@@ -1,0 +1,35 @@
+body {
+    overflow: hidden;
+}
+
+#target-eye {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    font-size: 3vh;
+    text-shadow: 0.2vh 0.2vh 0.2vh #000000;
+}
+
+#target-label-wrapper {
+    position: absolute;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+    left: 51.5%;
+    width: fit-content;
+    height: 100%;
+    top: 49.25%;
+}
+
+#target-label {
+    list-style: none;
+    font-size: 1.3vh;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: white;
+    user-select: none;
+    white-space: nowrap;
+    text-shadow: 0.2vh 0.2vh 0.2vh #000000;
+}

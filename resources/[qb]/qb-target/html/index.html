@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <!-- Font Awesome Icons Import -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Material Icons Import -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Material Design Icons Import -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
+    <!-- Ionicons Import -->
+    <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <!-- Eva Icons Import -->
+    <script src="https://unpkg.com/eva-icons"></script>
+    <!-- Line Awesome Icons Import -->
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <!-- Boostrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Quasar CSS Import -->
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.1.0/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+    <!-- CSS File Import -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!-- Vue Import -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js" defer></script>
+    <!-- Quasar JS Import -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.1.0/dist/quasar.umd.prod.js" defer></script>
+    <!-- JavaScript File Import -->
+    <script src="js/app.js" type="text/javascript" defer></script>
+</head>
+
+<body>
+    <div id="target-wrapper">
+        <q-icon id="target-eye" :name="CurrentIcon" v-show="Show" :style="TargetEyeStyleObject"></q-icon>
+        <div id="target-label-wrapper">
+            <div id="target-label" v-html="TargetHTML"></div>
+        </div>
+    </div>
+</body>
+
+</html>
