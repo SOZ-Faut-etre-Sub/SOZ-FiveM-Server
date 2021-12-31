@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local HudDisplayed = false
+local HudDisplayed, HudRadar = false, true
 --- @class PlayerData
 local HudPlayerStatus = {
     --- @type number
@@ -17,6 +17,15 @@ local function setHudDisplay(state)
     if HudDisplayed ~= state then
         HudDisplayed = state
         SendNUIMessage({ action = 'display', show = HudDisplayed })
+    end
+end
+
+--- Radar Hud display function
+--- @param state boolean
+local function setHudRadar(state)
+    if HudRadar ~= state then
+        HudRadar = state
+        DisplayRadar(HudRadar)
     end
 end
 
@@ -61,8 +70,12 @@ end)
 
 CreateThread(function()
     while true do
+        local player = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(player)
+
         if LocalPlayer.state.isLoggedIn then
             setHudDisplay(not IsPauseMenuActive())
+            setHudRadar(IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle))
         else
             Wait(500)
         end
