@@ -18,6 +18,7 @@ client_scripts {
     'client/main.lua',
     'client/no_reticule.lua',
     'client/hud_components.lua',
+    'client/notifications.lua',
 }
 
 dependency 'qb-core'
