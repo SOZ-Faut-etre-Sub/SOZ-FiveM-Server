@@ -1,2 +1,6 @@
 env.cfg
 cache
+[indev]/*
+![indev]/.gitkeep
+[soz]/*
+![soz]/.gitkeep
