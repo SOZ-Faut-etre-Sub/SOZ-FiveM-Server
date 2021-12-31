@@ -3,10 +3,23 @@
   --progressbar-bg-opacity: 0.4;
 }
 
-body {
-  transition: opacity .5s;
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
+body {
+  transition: opacity .5s;
+  /*background-color: #0d3349;*/
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+}
+
+/**
+ * Needs style
+ */
 .statues {
   position: absolute;
   width: 12vw;
@@ -40,6 +53,7 @@ body {
   border-radius: 1rem;
   overflow: hidden;
 }
+
 .status .progressbar .progress {
   display: flex;
   flex-direction: column;
@@ -77,4 +91,109 @@ body {
 
 .progressbar .progress.weed {
   background-color: rgba(37, 228, 30, var(--progressbar-fg-opacity));
+}
+
+/**
+ * Speedometer style
+ */
+.speedometer {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 30vw;
+  bottom: 1.2vh;
+  left: 35vw;
+  transition: opacity .5s;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .7))
+}
+
+.speedometer .seatbelt {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: rgba(255, 255, 255, .3);
+  animation-duration: 2s;
+}
+
+.speedometer .seatbelt.belt {
+  animation-name: belt;
+}
+.speedometer .seatbelt.nobelt {
+  animation-name: nobelt;
+}
+
+.speedometer .seatbelt svg,
+.speedometer .lights vehicle-light svg {
+  width: 30px;
+  height: 30px;
+}
+
+.speedometer .gauge {
+  display: flex;
+  justify-content: center;
+  margin-right: -40px;
+}
+
+.speedometer .gauge vehicle-speed .display {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  text-align: center;
+  top: 1.5rem;
+  width: 100px;
+  color: #a4a4a4;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.speedometer .gauge vehicle-speed .display .speed {
+  color: white;
+  font-size: 1.8rem;
+}
+
+.speedometer .gauge vehicle-fuel {
+  position: relative;
+  right: 20px;
+  top: 60px;
+}
+
+.speedometer .fuel g {
+  transform: translate(16px, 13px);
+}
+
+.speedometer .lights {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: rgba(255, 255, 255, .3);
+}
+
+.speedometer .lights vehicle-light svg {
+  transition: all .5s;
+}
+
+@keyframes belt {
+  from {
+    color: rgba(255, 255, 255, .3);
+  }
+  50% {
+    color: #2ecc71;
+  }
+
+  to {
+    color: rgba(255, 255, 255, .3);
+  }
+}
+
+@keyframes nobelt {
+  from {
+    color: rgba(255, 255, 255, .3);
+  }
+  50% {
+    color: rgb(255,2,69);
+  }
+
+  to {
+    color: rgba(255, 255, 255, .3);
+  }
 }

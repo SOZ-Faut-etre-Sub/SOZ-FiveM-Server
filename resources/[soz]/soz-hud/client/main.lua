@@ -1,12 +1,27 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore                 = exports['qb-core']:GetCoreObject()
 
 local HudDisplayed, HudRadar = false, true
 --- @class PlayerData
-local HudPlayerStatus = {
+local HudPlayerStatus        = {
     --- @type number
     hunger = 100,
     --- @type number
     thirst = 100
+}
+--- @class VehicleData
+local HudVehicleStatus       = {
+    --- @type boolean
+    haveSeatbelt = false,
+    --- @type number
+    speed        = 0,
+    --- @type number
+    fuel         = 100,
+    --- @type boolean
+    haveLight    = false,
+    --- @type boolean
+    lightsOn     = false,
+    --- @type boolean
+    highBeamsOn  = false,
 }
 
 --- Update Functions
@@ -26,6 +41,7 @@ local function setHudRadar(state)
     if HudRadar ~= state then
         HudRadar = state
         DisplayRadar(HudRadar)
+        SendNUIMessage({ action = 'speedometer', show = HudRadar })
     end
 end
 
@@ -43,6 +59,30 @@ local function setPlayerData(data)
 
     if shouldUpdate then
         SendNUIMessage({ action = 'update_needs', hunger = data.hunger, thirst = data.thirst })
+    end
+end
+
+--- Update VehicleData
+--- @param data VehicleData
+local function setVehicleData(data)
+    local shouldUpdate = false
+    for k, v in pairs(data) do
+        if HudVehicleStatus[k] ~= v then
+            HudVehicleStatus[k] = v
+            shouldUpdate = true
+        end
+    end
+
+    if shouldUpdate then
+        SendNUIMessage({
+                           action       = 'update_vehicle',
+                           speed        = HudVehicleStatus.speed,
+                           fuel         = HudVehicleStatus.fuel,
+                           haveSeatbelt = HudVehicleStatus.haveSeatbelt,
+                           haveLight    = HudVehicleStatus.haveLight,
+                           lightsOn     = HudVehicleStatus.lightsOn,
+                           highBeamsOn  = HudVehicleStatus.highBeamsOn,
+                       })
     end
 end
 
@@ -66,16 +106,34 @@ RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst)
     setPlayerData({ hunger = newHunger, thirst = newThirst })
 end)
 
+RegisterNetEvent('hud:client:UpdateSeatbelt', function(newState)
+    setVehicleData({ haveSeatbelt = newState })
+end)
+
 --- Loops
 
 CreateThread(function()
     while true do
-        local player = PlayerPedId()
+        local player  = PlayerPedId()
         local vehicle = GetVehiclePedIsIn(player)
 
         if LocalPlayer.state.isLoggedIn then
             setHudDisplay(not IsPauseMenuActive())
-            setHudRadar(IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle))
+
+            if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
+                local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
+
+                setHudRadar(true)
+                setVehicleData({
+                                   speed       = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
+                                   fuel        = GetVehicleFuelLevel(vehicle),
+                                   haveLight   = haveLight,
+                                   lightsOn    = lightsOn,
+                                   highBeamsOn = highBeamsOn,
+                               })
+            else
+                setHudRadar(false)
+            end
         else
             Wait(500)
         end

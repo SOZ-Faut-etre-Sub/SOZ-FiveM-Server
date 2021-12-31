@@ -3,28 +3,11 @@
  * @param data-type used to force display hunger and thirst even if value id 0
  * @param data-value representation in percentage of the completion of the need
  */
-class PlayerNeed extends HTMLElement {
-  constructor () {
+class PlayerNeed extends SozUiElement {
+  constructor() {
     super()
 
-    this.root = this
     this.type = this.dataset.type
-    this.value = this.dataset.value
-  }
-
-  static get observedAttributes() {
-    return ['data-value'];
-  }
-
-  connectedCallback () {
-    this.renderHTMLComponent()
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue === newValue) return
-
-    this.value = newValue
-    this.renderHTMLComponent()
   }
 
   renderHTMLComponent() {

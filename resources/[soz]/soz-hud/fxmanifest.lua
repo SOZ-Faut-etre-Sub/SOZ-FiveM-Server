@@ -8,6 +8,7 @@ files {
     'ui/index.html',
     'ui/app.js',
     'ui/elements/*.js',
+    'ui/fonts/*.ttf',
     'ui/app.css',
     'ui/sprite.svg',
 }
