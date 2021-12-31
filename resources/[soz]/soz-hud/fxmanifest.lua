@@ -12,6 +12,9 @@ files {
     'ui/sprite.svg',
 }
 
-client_script 'client/main.lua'
+client_scripts {
+    'client/main.lua',
+    'client/hud_components.lua',
+}
 
 dependency 'qb-core'
