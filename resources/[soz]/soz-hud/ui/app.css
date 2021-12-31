@@ -1,0 +1,80 @@
+:root{
+  --progressbar-fg-opacity: 0.6;
+  --progressbar-bg-opacity: 0.4;
+}
+
+body {
+  transition: opacity .5s;
+}
+
+.statues {
+  position: absolute;
+  width: 12vw;
+  bottom: 1.2vh;
+  right: .8vw;
+}
+
+.status {
+  display: flex;
+  padding: .3rem;
+  margin: .5rem 0;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, .4);
+}
+
+.status .icon {
+  padding: 0 .5rem;
+  height: .8rem;
+  width: .8rem;
+  color: white;
+}
+
+.status .icon svg {
+  height: .8rem;
+  width: .8rem;
+}
+
+.status .progressbar {
+  display: flex;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.status .progressbar .progress {
+  display: flex;
+  flex-direction: column;
+  transition: width 1s;
+}
+
+/** Progress bar color **/
+.progressbar.hunger {
+  background-color: rgba(251, 140, 0, var(--progressbar-bg-opacity));
+}
+
+.progressbar .progress.hunger {
+  background-color: rgba(251, 140, 0, var(--progressbar-fg-opacity));
+}
+
+.progressbar.thirst {
+  background-color: rgba(30, 135, 228, var(--progressbar-bg-opacity));
+}
+
+.progressbar .progress.thirst {
+  background-color: rgba(30, 135, 228, var(--progressbar-fg-opacity));
+}
+
+.progressbar.drunk {
+  background-color: rgba(228, 30, 53, var(--progressbar-bg-opacity));
+}
+
+.progressbar .progress.drunk {
+  background-color: rgba(228, 30, 47, var(--progressbar-fg-opacity));
+}
+
+.progressbar.weed {
+  background-color: rgba(79, 228, 30, var(--progressbar-bg-opacity));
+}
+
+.progressbar .progress.weed {
+  background-color: rgba(37, 228, 30, var(--progressbar-fg-opacity));
+}
