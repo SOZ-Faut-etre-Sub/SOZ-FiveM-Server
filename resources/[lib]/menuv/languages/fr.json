@@ -1,0 +1,22 @@
+{
+    "language": "fr",
+    "translators": [
+        {
+            "name": "Korioz",
+            "emails": ["pro.korioz@protonmail.com"],
+            "github": "https://github.com/Korioz"
+        }
+    ],
+    "translations": {
+        "keyboard": "Clavier",
+        "controller": "Manette",
+        "keybind_key_up": "Haut dans un menu",
+        "keybind_key_down": "Bas dans un menu",
+        "keybind_key_left": "Gauche dans un menu",
+        "keybind_key_right": "Droite dans un menu",
+        "keybind_key_enter": "Confirmer dans un menu",
+        "keybind_key_close": "Fermer un menu",
+        "keybind_key_close_all": "Fermer tout les menus",
+        "open_menu": "Ouvrir menu '%s'"
+    }
+}
