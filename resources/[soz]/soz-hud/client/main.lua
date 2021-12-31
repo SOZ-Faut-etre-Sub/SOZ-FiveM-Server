@@ -1,15 +1,15 @@
-local QBCore                 = exports['qb-core']:GetCoreObject()
+local QBCore           = exports['qb-core']:GetCoreObject()
 
-local HudDisplayed, HudRadar = false, true
+HudDisplayed, HudRadar = false, true
 --- @class PlayerData
-local HudPlayerStatus        = {
+local HudPlayerStatus  = {
     --- @type number
     hunger = 100,
     --- @type number
     thirst = 100
 }
 --- @class VehicleData
-local HudVehicleStatus       = {
+local HudVehicleStatus = {
     --- @type boolean
     haveSeatbelt = false,
     --- @type number

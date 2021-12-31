@@ -16,11 +16,14 @@ files {
 shared_script 'config.lua'
 
 client_scripts {
+    'client/utils/*.lua',
     'client/main.lua',
     'client/no_reticule.lua',
     'client/hud_components.lua',
     'client/notifications.lua',
     'client/input.lua',
+    'client/compass.lua',
+    'client/streetname.lua',
 }
 
 dependency 'qb-core'
