@@ -12,8 +12,11 @@ files {
     'ui/sprite.svg',
 }
 
+shared_script 'config.lua'
+
 client_scripts {
     'client/main.lua',
+    'client/no_reticule.lua',
     'client/hud_components.lua',
 }
 
