@@ -8,13 +8,16 @@ SOZui.displayVehicleHud = function(bool) {
   document.querySelector('.speedometer').style.opacity = bool ? '1' : '0'
 }
 
-SOZui.updateCustomElement = function(data) {
+SOZui.updateNeedsElement = function(data) {
   if (data.hunger !== undefined) {
     document.querySelector('player-need[data-type="hunger"]').dataset['value'] = data.hunger
   }
   if (data.thirst !== undefined) {
     document.querySelector('player-need[data-type="thirst"]').dataset['value'] = data.thirst
   }
+}
+
+SOZui.updateVehicleElement = function(data) {
   if (data.speed !== undefined) {
     document.querySelector('vehicle-speed').dataset['value'] = data.speed
   }
@@ -51,10 +54,10 @@ window.addEventListener("message", (event) => {
       SOZui.displayVehicleHud(event.data.show);
       break;
     case "update_needs":
-      SOZui.updateCustomElement(event.data);
+      SOZui.updateNeedsElement(event.data);
       break;
     case "update_vehicle":
-      SOZui.updateCustomElement(event.data);
+      SOZui.updateVehicleElement(event.data);
       break;
   }
 });
