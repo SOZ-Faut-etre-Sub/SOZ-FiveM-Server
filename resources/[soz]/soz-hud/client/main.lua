@@ -69,20 +69,20 @@ local function setVehicleData(data)
     for k, v in pairs(data) do
         if HudVehicleStatus[k] ~= v then
             HudVehicleStatus[k] = v
-            shouldUpdate = true
+            shouldUpdate        = true
         end
     end
 
     if shouldUpdate then
         SendNUIMessage({
-                           action       = 'update_vehicle',
-                           speed        = HudVehicleStatus.speed,
-                           fuel         = HudVehicleStatus.fuel,
-                           haveSeatbelt = HudVehicleStatus.haveSeatbelt,
-                           haveLight    = HudVehicleStatus.haveLight,
-                           lightsOn     = HudVehicleStatus.lightsOn,
-                           highBeamsOn  = HudVehicleStatus.highBeamsOn,
-                       })
+            action       = 'update_vehicle',
+            speed        = HudVehicleStatus.speed,
+            fuel         = HudVehicleStatus.fuel,
+            haveSeatbelt = HudVehicleStatus.haveSeatbelt,
+            haveLight    = HudVehicleStatus.haveLight,
+            lightsOn     = HudVehicleStatus.lightsOn,
+            highBeamsOn  = HudVehicleStatus.highBeamsOn,
+        })
     end
 end
 
@@ -125,12 +125,12 @@ CreateThread(function()
 
                 setHudRadar(true)
                 setVehicleData({
-                                   speed       = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
-                                   fuel        = GetVehicleFuelLevel(vehicle),
-                                   haveLight   = haveLight,
-                                   lightsOn    = lightsOn,
-                                   highBeamsOn = highBeamsOn,
-                               })
+                    speed       = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
+                    fuel        = GetVehicleFuelLevel(vehicle),
+                    haveLight   = haveLight,
+                    lightsOn    = lightsOn,
+                    highBeamsOn = highBeamsOn,
+                })
             else
                 setHudRadar(false)
             end
