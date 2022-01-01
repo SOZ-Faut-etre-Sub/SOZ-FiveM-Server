@@ -13,9 +13,7 @@ RegisterNetEvent('soz-hud:client:DrawNotification', function(msg, flash, save)
     DrawNotification(msg, flash, save)
 end)
 
-exports('DrawNotification', function(msg, flash, save)
-    DrawNotification(msg, flash, save)
-end)
+exports('DrawNotification', DrawNotification)
 
 --- DrawAdvancedNotification Display advanced notification
 --- @param msg string Notification message
@@ -38,6 +36,4 @@ RegisterNetEvent('soz-hud:client:DrawAdvancedNotification', function(msg, title,
     DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
 end)
 
-exports('DrawAdvancedNotification', function(msg, title, subtitle, image, iconType, flash, save, color)
-    DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
-end)
+exports('DrawAdvancedNotification', DrawAdvancedNotification)

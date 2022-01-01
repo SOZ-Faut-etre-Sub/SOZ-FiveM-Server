@@ -11,6 +11,4 @@ local function Input(title, maxChar, content)
     end
 end
 
-exports('Input', function(title, maxChar, content)
-    return Input(title, maxChar, content)
-end)
+exports('Input', Input)
