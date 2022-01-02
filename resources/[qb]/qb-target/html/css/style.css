@@ -1,35 +1,49 @@
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 #target-eye {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    font-size: 3vh;
-    text-shadow: 0.2vh 0.2vh 0.2vh #000000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  font-size: 3vh;
+  text-shadow: 0.1vh 0.1vh 0.1vh #000000;
 }
 
 #target-label-wrapper {
-    position: absolute;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    flex-direction: row;
-    left: 51.5%;
-    width: fit-content;
-    height: 100%;
-    top: 49.25%;
+  position: absolute;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: row;
+  left: 52vw;
+  width: fit-content;
+  height: 100%;
+  top: 43vh;
 }
 
 #target-label {
-    list-style: none;
-    font-size: 1.3vh;
-    font-weight: bold;
-    font-family: sans-serif;
-    color: white;
-    user-select: none;
-    white-space: nowrap;
-    text-shadow: 0.2vh 0.2vh 0.2vh #000000;
+  list-style: none;
+  font-size: 1.3vh;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: white;
+  user-select: none;
+  white-space: nowrap;
+  text-shadow: 0.1vh 0.1vh 0.1vh #000000;
+}
+
+#target-label > div {
+  background: linear-gradient(to right, rgba(0, 0, 0, .5) 40%, rgba(0, 0, 0, 0) 100%);
+
+  border-bottom-style: solid;
+  border-width: .1rem;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 30%, rgba(0, 0, 0, 0) 100%);
+
+  border-top-left-radius: .3rem;
+  border-bottom-left-radius: .3rem;
+  padding: .5rem 2rem;
+  cursor: pointer;
 }

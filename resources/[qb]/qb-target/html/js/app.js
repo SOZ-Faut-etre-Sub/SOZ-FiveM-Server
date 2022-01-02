@@ -5,7 +5,7 @@ const Targeting = Vue.createApp({
             ChangeTextIconColor: false, // This is if you want to change the color of the icon next to the option text with the text color
             StandardEyeIcon: "far fa-eye",
             CurrentIcon: "far fa-eye",
-            SuccessColor: "rgb(30, 144, 255)",
+            SuccessColor: "rgb(34,188,74)",
             StandardColor: "white",
             TargetHTML: "",
             TargetEyeStyleObject: {
@@ -104,9 +104,9 @@ const Targeting = Vue.createApp({
             const AlsoChangeTextIconColor = this.ChangeTextIconColor;
             item.data.forEach(function(item, index) {
                 if (AlsoChangeTextIconColor) {
-                    TargetLabel += "<div id='target-" + index + "' style='margin-bottom: 1vh;'><span id='target-icon-" + index + "' style='color: " + ResetColor + "'><i class='" + item.icon + "'></i></span>&nbsp" + item.label + "</div>";
+                    TargetLabel += "<div id='target-" + index + "' style='margin-bottom: .5vh;'><span id='target-icon-" + index + "' style='color: " + ResetColor + "'><i class='" + item.icon + "'></i></span>&nbsp" + item.label + "</div>";
                 } else {
-                    TargetLabel += "<div id='target-" + index + "' style='margin-bottom: 1vh;'><span id='target-icon-" + index + "' style='color: " + FoundColor + "'><i class='" + item.icon + "'></i></span>&nbsp" + item.label + "</div>";
+                    TargetLabel += "<div id='target-" + index + "' style='margin-bottom: .5vh;'><span id='target-icon-" + index + "' style='color: " + FoundColor + "'><i class='" + item.icon + "'></i></span>&nbsp" + item.label + "</div>";
                 };
 
                 setTimeout(function() {
