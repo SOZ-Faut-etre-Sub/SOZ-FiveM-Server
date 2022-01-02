@@ -1,0 +1,529 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+.container {
+    height: 100vh;
+}
+
+::-webkit-inner-spin-button {
+    display: none;
+}
+
+.clothing-menu-container {
+    display: none;
+    margin-top: .5vh;
+    margin-right: 5vh;
+    position: absolute;
+    height: 99vh;
+    width: 38vh;
+    background-color: rgb(23 23 23 / 80%);
+    right: -25vw;
+    border-radius:1.3vh;
+}
+
+.clothing-menu-header {
+    position: relative;
+    height: 6vh;
+    width: 100%;
+    top: .9vh;
+}
+
+.clothing-menu-header-btn {
+    position: relative;
+    height: 80%;
+    top: 3.5vh;
+    float: left;
+    color: #ededed;
+    text-align: center;
+    line-height: 3.5vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-header-btn:hover {
+    color: #444444;
+    cursor: pointer;
+}
+
+.selected {
+    color: #dc143c;
+}
+
+.clothing-menu-header-btn > p {
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-size: 1vh;
+    letter-spacing: 0.1vh;
+    margin-bottom: -10px;
+}
+
+.clothing-menu-header-cameras {
+    position: absolute;
+    height: 5.5vh;
+    width: 102%;
+    top: -2.3vh;
+}
+
+.clothing-menu-header-camera-btn {
+    position: relative;
+    height: 55%;
+    top: 3.2vh;
+    width: 24%;
+    float: left;
+    color: #ededed;
+    text-align: center;
+    line-height: 3.7vh;
+    transition: all 1s linear;
+}
+
+.selected-cam {
+    color: #dc143c;
+}
+
+.clothing-menu-header-camera-btn:hover {
+    color: #444444;
+    cursor: pointer;
+}
+
+.clothing-menu-header-camera-btn > i {
+    font-size: 1.4vh;
+}
+
+.clothing-menu-roomOutfits-container {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0.3vh;
+    right: 0;
+    top: 9vh;
+    height: 87vh;
+    width: 92%;
+    overflow-y: scroll !important;
+}
+
+.clothing-menu-myOutfits-container {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0.3vh;
+    right: 0;
+    top: 9vh;
+    height: 77vh;
+    width: 92%;
+    overflow-y: scroll !important;
+}
+
+.clothing-menu-outfit-option-button {
+    position: relative;
+    text-align: center;
+    line-height: 4.8vh;
+    width: 60%;
+    height: 40%;
+    margin: 0 auto;
+    top: 2.3vh;
+    background-color: #dc143c;
+    border-radius: 0.75vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-outfit-option-button:hover {
+    background-color: #444444;
+    cursor: pointer;
+}
+
+.clothing-menu-outfit-option-button > p {
+    color: #ededed;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.1vh;
+    font-size: 1vh;
+}
+
+.clothing-menu-myOutfit-option-button {
+    position: absolute;
+    text-align: center;
+    line-height: 4.8vh;
+    width: 40%;
+    height: 40%;
+    left: 2vh;
+    top: 5.1vh;
+    background-color: #dc143c;
+    border-radius: 0.4vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-myOutfit-option-button:hover {
+    background-color: #444444;
+    cursor: pointer;
+}
+
+.clothing-menu-myOutfit-option-button > p {
+    color: #ededed;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.1vh;
+    font-size: 1.3vh;
+}
+
+.clothing-menu-myOutfit-option-button-remove {
+    position: absolute;
+    text-align: center;
+    line-height: 4.8vh;
+    width: 40%;
+    height: 40%;
+    right: 2vh;
+    top: 5.1vh;
+    background-color: #dc143c;
+    border-radius: 0.4vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-myOutfit-option-button-remove:hover {
+    background-color: #444444;
+}
+
+.clothing-menu-myOutfit-option-button-remove > p {
+    color: #ededed;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.1vh;
+    font-size: 1.3vh;
+}
+
+.clothing-menu-character-container {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0.3vh;
+    right: 0;
+    top: 9vh;
+    height: 86vh;
+    width: 92%;
+    overflow-y: scroll !important;
+}
+
+.clothing-menu-clothing-container {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0.3vh;
+    right: 0;
+    top: 9vh;
+    height: 86vh;
+    width: 92%;
+    overflow-y: scroll !important;
+}
+
+.clothing-menu-accessoires-container {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0.3vh;
+    right: 0;
+    top: 9vh;
+    height: 86vh;
+    width: 92%;
+    overflow-y: scroll !important;
+}
+
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+	background-color: rgb(245 245 245 / 0%);
+}
+
+::-webkit-scrollbar
+{
+	width: 0.6vh;
+	background-color: rgb(245 245 245 / 0%);
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #dc143c;
+}
+
+.clothing-menu-option {
+    position: relative;
+    width: 100%;
+    height: 14%;
+}
+
+.clothing-menu-option-header {
+    color: #ededed;
+    padding: 0.8vh;
+    width: 100%;
+    margin-top: -0.5em;
+    margin-bottom: -15px;
+}
+
+.clothing-menu-option-header > p {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.4vh;
+    letter-spacing: 0.1vh;
+}
+
+.clothing-menu-option-item {
+    position: relative;
+    float: left;
+    height: 50%;
+    width: 40%;
+    margin-left: 2.4vh;
+    margin-top: 2vh;
+}
+
+.clothing-menu-option-item-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    width: 33%;
+    background-color: #dc143c;
+    color: #e9e9e9;
+    text-align: center;
+    line-height: 3.6vh;
+    border-radius: .3vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-option-item-left:hover {
+    background-color: #444444;
+    cursor: pointer;
+}
+
+.clothing-menu-option-item-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 50%;
+    width: 33%;
+    background-color: #dc143c;
+    color: #e9e9e9;
+    text-align: center;
+    line-height: 3.6vh;
+    border-radius: .3vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-option-item-right:hover {
+    background-color: #444444;
+    cursor: pointer;
+}
+
+.item-number {
+    position: absolute;
+    width: 25%;
+    height: 60%;
+    top: 2.8vh;
+    left: 5vh;
+    background: none;
+    border: none;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1vh;
+    letter-spacing: 0.1vh;
+    color: white;
+    outline: none;
+    transition: all 0.1s linear;
+}
+
+.clothing-menu-option-item-header {
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1vh;
+    letter-spacing: 0.1vh;
+    color: #ededed;
+}
+
+.clothing-menu-option-item-header > p {
+    font-family: 'Poppins', sans-serif;
+    padding: 0.2vh;
+}
+
+.clothing-menu-option-buttons {
+    position: absolute;
+    bottom: 0vh;
+    width: 100%;
+    height: 3vh;
+}
+
+.clothing-menu-option-button {
+    position: relative;
+    float: right;
+    height: 100%;
+    width: 33.33%;
+    background-color: #dc143c;
+    transition: all 1s linear;
+}
+
+.clothing-menu-option-button:hover {
+    background-color: #444444;
+    cursor: pointer;
+}
+
+.clothing-menu-option-button > p {
+    line-height: 3.1vh;
+    font-size: 1.3vh;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: #ededed;
+    text-align: center;
+}
+
+.clothing-menu-save-outfit-name {
+    display: none;
+    position: relative;
+    width: 30vh;
+    height: 18vh;
+    background-color: rgb(23 23 23 / 80%);
+    margin: 0 auto;
+    top: 40%;
+    border-radius: 0.7vh;
+
+}
+
+.clothing-menu-save-outfit-name-buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 17%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.clothing-menu-save-outfit-name-button {
+    position: relative;
+    background: #dc143c;
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: center;
+    line-height: 3vh;
+    transition: all 1s linear;
+}
+
+.clothing-menu-save-outfit-name-button:hover {
+    background: #444444;
+    cursor: pointer;
+}
+
+.clothing-menu-save-outfit-name-button > p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1vh;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+}
+
+.clothing-menu-save-outfit-name-header {
+    position: relative;
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    line-height: 5vh;
+}
+
+.clothing-menu-save-outfit-name-header > p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.7vh;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: #ededed;
+    font-weight: bold;
+}
+
+#outfit-name {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 40%;
+    background: none;
+    border: none;
+    outline: none;
+    width: 60%;
+    height: 27%;
+    text-align: center;
+    background: #444444;
+    transition: all 1s linear;
+    border-radius: .7vh;
+}
+
+#outfit-name {
+    color: #ededed;
+    font-family: sans-serif;
+    font-size: 1.75vh;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#outfit-name::placeholder {
+    color: rgba(255, 255, 255, 0.404);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.7vh;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.change-camera-buttons {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    height: 7vh;
+    width: 20vh;
+}
+
+.change-camera-button {
+    position: relative;
+    height: 80%;
+    width: 50%;
+    float: left;
+    background-color: rgb(23 23 23 / 80%);
+    text-align: center;
+    transition: 0.08s;
+}
+
+.change-camera-button:hover {
+    background: #dc143c;
+    cursor: pointer;
+}
+
+.change-camera-button > i {
+    font-size: 3vh;
+    color: #ededed;
+    line-height: 5.5vh;
+}
+
+.change-camera-footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    height: 20%;
+    background: #dc143c;
+    line-height: 1.5vh;
+    border-bottom-left-radius: .8vh;
+    border-bottom-right-radius: .8vh;
+}
+
+.change-camera-footer > p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 0.8vh;
+    text-transform: uppercase;
+    color: #ededed;
+    letter-spacing: 0.1vh;
+}

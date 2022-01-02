@@ -113,7 +113,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Job
     PlayerData.job = PlayerData.job or {}
     PlayerData.job.name = PlayerData.job.name or 'unemployed'
-    PlayerData.job.label = PlayerData.job.label or 'Civil'
+    PlayerData.job.label = PlayerData.job.label or 'Civilian'
     PlayerData.job.payment = PlayerData.job.payment or 10
     if QBCore.Shared.ForceJobDefaultDutyAtLogin or PlayerData.job.onduty == nil then
         PlayerData.job.onduty = QBCore.Shared.Jobs[PlayerData.job.name].defaultDuty
@@ -125,7 +125,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
     PlayerData.gang.name = PlayerData.gang.name or 'none'
-    PlayerData.gang.label = PlayerData.gang.label or 'Citoyen'
+    PlayerData.gang.label = PlayerData.gang.label or 'No Gang Affiliaton'
     PlayerData.gang.isboss = PlayerData.gang.isboss or false
     PlayerData.gang.grade = PlayerData.gang.grade or {}
     PlayerData.gang.grade.name = PlayerData.gang.grade.name or 'none'
@@ -353,7 +353,8 @@ function QBCore.Player.CreatePlayer(PlayerData)
                 end
             end
         else
-            TriggerClientEvent('QBCore:Notify', self.PlayerData.source, 'Your inventory is too heavy!', 'error')
+            TriggerEvent("inventory:server:spawnOnGround", self.PlayerData.source, { name = itemInfo['name'], amount = amount, info = info or '', label = itemInfo['label'], description = itemInfo['description'] or '', weight = itemInfo['weight'], type = itemInfo['type'], unique = itemInfo['unique'], useable = itemInfo['useable'], image = itemInfo['image'], shouldClose = itemInfo['shouldClose'], slot = slot, combinable = itemInfo['combinable'] }, amount)
+            TriggerClientEvent('QBCore:Notify', self.PlayerData.source, 'Your inventory is too heavy, placing item on floor!', 'error')
         end
         return false
     end

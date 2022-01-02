@@ -35,7 +35,7 @@ files {
 
 dependencies {
 	'oxmysql',
-	'progressbar',
+	'progressbar'
 }
 
 lua54 'yes'

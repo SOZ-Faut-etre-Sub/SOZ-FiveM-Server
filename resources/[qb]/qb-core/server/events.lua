@@ -40,6 +40,7 @@ end)
 
 -- Player Connecting
 
+
 local function OnPlayerConnecting(name, setKickReason, deferrals)
     -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
     deferrals.defer()

@@ -11,9 +11,12 @@ CreateThread(function()
         HideHudComponentThisFrame(9)  -- 9 : STREET_NAME
         HideHudComponentThisFrame(13) -- 13 : CASH_CHANGE
         HideHudComponentThisFrame(17) -- 17 : SAVING_GAME
+        HideHudComponentThisFrame(19) -- 19 : WEAPON_WHEEL
         HideHudComponentThisFrame(20) -- 20 : WEAPON_WHEEL_STATS
         HideHudComponentThisFrame(21) -- 21 : HUD_COMPONENTS
         HideHudComponentThisFrame(22) -- 22 : HUD_WEAPONS
+
+        DisableControlAction(1, 37)
 
         Wait(4)
     end
