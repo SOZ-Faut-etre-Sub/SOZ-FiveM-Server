@@ -1,6 +1,9 @@
 :root{
+  --progressbar-hunger-primary: linear-gradient(to top, rgba(251, 140, 0, 0.6) 31%, rgba(255, 168, 55, 0.6) 100%);
+  --progressbar-thirst-primary: linear-gradient(to top, rgba(30, 135, 228, 0.6) 31%, rgba(94, 165, 239, 0.6) 100%);
+  --progressbar-weed-primary: linear-gradient(to top, rgba(37, 228, 30, 0.6) 31%, rgba(97, 243, 91, 0.6) 100%);
+  --progressbar-drunk-primary: linear-gradient(to top, rgba(228, 30, 47, 0.6) 31%, rgba(241, 78, 92, 0.6) 100%);
   --progressbar-fg-opacity: 0.6;
-  --progressbar-bg-opacity: 0.4;
 }
 
 @font-face {
@@ -62,35 +65,35 @@ body {
 
 /** Progress bar color **/
 .progressbar.hunger {
-  background-color: rgba(251, 140, 0, var(--progressbar-bg-opacity));
+  background-color: rgba(251, 140, 0, 0.4);
 }
 
 .progressbar .progress.hunger {
-  background-color: rgba(251, 140, 0, var(--progressbar-fg-opacity));
+  background: var(--progressbar-hunger-primary);
 }
 
 .progressbar.thirst {
-  background-color: rgba(30, 135, 228, var(--progressbar-bg-opacity));
+  background-color: rgba(30, 135, 228, 0.4);
 }
 
 .progressbar .progress.thirst {
-  background-color: rgba(30, 135, 228, var(--progressbar-fg-opacity));
+  background: var(--progressbar-thirst-primary);
 }
 
 .progressbar.drunk {
-  background-color: rgba(228, 30, 53, var(--progressbar-bg-opacity));
+  background-color: rgba(228, 30, 53, 0.4);
 }
 
 .progressbar .progress.drunk {
-  background-color: rgba(228, 30, 47, var(--progressbar-fg-opacity));
+  background: var(--progressbar-drunk-primary);
 }
 
 .progressbar.weed {
-  background-color: rgba(79, 228, 30, var(--progressbar-bg-opacity));
+  background-color: rgba(79, 228, 30, 0.4);
 }
 
 .progressbar .progress.weed {
-  background-color: rgba(37, 228, 30, var(--progressbar-fg-opacity));
+  background: var(--progressbar-weed-primary);
 }
 
 /**
