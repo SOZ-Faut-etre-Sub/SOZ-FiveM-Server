@@ -11,8 +11,8 @@ QBConfig.Money.DontAllowMinus = { 'cash', 'crypto' } -- Money that is not allowe
 QBConfig.Money.PayCheckTimeOut = 10 -- The time in minutes that it will give the paycheck
 
 QBConfig.Player = {}
-QBConfig.Player.MaxWeight = 120000 -- Max weight a player can carry (currently 120kg, written in grams)
-QBConfig.Player.MaxInvSlots = 41 -- Max inventory slots for a player
+QBConfig.Player.MaxWeight = 80000 -- Max weight a player can carry (currently 120kg, written in grams)
+QBConfig.Player.MaxInvSlots = 30 -- Max inventory slots for a player
 QBConfig.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
 QBConfig.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
 QBConfig.Player.Bloodtypes = {
@@ -28,7 +28,7 @@ QBConfig.Player.Bloodtypes = {
 
 QBConfig.Server = {} -- General server config
 QBConfig.Server.closed = false -- Set server closed (no one can join except people with ace permission 'qbadmin.join')
-QBConfig.Server.closedReason = "Server Closed" -- Reason message to display when people can't join the server
+QBConfig.Server.closedReason = "Serveur en developpement" -- Reason message to display when people can't join the server
 QBConfig.Server.uptime = 0 -- Time the server has been up.
 QBConfig.Server.whitelist = false -- Enable or disable whitelist on the server
 QBConfig.Server.pvp = true -- Enable or disable pvp on the server (Ability to shoot other players)

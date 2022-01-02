@@ -71,9 +71,9 @@ QBShared.SetDefaultVehicleExtras = function (vehicle, config)
 end
 
 QBShared.StarterItems = {
-    ['phone'] = { amount = 1, item = 'phone' },
-    ['id_card'] = { amount = 1, item = 'id_card' },
-    ['driver_license'] = { amount = 1, item = 'driver_license' },
+    ['phone'] = { amount = 1, item = 'Telephone' },
+    ['id_card'] = { amount = 1, item = 'Carte ID' },
+    ['driver_license'] = { amount = 1, item = 'Permis de conduire' },
 }
 
 QBShared.Items = {
@@ -599,100 +599,10 @@ QBShared.Weapons = {
 -- Gangs
 QBShared.Gangs = {
 	['none'] = {
-		label = 'No Gang',
+		label = 'Citoyen',
 		grades = {
             ['0'] = {
                 name = 'Unaffiliated'
-            },
-        },
-	},
-	['lostmc'] = {
-		label = 'The Lost MC',
-		grades = {
-            ['0'] = {
-                name = 'Recruit'
-            },
-			['1'] = {
-                name = 'Enforcer'
-            },
-			['2'] = {
-                name = 'Shot Caller'
-            },
-			['3'] = {
-                name = 'Boss',
-				isboss = true
-            },
-        },
-	},
-	['ballas'] = {
-		label = 'Ballas',
-		grades = {
-            ['0'] = {
-                name = 'Recruit'
-            },
-			['1'] = {
-                name = 'Enforcer'
-            },
-			['2'] = {
-                name = 'Shot Caller'
-            },
-			['3'] = {
-                name = 'Boss',
-				isboss = true
-            },
-        },
-	},
-	['vagos'] = {
-		label = 'Vagos',
-		grades = {
-            ['0'] = {
-                name = 'Recruit'
-            },
-			['1'] = {
-                name = 'Enforcer'
-            },
-			['2'] = {
-                name = 'Shot Caller'
-            },
-			['3'] = {
-                name = 'Boss',
-				isboss = true
-            },
-        },
-	},
-	['cartel'] = {
-		label = 'Cartel',
-		grades = {
-            ['0'] = {
-                name = 'Recruit'
-            },
-			['1'] = {
-                name = 'Enforcer'
-            },
-			['2'] = {
-                name = 'Shot Caller'
-            },
-			['3'] = {
-                name = 'Boss',
-				isboss = true
-            },
-        },
-	},
-	['families'] = {
-		label = 'Families',
-		grades = {
-            ['0'] = {
-                name = 'Recruit'
-            },
-			['1'] = {
-                name = 'Enforcer'
-            },
-			['2'] = {
-                name = 'Shot Caller'
-            },
-			['3'] = {
-                name = 'Boss',
-				isboss = true
             },
         },
 	},
@@ -719,8 +629,8 @@ QBShared.Gangs = {
 -- Jobs
 QBShared.ForceJobDefaultDutyAtLogin = true -- true: Force duty state to jobdefaultDuty | false: set duty state from database last saved
 QBShared.Jobs = {
-	['unemployed'] = {
-		label = 'Civilian',
+	['chomage'] = {
+		label = 'Civil',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -730,8 +640,8 @@ QBShared.Jobs = {
             },
         },
 	},
-	['police'] = {
-		label = 'Law Enforcement',
+	['sudpolice'] = {
+		label = 'LSPD',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -758,8 +668,37 @@ QBShared.Jobs = {
             },
         },
 	},
-	['ambulance'] = {
-		label = 'EMS',
+	['nordpolice'] = {
+		label = 'LSCS',
+		defaultDuty = true,
+		offDutyPay = false,
+		grades = {
+            ['0'] = {
+                name = 'Recruit',
+                payment = 50
+            },
+			['1'] = {
+                name = 'Officer',
+                payment = 75
+            },
+			['2'] = {
+                name = 'Sergeant',
+                payment = 100
+            },
+			['3'] = {
+                name = 'Lieutenant',
+                payment = 125
+            },
+			['4'] = {
+                name = 'Chief',
+				isboss = true,
+                payment = 150
+            },
+        },
+
+	},
+	['sudambulance'] = {
+		label = 'LSMS',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -786,8 +725,8 @@ QBShared.Jobs = {
             },
         },
 	},
-	['realestate'] = {
-		label = 'Real Estate',
+	['nordambulance'] = {
+		label = 'BCMS',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -796,26 +735,27 @@ QBShared.Jobs = {
                 payment = 50
             },
 			['1'] = {
-                name = 'House Sales',
+                name = 'Paramedic',
                 payment = 75
             },
 			['2'] = {
-                name = 'Business Sales',
+                name = 'Doctor',
                 payment = 100
             },
 			['3'] = {
-                name = 'Broker',
+                name = 'Surgeon',
                 payment = 125
             },
 			['4'] = {
-                name = 'Manager',
+                name = 'Chief',
 				isboss = true,
                 payment = 150
             },
         },
+
 	},
 	['taxi'] = {
-		label = 'Taxi',
+		label = 'Rapid Transit',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -854,7 +794,7 @@ QBShared.Jobs = {
 		},
 	},
 	['cardealer'] = {
-		label = 'Vehicle Dealer',
+		label = 'Concessionnaire',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {

@@ -99,6 +99,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ['weapon'] = false
     }
     PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
+-- use only house and then house type for villa appart or house?
         house = nil,
         apartment = {
             apartmentType = nil,
@@ -112,7 +113,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Job
     PlayerData.job = PlayerData.job or {}
     PlayerData.job.name = PlayerData.job.name or 'unemployed'
-    PlayerData.job.label = PlayerData.job.label or 'Civilian'
+    PlayerData.job.label = PlayerData.job.label or 'Civil'
     PlayerData.job.payment = PlayerData.job.payment or 10
     if QBCore.Shared.ForceJobDefaultDutyAtLogin or PlayerData.job.onduty == nil then
         PlayerData.job.onduty = QBCore.Shared.Jobs[PlayerData.job.name].defaultDuty
@@ -124,7 +125,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
     PlayerData.gang.name = PlayerData.gang.name or 'none'
-    PlayerData.gang.label = PlayerData.gang.label or 'No Gang Affiliaton'
+    PlayerData.gang.label = PlayerData.gang.label or 'Citoyen'
     PlayerData.gang.isboss = PlayerData.gang.isboss or false
     PlayerData.gang.grade = PlayerData.gang.grade or {}
     PlayerData.gang.grade.name = PlayerData.gang.grade.name or 'none'
