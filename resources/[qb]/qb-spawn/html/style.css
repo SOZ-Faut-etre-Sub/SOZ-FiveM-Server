@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+.container {
+    font-family: 'Poppins', sans-serif;
+}
+
+.spawn-locations {
+    text-transform: uppercase;
+    position: absolute;
+    top: 10vh;
+    left: 10vh;
+    background-color: rgb(23 23 23 / 80%);
+    border-radius: .8vh;
+    padding: 30px;
+    cursor: default;
+}
+
+.location {
+    width: 28vh;
+    height: 4.5vh;
+    margin-bottom: 2vh;
+    transition: 0.2s;
+    transition: .1s linear;
+    border-radius: .3vh;
+    cursor: pointer;
+}
+
+.location > p {
+    position: relative;
+    color: #ededed;
+    text-align: center;
+    line-height: 4.5vh;
+    font-size: 1.8vh;
+}
+
+.location:hover {
+    background-color: #dc143c;
+    transition: 0.2s;
+}
+
+.selected {
+    background-color: #dc143c;
+}
+
+.submit-spawn {
+    background-color: #28a745;
+    width: 28vh;
+    height: 4.5vh;
+    margin-bottom: .75vh;
+    transition: 0.2s;
+    border-radius: .3vh;
+    cursor: pointer;
+}
+
+.submit-spawn > p {
+    position: relative;
+    color: white;
+    text-align: center;
+    line-height: 4.5vh;
+    font-size: 1.6vh;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.submit-spawn:hover {
+    transition: 0.2s;
+}
+
+#spawn-label {
+    color: #ededed;
+    font-weight: bold;
+}
+
+.loclabel {
+    width: 28vh;
+    height: 4vh;
+    transition: 0.2s;
+}
+
+.loclabel > p {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
+    position: relative;
+    color: #ededed;
+    text-align: center;
+    font-size: 1.5vh;
+}

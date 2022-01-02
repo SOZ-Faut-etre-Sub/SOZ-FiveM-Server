@@ -413,9 +413,10 @@ QBShared.Items = {
 	-- Medication
 	['firstaid'] 			 		 = {['name'] = 'firstaid', 						['label'] = 'First Aid', 				['weight'] = 2500, 		['type'] = 'item', 		['image'] = 'firstaid.png', 			['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'You can use this First Aid kit to get people back on their feet'},
 	['bandage'] 			 		 = {['name'] = 'bandage', 						['label'] = 'Bandage', 					['weight'] = 0, 		['type'] = 'item', 		['image'] = 'bandage.png', 				['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,    ['combinable'] = nil,   ['description'] = 'A bandage works every time'},
+    ['ifaks']                        = {['name'] = 'ifaks',                         ['label'] = 'ifaks',                    ['weight'] = 200,      ['type'] = 'item',       ['image'] = 'ifaks.png',                ['unique'] = false,     ['useable'] = true,     ['shouldClose'] = true,    ['combinable'] = nil,   ['description'] = 'ifaks for healing and a complete stress remover.'},
 	['painkillers'] 			 	 = {['name'] = 'painkillers', 					['label'] = 'Painkillers', 				['weight'] = 0, 		['type'] = 'item', 		['image'] = 'painkillers.png', 			['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,    ['combinable'] = nil,   ['description'] = 'For pain you can\'t stand anymore, take this pill that\'d make you feel great again'},
 	['walkstick'] 				 	 = {['name'] = 'walkstick', 			  	  	['label'] = 'Walking Stick', 			['weight'] = 1000, 		['type'] = 'item', 		['image'] = 'walkstick.png', 			['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Walking stick for ya\'ll grannies out there.. HAHA'},
-	
+
 	-- Communication
 	['phone'] 			 	 	 	 = {['name'] = 'phone', 			  			['label'] = 'Phone', 					['weight'] = 700, 		['type'] = 'item', 		['image'] = 'phone.png', 				['unique'] = true, 		['useable'] = false, 	['shouldClose'] = false,   ['combinable'] = nil,   ['description'] = 'Neat phone ya got there'},
 	['radio'] 			 	 		 = {['name'] = 'radio', 			  			['label'] = 'Radio', 					['weight'] = 2000, 		['type'] = 'item', 		['image'] = 'radio.png', 				['unique'] = true, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'You can communicate with this through a signal'},
@@ -599,10 +600,100 @@ QBShared.Weapons = {
 -- Gangs
 QBShared.Gangs = {
 	['none'] = {
-		label = 'Citoyen',
+		label = 'No Gang',
 		grades = {
             ['0'] = {
                 name = 'Unaffiliated'
+            },
+        },
+	},
+	['lostmc'] = {
+		label = 'The Lost MC',
+		grades = {
+            ['0'] = {
+                name = 'Recruit'
+            },
+			['1'] = {
+                name = 'Enforcer'
+            },
+			['2'] = {
+                name = 'Shot Caller'
+            },
+			['3'] = {
+                name = 'Boss',
+				isboss = true
+            },
+        },
+	},
+	['ballas'] = {
+		label = 'Ballas',
+		grades = {
+            ['0'] = {
+                name = 'Recruit'
+            },
+			['1'] = {
+                name = 'Enforcer'
+            },
+			['2'] = {
+                name = 'Shot Caller'
+            },
+			['3'] = {
+                name = 'Boss',
+				isboss = true
+            },
+        },
+	},
+	['vagos'] = {
+		label = 'Vagos',
+		grades = {
+            ['0'] = {
+                name = 'Recruit'
+            },
+			['1'] = {
+                name = 'Enforcer'
+            },
+			['2'] = {
+                name = 'Shot Caller'
+            },
+			['3'] = {
+                name = 'Boss',
+				isboss = true
+            },
+        },
+	},
+	['cartel'] = {
+		label = 'Cartel',
+		grades = {
+            ['0'] = {
+                name = 'Recruit'
+            },
+			['1'] = {
+                name = 'Enforcer'
+            },
+			['2'] = {
+                name = 'Shot Caller'
+            },
+			['3'] = {
+                name = 'Boss',
+				isboss = true
+            },
+        },
+	},
+	['families'] = {
+		label = 'Families',
+		grades = {
+            ['0'] = {
+                name = 'Recruit'
+            },
+			['1'] = {
+                name = 'Enforcer'
+            },
+			['2'] = {
+                name = 'Shot Caller'
+            },
+			['3'] = {
+                name = 'Boss',
+				isboss = true
             },
         },
 	},
@@ -629,8 +720,8 @@ QBShared.Gangs = {
 -- Jobs
 QBShared.ForceJobDefaultDutyAtLogin = true -- true: Force duty state to jobdefaultDuty | false: set duty state from database last saved
 QBShared.Jobs = {
-	['chomage'] = {
-		label = 'Civil',
+	['unemployed'] = {
+		label = 'Civilian',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -640,8 +731,8 @@ QBShared.Jobs = {
             },
         },
 	},
-	['sudpolice'] = {
-		label = 'LSPD',
+	['police'] = {
+		label = 'Law Enforcement',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -668,37 +759,8 @@ QBShared.Jobs = {
             },
         },
 	},
-	['nordpolice'] = {
-		label = 'LSCS',
-		defaultDuty = true,
-		offDutyPay = false,
-		grades = {
-            ['0'] = {
-                name = 'Recruit',
-                payment = 50
-            },
-			['1'] = {
-                name = 'Officer',
-                payment = 75
-            },
-			['2'] = {
-                name = 'Sergeant',
-                payment = 100
-            },
-			['3'] = {
-                name = 'Lieutenant',
-                payment = 125
-            },
-			['4'] = {
-                name = 'Chief',
-				isboss = true,
-                payment = 150
-            },
-        },
-
-	},
-	['sudambulance'] = {
-		label = 'LSMS',
+	['ambulance'] = {
+		label = 'EMS',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -725,8 +787,8 @@ QBShared.Jobs = {
             },
         },
 	},
-	['nordambulance'] = {
-		label = 'BCMS',
+	['realestate'] = {
+		label = 'Real Estate',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -735,27 +797,26 @@ QBShared.Jobs = {
                 payment = 50
             },
 			['1'] = {
-                name = 'Paramedic',
+                name = 'House Sales',
                 payment = 75
             },
 			['2'] = {
-                name = 'Doctor',
+                name = 'Business Sales',
                 payment = 100
             },
 			['3'] = {
-                name = 'Surgeon',
+                name = 'Broker',
                 payment = 125
             },
 			['4'] = {
-                name = 'Chief',
+                name = 'Manager',
 				isboss = true,
                 payment = 150
             },
         },
-
 	},
 	['taxi'] = {
-		label = 'Rapid Transit',
+		label = 'Taxi',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -794,7 +855,7 @@ QBShared.Jobs = {
 		},
 	},
 	['cardealer'] = {
-		label = 'Concessionnaire',
+		label = 'Vehicle Dealer',
 		defaultDuty = true,
 		offDutyPay = false,
 		grades = {
@@ -1222,13 +1283,40 @@ QBShared.Vehicles = {
 		['hash'] = `zion2`,
 		['shop'] = 'pdm',
 	},
-	['previon'] = {							--DLC +set sv_enforceGameBuild 2372
+	['previon'] = {			--DLC +set sv_enforceGameBuild 2372
 		['name'] = 'Previon',
 		['brand'] = 'Karin',
 		['model'] = 'previon',
 		['price'] = 149000,
 		['category'] = 'coupes',
 		['hash'] = `previon`,
+		['shop'] = 'pdm',
+	},
+	['champion'] = {		--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Champion',
+		['brand'] = 'Dewbauchee',
+		['model'] = 'champion',
+		['price'] = 205000,
+		['category'] = 'coupes',
+		['hash'] = `champion`,
+		['shop'] = 'pdm',
+	},
+	['ignus'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Ignus',
+		['brand'] = 'Pegassi',
+		['model'] = 'ignus',
+		['price'] = 1120000,
+		['category'] = 'coupes',
+		['hash'] = `ignus`,
+		['shop'] = 'pdm',
+	},
+	['zeno'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Patriot',
+		['brand'] = 'Mil-Spec',
+		['model'] = 'zeno',
+		['price'] = 1350000,
+		['category'] = 'coupes',
+		['hash'] = `zeno`,
 		['shop'] = 'pdm',
 	},
 	--- Cycles
@@ -1755,6 +1843,24 @@ QBShared.Vehicles = {
 		['price'] = 14000,
 		['category'] = 'motorcycles',
 		['hash'] = `manchez2`,
+		['shop'] = 'pdm',
+	},
+	['shinobi'] = {		--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Shinobi',
+		['brand'] = 'Nagasaki',
+		['model'] = 'shinobi',
+		['price'] = 25000,
+		['category'] = 'motorcycles',
+		['hash'] = `shinobi`,
+		['shop'] = 'pdm',
+	},
+	['reever'] = {		--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Reever',
+		['brand'] = 'Western',
+		['model'] = 'reever',
+		['price'] = 25000,
+		['category'] = 'motorcycles',
+		['hash'] = `reever`,
 		['shop'] = 'pdm',
 	},
 	--- Muscle
@@ -2334,6 +2440,15 @@ QBShared.Vehicles = {
 		['hash'] = `yosemite3`,
 		['shop'] = 'pdm',
 	},
+	['buffalo4'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Buffalo STX',
+		['brand'] = 'Bravado',
+		['model'] = 'buffalo4',
+		['price'] = 345000,
+		['category'] = 'muscle',
+		['hash'] = `buffalo4`,
+		['shop'] = 'pdm',
+	},
 	--- Off-Road
 	['bfinjection'] = {
 		['name'] = 'Bf Injection',
@@ -2867,6 +2982,15 @@ QBShared.Vehicles = {
 		['hash'] = `xls`,
 		['shop'] = 'pdm',
 	},
+	['granger2'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Granger 3600LX',
+		['brand'] = 'Declasse',
+		['model'] = 'granger2',
+		['price'] = 221000,
+		['category'] = 'suvs',
+		['hash'] = `granger2`,
+		['shop'] = 'pdm',
+	},
 	--- Sedans
 	['asea'] = {
 		['name'] = 'Asea',
@@ -3082,6 +3206,78 @@ QBShared.Vehicles = {
 		['price'] = 51000,
 		['category'] = 'sedans',
 		['hash'] = `tailgater2`,
+		['shop'] = 'pdm',
+	},
+	['cinquemila'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Lampadati',
+		['brand'] = 'Cinquemila',
+		['model'] = 'cinquemila',
+		['price'] = 125000,
+		['category'] = 'sedans',
+		['hash'] = `cinquemila`,
+		['shop'] = 'pdm',
+	},
+	['iwagen'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Obey',
+		['brand'] = 'I-Wagen',
+		['model'] = 'iwagen',
+		['price'] = 225000,
+		['category'] = 'sedans',
+		['hash'] = `iwagen`,
+		['shop'] = 'pdm',
+	},
+	['astron'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Pfister',
+		['brand'] = 'Astron',
+		['model'] = 'astron',
+		['price'] = 150000,
+		['category'] = 'sedans',
+		['hash'] = `astron`,
+		['shop'] = 'pdm',
+	},
+	['baller7'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Baller ST',
+		['brand'] = 'Gallivanter',
+		['model'] = 'baller7',
+		['price'] = 145000,
+		['category'] = 'sedans',
+		['hash'] = `baller7`,
+		['shop'] = 'pdm',
+	},
+	['comet7'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Comet',
+		['brand'] = 'S2 Cabrio',
+		['model'] = 'comet7',
+		['price'] = 25000,
+		['category'] = 'sedans',
+		['hash'] = `comet7`,
+		['shop'] = 'pdm',
+	},
+	['deity'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Deity',
+		['brand'] = 'Enus',
+		['model'] = 'deity',
+		['price'] = 505000,
+		['category'] = 'sedans',
+		['hash'] = `deity`,
+		['shop'] = 'pdm',
+	},
+	['jubilee'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Jubilee',
+		['brand'] = 'Enus',
+		['model'] = 'jubilee',
+		['price'] = 485000,
+		['category'] = 'sedans',
+		['hash'] = `jubilee`,
+		['shop'] = 'pdm',
+	},
+	['patriot3'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Patriot',
+		['brand'] = 'Mil-Spec',
+		['model'] = 'patriot3',
+		['price'] = 270000,
+		['category'] = 'sedans',
+		['hash'] = `patriot3`,
 		['shop'] = 'pdm',
 	},
 	--- Sports
@@ -4760,6 +4956,24 @@ QBShared.Vehicles = {
 		['price'] = 14500,
 		['category'] = 'vans',
 		['hash'] = `youga2`,
+		['shop'] = 'pdm',
+	},
+	['youga4'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Youga',
+		['brand'] = 'Bravado',
+		['model'] = 'youga4',
+		['price'] = 85000,
+		['category'] = 'vans',
+		['hash'] = `youga4`,
+		['shop'] = 'pdm',
+	},
+	['mule5'] = { 	 	--DLC +set sv_enforceGameBuild 2545
+		['name'] = 'Mule',
+		['brand'] = 'Box Truck',
+		['model'] = 'mule5',
+		['price'] = 221000,
+		['category'] = 'vans',
+		['hash'] = `mule5`,
 		['shop'] = 'pdm',
 	},
 	-- Utility
