@@ -10,8 +10,9 @@ table.insert(migrations, {
                `iban` varchar(50) NOT NULL DEFAULT '0',
                PRIMARY KEY (`id`),
                KEY `citizenid` (`citizenid`)
-             ) ENGINE=InnoDB AUTO_INCREMENT=1;
-			 
+            ) ENGINE=InnoDB AUTO_INCREMENT=1;
+        ]],
+        [[
             CREATE TABLE IF NOT EXISTS `player_outfits` (
                `id` int(11) NOT NULL AUTO_INCREMENT,
                `citizenid` varchar(50) DEFAULT NULL,
@@ -22,8 +23,9 @@ table.insert(migrations, {
                PRIMARY KEY (`id`),
                KEY `citizenid` (`citizenid`),
                KEY `outfitId` (`outfitId`)
-             ) ENGINE=InnoDB AUTO_INCREMENT=8970;
-
+            ) ENGINE=InnoDB AUTO_INCREMENT=8970;
+        ]],
+        [[
             CREATE TABLE IF NOT EXISTS `playerskins` (
                `id` int(11) NOT NULL AUTO_INCREMENT,
                `citizenid` varchar(255) NOT NULL,
@@ -33,7 +35,7 @@ table.insert(migrations, {
                PRIMARY KEY (`id`),
                KEY `citizenid` (`citizenid`),
                KEY `active` (`active`)
-             ) ENGINE=InnoDB AUTO_INCREMENT=43010;
+            ) ENGINE=InnoDB AUTO_INCREMENT=43010;
         ]],
     }
 });
