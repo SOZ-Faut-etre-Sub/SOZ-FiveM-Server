@@ -1,5 +1,6 @@
 local QBCore           = exports['qb-core']:GetCoreObject()
 
+local HudForcedStateDisplay = true
 HudDisplayed, HudRadar = false, true
 --- @class PlayerData
 local HudPlayerStatus  = {
@@ -29,8 +30,8 @@ local HudVehicleStatus = {
 --- Global Hud display function
 --- @param state boolean
 local function setHudDisplay(state)
-    if HudDisplayed ~= state then
-        HudDisplayed = state
+    if HudDisplayed ~= (HudForcedStateDisplay and state) then
+        HudDisplayed = (HudForcedStateDisplay and state)
         SendNUIMessage({ action = 'display', show = HudDisplayed })
     end
 end
@@ -108,6 +109,11 @@ end)
 
 RegisterNetEvent('hud:client:UpdateSeatbelt', function(newState)
     setVehicleData({ haveSeatbelt = newState })
+end)
+
+RegisterNetEvent('hud:client:OverrideVisibility', function(newState)
+    HudForcedStateDisplay = newState
+    setHudDisplay(newState)
 end)
 
 --- Loops
