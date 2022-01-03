@@ -70,7 +70,7 @@ class VehicleSpeed extends SozUiElement {
             style="stroke-dashoffset: -${200 - speed}" />
           <defs>
             <linearGradient id="gradient">
-              <stop offset="30%" stop-color="#BBFFFE"/>
+              <stop offset="30%" stop-color="rgba(255, 255, 255, .8)"/>
               <stop offset="100%" stop-color="#FF0245"/>
             </linearGradient>
           </defs>
