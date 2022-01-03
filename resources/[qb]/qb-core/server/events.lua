@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        TriggerEvent('qb-log:server:CreateLog', 'joinleave', 'Dropped', 'red', '**' .. GetPlayerName(src) .. '** (' .. Player.PlayerData.license .. ') left..')
+        exports['soz-monitor']:Log('INFO', 'Player left !', Player)
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         QBCore.Players[src] = nil

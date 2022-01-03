@@ -48,7 +48,8 @@ end)
 RegisterNetEvent('qb-multicharacter:server:loadUserData', function(cData)
     local src = source
     if QBCore.Player.Login(src, cData.citizenid) then
-        print('^2[qb-core]^7 '..GetPlayerName(src)..' (Citizen ID: '..cData.citizenid..') has succesfully loaded!')
+        exports['soz-monitor']:Log('INFO', 'Player has successfully loaded !', cData)
+
         QBCore.Commands.Refresh(src)
 	TriggerClientEvent('qb-spawn:client:setupSpawns', src, cData, false, nil)
 	TriggerClientEvent('qb-spawn:client:openUI', src, true)
@@ -63,10 +64,10 @@ RegisterNetEvent('qb-multicharacter:server:createCharacter', function(data)
     newData.cid = data.cid
     newData.charinfo = data
     if QBCore.Player.Login(src, false, newData) then
-            print('^2[qb-core]^7 '..GetPlayerName(src)..' has succesfully loaded!')
-            QBCore.Commands.Refresh(src)
-            TriggerClientEvent("qb-multicharacter:client:closeNUIdefault", src)
-            GiveStarterItems(src)
+        exports['soz-monitor']:Log('INFO', GetPlayerName(src)..' has succesfully loaded!')
+        QBCore.Commands.Refresh(src)
+        TriggerClientEvent("qb-multicharacter:client:closeNUIdefault", src)
+        GiveStarterItems(src)
     end
 end)
 
