@@ -1,4 +1,3 @@
-local QBCore = exports['qb-core']:GetCoreObject()
 
 local function printLogString(level, message, playerData)
     local logMessage = ReplaceString(Config.logFormat, '%date%', FormattedDateTime())

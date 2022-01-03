@@ -10,7 +10,9 @@ shared_scripts {
 }
 
 server_scripts {
-    'server/*.lua',
+    'server/main.lua',
+    'server/log.lua',
+    'server/metric.lua',
 }
 
 dependency 'qb-core'
