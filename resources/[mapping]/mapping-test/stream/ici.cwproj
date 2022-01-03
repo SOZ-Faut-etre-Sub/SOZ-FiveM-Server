@@ -10,9 +10,13 @@
   </YmapFilenames>
   <YtypFilenames>
     <Item>hei_dlc_heist_police.ytyp</Item>
-    <Item>hei_dlc_heist_police.ytyp</Item>
   </YtypFilenames>
-  <YbnFilenames />
+  <YbnFilenames>
+    <Item>hei_dt1_19_0.ybn</Item>
+    <Item>hei_heist_police_dlc.ybn</Item>
+    <Item>hi@hei_dt1_19_0.ybn</Item>
+    <Item>hi@hei_heist_police_dlc.ybn</Item>
+  </YbnFilenames>
   <YndFilenames />
   <YnvFilenames />
   <TrainsFilenames />
