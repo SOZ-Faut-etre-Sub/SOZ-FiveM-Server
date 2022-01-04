@@ -52,8 +52,8 @@ CreateThread(function()
     -- Change this to switch between seasons
     Forecast = SummerForecast
 
-	while true do
-	    -- Change weather in 5 to 10 minutes
+    while true do
+        -- Change weather in 5 to 10 minutes
         local nextWeatherDelay = math.random(5 * 60 * 1000, 10 * 60 * 1000);
         NextWeather = GetNextWeather(CurrentWeather, Forecast);
         TriggerClientEvent("soz-weather:sync", -1, CurrentWeather, NextWeather)
@@ -61,5 +61,5 @@ CreateThread(function()
         Wait(nextWeatherDelay)
 
         CurrentWeather = NextWeather
-	end
+    end
 end)
