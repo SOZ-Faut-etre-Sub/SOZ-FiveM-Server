@@ -1,51 +1,51 @@
 SummerForecast = {
-	extrasunny = {
+    extrasunny = {
         clearing = 10,
         overcast = 40,
-	},
-	clear = {
+    },
+    clear = {
         clearing = 10,
         overcast = 40,
-	},
-	neutral = {
+    },
+    neutral = {
         overcast = 100,
-	},
-	smog = {
+    },
+    smog = {
         overcast = 100,
-	},
-	foggy = {
+    },
+    foggy = {
         overcast = 100,
-	},
-	overcast = {
+    },
+    overcast = {
         overcast = 100,
-	},
-	clouds = {
+    },
+    clouds = {
         clearing = 10,
         overcast = 40,
-	},
-	clearing = {
+    },
+    clearing = {
         rain = 50,
         overcast = 100,
-	},
-	rain = {
+    },
+    rain = {
         overcast = 100,
-	},
-	thunder = {
+    },
+    thunder = {
         overcast = 100,
-	},
-	snow = {
+    },
+    snow = {
         overcast = 100,
-	},
-	blizzard = {
+    },
+    blizzard = {
         overcast = 100,
-	},
-	snowlight = {
+    },
+    snowlight = {
         overcast = 100,
-	},
-	xmas = {
+    },
+    xmas = {
         overcast = 100,
-	},
-	halloween = {
+    },
+    halloween = {
         overcast = 100,
-	},
+    },
 }
