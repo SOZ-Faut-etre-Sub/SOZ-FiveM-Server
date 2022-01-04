@@ -7,6 +7,7 @@ AddEventHandler('playerDropped', function()
         exports['soz-monitor']:Log('INFO', 'Player left !', Player)
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
+        exports['soz-inventory']:DropPlayerInventory(src)
         QBCore.Players[src] = nil
     end
 end)

@@ -144,6 +144,7 @@ function QBCore.Player.Logout(source)
     TriggerClientEvent('QBCore:Client:OnPlayerUnload', src)
     TriggerClientEvent('QBCore:Player:UpdatePlayerData', src)
     Wait(200)
+    exports['soz-inventory']:DropPlayerInventory(src)
     QBCore.Players[src] = nil
 end
 
@@ -337,7 +338,21 @@ function QBCore.Player.CreatePlayer(PlayerData)
             elseif (itemInfo['unique']) or (not slot or slot == nil) or (itemInfo['type'] == 'weapon') then
                 for i = 1, QBConfig.Player.MaxInvSlots, 1 do
                     if self.PlayerData.items[i] == nil then
-                        self.PlayerData.items[i] = { name = itemInfo['name'], amount = amount, info = info or '', label = itemInfo['label'], description = itemInfo['description'] or '', weight = itemInfo['weight'], type = itemInfo['type'], unique = itemInfo['unique'], useable = itemInfo['useable'], image = itemInfo['image'], shouldClose = itemInfo['shouldClose'], slot = i, combinable = itemInfo['combinable'] }
+                        self.PlayerData.items[i] = {
+                            name = itemInfo['name'],
+                            amount = amount,
+                            info = info or '',
+                            label = itemInfo['label'],
+                            description = itemInfo['description'] or '',
+                            weight = itemInfo['weight'],
+                            type = itemInfo['type'],
+                            unique = itemInfo['unique'],
+                            useable = itemInfo['useable'],
+                            image = itemInfo['image'],
+                            shouldClose = itemInfo['shouldClose'],
+                            slot = i,
+                            combinable = itemInfo['combinable']
+                        }
                         self.Functions.UpdatePlayerData()
                         exports['soz-monitor']:Log('WARN', 'Inventory movement - Add ! got item: [slot:' .. i .. '], itemname: ' .. self.PlayerData.items[i].name .. ', added amount: ' .. amount .. ', new total amount: ' .. self.PlayerData.items[i].amount, self.PlayerData)
                         return true
@@ -479,7 +494,7 @@ function QBCore.Player.Save(source)
             position = json.encode(pcoords),
             metadata = json.encode(PlayerData.metadata)
         })
-        QBCore.Player.SaveInventory(src)
+        exports['soz-inventory']:CreatePlayerInventory(PlayerData)
         exports['soz-monitor']:Log('INFO', 'Save player !', PlayerData)
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', PlayerData)
@@ -554,31 +569,6 @@ QBCore.Player.LoadInventory = function(PlayerData)
         end
     end
     return PlayerData
-end
-
-QBCore.Player.SaveInventory = function(source)
-    local src = source
-    if QBCore.Players[src] then
-        local PlayerData = QBCore.Players[src].PlayerData
-        local items = PlayerData.items
-        local ItemsJson = {}
-        if items and next(items) then
-            for slot, item in pairs(items) do
-                if items[slot] then
-                    ItemsJson[#ItemsJson+1] = {
-                        name = item.name,
-                        amount = item.amount,
-                        info = item.info,
-                        type = item.type,
-                        slot = slot,
-                    }
-                end
-            end
-            exports.oxmysql:execute('UPDATE players SET inventory = ? WHERE citizenid = ?', { json.encode(ItemsJson), PlayerData.citizenid })
-        else
-            exports.oxmysql:execute('UPDATE players SET inventory = ? WHERE citizenid = ?', { '[]', PlayerData.citizenid })
-        end
-    end
 end
 
 -- Util Functions
