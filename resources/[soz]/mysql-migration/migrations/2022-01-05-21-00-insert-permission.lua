@@ -2,7 +2,7 @@ table.insert(migrations, {
     name = 'insert-permission',
     queries = {
         [[
-            INSERT INTO permission (
+            INSERT INTO permissions (
                 name,
                 license,
                 permission
@@ -14,7 +14,7 @@ table.insert(migrations, {
             );
         ]],
         [[
-            INSERT INTO permission (
+            INSERT INTO permissions (
                 name,
                 license,
                 permission
@@ -26,7 +26,7 @@ table.insert(migrations, {
             );
         ]],
         [[
-            INSERT INTO permission (
+            INSERT INTO permissions (
                 name,
                 license,
                 permission
@@ -38,7 +38,7 @@ table.insert(migrations, {
             );
         ]],
         [[
-            INSERT INTO permission (
+            INSERT INTO permissions (
                 name,
                 license,
                 permission
@@ -50,7 +50,7 @@ table.insert(migrations, {
             );
         ]],
         [[
-            INSERT INTO permission (
+            INSERT INTO permissions (
                 name,
                 license,
                 permission
@@ -62,7 +62,7 @@ table.insert(migrations, {
             );
         ]],
         [[
-            INSERT INTO permission (
+            INSERT INTO permissions (
                 name,
                 license,
                 permission
