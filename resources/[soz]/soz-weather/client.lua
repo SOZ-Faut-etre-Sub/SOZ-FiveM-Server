@@ -13,18 +13,11 @@ AddEventHandler("soz-weather:sync", function (current, next)
 end)
 
 RegisterNetEvent("soz-weather:sync-time")
-AddEventHandler("soz-weather:sync-time", function (hour, minute, second)
-    currentHour = hour
-    currentMinute = minute
-    currentSecond = second
-end)
+AddEventHandler("soz-weather:sync-time", function (hour, minute, second, dayDurationInSeconds)
+    NetworkOverrideClockTime(hour, minute, second)
 
-Citizen.CreateThread(function()
-    while true do
-        NetworkOverrideClockTime(currentHour, currentMinute, currentSeconds)
-        Citizen.Wait(1000)
-        AdvanceTime()
-    end
+    local millisecondsPerGameMinute = math.floor(((dayDurationInSeconds / (60 * 24)) * 1000) + 0.5)
+    NetworkOverrideClockMillisecondsPerGameMinute(millisecondsPerGameMinute)
 end)
 
 Citizen.CreateThread(function()

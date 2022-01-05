@@ -44,6 +44,17 @@ RegisterCommand("soz-weather-update", function(source, args)
     TriggerClientEvent("soz-weather:sync", -1, CurrentWeather, NextWeather)
 end, false)
 
+RegisterCommand("soz-weather-time", function(source, args)
+    -- @TODO Check if source can set weather
+
+    -- @TODO Check if first arg is a correct weather
+    currentHour = tonumber(args[1])
+    currentMinute = tonumber(args[2])
+    currentSecond = tonumber(args[3])
+
+    TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond)
+end, false)
+
 AddEventHandler("soz-weather:init", function(source)
     TriggerClientEvent("soz-weather:sync", player, CurrentWeather, NextWeather)
 end)
@@ -52,14 +63,14 @@ end)
 CreateThread(function()
     while true do
         AdvanceTime()
-        Wait(1000)
+        Wait(clockTick)
     end
 end)
 
 -- Resync time every minute for each player
 CreateThread(function()
     while true do
-        TriggerClientEvent("soz-weather:sync-time", currentHour, currentMinute, currentSecond)
+        TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond, dayInSeconds)
         Wait(60000)
     end
 end)

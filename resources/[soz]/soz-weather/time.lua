@@ -4,7 +4,8 @@ currentSecond = 00
 
 -- How many seconds in real time to do 24h in GTA
 dayInSeconds = 1800
-incrementSeconds = (3600 * 24) / dayInSeconds
+clockTick = 1000
+incrementSeconds = ((3600 * 24) / dayInSeconds) / (1000 / clockTick)
 
 function AdvanceTime()
     currentSecond += incrementSeconds
@@ -17,6 +18,7 @@ function AdvanceTime()
         if currentMinute >= 60 then
             incrementHours = math.floor((currentMinute / 60) + 0.5)
             currentMinute = currentMinute % 60
+            currentHour += incrementHours
 
             if currentHour >= 24 then
                 currentHour = currentHour % 24
