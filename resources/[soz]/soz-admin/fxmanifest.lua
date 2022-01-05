@@ -3,6 +3,17 @@ games { 'gta5' }
 lua54 'yes'
 
 client_scripts {
+    "@menuv/menuv.lua",
+    "client/main.lua",
     "client/noclip.lua",
     "client/tpm.lua",
+}
+
+server_scripts {
+    "server/main.lua",
+}
+
+dependencies {
+    'qb-core',
+    'menuv',
 }
