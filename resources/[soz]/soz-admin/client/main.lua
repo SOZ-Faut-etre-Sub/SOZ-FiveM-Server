@@ -1,10 +1,21 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local AdminMenu = MenuV:CreateMenu("admin", "", 255, 0, 0, 'default_native', 'menuv', 'admin-panel')
 local PlayerList = MenuV:CreateMenu("Player", "", 255, 0, 0, 'default_native', 'menuv', 'player-panel')
+local VehiculeList = MenuV:CreateMenu("Véhicule model", "", 255, 0, 0, 'default_native', 'menuv', 'veh-panel-list')
+local VehiculeModel = MenuV:CreateMenu("Spawn Véhicule", "", 255, 0, 0, 'default_native', 'menuv', 'veh-panel')
 local PlayerData = QBCore.Functions.GetPlayerData()
 
 local noclip_check = false
 local coords_check = false
+
+local vehicles = {}
+for k, v in pairs(QBCore.Shared.Vehicles) do
+    local category = v["category"]
+    if vehicles[category] == nil then
+        vehicles[category] = { }
+    end
+    vehicles[category][k] = v
+end
 
 local function round(input, decimalPlaces)
     return tonumber(string.format("%." .. (decimalPlaces or 0) .. "f", input))
@@ -71,11 +82,28 @@ local function OpenPlayerMenus(player)
     end   
 end
 
+local function OpenCarModelsMenu(category)
+    VehiculeModel:ClearItems()
+    MenuV:OpenMenu(VehiculeModel)
+    for k, v in pairs(category) do
+        local menu_button10 = VehiculeModel:AddButton({
+             label = v["name"],
+             value = k,
+             description = 'Frayer ' .. v["name"],
+             select = function(btn)
+                 TriggerServerEvent('QBCore:CallCommand', "car", { k })
+             end
+        })
+    end
+end
+
 local function AdminPanel(menu)
     local noclip = menu:AddCheckbox({ label = "Noclip", value = noclip_check, description = "Active/Désactive le noclip" })
     local coords = menu:AddCheckbox({ label = "Voir les coords", value = coords_check, description = "Affiche les coords" })
     local tpm = menu:AddButton({label = "Tpm", description = "Téléport sur le marqueur"})
     local playerlist = menu:AddButton({label = "Gestion des joueurs", value = PlayerList, description = "Voir la liste des joueurs"})
+    local vehspawn = menu:AddButton({label = "Spawn Véhicules", value = VehiculeList, description = "Voir la liste des Véhicules"})
+    
     
     noclip:On('change', function()
         noclip_check = not noclip_check
@@ -98,7 +126,7 @@ local function AdminPanel(menu)
                 local menu_button10 = PlayerList:AddButton({
                     label = 'ID:' .. v["id"] .. ' | ' .. v["name"],
                     value = v,
-                    description = 'Player Name',
+                    description = 'Nom du joueur',
                     select = function(btn)
                         local select = btn.Value
                         OpenPlayerMenus(select) 
@@ -108,11 +136,25 @@ local function AdminPanel(menu)
         end)
     end)
 
+    vehspawn:On('Select', function(item)
+    VehiculeList:ClearItems()
+    for k, v in pairs(vehicles) do
+        local menu_button10 = VehiculeList:AddButton({
+            label = k,
+            value = v,
+            description = 'Nom de catégorie',
+            select = function(btn)
+                local select = btn.Value
+                OpenCarModelsMenu(select)
+            end
+        })
+    end
+end)
+
 end
 
 local function GenerateMenu()
     AdminMenu:ClearItems()
-    AdminMenu:SetSubtitle(string.format('%s %s', PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
     AdminPanel(AdminMenu)
     
     MenuV:CloseAll(function()
