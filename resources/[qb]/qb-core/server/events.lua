@@ -7,7 +7,7 @@ AddEventHandler('playerDropped', function()
         exports['soz-monitor']:Log('INFO', 'Player left !', Player)
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
-        exports['soz-inventory']:DropPlayerInventory(src)
+        TriggerEvent('inventory:DropPlayerInventory', src)
         QBCore.Players[src] = nil
     end
 end)
@@ -186,13 +186,7 @@ end)
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    Player.Functions.RemoveItem(itemName, amount, slot)
-end)
-
-RegisterNetEvent('QBCore:Server:AddItem', function(itemName, amount, slot, info)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    Player.Functions.AddItem(itemName, amount, slot, info)
+    exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, slot)
 end)
 
 -- Non-Chat Command Calling (ex: qb-adminmenu)

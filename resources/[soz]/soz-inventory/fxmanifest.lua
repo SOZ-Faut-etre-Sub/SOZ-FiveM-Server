@@ -13,9 +13,9 @@ client_scripts {
 }
 
 server_scripts {
-    'server/container.lua',
     'server/main.lua',
     'server/command.lua',
+    'server/actions.lua',
 }
 
 dependencies {

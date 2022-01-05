@@ -13,16 +13,16 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(data)
 end)
 
 local function MoneyMenu()
-    local moneyItem = MenuV:InheritMenu(inventoryMenu, { Subtitle = 'Argent' })
+    local moneyMenu = MenuV:InheritMenu(inventoryMenu, { Subtitle = 'Argent' })
 
     inventoryMenu:AddButton({
         label = PlayerData.money['cash'] .. '$',
-        value = moneyItem,
+        value = moneyMenu,
         description = "Votre argent"
     })
 
 
-    local give = moneyItem:AddButton({ label = "Donner", value = 'money', description = "" })
+    local give = moneyMenu:AddButton({ label = "Donner", value = 'money', description = "" })
     give:On('select', function(i)
         local player, distance = QBCore.Functions.GetClosestPlayer()
         if player ~= -1 and distance < 2.0 then
@@ -31,7 +31,9 @@ local function MoneyMenu()
             if amount and tonumber(amount) > 0 then
                 SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
                 TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), tonumber(amount))
-                MenuV:CloseAll()
+
+                moneyMenu:Close()
+                inventoryMenu:Close()
             end
         else
             exports['soz-hud']:DrawNotification("Personne n'est à portée de vous")
@@ -66,7 +68,9 @@ local function ItemsMenu()
                 if amount and tonumber(amount) > 0 then
                     SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
                     TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(player), i.Value, tonumber(amount))
-                    MenuV:CloseAll()
+
+                    itemMenu:Close()
+                    inventoryMenu:Close()
                 end
             else
                 exports['soz-hud']:DrawNotification("Personne n'est à portée de vous")
@@ -83,7 +87,8 @@ local function ItemsMenu()
     return playerWeight
 end
 
-local function GenerateInventoryMenu()
+RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
+RegisterCommand("inventory", function()
     inventoryMenu:ClearItems()
 
     MoneyMenu()
@@ -91,13 +96,12 @@ local function GenerateInventoryMenu()
 
     inventoryMenu:SetSubtitle(string.format('%s/%s Kg', playerWeight/1000, QBCore.Config.Player.MaxWeight/1000))
 
-    MenuV:CloseAll(function()
+    if inventoryMenu.IsOpen then
+        inventoryMenu:Close()
+    else
         inventoryMenu:Open()
-    end)
-end
-
-RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
-RegisterCommand("inventory", GenerateInventoryMenu, false)
+    end
+end, false)
 
 RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
     local ped = PlayerPedId()
@@ -130,8 +134,8 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
             GiveWeaponToPed(ped, GetHashKey(weaponName), 0, false, false)
             SetPedAmmo(ped, GetHashKey(weaponName), ammo)
             SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-            if weaponData.info.attachments ~= nil then
-                for _, attachment in pairs(weaponData.info.attachments) do
+            if weaponData.metadata.attachments ~= nil then
+                for _, attachment in pairs(weaponData.metadata.attachments) do
                     GiveWeaponComponentToPed(ped, GetHashKey(weaponName), GetHashKey(attachment.component))
                 end
             end

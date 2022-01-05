@@ -7,21 +7,21 @@ local function GiveStarterItems(source)
     local Player = QBCore.Functions.GetPlayer(src)
 
     for k, v in pairs(QBCore.Shared.StarterItems) do
-        local info = {}
+        local metadata = {}
         if v.item == "id_card" then
-            info.citizenid = Player.PlayerData.citizenid
-            info.firstname = Player.PlayerData.charinfo.firstname
-            info.lastname = Player.PlayerData.charinfo.lastname
-            info.birthdate = Player.PlayerData.charinfo.birthdate
-            info.gender = Player.PlayerData.charinfo.gender
-            info.nationality = Player.PlayerData.charinfo.nationality
+            metadata.citizenid = Player.PlayerData.citizenid
+            metadata.firstname = Player.PlayerData.charinfo.firstname
+            metadata.lastname = Player.PlayerData.charinfo.lastname
+            metadata.birthdate = Player.PlayerData.charinfo.birthdate
+            metadata.gender = Player.PlayerData.charinfo.gender
+            metadata.nationality = Player.PlayerData.charinfo.nationality
         elseif v.item == "driver_license" then
-            info.firstname = Player.PlayerData.charinfo.firstname
-            info.lastname = Player.PlayerData.charinfo.lastname
-            info.birthdate = Player.PlayerData.charinfo.birthdate
-            info.type = "Class C Driver License"
+            metadata.firstname = Player.PlayerData.charinfo.firstname
+            metadata.lastname = Player.PlayerData.charinfo.lastname
+            metadata.birthdate = Player.PlayerData.charinfo.birthdate
+            metadata.type = "Class C Driver License"
         end
-        Player.Functions.AddItem(v.item, v.amount, false, info)
+        exports['soz-inventory']:AddItem(Player.PlayerData.source, v.item, v.amount, false, metadata)
     end
 end
 

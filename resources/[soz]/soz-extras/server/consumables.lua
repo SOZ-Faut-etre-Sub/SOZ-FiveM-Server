@@ -101,5 +101,5 @@ end)
 RegisterNetEvent('qb-smallpenis:server:AddParachute', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    Player.Functions.AddItem("parachute", 1)
+    exports['soz-inventory']:AddItem(Player.PlayerData.source, "parachute", 1)
 end)

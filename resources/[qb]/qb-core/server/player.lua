@@ -133,7 +133,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Other
     PlayerData.position = PlayerData.position or QBConfig.DefaultSpawn
     PlayerData.LoggedIn = true
-    PlayerData = QBCore.Player.LoadInventory(PlayerData)
     QBCore.Player.CreatePlayer(PlayerData)
 end
 
@@ -144,7 +143,7 @@ function QBCore.Player.Logout(source)
     TriggerClientEvent('QBCore:Client:OnPlayerUnload', src)
     TriggerClientEvent('QBCore:Player:UpdatePlayerData', src)
     Wait(200)
-    exports['soz-inventory']:DropPlayerInventory(src)
+    TriggerEvent('inventory:DropPlayerInventory', src)
     QBCore.Players[src] = nil
 end
 
@@ -310,109 +309,10 @@ function QBCore.Player.CreatePlayer(PlayerData)
         return false
     end
 
-    self.Functions.AddItem = function(item, amount, slot, info)
-        local totalWeight = QBCore.Player.GetTotalWeight(self.PlayerData.items)
-        local itemInfo = QBCore.Shared.Items[item:lower()]
-        if itemInfo == nil then
-            TriggerClientEvent('QBCore:Notify', self.PlayerData.source, 'Item Does Not Exist', 'error')
-            return
-        end
-        local amount = tonumber(amount)
-        local slot = tonumber(slot) or QBCore.Player.GetFirstSlotByItem(self.PlayerData.items, item)
-        if itemInfo['type'] == 'weapon' and info == nil then
-            info = {
-                serie = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4)),
-            }
-        end
-        if (totalWeight + (itemInfo['weight'] * amount)) <= QBCore.Config.Player.MaxWeight then
-            if (slot and self.PlayerData.items[slot]) and (self.PlayerData.items[slot].name:lower() == item:lower()) and (itemInfo['type'] == 'item' and not itemInfo['unique']) then
-                self.PlayerData.items[slot].amount = self.PlayerData.items[slot].amount + amount
-                self.Functions.UpdatePlayerData()
-                exports['soz-monitor']:Log('WARN', 'Inventory movement - Add ! got item: [slot:' .. slot .. '], itemname: ' .. self.PlayerData.items[slot].name .. ', added amount: ' .. amount .. ', new total amount: ' .. self.PlayerData.items[slot].amount, self.PlayerData)
-                return true
-            elseif (not itemInfo['unique'] and slot or slot and self.PlayerData.items[slot] == nil) then
-                self.PlayerData.items[slot] = { name = itemInfo['name'], amount = amount, info = info or '', label = itemInfo['label'], description = itemInfo['description'] or '', weight = itemInfo['weight'], type = itemInfo['type'], unique = itemInfo['unique'], useable = itemInfo['useable'], image = itemInfo['image'], shouldClose = itemInfo['shouldClose'], slot = slot, combinable = itemInfo['combinable'] }
-                self.Functions.UpdatePlayerData()
-                exports['soz-monitor']:Log('WARN', 'Inventory movement - Add ! got item: [slot:' .. slot .. '], itemname: ' .. self.PlayerData.items[slot].name .. ', added amount: ' .. amount .. ', new total amount: ' .. self.PlayerData.items[slot].amount, self.PlayerData)
-                return true
-            elseif (itemInfo['unique']) or (not slot or slot == nil) or (itemInfo['type'] == 'weapon') then
-                for i = 1, QBConfig.Player.MaxInvSlots, 1 do
-                    if self.PlayerData.items[i] == nil then
-                        self.PlayerData.items[i] = {
-                            name = itemInfo['name'],
-                            amount = amount,
-                            info = info or '',
-                            label = itemInfo['label'],
-                            description = itemInfo['description'] or '',
-                            weight = itemInfo['weight'],
-                            type = itemInfo['type'],
-                            unique = itemInfo['unique'],
-                            useable = itemInfo['useable'],
-                            image = itemInfo['image'],
-                            shouldClose = itemInfo['shouldClose'],
-                            slot = i,
-                            combinable = itemInfo['combinable']
-                        }
-                        self.Functions.UpdatePlayerData()
-                        exports['soz-monitor']:Log('WARN', 'Inventory movement - Add ! got item: [slot:' .. i .. '], itemname: ' .. self.PlayerData.items[i].name .. ', added amount: ' .. amount .. ', new total amount: ' .. self.PlayerData.items[i].amount, self.PlayerData)
-                        return true
-                    end
-                end
-            end
-        else
-            TriggerEvent("inventory:server:spawnOnGround", self.PlayerData.source, { name = itemInfo['name'], amount = amount, info = info or '', label = itemInfo['label'], description = itemInfo['description'] or '', weight = itemInfo['weight'], type = itemInfo['type'], unique = itemInfo['unique'], useable = itemInfo['useable'], image = itemInfo['image'], shouldClose = itemInfo['shouldClose'], slot = slot, combinable = itemInfo['combinable'] }, amount)
-            TriggerClientEvent('QBCore:Notify', self.PlayerData.source, 'Your inventory is too heavy, placing item on floor!', 'error')
-        end
-        return false
-    end
-
-    self.Functions.RemoveItem = function(item, amount, slot)
-        local amount = tonumber(amount)
-        local slot = tonumber(slot)
-        if slot then
-            if self.PlayerData.items[slot].amount > amount then
-                self.PlayerData.items[slot].amount = self.PlayerData.items[slot].amount - amount
-                self.Functions.UpdatePlayerData()
-                exports['soz-monitor']:Log('WARN', 'Inventory movement - Remove ! lost item: [slot:' .. slot .. '], itemname: ' .. self.PlayerData.items[slot].name .. ', removed amount: ' .. amount .. ', new total amount: ' .. self.PlayerData.items[slot].amount, self.PlayerData)
-                return true
-            else
-                self.PlayerData.items[slot] = nil
-                self.Functions.UpdatePlayerData()
-                exports['soz-monitor']:Log('WARN', 'Inventory movement - Remove ! lost item: [slot:' .. slot .. '], itemname: ' .. item .. ', removed amount: ' .. amount .. ', item removed', self.PlayerData)
-                return true
-            end
-        else
-            local slots = QBCore.Player.GetSlotsByItem(self.PlayerData.items, item)
-            local amountToRemove = amount
-            if slots then
-                for _, slot in pairs(slots) do
-                    if self.PlayerData.items[slot].amount > amountToRemove then
-                        self.PlayerData.items[slot].amount = self.PlayerData.items[slot].amount - amountToRemove
-                        self.Functions.UpdatePlayerData()
-                        exports['soz-monitor']:Log('WARN', 'Inventory movement - Remove ! lost item: [slot:' .. slot .. '], itemname: ' .. self.PlayerData.items[slot].name .. ', removed amount: ' .. amount .. ', new total amount: ' .. self.PlayerData.items[slot].amount, self.PlayerData)
-                        return true
-                    elseif self.PlayerData.items[slot].amount == amountToRemove then
-                        self.PlayerData.items[slot] = nil
-                        self.Functions.UpdatePlayerData()
-                        exports['soz-monitor']:Log('WARN', 'Inventory movement - Remove ! lost item: [slot:' .. slot .. '], itemname: ' .. item .. ', removed amount: ' .. amount .. ', item removed', self.PlayerData)
-                        return true
-                    end
-                end
-            end
-        end
-        return false
-    end
-
     self.Functions.SetInventory = function(items, dontUpdateChat)
         self.PlayerData.items = items
         self.Functions.UpdatePlayerData(dontUpdateChat)
         exports['soz-monitor']:Log('WARN', 'Inventory movement - Set ! items set: ' .. json.encode(items), self.PlayerData)
-    end
-
-    self.Functions.ClearInventory = function()
-        self.PlayerData.items = {}
-        self.Functions.UpdatePlayerData()
-        exports['soz-monitor']:Log('WARN', 'Inventory movement - Clear ! inventory cleared', self.PlayerData)
     end
 
     self.Functions.GetItemByName = function(item)
@@ -446,7 +346,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         local slots = QBCore.Player.GetSlotsByItem(self.PlayerData.items, item)
         for _, slot in pairs(slots) do
             if slot then
-                if self.PlayerData.items[slot].info.cardNumber == cardNumber then
+                if self.PlayerData.items[slot].metadata.cardNumber == cardNumber then
                     return slot
                 end
             end
@@ -494,7 +394,7 @@ function QBCore.Player.Save(source)
             position = json.encode(pcoords),
             metadata = json.encode(PlayerData.metadata)
         })
-        exports['soz-inventory']:CreatePlayerInventory(PlayerData)
+        TriggerEvent('inventory:CreatePlayerInventory', PlayerData)
         exports['soz-monitor']:Log('INFO', 'Save player !', PlayerData)
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', PlayerData)
@@ -532,43 +432,6 @@ function QBCore.Player.DeleteCharacter(source, citizenid)
         DropPlayer(src, 'You Have Been Kicked For Exploitation')
         exports['soz-monitor']:Log('WARN', 'Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit', license)
     end
-end
-
--- Inventory
-
-QBCore.Player.LoadInventory = function(PlayerData)
-    PlayerData.items = {}
-    local result = exports.oxmysql:singleSync('SELECT * FROM players WHERE citizenid = ?', { PlayerData.citizenid })
-    if result then
-        if result.inventory then
-            local plyInventory = json.decode(result.inventory)
-            if next(plyInventory) then
-                for _, item in pairs(plyInventory) do
-                    if item then
-                        local itemInfo = QBCore.Shared.Items[item.name:lower()]
-                        if itemInfo then
-                            PlayerData.items[item.slot] = {
-                                name = itemInfo['name'],
-                                amount = item.amount,
-                                info = item.info or '',
-                                label = itemInfo['label'],
-                                description = itemInfo['description'] or '',
-                                weight = itemInfo['weight'],
-                                type = itemInfo['type'],
-                                unique = itemInfo['unique'],
-                                useable = itemInfo['useable'],
-                                image = itemInfo['image'],
-                                shouldClose = itemInfo['shouldClose'],
-                                slot = item.slot,
-                                combinable = itemInfo['combinable']
-                            }
-                        end
-                    end
-                end
-            end
-        end
-    end
-    return PlayerData
 end
 
 -- Util Functions
