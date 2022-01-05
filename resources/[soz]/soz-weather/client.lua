@@ -3,7 +3,7 @@ local nextWeather = nil
 local snowOnGround = false
 
 RegisterNetEvent("soz-weather:sync")
-AddEventHandler("soz-weather:sync", function (current, next)
+AddEventHandler("soz-weather:sync", function(current, next)
     currentWeather = current
     nextWeather = next
     snowOnGround = current == "blizzard" or current == "snow" or current == "snowlight"
@@ -13,7 +13,7 @@ AddEventHandler("soz-weather:sync", function (current, next)
 end)
 
 RegisterNetEvent("soz-weather:sync-time")
-AddEventHandler("soz-weather:sync-time", function (hour, minute, second, dayDurationInSeconds)
+AddEventHandler("soz-weather:sync-time", function(hour, minute, second, dayDurationInSeconds)
     NetworkOverrideClockTime(hour, minute, second)
 
     local millisecondsPerGameMinute = math.floor(((dayDurationInSeconds / (60 * 24)) * 1000) + 0.5)
