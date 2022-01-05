@@ -211,7 +211,7 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
                     QBCore.Commands.List[command].callback(src, args)
                 end
             else
-                TriggerClientEvent('QBCore:Notify', src, 'No Access To This Command', 'error')
+                TriggerClientEvent('QBCore:Notify', src, "Vous n'avez pas acces à cette command", 'error')
             end
         end
     end

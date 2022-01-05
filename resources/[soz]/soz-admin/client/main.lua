@@ -54,7 +54,7 @@ local function ToggleShowCoordinates()
 end
 
 local function OpenPlayerMenus(player)
-    local Players = MenuV:CreateMenu(false, player.cid .. ' Options', 'topright', 220, 20, 60, 'size-125', 'none', 'menuv')
+    local Players = MenuV:CreateMenu("Player", "", 255, 0, 0, 'default_native', 'menuv', 'player-option')
     Players:ClearItems()
     MenuV:OpenMenu(Players)
     local elements = {
