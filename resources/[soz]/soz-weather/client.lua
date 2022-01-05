@@ -6,10 +6,25 @@ RegisterNetEvent("soz-weather:sync")
 AddEventHandler("soz-weather:sync", function (current, next)
     currentWeather = current
     nextWeather = next
-	snowOnGround = current == "blizzard" or current == "snow" or current == "snowlight"
+    snowOnGround = current == "blizzard" or current == "snow" or current == "snowlight"
 
     SetWeatherOwnedByNetwork(false)
     SetWeatherTypeOvertimePersist(current, 10.0)
+end)
+
+RegisterNetEvent("soz-weather:sync-time")
+AddEventHandler("soz-weather:sync-time", function (hour, minute, second)
+    currentHour = hour
+    currentMinute = minute
+    currentSecond = second
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        NetworkOverrideClockTime(currentHour, currentMinute, currentSeconds)
+        Citizen.Wait(1000)
+        AdvanceTime()
+    end
 end)
 
 Citizen.CreateThread(function()

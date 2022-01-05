@@ -48,6 +48,22 @@ AddEventHandler("soz-weather:init", function(source)
     TriggerClientEvent("soz-weather:sync", player, CurrentWeather, NextWeather)
 end)
 
+
+CreateThread(function()
+    while true do
+        AdvanceTime()
+        Wait(1000)
+    end
+end)
+
+-- Resync time every minute for each player
+CreateThread(function()
+    while true do
+        TriggerClientEvent("soz-weather:sync-time", currentHour, currentMinute, currentSecond)
+        Wait(60000)
+    end
+end)
+
 CreateThread(function()
     -- Change this to switch between seasons
     Forecast = SummerForecast
