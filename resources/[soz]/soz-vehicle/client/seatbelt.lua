@@ -1,23 +1,23 @@
-local seatbeltOn = false
-local harnessOn = false
-local harnessHp = 20
-local handbrake = 0
-local sleep = 0
-local harnessData = {}
-local SpeedBuffer = {}
-local vehVelocity = {x = 0.0, y = 0.0, z = 0.0}
-local newvehicleBodyHealth = 0
-local newvehicleEngineHealth = 0
+local seatbeltOn                 = false
+local harnessOn                  = false
+local harnessHp                  = 20
+local handbrake                  = 0
+local sleep                      = 0
+local harnessData                = {}
+local SpeedBuffer                = {}
+local vehVelocity                = { x = 0.0, y = 0.0, z = 0.0 }
+local newvehicleBodyHealth       = 0
+local newvehicleEngineHealth     = 0
 local currentvehicleEngineHealth = 0
-local currentvehicleBodyHealth = 0
-local frameBodyChange = 0
-local frameEngineChange = 0
-local lastFrameVehiclespeed = 0
-local lastFrameVehiclespeed2 = 0
-local thisFrameVehicleSpeed = 0
-local tick = 0
-local damagedone = false
-local modifierDensity = true
+local currentvehicleBodyHealth   = 0
+local frameBodyChange            = 0
+local frameEngineChange          = 0
+local lastFrameVehiclespeed      = 0
+local lastFrameVehiclespeed2     = 0
+local thisFrameVehicleSpeed      = 0
+local tick                       = 0
+local damagedone                 = false
+local modifierDensity            = true
 
 -- Register Key
 
@@ -34,32 +34,33 @@ RegisterKeyMapping('toggleseatbelt', 'Toggle Seatbelt', 'keyboard', 'B')
 
 -- Events
 
-RegisterNetEvent('seatbelt:client:UseHarness', function(ItemData) -- On Item Use (registered server side)
-    local ped = PlayerPedId()
+RegisterNetEvent('seatbelt:client:UseHarness', function(ItemData)
+    -- On Item Use (registered server side)
+    local ped   = PlayerPedId()
     local inveh = IsPedInAnyVehicle(ped, false)
     local class = GetVehicleClass(GetVehiclePedIsUsing(ped))
     if inveh and class ~= 8 and class ~= 13 and class ~= 14 then
         if not harnessOn then
             LocalPlayer.state:set("inv_busy", true, true)
             QBCore.Functions.Progressbar("harness_equip", "Attaching Race Harness", 5000, false, true, {
-                disableMovement = false,
+                disableMovement    = false,
                 disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = true,
+                disableMouse       = false,
+                disableCombat      = true,
             }, {}, {}, {}, function()
                 LocalPlayer.state:set("inv_busy", false, true)
                 ToggleHarness()
                 TriggerServerEvent('equip:harness', ItemData)
             end)
-            harnessHp = ItemData.info.uses
+            harnessHp   = ItemData.info.uses
             harnessData = ItemData
         else
             LocalPlayer.state:set("inv_busy", true, true)
             QBCore.Functions.Progressbar("harness_equip", "Removing Race Harness", 5000, false, true, {
-                disableMovement = false,
+                disableMovement    = false,
                 disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = true,
+                disableMouse       = false,
+                disableCombat      = true,
             }, {}, {}, {}, function()
                 LocalPlayer.state:set("inv_busy", false, true)
                 ToggleHarness()
@@ -75,13 +76,12 @@ end)
 function ToggleSeatbelt()
     if seatbeltOn then
         seatbeltOn = false
-        TriggerEvent("seatbelt:client:ToggleSeatbelt")
         TriggerServerEvent("InteractSound_SV:PlayOnSource", "carunbuckle", 0.25)
     else
         seatbeltOn = true
-        TriggerEvent("seatbelt:client:ToggleSeatbelt")
         TriggerServerEvent("InteractSound_SV:PlayOnSource", "carbuckle", 0.25)
     end
+    TriggerEvent("hud:client:UpdateSeatbelt", seatbeltOn)
 end
 
 function ToggleHarness()
@@ -118,7 +118,7 @@ CreateThread(function()
             end
         else
             seatbeltOn = false
-            harnessOn = false
+            harnessOn  = false
         end
         Wait(sleep)
     end
@@ -129,9 +129,9 @@ end)
 CreateThread(function()
     while true do
         Wait(5)
-        local playerPed = PlayerPedId()
+        local playerPed      = PlayerPedId()
         local currentVehicle = GetVehiclePedIsIn(playerPed, false)
-        local driverPed = GetPedInVehicleSeat(currentVehicle, -1)
+        local driverPed      = GetPedInVehicleSeat(currentVehicle, -1)
         if currentVehicle ~= nil and currentVehicle ~= false and currentVehicle ~= 0 then
             SetPedHelmet(playerPed, false)
             lastVehicle = GetVehiclePedIsIn(playerPed, false)
@@ -147,7 +147,7 @@ CreateThread(function()
                 end
             end
 
-            thisFrameVehicleSpeed = GetEntitySpeed(currentVehicle) * 3.6
+            thisFrameVehicleSpeed    = GetEntitySpeed(currentVehicle) * 3.6
             currentvehicleBodyHealth = GetVehicleBodyHealth(currentVehicle)
             if currentvehicleBodyHealth == 1000 and frameBodyChange ~= 0 then
                 frameBodyChange = 0
@@ -172,7 +172,7 @@ CreateThread(function()
                                     else
                                         harnessHp = harnessHp - 1
                                         TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
-                                    end                     
+                                    end
                                 end
                             end
                         end
@@ -184,7 +184,7 @@ CreateThread(function()
                                 else
                                     harnessHp = harnessHp - 1
                                     TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
-                                end                        
+                                end
                             end
                         elseif (seatbeltOn or harnessOn) and not IsThisModelABike(currentVehicle) then
                             if lastFrameVehiclespeed > 120 then
@@ -194,7 +194,7 @@ CreateThread(function()
                                     else
                                         harnessHp = harnessHp - 1
                                         TriggerServerEvent('seatbelt:DoHarnessDamage', harnessHp, harnessData)
-                                    end                     
+                                    end
                                 end
                             end
                         end
@@ -213,15 +213,15 @@ CreateThread(function()
                 tick = 0
             end
             frameBodyChange = newvehicleBodyHealth - currentvehicleBodyHealth
-            if tick > 0 then 
+            if tick > 0 then
                 tick = tick - 1
                 if tick == 1 then
                     lastFrameVehiclespeed = GetEntitySpeed(currentVehicle) * 3.6
                 end
             else
                 if damagedone then
-                    damagedone = false
-                    frameBodyChange = 0
+                    damagedone            = false
+                    frameBodyChange       = 0
                     lastFrameVehiclespeed = GetEntitySpeed(currentVehicle) * 3.6
                 end
                 lastFrameVehiclespeed2 = GetEntitySpeed(currentVehicle) * 3.6
@@ -234,9 +234,9 @@ CreateThread(function()
 
             end
             vels = GetEntityVelocity(currentVehicle)
-            if tick < 0 then 
+            if tick < 0 then
                 tick = 0
-            end     
+            end
             newvehicleBodyHealth = GetVehicleBodyHealth(currentVehicle)
             if not modifierDensity then
                 modifierDensity = true
@@ -254,11 +254,11 @@ CreateThread(function()
                 end
                 lastVehicle = nil
             end
-            lastFrameVehiclespeed2 = 0
-            lastFrameVehiclespeed = 0
-            newvehicleBodyHealth = 0
+            lastFrameVehiclespeed2   = 0
+            lastFrameVehiclespeed    = 0
+            newvehicleBodyHealth     = 0
             currentvehicleBodyHealth = 0
-            frameBodyChange = 0
+            frameBodyChange          = 0
             Wait(2000)
         end
     end
@@ -272,16 +272,16 @@ function GetFwd(entity)
 end
 
 function EjectFromVehicle()
-    local ped = PlayerPedId()
-    local veh = GetVehiclePedIsIn(ped,false)
+    local ped    = PlayerPedId()
+    local veh    = GetVehiclePedIsIn(ped, false)
     local coords = GetOffsetFromEntityInWorldCoords(veh, 1.0, 0.0, 1.0)
-    SetEntityCoords(ped,coords)
+    SetEntityCoords(ped, coords)
     Wait(1)
     SetPedToRagdoll(ped, 5511, 5511, 0, 0, 0, 0)
-    SetEntityVelocity(ped, veloc.x*3,veloc.y*3,veloc.z*3)
+    SetEntityVelocity(ped, veloc.x * 3, veloc.y * 3, veloc.z * 3)
     local ejectspeed = math.ceil(GetEntitySpeed(ped) * 5)
-    if(GetEntityHealth(ped) - ejectspeed) > 0 then
-        SetEntityHealth(ped, (GetEntityHealth(ped) - ejectspeed) )
+    if (GetEntityHealth(ped) - ejectspeed) > 0 then
+        SetEntityHealth(ped, (GetEntityHealth(ped) - ejectspeed))
     elseif GetEntityHealth(ped) ~= 0 then
         SetEntityHealth(ped, 0)
     end

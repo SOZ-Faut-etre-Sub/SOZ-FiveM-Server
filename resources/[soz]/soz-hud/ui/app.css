@@ -144,7 +144,7 @@ body {
   text-align: center;
   top: 1.5rem;
   width: 100px;
-  color: #a4a4a4;
+  color: rgba(255, 255, 255, .8);
   text-transform: uppercase;
   font-size: 0.8rem;
 }

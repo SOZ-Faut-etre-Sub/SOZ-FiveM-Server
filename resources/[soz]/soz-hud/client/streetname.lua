@@ -38,7 +38,7 @@ Citizen.CreateThread( function()
                 centered = streetName.position.centered
             })
 
-            Wait( 5 )
+            Wait(0)
         else
             Wait(500)
         end

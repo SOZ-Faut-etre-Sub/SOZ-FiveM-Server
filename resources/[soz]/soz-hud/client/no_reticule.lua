@@ -10,6 +10,6 @@ Citizen.CreateThread(function()
             end
         end
 
-        Wait(5)
+        Wait(0)
     end
 end)
