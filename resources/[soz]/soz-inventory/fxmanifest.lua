@@ -14,6 +14,7 @@ client_scripts {
 
 server_scripts {
     'server/main.lua',
+    'server/containers/*.lua',
     'server/command.lua',
     'server/actions.lua',
 }

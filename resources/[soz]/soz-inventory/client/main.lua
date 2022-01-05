@@ -5,11 +5,16 @@ local PlayerData = QBCore.Functions.GetPlayerData()
 local currentWeapon, CurrentWeaponData = nil, {}
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    LocalPlayer.state:set("inv_busy", false, true)
     PlayerData = QBCore.Functions.GetPlayerData()
 end)
 
 RegisterNetEvent('QBCore:Player:SetPlayerData', function(data)
     PlayerData = data
+end)
+
+RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
+    LocalPlayer.state:set("inv_busy", true, true)
 end)
 
 local function MoneyMenu()
@@ -20,7 +25,6 @@ local function MoneyMenu()
         value = moneyMenu,
         description = "Votre argent"
     })
-
 
     local give = moneyMenu:AddButton({ label = "Donner", value = 'money', description = "" })
     give:On('select', function(i)
@@ -41,10 +45,10 @@ local function MoneyMenu()
     end)
 end
 
-local function ItemsMenu()
+local function ItemsMenu(items)
     local playerWeight = 0
 
-    for _,item in pairs(PlayerData.items) do
+    for _,item in pairs(items) do
         local itemMenu = MenuV:InheritMenu(inventoryMenu, { Subtitle = item.label })
         playerWeight = playerWeight + item.weight
 
@@ -55,7 +59,9 @@ local function ItemsMenu()
             local use = itemMenu:AddButton({ label = label, value = item, description = "" })
             use:On('select', function(i)
                 TriggerServerEvent('inventory:server:UseItemSlot', i.Value.slot)
-                MenuV:CloseAll()
+
+                itemMenu:Close()
+                inventoryMenu:Close()
             end)
         end
 
@@ -89,18 +95,23 @@ end
 
 RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
 RegisterCommand("inventory", function()
-    inventoryMenu:ClearItems()
+    QBCore.Functions.TriggerCallback("inventory:server:OpenInventory", function(inventory)
+        if inventory ~= nil then
+            if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
+                inventoryMenu:ClearItems()
+                inventoryMenu:SetSubtitle(string.format('%s/%s Kg', inventory.weight/1000, inventory.maxWeight/1000))
 
-    MoneyMenu()
-    playerWeight = ItemsMenu()
+                MoneyMenu()
+                ItemsMenu(inventory.items)
 
-    inventoryMenu:SetSubtitle(string.format('%s/%s Kg', playerWeight/1000, QBCore.Config.Player.MaxWeight/1000))
-
-    if inventoryMenu.IsOpen then
-        inventoryMenu:Close()
-    else
-        inventoryMenu:Open()
-    end
+                if inventoryMenu.IsOpen then
+                    inventoryMenu:Close()
+                else
+                    inventoryMenu:Open()
+                end
+            end
+        end
+    end, 'player', source)
 end, false)
 
 RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)

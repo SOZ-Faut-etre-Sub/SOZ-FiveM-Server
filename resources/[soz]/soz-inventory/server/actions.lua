@@ -1,4 +1,16 @@
 
+QBCore.Functions.CreateCallback("inventory:server:OpenInventory", function(source, cb, type, id)
+    local ply = Player(source)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if not ply.state.inv_busy then
+        cb(Inventory(Player.PlayerData.source))
+    else
+        TriggerClientEvent('hud:client:DrawNotification', Player.PlayerData.source, "Inventaire en cours d'utilisation")
+        cb(nil)
+    end
+end)
+
 RegisterNetEvent('inventory:server:UseItemSlot', function(slot)
     local Player = QBCore.Functions.GetPlayer(source)
     local itemData = Player.Functions.GetItemBySlot(slot)

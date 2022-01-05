@@ -16,27 +16,13 @@ setmetatable(Inventory, {
 })
 
 
---- Utilities function for Inventory
-local function minimal(inv)
-    inv                     = Inventory(inv)
-    local inventory, amount = {}, 0
-    for k, v in pairs(inv.items) do
-        if v.name and v.amount > 0 then
-            amount            = amount + 1
-            inventory[amount] = {
-                name     = v.name,
-                type     = v.type,
-                slot     = k,
-                amount   = v.amount,
-                metadata = next(v.metadata) and v.metadata or nil
-            }
-        end
-    end
-    return inventory
-end
-
 --- Management
 function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
+    if _G.Container[invType] == nil then
+        print('Inventory type not valid !')
+        return
+    end
+
     if maxWeight then
         local self = {
             id        = id,
@@ -59,7 +45,7 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
         end
 
         Inventories[self.id] = self
-        Inventory.SyncInventory(self)
+        _G.Container[self.type]:sync(self.id, self.items)
 
         return Inventories[self.id]
     end
@@ -68,19 +54,8 @@ end
 function Inventory.Load(id, invType, owner)
     local datastore, result = nil, nil
 
-    if id and invType then
-        if invType == 'trunk' then
-            local plate = string.sub(id, 7, 14)
-            result      = exports.oxmysql:scalar_async('SELECT trunk FROM player_vehicles WHERE plate = ?', { plate })
-            if result then
-                result = json.decode(result)
-            else
-                datastore = true
-            end
-        elseif owner then
-            result = exports.oxmysql:scalar_async('SELECT inventory FROM players WHERE citizenid = ?', { owner })
-            if result then result = json.decode(result) end
-        end
+    if (id or owner) and invType then
+        result = _G.Container[invType]:load(id, owner)
     end
 
     local returnData, weight = {}, 0
@@ -111,36 +86,13 @@ function Inventory.Load(id, invType, owner)
     return returnData, weight, datastore
 end
 
-function Inventory.SyncInventory(inv)
-    if inv.type ~= 'player' then return end
-
-    local Player = QBCore.Functions.GetPlayer(inv.id)
-    Player.Functions.SetInventory(inv.items)
-end
-
-function Inventory.Save(inv)
-    inv             = Inventory(inv)
-    local inventory = json.encode(minimal(inv))
-    if inv.type == 'player' then
-        exports.oxmysql:update_async('UPDATE players SET inventory = ? WHERE citizenid = ?', { inventory, inv.owner })
-    else
-        if inv.type == 'trunk' then
-            local plate = string.sub(inv.id, 7, 14)
-            exports.oxmysql:update_async('UPDATE owned_vehicles SET trunk = ? WHERE plate = ?', { inventory, plate })
-        end
-        inv.changed = false
-    end
-end
-
 function Inventory.Clear(inv, keep)
     inv = Inventory(inv)
     if inv then
         if not keep then
             table.wipe(inv.items)
             inv.weight = 0
-            if inv.type == 'player' then
-                Inventory.SyncInventory(inv)
-            end
+            _G.Container[inv.type]:sync(inv.id, inv.items)
         end
     end
 end
@@ -149,6 +101,7 @@ function Inventory.Remove(inv)
     inv                 = Inventory(inv)
     Inventories[inv.id] = nil
 end
+
 
 --- Weight
 function Inventory.CalculateWeight(items)
@@ -207,6 +160,7 @@ function Inventory.CanCarryItem(inv, item, amount, metadata)
         end
     end
 end
+
 
 --- Items management
 function Inventory.Search(inv, search, item, metadata)
@@ -283,9 +237,7 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
             success    = true
 
             inv.changed = true
-            if inv.type == 'player' then
-                Inventory.SyncInventory(inv)
-            end
+            _G.Container[inv.type]:sync(inv.id, inv.items)
         else
             success = false
             reason  = 'invalid_inventory'
@@ -302,16 +254,18 @@ exports('AddItem', Inventory.AddItem)
 function Inventory.SetMetadata(inv, slot, metadata)
     inv  = Inventory(inv)
     slot = type(slot) == 'number' and (inv and inv.items[slot])
+
     if inv and slot then
         if inv then
-            slot.metadata = type(metadata) == 'table' and metadata or { type = metadata }
-
-            if inv.type == 'player' then
-                Inventory.SyncInventory(inv)
+            for k,v in pairs(metadata) do
+                slot.metadata[k] = v
             end
+            _G.Container[inv.type]:sync(inv.id, inv.items)
         end
     end
 end
+RegisterNetEvent('inventory:server:SetMetadata', Inventory.SetMetadata)
+exports('SetMetadata', Inventory.SetMetadata)
 
 function Inventory.RemoveItem(inv, item, amount, metadata, slot)
     if type(item) ~= 'table' then item = QBCore.Shared.Items[item] end
@@ -358,14 +312,14 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
 
             for k, v in pairs(slots) do
                 if type(v) == 'number' then
-                    array[k] = { item = { slot = v, label = metadata.label or item.label, name = metadata.image or item.name }, inventory = inv.type }
+                    array[k] = { item = { slot = v, label = item.label, name = item.name }, inventory = inv.type }
                 else
                     array[k] = { item = v, inventory = inv.type }
                 end
             end
 
             inv.changed = true
-            Inventory.SyncInventory(inv)
+            _G.Container[inv.type]:sync(inv.id, inv.items)
         end
     end
 end
@@ -401,9 +355,8 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
                             success, reason = s, r
                         end)
 
-                        if invSource.type == 'player' then Inventory.SyncInventory(invSource) end
-                        if invTarget.type == 'player' then Inventory.SyncInventory(invTarget) end
-
+                        _G.Container[invSource.type]:sync(invSource.id, invSource.items)
+                        _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
                     else
                         success, reason = false, 'inventory_full'
                     end
@@ -510,7 +463,9 @@ end)
 
 --- Drop Player Storage
 RegisterNetEvent('inventory:DropPlayerInventory', function(playerID --[[PlayerData]])
-    Inventory.Save(playerID)
+    local inv               = Inventory(playerID)
+
+    _G.Container[inv.type]:save(inv.id, inv.owner, inv.items)
     Inventory.Remove(playerID)
 end)
 
@@ -518,7 +473,9 @@ end)
 local function saveInventories(loop)
     for _, inv in pairs(Inventories) do
         if not inv.datastore and inv.changed then
-            Inventory.Save(inv)
+            if _G.Container[inv.type]:save(inv.id, inv.owner, inv.items) then
+                inv.changed = false
+            end
         end
     end
 
@@ -546,3 +503,4 @@ AddEventHandler('onResourceStop', function(resource)
 end)
 
 _G.Inventory = Inventory
+_G.Container = {}

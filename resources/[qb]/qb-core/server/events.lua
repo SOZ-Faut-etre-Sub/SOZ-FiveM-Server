@@ -184,9 +184,8 @@ RegisterNetEvent('QBCore:Server:UseItem', function(item)
 end)
 
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, slot)
+    local Player = QBCore.Functions.GetPlayer(source)
+    exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, false, slot)
 end)
 
 -- Non-Chat Command Calling (ex: qb-adminmenu)

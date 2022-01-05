@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+QBCore = exports['qb-core']:GetCoreObject()
 
 CreateThread(function()
 	for i, v in pairs(QBCore.Shared.Vehicles) do

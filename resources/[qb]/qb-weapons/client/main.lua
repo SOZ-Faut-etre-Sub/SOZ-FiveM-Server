@@ -92,7 +92,6 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
                         TaskReloadWeapon(ped)
                         TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + amount)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
-                        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemData.name], "remove")
                         TriggerEvent('QBCore:Notify', 'Reloaded', "success")
                     end
                 end, function()

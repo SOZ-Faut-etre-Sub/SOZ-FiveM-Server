@@ -65,7 +65,6 @@ QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(sour
                 table.remove(Inventory[ItemData.slot].metadata.attachments, key)
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 exports['soz-inventory']:AddItem(Player.PlayerData.source, AttachmentComponent.item, 1)
-                TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[AttachmentComponent.item], "add")
                 TriggerClientEvent("QBCore:Notify", src, "You removed "..AttachmentComponent.label.." from your weapon!", "error")
                 cb(Inventory[ItemData.slot].metadata.attachments)
             else
@@ -98,7 +97,6 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                         Ready = false,
                     }
                     exports['soz-inventory']:RemoveItem(Player.PlayerData.source, data.name, 1, data.slot)
-                    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[data.name], "remove")
                     TriggerClientEvent("inventory:client:CheckWeapon", src, data.name)
                     TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[RepairPoint], RepairPoint)
 
@@ -141,26 +139,18 @@ end)
 -- Events
 
 RegisterNetEvent("weapons:server:AddWeaponAmmo", function(CurrentWeaponData, amount)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local amount = tonumber(amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    amount = tonumber(amount)
     if CurrentWeaponData then
-        if Player.PlayerData.items[CurrentWeaponData.slot] then
-            Player.PlayerData.items[CurrentWeaponData.slot].metadata.ammo = amount
-        end
-        Player.Functions.SetInventory(Player.PlayerData.items, true)
+        exports['soz-inventory']:SetMetadata(Player.PlayerData.source, CurrentWeaponData.slot, {ammo = amount})
     end
 end)
 
 RegisterNetEvent("weapons:server:UpdateWeaponAmmo", function(CurrentWeaponData, amount)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local amount = tonumber(amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    amount = tonumber(amount)
     if CurrentWeaponData then
-        if Player.PlayerData.items[CurrentWeaponData.slot] then
-            Player.PlayerData.items[CurrentWeaponData.slot].metadata.ammo = amount
-        end
-        Player.Functions.SetInventory(Player.PlayerData.items, true)
+        exports['soz-inventory']:SetMetadata(Player.PlayerData.source, CurrentWeaponData.slot, {ammo = amount})
     end
 end)
 
@@ -170,18 +160,15 @@ RegisterNetEvent("weapons:server:TakeBackWeapon", function(k, data)
     local itemdata = Config.WeaponRepairPoints[k].RepairingData.WeaponData
     itemdata.metadata.quality = 100
     exports['soz-inventory']:AddItem(Player.PlayerData.source, itemdata.name, 1, false, itemdata.info)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[itemdata.name], "add")
     Config.WeaponRepairPoints[k].IsRepairing = false
     Config.WeaponRepairPoints[k].RepairingData = {}
     TriggerClientEvent('weapons:client:SyncRepairShops', -1, Config.WeaponRepairPoints[k], k)
 end)
 
 RegisterNetEvent("weapons:server:SetWeaponQuality", function(data, hp)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local WeaponSlot = Player.PlayerData.items[data.slot]
-    WeaponSlot.metadata.quality = hp
-    Player.Functions.SetInventory(Player.PlayerData.items, true)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    exports['soz-inventory']:SetMetadata(Player.PlayerData.source, data.slot, {quality = hp})
 end)
 
 RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
@@ -217,8 +204,8 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                 end
             end
         end
+        exports['soz-inventory']:SetMetadata(Player.PlayerData.source, data.slot, WeaponSlot.metadata)
     end
-    Player.Functions.SetInventory(Player.PlayerData.items, true)
 end)
 
 RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWeaponData, AttachmentData)
@@ -236,7 +223,6 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                         if v.type and v.type == currenttype then
                             GiveBackItem = tostring(v.item):lower()
                             table.remove(Inventory[CurrentWeaponData.slot].metadata.attachments, key)
-                            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[GiveBackItem], "add")
                         end
                     end
                 end
@@ -249,9 +235,6 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                 TriggerClientEvent("addAttachment", src, AttachmentData.component)
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 exports['soz-inventory']:RemoveItem(Player.PlayerData.source, ItemData.name, 1)
-                SetTimeout(1000, function()
-                    TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
-                end)
             else
                 TriggerClientEvent("QBCore:Notify", src, "You already have a "..AttachmentData.label:lower().." on your weapon.", "error", 3500)
             end
@@ -266,9 +249,6 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
             TriggerClientEvent("addAttachment", src, AttachmentData.component)
             Player.Functions.SetInventory(Player.PlayerData.items, true)
             exports['soz-inventory']:RemoveItem(Player.PlayerData.source, ItemData.name, 1)
-            SetTimeout(1000, function()
-                TriggerClientEvent('inventory:client:ItemBox', src, ItemData, "remove")
-            end)
         end
     end
     if GiveBackItem then

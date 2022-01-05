@@ -309,6 +309,10 @@ function QBCore.Player.CreatePlayer(PlayerData)
         return false
     end
 
+    self.Functions.RemoveItem = function(item, amount, slot)
+        exports['soz-inventory']:RemoveItem(self.PlayerData.source, item, amount, false, slot)
+    end
+
     self.Functions.SetInventory = function(items, dontUpdateChat)
         self.PlayerData.items = items
         self.Functions.UpdatePlayerData(dontUpdateChat)
