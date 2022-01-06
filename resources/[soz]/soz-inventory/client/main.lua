@@ -36,6 +36,9 @@ RegisterNUICallback('transfertItem', function(data, cb)
                 sourceInventory = invSource,
                 targetInventory = invTarget
             })
+            if not success then
+                exports['soz-hud']:DrawNotification(Config.ErrorMessage[reason])
+            end
         end, data.source, data.target, data.item.name, amount, data.item.slot)
     else
         cb({ status = false })
