@@ -74,8 +74,8 @@ MVconfig = {
     }
 }
 
-_G.Config = MVconfig
-_ENV.Config = MVconfig
+_G.MVconfig = MVconfig
+_ENV.MVconfig = MVconfig
 ----------------------- [ MenuV ] -----------------------
 -- GitHub: https://github.com/ThymonA/menuv/
 -- License: GNU General Public License v3.0
@@ -1880,7 +1880,7 @@ local Utilities = assert(Utilities)
 local translations = {}
 
 --- Load all translations
-local lang = Utilities:Ensure((Config or {}).Language, 'en')
+local lang = Utilities:Ensure((MVconfig or {}).Language, 'en')
 local translations_path = ('languages/%s.json'):format(lang)
 local translations_raw = LoadResourceFile('menuv', translations_path)
 
