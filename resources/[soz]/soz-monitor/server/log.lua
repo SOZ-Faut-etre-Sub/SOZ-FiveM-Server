@@ -54,6 +54,16 @@ local function printFormattedLog(level, message, playerData)
         return
     end
 
+    if PlayerData then
+        if type(playerData) == "number" then
+            local Player = QBCore.Functions.GetPlayer(PlayerData)
+
+            if Player then
+                playerData = Player
+            end
+        end
+    end
+
     if GetConvar('log_format', 'text') == 'text' then
         printLogString(level, message, playerData)
     elseif GetConvar('log_format', 'text') == 'json' then
@@ -67,9 +77,7 @@ end
 --- @param level string Log level
 --- @param message string Message
 RegisterServerEvent('monitor:server:Log', function(level, message)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    printFormattedLog(level, message, Player or source)
+    printFormattedLog(level, message, source)
 end)
 
 exports("Log", printFormattedLog)
