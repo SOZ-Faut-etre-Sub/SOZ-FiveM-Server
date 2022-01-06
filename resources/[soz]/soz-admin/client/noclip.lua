@@ -1,7 +1,3 @@
-RegisterCommand("noclip", function()
-    ToggleNoClipMode()
-end)
-
 local MOVE_UP_KEY = 20
 local MOVE_DOWN_KEY = 44
 local CHANGE_SPEED_KEY = 21

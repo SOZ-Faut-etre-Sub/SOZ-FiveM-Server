@@ -97,12 +97,18 @@ local function OpenCarModelsMenu(category)
     end
 end
 
+local function SetFoodandDrink()
+    TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + 100)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["thirst"] + 100)
+end
+
 local function AdminPanel(menu)
     local noclip = menu:AddCheckbox({ label = "Noclip", value = noclip_check, description = "Active/Désactive le noclip" })
     local coords = menu:AddCheckbox({ label = "Voir les coords", value = coords_check, description = "Affiche les coords" })
     local tpm = menu:AddButton({label = "Tpm", description = "Téléport sur le marqueur"})
     local playerlist = menu:AddButton({label = "Gestion des joueurs", value = PlayerList, description = "Voir la liste des joueurs"})
     local vehspawn = menu:AddButton({label = "Spawn Véhicules", value = VehiculeList, description = "Voir la liste des Véhicules"})
+    local heal = menu:AddButton({label = "max faim/soif", description = "reset la faim et la soif"})
     
     
     noclip:On('change', function()
@@ -117,6 +123,10 @@ local function AdminPanel(menu)
 
     tpm:On('select', function()
         TeleportToWaypoint()
+    end)
+
+    heal:On('select', function()
+        SetFoodandDrink()
     end)
 
     playerlist:On('select', function(item)
@@ -153,7 +163,7 @@ end)
 
 end
 
-local function GenerateMenu()
+local function GenerateMenu(source)
     AdminMenu:ClearItems()
     AdminPanel(AdminMenu)
     
@@ -162,6 +172,6 @@ local function GenerateMenu()
     end)
 end
 
-RegisterCommand("admin", function()
+RegisterCommand("admin", function(source)
     GenerateMenu()
 end)
