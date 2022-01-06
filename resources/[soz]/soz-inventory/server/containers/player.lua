@@ -33,7 +33,7 @@ end
 --- @param items table
 --- @return boolean
 function PlayerInventory:sync(id, items)
-    local Player = QBCore.Functions.GetPlayer(id)
+    local Player = QBCore.Functions.GetPlayer(tonumber(id))
 
     if Player then
         Player.Functions.SetInventory(items)

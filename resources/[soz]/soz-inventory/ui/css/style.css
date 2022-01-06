@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+body {
+  border: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+/** dragula **/
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+.gu-mirror .tooltip {
+  visibility: hidden !important;
+}
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+/** Inventories **/
+.container {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1vw;
+  top: 1vh;
+  left: 24.5vw;
+  width: 51vw;
+}
+
+.container > div {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.container > div header {
+  user-select: none;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 2rem 0;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background:url("../img/default.png");
+  background-size: cover;
+  box-shadow: inset 0 -.5em 1em rgba(0, 0, 0, .6);
+}
+
+.container > div section {
+  background: rgba(0, 0, 0, .6);
+  min-height: 20vh;
+  padding-bottom: 10vh;
+}
+
+/** Inventory Item **/
+.inv-item {
+  font-weight: 300;
+  color: white;
+  padding: .8rem 2rem;
+  margin-bottom: .2rem;
+  cursor: grab;
+}
+.gu-mirror .inv-item {
+  cursor: grabbing !important;
+}
+
+.inv-item:hover {
+  font-weight: bold;
+  background: rgba(255, 255, 255, .25);
+}
+
+.inv-item:hover .tooltip {
+  visibility: visible;
+}
+
+.tooltip {
+  position: absolute;
+  visibility: hidden;
+  background: rgba(0, 0, 0, .6);
+  color: #fff;
+  padding: .5rem .8rem;
+  margin: .5rem 0 0 .5rem;
+  border-radius: 6px;
+  max-width: 18vw;
+}

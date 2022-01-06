@@ -5,6 +5,7 @@ lua54 'yes'
 shared_scripts {
     'shared/table.lua',
     'config.lua',
+    'storage/*.lua',
 }
 
 client_scripts {
@@ -17,6 +18,17 @@ server_scripts {
     'server/containers/*.lua',
     'server/command.lua',
     'server/actions.lua',
+}
+
+ui_page 'ui/index.html'
+
+files {
+    'ui/index.html',
+    'ui/img/*.png',
+    'ui/css/style.css',
+    'ui/js/inventory_item.js',
+    'ui/js/inventory_item.js',
+    'ui/js/app.js',
 }
 
 dependencies {

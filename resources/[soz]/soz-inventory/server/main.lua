@@ -6,9 +6,8 @@ local Inventories = {}
 setmetatable(Inventory, {
     __call = function(self, arg)
         if arg then
-            if arg and type(arg) == 'table' then
-                return arg
-            end
+            if type(arg) == 'table' then return arg end
+            if type(arg) == 'number' then arg = tostring(arg) end
             return Inventories[arg]
         end
         return self
@@ -25,7 +24,7 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
 
     if maxWeight then
         local self = {
-            id        = id,
+            id        = tostring(id),
             label     = label or id,
             type      = invType,
             slots     = slots,
@@ -330,6 +329,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
     if type(invSource) ~= 'table' then invSource = Inventory(invSource) end
     if type(invTarget) ~= 'table' then invTarget = Inventory(invTarget) end
     if type(item) ~= 'table' then item = QBCore.Shared.Items[item] end
+    if not metadata then metadata = {} end
     amount = math.floor(amount + 0.5)
     local success, reason = false, nil
 
@@ -340,7 +340,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
                 if slot then
                     local it = Inventory.GetItem(invSource, item, metadata)
                     if it then
-                        itemSlots, totalAmount = it.slot, it.amount
+                        itemSlots, totalAmount, metadata = it.slot, it.amount, it.metadata
                     end
                 else
                     itemSlots, totalAmount = Inventory.GetItemSlots(invSource, item, metadata)
