@@ -16,9 +16,11 @@ local function GenerateMenu()
 
     HudToggleEntry(personalMenu)
 
-    MenuV:CloseAll(function()
+    if personalMenu.IsOpen then
+        personalMenu:Close()
+    else
         personalMenu:Open()
-    end)
+    end
 end
 
 RegisterKeyMapping("personal", "Ouvrir le menu personnel", "keyboard", "F1")
