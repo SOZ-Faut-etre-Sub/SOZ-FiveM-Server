@@ -4,6 +4,7 @@ body {
   border: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  transition: opacity .5s;
 }
 
 /** dragula **/

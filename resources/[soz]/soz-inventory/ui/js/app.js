@@ -42,11 +42,20 @@ window.addEventListener("message", (event) => {
   switch (event.data.action) {
     case "openInventory":
       if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return
+
+      document.querySelector('body').style.opacity = 1
       SOZinventory.setupContainer(playerInventory, event.data.playerInventory)
       SOZinventory.setupContainer(targetInventory, event.data.targetInventory)
       break;
     }
 })
+
+window.onkeyup = function (event) {
+  if (event.key === 'Escape') {
+    document.querySelector('body').style.opacity = 0
+    fetch(`${INVENTORY_ENDPOINT}/closeNUI`, {  method: 'POST' });
+  }
+}
 
 SOZinventory.setupContainer = function (container, inventory){
   container.innerHTML = ''
