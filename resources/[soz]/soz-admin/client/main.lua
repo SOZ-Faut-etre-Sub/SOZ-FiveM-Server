@@ -3,6 +3,7 @@ local AdminMenu = MenuV:CreateMenu("admin", "", 255, 0, 0, 'default_native', 'me
 local PlayerList = MenuV:CreateMenu("Player", "", 255, 0, 0, 'default_native', 'menuv', 'player-panel')
 local VehiculeList = MenuV:CreateMenu("Véhicule model", "", 255, 0, 0, 'default_native', 'menuv', 'veh-panel-list')
 local VehiculeModel = MenuV:CreateMenu("Spawn Véhicule", "", 255, 0, 0, 'default_native', 'menuv', 'veh-panel')
+local Players = MenuV:CreateMenu("player option" , "", 255, 0, 0, 'default_native', 'menuv', 'player-option')
 local PlayerData = QBCore.Functions.GetPlayerData()
 
 local noclip_check = false
@@ -54,7 +55,6 @@ local function ToggleShowCoordinates()
 end
 
 local function OpenPlayerMenus(player)
-    local Players = MenuV:CreateMenu(player.cid ..' option' , "", 255, 0, 0, 'default_native', 'menuv', 'player-option')
     Players:ClearItems()
     MenuV:OpenMenu(Players)
     local elements = {
