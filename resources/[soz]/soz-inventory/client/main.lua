@@ -1,5 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local inventoryMenu = MenuV:CreateMenu("Inventaire", "", 255, 0, 0, 'default_native', 'menuv', 'inventory')
+local inventoryMenu = MenuV:CreateMenu("Inventaire", "", 255, 0, 0, 'default', 'soz', 'inventory')
 local PlayerData = QBCore.Functions.GetPlayerData()
 
 local currentWeapon, CurrentWeaponData = nil, {}
@@ -152,5 +152,23 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
             end
             currentWeapon = weaponName
         end, CurrentWeaponData)
+    end
+end)
+
+RegisterNUICallback('transfertItem', function(data, cb)
+    SetNuiFocus(false, false)
+    local amount = exports['soz-hud']:Input("Quantité", 5, data.item.amount)
+    SetNuiFocus(true, true)
+
+    if amount and tonumber(amount) then
+        QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
+            cb({
+                status = success,
+                sourceInventory = invSource,
+                targetInventory = invTarget
+            })
+        end, data.source, data.target, data.item.name, amount, data.item.slot)
+    else
+        cb({ status = false })
     end
 end)
