@@ -1,7 +1,3 @@
-RegisterCommand("tpm", function(source)
-    TeleportToWaypoint()
-end)
-
 TeleportToWaypoint = function()
 local WaypointHandle = GetFirstBlipInfoId(8)
     if DoesBlipExist(WaypointHandle) then
