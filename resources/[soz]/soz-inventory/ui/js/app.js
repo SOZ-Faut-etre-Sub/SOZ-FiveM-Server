@@ -60,16 +60,19 @@ window.onkeyup = function (event) {
 SOZinventory.setupContainer = function (container, inventory){
   container.innerHTML = ''
   container.dataset.inventoryId = inventory.id
+  container.parentNode.querySelector('header span').innerText = `${inventory.weight/1000}/${inventory.maxWeight/1000} Kg`
 
   inventory.items.forEach(function(item, k){
-    let itemNode = document.createElement('inventory-item')
+    if (item !== null) {
+      let itemNode = document.createElement('inventory-item')
 
-    itemNode.dataset.slot = item.slot
-    itemNode.dataset.name = item.name
-    itemNode.dataset.label = item.label
-    itemNode.dataset.amount = item.amount
-    itemNode.dataset.description = item.description
+      itemNode.dataset.slot = item.slot
+      itemNode.dataset.name = item.name
+      itemNode.dataset.label = item.label
+      itemNode.dataset.amount = item.amount
+      itemNode.dataset.description = item.description
 
-    container.append(itemNode)
+      container.append(itemNode)
+    }
   })
 }
