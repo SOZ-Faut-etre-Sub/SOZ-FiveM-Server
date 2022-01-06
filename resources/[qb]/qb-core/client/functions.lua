@@ -32,6 +32,11 @@ end
 
 -- Utility
 
+function QBCore.Functions.ShowHelpNotification(msg)
+    AddTextEntry('helpNotification', msg)
+    DisplayHelpTextThisFrame('helpNotification', false)
+end
+
 function QBCore.Functions.DrawText(x, y, width, height, scale, r, g, b, a, text)
     -- Use local function instead
     SetTextFont(4)
@@ -96,7 +101,7 @@ end
 function QBCore.Functions.HideBlip(id, toggle)
     local blip = Blips[id]
     if not blip then return end
-    if toggle then 
+    if toggle then
         SetBlipAlpha(blip.blip, 0)
         SetBlipHiddenOnLegend(blip.blip, true)
     else

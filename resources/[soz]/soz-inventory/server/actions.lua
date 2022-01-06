@@ -81,6 +81,10 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, amount)
     end
 end)
 
+RegisterServerEvent('inventory:server:openInventory', function(invID)
+    TriggerClientEvent('inventory:client:openInventory', source, Inventory(source), Inventory(invID))
+end)
+
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem", function(source, cb, inventorySource, inventoryTarget, item, amount, slot)
     Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, false, slot, function(success, reason)
         cb(success, reason, Inventory(inventorySource), Inventory(inventoryTarget))

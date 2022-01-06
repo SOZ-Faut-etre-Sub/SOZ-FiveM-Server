@@ -301,6 +301,7 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
                         inv.items[k]      = nil
                         slots[#slots + 1] = k
                     end
+                    inv.changed = true
                 else break end
             end
         end
@@ -443,6 +444,7 @@ function Inventory.SetSlot(inv, item, amount, metadata, slot)
         }
         inv.items[slot].weight = Inventory.SlotWeight(item, inv.items[slot])
     end
+    inv.changed = true
 end
 
 ---

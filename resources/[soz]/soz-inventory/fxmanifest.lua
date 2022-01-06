@@ -11,6 +11,7 @@ shared_scripts {
 client_scripts {
     '@menuv/menuv.lua',
     'client/main.lua',
+    'client/player.lua',
 }
 
 server_scripts {
