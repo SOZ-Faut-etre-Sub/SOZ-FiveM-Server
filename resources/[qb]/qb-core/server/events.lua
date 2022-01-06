@@ -185,6 +185,7 @@ end)
 
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
     local Player = QBCore.Functions.GetPlayer(source)
+    exports['soz-monitor']:Log('FATAL', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
     exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, false, slot)
 end)
 
