@@ -3,6 +3,18 @@
 ### [Official QBCore Documentation](https://qbcore-framework.github.io/qb-docs/)
 
 
+# Items type
+
+- weapon
+- weapon_attachment
+- weapon_ammo
+
+- item
+
+- food
+- drink
+- drug
+
 # License
 
     QBCore Framework
