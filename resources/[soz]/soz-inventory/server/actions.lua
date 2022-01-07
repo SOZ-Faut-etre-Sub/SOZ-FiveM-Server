@@ -85,10 +85,14 @@ RegisterServerEvent('inventory:server:openInventory', function(invID)
     local sourceInv = Inventory(source)
     local targetInv = Inventory(invID)
 
-    TriggerClientEvent('inventory:client:openInventory', source,
-            Inventory.FilterItems(sourceInv, targetInv.type),
-            Inventory.FilterItems(targetInv, sourceInv.type)
-    )
+    if Inventory.AccessGranted(targetInv, source) then
+        TriggerClientEvent('inventory:client:openInventory', source,
+                Inventory.FilterItems(sourceInv, targetInv.type),
+                Inventory.FilterItems(targetInv, sourceInv.type)
+        )
+    else
+        TriggerClientEvent('hud:client:DrawNotification', source, "~r~Vous n'avez pas accès à ce stockage")
+    end
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem", function(source, cb, inventorySource, inventoryTarget, item, amount, slot)

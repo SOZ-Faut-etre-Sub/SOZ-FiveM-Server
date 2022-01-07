@@ -33,7 +33,7 @@ MySQL.ready(function()
 
         -- Create storage present in configuration if not exist in database
         for k, v in pairs(StorageNotLoaded) do
-            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, nil)
+            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, v.owner)
         end
     end)
 end)
@@ -107,6 +107,12 @@ function Inventory.Load(id, invType, owner)
         end
     end
     return returnData, weight, datastore
+end
+
+function Inventory.AccessGranted(inv, playerId)
+    inv = Inventory(inv)
+
+    return _G.Container[inv.type]:AccessAllowed(inv.owner, playerId)
 end
 
 function Inventory.Clear(inv, keep)
@@ -206,7 +212,6 @@ function Inventory.FilterItems(inv, invType)
     inventory.items = items
     return inventory
 end
-
 
 function Inventory.Search(inv, search, item, metadata)
     if item then
