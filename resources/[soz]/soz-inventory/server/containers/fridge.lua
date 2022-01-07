@@ -42,6 +42,20 @@ function FridgeInventory:AllowedItems(item)
     return typeAllowed[item.type or ''] or false
 end
 
+--- AccessAllowed
+--- @param owner string
+--- @param player Player
+--- @return boolean
+function FridgeInventory:AccessAllowed(owner, playerId)
+    local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
+
+    if Player then
+        return Player.PlayerData.job.name == owner
+    else
+        return false
+    end
+end
+
 --- sync
 --- @param id any
 --- @param items table

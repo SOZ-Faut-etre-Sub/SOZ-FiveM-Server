@@ -5,8 +5,9 @@ const INVENTORY_ENDPOINT = "https://soz-inventory"
 const playerInventory = document.getElementById('player-inv')
 const targetInventory = document.getElementById('target-inv')
 
-dragula([playerInventory, targetInventory]).on('drop', function(el, target, source, sibling) {
+const drake = dragula([playerInventory, targetInventory])
 
+drake.on('drop', function(el, target, source, sibling) {
   fetch(`${INVENTORY_ENDPOINT}/transfertItem`, {
     method: 'POST',
     headers: {
@@ -22,19 +23,23 @@ dragula([playerInventory, targetInventory]).on('drop', function(el, target, sour
       return response.json();
     })
     .then(function(json) {
-      SOZinventory.setupContainer(
-        document.querySelector(`section[data-inventory-id="${json.sourceInventory.id}"]`),
-        json.sourceInventory
-      )
-      SOZinventory.setupContainer(
-        document.querySelector(`section[data-inventory-id="${json.targetInventory.id}"]`),
-        json.targetInventory
-      )
+      if (json.status) {
+        SOZinventory.setupContainer(
+          document.querySelector(`section[data-inventory-id="${json.sourceInventory.id}"]`),
+          json.sourceInventory
+        )
+        SOZinventory.setupContainer(
+          document.querySelector(`section[data-inventory-id="${json.targetInventory.id}"]`),
+          json.targetInventory
+        )
+      } else {
+        source.append(el)
+        target.querySelector(el).remove()
+      }
     })
     .catch(function(err) {
       return false
     });
-
 })
 
 

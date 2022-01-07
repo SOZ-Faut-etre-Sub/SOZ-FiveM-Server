@@ -54,21 +54,23 @@ end)
 CreateThread(function()
     while true do
         for id,storage in pairs(Config.Storages) do
-            local dist = #(GetEntityCoords(PlayerPedId()) - storage.position)
+            if storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.name == storage.owner) then
+                local dist = #(GetEntityCoords(PlayerPedId()) - storage.position)
 
-            if dist <= 80.0 then
-                DrawMarker(27,
-                        storage.position.x, storage.position.y, storage.position.z,
-                        0.0, 0.0, 0.0,
-                        0.0, 180.0, 0.0,
-                        1.5, 1.5, 1.5,
-                        255, 128, 0, 50,
-                        false, false, 2)
+                if dist <= 80.0 then
+                    DrawMarker(27,
+                            storage.position.x, storage.position.y, storage.position.z,
+                            0.0, 0.0, 0.0,
+                            0.0, 180.0, 0.0,
+                            1.5, 1.5, 1.5,
+                            255, 128, 0, 50,
+                            false, false, 2)
 
-                if dist <= 2.0 then
-                    QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
-                    if IsControlPressed(1, 51) then
-                        TriggerServerEvent('inventory:server:openInventory', id)
+                    if dist <= 2.0 then
+                        QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
+                        if IsControlPressed(1, 51) then
+                            TriggerServerEvent('inventory:server:openInventory', id)
+                        end
                     end
                 end
             end

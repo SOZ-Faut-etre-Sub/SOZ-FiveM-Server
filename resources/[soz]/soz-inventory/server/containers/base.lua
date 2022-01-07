@@ -52,6 +52,15 @@ function InventoryShell:AllowedItems(item)
     return true
 end
 
+--- AccessAllowed
+--- @param inventory table
+--- @param player Player
+--- @return boolean
+function InventoryShell:AccessAllowed(inv, player)
+    print('^8' .. tostring(self) .. ':AccessAllowed() is not implemented !')
+    return true
+end
+
 --- sync
 --- @param id any
 --- @param items table
