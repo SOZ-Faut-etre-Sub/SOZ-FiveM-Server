@@ -165,7 +165,7 @@ div .hide,
     padding-bottom: 0.375em;
     padding-left: 0.5em;
     height: auto;
-    color: #2e69bb !important;
+    color: #266e2d !important;
 }
 
 .menuv.native .menuv-items {
@@ -177,23 +177,23 @@ div .hide,
 }
 
 .menuv.native.size-100 .menuv-items {
-    max-height: 66.1vh;
+    max-height: 32.2vh;
 }
 
 .menuv.native.size-110 .menuv-items {
-    max-height: 59.2vh;
+    max-height: 32.2vh;
 }
 
 .menuv.native.size-125 .menuv-items {
-    max-height: 50.2vh;
+    max-height: 32.2vh;
 }
 
 .menuv.native.size-150 .menuv-items {
-    max-height: 45.8vh;
+    max-height: 32.2vh;
 }
 
 .menuv.native.size-175 .menuv-items {
-    max-height: 39vh;
+    max-height: 32.2vh;
 }
 
 .menuv.native.size-200 .menuv-items {
