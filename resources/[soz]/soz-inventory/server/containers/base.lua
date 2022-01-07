@@ -9,12 +9,11 @@ function InventoryShell.new()
 end
 
 function InventoryShell:CompactInventory(inv)
-    local inventory, amount = {}, 0
+    local inventory = {}
     if inv ~= nil then
         for k, v in pairs(inv) do
             if v.name and v.amount > 0 then
-                amount            = amount + 1
-                inventory[amount] = {
+                inventory[#inventory+1] = {
                     name     = v.name,
                     type     = v.type,
                     slot     = k,
@@ -44,6 +43,13 @@ end
 function InventoryShell:save(id, owner, inventory)
     print('^8' .. tostring(self) .. ':save() is not implemented !')
     return false
+end
+
+--- AllowedItems
+--- @param item table
+--- @return boolean
+function InventoryShell:AllowedItems(item)
+    return true
 end
 
 --- sync

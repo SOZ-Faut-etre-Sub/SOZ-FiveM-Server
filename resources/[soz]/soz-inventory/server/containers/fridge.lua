@@ -31,6 +31,17 @@ function FridgeInventory:save(id, owner, inventory)
     return true
 end
 
+--- AllowedItems
+--- @param item table
+--- @return boolean
+function InventoryShell:AllowedItems(item)
+    local typeAllowed = {
+        ['food'] = true,
+        ['drink'] = true,
+    }
+    return typeAllowed[item.type or ''] or false
+end
+
 --- sync
 --- @param id any
 --- @param items table

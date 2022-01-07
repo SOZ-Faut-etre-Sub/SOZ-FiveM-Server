@@ -162,6 +162,28 @@ end
 
 
 --- Items management
+function Inventory.FilterItems(inv, invType)
+    if type(inv) ~= 'table' then inv = Inventory(inv) end
+
+    -- Clone inventory to filter frontend items and don't affect real inventory
+    local inventory = table.deepclone(inv)
+    local items = {}
+
+    if invType then
+        if inv.items ~= nil then
+            for _,v in pairs(inv.items) do
+                if _G.Container[invType]:AllowedItems(v) then
+                    items[#items+1] = v
+                end
+            end
+        end
+    end
+
+    inventory.items = items
+    return inventory
+end
+
+
 function Inventory.Search(inv, search, item, metadata)
     if item then
         inv = Inventory(inv)
@@ -350,16 +372,20 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
                 if itemSlots ~= nil or totalAmount ~= nil then
                     if amount > totalAmount then amount = totalAmount end
 
-                    if Inventory.CanCarryItem(invTarget, item, amount, metadata) then
-                        Inventory.RemoveItem(invSource, item, amount, metadata, slot)
-                        Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
-                            success, reason = s, r
-                        end)
+                    if _G.Container[invTarget.type]:AllowedItems(item) then
+                        if Inventory.CanCarryItem(invTarget, item, amount, metadata) then
+                            Inventory.RemoveItem(invSource, item, amount, metadata, slot)
+                            Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
+                                success, reason = s, r
+                            end)
 
-                        _G.Container[invSource.type]:sync(invSource.id, invSource.items)
-                        _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
+                            _G.Container[invSource.type]:sync(invSource.id, invSource.items)
+                            _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
+                        else
+                            success, reason = false, 'inventory_full'
+                        end
                     else
-                        success, reason = false, 'inventory_full'
+                        success, reason = false, 'not_allowed_item'
                     end
                 else
                     success, reason = false, 'nonexistent_item'
