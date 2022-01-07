@@ -79,7 +79,7 @@ end
 
 RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
 RegisterCommand("inventory", function()
-    QBCore.Functions.TriggerCallback("inventory:server:OpenInventory", function(inventory)
+    QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
             if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
                 inventoryMenu:ClearItems()

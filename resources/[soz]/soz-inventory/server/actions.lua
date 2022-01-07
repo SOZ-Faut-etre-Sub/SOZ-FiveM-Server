@@ -1,5 +1,5 @@
 
-QBCore.Functions.CreateCallback("inventory:server:OpenInventory", function(source, cb, type, id)
+QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function(source, cb, type, id)
     local ply = Player(source)
     local Player = QBCore.Functions.GetPlayer(source)
 
@@ -82,12 +82,24 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, amount)
 end)
 
 RegisterServerEvent('inventory:server:openInventory', function(invID)
-    TriggerClientEvent('inventory:client:openInventory', source, Inventory(source), Inventory(invID))
+    local sourceInv = Inventory(source)
+    local targetInv = Inventory(invID)
+
+    TriggerClientEvent('inventory:client:openInventory', source,
+            Inventory.FilterItems(sourceInv, targetInv.type),
+            Inventory.FilterItems(targetInv, sourceInv.type)
+    )
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem", function(source, cb, inventorySource, inventoryTarget, item, amount, slot)
     Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, false, slot, function(success, reason)
-        cb(success, reason, Inventory(inventorySource), Inventory(inventoryTarget))
+        local sourceInv = Inventory(inventorySource)
+        local targetInv = Inventory(inventoryTarget)
+
+        cb(success, reason,
+                Inventory.FilterItems(sourceInv, targetInv.type),
+                Inventory.FilterItems(targetInv, sourceInv.type)
+        )
     end)
 end)
 
