@@ -5,7 +5,7 @@ lua54 'yes'
 shared_scripts {
     'shared/table.lua',
     'config.lua',
-    'storage/*.lua',
+    'storages/*.lua',
 }
 
 client_scripts {
@@ -15,8 +15,14 @@ client_scripts {
 }
 
 server_scripts {
+    '@oxmysql/lib/MySQL.lua',
     'server/main.lua',
-    'server/containers/*.lua',
+
+    'server/containers/base.lua',
+    'server/containers/armory.lua',
+    'server/containers/fridge.lua',
+    'server/containers/player.lua',
+
     'server/command.lua',
     'server/actions.lua',
 }
@@ -33,9 +39,11 @@ files {
 }
 
 dependencies {
+    'oxmysql',
     'qb-core',
     'qb-weapons',
     'soz-hud',
+    'soz-monitor',
     'dpemotes',
     'menuv',
 }
