@@ -15,6 +15,30 @@ setmetatable(Inventory, {
 })
 
 
+MySQL.ready(function()
+    local StorageNotLoaded = table.clone(Config.Storages)
+
+    MySQL.query('SELECT * FROM storages', {}, function(result)
+        if result then
+            for _, v in pairs(result) do
+                if Config.Storages[v.name] then
+                    local st = Config.Storages[v.name]
+                    Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner, json.decode(v.inventory or '[]'))
+                    StorageNotLoaded[v.name] = nil
+                else
+                    exports['soz-monitor']:Log('ERROR', ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
+                end
+            end
+        end
+
+        -- Create storage present in configuration if not exist in database
+        for k, v in pairs(StorageNotLoaded) do
+            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, nil)
+        end
+    end)
+end)
+
+
 --- Management
 function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
     if _G.Container[invType] == nil then

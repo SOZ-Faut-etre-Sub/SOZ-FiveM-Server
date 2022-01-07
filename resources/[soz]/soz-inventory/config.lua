@@ -10,4 +10,6 @@ Config.ErrorMessage = {
     ['not_allowed_item'] = "~r~L'objet ne peut aller dans ce stockage !",
 }
 
+Config.StorageMaxWeight = 250000
+Config.StorageMaxInvSlots = 10
 Config.Storages = {}
