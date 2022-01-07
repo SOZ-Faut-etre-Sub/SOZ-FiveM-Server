@@ -5,9 +5,9 @@ local function MoneyMenu()
     local moneyMenu = MenuV:InheritMenu(inventoryMenu, { Subtitle = 'Argent' })
 
     inventoryMenu:AddButton({
-        label = PlayerData.money['cash'] .. '$',
+        label = "Votre argent",
+        rightLabel = PlayerData.money['cash'] .. '$',
         value = moneyMenu,
-        description = "Votre argent"
     })
 
     local give = moneyMenu:AddButton({ label = "Donner", value = 'money', description = "" })
@@ -68,7 +68,8 @@ local function ItemsMenu(items)
         end)
 
         inventoryMenu:AddButton({
-            label = item.amount .. ' ' .. item.label,
+            label = item.label,
+            rightLabel = item.amount,
             value = itemMenu,
             description = item.description
         })

@@ -21,7 +21,7 @@
 - Event-based callbacks
 - Uses `2 msec` while menu open and idle.
 - Documentation on [menuv.fivem.io/api/](https://menuv.fivem.io/api/)
-- Themes: **[default](https://i.imgur.com/KSkeiQm.png)** or **[native](https://i.imgur.com/KSkeiQm.png)**
+- Themes: **[default](https://i.imgur.com/xGagIBm.png)** or **[native](https://i.imgur.com/KSkeiQm.png)**
 
 ## Compile files
 **[MenuV](https://github.com/ThymonA/menuv)** uses **[VueJS](https://vuejs.org/v2/guide/installation.html#NPM)** and **[TypeScript](https://www.npmjs.com/package/typescript)** with **[NodeJS](https://nodejs.org/en/)**. If you want to use the **`master`** files, you need to build the hole project by doing:
@@ -69,11 +69,11 @@ client_scripts {
 ### Create a menu
 Create a menu by calling the **MenuV:CreateMenu** function.
 ```ts
-MenuV:CreateMenu(title: string, subtitle: string, red: number, green: number, blue: number, texture: string, disctionary: string, namespace: string)
+MenuV:CreateMenu(title: string, subtitle: string, position: string, red: number, green: number, blue: number, texture: string, disctionary: string, namespace: string, theme: string)
 ```
 **Example:**
 ```lua
-local menu = MenuV:CreateMenu('MenuV', 'Welcome to MenuV', 255, 0, 0, 'default', 'menuv', 'example_namespace')
+local menu = MenuV:CreateMenu('MenuV', 'Welcome to MenuV', 'topleft', 255, 0, 0, 'size-125', 'default', 'menuv', 'example_namespace', 'native')
 ```
 
 ### Create menu items

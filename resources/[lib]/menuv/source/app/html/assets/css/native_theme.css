@@ -5,7 +5,7 @@
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 */
@@ -159,11 +159,13 @@ div .hide,
     text-align: left;
     font-weight: 500;
     font-size: 1.125em;
-    line-height: 1.125em;
+    line-height: auto;
     text-transform: uppercase;
-    padding: 0.375em 0.5em;
+    padding-top: 0.125em;
+    padding-bottom: 0.375em;
+    padding-left: 0.5em;
     height: auto;
-    color: #1a7d31 !important;
+    color: #2e69bb !important;
 }
 
 .menuv.native .menuv-items {

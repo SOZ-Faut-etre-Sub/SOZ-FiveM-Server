@@ -1,0 +1,22 @@
+{
+    "language": "en",
+    "translators": [
+        {
+            "name": "ThymonA",
+            "emails": ["contact@thymonarens.nl"],
+            "github": "https://github.com/ThymonA"
+        }
+    ],
+    "translations": {
+        "keyboard": "Keyboard",
+        "controller": "Controller",
+        "keybind_key_up": "Up in a menu",
+        "keybind_key_down": "Down in a menu",
+        "keybind_key_left": "Left in a menu",
+        "keybind_key_right": "Right in a menu",
+        "keybind_key_enter": "Confirm item in menu",
+        "keybind_key_close": "Closing a menu",
+        "keybind_key_close_all": "Close all menus (including parents)",
+        "open_menu": "Open menu '%s' with this key"
+    }
+}

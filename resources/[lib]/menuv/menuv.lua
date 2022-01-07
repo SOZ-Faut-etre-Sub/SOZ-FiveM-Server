@@ -4,7 +4,7 @@
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 local assert = assert
@@ -34,7 +34,7 @@ local Wait = assert(Citizen.Wait)
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 MVconfig = {
@@ -82,7 +82,7 @@ _ENV.MVconfig = MVconfig
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 local assert = assert
@@ -509,7 +509,7 @@ _ENV.Utilities = Utilities
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 local assert = assert
@@ -551,6 +551,8 @@ function CreateMenuItem(info)
         Description = U:Ensure(info.Description or info.description, ''),
         ---@type any
         Value = info.Value or info.value,
+        ---@type any
+        RightLabel = info.RightLabel or info.rightLabel,
         ---@type table[]
         Values = {},
         ---@type number
@@ -782,7 +784,7 @@ _G.CreateMenuItem = CreateMenuItem
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 local assert = assert
@@ -830,6 +832,7 @@ function CreateEmptyItemsTable(data)
                 uuid = U:Ensure(option.UUID, 'unknown'),
                 icon = U:Ensure(option.Icon, 'none'),
                 label = U:Ensure(option.Label, 'Unknown'),
+                rightLabel = U:Ensure(option.RightLabel, ''),
                 description = U:Ensure(option.Description, ''),
                 value = 'none',
                 values = {},
@@ -1060,17 +1063,6 @@ function CreateMenu(info)
         error(("[MenuV] Namespace '%s' is already taken, make sure it is unique."):format(namespace))
     end
 
-    local theme = lower(U:Ensure(info.Theme or info.theme, 'default'))
-
-    if (theme ~= 'default' and theme ~= 'native') then
-        theme = 'default'
-    end
-
-    if (theme == 'native') then
-        info.R, info.G, info.B = 255, 255, 255
-        info.r, info.g, info.b = 255, 255, 255
-    end
-
     local item = {
         ---@type string
         Namespace = namespace,
@@ -1085,21 +1077,17 @@ function CreateMenu(info)
         ---@type string | "'topleft'" | "'topcenter'" | "'topright'" | "'centerleft'" | "'center'" | "'centerright'" | "'bottomleft'" | "'bottomcenter'" | "'bottomright'"
         Position = U:Ensure(info.Position or info.position, 'topleft'),
         ---@type table
-        Color = {
-            R = U:Ensure(info.R or info.r, 0),
-            G = U:Ensure(info.G or info.g, 0),
-            B = U:Ensure(info.B or info.b, 255)
-        },
+        Color = { R = 255, G = 255, B = 255 },
         ---@type string | "'size-100'" | "'size-110'" | "'size-125'" | "'size-150'" | "'size-175'" | "'size-200'"
         Size = U:Ensure(info.Size or info.size, 'size-110'),
         ---@type string
-        Dictionary = U:Ensure(info.Dictionary or info.dictionary, 'menuv'),
+        Dictionary = U:Ensure(info.Dictionary or info.dictionary, 'soz'),
         ---@type string
         Texture = U:Ensure(info.Texture or info.texture, 'default'),
         ---@type table
         Events = U:Ensure(info.Events or info.events, {}),
         ---@type string
-        Theme = theme,
+        Theme = 'native',
         ---@type Item[]
         Items = CreateEmptyItemsTable({}),
         ---@param t Menu
@@ -1682,11 +1670,7 @@ function CreateMenu(info)
                 size = U:Ensure(t.Size, 'size-110'),
                 dictionary = U:Ensure(t.Dictionary, 'menuv'),
                 texture = U:Ensure(t.Texture, 'default'),
-                color = {
-                    r = U:Ensure(t.Color.R, 0),
-                    g = U:Ensure(t.Color.G, 0),
-                    b = U:Ensure(t.Color.B, 255)
-                },
+                color = { r = 255, g = 255, b = 255 },
                 items = {}
             }
 
@@ -1706,10 +1690,6 @@ function CreateMenu(info)
             return tempTable
         end
     }
-
-    if (lower(item.Texture) == 'default' and lower(item.Dictionary) == 'menuv' and theme == 'native') then
-        item.Texture = 'default_native'
-    end
 
     item.Events.OnOpen = {}
     item.Events.OnClose = {}
@@ -1763,26 +1743,6 @@ function CreateMenu(info)
             end
 
             rawset(t.data, k, v)
-
-            if (key == 'Theme' or key == 'theme') then
-                local theme_value = string.lower(U:Ensure(v, 'default'))
-
-                if (theme_value == 'native') then
-                    rawset(t.data, 'color', { R = 255, G = 255, B = 255 })
-
-                    local texture = U:Ensure(rawget(t.data, 'Texture'), 'default')
-
-                    if (texture == 'default') then
-                        rawset(t.data, 'Texture', 'default_native')
-                    end
-                elseif (theme_value == 'default') then
-                    local texture = U:Ensure(rawget(t.data, 'Texture'), 'default')
-
-                    if (texture == 'default_native') then
-                        rawset(t.data, 'Texture', 'default')
-                    end
-                end
-            end
 
             if (updateIndexTrigger) then
                 t:NewIndex(key, v)
@@ -1863,7 +1823,7 @@ _G.CreateMenu = CreateMenu
 --          https://choosealicense.com/licenses/gpl-3.0/
 -- Author: Thymon Arens <contact@arens.io>
 -- Name: MenuV
--- Version: 1.4.1
+-- Version: 1.0.0
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 local assert = assert
@@ -2000,17 +1960,16 @@ end
 ---@param texture string Name of texture example: "default"
 ---@param dictionary string Name of dictionary example: "menuv"
 ---@param namespace string Namespace of Menu
+---@param theme string Theme of Menu
 ---@return Menu
-function MenuV:CreateMenu(title, subtitle, r, g, b, texture, dictionary, namespace)
+function MenuV:CreateMenu(title, subtitle, r, g, b, texture, dictionary, namespace, theme)
     local menu = CreateMenu({
-        Theme = 'native',
+        Theme = theme,
         Title = title,
         Subtitle = subtitle,
-        Position = 'topleft',
         R = r,
         G = g,
         B = b,
-        Size = 'size-110',
         Texture = texture,
         Dictionary = dictionary,
         Namespace = namespace
