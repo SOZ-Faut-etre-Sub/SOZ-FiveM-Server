@@ -1,0 +1,507 @@
+/*
+----------------------- [ MenuV ] -----------------------
+-- GitHub: https://github.com/ThymonA/menuv/
+-- License: GNU General Public License v3.0
+--          https://choosealicense.com/licenses/gpl-3.0/
+-- Author: Thymon Arens <contact@arens.io>
+-- Name: MenuV
+-- Version: 1.0.0
+-- Description: FiveM menu library for creating menu's
+----------------------- [ MenuV ] -----------------------
+*/
+@font-face {
+    font-family: 'SignPainter';
+    font-style: normal;
+    font-weight: normal;
+    src: local('../fonts/SignPainter'), url('../fonts/SignPainterHouseScript.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'TTCommons';
+    font-style: normal;
+    font-weight: normal;
+    src: local('../fonts/TTCommons'), url('../fonts/TTCommons.woff') format('woff');
+}
+
+html,
+body {
+    overflow: hidden;
+    color: white;
+    background-color: transparent;
+}
+
+* .hide,
+html .hide,
+body .hide,
+div .hide,
+.menuv.native.hide {
+    display: none !important;
+    opacity: 0;
+}
+
+.menuv.native {
+    min-width: 30em;
+    max-width: 30em;
+    max-height: 90vh;
+    margin-top: 1em;
+    margin-left: 1em;
+    font-size: 0.85em;
+}
+
+.menuv.native.topcenter {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menuv.native.topright {
+    margin-right: 1em;
+    margin-left: auto;
+}
+
+.menuv.native.centerleft {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.menuv.native.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.menuv.native.centerright {
+    position: absolute;
+    top: 50%;
+    right: 1em;
+    transform: translateY(-50%);
+}
+
+.menuv.native.bottomleft {
+    position: absolute;
+    bottom: 1em;
+}
+
+.menuv.native.bottomcenter {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menuv.native.bottomright {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
+.menuv.native.size-100 {
+    zoom: 1;
+}
+.menuv.native.size-110 {
+    zoom: 1.1;
+}
+.menuv.native.size-125 {
+    zoom: 1.25;
+}
+.menuv.native.size-150 {
+    zoom: 1.50;
+}
+.menuv.native.size-175 {
+    zoom: 1.75;
+}
+.menuv.native.size-200 {
+    zoom: 2;
+}
+
+.menuv.native .menuv-header {
+    height: 2em;
+    max-height: 4.25em;
+    line-height: 2.25em;
+    width: 100%;
+    text-align: center;
+    letter-spacing: auto;
+    font-size: 3.5em;
+    font-weight: normal;
+    font-family: 'SignPainter';
+    background-color: black;
+    overflow: hidden;
+}
+
+.menuv.native .menuv-header strong {
+    position: relative;
+    z-index: 1;
+    color: white;
+    max-width: 1em;
+    font-weight: normal;
+}
+
+.menuv.native .menuv-header .menuv-bg-icon {
+    display: flex;
+    position: fixed;
+    max-height: 4.25em;
+    max-width: 4.25em;
+    overflow: hidden;
+    top: 0.6em;
+    margin-left: 9.8em;
+}
+
+.menuv.native .menuv-header .menuv-bg-icon i,
+.menuv.native .menuv-header .menuv-bg-icon svg {
+    font-size: 5em;
+    opacity: 0.5;
+    color: blue;
+}
+
+.menuv.native .menuv-subheader {
+    background-color: black !important;
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.125em;
+    line-height: auto;
+    text-transform: uppercase;
+    padding-top: 0.125em;
+    padding-bottom: 0.375em;
+    padding-left: 0.5em;
+    height: auto;
+    color: #266e2d !important;
+}
+
+.menuv.native .menuv-items {
+    background-color: rgba(0, 0, 0, 0.65);
+    padding-bottom: 0.5em;
+    max-height: 50.75vh;
+    overflow: hidden;
+    color: white;
+}
+
+.menuv.native.size-100 .menuv-items {
+    max-height: 32.2vh;
+}
+
+.menuv.native.size-110 .menuv-items {
+    max-height: 32.2vh;
+}
+
+.menuv.native.size-125 .menuv-items {
+    max-height: 32.2vh;
+}
+
+.menuv.native.size-150 .menuv-items {
+    max-height: 32.2vh;
+}
+
+.menuv.native.size-175 .menuv-items {
+    max-height: 32.2vh;
+}
+
+.menuv.native.size-200 .menuv-items {
+    max-height: 32.2vh;
+}
+
+.menuv.native .menuv-items .menuv-item {
+    padding: 0.25em 0.50em;
+    margin: 0;
+    font-size: 1em;
+    max-height: auto;
+    height: auto;
+    line-height: 1.25em;
+    color: white;
+    width: 100%;
+    min-width: 100%;
+    max-width: 30em;
+}
+
+.menuv.native .menuv-items .flex-left {
+    justify-content: left;
+}
+
+.menuv.native .menuv-items .item-title {
+    font-family: 'TTCommons';
+    font-weight: 400;
+    font-size: 1.35em;
+    padding-top: 0.25em;
+    word-break: break-all;
+}
+
+.menuv.native .menuv-items .item-icon {
+    width: 2.5em;
+    max-width: 2.5em;
+    margin-right: 5px;
+}
+
+.menuv.native .menuv-items .menuv-item.disabled .item-icon {
+    text-decoration: none !important;
+}
+
+.menuv.native .menuv-items .menuv-item i,
+.menuv.native .menuv-items .menuv-item svg {
+    float: right;
+    margin-top: 0.125em;
+    font-size: 1.2em;
+}
+
+.menuv.native .menuv-items .menuv-item.active {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.menuv.native .menuv-items .menuv-item.disabled {
+    opacity: 0.75;
+    background: #383838;
+}
+
+.menuv.native .menuv-items .menuv-item.active i,
+.menuv.native .menuv-items .menuv-item.active svg {
+    color: black;
+}
+
+.menuv.native .menuv-items span.menuv-icon {
+    margin-left: 2.5px;
+    margin-right: 5px;
+    border-right: 1px solid white;
+    padding-right: 5px;
+    float: left;
+    width: 2em;
+    text-align: center;
+}
+
+.menuv.native .menuv-items span.menuv-title {
+    word-break: break-all;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 1.25em;
+    font-weight: 600;
+    letter-spacing: normal;
+    padding: none;
+    margin: none;
+}
+
+.menuv.native .menuv-items .menuv-item.active span.menuv-icon {
+    border-right: 1px solid black;
+}
+
+.menuv.native .menuv-items .menuv-item {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
+    border-top: none !important;
+}
+
+.menuv.native .menuv-items span.menuv-options {
+    float: right;
+    font-size: 0.9em;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.menuv.native .menuv-items .menuv-item.active span.menuv-options {
+    font-weight: 700;
+}
+
+.menuv.native .menuv-items span.menuv-options i,
+.menuv.native .menuv-items span.menuv-options svg {
+    float: unset;
+    font-size: unset;
+}
+
+.menuv.native .menuv-items span.menuv-options i:first-child,
+.menuv.native .menuv-items span.menuv-options svg:first-child {
+    margin-right: 0.25em;
+}
+
+.menuv.native .menuv-items span.menuv-options i:last-child,
+.menuv.native .menuv-items span.menuv-options svg:last-child {
+    margin-left: 0.25em;
+}
+
+.menuv.native .menuv-items span.menuv-options span.menuv-btn {
+    background-color: white;
+    color: black;
+    padding: 0.25em 0.5em;
+    margin: 0.125em;
+    font-weight: bold;
+    font-weight: 500;
+    border-radius: 0.125em;
+}
+
+.menuv.native .menuv-items .menuv-item span.menuv-options span.menuv-btn {
+    background-color: transparent;
+    color: white;
+}
+
+.menuv.native .menuv-items .menuv-item.active span.menuv-options span.menuv-btn {
+    background-color: black;
+    color: white;
+}
+
+.menuv.native .menuv-items span.menuv-options span.menuv-btn.active {
+    background-color: blue;
+    color: white;
+    font-weight: 700;
+}
+
+.menuv.native .menuv-items .menuv-item.active span.menuv-options span.menuv-btn.active {
+    background-color: blue;
+    color: white;
+}
+
+.menuv.native .menuv-items input[type="range"] {
+    display: flex;
+    float: right;
+    -webkit-appearance: none;
+    max-width: 6.5em;
+    margin-top: 0.15em;
+}
+
+.menuv.native .menuv-items input[type="range"]:focus {
+    outline: none;
+}
+
+.menuv.native .menuv-items input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #000000;
+    background: blue;
+    border-radius: 0;
+    border: 0px solid #000000;
+}
+
+.menuv.native .menuv-items .menuv-item.active input[type="range"]::-webkit-slider-runnable-track {
+    background: black;
+}
+
+.menuv.native .menuv-items input[type="range"]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    height: 18px;
+    width: 5px;
+    border-radius: 0;
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 1);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -7px;
+}
+
+.menuv.native .menuv-items .menuv-item.active input[type="range"]::-webkit-slider-thumb {
+    background: blue;
+    border: 1px solid rgba(0, 0, 255, 0.25);
+}
+
+.menuv.native .menuv-items input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: blue;
+}
+
+.menuv.native .menuv-items .menuv-item.active input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: black;
+}
+
+.menuv.native .menuv-items .menuv-desc {
+    display: none;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    position: absolute;
+    width: 100%;
+    max-width: 17.5em;
+    margin-left: 17.5em;
+    margin-top: -0.25em;
+    font-weight: 400;
+    font-size: 0.9em;
+    padding: 0.75em 1em;
+    line-height: 1.25em;
+    border-left: 0.375em solid blue;
+}
+
+.menuv.native .menuv-items .menuv-item.active .menuv-desc {
+    display: initial;
+    opacity: 1;
+}
+
+.menuv.native .menuv-items .menuv-desc strong {
+    color: white;
+}
+
+.menuv.native .menuv-items .menuv-desc table {
+    margin-left: -0.75em;
+    width: calc(100% + 0.75em);
+}
+
+.menuv.native .menuv-items .menuv-desc table th {
+    color: white;
+    padding: 2px 5px;
+}
+
+.menuv.native .menuv-items .menuv-desc table td {
+    padding: 2px 5px;
+}
+
+.menuv.native .menuv-items .menuv-label {
+    float: right;
+    font-size: 1.125em;
+    font-weight: 800;
+}
+
+.menuv.native .menuv-pagination {
+    padding: 0.5em;
+    max-width: 20em;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    border-top: 2px solid white;
+    margin-top: 1em;
+}
+
+.menuv.native .menuv-pagination .menu-pagination-option {
+    display: inline-block;
+    height: 1.5em;
+    width: 3em;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 2.5px;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    font-size: 0.8em;
+}
+
+.menuv.native .menuv-pagination .menu-pagination-option.active {
+    background-color: red;
+    color: white;
+}
+
+.menuv.native .menuv-pagination .menu-pagination-ellipsis {
+    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+}
+
+.menuv.native .menuv-description {
+    border-top: 2px solid black;
+    background-color: rgba(0, 0, 0, 0.65);
+    width: 100%;
+    max-width: 30em;
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+    text-align: left;
+}
+
+.menuv.native .menuv-description strong {
+    color: white;
+    font-family: 'TTCommons';
+    font-weight: 400;
+    font-size: 1.15em;
+}
