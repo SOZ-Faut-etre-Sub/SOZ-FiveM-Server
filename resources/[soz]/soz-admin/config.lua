@@ -1,0 +1,5 @@
+Config = {}
+
+Config.AllowedRole = {
+    'admin',
+}
