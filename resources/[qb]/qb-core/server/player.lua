@@ -156,6 +156,10 @@ function QBCore.Player.CreatePlayer(PlayerData)
     self.Functions = {}
     self.PlayerData = PlayerData
 
+    self.Functions.GetName = function()
+        return self.PlayerData.charinfo.firstname .. ' ' .. self.PlayerData.charinfo.lastname
+    end
+
     self.Functions.UpdatePlayerData = function(dontUpdateChat)
         TriggerClientEvent('QBCore:Player:SetPlayerData', self.PlayerData.source, self.PlayerData)
         if dontUpdateChat == nil then

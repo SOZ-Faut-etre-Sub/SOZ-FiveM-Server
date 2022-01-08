@@ -25,6 +25,7 @@ server_scripts {
 
     'server/command.lua',
     'server/actions.lua',
+    'server/events.lua',
 }
 
 ui_page 'ui/index.html'
