@@ -47,6 +47,7 @@ end)
 
 RegisterNUICallback('closeNUI', function(data, cb)
     SetNuiFocus(false, false)
+    TriggerServerEvent('inventory:server:closeInventory', data.target)
     cb(true)
 end)
 
@@ -67,9 +68,13 @@ CreateThread(function()
                             false, false, 2)
 
                     if dist <= 2.0 then
-                        QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
-                        if IsControlPressed(1, 51) then
-                            TriggerServerEvent('inventory:server:openInventory', id)
+                        if storage.state == nil then
+                            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
+                            if IsControlJustPressed(1, 51) then
+                                TriggerServerEvent('inventory:server:openInventory', id)
+                            end
+                        else
+                            QBCore.Functions.ShowHelpNotification("~r~Stockage déjà utilisé par ~o~" .. storage.state)
                         end
                     end
                 end
@@ -80,3 +85,8 @@ CreateThread(function()
     end
 end)
 
+RegisterNetEvent('inventory:client:updateStorageState', function(name, state)
+    if Config.Storages[name] then
+        Config.Storages[name].state = state
+    end
+end)

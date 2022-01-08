@@ -58,7 +58,15 @@ window.addEventListener("message", (event) => {
 window.onkeyup = function (event) {
   if (event.key === 'Escape') {
     document.querySelector('body').style.opacity = 0
-    fetch(`${INVENTORY_ENDPOINT}/closeNUI`, {  method: 'POST' });
+    fetch(`${INVENTORY_ENDPOINT}/closeNUI`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        target: targetInventory.dataset.inventoryId,
+      })
+    });
   }
 }
 

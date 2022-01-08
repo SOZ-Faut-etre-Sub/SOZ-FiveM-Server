@@ -58,6 +58,7 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
             items     = type(items) == 'table' and items,
             changed   = false,
             open      = false,
+            user      = nil,
             time      = os.time()
         }
 
