@@ -1,0 +1,29 @@
+# No IDE Folders
+.idea
+
+.docker
+
+npwd_temp
+
+resources/html
+
+phone/.eslintcache
+
+# Node Modules and Built Folders
+node_modules
+build
+dist
+
+# Error Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Mac thing
+.DS_Store
+
+# Debug logs
+sv_npwd.log
+
+# FXServer Yarn
+.yarn.installed

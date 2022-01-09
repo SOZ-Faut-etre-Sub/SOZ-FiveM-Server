@@ -1,0 +1,9 @@
+build
+dist
+coverage
+node_modules
+.idea
+.github
+.vscode
+resources/html
+resources/dist
