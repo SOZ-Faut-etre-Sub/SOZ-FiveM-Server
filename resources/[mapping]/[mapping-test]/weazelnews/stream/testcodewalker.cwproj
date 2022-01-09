@@ -1,0 +1,28 @@
+<CodeWalkerProject>
+  <Name>New CodeWalker Project</Name>
+  <Version value="1" />
+  <YmapFilenames>
+    <Item>hei_kt1_12_strm_0.ymap</Item>
+    <Item>int_wnews_garag_milo_.ymap</Item>
+    <Item>int_wnews_milo_.ymap</Item>
+    <Item>kt1_occl_00.ymap</Item>
+    <Item>kt1_occl_01.ymap</Item>
+  </YmapFilenames>
+  <YtypFilenames>
+    <Item>int_mp_wnews.ytyp</Item>
+    <Item>wnews_props.ytyp</Item>
+  </YtypFilenames>
+  <YbnFilenames>
+    <Item>hi@_wnews.ybn</Item>
+    <Item>hi@_wnewsgarag.ybn</Item>
+    <Item>hi@kt1_12_0.ybn</Item>
+    <Item>kt1_12_0.ybn</Item>
+    <Item>wnews.ybn</Item>
+    <Item>wnewsgarag.ybn</Item>
+  </YbnFilenames>
+  <YndFilenames />
+  <YnvFilenames />
+  <TrainsFilenames />
+  <ScenarioFilenames />
+  <AudioRelFilenames />
+</CodeWalkerProject>
