@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunknpwd_nui=self.webpackChunknpwd_nui||[]).push([[1444],{1444:function(c,n,e){e.r(n);e(2791);var u=e(567),r=e(184);n.default=function(){return(0,r.jsx)(u.Z,{fontSize:"large"})}},567:function(c,n,e){var u=e(4223),r=e(184);n.Z=(0,u.Z)([(0,r.jsx)("circle",{cx:"12",cy:"12",r:"3.2"},"0"),(0,r.jsx)("path",{d:"M9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"},"1")],"CameraAlt")}}]);
+//# sourceMappingURL=1444.4142f507.chunk.js.map
