@@ -22,6 +22,9 @@ server_scripts {
     'server/containers/armory.lua',
     'server/containers/fridge.lua',
     'server/containers/player.lua',
+    'server/containers/seizure.lua',
+    'server/containers/storage.lua',
+    'server/containers/trunk.lua',
 
     'server/command.lua',
     'server/actions.lua',
