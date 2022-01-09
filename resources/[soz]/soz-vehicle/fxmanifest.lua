@@ -10,5 +10,7 @@ client_scripts {
 }
 
 dependencies {
+    'qb-core',
+    'soz-hud',
     'menuv',
 }

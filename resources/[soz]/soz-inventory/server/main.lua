@@ -25,7 +25,7 @@ MySQL.ready(function()
                     local st = Config.Storages[v.name]
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner, json.decode(v.inventory or '[]'))
                     StorageNotLoaded[v.name] = nil
-                else
+                elseif v.type ~= 'trunk' then
                     exports['soz-monitor']:Log('ERROR', ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
                 end
             end
