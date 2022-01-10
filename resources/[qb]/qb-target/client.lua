@@ -1070,3 +1070,24 @@ end)
 -- Debug Option
 
 if Config.Debug then Load('debug') end
+
+RegisterNetEvent('sitchair')
+AddEventHandler('sitchair', function(data)
+    TriggerEvent("soz:client:sit", data)
+end)
+
+local sitchair = {
+	1580642483,
+	-109356459,
+}
+
+exports['qb-target']:AddTargetModel(sitchair, {
+    options = {
+        {
+            event = "sitchair",
+            icon = "fas fa-coffee",
+            label = "s'asseoir",
+        },
+    },
+    distance = 1
+})
