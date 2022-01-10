@@ -1,0 +1,448 @@
+<div class="group" id="brow">
+    <h2 class="header">Brow</h2>
+    <div class="slider interval">
+        <h3 class="header">Depth</h3>
+        <div class="valuelabel left">In</div>
+        <div class="valuelabel right">Out</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="eyebrows_6" data-index="7">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Height</h3>
+        <div class="valuelabel left">Down</div>
+        <div class="valuelabel right">Up</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="eyebrows_5" data-index="6">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="eyes">
+    <h2 class="header">Eyes</h2>
+    <div class="list">
+        <h3 class="header">Color</h3>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <select class="eyecolor" id="eye_color">
+                <!-- NOTE: Populated via javascript -->
+                <option value="0" selected="selected">Green</option>
+                <option value="1">Emerald</option>
+                <option value="2">Light Blue</option>
+                <option value="3">Ocean Blue</option>
+                <option value="4">Light Brown</option>
+                <option value="5">Dark Brown</option>
+                <option value="6">Hazel</option>
+                <option value="7">Dark Gray</option>
+                <option value="8">Light Gray</option>
+            </select>
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Opening</h3>
+        <div class="valuelabel left">Squint</div>
+        <div class="valuelabel right">Wide</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="eye_squint" data-index="11">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="nose">
+    <h2 class="header">Nose</h2>
+    <div class="slider interval">
+        <h3 class="header">Width</h3>
+        <div class="valuelabel left">Narrow</div>
+        <div class="valuelabel right">Wide</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="nose_1" data-index="0">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Height</h3>
+        <div class="valuelabel left">Down</div>
+        <div class="valuelabel right">Up</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="nose_2" data-index="1">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Length</h3>
+        <div class="valuelabel left">Short</div>
+        <div class="valuelabel right">Long</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="nose_3" data-index="2">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Bridge shape</h3>
+        <div class="valuelabel left">Curved</div>
+        <div class="valuelabel right">Crooked</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="nose_4" data-index="3">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Bridge twist</h3>
+        <div class="valuelabel left">Left</div>
+        <div class="valuelabel right">Right</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="nose_6" data-index="5">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Tip direction</h3>
+        <div class="valuelabel left">Down</div>
+        <div class="valuelabel right">Up</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="nose_5" data-index="4">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="cheeks">
+    <h2 class="header">Cheeks</h2>
+    <div class="slider interval">
+        <h3 class="header">Shape</h3>
+        <div class="valuelabel left">Gaunt</div>
+        <div class="valuelabel right">Puffed</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="cheeks_3" data-index="10">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Cheekbones width</h3>
+        <div class="valuelabel left">Flat</div>
+        <div class="valuelabel right">Protruding</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="cheeks_2" data-index="9">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Cheekbones height</h3>
+        <div class="valuelabel left">Low</div>
+        <div class="valuelabel right">High</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="cheeks_1" data-index="8">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="jaw">
+    <h2 class="header">Jaw</h2>
+    <div class="slider interval">
+        <h3 class="header">Jawbone base</h3>
+        <div class="valuelabel left">Narrow</div>
+        <div class="valuelabel right">Wide</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="jaw_1" data-index="13">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Jawbone angle</h3>
+        <div class="valuelabel left">Round</div>
+        <div class="valuelabel right">Square</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="jaw_2" data-index="14">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="chin">
+    <h2 class="header">Chin</h2>
+    <div class="slider interval">
+        <h3 class="header">Width</h3>
+        <div class="valuelabel left">Pointed</div>
+        <div class="valuelabel right">Square</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="chin_3" data-index="17">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Length</h3>
+        <div class="valuelabel left">Short</div>
+        <div class="valuelabel right">Long</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="chin_1" data-index="15">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Alignment</h3>
+        <div class="valuelabel left">Receding</div>
+        <div class="valuelabel right">Protruding</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="chin_2" data-index="16">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider interval">
+        <h3 class="header">Shape</h3>
+        <div class="valuelabel left">Rounded</div>
+        <div class="valuelabel right">Bum</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature" id="chin_4" data-index="18">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="lips">
+    <h2 class="header">Lips</h2>
+    <div class="slider interval">
+        <h3 class="header">Lip fullness</h3>
+        <div class="valuelabel left">Thin</div>
+        <div class="valuelabel right">Full</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input type="range" min="-100" max="100" class="facefeature inverted" id="lip_thickness" data-index="12">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+</div>
+<div class="group" id="skin">
+    <h2 class="header">Skin</h2>
+    <div class="subgroup">
+        <div class="list">
+            <h3 class="header">Blemishes</h3>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <!--
+                    NOTE:
+                    Some skin blemishes have an extra, hidden property that adds an effect to the body as well,
+                    the effect is the same for all the skin blemishes.
+
+                    Affected ones are:
+                    Cheek Rash, Face Rash, Eyesore, Chin Rash, Greasy, Acne Scarring
+
+                    In GTA Online this effect does not have an opacity and does not share it with skin blemishes,
+                    even if skin blemishes opacity is set to zero, this effect appears in full.
+                    I decided to improve on it and link the blemishes opacity slider to both effects.
+
+                    This effect is the overlay index 12 and has two variants but only one ever appears in game, 
+                    the '0' seems to be unused. Only way to disable it, is to set it to 255.
+                -->
+                <select class="headoverlayextra" id="blemishes_1" data-index="0" data-keyextra="bodyb_3" data-indexextra="12">
+                    <option value="255" data-extra="255" selected="selected">None</option>
+                    <option value="0"  data-extra="255">Measles</option>
+                    <option value="1"  data-extra="255">Pimples</option>
+                    <option value="2"  data-extra="255">Spots</option>
+                    <option value="3"  data-extra="255">Break Out</option>
+                    <option value="4"  data-extra="255">Blackheads</option>
+                    <option value="5"  data-extra="255">Build Up</option>
+                    <option value="6"  data-extra="255">Pustules</option>
+                    <option value="7"  data-extra="255">Zits</option>
+                    <option value="8"  data-extra="255">Full Acne</option>
+                    <option value="9"  data-extra="255">Acne</option>
+                    <option value="10" data-extra="1">Cheek Rash</option>
+                    <option value="11" data-extra="1">Face Rash</option>
+                    <option value="12" data-extra="255">Picker</option>
+                    <option value="13" data-extra="255">Puberty</option>
+                    <option value="14" data-extra="1">Eyesore</option>
+                    <option value="15" data-extra="1">Chin Rash</option>
+                    <option value="16" data-extra="255">Two Face</option>
+                    <option value="17" data-extra="255">T Zone</option>
+                    <option value="18" data-extra="1">Greasy</option>
+                    <option value="19" data-extra="255">Marked</option>
+                    <option value="20" data-extra="1">Acne Scarring</option>
+                    <option value="21" data-extra="255">Full Acne Scarring</option>
+                    <option value="22" data-extra="255">Cold Sores</option>
+                    <option value="23" data-extra="255">Impetigo</option>
+                </select>
+                <button class="arrow right"></button>
+            </div>
+        </div>
+        <div class="slider opacity">
+            <h3 class="header">Blemishes opacity</h3>
+            <div class="valuelabel center">50%</div>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <input type="range" min="0" max="100" class="headoverlayextra" id="blemishes_2" data-index="0" data-keyextra="bodyb_4" data-indexextra="12">
+                <button class="arrow right"></button>
+            </div>
+        </div>
+    </div>
+    <div class="subgroup">
+        <div class="list">
+            <h3 class="header">Aging</h3>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <select class="headoverlay" id="age_1" data-index="3">
+                    <option value="255" selected="selected">None</option>
+                    <option value="0">Crow's Feet</option>
+                    <option value="1">First Signs</option>
+                    <option value="2">Middle Aged</option>
+                    <option value="3">Worry Lines</option>
+                    <option value="4">Depression</option>
+                    <option value="5">Distinguished</option>
+                    <option value="6">Aged</option>
+                    <option value="7">Weathered</option>
+                    <option value="8">Wrinkled</option>
+                    <option value="9">Sagging</option>
+                    <option value="10">Tough Life</option>
+                    <option value="11">Vintage</option>
+                    <option value="12">Retired</option>
+                    <option value="13">Junkie</option>
+                    <option value="14">Geriatric</option>
+                </select>
+                <button class="arrow right"></button>
+            </div>
+        </div>
+        <div class="slider opacity">
+            <h3 class="header">Aging opacity</h3>
+            <div class="valuelabel center">50%</div>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <input type="range" min="0" max="100" class="headoverlay" id="age_2" data-index="3">
+                <button class="arrow right"></button>
+            </div>
+        </div>
+    </div>
+    <div class="subgroup">
+        <div class="list">
+            <h3 class="header">Complexion</h3>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <select class="headoverlay" id="complexion_1" data-index="6">
+                    <option value="255" selected="selected">None</option>
+                    <option value="0">Rosy Cheeks</option>
+                    <option value="1">Stubble Rash</option>
+                    <option value="2">Hot Flush</option>
+                    <option value="3">Sun Burn</option>
+                    <option value="4">Bruised</option>
+                    <option value="5">Alcoholic</option>
+                    <option value="6">Patchy</option>
+                    <option value="7">Totem</option>
+                    <option value="8">Blood Vessels</option>
+                    <option value="9">Damaged</option>
+                    <option value="10">Pale</option>
+                    <option value="11">Ghostly</option>
+                </select>
+                <button class="arrow right"></button>
+            </div>
+        </div>
+        <div class="slider opacity">
+            <h3 class="header">Complexion opacity</h3>
+            <div class="valuelabel center">50%</div>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <input type="range" min="0" max="100" class="headoverlay" id="complexion_2" data-index="6">
+                <button class="arrow right"></button>
+            </div>
+        </div>
+    </div>
+    <div class="subgroup">
+        <div class="list">
+            <h3 class="header">Moles & Freckles</h3>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <!--
+                    NOTE:
+                    Moles & Freckles are a face property which might also affect the body.
+                    Each face option is paired with a body effect (can be 'None').
+
+                    'Body Blemishes' overlay functions support this effect,
+                    they are NOT a separate customization option. 
+
+                    In GTA Online opacity only affects the face part, the body effect is always full
+                    (1.0 opacity) just like for skin blemishes. Similarly to skin blemishes, 
+                    I decided to improve on it and link the opacity slider to both effects.
+
+                    Sadly, I could not determine with 100% accurracy which options are paired up 
+                    with what effect. The pairings data is all based on 'looking and comparing'.
+                -->
+                <select class="headoverlayextra" id="moles_1" data-index="9" data-keyextra="bodyb_1" data-indexextra="11">
+                    <option value="255" data-extra="255" selected="selected">None</option>
+                    <option value="0"  data-extra="255">Cherub</option>
+                    <option value="1"  data-extra="10">All Over</option>
+                    <option value="2"  data-extra="11">Irregular</option>
+                    <option value="3"  data-extra="11">Dot Dash</option>
+                    <option value="4"  data-extra="10">Over the Bridge</option>
+                    <option value="5"  data-extra="10">Baby Doll</option>
+                    <option value="6"  data-extra="10">Pixie</option>
+                    <option value="7"  data-extra="10">Sun Kissed</option>
+                    <option value="8"  data-extra="6">Beauty Marks</option>
+                    <option value="9"  data-extra="1">Line Up</option>
+                    <option value="10" data-extra="7">Modelesque</option>
+                    <option value="11" data-extra="3">Occasional</option>
+                    <option value="12" data-extra="9">Speckled</option>
+                    <option value="13" data-extra="1">Rain Drops</option>
+                    <option value="14" data-extra="2">Double Dip</option>
+                    <option value="15" data-extra="8">One Sided</option>
+                    <option value="16" data-extra="7">Pairs</option>
+                    <option value="17" data-extra="2">Growth</option>
+                </select>
+                <button class="arrow right"></button>
+            </div>
+        </div>
+        <div class="slider opacity">
+            <h3 class="header">Moles & Freckles opacity</h3>
+            <div class="valuelabel center">50%</div>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <input type="range" min="0" max="100" class="headoverlayextra" id="moles_2" data-index="9" data-keyextra="bodyb_2" data-indexextra="11">
+                <button class="arrow right"></button>
+            </div>
+        </div>
+    </div>
+    <div class="subgroup">
+        <div class="list">
+            <h3 class="header">Damage</h3>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <select class="headoverlay" id="sun_1" data-index="7">
+                    <option value="255" selected="selected">None</option>
+                    <option value="0">Uneven</option>
+                    <option value="1">Sandpaper</option>
+                    <option value="2">Patchy</option>
+                    <option value="3">Rough</option>
+                    <option value="4">Leathery</option>
+                    <option value="5">Textured</option>
+                    <option value="6">Coarse</option>
+                    <option value="7">Rugged</option>
+                    <option value="8">Creased</option>
+                    <option value="9">Cracked</option>
+                    <option value="10">Gritty</option>
+                </select>
+                <button class="arrow right"></button>
+            </div>
+        </div>
+        <div class="slider opacity">
+            <h3 class="header">Damage opacity</h3>
+            <div class="valuelabel center">50%</div>
+            <div class="controls">
+                <button class="arrow left"></button>
+                <input type="range" min="0" max="100" class="headoverlay" id="sun_2" data-index="7">
+                <button class="arrow right"></button>
+            </div>
+        </div>
+    </div>
+</div>

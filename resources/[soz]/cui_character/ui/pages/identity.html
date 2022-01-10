@@ -1,0 +1,112 @@
+<div class="group" id="gender">
+    <h2 class="header">Gender</h2>
+    <div class="radioselect" id="sex">
+        <div class="radioitem">
+            <input type="radio" name="sex" value="0" id="male" checked />
+            <label for="male">
+                Male
+                <img src="assets/icons/symbol-male.svg">
+            </label>
+        </div>
+        <div class="radioitem">
+            <input type="radio" name="sex" value="1" id="female" />
+            <label for="female">
+                Female
+                <img src="assets/icons/symbol-female.svg">
+            </label>
+        </div>
+    </div>
+</div>
+<div class="group" id="heritage">
+    <h2 class="header">Heritage</h2>
+    <div id="parentswindow">
+        <img id="parentsdad" src="">
+        <img id="parentsmom" src="">
+    </div>
+    <div class="list">
+        <h3 class="header">Mom</h3>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <select class="headblend" id="mom">
+                <option value="21" data-portrait="female_0" selected="selected">Hannah</option>
+                <option value="22" data-portrait="female_1">Audrey</option>
+                <option value="23" data-portrait="female_2">Jasmine</option>
+                <option value="24" data-portrait="female_3">Gisele</option>
+                <option value="25" data-portrait="female_4">Amelia</option>
+                <option value="26" data-portrait="female_5">Isabella</option>
+                <option value="27" data-portrait="female_6">Zoe</option>
+                <option value="28" data-portrait="female_7">Ava</option>
+                <option value="29" data-portrait="female_8">Camila</option>
+                <option value="30" data-portrait="female_9">Violet</option>
+                <option value="31" data-portrait="female_10">Sophia</option>
+                <option value="32" data-portrait="female_11">Evelyn</option>
+                <option value="33" data-portrait="female_12">Nicole</option>
+                <option value="34" data-portrait="female_13">Ashley</option>
+                <option value="35" data-portrait="female_14">Grace</option>
+                <option value="36" data-portrait="female_15">Brianna</option>
+                <option value="37" data-portrait="female_16">Natalie</option>
+                <option value="38" data-portrait="female_17">Olivia</option>
+                <option value="39" data-portrait="female_18">Elizabeth</option>
+                <option value="40" data-portrait="female_19">Charlotte</option>
+                <option value="41" data-portrait="female_20">Emma</option>
+                <option value="45" data-portrait="special_female_0">Misty</option>
+            </select>
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="list">
+        <h3 class="header">Dad</h3>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <select class="headblend" id="dad" data-type="headblend">
+                <option value="0" data-portrait="male_0"  selected="selected">Benjamin</option>
+                <option value="1" data-portrait="male_1">Daniel</option>
+                <option value="2" data-portrait="male_2">Joshua</option>
+                <option value="3" data-portrait="male_3">Noah</option>
+                <option value="4" data-portrait="male_4">Andrew</option>
+                <option value="5" data-portrait="male_5">Juan</option>
+                <option value="6" data-portrait="male_6">Alex</option>
+                <option value="7" data-portrait="male_7">Isaac</option>
+                <option value="8" data-portrait="male_8">Evan</option>
+                <option value="9" data-portrait="male_9">Ethan</option>
+                <option value="10" data-portrait="male_10">Vincent</option>
+                <option value="11" data-portrait="male_11">Angel</option>
+                <option value="12" data-portrait="male_12">Diego</option>
+                <option value="13" data-portrait="male_13">Adrian</option>
+                <option value="14" data-portrait="male_14">Gabriel</option>
+                <option value="15" data-portrait="male_15">Michael</option>
+                <option value="16" data-portrait="male_16">Santiago</option>
+                <option value="17" data-portrait="male_17">Kevin</option>
+                <option value="18" data-portrait="male_18">Louis</option>
+                <option value="19" data-portrait="male_19">Samuel</option>
+                <option value="20" data-portrait="male_20">Anthony</option>
+                <option value="42" data-portrait="special_male_0">Claude</option>
+                <option value="43" data-portrait="special_male_1">Niko</option>
+                <option value="44" data-portrait="special_male_2">John</option>
+            </select>
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <div class="slider contribution">
+        <h3 class="header">Resemblance</h3>
+        <div class="valuelabel left">50%</div>
+        <div class="valuelabel right">50%</div>
+        <div class="controls">
+            <div class="icon left"></div>
+            <input type="range" min="0" max="100" class="headblend" id="face_md_weight">
+            <div class="icon right"></div>
+        </div>
+    </div>
+    <div class="slider contribution">
+        <h3 class="header">Skin tone</h3>
+        <div class="valuelabel left">50%</div>
+        <div class="valuelabel right">50%</div>
+        <div class="controls">
+            <div class="icon left"></div>
+            <input type="range" min="0" max="100" class="headblend" id="skin_md_weight">
+            <div class="icon right"></div>
+        </div>
+    </div>
+</div>
+<div class="optional" id="pdata">
+</div>
