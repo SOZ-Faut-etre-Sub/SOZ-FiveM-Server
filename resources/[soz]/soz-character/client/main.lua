@@ -33,11 +33,6 @@ RegisterNetEvent('soz-character:client:closeNUIdefault', function()
     TriggerEvent('cui_character:open', { 'identity', 'features', 'style', 'apparel' }, false)
 end)
 
-RegisterNetEvent('soz-character:client:closeNUI', function()
-    DeleteEntity(charPed)
-    SetNuiFocus(false, false)
-end)
-
 RegisterNetEvent('soz-character:client:chooseChar', function()
     ShutdownLoadingScreen()
     ShutdownLoadingScreenNui()
