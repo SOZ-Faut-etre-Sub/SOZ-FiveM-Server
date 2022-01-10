@@ -10,7 +10,7 @@ table.insert(migrations, {
                 `nationality` varchar(50) DEFAULT NULL,
                 `birthdate` varchar(10) DEFAULT NULL,
                 `gender` ENUM('Homme','Femme'),
-                `spawn` ENUM('Nord','Sud')
+                `spawn` ENUM('Nord','Sud'),
                 PRIMARY KEY (`id`)
               ) ENGINE=InnoDB AUTO_INCREMENT=1;              
         ]],
@@ -31,7 +31,7 @@ table.insert(migrations, {
                 'Alien',
                 '1990-01-01',
                 'Femme',
-                'South'
+                'Sud'
             );
         ]],
         [[
@@ -51,7 +51,7 @@ table.insert(migrations, {
                 'Animal',
                 '1995-01-01',
                 'Homme',
-                'South'
+                'Sud'
             );
         ]]
     }
