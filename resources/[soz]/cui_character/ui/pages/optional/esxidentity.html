@@ -1,0 +1,113 @@
+<div class="group" id="personal">
+    <h2 class="header">Personal Data</h2>
+    <div class="datainput">
+        <h3 class="header">First name</h3>
+        <div class="controls">
+            <input id="firstname" class="name" type="text" name="firstname" spellcheck="false" placeholder="" onKeyDown="if(this.value.length==16 && event.keyCode!=8) return false;" onkeypress="if (isNumber(event) == true) return false;" onKeyUp="checkName('firstname')" onmouseup="checkName('firstname')">
+        </div>
+    </div>
+    <div class="datainput">
+        <h3 class="header">Last name</h3>
+        <div class="controls">
+            <input id="lastname" class="name" type="text" name="lastname" spellcheck="false" placeholder="" onKeyDown="if(this.value.length==16 && event.keyCode!=8) return false;" onkeypress="if (isNumber(event) == true) return false;" onKeyUp="checkName('lastname')" onmouseup="checkName('lastname')">
+        </div>
+    </div>
+    <div class="datainput">
+        <h3 class="header">Date of birth</h3>
+        <div class="controls">
+            <input id="dateofbirth" type="date" name="dateofbirth" placeholder="mm/dd/yyyy" dateformat="M d y" min="01/01/1900" max="12/31/2020" onkeypress="if ( isNaN(String.fromCharCode(event.keyCode) )) return false;" onchange="checkDOB()" onKeyUp="checkDOB()" onmouseup="checkDOB()">
+        </div>
+    </div>
+    <div class="slider">
+        <h3 class="header">Height</h3>
+        <div class="valuelabel center">0</div>
+        <div class="controls">
+            <button class="arrow left"></button>
+            <input id="height" type="range" min="0" max="100">
+            <button class="arrow right"></button>
+        </div>
+    </div>
+    <script>
+        // check as soon as the elements are there
+        checkName('firstname');
+        checkName('lastname');
+        checkDOB();
+
+        // Code adapted and modified from esx_identity
+        function isNumber(e) {
+            let key=e.which || e.KeyCode;
+            if ( key >=48 && key <= 57) {
+                return true; 
+            }
+            else {
+                return false;
+            }
+        }
+
+        function checkName(name) {
+            let target = document.getElementById(name);
+            let value = target.value;
+            let trimmed = value.trim();
+            if((trimmed.match(/^[a-zA-Z][0-9a-zA-Z .,'-]*$/) == null) ||
+              (trimmed != (trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase())) ||
+              (/\s/g.test(value))) {
+                target.parentElement.style.border = '0.15vh solid #E06666';
+            }
+            else {
+                if(value.length > 0 && value.length < 17) {
+                    target.parentElement.style.border = 'none';
+                }
+                else {
+                    target.parentElement.style.border = '0.15vh solid #E06666';
+                }
+            }
+        }
+
+        function checkDOB() {
+            let myDOB = document.getElementById('dateofbirth');
+            let date = new Date($('#dateofbirth').val());
+            day = date.getDate();
+            month = date.getMonth() + 1;
+            year = date.getFullYear();
+            if (isNaN(month) || isNaN(day) || isNaN(year)) {
+                myDOB.parentElement.style.border = '0.15vh solid #E06666';
+            }
+            else {
+                let dateInput = [month, day, year].join('/');
+
+                let regExp = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+                let dateArray = dateInput.match(regExp);
+
+                if (dateArray == null){
+                    return false;
+                }
+
+                month = dateArray[1];
+                day= dateArray[3];
+                year = dateArray[5];        
+
+                if (month < 1 || month > 12){
+                    myDOB.parentElement.style.border = '0.15vh solid #E06666';
+                }
+                else if (day < 1 || day> 31) { 
+                    myDOB.parentElement.style.border = '0.15vh solid #E06666';
+                }
+                else if ((month==4 || month==6 || month==9 || month==11) && day == 31) {
+                    myDOB.parentElement.style.border = '0.15vh solid #E06666';
+                }
+                else if (month == 2) {
+                    let isLeapYear = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+                    if (day> 29 || (day == 29 && !isLeapYear)){
+                        myDOB.parentElement.style.border = '0.15vh solid #E06666';
+                    }
+                }
+                else if ((year < identityLimits.yearmin) || (year > identityLimits.yearmax)) {
+                    myDOB.parentElement.style.border = '0.15vh solid #E06666';
+                }
+                else {
+                    myDOB.parentElement.style.border = 'none';
+                }
+            }
+        }
+    </script>
+</div>

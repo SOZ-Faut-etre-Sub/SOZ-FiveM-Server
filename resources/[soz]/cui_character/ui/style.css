@@ -1,0 +1,598 @@
+@font-face {
+    font-family: 'ChaletLondonNineteenSixty';
+    src: url('assets/fonts/chaletlondon1960.woff2') format('woff2')
+}
+
+.inputContainer {
+	position: absolute;
+	margin-top: 8px;
+	margin-left: 90%;
+	width: 200px;
+}
+.inputText {
+	position: relative;
+	display: flex;
+	float: left;
+	background: rgba(178, 178, 178, 0.2);
+	color: white;
+	border-style: solid;
+	border-color: black;
+	width: 30px;
+}
+
+.direct-go {
+    width: 45px;
+    height: 15px;
+    font-size: 10px;
+    outline: none;
+    border-radius: 0.5vh 0.5vh 0.5vh 0.5vh;
+    background: #ffffff33;
+    color: #fff;
+    border: 0.5px solid #ffffff00;
+}
+
+h2, h3 {
+    margin: 0;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'ChaletLondonNineteenSixty', sans-serif;
+    font-weight: bold;
+    user-select: none;
+    overflow: hidden;
+}
+
+.overlay {
+    display: none;
+    width: 110%;
+    height: 110%;
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    background-color: black;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+#camerapanel {
+    position: absolute;
+    width: 10vw;
+    height: 6vh;
+    left: 40vw;
+    top: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.cameraview {
+    flex: 1;
+    margin: 1%;
+    border: none;
+    outline: none;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 0.02vw solid rgba(255, 255, 255, 0.2);
+}
+
+.cameraview.active {
+    background-color: #f0f0f0;
+    border: 0.3vh solid #912db9; /*2d6eb9*/
+}
+
+.cameraview > img {
+    max-height: 80%;
+    max-width: 80%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.cameraview:hover:not(.active) {
+    background-color: #646464;
+}
+
+.cameraview.active > img {
+    filter: invert();
+}
+
+#main {
+    position: absolute;
+    width: 25vw;
+    right: 3vw;
+    top: 5vh;
+    min-height: calc(100% - 11vh);
+    display: flex;
+    flex-direction: column;
+}
+
+#tabs {
+    height: 8.5vh;
+    width: 100%;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-bottom: 0.5vh;
+}
+
+#tabs button {
+    position: relative;
+    display: inline-block;
+    background: none;
+    width: 5.3vw;
+    height: 100%;
+    font-size: 1.2vh;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 5vh 0 0 0;
+    color: white;
+    outline: none;
+    border: none;
+    border-right: 0.02vw solid rgba(255, 255, 255, 0.2);
+}
+
+#tabs button > img {
+    position: absolute;
+    width: 4vw;
+    height: 4vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -70%);
+    pointer-events: none;
+}
+
+/* only leftmost, visible element has the left border */
+#tabs button {
+    border-left: none;
+}
+
+#tabs button:first-child {
+    border-left: 0.02vw solid rgba(255, 255, 255, 0.2);
+}
+
+#tabs button[style*="display: none"] + button:not([style*="display: none"]) {
+    border-left: 0.02vw solid rgba(255, 255, 255, 0.2);
+}
+
+#tabs button:not([style*="display: none"]) + button {
+    border-left: none;
+}
+
+#tabs > button:not([style*="display: none"]) ~ * {
+    border-left: none!important;
+}
+
+#tabs .tablinks.active {
+    background-color: #f0f0f0;
+    border-top: 0.5vh solid #912db9;
+    color: black;
+}
+
+#tabs .tablinks:hover:not(.active) {
+    background-color: #646464;
+}
+
+#tabs .tablinks.active > img {
+    filter: invert();
+}
+
+#main .content {
+    width: 100%;
+    height: 72vh;
+    background: rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+    color: #f0f0f0;
+}
+
+::-webkit-scrollbar {
+    width: 0.4vw;
+}
+
+/*
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px #f0f0f0;
+}
+*/
+
+::-webkit-scrollbar-thumb {
+    background: #f0f0f0
+}
+
+.panelbottom {
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    height: 5vh;
+    margin-top: 0.5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.panelbottom button {
+    position: relative;
+    display: inline-block;
+    background: none;
+    height: 100%;
+    width: 10vw;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5vh;
+    color: white;
+    outline: none;
+    border: none;
+    border-right: 0.02vw solid rgba(255, 255, 255, 0.2);
+}
+
+.panelbottom button:first-of-type {
+    border-left: 0.02vw solid rgba(255, 255, 255, 0.2);
+}
+
+.panelbottom button:hover:not(.active) {
+    background-color: #646464;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    font-size: 1.5vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 25vw;
+    height: 17vh;
+}
+
+.popup .content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+}
+
+.popup > .content> .title {
+    background: rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5vh;
+    height: 2.5vh;
+    padding-top: 1%;
+    text-transform: uppercase;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.popup > .content> .message {
+    background: rgba(0, 0, 0, 0.5);
+    height: 8vh;
+    padding-top: 4vh;
+}
+
+/*      Inside category tabs    */
+input[type="radio"] {
+    display: none;
+}
+
+.tabcontent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.group {
+    width: 100%;
+    padding-bottom: 3vh;
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.group > h2 {
+    color: #f0f0f0;
+    text-align: left;
+    font-size: 1.7vh;
+    text-transform: uppercase;
+    letter-spacing: 0.03vw;
+}
+
+.radioselect {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.radioselect .radioitem {
+    display: inline-block;
+    width: 5vw;
+    height: 5vw;
+    position: relative;
+    text-align: center;
+}
+
+.radioitem label, .radioitem input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.radioitem label {
+    font-size: 1.4vh;
+    text-align: center;
+    padding: 6vh 0 0 0;
+    color: rgba(255, 255, 255, 0.2);
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+}
+
+.radioitem input[type="radio"]:checked + label {
+    color: white;
+    border: 2px solid white;
+}
+
+.radioitem input[type="radio"]:not(:checked) + label:hover {
+    border: 2px solid white;
+}
+
+.radioitem label img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -70%);
+    filter: opacity(0.2);
+    pointer-events: none;
+}
+
+.radioitem input[type="radio"]:checked + label img {
+    filter: none;
+}
+
+#parentswindow {
+    position: relative;
+    width: 20vw;
+    height: 10vw;
+    border: 2px solid white;
+    border-radius: 20px;
+    background-image: url('https://nui-img/pause_menu_pages_char_mom_dad/mumdadbg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+#parentswindow img {
+    width: 10vw;
+    height: auto;
+    position: absolute;
+}
+
+#parentswindow #parentsdad {
+    left: 43%;
+}
+#parentswindow #parentsmom {
+    left: 7%;
+}
+
+/*  Lists, sliders and color palettes   */
+h3 {
+    display: block;
+    width: 100%;
+    height: 15%;
+    position: absolute;
+    top: 2%;
+    left: 0%;
+    font-size: 1.4vh;
+    color: #f0f0f0;
+}
+
+.controls {
+    position: absolute;
+    bottom: 0%;
+    width: 20vw;
+    height: 4.2vh;
+    background-color: rgba(64, 64, 64, 0.4);
+    border-radius: 20vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls button {
+    height: 80%;
+    background: none;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    outline: none;
+}
+
+.controls button:hover {
+    background-size: 120% auto;
+}
+
+.list, .slider, .datainput {
+    position: relative;
+    width: 20vw;
+    height: 7vh;
+    display: inline-block;
+}
+
+.slider {
+    height: 9vh;
+}
+
+.subgroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.controls .arrow {
+    background-image: url('https://nui-img/mparrow/mp_arrowlarge');
+}
+
+.controls .arrow.left {
+    transform: scaleX(-1);
+}
+
+.list .controls select, .datainput .controls input {
+    -webkit-appearance: none;
+    outline: none;
+    width: 85%;
+    height: 80%;
+    font: inherit;
+    text-align-last: center;
+    border: none;
+    background: none;
+    color: #f0f0f0;
+    font-size: 1.8vh;
+    font-weight: normal;
+}
+
+.list .controls select {
+    pointer-events: none;
+}
+
+.datainput .controls input::-webkit-calendar-picker-indicator {
+    filter: invert();
+}
+
+.datainput .controls input::-webkit-datetime-edit-day-field:focus,
+.datainput .controls input::-webkit-datetime-edit-month-field:focus,
+.datainput .controls input::-webkit-datetime-edit-year-field:focus {
+    background: #912db9;
+    color: #f0f0f0;
+    outline: none;
+}
+
+.datainput .controls input::selection {
+    color: #f0f0f0;
+    background: #912db9;
+}
+
+.datainput .controls input[type=text] {
+    text-align: center
+}
+
+.slider input[type=range] {
+    -webkit-appearance: none;
+    background: 0 0;
+    width: 85%;
+    vertical-align: middle;
+    outline: 0;
+    padding: 0 1vh
+}
+
+.slider input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 1.3vh;
+    width: 1.3vh;
+    border-radius: 100%;
+    background: #f0f0f0;
+    margin-top: -0.5vh;
+}
+
+.slider input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0.18vh;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.slider input[type=range].inverted {
+    direction: rtl;
+}
+
+.slider > .valuelabel {
+    font-size: 1.5vh;
+    position: absolute;
+    top: 35%;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.slider > .valuelabel.left {
+    left: 4%;
+}
+
+.slider > .valuelabel.center {
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.slider > .valuelabel.right {
+    right: 4%;
+}
+
+.slider.contribution > .controls > .icon {
+    position: relative;
+    width: 8%;
+    height: 70%;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.slider.contribution > .controls > .icon.left {
+    left: 3%;
+    background-image: url('https://nui-img/mpleaderboard/leaderboard_female_icon');
+}
+
+.slider.contribution > .controls > .icon.right {
+    right: 3%;
+    background-image: url('https://nui-img/mpleaderboard/leaderboard_male_icon');
+}
+
+.colorselect {
+    width: 20vw;
+    min-height: 6vh;
+    position: relative;
+    padding-top: 0.5vh;
+}
+
+.colorselect h3 {
+    position: relative;
+    display: block;
+}
+
+.colorselect .palette {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.colorselect .palette input[type="radio"] + label {
+    display: inline-block;
+    width: 3.5vh;
+    height: 3.5vh;
+    margin-left: 0.08vw;
+    margin-bottom: 0.08vw;
+    /* background-color: red; */
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0.15vh solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+.colorselect .palette input[type="radio"]:checked + label {
+    border: 0.15vh solid white;
+    background-image: url('assets/icons/check.svg');
+}
+
+.colorselect .palette input[type="radio"]:not(:checked) + label:hover {
+    border: 0.15vh solid white;
+}
