@@ -9,8 +9,8 @@ table.insert(migrations, {
                 `lastname` varchar(50) DEFAULT NULL,
                 `nationality` varchar(50) DEFAULT NULL,
                 `birthdate` varchar(10) DEFAULT NULL,
-                `gender` int(1) DEFAULT NULL,
-                `spawn` varchar(10) DEFAULT NULL,
+                `gender` ENUM('male','female'),
+                `spawn` ENUM('north','south')
                 PRIMARY KEY (`id`)
               ) ENGINE=InnoDB AUTO_INCREMENT=1;              
         ]],
