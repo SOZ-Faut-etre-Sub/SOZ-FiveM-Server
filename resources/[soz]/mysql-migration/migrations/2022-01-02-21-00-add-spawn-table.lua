@@ -20,8 +20,8 @@ table.insert(migrations, {
                `model` varchar(50) DEFAULT NULL,
                `skin` text DEFAULT NULL,
                `outfitId` varchar(50) NOT NULL,
-               PRIMARY KEY (`citizenid`),
-               KEY `id` (`id`),
+               PRIMARY KEY (`id`),
+               KEY `citizenid` (`citizenid`),
                KEY `outfitId` (`outfitId`)
             ) ENGINE=InnoDB AUTO_INCREMENT=8970;
         ]],
@@ -32,8 +32,8 @@ table.insert(migrations, {
                `model` varchar(255) NOT NULL,
                `skin` text NOT NULL,
                `active` tinyint(2) NOT NULL DEFAULT 1,
-               PRIMARY KEY (`citizenid`),
-               KEY `id` (`id`),
+               PRIMARY KEY (`id`),
+               KEY `citizenid` (`citizenid`),
                KEY `active` (`active`)
             ) ENGINE=InnoDB AUTO_INCREMENT=43010;
         ]],
