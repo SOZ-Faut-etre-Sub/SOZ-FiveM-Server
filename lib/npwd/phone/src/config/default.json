@@ -148,9 +148,6 @@
     "ringtoneVol": 50,
     "notiSoundVol": 50
   },
-  "appSettings": {
-    "browserHomePage": "https://docs.projecterror.dev"
-  },
   "iconSet": [
     {
       "label": "NPWD Icons",

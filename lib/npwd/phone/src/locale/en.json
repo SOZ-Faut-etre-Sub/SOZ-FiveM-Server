@@ -21,9 +21,6 @@
         "ERROR": "Error occurred while completing this call"
       }
     },
-    "BROWSER": {
-      "NAME": "Browser"
-    },
     "SETTINGS": {
       "PHONE_NUMBER": "Phone Number",
       "CATEGORY": {

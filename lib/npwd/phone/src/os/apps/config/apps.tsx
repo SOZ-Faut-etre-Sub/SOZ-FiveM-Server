@@ -1,5 +1,5 @@
 import React from 'react';
-import { blue, common, grey, purple } from '@mui/material/colors';
+import { blue, common, grey } from '@mui/material/colors';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
@@ -26,7 +26,6 @@ import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/not
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 import { SvgIconProps } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
-import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 
 export interface IAppConfig {
   id: string;
@@ -53,16 +52,6 @@ export const APPS: IAppConfig[] = [
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
     Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
-  },
-  {
-    id: 'BROWSER',
-    nameLocale: 'BROWSER.NAME',
-    backgroundColor: blue['300'],
-    path: '/browser',
-    color: common.white,
-    Route: () => (
-      <AppRoute id="BROWSER" path="/browser" component={BrowserApp} emitOnOpen={false} />
-    ),
   },
   {
     id: 'MESSAGES',

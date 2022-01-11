@@ -21,9 +21,6 @@
         "ERROR": "Une erreur est survenue lors de cet appel"
       }
     },
-    "BROWSER": {
-      "NAME": "Navigateur"
-    },
     "SETTINGS": {
       "PHONE_NUMBER": "Numéro de téléphone",
       "CATEGORY": {
