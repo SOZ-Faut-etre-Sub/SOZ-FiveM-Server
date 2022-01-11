@@ -30,6 +30,8 @@ CreateThread(function()
             last is the url (this has to start with "fivem://connect/" or "https://") 
         ]] --
 
+        SetDiscordRichPresenceAction(0, "Un jour peut être ?", "")
+
         -- It updates every minute just in case.
         Wait(60000)
     end
