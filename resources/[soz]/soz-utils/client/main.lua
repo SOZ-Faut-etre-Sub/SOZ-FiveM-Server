@@ -44,7 +44,26 @@ AddEventHandler("soz:client:sit", function(data)
     TriggerEvent("animations:client:EmoteCommandStart", {"sitchair"})
 end)
 
+RegisterNetEvent("soz:client:sit2")
+AddEventHandler("soz:client:sit2", function(data)
+    local player = GetPlayerPed(-1)
+    local entity = getEntity(PlayerId())
+    local coords = GetEntityCoords(entity)
+    local heading = GetEntityHeading(entity)
+    if heading >= 180 then
+        heading = heading - 179
+    else
+        heading = heading + 179
+    end
+
+    local angle = heading * (2 * math.pi) / 360
+    SetEntityHeading(player, heading)
+    SetPedCoordsKeepVehicle(player, (coords.x - (0.5 * math.sin(angle))), (coords.y + (0.5 * math.cos(angle))), coords.z )
+    TriggerEvent("animations:client:EmoteCommandStart", {"sitchair"})
+end)
+
 function getEntity(player)
     local hit, coords, entity = RayCastGamePlayCamera(player)
     return entity
 end
+

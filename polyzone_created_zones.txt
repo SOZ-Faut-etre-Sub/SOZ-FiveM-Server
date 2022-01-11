@@ -1,0 +1,9 @@
+--Name: clothes | 2022-01-11T17:52:39Z
+BoxZone:Create(vector3(-1194.05, -772.14, 17.32), 9.4, 11.8, {
+  name="clothes",
+  heading=36,
+  --debugPoly=true,
+  minZ=14.12,
+  maxZ=19.32
+})
+

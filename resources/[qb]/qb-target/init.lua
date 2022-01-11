@@ -21,7 +21,7 @@ Config = {}
 Config.MaxDistance = 5.0
 
 -- Enable debug options
-Config.Debug = false
+Config.Debug = true
 
 -- Supported values: true, false
 Config.Standalone = true
@@ -53,7 +53,6 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
-
 }
 
 Config.PolyZones = {
