@@ -1,8 +1,7 @@
-table.insert(
-    migrations, {
-        name = "add-account-table",
-        queries = {
-            [[
+table.insert(migrations, {
+    name = "add-account-table",
+    queries = {
+        [[
             CREATE TABLE `Account` (
                 `id` BINARY(16) NOT NULL,
                 `name` VARCHAR(191) NOT NULL,
@@ -23,7 +22,7 @@ table.insert(
                 PRIMARY KEY (`id`)
             ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
         ]],
-            [[
+        [[
             CREATE TABLE `AccountIdentity` (
                 `accountId` BINARY(16) NOT NULL,
                 `identityType` ENUM('TWITCH', 'DISCORD', 'STEAM') NOT NULL,
@@ -34,7 +33,7 @@ table.insert(
                 PRIMARY KEY (`accountId`, `identityType`)
             ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
         ]],
-            [[
+        [[
             CREATE TABLE `InvitationCode` (
                 `id` BINARY(16) NOT NULL,
                 `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -51,18 +50,17 @@ table.insert(
                 PRIMARY KEY (`id`)
             ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
         ]],
-            [[
+        [[
             ALTER TABLE `Account` ADD CONSTRAINT `Account_whitelistStatusChangedById_fkey` FOREIGN KEY (`whitelistStatusChangedById`) REFERENCES `Account`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
         ]],
-            [[
+        [[
             ALTER TABLE `AccountIdentity` ADD CONSTRAINT `AccountIdentity_accountId_fkey` FOREIGN KEY (`accountId`) REFERENCES `Account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
         ]],
-            [[
+        [[
             ALTER TABLE `InvitationCode` ADD CONSTRAINT `InvitationCode_createdById_fkey` FOREIGN KEY (`createdById`) REFERENCES `Account`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
         ]],
-            [[
+        [[
             ALTER TABLE `InvitationCode` ADD CONSTRAINT `InvitationCode_acceptedById_fkey` FOREIGN KEY (`acceptedById`) REFERENCES `Account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
         ]],
-        },
-    }
-);
+    },
+});

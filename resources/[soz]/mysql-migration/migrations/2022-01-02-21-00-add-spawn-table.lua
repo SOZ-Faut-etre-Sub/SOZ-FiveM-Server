@@ -1,8 +1,7 @@
-table.insert(
-    migrations, {
-        name = "add-spawn-table",
-        queries = {
-            [[
+table.insert(migrations, {
+    name = "add-spawn-table",
+    queries = {
+        [[
             CREATE TABLE IF NOT EXISTS `player_contacts` (
                `id` int(11) NOT NULL AUTO_INCREMENT,
                `citizenid` varchar(50) DEFAULT NULL,
@@ -13,7 +12,7 @@ table.insert(
                KEY `citizenid` (`citizenid`)
             ) ENGINE=InnoDB AUTO_INCREMENT=1;
         ]],
-            [[
+        [[
             CREATE TABLE IF NOT EXISTS `player_outfits` (
                `id` int(11) NOT NULL AUTO_INCREMENT,
                `citizenid` varchar(50) DEFAULT NULL,
@@ -26,7 +25,7 @@ table.insert(
                KEY `outfitId` (`outfitId`)
             ) ENGINE=InnoDB AUTO_INCREMENT=8970;
         ]],
-            [[
+        [[
             CREATE TABLE IF NOT EXISTS `playerskins` (
                `id` int(11) NOT NULL AUTO_INCREMENT,
                `citizenid` varchar(255) NOT NULL,
@@ -38,6 +37,5 @@ table.insert(
                KEY `active` (`active`)
             ) ENGINE=InnoDB AUTO_INCREMENT=43010;
         ]],
-        },
-    }
-);
+    },
+});

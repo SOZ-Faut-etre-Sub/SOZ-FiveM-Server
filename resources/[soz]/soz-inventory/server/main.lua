@@ -3,54 +3,45 @@ QBCore = exports["qb-core"]:GetCoreObject()
 local Inventory = {}
 local Inventories = {}
 
-setmetatable(
-    Inventory, {
-        __call = function(self, arg)
-            if arg then
-                if type(arg) == "table" then
-                    return arg
-                end
-                if type(arg) == "number" then
-                    arg = tostring(arg)
-                end
-                return Inventories[arg]
+setmetatable(Inventory, {
+    __call = function(self, arg)
+        if arg then
+            if type(arg) == "table" then
+                return arg
             end
-            return self
-        end,
-    }
-)
+            if type(arg) == "number" then
+                arg = tostring(arg)
+            end
+            return Inventories[arg]
+        end
+        return self
+    end,
+})
 
-MySQL.ready(
-    function()
-        local StorageNotLoaded = table.clone(Config.Storages)
+MySQL.ready(function()
+    local StorageNotLoaded = table.clone(Config.Storages)
 
-        MySQL.query(
-            "SELECT * FROM storages", {}, function(result)
-                if result then
-                    for _, v in pairs(result) do
-                        if Config.Storages[v.name] then
-                            local st = Config.Storages[v.name]
-                            Inventory.Create(
-                                v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner,
-                                json.decode(v.inventory or "[]")
-                            )
-                            StorageNotLoaded[v.name] = nil
-                        elseif v.type ~= "trunk" then
-                            exports["soz-monitor"]:Log(
-                                "ERROR", ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type)
-                            )
-                        end
-                    end
-                end
-
-                -- Create storage present in configuration if not exist in database
-                for k, v in pairs(StorageNotLoaded) do
-                    Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, v.owner)
+    MySQL.query("SELECT * FROM storages", {}, function(result)
+        if result then
+            for _, v in pairs(result) do
+                if Config.Storages[v.name] then
+                    local st = Config.Storages[v.name]
+                    Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner,
+                                     json.decode(v.inventory or "[]"))
+                    StorageNotLoaded[v.name] = nil
+                elseif v.type ~= "trunk" then
+                    exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(
+                                                   v.name, v.type))
                 end
             end
-        )
-    end
-)
+        end
+
+        -- Create storage present in configuration if not exist in database
+        for k, v in pairs(StorageNotLoaded) do
+            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, v.owner)
+        end
+    end)
+end)
 
 --- Management
 function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
@@ -195,10 +186,9 @@ function Inventory.CanCarryItem(inv, item, amount, metadata)
     end
     if item then
         inv = Inventory(inv)
-        local itemSlots, totalAmount, emptySlots = Inventory.GetItemSlots(
-                                                       inv, item, metadata == nil and {} or type(metadata) == "string" and
-                                                           {type = metadata} or metadata
-                                                   )
+        local itemSlots, totalAmount, emptySlots = Inventory.GetItemSlots(inv, item, metadata == nil and {} or
+                                                                              type(metadata) == "string" and
+                                                                              {type = metadata} or metadata)
 
         if #itemSlots > 0 or emptySlots > 0 then
             if inv.type == "player" and item.limit and (totalAmount + amount) > item.limit then
@@ -468,11 +458,9 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
                     if _G.Container[invTarget.type]:AllowedItems(item) then
                         if Inventory.CanCarryItem(invTarget, item, amount, metadata) then
                             Inventory.RemoveItem(invSource, item, amount, metadata, slot)
-                            Inventory.AddItem(
-                                invTarget, item, amount, metadata, false, function(s, r)
-                                    success, reason = s, r
-                                end
-                            )
+                            Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
+                                success, reason = s, r
+                            end)
 
                             _G.Container[invSource.type]:sync(invSource.id, invSource.items)
                             _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
@@ -578,24 +566,18 @@ end
 ---
 
 --- Create Player Storage
-RegisterNetEvent(
-    "inventory:CreatePlayerInventory", function(player --[[PlayerData]] )
-        Inventory.Create(
-            player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots,
-            Config.MaxWeight, player.citizenid
-        )
-    end
-)
+RegisterNetEvent("inventory:CreatePlayerInventory", function(player --[[PlayerData]] )
+    Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player",
+                     Config.MaxInvSlots, Config.MaxWeight, player.citizenid)
+end)
 
 --- Drop Player Storage
-RegisterNetEvent(
-    "inventory:DropPlayerInventory", function(playerID --[[PlayerData]] )
-        local inv = Inventory(playerID)
+RegisterNetEvent("inventory:DropPlayerInventory", function(playerID --[[PlayerData]] )
+    local inv = Inventory(playerID)
 
-        _G.Container[inv.type]:save(inv.id, inv.owner, inv.items)
-        Inventory.Remove(playerID)
-    end
-)
+    _G.Container[inv.type]:save(inv.id, inv.owner, inv.items)
+    Inventory.Remove(playerID)
+end)
 
 --- Loops
 local function saveInventories(loop)
@@ -615,25 +597,19 @@ end
 saveInventories(true)
 
 -- Events
-AddEventHandler(
-    "txAdmin:events:scheduledRestart", function(event)
-        if event.secondsRemaining == 60 then
-            SetTimeout(
-                50000, function()
-                    saveInventories()
-                end
-            )
-        end
-    end
-)
-
-AddEventHandler(
-    "onResourceStop", function(resource)
-        if resource == GetCurrentResourceName() then
+AddEventHandler("txAdmin:events:scheduledRestart", function(event)
+    if event.secondsRemaining == 60 then
+        SetTimeout(50000, function()
             saveInventories()
-        end
+        end)
     end
-)
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource == GetCurrentResourceName() then
+        saveInventories()
+    end
+end)
 
 _G.Inventory = Inventory
 _G.Container = {}

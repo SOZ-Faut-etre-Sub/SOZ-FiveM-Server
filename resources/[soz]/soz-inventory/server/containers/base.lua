@@ -2,14 +2,12 @@
 InventoryShell = {}
 
 function InventoryShell.new()
-    return setmetatable(
-               {}, {
-            __index = InventoryShell,
-            __tostring = function()
-                return "InventoryShell"
-            end,
-        }
-           )
+    return setmetatable({}, {
+        __index = InventoryShell,
+        __tostring = function()
+            return "InventoryShell"
+        end,
+    })
 end
 
 function InventoryShell:CompactInventory(inv)

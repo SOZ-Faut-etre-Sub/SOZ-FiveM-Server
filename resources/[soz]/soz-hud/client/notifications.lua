@@ -8,11 +8,9 @@ local function DrawNotification(msg, flash, save)
     EndTextCommandThefeedPostTicker(flash or false, save or false)
 end
 
-RegisterNetEvent(
-    "hud:client:DrawNotification", function(msg, flash, save)
-        DrawNotification(msg, flash, save)
-    end
-)
+RegisterNetEvent("hud:client:DrawNotification", function(msg, flash, save)
+    DrawNotification(msg, flash, save)
+end)
 
 exports("DrawNotification", DrawNotification)
 
@@ -35,10 +33,9 @@ local function DrawAdvancedNotification(msg, title, subtitle, image, iconType, f
     EndTextCommandThefeedPostTicker(flash or false, save or false)
 end
 
-RegisterNetEvent(
-    "hud:client:DrawAdvancedNotification", function(msg, title, subtitle, image, iconType, flash, save, color)
-        DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
-    end
-)
+RegisterNetEvent("hud:client:DrawAdvancedNotification",
+                 function(msg, title, subtitle, image, iconType, flash, save, color)
+    DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
+end)
 
 exports("DrawAdvancedNotification", DrawAdvancedNotification)

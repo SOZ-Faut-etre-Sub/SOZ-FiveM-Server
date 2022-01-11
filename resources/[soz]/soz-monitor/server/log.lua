@@ -1,9 +1,8 @@
 local function printLogString(level, message, playerData)
     local logMessage = ReplaceString(Config.logFormat, "%date%", FormattedDateTime())
 
-    logMessage = ReplaceString(
-                     logMessage, "%level%", (Config.logLevelColor[level] or "") .. string.format("%-5s", level)
-                 )
+    logMessage = ReplaceString(logMessage, "%level%",
+                               (Config.logLevelColor[level] or "") .. string.format("%-5s", level))
     logMessage = ReplaceString(logMessage, "%emitter%", GetInvokingResource() or "soz-monitor")
     logMessage = ReplaceString(logMessage, "%msg%", message or "")
 
@@ -79,10 +78,8 @@ end
 --- monitor:server:Log
 --- @param level string Log level
 --- @param message string Message
-RegisterServerEvent(
-    "monitor:server:Log", function(level, message)
-        printFormattedLog(level, message, source)
-    end
-)
+RegisterServerEvent("monitor:server:Log", function(level, message)
+    printFormattedLog(level, message, source)
+end)
 
 exports("Log", printFormattedLog)

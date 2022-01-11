@@ -2,14 +2,12 @@
 TrunkInventory = {}
 
 function TrunkInventory.new()
-    return setmetatable(
-               {}, {
-            __index = TrunkInventory,
-            __tostring = function()
-                return "TrunkInventory"
-            end,
-        }
-           )
+    return setmetatable({}, {
+        __index = TrunkInventory,
+        __tostring = function()
+            return "TrunkInventory"
+        end,
+    })
 end
 
 --- load
@@ -21,8 +19,7 @@ function TrunkInventory:load(id, owner)
     if result == nil then
         exports.oxmysql:execute(
             "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
-            {id, "trunk", owner}
-        )
+            {id, "trunk", owner})
     end
     return result and json.decode(result) or {}
 end

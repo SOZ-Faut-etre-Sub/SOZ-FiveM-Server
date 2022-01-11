@@ -1,11 +1,9 @@
-CreateThread(
-    function()
-        while true do
-            RemoveWeaponDrops()
-            Wait(1000)
-        end
+CreateThread(function()
+    while true do
+        RemoveWeaponDrops()
+        Wait(1000)
     end
-)
+end)
 
 function RemoveWeaponDrops()
     local pickupList = {

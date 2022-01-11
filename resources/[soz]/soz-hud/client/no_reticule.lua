@@ -1,17 +1,15 @@
-Citizen.CreateThread(
-    function()
-        while true do
-            local ped = GetPlayerPed(-1)
+Citizen.CreateThread(function()
+    while true do
+        local ped = GetPlayerPed(-1)
 
-            if DoesEntityExist(ped) and not IsEntityDead(ped) then
-                local _, hash = GetCurrentPedWeapon(ped, true)
+        if DoesEntityExist(ped) and not IsEntityDead(ped) then
+            local _, hash = GetCurrentPedWeapon(ped, true)
 
-                if not Config.AllowedReticuleWeapon[hash] then
-                    HideHudComponentThisFrame(14)
-                end
+            if not Config.AllowedReticuleWeapon[hash] then
+                HideHudComponentThisFrame(14)
             end
-
-            Wait(0)
         end
+
+        Wait(0)
     end
-)
+end)
