@@ -67,8 +67,6 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
   - Gif support for avatar.
 - [Notes](https://i.imgur.com/0Hvvlah.png)
   - Something you want to remember in game? Make a note!
-- [Calculator](https://user-images.githubusercontent.com/55056068/147531020-b7527a69-0b0e-4e81-83c7-58ad836eab23.png)
-  - Peform calculations. 
 - [Themes](https://i.imgur.com/2DpBHuM.png)
   - Default dark theme or light theme with other themes in the works. Want to make your own? Follow our [documentation](https://projecterror.dev/docs/npwd/dev/setup#setting-up-the-theme).
   - Set within the Settings app.
