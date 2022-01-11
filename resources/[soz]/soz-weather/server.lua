@@ -52,12 +52,12 @@ RegisterCommand("soz-weather-time", function(source, args)
     currentMinute = tonumber(args[2])
     currentSecond = tonumber(args[3])
 
-    TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond)
+    TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond, dayInSeconds)
 end, false)
 
 AddEventHandler("soz-weather:init", function()
     TriggerClientEvent("soz-weather:sync", source, CurrentWeather, NextWeather)
-    TriggerClientEvent("soz-weather:sync-time", source, currentHour, currentMinute, currentSecond)
+    TriggerClientEvent("soz-weather:sync-time", source, currentHour, currentMinute, currentSecond, dayInSeconds)
 end)
 
 CreateThread(function()
