@@ -30,7 +30,7 @@ CreateThread(function()
             last is the url (this has to start with "fivem://connect/" or "https://") 
         ]] --
 
-        SetDiscordRichPresenceAction(0, "Un jour peut être ?", "")
+        SetDiscordRichPresenceAction(0, "Un jour peut être ?", "https://liquipedia.net/commons/images/6/63/WIP-logo.png")
 
         -- It updates every minute just in case.
         Wait(60000)
