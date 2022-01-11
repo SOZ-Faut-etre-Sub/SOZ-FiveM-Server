@@ -1076,8 +1076,24 @@ AddEventHandler('sitchair', function(data)
     TriggerEvent("soz:client:sit", data)
 end)
 
+
+RegisterNetEvent('sitchair2')
+AddEventHandler('sitchair2', function(data)
+    TriggerEvent("soz:client:sit2", data)
+end)
+
 local sitchair = {
 	1580642483,
+	-1278649385,
+	-109356459,
+	-1633198649,
+	-377849416,
+	1037469683,
+	603897027,
+}
+
+local sitchair2 ={
+	444105316,
 	-109356459,
 }
 
@@ -1089,5 +1105,40 @@ exports['qb-target']:AddTargetModel(sitchair, {
             label = "s'asseoir",
         },
     },
-    distance = 1
+    distance = 2
 })
+
+exports['qb-target']:AddTargetModel(sitchair, {
+    options = {
+        {
+            event = "sitchair2",
+            icon = "fas fa-coffee",
+            label = "s'asseoir",
+        },
+    },
+    distance = 2
+})
+
+exports['qb-target']:AddBoxZone("clothes1", vector3(-1194.05, -772.14, 17.32), 9.4, 11.8, {
+	name = "apparel",
+	heading = 36,
+	debugPoly = false,
+	minZ = 14.12,
+	maxZ = 19.32,
+	}, {
+		options = {
+			{
+            	type = "client",
+            	event = "polyzone:clothes:apparel:enter",
+				icon = "fas fa-sign-in-alt",
+				label = "open clothes store",
+			},
+		},
+	distance = 1
+})
+
+RegisterNetEvent('polyzone:clothes:apparel:enter')
+AddEventHandler('polyzone:clothes:enter', function(name)
+        TriggerEvent('cui_character:open', { 'apparel'})
+		
+end)
