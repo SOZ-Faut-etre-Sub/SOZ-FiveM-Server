@@ -1,5 +1,4 @@
 import { atom, DefaultValue, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { SETTINGS_ALL_TWEETS, SETTING_MENTIONS } from '@typings/twitter';
 import config from '../../../config/default.json';
 import { SettingOption } from '@ui/hooks/useContextMenu';
 import { Schema, Validator } from 'jsonschema';
@@ -56,10 +55,6 @@ const settingsSchema: Schema = {
     ringtoneVol: { type: 'number' },
     notiSound: { $ref: '/SettingOption' },
     notiSoundVol: { type: 'number' },
-    TWITTER_notiFilter: { $ref: '/SettingOption' },
-    TWITTER_notiSound: { $ref: '/SettingOption' },
-    TWITTER_notiSoundVol: { type: 'number' },
-    TWITTER_notifyNewFeedTweet: { type: 'boolean' },
   },
   required: true,
 };
@@ -97,10 +92,6 @@ export interface IPhoneSettings {
   ringtoneVol: number;
   notiSound: SettingOption;
   notiSoundVol: number;
-  TWITTER_notiFilter: SettingOption<SETTING_MENTIONS | SETTINGS_ALL_TWEETS>;
-  TWITTER_notiSound: SettingOption;
-  TWITTER_notiSoundVol: number;
-  TWITTER_notifyNewFeedTweet: boolean;
 }
 
 const localStorageEffect =

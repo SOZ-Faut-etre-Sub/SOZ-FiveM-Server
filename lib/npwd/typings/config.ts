@@ -1,17 +1,3 @@
-interface TwitterConfig {
-  showNotifications: boolean;
-  generateProfileNameFromUsers: boolean;
-  allowEditableProfileName: boolean;
-  allowDeleteTweets: boolean;
-  allowReportTweets: boolean;
-  characterLimit: number;
-  newLineLimit: number;
-  enableAvatars: boolean;
-  enableEmojis: boolean;
-  enableImages: boolean;
-  maxImages: number;
-}
-
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
@@ -64,7 +50,6 @@ export interface ResourceConfig {
   Locale: string;
   PhoneAsItem: PhoneAsItemConfig;
   RunRate: number;
-  twitter: TwitterConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
   general: General;

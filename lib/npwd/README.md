@@ -49,14 +49,6 @@ Please open an issue/enhancement on our [Github Repo](https://github.com/project
 ## Features
 - [Optimized](https://i.imgur.com/mN5ib42.png)
   - 0.01 ms on idle and 0.05 while in use.
-- [Twitter](https://i.imgur.com/BjwovRR.png)
-  - Like, reply, retweet, report and delete your own Tweets.
-  - Send emojis and images directly from the phone's gallery, or from an external url. *Gifs too!*
-  - NPWD features discord logging so all reported tweets will be sent to the configured webhook.
-- [Matchmaker](https://i.imgur.com/46XtZ06.jpeg)
-  - Like tinder but without all the bots. Swipe right into romance or rejection.
-  - As of v1.0, there is no filter for sexual preference.
-  - Don't want this app? Follow the documentation [here](https://projecterror.dev/docs/npwd/dev/disable_apps) to disable it.
 - [Marketplace](https://user-images.githubusercontent.com/55056068/147530933-d56ceb19-0db2-471f-a8ca-7cc3986b87be.png)
   - Post an ad with/without a picture.
   - Choose a picture from your gallery or from a url.

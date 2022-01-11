@@ -10,10 +10,6 @@ export function sendMessage(app: string, method: string, data: any): void {
   });
 }
 
-export function sendTwitterMessage(method: string, data: any = {}): void {
-  return sendMessage(apps.TWITTER, method, data);
-}
-
 export function sendMessageEvent(method: string, data: any = {}): void {
   return sendMessage(apps.MESSAGES, method, data);
 }

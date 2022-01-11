@@ -16,7 +16,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
-  FilterList,
   Brush,
   Wallpaper,
   Phone,
@@ -98,18 +97,6 @@ export const SettingsApp = () => {
   const notifications = config.notiSounds.map(
     MapSettingItem(settings.notiSound, (val: SettingOption) =>
       handleSettingChange('notiSound', val),
-    ),
-  );
-
-  const twitterNotifications = config.notiSounds.map(
-    MapSettingItem(settings.TWITTER_notiSound, (val: SettingOption) =>
-      handleSettingChange('TWITTER_notiSound', val),
-    ),
-  );
-
-  const twitterNotificationFilters = config.notiFilters.map(
-    MapSettingItem(settings.TWITTER_notiFilter, (val: SettingOption) =>
-      handleSettingChange('TWITTER_notiFilter', val),
     ),
   );
 
@@ -264,28 +251,6 @@ export const SettingsApp = () => {
             options={zoomOptions}
             onClick={openMenu}
             icon={<ZoomIn />}
-          />
-        </List>
-        <List disablePadding subheader={<SubHeaderComp text={t('APPS_TWITTER')} />}>
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.NOTIFICATION_FILTER')}
-            value={settings.TWITTER_notiFilter.label}
-            options={twitterNotificationFilters}
-            onClick={openMenu}
-            icon={<FilterList />}
-          />
-          <SettingItem
-            label={t('SETTINGS.OPTIONS.NOTIFICATION')}
-            value={settings.TWITTER_notiSound.label}
-            options={twitterNotifications}
-            onClick={openMenu}
-            icon={<LibraryMusic />}
-          />
-          <SettingItemSlider
-            label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
-            value={settings.TWITTER_notiSoundVol}
-            onCommit={(e, val) => handleSettingChange('TWITTER_notiSoundVol', val)}
-            icon={<VolumeUp />}
           />
         </List>
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.ACTIONS')} />}>

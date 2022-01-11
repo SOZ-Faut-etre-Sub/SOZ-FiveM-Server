@@ -95,49 +95,6 @@
       "NAVBAR_CONTACTS": "Contacts",
       "NO_HISTORY": "You have no call history"
     },
-    "TWITTER": {
-      "FEEDBACK": {
-        "CREATE_PROFILE_SUCCESS": "Successfully created your profile",
-        "CREATE_PROFILE_FAILURE": "Failed to create your profile",
-        "EDIT_PROFILE_SUCCESS": "Successfully updated your profile",
-        "EDIT_PROFILE_FAILURE": "Failed to update your profile",
-        "CREATE_FAILED": "Failed to send your tweet",
-        "RETWEET_FAILED": "Failed to retweet this tweet",
-        "RETWEET_EXISTS": "You have already retweeted this tweet!",
-        "LIKE_TWEET_FAILED": "Failed to like tweet",
-        "REPORT_TWEET_SUCCESS": "Successfully reported tweet",
-        "REPORT_TWEET_FAILED": "Failed to report tweet",
-        "FETCH_TWEETS_FAILED": "Failed to fetch tweets",
-        "DELETE_TWEET_FAILED": "Failed to delete tweet"
-      },
-      "MESSAGES": {
-        "NEW_RETWEET_BROADCAST": "@{{ profile_name }} retweeted someone!",
-        "NEW_BROADCAST": "New tweet from @{{ profile_name }}!",
-        "UNREAD_MESSAGES": "You have {{ count }} new tweets in your timeline!"
-      },
-      "SUBMIT_IMAGE": "Add Media",
-      "TWEET": "Tweet",
-      "REPORTED": " Reported",
-      "REPORT": "Report",
-      "IMAGE_PLACEHOLDER": "A link to your image or gif",
-      "EDIT_DEFAULT_PROFILE_NAME": "Choose Profile Name",
-      "EDIT_PROFILE_AVATAR": "Avatar URL",
-      "AVATAR_CHOOSE_IMAGE": "Choose a image",
-      "EDIT_PROFILE_NAME": "Profile name",
-      "EDIT_PROFILE_BIO": "Bio",
-      "EDIT_PROFILE_LOCATION": "Location",
-      "EDIT_PROFILE_JOB": "Job",
-      "RETWEETED": "Retweeted",
-      "TWEET_MESSAGE_CHAR_LIMIT": "Message is over the character limit",
-      "TWEET_MESSAGE_NEW_LINE_LIMIT": "Message is over the new line limit",
-      "TWEET_MESSAGE_PLACEHOLDER": "What's happening?",
-      "SEARCH_TWEETS_PLACEHOLDER": "Search by profile name or message",
-      "SEARCH_TWEETS": "Search for tweets",
-      "TIME_JUST_NOW": "Just now",
-      "TIME_MINUTES": "m",
-      "TIME_HOURS": "h",
-      "TIME_DAYS": "d"
-    },
     "NOTES": {
       "FEEDBACK": {
         "NO_NOTES": "You have no notes",
@@ -240,7 +197,6 @@
     "APPS_BANK": "WhoDis Banking",
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "Example app",
-    "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Camera",
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
