@@ -68,8 +68,7 @@ RegisterNetEvent("soz-character:client:NcDataPed", function(source)
                         while not HasModelLoaded(model) do
                             Wait(0)
                         end
-                        charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98,
-                                            Config.PedCoords.w, false, true)
+                        charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98, Config.PedCoords.w, false, true)
                         SetPedComponentVariation(charPed, 0, 0, 0, 2)
                         FreezeEntityPosition(charPed, false)
                         SetEntityInvincible(charPed, true)
@@ -81,8 +80,7 @@ RegisterNetEvent("soz-character:client:NcDataPed", function(source)
                         DoScreenFadeOut(500)
                         Wait(2000)
                         QBCore.Functions.GetPlayerData(function(PlayerData)
-                            SetEntityCoords(PlayerPedId(), PlayerData.position.x, PlayerData.position.y,
-                                            PlayerData.position.z)
+                            SetEntityCoords(PlayerPedId(), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)
                             SetEntityHeading(PlayerPedId(), PlayerData.position.a)
                             FreezeEntityPosition(PlayerPedId(), false)
                         end)
@@ -118,8 +116,7 @@ RegisterNetEvent("soz-character:client:NcDataPed", function(source)
                     while not HasModelLoaded(model) do
                         Wait(0)
                     end
-                    charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98,
-                                        Config.PedCoords.w, false, true)
+                    charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98, Config.PedCoords.w, false, true)
                     SetPedComponentVariation(charPed, 0, 0, 0, 2)
                     FreezeEntityPosition(charPed, false)
                     SetEntityInvincible(charPed, true)

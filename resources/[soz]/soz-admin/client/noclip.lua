@@ -38,9 +38,7 @@ end
 local function MoveInNoClip()
     SetEntityRotation(noClippingEntity, GetGameplayCamRot(0), 0, false)
     local forward, right, up, c = GetEntityMatrix(noClippingEntity);
-    previousVelocity = Lerp(previousVelocity,
-                            (((right * input.x * speed) + (up * -input.z * speed) + (forward * -input.y * speed))),
-                            Timestep() * breakSpeed);
+    previousVelocity = Lerp(previousVelocity, (((right * input.x * speed) + (up * -input.z * speed) + (forward * -input.y * speed))), Timestep() * breakSpeed);
     c = c + previousVelocity
     SetEntityCoords(noClippingEntity, c - offset, true, true, true, false)
 
@@ -65,9 +63,7 @@ local function SetNoClip(val)
                 PlaySoundFromEntity(-1, "CANCEL", playerPed, "HUD_LIQUOR_STORE_SOUNDSET", 0, 0)
             end
         end
-        TriggerEvent("msgprinter:addMessage",
-                     ((isNoClipping and ":airplane: No-clip enabled") or ":rock: No-clip disabled"),
-                     GetCurrentResourceName());
+        TriggerEvent("msgprinter:addMessage", ((isNoClipping and ":airplane: No-clip enabled") or ":rock: No-clip disabled"), GetCurrentResourceName());
         SetUserRadioControlEnabled(not isNoClipping);
         if (isNoClipping) then
             TriggerEvent("instructor:add-instruction", {MOVE_LEFT_RIGHT, MOVE_UP_DOWN}, "move", RESSOURCE_NAME);
@@ -94,10 +90,8 @@ local function SetNoClip(val)
                     SetEveryoneIgnorePlayer(pPed, true);
                     SetPoliceIgnorePlayer(pPed, true);
                     input = vector3(GetControlNormal(0, MOVE_LEFT_RIGHT), GetControlNormal(0, MOVE_UP_DOWN),
-                                    (IsControlAlwaysPressed(1, MOVE_UP_KEY) and 1) or
-                                        ((IsControlAlwaysPressed(1, MOVE_DOWN_KEY) and -1) or 0))
-                    speed = ((IsControlAlwaysPressed(1, CHANGE_SPEED_KEY) and NO_CLIP_FAST_SPEED) or
-                                NO_CLIP_NORMAL_SPEED) * ((isClippedVeh and 2.75) or 1)
+                                    (IsControlAlwaysPressed(1, MOVE_UP_KEY) and 1) or ((IsControlAlwaysPressed(1, MOVE_DOWN_KEY) and -1) or 0))
+                    speed = ((IsControlAlwaysPressed(1, CHANGE_SPEED_KEY) and NO_CLIP_FAST_SPEED) or NO_CLIP_NORMAL_SPEED) * ((isClippedVeh and 2.75) or 1)
                     MoveInNoClip();
                 end
                 Citizen.Wait(0);

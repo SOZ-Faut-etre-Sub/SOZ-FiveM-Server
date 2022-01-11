@@ -21,8 +21,7 @@ local function RayCastGamePlayCamera(distance)
         y = cameraCoord.y + direction.y * distance,
         z = cameraCoord.z + direction.z * distance,
     }
-    local a, b, c, d, e = GetShapeTestResult(StartShapeTestRay(cameraCoord.x, cameraCoord.y, cameraCoord.z,
-                                                               destination.x, destination.y, destination.z, -1,
+    local a, b, c, d, e = GetShapeTestResult(StartShapeTestRay(cameraCoord.x, cameraCoord.y, cameraCoord.z, destination.x, destination.y, destination.z, -1,
                                                                PlayerPedId(), 0))
     return b, c, e
 end
@@ -41,8 +40,7 @@ AddEventHandler("soz:client:sit", function(data)
 
     local angle = heading * (2 * math.pi) / 360
     SetEntityHeading(player, heading)
-    SetPedCoordsKeepVehicle(player, (coords.x - (0.5 * math.sin(angle))), (coords.y + (0.5 * math.cos(angle))),
-                            coords.z - 0.6)
+    SetPedCoordsKeepVehicle(player, (coords.x - (0.5 * math.sin(angle))), (coords.y + (0.5 * math.cos(angle))), coords.z - 0.6)
     TriggerEvent("animations:client:EmoteCommandStart", {"sitchair"})
 end)
 

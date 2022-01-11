@@ -58,14 +58,12 @@ Citizen.CreateThread(function()
                 if (tickDegree % 90.0) == 0 then
                     -- Draw cardinal
                     if compass.cardinal.tickShow then
-                        DrawRect(tickPosition, compass.position.y, compass.cardinal.tickSize.w,
-                                 compass.cardinal.tickSize.h, compass.cardinal.tickColour.r,
-                                 compass.cardinal.tickColour.g, compass.cardinal.tickColour.b,
-                                 compass.cardinal.tickColour.a)
+                        DrawRect(tickPosition, compass.position.y, compass.cardinal.tickSize.w, compass.cardinal.tickSize.h, compass.cardinal.tickColour.r,
+                                 compass.cardinal.tickColour.g, compass.cardinal.tickColour.b, compass.cardinal.tickColour.a)
                     end
 
-                    drawText(degreesToIntercardinalDirection(tickDegree), tickPosition,
-                             compass.position.y + compass.cardinal.textOffset, {
+                    drawText(degreesToIntercardinalDirection(tickDegree), tickPosition, compass.position.y + compass.cardinal.textOffset,
+                             {
                         size = compass.cardinal.textSize,
                         colour = compass.cardinal.textColour,
                         outline = true,
@@ -74,15 +72,14 @@ Citizen.CreateThread(function()
                 elseif (tickDegree % 45.0) == 0 and compass.intercardinal.show then
                     -- Draw intercardinal
                     if compass.intercardinal.tickShow then
-                        DrawRect(tickPosition, compass.position.y, compass.intercardinal.tickSize.w,
-                                 compass.intercardinal.tickSize.h, compass.intercardinal.tickColour.r,
-                                 compass.intercardinal.tickColour.g, compass.intercardinal.tickColour.b,
+                        DrawRect(tickPosition, compass.position.y, compass.intercardinal.tickSize.w, compass.intercardinal.tickSize.h,
+                                 compass.intercardinal.tickColour.r, compass.intercardinal.tickColour.g, compass.intercardinal.tickColour.b,
                                  compass.intercardinal.tickColour.a)
                     end
 
                     if compass.intercardinal.textShow then
-                        drawText(degreesToIntercardinalDirection(tickDegree), tickPosition,
-                                 compass.position.y + compass.intercardinal.textOffset, {
+                        drawText(degreesToIntercardinalDirection(tickDegree), tickPosition, compass.position.y + compass.intercardinal.textOffset,
+                                 {
                             size = compass.intercardinal.textSize,
                             colour = compass.intercardinal.textColour,
                             outline = true,
@@ -91,8 +88,8 @@ Citizen.CreateThread(function()
                     end
                 else
                     -- Draw tick
-                    DrawRect(tickPosition, compass.position.y, compass.tickSize.w, compass.tickSize.h,
-                             compass.tickColour.r, compass.tickColour.g, compass.tickColour.b, compass.tickColour.a)
+                    DrawRect(tickPosition, compass.position.y, compass.tickSize.w, compass.tickSize.h, compass.tickColour.r, compass.tickColour.g,
+                             compass.tickColour.b, compass.tickColour.a)
                 end
 
                 -- Advance to the next tick

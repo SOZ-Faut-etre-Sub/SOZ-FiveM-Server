@@ -26,12 +26,10 @@ MySQL.ready(function()
             for _, v in pairs(result) do
                 if Config.Storages[v.name] then
                     local st = Config.Storages[v.name]
-                    Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner,
-                                     json.decode(v.inventory or "[]"))
+                    Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner, json.decode(v.inventory or "[]"))
                     StorageNotLoaded[v.name] = nil
                 elseif v.type ~= "trunk" then
-                    exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(
-                                                   v.name, v.type))
+                    exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
                 end
             end
         end
@@ -186,9 +184,9 @@ function Inventory.CanCarryItem(inv, item, amount, metadata)
     end
     if item then
         inv = Inventory(inv)
-        local itemSlots, totalAmount, emptySlots = Inventory.GetItemSlots(inv, item, metadata == nil and {} or
-                                                                              type(metadata) == "string" and
-                                                                              {type = metadata} or metadata)
+        local itemSlots, totalAmount, emptySlots = Inventory.GetItemSlots(inv, item, metadata == nil and {} or type(metadata) == "string" and {
+            type = metadata,
+        } or metadata)
 
         if #itemSlots > 0 or emptySlots > 0 then
             if inv.type == "player" and item.limit and (totalAmount + amount) > item.limit then
@@ -296,8 +294,7 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
 
                 if slot then
                     local slotItem = inv.items[slot]
-                    if not slotItem or not item.unique and slotItem and slotItem.name == item.name and
-                        table.matches(slotItem.metadata, metadata) then
+                    if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
                         existing = nil
                     end
                 end
@@ -306,8 +303,7 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                     local items, toSlot = inv.items, nil
                     for i = 1, inv.slots do
                         local slotItem = items[i]
-                        if not item.unique and slotItem ~= nil and slotItem.name == item.name and
-                            table.matches(slotItem.metadata, metadata) then
+                        if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
                             toSlot, existing = i, true
                             break
                         elseif not toSlot and slotItem == nil then
@@ -567,8 +563,8 @@ end
 
 --- Create Player Storage
 RegisterNetEvent("inventory:CreatePlayerInventory", function(player --[[PlayerData]] )
-    Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player",
-                     Config.MaxInvSlots, Config.MaxWeight, player.citizenid)
+    Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
+                     player.citizenid)
 end)
 
 --- Drop Player Storage

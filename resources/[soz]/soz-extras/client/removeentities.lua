@@ -6,8 +6,7 @@ local objects = {
 CreateThread(function()
     while true do
         for k, v in pairs(objects) do
-            local ent = GetClosestObjectOfType(objects[k].x, objects[k].y, objects[k].z, 2.0,
-                                               GetHashKey(objects[k].model), false, false, false)
+            local ent = GetClosestObjectOfType(objects[k].x, objects[k].y, objects[k].z, 2.0, GetHashKey(objects[k].model), false, false, false)
 
             SetEntityAsMissionEntity(ent, 1, 1)
             DeleteObject(ent)

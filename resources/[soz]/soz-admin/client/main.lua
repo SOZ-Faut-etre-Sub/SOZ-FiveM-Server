@@ -50,9 +50,11 @@ local function ToggleShowCoordinates()
             c.z = round(coords.z, 2)
             heading = round(heading, 2)
             Citizen.Wait(0)
-            Draw2DText(
-                string.format("~w~Ped Coordinates:~b~ vector4(~w~%s~b~, ~w~%s~b~, ~w~%s~b~, ~w~%s~b~)", c.x, c.y, c.z,
-                              heading), 4, {66, 182, 245}, 0.4, x + 0.0, y + 0.0)
+            Draw2DText(string.format("~w~Ped Coordinates:~b~ vector4(~w~%s~b~, ~w~%s~b~, ~w~%s~b~, ~w~%s~b~)", c.x, c.y, c.z, heading), 4, {
+                66,
+                182,
+                245,
+            }, 0.4, x + 0.0, y + 0.0)
         end
     end)
 end

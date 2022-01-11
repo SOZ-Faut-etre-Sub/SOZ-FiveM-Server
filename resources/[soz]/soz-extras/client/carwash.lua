@@ -19,7 +19,8 @@ RegisterNetEvent("qb-carwash:client:washCar", function()
     local PlayerPed = PlayerPedId()
     local PedVehicle = GetVehiclePedIsIn(PlayerPed)
     washingVehicle = true
-    QBCore.Functions.Progressbar("search_cabin", "Vehicle is being washed ..", math.random(4000, 8000), false, true, {
+    QBCore.Functions.Progressbar("search_cabin", "Vehicle is being washed ..", math.random(4000, 8000), false, true,
+                                 {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
@@ -45,16 +46,13 @@ CreateThread(function()
         local dirtLevel = GetVehicleDirtLevel(PedVehicle)
         if IsPedInAnyVehicle(PlayerPed) then
             for k, v in pairs(Config.CarWash) do
-                local dist = #(PlayerPos -
-                                 vector3(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"],
-                                         Config.CarWash[k]["coords"]["z"]))
+                local dist = #(PlayerPos - vector3(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"]))
                 if dist <= 10 then
                     inRange = true
                     if dist <= 7.5 then
                         if Driver == PlayerPed then
                             if not washingVehicle then
-                                DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"],
-                                            Config.CarWash[k]["coords"]["z"],
+                                DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"],
                                             "~g~E~w~ - Washing car ($" .. Config.DefaultPrice .. ")")
                                 if IsControlJustPressed(0, 38) then
                                     if dirtLevel > Config.DirtLevel then
@@ -64,8 +62,8 @@ CreateThread(function()
                                     end
                                 end
                             else
-                                DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"],
-                                            Config.CarWash[k]["coords"]["z"], "The car wash is not available ..")
+                                DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"],
+                                            "The car wash is not available ..")
                             end
                         end
                     end
@@ -81,8 +79,7 @@ end)
 
 CreateThread(function()
     for k, v in pairs(Config.CarWash) do
-        carWash = AddBlipForCoord(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"],
-                                  Config.CarWash[k]["coords"]["z"])
+        carWash = AddBlipForCoord(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"])
         SetBlipSprite(carWash, 100)
         SetBlipDisplay(carWash, 4)
         SetBlipScale(carWash, 0.75)

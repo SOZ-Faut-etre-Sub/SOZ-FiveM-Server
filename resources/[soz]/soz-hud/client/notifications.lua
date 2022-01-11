@@ -33,8 +33,7 @@ local function DrawAdvancedNotification(msg, title, subtitle, image, iconType, f
     EndTextCommandThefeedPostTicker(flash or false, save or false)
 end
 
-RegisterNetEvent("hud:client:DrawAdvancedNotification",
-                 function(msg, title, subtitle, image, iconType, flash, save, color)
+RegisterNetEvent("hud:client:DrawAdvancedNotification", function(msg, title, subtitle, image, iconType, flash, save, color)
     DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
 end)
 
