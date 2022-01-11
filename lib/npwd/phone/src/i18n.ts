@@ -1,13 +1,11 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from './locale/en.json';
 import fr from './locale/fr.json';
 
 // Should we just programatically call for static files
 // on the scripts side to avoid having to parse all these
 // JSONs for no reason? yes, probably
 export const resources = {
-  en,
   fr,
 } as const;
 

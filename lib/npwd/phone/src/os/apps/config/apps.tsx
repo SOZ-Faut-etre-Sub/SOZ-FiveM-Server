@@ -8,6 +8,7 @@ import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWr
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
+import {SocietyContactsApp} from "../../../apps/society-contacts/components/SocietyContactsApp";
 import { AppRoute } from '../components/AppRoute';
 
 import {
@@ -26,6 +27,10 @@ import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/not
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
 import { SvgIconProps } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
+import {
+  SOCIETY_CONTACTS_APP_PRIMARY_COLOR,
+  SOCIETY_CONTACTS_APP_TEXT_COLOR
+} from "../../../apps/society-contacts/contacts.theme";
 
 export interface IAppConfig {
   id: string;
@@ -92,6 +97,16 @@ export const APPS: IAppConfig[] = [
     path: '/bank',
     Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
   },*/
+  {
+    id: 'SOCIETY_CONTACTS',
+    nameLocale: 'APPS_SOCIETY_CONTACTS',
+    backgroundColor: SOCIETY_CONTACTS_APP_PRIMARY_COLOR,
+    color: SOCIETY_CONTACTS_APP_TEXT_COLOR,
+    path: '/society-contacts',
+    Route: () => (
+      <AppRoute id="SOCIETY_CONTACTS" path="/society-contacts" component={SocietyContactsApp} emitOnOpen={false} />
+    ),
+  },
   {
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',
