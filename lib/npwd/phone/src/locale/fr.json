@@ -151,6 +151,12 @@
       "ACTIONS_TITLE": "Actions",
       "ME": "Moi"
     },
+    "SOCIETY_CONTACTS": {
+      "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher...",
+      "FORM_MESSAGE": "Message",
+      "SEND": "Envoyer",
+      "SEND_POSITION": "Envoyer + Position"
+    },
     "RELATIVE_TIME": {
       "future": "dans %s",
       "past": "%s plus tôt",
@@ -195,6 +201,7 @@
     "APPS_EXAMPLE": "Example app",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Caméra",
+    "APPS_SOCIETY_CONTACTS": "Annuaire",
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
     "GENERIC_LOADING": "Chargement...",
     "GENERIC_WAIT": "Veuillez patienter...",

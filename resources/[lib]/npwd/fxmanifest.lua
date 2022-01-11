@@ -9,7 +9,8 @@ client_scripts {
 }
 
 server_script {
-    'dist/server/server.js'
+    'dist/server/server.js',
+    'server/*.lua'
 }
 
 ui_page 'html/index.html'
