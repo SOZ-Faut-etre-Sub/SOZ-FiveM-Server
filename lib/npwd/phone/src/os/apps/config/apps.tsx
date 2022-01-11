@@ -2,7 +2,6 @@ import React from 'react';
 import { blue, common, grey, purple } from '@mui/material/colors';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
-import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
 import { ExampleAppWrapper } from '../../../apps/example/components/ExampleAppWrapper';
@@ -83,16 +82,6 @@ export const APPS: IAppConfig[] = [
     path: '/contacts',
     Route: () => (
       <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} emitOnOpen={false} />
-    ),
-  },
-  {
-    id: 'CALCULATOR',
-    nameLocale: 'APPS_CALCULATOR',
-    backgroundColor: purple[500],
-    color: grey[50],
-    path: '/calculator',
-    Route: () => (
-      <AppRoute id="CALCULATOR" path="/calculator" component={CalculatorApp} emitOnOpen={false} />
     ),
   },
   {
