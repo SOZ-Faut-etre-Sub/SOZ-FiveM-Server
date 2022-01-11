@@ -102,26 +102,30 @@ RegisterNetEvent("soz-character:client:NcDataPed", function(source)
             end)
         else
             QBCore.Functions.TriggerCallback("soz-character:server:GetUserTempCharacters", function(result2)
-                if result2[1] ~= nil then
-                    local cData2 = result2[1]
-                    -- TriggerEvent('soz-character:client:selectCharacter', cData2)
-                    TriggerEvent("soz-character:client:createNewCharacter", cData2)
-                    CreateThread(function()
-                        local randommodels = {"mp_m_freemode_01", "mp_f_freemode_01"}
-                        local model = GetHashKey(randommodels[math.random(1, #randommodels)])
-                        RequestModel(model)
-                        while not HasModelLoaded(model) do
-                            Wait(0)
-                        end
-                        charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98,
-                                            Config.PedCoords.w, false, true)
-                        SetPedComponentVariation(charPed, 0, 0, 0, 2)
-                        FreezeEntityPosition(charPed, false)
-                        SetEntityInvincible(charPed, true)
-                        PlaceObjectOnGroundProperly(charPed)
-                        SetBlockingOfNonTemporaryEvents(charPed, true)
-                    end)
+                local tmpUser = result2[1];
+
+                if tmpUser == nil then
+                    -- @TODO-Release Remove this block, disconnect user, and throw error
+                    -- force empty, qb create default value if needed
+                    tmpUser = {}
                 end
+
+                TriggerEvent("soz-character:client:createNewCharacter", tmpUser)
+                CreateThread(function()
+                    local randommodels = {"mp_m_freemode_01", "mp_f_freemode_01"}
+                    local model = GetHashKey(randommodels[math.random(1, #randommodels)])
+                    RequestModel(model)
+                    while not HasModelLoaded(model) do
+                        Wait(0)
+                    end
+                    charPed = CreatePed(2, model, Config.PedCoords.x, Config.PedCoords.y, Config.PedCoords.z - 0.98,
+                                        Config.PedCoords.w, false, true)
+                    SetPedComponentVariation(charPed, 0, 0, 0, 2)
+                    FreezeEntityPosition(charPed, false)
+                    SetEntityInvincible(charPed, true)
+                    PlaceObjectOnGroundProperly(charPed)
+                    SetBlockingOfNonTemporaryEvents(charPed, true)
+                end)
             end)
         end
     end)
