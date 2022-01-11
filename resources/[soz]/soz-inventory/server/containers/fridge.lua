@@ -2,14 +2,12 @@
 FridgeInventory = {}
 
 function FridgeInventory.new()
-    return setmetatable(
-               {}, {
-            __index = FridgeInventory,
-            __tostring = function()
-                return "FridgeInventory"
-            end,
-        }
-           )
+    return setmetatable({}, {
+        __index = FridgeInventory,
+        __tostring = function()
+            return "FridgeInventory"
+        end,
+    })
 end
 
 --- load
@@ -21,8 +19,7 @@ function FridgeInventory:load(id, owner)
     if result == nil then
         exports.oxmysql:execute(
             "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
-            {id, "fridge", owner}
-        )
+            {id, "fridge", owner})
     end
     return result and json.decode(result) or {}
 end

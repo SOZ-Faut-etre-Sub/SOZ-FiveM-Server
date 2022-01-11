@@ -1,8 +1,7 @@
-table.insert(
-    migrations, {
-        name = "add-ban-table",
-        queries = {
-            [[
+table.insert(migrations, {
+    name = "add-ban-table",
+    queries = {
+        [[
             CREATE TABLE IF NOT EXISTS `bans` (
               `id` int(11) NOT NULL AUTO_INCREMENT,
               `name` varchar(50) DEFAULT NULL,
@@ -18,7 +17,6 @@ table.insert(
               KEY `ip` (`ip`)
             ) ENGINE=InnoDB AUTO_INCREMENT=1;
         ]],
-        },
-    }
-);
+    },
+});
 

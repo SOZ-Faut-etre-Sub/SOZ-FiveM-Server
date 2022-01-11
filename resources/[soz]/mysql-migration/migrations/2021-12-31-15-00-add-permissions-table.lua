@@ -1,8 +1,7 @@
-table.insert(
-    migrations, {
-        name = "add-permissions-table",
-        queries = {
-            [[
+table.insert(migrations, {
+    name = "add-permissions-table",
+    queries = {
+        [[
             CREATE TABLE IF NOT EXISTS `permissions` (
               `id` int(11) NOT NULL AUTO_INCREMENT,
               `name` varchar(255) NOT NULL,
@@ -12,7 +11,6 @@ table.insert(
               KEY `license` (`license`)
             ) ENGINE=InnoDB AUTO_INCREMENT=1;
         ]],
-        },
-    }
-);
+    },
+});
 

@@ -24,36 +24,32 @@ local function DisableVehicle(vehicle, time)
     SetVehicleEngineOn(vehicle, true, false, true)
 end
 
-Citizen.CreateThread(
-    function()
-        while true do
-            local player = PlayerPedId()
-            local vehicle = GetVehiclePedIsIn(player, false)
+Citizen.CreateThread(function()
+    while true do
+        local player = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(player, false)
 
-            if IsPedInAnyVehicle(player, 1) and GetPedInVehicleSeat(vehicle, -1) == player then
-                local newVehEng, newVehBody = GetVehicleEngineHealth(vehicle), GetVehicleBodyHealth(vehicle)
+        if IsPedInAnyVehicle(player, 1) and GetPedInVehicleSeat(vehicle, -1) == player then
+            local newVehEng, newVehBody = GetVehicleEngineHealth(vehicle), GetVehicleBodyHealth(vehicle)
 
-                if newVehEng + newVehBody <= (vehEng + vehBody) - 30 then
-                    if vehEng ~= 0.0 and vehBody ~= 0.0 then
-                        -- Get all vehicle damages and add random to calculate wait time
-                        local wait = (newVehEng / vehEng + newVehBody / vehBody) + math.random(1000, 3000)
+            if newVehEng + newVehBody <= (vehEng + vehBody) - 30 then
+                if vehEng ~= 0.0 and vehBody ~= 0.0 then
+                    -- Get all vehicle damages and add random to calculate wait time
+                    local wait = (newVehEng / vehEng + newVehBody / vehBody) + math.random(1000, 3000)
 
-                        CreateThread(
-                            function()
-                                DisableVehicle(vehicle, math.abs(wait))
-                            end
-                        )
-                    end
+                    CreateThread(function()
+                        DisableVehicle(vehicle, math.abs(wait))
+                    end)
                 end
-
-                vehEng, vehBody = newVehEng, newVehBody
-            else
-                vehEng, vehBody = 0, 0
-
-                Wait(5000)
             end
 
-            Wait(1000)
+            vehEng, vehBody = newVehEng, newVehBody
+        else
+            vehEng, vehBody = 0, 0
+
+            Wait(5000)
         end
+
+        Wait(1000)
     end
-)
+end)

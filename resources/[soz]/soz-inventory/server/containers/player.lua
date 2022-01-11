@@ -2,14 +2,12 @@
 PlayerInventory = {}
 
 function PlayerInventory.new()
-    return setmetatable(
-               {}, {
-            __index = PlayerInventory,
-            __tostring = function()
-                return "PlayerInventory"
-            end,
-        }
-           )
+    return setmetatable({}, {
+        __index = PlayerInventory,
+        __tostring = function()
+            return "PlayerInventory"
+        end,
+    })
 end
 
 --- load
