@@ -103,7 +103,7 @@ RegisterNetEvent('inventory:client:UseWeapon', function(weaponData, shootbool)
     local ped = PlayerPedId()
     local weaponName = tostring(weaponData.name)
     if currentWeapon == weaponName then
-        SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
     RemoveAllPedWeapons(ped, true)
     TriggerEvent('weapons:client:SetCurrentWeapon', nil, shootbool)
     currentWeapon = nil

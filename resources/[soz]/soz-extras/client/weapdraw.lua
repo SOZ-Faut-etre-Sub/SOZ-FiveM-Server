@@ -88,13 +88,13 @@ local holsterableWeapons = {
 
 local holstered = true
 local canFire = true
-local currWeapon = `WEAPON_UNARMED`
+local currWeapon = GetHashKey("WEAPON_UNARMED")
 local currentHoldster = nil
 
 RegisterNetEvent('weapons:ResetHolster', function()
 	holstered = true
 	canFire = true
-	currWeapon = `WEAPON_UNARMED`
+	currWeapon = GetHashKey("WEAPON_UNARMED")
 	currentHoldster = nil
 end)
 
@@ -158,7 +158,7 @@ CreateThread(function()
 								SetPedComponentVariation(ped, 7, currentHoldster, 0, 2)
 							end
 
-							SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+							SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
 							currentHoldster = GetPedDrawableVariation(ped, 7)
 
 							TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
@@ -184,7 +184,7 @@ CreateThread(function()
 							canFire = false
 							TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "outro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
 							Wait(1600)
-							SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+							SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
 							TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
 							Wait(1000)
 							SetCurrentPedWeapon(ped, newWeap, true)
@@ -196,7 +196,7 @@ CreateThread(function()
 						end
 					else
 						if QBCore.Functions.GetPlayerData().job.name == "police" then
-							SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+							SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
 							currentHoldster = GetPedDrawableVariation(ped, 7)
 							TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
 							Wait(300)
@@ -218,7 +218,7 @@ CreateThread(function()
 							holstered = false
 							canFire = true
 						else
-							SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+							SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
 							TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
 							Wait(1000)
 							SetCurrentPedWeapon(ped, newWeap, true)
@@ -240,7 +240,7 @@ CreateThread(function()
 								SetPedComponentVariation(ped, 7, currentHoldster, 0, 2)
 							end
 
-							SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+							SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
 							ClearPedTasks(ped)
 							SetCurrentPedWeapon(ped, newWeap, true)
 							holstered = true
@@ -250,7 +250,7 @@ CreateThread(function()
 							canFire = false
 							TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "outro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
 							Wait(1400)
-							SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+							SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
 							ClearPedTasks(ped)
 							SetCurrentPedWeapon(ped, newWeap, true)
 							holstered = true
