@@ -138,34 +138,6 @@
       "TIME_HOURS": "h",
       "TIME_DAYS": "d"
     },
-    "MATCH": {
-      "MESSAGES": {
-        "PROFILE_MATCHED_AT": "Matched: {{ matchedAt }}",
-        "PROFILE_LAST_ACTIVE": "Last Active: {{ lastActive }}",
-        "LIKED": "LIKE",
-        "NOPE": "NOPE"
-      },
-      "FEEDBACK": {
-        "UPDATE_PROFILE_FAILED": "Failed to update profile",
-        "UPDATE_PROFILE_SUCCEEDED": "Successfully updated profile",
-        "MATCHES_ERROR": "Error loading matches",
-        "NO_MATCHES": "No matches Found",
-        "NO_PROFILES": "No Recent Profiles Found",
-        "PROFILES_ERROR": "Error loading profiles",
-        "SAVE_LIKES_FAILED": "Failed to save likes",
-        "NEW_LIKE_FOUND": "New match found!"
-      },
-      "PROFILE_CONFIGURATION": "App is incorrectly configured - cannot create profile. Please contact an administrator.",
-      "EDIT_PROFILE_IMAGE": "Image URL",
-      "EDIT_PROFILE_NAME": "Profile name",
-      "EDIT_PROFILE_BIO": "Bio",
-      "EDIT_PROFILE_LOCATION": "Location",
-      "EDIT_PROFILE_JOB": "Job",
-      "EDIT_PROFILE_TAGS": "Tags",
-      "EDIT_PROFILE_PREVIEW": "Show Preview",
-      "LIKE": "Like",
-      "DISLIKE": "Dislike"
-    },
     "NOTES": {
       "FEEDBACK": {
         "NO_NOTES": "You have no notes",
@@ -271,7 +243,6 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Camera",
-    "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Result was copied to clipboard!",
     "GENERIC_CLICK_TO_REVEAL": "Click to reveal",
     "GENERIC_LOADING": "Loading...",

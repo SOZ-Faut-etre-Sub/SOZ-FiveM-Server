@@ -138,34 +138,6 @@
       "TIME_HOURS": "h",
       "TIME_DAYS": "j"
     },
-    "MATCH": {
-      "MESSAGES": {
-        "PROFILE_MATCHED_AT": "Matché: {{ matchedAt }}",
-        "PROFILE_LAST_ACTIVE": "Dernière activité: {{ lastActive }}",
-        "LIKED": "LIKE",
-        "NOPE": "NOPE"
-      },
-      "FEEDBACK": {
-        "UPDATE_PROFILE_FAILED": "Erreur de mise à jour du profil",
-        "UPDATE_PROFILE_SUCCEEDED": "Profil mis à jour avec succès",
-        "MATCHES_ERROR": "Erreur de chargement des matchs",
-        "NO_MATCHES": "Aucun match trouvé",
-        "NO_PROFILES": "Aucun profil récent trouvé",
-        "PROFILES_ERROR": "Erreur de chargement des profils",
-        "SAVE_LIKES_FAILED": "Impossible de sauvegarder les likes",
-        "NEW_LIKE_FOUND": "Tu as un nouveau match!"
-      },
-      "PROFILE_CONFIGURATION": "L'application n'est pas correctement configurée - Veuillez contacter un administrateur.",
-      "EDIT_PROFILE_IMAGE": "URL Photo de profil",
-      "EDIT_PROFILE_NAME": "Pseudonyme",
-      "EDIT_PROFILE_BIO": "Bio",
-      "EDIT_PROFILE_LOCATION": "Localisation",
-      "EDIT_PROFILE_JOB": "Job",
-      "EDIT_PROFILE_TAGS": "Tags",
-      "EDIT_PROFILE_PREVIEW": "Voir l'aperçu",
-      "LIKE": "Like",
-      "DISLIKE": "Dislike"
-    },
     "NOTES": {
       "FEEDBACK": {
         "NO_NOTES": "Vous n'avez pas de notes",
@@ -271,7 +243,6 @@
     "APPS_TWITTER": "Twitter",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Caméra",
-    "APPS_MATCH": "Matchmaker",
     "APPS_CALCULATOR_COPIED": "Résultat copiée dans le presse-papier!",
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
     "GENERIC_LOADING": "Chargement...",

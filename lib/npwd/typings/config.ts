@@ -12,11 +12,6 @@ interface TwitterConfig {
   maxImages: number;
 }
 
-interface MatchConfig {
-  generateProfileNameFromUsers: boolean;
-  allowEditableProfileName: boolean;
-}
-
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
@@ -70,7 +65,6 @@ export interface ResourceConfig {
   PhoneAsItem: PhoneAsItemConfig;
   RunRate: number;
   twitter: TwitterConfig;
-  match: MatchConfig;
   bank: BankConfig;
   notificationPosition: NotificationConfig;
   general: General;
