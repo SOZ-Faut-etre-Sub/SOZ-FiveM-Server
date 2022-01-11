@@ -1,18 +1,11 @@
-fx_version 'cerulean'
-games { 'gta5' }
-lua54 'yes'
+fx_version "cerulean"
+games {"gta5"}
+lua54 "yes"
 
-description 'Log / Metrics management for SOZ'
+description "Log / Metrics management for SOZ"
 
-shared_scripts {
-    'config.lua',
-    'shared/*.lua',
-}
+shared_scripts {"config.lua", "shared/*.lua"}
 
-server_scripts {
-    'server/main.lua',
-    'server/log.lua',
-    'server/metric.lua',
-}
+server_scripts {"server/main.lua", "server/log.lua", "server/metric.lua"}
 
-dependency 'qb-core'
+dependency "qb-core"

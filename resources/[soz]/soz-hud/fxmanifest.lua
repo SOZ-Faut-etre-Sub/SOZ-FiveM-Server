@@ -1,29 +1,22 @@
-fx_version 'cerulean'
-games { 'gta5' }
-lua54 'yes'
+fx_version "cerulean"
+games {"gta5"}
+lua54 "yes"
 
-ui_page 'ui/index.html'
+ui_page "ui/index.html"
 
-files {
-    'ui/index.html',
-    'ui/app.js',
-    'ui/elements/*.js',
-    'ui/fonts/*.ttf',
-    'ui/app.css',
-    'ui/sprite.svg',
-}
+files {"ui/index.html", "ui/app.js", "ui/elements/*.js", "ui/fonts/*.ttf", "ui/app.css", "ui/sprite.svg"}
 
-shared_script 'config.lua'
+shared_script "config.lua"
 
 client_scripts {
-    'client/utils/*.lua',
-    'client/main.lua',
-    'client/no_reticule.lua',
-    'client/hud_components.lua',
-    'client/notifications.lua',
-    'client/input.lua',
-    'client/compass.lua',
-    'client/streetname.lua',
+    "client/utils/*.lua",
+    "client/main.lua",
+    "client/no_reticule.lua",
+    "client/hud_components.lua",
+    "client/notifications.lua",
+    "client/input.lua",
+    "client/compass.lua",
+    "client/streetname.lua",
 }
 
-dependency 'qb-core'
+dependency "qb-core"

@@ -1,5 +1,3 @@
 Config = {}
 
-Config.AllowedRole = {
-    'admin',
-}
+Config.AllowedRole = {"admin"}

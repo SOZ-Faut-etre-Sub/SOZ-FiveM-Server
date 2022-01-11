@@ -1,4 +1,4 @@
-Config               = {}
+Config = {}
 
 --- Available format
 --- @param %a abbreviated weekday name (e.g., Wed)
@@ -19,29 +19,22 @@ Config               = {}
 --- @param %Y full year (1998)
 --- @param %y two-digit year (98) [00-99]
 --- @param %% the character `%´
-Config.dateFormat    = "%xT%X"
+Config.dateFormat = "%xT%X"
 
 --- Available replacement
 --- @param %level% string
 --- @param %date% date
 --- @param %emitter% string log emitter
 --- @param %msg% string log message
-Config.logFormat     = "%level% [%date%] %emitter% - %msg%"
+Config.logFormat = "%level% [%date%] %emitter% - %msg%"
 
-Config.logLevelIndex = {
-    ['TRACE'] = 0,
-    ['DEBUG'] = 1,
-    ['INFO']  = 2,
-    ['WARN']  = 3,
-    ['ERROR'] = 4,
-    ['FATAL'] = 5,
-}
+Config.logLevelIndex = {["TRACE"] = 0, ["DEBUG"] = 1, ["INFO"] = 2, ["WARN"] = 3, ["ERROR"] = 4, ["FATAL"] = 5}
 
 Config.logLevelColor = {
-    ['TRACE'] = '^9',
-    ['DEBUG'] = '^6',
-    ['INFO']  = '^7',
-    ['WARN']  = '^3',
-    ['ERROR'] = '^1',
-    ['FATAL'] = '^8',
+    ["TRACE"] = "^9",
+    ["DEBUG"] = "^6",
+    ["INFO"] = "^7",
+    ["WARN"] = "^3",
+    ["ERROR"] = "^1",
+    ["FATAL"] = "^8",
 }

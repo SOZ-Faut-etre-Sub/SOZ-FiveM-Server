@@ -2,10 +2,14 @@
 PlayerInventory = {}
 
 function PlayerInventory.new()
-    return setmetatable({}, {
-        __index = PlayerInventory,
-        __tostring = function() return 'PlayerInventory' end
-    })
+    return setmetatable(
+               {}, {
+            __index = PlayerInventory,
+            __tostring = function()
+                return "PlayerInventory"
+            end,
+        }
+           )
 end
 
 --- load
@@ -13,7 +17,7 @@ end
 --- @param citizenid any
 --- @return table
 function PlayerInventory:load(_, citizenid)
-    local result = exports.oxmysql:scalar_async('SELECT inventory FROM players WHERE citizenid = ?', { citizenid })
+    local result = exports.oxmysql:scalar_async("SELECT inventory FROM players WHERE citizenid = ?", {citizenid})
     return result and json.decode(result) or {}
 end
 
@@ -24,7 +28,7 @@ end
 --- @return boolean
 function PlayerInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async('UPDATE players SET inventory = ? WHERE citizenid = ?', { inventory, owner })
+    exports.oxmysql:update_async("UPDATE players SET inventory = ? WHERE citizenid = ?", {inventory, owner})
     return true
 end
 
@@ -43,5 +47,5 @@ function PlayerInventory:sync(id, items)
 end
 
 --- Exports functions
-setmetatable(PlayerInventory, { __index = InventoryShell })
-_G.Container['player'] = PlayerInventory.new()
+setmetatable(PlayerInventory, {__index = InventoryShell})
+_G.Container["player"] = PlayerInventory.new()

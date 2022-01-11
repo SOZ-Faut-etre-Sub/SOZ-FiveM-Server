@@ -1,7 +1,8 @@
-table.insert(migrations, {
-    name = 'insert-characters',
-    queries = {
-        [[
+table.insert(
+    migrations, {
+        name = "insert-characters",
+        queries = {
+            [[
             CREATE TABLE IF NOT EXISTS `player_temp` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `license` varchar(255) DEFAULT NULL,
@@ -14,7 +15,7 @@ table.insert(migrations, {
                 PRIMARY KEY (`id`)
               ) ENGINE=InnoDB AUTO_INCREMENT=1;              
         ]],
-        [[
+            [[
             INSERT INTO player_temp (
                 license,
                 firstname,
@@ -34,7 +35,7 @@ table.insert(migrations, {
                 'Sud'
             );
         ]],
-        [[
+            [[
             INSERT INTO player_temp (
                 license,
                 firstname,
@@ -53,6 +54,7 @@ table.insert(migrations, {
                 'Homme',
                 'Sud'
             );
-        ]]
+        ]],
+        },
     }
-});
+);

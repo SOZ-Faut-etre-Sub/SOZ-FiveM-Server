@@ -1,10 +1,8 @@
-
 --- FormattedDateTime
 --- @param timestamp number Farmat date for specific timestamp (default: now)
 function FormattedDateTime(timestamp)
     return os.date(Config.dateFormat, timestamp)
 end
-
 
 function ReplaceString(str, this, that)
     local b, e = str:find(this, 1, true)

@@ -1,4 +1,3 @@
-
 local function Input(title, maxChar, content)
     ForceCloseTextInputBox()
     CancelOnscreenKeyboard()
@@ -14,4 +13,4 @@ local function Input(title, maxChar, content)
     end
 end
 
-exports('Input', Input)
+exports("Input", Input)

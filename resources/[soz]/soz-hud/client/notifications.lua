@@ -1,4 +1,3 @@
-
 --- DrawNotification Display basic notification
 --- @param msg string Notification message
 --- @param flash boolean Notification flash on the screen
@@ -9,11 +8,13 @@ local function DrawNotification(msg, flash, save)
     EndTextCommandThefeedPostTicker(flash or false, save or false)
 end
 
-RegisterNetEvent('hud:client:DrawNotification', function(msg, flash, save)
-    DrawNotification(msg, flash, save)
-end)
+RegisterNetEvent(
+    "hud:client:DrawNotification", function(msg, flash, save)
+        DrawNotification(msg, flash, save)
+    end
+)
 
-exports('DrawNotification', DrawNotification)
+exports("DrawNotification", DrawNotification)
 
 --- DrawAdvancedNotification Display advanced notification
 --- @param msg string Notification message
@@ -27,13 +28,17 @@ exports('DrawNotification', DrawNotification)
 local function DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
     BeginTextCommandThefeedPost("STRING")
     AddTextComponentSubstringPlayerName(msg)
-    if color then ThefeedNextPostBackgroundColor(color) end
+    if color then
+        ThefeedNextPostBackgroundColor(color)
+    end
     EndTextCommandThefeedPostMessagetext(image, image, flash, iconType, title, subtitle)
     EndTextCommandThefeedPostTicker(flash or false, save or false)
 end
 
-RegisterNetEvent('hud:client:DrawAdvancedNotification', function(msg, title, subtitle, image, iconType, flash, save, color)
-    DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
-end)
+RegisterNetEvent(
+    "hud:client:DrawAdvancedNotification", function(msg, title, subtitle, image, iconType, flash, save, color)
+        DrawAdvancedNotification(msg, title, subtitle, image, iconType, flash, save, color)
+    end
+)
 
-exports('DrawAdvancedNotification', DrawAdvancedNotification)
+exports("DrawAdvancedNotification", DrawAdvancedNotification)

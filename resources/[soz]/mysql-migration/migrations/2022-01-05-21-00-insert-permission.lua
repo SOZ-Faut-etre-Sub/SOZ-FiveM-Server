@@ -1,7 +1,8 @@
-table.insert(migrations, {
-    name = 'insert-permission',
-    queries = {
-        [[
+table.insert(
+    migrations, {
+        name = "insert-permission",
+        queries = {
+            [[
             INSERT INTO permissions (
                 name,
                 license,
@@ -13,7 +14,7 @@ table.insert(migrations, {
                 'god'
             );
         ]],
-        [[
+            [[
             INSERT INTO permissions (
                 name,
                 license,
@@ -25,7 +26,7 @@ table.insert(migrations, {
                 'god'
             );
         ]],
-        [[
+            [[
             INSERT INTO permissions (
                 name,
                 license,
@@ -37,7 +38,7 @@ table.insert(migrations, {
                 'god'
             );
         ]],
-        [[
+            [[
             INSERT INTO permissions (
                 name,
                 license,
@@ -49,7 +50,7 @@ table.insert(migrations, {
                 'god'
             );
         ]],
-        [[
+            [[
             INSERT INTO permissions (
                 name,
                 license,
@@ -61,7 +62,7 @@ table.insert(migrations, {
                 'god'
             );
         ]],
-        [[
+            [[
             INSERT INTO permissions (
                 name,
                 license,
@@ -73,5 +74,6 @@ table.insert(migrations, {
                 'god'
             );
         ]],
+        },
     }
-});
+);

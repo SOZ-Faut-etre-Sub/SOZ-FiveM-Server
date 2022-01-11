@@ -8,5 +8,5 @@ Config = {
         [GetHashKey("WEAPON_HEAVYSNIPER_MK2")] = true,
         [GetHashKey("WEAPON_MARKSMANRIFLE")] = true,
         [GetHashKey("WEAPON_MARKSMANRIFLE_MK2")] = true,
-    }
+    },
 }

@@ -2,10 +2,14 @@
 StorageInventory = {}
 
 function StorageInventory.new()
-    return setmetatable({}, {
-        __index = StorageInventory,
-        __tostring = function() return 'StorageInventory' end
-    })
+    return setmetatable(
+               {}, {
+            __index = StorageInventory,
+            __tostring = function()
+                return "StorageInventory"
+            end,
+        }
+           )
 end
 
 --- load
@@ -13,9 +17,12 @@ end
 --- @param citizenid any
 --- @return table
 function StorageInventory:load(id, owner)
-    local result = exports.oxmysql:scalar_async('SELECT inventory FROM storages WHERE name = ?', { id })
+    local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute('INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name', { id, 'storage', owner })
+        exports.oxmysql:execute(
+            "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
+            {id, "storage", owner}
+        )
     end
     return result and json.decode(result) or {}
 end
@@ -27,7 +34,7 @@ end
 --- @return boolean
 function StorageInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async('UPDATE storages SET inventory = ? WHERE name = ?', { inventory, id })
+    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
 end
 
@@ -61,5 +68,5 @@ function StorageInventory:sync(id, items)
 end
 
 --- Exports functions
-setmetatable(StorageInventory, { __index = InventoryShell })
-_G.Container['storage'] = StorageInventory.new()
+setmetatable(StorageInventory, {__index = InventoryShell})
+_G.Container["storage"] = StorageInventory.new()
