@@ -2,10 +2,14 @@
 FridgeInventory = {}
 
 function FridgeInventory.new()
-    return setmetatable({}, {
-        __index = FridgeInventory,
-        __tostring = function() return 'FridgeInventory' end
-    })
+    return setmetatable(
+               {}, {
+            __index = FridgeInventory,
+            __tostring = function()
+                return "FridgeInventory"
+            end,
+        }
+           )
 end
 
 --- load
@@ -13,9 +17,12 @@ end
 --- @param citizenid any
 --- @return table
 function FridgeInventory:load(id, owner)
-    local result = exports.oxmysql:scalar_async('SELECT inventory FROM storages WHERE name = ?', { id })
+    local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute('INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name', { id, 'fridge', owner })
+        exports.oxmysql:execute(
+            "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
+            {id, "fridge", owner}
+        )
     end
     return result and json.decode(result) or {}
 end
@@ -27,7 +34,7 @@ end
 --- @return boolean
 function FridgeInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async('UPDATE storages SET inventory = ? WHERE name = ?', { inventory, id })
+    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
 end
 
@@ -35,11 +42,8 @@ end
 --- @param item table
 --- @return boolean
 function FridgeInventory:AllowedItems(item)
-    local typeAllowed = {
-        ['food'] = true,
-        ['drink'] = true,
-    }
-    return typeAllowed[item.type or ''] or false
+    local typeAllowed = {["food"] = true, ["drink"] = true}
+    return typeAllowed[item.type or ""] or false
 end
 
 --- AccessAllowed
@@ -65,5 +69,5 @@ function FridgeInventory:sync(id, items)
 end
 
 --- Exports functions
-setmetatable(FridgeInventory, { __index = InventoryShell })
-_G.Container['fridge'] = FridgeInventory.new()
+setmetatable(FridgeInventory, {__index = InventoryShell})
+_G.Container["fridge"] = FridgeInventory.new()

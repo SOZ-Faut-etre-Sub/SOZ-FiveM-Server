@@ -3,14 +3,14 @@ function GetNextWeather(Weather, Forecast)
 
     -- Safe guard to default weather if no transition found
     if transitions == nil or next(transitions) == nil then
-        return 'overcast'
+        return "overcast"
     end
 
     local totalWeight = 0
 
     -- Calculate total weight
     for _, weight in pairs(transitions) do
-        totalWeight += weight
+        totalWeight = totalWeight + weight
     end
 
     -- Randomize choice
@@ -24,69 +24,80 @@ function GetNextWeather(Weather, Forecast)
         end
 
         -- Remove weight for random, so we are able to select next transition if possible
-        rnd -= weight
+        rnd = rnd - weight
     end
 
     -- Safe guard, should never be here
-    return 'overcast'
+    return "overcast"
 end
 
-local CurrentWeather = 'overcast'
+local CurrentWeather = "overcast"
 local NextWeather = nil
 
-RegisterCommand("soz-weather-update", function(source, args)
-    -- @TODO Check if source can set weather
+RegisterCommand(
+    "soz-weather-update", function(source, args)
+        -- @TODO Check if source can set weather
 
-    -- @TODO Check if first arg is a correct weather
-    local weather = args[1]
+        -- @TODO Check if first arg is a correct weather
+        local weather = args[1]
 
-    CurrentWeather = weather
-    TriggerClientEvent("soz-weather:sync", -1, CurrentWeather, NextWeather)
-end, false)
+        CurrentWeather = weather
+        TriggerClientEvent("soz-weather:sync", -1, CurrentWeather, NextWeather)
+    end, false
+)
 
-RegisterCommand("soz-weather-time", function(source, args)
-    -- @TODO Check if source can set weather
+RegisterCommand(
+    "soz-weather-time", function(source, args)
+        -- @TODO Check if source can set weather
 
-    -- @TODO Check if first arg is a correct weather
-    currentHour = tonumber(args[1])
-    currentMinute = tonumber(args[2])
-    currentSecond = tonumber(args[3])
+        -- @TODO Check if first arg is a correct weather
+        currentHour = tonumber(args[1])
+        currentMinute = tonumber(args[2])
+        currentSecond = tonumber(args[3])
 
-    TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond)
-end, false)
+        TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond)
+    end, false
+)
 
-AddEventHandler("soz-weather:init", function(source)
-    TriggerClientEvent("soz-weather:sync", player, CurrentWeather, NextWeather)
-end)
-
-
-CreateThread(function()
-    while true do
-        AdvanceTime()
-        Wait(clockTick)
+AddEventHandler(
+    "soz-weather:init", function(source)
+        TriggerClientEvent("soz-weather:sync", player, CurrentWeather, NextWeather)
     end
-end)
+)
+
+CreateThread(
+    function()
+        while true do
+            AdvanceTime()
+            Wait(clockTick)
+        end
+    end
+)
 
 -- Resync time every minute for each player
-CreateThread(function()
-    while true do
-        TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond, dayInSeconds)
-        Wait(60000)
+CreateThread(
+    function()
+        while true do
+            TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond, dayInSeconds)
+            Wait(60000)
+        end
     end
-end)
+)
 
-CreateThread(function()
-    -- Change this to switch between seasons
-    Forecast = SummerForecast
+CreateThread(
+    function()
+        -- Change this to switch between seasons
+        Forecast = SummerForecast
 
-    while true do
-        -- Change weather in 5 to 10 minutes
-        local nextWeatherDelay = math.random(5 * 60 * 1000, 10 * 60 * 1000);
-        NextWeather = GetNextWeather(CurrentWeather, Forecast);
-        TriggerClientEvent("soz-weather:sync", -1, CurrentWeather, NextWeather)
+        while true do
+            -- Change weather in 5 to 10 minutes
+            local nextWeatherDelay = math.random(5 * 60 * 1000, 10 * 60 * 1000);
+            NextWeather = GetNextWeather(CurrentWeather, Forecast);
+            TriggerClientEvent("soz-weather:sync", -1, CurrentWeather, NextWeather)
 
-        Wait(nextWeatherDelay)
+            Wait(nextWeatherDelay)
 
-        CurrentWeather = NextWeather
+            CurrentWeather = NextWeather
+        end
     end
-end)
+)

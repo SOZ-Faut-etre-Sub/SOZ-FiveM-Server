@@ -1,7 +1,8 @@
-table.insert(migrations, {
-    name = 'add-player-contacts-table',
-    queries = {
-        [[
+table.insert(
+    migrations, {
+        name = "add-player-contacts-table",
+        queries = {
+            [[
             CREATE TABLE IF NOT EXISTS `player_contacts` (
                `id` int(11) NOT NULL AUTO_INCREMENT,
                `citizenid` varchar(50) DEFAULT NULL,
@@ -12,6 +13,7 @@ table.insert(migrations, {
                KEY `citizenid` (`citizenid`)
              ) ENGINE=InnoDB AUTO_INCREMENT=1;
         ]],
+        },
     }
-});
+);
 

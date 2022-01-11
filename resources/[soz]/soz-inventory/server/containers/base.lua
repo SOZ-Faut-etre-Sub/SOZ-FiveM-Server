@@ -2,10 +2,14 @@
 InventoryShell = {}
 
 function InventoryShell.new()
-    return setmetatable({},{
-        __index = InventoryShell,
-        __tostring = function() return 'InventoryShell' end
-    })
+    return setmetatable(
+               {}, {
+            __index = InventoryShell,
+            __tostring = function()
+                return "InventoryShell"
+            end,
+        }
+           )
 end
 
 function InventoryShell:CompactInventory(inv)
@@ -13,12 +17,12 @@ function InventoryShell:CompactInventory(inv)
     if inv ~= nil then
         for k, v in pairs(inv) do
             if v.name and v.amount > 0 then
-                inventory[#inventory+1] = {
-                    name     = v.name,
-                    type     = v.type,
-                    slot     = k,
-                    amount   = v.amount,
-                    metadata = next(v.metadata) and v.metadata or nil
+                inventory[#inventory + 1] = {
+                    name = v.name,
+                    type = v.type,
+                    slot = k,
+                    amount = v.amount,
+                    metadata = next(v.metadata) and v.metadata or nil,
                 }
             end
         end
@@ -31,7 +35,7 @@ end
 --- @param owner any
 --- @return table
 function InventoryShell:load(id, owner)
-    print('^8' .. tostring(self) .. ':load() is not implemented !')
+    print("^8" .. tostring(self) .. ":load() is not implemented !")
     return {}
 end
 
@@ -41,7 +45,7 @@ end
 --- @param inventory string
 --- @return boolean
 function InventoryShell:save(id, owner, inventory)
-    print('^8' .. tostring(self) .. ':save() is not implemented !')
+    print("^8" .. tostring(self) .. ":save() is not implemented !")
     return false
 end
 
@@ -57,7 +61,7 @@ end
 --- @param player Player
 --- @return boolean
 function InventoryShell:AccessAllowed(inv, player)
-    print('^8' .. tostring(self) .. ':AccessAllowed() is not implemented !')
+    print("^8" .. tostring(self) .. ":AccessAllowed() is not implemented !")
     return true
 end
 
@@ -66,6 +70,6 @@ end
 --- @param items table
 --- @return boolean
 function InventoryShell:sync(id, items)
-    print('^8' .. tostring(self) .. ':sync() is not implemented !')
+    print("^8" .. tostring(self) .. ":sync() is not implemented !")
     return false
 end

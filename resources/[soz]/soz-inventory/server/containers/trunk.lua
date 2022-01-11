@@ -2,10 +2,14 @@
 TrunkInventory = {}
 
 function TrunkInventory.new()
-    return setmetatable({}, {
-        __index = TrunkInventory,
-        __tostring = function() return 'TrunkInventory' end
-    })
+    return setmetatable(
+               {}, {
+            __index = TrunkInventory,
+            __tostring = function()
+                return "TrunkInventory"
+            end,
+        }
+           )
 end
 
 --- load
@@ -13,9 +17,12 @@ end
 --- @param citizenid any
 --- @return table
 function TrunkInventory:load(id, owner)
-    local result = exports.oxmysql:scalar_async('SELECT inventory FROM storages WHERE name = ?', { id })
+    local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute('INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name', { id, 'trunk', owner })
+        exports.oxmysql:execute(
+            "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
+            {id, "trunk", owner}
+        )
     end
     return result and json.decode(result) or {}
 end
@@ -27,7 +34,7 @@ end
 --- @return boolean
 function TrunkInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async('UPDATE storages SET inventory = ? WHERE name = ?', { inventory, id })
+    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
 end
 
@@ -56,5 +63,5 @@ function TrunkInventory:sync(id, items)
 end
 
 --- Exports functions
-setmetatable(TrunkInventory, { __index = InventoryShell })
-_G.Container['trunk'] = TrunkInventory.new()
+setmetatable(TrunkInventory, {__index = InventoryShell})
+_G.Container["trunk"] = TrunkInventory.new()

@@ -1,4 +1,3 @@
-
 function playerDataModel(playerData)
     return {
         source = playerData.source,

@@ -2,10 +2,14 @@
 ArmoryInventory = {}
 
 function ArmoryInventory.new()
-    return setmetatable({}, {
-        __index = ArmoryInventory,
-        __tostring = function() return 'ArmoryInventory' end
-    })
+    return setmetatable(
+               {}, {
+            __index = ArmoryInventory,
+            __tostring = function()
+                return "ArmoryInventory"
+            end,
+        }
+           )
 end
 
 --- load
@@ -13,9 +17,12 @@ end
 --- @param citizenid any
 --- @return table
 function ArmoryInventory:load(id, owner)
-    local result = exports.oxmysql:scalar_async('SELECT inventory FROM storages WHERE name = ?', { id })
+    local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute('INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name', { id, 'armory', owner })
+        exports.oxmysql:execute(
+            "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
+            {id, "armory", owner}
+        )
     end
     return result and json.decode(result) or {}
 end
@@ -27,7 +34,7 @@ end
 --- @return boolean
 function ArmoryInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async('UPDATE storages SET inventory = ? WHERE name = ?', { inventory, id })
+    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
 end
 
@@ -35,12 +42,8 @@ end
 --- @param item table
 --- @return boolean
 function ArmoryInventory:AllowedItems(item)
-    local typeAllowed = {
-        ['weapon'] = true,
-        ['weapon_attachment'] = true,
-        ['weapon_ammo'] = true,
-    }
-    return typeAllowed[item.type or ''] or false
+    local typeAllowed = {["weapon"] = true, ["weapon_attachment"] = true, ["weapon_ammo"] = true}
+    return typeAllowed[item.type or ""] or false
 end
 
 --- AccessAllowed
@@ -66,5 +69,5 @@ function ArmoryInventory:sync(id, items)
 end
 
 --- Exports functions
-setmetatable(ArmoryInventory, { __index = InventoryShell })
-_G.Container['armory'] = ArmoryInventory.new()
+setmetatable(ArmoryInventory, {__index = InventoryShell})
+_G.Container["armory"] = ArmoryInventory.new()

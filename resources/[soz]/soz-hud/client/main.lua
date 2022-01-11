@@ -1,28 +1,28 @@
-local QBCore           = exports['qb-core']:GetCoreObject()
+local QBCore = exports["qb-core"]:GetCoreObject()
 
 local HudForcedStateDisplay = true
 HudDisplayed, HudRadar = false, true
 --- @class PlayerData
-local HudPlayerStatus  = {
+local HudPlayerStatus = {
     --- @type number
     hunger = 100,
     --- @type number
-    thirst = 100
+    thirst = 100,
 }
 --- @class VehicleData
 local HudVehicleStatus = {
     --- @type boolean
     haveSeatbelt = false,
     --- @type number
-    speed        = 0,
+    speed = 0,
     --- @type number
-    fuel         = 100,
+    fuel = 100,
     --- @type boolean
-    haveLight    = false,
+    haveLight = false,
     --- @type boolean
-    lightsOn     = false,
+    lightsOn = false,
     --- @type boolean
-    highBeamsOn  = false,
+    highBeamsOn = false,
 }
 
 --- Update Functions
@@ -32,7 +32,7 @@ local HudVehicleStatus = {
 local function setHudDisplay(state)
     if HudDisplayed ~= (HudForcedStateDisplay and state) then
         HudDisplayed = (HudForcedStateDisplay and state)
-        SendNUIMessage({ action = 'display', show = HudDisplayed })
+        SendNUIMessage({action = "display", show = HudDisplayed})
     end
 end
 
@@ -42,7 +42,7 @@ local function setHudRadar(state)
     if HudRadar ~= state then
         HudRadar = state
         DisplayRadar(HudRadar)
-        SendNUIMessage({ action = 'speedometer', show = HudRadar })
+        SendNUIMessage({action = "speedometer", show = HudRadar})
     end
 end
 
@@ -59,7 +59,7 @@ local function setPlayerData(data)
     HudPlayerStatus = data
 
     if shouldUpdate then
-        SendNUIMessage({ action = 'update_needs', hunger = data.hunger, thirst = data.thirst })
+        SendNUIMessage({action = "update_needs", hunger = data.hunger, thirst = data.thirst})
     end
 end
 
@@ -70,80 +70,98 @@ local function setVehicleData(data)
     for k, v in pairs(data) do
         if HudVehicleStatus[k] ~= v then
             HudVehicleStatus[k] = v
-            shouldUpdate        = true
+            shouldUpdate = true
         end
     end
 
     if shouldUpdate then
-        SendNUIMessage({
-            action       = 'update_vehicle',
-            speed        = HudVehicleStatus.speed,
-            fuel         = HudVehicleStatus.fuel,
-            haveSeatbelt = HudVehicleStatus.haveSeatbelt,
-            haveLight    = HudVehicleStatus.haveLight,
-            lightsOn     = HudVehicleStatus.lightsOn,
-            highBeamsOn  = HudVehicleStatus.highBeamsOn,
-        })
+        SendNUIMessage(
+            {
+                action = "update_vehicle",
+                speed = HudVehicleStatus.speed,
+                fuel = HudVehicleStatus.fuel,
+                haveSeatbelt = HudVehicleStatus.haveSeatbelt,
+                haveLight = HudVehicleStatus.haveLight,
+                lightsOn = HudVehicleStatus.lightsOn,
+                highBeamsOn = HudVehicleStatus.highBeamsOn,
+            }
+        )
     end
 end
 
 --- Events
 
 --- Populate value at player login
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    setHudDisplay(true)
-    QBCore.Functions.GetPlayerData(function(PlayerData)
-        HudPlayerStatus.hunger = PlayerData.metadata['hunger']
-        HudPlayerStatus.thirst = PlayerData.metadata['thirst']
-    end)
-end)
+RegisterNetEvent(
+    "QBCore:Client:OnPlayerLoaded", function()
+        setHudDisplay(true)
+        QBCore.Functions.GetPlayerData(
+            function(PlayerData)
+                HudPlayerStatus.hunger = PlayerData.metadata["hunger"]
+                HudPlayerStatus.thirst = PlayerData.metadata["thirst"]
+            end
+        )
+    end
+)
 
-RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    setHudDisplay(false)
-end)
+RegisterNetEvent(
+    "QBCore:Client:OnPlayerUnload", function()
+        setHudDisplay(false)
+    end
+)
 
 --- Keep same name as qb-hud
-RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst)
-    setPlayerData({ hunger = newHunger, thirst = newThirst })
-end)
+RegisterNetEvent(
+    "hud:client:UpdateNeeds", function(newHunger, newThirst)
+        setPlayerData({hunger = newHunger, thirst = newThirst})
+    end
+)
 
-RegisterNetEvent('hud:client:UpdateSeatbelt', function(newState)
-    setVehicleData({ haveSeatbelt = newState })
-end)
+RegisterNetEvent(
+    "hud:client:UpdateSeatbelt", function(newState)
+        setVehicleData({haveSeatbelt = newState})
+    end
+)
 
-RegisterNetEvent('hud:client:OverrideVisibility', function(newState)
-    HudForcedStateDisplay = newState
-    setHudDisplay(newState)
-end)
+RegisterNetEvent(
+    "hud:client:OverrideVisibility", function(newState)
+        HudForcedStateDisplay = newState
+        setHudDisplay(newState)
+    end
+)
 
 --- Loops
 
-CreateThread(function()
-    while true do
-        local player  = PlayerPedId()
-        local vehicle = GetVehiclePedIsIn(player)
+CreateThread(
+    function()
+        while true do
+            local player = PlayerPedId()
+            local vehicle = GetVehiclePedIsIn(player)
 
-        if LocalPlayer.state.isLoggedIn then
-            setHudDisplay(not IsPauseMenuActive())
+            if LocalPlayer.state.isLoggedIn then
+                setHudDisplay(not IsPauseMenuActive())
 
-            if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
-                local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
+                if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
+                    local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
 
-                setHudRadar(true)
-                setVehicleData({
-                    speed       = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
-                    fuel        = GetVehicleFuelLevel(vehicle),
-                    haveLight   = haveLight,
-                    lightsOn    = lightsOn,
-                    highBeamsOn = highBeamsOn,
-                })
+                    setHudRadar(true)
+                    setVehicleData(
+                        {
+                            speed = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
+                            fuel = GetVehicleFuelLevel(vehicle),
+                            haveLight = haveLight,
+                            lightsOn = lightsOn,
+                            highBeamsOn = highBeamsOn,
+                        }
+                    )
+                else
+                    setHudRadar(false)
+                end
             else
-                setHudRadar(false)
+                Wait(500)
             end
-        else
-            Wait(500)
-        end
 
-        Wait(50)
+            Wait(50)
+        end
     end
-end)
+)

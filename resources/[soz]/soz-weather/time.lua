@@ -8,17 +8,17 @@ clockTick = 1000
 incrementSeconds = ((3600 * 24) / dayInSeconds) / (1000 / clockTick)
 
 function AdvanceTime()
-    currentSecond += incrementSeconds
+    currentSecond = currentSecond + incrementSeconds
 
     if currentSecond >= 60 then
         incrementMinutes = math.floor((currentSecond / 60) + 0.5)
-        currentMinute += incrementMinutes
+        currentMinute = currentMinute + incrementMinutes
         currentSecond = currentSecond % 60
 
         if currentMinute >= 60 then
             incrementHours = math.floor((currentMinute / 60) + 0.5)
             currentMinute = currentMinute % 60
-            currentHour += incrementHours
+            currentHour = currentHour + incrementHours
 
             if currentHour >= 24 then
                 currentHour = currentHour % 24

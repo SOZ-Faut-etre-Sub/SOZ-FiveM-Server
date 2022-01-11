@@ -1,20 +1,21 @@
-
 local function printLogString(level, message, playerData)
-    local logMessage = ReplaceString(Config.logFormat, '%date%', FormattedDateTime())
+    local logMessage = ReplaceString(Config.logFormat, "%date%", FormattedDateTime())
 
-    logMessage = ReplaceString(logMessage, '%level%', (Config.logLevelColor[level] or '') .. string.format("%-5s", level))
-    logMessage = ReplaceString(logMessage, '%emitter%', GetInvokingResource() or 'soz-monitor')
-    logMessage = ReplaceString(logMessage, '%msg%', message or '')
+    logMessage = ReplaceString(
+                     logMessage, "%level%", (Config.logLevelColor[level] or "") .. string.format("%-5s", level)
+                 )
+    logMessage = ReplaceString(logMessage, "%emitter%", GetInvokingResource() or "soz-monitor")
+    logMessage = ReplaceString(logMessage, "%msg%", message or "")
 
     if playerData then
         if type(playerData) == "table" then
             if playerData.charinfo ~= nil then
-                logMessage = logMessage .. ' | player: ' .. json.encode(playerDataModel(playerData))
+                logMessage = logMessage .. " | player: " .. json.encode(playerDataModel(playerData))
             else
-                logMessage = logMessage .. ' | player: ' .. json.encode(playerData)
+                logMessage = logMessage .. " | player: " .. json.encode(playerData)
             end
         else
-            logMessage = logMessage .. ' | source: ' .. playerData
+            logMessage = logMessage .. " | source: " .. playerData
         end
     end
 
@@ -22,12 +23,12 @@ local function printLogString(level, message, playerData)
 end
 
 local function printLogJSON(level, message, playerData)
-    local logPayload     = {}
+    local logPayload = {}
 
     logPayload.timestamp = os.time()
-    logPayload.emitter   = GetInvokingResource() or 'soz-monitor'
-    logPayload.level     = level or ''
-    logPayload.message   = message
+    logPayload.emitter = GetInvokingResource() or "soz-monitor"
+    logPayload.level = level or ""
+    logPayload.message = message
 
     if playerData then
         if type(playerData) == "table" then
@@ -49,8 +50,10 @@ end
 --- @param message string
 --- @param playerData PlayerData
 local function printFormattedLog(level, message, playerData)
-    if not Config.logLevelIndex[level:upper()] then return end
-    if Config.logLevelIndex[level:upper()] < Config.logLevelIndex[GetConvar('log_level', 'info'):upper()] then
+    if not Config.logLevelIndex[level:upper()] then
+        return
+    end
+    if Config.logLevelIndex[level:upper()] < Config.logLevelIndex[GetConvar("log_level", "info"):upper()] then
         return
     end
 
@@ -64,20 +67,22 @@ local function printFormattedLog(level, message, playerData)
         end
     end
 
-    if GetConvar('log_format', 'text') == 'text' then
+    if GetConvar("log_format", "text") == "text" then
         printLogString(level, message, playerData)
-    elseif GetConvar('log_format', 'text') == 'json' then
+    elseif GetConvar("log_format", "text") == "json" then
         printLogJSON(level, message, playerData)
     else
-        printLogString('FATAL', "Your log_format is not valid. Valid format is json or text.")
+        printLogString("FATAL", "Your log_format is not valid. Valid format is json or text.")
     end
 end
 
 --- monitor:server:Log
 --- @param level string Log level
 --- @param message string Message
-RegisterServerEvent('monitor:server:Log', function(level, message)
-    printFormattedLog(level, message, source)
-end)
+RegisterServerEvent(
+    "monitor:server:Log", function(level, message)
+        printFormattedLog(level, message, source)
+    end
+)
 
 exports("Log", printFormattedLog)

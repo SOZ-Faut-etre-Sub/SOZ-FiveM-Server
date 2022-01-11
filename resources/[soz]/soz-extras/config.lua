@@ -8,7 +8,7 @@ Config.JointEffectTime = 60
 Config.RemoveWeaponDrops = true
 Config.RemoveWeaponDropsTimer = 25
 Config.DefaultPrice = 20 -- carwash
-Config.DirtLevel = 0.1 --carwash dirt level
+Config.DirtLevel = 0.1 -- carwash dirt level
 
 ConsumeablesEat = {
     ["sandwich"] = math.random(35, 54),
@@ -30,16 +30,8 @@ ConsumeablesAlcohol = {
 }
 
 Config.BlacklistedScenarios = {
-    ['TYPES'] = {
-        "WORLD_VEHICLE_MILITARY_PLANES_SMALL",
-        "WORLD_VEHICLE_MILITARY_PLANES_BIG",
-    },
-    ['GROUPS'] = {
-        2017590552,
-        2141866469,
-        1409640232,
-        GetHashKey("ng_planes"),
-    }
+    ["TYPES"] = {"WORLD_VEHICLE_MILITARY_PLANES_SMALL", "WORLD_VEHICLE_MILITARY_PLANES_BIG"},
+    ["GROUPS"] = {2017590552, 2141866469, 1409640232, GetHashKey("ng_planes")},
 }
 
 Config.BlacklistedVehs = {
@@ -99,28 +91,12 @@ Config.BlacklistedPeds = {
     [GetHashKey("s_m_y_hwaycop_01")] = true,
 }
 
-Config.Teleports = {
-}
+Config.Teleports = {}
 
 Config.CarWash = { -- carwash
-    [1] = {
-        ["label"] = "Hands Free Carwash",
-        ["coords"] = vector3(25.29, -1391.96, 29.33),
-    },
-    [2] = {
-        ["label"] = "Hands Free Carwash",
-        ["coords"] = vector3(174.18, -1736.66, 29.35),
-    },
-    [3] = {
-        ["label"] = "Hands Free Carwash",
-        ["coords"] = vector3(-74.56, 6427.87, 31.44),
-    },
-    [5] = {
-        ["label"] = "Hands Free Carwash",
-        ["coords"] = vector3(1363.22, 3592.7, 34.92),
-    },
-    [6] = {
-        ["label"] = "Hands Free Carwash",
-        ["coords"] = vector3(-699.62, -932.7, 19.01),
-    }
+    [1] = {["label"] = "Hands Free Carwash", ["coords"] = vector3(25.29, -1391.96, 29.33)},
+    [2] = {["label"] = "Hands Free Carwash", ["coords"] = vector3(174.18, -1736.66, 29.35)},
+    [3] = {["label"] = "Hands Free Carwash", ["coords"] = vector3(-74.56, 6427.87, 31.44)},
+    [5] = {["label"] = "Hands Free Carwash", ["coords"] = vector3(1363.22, 3592.7, 34.92)},
+    [6] = {["label"] = "Hands Free Carwash", ["coords"] = vector3(-699.62, -932.7, 19.01)},
 }
