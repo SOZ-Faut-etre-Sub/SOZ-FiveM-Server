@@ -23,8 +23,7 @@ RegisterServerEvent("inventory:server:openTrunkInventory", function(plate)
     local targetInv = Inventory("plate_" .. plate)
 
     if targetInv == nil then
-        targetInv = Inventory.Create("plate_" .. plate, plate, "trunk", Config.StorageMaxInvSlots,
-                                     Config.StorageMaxWeight, plate)
+        targetInv = Inventory.Create("plate_" .. plate, plate, "trunk", Config.StorageMaxInvSlots, Config.StorageMaxWeight, plate)
     end
 
     if targetInv.open == false and Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
@@ -32,23 +31,19 @@ RegisterServerEvent("inventory:server:openTrunkInventory", function(plate)
         targetInv.open = true
         targetInv.user = Player.PlayerData.source
 
-        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source,
-                           Inventory.FilterItems(sourceInv, targetInv.type),
+        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
                            Inventory.FilterItems(targetInv, sourceInv.type))
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           "~r~Vous n'avez pas accès à ce coffre")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas accès à ce coffre")
     end
 end)
 
-QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
-                                function(source, cb, inventorySource, inventoryTarget, item, amount, slot)
+QBCore.Functions.CreateCallback("inventory:server:TransfertItem", function(source, cb, inventorySource, inventoryTarget, item, amount, slot)
     Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, false, slot, function(success, reason)
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
 
-        cb(success, reason, Inventory.FilterItems(sourceInv, targetInv.type),
-           Inventory.FilterItems(targetInv, sourceInv.type))
+        cb(success, reason, Inventory.FilterItems(sourceInv, targetInv.type), Inventory.FilterItems(targetInv, sourceInv.type))
     end)
 end)
 

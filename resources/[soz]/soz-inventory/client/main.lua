@@ -25,8 +25,7 @@ RegisterNUICallback("transfertItem", function(data, cb)
     SetNuiFocus(true, true)
 
     if amount and tonumber(amount) then
-        QBCore.Functions.TriggerCallback("inventory:server:TransfertItem",
-                                         function(success, reason, invSource, invTarget)
+        QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
             cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
             if not success then
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
@@ -50,19 +49,17 @@ CreateThread(function()
                 local dist = #(GetEntityCoords(PlayerPedId()) - storage.position)
 
                 if dist <= 80.0 then
-                    DrawMarker(27, storage.position.x, storage.position.y, storage.position.z, 0.0, 0.0, 0.0, 0.0,
-                               180.0, 0.0, 1.5, 1.5, 1.5, 255, 128, 0, 50, false, false, 2)
+                    DrawMarker(27, storage.position.x, storage.position.y, storage.position.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.5, 1.5, 1.5, 255, 128, 0, 50,
+                               false, false, 2)
 
                     if dist <= 2.0 then
                         if storage.state == nil then
-                            QBCore.Functions.ShowHelpNotification(
-                                "~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
+                            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
                             if IsControlJustPressed(1, 51) then
                                 TriggerServerEvent("inventory:server:openInventory", id)
                             end
                         else
-                            QBCore.Functions
-                                .ShowHelpNotification("~r~Stockage déjà utilisé par ~o~" .. storage.state)
+                            QBCore.Functions.ShowHelpNotification("~r~Stockage déjà utilisé par ~o~" .. storage.state)
                         end
                     end
                 end

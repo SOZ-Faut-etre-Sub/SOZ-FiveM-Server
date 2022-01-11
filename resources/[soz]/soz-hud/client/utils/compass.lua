@@ -21,9 +21,9 @@ function drawText(str, x, y, style)
     end
 
     if style.shadow ~= nil then
-        SetTextDropShadow(style.shadow.distance ~= nil and style.shadow.distance or 0,
-                          style.shadow.r ~= nil and style.shadow.r or 0, style.shadow.g ~= nil and style.shadow.g or 0,
-                          style.shadow.b ~= nil and style.shadow.b or 0, style.shadow.a ~= nil and style.shadow.a or 255)
+        SetTextDropShadow(style.shadow.distance ~= nil and style.shadow.distance or 0, style.shadow.r ~= nil and style.shadow.r or 0,
+                          style.shadow.g ~= nil and style.shadow.g or 0, style.shadow.b ~= nil and style.shadow.b or 0,
+                          style.shadow.a ~= nil and style.shadow.a or 255)
     else
         SetTextDropShadow(0, 0, 0, 0, 255)
     end

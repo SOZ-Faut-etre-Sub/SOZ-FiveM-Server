@@ -101,8 +101,8 @@ end)
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
-        if DoesEntityExist(ped) and not IsEntityDead(ped) and not IsPedInParachuteFreeFall(ped) and
-            not IsPedFalling(ped) and (GetPedParachuteState(ped) == -1 or GetPedParachuteState(ped) == 0) then
+        if DoesEntityExist(ped) and not IsEntityDead(ped) and not IsPedInParachuteFreeFall(ped) and not IsPedFalling(ped) and
+            (GetPedParachuteState(ped) == -1 or GetPedParachuteState(ped) == 0) then
             if currWeapon ~= GetSelectedPedWeapon(ped) then
                 pos = GetEntityCoords(ped, true)
                 rot = GetEntityHeading(ped)
@@ -119,8 +119,7 @@ CreateThread(function()
                             -- TaskPlayAnim(ped, "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
                             canFire = false
                             currentHoldster = GetPedDrawableVariation(ped, 7)
-                            TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0,
-                                                 rot, 3.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(300)
                             SetCurrentPedWeapon(ped, newWeap, true)
 
@@ -140,8 +139,7 @@ CreateThread(function()
                             canFire = true
                         else
                             canFire = false
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true),
-                                                 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(1000)
                             SetCurrentPedWeapon(ped, newWeap, true)
                             currWeapon = newWeap
@@ -154,8 +152,8 @@ CreateThread(function()
                         if QBCore.Functions.GetPlayerData().job.name == "police" then
                             canFire = false
 
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@cop@unarmed", "intro",
-                                                 GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@cop@unarmed", "intro", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0,
+                                                 0, 0)
                             Wait(500)
 
                             if IsWeaponHolsterable(currWeapon) then
@@ -165,8 +163,7 @@ CreateThread(function()
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
                             currentHoldster = GetPedDrawableVariation(ped, 7)
 
-                            TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0,
-                                                 rot, 3.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(300)
                             SetCurrentPedWeapon(ped, newWeap, true)
 
@@ -187,12 +184,10 @@ CreateThread(function()
                             canFire = true
                         else
                             canFire = false
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "outro", GetEntityCoords(ped, true),
-                                                 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "outro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(1600)
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true),
-                                                 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(1000)
                             SetCurrentPedWeapon(ped, newWeap, true)
                             currWeapon = newWeap
@@ -205,8 +200,7 @@ CreateThread(function()
                         if QBCore.Functions.GetPlayerData().job.name == "police" then
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
                             currentHoldster = GetPedDrawableVariation(ped, 7)
-                            TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0,
-                                                 rot, 3.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(300)
                             SetCurrentPedWeapon(ped, newWeap, true)
 
@@ -227,8 +221,7 @@ CreateThread(function()
                             canFire = true
                         else
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true),
-                                                 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "intro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(1000)
                             SetCurrentPedWeapon(ped, newWeap, true)
                             currWeapon = newWeap
@@ -242,8 +235,8 @@ CreateThread(function()
                     if not holstered and CheckWeapon(currWeapon) then
                         if QBCore.Functions.GetPlayerData().job.name == "police" then
                             canFire = false
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@cop@unarmed", "intro",
-                                                 GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@cop@unarmed", "intro", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0,
+                                                 0, 0)
                             Wait(500)
 
                             if IsWeaponHolsterable(currWeapon) then
@@ -258,8 +251,7 @@ CreateThread(function()
                             currWeapon = newWeap
                         else
                             canFire = false
-                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "outro", GetEntityCoords(ped, true),
-                                                 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
+                            TaskPlayAnimAdvanced(ped, "reaction@intimidation@1h", "outro", GetEntityCoords(ped, true), 0, 0, rot, 8.0, 3.0, -1, 50, 0, 0, 0)
                             Wait(1400)
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
                             ClearPedTasks(ped)

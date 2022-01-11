@@ -17,9 +17,11 @@ end
 function TrunkInventory:load(id, owner)
     local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute(
-            "INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name",
-            {id, "trunk", owner})
+        exports.oxmysql:execute("INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name", {
+            id,
+            "trunk",
+            owner,
+        })
     end
     return result and json.decode(result) or {}
 end

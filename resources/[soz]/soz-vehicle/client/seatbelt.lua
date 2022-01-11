@@ -42,7 +42,8 @@ RegisterNetEvent("seatbelt:client:UseHarness", function(ItemData)
     if inveh and class ~= 8 and class ~= 13 and class ~= 14 then
         if not harnessOn then
             LocalPlayer.state:set("inv_busy", true, true)
-            QBCore.Functions.Progressbar("harness_equip", "Attaching Race Harness", 5000, false, true, {
+            QBCore.Functions.Progressbar("harness_equip", "Attaching Race Harness", 5000, false, true,
+                                         {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
@@ -56,7 +57,8 @@ RegisterNetEvent("seatbelt:client:UseHarness", function(ItemData)
             harnessData = ItemData
         else
             LocalPlayer.state:set("inv_busy", true, true)
-            QBCore.Functions.Progressbar("harness_equip", "Removing Race Harness", 5000, false, true, {
+            QBCore.Functions.Progressbar("harness_equip", "Removing Race Harness", 5000, false, true,
+                                         {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
@@ -138,8 +140,7 @@ CreateThread(function()
             if GetVehicleEngineHealth(currentVehicle) < 0.0 then
                 SetVehicleEngineHealth(currentVehicle, 0.0)
             end
-            if (GetVehicleHandbrake(currentVehicle) or (GetVehicleSteeringAngle(currentVehicle)) > 25.0 or
-                (GetVehicleSteeringAngle(currentVehicle)) < -25.0) then
+            if (GetVehicleHandbrake(currentVehicle) or (GetVehicleSteeringAngle(currentVehicle)) > 25.0 or (GetVehicleSteeringAngle(currentVehicle)) < -25.0) then
                 if handbrake == 0 then
                     handbrake = 100
                     ResetHandBrake()
@@ -154,8 +155,7 @@ CreateThread(function()
                 frameBodyChange = 0
             end
             if frameBodyChange ~= 0 then
-                if lastFrameVehiclespeed > 110 and thisFrameVehicleSpeed < (lastFrameVehiclespeed * 0.75) and
-                    not damagedone then
+                if lastFrameVehiclespeed > 110 and thisFrameVehicleSpeed < (lastFrameVehiclespeed * 0.75) and not damagedone then
                     if frameBodyChange > 18.0 then
                         if not seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if math.random(math.ceil(lastFrameVehiclespeed)) > 60 then

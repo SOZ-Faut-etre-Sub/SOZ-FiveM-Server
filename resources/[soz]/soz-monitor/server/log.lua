@@ -1,8 +1,7 @@
 local function printLogString(level, message, playerData)
     local logMessage = ReplaceString(Config.logFormat, "%date%", FormattedDateTime())
 
-    logMessage = ReplaceString(logMessage, "%level%",
-                               (Config.logLevelColor[level] or "") .. string.format("%-5s", level))
+    logMessage = ReplaceString(logMessage, "%level%", (Config.logLevelColor[level] or "") .. string.format("%-5s", level))
     logMessage = ReplaceString(logMessage, "%emitter%", GetInvokingResource() or "soz-monitor")
     logMessage = ReplaceString(logMessage, "%msg%", message or "")
 

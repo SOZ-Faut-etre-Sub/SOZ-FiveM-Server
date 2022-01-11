@@ -5,8 +5,7 @@ local function ApplyHUD()
 end
 
 function HudToggleEntry(menu)
-    local global =
-        menu:AddCheckbox({label = "HUD: Global", value = globalHUD, description = "Active/Désactive le HUD"})
+    local global = menu:AddCheckbox({label = "HUD: Global", value = globalHUD, description = "Active/Désactive le HUD"})
     local cinematic = menu:AddCheckbox({
         label = "HUD: Cinématique",
         value = cinematicHUD,

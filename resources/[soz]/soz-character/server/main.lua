@@ -78,8 +78,10 @@ QBCore.Functions.CreateCallback("soz-character:server:getSkin", function(source,
     exports.oxmysql:execute("SELECT * FROM players WHERE license = ?", {license}, function(result2)
         ply2Chars = result2
         local cid2 = ply2Chars[1].citizenid
-        local result = exports.oxmysql:executeSync("SELECT * FROM playerskins WHERE citizenid = ? AND active = ?",
-                                                   {cid2, 1})
+        local result = exports.oxmysql:executeSync("SELECT * FROM playerskins WHERE citizenid = ? AND active = ?", {
+            cid2,
+            1,
+        })
         if result[1] ~= nil then
             cb(result[1].model, result[1].skin)
         else

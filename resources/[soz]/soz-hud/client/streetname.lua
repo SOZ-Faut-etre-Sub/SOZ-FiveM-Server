@@ -16,8 +16,7 @@ Citizen.CreateThread(function()
             local streetA, streetB = GetStreetNameAtCoord(playerPos.x, playerPos.y, playerPos.z)
             local street = {}
 
-            if not ((streetA == lastStreetA or streetA == lastStreetB) and
-                (streetB == lastStreetA or streetB == lastStreetB)) then
+            if not ((streetA == lastStreetA or streetA == lastStreetB) and (streetB == lastStreetA or streetB == lastStreetB)) then
                 -- Ignores the switcharoo while doing circles on intersections
                 lastStreetA = streetA
                 lastStreetB = streetB

@@ -34,15 +34,13 @@ end)
 RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(tonumber(target))
-    local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) -
-                     GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
+    local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
 
     if Player == Target then
         return
     end
     if dist > 2 then
-        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                  "Personne n'est à portée de vous")
+        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous")
     end
 
     if amount <= item.amount then
@@ -50,54 +48,43 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
             amount = item.amount
         end
 
-        Inventory.TransfertItem(Player.PlayerData.source, Target.PlayerData.source, item.name, amount, item.metadata,
-                                item.slot, function(success, reason)
+        Inventory.TransfertItem(Player.PlayerData.source, Target.PlayerData.source, item.name, amount, item.metadata, item.slot, function(success, reason)
             if success then
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                   string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
-                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source,
-                                   string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
+                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
 
                 TriggerClientEvent("SyncPlayEmoteSource", Player.PlayerData.source, "give2")
                 TriggerClientEvent("SyncPlayEmoteSource", Target.PlayerData.source, "give2")
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                   "~r~Vous ne pouvez pas donner cet objet !")
-                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source,
-                                   "~r~Vous ne pouvez pas recevoir d'objet !")
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous ne pouvez pas donner cet objet !")
+                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "~r~Vous ne pouvez pas recevoir d'objet !")
             end
         end)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           "~r~Vous ne possédez pas le nombre d'items requis pour le transfert")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous ne possédez pas le nombre d'items requis pour le transfert")
     end
 end)
 
 RegisterServerEvent("inventory:server:GiveMoney", function(target, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(tonumber(target))
-    local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) -
-                     GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
+    local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
 
     if Player == Target then
         return
     end
     if dist > 2 then
-        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                  "Personne n'est à portée de vous")
+        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous")
     end
     if Player.Functions.RemoveMoney("cash", amount) then
         Target.Functions.AddMoney("cash", amount)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           string.format("Vous avez donné ~r~%s$", amount))
-        TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source,
-                           string.format("Vous avez reçu ~g~%s$", amount))
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
+        TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
 
         TriggerClientEvent("SyncPlayEmoteSource", Player.PlayerData.source, "give2")
         TriggerClientEvent("SyncPlayEmoteSource", Target.PlayerData.source, "give2")
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           "~r~Vous ne possédez pas l'argent requis pour le transfert")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous ne possédez pas l'argent requis pour le transfert")
     end
 end)
 

@@ -4,8 +4,7 @@ CreateThread(function()
     while true do
         Wait(1)
         local ped = PlayerPedId()
-        if not IsPedSittingInAnyVehicle(ped) and not IsPedFalling(ped) and not IsPedSwimming(ped) and
-            not IsPedSwimmingUnderWater(ped) then
+        if not IsPedSittingInAnyVehicle(ped) and not IsPedFalling(ped) and not IsPedSwimming(ped) and not IsPedSwimmingUnderWater(ped) then
             if IsControlJustReleased(0, 36) then
                 stage = stage + 1
                 if stage == 2 then
@@ -37,8 +36,7 @@ CreateThread(function()
                 if GetEntitySpeed(ped) > 1.0 then
                     SetPedWeaponMovementClipset(ped, "move_ped_crouched", 1.0)
                     SetPedStrafeClipset(ped, "move_ped_crouched_strafing", 1.0)
-                elseif GetEntitySpeed(ped) < 1.0 and
-                    (GetFollowPedCamViewMode() == 4 or GetFollowVehicleCamViewMode() == 4) then
+                elseif GetEntitySpeed(ped) < 1.0 and (GetFollowPedCamViewMode() == 4 or GetFollowVehicleCamViewMode() == 4) then
                     ResetPedWeaponMovementClipset(ped)
                     ResetPedStrafeClipset(ped)
                 end
@@ -52,13 +50,13 @@ CreateThread(function()
                     movingForward = true
                     SetPedMoveAnimsBlendOut(ped)
                     local pronepos = GetEntityCoords(ped)
-                    TaskPlayAnimAdvanced(ped, "move_crawl", "onfront_fwd", pronepos.x, pronepos.y, pronepos.z + 0.1,
-                                         0.0, 0.0, GetEntityHeading(ped), 100.0, 0.4, 1.0, 7, 2.0, 1, 1)
+                    TaskPlayAnimAdvanced(ped, "move_crawl", "onfront_fwd", pronepos.x, pronepos.y, pronepos.z + 0.1, 0.0, 0.0, GetEntityHeading(ped), 100.0,
+                                         0.4, 1.0, 7, 2.0, 1, 1)
                     Wait(500)
                 elseif (not IsControlPressed(0, 32) and movingForward) then
                     local pronepos = GetEntityCoords(ped)
-                    TaskPlayAnimAdvanced(ped, "move_crawl", "onfront_fwd", pronepos.x, pronepos.y, pronepos.z + 0.1,
-                                         0.0, 0.0, GetEntityHeading(ped), 100.0, 0.4, 1.0, 6, 2.0, 1, 1)
+                    TaskPlayAnimAdvanced(ped, "move_crawl", "onfront_fwd", pronepos.x, pronepos.y, pronepos.z + 0.1, 0.0, 0.0, GetEntityHeading(ped), 100.0,
+                                         0.4, 1.0, 6, 2.0, 1, 1)
                     Wait(500)
                     movingForward = false
                 end
