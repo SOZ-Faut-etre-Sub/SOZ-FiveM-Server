@@ -6,6 +6,6 @@ description "Log / Metrics management for SOZ"
 
 shared_scripts {"config.lua", "shared/*.lua"}
 
-server_scripts {"server/main.lua", "server/log.lua", "server/metric.lua"}
+server_scripts {"server/http.lua", "server/main.lua", "server/log.lua", "server/metric.lua"}
 
 dependency "qb-core"
