@@ -20,6 +20,16 @@ AddEventHandler("soz-weather:sync-time", function(hour, minute, second, dayDurat
     NetworkOverrideClockMillisecondsPerGameMinute(millisecondsPerGameMinute)
 end)
 
+CreateThread(function()
+    while true do
+        Wait(0)
+        if NetworkIsSessionStarted() then
+            TriggerEvent("soz-weather:init")
+            return
+        end
+    end
+end)
+
 Citizen.CreateThread(function()
     while true do
         ForceSnowPass(snowOnGround)

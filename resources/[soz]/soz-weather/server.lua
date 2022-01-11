@@ -55,8 +55,9 @@ RegisterCommand("soz-weather-time", function(source, args)
     TriggerClientEvent("soz-weather:sync-time", -1, currentHour, currentMinute, currentSecond)
 end, false)
 
-AddEventHandler("soz-weather:init", function(source)
-    TriggerClientEvent("soz-weather:sync", player, CurrentWeather, NextWeather)
+AddEventHandler("soz-weather:init", function()
+    TriggerClientEvent("soz-weather:sync", source, CurrentWeather, NextWeather)
+    TriggerClientEvent("soz-weather:sync-time", source, currentHour, currentMinute, currentSecond)
 end)
 
 CreateThread(function()
