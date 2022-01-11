@@ -8,7 +8,6 @@ import { Navigation } from '@os/navigation-bar/components/Navigation';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import { usePhoneService } from '@os/phone/hooks/usePhoneService';
 import { useApps } from '@os/apps/hooks/useApps';
-import { useTwitterService } from './apps/twitter/hooks/useTwitterService';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
@@ -66,7 +65,6 @@ function Phone() {
   useKeyboardService();
   usePhoneService();
   useSimcardService();
-  useTwitterService();
   useMarketplaceService();
   useBankService();
   useMessagesService();

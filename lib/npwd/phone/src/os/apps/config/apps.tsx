@@ -25,14 +25,9 @@ import {
 } from '../../../apps/marketplace/marketplace.theme';
 import { NOTES_APP_ICON_COLOR, NOTES_APP_PRIMARY_COLOR } from '../../../apps/notes/notes.theme';
 import { DIALER_APP_PRIMARY_COLOR, DIALER_APP_TEXT_COLOR } from '../../../apps/dialer/dialer.theme';
-import {
-  TWITTER_APP_PRIMARY_COLOR,
-  TWITTER_APP_TEXT_COLOR,
-} from '../../../apps/twitter/twitter.theme';
 import { SvgIconProps } from '@mui/material';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
-import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 
 export interface IAppConfig {
   id: string;
@@ -119,16 +114,6 @@ export const APPS: IAppConfig[] = [
     path: '/bank',
     Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
   },*/
-  {
-    id: 'TWITTER',
-    nameLocale: 'APPS_TWITTER',
-    backgroundColor: TWITTER_APP_PRIMARY_COLOR,
-    color: TWITTER_APP_TEXT_COLOR,
-    path: '/twitter',
-    Route: () => (
-      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={false} />
-    ),
-  },
   {
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',

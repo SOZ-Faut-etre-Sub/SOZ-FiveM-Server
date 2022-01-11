@@ -13,80 +13,6 @@ CREATE TABLE IF NOT EXISTS `npwd_phone_contacts`
     INDEX `identifier` (`identifier`)
 );
 
-CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets`
-(
-    `id`         int           NOT NULL AUTO_INCREMENT,
-    `message`    varchar(1000) NOT NULL,
-    `createdAt`  timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`  timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `likes`      int           NOT NULL DEFAULT '0',
-    `identifier` varchar(48)   NOT NULL,
-    `visible`    tinyint       NOT NULL DEFAULT '1',
-    `images`     varchar(1000)          DEFAULT '',
-    `retweet`    int                    DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `identifier` (`identifier`)
-);
-
-
-CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles`
-(
-    `id`           int         NOT NULL AUTO_INCREMENT,
-    `profile_name` varchar(90) NOT NULL,
-    `identifier`   varchar(48) NOT NULL,
-#   Default Profile avatar can be set here
-    `avatar_url`   varchar(255)         DEFAULT 'https://i.file.glass/QrEvq.png',
-    `createdAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `profile_name_UNIQUE` (`profile_name`),
-    INDEX `identifier` (`identifier`)
-);
-
-CREATE TABLE IF NOT EXISTS `npwd_twitter_likes`
-(
-    `id`         int NOT NULL AUTO_INCREMENT,
-    `profile_id` int NOT NULL,
-    `tweet_id`   int NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_combination` (`profile_id`, `tweet_id`),
-    KEY `profile_idx` (`profile_id`),
-    KEY `tweet_idx` (`tweet_id`),
-    CONSTRAINT `profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
-    CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS `npwd_match_profiles`
-(
-    `id`         int          NOT NULL AUTO_INCREMENT,
-    `identifier` varchar(48)  NOT NULL,
-    `name`       varchar(90)  NOT NULL,
-    `image`      varchar(255) NOT NULL,
-    `bio`        varchar(512)          DEFAULT NULL,
-    `location`   varchar(45)           DEFAULT NULL,
-    `job`        varchar(45)           DEFAULT NULL,
-    `tags`       varchar(255) NOT NULL DEFAULT '',
-    `createdAt`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `name_UNIQUE` (`name`),
-    UNIQUE KEY `identifier_UNIQUE` (`identifier`)
-);
-
-CREATE TABLE IF NOT EXISTS `npwd_match_views`
-(
-    `id`         int         NOT NULL AUTO_INCREMENT,
-    `identifier` varchar(48) NOT NULL,
-    `profile`    int         NOT NULL,
-    `liked`      tinyint              DEFAULT '0',
-    `createdAt`  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updatedAt`  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    KEY `match_profile_idx` (`profile`),
-    CONSTRAINT `match_profile` FOREIGN KEY (`profile`) REFERENCES `npwd_match_profiles` (`id`),
-    INDEX `identifier` (`identifier`)
-);
-
 CREATE TABLE IF NOT EXISTS `npwd_notes`
 (
     `id`         int(11)      NOT NULL AUTO_INCREMENT,
@@ -112,19 +38,6 @@ CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings`
     `reported`    tinyint      NOT NULL DEFAULT 0,
         PRIMARY KEY (id),
     INDEX `identifier` (`identifier`)
-);
-
-CREATE TABLE IF NOT EXISTS `npwd_twitter_reports`
-(
-    `id`         int NOT NULL AUTO_INCREMENT,
-    `profile_id` int NOT NULL,
-    `tweet_id`   int NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_combination` (`profile_id`, `tweet_id`),
-    KEY `profile_idx` (`profile_id`),
-    KEY `tweet_idx` (`tweet_id`),
-    CONSTRAINT `report_profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
-    CONSTRAINT `report_tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `npwd_messages`

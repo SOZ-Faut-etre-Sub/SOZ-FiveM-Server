@@ -1,6 +1,6 @@
 {
-  "cellProvider": "AT&T",
-  "defaultLanguage": "en",
+  "cellProvider": "ZT&T",
+  "defaultLanguage": "fr",
   "wallpapers": [
     {
       "label": "Minimal",
@@ -35,10 +35,6 @@
     {
       "label": "Gold",
       "value": "gold.png"
-    },
-    {
-      "label": "Kawaii",
-      "value": "kawaii.png"
     },
     {
       "label": "Minimal",
@@ -77,56 +73,8 @@
       "value": "en"
     },
     {
-      "label": "Español",
-      "value": "es"
-    },
-    {
       "label": "Français",
       "value": "fr"
-    },
-    {
-      "label": "Norsk",
-      "value": "no"
-    },
-    {
-      "label": "Polski",
-      "value": "pl"
-    },
-    {
-      "label": "Bosanski",
-      "value": "ba"
-    },
-    {
-      "label": "Português",
-      "value": "pt"
-    },
-    {
-      "label": "Hungarian",
-      "value": "hu"
-    },
-    {
-      "label": "Czech",
-      "value": "cs"
-    },
-    {
-      "label": "Nederlands",
-      "value": "nl"
-    },
-    {
-      "label": "Deutsch",
-      "value": "de"
-    },
-    {
-      "label": "Finnish",
-      "value": "fi"
-    },
-    {
-      "label": "Italian",
-      "value": "it"
-    },
-    {
-      "label": "Indonesia",
-      "value": "id"
     }
   ],
   "ringtones": [
@@ -198,17 +146,7 @@
       "value": "online"
     },
     "ringtoneVol": 50,
-    "notiSoundVol": 50,
-    "TWITTER_notiFilter": {
-      "label": "All Tweets",
-      "value": "all"
-    },
-    "TWITTER_notiSound": {
-      "label": "Online",
-      "value": "online"
-    },
-    "TWITTER_notiSoundVol": 25,
-    "TWITTER_notifyNewFeedTweet": true
+    "notiSoundVol": 50
   },
   "appSettings": {
     "browserHomePage": "https://docs.projecterror.dev"

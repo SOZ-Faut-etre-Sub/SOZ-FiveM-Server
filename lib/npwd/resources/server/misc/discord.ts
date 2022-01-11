@@ -1,7 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Tweet, Profile } from '../../../typings/twitter';
-
 import { mainLogger } from '../sv_logger';
 import { MarketplaceListing } from '../../../typings/marketplace';
 
@@ -62,37 +60,6 @@ const createDiscordMsgObj = (type: string, message: string, fields: DiscordEmbed
     ],
   };
 };
-
-export async function reportTweetToDiscord(tweet: Tweet, reportingProfile: Profile): Promise<any> {
-  const guaranteedFields = [
-    {
-      name: 'Reported By:',
-      value: `\`\`\`Profile Name: ${reportingProfile.profile_name}\nProfile ID: ${reportingProfile.id}\nUser Identifier: ${reportingProfile.identifier}\`\`\``,
-    },
-    {
-      name: 'Reported User Data:',
-      value: `\`\`\`Profile Name: ${tweet.profile_name}\nProfile ID: ${tweet.profile_id}\nUser Identifier: ${tweet.identifier}\`\`\``,
-    },
-    {
-      name: 'Tweet Message:',
-      value: `\`\`\`Message: ${tweet.message}\`\`\``,
-    },
-  ];
-
-  const finalFields = tweet.images
-    ? guaranteedFields.concat({
-        name: 'Reported Image:',
-        value: tweet.images.split(IMAGE_DELIMITER).join('\n'),
-      })
-    : guaranteedFields;
-
-  const msgObj = createDiscordMsgObj('TWITTER', `Received a report for a tweet`, finalFields);
-  try {
-    await postToWebhook(msgObj);
-  } catch (e) {
-    discordLogger.error(e.message);
-  }
-}
 
 export async function reportListingToDiscord(
   listing: MarketplaceListing,
