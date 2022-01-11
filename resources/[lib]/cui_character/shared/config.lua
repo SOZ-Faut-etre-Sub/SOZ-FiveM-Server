@@ -11,7 +11,7 @@ Config.UseNaturalHairColors = true
 Config.UseNaturalEyeColors = true
 
 -- Map Locations
-Config.EnableClothingShops = true
+Config.EnableClothingShops = false 
 Config.ClothingShops = {
     vector3(72.3, -1399.1, 28.4),
     vector3(-703.8, -152.3, 36.4),
