@@ -5,7 +5,6 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useResourceIntegration": true,
     "toggleKey": "L",
     "toggleCommand": "phone"
   },

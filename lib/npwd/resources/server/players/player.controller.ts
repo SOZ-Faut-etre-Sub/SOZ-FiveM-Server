@@ -1,6 +1,5 @@
 import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
-import { config } from '../server';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
 
@@ -20,15 +19,12 @@ onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
 // If multicharacter mode is disabled, we instantiate a new
 // NPWD player by ourselves without waiting for an export
 
-if (!config.general.useResourceIntegration) {
-  on('playerJoining', async () => {
-    const src = getSource();
-    await PlayerService.handleNewPlayerJoined(src);
-  });
-}
+on('QBCore:Server:PlayerLoaded', async (playerData: any) => {
+  await PlayerService.handleNewPlayerJoined(playerData);
+});
 
 // Handle removing from player maps when player disconnects
-on('playerDropped', async () => {
+on('QBCore:Server:PlayerUnload', async () => {
   const src = getSource();
   // Get identifier for player to remove
   try {
@@ -47,15 +43,3 @@ on('playerDropped', async () => {
 //   false,
 // );
 
-// Used for debug purposes, if the resource is restarted and the multicharacter option is false
-// we will handle all the currently online players
-if (!config.general.useResourceIntegration) {
-  on('onServerResourceStart', async (resource: string) => {
-    if (resource === GetCurrentResourceName()) {
-      const onlinePlayers = getPlayers();
-      for (const player of onlinePlayers) {
-        await PlayerService.handleNewPlayerJoined(parseInt(player));
-      }
-    }
-  });
-}

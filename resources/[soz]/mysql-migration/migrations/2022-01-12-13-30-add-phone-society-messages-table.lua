@@ -6,7 +6,7 @@ table.insert(migrations, {
             (
                 `id`              int(11)      NOT NULL AUTO_INCREMENT,
                 `conversation_id` varchar(512) NOT NULL,
-                `source_phone`    varchar(48)  NOT NULL,
+                `source_phone`    varchar(8)   NOT NULL,
                 `message`         varchar(512) NOT NULL,
                 `position`        json,
                 `isTaken`         tinyint(4)   NOT NULL DEFAULT 0,
