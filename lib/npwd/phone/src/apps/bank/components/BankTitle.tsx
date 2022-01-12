@@ -27,7 +27,7 @@ export const BankTitle = () => {
   return (
     <Paper className={classes.root} square variant="outlined" elevation={24}>
       <Typography id="bank-title" style={{ margin: 0 }} variant="h4">
-        WhoDis Banking
+        ZRTSTONK
       </Typography>
     </Paper>
   );

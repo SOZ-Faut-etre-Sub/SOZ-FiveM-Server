@@ -37,9 +37,7 @@ function Phone() {
   const { t, i18n } = useTranslation();
 
   const { apps } = useApps();
-
   const [settings] = useSettings();
-
   const { addAlert } = useSnackbar();
 
   // Set language from local storage
