@@ -31,6 +31,7 @@ import {
   SOCIETY_CONTACTS_APP_PRIMARY_COLOR,
   SOCIETY_CONTACTS_APP_TEXT_COLOR
 } from "../../../apps/society-contacts/contacts.theme";
+import {BankApp} from "../../../apps/bank/components/BankApp";
 
 export interface IAppConfig {
   id: string;
@@ -88,15 +89,14 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false} />
     ),
   },
-  /* Hiding the bank app while the bank resource gets done */
-  /*{
+  {
     id: 'BANK',
     nameLocale: 'APPS_BANK',
     backgroundColor: blue[900],
     color: common.white,
     path: '/bank',
-    Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
-  },*/
+    Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} emitOnOpen={false} />,
+  },
   {
     id: 'SOCIETY_CONTACTS',
     nameLocale: 'APPS_SOCIETY_CONTACTS',

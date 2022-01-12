@@ -103,6 +103,10 @@
         "UPDATE_SUCCESS": "Note mise à jour avec succès."
       }
     },
+    "BANK": {
+      "HOME_TITLE": "Compte en banque",
+      "CHECKING": "Total :"
+    },
     "MARKETPLACE": {
       "FEEDBACK": {
         "REQUIRED_FIELDS": "Tous les champs requis doivent être renseignés!",

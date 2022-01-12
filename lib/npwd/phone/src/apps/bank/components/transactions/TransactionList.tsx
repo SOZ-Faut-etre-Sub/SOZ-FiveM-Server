@@ -14,7 +14,6 @@ export const TransactionList = () => {
   const TransactionTypes = {
     Deposit: classes.depositType,
     Withdraw: classes.withdrawType,
-    Transfer: classes.depositType,
   };
 
   const handleChangePage = (event, newPage) => {

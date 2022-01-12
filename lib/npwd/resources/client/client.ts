@@ -7,6 +7,7 @@ export const config: ResourceConfig = JSON.parse(
 );
 
 import './cl_main';
+import './cl_bank';
 import './cl_contacts';
 import './cl_marketplace';
 import './cl_notes';
