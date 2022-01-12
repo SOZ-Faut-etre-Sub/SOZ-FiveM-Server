@@ -57,7 +57,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.charinfo.gender = PlayerData.charinfo.gender or 0
     PlayerData.charinfo.backstory = PlayerData.charinfo.backstory or 'placeholder backstory'
     PlayerData.charinfo.nationality = PlayerData.charinfo.nationality or 'USA'
-    PlayerData.charinfo.phone = PlayerData.charinfo.phone ~= nil and PlayerData.charinfo.phone or '1' .. math.random(111111111, 999999999)
+    PlayerData.charinfo.phone = PlayerData.charinfo.phone or QBCore.Player.CreatePhoneNumber()
     PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or 'US0' .. math.random(1, 9) .. 'QBCore' .. math.random(1111, 9999) .. math.random(1111, 9999) .. math.random(11, 99)
     -- Metadata
     PlayerData.metadata = PlayerData.metadata or {}
@@ -144,6 +144,7 @@ function QBCore.Player.Logout(source)
     TriggerClientEvent('QBCore:Player:UpdatePlayerData', src)
     Wait(200)
     TriggerEvent('inventory:DropPlayerInventory', src)
+    TriggerEvent('QBCore:Server:PlayerUnload', src)
     QBCore.Players[src] = nil
 end
 
@@ -502,6 +503,20 @@ function QBCore.Player.CreateFingerId()
         end
     end
     return FingerId
+end
+
+function QBCore.Player.CreatePhoneNumber()
+    local UniqueFound = false
+    local PhoneNumber = nil
+    while not UniqueFound do
+        PhoneNumber = tostring('555-' .. QBCore.Shared.RandomInt(4))
+        local query = '%' .. PhoneNumber .. '%'
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `players` WHERE `metadata` LIKE ?', { query })
+        if result[1].count == 0 then
+            UniqueFound = true
+        end
+    end
+    return PhoneNumber
 end
 
 function QBCore.Player.CreateWalletId()

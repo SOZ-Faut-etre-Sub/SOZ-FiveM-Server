@@ -9,6 +9,8 @@ import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
 import { Delay } from '../../utils/fivem';
 
+const exp = global.exports;
+
 class _PlayerService {
   private readonly playersBySource: Collection<number, Player>;
   private readonly playersByIdentifier: Collection<string, Player>;
@@ -101,29 +103,21 @@ class _PlayerService {
   /**
    * We call this function on the event `playerJoined`,
    * only if the multicharacter option is set to false in the config.
-   * @param pSource - The source of the player to handle
+   * @param player - The source of the player to handle
    */
-  async handleNewPlayerJoined(pSource: number) {
-    const playerIdentifier = getPlayerGameLicense(pSource);
-
-    if (!playerIdentifier) {
-      throw new Error(`License identifier could not be found for source (${pSource})`);
-    }
-
-    const username = GetPlayerName(pSource.toString());
-    playerLogger.info(`Started loading for ${username} (${pSource})`);
+  async handleNewPlayerJoined(player: any) {
+    const username = `${player.PlayerData.charinfo.firstname} ${player.PlayerData.charinfo.lastname}`;
+    playerLogger.info(`Started loading for ${username} (${player.PlayerData.source})`);
     // Ensure phone number exists or generate
 
-    const phone_number = await findOrGeneratePhoneNumber(playerIdentifier);
-
     const newPlayer = new Player({
-      identifier: playerIdentifier,
-      source: pSource,
+      identifier: player.PlayerData.citizenid,
+      source: player.PlayerData.source,
       username,
-      phoneNumber: phone_number,
+      phoneNumber: player.PlayerData.charinfo.phone,
     });
 
-    this.addPlayerToMaps(pSource, newPlayer);
+    this.addPlayerToMaps(player.PlayerData.source, newPlayer);
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
@@ -135,7 +129,7 @@ class _PlayerService {
       await Delay(100);
     }
 
-    emitNet(PhoneEvents.SET_PLAYER_LOADED, pSource, true);
+    emitNet(PhoneEvents.SET_PLAYER_LOADED, player.PlayerData.source, true);
   }
 
   /**
