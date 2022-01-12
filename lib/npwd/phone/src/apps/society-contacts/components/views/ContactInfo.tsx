@@ -92,7 +92,8 @@ const ContactsInfoPage: React.FC = () => {
           value={message}
           multiline
           fullWidth
-          rows={10}
+          rows={16}
+          variant="outlined"
           onChange={handleNumberChange}
           label={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
           inputProps={{

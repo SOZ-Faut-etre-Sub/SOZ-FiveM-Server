@@ -23,7 +23,7 @@ export class _MessagesDB {
     conversationId: string,
     message: string,
   ): Promise<number> {
-    const query = `INSERT INTO npwd_messages (user_identifier, author, message, conversation_id)
+    const query = `INSERT INTO phone_messages (user_identifier, author, message, conversation_id)
                    VALUES (?, ?, ?, ?)`;
 
     const [results] = await DbInterface._rawExec(query, [
@@ -43,18 +43,18 @@ export class _MessagesDB {
    * @param phoneNumber - phoneNumber of the user to get message conversations for
    */
   async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
-    const query = `SELECT npwd_messages_conversations.unread,
-                          npwd_messages_conversations.conversation_id,
-                          npwd_messages_conversations.user_identifier,
-                          npwd_messages_conversations.participant_identifier,
+    const query = `SELECT phone_messages_conversations.unread,
+                          phone_messages_conversations.conversation_id,
+                          phone_messages_conversations.user_identifier,
+                          phone_messages_conversations.participant_identifier,
                           ${config.database.playerTable}.${config.database.phoneNumberColumn} AS phone_number
                    FROM (SELECT conversation_id
-                         FROM npwd_messages_conversations
-                         WHERE npwd_messages_conversations.participant_identifier = ?) AS t
-                            LEFT OUTER JOIN npwd_messages_conversations
-                                            ON npwd_messages_conversations.conversation_id = t.conversation_id
+                         FROM phone_messages_conversations
+                         WHERE phone_messages_conversations.participant_identifier = ?) AS t
+                            LEFT OUTER JOIN phone_messages_conversations
+                                            ON phone_messages_conversations.conversation_id = t.conversation_id
                             LEFT OUTER JOIN ${config.database.playerTable}
-                                            ON ${config.database.playerTable}.${config.database.phoneNumberColumn} = npwd_messages_conversations.participant_identifier
+                                            ON ${config.database.playerTable}.${config.database.phoneNumberColumn} = phone_messages_conversations.participant_identifier
 		`;
 
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
@@ -64,12 +64,12 @@ export class _MessagesDB {
   async getMessages(conversationId: string, page: number): Promise<Message[]> {
     const offset = page * MESSAGES_PER_PAGE;
 
-    const query = `SELECT npwd_messages.id,
-                          npwd_messages.conversation_id,
-                          npwd_messages.message,
-                          npwd_messages.author
-                   FROM npwd_messages
-                   WHERE npwd_messages.conversation_id = ?
+    const query = `SELECT phone_messages.id,
+                          phone_messages.conversation_id,
+                          phone_messages.message,
+                          phone_messages.author
+                   FROM phone_messages
+                   WHERE phone_messages.conversation_id = ?
                    ORDER BY id DESC
                    LIMIT ? OFFSET ?`;
 
@@ -96,7 +96,7 @@ export class _MessagesDB {
   ): Promise<void> {
     const query = `
         INSERT
-        INTO npwd_messages_conversations
+        INTO phone_messages_conversations
             (user_identifier, conversation_id, participant_identifier)
         VALUES (?, ?, ?)
 		`;
@@ -129,7 +129,7 @@ export class _MessagesDB {
   async checkIfMessageGroupExists(groupId: string): Promise<boolean> {
     const query = `
         SELECT COUNT(*) as count
-        FROM npwd_messages_conversations
+        FROM phone_messages_conversations
         WHERE conversation_id = ?;
 		`;
     const [results] = await DbInterface._rawExec(query, [groupId]);
@@ -141,7 +141,7 @@ export class _MessagesDB {
   async getMessageCountByGroup(groupId: string): Promise<number> {
     const query = `
         SELECT COUNT(*) as count
-        FROM npwd_messages
+        FROM phone_messages
         WHERE conversation_id = ?`;
     const [results] = await DbInterface._rawExec(query, [groupId]);
     const result = <any>results;
@@ -154,7 +154,7 @@ export class _MessagesDB {
    * @param identifier The identifier for the player
    */
   async setMessageRead(groupId: string, identifier: string) {
-    const query = `UPDATE npwd_messages_conversations
+    const query = `UPDATE phone_messages_conversations
                    SET unreadCount = 0
                    WHERE conversation_id = ?
                      AND participant_identifier = ?`;
@@ -163,7 +163,7 @@ export class _MessagesDB {
 
   async deleteConversation(conversationId: string, sourcePhoneNumber: string) {
     const query = `DELETE
-                   FROM npwd_messages_conversations
+                   FROM phone_messages_conversations
                    WHERE conversation_id = ?
                      AND participant_identifier = ?`;
     await DbInterface._rawExec(query, [conversationId, sourcePhoneNumber]);
@@ -171,7 +171,7 @@ export class _MessagesDB {
 
   async deleteMessage(message: Message) {
     const query = `DELETE
-                   FROM npwd_messages
+                   FROM phone_messages
                    WHERE id = ?
                      AND conversation_id = ?`;
 
@@ -183,7 +183,7 @@ export class _MessagesDB {
     identifier: string,
   ): Promise<UnformattedMessageConversation | null> {
     const query = `SELECT *
-                   FROM npwd_messages_conversations
+                   FROM phone_messages_conversations
                    WHERE conversation_id = ?
                      AND participant_identifier = ?`;
     const [results] = await DbInterface._rawExec(query, [conversationId, identifier]);
