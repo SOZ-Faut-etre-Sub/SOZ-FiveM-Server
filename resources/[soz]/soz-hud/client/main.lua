@@ -91,6 +91,7 @@ end
 
 --- Populate value at player login
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    ForceCloseTextInputBox() -- Ensure last input is closed
     setHudDisplay(true)
     QBCore.Functions.GetPlayerData(function(PlayerData)
         HudPlayerStatus.hunger = PlayerData.metadata["hunger"]
