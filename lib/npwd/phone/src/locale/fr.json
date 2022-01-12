@@ -152,6 +152,10 @@
       "ME": "Moi"
     },
     "SOCIETY_CONTACTS": {
+      "FEEDBACK": {
+        "SEND_FAILED": "Erreur d'envoi du message !",
+        "SEND_SUCCESS": "Message envoyé avec succès !"
+      },
       "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher...",
       "FORM_MESSAGE": "Message",
       "SEND": "Envoyer",

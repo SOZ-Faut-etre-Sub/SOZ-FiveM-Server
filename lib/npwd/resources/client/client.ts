@@ -12,6 +12,7 @@ import './cl_marketplace';
 import './cl_notes';
 import './cl_photo';
 import './cl_messages';
+import './cl_societies';
 import './calls/cl_calls.controller';
 import './functions';
 import './cl_exports';

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Paper } from '@mui/material';
+import {Box, Button, Paper, Typography} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { ContactsDatabaseLimits } from '@typings/contact';
+import { SocietiesDatabaseLimits } from '@typings/society';
 import { TextField } from '@ui/components/Input';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
@@ -26,6 +26,7 @@ const useStyles = makeStyles({
   root: {
     height: '100%',
     width: '100%',
+    backgroundImage: 'none'
   },
   listContainer: {
     marginTop: 30,
@@ -53,45 +54,31 @@ const ContactsInfoPage: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams<ContactInfoRouteParams>();
-  const {
-    addNumber,
-    // Because this is mispelled absolutely everywhere
-    referal: referral,
-    avatar: avatarParam,
-    name: nameParam,
-  } = useQueryParams<ContactInfoRouteQuery>({
+  const { referal: referral } = useQueryParams<ContactInfoRouteQuery>({
     referal: '/society-contacts',
   });
 
   const { getContact } = useContactActions();
-  const { updateContact, deleteContact } = useContactsAPI();
-
+  const { sendSocietyMessage } = useContactsAPI();
   const contact = getContact(parseInt(id));
 
-  const [name, setName] = useState(() => contact?.display || '');
-  const [number, setNumber] = useState(() => contact?.number || '');
-  const [avatar, setAvatar] = useState(() => contact?.avatar || '');
-  // Set state after checking if null
+  const [message, setMessage] = useState('');
 
   const [t] = useTranslation();
 
   const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
-    if (inputVal.length === ContactsDatabaseLimits.number) return;
-    setNumber(e.target.value);
+    if (inputVal.length === SocietiesDatabaseLimits.message) return;
+    setMessage(e.target.value);
   };
 
   const handleSend = () => {
+    sendSocietyMessage({ number: contact.number, message, position: false }, referral)
   };
 
   const handleSendWithLocation = () => {
+    sendSocietyMessage({ number: contact.number, message, position: true }, referral)
   };
-
-  useEffect(() => {
-    if (addNumber) setNumber(addNumber);
-    if (avatarParam) setAvatar(avatarParam);
-    if (nameParam) setName(nameParam);
-  }, [addNumber, avatar, avatarParam, nameParam]);
 
   return (
     <Paper className={classes.root} square>
@@ -101,8 +88,8 @@ const ContactsInfoPage: React.FC = () => {
       <div className={classes.listContainer}>
         <TextField
           className={classes.input}
-          error={number.length >= ContactsDatabaseLimits.number}
-          value={number}
+          error={message.length >= SocietiesDatabaseLimits.message}
+          value={message}
           multiline
           fullWidth
           rows={10}
@@ -112,6 +99,7 @@ const ContactsInfoPage: React.FC = () => {
             className: classes.inputProps,
           }}
         />
+        <Typography paragraph>{message.length}/{SocietiesDatabaseLimits.message}</Typography>
         <Box p={1} display="inline">
           <Button color="primary" variant="contained" onClick={handleSend}>
             {t('SOCIETY_CONTACTS.SEND')}

@@ -2,97 +2,39 @@ import { useCallback } from 'react';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { fetchNui } from '../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
-import { Contact, ContactEvents, PreDBContact } from '@typings/contact';
+import { Society, SocietyEvents, PreDBSociety } from '@typings/society';
 import { useTranslation } from 'react-i18next';
-import { useContactActions } from './useContactActions';
 import { useHistory } from 'react-router';
 
 export const useContactsAPI = () => {
   const { addAlert } = useSnackbar();
   const [t] = useTranslation();
-  const { addLocalContact, updateLocalContact, deleteLocalContact } = useContactActions();
   const history = useHistory();
 
-  const addNewContact = useCallback(
-    ({ display, number, avatar }: PreDBContact, referral: string) => {
-      fetchNui<ServerPromiseResp<Contact>>(ContactEvents.ADD_CONTACT, {
-        display,
+  const sendSocietyMessage = useCallback(
+    ({ number, message, position }: PreDBSociety, referral: string) => {
+      fetchNui<ServerPromiseResp<Society>>(SocietyEvents.SEND_SOCIETY_MESSAGE, {
         number,
-        avatar,
+        message,
+        position
       }).then((serverResp) => {
         if (serverResp.status !== 'ok') {
           return addAlert({
-            message: t('CONTACTS.FEEDBACK.ADD_FAILED'),
+            message: t('SOCIETY_CONTACTS.FEEDBACK.SEND_FAILED'),
             type: 'error',
           });
         }
 
         // Sanity checks maybe?
-        addLocalContact(serverResp.data);
         addAlert({
-          message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
+          message: t('SOCIETY_CONTACTS.FEEDBACK.SEND_SUCCESS'),
           type: 'success',
         });
         history.replace(referral);
       });
     },
-    [addAlert, addLocalContact, history, t],
+    [addAlert, history, t],
   );
 
-  const updateContact = useCallback(
-    ({ id, display, number, avatar }: Contact) => {
-      fetchNui<ServerPromiseResp>(ContactEvents.UPDATE_CONTACT, {
-        id,
-        display,
-        number,
-        avatar,
-      }).then((resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('CONTACTS.FEEDBACK.UPDATE_FAILED'),
-            type: 'error',
-          });
-        }
-
-        updateLocalContact({
-          id,
-          display,
-          number,
-          avatar,
-        });
-
-        addAlert({
-          message: t('CONTACTS.FEEDBACK.UPDATE_SUCCESS'),
-          type: 'success',
-        });
-
-        history.goBack();
-      });
-    },
-    [addAlert, history, t, updateLocalContact],
-  );
-
-  const deleteContact = useCallback(
-    ({ id }) => {
-      fetchNui<ServerPromiseResp>(ContactEvents.DELETE_CONTACT, { id }).then((resp) => {
-        if (resp.status !== 'ok') {
-          return addAlert({
-            message: t('CONTACTS.FEEDBACK.DELETE_FAILED'),
-            type: 'error',
-          });
-        }
-        history.goBack();
-
-        deleteLocalContact(id);
-
-        addAlert({
-          message: t('CONTACTS.FEEDBACK.DELETE_SUCCESS'),
-          type: 'success',
-        });
-      });
-    },
-    [addAlert, deleteLocalContact, history, t],
-  );
-
-  return { addNewContact, updateContact, deleteContact };
+  return { sendSocietyMessage };
 };

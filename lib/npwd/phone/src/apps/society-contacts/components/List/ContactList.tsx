@@ -21,11 +21,7 @@ export const ContactList: React.FC = () => {
         {filteredContacts.map((contact) => (
           <ListItem key={contact.id} divider>
             <ListItemAvatar>
-              {contact.avatar ? (
-                <MuiAvatar src={contact.avatar} />
-              ) : (
-                <MuiAvatar>{contact.display.slice(0, 1).toUpperCase()}</MuiAvatar>
-              )}
+              <MuiAvatar src={contact.avatar || ''} />
             </ListItemAvatar>
             <ListItemText
               primary={contact.display}
