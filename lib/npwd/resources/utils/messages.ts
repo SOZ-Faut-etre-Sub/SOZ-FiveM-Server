@@ -30,3 +30,7 @@ export function sendCameraEvent(method: string, data: any = {}): void {
   sendMessage(apps.CAMERA, method, data);
 }
 
+export function sendSocietyEvent(method: string, data: any = {}): void {
+  sendMessage(apps.SOCIETIES, method, data);
+}
+

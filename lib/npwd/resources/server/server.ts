@@ -14,6 +14,7 @@ import './contacts/contacts.controller';
 import './photo/photo.controller';
 import './messages/messages.controller';
 import './marketplace/marketplace.controller';
+import './societies/societies.controller';
 
 // setup exports
 import './bridge/sv_exports';

@@ -1,9 +1,9 @@
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { Contact } from '@typings/contact';
+import { Society } from '@typings/society';
 import { SocietyContactsState } from '../utils/constants';
 
 export const contactsState = {
-  contacts: atom<Contact[]>({
+  contacts: atom<Society[]>({
     key: 'societyContactsList',
     default: SocietyContactsState,
   }),
@@ -15,7 +15,7 @@ export const contactsState = {
     key: 'societyFilteredContacts',
     get: ({ get }) => {
       const filterInputVal: string = get(contactsState.filterInput);
-      const contacts: Contact[] = get(contactsState.contacts);
+      const contacts: Society[] = get(contactsState.contacts);
 
       if (!filterInputVal) return contacts;
 
