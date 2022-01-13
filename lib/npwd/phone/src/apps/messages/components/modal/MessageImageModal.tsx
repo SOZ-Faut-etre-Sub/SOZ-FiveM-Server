@@ -96,7 +96,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           ),
       },
     ],
-    [history, pathname, search, t],
+    [addAlert, messageGroupId, sendMessage, history, pathname, search, t],
   );
 
   return (

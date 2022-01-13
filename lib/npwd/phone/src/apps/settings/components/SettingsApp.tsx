@@ -169,7 +169,7 @@ export const SettingsApp = () => {
 
     updateProfilePicture({number: myNumber, url: query.image})
     history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
-  }, [query.image, history, pathname, search]);
+  }, [query.image, updateProfilePicture, myNumber, history, pathname, search]);
 
   return (
     <AppWrapper>

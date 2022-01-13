@@ -1,13 +1,8 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { Button } from '@ui/components/Button';
 import { useTranslation } from 'react-i18next';
-
 import { useCredentials } from '../../hooks/useCredentials';
-import { NavLink } from 'react-router-dom';
-
 import useStyles from './home.styles';
-import {TransactionList} from "../transactions/TransactionList";
 
 export const BankHome = () => {
   const classes = useStyles();
