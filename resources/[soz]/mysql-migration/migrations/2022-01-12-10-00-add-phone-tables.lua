@@ -52,7 +52,6 @@ table.insert(migrations, {
             (
                 `id`         int(11)      NOT NULL AUTO_INCREMENT,
                 `identifier` varchar(48)  DEFAULT NULL,
-                `avatar`     varchar(255) DEFAULT NULL,
                 `number`     varchar(8)   DEFAULT NULL,
                 `display`    varchar(255) NOT NULL DEFAULT '',
                 PRIMARY KEY (`id`),
@@ -79,6 +78,17 @@ table.insert(migrations, {
                 PRIMARY KEY (id),
                 INDEX `identifier` (`identifier`)
             );
+        ]],
+        [[
+            CREATE TABLE IF NOT EXISTS `phone_profile`
+            (
+                `number`     varchar(8)   DEFAULT NULL,
+                `avatar`     varchar(255) DEFAULT NULL,
+                PRIMARY KEY (`number`)
+            );
+        ]],
+        [[
+            DROP TABLE player_contacts;
         ]]
     }
 });
