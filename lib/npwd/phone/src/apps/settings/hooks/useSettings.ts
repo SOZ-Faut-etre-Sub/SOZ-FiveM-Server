@@ -172,7 +172,7 @@ export const useSettingsAPI = () => {
         });
       });
     },
-    [addAlert, history, t],
+    [addAlert, t],
   );
 
   return { updateProfilePicture };
