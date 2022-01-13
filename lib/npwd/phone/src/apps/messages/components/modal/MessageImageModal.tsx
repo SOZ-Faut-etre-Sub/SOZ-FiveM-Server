@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
 import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '@ui/components/ContextMenu';
@@ -9,6 +11,10 @@ import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
 import { PictureResponsive } from '@ui/components/PictureResponsive';
 import { useTranslation } from 'react-i18next';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import {fetchNui} from "@utils/fetchNui";
+import {ServerPromiseResp} from "@typings/common";
+import {MessageEvents} from "@typings/messages";
+import {useSnackbar} from "@os/snackbar/hooks/useSnackbar";
 
 interface IProps {
   isOpen: boolean;
@@ -23,6 +29,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
   const history = useHistory();
   const [t] = useTranslation();
   const { pathname, search } = useLocation();
+  const { addAlert } = useSnackbar();
   const [queryParamImagePreview, setQueryParamImagePreview] = useState(null);
   const { sendMessage } = useMessageAPI();
   const removeQueryParamImage = useCallback(() => {
@@ -53,6 +60,31 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
 
   const menuOptions = useMemo(
     () => [
+      {
+        label: t('MESSAGES.POSITION_OPTION'),
+        icon: <AddLocationAltIcon />,
+        onClick: () => {
+          fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_POSITION, {}).then((resp) => {
+            sendMessage({ conversationId: messageGroupId, message: `vec2(${resp.data.x},${resp.data.y})` })
+          })
+        }
+      },
+      {
+        label: t('MESSAGES.DESTINATION_OPTION'),
+        icon: <DirectionsIcon />,
+        onClick: () => {
+          fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_DESTINATION, {}).then((resp) => {
+            if (resp.data.x !== 0 && resp.data.y !== 0) {
+              sendMessage({ conversationId: messageGroupId, message: `vec2(${resp.data.x},${resp.data.y})` })
+            } else {
+              addAlert({
+                message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
+                type: 'error',
+              });
+            }
+          })
+        }
+      },
       {
         label: t('MESSAGES.MEDIA_OPTION'),
         icon: <PhotoLibraryIcon />,

@@ -100,4 +100,7 @@ export enum MessageEvents {
   CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
   SET_MESSAGE_READ = 'npwd:setReadMessages',
   DELETE_CONVERSATION = 'nwpd:deleteConversation',
+  GET_POSITION = 'nwpd:getCurrentPosition',
+  GET_DESTINATION = 'nwpd:getCurrentDestination',
+  SET_WAYPOINT = 'nwpd:setWaypoint',
 }

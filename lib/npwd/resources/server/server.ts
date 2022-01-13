@@ -16,9 +16,6 @@ import './messages/messages.controller';
 import './marketplace/marketplace.controller';
 import './societies/societies.controller';
 
-// setup exports
-import './bridge/sv_exports';
-
 import { mainLogger } from './sv_logger';
 import * as Sentry from '@sentry/node';
 
