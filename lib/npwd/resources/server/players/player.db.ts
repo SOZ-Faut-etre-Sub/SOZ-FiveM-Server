@@ -1,12 +1,11 @@
-import { config } from '../server';
 import DbInterface from '../db/db_wrapper';
 
 export class PlayerRepo {
   async fetchIdentifierFromPhoneNumber(phoneNumber: string): Promise<string | null> {
-    const query = `SELECT ${config.database.identifierColumn} FROM ${config.database.playerTable} WHERE ${config.database.phoneNumberColumn} = ?`;
+    const query = `SELECT citizenid FROM players WHERE charinfo LIKE %?%`;
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
     // Get identifier from results
-    return (results as any[])[0][config.database.identifierColumn] || null;
+    return (results as any[])[0]['citizenid'] || null;
   }
 }
 

@@ -9,8 +9,8 @@ table.insert(migrations, {
                 `transmitter` varchar(8)   NOT NULL,
                 `receiver`    varchar(8)   NOT NULL,
                 `is_accepted` tinyint(4)   DEFAULT 0,
-                `start`       timestamp    DEFAULT NULL,
-                `end`         timestamp    DEFAULT NULL,
+                `start`       timestamp    DEFAULT CURRENT_TIMESTAMP(),
+                `end`         timestamp,
                 PRIMARY KEY (id),
                 INDEX `identifier` (`identifier`)
             );

@@ -1,9 +1,7 @@
-import { findOrGeneratePhoneNumber } from '../misc/functions';
 import { PhoneEvents } from '../../../typings/phone';
 import { Player } from './player.class';
 import { PlayerAddData } from './player.interfaces';
 import Collection from '@discordjs/collection';
-import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
@@ -149,11 +147,6 @@ class _PlayerService {
     phoneNumber: string;
   }): Promise<Player | null> {
     const username = GetPlayerName(src.toString());
-
-    if (!phoneNumber) {
-      phoneNumber = await findOrGeneratePhoneNumber(identifier);
-      if (!phoneNumber) return null;
-    }
 
     return new Player({
       source: src,

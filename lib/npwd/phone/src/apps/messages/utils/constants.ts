@@ -48,6 +48,11 @@ const MockConversationMessages: Message[] = [
     author: '215-8139',
     message: 'https://i.tasoagc.dev/LtuA.png',
   },
+  {
+    id: 6,
+    author: '215-8139',
+    message: 'vec2(355.555,-8754.54)',
+  },
 ];
 
 export const MockConversationServerResp: ServerPromiseResp<Message[]> = {
