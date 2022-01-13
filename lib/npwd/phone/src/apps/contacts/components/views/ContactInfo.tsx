@@ -87,12 +87,6 @@ const ContactsInfoPage: React.FC = () => {
     setName(e.target.value);
   };
 
-  const handleAvatarChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const inputVal = e.currentTarget.value;
-    if (inputVal.length === ContactsDatabaseLimits.avatar) return;
-    setAvatar(e.target.value);
-  };
-
   const handleContactAdd = () => {
     addNewContact({ display: name, number, avatar }, referral);
   };
@@ -137,17 +131,6 @@ const ContactsInfoPage: React.FC = () => {
           onChange={handleNumberChange}
           label={t('CONTACTS.FORM_NUMBER')}
           fullWidth
-          inputProps={{
-            className: classes.inputProps,
-          }}
-        />
-        <TextField
-          error={avatar.length >= ContactsDatabaseLimits.avatar}
-          className={classes.input}
-          label={t('CONTACTS.FORM_AVATAR')}
-          fullWidth
-          value={avatar}
-          onChange={handleAvatarChange}
           inputProps={{
             className: classes.inputProps,
           }}

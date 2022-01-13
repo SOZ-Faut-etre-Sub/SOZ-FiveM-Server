@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import { AppWrapper } from '@ui/components';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppContent } from '@ui/components/AppContent';
 import { useContextMenu, MapSettingItem, SettingOption } from '@ui/hooks/useContextMenu';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { List } from '@ui/components/List';
-import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
+import {useMyPhoneNumber, useMyPictureProfile} from '@os/simcard/hooks/useMyPhoneNumber';
 import { IconSetObject, useApp } from '@os/apps/hooks/useApps';
 import {
   SettingItem,
@@ -29,12 +29,17 @@ import {
   Apps,
 } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
-import { ListSubheader } from '@mui/material';
-import { useCustomWallpaperModal, useResetSettings, useSettings } from '../hooks/useSettings';
+import {Avatar as MuiAvatar, Box, Button, ListSubheader} from '@mui/material';
+import {useCustomWallpaperModal, useResetSettings, useSettings, useSettingsAPI} from '../hooks/useSettings';
 import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { IContextMenuOption } from '@ui/components/ContextMenu';
 import WallpaperModal from './WallpaperModal';
+import ImageIcon from "@mui/icons-material/Image";
+import {deleteQueryFromLocation} from "@common/utils/deleteQueryFromLocation";
+import {useQueryParams} from "@common/hooks/useQueryParams";
+import {useHistory, useLocation} from "react-router-dom";
+import qs from "qs";
 
 const SubHeaderComp = (props: { text: string }) => (
   <ListSubheader color="primary" component="div" disableSticky>
@@ -53,17 +58,27 @@ const useStyles = makeStyles({
     bottom: 0,
     zIndex: 5,
   },
+  avatar: {
+    margin: 'auto',
+    height: '100px',
+    width: '100px',
+    marginBottom: 10,
+  },
 });
 
 export const SettingsApp = () => {
   const settingsApp = useApp('SETTINGS');
   const [config] = usePhoneConfig();
   const myNumber = useMyPhoneNumber();
+  const myAvatar = useMyPictureProfile();
   const [settings, setSettings] = useSettings();
   const [t] = useTranslation();
   const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
-
   const { addAlert } = useSnackbar();
+  const query = useQueryParams();
+  const { pathname, search } = useLocation();
+  const history = useHistory();
+  const { updateProfilePicture } = useSettingsAPI();
 
   const resetSettings = useResetSettings();
 
@@ -138,8 +153,23 @@ export const SettingsApp = () => {
     });
   };
 
+  const handleChooseImage = useCallback(() => {
+    history.push(
+      `/camera?${qs.stringify({
+        referal: encodeURIComponent(pathname + search),
+      })}`,
+    );
+  }, [history, pathname, search]);
+
   const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
   const classes = useStyles();
+
+  useEffect(() => {
+    if (!query.image) return;
+
+    updateProfilePicture({number: myNumber, url: query.image})
+    history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+  }, [query.image, history, pathname, search]);
 
   return (
     <AppWrapper>
@@ -164,6 +194,15 @@ export const SettingsApp = () => {
           height: 'auto',
         }}
       >
+        <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PROFILE')} />}>
+          <MuiAvatar className={classes.avatar} src={myAvatar} />
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <ImageIcon />
+            <Button onClick={handleChooseImage}>
+              {t('MARKETPLACE.CHOOSE_IMAGE')}
+            </Button>
+          </Box>
+        </List>
         <List disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PHONE')} />}>
           <SettingItemIconAction
             label={t('SETTINGS.PHONE_NUMBER')}

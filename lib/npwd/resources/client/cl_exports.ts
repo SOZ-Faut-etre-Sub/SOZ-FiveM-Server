@@ -57,7 +57,6 @@ exps('startPhoneCall', (number: string) => {
 // interface AddContactExportData {
 //   name?: string;
 //   number: string;
-//   avatar?: string;
 // }
 exps('fillNewContact', (contactData: AddContactExportData) => {
   verifyExportArgType('fillNewContact', contactData, ['object']);

@@ -1,8 +1,9 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
-import { config } from './client';
+import {ClUtils, config} from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
+import {SettingsEvents} from "../../typings/settings";
 
 // All main globals that are set and used across files
 global.isPhoneOpen = false;
@@ -129,6 +130,10 @@ async function togglePhone(): Promise<void> {
 
 onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
+
+  ClUtils.emitNetPromise(SettingsEvents.SET_AVATAR).then(avatar => {
+    sendMessage('AVATAR', SettingsEvents.SET_AVATAR, avatar["data"]);
+  });
 });
 
 on('onResourceStop', (resource: string) => {

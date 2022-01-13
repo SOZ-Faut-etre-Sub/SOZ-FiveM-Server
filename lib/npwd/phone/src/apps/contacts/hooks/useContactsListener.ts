@@ -19,7 +19,6 @@ export const useContactsListener = () => {
       const queryData = qs.stringify({
         addNumber: contactData.number.slice(0, ContactsDatabaseLimits.number),
         name: contactData.name?.slice(0, ContactsDatabaseLimits.display),
-        avatar: contactData.avatar?.slice(0, ContactsDatabaseLimits.avatar),
       });
 
       if (!contact) {

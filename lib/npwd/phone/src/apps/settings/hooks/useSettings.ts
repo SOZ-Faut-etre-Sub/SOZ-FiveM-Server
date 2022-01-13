@@ -3,6 +3,13 @@ import config from '../../../config/default.json';
 import { SettingOption } from '@ui/hooks/useContextMenu';
 import { Schema, Validator } from 'jsonschema';
 import { IconSetObject } from '@os/apps/hooks/useApps';
+import {useCallback} from "react";
+import {fetchNui} from "@utils/fetchNui";
+import {ServerPromiseResp} from "@typings/common";
+import {PreDBSettings, SettingsEvents} from "@typings/settings";
+import {useHistory} from "react-router";
+import {useTranslation} from "react-i18next";
+import {useSnackbar} from "@os/snackbar/hooks/useSnackbar";
 
 const NPWD_STORAGE_KEY = 'npwd_settings';
 
@@ -140,3 +147,33 @@ export const useSettingsValue = () => useRecoilValue(settingsState);
 export const useResetSettings = () => useResetRecoilState(settingsState);
 
 export const useCustomWallpaperModal = () => useRecoilState(customWallpaperState);
+
+export const useSettingsAPI = () => {
+  const history = useHistory();
+  const [t] = useTranslation();
+  const { addAlert } = useSnackbar();
+
+  const updateProfilePicture = useCallback(
+    ({ number, url }: PreDBSettings) => {
+      fetchNui<ServerPromiseResp<void>>(SettingsEvents.UPDATE_PICTURE, {
+        number,
+        url,
+      }).then((serverResp) => {
+        if (serverResp.status !== 'ok') {
+          return addAlert({
+            message: t('CONTACTS.FEEDBACK.ADD_FAILED'),
+            type: 'error',
+          });
+        }
+
+        addAlert({
+          message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
+          type: 'success',
+        });
+      });
+    },
+    [addAlert, history, t],
+  );
+
+  return { updateProfilePicture };
+}

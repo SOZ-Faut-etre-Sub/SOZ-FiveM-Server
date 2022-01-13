@@ -4,35 +4,36 @@ import DbInterface from '../db/db_wrapper';
 
 export class _ContactsDB {
   async fetchAllContacts(identifier: string): Promise<Contact[]> {
-    const query = 'SELECT * FROM phone_contacts WHERE identifier = ? ORDER BY display ASC';
+    const query = `SELECT phone_contacts.*, phone_profile.avatar as avatar
+                   FROM phone_contacts, phone_profile
+                   WHERE identifier = ? AND phone_contacts.number = phone_profile.number
+                   ORDER BY display ASC`;
     const [results] = await DbInterface._rawExec(query, [identifier]);
     return <Contact[]>results;
   }
 
   async addContact(
     identifier: string,
-    { display, avatar, number }: PreDBContact,
+    { display, number }: PreDBContact,
   ): Promise<Contact> {
     const query =
-      'INSERT INTO phone_contacts (identifier, number, display, avatar) VALUES (?, ?, ?, ?)';
+      'INSERT INTO phone_contacts (identifier, number, display) VALUES (?, ?, ?)';
 
-    const [setResult] = await DbInterface._rawExec(query, [identifier, number, display, avatar]);
+    const [setResult] = await DbInterface._rawExec(query, [identifier, number, display]);
 
     return {
       id: (<ResultSetHeader>setResult).insertId,
       number,
-      avatar,
       display,
     };
   }
 
   async updateContact(contact: Contact, identifier: string): Promise<any> {
     const query =
-      'UPDATE phone_contacts SET number = ?, display = ?, avatar = ? WHERE id = ? AND identifier = ?';
+      'UPDATE phone_contacts SET number = ?, display = ? WHERE id = ? AND identifier = ?';
     await DbInterface._rawExec(query, [
       contact.number,
       contact.display,
-      contact.avatar,
       contact.id,
       identifier,
     ]);
