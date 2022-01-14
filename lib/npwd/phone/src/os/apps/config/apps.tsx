@@ -122,7 +122,7 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="SOCIETY_MESSAGES" path="/society-messages" component={SocietyMessagesApp} emitOnOpen={false} />
     ),
   },
-  {
+  /*{
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',
     backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
@@ -131,7 +131,7 @@ export const APPS: IAppConfig[] = [
     Route: () => (
       <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
     ),
-  },
+  },*/
   {
     id: 'NOTES',
     nameLocale: 'APPS_NOTES',
