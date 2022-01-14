@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dat151>
+ <Version value="6978435" />
+ <Items>
+  <Item type="Helicopter" ntOffset="367492">
+   <Name>newsmav</Name>
+   <Flags value="0xAAAAAA96" />
+   <Version value="1" />
+   <MainRotor>hash_BB5D4B86</MainRotor>
+   <TailRotor>hash_ACF052E7</TailRotor>
+   <Exhaust>hash_FED6A097</Exhaust>
+   <Engine>hash_BF37A8CD</Engine>
+   <InternalCabinTone>hash_550BC69E</InternalCabinTone>
+   <Unk06 value="0.005" />
+   <BankAngleVolume>hash_434D70C7</BankAngleVolume>
+   <BankThrottleVolume>hash_EA1A6B06</BankThrottleVolume>
+   <BankThrottlePitch>hash_BD942348</BankThrottlePitch>
+   <RotorThrottleVolume>hash_51943A30</RotorThrottleVolume>
+   <RotorThrottlePitch>hash_43F90C56</RotorThrottlePitch>
+   <RotorThrottleGap>hash_004326BC</RotorThrottleGap>
+   <TailRotorThrottleVolume>hash_3F8CB603</TailRotorThrottleVolume>
+   <ExhaustThrottleVolume>hash_2E60C481</ExhaustThrottleVolume>
+   <ExhaustThrottlePitch>hash_66A5AB4D</ExhaustThrottlePitch>
+   <Unk16 value="46" />
+   <Unk17 value="134" />
+   <Unk18 value="-300" />
+   <Unk19 value="2" />
+   <Unk20 value="177" />
+   <Unk21 value="-300" />
+   <Unk22 value="80" />
+   <Unk23 value="100" />
+   <Unk24 value="-300" />
+   <Unk25 value="0" />
+   <ThrottleResonance1>hash_9E7F270A</ThrottleResonance1>
+   <ThrottleResonance2>hash_EBEF41E9</ThrottleResonance2>
+   <BankingResonance>hash_A308DDBF</BankingResonance>
+   <RotorStartupVolume>hash_24A41B0F</RotorStartupVolume>
+   <BladeStartupVolume>hash_6606C189</BladeStartupVolume>
+   <RotorStartupPitch>hash_35EF2D97</RotorStartupPitch>
+   <RearRotorStartupVolume>hash_1EACCB40</RearRotorStartupVolume>
+   <ExhaustStartupVolume>hash_E4C4CF6A</ExhaustStartupVolume>
+   <RotorStartupGap>hash_89B07FA2</RotorStartupGap>
+   <Startup>hash_DFA343C9</Startup>
+   <Unk36 value="91" />
+   <Unk37 value="110" />
+   <Unk38 value="0" />
+   <Unk39 value="109" />
+   <Unk40 value="76" />
+   <Unk41>null_sound</Unk41>
+   <Unk42>null_sound</Unk42>
+   <PoliceScannerCategory>hash_E20A21B9</PoliceScannerCategory>
+   <PoliceScannerParams>hash_B33B6CCF</PoliceScannerParams>
+   <Unk45 value="1" />
+   <DoorOpen>hash_00A1D83A</DoorOpen>
+   <DoorClose>hash_FA4CE5F1</DoorClose>
+   <DoorLimit>hash_E4126EED</DoorLimit>
+   <Damage>hash_FCE3FD1B</Damage>
+   <Unk50>hash_F402E7B8</Unk50>
+   <Unk51 value="400" />
+   <Unk52 />
+   <Unk53 />
+   <Unk54 />
+   <Unk55 />
+   <Unk56>hash_C8A30AC3</Unk56>
+   <Unk57>hash_D2CE8485</Unk57>
+   <RotorBass>hash_67018D2D</RotorBass>
+   <Unk59>hash_F7CA35FC</Unk59>
+   <Collision>hash_8468C6AD</Collision>
+   <Unk61>hash_0BD90476</Unk61>
+   <Distant>hash_79A906D2</Distant>
+   <Unk63>null_sound</Unk63>
+   <Unk64>null_sound</Unk64>
+   <Unk65>null_sound</Unk65>
+   <Unk66>null_sound</Unk66>
+   <SuspensionUp>hash_9700284D</SuspensionUp>
+   <SuspensionDown>hash_145E3E6A</SuspensionDown>
+   <Unk69 value="0.4" />
+   <Unk70 value="1" />
+   <DamageOneShots>hash_C869646E</DamageOneShots>
+   <DamageWarning>hash_B92580E0</DamageWarning>
+   <Unk73>hash_0DD62405</Unk73>
+   <Unk74>hash_7583EDEE</Unk74>
+   <Unk75>hash_75FC8C1F</Unk75>
+   <Unk76>hash_14B07FAD</Unk76>
+   <Unk77>hash_69751E17</Unk77>
+   <Unk78>hash_D5D90E49</Unk78>
+   <AltitudeWarning>hash_9EC37D07</AltitudeWarning>
+   <DamageVolumeCurve>hash_E9A6B78F</DamageVolumeCurve>
+   <DamageVolumeCurve2>hash_E9A6B78F</DamageVolumeCurve2>
+   <DamageBelow600>hash_822C0638</DamageBelow600>
+   <Unk83 value="0.003" />
+   <Unk84 value="0.003" />
+   <Unk85 value="100" />
+   <Jet>null_sound</Jet>
+   <Unk87>hash_90E18A73</Unk87>
+   <Unk88>null_sound</Unk88>
+   <Unk89>null_sound</Unk89>
+   <Unk90>null_sound</Unk90>
+   <StartupBroken>hash_C010B173</StartupBroken>
+  </Item>
+  <Item type="Vehicle" ntOffset="372560">
+   <Name>newsvan</Name>
+   <Unk00 value="0x91005A28" />
+   <Engine>hash_3062681F</Engine>
+   <EngineGranular>hash_D1956D0E</EngineGranular>
+   <Horns>hash_029059CA</Horns>
+   <DoorOpen>hash_EE43EB05</DoorOpen>
+   <DoorClose>hash_8398E44E</DoorClose>
+   <TrunkOpen>hash_71BF0F14</TrunkOpen>
+   <TrunkClose>hash_B58A7E0A</TrunkClose>
+   <Unk08>null_sound</Unk08>
+   <Unk09 value="0.5" />
+   <SuspensionUp>hash_7CEDC837</SuspensionUp>
+   <SuspensionDown>hash_4AEF38F3</SuspensionDown>
+   <Unk12 value="0.4" />
+   <Unk13 value="1" />
+   <Unk14>hash_00C2FB47</Unk14>
+   <Unk15 value="0" />
+   <Unk16 value="0" />
+   <Unk17 value="0" />
+   <ScannerParams>hash_6EEE584A</ScannerParams>
+   <JumpLandIntact>hash_A5EB71C0</JumpLandIntact>
+   <JumpLandLoose>hash_1AF1FCAC</JumpLandLoose>
+   <Unk21 value="31" />
+   <Unk22 value="36" />
+   <RadioFlags value="0x05010001" />
+   <IndicatorOn>hash_D4314DE2</IndicatorOn>
+   <IndicatorOff>hash_A683DC21</IndicatorOff>
+   <Handbrake>hash_97DEEC51</Handbrake>
+   <Unk27 value="0x00010001" />
+   <Unk28>hash_674E1F4D</Unk28>
+   <Unk29 value="0x55FC0070" />
+   <Unk30>hash_795E90E6</Unk30>
+   <Unk31>hash_795E90E6</Unk31>
+   <Unk32>hash_2FF627AC</Unk32>
+   <StartupSequence>null_sound</StartupSequence>
+   <Unk34>null_sound</Unk34>
+   <Unk35>hash_F52E6D86</Unk35>
+   <Unk36>hash_F52E6D86</Unk36>
+   <Unk37 value="6" />
+   <Unk38 value="3" />
+   <Unk39 />
+   <Unk40 value="0" />
+   <Sirens />
+   <Unk42 value="0" />
+   <Unk43 value="0" />
+   <Unk44 value="0" />
+   <Unk45>hash_0C3F6AD5</Unk45>
+   <Unk46>hash_359E05CB</Unk46>
+   <Unk47 />
+   <TurretSounds />
+   <Unk49 value="5" />
+   <Unk50 />
+   <Unk51 />
+   <Unk52 value="0" />
+   <ElectricEngine />
+   <Unk54 value="0" />
+   <ReverseWarning>null_sound</ReverseWarning>
+   <Unk56 value="3" />
+   <VehicleMaster>null_sound</VehicleMaster>
+   <ShutdownBeep>null_sound</ShutdownBeep>
+   <Unk59 value="1" />
+   <Unk60 value="0" />
+   <Unk61 value="1" />
+   <Unk62 value="0" />
+   <Unk63>null_sound</Unk63>
+   <Unk64 value="600" />
+   <Unk65 value="0" />
+   <Unk66 value="0" />
+   <Unk67 />
+   <Unk68>null_sound</Unk68>
+   <Unk69>hash_7C9B8D8C</Unk69>
+   <Unk70 value="0" />
+   <Unk71>null_sound</Unk71>
+   <Unk72>null_sound</Unk72>
+  </Item>
+  <Item type="Vehicle" ntOffset="372662">
+   <Name>newsvan2</Name>
+   <Unk00 value="0x91005A28" />
+   <Engine>hash_5BD3FF79</Engine>
+   <EngineGranular>hash_89D401F3</EngineGranular>
+   <Horns>hash_029059CA</Horns>
+   <DoorOpen>hash_EE43EB05</DoorOpen>
+   <DoorClose>hash_8398E44E</DoorClose>
+   <TrunkOpen>hash_71BF0F14</TrunkOpen>
+   <TrunkClose>hash_B58A7E0A</TrunkClose>
+   <Unk08>null_sound</Unk08>
+   <Unk09 value="0.5" />
+   <SuspensionUp>hash_7CEDC837</SuspensionUp>
+   <SuspensionDown>hash_4AEF38F3</SuspensionDown>
+   <Unk12 value="0.4" />
+   <Unk13 value="1" />
+   <Unk14>hash_00C2FB47</Unk14>
+   <Unk15 value="0" />
+   <Unk16 value="0" />
+   <Unk17 value="0" />
+   <ScannerParams>hash_F5572522</ScannerParams>
+   <JumpLandIntact>hash_A5EB71C0</JumpLandIntact>
+   <JumpLandLoose>hash_1AF1FCAC</JumpLandLoose>
+   <Unk21 value="0" />
+   <Unk22 value="100" />
+   <RadioFlags value="0x05010001" />
+   <IndicatorOn>hash_D4314DE2</IndicatorOn>
+   <IndicatorOff>hash_A683DC21</IndicatorOff>
+   <Handbrake>hash_8263381C</Handbrake>
+   <Unk27 value="0x00030001" />
+   <Unk28>hash_674E1F4D</Unk28>
+   <Unk29 value="0x55FC0070" />
+   <Unk30>hash_795E90E6</Unk30>
+   <Unk31>hash_795E90E6</Unk31>
+   <Unk32>hash_2FF627AC</Unk32>
+   <StartupSequence>null_sound</StartupSequence>
+   <Unk34>null_sound</Unk34>
+   <Unk35>hash_F52E6D86</Unk35>
+   <Unk36>hash_F52E6D86</Unk36>
+   <Unk37 value="6" />
+   <Unk38 value="3" />
+   <Unk39 />
+   <Unk40 value="0" />
+   <Sirens />
+   <Unk42 value="0" />
+   <Unk43 value="0" />
+   <Unk44 value="0" />
+   <Unk45>hash_0C3F6AD5</Unk45>
+   <Unk46>hash_359E05CB</Unk46>
+   <Unk47 />
+   <TurretSounds />
+   <Unk49 value="5" />
+   <Unk50 />
+   <Unk51 />
+   <Unk52 value="0" />
+   <ElectricEngine />
+   <Unk54 value="0" />
+   <ReverseWarning>null_sound</ReverseWarning>
+   <Unk56 value="3" />
+   <VehicleMaster>null_sound</VehicleMaster>
+   <ShutdownBeep>null_sound</ShutdownBeep>
+   <Unk59 value="1" />
+   <Unk60 value="0" />
+   <Unk61 value="2" />
+   <Unk62 value="300" />
+   <Unk63>null_sound</Unk63>
+   <Unk64 value="600" />
+   <Unk65 value="0" />
+   <Unk66 value="0" />
+   <Unk67 />
+   <Unk68>null_sound</Unk68>
+   <Unk69>hash_7C9B8D8C</Unk69>
+   <Unk70 value="0" />
+   <Unk71>null_sound</Unk71>
+   <Unk72>null_sound</Unk72>
+  </Item>
+ </Items>
+</Dat151>
