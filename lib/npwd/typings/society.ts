@@ -27,8 +27,8 @@ export interface SocietyMessage {
   position: string;
   isTaken: boolean;
   isDone: boolean;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export enum SocietiesDatabaseLimits {

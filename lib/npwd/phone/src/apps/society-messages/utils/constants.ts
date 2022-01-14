@@ -9,8 +9,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
     position: '{"x":205.12088012695312,"y":1160.4395751953125,"z":226.99560546875}',
     isTaken: false,
     isDone: false,
-    createdAt: new Date().getTime()/1000,
-    updatedAt: new Date().getTime()/1000
+    createdAt: '2022-01-14T09:58:18.000Z',
+    updatedAt: '2022-01-14T09:58:18.000Z'
   },
   {
     id: 2,
@@ -20,8 +20,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
     position: null,
     isTaken: true,
     isDone: false,
-    createdAt: new Date().getTime()/1000,
-    updatedAt: new Date().getTime()/1000
+    createdAt: '2022-01-14T09:58:18.000Z',
+    updatedAt: '2022-01-14T09:58:18.000Z'
   },
   {
     id: 2,
@@ -31,8 +31,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
     position: null,
     isTaken: true,
     isDone: true,
-    createdAt: new Date().getTime()/1000,
-    updatedAt: new Date().getTime()/1000
+    createdAt: '2022-01-14T09:58:18.000Z',
+    updatedAt: '2022-01-14T09:58:18.000Z'
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ export const MockSocietyMessages: SocietyMessage[] = [
     position: '{"x":205.12088012695312,"y":1160.4395751953125,"z":226.99560546875}',
     isTaken: true,
     isDone: true,
-    createdAt: new Date().getTime()/1000,
-    updatedAt: new Date().getTime()/1000
+    createdAt: '2022-01-14T09:58:18.000Z',
+    updatedAt: '2022-01-14T09:58:18.000Z'
   },
 ];

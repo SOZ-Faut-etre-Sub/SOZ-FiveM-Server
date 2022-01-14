@@ -49,7 +49,7 @@ const MessagesList = (): any => {
         <ListItem key={message.conversation_id} alignItems="flex-start" divider>
           <ListItemText
             primary={message.message}
-            secondary={dayjs().to(dayjs.unix(message.createdAt))}
+            secondary={dayjs().to(dayjs.unix(parseInt(message.createdAt)))}
             primaryTypographyProps={{
               overflow: 'hidden',
               textOverflow: 'ellipsis',

@@ -44,8 +44,6 @@ class _SocietyService {
           position: reqObj.data.pedPosition,
           isTaken: false,
           isDone: false,
-          createdAt: new Date().getTime()/1000,
-          updatedAt: new Date().getTime()/1000
         });
       })
     } catch (e) {
@@ -82,6 +80,13 @@ class _SocietyService {
 
     try {
       const contact = await this.contactsDB.getMessages(identifier);
+
+      contact.map((message) => {
+        // @ts-ignore
+        message.createdAt = Math.floor(message.createdAt.getTime() / 1000)
+        // @ts-ignore
+        message.updatedAt = Math.floor(message.updatedAt.getTime() / 1000)
+      })
 
       resp({ status: 'ok', data: contact });
     } catch (e) {
