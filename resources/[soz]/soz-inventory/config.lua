@@ -14,3 +14,9 @@ Config.ErrorMessage = {
 Config.StorageMaxWeight = 250000
 Config.StorageMaxInvSlots = 10
 Config.Storages = {}
+
+Config.BinLocation = {
+    vector4(14.38, -1117.13, 27.88, 159.51),
+    vector4(419.23, -990.35, 28.33, 92.92),
+    vector4(289.33, -1369.08, 30.93, 231.78),
+}

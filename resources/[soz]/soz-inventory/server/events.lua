@@ -1,29 +1,21 @@
-RegisterServerEvent("inventory:server:openInventory", function(invID)
+RegisterServerEvent("inventory:server:openInventory", function(storageType, invID)
     local Player = QBCore.Functions.GetPlayer(source)
 
     local sourceInv = Inventory(source)
     local targetInv = Inventory(invID)
 
-    if targetInv.open == false and Inventory.AccessGranted(targetInv, source) then
-        TriggerClientEvent("inventory:client:updateStorageState", -1, targetInv.id, Player.Functions.GetName())
-        targetInv.open = true
-        targetInv.user = source
+    if storageType == "bin" then
+        targetInv = Inventory("bin_" .. invID)
 
-        TriggerClientEvent("inventory:client:openInventory", source, Inventory.FilterItems(sourceInv, targetInv.type),
-                           Inventory.FilterItems(targetInv, sourceInv.type))
-    else
-        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Vous n'avez pas accès à ce stockage")
-    end
-end)
+        if targetInv == nil then
+            targetInv = Inventory.Create("bin_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+        end
+    elseif storageType == "trunk" then
+        targetInv = Inventory("plate_" .. invID)
 
-RegisterServerEvent("inventory:server:openTrunkInventory", function(plate)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    local sourceInv = Inventory(Player.PlayerData.source)
-    local targetInv = Inventory("plate_" .. plate)
-
-    if targetInv == nil then
-        targetInv = Inventory.Create("plate_" .. plate, plate, "trunk", Config.StorageMaxInvSlots, Config.StorageMaxWeight, plate)
+        if targetInv == nil then
+            targetInv = Inventory.Create("plate_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+        end
     end
 
     if targetInv.open == false and Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
@@ -31,10 +23,12 @@ RegisterServerEvent("inventory:server:openTrunkInventory", function(plate)
         targetInv.open = true
         targetInv.user = Player.PlayerData.source
 
-        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
-                           Inventory.FilterItems(targetInv, sourceInv.type))
+        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source,
+                Inventory.FilterItems(sourceInv, targetInv.type),
+                Inventory.FilterItems(targetInv, sourceInv.type)
+        )
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas accès à ce coffre")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas accès à ce stockage")
     end
 end)
 

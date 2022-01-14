@@ -9,7 +9,7 @@ local function OpenTrunk()
     if distance <= 3.0 then
         if GetVehicleDoorLockStatus(vehicle) == 1 then
             local plate = QBCore.Functions.GetPlate(vehicle)
-            TriggerServerEvent("inventory:server:openTrunkInventory", plate)
+            TriggerServerEvent("inventory:server:openInventory", "trunk", plate)
         else
             exports["soz-hud"]:DrawNotification("~r~Véhicule verrouillé")
         end

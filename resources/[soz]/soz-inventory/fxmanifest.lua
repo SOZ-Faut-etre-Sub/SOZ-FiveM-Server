@@ -4,7 +4,7 @@ lua54 "yes"
 
 shared_scripts {"shared/table.lua", "config.lua", "storages/*.lua"}
 
-client_scripts {"@menuv/menuv.lua", "client/main.lua", "client/player.lua"}
+client_scripts {"@menuv/menuv.lua", "client/main.lua", "client/player.lua", "client/bin.lua"}
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",
@@ -12,6 +12,7 @@ server_scripts {
 
     "server/containers/base.lua",
     "server/containers/armory.lua",
+    "server/containers/bin.lua",
     "server/containers/fridge.lua",
     "server/containers/player.lua",
     "server/containers/seizure.lua",
@@ -21,6 +22,7 @@ server_scripts {
     "server/command.lua",
     "server/actions.lua",
     "server/events.lua",
+    "server/props.lua",
 }
 
 ui_page "ui/index.html"
@@ -34,4 +36,4 @@ files {
     "ui/js/app.js",
 }
 
-dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "soz-monitor", "dpemotes", "menuv"}
+dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "soz-monitor", "dpemotes", "menuv", "qb-target"}
