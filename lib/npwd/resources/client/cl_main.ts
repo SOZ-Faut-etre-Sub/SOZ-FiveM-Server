@@ -128,8 +128,9 @@ async function togglePhone(): Promise<void> {
   await showPhone();
 }
 
-onNet(PhoneEvents.SEND_CREDENTIALS, (number: string) => {
+onNet(PhoneEvents.SEND_CREDENTIALS, (number: string, societyNumber: string|null) => {
   sendMessage('SIMCARD', PhoneEvents.SET_NUMBER, number);
+  sendMessage('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, societyNumber);
 
   ClUtils.emitNetPromise(SettingsEvents.SET_AVATAR).then(avatar => {
     sendMessage('AVATAR', SettingsEvents.SET_AVATAR, avatar["data"]);

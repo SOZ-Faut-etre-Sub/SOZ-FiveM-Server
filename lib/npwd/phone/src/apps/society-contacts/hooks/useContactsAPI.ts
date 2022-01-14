@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { fetchNui } from '../../../utils/fetchNui';
+import { fetchNui } from '@utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { Society, SocietyEvents, PreDBSociety } from '@typings/society';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +12,10 @@ export const useContactsAPI = () => {
   const history = useHistory();
 
   const sendSocietyMessage = useCallback(
-    ({ number, message, position }: PreDBSociety, referral: string) => {
+    ({ number, message, anonymous, position }: PreDBSociety, referral: string) => {
       fetchNui<ServerPromiseResp<Society>>(SocietyEvents.SEND_SOCIETY_MESSAGE, {
         number,
+        anonymous,
         message,
         position
       }).then((serverResp) => {
