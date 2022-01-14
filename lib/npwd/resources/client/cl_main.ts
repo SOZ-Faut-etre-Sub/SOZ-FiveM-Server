@@ -122,7 +122,10 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 async function togglePhone(): Promise<void> {
   if (config.PhoneAsItem.enabled) {
     const canAccess = await checkExportCanOpen();
-    if (!canAccess) return;
+    if (!canAccess) {
+      exps['soz-hud'].DrawNotification("~r~Vous n'avez pas de télephone")
+      return
+    }
   }
   if (global.isPhoneOpen) return await hidePhone();
   await showPhone();

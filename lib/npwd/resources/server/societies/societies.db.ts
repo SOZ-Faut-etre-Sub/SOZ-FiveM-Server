@@ -30,7 +30,7 @@ export class _SocietiesDB {
   async getMessages(
     identifier: string,
   ): Promise<SocietyMessage[]> {
-    const query = `SELECT * FROM phone_society_messages WHERE conversation_id = ?`;
+    const query = `SELECT * FROM phone_society_messages WHERE conversation_id = ? AND updatedAt > date_sub(now(), interval 2 day)`;
     const [result] = await DbInterface._rawExec(query, [identifier]);
     return <SocietyMessage[]>result;
   }
