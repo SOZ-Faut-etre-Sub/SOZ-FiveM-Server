@@ -4,6 +4,7 @@ export class Player {
   public readonly source: number;
   public readonly username: string;
   private _phoneNumber: string;
+  private _societyPhoneNumber: string | null;
   private _identifier: string;
   private _firstname: string | null;
   private _lastname: string | null;
@@ -81,6 +82,21 @@ export class Player {
    **/
   public setPhoneNumber(number: string): Player {
     this._phoneNumber = number;
+    return this;
+  }
+
+  /**
+   * Get the stored society phone number for a user
+   **/
+  public getSocietyPhoneNumber(): string {
+    return this._societyPhoneNumber;
+  }
+
+  /**
+   * Set the stored society phone number for a user
+   **/
+  public setSocietyPhoneNumber(number: string): Player {
+    this._societyPhoneNumber = number;
     return this;
   }
 }

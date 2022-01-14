@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import {Box, Button, Paper, Typography} from '@mui/material';
+import {Box, Button, Checkbox, Paper, Typography} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { SocietiesDatabaseLimits } from '@typings/society';
 import { TextField } from '@ui/components/Input';
@@ -52,7 +51,6 @@ const useStyles = makeStyles({
 
 const ContactsInfoPage: React.FC = () => {
   const classes = useStyles();
-  const history = useHistory();
   const { id } = useParams<ContactInfoRouteParams>();
   const { referal: referral } = useQueryParams<ContactInfoRouteQuery>({
     referal: '/society-contacts',
@@ -62,9 +60,9 @@ const ContactsInfoPage: React.FC = () => {
   const { sendSocietyMessage } = useContactsAPI();
   const contact = getContact(parseInt(id));
 
-  const [message, setMessage] = useState('');
-
   const [t] = useTranslation();
+  const [message, setMessage] = useState('');
+  const [anonymous, setAnonymous] = useState(false);
 
   const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputVal = e.currentTarget.value;
@@ -72,19 +70,20 @@ const ContactsInfoPage: React.FC = () => {
     setMessage(e.target.value);
   };
 
+  const handleAnonymousChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setAnonymous(e.target.value === 'false');
+  };
+
   const handleSend = () => {
-    sendSocietyMessage({ number: contact.number, message, position: false }, referral)
+    sendSocietyMessage({ number: contact.number, message, anonymous, position: false }, referral)
   };
 
   const handleSendWithLocation = () => {
-    sendSocietyMessage({ number: contact.number, message, position: true }, referral)
+    sendSocietyMessage({ number: contact.number, message, anonymous, position: true }, referral)
   };
 
   return (
     <Paper className={classes.root} square>
-      <Button style={{ margin: 10 }} onClick={() => history.goBack()}>
-        <ArrowBackIcon fontSize="large" />
-      </Button>
       <div className={classes.listContainer}>
         <TextField
           className={classes.input}
@@ -101,6 +100,10 @@ const ContactsInfoPage: React.FC = () => {
           }}
         />
         <Typography paragraph>{message.length}/{SocietiesDatabaseLimits.message}</Typography>
+        <Box p={1} textAlign="left" display="block">
+          <Checkbox value={anonymous} onChange={handleAnonymousChange} />
+          {t('SOCIETY_CONTACTS.SET_ANONYMOUS')}
+        </Box>
         <Box p={1} display="inline">
           <Button color="primary" variant="contained" onClick={handleSend}>
             {t('SOCIETY_CONTACTS.SEND')}

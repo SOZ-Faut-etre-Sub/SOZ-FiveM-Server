@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunknpwd_nui=self.webpackChunknpwd_nui||[]).push([[4238],{4238:function(n,u,e){e.r(u);e(2791);var s=e(4939),t=e(184);u.default=function(){return(0,t.jsx)(s.Z,{fontSize:"small"})}}}]);
+//# sourceMappingURL=4238.15b1745c.chunk.js.map

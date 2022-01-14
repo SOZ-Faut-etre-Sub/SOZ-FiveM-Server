@@ -32,6 +32,11 @@ import {
   SOCIETY_CONTACTS_APP_TEXT_COLOR
 } from "../../../apps/society-contacts/contacts.theme";
 import {BankApp} from "../../../apps/bank/components/BankApp";
+import {
+  SOCIETY_MESSAGES_APP_PRIMARY_COLOR,
+  SOCIETY_MESSAGES_APP_TEXT_COLOR
+} from "../../../apps/society-messages/messages.theme";
+import {SocietyMessagesApp} from "../../../apps/society-messages/components/SocietyMessagesApp";
 
 export interface IAppConfig {
   id: string;
@@ -108,18 +113,23 @@ export const APPS: IAppConfig[] = [
     ),
   },
   {
+    id: 'SOCIETY_MESSAGES',
+    nameLocale: 'APPS_SOCIETY_MESSAGES',
+    backgroundColor: SOCIETY_MESSAGES_APP_PRIMARY_COLOR,
+    color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
+    path: '/society-messages',
+    Route: () => (
+      <AppRoute id="SOCIETY_MESSAGES" path="/society-messages" component={SocietyMessagesApp} emitOnOpen={false} />
+    ),
+  },
+  {
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',
     backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
     color: MARKETPLACE_APP_ICON_COLOR,
     path: '/marketplace',
     Route: () => (
-      <AppRoute
-        id="MARKETPLACE"
-        path="/marketplace"
-        component={MarketplaceApp}
-        emitOnOpen={false}
-      />
+      <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
     ),
   },
   {

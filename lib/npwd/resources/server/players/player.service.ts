@@ -6,6 +6,8 @@ import playerDB, { PlayerRepo } from './player.db';
 import { playerLogger } from './player.utils';
 import MarketplaceService from '../marketplace/marketplace.service';
 import { Delay } from '../../utils/fivem';
+import {SocietyNumberList} from "../../../typings/society";
+import {QBJob} from "../../../typings/qb";
 
 const exp = global.exports;
 
@@ -116,6 +118,7 @@ class _PlayerService {
     });
 
     this.addPlayerToMaps(player.PlayerData.source, newPlayer);
+    await this.handlePlayerJobUpdate(player.PlayerData.source, player.PlayerData.job)
 
     playerLogger.info('NPWD Player Loaded!');
     playerLogger.debug(newPlayer);
@@ -128,6 +131,25 @@ class _PlayerService {
     }
 
     emitNet(PhoneEvents.SET_PLAYER_LOADED, player.PlayerData.source, true);
+  }
+
+  /**
+   * We call this function on the event `playerJoined`,
+   * only if the multicharacter option is set to false in the config.
+   * @param source - The source of the player to handle
+   * @param job - The source of the player to handle
+   */
+  async handlePlayerJobUpdate(source: number, job: QBJob) {
+    const player = PlayerService.getPlayer(source)
+    const jobName = job.name
+
+    if (SocietyNumberList[jobName] !== undefined) {
+      player.setSocietyPhoneNumber(SocietyNumberList[jobName])
+    } else {
+      player.setSocietyPhoneNumber(null)
+    }
+
+    // emitNet(PhoneEvents.SET_PLAYER_LOADED, player.PlayerData.source, true);
   }
 
   /**
@@ -200,6 +222,19 @@ class _PlayerService {
     if (fetch) {
       return await this.playerDB.fetchIdentifierFromPhoneNumber(phoneNumber);
     }
+  }
+
+  /**
+   * Return all player with the given society number
+   * @param phoneNumber The phone number to return identifier for
+   **/
+  async getPlayersFromSocietyNumber(phoneNumber: string): Promise<Player[]> {
+    let players = [];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [_, player] of this.playersBySource) {
+      if (player.getSocietyPhoneNumber() === phoneNumber) players.push(player);
+    }
+    return players;
   }
 
   /**

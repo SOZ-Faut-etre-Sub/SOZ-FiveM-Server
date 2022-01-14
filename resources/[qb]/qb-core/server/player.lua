@@ -194,6 +194,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
             self.Functions.UpdatePlayerData()
             TriggerClientEvent('QBCore:Client:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
+            TriggerEvent('QBCore:Server:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
             return true
         end
 

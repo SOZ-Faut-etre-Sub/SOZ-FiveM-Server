@@ -1,4 +1,4 @@
-import { PreDBSociety } from '../../../typings/society';
+import {DBSocietyUpdate, PreDBSociety, SocietyMessage} from '../../../typings/society';
 import { ResultSetHeader } from 'mysql2';
 import DbInterface from '../db/db_wrapper';
 
@@ -17,6 +17,22 @@ export class _SocietiesDB {
       pedPosition]);
 
     return (<ResultSetHeader>setResult).insertId;
+  }
+
+  async updateMessage(
+    { id, take, done }: DBSocietyUpdate,
+  ): Promise<boolean> {
+    const query = `UPDATE phone_society_messages SET isTaken=?, isDone=? WHERE id=?`;
+    const [setResult] = await DbInterface._rawExec(query, [take, done, id]);
+    return (<ResultSetHeader>setResult).affectedRows === 1;
+  }
+
+  async getMessages(
+    identifier: string,
+  ): Promise<SocietyMessage[]> {
+    const query = `SELECT * FROM phone_society_messages WHERE conversation_id = ?`;
+    const [result] = await DbInterface._rawExec(query, [identifier]);
+    return <SocietyMessage[]>result;
   }
 }
 

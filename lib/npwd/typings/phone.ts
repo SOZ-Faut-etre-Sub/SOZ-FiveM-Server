@@ -13,6 +13,7 @@ export enum PhoneEvents {
   SET_VISIBILITY = 'npwd:setVisibility',
   ADD_SNACKBAR_ALERT = 'npwd:setSnackarAlert',
   SET_NUMBER = 'npwd:setNumber',
+  SET_SOCIETY_NUMBER = 'npwd:setSocietyNumber',
   SET_PHONE_READY = 'npwd:phoneReady',
   SET_CONFIG = 'npwd:setPhoneConfig',
   SET_TIME = 'npwd:setGameTime',

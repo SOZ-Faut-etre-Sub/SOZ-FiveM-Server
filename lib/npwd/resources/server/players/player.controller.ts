@@ -2,12 +2,19 @@ import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
+import {SocietyEvents, SocietyMessage} from "../../../typings/society";
+import SocietyService from "../societies/societies.service";
+import {societiesLogger} from "../societies/societies.utils";
+import {PromiseEventResp, PromiseRequest} from "../lib/PromiseNetEvents/promise.types";
+import {ServerPromiseResp} from "../../../typings/common";
 
 onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
-  const phoneNumber = PlayerService.getPlayer(src).getPhoneNumber();
+  const player = PlayerService.getPlayer(src)
+  const phoneNumber = player.getPhoneNumber();
+  const societyPhoneNumber = player.getSocietyPhoneNumber();
 
-  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber);
+  emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber, societyPhoneNumber);
 });
 
 /**
@@ -21,6 +28,12 @@ onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
 
 on('QBCore:Server:PlayerLoaded', async (playerData: any) => {
   await PlayerService.handleNewPlayerJoined(playerData);
+});
+
+on('QBCore:Server:OnJobUpdate', async (source: number, playerData: any) => {
+  await PlayerService.handlePlayerJobUpdate(source, playerData);
+
+  emitNet(SocietyEvents.RESET_SOCIETY_MESSAGES, source);
 });
 
 // Handle removing from player maps when player disconnects

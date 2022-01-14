@@ -31,7 +31,8 @@ import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
-import { useCall } from './os/call/hooks/useCall';
+import { useCall } from '@os/call/hooks/useCall';
+import {useSocietyMessagesService} from "./apps/society-messages/hooks/useMessageService";
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -69,6 +70,7 @@ function Phone() {
   useContactsListener();
   useNoteListener();
   /*usePhotoService();*/
+  useSocietyMessagesService();
   useCallService();
   useDialService();
 
