@@ -47,6 +47,11 @@ function InventoryShell:save(id, owner, inventory)
     return false
 end
 
+--- IsDatastore
+function InventoryShell:IsDatastore()
+    return false
+end
+
 --- AllowedItems
 --- @param item table
 --- @return boolean

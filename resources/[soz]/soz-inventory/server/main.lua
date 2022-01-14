@@ -81,6 +81,7 @@ function Inventory.Load(id, invType, owner)
     local datastore, result = nil, nil
 
     if (id or owner) and invType then
+        datastore = _G.Container[invType]:IsDatastore()
         result = _G.Container[invType]:load(id, owner)
     end
 
