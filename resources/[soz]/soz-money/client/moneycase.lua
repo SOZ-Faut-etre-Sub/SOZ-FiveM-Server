@@ -32,14 +32,18 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        if GetCurrentMoney() >= Config.MoneyCaseTrigger then
-            if not hasMoneyCase() then
-                addCase()
+        if LocalPlayer.state.isLoggedIn then
+            if GetCurrentMoney() >= Config.MoneyCaseTrigger then
+                if not hasMoneyCase() then
+                    addCase()
+                end
+            else
+                if hasMoneyCase() then
+                    removeCase()
+                end
             end
         else
-            if hasMoneyCase() then
-                removeCase()
-            end
+            Wait(1000)
         end
 
         Wait(1000)
