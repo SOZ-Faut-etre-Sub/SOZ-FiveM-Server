@@ -3,8 +3,9 @@ local currentWeapon, CurrentWeaponData = nil, {}
 
 local function MoneyMenu()
     local moneyMenu = MenuV:InheritMenu(inventoryMenu, {Subtitle = "Argent"})
+    local playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"]
 
-    inventoryMenu:AddButton({label = "Votre argent", rightLabel = PlayerData.money["money"] .. "$", value = moneyMenu})
+    inventoryMenu:AddButton({label = "Votre argent", rightLabel = playerMoney .. "$", value = moneyMenu})
 
     local give = moneyMenu:AddButton({label = "Donner", value = "money", description = ""})
     give:On("select", function(i)
