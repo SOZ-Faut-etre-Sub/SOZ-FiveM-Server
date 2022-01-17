@@ -5,7 +5,6 @@ CreateThread(function()
         HideHudComponentThisFrame(2) -- 2 : WEAPON_ICON
         HideHudComponentThisFrame(3) -- 3 : CASH
         HideHudComponentThisFrame(4) -- 4 : MP_CASH
-        HideHudComponentThisFrame(6) -- 6 : VEHICLE_NAME
         HideHudComponentThisFrame(7) -- 7 : AREA_NAME
         HideHudComponentThisFrame(8) -- 8 : VEHICLE_CLASS
         HideHudComponentThisFrame(9) -- 9 : STREET_NAME
