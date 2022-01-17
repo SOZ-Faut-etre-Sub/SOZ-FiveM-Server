@@ -76,8 +76,8 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, amount)
     if dist > 2 then
         return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous")
     end
-    if Player.Functions.RemoveMoney("cash", amount) then
-        Target.Functions.AddMoney("cash", amount)
+    if Player.Functions.RemoveMoney("money", amount) then
+        Target.Functions.AddMoney("money", amount)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
         TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
 
