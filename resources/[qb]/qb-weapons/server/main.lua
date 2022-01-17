@@ -89,7 +89,7 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
     if Player.PlayerData.items[data.slot] then
         if Player.PlayerData.items[data.slot].metadata.quality then
             if Player.PlayerData.items[data.slot].metadata.quality ~= 100 then
-                if Player.Functions.RemoveMoney('cash', Config.WeaponRepairCosts[WeaponClass]) then
+                if Player.Functions.RemoveMoney('money', Config.WeaponRepairCosts[WeaponClass]) then
                     Config.WeaponRepairPoints[RepairPoint].IsRepairing = true
                     Config.WeaponRepairPoints[RepairPoint].RepairingData = {
                         CitizenId = Player.PlayerData.citizenid,
