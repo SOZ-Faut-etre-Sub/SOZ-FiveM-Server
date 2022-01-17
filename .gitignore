@@ -2,3 +2,4 @@ env.cfg
 cache
 [local]/*
 ![local]/.gitkeep
+imgui.ini
