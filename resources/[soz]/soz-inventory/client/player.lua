@@ -7,15 +7,14 @@ local function MoneyMenu()
 
     inventoryMenu:AddButton({label = "Votre argent", rightLabel = playerMoney .. "$", value = moneyMenu})
 
-    local give = moneyMenu:AddButton({label = "Donner", value = "money", description = ""})
-    give:On("select", function(i)
+    local function giveMoney(button)
         local player, distance = QBCore.Functions.GetClosestPlayer()
         if player ~= -1 and distance < 2.0 then
-            local amount = exports["soz-hud"]:Input("Quantité", 5)
+            local amount = exports["soz-hud"]:Input("Quantité", 12)
 
             if amount and tonumber(amount) > 0 then
                 SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
-                TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), tonumber(amount))
+                TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), button.Value, tonumber(amount))
 
                 moneyMenu:Close()
                 inventoryMenu:Close()
@@ -23,7 +22,12 @@ local function MoneyMenu()
         else
             exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous")
         end
-    end)
+    end
+
+    local giveMoneyItem = moneyMenu:AddButton({label = "Donner de l'argent", value = "money"})
+    local giveMarkedMoneyItem = moneyMenu:AddButton({label = "Donner de l'argent sale", value = "marked_money"})
+    giveMoneyItem:On("select", giveMoney)
+    giveMarkedMoneyItem:On("select", giveMoney)
 end
 
 local function ItemsMenu(items)

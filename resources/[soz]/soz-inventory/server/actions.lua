@@ -65,7 +65,11 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
     end
 end)
 
-RegisterServerEvent("inventory:server:GiveMoney", function(target, amount)
+RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, amount)
+    if moneyType ~= "money" and moneyType ~= "marked_money" then
+        return
+    end
+
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(tonumber(target))
     local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
@@ -76,8 +80,35 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, amount)
     if dist > 2 then
         return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous")
     end
-    if Player.Functions.RemoveMoney("money", amount) then
-        Target.Functions.AddMoney("money", amount)
+
+    local moneyAmount = Player.Functions.GetMoney("money")
+    local moneyMarkedAmount = Player.Functions.GetMoney("marked_money")
+
+    if (moneyAmount + moneyMarkedAmount) >= amount then
+        local moneyTake = 0
+        local markedMoneyTake = 0
+
+        if moneyType == "money" then
+            if moneyAmount < amount then
+                moneyTake = moneyAmount
+                markedMoneyTake = amount - moneyAmount
+            else
+                moneyTake = amount
+            end
+        elseif moneyType == "marked_money" then
+            if moneyMarkedAmount < amount then
+                moneyTake = amount - moneyMarkedAmount
+                markedMoneyTake = moneyMarkedAmount
+            else
+                markedMoneyTake = amount
+            end
+        end
+
+        Player.Functions.RemoveMoney("money", moneyTake)
+        Player.Functions.RemoveMoney("marked_money", markedMoneyTake)
+        Target.Functions.AddMoney("money", moneyTake)
+        Target.Functions.AddMoney("marked_money", markedMoneyTake)
+
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
         TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
 
