@@ -4,7 +4,7 @@ lua54 "yes"
 
 ui_page "ui/index.html"
 
-files {"ui/index.html", "ui/app.js", "ui/elements/*.js", "ui/fonts/*.ttf", "ui/app.css", "ui/sprite.svg"}
+files {"themes/*", "ui/index.html", "ui/app.js", "ui/elements/*.js", "ui/fonts/*.ttf", "ui/app.css", "ui/sprite.svg"}
 
 shared_script "config.lua"
 
