@@ -4,12 +4,14 @@ table.insert(migrations, {
         [[
             CREATE TABLE IF NOT EXISTS `bank_accounts` (
               `id` bigint(255) NOT NULL AUTO_INCREMENT,
+              `accountid` varchar(50) DEFAULT NULL,
               `citizenid` varchar(50) DEFAULT NULL,
               `businessid` varchar(50) DEFAULT NULL,
               `gangid` varchar(50) DEFAULT NULL,
               `amount` bigint(255) NOT NULL DEFAULT 0,
               `account_type` enum('player','business','gang') NOT NULL DEFAULT 'player',
               PRIMARY KEY (`id`),
+              UNIQUE KEY `accountid` (`accountid`),
               UNIQUE KEY `citizenid` (`citizenid`),
               KEY `businessid` (`businessid`),
               KEY `gangid` (`gangid`)

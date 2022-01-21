@@ -41,6 +41,11 @@ QBShared.Round = function(value, numDecimalPlaces)
     return math.floor((value * power) + 0.5) / (power)
 end
 
+QBShared.GroupDigits = function(value)
+    local left, num, right = string.match(value, '^([^%d]*%d)(%d*)(.-)$')
+    return left .. (num:reverse():gsub('(%d%d%d)', '%1 '):reverse()) .. right
+end
+
 QBShared.ChangeVehicleExtra = function (vehicle, extra, enable)
     if DoesExtraExist(vehicle, extra) then
         if enable then

@@ -19,12 +19,14 @@ setmetatable(Account, {
 MySQL.ready(function()
     local AccountNotLoaded = table.clone(QBCore.Shared.Jobs)
 
-    MySQL.query("SELECT * FROM bank_accounts WHERE not account_type = 'player'", {}, function(result)
+    MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
             for _, v in pairs(result) do
-                if v.account_type == 'business' then
-                    Account.Create(v.name, QBCore.Shared.Jobs[v.name].label or v.name, v.account_type, v.businessid, v.amount)
-                    AccountNotLoaded[v.name] = nil
+                if v.account_type == 'player' then
+                    Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.amount)
+                elseif v.account_type == 'business' then
+                    --Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.amount)
+                    AccountNotLoaded[v.businessid] = nil
                 end
             end
         end
@@ -32,7 +34,7 @@ MySQL.ready(function()
         -- Create account present in configuration if not exist in database
         for k, v in pairs(AccountNotLoaded) do
             if k ~= "unemployed" then
-                Account.Create(k, v.label, 'business', k)
+                --Account.Create(k, v.label, 'business', k)
             end
         end
     end)
@@ -63,31 +65,76 @@ function Account.Create(id, label, accountType, owner, amount)
     return Accounts[self.id]
 end
 
-function Account.Remove(inv)
-    inv = Account(inv)
-    Accounts[inv.id] = nil
+function Account.Remove(acc)
+    acc = Account(acc)
+    Accounts[acc.id] = nil
+end
+
+function Account.AddMoney(acc, amount)
+    acc = Account(acc)
+
+    acc.amount = math.ceil(acc.amount + amount - 0.5)
+    acc.changed = true
+    return true
+end
+
+function Account.RemoveMoney(acc, amount)
+    acc = Account(acc)
+    if acc.amount - amount >= 0 then
+        acc.amount = math.ceil(acc.amount - amount - 0.5)
+        acc.changed = true
+        return true
+    else
+        return false, 'no_account_money'
+    end
+end
+
+function Account.TransfertMoney(accSource, accTarget, amount, cb)
+    accSource = Account(accSource)
+    accTarget = Account(accTarget)
+    amount = math.round(amount, 0)
+    local success, reason = false, nil
+
+    if accSource then
+        if accTarget then
+            if amount > accSource.amount then
+                amount = accSource.amount
+            end
+
+            if Account.RemoveMoney(accSource, amount) and Account.AddMoney(accTarget, amount) then
+                _G.AccountType[accSource.type]:save(accSource.id, accSource.owner, accSource.amount)
+                _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.amount)
+
+                success = true
+            else
+                success, reason = false, "transfert_failed"
+            end
+        else
+            success, reason = false, "invalid_account"
+        end
+    else
+        success, reason = false, "invalid_account"
+    end
+
+    if cb then
+        cb(success, reason)
+    end
 end
 
 
 --- Create Player account
 RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]] )
-    Account.Create(player.PlayerData.source, player.Functions.GetName(), "player", player.PlayerData.citizenid)
-end)
-
---- Drop Player account
-RegisterNetEvent("QBCore:Server:PlayerUnload", function(playerID --[[playerID]] )
-    local inv = Account(playerID)
-
-    _G.AccountType[inv.type]:save(inv.id, inv.owner, inv.amount)
-    Account.Remove(playerID)
+    if Account(player.PlayerData.charinfo.account) == nil then
+        Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
+    end
 end)
 
 --- Loops
 local function saveAccounts(loop)
-    for _, inv in pairs(Accounts) do
-        if inv.changed then
-            if _G.AccountType[inv.type]:save(inv.id, inv.owner, inv.amount) then
-                inv.changed = false
+    for _, acc in pairs(Accounts) do
+        if acc.changed then
+            if _G.AccountType[acc.type]:save(acc.id, acc.owner, acc.amount) then
+                acc.changed = false
             end
         end
     end
@@ -114,4 +161,16 @@ AddEventHandler("onResourceStop", function(resource)
     end
 end)
 
+_G.Account = Account
 _G.AccountType = {}
+
+
+
+
+CreateThread(function()
+    while true do
+        QBCore.Debug(Accounts)
+
+        Wait(5000)
+    end
+end)

@@ -1,33 +1,51 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-local function format_int(number)
-    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
-    int = int:reverse():gsub("(%d%d%d)", "%1,")
-    return minus .. int:reverse():gsub("^,", "") .. fraction
-end
-
-
 QBCore.Functions.CreateCallback('banking:getBankingInformation', function(source, cb)
-    local src = source
-    local xPlayer = QBCore.Functions.GetPlayer(src)
-    while xPlayer == nil do Wait(0) end
-    if (xPlayer) then
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if Player then
+        local account = Account(Player.PlayerData.charinfo.account)
+
         local banking = {
-            ['name'] = xPlayer.PlayerData.charinfo.firstname .. ' ' .. xPlayer.PlayerData.charinfo.lastname,
-            ['bankbalance'] = '$'.. format_int(xPlayer.PlayerData.money['bank']),
-            ['cash'] = '$'.. format_int(xPlayer.PlayerData.money['money']),
-            ['accountinfo'] = xPlayer.PlayerData.charinfo.account,
+            ['name'] = Player.Functions.GetName(),
+            ['accountinfo'] = account.id,
+            ['bankbalance'] = QBCore.Shared.GroupDigits(account.amount) .. '$',
+            ['money'] = QBCore.Shared.GroupDigits(Player.PlayerData.money['money']) .. '$',
         }
-        --if savingsAccounts[xPlayer.PlayerData.citizenid] then
-        --    local cid = xPlayer.PlayerData.citizenid
-        --    banking['savings'] = {
-        --        ['amount'] = savingsAccounts[cid].GetBalance(),
-        --        ['details'] = savingsAccounts[cid].getAccount(),
-        --        ['statement'] = savingsAccounts[cid].getStatement(),
-        --    }
-        --end
         cb(banking)
     else
         cb(nil)
     end
+end)
+
+QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source, cb, accountSource, accountTarget, amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local CurrentMoney = Player.Functions.GetMoney("money")
+    amount = tonumber(amount)
+
+    if accountSource == "player" then
+        if amount <= CurrentMoney then
+            if Player.Functions.RemoveMoney("money", amount) then
+                Account.AddMoney(accountTarget, amount)
+                cb(true)
+                return
+            end
+        end
+    elseif accountTarget == "player" then
+        local AccountMoney = Account(accountSource).amount
+        if amount <= AccountMoney then
+            if Player.Functions.AddMoney("money", amount) then
+                Account.RemoveMoney(accountSource, amount)
+                cb(true)
+                return
+            end
+        end
+    else
+        Account.TransfertMoney(accountSource, accountTarget, amount, function(success, reason)
+            cb(success, reason)
+            return
+        end)
+    end
+
+    cb(false, "unknown")
 end)
