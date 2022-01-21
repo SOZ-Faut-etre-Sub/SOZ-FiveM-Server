@@ -9,18 +9,6 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
 
-RegisterNetEvent('banking:openBankScreen', function()
-    QBCore.Functions.TriggerCallback('banking:getBankingInformation', function(banking)
-        if banking ~= nil then
-            SetNuiFocus(true, true)
-            SendNUIMessage({
-                status = "openbank",
-                information = banking
-            })
-        end
-    end)
-end)
-
 CreateThread(function()
     for id, bank in pairs(Config.BankPedLocations) do
         if not QBCore.Functions.GetBlip("bank_" .. id) then

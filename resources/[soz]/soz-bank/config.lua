@@ -4,6 +4,13 @@ Config.MoneyCaseTrigger = 5000
 
 Config.DefaultAccountMoney = {["player"] = 5000, ["business"] = 100000}
 
+Config.ErrorMessage = {
+    ["unknown"] = "~r~Erreur de la banque !",
+    ["invalid_account"] = "~r~Le compte n'existe pas !",
+    ["transfert_failed"] = "~r~Le transfer a subis une erreur !",
+    ["no_account_money"] = "~r~Le compte ne possède pas assez d'argent !",
+}
+
 -- TODO: move this to policejob
 Config.MoneyChecker = vector3(458.63, -979.16, 23.92)
 

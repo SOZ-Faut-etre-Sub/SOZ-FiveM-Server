@@ -8,8 +8,8 @@ client_scripts {"@menuv/menuv.lua", "client/main.lua", "client/nui.lua", "client
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",
-    "server/main.lua",
 
+    "server/main.lua",
     "server/accounts.lua",
 
     "server/accounts/base.lua",
