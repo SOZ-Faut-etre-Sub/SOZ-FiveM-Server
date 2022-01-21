@@ -10,17 +10,16 @@ local function addCase()
 end
 
 local function removeCase()
-    SetCurrentPedWeapon(PlayerPedId(), 'WEAPON_UNARMED')
+    SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
     RemoveWeaponFromPed(PlayerPedId(), briefcaseHash)
 end
-
 
 local function GetCurrentMoney()
     local currentMoney = 0
 
     if PlayerData.money ~= nil then
         for k, v in pairs(PlayerData.money) do
-            if k ~= 'bank' then
+            if k ~= "bank" then
                 currentMoney = currentMoney + v
             end
         end
@@ -28,7 +27,6 @@ local function GetCurrentMoney()
 
     return currentMoney
 end
-
 
 Citizen.CreateThread(function()
     while true do
@@ -61,7 +59,7 @@ Citizen.CreateThread(function()
             DisableControlAction(0, 44, true) -- Cover
             DisableControlAction(0, 37, true) -- Select Weapon
             DisableControlAction(2, 36, true) -- Disable going stealth
-            DisableControlAction(0, 47, true)  -- Disable weapon
+            DisableControlAction(0, 47, true) -- Disable weapon
             DisableControlAction(0, 264, true) -- Disable melee
             DisableControlAction(0, 257, true) -- Disable melee
             DisableControlAction(0, 140, true) -- Disable melee
@@ -76,7 +74,7 @@ Citizen.CreateThread(function()
 
         if hasMoneyCase() and GetVehiclePedIsTryingToEnter(PlayerPedId()) ~= 0 then
             Wait(500)
-            SetCurrentPedWeapon(PlayerPedId(), 'WEAPON_UNARMED')
+            SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
         end
 
         Wait(0)

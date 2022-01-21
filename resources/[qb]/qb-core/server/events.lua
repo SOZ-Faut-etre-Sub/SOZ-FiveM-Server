@@ -8,6 +8,7 @@ AddEventHandler('playerDropped', function()
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
+        TriggerEvent('QBCore:Server:PlayerUnload', src)
         QBCore.Players[src] = nil
     end
 end)
