@@ -1,8 +1,6 @@
 local mutedPlayers = {}
 
--- we can't use GetConvarInt because its not a integer, and theres no way to get a float... so use a hacky way it is!
 local volumes = {
-	-- people are setting this to 1 instead of 1.0 and expecting it to work.
 	['radio'] = tonumber(GetConvar('voice_defaultVolume', '0.3')) + 0.0,
 	['phone'] = tonumber(GetConvar('voice_defaultVolume', '0.3')) + 0.0,
 }
@@ -11,30 +9,6 @@ radioEnabled, radioPressed, mode = false, false, 2
 radioData = {}
 callData = {}
 
---- function setVolume
---- Toggles the players volume
----@param volume number between 0 and 100
----@param volumeType string the volume type (currently radio & call) to set the volume of (opt)
-function setVolume(volume, volumeType)
-	type_check({volume, "number"})
-	local volume = volume
-	volume = volume / 100
-	if volumeType then
-		local volumeTbl = volumes[volumeType]
-		if volumeTbl then
-			LocalPlayer.state:set(volumeType, volume, true)
-			volumes[volumeType] = volume
-		else
-			error(('setVolume got a invalid volume type %s'):format(volumeType))
-		end
-	else
-		-- _ is here to not mess with global 'type' function
-		for _type, vol in pairs(volumes) do
-			volumes[_type] = volume
-			LocalPlayer.state:set(_type, volume, true)
-		end
-	end
-end
 
 exports('setRadioVolume', function(vol)
 	setVolume(vol, 'radio')

@@ -12,18 +12,7 @@ function defaultTable(source)
 	}
 end
 
-function handleStateBagInitilization(source)
-	local plyState = Player(source).state
-	plyState:set('radio', tonumber(GetConvar('voice_defaultVolume', '0.3')), true)
-	plyState:set('phone', tonumber(GetConvar('voice_defaultVolume', '0.3')), true)
-	plyState:set('proximity', {}, true)
-	plyState:set('callChannel', 0, true)
-	plyState:set('radioChannel', 0, true)
-end
-
--- temp fix before an actual fix is added
 Citizen.CreateThreadNow(function()
-
 	local plyTbl = GetPlayers()
 	for i = 1, #plyTbl do
 		local ply = tonumber(plyTbl[i])
@@ -93,19 +82,7 @@ AddEventHandler("playerDropped", function()
 	end
 end)
 
-if GetConvarInt('voice_externalDisallowJoin', 0) == 1 then
-	AddEventHandler('playerConnecting', function(_, _, deferral)
-		deferral.defer()
-		Wait(0)
-		deferral.done('This server is not accepting connections.')
-	end)
-end
 
--- only meant for internal use so no documentation
-function isValidPlayer(source)
-	return voiceData[source]
-end
-exports('isValidPlayer', isValidPlayer)
 
 function getPlayersInRadioChannel(channel)
 	local returnChannel = radioData[channel]
