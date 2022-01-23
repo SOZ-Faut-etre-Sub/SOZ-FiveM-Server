@@ -25,7 +25,7 @@ MySQL.ready(function()
                 if v.account_type == 'player' then
                     Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.amount)
                 elseif v.account_type == 'business' then
-                    --Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.amount)
+                    Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.amount)
                     AccountNotLoaded[v.businessid] = nil
                 end
             end
@@ -34,7 +34,7 @@ MySQL.ready(function()
         -- Create account present in configuration if not exist in database
         for k, v in pairs(AccountNotLoaded) do
             if k ~= "unemployed" then
-                --Account.Create(k, v.label, 'business', k)
+                Account.Create(k, v.label, 'business', k)
             end
         end
     end)
@@ -163,14 +163,3 @@ end)
 
 _G.Account = Account
 _G.AccountType = {}
-
-
-
-
-CreateThread(function()
-    while true do
-        QBCore.Debug(Accounts)
-
-        Wait(5000)
-    end
-end)

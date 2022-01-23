@@ -11,6 +11,7 @@ server_scripts {
 
     "server/main.lua",
     "server/accounts.lua",
+    "server/paycheck.lua",
 
     "server/accounts/base.lua",
     "server/accounts/player.lua",

@@ -547,5 +547,3 @@ function QBCore.Player.CreateSerialNumber()
     end
     return SerialNumber
 end
-
-PaycheckLoop() -- This just starts the paycheck system

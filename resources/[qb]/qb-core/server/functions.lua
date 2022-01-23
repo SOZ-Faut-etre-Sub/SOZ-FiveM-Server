@@ -179,20 +179,6 @@ function QBCore.Functions.IsPlayerInBucket(player_source --[[int]] ,bucket --[[i
     return curr_player_bucket == bucket
 end
 
--- Paychecks (standalone - don't touch)
-
-function PaycheckLoop()
-    local Players = QBCore.Functions.GetQBPlayers()
-    for _, Player in pairs(Players) do
-        local payment = Player.PlayerData.job.payment
-        if Player.PlayerData.job and payment > 0 and (QBShared.Jobs[Player.PlayerData.job.name].offDutyPay or Player.PlayerData.job.onduty) then
-            Player.Functions.AddMoney('bank', payment)
-            TriggerClientEvent('QBCore:Notify', Player.PlayerData.source, ('You received your paycheck of $%s'):format(payment))
-        end
-    end
-    SetTimeout(QBCore.Config.Money.PayCheckTimeOut * (60 * 1000), PaycheckLoop)
-end
-
 -- Callbacks
 
 function QBCore.Functions.CreateCallback(name, cb)
