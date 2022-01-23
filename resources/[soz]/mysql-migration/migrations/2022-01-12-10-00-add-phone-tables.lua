@@ -1,5 +1,5 @@
 table.insert(migrations, {
-    name = 'add-phone-tables',
+    name = "add-phone-tables",
     queries = {
         [[
             CREATE TABLE IF NOT EXISTS `phone_calls`
@@ -89,6 +89,6 @@ table.insert(migrations, {
         ]],
         [[
             DROP TABLE player_contacts;
-        ]]
-    }
+        ]],
+    },
 });

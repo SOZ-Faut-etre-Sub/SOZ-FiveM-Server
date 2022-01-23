@@ -23,10 +23,8 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         targetInv.open = true
         targetInv.user = Player.PlayerData.source
 
-        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source,
-                Inventory.FilterItems(sourceInv, targetInv.type),
-                Inventory.FilterItems(targetInv, sourceInv.type)
-        )
+        TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
+                           Inventory.FilterItems(targetInv, sourceInv.type))
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas accès à ce stockage")
     end

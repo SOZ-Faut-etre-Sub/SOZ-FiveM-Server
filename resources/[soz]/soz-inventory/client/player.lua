@@ -141,17 +141,14 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
     end
 end)
 
-exports('hasPhone', function()
+exports("hasPhone", function()
     local p = promise.new()
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
-            if not PlayerData.metadata["isdead"] and
-                    not PlayerData.metadata["inlaststand"] and
-                    not PlayerData.metadata["ishandcuffed"] and
-                    not IsPauseMenuActive()
-            then
-                for _,item in pairs(inventory.items) do
-                    if item.name == 'phone' then
+            if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and
+                not IsPauseMenuActive() then
+                for _, item in pairs(inventory.items) do
+                    if item.name == "phone" then
                         p:resolve(true)
                         break
                     end
