@@ -1,5 +1,6 @@
 Config = {}
 
+Config.PayCheckTimeOut = 15
 Config.MoneyCaseTrigger = 5000
 
 Config.DefaultAccountMoney = {["player"] = 5000, ["business"] = 100000}

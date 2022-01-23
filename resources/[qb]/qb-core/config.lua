@@ -8,7 +8,6 @@ QBConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in ms
 QBConfig.Money = {}
 QBConfig.Money.MoneyTypes = { ['money'] = 500, ['marked_money'] = 0 }
 QBConfig.Money.DontAllowMinus = { 'money', 'marked_money' } -- Money that is not allowed going in minus
-QBConfig.Money.PayCheckTimeOut = 10 -- The time in minutes that it will give the paycheck
 
 QBConfig.Player = {}
 QBConfig.Player.MaxWeight = 80000 -- Max weight a player can carry (currently 120kg, written in grams)
