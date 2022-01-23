@@ -1,5 +1,5 @@
 table.insert(migrations, {
-    name = 'add-phone-society-messages-table',
+    name = "add-phone-society-messages-table",
     queries = {
         [[
             CREATE TABLE IF NOT EXISTS `phone_society_messages`
@@ -16,6 +16,6 @@ table.insert(migrations, {
                 PRIMARY KEY (id),
                 INDEX `conversation_id` (`conversation_id`)
             );
-        ]]
-    }
+        ]],
+    },
 });
