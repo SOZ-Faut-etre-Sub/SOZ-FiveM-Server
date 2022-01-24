@@ -15,9 +15,14 @@ end
 --- @return table
 function BusinessAccount:load(id, owner)
     local created = false
-    local result = MySQL.Sync.fetchScalar("SELECT money FROM bank_accounts WHERE account_type = 'business' AND businessid = ?", {owner})
+    local result = MySQL.Sync.fetchScalar("SELECT money FROM bank_accounts WHERE account_type = 'business' AND businessid = ?", {
+        owner,
+    })
     if result == nil then
-        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'business', ?)", {owner, 0})
+        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'business', ?)", {
+            owner,
+            0,
+        })
         created = true
     end
     return result and result or Config.DefaultAccountMoney["business"] or 0, created
@@ -29,7 +34,10 @@ end
 --- @param amount number
 --- @return boolean
 function BusinessAccount:save(id, owner, amount, marked_money)
-    MySQL.update.await("UPDATE bank_accounts SET money = ? WHERE account_type = 'business' AND businessid = ?", {amount, owner})
+    MySQL.update.await("UPDATE bank_accounts SET money = ? WHERE account_type = 'business' AND businessid = ?", {
+        amount,
+        owner,
+    })
     return true
 end
 

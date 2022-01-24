@@ -1,4 +1,3 @@
-
 -- TODO: move this to policejob
 QBCore.Functions.CreateCallback("police:getOtherPlayerData", function(source, cb, target)
     local Target = QBCore.Functions.GetPlayer(target)

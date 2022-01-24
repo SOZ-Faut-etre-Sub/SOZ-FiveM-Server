@@ -15,22 +15,22 @@ CreateThread(function()
         if not QBCore.Functions.GetBlip("bank_" .. id) then
             QBCore.Functions.CreateBlip("bank_" .. id, {name = "Banque", coords = bank, sprite = 108, color = 2})
         end
-        exports['qb-target']:SpawnPed({
+        exports["qb-target"]:SpawnPed({
             {
-                model = 'ig_bankman',
+                model = "ig_bankman",
                 coords = bank,
                 minusOne = true,
                 freeze = true,
                 invincible = true,
                 blockevents = true,
-                scenario = 'WORLD_HUMAN_CLIPBOARD',
+                scenario = "WORLD_HUMAN_CLIPBOARD",
                 target = {
                     options = {
-                        {event = "banking:openBankScreen", icon = "fas fa-money-check", label = "Accéder au compte"}
+                        {event = "banking:openBankScreen", icon = "fas fa-money-check", label = "Accéder au compte"},
                     },
                     distance = 2.5,
-                }
-            }
+                },
+            },
         })
     end
 end)
@@ -57,14 +57,13 @@ local function SafeStorageWithdraw(money_type, safeStorage)
     end
 end
 
-
 local function OpenSafeStorageMenu(safeStorage, money, black_money)
     safeStorageMenu:ClearItems()
 
-    local moneyMenu = MenuV:InheritMenu(safeStorageMenu, { subtitle = ("Gestion de l'argent (%s$)"):format(money) })
-    local moneyDeposit = moneyMenu:AddButton({ label = "Déposer" })
-    local moneyDepositAll = moneyMenu:AddButton({ label = "Tout déposer" })
-    local moneyWithdraw = moneyMenu:AddButton({ label = "Retirer" })
+    local moneyMenu = MenuV:InheritMenu(safeStorageMenu, {subtitle = ("Gestion de l'argent (%s$)"):format(money)})
+    local moneyDeposit = moneyMenu:AddButton({label = "Déposer"})
+    local moneyDepositAll = moneyMenu:AddButton({label = "Tout déposer"})
+    local moneyWithdraw = moneyMenu:AddButton({label = "Retirer"})
 
     moneyDeposit:On("select", function()
         SafeStorageDeposit("money", safeStorage)
@@ -79,10 +78,12 @@ local function OpenSafeStorageMenu(safeStorage, money, black_money)
         MenuV:CloseAll()
     end)
 
-    local markedMoneyMenu = MenuV:InheritMenu(safeStorageMenu, { subtitle = ("Gestion de l'argent sale (%s$)"):format(black_money) })
-    local markedMoneyDeposit = markedMoneyMenu:AddButton({ label = "Déposer" })
-    local markedMoneyDepositAll = markedMoneyMenu:AddButton({ label = "Tout déposer" })
-    local markedMoneyWithdraw = markedMoneyMenu:AddButton({ label = "Retirer" })
+    local markedMoneyMenu = MenuV:InheritMenu(safeStorageMenu, {
+        subtitle = ("Gestion de l'argent sale (%s$)"):format(black_money),
+    })
+    local markedMoneyDeposit = markedMoneyMenu:AddButton({label = "Déposer"})
+    local markedMoneyDepositAll = markedMoneyMenu:AddButton({label = "Tout déposer"})
+    local markedMoneyWithdraw = markedMoneyMenu:AddButton({label = "Retirer"})
 
     markedMoneyDeposit:On("select", function()
         SafeStorageDeposit("marked_money", safeStorage)
@@ -97,8 +98,8 @@ local function OpenSafeStorageMenu(safeStorage, money, black_money)
         MenuV:CloseAll()
     end)
 
-    safeStorageMenu:AddButton({ label = "Argent", value = moneyMenu, rightLabel = "~g~" .. money .. "$" })
-    safeStorageMenu:AddButton({ label = "Argent Sale", value = markedMoneyMenu, rightLabel = "~r~" .. black_money .. "$" })
+    safeStorageMenu:AddButton({label = "Argent", value = moneyMenu, rightLabel = "~g~" .. money .. "$"})
+    safeStorageMenu:AddButton({label = "Argent Sale", value = markedMoneyMenu, rightLabel = "~r~" .. black_money .. "$"})
 
     safeStorageMenu:Open()
 end
