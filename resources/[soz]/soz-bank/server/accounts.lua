@@ -17,31 +17,40 @@ setmetatable(Account, {
 })
 
 MySQL.ready(function()
-    local AccountNotLoaded = table.clone(QBCore.Shared.Jobs)
+    local EnterpriseAccountNotLoaded = table.clone(QBCore.Shared.Jobs)
+    local EnterpriseSafeNotLoaded = table.clone(Config.SafeStorages)
 
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
             for _, v in pairs(result) do
                 if v.account_type == 'player' then
-                    Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.amount)
+                    Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.money)
                 elseif v.account_type == 'business' then
-                    Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.amount)
-                    AccountNotLoaded[v.businessid] = nil
+                    Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.money)
+                    EnterpriseAccountNotLoaded[v.businessid] = nil
+                elseif v.account_type == 'safestorages' then
+                    Account.Create(v.businessid, Config.SafeStorages[v.businessid].label or v.name, v.account_type, v.businessid, v.money, v.marked_money)
+                    EnterpriseSafeNotLoaded[v.businessid] = nil
                 end
             end
         end
 
         -- Create account present in configuration if not exist in database
-        for k, v in pairs(AccountNotLoaded) do
+        for k, v in pairs(EnterpriseAccountNotLoaded) do
             if k ~= "unemployed" then
                 Account.Create(k, v.label, 'business', k)
             end
+        end
+
+        -- Create account present in configuration if not exist in database
+        for k, v in pairs(EnterpriseSafeNotLoaded) do
+            Account.Create(k, v.label, 'safestorages', v.owner)
         end
     end)
 end)
 
 --- Management
-function Account.Create(id, label, accountType, owner, amount)
+function Account.Create(id, label, accountType, owner, money, marked_money)
     if _G.AccountType[accountType] == nil then
         print("Account type not valid !")
         return
@@ -52,13 +61,22 @@ function Account.Create(id, label, accountType, owner, amount)
         label = label or id,
         type = accountType,
         owner = owner,
-        amount = amount,
+        money = money,
+        marked_money = marked_money,
         changed = false,
         time = os.time(),
     }
 
-    if not self.amount then
-        self.amount, self.changed = _G.AccountType[self.type]:load(self.id, self.owner)
+    if not self.money then
+        self.money, self.changed = _G.AccountType[self.type]:load(self.id, self.owner)
+    end
+
+    if self.type == 'safestorages' then
+        self.marked_money = 0
+
+        if string.find(self.id, "safe_") == nil then
+            self.id = "safe_" .. self.id
+        end
     end
 
     Accounts[self.id] = self
@@ -70,18 +88,27 @@ function Account.Remove(acc)
     Accounts[acc.id] = nil
 end
 
-function Account.AddMoney(acc, amount)
+function Account.AddMoney(acc, money, money_type)
     acc = Account(acc)
 
-    acc.amount = math.ceil(acc.amount + amount - 0.5)
+    if money_type == nil then
+        money_type = "money"
+    end
+
+    acc[money_type] = math.ceil(acc[money_type] + money - 0.5)
     acc.changed = true
     return true
 end
 
-function Account.RemoveMoney(acc, amount)
+function Account.RemoveMoney(acc, money, money_type)
     acc = Account(acc)
-    if acc.amount - amount >= 0 then
-        acc.amount = math.ceil(acc.amount - amount - 0.5)
+
+    if money_type == nil then
+        money_type = "money"
+    end
+
+    if acc[money_type] - money >= 0 then
+        acc[money_type] = math.ceil(acc[money_type] - money - 0.5)
         acc.changed = true
         return true
     else
@@ -89,21 +116,21 @@ function Account.RemoveMoney(acc, amount)
     end
 end
 
-function Account.TransfertMoney(accSource, accTarget, amount, cb)
+function Account.TransfertMoney(accSource, accTarget, money, cb)
     accSource = Account(accSource)
     accTarget = Account(accTarget)
-    amount = math.round(amount, 0)
+    money = math.round(money, 0)
     local success, reason = false, nil
 
     if accSource then
         if accTarget then
-            if amount > accSource.amount then
-                amount = accSource.amount
+            if money > accSource.money then
+                money = accSource.money
             end
 
-            if Account.RemoveMoney(accSource, amount) and Account.AddMoney(accTarget, amount) then
-                _G.AccountType[accSource.type]:save(accSource.id, accSource.owner, accSource.amount)
-                _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.amount)
+            if Account.RemoveMoney(accSource, money) and Account.AddMoney(accTarget, money) then
+                _G.AccountType[accSource.type]:save(accSource.id, accSource.owner, accSource.money, accSource.marked_money)
+                _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.money, accTarget.marked_money)
 
                 success = true
             else
@@ -121,6 +148,16 @@ function Account.TransfertMoney(accSource, accTarget, amount, cb)
     end
 end
 
+function Account.AccessGranted(acc, playerId)
+    acc = Account(acc)
+
+    local owner = acc.owner
+    if string.find(owner, "safe_") ~= nil then
+        owner = string.sub(owner, 6)
+    end
+
+    return _G.AccountType[acc.type]:AccessAllowed(owner, playerId)
+end
 
 --- Create Player account
 RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]] )
@@ -133,7 +170,7 @@ end)
 local function saveAccounts(loop)
     for _, acc in pairs(Accounts) do
         if acc.changed then
-            if _G.AccountType[acc.type]:save(acc.id, acc.owner, acc.amount) then
+            if _G.AccountType[acc.type]:save(acc.id, acc.owner, acc.money, acc.marked_money) then
                 acc.changed = false
             end
         end

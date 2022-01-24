@@ -19,12 +19,22 @@ function AccountShell:load(id, owner)
     return {}, false
 end
 
+--- AccessAllowed
+--- @param owner any
+--- @param player any
+--- @return boolean
+function AccountShell:AccessAllowed(owner, player)
+    print("^8" .. tostring(self) .. ":AccessAllowed() is not implemented !")
+    return true
+end
+
 --- save
 --- @param id any
 --- @param owner any
---- @param inventory string
+--- @param money number
+--- @param marked_money number
 --- @return boolean
-function AccountShell:save(id, owner, inventory)
+function AccountShell:save(id, owner, money, marked_money)
     print("^8" .. tostring(self) .. ":save() is not implemented !")
     return false
 end

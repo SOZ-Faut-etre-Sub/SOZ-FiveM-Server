@@ -5,7 +5,7 @@
 local function DrawNotification(msg, flash, save)
     BeginTextCommandThefeedPost("STRING")
     AddTextComponentSubstringPlayerName(msg)
-    EndTextCommandThefeedPostTicker(flash or true, save or false)
+    EndTextCommandThefeedPostTicker(flash or true, save or true)
 end
 
 RegisterNetEvent("hud:client:DrawNotification", function(msg, flash, save)
@@ -30,7 +30,7 @@ local function DrawAdvancedNotification(title, subtitle, msg, image, iconType, f
         ThefeedNextPostBackgroundColor(color)
     end
     EndTextCommandThefeedPostMessagetext(image, image, flash, iconType, title, subtitle)
-    EndTextCommandThefeedPostTicker(flash or true, save or false)
+    EndTextCommandThefeedPostTicker(flash or true, save or true)
 end
 
 RegisterNetEvent("hud:client:DrawAdvancedNotification", function(title, subtitle, msg, image, iconType, flash, save, color)
