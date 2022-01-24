@@ -20,6 +20,17 @@ RegisterNUICallback("NUIFocusOff", function(data, cb)
     SendNUIMessage({status = "closebank"})
 end)
 
+RegisterNUICallback("createOffshoreAccount", function(data, cb)
+    QBCore.Functions.TriggerCallback("banking:server:createOffshoreAccount", function(success, reason)
+        if success then
+            exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Création de compte", "Vous avez crée un nouveau compte", "CHAR_BANK_MAZE", 9)
+        else
+            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+        end
+        openBankScreen(data.account)
+    end, data.account)
+end)
+
 RegisterNUICallback("doDeposit", function(data, cb)
     local amount = tonumber(data.amount)
 
@@ -32,6 +43,21 @@ RegisterNUICallback("doDeposit", function(data, cb)
             end
             openBankScreen(data.account)
         end, "player", data.account, amount)
+    end
+end)
+
+RegisterNUICallback("doOffshoreDeposit", function(data, cb)
+    local amount = tonumber(data.amount)
+
+    if amount ~= nil and amount > 0 then
+        QBCore.Functions.TriggerCallback("banking:server:TransfertOffshoreMoney", function(success, reason)
+            if success then
+                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE", 9)
+            else
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+            end
+            openBankScreen(data.account)
+        end, data.account, amount)
     end
 end)
 

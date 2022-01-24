@@ -1,48 +1,60 @@
-var Config = new Object();
-Config.closeKeys = [69, 27];
-var currentLimit = null;
-var clientPin = null;
+const Config = {
+    closeKeys: [69, 27]
+}
+
+const playerAccountReg = /^[0-9]{2}Z[0-9]{4}T[0-9]{4}$/
 
 window.addEventListener("message", function (event) {
-    if(event.data.status == "openbank") {
-        /*$("#cardDetails").css({"display":"none"});*/
-        $("#createNewPin").css({"display":"none"});
+    if(event.data.status === "openbank") {
         $("#currentStatement").DataTable().destroy();
         $("#accountNumber").html(event.data.information.accountinfo);
 
-        $('#newPinNumber').val('');
         $("#bankingHome-tab").addClass('active');
         $("#bankingWithdraw-tab").removeClass('active');
         $("#bankingDeposit-tab").removeClass('active');
         $("#bankingTransfer-tab").removeClass('active');
         $("#bankingStatement-tab").removeClass('active');
+        $("#bankingActions-tab").removeClass('active');
+        $("#bankingOffShore-tab").removeClass('active');
         $("#bankingHome").addClass('active').addClass('show');
         $("#bankingWithdraw").removeClass('active').removeClass('show');
         $("#bankingDeposit").removeClass('active').removeClass('show');
         $("#bankingTransfer").removeClass('active').removeClass('show');
         $("#bankingStatement").removeClass('active').removeClass('show');
+        $("#bankingActions").removeClass('active').removeClass('show');
+        $("#bankingOffShore").removeClass('active').removeClass('show');
 
         $("#saccountNumber").html('');
+        $("#offshoreBalance").html('');
 
         populateBanking(event.data.information);
         $("#bankingContainer").css({"display":"block"});
+        $("#bankingOffShore-tab").css({"display":"none"});
 
-    }
-    else if (event.data.status == "closebank") {
-        $("#cardDetails").css({"display":"none"});
-        $("#createNewPin").css({"display":"none"});
+        if (!playerAccountReg.test(event.data.information.accountinfo)) {
+            $("#accountNumberCard").css({"display":"none"});
+            $("#bankingActions-tab").css({"display":"block"});
+        } else {
+            $("#accountNumberCard").css({"display":"block"});
+            $("#bankingActions-tab").css({"display":"none"});
+        }
+
+        if (event.data.information.offshore !== undefined && event.data.information.offshore !== null) {
+            $("#bankingOffShore-tab").css({"display":"block"});
+            $("#bankingActions-tab").css({"display":"none"});
+            $("#offshoreBalance").html(event.data.information.offshore);
+        }
+    } else if (event.data.status === "closebank") {
         $("#currentStatement").DataTable().destroy();
-        $("#enteringPin").addClass('show').addClass('active');
-        $("#createNewPin").css({"display":"block"});
         $("#successRow").css({"display":"none"});
         $("#successMessage").html('');
         $("#bankingContainer").css({"display":"none"});
-    } else if (event.data.status == "transferError") {
+    } else if (event.data.status === "transferError") {
         if(event.data.error !== undefined) {
             $("#transferError").css({"display":"block"});
             $("#transferErrorMsg").html(event.data.error);
         }
-    } else if (event.data.status == "successMessage") {
+    } else if (event.data.status === "successMessage") {
         if(event.data.message !== undefined) {
             $("#successRow").css({"display":"block"});
             $("#successMessage").html(event.data.message);
@@ -62,12 +74,7 @@ function dynamicSort(property) {
     }
 }
 
-function populateBanking(data)
-{
-    $('#newPinNumber').val('');
-    $("#createNewPin").css({"display":"none"});
-    $("#cardInactive").css({"display":"none"});
-    $("#cardOrdering").css({"display":"none"});
+function populateBanking(data) {
     $('#withdrawAmount').val('');
     $("#customerName").html(data.name);
     $("#currentBalance").html(data.bankbalance);
@@ -77,8 +84,6 @@ function populateBanking(data)
     $("#currentBalance2").html(data.bankbalance);
     $("#currentCashBalance2").html(data.money);
     $("#currentStatementContents").html('');
-    $("#cardOrdering").css({"display":"none"});
-    $("#cardInactive").css({"display":"block"});
 
     if(data.statement !== undefined) {
         data.statement.sort(dynamicSort("date"));
@@ -199,6 +204,22 @@ $(function() {
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
             }));
+        }
+    });
+
+    $("#openOffshore").click(function() {
+        $.post('https://soz-bank/createOffshoreAccount', JSON.stringify({ account: $("#accountNumber").text() }))
+    });
+
+    $("#makeOffShoreTransfer").click(function() {
+        var amount = $('#OffShoreTAmount').val();
+
+        if(amount !== undefined && amount > 0) {
+            $.post('https://soz-bank/doOffshoreDeposit', JSON.stringify({
+                account: $("#accountNumber").text(),
+                amount: parseInt(amount)
+            }));
+            $('#OffShoreTAmount').val('');
         }
     });
 
