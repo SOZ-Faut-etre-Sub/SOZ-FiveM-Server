@@ -1,14 +1,18 @@
-local function openBankScreen()
+local function openBankScreen(account)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
             SetNuiFocus(true, true)
             SendNUIMessage({status = "openbank", information = banking})
         end
-    end)
+    end, account)
 end
 
 RegisterNetEvent("banking:openBankScreen", function()
     openBankScreen()
+end)
+
+RegisterNetEvent("banking:openSocietyBankScreen", function()
+    openBankScreen(PlayerData.job.name)
 end)
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
@@ -26,7 +30,7 @@ RegisterNUICallback("doDeposit", function(data, cb)
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end
-            openBankScreen()
+            openBankScreen(data.account)
         end, "player", data.account, amount)
     end
 end)
@@ -41,15 +45,13 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end
-            openBankScreen()
+            openBankScreen(data.account)
         end, data.account, "player", amount)
     end
 end)
 
 RegisterNUICallback("doTransfer", function(data, cb)
     local amount = tonumber(data.amount)
-
-    QBCore.Debug(data)
 
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertMoney", function(success, reason)
@@ -59,7 +61,7 @@ RegisterNUICallback("doTransfer", function(data, cb)
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end
-            openBankScreen()
+            openBankScreen(data.accountSource)
         end, data.accountSource, data.accountTarget, amount)
     end
 end)
