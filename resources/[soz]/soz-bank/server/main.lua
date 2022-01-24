@@ -9,7 +9,7 @@ QBCore.Functions.CreateCallback('banking:getBankingInformation', function(source
         local banking = {
             ['name'] = Player.Functions.GetName(),
             ['accountinfo'] = account.id,
-            ['bankbalance'] = QBCore.Shared.GroupDigits(account.amount) .. '$',
+            ['bankbalance'] = QBCore.Shared.GroupDigits(account.money) .. '$',
             ['money'] = QBCore.Shared.GroupDigits(Player.PlayerData.money['money']) .. '$',
         }
         cb(banking)
@@ -32,7 +32,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
             end
         end
     elseif accountTarget == "player" then
-        local AccountMoney = Account(accountSource).amount
+        local AccountMoney = Account(accountSource).money
         if amount <= AccountMoney then
             if Player.Functions.AddMoney("money", amount) then
                 Account.RemoveMoney(accountSource, amount)
@@ -48,4 +48,46 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
     end
 
     cb(false, "unknown")
+end)
+
+RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeStorage, amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local CurrentMoney = Player.Functions.GetMoney(money_type)
+    amount = tonumber(amount)
+
+    if money_type == "money" or money_type == "marked_money" then
+        if amount <= CurrentMoney then
+            if Player.Functions.RemoveMoney(money_type, amount) then
+                Account.AddMoney(safeStorage, amount, money_type)
+            end
+        else
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+        end
+    end
+end)
+
+RegisterNetEvent("baking:server:SafeStorageWithdraw", function(money_type, safeStorage, amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    amount = tonumber(amount)
+
+    if money_type == "money" or money_type == "marked_money" then
+        local CurrentMoney = Account(safeStorage)[money_type]
+        if amount <= CurrentMoney then
+            if Player.Functions.AddMoney(money_type, amount) then
+                Account.RemoveMoney(safeStorage, amount, money_type)
+            end
+        else
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+        end
+    end
+end)
+
+QBCore.Functions.CreateCallback("banking:server:openSafeStorage", function(source, cb, safeStorage)
+    local account = Account(safeStorage)
+
+    if account and Account.AccessGranted(account, source) then
+        cb(true, account.money, account.marked_money)
+    else
+        cb(false)
+    end
 end)

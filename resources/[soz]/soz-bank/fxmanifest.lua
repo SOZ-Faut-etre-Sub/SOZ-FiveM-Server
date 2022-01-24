@@ -16,6 +16,7 @@ server_scripts {
     "server/accounts/base.lua",
     "server/accounts/player.lua",
     "server/accounts/business.lua",
+    "server/accounts/safestorages.lua",
 
     "server/police.lua",
 }
