@@ -15,9 +15,14 @@ end
 --- @return table
 function SafeStorageAccount:load(id, owner)
     local created = false
-    local result = MySQL.Sync.fetchScalar("SELECT money FROM bank_accounts WHERE account_type = 'safestorages' AND businessid = ?", {id})
+    local result = MySQL.Sync.fetchScalar("SELECT money FROM bank_accounts WHERE account_type = 'safestorages' AND businessid = ?", {
+        id,
+    })
     if result == nil then
-        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'safestorages', ?)", {id, 0})
+        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'safestorages', ?)", {
+            id,
+            0,
+        })
         created = true
     end
     return result and result or 0, created
@@ -43,7 +48,11 @@ end
 --- @param money number
 --- @return boolean
 function SafeStorageAccount:save(id, owner, money, marked_money)
-    MySQL.update.await("UPDATE bank_accounts SET money = ?, marked_money = ? WHERE account_type = 'safestorages' AND businessid = ?", {money, marked_money, id})
+    MySQL.update.await("UPDATE bank_accounts SET money = ?, marked_money = ? WHERE account_type = 'safestorages' AND businessid = ?", {
+        money,
+        marked_money,
+        id,
+    })
     return true
 end
 

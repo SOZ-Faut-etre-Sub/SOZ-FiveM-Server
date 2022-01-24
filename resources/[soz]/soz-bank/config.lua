@@ -16,11 +16,7 @@ Config.ErrorMessage = {
 Config.MoneyChecker = vector3(458.63, -979.16, 23.92)
 
 Config.SafeStorages = {
-    ["safe_police"] = {
-        label = "Coffre police",
-        owner = "police",
-        position = vector3(450.15, -973.15, 29.7),
-    }
+    ["safe_police"] = {label = "Coffre police", owner = "police", position = vector3(450.15, -973.15, 29.7)},
 }
 
 Config.BankPedLocations = {

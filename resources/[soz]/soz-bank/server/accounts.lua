@@ -23,12 +23,12 @@ MySQL.ready(function()
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
             for _, v in pairs(result) do
-                if v.account_type == 'player' then
+                if v.account_type == "player" then
                     Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.money)
-                elseif v.account_type == 'business' then
+                elseif v.account_type == "business" then
                     Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.money)
                     EnterpriseAccountNotLoaded[v.businessid] = nil
-                elseif v.account_type == 'safestorages' then
+                elseif v.account_type == "safestorages" then
                     Account.Create(v.businessid, Config.SafeStorages[v.businessid].label or v.name, v.account_type, v.businessid, v.money, v.marked_money)
                     EnterpriseSafeNotLoaded[v.businessid] = nil
                 end
@@ -38,13 +38,13 @@ MySQL.ready(function()
         -- Create account present in configuration if not exist in database
         for k, v in pairs(EnterpriseAccountNotLoaded) do
             if k ~= "unemployed" then
-                Account.Create(k, v.label, 'business', k)
+                Account.Create(k, v.label, "business", k)
             end
         end
 
         -- Create account present in configuration if not exist in database
         for k, v in pairs(EnterpriseSafeNotLoaded) do
-            Account.Create(k, v.label, 'safestorages', v.owner)
+            Account.Create(k, v.label, "safestorages", v.owner)
         end
     end)
 end)
@@ -71,7 +71,7 @@ function Account.Create(id, label, accountType, owner, money, marked_money)
         self.money, self.changed = _G.AccountType[self.type]:load(self.id, self.owner)
     end
 
-    if self.type == 'safestorages' then
+    if self.type == "safestorages" then
         self.marked_money = 0
 
         if string.find(self.id, "safe_") == nil then
@@ -112,7 +112,7 @@ function Account.RemoveMoney(acc, money, money_type)
         acc.changed = true
         return true
     else
-        return false, 'no_account_money'
+        return false, "no_account_money"
     end
 end
 

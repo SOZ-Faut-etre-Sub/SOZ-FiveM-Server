@@ -1,16 +1,16 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-QBCore.Functions.CreateCallback('banking:getBankingInformation', function(source, cb)
+QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
 
     if Player then
         local account = Account(Player.PlayerData.charinfo.account)
 
         local banking = {
-            ['name'] = Player.Functions.GetName(),
-            ['accountinfo'] = account.id,
-            ['bankbalance'] = QBCore.Shared.GroupDigits(account.money) .. '$',
-            ['money'] = QBCore.Shared.GroupDigits(Player.PlayerData.money['money']) .. '$',
+            ["name"] = Player.Functions.GetName(),
+            ["accountinfo"] = account.id,
+            ["bankbalance"] = QBCore.Shared.GroupDigits(account.money) .. "$",
+            ["money"] = QBCore.Shared.GroupDigits(Player.PlayerData.money["money"]) .. "$",
         }
         cb(banking)
     else
