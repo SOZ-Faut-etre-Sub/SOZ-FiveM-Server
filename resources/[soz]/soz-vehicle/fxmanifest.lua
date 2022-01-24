@@ -6,4 +6,6 @@ shared_script "config.lua"
 
 client_scripts {"@menuv/menuv.lua", "client/*.lua"}
 
-dependencies {"qb-core", "soz-hud", "menuv"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "server/concess.lua"}
+
+dependencies {"qb-core", "soz-hud", "menuv", "qb-target"}
