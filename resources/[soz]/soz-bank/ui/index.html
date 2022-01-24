@@ -33,12 +33,14 @@
                                 <a class="nav-link m-1" id="bankingWithdraw-tab" data-toggle="pill" href="#bankingWithdraw" role="tab" aria-controls="bankingWithdraw" aria-selected="false" style="color: white">Retrait</a>
                                 <a class="nav-link m-1" id="bankingDeposit-tab" data-toggle="pill" href="#bankingDeposit" role="tab" aria-controls="bankingDeposit" aria-selected="false" style="color: white">Dépôt</a>
                                 <a class="nav-link m-1" id="bankingTransfer-tab" data-toggle="pill" href="#bankingTransfer" role="tab" aria-controls="bankingTransfer" aria-selected="false" style="color: white">Transfert</a>
-                                <a class="nav-link m-1" id="bankingStatement-tab" data-toggle="pill" href="#bankingStatement" role="tab" aria-controls="bankingStatement" aria-selected="false" style= "color: white">Historique</a>
+<!--                                <a class="nav-link m-1" id="bankingStatement-tab" data-toggle="pill" href="#bankingStatement" role="tab" aria-controls="bankingStatement" aria-selected="false" style= "color: white">Historique</a>-->
+                                <a class="nav-link m-1" id="bankingOffShore-tab" style="display:none; color: white;" data-toggle="pill" href="#bankingOffShore" role="tab" aria-controls="bankingOffShore" aria-selected="false">Compte OffShore</a>
+                                <a class="nav-link m-1" id="bankingActions-tab" data-toggle="pill" href="#bankingActions" role="tab" aria-controls="bankingActions" aria-selected="false" style="color: white">Option du compte</a>
                             </div>
                         </div>
                         <div class="col-12 mt-2">
                             <div class="col-12">
-                                <div class="card mb-3" style="color: white;">
+                                <div id="accountNumberCard" class="card mb-3" style="color: white;">
                                     <div class="card-header">Identifiant du compte</div>
                                     <div class="card-body">
                                         <p class="card-text" style="color: white;">
@@ -229,7 +231,6 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="bankingTransfer" role="tabpanel" aria-labelledby="bankingTransfer-tab">
-
                         <div class="container-fluid p-2" style="position: relative; top: 54px;">
                             <div class="row">
                                 <div class="col-12 title">
@@ -302,6 +303,74 @@
                                                 <tbody id="currentStatementContents">
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="bankingOffShore" role="tabpanel" aria-labelledby="bankingSavings-tab">
+                        <div class="container-fluid p-2" style="position: relative; top: 54px;">
+                            <div class="row">
+                                <div class="col-12 title">
+                                    <h4 style="font-size: 35px;">Compte OffShore</h4>
+                                </div>
+                            </div>
+                            <div class="row" style="position: relative; top: 20px;">
+                                <div class="col-4" style="color: #00af17">
+                                    <div class="card mb-3" style="color: white; min-height:150px;">
+                                        <div class="card-header"><i class="fad fa-fw fa-money-bill-wave"></i> Montant total du compte</div>
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title"><span id="offshoreBalance"></span></h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-8">
+                                    <div class="card mb-3" style="color: white;">
+                                        <div class="card-header">Action sur le compte</div>
+                                        <div class="card-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <label for="OffShoreTAmount"><small>Montant</small></label>
+                                                        <input type="number" id="OffShoreTAmount" name="OffShoreTAmount" class="form-control" placeholder="$" style="font-size: 13px;">
+                                                    </div>
+                                                    <div class="col-4 align-self-end">
+                                                        <button class="btn btn-block align-bottom" id="makeOffShoreTransfer" style="background-color: #28a745; font-size: 12px; color: white">Déposer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="bankingActions" role="tabpanel" aria-labelledby="bankingActions-tab" style="position: relative; top: 54px;">
+                        <div class="container-fluid p-2">
+                            <div class="row">
+                                <div class="col-12 title">
+                                    <h3 style="font-size: 35px;">Option du compte</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-3" style="color: white;">
+                                        <div class="card-header">Compte Offshore</div>
+                                        <div class="card-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-12 content" style="font-size: 16px;">
+                                                        <p>Via ce menu vous pouvez ouvrir un compte Offshore, qui va vous permettre de blanchir de l'argent.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <button class="btn btn-block mt-2" style="background:#28a745; color: white;" id="openOffshore">Ouvrir un compte Offshore</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

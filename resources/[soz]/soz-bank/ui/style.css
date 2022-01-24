@@ -93,5 +93,5 @@ input.form-control:focus {
 }
 
 input.form-control::placeholder {
-    color: white;
+    color: #949494;
 }

@@ -10,7 +10,7 @@ table.insert(migrations, {
               `gangid` varchar(50) DEFAULT NULL,
               `money` bigint(255) NOT NULL DEFAULT 0,
               `marked_money` bigint(255) NOT NULL DEFAULT 0,
-              `account_type` enum('player','business','safestorages','gang') NOT NULL DEFAULT 'player',
+              `account_type` enum('player','business','safestorages','offshore') NOT NULL DEFAULT 'player',
               PRIMARY KEY (`id`),
               UNIQUE KEY `accountid` (`accountid`),
               UNIQUE KEY `citizenid` (`citizenid`),

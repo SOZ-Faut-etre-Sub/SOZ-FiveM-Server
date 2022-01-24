@@ -11,10 +11,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
 
-local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 2.4, {
-    name="bank_society",
-    heading=340,
-})
+local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 2.4, {name = "bank_society", heading = 340})
 bankSociety:onPlayerInOut(function(isPointInside, point)
     isInsideBankZone = isPointInside
 end)

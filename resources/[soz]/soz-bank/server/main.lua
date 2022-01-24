@@ -23,10 +23,55 @@ QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source
             ["bankbalance"] = QBCore.Shared.GroupDigits(account.money) .. "$",
             ["money"] = QBCore.Shared.GroupDigits(Player.PlayerData.money["money"]) .. "$",
         }
+
+        local offshore = Account("offshore_" .. account.id)
+        if offshore ~= nil then
+            banking["offshore"] = QBCore.Shared.GroupDigits(offshore.marked_money) .. "$"
+        end
+
         cb(banking)
     else
         cb(nil)
     end
+end)
+
+QBCore.Functions.CreateCallback("banking:server:createOffshoreAccount", function(source, cb, account)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local offshore = Account("offshore_" .. account)
+
+    if Player.PlayerData.job.isboss then
+        if offshore == nil then
+            Account.Create("offshore_" .. account, "Compte offshore " .. account, "offshore", "offshore_" .. account)
+            cb(true)
+            return
+        else
+            cb(false, "already_exist")
+            return
+        end
+    else
+        cb(false, "action_forbidden")
+    end
+end)
+
+QBCore.Functions.CreateCallback("banking:server:TransfertOffshoreMoney", function(source, cb, accountTarget, amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local CurrentMoney = Player.Functions.GetMoney("marked_money")
+    amount = tonumber(amount)
+
+    if Player.PlayerData.job.isboss then
+        if amount <= CurrentMoney then
+            if Player.Functions.RemoveMoney("marked_money", amount) then
+                Account.AddMoney("offshore_" .. accountTarget, amount, "marked_money")
+                cb(true)
+                return
+            end
+        end
+    else
+        cb(false, "action_forbidden")
+        return
+    end
+
+    cb(false, "unknown")
 end)
 
 QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source, cb, accountSource, accountTarget, amount)

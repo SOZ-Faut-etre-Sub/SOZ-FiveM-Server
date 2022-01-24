@@ -31,6 +31,8 @@ MySQL.ready(function()
                 elseif v.account_type == "safestorages" then
                     Account.Create(v.businessid, Config.SafeStorages[v.businessid].label or v.name, v.account_type, v.businessid, v.money, v.marked_money)
                     EnterpriseSafeNotLoaded[v.businessid] = nil
+                elseif v.account_type == "offshore" then
+                    Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 end
             end
         end
@@ -62,7 +64,7 @@ function Account.Create(id, label, accountType, owner, money, marked_money)
         type = accountType,
         owner = owner,
         money = money,
-        marked_money = marked_money,
+        marked_money = marked_money or 0,
         changed = false,
         time = os.time(),
     }
@@ -72,8 +74,6 @@ function Account.Create(id, label, accountType, owner, money, marked_money)
     end
 
     if self.type == "safestorages" then
-        self.marked_money = 0
-
         if string.find(self.id, "safe_") == nil then
             self.id = "safe_" .. self.id
         end
