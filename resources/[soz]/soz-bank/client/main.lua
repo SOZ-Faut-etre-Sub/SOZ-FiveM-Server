@@ -1,6 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 local safeStorageMenu = MenuV:CreateMenu("Coffre fort", "", 255, 0, 0, "default", "soz", "safe-storage")
+local isInsideBankZone = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -8,6 +9,14 @@ end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
+end)
+
+local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 2.4, {
+    name="bank_society",
+    heading=340,
+})
+bankSociety:onPlayerInOut(function(isPointInside, point)
+    isInsideBankZone = isPointInside
 end)
 
 CreateThread(function()
@@ -27,6 +36,14 @@ CreateThread(function()
                 target = {
                     options = {
                         {event = "banking:openBankScreen", icon = "fas fa-money-check", label = "Accéder au compte"},
+                        {
+                            event = "banking:openSocietyBankScreen",
+                            icon = "fas fa-money-check",
+                            label = "Accéder au compte Société",
+                            canInteract = function(entity, distance, data)
+                                return PlayerData.job.isboss and isInsideBankZone
+                            end,
+                        },
                     },
                     distance = 2.5,
                 },

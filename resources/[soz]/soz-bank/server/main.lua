@@ -1,10 +1,21 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb)
+QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb, account)
     local Player = QBCore.Functions.GetPlayer(source)
 
     if Player then
-        local account = Account(Player.PlayerData.charinfo.account)
+        if account == nil then
+            account = Account(Player.PlayerData.charinfo.account)
+        else
+            if string.find(account, "%d%d%u%d%d%d%d%u%d%d%d%d") then
+                account = Account(account)
+            elseif Player.PlayerData.job.isboss then
+                account = Account(account)
+            else
+                cb(nil)
+                return
+            end
+        end
 
         local banking = {
             ["name"] = Player.Functions.GetName(),
