@@ -20,6 +20,7 @@ server_scripts {
     "server/main.lua",
     "server/accounts.lua",
     "server/paycheck.lua",
+    "server/washmoney.lua",
 
     "server/accounts/base.lua",
     "server/accounts/player.lua",
@@ -34,4 +35,4 @@ ui_page "ui/index.html"
 
 files {"ui/images/logo.png", "ui/style.css", "ui/index.html", "ui/qb-banking.js"}
 
-dependencies {"oxmysql", "qb-core", "soz-hud", "menuv", "PolyZone"}
+dependencies {"oxmysql", "cron", "qb-core", "soz-hud", "menuv", "PolyZone"}
