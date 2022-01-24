@@ -1,5 +1,5 @@
-local Account = {}
-local Accounts = {}
+Account = {}
+Accounts = {}
 
 setmetatable(Account, {
     __call = function(self, arg)
@@ -198,5 +198,4 @@ AddEventHandler("onResourceStop", function(resource)
     end
 end)
 
-_G.Account = Account
 _G.AccountType = {}

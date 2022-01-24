@@ -3,6 +3,8 @@ Config = {}
 Config.PayCheckTimeOut = 15
 Config.MoneyCaseTrigger = 5000
 
+Config.OffShoreMaxWashAmount = math.random(50000, 150000)
+
 Config.DefaultAccountMoney = {["player"] = 5000, ["business"] = 100000}
 
 Config.ErrorMessage = {
