@@ -135,22 +135,16 @@ end
 --- Create a `MenuV` menu
 ---@param title string Title of Menu
 ---@param subtitle string Subtitle of Menu
----@param r number 0-255 RED
----@param g number 0-255 GREEN
----@param b number 0-255 BLUE
 ---@param texture string Name of texture example: "default"
 ---@param dictionary string Name of dictionary example: "menuv"
 ---@param namespace string Namespace of Menu
 ---@param theme string Theme of Menu
 ---@return Menu
-function MenuV:CreateMenu(title, subtitle, r, g, b, texture, dictionary, namespace, theme)
+function MenuV:CreateMenu(title, subtitle, texture, dictionary, namespace, theme)
     local menu = CreateMenu({
         Theme = theme,
         Title = title,
         Subtitle = subtitle,
-        R = r,
-        G = g,
-        B = b,
         Texture = texture,
         Dictionary = dictionary,
         Namespace = namespace
@@ -183,9 +177,6 @@ function MenuV:InheritMenu(parent, overrides, namespace)
         Title = Utilities:Ensure(overrides.title or overrides.Title, parentMenu.Title),
         Subtitle = Utilities:Ensure(overrides.subtitle or overrides.Subtitle, parentMenu.Subtitle),
         Position = Utilities:Ensure(overrides.position or overrides.Position, parentMenu.Position),
-        R = Utilities:Ensure(overrides.r or overrides.R, parentMenu.Color.R),
-        G = Utilities:Ensure(overrides.g or overrides.G, parentMenu.Color.G),
-        B = Utilities:Ensure(overrides.b or overrides.B, parentMenu.Color.B),
         Size = Utilities:Ensure(overrides.size or overrides.Size, parentMenu.Size),
         Texture = Utilities:Ensure(overrides.texture or overrides.Texture, parentMenu.Texture),
         Dictionary = Utilities:Ensure(overrides.dictionary or overrides.Dictionary, parentMenu.Dictionary),
