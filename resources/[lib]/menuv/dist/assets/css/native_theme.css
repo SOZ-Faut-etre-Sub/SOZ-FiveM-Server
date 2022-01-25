@@ -9,6 +9,8 @@
 -- Description: FiveM menu library for creating menu's
 ----------------------- [ MenuV ] -----------------------
 */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @font-face {
     font-family: 'SignPainter';
     font-style: normal;
@@ -16,18 +18,12 @@
     src: local('../fonts/SignPainter'), url('../fonts/SignPainterHouseScript.woff') format('woff');
 }
 
-@font-face {
-    font-family: 'TTCommons';
-    font-style: normal;
-    font-weight: normal;
-    src: local('../fonts/TTCommons'), url('../fonts/TTCommons.woff') format('woff');
-}
-
 html,
 body {
     overflow: hidden;
     color: white;
     background-color: transparent;
+    font-family: 'Prompt', sans-serif;
 }
 
 * .hide,
@@ -127,6 +123,8 @@ div .hide,
     font-family: 'SignPainter';
     background-color: black;
     overflow: hidden;
+    border-top-right-radius: .3rem;
+    border-top-left-radius: .3rem;
 }
 
 .menuv.native .menuv-header strong {
@@ -158,22 +156,27 @@ div .hide,
     background-color: black !important;
     text-align: left;
     font-weight: 500;
-    font-size: 1.125em;
+    font-size: 1.0em;
     line-height: auto;
-    text-transform: uppercase;
-    padding-top: 0.125em;
-    padding-bottom: 0.375em;
-    padding-left: 0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 1em;
     height: auto;
-    color: #266e2d !important;
+    color: #ffffff !important;
 }
 
 .menuv.native .menuv-items {
     background-color: rgba(0, 0, 0, 0.65);
-    padding-bottom: 0.5em;
     max-height: 50.75vh;
+    padding: 0.5em;
     overflow: hidden;
     color: white;
+    border-bottom-right-radius: .3rem;
+    border-bottom-left-radius: .3rem;
+}
+
+.menuv.native .menuv-items > .menuv-item + .menuv-item {
+    margin-top: 0.25rem;
 }
 
 .menuv.native.size-100 .menuv-items {
@@ -207,6 +210,7 @@ div .hide,
     max-height: auto;
     height: auto;
     line-height: 1.25em;
+    border-radius: .3rem;
     color: white;
     width: 100%;
     min-width: 100%;
@@ -218,10 +222,8 @@ div .hide,
 }
 
 .menuv.native .menuv-items .item-title {
-    font-family: 'TTCommons';
     font-weight: 400;
-    font-size: 1.35em;
-    padding-top: 0.25em;
+    font-size: 1.0em;
     word-break: break-all;
 }
 
@@ -492,6 +494,7 @@ div .hide,
 .menuv.native .menuv-description {
     border-top: 2px solid black;
     background-color: rgba(0, 0, 0, 0.65);
+    border-radius: .3rem;
     width: 100%;
     max-width: 30em;
     padding: 0.5em 1em;
@@ -501,7 +504,6 @@ div .hide,
 
 .menuv.native .menuv-description strong {
     color: white;
-    font-family: 'TTCommons';
     font-weight: 400;
-    font-size: 1.15em;
+    font-size: 1.0em;
 }
