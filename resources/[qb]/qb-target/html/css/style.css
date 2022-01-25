@@ -44,6 +44,10 @@ body {
 
   border-top-left-radius: .3rem;
   border-bottom-left-radius: .3rem;
-  padding: .5rem 2rem;
+  padding: .5rem 1rem;
   cursor: pointer;
+}
+
+#target-label > div i {
+  padding-right: .5rem;
 }
