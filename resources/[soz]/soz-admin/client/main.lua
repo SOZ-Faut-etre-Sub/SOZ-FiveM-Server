@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-local AdminMenu = MenuV:CreateMenu("Admin", "Le menu de métal", 255, 0, 0, "default", "soz", "admin-panel")
+local AdminMenu = MenuV:CreateMenu("Admin", "Le menu de métal", "default", "soz", "admin-panel")
 
 local PlayerList = MenuV:InheritMenu(AdminMenu, {Title = "Joueur"})
 local VehiculeList = MenuV:InheritMenu(AdminMenu, {Title = "Véhicule model"})
