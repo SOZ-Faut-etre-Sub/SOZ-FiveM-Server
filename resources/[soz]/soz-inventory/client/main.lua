@@ -65,7 +65,7 @@ CreateThread(function()
                         if storage.state == nil then
                             QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
                             if IsControlJustPressed(1, 51) then
-                                TriggerServerEvent("inventory:server:openInventory", id)
+                                TriggerServerEvent("inventory:server:openInventory", storage.type, id)
                             end
                         else
                             QBCore.Functions.ShowHelpNotification("~r~Stockage déjà utilisé par ~o~" .. storage.state)
