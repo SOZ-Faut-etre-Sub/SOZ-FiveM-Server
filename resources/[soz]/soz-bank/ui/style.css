@@ -1,20 +1,18 @@
 body {
-    margin-top: 80px;
+    margin-top: 15vh;
 }
 
 #bankingContainer {
     background: rgb(45, 45, 45) !important;
     border-radius: 7px;
-    min-height: 800px;
-    max-height: 800px;
+    height: 70vh;
     display: none;
 }
 
 #ATMContainer {
     background: rgba(0, 0, 0, 0.8) !important;
     border-radius: 20px;
-    min-height: 800px;
-    max-height: 800px;
+    height: 70vh;
     display: none;
     border: 2px solid #28a745;
 }
@@ -34,7 +32,7 @@ body {
     min-height: 100%;
     padding-left: 0;
     padding-right: 0;
-    height:800px;
+    height:70vh;
 }
 
 #v-pills-tabContent::-webkit-scrollbar-track,
