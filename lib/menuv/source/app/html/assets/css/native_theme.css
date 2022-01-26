@@ -329,7 +329,7 @@ div .hide,
 .menuv.native .menuv-items span.menuv-options span.menuv-btn {
     background-color: white;
     color: black;
-    padding: 0.25em 0.5em;
+    padding: 0 0.5em;
     margin: 0.125em;
     font-weight: bold;
     font-weight: 500;
@@ -342,18 +342,20 @@ div .hide,
 }
 
 .menuv.native .menuv-items .menuv-item.active span.menuv-options span.menuv-btn {
-    background-color: black;
-    color: white;
+    background-color: transparent;
+    border: 1px solid #2A8C0E;
+    color: #2A8C0E;
 }
 
 .menuv.native .menuv-items span.menuv-options span.menuv-btn.active {
-    background-color: blue;
+    background-color: #23740C;
     color: white;
     font-weight: 700;
 }
 
 .menuv.native .menuv-items .menuv-item.active span.menuv-options span.menuv-btn.active {
-    background-color: blue;
+    background-color: #23740C;
+    border: 1px solid #23740C;
     color: white;
 }
 

@@ -1,6 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
-local safeStorageMenu = MenuV:CreateMenu("Coffre fort", "", 255, 0, 0, "default", "soz", "safe-storage")
+local safeStorageMenu = MenuV:CreateMenu("Coffre fort", "", "default", "soz", "safe-storage")
 local isInsideBankZone = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()

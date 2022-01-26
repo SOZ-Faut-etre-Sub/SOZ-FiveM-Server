@@ -797,18 +797,18 @@ export default VUE.extend({
             text = this.ENSURE(text, '');
 
             text = text.replace(/\^0/g, '<span style="color: black !important;">');
-            text = text.replace(/\^1/g, '<span style="color: red !important;">');
+            text = text.replace(/\^1/g, '<span style="color: #f32020 !important;">');
             text = text.replace(/\^2/g, '<span style="color: green !important;">');
             text = text.replace(/\^3/g, '<span style="color: yellow !important;">');
-            text = text.replace(/\^4/g, '<span style="color: blue !important;">');
+            text = text.replace(/\^4/g, '<span style="color: #2f4eec !important;">');
             text = text.replace(/\^5/g, '<span style="color: cyan !important;">');
             text = text.replace(/\^6/g, '<span style="color: purple !important;">');
             text = text.replace(/\^7/g, '<span style="color: white !important;">');
             text = text.replace(/\^8/g, '<span style="color: darkred !important;">');
             text = text.replace(/\^9/g, '<span style="color: gray !important;">');
-            text = text.replace(/~r~/g, '<span style="color: red !important;">');
+            text = text.replace(/~r~/g, '<span style="color: #f32020 !important;">');
             text = text.replace(/~g~/g, '<span style="color: green !important;">');
-            text = text.replace(/~b~/g, '<span style="color: blue !important;">');
+            text = text.replace(/~b~/g, '<span style="color: #2f4eec !important;">');
             text = text.replace(/~y~/g, '<span style="color: yellow !important;">');
             text = text.replace(/~p~/g, '<span style="color: purple !important;">');
             text = text.replace(/~c~/g, '<span style="color: gray !important;">');

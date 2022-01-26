@@ -46,25 +46,6 @@
         border-right: 1px solid {{TEXT_COLOR(color.r, color.g, color.b)}};
       }
 
-      .menuv.{{theme}} .menuv-items span.menuv-options span.menuv-btn {
-        color: {{TEXT_COLOR(color.r, color.g, color.b)}};
-      }
-
-      .menuv.{{theme}} .menuv-items span.menuv-options span.menuv-btn.active {
-        background-color: rgb({{color.r}},{{color.g}},{{color.b}});
-        color: {{TEXT_COLOR(color.r, color.g, color.b)}};
-      }
-
-      .menuv.{{theme}} .menuv-items .menuv-item.active span.menuv-options span.menuv-btn {
-        background-color: rgb({{color.r}},{{color.g}},{{color.b}});
-        color: {{TEXT_COLOR(color.r, color.g, color.b)}};
-      }
-
-      .menuv.{{theme}} .menuv-items .menuv-item.active span.menuv-options span.menuv-btn.active {
-        background-color: black;
-        color: white;
-      }
-
       .menuv.{{theme}} .menuv-items input[type="range"]::-webkit-slider-runnable-track {
         background: rgba({{color.r}},{{color.g}},{{color.b}}, 0.50);
         box-shadow: 0px 0px 0px {{TEXT_COLOR(color.r, color.g, color.b, 0.50)}};
