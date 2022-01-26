@@ -1,96 +1,38 @@
-voiceData = {}
-radioData = {}
-callData = {}
+QBCore = exports["qb-core"]:GetCoreObject()
+SOZVoice = {}
 
-function defaultTable(source)
-	handleStateBagInitilization(source)
-	return {
-		radio = 0,
-		call = 0,
-		lastRadio = 0,
-		lastCall = 0
-	}
+SOZVoice.players = {}
+
+SOZVoice.getAllPlayers = function()
+    return SOZVoice.players
 end
 
-Citizen.CreateThreadNow(function()
-	local plyTbl = GetPlayers()
-	for i = 1, #plyTbl do
-		local ply = tonumber(plyTbl[i])
-		voiceData[ply] = defaultTable(plyTbl[i])
-	end
-
-	Wait(5000)
-
-	local nativeAudio = GetConvar('voice_useNativeAudio', 'false')
-	local _3dAudio = GetConvar('voice_use3dAudio', 'false')
-	local _2dAudio = GetConvar('voice_use2dAudio', 'false')
-	local sendingRangeOnly = GetConvar('voice_useSendingRangeOnly', 'false')
-	local gameVersion = GetConvar('gamename', 'fivem')
-
-	-- handle no convars being set (default drag n' drop)
-	if
-		nativeAudio == 'false'
-		and _3dAudio == 'false'
-		and _2dAudio == 'false'
-	then
-		if gameVersion == 'fivem' then
-			SetConvarReplicated('voice_useNativeAudio', 'true')
-			if sendingRangeOnly == 'false' then
-				SetConvarReplicated('voice_useSendingRangeOnly', 'true')
-			end
-			logger.info('No convars detected for voice mode, defaulting to \'setr voice_useNativeAudio true\' and \'setr voice_useSendingRangeOnly true\'')
-		else
-			SetConvarReplicated('voice_use3dAudio', 'true')
-			if sendingRangeOnly == 'false' then
-				SetConvarReplicated('voice_useSendingRangeOnly', 'true')
-			end
-			logger.info('No convars detected for voice mode, defaulting to \'setr voice_use3dAudio true\' and \'setr voice_useSendingRangeOnly true\'')
-		end
-	elseif sendingRangeOnly == 'false' then
-		logger.warn('It\'s recommended to have \'voice_useSendingRangeOnly\' set to true you can do that with \'setr voice_useSendingRangeOnly true\', this prevents players who directly join the mumble server from broadcasting to players.')
-	end
-
-	if GetConvar('gamename', 'fivem') == 'rdr3' then
-		if nativeAudio == 'true' then
-			logger.warn("RedM doesn't currently support native audio, automatically switching to 3d audio. This also means that submixes will not work.")
-			SetConvarReplicated('voice_useNativeAudio', 'false')
-			SetConvarReplicated('voice_use3dAudio', 'true')
-		end
-	end
-end)
-
-AddEventHandler('playerJoining', function()
-	if not voiceData[source] then
-		voiceData[source] = defaultTable(source)
-	end
-end)
-
-AddEventHandler("playerDropped", function()
-	local source = source
-	if voiceData[source] then
-		local plyData = voiceData[source]
-
-		if plyData.radio ~= 0 then
-			removePlayerFromRadio(source, plyData.radio)
-		end
-
-		if plyData.call ~= 0 then
-			removePlayerFromCall(source, plyData.call)
-		end
-
-		voiceData[source] = nil
-	end
-end)
-
-
-
-function getPlayersInRadioChannel(channel)
-	local returnChannel = radioData[channel]
-	if returnChannel then
-		return returnChannel
-	end
-	-- channel doesnt exist
-	return {}
+SOZVoice.getPlayer = function(_src)
+    return SOZVoice.players[_src]
 end
-exports('getPlayersInRadioChannel', getPlayersInRadioChannel)
-exports('GetPlayersInRadioChannel', getPlayersInRadioChannel)
+
+SOZVoice.getOrCreatePlayer = function(_src)
+    if not SOZVoice.players[_src] then
+        return VoicePlayer:new(_src)
+    end
+    return SOZVoice.players[_src]
+end
+
+SOZVoice.playerExists = function(_src)
+    return SOZVoice.players[_src] ~= nil
+end
+
+SOZVoice.removePlayer = function(_src)
+    SOZVoice.players[_src] = nil
+end
+
+SOZVoice.createPlayer = function(_src)
+    SOZVoice.players[_src] = VoicePlayer:new(_src)
+end
+
+-- If resource is restarted, we need to reset all players
+CreateThreadNow(function()
+    for _src, _ in pairs(QBCore.Players) do
+        SOZVoice.createPlayer(_src)
+    end
+end)
