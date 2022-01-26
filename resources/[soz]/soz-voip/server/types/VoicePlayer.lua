@@ -5,8 +5,10 @@
 ---
 
 ---@class VoicePlayer
----@field public applicationKey string
----@field public debug boolean
+---@field public _src number
+---@field public callChannel number
+---@field public radioAlphaChannel number
+---@field public radioBetaChannel number
 VoicePlayer = {}
 
 ---new
@@ -16,7 +18,9 @@ function VoicePlayer:new(_src)
     local object = {}
     setmetatable(object, self)
     self.__index = self
-    self.debug = (debug or false)
-    self.applicationKey = applicationKey
+    self._src = _src
+    self.callChannel = nil
+    self.radioAlphaChannel = nil
+    self.radioBetaChannel = nil
     return self
 end
