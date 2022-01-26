@@ -1,4 +1,4 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 local personalMenu = MenuV:CreateMenu("Menu personnel", "", "default", "soz", "personal")
 local PlayerData = QBCore.Functions.GetPlayerData()
 
@@ -14,6 +14,7 @@ local function GenerateMenu()
     personalMenu:ClearItems()
     personalMenu:SetSubtitle(string.format("%s %s", PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
 
+    InvoiceEntry(personalMenu)
     HudToggleEntry(personalMenu)
 
     if personalMenu.IsOpen then

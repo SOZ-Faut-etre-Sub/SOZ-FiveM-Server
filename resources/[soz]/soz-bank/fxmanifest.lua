@@ -19,6 +19,7 @@ server_scripts {
 
     "server/main.lua",
     "server/accounts.lua",
+    "server/invoices.lua",
     "server/paycheck.lua",
     "server/washmoney.lua",
 
