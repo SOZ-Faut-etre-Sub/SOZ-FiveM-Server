@@ -2,6 +2,8 @@ QBCore = exports["qb-core"]:GetCoreObject()
 SOZVoice = {}
 
 SOZVoice.players = {}
+SOZVoice.callChannels = {}
+SOZVoice.radioChannels = {}
 
 SOZVoice.getAllPlayers = function()
     return SOZVoice.players
