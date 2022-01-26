@@ -4,7 +4,7 @@ local Action = {
     label = "",
     useWhileDead = false,
     canCancel = true,
-	disarm = true,
+    disarm = true,
     controlDisables = {
         disableMovement = false,
         disableCarMovement = false,
@@ -46,23 +46,23 @@ RegisterNetEvent('progressbar:client:ToggleBusyness', function(bool)
 end)
 
 function Progress(action, finish)
-	Process(action, nil, nil, finish)
+    Process(action, nil, nil, finish)
 end
 
 function ProgressWithStartEvent(action, start, finish)
-	Process(action, start, nil, finish)
+    Process(action, start, nil, finish)
 end
 
 function ProgressWithTickEvent(action, tick, finish)
-	Process(action, nil, tick, finish)
+    Process(action, nil, tick, finish)
 end
 
 function ProgressWithStartAndTick(action, start, tick, finish)
-	Process(action, start, tick, finish)
+    Process(action, start, tick, finish)
 end
 
 function Process(action, start, tick, finish)
-	ActionStart()
+    ActionStart()
     Action = action
     local ped = PlayerPedId()
     if not IsEntityDead(ped) or Action.useWhileDead then
@@ -78,7 +78,7 @@ function Process(action, start, tick, finish)
                 label = Action.label
             })
 
-            CreateThread(function ()
+            CreateThread(function()
                 if start ~= nil then
                     start()
                 end
@@ -100,10 +100,10 @@ function Process(action, start, tick, finish)
                 end
             end)
         else
-            TriggerEvent("QBCore:Notify", "You are already doing something!", "error")
+            TriggerEvent("hud:client:DrawNotification", "~r~Une action est déjà en cours !")
         end
     else
-        TriggerEvent("QBCore:Notify", "Cant do that action!", "error")
+        TriggerEvent("hud:client:DrawNotification", "~r~Vous ne pouvez réaliser cette action !")
     end
 end
 
@@ -124,8 +124,8 @@ function ActionStart()
 
                             local player = PlayerPedId()
                             if (DoesEntityExist(player) and not IsEntityDead(player)) then
-                                loadAnimDict( Action.animation.animDict)
-                                TaskPlayAnim(player, Action.animation.animDict, Action.animation.anim, 3.0, 3.0, -1, Action.animation.flags, 0, 0, 0, 0 )     
+                                loadAnimDict(Action.animation.animDict)
+                                TaskPlayAnim(player, Action.animation.animDict, Action.animation.anim, 3.0, 3.0, -1, Action.animation.flags, 0, 0, 0, 0)
                             end
                         else
                             --TaskStartScenarioInPlace(PlayerPedId(), 'PROP_HUMAN_BUM_BIN', 0, true)
@@ -165,7 +165,7 @@ function ActionStart()
                     prop_net = netid
 
                     isProp = true
-                    
+
                     if not isPropTwo and Action.propTwo ~= nil and Action.propTwo.model ~= nil then
                         RequestModel(Action.propTwo.model)
 
@@ -245,10 +245,10 @@ function ActionCleanup()
 end
 
 function loadAnimDict(dict)
-	while (not HasAnimDictLoaded(dict)) do
-		RequestAnimDict(dict)
-		Wait(5)
-	end
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Wait(5)
+    end
 end
 
 function DisableActions(ped)
@@ -291,25 +291,25 @@ function DisableActions(ped)
 end
 
 RegisterNetEvent('progressbar:client:progress', function(action, finish)
-	Process(action, nil, nil, finish)
+    Process(action, nil, nil, finish)
 end)
 
 RegisterNetEvent('progressbar:client:ProgressWithStartEvent', function(action, start, finish)
-	Process(action, start, nil, finish)
+    Process(action, start, nil, finish)
 end)
 
 RegisterNetEvent('progressbar:client:ProgressWithTickEvent', function(action, tick, finish)
-	Process(action, nil, tick, finish)
+    Process(action, nil, tick, finish)
 end)
 
 RegisterNetEvent('progressbar:client:ProgressWithStartAndTick', function(action, start, tick, finish)
-	Process(action, start, tick, finish)
+    Process(action, start, tick, finish)
 end)
 
 RegisterNetEvent('progressbar:client:cancel', function()
-	Cancel()
+    Cancel()
 end)
 
 RegisterNUICallback('FinishAction', function(data, cb)
-	Finish()
+    Finish()
 end)
