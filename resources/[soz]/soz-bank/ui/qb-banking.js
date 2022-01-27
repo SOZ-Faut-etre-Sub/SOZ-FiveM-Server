@@ -44,6 +44,15 @@ window.addEventListener("message", function (event) {
             $("#bankingActions-tab").css({"display":"none"});
             $("#offshoreBalance").html(event.data.information.offshore);
         }
+
+        if (event.data.isATM) {
+            $("#bankingTransfer").css({"display":"none"});
+            $("#bankingTransfer-tab").css({"display":"none"});
+        } else {
+            $("#bankingTransfer").css({"display":"block"});
+            $("#bankingTransfer-tab").css({"display":"block"});
+        }
+
     } else if (event.data.status === "closebank") {
         $("#currentStatement").DataTable().destroy();
         $("#successRow").css({"display":"none"});
