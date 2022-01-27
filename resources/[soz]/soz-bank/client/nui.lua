@@ -1,14 +1,18 @@
-local function openBankScreen(account)
+local function openBankScreen(account, isATM)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
             SetNuiFocus(true, true)
-            SendNUIMessage({status = "openbank", information = banking})
+            SendNUIMessage({status = "openbank", information = banking, isATM = isATM})
         end
     end, account)
 end
 
 RegisterNetEvent("banking:openBankScreen", function()
     openBankScreen()
+end)
+
+RegisterNetEvent("banking:openATMScreen", function()
+    openBankScreen(nil, true)
 end)
 
 RegisterNetEvent("banking:openSocietyBankScreen", function()
