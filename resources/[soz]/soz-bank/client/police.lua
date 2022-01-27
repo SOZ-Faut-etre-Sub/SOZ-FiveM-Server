@@ -1,5 +1,5 @@
 -- TODO: move this to policejob
-local policeMenu = MenuV:CreateMenu("LSPD", "", "default", "soz", "lspd")
+local policeMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "lspd")
 
 -- Display action menu
 Citizen.CreateThread(function()
