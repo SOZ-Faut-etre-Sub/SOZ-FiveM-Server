@@ -1,39 +1,39 @@
 import React, { useEffect } from 'react';
 import { Typography, Grid, IconButton, Slide, Paper, Box, List, Divider } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import SignalIcon from '@mui/icons-material/SignalCellular3Bar';
-import Battery90Icon from '@mui/icons-material/Battery90';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import Default from '../../../config/default.json';
 import { useNotifications } from '../hooks/useNotifications';
 import { NotificationItem } from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
+import BatteryIcon from "../../../styles/icons/system/Battery";
+import CellSignal from "../../../styles/icons/system/CellSignal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
-    height: '30px',
+    height: '33px',
     width: '100%',
     color: theme.palette.text.primary,
     zIndex: 99,
-    paddingLeft: '15px',
-    paddingRight: '10px',
+    paddingTop: '13px',
+    alignItems: 'center',
     position: 'relative',
     '&:hover': {
       cursor: 'pointer',
     },
   },
   item: {
-    margin: '0 6px',
+    margin: '0 2px',
   },
   text: {
     position: 'relative',
-    lineHeight: '30px',
+    lineHeight: '0.85rem',
+    fontWeight: 300,
+    fontSize: '0.85rem',
     color: theme.palette.text.primary,
   },
   icon: {
-    padding: '4px',
+    paddingLeft: '6px',
     color: theme.palette.text.primary,
   },
   drawer: {
@@ -81,31 +81,29 @@ export const NotificationBar = () => {
           setBarUncollapsed((curr) => !curr);
         }}
       >
-        <Grid container item wrap="nowrap">
+        <Grid container item wrap="nowrap" justifyContent="center">
+            {time && (
+              <Grid item className={classes.item}>
+                <Typography className={classes.text} variant="inherit">
+                  {time}
+                </Typography>
+              </Grid>
+            )}
           {icons.map((notifIcon) => (
             <Grid item key={notifIcon.key} component={IconButton} className={classes.icon}>
               {notifIcon.icon}
             </Grid>
           ))}
         </Grid>
-        {time && (
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {time}
-            </Typography>
+        <Grid container item wrap="nowrap" />
+        <Grid container item wrap="nowrap" justifyContent="center" alignItems="center">
+          <Grid item className={classes.icon}>
+              <Typography className={classes.text} variant="inherit">
+                  5Z <CellSignal/>
+              </Typography>
           </Grid>
-        )}
-        <Grid container item wrap="nowrap" justifyContent="flex-end" alignItems="center">
-          <Grid item>
-            <SignalIcon fontSize="small" />
-          </Grid>
-          <Grid item className={classes.item}>
-            <Typography className={classes.text} variant="button">
-              {Default.cellProvider}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Battery90Icon style={{ transform: 'rotate(90deg)', display: 'block' }} />
+          <Grid item className={classes.icon}>
+              <BatteryIcon />
           </Grid>
         </Grid>
       </Grid>

@@ -1,26 +1,29 @@
 import React from 'react';
-import { darken, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { green } from '@mui/material/colors';
-import { Avatar, Badge, Button, Zoom } from '@mui/material';
+import {Avatar, Badge, Button, Typography} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
-import { Tooltip } from './Tooltip';
 
-const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>((theme) => ({
+const useStyles = makeStyles<Theme, { color: string }>((theme) => ({
   root: {
     padding: 0,
-    marginTop: theme.spacing(3),
+    flexDirection: 'column',
+    textTransform: 'initial',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    '&:hover': {
+        backgroundColor: 'transparent',
+    },
   },
   avatar: {
-    '&:hover': {
-      backgroundColor: ({ backgroundColor }) => darken(backgroundColor, 0.1),
-    },
-    backgroundColor: ({ backgroundColor }) => backgroundColor,
+    backgroundColor: 'transparent',
     color: ({ color }) => color,
-    boxShadow: theme.shadows[2],
+    boxShadow: theme.shadows[1],
     width: theme.spacing(8),
     height: theme.spacing(8),
+    borderRadius: '15px',
     fontSize: theme.typography.h4.fontSize,
   },
   icon: {
@@ -28,9 +31,14 @@ const useStyles = makeStyles<Theme, { color: string; backgroundColor: string }>(
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
-  tooltip: {
+  label: {
+    maxWidth: '90px',
     fontSize: 12,
-  },
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    color: 'white'
+  }
 }));
 
 export interface AppIconProps {
@@ -38,7 +46,6 @@ export interface AppIconProps {
   nameLocale: string;
   Icon: React.ElementType;
   icon: React.ElementType;
-  backgroundColor: string;
   color: string;
   notification: INotificationIcon;
 }
@@ -47,39 +54,29 @@ export const AppIcon: React.FC<AppIconProps> = ({
   id,
   nameLocale,
   Icon,
-  backgroundColor,
   color,
   icon,
   notification,
 }) => {
   const [t] = useTranslation();
   const classes = useStyles({
-    backgroundColor: backgroundColor || green[50],
-    color: color || green[400],
+    color: 'white'
   });
 
   return (
-    <Tooltip
-      arrow
-      key={id}
-      title={t(nameLocale)}
-      placement="top"
-      classes={{ tooltip: classes.tooltip }}
-      TransitionComponent={Zoom}
-    >
-      <Button className={classes.root}>
-        <Badge
-          color="error"
-          badgeContent={notification?.badge}
-          invisible={!notification || notification.badge < 2}
-        >
-          {Icon ? (
-            <Icon className={classes.icon} fontSize="large" />
-          ) : (
-            <Avatar className={classes.avatar}>{icon || t(nameLocale)}</Avatar>
-          )}
-        </Badge>
-      </Button>
-    </Tooltip>
+    <Button className={classes.root}>
+      <Badge
+        color="error"
+        badgeContent={notification?.badge}
+        invisible={!notification || notification.badge < 2}
+      >
+        {Icon ? (
+          <Icon className={classes.icon} fontSize="large" />
+        ) : (
+          <Avatar className={classes.avatar}>{icon || t(nameLocale)}</Avatar>
+        )}
+      </Badge>
+      <Typography variant="inherit" className={classes.label}>{t(nameLocale)}</Typography>
+    </Button>
   );
 };

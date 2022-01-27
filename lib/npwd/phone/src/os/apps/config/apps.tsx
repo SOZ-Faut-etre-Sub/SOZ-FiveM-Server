@@ -41,9 +41,9 @@ import {SocietyMessagesApp} from "../../../apps/society-messages/components/Soci
 export interface IAppConfig {
   id: string;
   nameLocale: string;
-  backgroundColor: string;
   color: string;
   path: string;
+  home?: boolean;
   Route: React.FC;
 }
 
@@ -59,17 +59,17 @@ export const APPS: IAppConfig[] = [
   {
     id: 'DIALER',
     nameLocale: 'APPS_DIALER',
-    backgroundColor: DIALER_APP_PRIMARY_COLOR,
     color: DIALER_APP_TEXT_COLOR,
     path: '/phone',
+    home: true,
     Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false} />,
   },
   {
     id: 'MESSAGES',
     nameLocale: 'APPS_MESSAGES',
-    backgroundColor: MESSAGES_APP_PRIMARY_COLOR,
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
+    home: true,
     Route: () => (
       <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
     ),
@@ -77,9 +77,9 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CONTACTS',
     nameLocale: 'APPS_CONTACTS',
-    backgroundColor: CONTACTS_APP_PRIMARY_COLOR,
     color: CONTACTS_APP_TEXT_COLOR,
     path: '/contacts',
+    home: true,
     Route: () => (
       <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} emitOnOpen={false} />
     ),
@@ -87,7 +87,6 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SETTINGS',
     nameLocale: 'APPS_SETTINGS',
-    backgroundColor: '#383838',
     color: grey[50],
     path: '/settings',
     Route: () => (
@@ -97,7 +96,6 @@ export const APPS: IAppConfig[] = [
   {
     id: 'BANK',
     nameLocale: 'APPS_BANK',
-    backgroundColor: blue[900],
     color: common.white,
     path: '/bank',
     Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} emitOnOpen={false} />,
@@ -105,7 +103,6 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SOCIETY_CONTACTS',
     nameLocale: 'APPS_SOCIETY_CONTACTS',
-    backgroundColor: SOCIETY_CONTACTS_APP_PRIMARY_COLOR,
     color: SOCIETY_CONTACTS_APP_TEXT_COLOR,
     path: '/society-contacts',
     Route: () => (
@@ -115,7 +112,6 @@ export const APPS: IAppConfig[] = [
   {
     id: 'SOCIETY_MESSAGES',
     nameLocale: 'APPS_SOCIETY_MESSAGES',
-    backgroundColor: SOCIETY_MESSAGES_APP_PRIMARY_COLOR,
     color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
     path: '/society-messages',
     Route: () => (
@@ -125,7 +121,6 @@ export const APPS: IAppConfig[] = [
   /*{
     id: 'MARKETPLACE',
     nameLocale: 'APPS_MARKETPLACE',
-    backgroundColor: MARKETPLACE_APP_PRIMARY_COLOR,
     color: MARKETPLACE_APP_ICON_COLOR,
     path: '/marketplace',
     Route: () => (
@@ -135,7 +130,6 @@ export const APPS: IAppConfig[] = [
   {
     id: 'NOTES',
     nameLocale: 'APPS_NOTES',
-    backgroundColor: NOTES_APP_PRIMARY_COLOR,
     color: NOTES_APP_ICON_COLOR,
     path: '/notes',
     Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={true} />,
@@ -143,9 +137,9 @@ export const APPS: IAppConfig[] = [
   {
     id: 'CAMERA',
     nameLocale: 'APPS_CAMERA',
-    backgroundColor: grey['A400'],
     color: common.white,
     path: '/camera',
+    home: true,
     Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true} />,
   },
 ];
@@ -155,7 +149,6 @@ if (process.env.NODE_ENV === 'development') {
   APPS.push({
     id: 'EXAMPLE',
     nameLocale: 'APPS_EXAMPLE',
-    backgroundColor: blue[500],
     color: blue[50],
     path: '/example',
     Route: () => (

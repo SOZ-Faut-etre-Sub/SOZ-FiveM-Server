@@ -1,9 +1,6 @@
 import React from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { BottomNavigation } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import AppsIcon from '@mui/icons-material/Apps';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
@@ -11,9 +8,20 @@ import { useNotifications } from '@os/notifications/hooks/useNotifications';
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: 2,
-    backgroundColor: theme.palette.background.default,
+    height: '15px',
+    backgroundColor: 'transparent',
   },
 }));
+
+const style = {
+  home: {
+    backgroundColor: 'rgba(255, 255, 255, .65)',
+    height: '6px',
+    width: '35%',
+    borderRadius: '10px',
+    cursor: 'pointer'
+  }
+}
 
 export const Navigation = () => {
   const classes = useStyles();
@@ -29,17 +37,7 @@ export const Navigation = () => {
         value();
       }}
     >
-      <BottomNavigationAction label="Home" value={() => history.push('/')} icon={<AppsIcon />} />
-      <BottomNavigationAction
-        label="Close"
-        value={closePhone}
-        icon={<RadioButtonUncheckedIcon />}
-      />
-      <BottomNavigationAction
-        label="Back"
-        value={() => !isExact && history.goBack()}
-        icon={<KeyboardArrowLeftIcon />}
-      />
+      <div style={style.home} onClick={() => history.push('/')} />
     </BottomNavigation>
   );
 };

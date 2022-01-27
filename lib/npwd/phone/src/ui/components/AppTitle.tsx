@@ -33,11 +33,11 @@ interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
 // Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint
 // but need to think about the best way to do that for standardization sake.
 export const AppTitle: React.FC<AppTitleProps> = ({
-  app: { backgroundColor, color, nameLocale },
+  app: { color, nameLocale },
   variant = 'h5',
   ...props
 }) => {
-  const classes = useStyle({ color, backgroundColor });
+  const classes = useStyle({ color });
   const [t] = useTranslation();
   return (
     <Box px={2} pt={2} className={classes.root} {...props}>
