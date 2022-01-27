@@ -5,16 +5,25 @@ import { GridMenu } from '@ui/components/GridMenu';
 import { useApps } from '@os/apps/hooks/useApps';
 import {useMySocietyPhoneNumber} from "@os/simcard/hooks/useMyPhoneNumber";
 
+const AppQuickClass = {
+    borderRadius: '40px',
+    background: 'rgba(255, 255, 255, .25)'
+};
+
 export const HomeApp: React.FC = () => {
   const { apps } = useApps();
   const societyNumber = useMySocietyPhoneNumber();
 
-  const filteredApps = (societyNumber === null) ? apps.filter((app) => app.id !== 'SOCIETY_MESSAGES') : apps
+  const filteredApps = (societyNumber === null) ? apps.filter((app) => app.home !== true && app.id !== 'SOCIETY_MESSAGES') : apps.filter((app) => app.home !== true)
+  const homeApps = apps.filter((app) => app.home === true)
 
   return (
-    <AppWrapper>
+    <AppWrapper style={{justifyContent: "space-between"}}>
       <Box component="div" mt={6} px={1}>
-        {apps && <GridMenu xs={3} items={filteredApps} />}
+        {filteredApps && <GridMenu xs={3} items={filteredApps} />}
+      </Box>
+      <Box sx={AppQuickClass} component="div" mb={1} pt={1} mx={2}>
+          {homeApps && <GridMenu xs={3} items={homeApps} />}
       </Box>
     </AppWrapper>
   );

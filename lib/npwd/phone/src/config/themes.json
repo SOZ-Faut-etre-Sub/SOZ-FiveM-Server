@@ -1,7 +1,7 @@
 {
   "default-light": {
     "typography": {
-      "fontFamily": "'SegoeUI', 'Roboto', 'Arial', sans-serif"
+      "fontFamily": "'SF-Pro', sans-serif"
     },
     "palette": {
       "type": "light"
@@ -9,7 +9,7 @@
   },
   "taso-dark": {
     "typography": {
-      "fontFamily": "'SegoeUI', 'Roboto', 'Arial', sans-serif"
+      "fontFamily": "'SF-Pro', sans-serif"
     },
     "common": {},
     "palette": {
