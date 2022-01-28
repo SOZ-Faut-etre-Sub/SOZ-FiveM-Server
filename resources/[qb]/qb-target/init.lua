@@ -49,10 +49,10 @@ Config.MenuControlKey = 238 -- Control for keypress detection on the context men
 -- These are all empty for you to fill in, refer to the .md files for help in filling these in
 
 Config.CircleZones = {
-
 }
 
 Config.BoxZones = {
+ 
 }
 
 Config.PolyZones = {
