@@ -69,14 +69,14 @@ local function CopyToClipboard(dataType)
         SendNUIMessage({
             string = string.format('vector3(%s, %s, %s)', x, y, z)
         })
-        QBCore.Functions.Notify("Coordinates copied to clipboard!", "success")
+        QBCore.Functions.Notify("Coordonnées copier!", "success")
     elseif dataType == 'heading' then
         local heading = GetEntityHeading(ped)
         local h = round(heading, 2)
         SendNUIMessage({
             string = h
         })
-        QBCore.Functions.Notify("Heading copied to clipboard!", "success")
+        QBCore.Functions.Notify("Orientation copier!", "success")
     end
 end
 
