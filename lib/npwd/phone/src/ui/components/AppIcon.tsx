@@ -1,7 +1,6 @@
 import React from 'react';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
-import { green } from '@mui/material/colors';
 import {Avatar, Badge, Button, Typography} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';

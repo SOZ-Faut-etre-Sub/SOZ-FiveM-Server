@@ -26,8 +26,6 @@ const style = {
 export const Navigation = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { isExact } = useRouteMatch('/');
-  const { closePhone } = usePhone();
   const { setBarUncollapsed } = useNotifications();
   return (
     <BottomNavigation
