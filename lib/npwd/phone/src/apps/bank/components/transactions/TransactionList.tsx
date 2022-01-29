@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import useStyles from '../bank.styles';
 import { useTranslation } from 'react-i18next';
-import TablePagination from '@mui/material/TablePagination';
 import { useTransactions } from '../../hooks/useTransactions';
 
 export const TransactionList = () => {
