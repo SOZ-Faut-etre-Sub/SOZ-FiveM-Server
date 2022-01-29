@@ -14,6 +14,7 @@ import { useSetModalVisible, useSetSelectedNote } from './hooks/state';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { AddNoteExportData } from '@typings/notes';
+import {AddBox} from "@mui/icons-material";
 
 export const NotesApp: React.FC = () => {
   const classes = useStyles();
@@ -44,15 +45,15 @@ export const NotesApp: React.FC = () => {
     <NotesThemeProvider>
       <AppWrapper id="notes-app">
         <AppTitle app={notesApp} />
+        <div className={classes.absolute} style={{cursor: 'pointer'}}>
+          <AddBox color="primary" onClick={onClickCreate}/>
+        </div>
         <NoteModal />
         <AppContent>
           <React.Suspense fallback={<LoadingSpinner />}>
             <Route path="/notes" component={NoteList} />
           </React.Suspense>
         </AppContent>
-        <Fab className={classes.absolute} onClick={onClickCreate} color="primary">
-          <AddIcon />
-        </Fab>
       </AppWrapper>
     </NotesThemeProvider>
   );
