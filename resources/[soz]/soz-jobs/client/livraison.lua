@@ -22,9 +22,7 @@ exports['qb-target']:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
                 label = "continuer le job livraison",
                 job = "livraison",
                 canInteract = function()
-                    if OnJob == false then
-                        return true
-                    end
+                    return OnJob == false
                 end,
             },
             {
