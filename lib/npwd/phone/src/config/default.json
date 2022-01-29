@@ -123,13 +123,6 @@
       "label": "English",
       "value": "en"
     },
-    "iconSet": {
-      "label": "Material",
-      "value": {
-        "custom": false,
-        "name": "material"
-      }
-    },
     "wallpaper": {
       "label": "Soz1",
       "value": "back1.jpg"
@@ -159,22 +152,6 @@
     "ringtoneVol": 50,
     "notiSoundVol": 50
   },
-  "iconSet": [
-    {
-      "label": "NPWD Icons",
-      "value": {
-        "custom": true,
-        "name": "npwd_icons"
-      }
-    },
-    {
-      "label": "Material",
-      "value": {
-        "custom": false,
-        "name": "material"
-      }
-    }
-  ],
   "themes": [
     {
       "label": "Dark",

@@ -30,17 +30,15 @@
         "ACTIONS": "Actions"
       },
       "OPTIONS": {
-        "ICONSET": "Pack d'icônes",
         "THEME": "Thème",
         "LANGUAGE": "Langage",
         "FRAME": "Coque",
         "ZOOM": "Zoom",
         "WALLPAPER": "Fond d'écran",
-        "RESET_SETTINGS": "Réinitialiser les paramètres",
-        "RESET_SETTINGS_DESC": "Cette action effacera toutes vos données",
+        "RESET_SETTINGS": "Réinitialiser toutes vos données",
         "STREAMER_MODE": {
-          "TITLE": "Mode streamer",
-          "DESCRIPTION": "Masque les images avant qu'elles soient montrées"
+          "TITLE": "Mode NSFW",
+          "DESCRIPTION": "Masque les images par défaut"
         },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Fond d'écran personnalisé",

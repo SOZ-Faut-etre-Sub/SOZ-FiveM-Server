@@ -2,7 +2,6 @@ import { atom, DefaultValue, useRecoilState, useRecoilValue, useResetRecoilState
 import config from '../../../config/default.json';
 import { SettingOption } from '@ui/hooks/useContextMenu';
 import { Schema, Validator } from 'jsonschema';
-import { IconSetObject } from '@os/apps/hooks/useApps';
 import {useCallback} from "react";
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
@@ -25,33 +24,9 @@ const settingOptionSchema: Schema = {
   required: true,
 };
 
-const iconSetValueSchema: Schema = {
-  id: '/IconSetValue',
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    custom: { type: 'boolean' },
-  },
-  required: true,
-};
-
-const settingOptionIconSet: Schema = {
-  id: '/SettingOptionIconSet',
-  type: 'object',
-  properties: {
-    label: { type: 'string' },
-    value: { $ref: '/IconSetValue' },
-  },
-  required: true,
-};
-
-v.addSchema(iconSetValueSchema, '/IconSetValue');
-v.addSchema(settingOptionIconSet, '/SettingOptionIconSet');
-
 const settingsSchema: Schema = {
   type: 'object',
   properties: {
-    iconSet: { $ref: '/SettingOptionIconSet' },
     language: { $ref: '/SettingOption' },
     wallpaper: { $ref: '/SettingOption' },
     frame: { $ref: '/SettingOption' },
@@ -89,7 +64,6 @@ export function isSettingsSchemaValid(): boolean {
 
 export interface IPhoneSettings {
   language: SettingOption;
-  iconSet: SettingOption<IconSetObject>;
   wallpaper: SettingOption;
   frame: SettingOption;
   theme: SettingOption;
