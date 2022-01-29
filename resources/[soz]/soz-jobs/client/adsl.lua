@@ -22,9 +22,7 @@ exports['qb-target']:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
                 label = "continuer le job adsl",
                 job = "adsl",
                 canInteract = function()
-                    if OnJob == false then
-                        return true
-                    end
+                    return OnJob == false
                 end,
             },
             {
