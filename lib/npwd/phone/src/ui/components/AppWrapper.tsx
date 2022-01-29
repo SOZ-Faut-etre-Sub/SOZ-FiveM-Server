@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppWrapperTypes } from '../interface/InterfaceUI';
+import {Grow} from "@mui/material";
 
 export const AppWrapper: React.FC<AppWrapperTypes> = ({
   children,
@@ -8,21 +9,23 @@ export const AppWrapper: React.FC<AppWrapperTypes> = ({
   ...props
 }) => {
   return (
-    <div
-      {...props}
-      style={{
-        padding: 0,
-        margin: 0,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        position: 'relative',
-        flexDirection: 'column',
-        minHeight: '720px',
-        ...style,
-      }}
-    >
-      {children}
-    </div>
+      <Grow in={true}>
+          <div
+              {...props}
+              style={{
+                  padding: 0,
+                  margin: 0,
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  position: 'relative',
+                  flexDirection: 'column',
+                  minHeight: '720px',
+                  ...style,
+              }}
+          >
+              {children}
+          </div>
+      </Grow>
   );
 };

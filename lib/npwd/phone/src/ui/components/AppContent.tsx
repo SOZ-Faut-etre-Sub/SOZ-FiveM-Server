@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     flex: 1,
     flexDirection: 'column',
     display: 'flex',
+    paddingBottom: '2rem',
   },
   backdrop: {
     position: 'absolute',
