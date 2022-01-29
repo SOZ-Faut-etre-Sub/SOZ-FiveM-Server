@@ -7,7 +7,8 @@ import {useMySocietyPhoneNumber} from "@os/simcard/hooks/useMyPhoneNumber";
 
 const AppQuickClass = {
     borderRadius: '40px',
-    background: 'rgba(255, 255, 255, .25)'
+    background: 'rgba(255, 255, 255, .25)',
+    marginBottom: '40px'
 };
 
 export const HomeApp: React.FC = () => {

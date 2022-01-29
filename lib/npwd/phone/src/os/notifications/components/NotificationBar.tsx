@@ -8,11 +8,25 @@ import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import { NoNotificationText } from './NoNotificationText';
 import BatteryIcon from "../../../styles/icons/system/Battery";
 import CellSignal from "../../../styles/icons/system/CellSignal";
+import {useRouteMatch} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '33px',
     width: '100%',
+    color: theme.palette.text.primary,
+    zIndex: 99,
+    paddingTop: '13px',
+    alignItems: 'center',
+    position: 'relative',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+    rootApp: {
+    height: '33px',
+    width: '100%',
+    background: '#000',
     color: theme.palette.text.primary,
     zIndex: 99,
     paddingTop: '13px',
@@ -28,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   text: {
     position: 'relative',
     lineHeight: '0.85rem',
-    fontWeight: 300,
     fontSize: '0.85rem',
     color: theme.palette.text.primary,
   },
@@ -63,6 +76,7 @@ export const NotificationBar = () => {
     useNotifications();
 
   const time = usePhoneTime();
+  const { isExact } = useRouteMatch('/');
 
   useEffect(() => {
     if (notifications.length === 0) {
@@ -73,7 +87,7 @@ export const NotificationBar = () => {
   return (
     <>
       <Grid
-        className={classes.root}
+        className={isExact ? classes.root : classes.rootApp}
         container
         justifyContent="space-between"
         wrap="nowrap"
@@ -96,14 +110,21 @@ export const NotificationBar = () => {
           ))}
         </Grid>
         <Grid container item wrap="nowrap" />
-        <Grid container item wrap="nowrap" justifyContent="center" alignItems="center">
+        <Grid container item wrap="nowrap" justifyContent="center" alignItems="flex-end">
           <Grid item className={classes.icon}>
-              <Typography className={classes.text} variant="inherit">
-                  5Z <CellSignal/>
+              <Typography style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '2px'}} className={classes.text} variant="inherit">
+                  5Z
               </Typography>
           </Grid>
           <Grid item className={classes.icon}>
-              <BatteryIcon />
+              <Typography style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '2px'}} className={classes.text} variant="inherit">
+                  <CellSignal/>
+              </Typography>
+          </Grid>
+          <Grid item className={classes.icon}>
+              <Typography className={classes.text} variant="inherit">
+                  <BatteryIcon />
+              </Typography>
           </Grid>
         </Grid>
       </Grid>

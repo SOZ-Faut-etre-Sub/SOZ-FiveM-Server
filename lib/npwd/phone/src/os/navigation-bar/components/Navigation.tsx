@@ -1,8 +1,7 @@
 import React from 'react';
 import { BottomNavigation } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import { usePhone } from '@os/phone/hooks/usePhone';
+import { useHistory } from 'react-router-dom';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 2,
     height: '15px',
     backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: '0.3rem',
+    width: '100%'
   },
 }));
 
