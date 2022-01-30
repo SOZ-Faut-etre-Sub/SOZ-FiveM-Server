@@ -1,15 +1,15 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Add, Delete } from '@mui/icons-material';
-import { Fab } from '@mui/material';
 import { useCheckedConversationsValue, useIsEditing } from '../../hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import {Box, IconButton} from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
-    bottom: theme.spacing(5),
-    right: theme.spacing(3),
+    top: '1.8rem',
+    right: '1rem',
   },
 }));
 
@@ -29,13 +29,15 @@ export const NewMessageGroupButton: React.FC<NewMessageGroupButtonProps> = ({ on
   };
 
   return (
-    <Fab
-      className={classes.root}
-      color="primary"
-      onClick={!isEditing ? onClick : handleDeleteConversations}
-    >
-      {!isEditing ? <Add /> : <Delete />}
-    </Fab>
+      <Box className={classes.root}>
+          <IconButton onClick={!isEditing ? onClick : handleDeleteConversations}>
+              {!isEditing ? (
+                  <Add color="primary"/>
+              ) : (
+                  <Delete color="primary"/>
+              )}
+          </IconButton>
+      </Box>
   );
 };
 

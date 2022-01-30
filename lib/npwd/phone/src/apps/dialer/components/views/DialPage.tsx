@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between'
   },
 }));
 

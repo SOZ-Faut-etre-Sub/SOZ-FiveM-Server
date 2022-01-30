@@ -33,13 +33,13 @@ const MockConversationMessages: Message[] = [
   },
   {
     id: 3,
-    author: '215-8139',
+    author: '111-1134',
     message: 'Hello',
     conversation_id: '4444+5555',
   },
   {
     id: 4,
-    author: '215-8139',
+    author: '111-1134',
     message: 'Hello Rocky',
     conversation_id: '4444+7777',
   },
