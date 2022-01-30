@@ -1,6 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
-local safeStorageMenu = MenuV:CreateMenu("Coffre fort", "", "default", "soz", "safe-storage")
+local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "safe-storage")
 local isInsideBankZone = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
@@ -47,6 +47,11 @@ CreateThread(function()
             },
         })
     end
+
+    exports["qb-target"]:AddTargetModel(Config.ATMModels, {
+        options = {{event = "banking:openATMScreen", icon = "fas fa-money-check", label = "Accéder au compte"}},
+        distance = 1.0,
+    })
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)

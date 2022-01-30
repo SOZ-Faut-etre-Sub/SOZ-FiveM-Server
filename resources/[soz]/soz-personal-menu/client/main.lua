@@ -1,5 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-local personalMenu = MenuV:CreateMenu("Menu personnel", "", "default", "soz", "personal")
+local personalMenu = MenuV:CreateMenu(nil, "", "menu_personal", "soz", "personal")
 local PlayerData = QBCore.Functions.GetPlayerData()
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()

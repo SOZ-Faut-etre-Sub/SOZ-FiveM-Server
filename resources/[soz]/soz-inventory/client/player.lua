@@ -1,4 +1,4 @@
-local inventoryMenu = MenuV:CreateMenu("Inventaire", "", "default", "soz", "inventory")
+local inventoryMenu = MenuV:CreateMenu(nil, "", "menu_inventory", "soz", "inventory")
 local currentWeapon, CurrentWeaponData = nil, {}
 
 local function MoneyMenu()
