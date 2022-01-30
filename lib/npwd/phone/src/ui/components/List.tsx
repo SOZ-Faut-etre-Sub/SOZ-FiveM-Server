@@ -1,6 +1,5 @@
 import React from 'react';
 import MaterialList, { ListProps } from '@mui/material/List';
-import {ListClasses} from "@mui/material/List/listClasses";
 
 export type UListProps = ListProps & {
     childrenClassName?: string;

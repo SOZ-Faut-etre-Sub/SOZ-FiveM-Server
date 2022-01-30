@@ -4,7 +4,6 @@ import {
     ListItemText,
     ListItemIcon,
     ListItemSecondaryAction,
-    Box,
     Slider,
     IconButton,
     Switch, styled, SwitchProps, Button,

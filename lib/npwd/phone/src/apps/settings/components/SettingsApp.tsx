@@ -21,14 +21,12 @@ import {
     Smartphone,
     ZoomIn,
     VolumeUp,
-    Book,
     DeleteForever,
-    Apps, ChevronRight, VolumeDown, Notifications,
+    ChevronRight, VolumeDown, Notifications,
 } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
-import {Avatar as MuiAvatar, Box, Button, Divider, ListItem, ListItemText, ListSubheader} from '@mui/material';
+import {Avatar as MuiAvatar, Button, Divider, ListItem, ListItemText, ListSubheader} from '@mui/material';
 import {useCustomWallpaperModal, useResetSettings, useSettings, useSettingsAPI} from '../hooks/useSettings';
-import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { IContextMenuOption } from '@ui/components/ContextMenu';
 import WallpaperModal from './WallpaperModal';
@@ -122,10 +120,6 @@ export const SettingsApp = () => {
     ),
   );
 
-  const languages = config.languages.map(
-    MapSettingItem(settings.language, (val: SettingOption) => handleSettingChange('language', val)),
-  );
-
   const handleResetOptions = () => {
     resetSettings();
     addAlert({
@@ -148,16 +142,6 @@ export const SettingsApp = () => {
     onClick: () => setCustomWallpaperState(true),
     key: 'CUSTOM_WALLPAPER',
     label: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
-  };
-
-  const handleCopyPhoneNumber = () => {
-    setClipboard(myNumber);
-    addAlert({
-      message: t('GENERIC.WRITE_TO_CLIPBOARD_MESSAGE', {
-        content: 'number',
-      }),
-      type: 'success',
-    });
   };
 
   const handleChooseImage = useCallback(() => {

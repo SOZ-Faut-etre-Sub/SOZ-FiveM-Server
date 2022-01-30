@@ -2,7 +2,6 @@ import {Button, Slide, Paper, Typography, Container, Box} from '@mui/material';
 import React, {useEffect, useMemo, useState} from 'react';
 import useStyles from './modal.styles';
 import {useTranslation} from 'react-i18next';
-import {StatusButton} from '@ui/components/StatusButton';
 import {TextField} from '@ui/components/Input';
 import {useModalVisible, useSelectedNote} from '../hooks/state';
 import {useHistory, useLocation} from 'react-router';
