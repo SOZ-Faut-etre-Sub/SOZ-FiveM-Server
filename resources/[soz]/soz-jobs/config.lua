@@ -15,6 +15,6 @@ Config.adsl = {
 Config.livraison = {
     {type = "colis", x = 859.15, y = -531.95, z = 57.33, sx = 1, sy = 1, heading = 0, minZ = 56.08, maxZ = 58.08},
     {type = "colis", x = -1225.8, y = -1094.27, z = 8.17, sx = 1, sy = 1, heading = 0, minZ = 6.77, maxZ = 8.57},
-    {type = "journal", x = 303.55 , y = -1355.5, z = 31.84, sx = 3.6, sy = 1, heading = 320, minZ = 30.64, maxZ = 32.44},
+    {type = "journal", x = 303.55, y = -1355.5, z = 31.84, sx = 3.6, sy = 1, heading = 320, minZ = 30.64, maxZ = 32.44},
     {type = "journal", x = 419.25, y = -997.37, z = 29.39, sx = 2, sy = 1, heading = 0, minZ = 27.99, maxZ = 29.59},
 }
