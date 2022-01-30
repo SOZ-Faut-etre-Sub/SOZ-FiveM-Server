@@ -19,7 +19,6 @@ export const contactsState = {
           );
           return resp.data;
         } catch (e) {
-          console.error(e);
           return [];
         }
       },

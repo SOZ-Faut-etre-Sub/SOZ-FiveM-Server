@@ -27,8 +27,8 @@ function CellFrontCamActivate(activate: boolean) {
 
 const displayHelperText = () => {
   BeginTextCommandDisplayHelp('TWOSTRINGS');
-  AddTextComponentString('Exit Camera Mode: ~INPUT_CELLPHONE_CANCEL~');
-  AddTextComponentString('Toggle Front/Back: ~INPUT_PHONE~');
+  AddTextComponentString('Mode selfie : ~INPUT_PHONE~');
+  AddTextComponentString('Quitter : ~INPUT_CELLPHONE_CANCEL~');
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 

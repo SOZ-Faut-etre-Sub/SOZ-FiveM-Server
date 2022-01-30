@@ -5,9 +5,9 @@ import DbInterface from '../db/db_wrapper';
 export class _ContactsDB {
   async fetchAllContacts(identifier: string): Promise<Contact[]> {
     const query = `SELECT phone_contacts.*, phone_profile.avatar as avatar
-                   FROM phone_contacts, phone_profile
-                   WHERE identifier = ? AND phone_contacts.number = phone_profile.number
-                   ORDER BY display ASC`;
+                   FROM phone_contacts
+                   LEFT JOIN phone_profile ON phone_contacts.number = phone_profile.number
+                   WHERE identifier = ? ORDER BY display ASC`;
     const [results] = await DbInterface._rawExec(query, [identifier]);
     return <Contact[]>results;
   }

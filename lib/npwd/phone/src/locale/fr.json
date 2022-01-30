@@ -30,17 +30,15 @@
         "ACTIONS": "Actions"
       },
       "OPTIONS": {
-        "ICONSET": "Pack d'icônes",
         "THEME": "Thème",
         "LANGUAGE": "Langage",
         "FRAME": "Coque",
         "ZOOM": "Zoom",
         "WALLPAPER": "Fond d'écran",
-        "RESET_SETTINGS": "Réinitialiser les paramètres",
-        "RESET_SETTINGS_DESC": "Cette action effacera toutes vos données",
+        "RESET_SETTINGS": "Réinitialiser toutes vos données",
         "STREAMER_MODE": {
-          "TITLE": "Mode streamer",
-          "DESCRIPTION": "Masque les images avant qu'elles soient montrées"
+          "TITLE": "Mode NSFW",
+          "DESCRIPTION": "Masque les images par défaut"
         },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Fond d'écran personnalisé",
@@ -134,7 +132,7 @@
         "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) ne sont pas attribués."
       },
       "FEEDBACK": {
-        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
+        "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
         "NEW_MESSAGE_FAILED": "Erreur d'envoi",
         "INVALID_PHONE_NUMBER": "Numéro de téléphone invalide",
         "MESSAGE_CONVERSATION_DUPLICATE": "Cette conversation existe déjà!",
@@ -213,7 +211,7 @@
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",
     "APPS_SETTINGS": "Paramètres",
-    "APPS_BANK": "WhoDis Banking",
+    "APPS_BANK": "Maze Banque",
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "Example app",
     "APPS_MARKETPLACE": "Marketplace",

@@ -62,7 +62,6 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
     () => [
       {
         label: t('MESSAGES.POSITION_OPTION'),
-        icon: <AddLocationAltIcon />,
         onClick: () => {
           fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_POSITION, {}).then((resp) => {
             sendMessage({ conversationId: messageGroupId, message: `vec2(${resp.data.x},${resp.data.y})` })
@@ -71,7 +70,6 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
       },
       {
         label: t('MESSAGES.DESTINATION_OPTION'),
-        icon: <DirectionsIcon />,
         onClick: () => {
           fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_DESTINATION, {}).then((resp) => {
             if (resp.data.x !== 0 && resp.data.y !== 0) {
@@ -87,7 +85,6 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
       },
       {
         label: t('MESSAGES.MEDIA_OPTION'),
-        icon: <PhotoLibraryIcon />,
         onClick: () =>
           history.push(
             `/camera?${qs.stringify({
