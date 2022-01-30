@@ -96,7 +96,7 @@ AddEventHandler("fuel:refuelFromPump", function(pumpObject, ped, vehicle)
                     TriggerServerEvent("fuel:pay", tonumber(fuelinputcout), GetPlayerServerId(PlayerId()))
                 end
                 QBCore.Functions.Progressbar("plein_vehicle", "Plein en cours..", (fuelinputcout * 500), false, false, 
-                {
+                                             {
                     disableMovement = true,
                     disableCarMovement = true,
                     disableMouse = false,
