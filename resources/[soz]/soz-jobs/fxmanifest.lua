@@ -6,8 +6,14 @@ description "job entreprise et pole emploie"
 
 shared_script "config.lua"
 
-client_script {"client/adsl.lua" , "client/pedlist.lua" , "client/spawnped.lua", "@PolyZone/client.lua", "@PolyZone/BoxZone.lua", "client/livraison.lua"}
+client_script {
+    "client/adsl.lua",
+    "client/pedlist.lua",
+    "client/spawnped.lua",
+    "@PolyZone/client.lua",
+    "@PolyZone/BoxZone.lua",
+    "client/livraison.lua",
+}
 
 server_script "server/server.lua"
-
 
