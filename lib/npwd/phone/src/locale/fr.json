@@ -132,7 +132,7 @@
         "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) ne sont pas attribués."
       },
       "FEEDBACK": {
-        "MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
+        "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
         "NEW_MESSAGE_FAILED": "Erreur d'envoi",
         "INVALID_PHONE_NUMBER": "Numéro de téléphone invalide",
         "MESSAGE_CONVERSATION_DUPLICATE": "Cette conversation existe déjà!",
