@@ -1119,26 +1119,3 @@ exports['qb-target']:AddTargetModel(sitchair, {
     distance = 2
 })
 
-exports['qb-target']:AddBoxZone("clothes1", vector3(-1194.05, -772.14, 17.32), 9.4, 11.8, {
-	name = "apparel",
-	heading = 36,
-	debugPoly = false,
-	minZ = 14.12,
-	maxZ = 19.32,
-	}, {
-		options = {
-			{
-            	type = "client",
-            	event = "polyzone:clothes:apparel:enter",
-				icon = "fas fa-sign-in-alt",
-				label = "open clothes store",
-			},
-		},
-	distance = 1
-})
-
-RegisterNetEvent('polyzone:clothes:apparel:enter')
-AddEventHandler('polyzone:clothes:enter', function(name)
-        TriggerEvent('cui_character:open', { 'apparel'})
-		
-end)
