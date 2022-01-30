@@ -22,6 +22,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
       const find = getContactByNumber(phoneNumber);
       if (find) {
         setParticipant(find);
+        addConversation(phoneNumber);
       } else {
         setParticipantValue(phoneNumber);
       }

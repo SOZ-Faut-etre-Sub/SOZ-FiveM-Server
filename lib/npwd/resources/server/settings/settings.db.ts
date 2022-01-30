@@ -18,7 +18,7 @@ export class _SettingsDB {
   ): Promise<string | null> {
     const query = `SELECT avatar FROM phone_profile WHERE number = ?`;
     const [results] = await DbInterface._rawExec(query, [number]);
-    return (results as any[])[0]['avatar'] || null;
+    return (results as any[])[0] ? (results as any[])[0]['avatar'] : null;
   }
 }
 
