@@ -84,7 +84,7 @@ local function OpenCarModelsMenu(category)
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
-    VehiculeModel:On("switch", function(currentItem)
+    VehiculeModel:On("switch", function(item, currentItem, prevItem)
         DeleteVehicle(veh)
         CarModels(currentItem.Value)
     end)
