@@ -69,12 +69,6 @@ AddEventHandler("jobs:livraison:fix", function()
     OnJob = false
 end)
 
-local function DeleteVehicule(vehicule)
-    SetEntityAsMissionEntity(vehicule, true, true )
-    DeleteVehicle(vehicule)
-end
-
-
 local function SpawnVehicule()
     local ModelHash = "faggio"
     if not IsModelInCdimage(ModelHash) then return end
@@ -115,5 +109,5 @@ AddEventHandler("jobs:livraison:end", function()
     TriggerServerEvent("job:set:unemployed")
     local money = Config.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    DeleteVehicule(adsl_vehicule)
+    QBCore.Functions.DeleteVehicle(adsl_vehicule)
 end)
