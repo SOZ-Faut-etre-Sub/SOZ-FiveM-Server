@@ -69,12 +69,6 @@ AddEventHandler("jobs:adsl:fix", function()
     OnJob = false
 end)
 
-local function DeleteVehicule(vehicule)
-    SetEntityAsMissionEntity(vehicule, true, true )
-    DeleteVehicle(vehicule)
-end
-
-
 local function SpawnVehicule()
     local ModelHash = "utillitruck3"
     if not IsModelInCdimage(ModelHash) then return end
@@ -115,5 +109,5 @@ AddEventHandler("jobs:adsl:end", function()
     TriggerServerEvent("job:set:unemployed")
     local money = Config.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    DeleteVehicule(adsl_vehicule)
+    QBCore.Functions.DeleteVehicle(adsl_vehicule)
 end)
