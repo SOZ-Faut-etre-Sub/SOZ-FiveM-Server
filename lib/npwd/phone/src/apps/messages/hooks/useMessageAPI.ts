@@ -89,7 +89,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
         if (resp.status !== 'ok') {
           history.push('/messages');
           return addAlert({
-            message: t('MESSAGE_CONVERSATION_CREATE_ONE_NUMBER_FAILED"', {
+            message: t('MESSAGES.FEEDBACK.CONVERSATION_CREATE_ONE_NUMBER_FAILED', {
               number: targetNumber,
             }),
             type: 'error',

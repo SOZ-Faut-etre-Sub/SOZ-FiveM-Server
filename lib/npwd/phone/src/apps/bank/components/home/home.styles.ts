@@ -6,8 +6,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Bahnschrift Regular',
   },
   headTitle: {
-    textAlign: 'center',
-    fontSize: '28px',
     marginTop: 30,
   },
   actions: {

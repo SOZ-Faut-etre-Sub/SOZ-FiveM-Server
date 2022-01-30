@@ -52,7 +52,7 @@ const MessagesList = (): any => {
   return (
     <Box display="flex" flexDirection="column">
       {!!conversations.length && (
-        <Box position="absolute" top={10} right={3}>
+        <Box position="absolute" top="1.8rem" right="3.5rem">
           <IconButton onClick={toggleEdit}>
             <EditIcon />
           </IconButton>
