@@ -1,8 +1,8 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
 local VehiculeList = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car", "soz", "shop:vehicle:car")
-local VehiculeModel = MenuV:InheritMenu(VehiculeList, {Title = "Modèle de véhicule"})
-local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = "Commande de véhicule"})
+local VehiculeModel = MenuV:InheritMenu(VehiculeList, {Title = nil})
+local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = nil})
 
 local vehicles = {}
 for k, voiture in pairs(QBCore.Shared.Vehicles) do
@@ -84,7 +84,7 @@ local function OpenCarModelsMenu(category)
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
-    VehiculeModel:On("switch", function(currentItem)
+    VehiculeModel:On("switch", function(item, currentItem, prevItem)
         DeleteVehicle(veh)
         CarModels(currentItem.Value)
     end)
@@ -187,7 +187,7 @@ end)
 
 exports["qb-target"]:SpawnPed({
     model = "s_m_m_autoshop_01",
-    coords = vector4(-33.77, -1102.02, 25.44, 66.5),
+    coords = vector4(-56.61, -1096.58, 25.42, 30.0),
     minusOne = false,
     freeze = true,
     invincible = true,
