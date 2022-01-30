@@ -187,7 +187,7 @@ end)
 
 exports["qb-target"]:SpawnPed({
     model = "s_m_m_autoshop_01",
-    coords = vector4(-56.61, -1096.58, 25.42, 66.5),
+    coords = vector4(-56.61, -1096.58, 25.42, 30.0),
     minusOne = false,
     freeze = true,
     invincible = true,
