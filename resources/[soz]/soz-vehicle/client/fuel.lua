@@ -313,7 +313,7 @@ local zones = {
         minZ = 29.5,
         maxZ = 33.5,
     }),
-    BoxZone:Create(vector3(-66.48, -2532.57, 5.14), 15, 15, {name = "Fuel27", heading = 52.0, minZ = 5.1, maxZ = 9.1,}),
+    BoxZone:Create(vector3(-66.48, -2532.57, 5.14), 15, 15, {name = "Fuel27", heading = 52.0, minZ = 5.1, maxZ = 9.1}),
     BoxZone:Create(vector3(1784.324, 3330.55, 40.253), 15, 15, {
         name = "Fuel28",
         heading = 28.0,
