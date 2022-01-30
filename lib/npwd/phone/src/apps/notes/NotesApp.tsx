@@ -5,8 +5,6 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { useApp } from '@os/apps/hooks/useApps';
 import NoteList from './list/NoteList';
 import { NoteModal } from './modal/NoteModal';
-import { Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import useStyles from './notes.styles';
 import { NotesThemeProvider } from './providers/NotesThemeProvider';
 import { Route } from 'react-router-dom';

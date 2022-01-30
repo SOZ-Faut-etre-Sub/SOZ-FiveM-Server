@@ -3,12 +3,10 @@ import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
 import { SvgIconComponent } from '@mui/icons-material';
-import { useTheme } from '@mui/material';
 
 
 export const useApps = () => {
   const { icons } = useNotifications();
-  const theme = useTheme();
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
@@ -34,7 +32,7 @@ export const useApps = () => {
         icon: <Icon />,
       };
     });
-  }, [icons, theme]);
+  }, [icons]);
 
   const getApp = useCallback((id: string): IApp => apps.find((a) => a.id === id) || null, [apps]);
   return { apps, getApp };

@@ -6,7 +6,6 @@ import {useCallback} from "react";
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
 import {PreDBSettings, SettingsEvents} from "@typings/settings";
-import {useHistory} from "react-router";
 import {useTranslation} from "react-i18next";
 import {useSnackbar} from "@os/snackbar/hooks/useSnackbar";
 
@@ -123,7 +122,6 @@ export const useResetSettings = () => useResetRecoilState(settingsState);
 export const useCustomWallpaperModal = () => useRecoilState(customWallpaperState);
 
 export const useSettingsAPI = () => {
-  const history = useHistory();
   const [t] = useTranslation();
   const { addAlert } = useSnackbar();
 
