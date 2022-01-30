@@ -23,6 +23,8 @@ Config.SafeStorages = {
     ["safe_police"] = {label = "Coffre police", owner = "police", position = vector3(450.15, -973.15, 29.7)},
 }
 
+Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
+
 Config.BankPedLocations = {
     vector4(149.42, -1042.15, 29.37, 340.3),
     vector4(313.79, -280.53, 54.16, 341.82),

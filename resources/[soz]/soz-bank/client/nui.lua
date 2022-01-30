@@ -1,14 +1,28 @@
-local function openBankScreen(account)
+local lib, anim = "anim@mp_atm@enter", "enter"
+
+local function playAnimation()
+    QBCore.Functions.RequestAnimDict(lib)
+    TaskPlayAnim(PlayerPedId(), lib, anim, 8.0, -8.0, -1, 0, 0.0, true, true, true)
+    Wait(3000)
+end
+
+local function openBankScreen(account, isATM)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
+            playAnimation()
+
             SetNuiFocus(true, true)
-            SendNUIMessage({status = "openbank", information = banking})
+            SendNUIMessage({status = "openbank", information = banking, isATM = isATM})
         end
     end, account)
 end
 
 RegisterNetEvent("banking:openBankScreen", function()
     openBankScreen()
+end)
+
+RegisterNetEvent("banking:openATMScreen", function()
+    openBankScreen(nil, true)
 end)
 
 RegisterNetEvent("banking:openSocietyBankScreen", function()
@@ -18,6 +32,7 @@ end)
 RegisterNUICallback("NUIFocusOff", function(data, cb)
     SetNuiFocus(false, false)
     SendNUIMessage({status = "closebank"})
+    playAnimation()
 end)
 
 RegisterNUICallback("createOffshoreAccount", function(data, cb)

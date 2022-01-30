@@ -4,4 +4,4 @@ lua54 "yes"
 
 client_scripts {"client.lua"}
 
-server_scripts {"forecast/*.lua", "time.lua", "server.lua"}
+server_scripts {"forecast/*.lua", "server.lua"}
