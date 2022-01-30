@@ -19,7 +19,7 @@ Config = {
         [16] = false, -- plane
         [17] = true, -- service
         [18] = true, -- emergency
-        [19] = false -- military
+        [19] = false, -- military
     }
 }
 
@@ -32,7 +32,7 @@ Config.Shops = {
             vector2(-34.427627563477, -1108.5111083984), vector2(-32.02657699585, -1101.5877685547),
             vector2(-33.342102050781, -1101.0377197266), vector2(-31.292987823486, -1095.3717041016)},
             ["minZ"] = 25.0, -- min height of the shop zone
-            ["maxZ"] = 28.0 -- max height of the shop zone
+            ["maxZ"] = 28.0, -- max height of the shop zone
         },
         ["ShopLabel"] = "Concessionnaire", -- Blip name
         ["showBlip"] = true,
@@ -46,10 +46,10 @@ Config.Shops = {
             ["Compacts"] = "Compacts",
             ["Motorcycles"] = "Motorcycles",
             ["Vans"] = "Vans",
-            ["Cycles"] = "Bicycles"
+            ["Cycles"] = "Bicycles",
         },
         ["Location"] = vector3(-45.67, -1098.34, 26.42), -- Blip Location
-        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 0) -- Spawn location when vehicle is bought
+        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 0), -- Spawn location when vehicle is bought
     }
 }
 
@@ -93,7 +93,7 @@ Config.Classes = {
     [18] = 1.0, -- Emergency
     [19] = 1.0, -- Military
     [20] = 1.0, -- Commercial
-    [21] = 1.0 -- Trains
+    [21] = 1.0, -- Trains
 }
 
 Config.GasStations = {
