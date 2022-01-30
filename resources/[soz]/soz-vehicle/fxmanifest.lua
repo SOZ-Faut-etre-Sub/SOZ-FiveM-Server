@@ -8,4 +8,4 @@ client_scripts {"@PolyZone/client.lua","@PolyZone/BoxZone.lua","@menuv/menuv.lua
 
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
 
-dependencies {"qb-core", "soz-hud", "menuv", "qb-target","PolyZone"}
+dependencies {"qb-core", "soz-hud", "menuv", "qb-target", "PolyZone"}
