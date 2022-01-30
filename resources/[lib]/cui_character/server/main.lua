@@ -5,11 +5,11 @@ QBCore = exports['qb-core']:GetCoreObject()
 QBCore.Functions.CreateCallback('cui_character:checkMoney', function(source, cb, amount)
     local _source = source
     local Player = QBCore.Functions.GetPlayer(_source)
-    local cashamount = Player.Functions.GetMoney('cash')
+    local cashamount = Player.Functions.GetMoney('money')
 
     if cashamount >= amount then
         cb(true)
-        Player.Functions.RemoveMoney('cash', amount)
+        Player.Functions.RemoveMoney('money', amount)
         TriggerClientEvent('QBCore:Notify', _source, 'Paid $' ..amount, 'success')
     else
         cb(false)

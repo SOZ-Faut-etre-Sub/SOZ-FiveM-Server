@@ -17,9 +17,8 @@ for k, voiture in pairs(QBCore.Shared.Vehicles) do
     end
 end
 
-local function ChooseCarModelsMenu(vehicule)
-    VehiculeChoose:ClearItems()
-    MenuV:OpenMenu(VehiculeChoose)
+local veh
+local function CarModels(vehicule)
 
     local voiture = vehicule
     local model = GetHashKey(voiture["model"])
@@ -39,35 +38,36 @@ local function ChooseCarModelsMenu(vehicule)
     Citizen.CreateThread(function()
         while true do
             Citizen.Wait(0)
-            if IsControlPressed(0, 177) then
+            if IsControlPressed(0, 176) or IsControlPressed(0, 177) then
                 TriggerEvent("soz-concess:client:deletecam", "")
                 DeleteVehicle(veh)
                 break
             end
         end
     end)
+end
 
+local function ChooseCarModelsMenu(vehicule)
+    VehiculeChoose:ClearItems()
+    MenuV:OpenMenu(VehiculeChoose)
+    local voiture = vehicule
     VehiculeChoose:AddButton({
         icon = "◀",
         label = voiture["name"],
         value = VehiculeModel,
         description = "Choisir un autre modèle",
         select = function()
-            TriggerEvent("soz-concess:client:deletecam", "")
             VehiculeChoose:Close()
-            DeleteVehicle(veh)
         end,
     })
     VehiculeChoose:AddButton({
-        label = "Acheter " .. voiture["name"],
+        label = "Acheter " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
         value = voiture,
-        description = "Acheter pour " .. voiture["price"] .. "$",
+        description = "Confirmer l'achat",
         select = function()
-            TriggerEvent("soz-concess:client:deletecam", "")
             VehiculeChoose:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
-            DeleteVehicle(veh)
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", voiture["model"])
         end,
     })
@@ -77,14 +77,17 @@ local function OpenCarModelsMenu(category)
     VehiculeModel:ClearItems()
     MenuV:OpenMenu(VehiculeModel)
     local firstbutton = 0
-    vehicules = {}
+    local vehicules = {}
     for _, voiture in pairs(category) do
         table.insert(vehicules, voiture)
     end
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
-
+    VehiculeModel:On("switch", function(currentItem)
+        DeleteVehicle(veh)
+        CarModels(currentItem.Value)
+    end)
     QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(vehiclestorage)
         for k, voiture in pairs(vehicules) do
             firstbutton = firstbutton + 1
@@ -109,7 +112,7 @@ local function OpenCarModelsMenu(category)
                             value = voiture,
                             description = "❌ HORS STOCK de " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
                         })
-                    elseif (y.stock <= 2 and y.stock > 0) then
+                    elseif y.stock == 1 then
                         newlabel = "^o" .. voiture["name"]
                         VehiculeModel:AddButton({
                             label = newlabel,
@@ -124,7 +127,7 @@ local function OpenCarModelsMenu(category)
                         VehiculeModel:AddButton({
                             label = newlabel,
                             value = voiture,
-                            description = "Voir  " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
+                            description = "Acheter  " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
                             select = function(btn)
                                 local select = btn.Value
                                 ChooseCarModelsMenu(select)
@@ -165,7 +168,7 @@ local function GenerateMenu()
 end
 
 RegisterNetEvent("soz-concess:client:createcam", function()
-    cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -53.69, -1094.83, 27.00, 216.5, 0.00, 0.00, 60.00, false, 0)
+    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -53.69, -1094.83, 27.00, 216.5, 0.00, 0.00, 60.00, false, 0)
     PointCamAtCoord(cam, -46.64, -1097.53, 25.44)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
@@ -206,7 +209,7 @@ exports["qb-target"]:SpawnPed({
                     end
                     TriggerEvent("soz-concess:client:Menu", "")
                 end,
-                canInteract = function(entity, distance, data)
+                canInteract = function(entity)
                     if IsPedAPlayer(entity) then
                         return false
                     end
@@ -226,7 +229,7 @@ end)
 RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plate)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-        -- exports['LegacyFuel']:SetFuel(veh, 100)
+        -- SetFuel(veh, 100)
         SetVehicleNumberPlateText(veh, plate)
         SetEntityHeading(veh, 0)
         SetEntityAsMissionEntity(veh, true, true)

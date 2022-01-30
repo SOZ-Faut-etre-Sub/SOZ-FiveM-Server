@@ -259,6 +259,8 @@ function DisableActions(ped)
     end
 
     if Action.controlDisables.disableMovement then
+        DisableControlAction(0, 22, true) -- disable spacebar
+        DisableControlAction(0, 23, true) -- disable enter vehicle
         DisableControlAction(0, 30, true) -- disable left/right
         DisableControlAction(0, 31, true) -- disable forward/back
         DisableControlAction(0, 36, true) -- INPUT_DUCK
@@ -277,6 +279,8 @@ function DisableActions(ped)
         DisablePlayerFiring(PlayerId(), true) -- Disable weapon firing
         DisableControlAction(0, 24, true) -- disable attack
         DisableControlAction(0, 25, true) -- disable aim
+        DisableControlAction(0, 29, true) -- disable ability secondary (B)
+        DisableControlAction(0, 44, true) -- disable cover
         DisableControlAction(1, 37, true) -- disable weapon select
         DisableControlAction(0, 47, true) -- disable weapon
         DisableControlAction(0, 58, true) -- disable weapon
