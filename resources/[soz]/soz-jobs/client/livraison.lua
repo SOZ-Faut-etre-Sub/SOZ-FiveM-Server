@@ -47,11 +47,6 @@ local function createblip(coords)
     SetBlipCategory(blip, 2)
 end
 
-local function destroyblip(blip)
-    RemoveBlip(blip)
-    blip = nil
-end
-
 RegisterNetEvent("jobs:livraison:fix")
 AddEventHandler("jobs:livraison:fix", function()
     TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})

@@ -12,6 +12,7 @@ client_script {
     "client/spawnped.lua",
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
+    "@menuv/menuv.lua",
     "client/livraison.lua",
     "client/pole.lua",
 }
