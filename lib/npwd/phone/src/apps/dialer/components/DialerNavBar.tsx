@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
+    paddingBottom: '2rem',
     backgroundColor: theme.palette.background.paper,
   },
   icon: {

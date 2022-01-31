@@ -3,12 +3,12 @@ import ListItemText from '@mui/material/ListItemText';
 import { Button, ListItemAvatar, Avatar as MuiAvatar, List, ListItem } from '@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useFilteredContacts } from '../../hooks/state';
 import { useCall } from '@os/call/hooks/useCall';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
@@ -52,24 +52,19 @@ export const ContactList: React.FC = () => {
             </ListItemAvatar>
             <ListItemText
               primary={contact.display}
-              secondary={contact.number}
               primaryTypographyProps={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
               }}
-              secondaryTypographyProps={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
             />
-            <Button onClick={() => startCall(contact.number)}>
+            <Button style={{ minWidth: 0, color: '#40cb56' }} onClick={() => startCall(contact.number)}>
               <PhoneIcon />
             </Button>
-            <Button onClick={() => handleMessage(contact.number)}>
+            <Button style={{ minWidth: 0, color: '#b4b4b4' }} onClick={() => handleMessage(contact.number)}>
               <ChatIcon />
             </Button>
-            <Button style={{ margin: -15 }} onClick={() => openContactInfo(contact.id)}>
-              <MoreVertIcon />
+            <Button style={{ minWidth: 0, color: '#ab5353' }} onClick={() => openContactInfo(contact.id)}>
+              <EditIcon />
             </Button>
           </ListItem>
         ))}

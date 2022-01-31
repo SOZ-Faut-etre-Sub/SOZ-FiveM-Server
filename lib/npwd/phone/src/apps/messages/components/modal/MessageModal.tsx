@@ -9,7 +9,6 @@ import {
   Tooltip,
   IconButton,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
@@ -22,6 +21,8 @@ import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
 import { Call } from '@mui/icons-material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
@@ -144,7 +145,7 @@ export const MessageModal = () => {
         >
           <Box display="flex" justifyContent="space-between" component={Paper}>
             <Button onClick={closeModal}>
-              <ArrowBackIcon fontSize="large" />
+              <ArrowBackIosIcon fontSize="large" />
             </Button>
             <Typography variant="h5" className={headerClass}>
               {header}

@@ -16,7 +16,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
           style={{
             position: 'fixed',
             transformOrigin: 'right bottom',
-            transform: `scale(${settings.zoom.value}`,
+            zoom: `${settings.zoom.value}%`,
             bottom,
           }}
         >

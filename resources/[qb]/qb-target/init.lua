@@ -24,7 +24,7 @@ Config.MaxDistance = 5.0
 Config.Debug = false
 
 -- Supported values: true, false
-Config.Standalone = true
+Config.Standalone = false
 
 -- Enable outlines around the entity you're looking at
 Config.EnableOutline = false
@@ -52,7 +52,11 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> main
 }
 
 Config.PolyZones = {

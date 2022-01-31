@@ -56,14 +56,14 @@ local function handleFountainStuff(source, id, pickup)
                 -- if the fountain is rich enough to get the per-use amount
                 if money >= fountain.amount then
                     -- give the player money
-                    if ms:addMoney(source, 'cash', fountain.amount) then
+                    if ms:addMoney(source, 'money', fountain.amount) then
                         money -= fountain.amount
                         success = true
                     end
                 end
             else
                 -- if the player is rich enough
-                if ms:removeMoney(source, 'cash', fountain.amount) then
+                if ms:removeMoney(source, 'money', fountain.amount) then
                     -- add to the fountain
                     money += fountain.amount
                     success = true

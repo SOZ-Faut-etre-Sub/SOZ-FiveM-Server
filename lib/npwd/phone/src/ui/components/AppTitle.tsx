@@ -6,6 +6,7 @@ import { IApp } from '@os/apps/config/apps';
 import { OverridableStringUnion } from '@mui/types';
 import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
 import { Variant } from '@mui/material/styles/createTypography';
+import {useRouteMatch} from "react-router-dom";
 
 interface IUseStyle {
   root: any;
@@ -14,13 +15,14 @@ interface IUseStyle {
 
 const useStyle = makeStyles(
   (theme): IUseStyle => ({
-    root: ({ backgroundColor }) => ({
+    root: ({ backgroundColor, home }) => ({
       width: '100%',
       textAlign: 'left',
       backgroundColor: backgroundColor || theme.palette.background.default,
     }),
     text: ({ color }) => ({
       color: color || theme.palette.text.primary,
+      marginBottom: 0,
     }),
   }),
 );
@@ -33,14 +35,15 @@ interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
 // Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint
 // but need to think about the best way to do that for standardization sake.
 export const AppTitle: React.FC<AppTitleProps> = ({
-  app: { backgroundColor, color, nameLocale },
+  app: { color, nameLocale },
   variant = 'h5',
   ...props
 }) => {
-  const classes = useStyle({ color, backgroundColor });
+  const { isExact } = useRouteMatch('/');
+  const classes = useStyle({ color, home: isExact });
   const [t] = useTranslation();
   return (
-    <Box px={2} pt={2} className={classes.root} {...props}>
+    <Box px={2} pt={4} pb={1} className={classes.root} {...props}>
       <Typography className={classes.text} paragraph variant={variant}>
         {t(nameLocale)}
       </Typography>
