@@ -80,7 +80,7 @@ AddEventHandler("fuel:refuelFromPump", function(pumpObject, ped, vehicle)
     local fueldiff = (100 - currentFuel) / 100
     local cout = math.floor(fueldiff * Config.RefillCost)
     local fuelinputcout = exports["soz-hud"]:Input(("Combien d'argent mettre? (max %s $)"):format(cout), 2, cout)
-    if not fuelinputcout == nil then
+    if fuelinputcout ~= "" then
         if (tonumber(currentmoney) >= tonumber(fuelinputcout)) then
             if (tonumber(fuelinputcout) <= cout) then
                 TaskTurnPedToFaceEntity(ped, vehicle, 1000)
@@ -123,6 +123,9 @@ AddEventHandler("fuel:refuelFromPump", function(pumpObject, ped, vehicle)
             TriggerEvent("QBCore:Notify", "Pas assez d'argent", "error")
             isFueling = false
         end
+    else
+        TriggerEvent("QBCore:Notify", "Vous n'avez rien mis", "error")
+        isFueling = false
     end
 end)
 
@@ -378,7 +381,7 @@ for int = 1, 28 do
                 distance = 2.5,
             })
         else
-            exports["qb-target"]:RemoveTargetModel(-2007231801, "Faire le plein")
+            exports["qb-target"]:RemoveTargetModel(GasModels[int], "Faire le plein")
         end
     end)
 end
