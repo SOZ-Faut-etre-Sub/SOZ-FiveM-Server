@@ -1,11 +1,11 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-local AdminMenu = MenuV:CreateMenu(nil, "Le menu de métal", "menu_admin", "soz", "admin-panel")
+local AdminMenu = MenuV:CreateMenu(nil, "", "menu_admin", "soz", "admin-panel")
 
-local PlayerList = MenuV:InheritMenu(AdminMenu, {Title = "Joueur"})
-local VehiculeList = MenuV:InheritMenu(AdminMenu, {Title = "Véhicule model"})
-local VehiculeModel = MenuV:InheritMenu(AdminMenu, {Title = "Spawn Véhicule"})
-local Players = MenuV:InheritMenu(AdminMenu, {Title = "Player Option"})
+local PlayerList = MenuV:InheritMenu(AdminMenu)
+local VehiculeList = MenuV:InheritMenu(AdminMenu)
+local VehiculeModel = MenuV:InheritMenu(AdminMenu)
+local Players = MenuV:InheritMenu(AdminMenu)
 
 local noclip_check = false
 local coords_check = false
