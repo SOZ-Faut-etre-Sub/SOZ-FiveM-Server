@@ -9,7 +9,7 @@ import {PreDBSettings, SettingsEvents} from "@typings/settings";
 import {useTranslation} from "react-i18next";
 import {useSnackbar} from "@os/snackbar/hooks/useSnackbar";
 
-const NPWD_STORAGE_KEY = 'npwd_settings';
+const NPWD_STORAGE_KEY = 'soz_settings';
 
 const v = new Validator();
 
