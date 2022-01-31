@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
   listContainer: {
     marginTop: 30,
-    width: '75%',
+    width: '95%',
     margin: '0 auto',
     textAlign: 'center',
   },
@@ -91,7 +91,7 @@ const ContactsInfoPage: React.FC = () => {
           value={message}
           multiline
           fullWidth
-          rows={16}
+          rows={20}
           variant="outlined"
           onChange={handleNumberChange}
           label={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
@@ -104,12 +104,10 @@ const ContactsInfoPage: React.FC = () => {
           <Checkbox value={anonymous} onChange={handleAnonymousChange} />
           {t('SOCIETY_CONTACTS.SET_ANONYMOUS')}
         </Box>
-        <Box p={1} display="inline">
+        <Box p={1} display="flex" justifyContent="space-between">
           <Button color="primary" variant="contained" onClick={handleSend}>
             {t('SOCIETY_CONTACTS.SEND')}
           </Button>
-        </Box>
-        <Box p={1} display="inline">
           <Button color="secondary" variant="contained" onClick={handleSendWithLocation}>
             {t('SOCIETY_CONTACTS.SEND_POSITION')}
           </Button>

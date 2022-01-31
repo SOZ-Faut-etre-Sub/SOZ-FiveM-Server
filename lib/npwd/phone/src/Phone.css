@@ -23,21 +23,21 @@
 .PhoneScreen {
   overflow: hidden;
   position: absolute;
-  background-color: black;
+  background-color: #121212;
   bottom: 100px;
   left: 50px;
   right: 50px;
-  top: 100px;
+  top: 35px;
   display: flex;
   flex-direction: column;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 40px;
 }
 
 .PhoneAppContainer {
-  height: 90%;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;

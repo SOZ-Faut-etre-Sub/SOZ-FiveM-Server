@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { ContextMenu } from '@ui/components/ContextMenu';
 import { useSelectedMessageValue } from '../../hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
@@ -23,7 +22,6 @@ const MessageBubbleMenu: React.FC<MessageBubbleMenuProps> = ({ open, handleClose
     () => [
       {
         label: t('MESSAGES.FEEDBACK.DELETE_MESSAGE'),
-        icon: <PhotoLibraryIcon />,
         onClick: handleDeleteMessage,
       },
     ],

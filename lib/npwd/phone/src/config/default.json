@@ -1,26 +1,37 @@
 {
-  "cellProvider": "ZT&T",
   "defaultLanguage": "fr",
   "wallpapers": [
     {
-      "label": "Minimal",
-      "value": "minimal.jpg"
+      "label": "SoZ 1",
+      "value": "back1.jpg"
     },
     {
-      "label": "Surf",
-      "value": "surf.jpg"
+      "label": "SoZ 2",
+      "value": "back2.jpg"
     },
     {
-      "label": "Waves",
-      "value": "waves.jpg"
+      "label": "SoZ 3",
+      "value": "back3.jpg"
     },
     {
-      "label": "Project Error",
-      "value": "projecterror.jpg"
+      "label": "SoZ 4",
+      "value": "back4.jpg"
     },
     {
-      "label": "Default",
-      "value": "default.jpg"
+      "label": "SoZ 5",
+      "value": "back5.jpg"
+    },
+    {
+      "label": "SoZ 6",
+      "value": "back6.jpg"
+    },
+    {
+      "label": "SoZ 7",
+      "value": "back7.jpg"
+    },
+    {
+      "label": "SoZ 8",
+      "value": "back8.jpg"
     }
   ],
   "frames": [
@@ -52,19 +63,19 @@
   "zoomOptions": [
     {
       "label": "100%",
-      "value": 1
+      "value": 90
     },
     {
       "label": "90%",
-      "value": 0.9
+      "value": 80
     },
     {
       "label": "80%",
-      "value": 0.8
+      "value": 70
     },
     {
       "label": "70%",
-      "value": 0.7
+      "value": 60
     }
   ],
   "languages": [
@@ -112,16 +123,9 @@
       "label": "English",
       "value": "en"
     },
-    "iconSet": {
-      "label": "Material",
-      "value": {
-        "custom": false,
-        "name": "material"
-      }
-    },
     "wallpaper": {
-      "label": "Minimal",
-      "value": "minimal.jpg"
+      "label": "Soz1",
+      "value": "back1.jpg"
     },
     "customWallpaper": "",
     "frame": {
@@ -134,7 +138,7 @@
     },
     "zoom": {
       "label": "90%",
-      "value": 0.9
+      "value": 80
     },
     "streamerMode": false,
     "ringtone": {
@@ -148,22 +152,6 @@
     "ringtoneVol": 50,
     "notiSoundVol": 50
   },
-  "iconSet": [
-    {
-      "label": "NPWD Icons",
-      "value": {
-        "custom": true,
-        "name": "npwd_icons"
-      }
-    },
-    {
-      "label": "Material",
-      "value": {
-        "custom": false,
-        "name": "material"
-      }
-    }
-  ],
   "themes": [
     {
       "label": "Dark",

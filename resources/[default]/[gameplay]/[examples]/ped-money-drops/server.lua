@@ -31,7 +31,7 @@ AddEventHandler('money:tryPickup', function(entity)
     local coords = GetEntityCoords(playerPed)
 
     if #(safePositions[entity] - coords) < 2.5 then
-        exports['money']:addMoney(source, 'cash', 40)
+        exports['money']:addMoney(source, 'money', 40)
     end
 
     safePositions[entity] = nil
