@@ -6,7 +6,6 @@ Config.livraison_payout = 100
 Config.adsl = {
     {x = 406.88, y = -968.05, z = 29.45, sx = 1.8, sy = 1.2, heading = 358, minZ = 27.8, maxZ = 30.4},
     {x = 386.94, y = -1440.93, z = 29.97, sx = 1.4, sy = 2.0, heading = 50, minZ = 28.17, maxZ = 29.97},
-    {x = -59.88, y = -59.88, z = 29.37, sx = 1.0, sy = 1.6, heading = 0, minZ = 27.77, maxZ = 29.77},
     {x = -245.4, y = -705.67, z = 33.57, sx = 1.8, sy = 0.8, heading = 343, minZ = 32.17, maxZ = 34.17},
     {x = -588.54, y = -225.87, z = 36.43, sx = 1.6, sy = 1.2, heading = 29, minZ = 35.03, maxZ = 37.43},
     {x = -613.4, y = -942.67, z = 21.96, sx = 2.0, sy = 0.6, heading = 0, minZ = 20.36, maxZ = 22.56},
