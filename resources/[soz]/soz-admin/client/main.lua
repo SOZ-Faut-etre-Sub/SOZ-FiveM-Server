@@ -61,34 +61,17 @@ end
 
 local function CopyToClipboard(dataType)
     local ped = PlayerPedId()
-<<<<<<< HEAD
-    if dataType == 'coords' then
-=======
     if dataType == "coords" then
->>>>>>> main
         local coords = GetEntityCoords(ped)
         local x = round(coords.x, 2)
         local y = round(coords.y, 2)
         local z = round(coords.z, 2)
-<<<<<<< HEAD
-        SendNUIMessage({
-            string = string.format('vector3(%s, %s, %s)', x, y, z)
-        })
-        QBCore.Functions.Notify("Coordonnées copier!", "success")
-    elseif dataType == 'heading' then
-        local heading = GetEntityHeading(ped)
-        local h = round(heading, 2)
-        SendNUIMessage({
-            string = h
-        })
-=======
         SendNUIMessage({string = string.format("vector3(%s, %s, %s)", x, y, z)})
         QBCore.Functions.Notify("Coordonnées copier!", "success")
     elseif dataType == "heading" then
         local heading = GetEntityHeading(ped)
         local h = round(heading, 2)
         SendNUIMessage({string = h})
->>>>>>> main
         QBCore.Functions.Notify("Orientation copier!", "success")
     end
 end
@@ -144,14 +127,7 @@ local function AdminPanel(menu)
         value = coords_check,
         description = "Affiche les coords",
     })
-<<<<<<< HEAD
-    local copy_coords = menu:AddButton({
-        label = "Copier les coords",
-        description = "Copie les coords",
-    })
-=======
     local copy_coords = menu:AddButton({label = "Copier les coords", description = "Copie les coords"})
->>>>>>> main
     local tpm = menu:AddButton({label = "Tpm", description = "Téléport sur le marqueur"})
     local playerlist = menu:AddButton({
         label = "Gestion des joueurs",
@@ -176,11 +152,7 @@ local function AdminPanel(menu)
     end)
 
     copy_coords:On("select", function()
-<<<<<<< HEAD
-        CopyToClipboard('coords')
-=======
         CopyToClipboard("coords")
->>>>>>> main
     end)
 
     tpm:On("select", function()
