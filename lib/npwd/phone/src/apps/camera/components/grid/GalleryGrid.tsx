@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Box, Button, CircularProgress} from '@mui/material';
+import React from 'react';
+import {Box, Button} from '@mui/material';
 import useStyles from './grid.styles';
 import AddIcon from '@mui/icons-material/Add';
 import {useHistory} from 'react-router-dom';
@@ -28,7 +28,6 @@ export const GalleryGrid = () => {
     const [t] = useTranslation();
     const photos = usePhotosValue();
     const {takePhoto} = usePhotoActions();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const referal = query.referal ? decodeURIComponent(query.referal) : '/camera/image';
 
@@ -37,7 +36,6 @@ export const GalleryGrid = () => {
     };
 
     const handleTakePhoto = () => {
-        setIsLoading(true);
         fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then((serverResp) => {
             if (serverResp.status !== 'ok') {
                 return addAlert({
@@ -47,7 +45,6 @@ export const GalleryGrid = () => {
             }
 
             takePhoto(serverResp.data);
-            setIsLoading(false);
         });
     };
 

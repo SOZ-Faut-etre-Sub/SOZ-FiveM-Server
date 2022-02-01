@@ -23,7 +23,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
           <div
             className="PhoneFrame"
             style={{
-              backgroundImage: `url(media/frames/${settings.frame.value})`,
+              backgroundImage: `url(media/frames/default.png)`,
             }}
           />
           <div

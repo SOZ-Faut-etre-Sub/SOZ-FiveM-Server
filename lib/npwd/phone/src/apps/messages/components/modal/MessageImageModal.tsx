@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
 import Modal from '../../../../ui/components/Modal';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
-import DirectionsIcon from '@mui/icons-material/Directions';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '@ui/components/ContextMenu';
