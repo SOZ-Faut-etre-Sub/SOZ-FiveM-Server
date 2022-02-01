@@ -7,18 +7,6 @@ local livraison_position = {x = -424.06, y = -2789.62, z = 6.4}
 local pole_emploi_coords = vector3(236.53, -409.22, 47.92)
 
 QBCore.Functions.CreateBlip("pole_emploi_local", {name = "Pôle emploi", coords = pole_emploi_coords, sprite = 280, color = 2})
-function dump(o)
-    if type(o) == 'table' then
-       local s = '{ '
-       for k,v in pairs(o) do
-          if type(k) ~= 'number' then k = '"'..k..'"' end
-          s = s .. '['..k..'] = ' .. dump(v) .. ','
-       end
-       return s .. '} '
-    else
-       return tostring(o)
-    end
- end
 
 exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
     name = "pole emploi",
