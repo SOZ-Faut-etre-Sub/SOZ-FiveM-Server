@@ -35,7 +35,7 @@ local function JobPosition(job, coords, sprite)
     SetBlipScale(blip, 1.0)
     SetBlipSprite(blip, sprite)
     SetBlipColour(blip, 32)
-    AddTextEntry(job, "commencer le job")
+    AddTextEntry(job, "Commencer le job")
     BeginTextCommandSetBlipName(job)
     EndTextCommandSetBlipName(blip)
     SetBlipCategory(blip, 2)
@@ -43,12 +43,12 @@ end
 
 local function JobPanel(menu)
     local adsl = menu:AddButton({
-        label = "job adsl",
-        description = "rendez vous au point sur votre gps pour commencez le job adsl",
+        label = "Job: Poseur d'Adsl",
+        description = "Rendez vous au point sur votre gps pour commencez le job adsl",
     })
     local livraison = menu:AddButton({
-        label = "job de livraison",
-        description = "rendez vous au point sur votre gps pour commencez le job de livraison",
+        label = "Job: Livreur de fougère",
+        description = "Rendez vous au point sur votre gps pour commencez le job de livraison",
     })
     adsl:On("select", function()
         if blip ~= nil then
