@@ -10,7 +10,6 @@ client_scripts {
     "@PolyZone/BoxZone.lua",
 
     "client/location/main.lua",
-    "client/location/weedshop.lua",
     "client/location/ammunation.lua",
     "client/location/robsliquor.lua",
     "client/location/ltdgasoline.lua",
