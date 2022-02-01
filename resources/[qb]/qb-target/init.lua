@@ -52,7 +52,6 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
-
 }
 
 Config.PolyZones = {

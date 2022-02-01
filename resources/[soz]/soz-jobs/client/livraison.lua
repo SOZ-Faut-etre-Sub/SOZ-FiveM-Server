@@ -47,11 +47,6 @@ local function createblip(coords)
     SetBlipCategory(blip, 2)
 end
 
-local function destroyblip(blip)
-    RemoveBlip(blip)
-    blip = nil
-end
-
 RegisterNetEvent("jobs:livraison:fix")
 AddEventHandler("jobs:livraison:fix", function()
     TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
@@ -69,11 +64,6 @@ AddEventHandler("jobs:livraison:fix", function()
     payout_counter = payout_counter + 1
     OnJob = false
 end)
-
-local function DeleteVehicule(vehicule)
-    SetEntityAsMissionEntity(vehicule, true, true)
-    DeleteVehicle(vehicule)
-end
 
 local function SpawnVehicule()
     local ModelHash = "faggio"
@@ -114,4 +104,9 @@ AddEventHandler("jobs:livraison:end", function()
     local money = Config.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
     DeleteVehicule(adsl_vehicule)
+    if OnJob == true then
+        exports["qb-target"]:RemoveZone("livraison_zone")
+        destroyblip(blip)
+        OnJob = false
+    end
 end)

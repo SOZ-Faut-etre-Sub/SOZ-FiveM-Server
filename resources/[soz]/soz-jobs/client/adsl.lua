@@ -47,11 +47,6 @@ local function createblip(coords)
     SetBlipCategory(blip, 2)
 end
 
-local function destroyblip(blip)
-    RemoveBlip(blip)
-    blip = nil
-end
-
 RegisterNetEvent("jobs:adsl:fix")
 AddEventHandler("jobs:adsl:fix", function()
     TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
@@ -70,18 +65,13 @@ AddEventHandler("jobs:adsl:fix", function()
     OnJob = false
 end)
 
-local function DeleteVehicule(vehicule)
-    SetEntityAsMissionEntity(vehicule, true, true)
-    DeleteVehicle(vehicule)
-end
-
 local function SpawnVehicule()
     local ModelHash = "utillitruck3"
     if not IsModelInCdimage(ModelHash) then
         return
     end
     RequestModel(ModelHash)
-    adsl_vehicule = CreateVehicle(ModelHash, 500.79, -105.88, 61.07, 253.78, true, false)
+    adsl_vehicule = CreateVehicle(ModelHash, 500.79, -105.88, 62.07, 253.78, true, false)
 end
 
 RegisterNetEvent("jobs:adsl:start")
@@ -112,4 +102,9 @@ AddEventHandler("jobs:adsl:end", function()
     local money = Config.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
     DeleteVehicule(adsl_vehicule)
+    if OnJob == true then
+        exports["qb-target"]:RemoveZone("adsl_zone")
+        destroyblip(blip)
+        OnJob = false
+    end
 end)
