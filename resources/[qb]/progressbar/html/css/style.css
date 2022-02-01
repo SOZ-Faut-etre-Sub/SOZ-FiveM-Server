@@ -30,26 +30,31 @@ body {
 
 .progress-labels {
     width: 100%;
-    height: 4vh;
     line-height: 3vh;
-    text-align: center;
-    position: absolute;
+    text-align: left;
     display: inline-block;
     white-space: nowrap;
+    overflow: hidden;
 }
 
 .progress-labels div {
+    font-family: 'Prompt', sans-serif;
+    position: relative;
     font-size: 1.3vh;
     line-height: 3vh;
-    position: relative;
     color: #ffffff;
     z-index: 10;
-    font-family: 'Prompt', sans-serif;
+    padding: 0 .2vw;
+    animation-duration: 2s;
+    animation-name: slide-in;
+    transition-timing-function: ease-in-out;
+    text-transform: capitalize;
+    text-shadow: -1px -1px 0 rgba(0,0,0,.5), 1px -1px 0 rgba(0,0,0,.5), -1px 1px 0 rgba(0,0,0,.5), 1px 1px 0 rgba(0,0,0,.5);
 }
 
 .progress-bar-container {
     width: 100%;
-    height: 3vh;
+    height: 1vh;
     background: rgba(0, 0, 0, 0.246);
     text-align: left;
     overflow: hidden;
@@ -60,9 +65,18 @@ body {
 }
 
 .progress-bar {
-    background-color: #23740C !important;
-    width: 0%;
-    height: 3vh;
+    background: linear-gradient(to top, #38BB13 31%, #3FD215 100%) !important;
+    width: 0;
+    height: 1vh;
     transition: width 0.3s;
     transition-timing-function: ease-out;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(5vh);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
