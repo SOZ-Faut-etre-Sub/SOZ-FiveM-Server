@@ -6,7 +6,12 @@ local adsl_position = {x = 479.17, y = -107.53, z = 63.16}
 local livraison_position = {x = -424.06, y = -2789.62, z = 6.4}
 local pole_emploi_coords = vector3(236.53, -409.22, 47.92)
 
-QBCore.Functions.CreateBlip("pole_emploi_local", {name = "Pôle emploi", coords = pole_emploi_coords, sprite = 280, color = 2})
+QBCore.Functions.CreateBlip("pole_emploi_local", {*
+    name = "Pôle emploi", 
+    coords = pole_emploi_coords, 
+    sprite = 280, 
+    color = 2
+})
 
 exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
     name = "pole emploi",
@@ -39,11 +44,11 @@ end
 local function JobPanel(menu)
     local adsl = menu:AddButton({
         label = "job adsl",
-        description = "rendez vous au point sur votre gps pour commencez le job adsl"
+        description = "rendez vous au point sur votre gps pour commencez le job adsl",
     })
     local livraison = menu:AddButton({
         label = "job de livraison",
-        description = "rendez vous au point sur votre gps pour commencez le job de livraison"
+        description = "rendez vous au point sur votre gps pour commencez le job de livraison",
     })
     adsl:On("select", function()
         if blip ~= nil then
