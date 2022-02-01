@@ -20,13 +20,6 @@ Config.Products = {
         [6] = {name = "weapon_vintagepistol", price = 4000, amount = 5},
         [7] = {name = "pistol_ammo", price = 250, amount = 250},
     },
-    ["weedshop"] = {
-        [1] = {name = "joint", price = 10, amount = 1000},
-        [2] = {name = "weapon_poolcue", price = 100, amount = 1000},
-        [3] = {name = "weed_nutrition", price = 20, amount = 1000},
-        [4] = {name = "empty_weed_bag", price = 2, amount = 1000},
-        [5] = {name = "rolling_paper", price = 2, amount = 1000},
-    },
 }
 
 local shopConfig = {
@@ -239,14 +232,5 @@ Config.Locations = {
         products = Config.Products["weapons"],
         blip = shopConfig["ammunation"].blip,
         pedModel = shopConfig["ammunation"].pedModel,
-    },
-
-    -- Weedshop Locations
-    ["weedshop"] = {
-        label = "Smoke on the water",
-        coords = vector4(-1171.27, -1571.12, 4.66, 125.14),
-        products = Config.Products["weedshop"],
-        blip = {sprite = 140, color = 25},
-        pedModel = "a_m_m_hillbilly_02",
     },
 }
