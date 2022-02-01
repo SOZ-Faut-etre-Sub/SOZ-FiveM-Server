@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Typography, Grid, IconButton, Slide, Paper, Box, List, Divider} from '@mui/material';
+import {Typography, Grid, IconButton, Slide, Box, List} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import {useNotifications} from '../hooks/useNotifications';

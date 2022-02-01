@@ -27,7 +27,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
         setParticipantValue(phoneNumber);
       }
     }
-  }, [phoneNumber, getContactByNumber]);
+  }, [phoneNumber, getContactByNumber, addConversation]);
 
   const handleSubmit = () => {
     if (participantValue || participant) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {emphasize, Paper} from '@mui/material';
+import {emphasize} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import SearchIcon from '@mui/icons-material/Search';
 import {InputBase} from './Input';

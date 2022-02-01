@@ -1,7 +1,7 @@
 import React from 'react';
 import {BottomNavigation} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import {useHistory, useRouteMatch} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {useNotifications} from '@os/notifications/hooks/useNotifications';
 
 const useStyles = makeStyles((theme) => ({

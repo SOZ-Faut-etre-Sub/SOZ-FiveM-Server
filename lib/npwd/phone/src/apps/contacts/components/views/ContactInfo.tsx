@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Avatar as MuiAvatar, Box, Button} from '@mui/material';
+import {Avatar as MuiAvatar, Box} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
