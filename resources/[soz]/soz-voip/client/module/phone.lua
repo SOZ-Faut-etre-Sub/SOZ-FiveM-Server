@@ -67,7 +67,6 @@ function setCallChannel(channel)
     end
     TriggerServerEvent("pma-voice:setPlayerCall", channel)
     callChannel = channel
-    sendUIMessage({callInfo = channel})
     createPhoneThread()
 end
 
