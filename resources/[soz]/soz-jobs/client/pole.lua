@@ -6,7 +6,7 @@ local adsl_position = {x = 479.17, y = -107.53, z = 63.16}
 local livraison_position = {x = -424.06, y = -2789.62, z = 6.4}
 local pole_emploi_coords = vector3(236.53, -409.22, 47.92)
 
-QBCore.Functions.CreateBlip("pole_emploi_local", {*
+QBCore.Functions.CreateBlip("pole_emploi_local", {
     name = "Pôle emploi", 
     coords = pole_emploi_coords, 
     sprite = 280, 
