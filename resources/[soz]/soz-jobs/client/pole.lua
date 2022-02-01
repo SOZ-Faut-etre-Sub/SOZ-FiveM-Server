@@ -10,7 +10,7 @@ QBCore.Functions.CreateBlip("pole_emploi_local", {
     name = "Pôle emploi", 
     coords = pole_emploi_coords, 
     sprite = 280, 
-    color = 2
+    color = 2,
 })
 
 exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
