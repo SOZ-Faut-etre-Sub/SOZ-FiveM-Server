@@ -9,15 +9,16 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         flexDirection: 'column',
         display: 'flex',
-        backgroundColor: '#121212',
         paddingBottom: '2rem',
-        backgroundImage: "none"
+        backgroundImage: "none",
+        backgroundColor: "transparent"
     },
     backdrop: {
         position: 'absolute',
         zIndex: 1,
     },
     paper: {
+        backgroundColor: "transparent",
         width: '100%',
         flex: '1 1 auto',
     },

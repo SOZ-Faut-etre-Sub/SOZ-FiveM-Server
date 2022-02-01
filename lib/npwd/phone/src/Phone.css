@@ -23,7 +23,6 @@
 .PhoneScreen {
   overflow: hidden;
   position: absolute;
-  background-color: #121212;
   bottom: 100px;
   left: 50px;
   right: 50px;
@@ -34,6 +33,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 40px;
+}
+
+.PhoneScreenNoHome:before {
+    content: "";
+    position: absolute;
+    width : 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(5px);
 }
 
 .PhoneAppContainer {

@@ -18,7 +18,6 @@ const useStyle = makeStyles(
     root: ({ backgroundColor, home }) => ({
       width: '100%',
       textAlign: 'left',
-      backgroundColor: backgroundColor || theme.palette.background.default,
     }),
     text: ({ color }) => ({
       color: color || theme.palette.text.primary,
