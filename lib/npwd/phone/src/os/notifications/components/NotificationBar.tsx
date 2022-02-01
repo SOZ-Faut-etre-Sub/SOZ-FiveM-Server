@@ -8,25 +8,11 @@ import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import {NoNotificationText} from './NoNotificationText';
 import BatteryIcon from "../../../styles/icons/system/Battery";
 import CellSignal from "../../../styles/icons/system/CellSignal";
-import {useRouteMatch} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '33px',
         width: '100%',
-        color: theme.palette.text.primary,
-        zIndex: 99,
-        paddingTop: '13px',
-        alignItems: 'center',
-        position: 'relative',
-        '&:hover': {
-            cursor: 'pointer',
-        },
-    },
-    rootApp: {
-        height: '33px',
-        width: '100%',
-        background: '#000',
         color: theme.palette.text.primary,
         zIndex: 99,
         paddingTop: '13px',
@@ -83,7 +69,6 @@ export const NotificationBar = () => {
         useNotifications();
 
     const time = usePhoneTime();
-    const {isExact} = useRouteMatch('/');
 
     useEffect(() => {
         if (notifications.length === 0) {
@@ -94,7 +79,7 @@ export const NotificationBar = () => {
     return (
         <>
             <Grid
-                className={isExact ? classes.root : classes.rootApp}
+                className={classes.root}
                 container
                 justifyContent="space-between"
                 wrap="nowrap"

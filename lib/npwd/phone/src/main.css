@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
     font-family: 'SF-Pro';
     src: url("../public/fonts/SF-Pro-Text-Medium.otf") format("opentype");

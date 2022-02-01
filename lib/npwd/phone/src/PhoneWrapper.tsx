@@ -3,9 +3,11 @@ import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { Slide } from '@mui/material';
+import {useRouteMatch} from "react-router-dom";
 
 const PhoneWrapper: React.FC = ({ children }) => {
   const [settings] = useSettings();
+  const {isExact} = useRouteMatch('/');
   const { bottom, visibility } = usePhoneVisibility();
 
   return (
@@ -28,7 +30,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
           />
           <div
             id="phone"
-            className="PhoneScreen"
+            className={isExact ? "PhoneScreen" : "PhoneScreen PhoneScreenNoHome"}
             style={{
               backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
                 ? `url(${settings.wallpaper.value})`

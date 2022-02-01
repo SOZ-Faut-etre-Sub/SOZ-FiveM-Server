@@ -65,7 +65,15 @@ const useStyles = makeStyles({
     listBackground: {
         margin: '0 .5rem',
         borderRadius: '.7rem',
-        background: 'rgba(255, 255, 255, .06)'
+        background: 'rgba(0,0,0,.15)',
+        ':after': {
+            content: "",
+            position: "absolute",
+            width : "100%",
+            height: "100%",
+            background: "inherit",
+            filter: "blur(15px)",
+        }
     }
 });
 
@@ -166,15 +174,6 @@ export const SettingsApp = () => {
             {/* Used for picking and viewing a custom wallpaper */}
             <WallpaperModal/>
             <div className={customWallpaperState ? classes.backgroundModal : undefined}/>
-            {/*
-        Sometimes depending on the height of the app, we sometimes want it to fill its parent
-        and other times we want it to grow with the content. AppContent implementation currently
-        has a style of height: 100%, attached to its main class. We overwrite this here by
-        passing a style prop of height: 'auto'. This isn't ideal but it works without breaking
-        any of the other apps.
-
-        This also fixes Material UI v5's background color properly
-      */}
             <AppContent
                 backdrop={isMenuOpen}
                 onClickBackdrop={closeMenu}
