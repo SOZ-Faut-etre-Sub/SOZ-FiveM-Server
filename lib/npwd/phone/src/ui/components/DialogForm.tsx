@@ -1,30 +1,5 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Button, DialogContent, DialogContentText, DialogTitle, Paper } from '@mui/material';
-import DialogActions from '@mui/material/DialogActions';
-
-const useStyles = makeStyles({
-  root: {
-    paddingLeft: '10px',
-    zIndex: 10,
-    width: '90%',
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    position: 'absolute',
-    top: '80px',
-  },
-  displayBlock: {
-    /*Sets modal to center*/
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  displayNone: {
-    display: 'none',
-  },
-});
+import { Button } from './Button';
 
 interface DialogFormProps {
   children: React.ReactNode;
@@ -43,27 +18,26 @@ const DialogForm: React.FC<DialogFormProps> = ({
   title,
   content,
 }) => {
-  const classes = useStyles();
 
-  const showHideClassName = open ? classes.displayBlock : classes.displayNone;
+  const showHideClassName = open ? 'classes.displayBlock' : 'classes.displayNone';
 
   return (
     <div className={showHideClassName}>
-      <Paper className={classes.root}>
-        <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{content}</DialogContentText>
+      <div >
+        <div id="form-dialog-title">{title}</div>
+        <div>
+          <div>{content}</div>
           {children}
-        </DialogContent>
-        <DialogActions>
+        </div>
+        <div>
           <Button color="primary" onClick={handleClose}>
             Cancel
           </Button>
           <Button color="primary" onClick={onSubmit}>
             Confirm
           </Button>
-        </DialogActions>
-      </Paper>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Email } from '@mui/icons-material';
 
-const EmailIcon: React.FC = () => <Email fontSize="large" />;
+const EmailIcon: React.FC = (props) => <div />;
 
 export default EmailIcon;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const NotesIcon: React.FC = () => {
+const NotesIcon: React.FC = (props) => {
     return (
-        <svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg {...props} viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="34" y="299" width="1024" height="725" fill="white"/>
             <g filter="url(#filter0_i_0_715)">
                 <rect x="34" width="1024" height="299" fill="url(#paint0_linear_0_715)"/>

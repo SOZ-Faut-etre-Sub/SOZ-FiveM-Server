@@ -1,15 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Slide,
-  Paper,
-  Typography,
-  Button,
-  Box,
-  CircularProgress,
-  Tooltip,
-  IconButton,
-} from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 import MessageSkeletonList from './MessageSkeletonList';
@@ -17,44 +6,17 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useMessagesState } from '../../hooks/state';
-import { makeStyles } from '@mui/styles';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 import { useCall } from '@os/call/hooks/useCall';
-import { Call } from '@mui/icons-material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Button } from '@ui/components/Button';
 
 const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
-const useStyles = makeStyles({
-  tooltip: {
-    fontSize: 12,
-  },
-  modalHide: {
-    display: 'none',
-  },
-  groupdisplay: {
-    width: '300px',
-    paddingTop: '8px',
-    fontSize: '24px',
-    whiteSpace: 'nowrap',
-    overflowX: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-  largeGroupDisplay: {
-    width: '300px',
-    paddingTop: '8px',
-    fontSize: '20px',
-    overflowX: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-});
-
 // abandon all hope ye who enter here
 export const MessageModal = () => {
   const [t] = useTranslation();
-  const classes = useStyles();
   const history = useHistory();
   const { pathname } = useLocation();
   const { groupId } = useParams<{ groupId: string }>();
@@ -104,7 +66,7 @@ export const MessageModal = () => {
   if (!activeMessageConversation)
     return (
       <div>
-        <CircularProgress />
+        {/*<CircularProgress />*/}
       </div>
     );
 
@@ -116,7 +78,7 @@ export const MessageModal = () => {
   header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
 
   const headerClass =
-    header.length > LARGE_HEADER_CHARS ? classes.largeGroupDisplay : classes.groupdisplay;
+    header.length > LARGE_HEADER_CHARS ? 'classes.largeGroupDisplay' : 'classes.groupdisplay';
 
   const handleAddContact = (number) => {
     const exists = getContactByNumber(number);
@@ -131,46 +93,36 @@ export const MessageModal = () => {
 
   return (
     <>
-      <Slide direction="left" in={!!activeMessageConversation}>
-        <Paper
-          sx={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            flexGrow: 1,
-            overflowY: 'hidden',
-            flexDirection: 'column',
-          }}
+      <div >
+        <div
         >
-          <Box display="flex" justifyContent="space-between" component={Paper}>
-            <Button onClick={closeModal}>
-              <ArrowBackIosIcon fontSize="large" />
-            </Button>
-            <Typography variant="h5" className={headerClass}>
+          <div >
+            <button onClick={closeModal}>
+              {/*<ArrowBackIosIcon fontSize="large" />*/}
+            </button>
+            <div className={headerClass}>
               {header}
-            </Typography>
-            <Tooltip
-              classes={{ tooltip: classes.tooltip }}
+            </div>
+            <div
               title={`${t('GENERIC.CALL')} ${targetNumber}`}
-              placement="bottom"
             >
-              <IconButton onClick={() => initializeCall(targetNumber)}>
-                <Call fontSize="medium" />
-              </IconButton>
-            </Tooltip>
+              {/*<IconButton onClick={() => initializeCall(targetNumber)}>*/}
+              {/*  <Call fontSize="medium" />*/}
+              {/*</IconButton>*/}
+            </div>
             {getDisplayByNumber(targetNumber) === targetNumber ? (
               <Button>
-                <PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />
+                {/*<PersonAddIcon onClick={() => handleAddContact(targetNumber)} fontSize="large" />*/}
               </Button>
             ) : null}
-          </Box>
+          </div>
           {isLoaded && activeMessageConversation ? (
             <Conversation messages={messages} activeMessageGroup={activeMessageConversation} />
           ) : (
             <MessageSkeletonList />
           )}
-        </Paper>
-      </Slide>
+        </div>
+      </div>
     </>
   );
 };

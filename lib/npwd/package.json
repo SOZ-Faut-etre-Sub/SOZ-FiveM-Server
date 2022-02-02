@@ -20,5 +20,6 @@
     "format:staged": "pretty-quick --staged",
     "postinstall": "yarn bootstrap",
     "test": "lerna run test"
-  }
+  },
+  "dependencies": {}
 }

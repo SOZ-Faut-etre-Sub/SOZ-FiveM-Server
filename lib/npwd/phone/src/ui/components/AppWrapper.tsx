@@ -1,29 +1,15 @@
 import React from 'react';
 import {AppWrapperTypes} from '../interface/InterfaceUI';
+import {useRouteMatch} from "react-router-dom";
 
 export const AppWrapper: React.FC<AppWrapperTypes> = ({
     children,
-    style,
-    handleClickAway,
-    ...props
 }) => {
+    const {isExact} = useRouteMatch('/');
 
     return (
-        <div
-            {...props}
-            style={{
-                padding: 0,
-                margin: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                position: 'relative',
-                flexDirection: 'column',
-                minHeight: '720px',
-                backgroundColor: "transparent",
-                ...style,
-            }}
-        >
+        <div className={`p-0 m-0 relative flex flex-col h-full w-full min-h-[720px]`}>
+            {/*${ !isExact && 'bg-red-500'}*/}
             {children}
         </div>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const BankIcon: React.FC = () => {
+const BankIcon: React.FC = (props) => {
     return (
-        <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg {...props} viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="150" height="150" fill="white"/>
             <path d="M119 15H133V120H119V15Z" fill="#E7242F"/>
             <path d="M119 15H133V120H119V15Z" fill="#E7242F"/>

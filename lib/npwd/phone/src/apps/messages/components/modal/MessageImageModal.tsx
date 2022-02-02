@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import qs from 'qs';
 import Modal from '../../../../ui/components/Modal';
-import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ContextMenu } from '@ui/components/ContextMenu';
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
@@ -97,18 +96,16 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
     <>
       <ContextMenu open={isOpen} options={menuOptions} onClose={onClose} />
       <Modal visible={queryParamImagePreview} handleClose={removeQueryParamImage}>
-        <Box py={1}>
-          <Typography paragraph>Do you want to share this image?</Typography>
+        <div>
+          <div>Do you want to share this image?</div>
           <PictureResponsive src={queryParamImagePreview} alt="Share gallery image preview" />
-          <Button
-            fullWidth
-            variant="contained"
+          <button
             color="primary"
             onClick={() => sendFromQueryParam(queryParamImagePreview)}
           >
             Share
-          </Button>
-        </Box>
+          </button>
+        </div>
       </Modal>
     </>
   );

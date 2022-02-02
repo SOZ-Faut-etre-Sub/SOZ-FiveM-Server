@@ -1,9 +1,7 @@
 import React from 'react';
 import Modal from '../../../../ui/components/Modal';
-import { Button } from '@mui/material';
 import { setClipboard } from '@os/phone/hooks/useClipboard';
 
-import useStyles from './modal.styles';
 import { useHistory } from 'react-router-dom';
 import { GalleryPhoto } from '@typings/photo';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +13,6 @@ interface IShareModalProps {
 }
 
 export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
-  const classes = useStyles();
   const history = useHistory();
   const [t] = useTranslation();
 
@@ -26,12 +23,12 @@ export const ShareModal = ({ meta, onClose, referal }: IShareModalProps) => {
 
   return (
     <Modal visible={!!meta} handleClose={onClose}>
-      <div className={classes.shareModal}>
-        <div className={classes.innerShareModal}>
+      <div >
+        <div >
           <h4>{t('CAMERA.COPY_IMAGE')}</h4>
-          <Button onClick={handleCopyImage} variant="contained">
+          <button onClick={handleCopyImage}>
             Copy image
-          </Button>
+          </button>
         </div>
       </div>
     </Modal>

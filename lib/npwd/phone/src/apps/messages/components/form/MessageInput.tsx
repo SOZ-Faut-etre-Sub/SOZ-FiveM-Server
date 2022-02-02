@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Paper, Box, Button} from '@mui/material';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import MenuIcon from '@mui/icons-material/Menu';
 import {TextField} from '@ui/components/Input';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
 
@@ -34,13 +31,13 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     if (!messageConversationId) return null;
 
     return (
-        <Paper variant="outlined" sx={{display: 'flex', alignItems: 'center'}}>
-            <Box>
-                <Button onClick={onAddImageClick}>
-                    <MenuIcon/>
-                </Button>
-            </Box>
-            <Box py={1} flexGrow={1}>
+        <div>
+            <div>
+                <button onClick={onAddImageClick}>
+                    {/*<MenuIcon/>*/}
+                </button>
+            </div>
+            <div>
                 <TextField
                     onKeyPress={handleKeyPress}
                     multiline
@@ -52,13 +49,13 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={t('MESSAGES.NEW_MESSAGE')}
                 />
-            </Box>
-            <Box>
-                <Button onClick={handleSubmit}>
-                    <FileUploadIcon/>
-                </Button>
-            </Box>
-        </Paper>
+            </div>
+            <div>
+                <button onClick={handleSubmit}>
+                    {/*<FileUploadIcon/>*/}
+                </button>
+            </div>
+        </div>
     );
 };
 

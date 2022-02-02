@@ -1,26 +1,5 @@
 import React, {useContext} from 'react';
-import {Box, Button, Grid} from '@mui/material';
-import {Theme} from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import {DialInputCtx} from '../context/InputContext';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    gridItem: {
-        fontSize: theme.typography.h5.fontSize,
-        display: 'flex',
-        color: 'white',
-        justifyContent: 'center',
-    },
-    itemLabel: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '80px',
-        width: '80px',
-        backgroundColor: 'rgba(255,255,255,.25)',
-        borderRadius: '50%',
-    }
-}));
 
 interface ButtonItemProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -28,13 +7,12 @@ interface ButtonItemProps {
 }
 
 const ButtonItem: React.FC<ButtonItemProps> = ({label, onClick}) => {
-    const classes = useStyles();
     return (
-        <Grid key={label} item xs={4}>
-            <Button fullWidth size="large" className={classes.gridItem} onClick={onClick}>
-                <span className={classes.itemLabel}>{label}</span>
-            </Button>
-        </Grid>
+        <div key={label}>
+            <button onClick={onClick}>
+                <span >{label}</span>
+            </button>
+        </div>
     );
 };
 
@@ -42,8 +20,8 @@ export const DialGrid = () => {
     const {add, removeOne, clear} = useContext(DialInputCtx);
 
     return (
-        <Box height="100%" width="80%" margin="auto">
-            <Grid container justifyContent="space-around">
+        <div>
+            <div>
                 <ButtonItem label={1} onClick={() => add(1)}/>
                 <ButtonItem label={2} onClick={() => add(2)}/>
                 <ButtonItem label={3} onClick={() => add(3)}/>
@@ -57,8 +35,8 @@ export const DialGrid = () => {
                 <ButtonItem label={0} onClick={() => add(0)}/>
                 <ButtonItem label="#" onClick={removeOne}/>
                 <ButtonItem label="-" onClick={() => add('-')}/>
-            </Grid>
-        </Box>
+            </div>
+        </div>
     );
 };
 

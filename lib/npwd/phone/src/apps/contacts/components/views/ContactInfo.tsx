@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {Avatar as MuiAvatar, Box} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {useContactActions} from '../../hooks/useContactActions';
@@ -8,10 +6,6 @@ import {useQueryParams} from '@common/hooks/useQueryParams';
 import {ContactsDatabaseLimits} from '@typings/contact';
 import {TextField} from '@ui/components/Input';
 import {useContactsAPI} from '../../hooks/useContactsAPI';
-import {Theme} from "@mui/material/styles";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ContactInfoRouteParams {
     mode: string;
@@ -25,40 +19,7 @@ interface ContactInfoRouteQuery {
     avatar?: string;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        height: '100%',
-        width: '100%',
-    },
-    action: {
-        position: 'absolute',
-        right: theme.spacing(3),
-        top: theme.spacing(5),
-    },
-    listContainer: {
-        marginTop: 30,
-        width: '75%',
-        margin: '0 auto',
-        textAlign: 'center',
-    },
-    avatar: {
-        margin: 'auto',
-        height: '125px',
-        width: '124px',
-        marginBottom: 29,
-    },
-    input: {
-        marginBottom: 20,
-        margin: 'auto',
-        textAlign: 'center',
-    },
-    inputProps: {
-        fontSize: 22,
-    },
-}));
-
 const ContactsInfoPage: React.FC = () => {
-    const classes = useStyles();
     const {id} = useParams<ContactInfoRouteParams>();
     const {
         addNumber,
@@ -113,42 +74,36 @@ const ContactsInfoPage: React.FC = () => {
     }, [addNumber, avatar, avatarParam, nameParam]);
 
     return (
-        <div className={classes.root}>
-            <div className={classes.action}>
+        <div >
+            <div >
                 {contact && (
-                    <Box display="flex">
-                        <EditIcon style={{ cursor: 'pointer', marginRight: 10 }} color="info" onClick={handleContactUpdate}/>
-                        <DeleteIcon style={{ cursor: 'pointer' }} color="error" onClick={handleContactDelete}/>
-                    </Box>
+                    <div>
+                        {/*<EditIcon style={{ cursor: 'pointer', marginRight: 10 }} color="info" onClick={handleContactUpdate}/>*/}
+                        {/*<DeleteIcon style={{ cursor: 'pointer' }} color="error" onClick={handleContactDelete}/>*/}
+                    </div>
                 )}
-                {!contact && (
-                    <AddBoxIcon color="primary" onClick={handleContactAdd} />
-                )}
+                {/*{!contact && (*/}
+                {/*    <AddBoxIcon color="primary" onClick={handleContactAdd} />*/}
+                {/*)}*/}
             </div>
-            <div className={classes.listContainer}>
-                <MuiAvatar className={classes.avatar} src={avatar}/>
+            <div >
+                {/*<MuiAvatar  src={avatar}/>*/}
                 <TextField
                     autoFocus
                     error={name.length >= ContactsDatabaseLimits.display}
-                    className={classes.input}
+
                     value={name}
                     onChange={handleDisplayChange}
                     label={t('CONTACTS.FORM_NAME')}
                     fullWidth
-                    inputProps={{
-                        className: classes.inputProps,
-                    }}
                 />
                 <TextField
-                    className={classes.input}
+
                     error={number.length >= ContactsDatabaseLimits.number}
                     value={number}
                     onChange={handleNumberChange}
                     label={t('CONTACTS.FORM_NUMBER')}
                     fullWidth
-                    inputProps={{
-                        className: classes.inputProps,
-                    }}
                 />
             </div>
         </div>

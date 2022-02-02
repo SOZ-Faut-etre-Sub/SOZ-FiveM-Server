@@ -5,17 +5,14 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { useApp } from '@os/apps/hooks/useApps';
 import NoteList from './list/NoteList';
 import { NoteModal } from './modal/NoteModal';
-import useStyles from './notes.styles';
 import { NotesThemeProvider } from './providers/NotesThemeProvider';
 import { Route } from 'react-router-dom';
 import { useSetModalVisible, useSetSelectedNote } from './hooks/state';
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { AddNoteExportData } from '@typings/notes';
-import {AddBox} from "@mui/icons-material";
 
 export const NotesApp: React.FC = () => {
-  const classes = useStyles();
   const notesApp = useApp('NOTES');
   const setSelectedNote = useSetSelectedNote();
   const setModalVisible = useSetModalVisible();
@@ -43,8 +40,8 @@ export const NotesApp: React.FC = () => {
     <NotesThemeProvider>
       <AppWrapper id="notes-app">
         <AppTitle app={notesApp} />
-        <div className={classes.absolute} style={{cursor: 'pointer'}}>
-          <AddBox color="primary" onClick={onClickCreate}/>
+        <div  style={{cursor: 'pointer'}}>
+          {/*<AddBox color="primary" onClick={onClickCreate}/>*/}
         </div>
         <NoteModal />
         <AppContent>

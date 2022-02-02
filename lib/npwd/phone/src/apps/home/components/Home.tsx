@@ -1,16 +1,9 @@
 import React from 'react';
 import {AppWrapper} from '@ui/components';
-import {Box} from '@mui/material';
-import {GridMenu} from '@ui/components/GridMenu';
 import {useApps} from '@os/apps/hooks/useApps';
 import {useMySocietyPhoneNumber} from "@os/simcard/hooks/useMyPhoneNumber";
 import {Transition} from '@headlessui/react';
-
-const AppQuickClass = {
-    borderRadius: '40px',
-    background: 'rgba(255, 255, 255, .25)',
-    marginBottom: '40px'
-};
+import {AppsGrid} from "./AppsGrid";
 
 export const HomeApp: React.FC = () => {
     const {apps} = useApps();
@@ -24,20 +17,20 @@ export const HomeApp: React.FC = () => {
             <Transition
                 appear={true}
                 show={true}
-                className="h-full flex flex-col justify-between"
-                enter="transition-transform duration-500"
-                enterFrom="scale-[2.0]"
+                className="mt-4 h-full flex flex-col justify-between"
+                enter="transition-transform duration-700"
+                enterFrom="scale-[3.0]"
                 enterTo="scale-100"
-                leave="transition-transform duration-500"
+                leave="transition-transform duration-7  00"
                 leaveFrom="scale-100"
-                leaveTo="scale-[2.0]"
+                leaveTo="scale-[3.0]"
             >
-                <Box component="div" mt={6} px={1}>
-                    {filteredApps && <GridMenu xs={3} items={filteredApps}/>}
-                </Box>
-                <Box sx={AppQuickClass} component="div" mb={1} pt={1} mx={2}>
-                    {homeApps && <GridMenu xs={3} items={homeApps}/>}
-                </Box>
+                <div className="mt-4 px-1">
+                    <AppsGrid items={filteredApps} />
+                </div>
+                <div className="bg-black bg-opacity-25 backdrop-blur rounded-[20px] mb-10 py-2 mx-2">
+                    <AppsGrid items={homeApps} />
+                </div>
             </Transition>
         </AppWrapper>
     );

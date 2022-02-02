@@ -1,9 +1,7 @@
 import React from 'react';
-import { Box, IconButton, List } from '@mui/material';
 import { MessageConversation } from '@typings/messages';
 import useMessages from '../../hooks/useMessages';
 import MessageGroupItem from './MessageGroupItem';
-import useStyles from './list.styles';
 import { SearchField } from '@ui/components/SearchField';
 import { useTranslation } from 'react-i18next';
 import {
@@ -12,13 +10,12 @@ import {
   useFilterValueState,
   useIsEditing,
 } from '../../hooks/state';
-import EditIcon from '@mui/icons-material/Edit';
+import { List } from '@ui/components/List';
 
 const MessagesList = (): any => {
   const [isEditing, setIsEditing] = useIsEditing();
   const [checkedConversation, setCheckedConversation] = useCheckedConversations();
 
-  const classes = useStyles();
   const [t] = useTranslation();
 
   const { conversations, goToConversation } = useMessages();
@@ -50,23 +47,23 @@ const MessagesList = (): any => {
   };
 
   return (
-    <Box display="flex" flexDirection="column">
+    <div>
       {!!conversations.length && (
-        <Box position="absolute" top="1.8rem" right="3.5rem">
-          <IconButton onClick={toggleEdit}>
-            <EditIcon />
-          </IconButton>
-        </Box>
+        <div>
+          {/*<IconButton onClick={toggleEdit}>*/}
+          {/*  <EditIcon />*/}
+          {/*</IconButton>*/}
+        </div>
       )}
-      <Box>
+      <div>
         <SearchField
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder={t('MESSAGES.SEARCH_PLACEHOLDER')}
         />
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <Box className={classes.root}>
+      </div>
+      <div>
+        <div >
           <List>
             {filteredConversations.map((conversation) => (
               <MessageGroupItem
@@ -79,9 +76,9 @@ const MessagesList = (): any => {
               />
             ))}
           </List>
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 };
 

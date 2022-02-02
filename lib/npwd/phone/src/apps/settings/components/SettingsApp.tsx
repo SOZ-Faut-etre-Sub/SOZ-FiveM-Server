@@ -9,73 +9,32 @@ import {useMyPhoneNumber, useMyPictureProfile} from '@os/simcard/hooks/useMyPhon
 import {useApp} from '@os/apps/hooks/useApps';
 import {
     SettingItem,
-    SettingItemSlider,
-    SettingSwitch,
+    SettingItemSlider, SettingSwitch,
 } from './SettingItem';
 import {useTranslation} from 'react-i18next';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import {
-    Wallpaper,
-    Phone,
-    ZoomIn,
-    VolumeUp,
-    DeleteForever,
-    ChevronRight, VolumeDown, Notifications,
-} from '@mui/icons-material';
-import makeStyles from '@mui/styles/makeStyles';
-import {Avatar as MuiAvatar, Button, Divider, ListItem, ListItemText, ListSubheader} from '@mui/material';
 import {useCustomWallpaperModal, useResetSettings, useSettings, useSettingsAPI} from '../hooks/useSettings';
 import {useSnackbar} from '@os/snackbar/hooks/useSnackbar';
 import {IContextMenuOption} from '@ui/components/ContextMenu';
-import WallpaperModal from './WallpaperModal';
 import {deleteQueryFromLocation} from "@common/utils/deleteQueryFromLocation";
 import {useQueryParams} from "@common/hooks/useQueryParams";
 import {useHistory, useLocation} from "react-router-dom";
 import qs from "qs";
+import { ListItem } from '@ui/components/ListItem';
+import { useInView } from 'react-intersection-observer';
+import { Button } from '@ui/components/Button';
+import {Transition} from "@headlessui/react";
+import {
+    ChevronRightIcon,
+    VolumeOffIcon,
+    BellIcon,
+    PhoneIcon,
+    VolumeUpIcon,
+    AdjustmentsIcon,
+    PhotographIcon,
+    EyeOffIcon,
+    TrashIcon
+} from "@heroicons/react/solid";
 
-const useStyles = makeStyles({
-    backgroundModal: {
-        background: 'black',
-        opacity: '0.6',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 5,
-    },
-    avatar: {
-        height: '80px',
-        width: '80px',
-    },
-    button: {
-        color: 'white',
-        textTransform: 'inherit',
-        "&:hover": {
-            background: 'transparent'
-        }
-    },
-    subheader: {
-        lineHeight: '1rem',
-        paddingTop: '2rem',
-        paddingBottom: '0.5rem',
-        textTransform: 'uppercase',
-        fontWeight: 300,
-    },
-    listBackground: {
-        margin: '0 .5rem',
-        borderRadius: '.7rem',
-        background: 'rgba(0,0,0,.15)',
-        ':after': {
-            content: "",
-            position: "absolute",
-            width : "100%",
-            height: "100%",
-            background: "inherit",
-            filter: "blur(15px)",
-        }
-    }
-});
 
 export const SettingsApp = () => {
     const settingsApp = useApp('SETTINGS');
@@ -93,14 +52,18 @@ export const SettingsApp = () => {
 
     const resetSettings = useResetSettings();
 
+    const [inViewRef, inView] = useInView({
+        triggerOnce: true
+    });
+
     const handleSettingChange = (key: string | number, value: unknown) => {
         setSettings({...settings, [key]: value});
     };
 
     const SubHeaderComp = (props: { text: string }) => (
-        <ListSubheader className={classes.subheader} component="div" disableSticky>
+        <div>
             {props.text}
-        </ListSubheader>
+        </div>
     );
 
     const wallpapers = config.wallpapers.map(
@@ -159,7 +122,6 @@ export const SettingsApp = () => {
     }, [history, pathname, search]);
 
     const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
-    const classes = useStyles();
 
     useEffect(() => {
         if (!query.image) return;
@@ -170,125 +132,113 @@ export const SettingsApp = () => {
 
     return (
         <AppWrapper>
-            <AppTitle app={settingsApp}/>
-            {/* Used for picking and viewing a custom wallpaper */}
-            <WallpaperModal/>
-            <div className={customWallpaperState ? classes.backgroundModal : undefined}/>
-            <AppContent
-                backdrop={isMenuOpen}
-                onClickBackdrop={closeMenu}
-                display="flex"
-                style={{
-                    height: 'auto',
-                }}
+            <Transition
+                appear={true}
+                show={true}
+                className="mt-4 h-full flex flex-col"
+                enter="transition-all origin-[20%_20%] duration-500"
+                enterFrom="scale-[0.0] opacity-0"
+                enterTo="scale-100 opacity-100"
+                leave="transition-all origin-[20%_20%] duration-500"
+                leaveFrom="scale-100 opacity-100"
+                leaveTo="scale-[0.0] opacity-0"
             >
-                <List childrenClassName={classes.listBackground} disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.PROFILE')}/>}>
-                    <ListItem>
-                        <ListItemText primary={<MuiAvatar className={classes.avatar} src={myAvatar}/>}/>
+                <AppTitle app={settingsApp} isBigHeader={inView}/>
+                {/*<WallpaperModal/>*/}
+                {/*<div className={customWallpaperState ? classes.backgroundModal : undefined}/>*/}
+                <AppContent className="mt-6 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
+                    <List>
+                        <ListItem>
+                            <div className="bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
+                            <Button className="flex items-center text-white text-sm" onClick={handleChooseImage}>
+                                {t('MARKETPLACE.CHOOSE_IMAGE')}
+                                <ChevronRightIcon className="text-opacity-25 w-6 h-6" />
+                            </Button>
+                        </ListItem>
+                    </List>
+                    <List>
+                        <SettingItem
+                            label={t('SETTINGS.PHONE_NUMBER')}
+                            value={myNumber}
+                            icon={<PhoneIcon/>}
+                            color='bg-[#65C466]'
+                        />
+                    </List>
+                    <List>
+                        <SettingItem
+                            label={t('SETTINGS.OPTIONS.RINGTONE')}
+                            value={settings.ringtone.label}
+                            options={ringtones}
+                            onClick={openMenu}
+                            icon={<VolumeUpIcon/>}
+                            color='bg-[#ee1039]'
+                        />
+                        <SettingItemSlider
+                            label={t('SETTINGS.OPTIONS.RINGTONE_VOLUME')}
+                            iconStart={<VolumeOffIcon/>}
+                            iconEnd={<VolumeUpIcon/>}
+                            value={settings.ringtoneVol}
+                            onCommit={e => handleSettingChange('ringtoneVol', e.target.value)}
+                        />
+                    </List>
+                    <List>
+                        <SettingItem
+                            label={t('SETTINGS.OPTIONS.NOTIFICATION')}
+                            value={settings.notiSound.label}
+                            options={notifications}
+                            onClick={openMenu}
+                            icon={<BellIcon/>}
+                            color='bg-[#EA4E3D]'
+                        />
+                        <SettingItemSlider
+                            label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
+                            iconStart={<VolumeOffIcon/>}
+                            iconEnd={<VolumeUpIcon/>}
+                            value={settings.notiSoundVol}
+                            onCommit={e => handleSettingChange('notiSoundVol', e.target.value)}
+                        />
+                    </List>
+                    <List>
+                        <SettingItem
+                            label={t('SETTINGS.OPTIONS.WALLPAPER')}
+                            value={settings.wallpaper.label}
+                            options={[...wallpapers, customWallpaper]}
+                            onClick={openMenu}
+                            icon={<PhotographIcon/>}
+                            color={'#23319b'}
+                        />
 
-                        <Button className={classes.button} onClick={handleChooseImage}>
-                            {t('MARKETPLACE.CHOOSE_IMAGE')}
-                            <ChevronRight color="action"/>
-                        </Button>
-                    </ListItem>
-                    <SettingItem
-                        label={t('SETTINGS.PHONE_NUMBER')}
-                        value={myNumber}
-                        icon={<Phone/>}
-                        color={'#40cb56'}
-                    />
-                </List>
-                <List childrenClassName={classes.listBackground} disablePadding subheader={<SubHeaderComp text={t('SETTINGS.OPTIONS.RINGTONE')}/>}>
-                    <SettingItem
-                        label={t('SETTINGS.OPTIONS.RINGTONE')}
-                        value={settings.ringtone.label}
-                        options={ringtones}
-                        onClick={openMenu}
-                        icon={<VolumeUp/>}
-                        color={'#ee1039'}
-                    />
-                    <SettingItemSlider
-                        label={t('SETTINGS.OPTIONS.RINGTONE_VOLUME')}
-                        iconStart={<VolumeDown/>}
-                        iconEnd={<VolumeUp/>}
-                        value={settings.ringtoneVol}
-                        onCommit={(e, val) => handleSettingChange('ringtoneVol', val)}
-                    />
-                </List>
-                <List childrenClassName={classes.listBackground} disablePadding subheader={<SubHeaderComp text={t('SETTINGS.OPTIONS.NOTIFICATION')}/>}>
-                    <SettingItem
-                        label={t('SETTINGS.OPTIONS.NOTIFICATION')}
-                        value={settings.notiSound.label}
-                        options={notifications}
-                        onClick={openMenu}
-                        icon={<Notifications/>}
-                        color={'#e5440a'}
-                    />
-                    <SettingItemSlider
-                        label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
-                        iconStart={<VolumeDown/>}
-                        iconEnd={<VolumeUp/>}
-                        value={settings.notiSoundVol}
-                        onCommit={(e, val) => handleSettingChange('notiSoundVol', val)}
-                    />
-                </List>
-                <List childrenClassName={classes.listBackground} disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.APPEARANCE')}/>}>
-                    {/*<SettingItem*/}
-                    {/*    label={t('SETTINGS.OPTIONS.THEME')}*/}
-                    {/*    value={settings.theme.label}*/}
-                    {/*    options={themes}*/}
-                    {/*    onClick={openMenu}*/}
-                    {/*    icon={<Brush/>}*/}
-                    {/*    color={'#333546'}*/}
-                    {/*/>*/}
-                    {/*<Divider component="li"/>*/}
-                    <SettingItem
-                        label={t('SETTINGS.OPTIONS.WALLPAPER')}
-                        value={settings.wallpaper.label}
-                        options={[...wallpapers, customWallpaper]}
-                        onClick={openMenu}
-                        icon={<Wallpaper/>}
-                        color={'#23319b'}
-                    />
-                    {/*<Divider component="li"/>*/}
-                    {/*<SettingItem*/}
-                    {/*    label={t('SETTINGS.OPTIONS.FRAME')}*/}
-                    {/*    value={settings.frame.label}*/}
-                    {/*    options={frames}*/}
-                    {/*    onClick={openMenu}*/}
-                    {/*    icon={<Smartphone/>}*/}
-                    {/*    color={'#bd4012'}*/}
-                    {/*/>*/}
-                    <Divider component="li"/>
-                    <SettingItem
-                        label={t('SETTINGS.OPTIONS.ZOOM')}
-                        value={settings.zoom.label}
-                        options={zoomOptions}
-                        onClick={openMenu}
-                        icon={<ZoomIn/>}
-                        color={'#429b21'}
-                    />
-                </List>
-                <List childrenClassName={classes.listBackground} disablePadding subheader={<SubHeaderComp text={t('SETTINGS.CATEGORY.ACTIONS')}/>}>
-                    <SettingSwitch
-                        label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
-                        secondary={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
-                        icon={<VisibilityOffIcon/>}
-                        color={'#c41515'}
-                        value={settings.streamerMode}
-                        onClick={(curr) => handleSettingChange('streamerMode', !curr)}
-                    />
-                    <SettingItem
-                        label=""
-                        value={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
-                        icon={<DeleteForever/>}
-                        color={'#f11f1f'}
-                        onClick={openMenu}
-                        options={resetSettingsOpts}
-                    />
-                </List>
-            </AppContent>
-            <ContextMenu/>
+                        {/*<Divider component="li"/>*/}
+                        <SettingItem
+                            label={t('SETTINGS.OPTIONS.ZOOM')}
+                            value={settings.zoom.label}
+                            options={zoomOptions}
+                            onClick={openMenu}
+                            icon={<AdjustmentsIcon/>}
+                            color={'#429b21'}
+                        />
+                    </List>
+                    <List>
+                        <SettingSwitch
+                            label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
+                            secondary={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
+                            icon={<EyeOffIcon/>}
+                            color='bg-[#c41515]'
+                            value={settings.streamerMode}
+                            onClick={(curr) => handleSettingChange('streamerMode', !curr)}
+                        />
+                        <SettingItem
+                            label=""
+                            value={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
+                            icon={<TrashIcon/>}
+                            color='bg-[#f11f1f]'
+                            onClick={openMenu}
+                            options={resetSettingsOpts}
+                        />
+                    </List>
+                </AppContent>
+                {/*<ContextMenu/>*/}
+            </Transition>
         </AppWrapper>
     );
 };

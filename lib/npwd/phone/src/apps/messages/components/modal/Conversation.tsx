@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { Box, CircularProgress } from '@mui/material';
 
 import { Message, MessageConversation, MessageEvents } from '@typings/messages';
 import MessageInput from '../form/MessageInput';
@@ -65,15 +64,15 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
 
   return (
     <>
-      <Box display="flex" zIndex={1} flexGrow={1} flexDirection="column">
+      <div>
         <MessageImageModal
           image={referalImage}
           onClose={() => setImageModalOpen(false)}
           isOpen={imageModalOpen}
           messageGroupId={activeMessageGroup.conversation_id}
         />
-        <Box id={CONVERSATION_ELEMENT_ID} style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
-          <Box
+        <div id={CONVERSATION_ELEMENT_ID} style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
+          <div
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -90,22 +89,22 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
                 flexDirection: 'column-reverse',
               }}
             >
-              <InfiniteScroll
-                next={handleNextPage}
-                scrollableTarget="scrollableDiv"
-                hasMore={hasMore}
-                inverse={true}
-                loader={<CircularProgress />}
-                dataLength={messages.length}
-              >
-                {messages.map((message) => (
-                  <MessageBubble key={message.id} message={message} />
-                ))}
-              </InfiniteScroll>
+              {/*<InfiniteScroll*/}
+              {/*  next={handleNextPage}*/}
+              {/*  scrollableTarget="scrollableDiv"*/}
+              {/*  hasMore={hasMore}*/}
+              {/*  inverse={true}*/}
+              {/*  // loader={<CircularProgress />}*/}
+              {/*  dataLength={messages.length}*/}
+              {/*>*/}
+              {/*  {messages.map((message) => (*/}
+              {/*    <MessageBubble key={message.id} message={message} />*/}
+              {/*  ))}*/}
+              {/*</InfiniteScroll>*/}
             </div>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
       <MessageInput
         messageGroupName={conversationContact?.display || activeMessageGroup.phoneNumber}
         messageConversationId={activeMessageGroup.conversation_id}
