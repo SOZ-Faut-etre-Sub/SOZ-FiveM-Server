@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
 
@@ -19,12 +18,12 @@ export const SearchContacts: React.FC = () => {
   }, [debouncedVal, setFilterVal]);
 
   return (
-    <Box>
+    <div>
       <SearchField
         onChange={(e) => setInputVal(e.target.value)}
         placeholder={t('SOCIETY_CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
         value={inputVal}
       />
-    </Box>
+    </div>
   );
 };

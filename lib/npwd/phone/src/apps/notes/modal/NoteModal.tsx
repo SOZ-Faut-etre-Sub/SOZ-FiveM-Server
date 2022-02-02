@@ -1,16 +1,13 @@
-import {Button, Slide, Paper, Typography, Container, Box} from '@mui/material';
 import React, {useEffect, useMemo, useState} from 'react';
-import useStyles from './modal.styles';
 import {useTranslation} from 'react-i18next';
 import {TextField} from '@ui/components/Input';
 import {useModalVisible, useSelectedNote} from '../hooks/state';
 import {useHistory, useLocation} from 'react-router';
 import {useApps} from '@os/apps/hooks/useApps';
 import {useNotesAPI} from '../hooks/useNotesAPI';
-import {ArrowBackIos, Delete, Save} from "@mui/icons-material";
+import { Button } from '@ui/components/Button';
 
 export const NoteModal: React.FC = () => {
-    const classes = useStyles();
     const {addNewNote, deleteNote, updateNote} = useNotesAPI();
     const [modalVisible, setModalVisible] = useModalVisible();
     const [t] = useTranslation();
@@ -77,33 +74,27 @@ export const NoteModal: React.FC = () => {
     if (selectedNote === null) return null;
 
     return (
-        <Slide
-            direction="left"
-            in={modalVisible}
-            mountOnEnter
-            unmountOnExit
-            onExited={handleClearContent}
-        >
-            <Paper className={classes.modalRoot} square>
-                <Container>
-                    <Box>
-                        <Box py={2} display="flex" justifyContent="space-between" alignItems="center">
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <div >
                             <Button
                                 color="primary"
                                 size="large"
-                                startIcon={<ArrowBackIos fontSize="large"/>}
+                                // startIcon={<ArrowBackIos fontSize="large"/>}
                                 onClick={_handleClose}
                             >
                                 {t('APPS_NOTES')}
                             </Button>
-                            <Box>
+                            <div>
                                 {isNewNote ? (
                                     <Button
                                         color="primary"
                                         disabled={noteTitle.length <= 0}
                                         onClick={handleNewNote}
                                     >
-                                        <Save />
+                                        {/*<Save />*/}
                                     </Button>
                                 ) : (
                                     <>
@@ -112,33 +103,23 @@ export const NoteModal: React.FC = () => {
                                             onClick={handleUpdateNote}
                                             disabled={noteTitle.length <= 0}
                                         >
-                                            <Save />
+                                            {/*<Save />*/}
                                         </Button>
                                         <Button color="error" onClick={handleDeleteNote}>
-                                            <Delete />
+                                            {/*<Delete />*/}
                                         </Button>
                                     </>
                                 )}
-                            </Box>
-                        </Box>
+                            </div>
+                        </div>
                         <TextField
-                            className={classes.input}
                             maxRows={1}
                             label={t('GENERIC.TITLE')}
-                            inputProps={{
-                                className: classes.inputPropsTitle,
-                                maxLength: 25,
-                            }}
                             fullWidth
                             value={noteTitle}
                             onChange={handleTitleChange}
                         />
                         <TextField
-                            className={classes.input}
-                            inputProps={{
-                                className: classes.inputPropsContent,
-                                maxLength: 250,
-                            }}
                             label={t('GENERIC.CONTENT')}
                             multiline
                             fullWidth
@@ -147,10 +128,10 @@ export const NoteModal: React.FC = () => {
                             value={noteContent}
                             onChange={handleContentChange}
                         />
-                        <Typography paragraph style={{textAlign: "center"}}>{noteContent.length}/250</Typography>
-                    </Box>
-                </Container>
-            </Paper>
-        </Slide>
+                        <div style={{textAlign: "center"}}>{noteContent.length}/250</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };

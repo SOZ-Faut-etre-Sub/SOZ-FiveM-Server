@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ContactIcon: React.FC = () => {
+const ContactIcon: React.FC = (props) => {
     return (
-        <svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg {...props} viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="1024" height="1024" fill="white"/>
             <mask id="mask0_6_5198" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
                 <rect width="1024" height="1024" fill="white"/>

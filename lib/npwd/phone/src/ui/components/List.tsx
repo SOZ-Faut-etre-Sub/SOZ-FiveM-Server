@@ -1,14 +1,11 @@
 import React from 'react';
-import MaterialList, { ListProps } from '@mui/material/List';
 
-export type UListProps = ListProps & {
-    childrenClassName?: string;
-};
-
-export const List: React.FC<UListProps> = ({ ...props }) => (
-  <MaterialList aria-label="list" {...props}>
-    <div className={props.childrenClassName}>
-      {props.children}
+export const List = ({ ...props }) => (
+    <div className="mx-2 my-4 bg-[#1C1C1E] shadow overflow-hidden rounded-[.8rem]">
+        <ul role="list" className="divide-y divide-gray-800">
+            {props.children}
+        </ul>
     </div>
-  </MaterialList>
+  // <div className="bg-[#1C1C1E] m-2 p-2 rounded-lg" {...props}>
+  // </div>
 );

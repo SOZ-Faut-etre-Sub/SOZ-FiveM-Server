@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from 'react';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { createLazyAppIcon } from '../utils/createLazyAppIcon';
 import { APPS, IApp } from '../config/apps';
-import { SvgIconComponent } from '@mui/icons-material';
 
 
 export const useApps = () => {
@@ -10,25 +9,25 @@ export const useApps = () => {
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
-      const SvgIcon = React.lazy<SvgIconComponent>(() =>
+      const SvgIcon = React.lazy<any>(() =>
         import(`${__dirname}/../icons/svg/${app.id}`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
-      const AppIcon = React.lazy<SvgIconComponent>(() =>
+      const AppIcon = React.lazy<any>(() =>
         import(`${__dirname}/../icons/app/${app.id}`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
 
       const NotificationIcon = createLazyAppIcon(SvgIcon);
-      const Icon = createLazyAppIcon(AppIcon);
+      const Icon = createLazyAppIcon(AppIcon, {className: "h-16 w-16 rounded-[1rem]"});
 
       return {
         ...app,
         notification: icons.find((i) => i.key === app.id),
         NotificationIcon,
-        notificationIcon: <NotificationIcon htmlColor={app.color} fontSize="small" />,
+        notificationIcon: <NotificationIcon />,
         icon: <Icon />,
       };
     });

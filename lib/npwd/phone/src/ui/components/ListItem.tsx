@@ -1,8 +1,7 @@
 import React from 'react';
-import MaterialListItem from '@mui/material/ListItem';
 
 export const ListItem = ({ ...props }) => (
-  <MaterialListItem aria-label="list item" {...props}>
+  <li className="py-2 px-4 flex justify-between items-center hover:bg-[#27272A] text-white text-sm" {...props}>
     {props.children}
-  </MaterialListItem>
+  </li>
 );

@@ -1,51 +1,20 @@
-import React, { HTMLAttributes } from 'react';
-import { Typography, Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { useTranslation } from 'react-i18next';
-import { IApp } from '@os/apps/config/apps';
-import { OverridableStringUnion } from '@mui/types';
-import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
-import { Variant } from '@mui/material/styles/createTypography';
-import {useRouteMatch} from "react-router-dom";
-
-interface IUseStyle {
-  root: any;
-  text: any;
-}
-
-const useStyle = makeStyles(
-  (theme): IUseStyle => ({
-    root: ({ backgroundColor, home }) => ({
-      width: '100%',
-      textAlign: 'left',
-    }),
-    text: ({ color }) => ({
-      color: color || theme.palette.text.primary,
-      marginBottom: 0,
-    }),
-  }),
-);
+import React, {HTMLAttributes} from 'react';
+import {useTranslation} from 'react-i18next';
+import {IApp} from '@os/apps/config/apps';
 
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
-  app: IApp;
-  variant?: OverridableStringUnion<Variant | 'inherit', TypographyPropsVariantOverrides>;
+    app: IApp
+    isBigHeader?: boolean
 }
 
-// Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint
-// but need to think about the best way to do that for standardization sake.
 export const AppTitle: React.FC<AppTitleProps> = ({
-  app: { color, nameLocale },
-  variant = 'h5',
-  ...props
+    app: {nameLocale},
+    isBigHeader
 }) => {
-  const { isExact } = useRouteMatch('/');
-  const classes = useStyle({ color, home: isExact });
-  const [t] = useTranslation();
-  return (
-    <Box px={2} pt={4} pb={1} className={classes.root} {...props}>
-      <Typography className={classes.text} paragraph variant={variant}>
-        {t(nameLocale)}
-      </Typography>
-    </Box>
-  );
+    const [t] = useTranslation();
+    return (
+        <div className={`${isBigHeader ? 'h-32' : 'h-24'} absolute -top-16 inset-x-0 bg-gray-900 bg-opacity-50 backdrop-blur px-5 pt-12 transition-all duration-300 ease-in-out z-30`}>
+            <h2 className={`text-gray-200 ${isBigHeader ? 'pt-8 text-3xl' : 'text-2xl'} font-semibold tracking-wide transition-all duration-300 ease-in-out`}>{t(nameLocale)}</h2>
+        </div>
+    );
 };

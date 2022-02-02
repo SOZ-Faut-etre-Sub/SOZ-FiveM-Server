@@ -1,40 +1,16 @@
 import React from 'react';
-import {Snackbar} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {useSnackbar} from '../hooks/useSnackbar';
 import Alert from '../../../ui/components/Alert';
 
-const useStyles = makeStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        height: 'auto',
-        width: '100%',
-        overflow: 'auto',
-        margin: '0 auto',
-        position: 'absolute',
-        left: 0,
-        top: 40,
-        right: 0,
-        transform: 'none',
-    },
-});
 
 export const PhoneSnackbar: React.FC = () => {
-    const classes = useStyles();
     const {alert, isOpen, handleClose} = useSnackbar();
 
     return (
-        <Snackbar
-            autoHideDuration={alert?.duration ?? 3000}
-            open={isOpen}
-            className={classes.root}
-            onClose={handleClose}
-        >
+        <div >
             <Alert severity={alert?.type || 'info'} onClose={handleClose}>
                 {alert?.message || ''}
             </Alert>
-        </Snackbar>
+        </div>
     );
 };

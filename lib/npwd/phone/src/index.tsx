@@ -9,7 +9,6 @@ import { PhoneProviders } from './PhoneProviders';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
-import { Theme as MaterialUITheme } from '@mui/material';
 import { RewriteFrames } from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
 import { createBrowserHistory } from 'history';
@@ -31,7 +30,7 @@ if (
   process.env.REACT_APP_VERSION
 ) {
   Sentry.init({
-    dsn: 'https://5172a525f085459da82ee8a5792d498d@o383364.ingest.sentry.io/6143921',
+    dsn: 'https://2fd07f10ac9b4868902998b8a147e47b@o1133416.ingest.sentry.io/6179935',
     autoSessionTracking: true,
     release: process.env.REACT_APP_VERSION,
     integrations: [
@@ -53,11 +52,6 @@ if (
     // for finer control
     tracesSampleRate: 0.5,
   });
-}
-
-declare module '@emotion/react' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface Theme extends MaterialUITheme {}
 }
 
 // window.mockNuiEvent is restricted to development env only

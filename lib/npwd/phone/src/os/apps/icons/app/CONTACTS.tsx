@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ContactIcon: React.FC = () => {
+const ContactIcon: React.FC = (props) => {
     return (
-        <svg width="2048" height="2048" viewBox="0 0 2048 2048" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg {...props} viewBox="0 0 2048 2048" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="App Icon / Apple / Contacts /">
                 <rect id="Origin Color" width="2048" height="2048" fill="white"/>
                 <mask id="mask0_0_1263" maskUnits="userSpaceOnUse" x="0" y="0" width="2048" height="2048">

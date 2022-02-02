@@ -1,16 +1,6 @@
 import React, { forwardRef } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { TextField } from './Input';
 
-const useStyles = makeStyles({
-  formContainer: {
-    width: '100%',
-    marginTop: '8px',
-  },
-  textField: {
-    width: '100%',
-  },
-});
 
 interface ProfileFieldProps {
   label: string;
@@ -23,13 +13,11 @@ interface ProfileFieldProps {
 
 const ProfileField = forwardRef<HTMLInputElement, ProfileFieldProps>(
   ({ label, value, handleChange, allowChange, multiline, maxLength }, ref) => {
-    const classes = useStyles();
     const _handleChange = (e) => handleChange(e.target.value);
 
     return (
-      <div className={classes.formContainer}>
+      <div >
         <TextField
-          className={classes.textField}
           label={label}
           value={value}
           onChange={_handleChange}

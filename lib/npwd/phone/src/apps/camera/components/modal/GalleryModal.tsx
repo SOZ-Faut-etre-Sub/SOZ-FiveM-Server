@@ -1,8 +1,4 @@
 import React, {useMemo, useState, useCallback} from 'react';
-import useStyles from './modal.styles';
-import {Box, Button, Paper} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ShareIcon from '@mui/icons-material/Share';
 import {useHistory} from 'react-router-dom';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {ShareModal} from './ShareModal';
@@ -12,12 +8,10 @@ import {fetchNui} from '@utils/fetchNui';
 import {ServerPromiseResp} from '@typings/common';
 import {useTranslation} from 'react-i18next';
 import {useSnackbar} from '@os/snackbar/hooks/useSnackbar';
-import {ArrowBackIos} from "@mui/icons-material";
 
 export const GalleryModal = () => {
     const [shareOpen, setShareOpen] = useState(null);
 
-    const classes = useStyles();
     const history = useHistory();
     const query = useQueryParams();
     const {deletePhoto} = usePhotoActions();
@@ -58,31 +52,29 @@ export const GalleryModal = () => {
     return (
         <>
             <ShareModal referal={referal} meta={shareOpen} onClose={() => setShareOpen(null)}/>
-            <Paper className={classes.modal}>
-                {shareOpen && <div className={classes.backgroundModal}/>}
-                <Box display="flex" flexDirection="column" justifyContent="space-between" height="100%" py={2}>
-                    <Button
+            <div >
+                {shareOpen && <div />}
+                <div>
+                    <button
                         color="primary"
-                        size="large"
-                        startIcon={<ArrowBackIos fontSize="large"/>}
-                        className={classes.button}
+                        // startIcon={<ArrowBackIos fontSize="large"/>}
                         onClick={_handleClose}
                     >
                         {t('APPS_CAMERA')}
-                    </Button>
+                    </button>
 
-                    <div className={classes.image} style={{backgroundImage: `url(${meta.image})`}}/>
+                    <div  style={{backgroundImage: `url(${meta.image})`}}/>
 
-                    <div className={classes.actionDiv}>
-                        <Button color="error" onClick={handleDeletePhoto}>
-                            <DeleteIcon fontSize="large"/>
-                        </Button>
-                        <Button onClick={handleSharePhoto}>
-                            <ShareIcon fontSize="large"/>
-                        </Button>
+                    <div >
+                        <button color="error" onClick={handleDeletePhoto}>
+                            {/*<DeleteIcon fontSize="large"/>*/}
+                        </button>
+                        <button onClick={handleSharePhoto}>
+                            {/*<ShareIcon fontSize="large"/>*/}
+                        </button>
                     </div>
-                </Box>
-            </Paper>
+                </div>
+            </div>
         </>
     );
 };

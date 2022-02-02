@@ -1,43 +1,23 @@
 import React from 'react';
-import {BottomNavigation} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {useHistory} from 'react-router-dom';
-import {useNotifications} from '@os/notifications/hooks/useNotifications';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        zIndex: 2,
-        height: '15px',
-        backgroundColor: 'transparent',
-        position: 'absolute',
-        bottom: '0.3rem',
-        width: '100%'
-    },
-}));
-
-const style = {
-    home: {
-        backgroundColor: 'rgba(255, 255, 255, .65)',
-        height: '6px',
-        width: '35%',
-        borderRadius: '10px',
-        cursor: 'pointer'
-    }
-}
+import { Transition } from '@headlessui/react';
 
 export const Navigation = () => {
-    const classes = useStyles();
     const history = useHistory();
-    const {setBarUncollapsed} = useNotifications();
+
     return (
-        <BottomNavigation
-            className={classes.root}
-            onChange={(_e, value) => {
-                setBarUncollapsed(false);
-                value();
-            }}
+        <Transition
+            appear={true}
+            show={true}
+            className="absolute bottom-0 inset-x-px flex justify-center items-center h-10 z-10"
+            enter="transition-opacity duration-75"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-150"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
         >
-            <div style={style.home} onClick={() => history.push('/')}/>
-        </BottomNavigation>
+            <div className="bg-gray-200 bg-opacity-70 rounded-full cursor-pointer h-[0.6rem] w-2/5" onClick={() => history.push('/')}/>
+        </Transition>
     );
 };

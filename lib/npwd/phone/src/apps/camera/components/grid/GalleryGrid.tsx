@@ -1,7 +1,4 @@
 import React from 'react';
-import {Box, Button} from '@mui/material';
-import useStyles from './grid.styles';
-import AddIcon from '@mui/icons-material/Add';
 import {useHistory} from 'react-router-dom';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {addQueryToLocation} from '@common/utils/addQueryToLocation';
@@ -17,11 +14,10 @@ import {AppWrapper} from "@ui/components";
 import {AppTitle} from "@ui/components/AppTitle";
 import {useApp} from "@os/apps/hooks/useApps";
 import {AppContent} from "@ui/components/AppContent";
-import {AddBox} from "@mui/icons-material";
+import { Transition } from '@headlessui/react';
 
 export const GalleryGrid = () => {
     const photosApp = useApp('CAMERA');
-    const classes = useStyles();
     const history = useHistory();
     const query = useQueryParams();
     const {addAlert} = useSnackbar();
@@ -50,30 +46,40 @@ export const GalleryGrid = () => {
 
     if (!photos)
         return (
-            <Box display="flex" flexWrap="wrap" alignContent="flex-start" className={classes.root}>
-                <Box>
-                    <Button onClick={takePhoto} style={{borderRadius: 0}} className={classes.photo}>
-                        <AddIcon fontSize="large"/>
-                    </Button>
-                </Box>
-            </Box>
+            <div>
+                <div>
+                    <button onClick={takePhoto} style={{borderRadius: 0}}>
+                        {/*<AddIcon fontSize="large"/>*/}
+                    </button>
+                </div>
+            </div>
         );
 
     return (
-        <AppWrapper id="photo-app">
-            <AppTitle app={photosApp}/>
-            <div className={classes.absolute} style={{cursor: 'pointer'}}>
-                <AddBox color="primary" onClick={handleTakePhoto}/>
-            </div>
-            <AppContent>
-                <Box display="grid" className={classes.root}>
-                    {photos.map((photo) => (
-                        <Box key={photo.id} onClick={() => handlePhotoOpen(photo)}>
-                            <div style={{backgroundImage: `url(${photo.image})`}} className={classes.photo}/>
-                        </Box>
-                    ))}
-                </Box>
-            </AppContent>
+        <AppWrapper>
+            <Transition
+                appear={true}
+                show={true}
+                className="mt-4 h-full flex flex-col"
+                enter="transition-all duration-300"
+                enterFrom="translate-x-0"
+                enterTo="-translate-x-full"
+                leave="transition-all duration-300"
+                leaveFrom="-translate-x-full"
+                leaveTo="translate-x-0"
+            >
+                <AppTitle app={photosApp} isBigHeader={true}/>
+                <div  style={{cursor: 'pointer'}}>
+                    {/*<AddBox color="primary" onClick={handleTakePhoto}/>*/}
+                </div>
+                <AppContent>
+                    <div className="grid grid-cols-3 gap-1">
+                        {photos.map((photo) => (
+                            <div key={photo.id}  className="bg-cover bg-center w-full aspect-square" style={{backgroundImage: `url(${photo.image})`}} onClick={() => handlePhotoOpen(photo)} />
+                        ))}
+                    </div>
+                </AppContent>
+            </Transition>
         </AppWrapper>
     );
 };

@@ -1,30 +1,8 @@
 import React from 'react';
-import {Backdrop, Paper, BoxProps} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {AppContentTypes} from '../interface/InterfaceUI';
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
 
-const useStyles = makeStyles((theme) => ({
-    wrapper: {
-        flex: 1,
-        flexDirection: 'column',
-        display: 'flex',
-        paddingBottom: '2rem',
-        backgroundImage: "none",
-        backgroundColor: "transparent"
-    },
-    backdrop: {
-        position: 'absolute',
-        zIndex: 1,
-    },
-    paper: {
-        backgroundColor: "transparent",
-        width: '100%',
-        flex: '1 1 auto',
-    },
-}));
-
-export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
+export const AppContent: React.FC<any> = ({
     children,
     paperStyle,
     backdrop,
@@ -32,29 +10,18 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
     onClickBackdrop,
     ...props
 }) => {
-    const classes = useStyles();
 
     const ChildElements = () => (
         <>
-            <Backdrop className={classes.backdrop} open={backdrop || false} onClick={onClickBackdrop}/>
-            <Paper
-                sx={{flexGrow: 1}}
-                square
-                elevation={0}
-                className={`${classes.paper} ${props.className}`}
-                style={paperStyle}
-            >
+            <div onClick={onClickBackdrop}/>
+            <div >
                 {children}
-            </Paper>
+            </div>
         </>
     );
 
     return (
-        <Paper
-            className={classes.wrapper}
-            square
-            style={backdrop ? {overflow: 'hidden'} : {overflow: 'auto'}}
-        >
+        <div className="mt-4" style={backdrop ? {overflow: 'hidden'} : {overflow: 'auto'}}>
             {!disableSuspenseHandler ? (
                 <React.Suspense fallback={<LoadingSpinner/>}>
                     <ChildElements/>
@@ -62,6 +29,6 @@ export const AppContent: React.FC<AppContentTypes & BoxProps> = ({
             ) : (
                 <ChildElements/>
             )}
-        </Paper>
+        </div>
     );
 };

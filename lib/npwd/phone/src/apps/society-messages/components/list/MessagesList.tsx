@@ -1,11 +1,4 @@
 import React from 'react';
-import {Button, List, ListItem} from '@mui/material';
-import ListItemText from "@mui/material/ListItemText";
-import DoneIcon from '@mui/icons-material/Done';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
-import ClearIcon from '@mui/icons-material/Clear';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import PhoneIcon from '@mui/icons-material/Phone';
 import {useMessagesValue} from "../../hooks/state";
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
@@ -14,6 +7,9 @@ import LogDebugEvent from "@os/debug/LogDebugEvents";
 import {useCall} from "@os/call/hooks/useCall";
 import {SocietyEvents} from "@typings/society";
 import dayjs from "dayjs";
+import { ListItem } from '@ui/components/ListItem';
+import { List } from '@ui/components/List';
+import { Button } from '@ui/components/Button';
 
 const MessagesList = (): any => {
   const societyMessages = useMessagesValue();
@@ -47,36 +43,25 @@ const MessagesList = (): any => {
     <List>
       {societyMessages.map((message) => (
         <ListItem key={message.conversation_id} alignItems="flex-start" divider>
-          <ListItemText
-            primary={message.message}
-            secondary={dayjs().to(dayjs.unix(parseInt(message.createdAt)))}
-            primaryTypographyProps={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-            secondaryTypographyProps={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          />
+
           {message.source_phone !== '' && <Button style={{ marginRight: -15 }} onClick={() => startCall(message.source_phone)}>
-            <PhoneIcon color="action" />
+            {/*<PhoneIcon color="action" />*/}
           </Button>}
           {message.position && <Button onClick={() => setWaypoint(message.position)}>
-              <LocationOnIcon color="info" />
+              {/*<LocationOnIcon color="info" />*/}
             </Button>}
           {message.isDone ? (
             <Button style={{ marginLeft: -15, marginRight: -15 }}>
-              <DoneAllIcon color="success" />
+              {/*<DoneAllIcon color="success" />*/}
             </Button>
           ) : (
             message.isTaken ? (
               <Button style={{ marginLeft: -15, marginRight: -15 }} onClick={() => setMessageState(message.id, true, true)}>
-                <DoneIcon color="warning" />
+                {/*<DoneIcon color="warning" />*/}
               </Button>
             ) : (
               <Button style={{ marginLeft: -15, marginRight: -15 }} onClick={() => setMessageState(message.id, true, false)}>
-                <ClearIcon color="error" />
+                {/*<ClearIcon color="error" />*/}
               </Button>
             )
           )}

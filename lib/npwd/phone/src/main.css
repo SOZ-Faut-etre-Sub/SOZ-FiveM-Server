@@ -4,13 +4,7 @@
 
 @font-face {
     font-family: 'SF-Pro';
-    src: url("../public/fonts/SF-Pro-Text-Medium.otf") format("opentype");
-}
-
-@font-face {
-    font-family: 'SF-Pro';
-    font-weight: 300;
-    src: url("../public/fonts/SF-Pro-Text-Light.otf") format("opentype");
+    src: url("../public/fonts/SF-Pro.ttf") format("truetype");
 }
 
 body {

@@ -2,8 +2,8 @@ import React from 'react';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
-import { Slide } from '@mui/material';
 import {useRouteMatch} from "react-router-dom";
+import { Transition } from '@headlessui/react';
 
 const PhoneWrapper: React.FC = ({ children }) => {
   const [settings] = useSettings();
@@ -11,7 +11,15 @@ const PhoneWrapper: React.FC = ({ children }) => {
   const { bottom, visibility } = usePhoneVisibility();
 
   return (
-    <Slide direction="up" timeout={{ enter: 500, exit: 500 }} in={visibility}>
+      <Transition
+          show={visibility}
+          enter="transition-any transform-gpu ease-in-out duration-500"
+          enterFrom="translate-y-full"
+          enterTo="translate-y-0"
+          leave="transition-any transform-gpu ease-in-out duration-500"
+          leaveFrom="translate-y-0"
+          leaveTo="translate-y-full"
+      >
       <div className="PhoneWrapper">
         <div
           className="Phone"
@@ -41,7 +49,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
           </div>
         </div>
       </div>
-    </Slide>
+    </Transition>
   );
 };
 

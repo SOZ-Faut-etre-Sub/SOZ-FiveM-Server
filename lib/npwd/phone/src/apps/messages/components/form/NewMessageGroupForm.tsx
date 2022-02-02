@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Popper } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { Autocomplete } from '@mui/material';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { TextField } from '@ui/components/Input';
 import { useContactsValue } from '../../../contacts/hooks/state';
@@ -52,41 +50,38 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
   const submitDisabled = !participantValue && !participant;
 
   return (
-    <Box>
-      <Box px={2} py={3}>
-        <Autocomplete
-          value={participant}
-          inputValue={participantValue}
-          freeSolo
-          disablePortal
-          PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}
-          autoHighlight
-          options={contacts}
-          // I am so sorry
-          ListboxProps={{ style: { marginLeft: 10 } }}
-          getOptionLabel={(contact) => contact.display || contact.number || participant}
-          onChange={(e, value: any) => setParticipant(value)}
-          onInputChange={(e, value: any) => setParticipantValue(value)}
-          renderInput={renderAutocompleteInput}
-        />
-      </Box>
-      <Box px={2} py={3}>
-        <Button
+    <div>
+      <div>
+        {/*<Autocomplete*/}
+        {/*  value={participant}*/}
+        {/*  inputValue={participantValue}*/}
+        {/*  freeSolo*/}
+        {/*  disablePortal*/}
+        {/*  PopperComponent={(props) => <Popper placement="bottom-start" {...props} />}*/}
+        {/*  autoHighlight*/}
+        {/*  options={contacts}*/}
+        {/*  // I am so sorry*/}
+        {/*  ListboxProps={{ style: { marginLeft: 10 } }}*/}
+        {/*  getOptionLabel={(contact) => contact.display || contact.number || participant}*/}
+        {/*  onChange={(e, value: any) => setParticipant(value)}*/}
+        {/*  onInputChange={(e, value: any) => setParticipantValue(value)}*/}
+        {/*  renderInput={renderAutocompleteInput}*/}
+        {/*/>*/}
+      </div>
+      <div>
+        <button
           onClick={() => handleSubmit()}
           disabled={submitDisabled}
-          variant="contained"
-          fullWidth
-          sx={{ mb: 1 }}
           color="primary"
           type="submit"
         >
           {t('MESSAGES.NEW_MESSAGE_GROUP_SUBMIT')}
-        </Button>
-        <Button onClick={handleCancel} variant="contained" fullWidth color="error">
+        </button>
+        <button onClick={handleCancel} color="error">
           {t('GENERIC_CANCEL')}
-        </Button>
-      </Box>
-    </Box>
+        </button>
+      </div>
+    </div>
   );
 };
 

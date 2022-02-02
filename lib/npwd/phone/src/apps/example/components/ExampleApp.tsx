@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Box, Button, IconButton, Typography } from '@mui/material';
-import { Stop, PlayArrow } from '@mui/icons-material';
 import { useExampleStringValue } from '../hooks/state';
 import useSound from '@os/sound/hooks/useSound';
 import { useApp } from '@os/apps/hooks/useApps';
@@ -20,15 +18,15 @@ export const ExampleApp: React.FC = () => {
   };
 
   return (
-    <Box height="100%" width="100%" p={2}>
-      <Typography variant="h4">Welcome to NPWD!</Typography>
-      <Button color="primary">{example.id}</Button>
+    <div>
+      <div>Welcome to NPWD!</div>
+      <button color="primary">{example.id}</button>
       {/* Here we are using the value in a h3 tag */}
       <h3>{exampleString}</h3>
-      <IconButton onClick={() => (playing ? stop() : play())} size="large">
-        {playing ? <Stop /> : <PlayArrow />}
-      </IconButton>
-      <Button onClick={toggleSound}>Change sound on the fly</Button>
-    </Box>
+      {/*<IconButton onClick={() => (playing ? stop() : play())} size="large">*/}
+      {/*  {playing ? <Stop /> : <PlayArrow />}*/}
+      {/*</IconButton>*/}
+      <button onClick={toggleSound}>Change sound on the fly</button>
+    </div>
   );
 };

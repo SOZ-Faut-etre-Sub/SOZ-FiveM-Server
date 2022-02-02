@@ -1,5 +1,4 @@
 import React from 'react';
-import {blue, common, grey} from '@mui/material/colors';
 import {DialerApp} from '../../../apps/dialer/components/DialerApp';
 import {ContactsApp} from '../../../apps/contacts/components/ContactsApp';
 import {SettingsApp} from '../../../apps/settings/components/SettingsApp';
@@ -18,7 +17,6 @@ import {
 } from '../../../apps/contacts/contacts.theme';
 import {NOTES_APP_ICON_COLOR} from '../../../apps/notes/notes.theme';
 import {DIALER_APP_TEXT_COLOR} from '../../../apps/dialer/dialer.theme';
-import {SvgIconProps} from '@mui/material';
 import {INotificationIcon} from '@os/notifications/providers/NotificationsProvider';
 import {
     SOCIETY_CONTACTS_APP_TEXT_COLOR
@@ -42,8 +40,8 @@ export type IApp = IAppConfig & {
     notification: INotificationIcon;
     icon: JSX.Element;
     notificationIcon: JSX.Element;
-    NotificationIcon: React.FC<SvgIconProps>;
-    Icon?: React.FC<SvgIconProps>;
+    NotificationIcon: React.FC<any>;
+    Icon?: React.FC<any>;
 };
 
 export const APPS: IAppConfig[] = [
@@ -78,7 +76,7 @@ export const APPS: IAppConfig[] = [
     {
         id: 'SETTINGS',
         nameLocale: 'APPS_SETTINGS',
-        color: grey[50],
+        color: 'grey[50]',
         path: '/settings',
         Route: () => (
             <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false}/>
@@ -87,7 +85,7 @@ export const APPS: IAppConfig[] = [
     {
         id: 'BANK',
         nameLocale: 'APPS_BANK',
-        color: common.white,
+        color: 'common.white',
         path: '/bank',
         Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} emitOnOpen={false}/>,
     },
@@ -128,7 +126,7 @@ export const APPS: IAppConfig[] = [
     {
         id: 'CAMERA',
         nameLocale: 'APPS_CAMERA',
-        color: common.white,
+        color: 'common.white',
         path: '/camera',
         home: true,
         Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true}/>,
@@ -140,7 +138,7 @@ if (process.env.NODE_ENV === 'development') {
     APPS.push({
         id: 'EXAMPLE',
         nameLocale: 'APPS_EXAMPLE',
-        color: blue[50],
+        color: 'blue[50]',
         path: '/example',
         Route: () => (
             <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false}/>
