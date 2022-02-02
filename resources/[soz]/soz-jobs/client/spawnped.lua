@@ -12,7 +12,8 @@ function pedCreation_basic(PedToCreate)
     pedCreated = CreatePed(4, PedToCreate.modelHash, PedToCreate.x, PedToCreate.y, PedToCreate.z - 1, PedToCreate.rotation, false, false)
     SetEntityAsMissionEntity(pedCreated, true, true)
     IsEntityStatic(pedCreated, true)
-    FreezeEntityPosition(PedToCreate, true)
+    FreezeEntityPosition(pedCreated, true)
+    SetBlockingOfNonTemporaryEvents(pedCreated, true)
     SetEntityInvincible(pedCreated, true)
 end
 
