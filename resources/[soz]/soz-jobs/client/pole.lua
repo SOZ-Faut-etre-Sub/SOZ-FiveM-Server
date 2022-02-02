@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-local PoleMenu = MenuV:CreateMenu(nil, "", "menu_pole", "soz", "job-panel")
+local PoleMenu = MenuV:CreateMenu(nil, "", "menu_job_poleemploi", "soz", "job-panel")
 
 local adsl_position = {x = 479.17, y = -107.53, z = 63.16}
 local livraison_position = {x = -424.06, y = -2789.62, z = 6.4}
