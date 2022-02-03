@@ -131,18 +131,19 @@ export const SettingsApp = () => {
     }, [query.image, updateProfilePicture, myNumber, history, pathname, search]);
 
     return (
-        <AppWrapper>
-            <Transition
-                appear={true}
-                show={true}
-                className="mt-4 h-full flex flex-col"
-                enter="transition-all origin-[20%_20%] duration-500"
-                enterFrom="scale-[0.0] opacity-0"
-                enterTo="scale-100 opacity-100"
-                leave="transition-all origin-[20%_20%] duration-500"
-                leaveFrom="scale-100 opacity-100"
-                leaveTo="scale-[0.0] opacity-0"
-            >
+        <Transition
+            appear={true}
+            show={true}
+            className="mt-4 h-full flex flex-col"
+            enter="transition-all origin-[20%_20%] duration-500"
+            enterFrom="scale-[0.0] opacity-0"
+            enterTo="scale-100 opacity-100"
+            leave="transition-all origin-[20%_20%] duration-500"
+            leaveFrom="scale-100 opacity-100"
+            leaveTo="scale-[0.0] opacity-0"
+        >
+            <ContextMenu/>
+            <AppWrapper>
                 <AppTitle app={settingsApp} isBigHeader={inView}/>
                 {/*<WallpaperModal/>*/}
                 {/*<div className={customWallpaperState ? classes.backgroundModal : undefined}/>*/}
@@ -205,7 +206,7 @@ export const SettingsApp = () => {
                             options={[...wallpapers, customWallpaper]}
                             onClick={openMenu}
                             icon={<PhotographIcon/>}
-                            color={'#23319b'}
+                            color='bg-[#8E8E92]'
                         />
 
                         {/*<Divider component="li"/>*/}
@@ -215,7 +216,7 @@ export const SettingsApp = () => {
                             options={zoomOptions}
                             onClick={openMenu}
                             icon={<AdjustmentsIcon/>}
-                            color={'#429b21'}
+                            color='bg-[#5756CE]'
                         />
                     </List>
                     <List>
@@ -237,8 +238,7 @@ export const SettingsApp = () => {
                         />
                     </List>
                 </AppContent>
-                {/*<ContextMenu/>*/}
-            </Transition>
-        </AppWrapper>
+            </AppWrapper>
+        </Transition>
     );
 };

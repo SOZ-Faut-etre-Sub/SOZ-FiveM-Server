@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/327.2b1df910.chunk.js","mappings":"qIAIA,UAFkC,SAACA,GAAD,OAAW","sources":["os/apps/icons/app/MARKETPLACE.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst MarketplaceIcon: React.FC = (props) => <div />;\r\n\r\nexport default MarketplaceIcon;\r\n"],"names":["props"],"sourceRoot":""}

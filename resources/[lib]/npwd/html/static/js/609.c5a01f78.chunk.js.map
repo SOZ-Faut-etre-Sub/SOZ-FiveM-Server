@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/609.c5a01f78.chunk.js","mappings":"qIAIA,UAF4B,SAACA,GAAD,OAAW","sources":["os/apps/icons/app/EMAIL.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst EmailIcon: React.FC = (props) => <div />;\r\n\r\nexport default EmailIcon;\r\n"],"names":["props"],"sourceRoot":""}

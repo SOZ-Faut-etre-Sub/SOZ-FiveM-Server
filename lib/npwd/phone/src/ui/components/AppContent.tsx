@@ -21,7 +21,7 @@ export const AppContent: React.FC<any> = ({
     );
 
     return (
-        <div className="mt-4" style={backdrop ? {overflow: 'hidden'} : {overflow: 'auto'}}>
+        <div className="mt-4" {...props} style={backdrop ? {overflow: 'hidden'} : {overflow: 'auto'}}>
             {!disableSuspenseHandler ? (
                 <React.Suspense fallback={<LoadingSpinner/>}>
                     <ChildElements/>
