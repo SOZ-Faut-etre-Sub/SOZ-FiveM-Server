@@ -42,7 +42,7 @@ const MessagesList = (): any => {
   return (
     <List>
       {societyMessages.map((message) => (
-        <ListItem key={message.conversation_id} alignItems="flex-start" divider>
+        <ListItem key={message.conversation_id} alignItems="flex-start">
 
           {message.source_phone !== '' && <Button style={{ marginRight: -15 }} onClick={() => startCall(message.source_phone)}>
             {/*<PhoneIcon color="action" />*/}

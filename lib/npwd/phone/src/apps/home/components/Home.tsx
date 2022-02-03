@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {AppWrapper} from '@ui/components';
 import {useApps} from '@os/apps/hooks/useApps';
 import {useMySocietyPhoneNumber} from "@os/simcard/hooks/useMyPhoneNumber";
 import {Transition} from '@headlessui/react';
 import {AppsGrid} from "./AppsGrid";
+import Alert from "@ui/components/Alert";
 
 export const HomeApp: React.FC = () => {
     const {apps} = useApps();
@@ -21,7 +22,7 @@ export const HomeApp: React.FC = () => {
                 enter="transition-transform duration-700"
                 enterFrom="scale-[3.0]"
                 enterTo="scale-100"
-                leave="transition-transform duration-7  00"
+                leave="transition-transform duration-700"
                 leaveFrom="scale-100"
                 leaveTo="scale-[3.0]"
             >

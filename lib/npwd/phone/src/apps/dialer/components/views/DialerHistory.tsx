@@ -48,7 +48,7 @@ export const DialerHistory: React.FC = () => {
     <List disablePadding>
       {calls.map((call: CallHistoryItem) =>
         call.transmitter === myNumber ? (
-          <ListItem key={call.id} divider>
+          <ListItem key={call.id}>
             {/*<ListItemIcon>*/}
             {/*  <PhoneForwardedIcon  />*/}
             {/*</ListItemIcon>*/}
@@ -80,7 +80,7 @@ export const DialerHistory: React.FC = () => {
             {/*)}*/}
           </ListItem>
         ) : (
-          <ListItem key={call.id} divider>
+          <ListItem key={call.id}>
             {/*<ListItemIcon>*/}
             {/*  <PhoneCallbackIcon  />*/}
             {/*</ListItemIcon>*/}

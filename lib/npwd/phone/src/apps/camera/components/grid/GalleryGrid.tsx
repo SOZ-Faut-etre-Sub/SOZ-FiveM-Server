@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {addQueryToLocation} from '@common/utils/addQueryToLocation';

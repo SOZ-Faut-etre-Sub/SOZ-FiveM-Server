@@ -43,36 +43,32 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({open, onClose, options}
             leaveTo="translate-x-full"
         >
             <AppWrapper>
-                <AppTitle title="Changer le paramètre" isBigHeader={false}>
-                    {onClose && <Button className="flex items-center text-[0.9rem]" onClick={onClose}>
+                <AppTitle title="Configuration" isBigHeader={false}>
+                    {onClose && <Button className="flex items-center text-base" onClick={onClose}>
                         <ChevronLeftIcon className="h-5 w-5" />
-                        Close
+                        Fermer
                     </Button>}
                 </AppTitle>
                 <AppContent className="mt-10 mb-4">
                     <List>
                         {options.map((option, id) => (
-                            <>
-                                <ListItem
-                                    selected={option.selected}
-                                    key={option.key || option.label}
-                                    button
-                                    onClick={(e) => {
-                                        option.onClick(e, option);
-                                        onClose();
-                                    }}
-                                >
-                                    <ItemIcon color="transparent" icon={option.icon} />
-                                    <p className="flex-grow ml-4 font-light normal-case">{option.label}</p>
-                                    <Button className="flex items-center">
-                                        <ChevronRightIcon className="text-white text-opacity-25 w-5 h-5" />
-                                    </Button>
-                                </ListItem>
-                                {options.length-1 !== id && <div />}
-                            </>
+                            <ListItem
+                                selected={option.selected}
+                                key={option.key || option.label}
+                                button
+                                onClick={(e) => {
+                                    option.onClick(e, option);
+                                    onClose();
+                                }}
+                            >
+                                <ItemIcon color="transparent" icon={option.icon} />
+                                <p className="flex-grow ml-4 font-light normal-case">{option.label}</p>
+                                <Button className="flex items-center">
+                                    <ChevronRightIcon className="text-white text-opacity-25 w-5 h-5" />
+                                </Button>
+                            </ListItem>
                         ))}
                     </List>
-
                 </AppContent>
             </AppWrapper>
         </Transition>

@@ -39,7 +39,7 @@ export const ContactList: React.FC = () => {
       <SearchContacts />
       <List>
         {filteredContacts.map((contact) => (
-          <ListItem key={contact.id} divider>
+          <ListItem key={contact.id}>
             {/*<ListItemAvatar>*/}
             {/*  {contact.avatar ? (*/}
             {/*    <MuiAvatar src={contact.avatar} />*/}

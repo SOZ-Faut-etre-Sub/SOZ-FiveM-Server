@@ -1,45 +1,44 @@
 import React from 'react';
-import { Button } from './Button';
+import {Button} from './Button';
 
 interface DialogFormProps {
-  children: React.ReactNode;
-  open: boolean;
-  handleClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // No idea what those types are
-  onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  title: string;
-  content: string;
+    children: React.ReactNode;
+    open: boolean;
+    handleClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // No idea what those types are
+    onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    title: string;
+    content: string;
 }
 
 const DialogForm: React.FC<DialogFormProps> = ({
-  children,
-  open,
-  handleClose,
-  onSubmit,
-  title,
-  content,
+    children,
+    open,
+    handleClose,
+    onSubmit,
+    title,
+    content,
 }) => {
 
-  const showHideClassName = open ? 'classes.displayBlock' : 'classes.displayNone';
+    return (
+        <div className="bg-black bg-opacity-75 text-white text-center rounded-[.8rem] mx-10">
+            <div className="pt-5 px-5">
+                <div className="font-bold">{title}</div>
+                <div className="text-[.9rem] py-2">{content}</div>
+                <div className="py-2">
+                    {children}
+                </div>
+            </div>
 
-  return (
-    <div className={showHideClassName}>
-      <div >
-        <div id="form-dialog-title">{title}</div>
-        <div>
-          <div>{content}</div>
-          {children}
+            <div className="border-t border-white border-opacity-30">
+                <Button className="w-2/4 p-2 text-center text-red-500" onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button className="w-2/4 p-2 text-center text-blue-500 border-l border-white border-opacity-30" onClick={onSubmit}>
+                    Confirm
+                </Button>
+            </div>
         </div>
-        <div>
-          <Button color="primary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button color="primary" onClick={onSubmit}>
-            Confirm
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default DialogForm;

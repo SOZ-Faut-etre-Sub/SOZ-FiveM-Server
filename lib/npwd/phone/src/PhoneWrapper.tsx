@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
@@ -13,10 +13,10 @@ const PhoneWrapper: React.FC = ({ children }) => {
   return (
       <Transition
           show={visibility}
-          enter="transition-any transform-gpu ease-in-out duration-500"
+          enter="transition-any ease-in-out duration-500"
           enterFrom="translate-y-full"
           enterTo="translate-y-0"
-          leave="transition-any transform-gpu ease-in-out duration-500"
+          leave="transition-any ease-in-out duration-500"
           leaveFrom="translate-y-0"
           leaveTo="translate-y-full"
       >
