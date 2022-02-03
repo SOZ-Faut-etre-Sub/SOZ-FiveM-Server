@@ -36,7 +36,7 @@ const NoteList = () => {
         );
 
     return (
-        <div color="inherit" style={{fontWeight: 300}}>
+        <div className="flex flex-col justify-center items-center text-white h-full">
             {t('NOTES.FEEDBACK.NO_NOTES')}
         </div>
     );

@@ -69,12 +69,12 @@ interface ISettingSwitch {
   value: boolean;
   onClick: any;
   icon: JSX.Element;
-  secondary: string;
 }
 
-export const SettingSwitch = ({ label, color, value, onClick, icon, secondary }: ISettingSwitch) => (
+export const SettingSwitch = ({ label, color, value, onClick, icon }: ISettingSwitch) => (
   <ListItem>
     <ItemIcon color={color} icon={icon} />
+    <p className="flex-grow ml-4 font-light normal-case">{label}</p>
     <div>
         <Switch checked={value} onChange={() => onClick(value)}
             className={`${

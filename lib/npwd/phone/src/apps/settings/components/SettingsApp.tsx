@@ -130,7 +130,7 @@ export const SettingsApp = () => {
                 <AppContent className="mt-14 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                     <List>
                         <ListItem>
-                            <div className="bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
+                            <div className="bg-gray-500 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
                             <Button className="flex items-center text-white text-sm" onClick={handleChooseImage}>
                                 {t('MARKETPLACE.CHOOSE_IMAGE')}
                                 <ChevronRightIcon className="text-opacity-25 w-6 h-6" />
@@ -199,8 +199,7 @@ export const SettingsApp = () => {
                     </List>
                     <List>
                         <SettingSwitch
-                            label={t('SETTINGS.OPTIONS.STREAMER_MODE.TITLE')}
-                            secondary={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
+                            label={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
                             icon={<EyeOffIcon/>}
                             color='bg-[#c41515]'
                             value={settings.streamerMode}
