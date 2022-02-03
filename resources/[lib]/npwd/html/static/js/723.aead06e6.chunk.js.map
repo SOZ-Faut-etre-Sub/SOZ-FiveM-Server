@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/723.aead06e6.chunk.js","mappings":"qIAIA,UAF+B,kBAAM","sources":["os/apps/icons/svg/MESSAGES.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst MessagesIcon: React.FC = () => <div />;\r\n\r\nexport default MessagesIcon;\r\n"],"names":[],"sourceRoot":""}
