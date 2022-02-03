@@ -38,7 +38,7 @@
         "RESET_SETTINGS": "Réinitialiser toutes vos données",
         "STREAMER_MODE": {
           "TITLE": "Mode NSFW",
-          "DESCRIPTION": "Masque les images par défaut"
+          "DESCRIPTION": "Masquer les images par défaut"
         },
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Fond d'écran personnalisé",
