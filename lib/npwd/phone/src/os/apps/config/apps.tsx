@@ -74,20 +74,18 @@ export const APPS: IAppConfig[] = [
         ),
     },
     {
-        id: 'SETTINGS',
-        nameLocale: 'APPS_SETTINGS',
-        color: 'grey[50]',
-        path: '/settings',
-        Route: () => (
-            <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false}/>
-        ),
-    },
-    {
         id: 'BANK',
         nameLocale: 'APPS_BANK',
         color: 'common.white',
         path: '/bank',
         Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} emitOnOpen={false}/>,
+    },
+    {
+        id: 'NOTES',
+        nameLocale: 'APPS_NOTES',
+        color: NOTES_APP_ICON_COLOR,
+        path: '/notes',
+        Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={true}/>,
     },
     {
         id: 'SOCIETY_CONTACTS',
@@ -96,6 +94,15 @@ export const APPS: IAppConfig[] = [
         path: '/society-contacts',
         Route: () => (
             <AppRoute id="SOCIETY_CONTACTS" path="/society-contacts" component={SocietyContactsApp} emitOnOpen={false}/>
+        ),
+    },
+    {
+        id: 'SETTINGS',
+        nameLocale: 'APPS_SETTINGS',
+        color: 'grey[50]',
+        path: '/settings',
+        Route: () => (
+            <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false}/>
         ),
     },
     {
@@ -116,13 +123,6 @@ export const APPS: IAppConfig[] = [
         <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
       ),
     },*/
-    {
-        id: 'NOTES',
-        nameLocale: 'APPS_NOTES',
-        color: NOTES_APP_ICON_COLOR,
-        path: '/notes',
-        Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={true}/>,
-    },
     {
         id: 'CAMERA',
         nameLocale: 'APPS_CAMERA',

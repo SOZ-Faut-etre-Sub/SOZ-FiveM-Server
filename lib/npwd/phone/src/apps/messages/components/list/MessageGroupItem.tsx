@@ -39,8 +39,6 @@ const MessageGroupItem = ({
     <ListItem
       key={messageConversation.conversation_id}
       onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
-      divider
-      button
     >
       {/*{isEditing && (*/}
       {/*  <ListItemIcon>*/}

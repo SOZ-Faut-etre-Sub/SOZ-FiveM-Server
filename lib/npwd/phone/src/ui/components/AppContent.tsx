@@ -1,5 +1,4 @@
 import React from 'react';
-import {AppContentTypes} from '../interface/InterfaceUI';
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
 
 export const AppContent: React.FC<any> = ({
@@ -10,24 +9,14 @@ export const AppContent: React.FC<any> = ({
     onClickBackdrop,
     ...props
 }) => {
-
-    const ChildElements = () => (
-        <>
-            <div onClick={onClickBackdrop}/>
-            <div >
-                {children}
-            </div>
-        </>
-    );
-
     return (
-        <div className="mt-4" {...props} style={backdrop ? {overflow: 'hidden'} : {overflow: 'auto'}}>
+        <div className="mt-4" {...props}>
             {!disableSuspenseHandler ? (
                 <React.Suspense fallback={<LoadingSpinner/>}>
-                    <ChildElements/>
+                    {children}
                 </React.Suspense>
             ) : (
-                <ChildElements/>
+                {children}
             )}
         </div>
     );

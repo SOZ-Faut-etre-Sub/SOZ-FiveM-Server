@@ -6,6 +6,4 @@ export const List = ({ ...props }) => (
             {props.children}
         </ul>
     </div>
-  // <div className="bg-[#1C1C1E] m-2 p-2 rounded-lg" {...props}>
-  // </div>
 );

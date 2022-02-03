@@ -20,7 +20,6 @@ import {useQueryParams} from "@common/hooks/useQueryParams";
 import {useHistory, useLocation} from "react-router-dom";
 import qs from "qs";
 import { ListItem } from '@ui/components/ListItem';
-import { useInView } from 'react-intersection-observer';
 import { Button } from '@ui/components/Button';
 import {Transition} from "@headlessui/react";
 import {
@@ -34,6 +33,7 @@ import {
     EyeOffIcon,
     TrashIcon
 } from "@heroicons/react/solid";
+import WallpaperModal from "./WallpaperModal";
 
 
 export const SettingsApp = () => {
@@ -49,33 +49,14 @@ export const SettingsApp = () => {
     const {pathname, search} = useLocation();
     const history = useHistory();
     const {updateProfilePicture} = useSettingsAPI();
-
     const resetSettings = useResetSettings();
 
-    const [inViewRef, inView] = useInView({
-        triggerOnce: true
-    });
 
     const handleSettingChange = (key: string | number, value: unknown) => {
         setSettings({...settings, [key]: value});
     };
-
-    const SubHeaderComp = (props: { text: string }) => (
-        <div>
-            {props.text}
-        </div>
-    );
-
-    const wallpapers = config.wallpapers.map(
-        MapSettingItem(settings.wallpaper, (val: SettingOption) =>
-            handleSettingChange('wallpaper', val),
-        ),
-    );
     // const frames = config.frames.map(
     //     MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
-    // );
-    // const themes = config.themes.map(
-    //     MapSettingItem(settings.theme, (val: SettingOption) => handleSettingChange('theme', val)),
     // );
     const zoomOptions = config.zoomOptions.map(
         MapSettingItem(settings.zoom, (val: SettingOption) => handleSettingChange('zoom', val)),
@@ -135,19 +116,18 @@ export const SettingsApp = () => {
             appear={true}
             show={true}
             className="mt-4 h-full flex flex-col"
-            enter="transition-all origin-[20%_20%] duration-500"
+            enter="transition-all origin-[80%_10%] duration-500"
             enterFrom="scale-[0.0] opacity-0"
             enterTo="scale-100 opacity-100"
-            leave="transition-all origin-[20%_20%] duration-500"
+            leave="transition-all origin-[80%_10%] duration-500"
             leaveFrom="scale-100 opacity-100"
             leaveTo="scale-[0.0] opacity-0"
         >
             <ContextMenu/>
+            <WallpaperModal/>
             <AppWrapper>
-                <AppTitle app={settingsApp} isBigHeader={inView}/>
-                {/*<WallpaperModal/>*/}
-                {/*<div className={customWallpaperState ? classes.backgroundModal : undefined}/>*/}
-                <AppContent className="mt-6 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
+                <AppTitle app={settingsApp} isBigHeader={true}/>
+                <AppContent className="mt-14 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                     <List>
                         <ListItem>
                             <div className="bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
@@ -179,7 +159,7 @@ export const SettingsApp = () => {
                             iconStart={<VolumeOffIcon/>}
                             iconEnd={<VolumeUpIcon/>}
                             value={settings.ringtoneVol}
-                            onCommit={e => handleSettingChange('ringtoneVol', e.target.value)}
+                            onCommit={e => handleSettingChange('ringtoneVol', parseInt(e.target.value))}
                         />
                     </List>
                     <List>
@@ -196,20 +176,18 @@ export const SettingsApp = () => {
                             iconStart={<VolumeOffIcon/>}
                             iconEnd={<VolumeUpIcon/>}
                             value={settings.notiSoundVol}
-                            onCommit={e => handleSettingChange('notiSoundVol', e.target.value)}
+                            onCommit={e => handleSettingChange('notiSoundVol', parseInt(e.target.value))}
                         />
                     </List>
                     <List>
                         <SettingItem
                             label={t('SETTINGS.OPTIONS.WALLPAPER')}
                             value={settings.wallpaper.label}
-                            options={[...wallpapers, customWallpaper]}
-                            onClick={openMenu}
+                            onClick={setCustomWallpaperState}
                             icon={<PhotographIcon/>}
                             color='bg-[#8E8E92]'
                         />
 
-                        {/*<Divider component="li"/>*/}
                         <SettingItem
                             label={t('SETTINGS.OPTIONS.ZOOM')}
                             value={settings.zoom.label}

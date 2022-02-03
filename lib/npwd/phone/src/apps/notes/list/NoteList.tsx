@@ -5,6 +5,8 @@ import {NoteItem} from '@typings/notes';
 import {useTranslation} from 'react-i18next';
 import { ListItem } from '@ui/components/ListItem';
 import { List } from '@ui/components/List';
+import {ChevronRightIcon} from "@heroicons/react/outline";
+import {Button} from "@ui/components/Button";
 
 
 // TODO: add search bar later
@@ -21,23 +23,21 @@ const NoteList = () => {
 
     if (notes && notes.length)
         return (
-            <List disablePadding>
+            <List>
                 {notes.map((note, id) => (
-                    <>
-                        <ListItem key={note.id} button onClick={() => handleNoteModal(note)}>
-                            <div>{note.title}</div>
-                        </ListItem>
-                        {notes.length-1 !== id && <div />}
-                    </>
+                    <ListItem key={note.id} onClick={() => handleNoteModal(note)}>
+                        <p className="flex-grow ml-4 py-2">{note.title}</p>
+                        <Button className="flex items-center">
+                            <ChevronRightIcon className="text-white text-opacity-25 w-5 h-5" />
+                        </Button>
+                    </ListItem>
                 ))}
             </List>
         );
 
     return (
-        <div>
-            <div color="inherit" style={{fontWeight: 300}}>
-                {t('NOTES.FEEDBACK.NO_NOTES')}
-            </div>
+        <div color="inherit" style={{fontWeight: 300}}>
+            {t('NOTES.FEEDBACK.NO_NOTES')}
         </div>
     );
 };
