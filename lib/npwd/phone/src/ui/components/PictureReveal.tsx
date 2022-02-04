@@ -19,12 +19,13 @@ export const PictureReveal: React.FC = ({ children }) => {
   const onClickCover = () => setCovered(false);
 
   return (
-    <div>
-      <div
-        onClick={onClickCover}>
-        {t('GENERIC_CLICK_TO_REVEAL')}
-      </div>
-      <div>
+    <div className="relative" onClick={onClickCover}>
+        {covered &&
+            <div className="h-full flex justify-center items-center">
+                {t('GENERIC_CLICK_TO_REVEAL')}
+            </div>
+        }
+      <div className={`${covered && 'relative opacity-50 blur-md'}`}>
         {children}
       </div>
     </div>

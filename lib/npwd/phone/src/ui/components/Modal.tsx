@@ -7,11 +7,8 @@ interface ModalProps {
 }
 
 export const Modal: React.FC<ModalProps> = ({ children, visible, handleClose }) => {
-
-  const showHideClassName = visible ? 'classes.displayBlock' : 'classes.displayNone';
-
   return (
-    <div className={showHideClassName}>
+    <div className={"showHideClassName"}>
       <div >
         <Button onClick={handleClose} >
           {/*<CloseIcon />*/}
