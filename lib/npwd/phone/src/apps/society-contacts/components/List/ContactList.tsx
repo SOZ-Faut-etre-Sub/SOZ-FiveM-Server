@@ -17,7 +17,7 @@ export const ContactList: React.FC = () => {
     };
 
     return (
-        <div className="mt-3">
+        <div className="mt-5">
             <SearchContacts/>
             <nav className="h-[780px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts).sort().map((letter) => (
@@ -43,20 +43,6 @@ export const ContactList: React.FC = () => {
                     </div>
                 ))}
             </nav>
-
-
-
-
-            <List>
-                {filteredContacts.map((contact, id) => (
-                    <>
-                        <ListItem style={{cursor: 'pointer'}} key={contact.id} onClick={() => openContactInfo(contact.id)}>
-
-                        </ListItem>
-                        {filteredContacts.length - 1 !== id && <div />}
-                    </>
-                ))}
-            </List>
         </div>
     );
 };

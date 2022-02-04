@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {TextField} from '@ui/components/Input';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
+import {MenuIcon, UploadIcon} from "@heroicons/react/outline";
 
 interface IProps {
     onAddImageClick(): void;
@@ -31,30 +32,24 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     if (!messageConversationId) return null;
 
     return (
-        <div>
-            <div>
-                <button onClick={onAddImageClick}>
-                    {/*<MenuIcon/>*/}
-                </button>
-            </div>
-            <div>
-                <TextField
-                    onKeyPress={handleKeyPress}
-                    multiline
-                    maxRows={4}
-                    aria-multiline="true"
-                    fullWidth
-                    inputProps={{style: {fontSize: '1.3em'}}}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={t('MESSAGES.NEW_MESSAGE')}
-                />
-            </div>
-            <div>
-                <button onClick={handleSubmit}>
-                    {/*<FileUploadIcon/>*/}
-                </button>
-            </div>
+        <div className="flex">
+            <button onClick={onAddImageClick}>
+                <MenuIcon className="h-5 w-5 mx-2 text-white" />
+            </button>
+            <TextField
+                onKeyPress={handleKeyPress}
+                multiline
+                maxRows={4}
+                aria-multiline="true"
+                fullWidth
+                inputProps={{style: {fontSize: '1.3em'}}}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder={t('MESSAGES.NEW_MESSAGE')}
+            />
+            <button className="bg-[#32CA5B] rounded-full mx-2 " onClick={handleSubmit}>
+                <UploadIcon className="w-5 h-5 mx-2 text-white" />
+            </button>
         </div>
     );
 };

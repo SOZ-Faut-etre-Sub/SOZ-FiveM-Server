@@ -37,7 +37,7 @@ export const ContactList: React.FC = () => {
     };
 
     return (
-        <div className="mt-3">
+        <div className="mt-5">
             <SearchContacts/>
             <nav className="h-[780px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts).sort().map((letter) => (

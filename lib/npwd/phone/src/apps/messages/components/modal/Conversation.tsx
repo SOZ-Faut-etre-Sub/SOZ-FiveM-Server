@@ -80,27 +80,10 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
               width: '100%',
             }}
           >
-            <div
-              id="scrollableDiv"
-              style={{
-                overflow: 'auto',
-                maxHeight: 554,
-                display: 'flex',
-                flexDirection: 'column-reverse',
-              }}
-            >
-              {/*<InfiniteScroll*/}
-              {/*  next={handleNextPage}*/}
-              {/*  scrollableTarget="scrollableDiv"*/}
-              {/*  hasMore={hasMore}*/}
-              {/*  inverse={true}*/}
-              {/*  // loader={<CircularProgress />}*/}
-              {/*  dataLength={messages.length}*/}
-              {/*>*/}
-              {/*  {messages.map((message) => (*/}
-              {/*    <MessageBubble key={message.id} message={message} />*/}
-              {/*  ))}*/}
-              {/*</InfiniteScroll>*/}
+            <div className="flex flex-col-reverse h-[675px] overflow-y-auto">
+                {messages.map((message) => (
+                  <MessageBubble key={message.id} message={message} />
+                ))}
             </div>
           </div>
         </div>
