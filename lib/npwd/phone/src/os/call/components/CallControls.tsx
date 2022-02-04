@@ -3,6 +3,7 @@ import { useCall } from '../hooks/useCall';
 import { useCallModal } from '../hooks/useCallModal';
 import { StatusIconButton } from '@ui/components/StatusIconButton';
 import { useHistory } from 'react-router-dom';
+import {PhoneIcon} from "@heroicons/react/solid";
 
 
 export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
@@ -32,14 +33,14 @@ export const CallControls = ({ isSmall }: { isSmall?: boolean }) => {
   // or we are the one calling
   if (call?.is_accepted || call?.isTransmitter)
     return (
-      <div>
+      <div className="absolute bottom-40 inset-x-0 flex justify-center">
         <StatusIconButton
           color="error"
           size={isSmall ? 'small' : 'medium'}
           onClick={handleEndCall}
           className={isSmall ? 'classes.smallIconWrapper' : 'classes.iconWrapper'}
         >
-          {/*<CallEndIcon  />*/}
+          <PhoneIcon className="h-20 w-20 rotate-[140deg] text-white p-4 bg-red-500 rounded-full" />
         </StatusIconButton>
       </div>
     );
