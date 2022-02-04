@@ -130,7 +130,7 @@ export const SettingsApp = () => {
                 <AppContent className="mt-14 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                     <List>
                         <ListItem>
-                            <div className="bg-gray-500 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
+                            <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
                             <Button className="flex items-center text-white text-sm" onClick={handleChooseImage}>
                                 {t('MARKETPLACE.CHOOSE_IMAGE')}
                                 <ChevronRightIcon className="text-opacity-25 w-6 h-6" />

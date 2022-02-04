@@ -8,7 +8,7 @@ export const AppWrapper: React.FC<AppWrapperTypes> = ({
     const {isExact} = useRouteMatch('/');
 
     return (
-        <div className={`${!isExact && 'bg-opacity-80 bg-gray-800'} p-0 m-0 relative flex flex-col h-full w-full min-h-[720px]`}>
+        <div className={`${!isExact && 'bg-black'} p-0 m-0 relative flex flex-col h-full w-full min-h-[720px]`}>
             {children}
         </div>
     );
