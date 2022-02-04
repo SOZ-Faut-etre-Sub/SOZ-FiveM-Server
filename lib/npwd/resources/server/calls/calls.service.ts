@@ -176,7 +176,12 @@ class CallsService {
       const player = PlayerService.getPlayer(reqObj.source);
       const srcPlayerNumber = player.getPhoneNumber();
       const calls = await this.callsDB.fetchCalls(srcPlayerNumber);
-      resp({ status: 'ok', data: calls });
+
+      let callsObj = calls.map(call => {
+          return {...call, start: call.start.toString()}
+      })
+
+      resp({ status: 'ok', data: callsObj });
     } catch (e) {
       resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
       console.error(`Error while fetching calls, ${e.message}`);

@@ -12,6 +12,7 @@ function formatCall(calls) {
 
     calls.forEach(call => {
         const key = dayjs(call.start).format('DD/MM/YYYY')
+
         if (listedCalls[key] === undefined) {
             listedCalls[key] = []
         }
@@ -34,7 +35,6 @@ export const dialState = {
                     return formatCall(resp.data);
                 } catch (e) {
                     if (isEnvBrowser()) {
-                        console.log(formatCall(MockHistoryData))
                         return formatCall(MockHistoryData);
                     }
                     console.error(e);

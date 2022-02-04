@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
-import {DialInputCtx} from '../context/InputContext';
+import {DialInputCtx, IDialInputCtx} from '../context/InputContext';
 import {BackspaceIcon, PhoneIcon} from "@heroicons/react/solid";
+import {useCall} from "@os/call/hooks/useCall";
 
 interface ButtonItemProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -11,13 +12,19 @@ interface ButtonItemProps {
 const ButtonItem: React.FC<ButtonItemProps> = ({label, onClick, className}) => {
     return (
         <button className={`flex justify-center items-center w-20 aspect-square m-2 bg-[#333333] hover:bg-[#444444] rounded-full cursor-pointer ${className}`} onClick={onClick}>
-            <span>{label}</span>
+            <span className="text-3xl">{label}</span>
         </button>
     );
 };
 
 export const DialGrid = () => {
-    const {add, removeOne, clear} = useContext(DialInputCtx);
+    const {initializeCall} = useCall();
+    const {add, removeOne} = useContext(DialInputCtx);
+    const {inputVal} = useContext<IDialInputCtx>(DialInputCtx);
+
+    const handleCall = () => {
+        initializeCall(inputVal);
+    };
 
     return (
         <div className="text-white">
@@ -34,7 +41,7 @@ export const DialGrid = () => {
                 <ButtonItem label="-" onClick={() => add('-')}/>
                 <ButtonItem label={0} onClick={() => add(0)}/>
                 <ButtonItem label={<BackspaceIcon className="h-8 w-8" />} onClick={removeOne}/>
-                <ButtonItem label={<PhoneIcon className="h-8 w-8" />} className="col-start-2 bg-[#2DD158] hover:bg-[#21B147]"/>
+                <ButtonItem label={<PhoneIcon className="h-8 w-8" />} onClick={handleCall} className="col-start-2 bg-[#2DD158] hover:bg-[#21B147]"/>
             </div>
         </div>
     );

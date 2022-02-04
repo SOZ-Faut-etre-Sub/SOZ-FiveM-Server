@@ -94,7 +94,7 @@ export const ContactList: React.FC = () => {
                                                     className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
                                                     onClick={() => openContactInfo(contact.id)}
                                                 >
-                                                    <PencilAltIcon className="mx-3 h-5 w-5"/> Edit
+                                                    <PencilAltIcon className="mx-3 h-5 w-5"/> Éditer
                                                 </Button>
                                             </Menu.Item>
                                         </Menu.Items>

@@ -92,7 +92,7 @@ const ContactsInfoPage: React.FC = () => {
                       rows={14}
                       variant="outlined"
                       onChange={handleNumberChange}
-                      label={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
+                      placeholder={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
                   />
               </div>
               <div className="mt-4 grid gap-3 grid-cols-3">

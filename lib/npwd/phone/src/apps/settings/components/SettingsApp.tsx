@@ -206,8 +206,7 @@ export const SettingsApp = () => {
                             onClick={(curr) => handleSettingChange('streamerMode', !curr)}
                         />
                         <SettingItem
-                            label=""
-                            value={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
+                            label={t('SETTINGS.OPTIONS.RESET_SETTINGS')}
                             icon={<TrashIcon/>}
                             color='bg-[#f11f1f]'
                             onClick={openMenu}

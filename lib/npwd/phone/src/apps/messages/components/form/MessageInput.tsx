@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {TextField} from '@ui/components/Input';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
-import {MenuIcon, UploadIcon} from "@heroicons/react/outline";
+import {MenuIcon, PaperClipIcon, UploadIcon} from "@heroicons/react/outline";
 
 interface IProps {
     onAddImageClick(): void;
@@ -34,7 +34,7 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     return (
         <div className="flex">
             <button onClick={onAddImageClick}>
-                <MenuIcon className="h-5 w-5 mx-2 text-white" />
+                <PaperClipIcon className="h-5 w-5 mx-2 text-white" />
             </button>
             <TextField
                 onKeyPress={handleKeyPress}

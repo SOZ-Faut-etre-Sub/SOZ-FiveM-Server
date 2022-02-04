@@ -80,7 +80,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
               width: '100%',
             }}
           >
-            <div className="flex flex-col-reverse h-[675px] overflow-y-auto">
+            <div className="flex flex-col h-[675px] overflow-y-auto">
                 {messages.map((message) => (
                   <MessageBubble key={message.id} message={message} />
                 ))}
