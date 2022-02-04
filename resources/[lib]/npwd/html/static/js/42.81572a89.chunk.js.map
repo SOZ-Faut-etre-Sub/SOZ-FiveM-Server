@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/42.81572a89.chunk.js","mappings":"oIAIA,UAF8B,kBAAM","sources":["os/apps/icons/svg/EXAMPLE.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst ExampleIcon: React.FC = () => <div />;\r\n\r\nexport default ExampleIcon;\r\n"],"names":[],"sourceRoot":""}

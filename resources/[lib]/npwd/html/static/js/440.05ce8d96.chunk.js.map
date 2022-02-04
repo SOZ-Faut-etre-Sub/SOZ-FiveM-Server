@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/440.05ce8d96.chunk.js","mappings":"qIAIA,UAF+B,kBAAM","sources":["os/apps/icons/svg/LOCATION.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst LocationIcon: React.FC = () => <div />;\r\n\r\nexport default LocationIcon;\r\n"],"names":[],"sourceRoot":""}

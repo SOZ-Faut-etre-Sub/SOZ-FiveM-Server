@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/152.5bb4fca4.chunk.js","mappings":"oIAIA,UAF8B,kBAAM","sources":["os/apps/icons/svg/SOCIETY_CONTACTS.tsx"],"sourcesContent":["import React from 'react';\r\n\r\nconst ContactIcon: React.FC = () => <div />;\r\n\r\nexport default ContactIcon;\r\n"],"names":[],"sourceRoot":""}

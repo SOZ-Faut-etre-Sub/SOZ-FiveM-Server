@@ -17,10 +17,10 @@ export const BankApp = () => {
             appear={true}
             show={true}
             className="mt-4 h-full flex flex-col"
-            enter="transition-all origin-[80%_10%] duration-500"
+            enter="transition-all origin-[20%_10%] duration-500"
             enterFrom="scale-[0.0] opacity-0"
             enterTo="scale-100 opacity-100"
-            leave="transition-all origin-[80%_10%] duration-500"
+            leave="transition-all origin-[20%_10%] duration-500"
             leaveFrom="scale-100 opacity-100"
             leaveTo="scale-[0.0] opacity-0"
         >

@@ -78,7 +78,7 @@ export const ContactList: React.FC = () => {
                                                     className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                     onClick={() => startCall(contact.number)}
                                                 >
-                                                    <PhoneIcon className="mx-3 h-5 w-5"/> Call
+                                                    <PhoneIcon className="mx-3 h-5 w-5"/> Appeler
                                                 </Button>
                                             </Menu.Item>
                                             <Menu.Item>
