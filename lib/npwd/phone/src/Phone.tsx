@@ -85,7 +85,7 @@ function Phone() {
         <WindowSnackbar />
         <PhoneWrapper>
           <NotificationBar />
-          <div className="PhoneAppContainer transform-gpu">
+          <div className="PhoneAppContainer transform-gpu select-none">
             <>
               <Route exact path="/" component={HomeApp} />
               {callModal && <Route exact path="/call" component={CallModal} />}

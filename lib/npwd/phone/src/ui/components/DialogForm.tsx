@@ -31,10 +31,10 @@ const DialogForm: React.FC<DialogFormProps> = ({
 
             <div className="border-t border-white border-opacity-30">
                 <Button className="w-2/4 p-2 text-center text-red-500" onClick={handleClose}>
-                    Cancel
+                    Annuler
                 </Button>
                 <Button className="w-2/4 p-2 text-center text-blue-500 border-l border-white border-opacity-30" onClick={onSubmit}>
-                    Confirm
+                    Valider
                 </Button>
             </div>
         </div>

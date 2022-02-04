@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'SF-Pro';
-    src: url("os/fonts/SF-Pro.ttf") format("truetype");
+    src: url("os/fonts/SF-Pro.otf") format("opentype");
 }
 
 body {

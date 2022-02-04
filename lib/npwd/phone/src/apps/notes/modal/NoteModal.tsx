@@ -101,7 +101,7 @@ export const NoteModal: React.FC = () => {
                     {!isNewNote &&
                         <Menu.Item>
                             <Button className="flex items-center w-full text-red-400 px-2 py-2 hover:text-red-500" onClick={handleDeleteNote}>
-                                <TrashIcon className="mx-3 h-5 w-5" /> Suppression
+                                <TrashIcon className="mx-3 h-5 w-5" /> Supprimer
                             </Button>
                         </Menu.Item>
                     }

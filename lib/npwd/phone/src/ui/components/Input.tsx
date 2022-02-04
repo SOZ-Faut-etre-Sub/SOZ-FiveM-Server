@@ -31,7 +31,7 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => (
   <textarea
     ref={ref}
     {...props}
-    className={`w-full h-full my-4 bg-[#1C1C1E] bg-opacity-50 text-white rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none ${props.className}`}
+    className={`w-full h-full resize-none my-4 bg-[#1C1C1E] bg-opacity-50 text-white rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none ${props.className}`}
     onFocus={(e) => {
       toggleKeys(false);
       if (props.onFocus) {

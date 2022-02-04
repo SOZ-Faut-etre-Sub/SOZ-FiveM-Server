@@ -13,6 +13,9 @@ import { useContacts } from '../../../contacts/hooks/state';
 import {Menu, Transition} from "@headlessui/react";
 import {Button} from "@ui/components/Button";
 import {ChatIcon, PencilAltIcon, PhoneIcon, PhoneIncomingIcon, PhoneMissedCallIcon, PhoneOutgoingIcon, UserAddIcon} from "@heroicons/react/solid";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime)
 
 
 export const DialerHistory: React.FC = () => {
@@ -43,8 +46,6 @@ export const DialerHistory: React.FC = () => {
       </div>
     );
   }
-
-  console.log(calls)
 
   return (
       <nav className="pb-10 h-full overflow-y-auto" aria-label="Directory">
@@ -78,7 +79,7 @@ export const DialerHistory: React.FC = () => {
                                           <p className="text-left text-sm font-medium text-gray-100">{getDisplay(call.transmitter === myNumber ? call.receiver : call.transmitter)}</p>
                                       </div>
                                       <div className="text-gray-500 text-sm">
-                                        {dayjs().to(dayjs.unix(parseInt(call.start)))}
+                                        {dayjs(call.start).fromNow(true)}
                                       </div>
                                   </div>
                               </Menu.Button>
@@ -100,7 +101,7 @@ export const DialerHistory: React.FC = () => {
                                               <PhoneIcon className="mx-3 h-5 w-5"/> Appeler
                                           </Button>
                                       </Menu.Item>
-                                      {getDisplay(call.receiver) === call.receiver &&
+                                      {getDisplay(call.receiver) === call.receiver && myNumber !== call.receiver &&
                                           <Menu.Item>
                                               <Button
                                                   className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
@@ -110,7 +111,7 @@ export const DialerHistory: React.FC = () => {
                                               </Button>
                                           </Menu.Item>
                                       }
-                                      {getDisplay(call.transmitter) === call.transmitter &&
+                                      {getDisplay(call.transmitter) === call.transmitter && myNumber !== call.transmitter &&
                                           <Menu.Item>
                                               <Button
                                                   className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
