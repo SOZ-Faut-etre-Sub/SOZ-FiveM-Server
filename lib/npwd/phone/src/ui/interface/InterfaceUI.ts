@@ -11,5 +11,6 @@ export interface AppContentTypes {
 export interface AppWrapperTypes {
   id?: string;
   style?: CSSProperties;
+  className?: string;
   handleClickAway?: (...args: any[]) => void;
 }

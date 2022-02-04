@@ -19,7 +19,11 @@ const RingingText = () => {
     return () => clearInterval(id);
   }, [step, text, t]);
 
-  return <div>{text}</div>;
+  return (
+      <div className="flex flex-col justify-center items-center text-gray-300">
+          <div className="font-light">{text}</div>
+      </div>
+  );
 };
 
 export default RingingText;

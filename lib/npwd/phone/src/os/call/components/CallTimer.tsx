@@ -6,10 +6,8 @@ const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 export const CallTimer = () => {
   const { seconds, hours, minutes } = useTimer();
   return (
-    <div>
-      <div >
-        {`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}
+      <div className="flex flex-col justify-center items-center text-gray-300">
+          <div className="font-light">{`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}</div>
       </div>
-    </div>
   );
 };

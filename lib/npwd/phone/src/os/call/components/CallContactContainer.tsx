@@ -1,36 +1,25 @@
 import React from 'react';
-import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
-import { useCall } from '../hooks/useCall';
-import { useTranslation } from 'react-i18next';
+import {useContactActions} from '../../../apps/contacts/hooks/useContactActions';
+import {useCall} from '../hooks/useCall';
 
 const CallContactContainer = () => {
-  const [t] = useTranslation();
-  const { call } = useCall();
+    const {call} = useCall();
 
-  const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+    const {getDisplayByNumber, getPictureByNumber} = useContactActions();
 
-  const getDisplayOrNumber = () =>
-    call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+    const getDisplayOrNumber = () =>
+        call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
 
-  return (
-    <div>
-      <div >
-        <div >
-          {call.isTransmitter
-            ? t('CALLS.MESSAGES.OUTGOING').toUpperCase()
-            : t('CALLS.MESSAGES.INCOMING').toUpperCase()}
+    return (
+        <div className="flex flex-col justify-center items-center mt-24 text-white">
+            <div className="bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${
+                    call.isTransmitter
+                        ? getPictureByNumber(call.receiver)
+                        : getPictureByNumber(call?.transmitter)
+                })`}} />
+            <div className="text-3xl font-light">{getDisplayOrNumber()}</div>
         </div>
-        <div>{getDisplayOrNumber()}</div>
-      </div>
-      <div>{getDisplayOrNumber()}
-          {
-              call.isTransmitter
-                  ? getPictureByNumber(call.receiver)
-                  : getPictureByNumber(call?.transmitter)
-          }
-      </div>
-    </div>
-  );
+    );
 };
 
 export default CallContactContainer;
