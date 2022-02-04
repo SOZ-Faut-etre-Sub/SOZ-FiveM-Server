@@ -6,13 +6,14 @@ import {NoNotificationText} from './NoNotificationText';
 import BatteryIcon from "../../../styles/icons/system/Battery";
 import CellSignal from "../../../styles/icons/system/CellSignal";
 import { List } from '@ui/components/List';
+import {useRouteMatch} from "react-router-dom";
 
 
 export const NotificationBar = () => {
-
     const {icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed} =
         useNotifications();
 
+    const {isExact} = useRouteMatch('/');
     const time = usePhoneTime();
 
     useEffect(() => {
@@ -23,7 +24,7 @@ export const NotificationBar = () => {
 
     return (
         <>
-            <div className="grid grid-cols-3 px-5 py-3 text-white text-sm w-full z-50">
+            <div className={`${!isExact && 'bg-black'} grid grid-cols-3 px-5 py-3 text-white text-sm w-full z-50`}>
                 <div className="text-center">
                     {time}
                     {icons.map((notifIcon) => (

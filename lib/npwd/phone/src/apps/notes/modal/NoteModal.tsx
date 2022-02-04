@@ -60,7 +60,6 @@ export const NoteModal: React.FC = () => {
     };
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value)
         setNoteTitle(e.target.value);
         e.target.focus()
     };

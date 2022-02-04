@@ -1,11 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {useContactActions} from '../../hooks/useContactActions';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {ContactsDatabaseLimits} from '@typings/contact';
-import {TextField} from '@ui/components/Input';
+import {TextareaField, TextField} from '@ui/components/Input';
 import {useContactsAPI} from '../../hooks/useContactsAPI';
+import {ChevronLeftIcon, PlusIcon} from "@heroicons/react/outline";
+import {AppTitle} from "@ui/components/AppTitle";
+import {useApp} from "@os/apps/hooks/useApps";
+import {Button} from "@ui/components/Button";
+import { Transition } from '@headlessui/react';
+import {AppContent} from "@ui/components/AppContent";
+import {AppWrapper} from "@ui/components";
+import {ChatIcon, PencilAltIcon, PhoneIcon, TrashIcon, UserAddIcon} from "@heroicons/react/solid";
+import LogDebugEvent from "@os/debug/LogDebugEvents";
+import {useCall} from "@os/call/hooks/useCall";
 
 interface ContactInfoRouteParams {
     mode: string;
@@ -20,6 +30,8 @@ interface ContactInfoRouteQuery {
 }
 
 const ContactsInfoPage: React.FC = () => {
+    const contacts = useApp('CONTACTS');
+    const history = useHistory();
     const {id} = useParams<ContactInfoRouteParams>();
     const {
         addNumber,
@@ -41,6 +53,7 @@ const ContactsInfoPage: React.FC = () => {
     const [avatar, setAvatar] = useState(() => contact?.avatar || '');
     // Set state after checking if null
 
+    const {initializeCall} = useCall();
     const [t] = useTranslation();
 
     const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -55,6 +68,17 @@ const ContactsInfoPage: React.FC = () => {
         setName(e.target.value);
     };
 
+    const handleContactCall = () => {
+        LogDebugEvent({
+            action: 'Emitting `Start Call` to Scripts',
+            level: 2,
+            data: true,
+        });
+        initializeCall(contact.number);
+    };
+    const handleContactMessage = () => {
+        history.push(`/messages/new?phoneNumber=${contact.number}`);
+    };
     const handleContactAdd = () => {
         addNewContact({display: name, number, avatar}, referral);
     };
@@ -74,39 +98,78 @@ const ContactsInfoPage: React.FC = () => {
     }, [addNumber, avatar, avatarParam, nameParam]);
 
     return (
-        <div >
-            <div >
-                {contact && (
-                    <div>
-                        {/*<EditIcon style={{ cursor: 'pointer', marginRight: 10 }} color="info" onClick={handleContactUpdate}/>*/}
-                        {/*<DeleteIcon style={{ cursor: 'pointer' }} color="error" onClick={handleContactDelete}/>*/}
+        <Transition
+            appear={true}
+            show={true}
+            className="absolute inset-x-0 z-40"
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-full"
+        >
+            <AppWrapper>
+                <AppTitle app={contacts}>
+                    <Button className="flex items-center text-base" onClick={() => history.goBack()}>
+                        <ChevronLeftIcon className="h-5 w-5" />
+                        Fermer
+                    </Button>
+                </AppTitle>
+                <AppContent className="text-white mt-10 mx-4 mb-4">
+                    <div className="flex justify-center">
+                        <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${avatar})`}} />
                     </div>
-                )}
-                {/*{!contact && (*/}
-                {/*    <AddBoxIcon color="primary" onClick={handleContactAdd} />*/}
-                {/*)}*/}
-            </div>
-            <div >
-                {/*<MuiAvatar  src={avatar}/>*/}
-                <TextField
-                    autoFocus
-                    error={name.length >= ContactsDatabaseLimits.display}
-
-                    value={name}
-                    onChange={handleDisplayChange}
-                    label={t('CONTACTS.FORM_NAME')}
-                    fullWidth
-                />
-                <TextField
-
-                    error={number.length >= ContactsDatabaseLimits.number}
-                    value={number}
-                    onChange={handleNumberChange}
-                    label={t('CONTACTS.FORM_NUMBER')}
-                    fullWidth
-                />
-            </div>
-        </div>
+                    <div className={`mt-4 grid gap-3 ${contact ? 'grid-cols-4' : 'grid-cols-3'}`}>
+                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactCall}>
+                            <PhoneIcon className="h-6 w-6"/>
+                            <p className="text-sm">Appeler</p>
+                        </div>
+                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactMessage}>
+                            <ChatIcon className="h-6 w-6"/>
+                            <p className="text-sm">Message</p>
+                        </div>
+                        {contact ? (
+                            <>
+                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactUpdate}>
+                                    <PencilAltIcon className="h-6 w-6"/>
+                                    <p className="text-sm">Éditer</p>
+                                </div>
+                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-red-500 rounded-xl p-3 cursor-pointer" onClick={handleContactDelete}>
+                                    <TrashIcon className="h-6 w-6"/>
+                                    <p className="text-sm">Supprimer</p>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactAdd}>
+                                <PlusIcon className="h-6 w-6"/>
+                                <p className="text-sm">Ajouter</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="mt-6">
+                        <div className="bg-[#1C1C1E] rounded-lg my-2">
+                            <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NAME')}</p>
+                            <TextField
+                                placeholder={t('CONTACTS.FORM_NAME')}
+                                error={name.length >= ContactsDatabaseLimits.display}
+                                value={name}
+                                onChange={handleDisplayChange}
+                            />
+                        </div>
+                        <div className="bg-[#1C1C1E] rounded-lg my-2">
+                            <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
+                            <TextField
+                                placeholder={t('CONTACTS.FORM_NUMBER')}
+                                error={number.length >= ContactsDatabaseLimits.number}
+                                value={number}
+                                onChange={handleNumberChange}
+                            />
+                        </div>
+                    </div>
+                </AppContent>
+            </AppWrapper>
+        </Transition>
     );
 };
 
