@@ -51,7 +51,11 @@ export const ContactList: React.FC = () => {
                                     <Menu.Button className="w-full">
                                         <div className="relative px-6 py-2 flex items-center space-x-3 hover:bg-gray-900">
                                             <div className="flex-shrink-0">
-                                                <img className="h-10 w-10 bg-gray-700 rounded-full" src={contact.avatar} alt=""/>
+                                                {contact.avatar ? (
+                                                    <img className="h-10 w-10 bg-gray-700 rounded-full" src={contact.avatar} alt=""/>
+                                                ) : (
+                                                    <div className="h-10 w-10 bg-gray-700 rounded-full"/>
+                                                )}
                                             </div>
                                             <div className="flex-1 min-w-0 cursor-pointer">
                                                 <span className="absolute inset-0" aria-hidden="true"/>

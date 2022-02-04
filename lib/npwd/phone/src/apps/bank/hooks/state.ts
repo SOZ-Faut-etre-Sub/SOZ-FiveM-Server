@@ -11,7 +11,10 @@ export const bankState = {
   }),
   bankCredentials: atom({
     key: 'bankCredentails',
-    default: null,
+    default: {
+        name: 'lkdsjajhfkljhadsf',
+        balance: 1500
+    },
   }),
   notification: atom({
     key: 'bankNotification',
