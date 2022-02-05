@@ -1,4 +1,4 @@
-local vehicleMenu = MenuV:CreateMenu("Véhicule", "", "default", "soz", "vehicle")
+local vehicleMenu = MenuV:CreateMenu(nil, "", "menu_vehicle", "soz", "vehicle")
 local doorName = {"Conducteur avant", "Passager avant", "Conducteur arrière", "Passager arrière", "Capot", "Coffre"}
 
 local function EngineMenu(vehicle)

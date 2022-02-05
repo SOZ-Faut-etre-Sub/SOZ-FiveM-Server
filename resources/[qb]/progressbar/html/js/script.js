@@ -43,7 +43,7 @@ $('document').ready(function() {
     Progressbar.CloseUI = function() {
         $('.main-container').fadeOut('fast');
     };
-    
+
     window.addEventListener('message', function(event) {
         switch(event.data.action) {
             case 'progress':

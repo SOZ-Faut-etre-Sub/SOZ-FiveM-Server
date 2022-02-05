@@ -46,10 +46,8 @@ window.addEventListener("message", function (event) {
         }
 
         if (event.data.isATM) {
-            $("#bankingTransfer").css({"display":"none"});
             $("#bankingTransfer-tab").css({"display":"none"});
         } else {
-            $("#bankingTransfer").css({"display":"block"});
             $("#bankingTransfer-tab").css({"display":"block"});
         }
 
@@ -175,16 +173,6 @@ $(function() {
         }
     });
 
-    $("[data-action=deposit]").click(function() {
-        var amount = $(this).attr('data-amount');
-        if(amount > 0) {
-            $.post('https://soz-bank/doDeposit', JSON.stringify({
-                account: $("#accountNumber").text(),
-                amount: parseInt(amount),
-            }));
-        }
-    });
-
     $("#initiateTransfer").click(function() {
         var amount = $('#transferAmount').val();
         var account = $('#transferAcctNo').val();
@@ -204,16 +192,6 @@ $(function() {
             $("#transferErrorMsg").html('There was an error with the information you have entered, please ensure the account number, sort code and amount is correctly filled out.');
         }
 
-    });
-
-    $("[data-action=withdraw]").click(function() {
-        var amount = $(this).attr('data-amount');
-        if(amount > 0) {
-            $.post('https://soz-bank/doWithdraw', JSON.stringify({
-                account: $("#accountNumber").text(),
-                amount: parseInt(amount),
-            }));
-        }
     });
 
     $("#openOffshore").click(function() {
