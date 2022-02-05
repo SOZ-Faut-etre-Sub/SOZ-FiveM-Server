@@ -17,3 +17,7 @@ RegisterServerEvent("job:payout", function(money)
     Player.Functions.AddMoney("cash", money)
     TriggerClientEvent("QBCore:Notify", source, string.format("Vous recevez: %s $ pour votre travail", money))
 end)
+
+RegisterServerEvent("job:anounce", function(string)
+    TriggerClientEvent("QBCore:Notify", source, string.format(string))
+end)

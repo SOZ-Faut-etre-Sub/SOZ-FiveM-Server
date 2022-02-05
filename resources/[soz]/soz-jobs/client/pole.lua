@@ -86,3 +86,25 @@ function destroyblip(blip)
     RemoveBlip(blip)
     blip = nil
 end
+
+function DrawInteractionMarker(ObjectifCoord, show)
+    local a, b, c, d, entity = GetShapeTestResult(StartShapeTestCapsule(
+        0.0,
+        0.0,
+        0.0,
+        ObjectifCoord.x,
+        ObjectifCoord.y,
+        ObjectifCoord.z,
+        1.5,
+        16,
+        0,
+        7
+    ))
+    SetEntityDrawOutlineColor(
+        100,
+        163,
+        16,
+        50
+    )
+    SetEntityDrawOutline(entity, show)
+end
