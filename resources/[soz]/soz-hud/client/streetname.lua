@@ -6,6 +6,8 @@ streetName.textSize = 0.45
 streetName.textColour = {r = 255, g = 255, b = 255, a = 255}
 -- End of configuration
 
+local street = {}
+
 Citizen.CreateThread(function()
     local lastStreetA = 0
     local lastStreetB = 0
@@ -14,10 +16,9 @@ Citizen.CreateThread(function()
         if HudDisplayed then
             local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
             local streetA, streetB = GetStreetNameAtCoord(playerPos.x, playerPos.y, playerPos.z)
-            local street = {}
+            street = {}
 
             if not ((streetA == lastStreetA or streetA == lastStreetB) and (streetB == lastStreetA or streetB == lastStreetB)) then
-                -- Ignores the switcharoo while doing circles on intersections
                 lastStreetA = streetA
                 lastStreetB = streetB
             end
@@ -30,6 +31,16 @@ Citizen.CreateThread(function()
                 table.insert(street, GetStreetNameFromHashKey(lastStreetB))
             end
 
+            Wait(1000)
+        else
+            Wait(5000)
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        if HudDisplayed then
             drawText(table.concat(street, " & "), streetName.position.x, streetName.position.y, {
                 size = streetName.textSize,
                 font = 1,
@@ -38,9 +49,9 @@ Citizen.CreateThread(function()
                 centered = streetName.position.centered,
             })
 
-            Wait(0)
+            Wait(1)
         else
-            Wait(500)
+            Wait(1000)
         end
     end
 end)
