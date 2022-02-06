@@ -2,7 +2,7 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 
 RegisterServerEvent("job:set:unemployed", function()
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    TriggerClientEvent("QBCore:Notify", source, string.format("Vous êtes a nouveau sans emploie"))
+    TriggerClientEvent("QBCore:Notify", source, string.format("Vous êtes à nouveau sans emploie"))
     Player.Functions.SetJob("unemployed", 0)
 end)
 
