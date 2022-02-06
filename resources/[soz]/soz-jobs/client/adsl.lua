@@ -5,10 +5,9 @@ local JobOutfit = false
 local JobVehicle = false
 local InVehicle = false
 local JobCounter = 0
-local JobDone = {}
 local ObjectifCoord = {}
 local DrawDistance = 0
-local player = GetPlayerPed(-1)
+
 
 exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 1, {
     name = "job adsl",
@@ -68,7 +67,8 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
 
 Citizen.CreateThread(function()
     while true do 
-        Citizen.Wait(10)
+        Citizen.Wait(10)    
+        local player = GetPlayerPed(-1)
         local coords = GetEntityCoords(player)
         local distance = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
         if distance <= DrawDistance then
@@ -79,21 +79,10 @@ Citizen.CreateThread(function()
     end
 end)
 
-local function createblip(coords)
-    blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipScale(blip, 1.0)
-    SetBlipSprite(blip, 761)
-    SetBlipColour(blip, 32)
-    AddTextEntry("ADSL", "Réparer l'adsl")
-    BeginTextCommandSetBlipName("ADSL")
-    EndTextCommandSetBlipName(blip)
-    SetBlipCategory(blip, 2)
-end
-
 RegisterNetEvent("jobs:adsl:fix")
 AddEventHandler("jobs:adsl:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
-    QBCore.Functions.Progressbar("adsl_fix", "Répare l'adsl..", 10000, false, true,
+    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
+    QBCore.Functions.Progressbar("adsl_fix", "Répare l'adsl..", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -102,10 +91,11 @@ AddEventHandler("jobs:adsl:fix", function()
     }, {}, {}, {}, function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
         exports["qb-target"]:RemoveZone("adsl_zone")
-        destroyblip(blip)
+        destroyblip(job_blip)
         DrawDistance = 0
         payout_counter = payout_counter + 1
         JobCounter = JobCounter + 1
+        ClearGpsMultiRoute()
         if JobCounter >= 4 then
             OnJob = false
             TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
@@ -117,11 +107,18 @@ end)
 
 local function SpawnVehicule()
     local ModelHash = "utillitruck3"
-    if not IsModelInCdimage(ModelHash) then
+    local model = GetHashKey(ModelHash)
+    if not IsModelInCdimage(model) then
         return
     end
-    RequestModel(ModelHash)
-    adsl_vehicule = CreateVehicle(ModelHash, 500.79, -105.88, 62.07, 253.78, true, false)
+    RequestModel(model)
+    print("model load")
+    while not HasModelLoaded(model) do
+        Citizen.Wait(10)
+        print(test)
+    end
+    adsl_vehicule = CreateVehicle(model, Config.adsl_vehicule.x, Config.adsl_vehicule.y, Config.adsl_vehicule.z, Config.adsl_vehicule.w, true, false)
+    SetModelAsNoLongerNeeded(model)
 end
 
 RegisterNetEvent("jobs:adsl:begin")
@@ -142,12 +139,15 @@ AddEventHandler("jobs:adsl:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
     SpawnVehicule()
     JobVehicle = true
+    createblip("Véhicule", "Montez dans le véhicule", 225, Config.adsl_vehicule)
+    local player = GetPlayerPed(-1)
     while InVehicle == false do
-        Citizen.Wait(10)
+        Citizen.Wait(100)
         if IsPedInVehicle(player, adsl_vehicule, true) == 1 then
             InVehicle = true
         end
     end
+    destroyblip(job_blip)
     TriggerEvent("jobs:adsl:start")
 end)
 
@@ -157,6 +157,15 @@ AddEventHandler("jobs:adsl:restart", function()
     TriggerEvent("jobs:adsl:start")
 end)
 
+function random_coord()
+    local result = Config.adsl[math.random(#Config.adsl)]
+    if result.x == JobDone then
+        random_coord()
+    end
+    local JobDone = result.x
+    return result
+end
+
 RegisterNetEvent("jobs:adsl:start")
 AddEventHandler("jobs:adsl:start", function()
     if JobCounter == 0 then
@@ -164,8 +173,12 @@ AddEventHandler("jobs:adsl:start", function()
     else
         TriggerServerEvent("job:anounce", "Réparez le prochain boitier adsl")
     end
-    local coords = Config.adsl[math.random(#Config.adsl)]
-    createblip(coords)
+    local coords = random_coord()
+    createblip("ADSL", "Réparer l'adsl", 761, coords)
+    ClearGpsMultiRoute()
+    StartGpsMultiRoute(6, true, true)
+    AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
+    SetGpsMultiRouteRender(true)
     exports["qb-target"]:AddBoxZone("adsl_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
         name = "adsl_zone",
@@ -174,7 +187,7 @@ AddEventHandler("jobs:adsl:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:adsl:fix", icon = "fas fa-sign-in-alt", label = "réparer l'adsl"}},
+        options = {{type = "client", event = "jobs:adsl:fix", icon = "fas fa-sign-in-alt", label = "Réparer l'adsl"}},
         distance = 1.5,
     })
     ObjectifCoord = coords
@@ -186,9 +199,9 @@ AddEventHandler("jobs:adsl:end", function()
     TriggerServerEvent("job:set:unemployed")
     local money = Config.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    DeleteVehicule(adsl_vehicule)
+    QBCore.Functions.DeleteVehicle(adsl_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")
-    destroyblip(blip)
+    destroyblip(job_blip)
     OnJob = false
     JobOutfit = false
     JobVehicle = false

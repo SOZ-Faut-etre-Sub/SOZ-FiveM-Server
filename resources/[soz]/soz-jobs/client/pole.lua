@@ -41,6 +41,7 @@ local function JobPosition(job, coords, sprite)
     SetBlipCategory(blip, 2)
 end
 
+
 local function JobPanel(menu)
     local adsl = menu:AddButton({
         label = "Job: Poseur d'Adsl",
@@ -87,6 +88,17 @@ function destroyblip(blip)
     blip = nil
 end
 
+function createblip(name, description, sprite, coords)
+    job_blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+    SetBlipScale(job_blip, 1.0)
+    SetBlipSprite(job_blip, sprite)
+    SetBlipColour(job_blip, 32)
+    AddTextEntry(name, description)
+    BeginTextCommandSetBlipName(name)
+    EndTextCommandSetBlipName(job_blip)
+    SetBlipCategory(job_blip, 2)
+end
+
 function DrawInteractionMarker(ObjectifCoord, show)
     local a, b, c, d, entity = GetShapeTestResult(StartShapeTestCapsule(
         0.0,
@@ -95,7 +107,7 @@ function DrawInteractionMarker(ObjectifCoord, show)
         ObjectifCoord.x,
         ObjectifCoord.y,
         ObjectifCoord.z,
-        1.5,
+        1.0,
         16,
         0,
         7
