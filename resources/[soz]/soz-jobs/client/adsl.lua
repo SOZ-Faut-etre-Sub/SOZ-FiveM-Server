@@ -67,7 +67,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
 
 Citizen.CreateThread(function()
     while true do 
-        Citizen.Wait(10)    
+        Citizen.Wait(10)
         local player = GetPlayerPed(-1)
         local coords = GetEntityCoords(player)
         local distance = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
