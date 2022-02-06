@@ -41,7 +41,6 @@ local function JobPosition(job, coords, sprite)
     SetBlipCategory(blip, 2)
 end
 
-
 local function JobPanel(menu)
     local adsl = menu:AddButton({
         label = "Job: Poseur d'Adsl",
