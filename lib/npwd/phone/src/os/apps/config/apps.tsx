@@ -26,6 +26,7 @@ import {
     SOCIETY_MESSAGES_APP_TEXT_COLOR
 } from "../../../apps/society-messages/messages.theme";
 import {SocietyMessagesApp} from "../../../apps/society-messages/components/SocietyMessagesApp";
+import PhotoApp from "../../../apps/photo/components/PhotoApp";
 
 export interface IAppConfig {
     id: string;
@@ -95,6 +96,13 @@ export const APPS: IAppConfig[] = [
         Route: () => (
             <AppRoute id="SOCIETY_CONTACTS" path="/society-contacts" component={SocietyContactsApp} emitOnOpen={false}/>
         ),
+    },
+    {
+        id: 'PHOTO',
+        nameLocale: 'APPS_PHOTO',
+        color: 'common.white',
+        path: '/photo',
+        Route: () => <AppRoute id="PHOTO" path="/photo" component={PhotoApp} emitOnOpen={true}/>,
     },
     {
         id: 'SETTINGS',

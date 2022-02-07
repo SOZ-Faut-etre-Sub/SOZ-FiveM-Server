@@ -10,7 +10,7 @@ import {useModalVisible, useNotesValue, useSetModalVisible, useSetSelectedNote} 
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {AddNoteExportData} from '@typings/notes';
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 import {PencilAltIcon} from "@heroicons/react/solid";
 
 export const NotesApp: React.FC = () => {
@@ -71,7 +71,7 @@ export const NotesApp: React.FC = () => {
                 >
                     <div className="grid grid-cols-3 items-center font-light text-sm mx-5 mb-10 z-0">
                         <p className="col-start-2 text-white text-center">{notes.length} note{notes.length > 1 && 's'}</p>
-                        <PencilAltIcon className="text-yellow-500 place-self-end cursor-pointer w-10 h-10" onClick={onClickCreate} />
+                        <PencilAltIcon className="text-yellow-500 place-self-end cursor-pointer w-10 h-10" onClick={onClickCreate}/>
                     </div>
                 </Transition>
             </AppWrapper>

@@ -9,7 +9,7 @@ import DialPage from './views/DialPage';
 import DialerNavBar from './DialerNavBar';
 import {ContactList} from '../../contacts/components/List/ContactList';
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 
 export const DialerApp: React.FC = () => {
     const dialer = useApp('DIALER');

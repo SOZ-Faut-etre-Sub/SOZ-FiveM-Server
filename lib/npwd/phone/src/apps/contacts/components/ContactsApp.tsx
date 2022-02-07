@@ -4,7 +4,7 @@ import {AppContent} from '@ui/components/AppContent';
 import {Route, useHistory} from 'react-router-dom';
 import ContactsInfoPage from './views/ContactInfo';
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 import {ContactList} from "./List/ContactList";
 import {PlusIcon} from "@heroicons/react/outline";
 import {AppTitle} from "@ui/components/AppTitle";
@@ -33,9 +33,9 @@ export const ContactsApp: React.FC = () => {
         >
             <AppWrapper>
                 <AppTitle app={contacts} action={!pathname.match(pathTemplate) && (
-                    <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => history.push('/contacts/-1')} />
-                )} >
-                    <div />
+                    <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => history.push('/contacts/-1')}/>
+                )}>
+                    <div/>
                 </AppTitle>
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner/>}>

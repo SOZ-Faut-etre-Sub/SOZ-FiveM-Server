@@ -44,6 +44,7 @@
           "DIALOG_TITLE": "Fond d'écran personnalisé",
           "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
           "DIALOG_PLACEHOLDER": "Lien de l'image",
+          "DIALOG_SUCCESS": "Fond d'écran mis a jour",
           "DIALOG_ERROR": "Image ou lien invalide"
         },
         "RINGTONE": "Sonnerie",
@@ -63,6 +64,11 @@
       "FAILED_TO_DELETE": "La photo n'a pas pu être supprimée :(",
       "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :("
     },
+      "PHOTO": {
+          "FEEDBACK": {
+              "NO_PHOTOS": "Vous n'avez pas de photos"
+          }
+      },
     "CONTACTS": {
       "FEEDBACK": {
         "ADD_FAILED": "Erreur de création du contact!",
@@ -216,6 +222,7 @@
     "APPS_EXAMPLE": "Example app",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Caméra",
+    "APPS_PHOTO": "Galerie",
     "APPS_SOCIETY_CONTACTS": "Annuaire Entreprise",
     "APPS_SOCIETY_MESSAGES": "Répondeur Entreprise",
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",

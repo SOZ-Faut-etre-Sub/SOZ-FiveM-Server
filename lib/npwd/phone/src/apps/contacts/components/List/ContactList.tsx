@@ -45,7 +45,7 @@ export const ContactList: React.FC = () => {
                         <div className="sticky top-0 pt-4 bg-black px-6 py-1 text-sm font-medium text-gray-400">
                             <h3>{letter}</h3>
                         </div>
-                        <ul role="list" className="relative divide-y divide-gray-700">
+                        <ul className="relative divide-y divide-gray-700">
                             {filteredContacts[letter].map((contact) => (
                                 <Menu key={contact.id} as="li" className="bg-black w-full">
                                     <Menu.Button className="w-full">

@@ -6,7 +6,7 @@ import {useApp} from '@os/apps/hooks/useApps';
 import MessagesList from './list/MessagesList';
 import {Route} from 'react-router-dom';
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 
 export const SocietyMessagesApp = () => {
     const messages = useApp('SOCIETY_MESSAGES');

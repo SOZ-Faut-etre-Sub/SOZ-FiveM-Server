@@ -109,7 +109,8 @@ export const MessageModal = () => {
                 <AppTitle title={header} isBigHeader={false} action={
                     <div className="flex">
                         <Button className="mx-3">
-                            <TrashIcon className="h-6 w-6 text-red-500 cursor-pointer" onClick={() => deleteConversation([activeMessageConversation.conversation_id])}/>
+                            <TrashIcon className="h-6 w-6 text-red-500 cursor-pointer"
+                                       onClick={() => deleteConversation([activeMessageConversation.conversation_id])}/>
                         </Button>
                         {getDisplayByNumber(targetNumber) === targetNumber &&
                             <Button className="mx-3">

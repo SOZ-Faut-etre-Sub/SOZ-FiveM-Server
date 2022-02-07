@@ -11,7 +11,8 @@ interface ButtonItemProps {
 
 const ButtonItem: React.FC<ButtonItemProps> = ({label, onClick, className}) => {
     return (
-        <button className={`flex justify-center items-center w-20 aspect-square m-2 bg-[#333333] hover:bg-[#444444] rounded-full cursor-pointer ${className}`} onClick={onClick}>
+        <button className={`flex justify-center items-center w-20 aspect-square m-2 bg-[#333333] hover:bg-[#444444] rounded-full cursor-pointer ${className}`}
+                onClick={onClick}>
             <span className="text-3xl">{label}</span>
         </button>
     );
@@ -40,8 +41,8 @@ export const DialGrid = () => {
                 <ButtonItem label={9} onClick={() => add(9)}/>
                 <ButtonItem label="-" onClick={() => add('-')}/>
                 <ButtonItem label={0} onClick={() => add(0)}/>
-                <ButtonItem label={<BackspaceIcon className="h-8 w-8" />} onClick={removeOne}/>
-                <ButtonItem label={<PhoneIcon className="h-8 w-8" />} onClick={handleCall} className="col-start-2 bg-[#2DD158] hover:bg-[#21B147]"/>
+                <ButtonItem label={<BackspaceIcon className="h-8 w-8"/>} onClick={removeOne}/>
+                <ButtonItem label={<PhoneIcon className="h-8 w-8"/>} onClick={handleCall} className="col-start-2 bg-[#2DD158] hover:bg-[#21B147]"/>
             </div>
         </div>
     );

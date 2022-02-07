@@ -9,7 +9,7 @@ import {Route, Switch, useHistory} from 'react-router-dom';
 import {MessageModal} from './modal/MessageModal';
 import {LoadingSpinner} from '@ui/components/LoadingSpinner';
 import {PlusIcon} from "@heroicons/react/outline";
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 
 export const MessagesApp = () => {
     const messages = useApp('MESSAGES');
@@ -33,7 +33,7 @@ export const MessagesApp = () => {
                         <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => history.push('/messages/new')}/>
                     </Route>
                 }>
-                <div/>
+                    <div/>
                 </AppTitle>
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner/>}>

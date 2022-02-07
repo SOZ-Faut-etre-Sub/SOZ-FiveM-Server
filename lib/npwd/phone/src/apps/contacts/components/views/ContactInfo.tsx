@@ -4,16 +4,16 @@ import {useHistory, useParams} from 'react-router-dom';
 import {useContactActions} from '../../hooks/useContactActions';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {ContactsDatabaseLimits} from '@typings/contact';
-import {TextareaField, TextField} from '@ui/components/Input';
+import {TextField} from '@ui/components/Input';
 import {useContactsAPI} from '../../hooks/useContactsAPI';
 import {ChevronLeftIcon, PlusIcon} from "@heroicons/react/outline";
 import {AppTitle} from "@ui/components/AppTitle";
 import {useApp} from "@os/apps/hooks/useApps";
 import {Button} from "@ui/components/Button";
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 import {AppContent} from "@ui/components/AppContent";
 import {AppWrapper} from "@ui/components";
-import {ChatIcon, PencilAltIcon, PhoneIcon, TrashIcon, UserAddIcon} from "@heroicons/react/solid";
+import {ChatIcon, PencilAltIcon, PhoneIcon, TrashIcon} from "@heroicons/react/solid";
 import LogDebugEvent from "@os/debug/LogDebugEvents";
 import {useCall} from "@os/call/hooks/useCall";
 
@@ -112,36 +112,41 @@ const ContactsInfoPage: React.FC = () => {
             <AppWrapper>
                 <AppTitle app={contacts}>
                     <Button className="flex items-center text-base" onClick={() => history.goBack()}>
-                        <ChevronLeftIcon className="h-5 w-5" />
+                        <ChevronLeftIcon className="h-5 w-5"/>
                         Fermer
                     </Button>
                 </AppTitle>
                 <AppContent className="text-white mt-10 mx-4 mb-4">
                     <div className="flex justify-center">
-                        <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${avatar})`}} />
+                        <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${avatar})`}}/>
                     </div>
                     <div className={`mt-4 grid gap-3 ${contact ? 'grid-cols-4' : 'grid-cols-3'}`}>
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactCall}>
+                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                             onClick={handleContactCall}>
                             <PhoneIcon className="h-6 w-6"/>
                             <p className="text-sm">Appeler</p>
                         </div>
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactMessage}>
+                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                             onClick={handleContactMessage}>
                             <ChatIcon className="h-6 w-6"/>
                             <p className="text-sm">Message</p>
                         </div>
                         {contact ? (
                             <>
-                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactUpdate}>
+                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                                     onClick={handleContactUpdate}>
                                     <PencilAltIcon className="h-6 w-6"/>
                                     <p className="text-sm">Éditer</p>
                                 </div>
-                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-red-500 rounded-xl p-3 cursor-pointer" onClick={handleContactDelete}>
+                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-red-500 rounded-xl p-3 cursor-pointer"
+                                     onClick={handleContactDelete}>
                                     <TrashIcon className="h-6 w-6"/>
                                     <p className="text-sm">Supprimer</p>
                                 </div>
                             </>
                         ) : (
-                            <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleContactAdd}>
+                            <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                                 onClick={handleContactAdd}>
                                 <PlusIcon className="h-6 w-6"/>
                                 <p className="text-sm">Ajouter</p>
                             </div>
@@ -152,7 +157,6 @@ const ContactsInfoPage: React.FC = () => {
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NAME')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NAME')}
-                                error={name.length >= ContactsDatabaseLimits.display}
                                 value={name}
                                 onChange={handleDisplayChange}
                             />
@@ -161,7 +165,6 @@ const ContactsInfoPage: React.FC = () => {
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NUMBER')}
-                                error={number.length >= ContactsDatabaseLimits.number}
                                 value={number}
                                 onChange={handleNumberChange}
                             />

@@ -3,33 +3,33 @@
 }
 
 #transaction-section .MuiTablePagination-root {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 #transaction-section .MuiTablePagination-caption {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 #transaction-section .MuiTablePagination-actions {
-  font-size: 50px;
+    font-size: 50px;
 }
 
 #bank-app .Mui-selected {
-  color: #388cf8 !important;
+    color: #388cf8 !important;
 }
 
 #bank-app .MuiSnackbar-root {
-  position: absolute;
+    position: absolute;
 }
 
 #bank-title {
-  font-size: 50px;
+    font-size: 50px;
 }
 
 .card-name {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 #actionButton a {
-  color: #fff;
+    color: #fff;
 }
