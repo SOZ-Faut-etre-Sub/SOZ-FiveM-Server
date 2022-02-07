@@ -53,7 +53,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
                     )}
                     {isPosition(message.message) && (
                         <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
-                            <LocationMarkerIcon className="h-5 w-5 mr-2" />Position
+                            <LocationMarkerIcon className="h-5 w-5 mr-2"/>Position
                         </span>
                     )}
                     {!isImage(message.message) && !isPosition(message.message) && (
@@ -61,7 +61,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
                     )}
                 </div>
                 {isMine &&
-                    <DotsVerticalIcon className="h-5 w-5 cursor-pointer" onClick={openMenu} />
+                    <DotsVerticalIcon className="h-5 w-5 cursor-pointer" onClick={openMenu}/>
                 }
             </div>
             <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)}/>

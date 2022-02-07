@@ -5,8 +5,8 @@ import {useModalVisible, useSelectedNote} from '../hooks/state';
 import {useHistory, useLocation} from 'react-router';
 import {useApps} from '@os/apps/hooks/useApps';
 import {useNotesAPI} from '../hooks/useNotesAPI';
-import { Button } from '@ui/components/Button';
-import { Transition, Menu } from '@headlessui/react';
+import {Button} from '@ui/components/Button';
+import {Transition, Menu} from '@headlessui/react';
 import {ChevronLeftIcon, DotsCircleHorizontalIcon, SaveIcon, TrashIcon} from "@heroicons/react/outline";
 import {AppTitle} from "@ui/components/AppTitle";
 import {AppWrapper} from "@ui/components";
@@ -79,7 +79,7 @@ export const NoteModal: React.FC = () => {
 
     const NoteActions = (
         <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button><DotsCircleHorizontalIcon className="h-6 w-6" /></Menu.Button>
+            <Menu.Button><DotsCircleHorizontalIcon className="h-6 w-6"/></Menu.Button>
             <Transition
                 enter="transition duration-100 ease-out"
                 enterFrom="transform scale-95 opacity-0"
@@ -88,20 +88,21 @@ export const NoteModal: React.FC = () => {
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
             >
-                <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                <Menu.Items
+                    className="absolute right-0 w-56 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                     <Menu.Item>
                         <Button
                             className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                             disabled={noteTitle.length <= 0}
                             onClick={isNewNote ? handleNewNote : handleUpdateNote}
                         >
-                            <SaveIcon className="mx-3 h-5 w-5" /> Sauvegarder
+                            <SaveIcon className="mx-3 h-5 w-5"/> Sauvegarder
                         </Button>
                     </Menu.Item>
                     {!isNewNote &&
                         <Menu.Item>
                             <Button className="flex items-center w-full text-red-400 px-2 py-2 hover:text-red-500" onClick={handleDeleteNote}>
-                                <TrashIcon className="mx-3 h-5 w-5" /> Supprimer
+                                <TrashIcon className="mx-3 h-5 w-5"/> Supprimer
                             </Button>
                         </Menu.Item>
                     }
@@ -128,7 +129,7 @@ export const NoteModal: React.FC = () => {
             <AppWrapper>
                 <AppTitle title={t('APPS_NOTES')} isBigHeader={false} action={NoteActions}>
                     <Button className="flex items-center text-base" onClick={_handleClose}>
-                        <ChevronLeftIcon className="h-5 w-5" />
+                        <ChevronLeftIcon className="h-5 w-5"/>
                         Fermer
                     </Button>
                 </AppTitle>

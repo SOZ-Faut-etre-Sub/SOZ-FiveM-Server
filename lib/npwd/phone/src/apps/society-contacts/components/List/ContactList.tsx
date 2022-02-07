@@ -2,11 +2,6 @@ import React from 'react';
 import {SearchContacts} from './SearchContacts';
 import {useHistory} from 'react-router-dom';
 import {useFilteredContacts} from '../../hooks/state';
-import { List } from '@ui/components/List';
-import {ListItem} from "@ui/components/ListItem";
-import {Menu, Transition} from "@headlessui/react";
-import {Button} from "@ui/components/Button";
-import {ChatIcon, PencilAltIcon, PhoneIcon} from "@heroicons/react/solid";
 
 export const ContactList: React.FC = () => {
     const filteredContacts = useFilteredContacts();
@@ -25,7 +20,7 @@ export const ContactList: React.FC = () => {
                         <div className="sticky top-0 pt-4 bg-black px-6 py-1 text-sm font-medium text-gray-400">
                             <h3>{letter}</h3>
                         </div>
-                        <ul role="list" className="relative divide-y divide-gray-700">
+                        <ul className="relative divide-y divide-gray-700">
                             {filteredContacts[letter].map((contact) => (
                                 <li key={contact.id} className="bg-black w-full cursor-pointer" onClick={() => openContactInfo(contact.id)}>
                                     <div className="relative px-6 py-2 flex items-center space-x-3 hover:bg-gray-900">

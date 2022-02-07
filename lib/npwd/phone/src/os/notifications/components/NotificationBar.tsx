@@ -1,17 +1,13 @@
 import React, {useEffect} from 'react';
 import {useNotifications} from '../hooks/useNotifications';
-import {NotificationItem} from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
-import {NoNotificationText} from './NoNotificationText';
 import BatteryIcon from "../../../styles/icons/system/Battery";
 import CellSignal from "../../../styles/icons/system/CellSignal";
-import { List } from '@ui/components/List';
 import {useRouteMatch} from "react-router-dom";
 
 
 export const NotificationBar = () => {
-    const {icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed} =
-        useNotifications();
+    const {icons, notifications, setBarUncollapsed} = useNotifications();
 
     const {isExact} = useRouteMatch('/');
     const time = usePhoneTime();

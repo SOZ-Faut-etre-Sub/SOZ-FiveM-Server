@@ -27,10 +27,10 @@ export const HomeApp: React.FC = () => {
                 leaveTo="scale-[3.0]"
             >
                 <div className="mt-4 px-1">
-                    <AppsGrid items={filteredApps} />
+                    <AppsGrid items={filteredApps}/>
                 </div>
                 <div className="bg-black bg-opacity-25 backdrop-blur rounded-[20px] mb-10 py-2 mx-2">
-                    <AppsGrid items={homeApps} />
+                    <AppsGrid items={homeApps}/>
                 </div>
             </Transition>
         </AppWrapper>

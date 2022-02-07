@@ -1,8 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import qs from 'qs';
-import Modal from '../../../../ui/components/Modal';
 import {useHistory, useLocation} from 'react-router-dom';
-import {ContextMenu} from '@ui/components/ContextMenu';
 import {deleteQueryFromLocation} from '@common/utils/deleteQueryFromLocation';
 import {PictureResponsive} from '@ui/components/PictureResponsive';
 import {useTranslation} from 'react-i18next';
@@ -13,15 +11,13 @@ import {MessageEvents} from "@typings/messages";
 import {useSnackbar} from "@os/snackbar/hooks/useSnackbar";
 import {Dialog, Transition} from "@headlessui/react";
 import {Button} from "@ui/components/Button";
-import {LocationMarkerIcon, PhotographIcon, TrashIcon} from "@heroicons/react/solid";
+import {LocationMarkerIcon, PhotographIcon} from "@heroicons/react/solid";
 import {XIcon} from "@heroicons/react/outline";
 
 interface IProps {
     isOpen: boolean;
     messageGroupId: string | undefined;
-
     onClose(): void;
-
     image?: string;
 }
 
@@ -80,7 +76,7 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
                                 })
                             }}
                         >
-                            <LocationMarkerIcon className="w-5 h-5 mx-3" /> {t('MESSAGES.POSITION_OPTION')}
+                            <LocationMarkerIcon className="w-5 h-5 mx-3"/> {t('MESSAGES.POSITION_OPTION')}
                         </Button>
                     </li>
                     <li>
@@ -99,7 +95,7 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
                                 })
                             }}
                         >
-                            <LocationMarkerIcon className="w-5 h-5 mx-3" /> {t('MESSAGES.DESTINATION_OPTION')}
+                            <LocationMarkerIcon className="w-5 h-5 mx-3"/> {t('MESSAGES.DESTINATION_OPTION')}
                         </Button>
                     </li>
                     <li>
@@ -107,13 +103,13 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
                             className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-400"
                             onClick={() => {
                                 history.push(
-                                    `/camera?${qs.stringify({
+                                    `/photo?${qs.stringify({
                                         referal: encodeURIComponent(pathname + search),
                                     })}`,
                                 )
                             }}
                         >
-                            <PhotographIcon className="w-5 h-5 mx-3" /> {t('MESSAGES.MEDIA_OPTION')}
+                            <PhotographIcon className="w-5 h-5 mx-3"/> {t('MESSAGES.MEDIA_OPTION')}
                         </Button>
                     </li>
 

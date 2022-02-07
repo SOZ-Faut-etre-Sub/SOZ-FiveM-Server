@@ -34,21 +34,16 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     return (
         <div className="flex">
             <button onClick={onAddImageClick}>
-                <PaperClipIcon className="h-5 w-5 mx-2 text-white" />
+                <PaperClipIcon className="h-5 w-5 mx-2 text-white"/>
             </button>
             <TextField
                 onKeyPress={handleKeyPress}
-                multiline
-                maxRows={4}
-                aria-multiline="true"
-                fullWidth
-                inputProps={{style: {fontSize: '1.3em'}}}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t('MESSAGES.NEW_MESSAGE')}
             />
             <button className="bg-[#32CA5B] rounded-full mx-2 " onClick={handleSubmit}>
-                <UploadIcon className="w-5 h-5 mx-2 text-white" />
+                <UploadIcon className="w-5 h-5 mx-2 text-white"/>
             </button>
         </div>
     );

@@ -33,11 +33,15 @@ const WallpaperModal: React.FC = () => {
         setSettings({...settings, [key]: value});
     };
 
-    const handleNewWallpaper = () => {
-        if (isImageAndUrl(value)) {
+    const handleNewWallpaper = (local) => {
+        if (local !== undefined || isImageAndUrl(value)) {
             handleSettingChange('wallpaper', {
-                label: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
-                value,
+                label: local.label || t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
+                value: local.value || value,
+            });
+            addAlert({
+                message: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_SUCCESS'),
+                type: 'success',
             });
             setCustomWallpaperModal(false);
             setWallpaperModal(false);
@@ -79,7 +83,7 @@ const WallpaperModal: React.FC = () => {
                             {config.wallpapers && config.wallpapers.map(wallpaper =>
                                 <div key={wallpaper.value} className="bg-cover bg-center w-5/6 aspect-[9/19] justify-self-center rounded-lg cursor-pointer"
                                      style={{backgroundImage: `url(${getBackgroundPath(wallpaper.value)})`}}
-                                     onClick={() => handleSettingChange('wallpaper', wallpaper)}
+                                     onClick={() => handleNewWallpaper(wallpaper)}
                                 />
                             )}
                         </div>
@@ -106,8 +110,7 @@ const WallpaperModal: React.FC = () => {
                 >
                     <TextField
                         value={value}
-                        error={!isImageAndUrl(value) && true}
-                        onChange={(e) => setValue(e.currentTarget.value)}
+                        onChange={(e) => !isImageAndUrl(value) && setValue(e.currentTarget.value)}
                         placeholder={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_PLACEHOLDER')}
                     />
                 </DialogForm>

@@ -3,8 +3,8 @@ import {useNotesValue, useSetModalVisible} from '../hooks/state';
 import {useSetSelectedNote} from '../hooks/state';
 import {NoteItem} from '@typings/notes';
 import {useTranslation} from 'react-i18next';
-import { ListItem } from '@ui/components/ListItem';
-import { List } from '@ui/components/List';
+import {ListItem} from '@ui/components/ListItem';
+import {List} from '@ui/components/List';
 import {ChevronRightIcon} from "@heroicons/react/outline";
 import {Button} from "@ui/components/Button";
 
@@ -28,7 +28,7 @@ const NoteList = () => {
                     <ListItem key={note.id} onClick={() => handleNoteModal(note)}>
                         <p className="flex-grow ml-4 py-2">{note.title}</p>
                         <Button className="flex items-center">
-                            <ChevronRightIcon className="text-white text-opacity-25 w-5 h-5" />
+                            <ChevronRightIcon className="text-white text-opacity-25 w-5 h-5"/>
                         </Button>
                     </ListItem>
                 ))}

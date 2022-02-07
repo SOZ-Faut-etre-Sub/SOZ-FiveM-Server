@@ -6,7 +6,7 @@ import {useApp} from '@os/apps/hooks/useApps';
 import {LoadingSpinner} from "@ui/components/LoadingSpinner";
 import {Route} from "react-router-dom";
 import ContactsInfoPage from "./views/ContactInfo";
-import { Transition } from '@headlessui/react';
+import {Transition} from '@headlessui/react';
 import {ContactList} from "./List/ContactList";
 
 export const SocietyContactsApp: React.FC = () => {

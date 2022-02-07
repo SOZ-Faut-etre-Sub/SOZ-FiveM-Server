@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {AppWrapper} from '@ui/components';
 import {AppTitle} from '@ui/components/AppTitle';
 import {AppContent} from '@ui/components/AppContent';
@@ -19,8 +19,8 @@ import {deleteQueryFromLocation} from "@common/utils/deleteQueryFromLocation";
 import {useQueryParams} from "@common/hooks/useQueryParams";
 import {useHistory, useLocation} from "react-router-dom";
 import qs from "qs";
-import { ListItem } from '@ui/components/ListItem';
-import { Button } from '@ui/components/Button';
+import {ListItem} from '@ui/components/ListItem';
+import {Button} from '@ui/components/Button';
 import {Transition} from "@headlessui/react";
 import {
     ChevronRightIcon,
@@ -51,7 +51,6 @@ export const SettingsApp = () => {
     const {updateProfilePicture} = useSettingsAPI();
     const resetSettings = useResetSettings();
 
-
     const handleSettingChange = (key: string | number, value: unknown) => {
         setSettings({...settings, [key]: value});
     };
@@ -65,9 +64,7 @@ export const SettingsApp = () => {
         MapSettingItem(settings.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val)),
     );
     const notifications = config.notiSounds.map(
-        MapSettingItem(settings.notiSound, (val: SettingOption) =>
-            handleSettingChange('notiSound', val),
-        ),
+        MapSettingItem(settings.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val)),
     );
 
     const handleResetOptions = () => {
@@ -96,7 +93,7 @@ export const SettingsApp = () => {
 
     const handleChooseImage = useCallback(() => {
         history.push(
-            `/camera?${qs.stringify({
+            `/photo?${qs.stringify({
                 referal: encodeURIComponent(pathname + search),
             })}`,
         );
@@ -116,10 +113,10 @@ export const SettingsApp = () => {
             appear={true}
             show={true}
             className="mt-4 h-full flex flex-col"
-            enter="transition-all origin-[80%_10%] duration-500"
+            enter="transition-all origin-[20%_20%] duration-500"
             enterFrom="scale-[0.0] opacity-0"
             enterTo="scale-100 opacity-100"
-            leave="transition-all origin-[80%_10%] duration-500"
+            leave="transition-all origin-[20%_20%] duration-500"
             leaveFrom="scale-100 opacity-100"
             leaveTo="scale-[0.0] opacity-0"
         >
@@ -130,10 +127,10 @@ export const SettingsApp = () => {
                 <AppContent className="mt-14 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                     <List>
                         <ListItem>
-                            <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}} />
+                            <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}}/>
                             <Button className="flex items-center text-white text-sm" onClick={handleChooseImage}>
                                 {t('MARKETPLACE.CHOOSE_IMAGE')}
-                                <ChevronRightIcon className="text-opacity-25 w-6 h-6" />
+                                <ChevronRightIcon className="text-opacity-25 w-6 h-6"/>
                             </Button>
                         </ListItem>
                     </List>
