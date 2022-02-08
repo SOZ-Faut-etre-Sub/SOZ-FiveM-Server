@@ -33,6 +33,11 @@ exps('setPhoneVisible', async (bool: boolean | number) => {
 // Getter equivalent of above
 exps('isPhoneVisible', () => global.isPhoneOpen);
 
+exps('setPhoneFocus', (bool: boolean) => {
+    SetNuiFocus(bool, bool)
+    SetNuiFocusKeepInput(bool);
+});
+
 // Will prevent the phone from being opened
 exps('setPhoneDisabled', (bool: boolean | number) => {
   verifyExportArgType('setPhoneVisible', bool, ['boolean', 'number']);
