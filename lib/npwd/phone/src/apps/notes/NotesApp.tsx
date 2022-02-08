@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {AppWrapper} from '@ui/components';
 import {AppContent} from '@ui/components/AppContent';
 import {AppTitle} from '@ui/components/AppTitle';
@@ -12,6 +12,7 @@ import {useQueryParams} from '@common/hooks/useQueryParams';
 import {AddNoteExportData} from '@typings/notes';
 import {Transition} from '@headlessui/react';
 import {PencilAltIcon} from "@heroicons/react/solid";
+import {ThemeContext} from "../../styles/themeProvider";
 
 export const NotesApp: React.FC = () => {
     const notesApp = useApp('NOTES');
@@ -19,6 +20,7 @@ export const NotesApp: React.FC = () => {
     const setSelectedNote = useSetSelectedNote();
     const [isModalVisible] = useModalVisible();
     const setModalVisible = useSetModalVisible();
+    const {theme} = useContext(ThemeContext);
 
     const onClickCreate = () => {
         setSelectedNote({title: '', content: ''});
@@ -70,7 +72,7 @@ export const NotesApp: React.FC = () => {
                     leaveTo="translate-y-full"
                 >
                     <div className="grid grid-cols-3 items-center font-light text-sm mx-5 mb-10 z-0">
-                        <p className="col-start-2 text-white text-center">{notes.length} note{notes.length > 1 && 's'}</p>
+                        <p className={`col-start-2 ${theme === 'dark' ? 'text-white' : 'text-black'} text-center`}>{notes.length} note{notes.length > 1 && 's'}</p>
                         <PencilAltIcon className="text-yellow-500 place-self-end cursor-pointer w-10 h-10" onClick={onClickCreate}/>
                     </div>
                 </Transition>

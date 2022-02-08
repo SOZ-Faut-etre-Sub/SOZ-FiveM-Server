@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {ThemeContext} from "../../styles/themeProvider";
 
-export const ListItem = ({ ...props }) => (
-  <li className={`${props.onClick && 'cursor-pointer'} py-2 px-4 flex justify-between items-center hover:bg-[#27272A] text-white text-sm`} {...props}>
-    {props.children}
-  </li>
-);
+export const ListItem = ({ ...props }) => {
+    const {theme} = useContext(ThemeContext);
+
+    return (
+        <li className={`${props.onClick && 'cursor-pointer'} py-2 px-4 flex justify-between items-center ${theme === 'dark' ? 'hover:bg-[#27272A] text-white' : 'hover:bg-gray-50 text-black'} text-sm`} {...props}>
+            {props.children}
+        </li>
+    )
+};

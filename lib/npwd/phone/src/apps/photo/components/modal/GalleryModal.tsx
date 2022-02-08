@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {GalleryPhoto, PhotoEvents} from '@typings/photo';
@@ -10,10 +10,12 @@ import {useSnackbar} from '@os/snackbar/hooks/useSnackbar';
 import {Button} from "@ui/components/Button";
 import {ShareIcon, TrashIcon} from "@heroicons/react/solid";
 import {setClipboard} from "@os/phone/hooks/useClipboard";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 export const GalleryModal = () => {
     const history = useHistory();
     const query = useQueryParams();
+    const {theme} = useContext(ThemeContext);
     const {deletePhoto} = usePhotoActions();
     const {addAlert} = useSnackbar();
     const [t] = useTranslation();
@@ -50,7 +52,7 @@ export const GalleryModal = () => {
         <div className="flex flex-col justify-between h-[790px]">
             <div/>
             <div className="bg-cover bg-center w-full aspect-square cursor-pointer" style={{backgroundImage: `url(${meta.image})`}} />
-            <div className="grid grid-cols-4 content-start text-white bg-[#1C1C1E] h-16">
+            <div className={`grid grid-cols-4 content-start ${theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-[#F2F2F6] text-black'} h-16`}>
                 <Button
                     className={`flex flex-col items-center py-3 text-sm`}
                     onClick={handleCopyImage}

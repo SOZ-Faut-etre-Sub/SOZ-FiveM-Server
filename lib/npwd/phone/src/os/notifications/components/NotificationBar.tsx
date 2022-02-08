@@ -1,15 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useNotifications} from '../hooks/useNotifications';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
 import BatteryIcon from "../../../styles/icons/system/Battery";
 import CellSignal from "../../../styles/icons/system/CellSignal";
 import {useRouteMatch} from "react-router-dom";
+import {ThemeContext} from "../../../styles/themeProvider";
 
 
 export const NotificationBar = () => {
     const {icons, notifications, setBarUncollapsed} = useNotifications();
 
-    const {isExact} = useRouteMatch('/');
+    const home = useRouteMatch('/');
+    const camera = useRouteMatch('/camera');
+    const {theme} = useContext(ThemeContext);
     const time = usePhoneTime();
 
     useEffect(() => {
@@ -18,9 +21,19 @@ export const NotificationBar = () => {
         }
     }, [notifications, setBarUncollapsed]);
 
+    const color = () => {
+        if (home && home.isExact) {
+            return 'text-white'
+        } else if (camera && camera.isExact) {
+            return 'bg-black text-white'
+        } else {
+            return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black'
+        }
+    }
+
     return (
         <>
-            <div className={`${!isExact && 'bg-black'} grid grid-cols-3 px-5 py-3 text-white text-sm w-full z-50`}>
+            <div className={`${color()} grid grid-cols-3 px-5 py-3 text-sm w-full z-50`}>
                 <div className="text-center">
                     {time}
                     {icons.map((notifIcon) => (

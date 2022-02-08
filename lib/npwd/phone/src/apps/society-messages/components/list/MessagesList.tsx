@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {useMessagesValue} from "../../hooks/state";
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
@@ -10,9 +10,11 @@ import dayjs from "dayjs";
 import {Button} from '@ui/components/Button';
 import {Menu, Transition} from "@headlessui/react";
 import {BookmarkIcon, LocationMarkerIcon, PhoneIcon} from "@heroicons/react/solid";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 const MessagesList = (): any => {
     const societyMessages = useMessagesValue();
+    const {theme} = useContext(ThemeContext);
     const {initializeCall} = useCall();
 
     const startCall = (number: string) => {
@@ -40,14 +42,14 @@ const MessagesList = (): any => {
     };
 
     return (
-        <ul role="list" className="mt-5 relative divide-y divide-gray-700">
+        <ul className={`mt-5 relative divide-y ${theme === 'dark' ? 'divide-gray-700' : 'divide-gray-300'}`}>
             {societyMessages.map((message) => (
-                <Menu key={message.conversation_id} as="li" className="bg-black w-full">
+                <Menu key={message.conversation_id} as="li" className={`w-full ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
                     <Menu.Button className="w-full">
-                        <div className="relative px-6 py-2 flex items-center space-x-3 hover:bg-gray-900">
+                        <div className={`relative px-6 py-2 flex items-center space-x-3 ${theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-300'}`}>
                             <div className="flex-1 min-w-0 cursor-pointer">
                                 <span className="absolute inset-0" aria-hidden="true"/>
-                                <p className="text-left text-sm font-medium text-gray-100">{message.message}</p>
+                                <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-700'}`}>{message.message}</p>
                                 <p className="flex justify-between text-left text-xs text-gray-400">
                                     {message.isDone ? (
                                         <span>L'appel est fini !</span>

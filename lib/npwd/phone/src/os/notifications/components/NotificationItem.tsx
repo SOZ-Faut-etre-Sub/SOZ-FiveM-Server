@@ -14,7 +14,6 @@ export const NotificationItem = ({
 
     return (
         <ListItem
-            button
             onClick={(e) => {
                 if (onClick) {
                     onClick(notification);

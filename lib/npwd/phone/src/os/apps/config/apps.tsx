@@ -3,7 +3,6 @@ import {DialerApp} from '../../../apps/dialer/components/DialerApp';
 import {ContactsApp} from '../../../apps/contacts/components/ContactsApp';
 import {SettingsApp} from '../../../apps/settings/components/SettingsApp';
 import {MessagesApp} from '../../../apps/messages/components/MessagesApp';
-import {ExampleAppWrapper} from '../../../apps/example/components/ExampleAppWrapper';
 import {NotesApp} from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import {SocietyContactsApp} from "../../../apps/society-contacts/components/SocietyContactsApp";
@@ -140,16 +139,3 @@ export const APPS: IAppConfig[] = [
         Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true}/>,
     },
 ];
-
-// Example app only in dev
-if (process.env.NODE_ENV === 'development') {
-    APPS.push({
-        id: 'EXAMPLE',
-        nameLocale: 'APPS_EXAMPLE',
-        color: 'blue[50]',
-        path: '/example',
-        Route: () => (
-            <AppRoute id="EXAMPLE" path="/example" component={ExampleAppWrapper} emitOnOpen={false}/>
-        ),
-    });
-}

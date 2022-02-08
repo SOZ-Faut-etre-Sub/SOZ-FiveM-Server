@@ -56,7 +56,6 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
 
     return (
         <>
-            {/*<ContextMenu open={isOpen} options={menuOptions} onClose={onClose}/>*/}
             <Transition
                 show={isOpen}
                 enter="transition duration-100 ease-out"

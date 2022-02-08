@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useQueryParams} from '@common/hooks/useQueryParams';
 import {addQueryToLocation} from '@common/utils/addQueryToLocation';
@@ -10,6 +10,7 @@ import {AppTitle} from "@ui/components/AppTitle";
 import {useApp} from "@os/apps/hooks/useApps";
 import {AppContent} from "@ui/components/AppContent";
 import {Transition} from '@headlessui/react';
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 export const GalleryGrid = () => {
     const photosApp = useApp('PHOTO');
@@ -17,6 +18,7 @@ export const GalleryGrid = () => {
     const query = useQueryParams();
     const [t] = useTranslation();
     const photos = usePhotosValue();
+    const {theme} = useContext(ThemeContext);
 
     const referal = query.referal ? decodeURIComponent(query.referal) : '/photo/image';
 
@@ -40,7 +42,7 @@ export const GalleryGrid = () => {
                 <AppTitle app={photosApp} isBigHeader={true}/>
                 <AppContent className="mt-14">
                     {photos.length === 0 && (
-                        <div className="flex flex-col justify-center items-center text-white h-[600px]">
+                        <div className={`flex flex-col justify-center items-center ${theme === 'dark' ? 'text-white' : 'text-black'} h-[600px]`}>
                             {t('PHOTO.FEEDBACK.NO_PHOTOS')}
                         </div>
                     )}

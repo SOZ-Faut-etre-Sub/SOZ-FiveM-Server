@@ -1,9 +1,7 @@
-import React, {Fragment, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {TextareaField, TextField, toggleKeys} from '@ui/components/Input';
+import {TextareaField, TextField} from '@ui/components/Input';
 import {useModalVisible, useSelectedNote} from '../hooks/state';
-import {useHistory, useLocation} from 'react-router';
-import {useApps} from '@os/apps/hooks/useApps';
 import {useNotesAPI} from '../hooks/useNotesAPI';
 import {Button} from '@ui/components/Button';
 import {Transition, Menu} from '@headlessui/react';
@@ -16,15 +14,9 @@ export const NoteModal: React.FC = () => {
     const {addNewNote, deleteNote, updateNote} = useNotesAPI();
     const [modalVisible, setModalVisible] = useModalVisible();
     const [t] = useTranslation();
-    const [selectedNote, setSelectedNote] = useSelectedNote();
+    const [selectedNote,] = useSelectedNote();
     const [noteTitle, setNoteTitle] = useState('');
     const [noteContent, setNoteContent] = useState('');
-
-    const history = useHistory();
-    const {getApp} = useApps();
-    const location = useLocation();
-
-    const notesApp = useMemo(() => getApp('NOTES'), [getApp]);
 
     const isNewNote = !Boolean(selectedNote?.id);
 
@@ -70,11 +62,6 @@ export const NoteModal: React.FC = () => {
 
     const _handleClose = () => {
         setModalVisible(false);
-    };
-
-    const handleClearContent = () => {
-        setSelectedNote(null);
-        if (location.search) history.push(notesApp.path);
     };
 
     const NoteActions = (

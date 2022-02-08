@@ -119,8 +119,8 @@
       "value": "default.png"
     },
     "theme": {
-      "label": "Dark",
-      "value": "taso-dark"
+      "label": "Mode clair",
+      "value": "light"
     },
     "zoom": {
       "label": "90%",
@@ -140,14 +140,18 @@
   },
   "themes": [
     {
-      "label": "Dark",
-      "value": "taso-dark"
+      "label": "Mode clair",
+      "value": "light"
+    },
+    {
+      "label": "Mode sombre",
+      "value": "dark"
     }
   ],
   "debug": {
-    "printDebugLogs": true,
+    "printDebugLogs": false,
     "logLevel": 1,
     "shouldShowAtomDebug": false
   },
-  "SentryErrorMetrics": true
+  "SentryErrorMetrics": false
 }

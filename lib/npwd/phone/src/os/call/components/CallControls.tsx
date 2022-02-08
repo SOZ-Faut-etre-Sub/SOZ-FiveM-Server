@@ -1,7 +1,6 @@
 import React from 'react';
 import {useCall} from '../hooks/useCall';
 import {useCallModal} from '../hooks/useCallModal';
-import {StatusIconButton} from '@ui/components/StatusIconButton';
 import {useHistory} from 'react-router-dom';
 import {PhoneIcon} from "@heroicons/react/solid";
 

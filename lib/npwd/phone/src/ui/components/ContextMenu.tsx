@@ -1,7 +1,6 @@
 import React from 'react';
 import {List} from './List';
 import {ListItem} from './ListItem';
-import {useTranslation} from 'react-i18next';
 import { Transition } from '@headlessui/react';
 import {AppWrapper} from "@ui/components/AppWrapper";
 import {AppTitle} from "@ui/components/AppTitle";
@@ -28,8 +27,6 @@ interface ContextMenuProps {
 }
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({open, onClose, options}) => {
-    const [t] = useTranslation();
-
     return (
         <Transition
             appear={true}
