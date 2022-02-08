@@ -15,6 +15,8 @@ client_script {
     "@menuv/menuv.lua",
     "client/livraison.lua",
     "client/pole.lua",
+    "client/metal.lua",
+    "client/religion.lua",
 }
 
 server_script "server/server.lua"
