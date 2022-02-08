@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Message, MessageEvents} from '@typings/messages';
 import {PictureReveal} from '@ui/components/PictureReveal';
 import {useMyPhoneNumber} from '@os/simcard/hooks/useMyPhoneNumber';
@@ -8,6 +8,7 @@ import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
 import {LocationMarkerIcon} from "@heroicons/react/solid";
 import {DotsVerticalIcon} from "@heroicons/react/outline";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 
 const isImage = (url) => {
@@ -24,6 +25,7 @@ interface MessageBubbleProps {
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const {theme} = useContext(ThemeContext);
 
     const setSelectedMessage = useSetSelectedMessage();
     const myNumber = useMyPhoneNumber();
@@ -42,9 +44,17 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
 
     const isMine = message.author === myNumber;
 
+    const messageColor = () => {
+        if (isMine) {
+            return 'bg-[#32CA5B] text-white'
+        } else {
+            return theme === 'dark' ? 'bg-[#26252A] text-white' : 'bg-[#E9E9EB] text-dark'
+        }
+    }
+
     return (
         <div className={`flex ${isMine && "justify-end"}`}>
-            <div className={`flex justify-between text-white w-3/4 rounded-2xl ${isMine ? "bg-[#32CA5B]" : "bg-[#26252A]"} p-3 m-2`}>
+            <div className={`flex justify-between w-3/4 rounded-2xl ${messageColor()} p-3 m-2`}>
                 <div>
                     {isImage(message.message) && (
                         <PictureReveal>

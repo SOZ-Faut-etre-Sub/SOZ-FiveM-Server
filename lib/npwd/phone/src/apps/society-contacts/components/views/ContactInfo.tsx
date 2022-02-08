@@ -13,6 +13,7 @@ import {AppTitle} from "@ui/components/AppTitle";
 import {ChevronLeftIcon} from "@heroicons/react/outline";
 import {ChatIcon, LocationMarkerIcon, PhoneIncomingIcon, PhoneMissedCallIcon} from "@heroicons/react/solid";
 import {AppContent} from "@ui/components/AppContent";
+import {ActionButton} from "@ui/components/ActionButton";
 
 interface ContactInfoRouteParams {
     mode: string;
@@ -93,25 +94,24 @@ const ContactsInfoPage: React.FC = () => {
                         />
                     </div>
                     <div className="mt-4 grid gap-3 grid-cols-3">
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleSend}>
+                        <ActionButton onClick={handleSend}>
                             <ChatIcon className="h-6 w-6"/>
                             <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND')}</p>
-                        </div>
+                        </ActionButton>
 
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
-                             onClick={handleAnonymousChange}>
+                        <ActionButton onClick={handleAnonymousChange}>
                             {anonymous ? (
                                 <PhoneMissedCallIcon className="h-6 w-6"/>
                             ) : (
                                 <PhoneIncomingIcon className="h-6 w-6"/>
                             )}
                             <p className="text-sm text-center">Rappel {anonymous ? 'interdit' : 'autorisé'}</p>
-                        </div>
+                        </ActionButton>
 
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer" onClick={handleSendWithLocation}>
+                        <ActionButton onClick={handleSendWithLocation}>
                             <LocationMarkerIcon className="h-6 w-6"/>
                             <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND_POSITION')}</p>
-                        </div>
+                        </ActionButton>
                     </div>
                 </AppContent>
             </AppWrapper>

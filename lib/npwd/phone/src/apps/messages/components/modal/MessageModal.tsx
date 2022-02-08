@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import useMessages from '../../hooks/useMessages';
 import Conversation, {CONVERSATION_ELEMENT_ID} from './Conversation';
 import {useHistory, useLocation, useParams} from 'react-router-dom';
-import {useTranslation} from 'react-i18next';
 import {useContactActions} from '../../../contacts/hooks/useContactActions';
 import {useMessagesState} from '../../hooks/state';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
@@ -12,17 +11,14 @@ import {Transition} from '@headlessui/react';
 import {AppTitle} from "@ui/components/AppTitle";
 import {ChevronLeftIcon} from "@heroicons/react/outline";
 import {AppContent} from "@ui/components/AppContent";
-import {PhoneIcon, PhoneOutgoingIcon, TrashIcon, UserAddIcon} from "@heroicons/react/solid";
+import {PhoneIcon, TrashIcon, UserAddIcon} from "@heroicons/react/solid";
 import {AppWrapper} from "@ui/components";
-import conversation from "./Conversation";
 
-const LARGE_HEADER_CHARS = 30;
 const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
 // abandon all hope ye who enter here
 export const MessageModal = () => {
-    const [t] = useTranslation();
     const history = useHistory();
     const {pathname} = useLocation();
     const {groupId} = useParams<{ groupId: string }>();

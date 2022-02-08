@@ -27,7 +27,7 @@
   },
   "debug": {
     "level": "info",
-    "enabled": true,
-    "sentryEnabled": true
+    "enabled": false,
+    "sentryEnabled": false
   }
 }

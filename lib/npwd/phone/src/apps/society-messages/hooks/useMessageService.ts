@@ -15,7 +15,7 @@ export const useSocietyMessagesService = () => {
     const {updateLocalMessages} = useMessageActions();
     const {pathname} = useLocation();
     const {visibility} = usePhoneVisibility();
-    const [messages, setMessages] = useMessagesState()
+    const [, setMessages] = useMessagesState()
 
     const handleMessageBroadcast = ({id, conversation_id, source_phone, message, position, isTaken, isDone, createdAt, updatedAt}) => {
         if (visibility && pathname.includes('/society-messages')) {

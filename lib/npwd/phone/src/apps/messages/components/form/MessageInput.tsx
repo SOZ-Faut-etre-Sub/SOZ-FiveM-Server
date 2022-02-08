@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {TextField} from '@ui/components/Input';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
-import {MenuIcon, PaperClipIcon, UploadIcon} from "@heroicons/react/outline";
+import {PaperClipIcon, UploadIcon} from "@heroicons/react/outline";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 interface IProps {
     onAddImageClick(): void;
@@ -13,6 +14,7 @@ interface IProps {
 
 const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     const [t] = useTranslation();
+    const {theme} = useContext(ThemeContext);
     const [message, setMessage] = useState('');
     const {sendMessage} = useMessageAPI();
 
@@ -34,7 +36,7 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     return (
         <div className="flex">
             <button onClick={onAddImageClick}>
-                <PaperClipIcon className="h-5 w-5 mx-2 text-white"/>
+                <PaperClipIcon className={`h-5 w-5 mx-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}/>
             </button>
             <TextField
                 onKeyPress={handleKeyPress}

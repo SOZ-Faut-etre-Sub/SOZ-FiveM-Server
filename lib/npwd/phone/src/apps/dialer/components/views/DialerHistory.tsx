@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {useContactActions} from '../../../contacts/hooks/useContactActions';
 import {CallHistoryItem} from '@typings/call';
 import {useTranslation} from 'react-i18next';
@@ -12,6 +12,8 @@ import {Menu, Transition} from "@headlessui/react";
 import {Button} from "@ui/components/Button";
 import {PhoneIcon, PhoneIncomingIcon, PhoneMissedCallIcon, PhoneOutgoingIcon, UserAddIcon} from "@heroicons/react/solid";
 import relativeTime from "dayjs/plugin/relativeTime";
+import 'dayjs/locale/fr'
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 dayjs.extend(relativeTime)
 
@@ -19,6 +21,7 @@ dayjs.extend(relativeTime)
 export const DialerHistory: React.FC = () => {
     const myNumber = useMyPhoneNumber();
     const {getDisplayByNumber, getPictureByNumber} = useContactActions();
+    const {theme} = useContext(ThemeContext);
     const {initializeCall} = useCall();
     const calls = useDialHistory();
     const contacts = useContacts();
@@ -49,20 +52,20 @@ export const DialerHistory: React.FC = () => {
         <nav className="pb-10 h-full overflow-y-auto" aria-label="Directory">
             {Object.keys(calls).sort().map((date) => (
                 <div key={date} className="relative">
-                    <div className="sticky top-0 pt-4 bg-black px-6 py-1 text-sm font-medium text-gray-400">
+                    <div className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${theme === 'dark' ? 'bg-black text-gray-400' : 'bg-[#F2F2F6] text-gray-600'}`}>
                         <h3>{date}</h3>
                     </div>
-                    <ul role="list" className="relative divide-y divide-gray-700">
+                    <ul className={`relative divide-y ${theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'}`}>
                         {calls[date].map((call: CallHistoryItem) => (
-                            <Menu key={call.id} as="li" className="bg-black w-full">
+                            <Menu key={call.id} as="li" className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} w-full cursor-pointer`}>
                                 <Menu.Button className="w-full">
-                                    <div className="relative px-6 py-2 flex items-center space-x-3 hover:bg-gray-900">
+                                    <div className={`relative px-6 py-2 flex items-center space-x-3 ${theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-200'}`}>
                                         <div className="flex-shrink-0">
                                             {getPictureByNumber(call.transmitter === myNumber ? call.receiver : call.transmitter) ? (
-                                                <img className="h-10 w-10 bg-gray-700 rounded-full"
+                                                <img className={`h-10 w-10 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'} rounded-full`}
                                                      src={getPictureByNumber(call.transmitter === myNumber ? call.receiver : call.transmitter)} alt=""/>
                                             ) : (
-                                                <div className="h-10 w-10 bg-gray-700 rounded-full"/>
+                                                <div className={`h-10 w-10 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'} rounded-full`}/>
                                             )}
                                         </div>
                                         <div className="flex flex-1 min-w-0 cursor-pointer">
@@ -75,10 +78,10 @@ export const DialerHistory: React.FC = () => {
                                                     <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3"/>
                                                 )
                                             )}
-                                            <p className="text-left text-sm font-medium text-gray-100">{getDisplay(call.transmitter === myNumber ? call.receiver : call.transmitter)}</p>
+                                            <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>{getDisplay(call.transmitter === myNumber ? call.receiver : call.transmitter)}</p>
                                         </div>
                                         <div className="text-gray-500 text-sm">
-                                            {dayjs(call.start).fromNow(true)}
+                                            {dayjs(call.start).locale('fr').fromNow(true)}
                                         </div>
                                     </div>
                                 </Menu.Button>
@@ -91,7 +94,7 @@ export const DialerHistory: React.FC = () => {
                                     leaveTo="transform scale-95 opacity-0"
                                 >
                                     <Menu.Items
-                                        className="absolute z-30 right-0 w-64 mt-2 origin-top-right bg-white bg-opacity-20 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                                        className="absolute z-30 right-0 w-64 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                                         <Menu.Item>
                                             <Button
                                                 className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"

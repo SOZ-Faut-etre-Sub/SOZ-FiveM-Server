@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {Button} from "@ui/components/Button";
 import {ClockIcon, UserCircleIcon, ViewGridIcon} from "@heroicons/react/solid";
+import {ThemeContext} from "../../../styles/themeProvider";
 
 const DialerNavBar: React.FC = () => {
     const {pathname} = useLocation();
     const history = useHistory();
+    const {theme} = useContext(ThemeContext);
     const [page, setPage] = useState(pathname);
     const [t] = useTranslation();
 
     return (
-        <div className="grid grid-cols-3 content-start text-white bg-[#1C1C1E] h-20">
+        <div className={`grid grid-cols-3 content-start ${theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-white text-black'} h-20`}>
             <Button
                 className={`flex flex-col items-center py-2 text-sm ${page === '/phone' && 'text-[#347DD9]'}`}
                 onClick={() => {

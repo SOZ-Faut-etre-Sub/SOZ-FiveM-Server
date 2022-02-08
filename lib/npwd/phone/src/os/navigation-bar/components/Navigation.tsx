@@ -1,9 +1,21 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
+import React, {useContext} from 'react';
+import {useHistory, useRouteMatch} from 'react-router-dom';
 import { Transition } from '@headlessui/react';
+import {ThemeContext} from "../../../styles/themeProvider";
 
 export const Navigation = () => {
     const history = useHistory();
+    const home = useRouteMatch('/');
+    const camera = useRouteMatch('/camera');
+    const {theme} = useContext(ThemeContext);
+
+    const color = () => {
+        if ((camera && camera.isExact) || (home && home.isExact)) {
+            return 'bg-gray-200'
+        } else {
+            return theme === 'dark' ? 'bg-gray-200' : 'bg-black'
+        }
+    }
 
     return (
         <Transition
@@ -17,7 +29,7 @@ export const Navigation = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
         >
-            <div className="bg-gray-200 bg-opacity-70 rounded-full cursor-pointer h-[0.53rem] w-2/5" onClick={() => history.push('/')}/>
+            <div className={`${color()} bg-opacity-70 rounded-full cursor-pointer h-[0.53rem] w-2/5 transition-colors ease-in-out duration-300`} onClick={() => history.push('/')}/>
         </Transition>
     );
 };

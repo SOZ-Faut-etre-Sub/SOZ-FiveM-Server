@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import {AppWrapper} from '@ui/components';
 import {AppTitle} from '@ui/components/AppTitle';
 import {AppContent} from '@ui/components/AppContent';
@@ -31,9 +31,10 @@ import {
     AdjustmentsIcon,
     PhotographIcon,
     EyeOffIcon,
-    TrashIcon
+    TrashIcon, PencilIcon
 } from "@heroicons/react/solid";
 import WallpaperModal from "./WallpaperModal";
+import {ThemeContext} from "../../../styles/themeProvider";
 
 
 export const SettingsApp = () => {
@@ -43,20 +44,29 @@ export const SettingsApp = () => {
     const myAvatar = useMyPictureProfile();
     const [settings, setSettings] = useSettings();
     const [t] = useTranslation();
-    const [customWallpaperState, setCustomWallpaperState] = useCustomWallpaperModal();
+    const [, setCustomWallpaperState] = useCustomWallpaperModal();
     const {addAlert} = useSnackbar();
     const query = useQueryParams();
     const {pathname, search} = useLocation();
     const history = useHistory();
     const {updateProfilePicture} = useSettingsAPI();
     const resetSettings = useResetSettings();
+    const {theme, updateTheme} = useContext(ThemeContext);
 
     const handleSettingChange = (key: string | number, value: unknown) => {
         setSettings({...settings, [key]: value});
+
+        if (key === 'theme') {
+            // @ts-ignore
+            updateTheme(value.value)
+        }
     };
     // const frames = config.frames.map(
     //     MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
     // );
+    const themes = config.themes.map(
+        MapSettingItem(settings.theme, (val: SettingOption) => handleSettingChange('theme', val)),
+    );
     const zoomOptions = config.zoomOptions.map(
         MapSettingItem(settings.zoom, (val: SettingOption) => handleSettingChange('zoom', val)),
     );
@@ -83,13 +93,6 @@ export const SettingsApp = () => {
             label: t('SETTINGS.OPTIONS.RESET_SETTINGS'),
         },
     ];
-
-    const customWallpaper: IContextMenuOption = {
-        selected: false,
-        onClick: () => setCustomWallpaperState(true),
-        key: 'CUSTOM_WALLPAPER',
-        label: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
-    };
 
     const handleChooseImage = useCallback(() => {
         history.push(
@@ -127,10 +130,10 @@ export const SettingsApp = () => {
                 <AppContent className="mt-14 mb-4" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                     <List>
                         <ListItem>
-                            <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${myAvatar})`}}/>
-                            <Button className="flex items-center text-white text-sm" onClick={handleChooseImage}>
+                            <div className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'} bg-cover bg-center h-20 w-20 my-1 rounded-full`} style={{backgroundImage: `url(${myAvatar})`}}/>
+                            <Button className={`flex items-center ${theme === 'dark' ? 'text-white' : 'text-black'} text-sm`} onClick={handleChooseImage}>
                                 {t('MARKETPLACE.CHOOSE_IMAGE')}
-                                <ChevronRightIcon className="text-opacity-25 w-6 h-6"/>
+                                <ChevronRightIcon className="text-gray-200 w-6 h-6"/>
                             </Button>
                         </ListItem>
                     </List>
@@ -177,6 +180,15 @@ export const SettingsApp = () => {
                         />
                     </List>
                     <List>
+                        <SettingItem
+                            label={t('SETTINGS.OPTIONS.THEME')}
+                            value={settings.theme.label}
+                            options={themes}
+                            onClick={openMenu}
+                            icon={<PencilIcon/>}
+                            color='bg-[#8E8E92]'
+                        />
+
                         <SettingItem
                             label={t('SETTINGS.OPTIONS.WALLPAPER')}
                             value={settings.wallpaper.label}

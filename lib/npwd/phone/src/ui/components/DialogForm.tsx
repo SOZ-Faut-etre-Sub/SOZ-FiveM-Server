@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button} from './Button';
+import {ThemeContext} from "../../styles/themeProvider";
 
 interface DialogFormProps {
     children: React.ReactNode;
@@ -18,9 +19,10 @@ const DialogForm: React.FC<DialogFormProps> = ({
     title,
     content,
 }) => {
+    const {theme} = useContext(ThemeContext);
 
     return (
-        <div className="bg-black bg-opacity-75 text-white text-center rounded-[.8rem] mx-10">
+        <div className={`${theme === 'dark' ? 'bg-black bg-opacity-75 text-white' : 'bg-white bg-opacity-75 text-black'} text-center rounded-[.8rem] mx-10`}>
             <div className="pt-5 px-5">
                 <div className="font-bold">{title}</div>
                 <div className="text-[.9rem] py-2">{content}</div>

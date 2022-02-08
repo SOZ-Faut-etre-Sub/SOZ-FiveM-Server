@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory, useParams} from 'react-router-dom';
 import {useContactActions} from '../../hooks/useContactActions';
@@ -16,6 +16,8 @@ import {AppWrapper} from "@ui/components";
 import {ChatIcon, PencilAltIcon, PhoneIcon, TrashIcon} from "@heroicons/react/solid";
 import LogDebugEvent from "@os/debug/LogDebugEvents";
 import {useCall} from "@os/call/hooks/useCall";
+import {ActionButton} from "@ui/components/ActionButton";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 interface ContactInfoRouteParams {
     mode: string;
@@ -32,6 +34,7 @@ interface ContactInfoRouteQuery {
 const ContactsInfoPage: React.FC = () => {
     const contacts = useApp('CONTACTS');
     const history = useHistory();
+    const {theme} = useContext(ThemeContext);
     const {id} = useParams<ContactInfoRouteParams>();
     const {
         addNumber,
@@ -118,42 +121,42 @@ const ContactsInfoPage: React.FC = () => {
                 </AppTitle>
                 <AppContent className="text-white mt-10 mx-4 mb-4">
                     <div className="flex justify-center">
-                        <div className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${avatar})`}}/>
+                        <div className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'} bg-cover bg-center h-20 w-20 my-1 rounded-full`} style={{backgroundImage: `url(${avatar})`}}/>
                     </div>
                     <div className={`mt-4 grid gap-3 ${contact ? 'grid-cols-4' : 'grid-cols-3'}`}>
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                        <ActionButton
                              onClick={handleContactCall}>
                             <PhoneIcon className="h-6 w-6"/>
                             <p className="text-sm">Appeler</p>
-                        </div>
-                        <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                        </ActionButton>
+                        <ActionButton
                              onClick={handleContactMessage}>
                             <ChatIcon className="h-6 w-6"/>
                             <p className="text-sm">Message</p>
-                        </div>
+                        </ActionButton>
                         {contact ? (
                             <>
-                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                                <ActionButton
                                      onClick={handleContactUpdate}>
                                     <PencilAltIcon className="h-6 w-6"/>
                                     <p className="text-sm">Éditer</p>
-                                </div>
-                                <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-red-500 rounded-xl p-3 cursor-pointer"
+                                </ActionButton>
+                                <div className={`flex flex-col justify-center items-center ${theme === 'dark' ? 'bg-[#1C1C1E]': 'bg-white'} text-red-500 rounded-xl p-3 cursor-pointer`}
                                      onClick={handleContactDelete}>
                                     <TrashIcon className="h-6 w-6"/>
                                     <p className="text-sm">Supprimer</p>
                                 </div>
                             </>
                         ) : (
-                            <div className="flex flex-col justify-center items-center bg-[#1C1C1E] text-[#347DD9] rounded-xl p-3 cursor-pointer"
+                            <ActionButton
                                  onClick={handleContactAdd}>
                                 <PlusIcon className="h-6 w-6"/>
                                 <p className="text-sm">Ajouter</p>
-                            </div>
+                            </ActionButton>
                         )}
                     </div>
                     <div className="mt-6">
-                        <div className="bg-[#1C1C1E] rounded-lg my-2">
+                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NAME')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NAME')}
@@ -161,7 +164,7 @@ const ContactsInfoPage: React.FC = () => {
                                 onChange={handleDisplayChange}
                             />
                         </div>
-                        <div className="bg-[#1C1C1E] rounded-lg my-2">
+                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NUMBER')}

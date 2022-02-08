@@ -13,6 +13,7 @@ import {useHistory} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useContactActions} from '../../../contacts/hooks/useContactActions';
+import {LoadingSpinner} from "@ui/components/LoadingSpinner";
 
 interface IProps {
     activeMessageGroup: MessageConversation;
@@ -81,9 +82,18 @@ const Conversation: React.FC<IProps> = ({activeMessageGroup, messages}) => {
                         }}
                     >
                         <div className="flex flex-col h-[675px] overflow-y-auto">
-                            {messages.map((message) => (
-                                <MessageBubble key={message.id} message={message}/>
-                            ))}
+                            <InfiniteScroll
+                                next={handleNextPage}
+                                scrollableTarget="scrollableDiv"
+                                hasMore={hasMore}
+                                inverse={true}
+                                loader={<LoadingSpinner/>}
+                                dataLength={messages.length}
+                            >
+                                {messages.map((message) => (
+                                    <MessageBubble key={message.id} message={message}/>
+                                ))}
+                            </InfiniteScroll>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,6 @@ export const ItemIcon: React.FC<ItemIconProps> = ({
 }) => {
 
   return (
-      <div className={`${color} h-8 w-8 p-1 rounded-md`}>{icon}</div>
+      <div className={`text-white ${color} h-8 w-8 p-1 rounded-md`}>{icon}</div>
   );
 };
