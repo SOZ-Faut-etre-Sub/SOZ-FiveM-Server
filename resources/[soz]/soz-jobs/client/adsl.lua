@@ -6,7 +6,8 @@ local JobVehicle = false
 local InVehicle = false
 local JobCounter = 0
 local ObjectifCoord = {}
-local DrawDistance = 0
+local DrawDistance = 100
+local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
 
 exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 1, {
     name = "job adsl",
@@ -64,20 +65,6 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
     distance = 2.5,
 })
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(10)
-        local player = GetPlayerPed(-1)
-        local coords = GetEntityCoords(player)
-        local distance = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
-        if distance <= DrawDistance then
-            DrawInteractionMarker(ObjectifCoord, true)
-        else
-            DrawInteractionMarker(ObjectifCoord, false)
-        end
-    end
-end)
-
 RegisterNetEvent("jobs:adsl:fix")
 AddEventHandler("jobs:adsl:fix", function()
     TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
@@ -91,6 +78,7 @@ AddEventHandler("jobs:adsl:fix", function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
         exports["qb-target"]:RemoveZone("adsl_zone")
         destroyblip(job_blip)
+        DrawInteractionMarker(ObjectifCoord, false)
         DrawDistance = 0
         payout_counter = payout_counter + 1
         JobCounter = JobCounter + 1
@@ -156,7 +144,7 @@ AddEventHandler("jobs:adsl:restart", function()
     TriggerEvent("jobs:adsl:start")
 end)
 
-function random_coord()
+local function random_coord()
     local result = Config.adsl[math.random(#Config.adsl)]
     if result.x == JobDone then
         random_coord()
@@ -190,7 +178,14 @@ AddEventHandler("jobs:adsl:start", function()
         distance = 1.5,
     })
     ObjectifCoord = coords
-    DrawDistance = 50
+    DrawDistance = 100
+    while DrawDistance >= 50 do
+        Citizen.Wait(1000)
+        local player = GetPlayerPed(-1)
+        local CoordPlayer = GetEntityCoords(player)
+        DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
+    end
+    DrawInteractionMarker(ObjectifCoord, true)
 end)
 
 RegisterNetEvent("jobs:adsl:end")

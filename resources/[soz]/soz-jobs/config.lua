@@ -2,7 +2,9 @@ Config = {}
 
 Config.adsl_payout = 25
 Config.adsl_vehicule = {x = 500.79, y = -105.88, z = 62.07, w = 253.78}
+
 Config.livraison_payout = 25
+Config.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
 
 Config.adsl = {
     {x = 406.88, y = -968.05, z = 29.45, sx = 1.8, sy = 1.2, heading = 358, minZ = 27.8, maxZ = 30.4},
@@ -16,8 +18,9 @@ Config.adsl = {
 }
 
 Config.livraison = {
-    {type = "colis", x = 859.15, y = -531.95, z = 57.33, sx = 1, sy = 1, heading = 0, minZ = 56.08, maxZ = 58.08},
-    {type = "colis", x = -1225.8, y = -1094.27, z = 8.17, sx = 1, sy = 1, heading = 0, minZ = 6.77, maxZ = 8.57},
-    {type = "journal", x = 303.55, y = -1355.5, z = 31.84, sx = 3.6, sy = 1, heading = 320, minZ = 30.64, maxZ = 32.44},
-    {type = "journal", x = 419.25, y = -997.37, z = 29.39, sx = 2, sy = 1, heading = 0, minZ = 27.99, maxZ = 29.59},
+    {x = 859.15, y = -531.95, z = 57.33, sx = 1, sy = 1, heading = 0, minZ = 56.08, maxZ = 58.08},
+    {x = -1225.8, y = -1094.27, z = 8.17, sx = 1, sy = 1, heading = 0, minZ = 6.77, maxZ = 8.57},
+    {x = -618.08, y = -950.34, z = 21.7, sx = 1, sy = 1, heading = 0, minZ = 20.5, maxZ = 21.9},
+    {x = -822.38, y = -995.39, z = 13.07, sx = 1, sy = 1, heading = 29, minZ = 12.27, maxZ = 14.07},
+    {x = -1365.82, y = -686.5, z = 25.32, sx = 1, sy = 1, heading = 37, minZ = 23.72, maxZ = 25.32},
 }
