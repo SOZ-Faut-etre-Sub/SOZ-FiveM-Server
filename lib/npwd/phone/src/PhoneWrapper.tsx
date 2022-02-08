@@ -25,8 +25,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
           leaveTo="translate-y-full"
       >
       <div className="PhoneWrapper" onClick={() => {
-          console.log(isCameraPath)
-          if (isCameraPath.isExact) {
+          if (isCameraPath && isCameraPath.isExact) {
               fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CONTROL_CAMERA, {})
           }
       }}>
