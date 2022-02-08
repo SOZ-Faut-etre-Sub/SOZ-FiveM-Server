@@ -36,7 +36,12 @@ end
 --- @param amount number
 --- @return boolean
 function PlayerAccount:save(id, owner, amount, marked_money)
+    local Player = QBCore.Functions.GetPlayerByCitizenId(owner)
+
     MySQL.update.await("UPDATE bank_accounts SET money = ? WHERE accountid = ? AND citizenid = ?", {amount, id, owner})
+    if Player then
+        TriggerClientEvent("phone:client:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), amount)
+    end
     return true
 end
 
