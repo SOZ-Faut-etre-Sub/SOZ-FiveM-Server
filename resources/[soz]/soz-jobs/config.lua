@@ -6,6 +6,12 @@ Config.adsl_vehicule = {x = 500.79, y = -105.88, z = 62.07, w = 253.78}
 Config.livraison_payout = 25
 Config.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
 
+Config.religion_payout = 25
+Config.religion_vehicule = {x = -763.69, y = -39.26, z = 37.69, w = 119.87}
+
+Config.metal_payout = 25
+Config.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
+
 Config.adsl = {
     {x = 406.88, y = -968.05, z = 29.45, sx = 1.8, sy = 1.2, heading = 358, minZ = 27.8, maxZ = 30.4},
     {x = -245.4, y = -705.67, z = 33.57, sx = 1.8, sy = 0.8, heading = 343, minZ = 32.17, maxZ = 34.17},
@@ -23,4 +29,16 @@ Config.livraison = {
     {x = -618.08, y = -950.34, z = 21.7, sx = 1, sy = 1, heading = 0, minZ = 20.5, maxZ = 21.9},
     {x = -822.38, y = -995.39, z = 13.07, sx = 1, sy = 1, heading = 29, minZ = 12.27, maxZ = 14.07},
     {x = -1365.82, y = -686.5, z = 25.32, sx = 1, sy = 1, heading = 37, minZ = 23.72, maxZ = 25.32},
+}
+
+Config.religion = {
+    {x = -1365.82, y = -686.5, z = 25.32, sx = 1, sy = 1, heading = 37, minZ = 23.72, maxZ = 25.32},
+}
+
+Config.metal = {
+    {x = -454.83, y = -1678.6, z = 19.03, sx = 4.2, sy = 2.4, heading = 336, minZ = 17.83, maxZ = 19.83},
+    {x = -443.72, y = -1676.47, z = 19.03, sx = 2.25, sy = 4.0, heading = 340, minZ = 17.28, maxZ = 19.88},
+    {x = -474.17, y = -1677.17, z = 19.0, sx = 2.8, sy = 2.2, heading = 335, minZ = 17.4, maxZ = 19.4},
+    {x = -474.31, y = -1680.6, z = 19.03, sx = 2.2, sy = 3.0, heading = 337, minZ = 17.63, maxZ = 19.63},
+    {x = -475.62, y = -1729.28, z = 18.69, sx = 2.4, sy = 4.4, heading = 14, minZ = 17.49, maxZ = 19.49},
 }
