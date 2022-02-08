@@ -1,6 +1,12 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local payout_counter = 0
 local OnJob = false
+local JobOutfit = false
+local JobVehicle = false
+local InVehicle = false
+local JobCounter = 0
+local ObjectifCoord = {}
+local DrawDistance = 100
 
 exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0), 1, 1, {
     name = "job livraison",
@@ -10,16 +16,38 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
     options = {
         {
             type = "client",
-            event = "jobs:livraison:start",
+            event = "jobs:livraison:begin",
             icon = "fas fa-sign-in-alt",
-            label = "comencer le job livraison",
+            label = "Commencer le job de livraison",
             job = "unemployed",
         },
         {
             type = "client",
-            event = "jobs:livraison:start",
+            event = "jobs:livraison:tenue",
             icon = "fas fa-sign-in-alt",
-            label = "continuer le job livraison",
+            label = "Prendre la tenue",
+            job = "livraison",
+            canInteract = function()
+                return JobOutfit == false
+            end,
+        },
+        {
+            type = "client",
+            event = "jobs:livraison:vehicle",
+            icon = "fas fa-sign-in-alt",
+            label = "Sortir la moto",
+            job = "livraison",
+            canInteract = function()
+                if JobOutfit == true then
+                    return JobVehicle == false
+                end
+            end,
+        },
+        {
+            type = "client",
+            event = "jobs:livraison:restart",
+            icon = "fas fa-sign-in-alt",
+            label = "Continuer le job de livraison",
             job = "livraison",
             canInteract = function()
                 return OnJob == false
@@ -29,28 +57,17 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             type = "client",
             event = "jobs:livraison:end",
             icon = "fas fa-sign-in-alt",
-            label = "finir le job livraison",
+            label = "Finir le job de livraison",
             job = "livraison",
         },
     },
     distance = 2.5,
 })
 
-local function createblip(coords)
-    blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipScale(blip, 1.0)
-    SetBlipSprite(blip, 525)
-    SetBlipColour(blip, 32)
-    AddTextEntry("Livraison", "livrer à cette adresse")
-    BeginTextCommandSetBlipName("Livraison")
-    EndTextCommandSetBlipName(blip)
-    SetBlipCategory(blip, 2)
-end
-
 RegisterNetEvent("jobs:livraison:fix")
 AddEventHandler("jobs:livraison:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
-    QBCore.Functions.Progressbar("adsl_fix", "livraison..", 10000, false, true,
+    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
+    QBCore.Functions.Progressbar("livraison_fix", "Livraison de fougère..", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -59,30 +76,95 @@ AddEventHandler("jobs:livraison:fix", function()
     }, {}, {}, {}, function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
         exports["qb-target"]:RemoveZone("livraison_zone")
-        destroyblip(blip)
+        destroyblip(job_blip)
+        DrawInteractionMarker(ObjectifCoord, false)
+        DrawDistance = 0
+        payout_counter = payout_counter + 1
+        JobCounter = JobCounter + 1
+        ClearGpsMultiRoute()
+        if JobCounter >= 4 then
+            OnJob = false
+            TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
+        else
+            TriggerEvent("jobs:livraison:start")
+        end
     end)
-    payout_counter = payout_counter + 1
-    OnJob = false
 end)
 
 local function SpawnVehicule()
     local ModelHash = "faggio"
-    if not IsModelInCdimage(ModelHash) then
+    local model = GetHashKey(ModelHash)
+    if not IsModelInCdimage(model) then
         return
     end
-    RequestModel(ModelHash)
-    adsl_vehicule = CreateVehicle(ModelHash, -413.45, -2791.54, 7.0, 317.52, true, false)
+    RequestModel(model)
+    print("model load")
+    while not HasModelLoaded(model) do
+        Citizen.Wait(10)
+        print(test)
+    end
+    livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z, Config.livraison_vehicule.w, true, false)
+    SetModelAsNoLongerNeeded(model)
+end
+
+RegisterNetEvent("jobs:livraison:begin")
+AddEventHandler("jobs:livraison:begin", function()
+    TriggerServerEvent("job:anounce", "Prenez la tenue")
+    TriggerServerEvent("job:set:pole", "livraison")
+    OnJob = true
+end)
+
+RegisterNetEvent("jobs:livraison:tenue")
+AddEventHandler("jobs:livraison:tenue", function()
+    TriggerServerEvent("job:anounce", "Sortez le véhicule")
+    JobOutfit = true
+end)
+
+RegisterNetEvent("jobs:livraison:vehicle")
+AddEventHandler("jobs:livraison:vehicle", function()
+    TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
+    SpawnVehicule()
+    JobVehicle = true
+    createblip("Véhicule", "Montez dans le véhicule", 225, Config.livraison_vehicule)
+    local player = GetPlayerPed(-1)
+    while InVehicle == false do
+        Citizen.Wait(100)
+        if IsPedInVehicle(player, livraison_vehicule, true) == 1 then
+            InVehicle = true
+        end
+    end
+    destroyblip(job_blip)
+    TriggerEvent("jobs:livraison:start")
+end)
+
+RegisterNetEvent("jobs:livraison:restart")
+AddEventHandler("jobs:livraison:restart", function()
+    JobCounter = 0
+    TriggerEvent("jobs:livraison:start")
+end)
+
+local function random_coord()
+    local result = Config.livraison[math.random(#Config.livraison)]
+    if result.x == JobDone then
+        random_coord()
+    end
+    local JobDone = result.x
+    return result
 end
 
 RegisterNetEvent("jobs:livraison:start")
 AddEventHandler("jobs:livraison:start", function()
-    OnJob = true
-    local coords = Config.livraison[math.random(#Config.livraison)]
-    createblip(coords)
-    if payout_counter == 0 then
-        SpawnVehicule()
-        TriggerServerEvent("job:set:pole", "livraison")
+    if JobCounter == 0 then
+        TriggerServerEvent("job:anounce", "Livrez la fougère")
+    else
+        TriggerServerEvent("job:anounce", "Livrez la prochainne fougère")
     end
+    local coords = random_coord()
+    createblip("livraison", "Livraison", 761, coords)
+    ClearGpsMultiRoute()
+    StartGpsMultiRoute(6, true, true)
+    AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
+    SetGpsMultiRouteRender(true)
     exports["qb-target"]:AddBoxZone("livraison_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
         name = "livraison_zone",
@@ -91,11 +173,18 @@ AddEventHandler("jobs:livraison:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {
-            {type = "client", event = "jobs:livraison:fix", icon = "fas fa-sign-in-alt", label = "livraison en cours"},
-        },
+        options = {{type = "client", event = "jobs:livraison:fix", icon = "fas fa-sign-in-alt", label = "Livrez la fougère"}},
         distance = 1.5,
     })
+    ObjectifCoord = coords
+    DrawDistance = 100
+    while DrawDistance >= 50 do
+        Citizen.Wait(1000)
+        local player = GetPlayerPed(-1)
+        local CoordPlayer = GetEntityCoords(player)
+        DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
+    end
+    DrawInteractionMarker(ObjectifCoord, true)
 end)
 
 RegisterNetEvent("jobs:livraison:end")
@@ -103,10 +192,13 @@ AddEventHandler("jobs:livraison:end", function()
     TriggerServerEvent("job:set:unemployed")
     local money = Config.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    DeleteVehicule(adsl_vehicule)
-    if OnJob == true then
-        exports["qb-target"]:RemoveZone("livraison_zone")
-        destroyblip(blip)
-        OnJob = false
-    end
+    QBCore.Functions.DeleteVehicle(livraison_vehicule)
+    exports["qb-target"]:RemoveZone("livraison_zone")
+    destroyblip(job_blip)
+    OnJob = false
+    JobOutfit = false
+    JobVehicle = false
+    JobCounter = 0
+    payout_counter = 0
+    DrawDistance = 0
 end)
