@@ -29,7 +29,7 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
 
 RegisterKeyMapping(
   config.general.toggleCommand,
-  'Toggle Phone',
+  'Afficher le téléphone',
   'keyboard',
   config.general.toggleKey,
 );
