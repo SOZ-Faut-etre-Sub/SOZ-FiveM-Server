@@ -9,18 +9,13 @@ export const useApps = () => {
 
   const apps: IApp[] = useMemo(() => {
     return APPS.map((app) => {
-      const SvgIcon = React.lazy<any>(() =>
-        import(`${__dirname}/../icons/svg/${app.id}`).catch(
-          () => 'Was not able to find a dynamic import for icon from this icon set',
-        ),
-      );
       const AppIcon = React.lazy<any>(() =>
         import(`${__dirname}/../icons/app/${app.id}`).catch(
           () => 'Was not able to find a dynamic import for icon from this icon set',
         ),
       );
 
-      const NotificationIcon = createLazyAppIcon(SvgIcon);
+      const NotificationIcon = createLazyAppIcon(AppIcon, {className: "h-8 w-8 rounded-md"});
       const Icon = createLazyAppIcon(AppIcon, {className: "h-16 w-16 rounded-[1rem]"});
 
       return {
