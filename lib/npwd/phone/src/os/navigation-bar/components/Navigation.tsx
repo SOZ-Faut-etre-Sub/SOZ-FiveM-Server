@@ -2,11 +2,13 @@ import React, {useContext} from 'react';
 import {useHistory, useRouteMatch} from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import {ThemeContext} from "../../../styles/themeProvider";
+import {useNotifications} from "@os/notifications/hooks/useNotifications";
 
 export const Navigation = () => {
     const history = useHistory();
     const home = useRouteMatch('/');
     const camera = useRouteMatch('/camera');
+    const {setBarUncollapsed} = useNotifications();
     const {theme} = useContext(ThemeContext);
 
     const color = () => {
@@ -29,7 +31,10 @@ export const Navigation = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
         >
-            <div className={`${color()} bg-opacity-70 rounded-full cursor-pointer h-[0.53rem] w-2/5 transition-colors ease-in-out duration-300`} onClick={() => history.push('/')}/>
+            <div className={`${color()} bg-opacity-70 rounded-full cursor-pointer h-[0.53rem] w-2/5 transition-colors ease-in-out duration-300`} onClick={() => {
+                history.push('/')
+                setBarUncollapsed(false)
+            }}/>
         </Transition>
     );
 };

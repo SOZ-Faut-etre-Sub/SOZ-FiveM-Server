@@ -51,6 +51,11 @@
   flex-direction: column;
 }
 
+.notificationBarIcon > * {
+    height: 20px;
+    width: 20px;
+}
+
 * {
   box-sizing: border-box;
 }
