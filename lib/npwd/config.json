@@ -17,7 +17,7 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://images.gorp.link/",
+    "url": "https://images.soz.zerator.com/",
     "type": "imgur",
     "imageEncoding": "jpg",
     "contentType": "multipart/form-data",

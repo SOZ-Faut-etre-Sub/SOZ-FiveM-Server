@@ -50,20 +50,20 @@ CreateThread(function()
         Wait(500)
 
         local isPauseOpen = IsPauseMenuActive() ~= false
-        local isPhoneVisible = exports.npwd:isPhoneVisible()
+        local isPhoneVisible = exports["soz-phone"]:isPhoneVisible()
         -- Pause opened and hasn't been handled yet
         if isPauseOpen and not cachedPauseStatus then
-            exports.npwd:setPhoneDisabled(true)
+            exports["soz-phone"]:setPhoneDisabled(true)
             cachedPauseStatus = true
         -- Pause closed and hasn't been undisabled yet
         elseif not isPauseOpen and cachedPauseStatus then
-            exports.npwd:setPhoneDisabled(false)
+            exports["soz-phone"]:setPhoneDisabled(false)
             cachedPauseStatus = false
         end
 
         -- Handle if the phone is already visible and escape menu is opened
         if isPauseOpen and isPhoneVisible then
-            exports.npwd:setPhoneVisible(false)
+            exports["soz-phone"]:setPhoneVisible(false)
         end
     end
 end)

@@ -31,8 +31,8 @@ Citizen.CreateThread(function()
                 while try <= Config.retryAllowed do
                     local word = Config.wordList[math.random(#Config.wordList)]
 
-                    if exports["npwd"]:isPhoneVisible() then
-                        exports["npwd"]:setPhoneFocus(false)
+                    if exports["soz-phone"]:isPhoneVisible() then
+                        exports["soz-phone"]:setPhoneFocus(false)
                     end
 
                     local afkWord = exports["soz-hud"]:Input(("Anti-AFK - %s/%s - Tapper le mot suivant: %s"):format(try, Config.retryAllowed, word), 32)
@@ -41,8 +41,8 @@ Citizen.CreateThread(function()
                         try, time = 1, Config.secondsUntilKick
                         exports["soz-hud"]:DrawNotification("~g~Vous n'êtes plus AFK")
 
-                        if exports["npwd"]:isPhoneVisible() then
-                            exports["npwd"]:setPhoneFocus(true)
+                        if exports["soz-phone"]:isPhoneVisible() then
+                            exports["soz-phone"]:setPhoneFocus(true)
                         end
 
                         break
