@@ -1,0 +1,47 @@
+.chat-window {
+    position: absolute;
+    top: 39vh;
+    left: 0.8vw;
+    width: 38vw;
+    height: 22vh;
+    max-width: 1000px;
+    background-color: rgba(0,0,0,0.25) !important;
+    -webkit-animation-duration: 2s;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.chat-input {
+    font-size: 1.65vh;
+    position: absolute;
+
+    top: 61vh;
+    left: 0.8vw;
+    width: 38vw;
+    max-width: 1000px;
+    box-sizing: border-box;
+}
+
+.chat-input > div.input {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5) !important;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+.suggestions {
+    list-style-type: none;
+    padding: 0.5%;
+    padding-left: 1.4%;
+    font-size: 1.65vh;
+    box-sizing: border-box;
+    color: white;
+    background-color: rgba(0,0,0,0.75) !important;
+    width: 90%;
+    margin: auto;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
