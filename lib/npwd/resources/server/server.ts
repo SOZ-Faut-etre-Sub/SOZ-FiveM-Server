@@ -23,7 +23,7 @@ import * as Sentry from '@sentry/node';
 // Setup sentry tracing
 if (config.debug.sentryEnabled && process.env.NODE_ENV === 'production') {
   Sentry.init({
-    dsn: 'https://5c5da180a57e4db1acb617ef2c6cb59f@sentry.projecterror.dev/3',
+    dsn: 'https://1bb64a7c88794547834d7ed7643e9575@o1133416.ingest.sentry.io/6185350',
     integrations: [new RewriteFrames()],
     release: process.env.SENTRY_RELEASE || '0.0.0',
     // Set tracesSampleRate to 1.0 to capture 100%

@@ -1,14 +1,8 @@
 import React from 'react';
-import { Box, BoxProps, CircularProgress } from '@mui/material';
+import {RefreshIcon} from "@heroicons/react/outline";
 
-export const LoadingSpinner: React.FC<BoxProps> = ({ ...props }) => (
-  <Box
-    display="flex"
-    justifyContent="center"
-    alignItems="center"
-    height={props.height ?? '100%'}
-    {...props}
-  >
-    <CircularProgress />
-  </Box>
+export const LoadingSpinner: React.FC<any> = ({...props}) => (
+    <div {...props} className="flex flex-col justify-center items-center h-full min-h-[720px]">
+        <RefreshIcon className="animate-spin text-white h-20 w-20"/>
+    </div>
 );

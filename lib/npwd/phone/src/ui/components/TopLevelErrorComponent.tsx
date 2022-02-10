@@ -1,12 +1,4 @@
 import React from 'react';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { captureException } from '@sentry/react';
 
@@ -26,22 +18,22 @@ const ErrorDialogComp: React.FC<ErrorDialogCompProps> = ({ isOpen, errorMsg }) =
   const handleReloadClick = () => window.location.reload();
 
   return (
-    <Dialog open={isOpen}>
-      <DialogTitle>{t('MISC.TOP_LEVEL_ERR_TITLE')}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
+    <div>
+      <div>{t('MISC.TOP_LEVEL_ERR_TITLE')}</div>
+      <div>
+        <div>
           {t('MISC.TOP_LEVEL_ERR_MSG')}
           <br />
           <br />
           <code style={{ color: 'red' }}>{errorMsg}</code>
-        </DialogContentText>
-        <DialogActions>
-          <Button color="primary" onClick={handleReloadClick}>
+        </div>
+        <div>
+          <div color="primary" onClick={handleReloadClick}>
             {t('MISC.TOP_LEVEL_ERR_ACTION')}
-          </Button>
-        </DialogActions>
-      </DialogContent>
-    </Dialog>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

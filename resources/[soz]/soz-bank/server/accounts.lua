@@ -161,9 +161,12 @@ end
 
 --- Create Player account
 RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]] )
-    if Account(player.PlayerData.charinfo.account) == nil then
-        Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
+    local account = Account(player.PlayerData.charinfo.account)
+    if account == nil then
+        account = Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
     end
+
+    TriggerClientEvent("phone:client:bank:updateBalance", player.PlayerData.source, player.Functions.GetName(), account.money)
 end)
 
 --- Loops

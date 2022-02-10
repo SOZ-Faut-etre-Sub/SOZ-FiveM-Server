@@ -1,6 +1,5 @@
 import React from 'react';
-import { LocationCity } from '@mui/icons-material';
 
-const ContactIcon: React.FC = () => <LocationCity fontSize="small" />;
+const ContactIcon: React.FC = () => <div />;
 
 export default ContactIcon;

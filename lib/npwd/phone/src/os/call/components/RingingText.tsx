@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const RingingText = () => {
@@ -20,7 +19,11 @@ const RingingText = () => {
     return () => clearInterval(id);
   }, [step, text, t]);
 
-  return <Typography>{text}</Typography>;
+  return (
+      <div className="flex flex-col justify-center items-center text-gray-300">
+          <div className="font-light">{text}</div>
+      </div>
+  );
 };
 
 export default RingingText;

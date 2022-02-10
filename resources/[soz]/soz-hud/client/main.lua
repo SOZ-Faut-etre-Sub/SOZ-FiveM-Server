@@ -117,6 +117,13 @@ RegisterNetEvent("hud:client:OverrideVisibility", function(newState)
     setHudDisplay(newState)
 end)
 
+RegisterNetEvent("phone:camera:enter", function()
+    setHudDisplay(false)
+end)
+RegisterNetEvent("phone:camera:exit", function()
+    setHudDisplay(true)
+end)
+
 --- Loops
 
 CreateThread(function()

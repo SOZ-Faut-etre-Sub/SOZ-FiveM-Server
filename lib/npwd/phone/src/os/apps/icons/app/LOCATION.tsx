@@ -1,6 +1,5 @@
 import React from 'react';
-import { LocationSearching } from '@mui/icons-material';
 
-const LocationIcon: React.FC = () => <LocationSearching fontSize="large" />;
+const LocationIcon: React.FC = (props) => <div />;
 
 export default LocationIcon;

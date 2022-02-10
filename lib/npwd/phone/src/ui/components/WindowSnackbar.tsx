@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
-import { Snackbar, Typography } from '@mui/material';
 import { Alert } from './Alert';
-import makeStyles from '@mui/styles/makeStyles';
 import { useNuiEvent } from 'fivem-nui-react-lib';
+import { Transition } from '@headlessui/react';
 
-const useStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    width: 'auto',
-    bottom: 20,
-  },
-});
 // NOTE: Will make this more generic at some point for error handling as well
 const WindowSnackbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [severity, setSeverity] = useState<'info' | 'error' | 'success'>('info');
-
-  const classes = useStyles();
 
   useNuiEvent('PHONE', 'startRestart', () => {
     setMessage('Restarting UI');
@@ -31,11 +21,21 @@ const WindowSnackbar: React.FC = () => {
   };
 
   return (
-    <Snackbar open={open} onClose={handleClose} className={classes.root}>
-      <Alert severity={severity}>
-        <Typography variant="body1">Phone - {message}</Typography>
+      <Transition
+          appear={true}
+          show={open}
+          className="absolute inset-x-0 z-40"
+          enter="transition ease-in-out duration-300 transform"
+          enterFrom="-translate-y-full"
+          enterTo="translate-y-0"
+          leave="transition ease-in-out duration-300 transform"
+          leaveFrom="translate-y-0"
+          leaveTo="-translate-y-full"
+      >
+      <Alert severity={severity} onClose={handleClose}>
+        <p>Phone -{message}</p>
       </Alert>
-    </Snackbar>
+    </Transition>
   );
 };
 

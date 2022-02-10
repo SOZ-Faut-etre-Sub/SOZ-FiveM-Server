@@ -111,10 +111,10 @@ export class _MessagesDB {
     const query = `
         SELECT citizenid
         FROM players
-        WHERE charinfo LIKE %?%
+        WHERE charinfo LIKE ?
         LIMIT 1
 		`;
-    const [results] = await DbInterface._rawExec(query, [phoneNumber]);
+    const [results] = await DbInterface._rawExec(query, ['%'+phoneNumber+'%']);
     const result = <any>results;
     return result[0].identifier;
   }

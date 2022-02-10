@@ -1,13 +1,9 @@
-import React, { Suspense } from 'react';
-import AppsIcon from '@mui/icons-material/Apps';
-import { SvgIconProps } from '@mui/material';
-import { SvgIconComponent } from '@mui/icons-material';
+import React, {Suspense} from 'react';
 
 export const createLazyAppIcon =
-  (Icon: React.LazyExoticComponent<SvgIconComponent>): React.FC<SvgIconProps> =>
-  (props: SvgIconProps) => {
+  (Icon: React.LazyExoticComponent<any>, props = {}): React.FC => () => {
     return (
-      <Suspense fallback={<AppsIcon {...props} />}>
+      <Suspense fallback={<div {...props} />}>
         <Icon {...props} />
       </Suspense>
     );

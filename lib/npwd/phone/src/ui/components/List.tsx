@@ -1,14 +1,14 @@
-import React from 'react';
-import MaterialList, { ListProps } from '@mui/material/List';
+import React, {useContext} from 'react';
+import {ThemeContext} from "../../styles/themeProvider";
 
-export type UListProps = ListProps & {
-    childrenClassName?: string;
+export const List = ({ ...props }) => {
+    const {theme} = useContext(ThemeContext);
+
+    return (
+        <div className={`mx-2 my-4 ${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-white'} shadow overflow-hidden rounded-[.8rem]`}>
+            <ul className={`divide-y ${theme === 'dark' ? 'divide-[#3D3D3F]' : 'divide-[#ECECED]'}`}>
+                {props.children}
+            </ul>
+        </div>
+    )
 };
-
-export const List: React.FC<UListProps> = ({ ...props }) => (
-  <MaterialList aria-label="list" {...props}>
-    <div className={props.childrenClassName}>
-      {props.children}
-    </div>
-  </MaterialList>
-);

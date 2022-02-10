@@ -1,5 +1,4 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 interface INotificationIcon {
@@ -9,8 +8,8 @@ interface INotificationIcon {
 
 export const NotificationIcon = ({ icon, to }: INotificationIcon) => {
   return (
-    <IconButton component={NavLink} to={to} size="small">
+    <NavLink to={to} >
       {icon}
-    </IconButton>
+    </NavLink>
   );
 };

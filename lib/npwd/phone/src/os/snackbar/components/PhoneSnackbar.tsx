@@ -1,40 +1,35 @@
-import React from 'react';
-import {Snackbar} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import React, {useEffect} from 'react';
 import {useSnackbar} from '../hooks/useSnackbar';
-import Alert from '../../../ui/components/Alert';
+import Alert from '@ui/components/Alert';
+import { Transition } from '@headlessui/react';
 
-const useStyles = makeStyles({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        height: 'auto',
-        width: '100%',
-        overflow: 'auto',
-        margin: '0 auto',
-        position: 'absolute',
-        left: 0,
-        top: 40,
-        right: 0,
-        transform: 'none',
-    },
-});
 
 export const PhoneSnackbar: React.FC = () => {
-    const classes = useStyles();
     const {alert, isOpen, handleClose} = useSnackbar();
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+            handleClose()
+        }, 3000);
+
+        return () => clearInterval(timer);
+    });
+
     return (
-        <Snackbar
-            autoHideDuration={alert?.duration ?? 3000}
-            open={isOpen}
-            className={classes.root}
-            onClose={handleClose}
+        <Transition
+            appear={true}
+            show={isOpen}
+            className="absolute inset-x-0 z-40"
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="-translate-y-full"
+            enterTo="translate-y-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-y-0"
+            leaveTo="-translate-y-full"
         >
             <Alert severity={alert?.type || 'info'} onClose={handleClose}>
                 {alert?.message || ''}
             </Alert>
-        </Snackbar>
+        </Transition>
     );
 };

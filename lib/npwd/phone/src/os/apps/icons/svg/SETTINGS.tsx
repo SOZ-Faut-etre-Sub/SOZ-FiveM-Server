@@ -1,6 +1,5 @@
 import React from 'react';
-import { Settings } from '@mui/icons-material';
 
-const SettingsIcon: React.FC = () => <Settings fontSize="small" />;
+const SettingsIcon: React.FC = () => <div />;
 
 export default SettingsIcon;

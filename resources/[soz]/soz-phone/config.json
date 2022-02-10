@@ -1,0 +1,33 @@
+{
+  "PhoneAsItem": {
+    "enabled": true,
+    "exportResource": "soz-inventory",
+    "exportFunction": "hasPhone"
+  },
+  "general": {
+    "toggleKey": "L",
+    "toggleCommand": "phone"
+  },
+  "database": {
+    "useIdentifierPrefix": false,
+    "playerTable": "players",
+    "identifierColumn": "citizenid",
+    "identifierType": "license",
+    "profileQueries": true,
+    "phoneNumberColumn": "phone_number"
+  },
+  "images": {
+    "url": "https://images.gorp.link/",
+    "type": "imgur",
+    "imageEncoding": "jpg",
+    "contentType": "multipart/form-data",
+    "authorizationPrefix": "Client-ID",
+    "useAuthorization": true,
+    "returnedDataIndexes": ["data", "link"]
+  },
+  "debug": {
+    "level": "info",
+    "enabled": false,
+    "sentryEnabled": false
+  }
+}

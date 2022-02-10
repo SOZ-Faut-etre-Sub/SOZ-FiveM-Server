@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Theme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { useSettings } from '../../apps/settings/hooks/useSettings';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles<Theme, { covered: boolean }>((theme) => ({
-  cover: {
-    cursor: 'pointer',
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.getContrastText(theme.palette.background.default),
-    visibility: ({ covered }) => (covered ? 'visible' : 'hidden'),
-  },
-}));
 
 export const PictureReveal: React.FC = ({ children }) => {
   const [settings] = useSettings();
   const [covered, setCovered] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(false);
+  const [, setReady] = useState<boolean>(false);
   const [t] = useTranslation();
-  const classes = useStyles({ covered });
 
   useEffect(() => {
     if (settings.streamerMode === true) {
@@ -30,24 +19,15 @@ export const PictureReveal: React.FC = ({ children }) => {
   const onClickCover = () => setCovered(false);
 
   return (
-    <Box width="100%" position="relative">
-      <Box
-        onClick={onClickCover}
-        className={classes.cover}
-        width="100%"
-        height="100%"
-        position="absolute"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        top={0}
-        left={0}
-      >
-        {t('GENERIC_CLICK_TO_REVEAL')}
-      </Box>
-      <Box width="100%" height="100%" visibility={ready ? 'visible' : 'hidden'}>
+    <div className="relative" onClick={onClickCover}>
+        {covered &&
+            <div className="h-full flex justify-center items-center">
+                {t('GENERIC_CLICK_TO_REVEAL')}
+            </div>
+        }
+      <div className={`${covered && 'relative opacity-50 blur-md'}`}>
         {children}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

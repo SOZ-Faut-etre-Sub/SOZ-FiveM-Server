@@ -1,32 +1,29 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {AppWrapperTypes} from '../interface/InterfaceUI';
-import {Grow} from "@mui/material";
+import {useRouteMatch} from "react-router-dom";
+import {ThemeContext} from "../../styles/themeProvider";
 
 export const AppWrapper: React.FC<AppWrapperTypes> = ({
     children,
-    style,
-    handleClickAway,
-    ...props
+    className
 }) => {
+    const home = useRouteMatch('/');
+    const camera = useRouteMatch('/camera');
+    const {theme} = useContext(ThemeContext);
+
+    const color = () => {
+        if (home && !home.isExact) {
+            if (camera && camera.isExact) {
+                return 'bg-black'
+            }
+            return theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'
+        }
+        return ''
+    }
 
     return (
-        <Grow in={true} style={{transformOrigin: `50% 50%`}}>
-            <div
-                {...props}
-                style={{
-                    padding: 0,
-                    margin: 0,
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    position: 'relative',
-                    flexDirection: 'column',
-                    minHeight: '720px',
-                    ...style,
-                }}
-            >
-                {children}
-            </div>
-        </Grow>
+        <div className={`${color()} p-0 m-0 relative flex flex-col h-full w-full min-h-[720px] ${className}`}>
+            {children}
+        </div>
     );
 };

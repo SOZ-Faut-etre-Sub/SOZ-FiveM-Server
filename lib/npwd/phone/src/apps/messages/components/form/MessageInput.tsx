@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Paper, Box, Button} from '@mui/material';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import MenuIcon from '@mui/icons-material/Menu';
 import {TextField} from '@ui/components/Input';
 import {useMessageAPI} from '../../hooks/useMessageAPI';
+import {PaperClipIcon, UploadIcon} from "@heroicons/react/outline";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
 interface IProps {
     onAddImageClick(): void;
@@ -15,6 +14,7 @@ interface IProps {
 
 const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     const [t] = useTranslation();
+    const {theme} = useContext(ThemeContext);
     const [message, setMessage] = useState('');
     const {sendMessage} = useMessageAPI();
 
@@ -34,31 +34,20 @@ const MessageInput = ({messageConversationId, onAddImageClick}: IProps) => {
     if (!messageConversationId) return null;
 
     return (
-        <Paper variant="outlined" sx={{display: 'flex', alignItems: 'center'}}>
-            <Box>
-                <Button onClick={onAddImageClick}>
-                    <MenuIcon/>
-                </Button>
-            </Box>
-            <Box py={1} flexGrow={1}>
-                <TextField
-                    onKeyPress={handleKeyPress}
-                    multiline
-                    maxRows={4}
-                    aria-multiline="true"
-                    fullWidth
-                    inputProps={{style: {fontSize: '1.3em'}}}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={t('MESSAGES.NEW_MESSAGE')}
-                />
-            </Box>
-            <Box>
-                <Button onClick={handleSubmit}>
-                    <FileUploadIcon/>
-                </Button>
-            </Box>
-        </Paper>
+        <div className="flex">
+            <button onClick={onAddImageClick}>
+                <PaperClipIcon className={`h-5 w-5 mx-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}/>
+            </button>
+            <TextField
+                onKeyPress={handleKeyPress}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder={t('MESSAGES.NEW_MESSAGE')}
+            />
+            <button className="bg-[#32CA5B] rounded-full mx-2 " onClick={handleSubmit}>
+                <UploadIcon className="w-5 h-5 mx-2 text-white"/>
+            </button>
+        </div>
     );
 };
 
