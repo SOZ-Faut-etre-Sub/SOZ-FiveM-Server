@@ -68,7 +68,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
     TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
-    QBCore.Functions.Progressbar("adsl_fix", "Répare l'metal..", 30000, false, true,
+    QBCore.Functions.Progressbar("adsl_fix", "Récolte du metal..", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,

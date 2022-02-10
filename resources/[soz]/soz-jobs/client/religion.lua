@@ -4,10 +4,8 @@ local OnJob = false
 local JobOutfit = false
 local JobVehicle = false
 local InVehicle = false
-local JobCounter = 0
 local ObjectifCoord = {}
 local DrawDistance = 100
-local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
 
 exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07), 1, 1, {
     name = "job religion",
@@ -67,8 +65,8 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
 
 RegisterNetEvent("jobs:religion:fix")
 AddEventHandler("jobs:religion:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
-    QBCore.Functions.Progressbar("adsl_fix", "Répare l'religion..", 30000, false, true,
+    TriggerEvent("animations:client:EmoteCommandStart", {"namaste"})
+    QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -76,7 +74,7 @@ AddEventHandler("jobs:religion:fix", function()
         disableCombat = true,
     }, {}, {}, {}, function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-        exports["qb-target"]:RemoveZone("adsl_zone")
+        exports["qb-target"]:RemoveZone("religion_zone")
         destroyblip(job_blip)
         DrawInteractionMarker(ObjectifCoord, false)
         DrawDistance = 0
@@ -155,26 +153,31 @@ end
 
 RegisterNetEvent("jobs:religion:start")
 AddEventHandler("jobs:religion:start", function()
-    if JobCounter == 0 then
-        TriggerServerEvent("job:anounce", "Réparez le boitier religion")
-    else
-        TriggerServerEvent("job:anounce", "Réparez le prochain boitier religion")
-    end
+    TriggerServerEvent("job:anounce", "Rendez vous dans la zone")
     local coords = random_coord()
-    createblip("ADSL", "Réparer l'religion", 761, coords)
+    createblip("religion", "Zone de conversion", 761, coords)
     ClearGpsMultiRoute()
     StartGpsMultiRoute(6, true, true)
     AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
     SetGpsMultiRouteRender(true)
-    exports["qb-target"]:AddBoxZone("adsl_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
+    exports["qb-target"]:AddBoxZone("religion_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
-        name = "adsl_zone",
+        name = "religion_zone",
         heading = coords.heading,
         minZ = coords.minZ,
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:religion:fix", icon = "fas fa-sign-in-alt", label = "Réparer l'religion"}},
+        options = {{type = "client", event = "jobs:religion:fix", icon = "fas fa-sign-in-alt", label = "Réparer l'religion",
+        canInteract = function(entity)
+            local type = GetEntityType(entity)
+            if type == 1 then
+                return true
+            else
+                return false
+            end
+        end
+        }},
         distance = 1.5,
     })
     ObjectifCoord = coords
@@ -185,7 +188,7 @@ AddEventHandler("jobs:religion:start", function()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
-    DrawInteractionMarker(ObjectifCoord, true)
+    
 end)
 
 RegisterNetEvent("jobs:religion:end")
@@ -199,7 +202,5 @@ AddEventHandler("jobs:religion:end", function()
     OnJob = false
     JobOutfit = false
     JobVehicle = false
-    JobCounter = 0
     payout_counter = 0
-    DrawDistance = 0
 end)

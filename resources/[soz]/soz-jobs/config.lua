@@ -32,7 +32,7 @@ Config.livraison = {
 }
 
 Config.religion = {
-    {x = -1365.82, y = -686.5, z = 25.32, sx = 1, sy = 1, heading = 37, minZ = 23.72, maxZ = 25.32},
+    {x = -1517.37, y = -433.94, z = 63.06, sx = 45.4, sy = 53.8, heading = 49, minZ = 34.46, maxZ = 43.46},
 }
 
 Config.metal = {

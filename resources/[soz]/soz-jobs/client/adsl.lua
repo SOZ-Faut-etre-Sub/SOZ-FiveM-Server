@@ -7,7 +7,6 @@ local InVehicle = false
 local JobCounter = 0
 local ObjectifCoord = {}
 local DrawDistance = 100
-local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
 
 exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 1, {
     name = "job adsl",
