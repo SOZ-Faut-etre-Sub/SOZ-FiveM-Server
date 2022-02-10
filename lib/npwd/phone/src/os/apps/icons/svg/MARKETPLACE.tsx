@@ -1,6 +1,5 @@
 import React from 'react';
-import { MonetizationOn } from '@mui/icons-material';
 
-const MarketplaceIcon: React.FC = () => <MonetizationOn fontSize="small" />;
+const MarketplaceIcon: React.FC = () => <div />;
 
 export default MarketplaceIcon;

@@ -1,39 +1,25 @@
 import React from 'react';
-import { Avatar, Box, Typography } from '@mui/material';
-import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
-import { useCall } from '../hooks/useCall';
-import { useTranslation } from 'react-i18next';
+import {useContactActions} from '../../../apps/contacts/hooks/useContactActions';
+import {useCall} from '../hooks/useCall';
 
 const CallContactContainer = () => {
-  const [t] = useTranslation();
-  const { call } = useCall();
+    const {call} = useCall();
 
-  const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+    const {getDisplayByNumber, getPictureByNumber} = useContactActions();
 
-  const getDisplayOrNumber = () =>
-    call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+    const getDisplayOrNumber = () =>
+        call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
 
-  return (
-    <Box display="flex" alignItems="center">
-      <Box flexGrow={1} overflow="hidden" textOverflow="ellipsis">
-        <Typography variant="body1">
-          {call.isTransmitter
-            ? t('CALLS.MESSAGES.OUTGOING').toUpperCase()
-            : t('CALLS.MESSAGES.INCOMING').toUpperCase()}
-        </Typography>
-        <Typography variant="h4">{getDisplayOrNumber()}</Typography>
-      </Box>
-      <Avatar
-        sx={{ ml: 1, height: 80, width: 80 }}
-        alt={getDisplayOrNumber()}
-        src={
-          call.isTransmitter
-            ? getPictureByNumber(call.receiver)
-            : getPictureByNumber(call?.transmitter)
-        }
-      />
-    </Box>
-  );
+    return (
+        <div className="flex flex-col justify-center items-center mt-24 text-white">
+            <div className="bg-cover bg-center h-20 w-20 my-1 rounded-full" style={{backgroundImage: `url(${
+                    call.isTransmitter
+                        ? getPictureByNumber(call.receiver)
+                        : getPictureByNumber(call?.transmitter)
+                })`}} />
+            <div className="text-3xl font-light">{getDisplayOrNumber()}</div>
+        </div>
+    );
 };
 
 export default CallContactContainer;

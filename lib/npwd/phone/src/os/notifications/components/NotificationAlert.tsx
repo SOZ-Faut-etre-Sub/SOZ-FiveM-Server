@@ -1,84 +1,52 @@
+import Alert from '@ui/components/Alert';
 import React from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { Box, IconButton, Slide } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { useNotifications } from '../hooks/useNotifications';
-import { Alert, AlertTitle } from '@mui/material';
-
-const useStyles = makeStyles((theme) => ({
-  snackbar: {
-    marginTop: '-710px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  alert: {
-    '& .MuiAlert-action': {
-      top: theme.spacing(1),
-      right: theme.spacing(2),
-      position: 'absolute',
-    },
-    position: 'relative',
-    cursor: 'pointer',
-    width: '370px',
-    height: '80px',
-    zIndex: 50,
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-    '& .MuiAlert-icon': {
-      color: theme.palette.text.primary,
-    },
-  },
-  alertContent: {
-    wordBreak: 'break-all',
-    display: '-webkit-box',
-    maxWidth: '360px',
-    height: '20px',
-    margin: '0 auto',
-    '-webkit-line-clamp': 3,
-    '-webkit-box-orient': 'vertical',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-}));
+import {useNotifications} from '../hooks/useNotifications';
+import { Transition } from '@headlessui/react';
 
 export const NotificationAlert = () => {
-  const classes = useStyles();
-  const { currentAlert } = useNotifications();
+    const {currentAlert} = useNotifications();
 
-  return (
-    <div className={classes.snackbar}>
-      <Slide in={!!currentAlert} mountOnEnter unmountOnExit>
-        <Alert
-          action={
-            <IconButton
-              color="primary"
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                currentAlert?.onCloseAlert(e);
-              }}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          }
-          onClick={(e) => currentAlert?.onClickAlert(e)}
-          icon={currentAlert?.icon || false}
-          className={classes.alert}
-          elevation={6}
+    return (
+        <Transition
+            appear={true}
+            show={!!currentAlert}
+            className="absolute inset-x-0 z-40"
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="-translate-y-full"
+            enterTo="translate-y-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-y-0"
+            leaveTo="-translate-y-full"
         >
-          <AlertTitle>
-            <Box width="282px" whiteSpace="nowrap">
-              <Box overflow="hidden" component="div" textOverflow="ellipsis">
-                {currentAlert?.title}
-              </Box>
-            </Box>
-          </AlertTitle>
-          <Box component="div" className={classes.alertContent} textOverflow="ellipsis">
-            {currentAlert?.content}
-          </Box>
-        </Alert>
-      </Slide>
-    </div>
-  );
+            <div>
+                <Alert
+                    // action={
+                    // <IconButton
+                    //   color="primary"
+                    //   size="small"
+                    //   onClick={(e) => {
+                    //     e.stopPropagation();
+                    //     currentAlert?.onCloseAlert(e);
+                    //   }}
+                    // >
+                    //   <CloseIcon fontSize="small" />
+                    // </IconButton>
+
+                    onClick={(e) => currentAlert?.onClickAlert(e)}
+                    icon={currentAlert?.icon || undefined}
+                >
+                    {/*<AlertTitle>*/}
+                    {/*  <Box width="282px" whiteSpace="nowrap">*/}
+                    {/*    <Box overflow="hidden" component="div" textOverflow="ellipsis">*/}
+                    {/*      {currentAlert?.title}*/}
+                    {/*    </Box>*/}
+                    {/*  </Box>*/}
+                    {/*</AlertTitle>*/}
+                    {/*<Box component="div"  textOverflow="ellipsis">*/}
+                    {/*  {currentAlert?.content}*/}
+                    {/*</Box>*/}
+                </Alert>
+            </div>
+        </Transition>
+    );
 };

@@ -1,33 +1,7 @@
 import React from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import {IconButton, ListItem, ListItemAvatar, ListItemText, Theme} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {INotification} from '../providers/NotificationsProvider';
-
-const useStyles = makeStyles<Theme, { cantClose: boolean }>((theme) => ({
-    closeNotifBtn: {
-        position: 'absolute',
-        right: '8px',
-        top: '8px',
-    },
-    notificationItem: {
-        paddingRight: ({cantClose}) => (cantClose ? '8px' : '28px'),
-        background: 'rgba(255, 255, 255, .1)',
-        position: 'relative',
-        color: 'white',
-        width: '90%',
-        margin: 'auto',
-        borderRadius: '.8rem',
-        marginBottom: '1rem'
-    },
-    iconItem: {
-        '& *': {
-            borderRadius: '.8rem',
-            maxHeight: '40px',
-            maxWidth: '40px',
-        }
-    }
-}));
+import {ChevronRightIcon} from "@heroicons/react/outline";
+import {Button} from "@ui/components/Button";
 
 export const NotificationItem = ({
     onClose,
@@ -37,27 +11,29 @@ export const NotificationItem = ({
     onClose: (e: any) => void;
     onClickClose: (e: any) => void;
 }) => {
-    const {title, icon, content, cantClose, onClick} = notification;
-    const classes = useStyles({cantClose});
+    const {title, notificationIcon, content, cantClose, onClick} = notification;
 
     return (
-        <ListItem
-            button
+        <li
+            className={`cursor-pointer py-2 px-4 flex justify-between items-center hover:bg-black hover:bg-opacity-25 text-white text-sm`}
             onClick={(e) => {
                 if (onClick) {
                     onClick(notification);
                     onClickClose(e);
                 }
             }}
-            className={classes.notificationItem}
+
         >
-            {icon && <ListItemAvatar className={classes.iconItem}>{icon}</ListItemAvatar>}
-            <ListItemText secondary={content}>{title}</ListItemText>
+            {notificationIcon && <div className={`text-white h-8 w-8 p-1 rounded-md`}>{notificationIcon}</div>}
+            <div className="flex flex-col">
+                <p className="flex-grow ml-4 font-light normal-case">{title}</p>
+                <p className="flex-grow ml-4 font-light normal-case">{content}</p>
+            </div>
             {!cantClose && (
-                <IconButton className={classes.closeNotifBtn} size="small" onClick={onClose}>
-                    <CloseIcon color="primary"/>
-                </IconButton>
+                <Button className="mx-2" onClick={onClose}>
+                    <ChevronRightIcon className="h-4 w-4 text-gray-400"/>
+                </Button>
             )}
-        </ListItem>
+        </li>
     );
 };

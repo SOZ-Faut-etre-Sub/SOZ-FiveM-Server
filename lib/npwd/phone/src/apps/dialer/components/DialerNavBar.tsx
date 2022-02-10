@@ -1,61 +1,48 @@
-import React, { useState } from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { NavLink, useLocation } from 'react-router-dom';
-import { Theme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import PhoneIcon from '@mui/icons-material/Phone';
-import PersonIcon from '@mui/icons-material/Person';
-import HistoryIcon from '@mui/icons-material/History';
-import { useTranslation } from 'react-i18next';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: '100%',
-    paddingBottom: '2rem',
-    backgroundColor: theme.palette.background.paper,
-  },
-  icon: {
-    color: theme.palette.primary.main,
-  },
-}));
+import React, {useContext, useState} from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {Button} from "@ui/components/Button";
+import {ClockIcon, UserCircleIcon, ViewGridIcon} from "@heroicons/react/solid";
+import {ThemeContext} from "../../../styles/themeProvider";
 
 const DialerNavBar: React.FC = () => {
-  const classes = useStyles();
-  const { pathname } = useLocation();
-  const [page, setPage] = useState(pathname);
-  const [t] = useTranslation();
+    const {pathname} = useLocation();
+    const history = useHistory();
+    const {theme} = useContext(ThemeContext);
+    const [page, setPage] = useState(pathname);
+    const [t] = useTranslation();
 
-  const handleChange = (_e, newPage) => {
-    setPage(newPage);
-  };
-
-  return (
-    <BottomNavigation value={page} onChange={handleChange} showLabels className={classes.root}>
-      <BottomNavigationAction
-        label={t('DIALER.NAVBAR_HISTORY')}
-        value="/phone"
-        component={NavLink}
-        icon={<HistoryIcon />}
-        to="/phone"
-      />
-      <BottomNavigationAction
-        label={t('DIALER.NAVBAR_DIAL')}
-        value="/phone/dial"
-        color="secondary"
-        component={NavLink}
-        icon={<PhoneIcon />}
-        to="/phone/dial"
-      />
-      <BottomNavigationAction
-        label={t('DIALER.NAVBAR_CONTACTS')}
-        value="/phone/contacts"
-        color="secondary"
-        component={NavLink}
-        icon={<PersonIcon />}
-        to="/phone/contacts"
-      />
-    </BottomNavigation>
-  );
+    return (
+        <div className={`grid grid-cols-3 content-start ${theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-white text-black'} h-20`}>
+            <Button
+                className={`flex flex-col items-center py-2 text-sm ${page === '/phone' && 'text-[#347DD9]'}`}
+                onClick={() => {
+                    setPage('/phone')
+                    history.push('/phone')
+                }}
+            >
+                <ClockIcon className="w-5 h-5"/> {t('DIALER.NAVBAR_HISTORY')}
+            </Button>
+            <Button
+                className={`flex flex-col items-center py-2 text-sm ${page === '/phone/contacts' && 'text-[#347DD9]'}`}
+                onClick={() => {
+                    setPage('/phone/contacts')
+                    history.push('/phone/contacts')
+                }}
+            >
+                <UserCircleIcon className="w-5 h-5"/> {t('DIALER.NAVBAR_CONTACTS')}
+            </Button>
+            <Button
+                className={`flex flex-col items-center py-2 text-sm ${page === '/phone/dial' && 'text-[#347DD9]'}`}
+                onClick={() => {
+                    setPage('/phone/dial')
+                    history.push('/phone/dial')
+                }}
+            >
+                <ViewGridIcon className="w-5 h-5"/> {t('DIALER.NAVBAR_DIAL')}
+            </Button>
+        </div>
+    );
 };
 
 export default DialerNavBar;

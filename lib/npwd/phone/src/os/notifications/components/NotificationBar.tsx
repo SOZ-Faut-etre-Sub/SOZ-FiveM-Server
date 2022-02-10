@@ -1,89 +1,21 @@
-import React, {useEffect} from 'react';
-import {Typography, Grid, IconButton, Slide, Paper, Box, List, Divider} from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import React, {useContext, useEffect} from 'react';
 import {useNotifications} from '../hooks/useNotifications';
-import {NotificationItem} from './NotificationItem';
 import usePhoneTime from '../../phone/hooks/usePhoneTime';
-import {NoNotificationText} from './NoNotificationText';
 import BatteryIcon from "../../../styles/icons/system/Battery";
 import CellSignal from "../../../styles/icons/system/CellSignal";
 import {useRouteMatch} from "react-router-dom";
+import {ThemeContext} from "../../../styles/themeProvider";
+import {NotificationItem} from "@os/notifications/components/NotificationItem";
+import { Transition } from '@headlessui/react';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        height: '33px',
-        width: '100%',
-        color: theme.palette.text.primary,
-        zIndex: 99,
-        paddingTop: '13px',
-        alignItems: 'center',
-        position: 'relative',
-        '&:hover': {
-            cursor: 'pointer',
-        },
-    },
-    rootApp: {
-        height: '33px',
-        width: '100%',
-        background: '#000',
-        color: theme.palette.text.primary,
-        zIndex: 99,
-        paddingTop: '13px',
-        alignItems: 'center',
-        position: 'relative',
-        '&:hover': {
-            cursor: 'pointer',
-        },
-    },
-    item: {
-        margin: '0 2px',
-        'svg': {
-            padding: 0
-        }
-    },
-    text: {
-        position: 'relative',
-        lineHeight: '0.85rem',
-        fontSize: '0.85rem',
-        color: theme.palette.text.primary,
-    },
-    icon: {
-        paddingLeft: '6px',
-        color: theme.palette.text.primary,
-    },
-    drawer: {
-        backgroundColor: theme.palette.background.default,
-        width: '100%',
-        position: 'absolute',
-        paddingTop: '25px',
-        inset: '0',
-        zIndex: 98,
-    },
-    closeNotifBtn: {
-        position: 'absolute',
-        right: '8px',
-        top: '8px',
-    },
-    notificationItem: {
-        position: 'relative',
-    },
-    collapseBtn: {
-        margin: '0 auto',
-        width: '90%',
-        height: '30px',
-        borderRadius: '.8rem'
-    },
-}));
 
 export const NotificationBar = () => {
-    const classes = useStyles();
+    const {icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed} = useNotifications();
 
-    const {icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed} =
-        useNotifications();
-
+    const home = useRouteMatch('/');
+    const camera = useRouteMatch('/camera');
+    const {theme} = useContext(ThemeContext);
     const time = usePhoneTime();
-    const {isExact} = useRouteMatch('/');
 
     useEffect(() => {
         if (notifications.length === 0) {
@@ -91,85 +23,73 @@ export const NotificationBar = () => {
         }
     }, [notifications, setBarUncollapsed]);
 
+    const color = () => {
+        if (home && home.isExact) {
+            return 'text-white'
+        } else if (camera && camera.isExact) {
+            return 'bg-black text-white'
+        } else {
+            return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black'
+        }
+    }
+
     return (
         <>
-            <Grid
-                className={isExact ? classes.root : classes.rootApp}
-                container
-                justifyContent="space-between"
-                wrap="nowrap"
-                onClick={() => {
-                    setBarUncollapsed((curr) => !curr);
-                }}
-            >
-                <Grid container item wrap="nowrap" justifyContent="center"  alignItems="center">
-                    {time && (
-                        <Grid item className={classes.item}>
-                            <Typography className={classes.text} variant="inherit">
-                                {time}
-                            </Typography>
-                        </Grid>
-                    )}
+            <div className={`${color()} grid grid-cols-3 px-5 py-3 text-sm w-full z-50 cursor-pointer`} onClick={() => {
+                setBarUncollapsed((curr) => !curr);
+            }}>
+                <div className="flex justify-center text-center truncate">
+                    <p className="mr-2">{time}</p>
                     {icons.map((notifIcon) => (
-                        <Grid item key={notifIcon.key} component={IconButton} className={classes.item}>
+                        <div className="h-4 w-4 mx-1 notificationBarIcon">
                             {notifIcon.icon}
-                        </Grid>
+                        </div>
                     ))}
-                </Grid>
-                <Grid container item wrap="nowrap"/>
-                <Grid container item wrap="nowrap" justifyContent="center" alignItems="flex-end">
-                    <Grid item className={classes.icon}>
-                        <Typography style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '2px'}} className={classes.text} variant="inherit">
-                            5Z
-                        </Typography>
-                    </Grid>
-                    <Grid item className={classes.icon}>
-                        <Typography style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '2px'}} className={classes.text} variant="inherit">
-                            <CellSignal/>
-                        </Typography>
-                    </Grid>
-                    <Grid item className={classes.icon}>
-                        <Typography className={classes.text} variant="inherit">
-                            <BatteryIcon/>
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Slide direction="down" in={barUncollapsed} mountOnEnter unmountOnExit>
-                <Box className={classes.drawer} display="flex" flexDirection="column" justifyContent="space-between">
-                    <Box py={1}>
-                        <List>
-                            {notifications.map((notification, idx) => (
-                                <NotificationItem
-                                    key={idx}
-                                    {...notification}
-                                    onClose={(e) => {
-                                        e.stopPropagation();
-                                        notification.onClose?.(notification);
+                </div>
+                <div>&nbsp;</div>
+                <div className="flex justify-end">
+                    <span>ZT&T</span>
+                    <CellSignal className="h-5 w-5 mx-2"/>
+                    <BatteryIcon className="h-5 w-5"/>
+                </div>
+            </div>
+
+            <Transition
+                appear={true}
+                show={barUncollapsed}
+                className="absolute inset-x-0 h-full w-full z-50"
+                enter="transition ease-in-out duration-300 transform"
+                enterFrom="-translate-y-full"
+                enterTo="translate-y-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="translate-y-0"
+                leaveTo="-translate-y-full"
+            >
+                <div className="h-full bg-black bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
+                    <div className="my-20 font-light text-6xl">
+                        {time}
+                    </div>
+                    <ul className="divide-y divide-gray-600 overflow-y-scroll">
+                        {notifications.map((notification, idx) => (
+                            <NotificationItem
+                                key={idx}
+                                {...notification}
+                                onClose={(e) => {
+                                    e.stopPropagation();
+                                    notification.onClose?.(notification);
+                                    removeNotification(idx);
+                                }}
+                                onClickClose={() => {
+                                    setBarUncollapsed(false);
+                                    if (!notification.cantClose) {
                                         removeNotification(idx);
-                                    }}
-                                    onClickClose={() => {
-                                        setBarUncollapsed(false);
-                                        if (!notification.cantClose) {
-                                            removeNotification(idx);
-                                        }
-                                    }}
-                                />
-                            ))}
-                        </List>
-                    </Box>
-                    {!notifications.length && <NoNotificationText/>}
-                    <Box display="flex" flexDirection="column">
-                        <IconButton
-                            className={classes.collapseBtn}
-                            size="small"
-                            onClick={() => setBarUncollapsed(false)}
-                        >
-                            <ArrowDropUpIcon/>
-                        </IconButton>
-                    </Box>
-                </Box>
-            </Slide>
+                                    }
+                                }}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            </Transition>
         </>
     );
 };

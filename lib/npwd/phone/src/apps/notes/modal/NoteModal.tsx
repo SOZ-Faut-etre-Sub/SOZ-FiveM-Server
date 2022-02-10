@@ -1,28 +1,22 @@
-import {Button, Slide, Paper, Typography, Container, Box} from '@mui/material';
-import React, {useEffect, useMemo, useState} from 'react';
-import useStyles from './modal.styles';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {TextField} from '@ui/components/Input';
+import {TextareaField, TextField} from '@ui/components/Input';
 import {useModalVisible, useSelectedNote} from '../hooks/state';
-import {useHistory, useLocation} from 'react-router';
-import {useApps} from '@os/apps/hooks/useApps';
 import {useNotesAPI} from '../hooks/useNotesAPI';
-import {ArrowBackIos, Delete, Save} from "@mui/icons-material";
+import {Button} from '@ui/components/Button';
+import {Transition, Menu} from '@headlessui/react';
+import {ChevronLeftIcon, DotsCircleHorizontalIcon, SaveIcon, TrashIcon} from "@heroicons/react/outline";
+import {AppTitle} from "@ui/components/AppTitle";
+import {AppWrapper} from "@ui/components";
+import {AppContent} from "@ui/components/AppContent";
 
 export const NoteModal: React.FC = () => {
-    const classes = useStyles();
     const {addNewNote, deleteNote, updateNote} = useNotesAPI();
     const [modalVisible, setModalVisible] = useModalVisible();
     const [t] = useTranslation();
-    const [selectedNote, setSelectedNote] = useSelectedNote();
+    const [selectedNote,] = useSelectedNote();
     const [noteTitle, setNoteTitle] = useState('');
     const [noteContent, setNoteContent] = useState('');
-
-    const history = useHistory();
-    const {getApp} = useApps();
-    const location = useLocation();
-
-    const notesApp = useMemo(() => getApp('NOTES'), [getApp]);
 
     const isNewNote = !Boolean(selectedNote?.id);
 
@@ -59,6 +53,7 @@ export const NoteModal: React.FC = () => {
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNoteTitle(e.target.value);
+        e.target.focus()
     };
 
     const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,88 +64,76 @@ export const NoteModal: React.FC = () => {
         setModalVisible(false);
     };
 
-    const handleClearContent = () => {
-        setSelectedNote(null);
-        if (location.search) history.push(notesApp.path);
-    };
+    const NoteActions = (
+        <Menu as="div" className="relative inline-block text-left">
+            <Menu.Button><DotsCircleHorizontalIcon className="h-6 w-6"/></Menu.Button>
+            <Transition
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+            >
+                <Menu.Items
+                    className="absolute right-0 w-56 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                    <Menu.Item>
+                        <Button
+                            className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                            disabled={noteTitle.length <= 0}
+                            onClick={isNewNote ? handleNewNote : handleUpdateNote}
+                        >
+                            <SaveIcon className="mx-3 h-5 w-5"/> Sauvegarder
+                        </Button>
+                    </Menu.Item>
+                    {!isNewNote &&
+                        <Menu.Item>
+                            <Button className="flex items-center w-full text-red-400 px-2 py-2 hover:text-red-500" onClick={handleDeleteNote}>
+                                <TrashIcon className="mx-3 h-5 w-5"/> Supprimer
+                            </Button>
+                        </Menu.Item>
+                    }
+                </Menu.Items>
+            </Transition>
+        </Menu>
+    );
 
     if (selectedNote === null) return null;
 
     return (
-        <Slide
-            direction="left"
-            in={modalVisible}
-            mountOnEnter
-            unmountOnExit
-            onExited={handleClearContent}
+        <Transition
+            appear={true}
+            show={modalVisible}
+            as="div"
+            className="absolute inset-x-0 z-40"
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-full"
         >
-            <Paper className={classes.modalRoot} square>
-                <Container>
-                    <Box>
-                        <Box py={2} display="flex" justifyContent="space-between" alignItems="center">
-                            <Button
-                                color="primary"
-                                size="large"
-                                startIcon={<ArrowBackIos fontSize="large"/>}
-                                onClick={_handleClose}
-                            >
-                                {t('APPS_NOTES')}
-                            </Button>
-                            <Box>
-                                {isNewNote ? (
-                                    <Button
-                                        color="primary"
-                                        disabled={noteTitle.length <= 0}
-                                        onClick={handleNewNote}
-                                    >
-                                        <Save />
-                                    </Button>
-                                ) : (
-                                    <>
-                                        <Button
-                                            color="primary"
-                                            onClick={handleUpdateNote}
-                                            disabled={noteTitle.length <= 0}
-                                        >
-                                            <Save />
-                                        </Button>
-                                        <Button color="error" onClick={handleDeleteNote}>
-                                            <Delete />
-                                        </Button>
-                                    </>
-                                )}
-                            </Box>
-                        </Box>
-                        <TextField
-                            className={classes.input}
-                            maxRows={1}
-                            label={t('GENERIC.TITLE')}
-                            inputProps={{
-                                className: classes.inputPropsTitle,
-                                maxLength: 25,
-                            }}
-                            fullWidth
-                            value={noteTitle}
-                            onChange={handleTitleChange}
-                        />
-                        <TextField
-                            className={classes.input}
-                            inputProps={{
-                                className: classes.inputPropsContent,
-                                maxLength: 250,
-                            }}
-                            label={t('GENERIC.CONTENT')}
-                            multiline
-                            fullWidth
-                            rows={24}
-                            variant="outlined"
-                            value={noteContent}
-                            onChange={handleContentChange}
-                        />
-                        <Typography paragraph style={{textAlign: "center"}}>{noteContent.length}/250</Typography>
-                    </Box>
-                </Container>
-            </Paper>
-        </Slide>
+            <AppWrapper>
+                <AppTitle title={t('APPS_NOTES')} isBigHeader={false} action={NoteActions}>
+                    <Button className="flex items-center text-base" onClick={_handleClose}>
+                        <ChevronLeftIcon className="h-5 w-5"/>
+                        Fermer
+                    </Button>
+                </AppTitle>
+                <AppContent className="mt-10 mx-4 mb-4">
+                    <TextField
+                        placeholder={t('GENERIC.TITLE')}
+                        value={noteTitle}
+                        onChange={handleTitleChange}
+                    />
+                    <TextareaField
+                        placeholder={t('GENERIC.CONTENT')}
+                        rows={22}
+                        value={noteContent}
+                        onChange={handleContentChange}
+                    />
+                </AppContent>
+            </AppWrapper>
+        </Transition>
     );
 };

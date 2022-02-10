@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
 import { PictureThumbnail } from './PictureThumbnail';
 import { PictureResponsive } from './PictureResponsive';
 import Modal from './Modal';
+import { Button } from './Button';
 
 interface PictureProps {
   src: string;

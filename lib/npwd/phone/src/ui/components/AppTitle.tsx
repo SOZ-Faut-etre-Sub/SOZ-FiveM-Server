@@ -1,52 +1,34 @@
-import React, { HTMLAttributes } from 'react';
-import { Typography, Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { useTranslation } from 'react-i18next';
-import { IApp } from '@os/apps/config/apps';
-import { OverridableStringUnion } from '@mui/types';
-import { TypographyPropsVariantOverrides } from '@mui/material/Typography/Typography';
-import { Variant } from '@mui/material/styles/createTypography';
+import React, {HTMLAttributes, useContext} from 'react';
+import {useTranslation} from 'react-i18next';
+import {IApp} from '@os/apps/config/apps';
+import {ThemeContext} from "../../styles/themeProvider";
 import {useRouteMatch} from "react-router-dom";
 
-interface IUseStyle {
-  root: any;
-  text: any;
-}
-
-const useStyle = makeStyles(
-  (theme): IUseStyle => ({
-    root: ({ backgroundColor, home }) => ({
-      width: '100%',
-      textAlign: 'left',
-      backgroundColor: backgroundColor || theme.palette.background.default,
-    }),
-    text: ({ color }) => ({
-      color: color || theme.palette.text.primary,
-      marginBottom: 0,
-    }),
-  }),
-);
-
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
-  app: IApp;
-  variant?: OverridableStringUnion<Variant | 'inherit', TypographyPropsVariantOverrides>;
+    app?: IApp
+    title?: string
+    action?: JSX.Element
+    isBigHeader?: boolean
 }
 
-// Taso: Maybe we should pass an icon (maybe fa?) as a prop as well at somepoint
-// but need to think about the best way to do that for standardization sake.
 export const AppTitle: React.FC<AppTitleProps> = ({
-  app: { color, nameLocale },
-  variant = 'h5',
-  ...props
+    app,
+    title,
+    isBigHeader,
+    action,
+    children
 }) => {
-  const { isExact } = useRouteMatch('/');
-  const classes = useStyle({ color, home: isExact });
-  const [t] = useTranslation();
-  return (
-    <Box px={2} pt={4} pb={1} className={classes.root} {...props}>
-      <Typography className={classes.text} paragraph variant={variant}>
-        {t(nameLocale)}
-      </Typography>
-    </Box>
-  );
+    const [t] = useTranslation();
+    const {theme} = useContext(ThemeContext);
+    const camera = useRouteMatch('/camera');
+
+    return (
+        <div className={`${isBigHeader ? 'h-32' : 'h-24'} absolute -top-16 inset-x-0 ${theme === 'dark' ? 'bg-black' : (camera && camera.isExact) ? 'bg-black' : 'bg-[#F2F2F6]'} px-5 pt-12 transition-all duration-300 ease-in-out z-30`}>
+            <h2 className={`grid grid-cols-4 ${theme === 'dark' ? 'text-gray-200' : 'text-black'} ${isBigHeader ? 'pt-8 text-3xl' : 'pt-3 text-2xl'} ${children && 'text-xl'} font-semibold tracking-wide transition-all duration-300 ease-in-out`}>
+                {children && <div className="flex items-center text-[#347DD9]">{children}</div>}
+                <div className={`${(!children && !action) ? 'col-span-4 text-left' : 'col-span-2 text-center'} `}>{title ? title : t(app.nameLocale)}</div>
+                {action && <div className="justify-self-end text-[#347DD9]">{action}</div>}
+            </h2>
+        </div>
+    );
 };

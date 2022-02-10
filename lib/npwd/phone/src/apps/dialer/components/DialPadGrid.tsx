@@ -1,49 +1,38 @@
 import React, {useContext} from 'react';
-import {Box, Button, Grid} from '@mui/material';
-import {Theme} from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
-import {DialInputCtx} from '../context/InputContext';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    gridItem: {
-        fontSize: theme.typography.h5.fontSize,
-        display: 'flex',
-        color: 'white',
-        justifyContent: 'center',
-    },
-    itemLabel: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '80px',
-        width: '80px',
-        backgroundColor: 'rgba(255,255,255,.25)',
-        borderRadius: '50%',
-    }
-}));
+import {DialInputCtx, IDialInputCtx} from '../context/InputContext';
+import {BackspaceIcon, PhoneIcon} from "@heroicons/react/solid";
+import {useCall} from "@os/call/hooks/useCall";
+import {ThemeContext} from "../../../styles/themeProvider";
 
 interface ButtonItemProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    label: string | number;
+    label: string | JSX.Element | number;
+    className?: string;
 }
 
-const ButtonItem: React.FC<ButtonItemProps> = ({label, onClick}) => {
-    const classes = useStyles();
+const ButtonItem: React.FC<ButtonItemProps> = ({label, onClick, className}) => {
+    const {theme} = useContext(ThemeContext);
+
     return (
-        <Grid key={label} item xs={4}>
-            <Button fullWidth size="large" className={classes.gridItem} onClick={onClick}>
-                <span className={classes.itemLabel}>{label}</span>
-            </Button>
-        </Grid>
+        <button className={`flex justify-center items-center w-20 aspect-square m-2 ${theme === 'dark' ? 'bg-[#333333] hover:bg-[#444444]' : 'bg-white hover:bg-[#E5E5E5] text-gray-700'} rounded-full cursor-pointer ${className}`}
+                onClick={onClick}>
+            <span className="text-3xl">{label}</span>
+        </button>
     );
 };
 
 export const DialGrid = () => {
-    const {add, removeOne, clear} = useContext(DialInputCtx);
+    const {initializeCall} = useCall();
+    const {add, removeOne} = useContext(DialInputCtx);
+    const {inputVal} = useContext<IDialInputCtx>(DialInputCtx);
+
+    const handleCall = () => {
+        initializeCall(inputVal);
+    };
 
     return (
-        <Box height="100%" width="80%" margin="auto">
-            <Grid container justifyContent="space-around">
+        <div className="text-white">
+            <div className="grid grid-cols-3 justify-items-center mx-8">
                 <ButtonItem label={1} onClick={() => add(1)}/>
                 <ButtonItem label={2} onClick={() => add(2)}/>
                 <ButtonItem label={3} onClick={() => add(3)}/>
@@ -53,12 +42,12 @@ export const DialGrid = () => {
                 <ButtonItem label={7} onClick={() => add(7)}/>
                 <ButtonItem label={8} onClick={() => add(8)}/>
                 <ButtonItem label={9} onClick={() => add(9)}/>
-                <ButtonItem label="*" onClick={clear}/>
-                <ButtonItem label={0} onClick={() => add(0)}/>
-                <ButtonItem label="#" onClick={removeOne}/>
                 <ButtonItem label="-" onClick={() => add('-')}/>
-            </Grid>
-        </Box>
+                <ButtonItem label={0} onClick={() => add(0)}/>
+                <ButtonItem label={<BackspaceIcon className="h-8 w-8"/>} onClick={removeOne}/>
+                <ButtonItem label={<PhoneIcon className="text-white h-8 w-8"/>} onClick={handleCall} className="col-start-2 bg-[#2DD158] hover:bg-[#21B147]"/>
+            </div>
+        </div>
     );
 };
 

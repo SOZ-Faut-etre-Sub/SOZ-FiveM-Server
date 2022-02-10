@@ -1,16 +1,11 @@
-@font-face {
-    font-family: 'SF-Pro';
-    src: url("../public/fonts/SF-Pro-Text-Medium.otf") format("opentype");
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-@font-face {
-    font-family: 'SF-Pro';
-    font-weight: 300;
-    src: url("../public/fonts/SF-Pro-Text-Light.otf") format("opentype");
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  font-family: -apple-system, 'SF-Pro', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 20px;

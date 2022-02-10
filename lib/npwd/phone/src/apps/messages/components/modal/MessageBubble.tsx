@@ -1,54 +1,15 @@
-import {Box, IconButton, Paper} from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {makeStyles} from '@mui/styles';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Message, MessageEvents} from '@typings/messages';
-import {PictureResponsive} from '@ui/components/PictureResponsive';
 import {PictureReveal} from '@ui/components/PictureReveal';
 import {useMyPhoneNumber} from '@os/simcard/hooks/useMyPhoneNumber';
 import MessageBubbleMenu from './MessageBubbleMenu';
 import {useSetSelectedMessage} from '../../hooks/state';
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import {blue} from "@mui/material/colors";
+import {LocationMarkerIcon} from "@heroicons/react/solid";
+import {DotsVerticalIcon} from "@heroicons/react/outline";
+import {ThemeContext} from "../../../../styles/themeProvider";
 
-const useStyles = makeStyles((theme) => ({
-    mySms: {
-        float: 'right',
-        margin: theme.spacing(1),
-        padding: '6px 16px',
-        height: 'auto',
-        width: 'auto',
-        minWidth: '60%',
-        maxWidth: '85%',
-        background: '#1be73e',
-        color: theme.palette.text.primary,
-        borderRadius: '20px',
-        textOverflow: 'ellipsis',
-        border: "none",
-    },
-    sms: {
-        float: 'left',
-        margin: theme.spacing(1),
-        padding: '6px 12px',
-        width: 'auto',
-        minWidth: '60%',
-        maxWidth: '85%',
-        height: 'auto',
-        background: 'rgba(255, 255, 255,.1)',
-        color: theme.palette.text.primary,
-        borderRadius: '15px',
-        textOverflow: 'ellipsis',
-        border: "none",
-    },
-    message: {
-        wordBreak: 'break-word',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-}));
 
 const isImage = (url) => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
@@ -63,8 +24,8 @@ interface MessageBubbleProps {
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
-    const classes = useStyles();
     const [menuOpen, setMenuOpen] = useState(false);
+    const {theme} = useContext(ThemeContext);
 
     const setSelectedMessage = useSetSelectedMessage();
     const myNumber = useMyPhoneNumber();
@@ -83,31 +44,37 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
 
     const isMine = message.author === myNumber;
 
+    const messageColor = () => {
+        if (isMine) {
+            return 'bg-[#32CA5B] text-white'
+        } else {
+            return theme === 'dark' ? 'bg-[#26252A] text-white' : 'bg-[#E9E9EB] text-dark'
+        }
+    }
+
     return (
-        <>
-            <Paper className={isMine ? classes.mySms : classes.sms} variant="outlined">
-                <Box className={classes.message}>
+        <div className={`flex ${isMine && "justify-end"}`}>
+            <div className={`flex justify-between w-3/4 rounded-2xl ${messageColor()} p-3 m-2`}>
+                <div>
                     {isImage(message.message) && (
                         <PictureReveal>
-                            <PictureResponsive src={message.message} alt="message multimedia"/>
+                            <img src={message.message} className="rounded-lg" alt="message multimedia"/>
                         </PictureReveal>
                     )}
                     {isPosition(message.message) && (
-                        <span style={{cursor: "pointer", color: blue["300"]}} onClick={setWaypoint}>
-              <AddLocationAltIcon/> Position
-            </span>
+                        <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
+                            <LocationMarkerIcon className="h-5 w-5 mr-2"/>Position
+                        </span>
                     )}
                     {!isImage(message.message) && !isPosition(message.message) && (
                         <>{message.message}</>
                     )}
-                    {isMine && (
-                        <IconButton onClick={openMenu}>
-                            <MoreVertIcon/>
-                        </IconButton>
-                    )}
-                </Box>
-            </Paper>
+                </div>
+                {isMine &&
+                    <DotsVerticalIcon className="h-5 w-5 cursor-pointer" onClick={openMenu}/>
+                }
+            </div>
             <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)}/>
-        </>
+        </div>
     );
 };

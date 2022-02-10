@@ -1,48 +1,57 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { Contact, ContactEvents } from '@typings/contact';
-import { fetchNui } from '@utils/fetchNui';
-import { ServerPromiseResp } from '@typings/common';
-import { buildRespObj } from '@utils/misc';
-import { BrowserContactsState } from '../utils/constants';
+import {atom, selector, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
+import {Contact, ContactEvents} from '@typings/contact';
+import {fetchNui} from '@utils/fetchNui';
+import {ServerPromiseResp} from '@typings/common';
+import {buildRespObj} from '@utils/misc';
+import {BrowserContactsState} from '../utils/constants';
 
 export const contactsState = {
-  contacts: atom<Contact[]>({
-    key: 'contactsList',
-    default: selector({
-      key: 'contactsListDefault',
-      get: async () => {
-        try {
-          const resp = await fetchNui<ServerPromiseResp<Contact[]>>(
-            ContactEvents.GET_CONTACTS,
-            undefined,
-            buildRespObj(BrowserContactsState),
-          );
-          return resp.data;
-        } catch (e) {
-          return [];
-        }
-      },
+    contacts: atom<Contact[]>({
+        key: 'contactsList',
+        default: selector({
+            key: 'contactsListDefault',
+            get: async () => {
+                try {
+                    const resp = await fetchNui<ServerPromiseResp<Contact[]>>(
+                        ContactEvents.GET_CONTACTS,
+                        undefined,
+                        buildRespObj(BrowserContactsState),
+                    );
+                    return resp.data;
+                } catch (e) {
+                    return [];
+                }
+            },
+        }),
     }),
-  }),
-  filterInput: atom<string>({
-    key: 'filterInput',
-    default: '',
-  }),
-  filteredContacts: selector({
-    key: 'filteredContacts',
-    get: ({ get }) => {
-      const filterInputVal: string = get(contactsState.filterInput);
-      const contacts: Contact[] = get(contactsState.contacts);
+    filterInput: atom<string>({
+        key: 'filterInput',
+        default: '',
+    }),
+    filteredContacts: selector({
+        key: 'filteredContacts',
+        get: ({get}) => {
+            const filterInputVal: string = get(contactsState.filterInput);
+            let contacts: Contact[] = get(contactsState.contacts);
+            let listedContact = [];
 
-      if (!filterInputVal) return contacts;
+            if (filterInputVal) {
+                const regExp = new RegExp(filterInputVal, 'gi');
+                contacts = contacts.filter(
+                    (contact) => contact.display.match(regExp) || contact.number.match(regExp),
+                )
+            }
 
-      const regExp = new RegExp(filterInputVal, 'gi');
+            contacts.forEach(contact => {
+                if (listedContact[contact.display[0]] === undefined) {
+                    listedContact[contact.display[0]] = []
+                }
+                listedContact[contact.display[0]].push(contact)
+            })
 
-      return contacts.filter(
-        (contact) => contact.display.match(regExp) || contact.number.match(regExp),
-      );
-    },
-  }),
+            return listedContact;
+        },
+    }),
 };
 
 export const useSetContacts = () => useSetRecoilState(contactsState.contacts);

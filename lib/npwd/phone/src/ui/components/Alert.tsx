@@ -1,28 +1,11 @@
 import React, {forwardRef} from 'react';
-import MuiAlert, {AlertProps} from '@mui/material/Alert';
-import {Typography} from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles({
-    root: {
-        zIndex: 10000,
-        width: '90%',
-        background: 'rgba(255,255,255,.35)',
-        backdropFilter: 'blur(10px)'
-    },
-    msg: {
-        wordWrap: 'break-word',
-        fontSize: '1.1em',
-    },
-});
-
-export const Alert: React.FC<AlertProps> = forwardRef((props, ref) => {
-    const classes = useStyles();
+export const Alert: React.FC<any> = forwardRef((props, ref) => {
     return (
-        <MuiAlert className={classes.root} elevation={4} variant="filled" {...props} ref={ref}>
-            <Typography className={classes.msg}>{props.children}</Typography>
-        </MuiAlert>
+        <div ref={ref} className="flex items-center mx-10 px-4 py-2 bg-black bg-opacity-70 text-gray-300 backdrop-blur shadow-md rounded-lg " {...props}>
+            <div className={`flex-none h-10 w-10 ${props.severity === 'success' ? 'bg-green-500' : 'bg-red-500' } rounded-lg mr-3`} />
+            <div className="flex-grow">{props.children}</div>
+        </div>
     );
 });
 
