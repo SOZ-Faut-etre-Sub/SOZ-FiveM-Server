@@ -35,7 +35,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             type = "client",
             event = "jobs:metal:vehicle",
             icon = "fas fa-sign-in-alt",
-            label = "Sortir la voiture",
+            label = "Sortir le véhicule",
             job = "metal",
             canInteract = function()
                 if JobOutfit == true then

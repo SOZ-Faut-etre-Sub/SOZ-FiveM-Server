@@ -34,7 +34,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             type = "client",
             event = "jobs:religion:vehicle",
             icon = "fas fa-sign-in-alt",
-            label = "Sortir la voiture",
+            label = "Sortir le véhicule",
             job = "religion",
             canInteract = function()
                 if JobOutfit == true then
@@ -190,7 +190,7 @@ AddEventHandler("jobs:religion:start", function()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
-    TriggerServerEvent("job:anounce", "Parler a une personne d'epsylon")
+    TriggerServerEvent("job:anounce", "Parler à une personne d'epsylon")
 end)
 
 RegisterNetEvent("jobs:religion:end")
