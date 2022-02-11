@@ -511,6 +511,8 @@ function Inventory.GetItem(inv, item, metadata, returnsAmount)
         end
     end
 end
+RegisterNetEvent("inventory:server:GetItem", Inventory.GetItem)
+exports("GetItem", Inventory.GetItem)
 
 function Inventory.GetItemSlots(inv, item, metadata)
     inv = Inventory(inv)
@@ -529,6 +531,7 @@ function Inventory.GetItemSlots(inv, item, metadata)
     end
     return slots, totalAmount, emptySlots
 end
+
 
 function Inventory.SetSlot(inv, item, amount, metadata, slot)
     inv = Inventory(inv)
