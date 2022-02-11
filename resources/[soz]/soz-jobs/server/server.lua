@@ -21,3 +21,10 @@ end)
 RegisterServerEvent("job:anounce", function(string)
     TriggerClientEvent("QBCore:Notify", source, string.format(string))
 end)
+
+RegisterServerEvent("job:get:metal", function(amount)
+    local Player = QBCore.Functions.GetPlayer(tonumber(source))
+    local metadata = {}
+    exports['soz-inventory']:AddItem(Player.PlayerData.source, "metalscrap", amount, metadata, false)
+    TriggerClientEvent("QBCore:Notify", source, string.format("Vous avez reçu ~o~%s metalscrap", amount))
+end)

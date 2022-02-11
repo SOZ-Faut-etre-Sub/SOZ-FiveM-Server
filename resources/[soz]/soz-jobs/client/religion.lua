@@ -175,7 +175,7 @@ AddEventHandler("jobs:religion:start", function()
             TriggerEvent("jobs:religion:fix", entity)
         end
         }},
-        distance = 1.5,
+        distance = 2.5,
     })
     ObjectifCoord = coords
     DrawDistance = 100
