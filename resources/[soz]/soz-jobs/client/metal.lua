@@ -6,81 +6,77 @@ local InVehicle = false
 local ObjectifCoord = {}
 local Counter = 0
 local DrawDistance = 100
-local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
+local PedCoord = {
+    x = 479.17,
+    y = -107.53,
+    z = 63.16
+}
 
 exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1, 1, {
     name = "job metal",
     heading = 0,
-    debugPoly = false,
+    debugPoly = false
 }, {
-    options = {
-        {
-            type = "client",
-            event = "jobs:metal:begin",
-            icon = "fas fa-sign-in-alt",
-            label = "Commencer le job metal",
-            job = "unemployed",
-        },
-        {
-            type = "client",
-            event = "jobs:metal:tenue",
-            icon = "fas fa-sign-in-alt",
-            label = "Prendre la tenue",
-            job = "metal",
-            canInteract = function()
-                return JobOutfit == false
-            end,
-        },
-        {
-            type = "client",
-            event = "jobs:metal:vehicle",
-            icon = "fas fa-sign-in-alt",
-            label = "Sortir le véhicule",
-            job = "metal",
-            canInteract = function()
-                if JobOutfit == true then
-                    return JobVehicle == false
-                end
-            end,
-        },
-        {
-            type = "client",
-            event = "jobs:metal:restart",
-            icon = "fas fa-sign-in-alt",
-            label = "Continuer le job metal",
-            job = "metal",
-            canInteract = function()
-                return OnJob == false
-            end,
-        },
-        {
-            type = "client",
-            event = "jobs:metal:vente",
-            icon = "fas fa-sign-in-alt",
-            label = "Vendre du métal",
-            job = "metal",
-            item = "metalscrap",
-        },
-        {
-            type = "client",
-            event = "jobs:metal:end",
-            icon = "fas fa-sign-in-alt",
-            label = "Finir le job de récolte de metal",
-            job = "metal",
-        },
-    },
-    distance = 2.5,
+    options = {{
+        type = "client",
+        event = "jobs:metal:begin",
+        icon = "fas fa-sign-in-alt",
+        label = "Commencer le job metal",
+        job = "unemployed"
+    }, {
+        type = "client",
+        event = "jobs:metal:tenue",
+        icon = "fas fa-sign-in-alt",
+        label = "Prendre la tenue",
+        job = "metal",
+        canInteract = function()
+            return JobOutfit == false
+        end
+    }, {
+        type = "client",
+        event = "jobs:metal:vehicle",
+        icon = "fas fa-sign-in-alt",
+        label = "Sortir le véhicule",
+        job = "metal",
+        canInteract = function()
+            if JobOutfit == true then
+                return JobVehicle == false
+            end
+        end
+    }, {
+        type = "client",
+        event = "jobs:metal:restart",
+        icon = "fas fa-sign-in-alt",
+        label = "Continuer le job metal",
+        job = "metal",
+        canInteract = function()
+            return OnJob == false
+        end
+    }, {
+        type = "client",
+        event = "jobs:metal:vente",
+        icon = "fas fa-sign-in-alt",
+        label = "Vendre du métal",
+        job = "metal",
+        item = "metalscrap"
+    }, {
+        type = "client",
+        event = "jobs:metal:end",
+        icon = "fas fa-sign-in-alt",
+        label = "Finir le job de récolte de metal",
+        job = "metal"
+    }},
+    distance = 2.5
 })
 
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
     TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
-    QBCore.Functions.Progressbar("adsl_fix", "Récolte du metal..", 10000, false, true,
-                                 {
+    QBCore.Functions.Progressbar("adsl_fix", "Récolte du metal..", 10000, false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
-        disableCombat = true,
+        disableCombat = true
     }, {}, {}, {}, function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
         TriggerEvent("animations:client:EmoteCommandStart", {"pickup"})
@@ -102,7 +98,8 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    metal_vehicule = CreateVehicle(model, Config.metal_vehicule.x, Config.metal_vehicule.y, Config.metal_vehicule.z, Config.metal_vehicule.w, true, false)
+    metal_vehicule = CreateVehicle(model, Config.metal_vehicule.x, Config.metal_vehicule.y, Config.metal_vehicule.z,
+        Config.metal_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
 end
 
@@ -162,7 +159,11 @@ RegisterNetEvent("jobs:metal:prestart")
 AddEventHandler("jobs:metal:prestart", function()
     TriggerServerEvent("job:anounce", "Rendez-vous dans la zone de récolte")
     DrawDistance = 100
-    local ZoneRecolte = {x = -465.04, y = -1709.02, z = 18.74}
+    local ZoneRecolte = {
+        x = -465.04,
+        y = -1709.02,
+        z = 18.74
+    }
     createblip("metal", "Zone de récolte", 801, ZoneRecolte)
     ClearGpsMultiRoute()
     StartGpsMultiRoute(6, true, true)
@@ -172,7 +173,8 @@ AddEventHandler("jobs:metal:prestart", function()
         Citizen.Wait(1000)
         local player = GetPlayerPed(-1)
         local CoordPlayer = GetEntityCoords(player)
-        DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ZoneRecolte.x, ZoneRecolte.y, ZoneRecolte.z)
+        DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ZoneRecolte.x,
+            ZoneRecolte.y, ZoneRecolte.z)
     end
 
     TriggerEvent("jobs:metal:start")
@@ -186,18 +188,20 @@ AddEventHandler("jobs:metal:start", function()
         TriggerServerEvent("job:anounce", "Puis retournez le vendre au patron")
     end
     local coords = random_coord()
-    exports["qb-target"]:AddBoxZone("metal_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
-                                    {
+    exports["qb-target"]:AddBoxZone("metal_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy, {
         name = "metal_zone",
         heading = coords.heading,
         minZ = coords.minZ,
         maxZ = coords.maxZ,
-        debugPoly = false,
+        debugPoly = false
     }, {
-        options = {
-            {type = "client", event = "jobs:metal:fix", icon = "fas fa-sign-in-alt", label = "Récolter du métal"},
-        },
-        distance = 2.5,
+        options = {{
+            type = "client",
+            event = "jobs:metal:fix",
+            icon = "fas fa-sign-in-alt",
+            label = "Récolter du métal"
+        }},
+        distance = 2.5
     })
     ObjectifCoord = coords
     DrawInteractionMarker(ObjectifCoord, true)
