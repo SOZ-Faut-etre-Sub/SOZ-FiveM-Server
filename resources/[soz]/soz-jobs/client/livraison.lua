@@ -103,7 +103,8 @@ local function SpawnVehicule()
         Citizen.Wait(10)
         print(test)
     end
-    livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z, Config.livraison_vehicule.w, true, false)
+    livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z,
+                                        Config.livraison_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
 end
 
@@ -173,7 +174,9 @@ AddEventHandler("jobs:livraison:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:livraison:fix", icon = "fas fa-sign-in-alt", label = "Livrez la fougère"}},
+        options = {
+            {type = "client", event = "jobs:livraison:fix", icon = "fas fa-sign-in-alt", label = "Livrez la fougère"},
+        },
         distance = 1.5,
     })
     ObjectifCoord = coords

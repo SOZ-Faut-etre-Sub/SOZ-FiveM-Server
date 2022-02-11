@@ -532,7 +532,6 @@ function Inventory.GetItemSlots(inv, item, metadata)
     return slots, totalAmount, emptySlots
 end
 
-
 function Inventory.SetSlot(inv, item, amount, metadata, slot)
     inv = Inventory(inv)
     local currentSlot = inv.items[slot]
