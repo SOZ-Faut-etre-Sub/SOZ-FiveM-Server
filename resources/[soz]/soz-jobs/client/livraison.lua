@@ -104,7 +104,7 @@ local function SpawnVehicule()
         print(test)
     end
     livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z,
-                                        Config.livraison_vehicule.w, true, false)
+                                       Config.livraison_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
 end
 
