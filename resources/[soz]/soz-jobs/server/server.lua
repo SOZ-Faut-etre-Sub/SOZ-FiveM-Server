@@ -14,7 +14,13 @@ end)
 
 RegisterServerEvent("job:payout", function(money)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    Player.Functions.AddMoney("cash", money)
+    Player.Functions.AddMoney("money", money)
+    TriggerClientEvent("QBCore:Notify", source, string.format("Vous recevez: %s $ pour votre travail", money))
+end)
+
+RegisterServerEvent("job:payout:metal", function(money, source)
+    local Player = QBCore.Functions.GetPlayer(tonumber(source))
+    Player.Functions.AddMoney("money", money)
     TriggerClientEvent("QBCore:Notify", source, string.format("Vous recevez: %s $ pour votre travail", money))
 end)
 
@@ -26,5 +32,18 @@ RegisterServerEvent("job:get:metal", function(amount)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
     local metadata = {}
     exports['soz-inventory']:AddItem(Player.PlayerData.source, "metalscrap", amount, metadata, false)
-    TriggerClientEvent("QBCore:Notify", source, string.format("Vous avez reçu ~o~%s metalscrap", amount))
+    TriggerClientEvent("QBCore:Notify", source, string.format("Vous avez reçu %s metalscrap", amount))
+end)
+
+RegisterServerEvent("job:remove:metal", function(amount)
+    local Player = QBCore.Functions.GetPlayer(tonumber(source))
+    local totalAmount = exports['soz-inventory']:GetItem(Player.PlayerData.source, "metalscrap", nil, true)
+    if tonumber(amount) <= tonumber(totalAmount) then
+        exports['soz-inventory']:RemoveItem(Player.PlayerData.source, "metalscrap", amount, nil)
+        TriggerClientEvent("QBCore:Notify", source, string.format("Vous avez vendu %s metalscrap", amount))
+        local payout = amount * Config.metal_payout
+        TriggerEvent("job:payout:metal", payout, source)
+    else
+        TriggerClientEvent("QBCore:Notify", source, string.format("Vous essayer de vendre plus que se que vous possédez", amount))
+    end
 end)
