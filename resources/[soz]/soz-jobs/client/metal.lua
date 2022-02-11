@@ -59,7 +59,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             icon = "fas fa-sign-in-alt",
             label = "Vendre du métal",
             job = "metal",
-            item = "metalscrap"
+            item = "metalscrap",
         },
         {
             type = "client",
@@ -194,7 +194,9 @@ AddEventHandler("jobs:metal:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:metal:fix", icon = "fas fa-sign-in-alt", label = "Récolter du métal"}},
+        options = {
+            {type = "client", event = "jobs:metal:fix", icon = "fas fa-sign-in-alt", label = "Récolter du métal"},
+        },
         distance = 2.5,
     })
     ObjectifCoord = coords

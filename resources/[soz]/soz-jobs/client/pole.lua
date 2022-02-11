@@ -18,7 +18,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 
 end)
 
-
 exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
     name = "pole emploi",
     heading = 0,
@@ -125,7 +124,8 @@ function createblip(name, description, sprite, coords)
 end
 
 function DrawInteractionMarker(ObjectifCoord, show)
-    local a, b, c, d, entity = GetShapeTestResult(StartShapeTestCapsule(ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z, 1.0, 16, 0, 7))
+    local a, b, c, d, entity = GetShapeTestResult(StartShapeTestCapsule(ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z, ObjectifCoord.x, ObjectifCoord.y,
+                                                                        ObjectifCoord.z, 1.0, 16, 0, 7))
     SetEntityDrawOutlineColor(100, 163, 16, 50)
     SetEntityDrawOutline(entity, show)
 end

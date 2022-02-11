@@ -162,19 +162,24 @@ AddEventHandler("jobs:religion:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", icon = "fas fa-sign-in-alt", label = "Parler d'epsylon",
-        canInteract = function(entity)
-            local type = GetEntityType(entity)
-            if type == 1 then
-                return true
-            else
-                return false
-            end
-        end,
-        action = function(entity)
-            TriggerEvent("jobs:religion:fix", entity)
-        end
-        }},
+        options = {
+            {
+                type = "client",
+                icon = "fas fa-sign-in-alt",
+                label = "Parler d'epsylon",
+                canInteract = function(entity)
+                    local type = GetEntityType(entity)
+                    if type == 1 then
+                        return true
+                    else
+                        return false
+                    end
+                end,
+                action = function(entity)
+                    TriggerEvent("jobs:religion:fix", entity)
+                end
+            },
+        },
         distance = 2.5,
     })
     ObjectifCoord = coords
