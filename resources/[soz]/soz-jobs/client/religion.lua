@@ -64,9 +64,11 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
 })
 
 RegisterNetEvent("jobs:religion:fix")
-AddEventHandler("jobs:religion:fix", function()
+AddEventHandler("jobs:religion:fix", function(ped)
     TriggerEvent("animations:client:EmoteCommandStart", {"namaste"})
-    QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 30000, false, true,
+    FreezeEntityPosition(ped, true)
+    TaskPlayAnim(ped, nil, 'namaste', 8.0, 8.0, 10000, 0, 0, 0, 0, 0)
+    QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -76,17 +78,11 @@ AddEventHandler("jobs:religion:fix", function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
         exports["qb-target"]:RemoveZone("religion_zone")
         destroyblip(job_blip)
-        DrawInteractionMarker(ObjectifCoord, false)
-        DrawDistance = 0
         payout_counter = payout_counter + 1
-        JobCounter = JobCounter + 1
+        FreezeEntityPosition(ped, false)
         ClearGpsMultiRoute()
-        if JobCounter >= 4 then
-            OnJob = false
-            TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
-        else
-            TriggerEvent("jobs:religion:start")
-        end
+        OnJob = false
+        TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
     end)
 end)
 
@@ -97,10 +93,8 @@ local function SpawnVehicule()
         return
     end
     RequestModel(model)
-    print("model load")
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
-        print(test)
     end
     religion_vehicule = CreateVehicle(model, Config.religion_vehicule.x, Config.religion_vehicule.y, Config.religion_vehicule.z, Config.religion_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
@@ -155,7 +149,7 @@ RegisterNetEvent("jobs:religion:start")
 AddEventHandler("jobs:religion:start", function()
     TriggerServerEvent("job:anounce", "Rendez vous dans la zone")
     local coords = random_coord()
-    createblip("religion", "Zone de conversion", 761, coords)
+    createblip("religion", "Zone de conversion", 480, coords)
     ClearGpsMultiRoute()
     StartGpsMultiRoute(6, true, true)
     AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
@@ -168,7 +162,7 @@ AddEventHandler("jobs:religion:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:religion:fix", icon = "fas fa-sign-in-alt", label = "Réparer l'religion",
+        options = {{type = "client", icon = "fas fa-sign-in-alt", label = "Parler d'epsylon",
         canInteract = function(entity)
             local type = GetEntityType(entity)
             if type == 1 then
@@ -176,6 +170,9 @@ AddEventHandler("jobs:religion:start", function()
             else
                 return false
             end
+        end,
+        action = function(entity)
+            TriggerEvent("jobs:religion:fix", entity)
         end
         }},
         distance = 1.5,
@@ -188,7 +185,7 @@ AddEventHandler("jobs:religion:start", function()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
-    
+    TriggerServerEvent("job:anounce", "Parler a une personne d'epsylon")
 end)
 
 RegisterNetEvent("jobs:religion:end")
