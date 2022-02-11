@@ -35,7 +35,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             type = "client",
             event = "jobs:adsl:vehicle",
             icon = "fas fa-sign-in-alt",
-            label = "Sortir la voiture",
+            label = "Sortir le véhicule",
             job = "adsl",
             canInteract = function()
                 if JobOutfit == true then
