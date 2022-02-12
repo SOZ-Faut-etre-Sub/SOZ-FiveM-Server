@@ -2,25 +2,16 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 local PlayerData = {}
 local PlayerGang = {}
 local PlayerJob = {}
-local currentHouseGarage = nil
-local inGarageRange = false
 local OutsideVehicles = {}
 
 local ParkingPublicList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car")
-local VehiculeParkingPublic = MenuV:InheritMenu(ParkingPublicList, {
-    Title = nil,
-})
+local VehiculeParkingPublic = MenuV:InheritMenu(ParkingPublicList, {Title = nil})
 
 local ParkingPriveList = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car")
-local VehiculeParkingPrive = MenuV:InheritMenu(ParkingPriveList, {
-    Title = nil,
-})
+local VehiculeParkingPrive = MenuV:InheritMenu(ParkingPriveList, {Title = nil})
 
 local ParkingFourriereList = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car")
-local VehiculeParkingFourriere = MenuV:InheritMenu(ParkingFourriereList, {
-    Title = nil,
-})
-
+local VehiculeParkingFourriere = MenuV:InheritMenu(ParkingFourriereList, {Title = nil})
 -- ZONES
 
 Zonesprives = {
