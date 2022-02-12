@@ -102,3 +102,15 @@ RegisterNetEvent("qb-smallpenis:server:AddParachute", function()
     local Player = QBCore.Functions.GetPlayer(src)
     exports["soz-inventory"]:AddItem(Player.PlayerData.source, "parachute", 1)
 end)
+
+----------- / Lockpicking
+
+QBCore.Functions.CreateUseableItem("lockpick", function(source, item)
+    local Player = QBCore.Functions.GetPlayer(source)
+    TriggerClientEvent("lockpicks:UseLockpick", source, false)
+end)
+
+QBCore.Functions.CreateUseableItem("advancedlockpick", function(source, item)
+    local Player = QBCore.Functions.GetPlayer(source)
+    TriggerClientEvent("lockpicks:UseLockpick", source, true)
+end)
