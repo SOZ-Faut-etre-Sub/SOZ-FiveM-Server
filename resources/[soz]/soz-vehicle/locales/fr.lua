@@ -12,10 +12,7 @@ local Translations = {
         impounded_by_police = "Ce véhicule a été mis en fourrière par la police!",
         someone_inside = "Le véhicule n'a pu être rangé, quelqu'un se trouve sans doute dedans.",
     },
-    success = {
-        vehicle_parked = "Véhicule garé !",
-        vehicle_out = "Véhicule sorti !",
-    },
+    success = {vehicle_parked = "Véhicule garé !", vehicle_out = "Véhicule sorti !"},
     menu = {
         header = {
             house_car = "Garage de propriété %{value}",
