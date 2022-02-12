@@ -1009,11 +1009,7 @@ local function SortirMenu(type, garage, indexgarage)
                         v.state = Lang:t("status.impound")
                     end
                     VehiculeParkingFourriere:AddButton({
-                        label = Lang:t("menu.header.depot", {
-                            value = vname,
-                            value2 = v.plate,
-                            value3 = v.depotprice,
-                        }),
+                        label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
                         description = Lang:t("menu.text.depot", {
                             value = v.state,
                             value2 = currentFuel,
