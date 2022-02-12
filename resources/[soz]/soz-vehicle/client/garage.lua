@@ -919,10 +919,7 @@ local function SortirMenu(type, garage, indexgarage)
                         v.state = Lang:t("status.impound")
                     end
                     VehiculeParkingPublic:AddButton({
-                        label = Lang:t("menu.header.public", {
-                            value = vname,
-                            value2 = v.plate,
-                        }),
+                        label = Lang:t("menu.header.public", {value = vname, value2 = v.plate}),
                         description = Lang:t("menu.text.garage", {
                             value = v.state,
                             value2 = currentFuel,
@@ -969,11 +966,7 @@ local function SortirMenu(type, garage, indexgarage)
                         v.state = Lang:t("status.impound")
                     end
                     VehiculeParkingPrive:AddButton({
-                        label = Lang:t("menu.header.private", {
-                            value = vname,
-                            value2 = v.plate,
-                            value3 = price,
-                        }),
+                        label = Lang:t("menu.header.private", {value = vname, value2 = v.plate, value3 = price}),
                         description = Lang:t("menu.text.garage", {
                             value = v.state,
                             value2 = currentFuel,
