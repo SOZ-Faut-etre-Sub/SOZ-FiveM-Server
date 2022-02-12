@@ -6,6 +6,7 @@ local PlayerList = MenuV:InheritMenu(AdminMenu)
 local VehiculeList = MenuV:InheritMenu(AdminMenu)
 local VehiculeModel = MenuV:InheritMenu(AdminMenu)
 local Players = MenuV:InheritMenu(AdminMenu)
+local Vehicules = MenuV:InheritMenu(AdminMenu)
 
 local noclip_check = false
 local coords_check = false
@@ -105,6 +106,26 @@ local function OpenPlayerMenus(player)
     end
 end
 
+local function OpenVehiculeMenus()
+    Vehicules:ClearItems()
+    MenuV:OpenMenu(Vehicules)
+    local elements = {
+        [1] = {label = "Fix", value = "fix", description = "Répare le véhicule" },
+        [2] = {label = "Supprime", value = "dv", description = "Supprime le véhicule"},
+    }
+    for k, v in ipairs(elements) do
+        local menu_button10 = Vehicules:AddButton({
+            label = " " .. v.label,
+            value = v.value,
+            description = v.description,
+            select = function(btn)
+                local values = btn.Value
+                TriggerServerEvent("QBCore:CallCommand", values, {})
+            end,
+        })
+    end
+end
+
 local function OpenCarModelsMenu(category)
     VehiculeModel:ClearItems()
     MenuV:OpenMenu(VehiculeModel)
@@ -143,6 +164,11 @@ local function AdminPanel(menu)
         value = PlayerList,
         description = "Voir la liste des joueurs",
     })
+    local vehmenu = menu:AddButton({
+        label = "Menu Véhicules",
+        value = Vehicules,
+        description = "Option du véhicule",
+    })
     local vehspawn = menu:AddButton({
         label = "Spawn Véhicules",
         value = VehiculeList,
@@ -162,6 +188,10 @@ local function AdminPanel(menu)
 
     copy_coords:On("select", function()
         CopyToClipboard("coords")
+    end)
+
+    vehmenu:On("select", function()
+        OpenVehiculeMenus()
     end)
 
     tpm:On("select", function()
