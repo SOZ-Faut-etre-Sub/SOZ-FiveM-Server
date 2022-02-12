@@ -58,13 +58,8 @@ local function SpeedLimiterMenu(vehicle)
 end
 
 local function DoorManagementMenu(vehicle)
-    local doorMenu = MenuV:InheritMenu(vehicleMenu, {
-        Subtitle = "Portes",
-    })
-    vehicleMenu:AddButton({
-        label = "Gestion des portes",
-        value = doorMenu,
-    })
+    local doorMenu = MenuV:InheritMenu(vehicleMenu, {Subtitle = "Portes"})
+    vehicleMenu:AddButton({label = "Gestion des portes", value = doorMenu})
 
     for i = 0, 5 do
         if not IsVehicleDoorDamaged(vehicle, i) and GetIsDoorValid(vehicle, i) then
