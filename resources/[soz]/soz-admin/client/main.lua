@@ -84,7 +84,11 @@ local function OpenPlayerMenus(player)
         [2] = {label = "Freeze", value = "freeze", description = "Freeze le joueur " .. player.cid .. ""},
         [3] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
         [4] = {label = "Amène sur", value = "bring", description = "Amène " .. player.cid .. " sur ta position"},
-        [5] = {label = "Assis-toi dans son véhicule", value = "intovehicle", description = "Assis-toi dans le véhicule de " .. player.cid .. ""},
+        [5] = {
+            label = "Assis-toi dans son véhicule",
+            value = "intovehicle",
+            description = "Assis-toi dans le véhicule de " .. player.cid .. "",
+        },
     }
     for k, v in ipairs(elements) do
         local menu_button10 = Players:AddButton({

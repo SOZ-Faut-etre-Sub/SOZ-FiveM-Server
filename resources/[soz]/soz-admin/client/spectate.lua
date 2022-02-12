@@ -9,17 +9,17 @@ RegisterNetEvent("admin:client:spectate", function(targetPed, coords)
     local target = GetPlayerPed(targetplayer)
     if not isSpectating then
         isSpectating = true
-        SetEntityVisible(myPed, false) 
-        SetEntityInvincible(myPed, true) 
-        lastSpectateCoord = GetEntityCoords(myPed) 
+        SetEntityVisible(myPed, false)
+        SetEntityInvincible(myPed, true)
+        lastSpectateCoord = GetEntityCoords(myPed)
         SetEntityCoords(myPed, coords)
-        NetworkSetInSpectatorMode(true, target) 
+        NetworkSetInSpectatorMode(true, target)
     else
         isSpectating = false
-        NetworkSetInSpectatorMode(false, target) 
-        SetEntityCoords(myPed, lastSpectateCoord) 
+        NetworkSetInSpectatorMode(false, target)
+        SetEntityCoords(myPed, lastSpectateCoord)
         SetEntityVisible(myPed, true)
-        SetEntityInvincible(myPed, false) 
+        SetEntityInvincible(myPed, false)
         lastSpectateCoord = nil
     end
 end)
