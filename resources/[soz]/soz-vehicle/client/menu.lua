@@ -34,22 +34,10 @@ local function SpeedLimiterMenu(vehicle)
         label = "Limitateur de vitesse",
         value = nil,
         values = {
-            {
-                label = "Aucune limite de vitesse",
-                value = 0,
-            },
-            {
-                label = "Limiter la vitesse à 50km/h",
-                value = 50,
-            },
-            {
-                label = "Limiter la vitesse à 90km/h",
-                value = 90,
-            },
-            {
-                label = "Limiter la vitesse à 120km/h",
-                value = 120,
-            },
+            {label = "Aucune limite de vitesse", value = 0},
+            {label = "Limiter la vitesse à 50km/h", value = 50},
+            {label = "Limiter la vitesse à 90km/h", value = 90},
+            {label = "Limiter la vitesse à 120km/h", value = 120},
         },
     })
     speed:On("select", function(item, value)
