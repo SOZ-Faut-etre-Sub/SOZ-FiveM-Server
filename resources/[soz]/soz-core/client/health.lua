@@ -10,7 +10,7 @@ AddEventHandler("core:client:Revive", function()
     local player = PlayerPedId()
 
     if isDead then
-		local playerPos = GetEntityCoords(player, true)
+        local playerPos = GetEntityCoords(player, true)
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         isDead = false
         SetEntityInvincible(player, false)
@@ -22,7 +22,7 @@ AddEventHandler("core:client:Revive", function()
     SetPlayerSprint(PlayerId(), true)
     ResetAll()
     ResetPedMovementClipset(player, 0.0)
-    
+
     QBCore.Functions.Notify("Vous êtes guéri!")
 end)
 
