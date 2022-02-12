@@ -236,9 +236,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerVehicles", function(s
     local Player = QBCore.Functions.GetPlayer(source)
     local Vehicles = {}
 
-    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ?", {
-        Player.PlayerData.citizenid,
-    }, function(result)
+    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ?", {Player.PlayerData.citizenid}, function(result)
         if result[1] then
             for k, v in pairs(result) do
                 local VehicleData = QBCore.Shared.Vehicles[v.vehicle]
