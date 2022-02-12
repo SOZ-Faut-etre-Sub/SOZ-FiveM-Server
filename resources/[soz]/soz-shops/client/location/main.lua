@@ -1,2 +1,2 @@
-LocationDebugPoly = false
+LocationDebugPoly = true
 ShopLocation = {}

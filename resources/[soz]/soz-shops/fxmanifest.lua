@@ -14,8 +14,14 @@ client_scripts {
     "client/location/robsliquor.lua",
     "client/location/ltdgasoline.lua",
     "client/location/247supermarket.lua",
+    "client/location/tattoo.lua",
 
     "client/main.lua",
+
+    "client/shops/base.lua",
+    "client/shops/tattoo.lua",
+
+    "client/events.lua",
 }
 server_scripts {"server/main.lua"}
 
