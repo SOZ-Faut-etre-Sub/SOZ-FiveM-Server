@@ -104,9 +104,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(sour
             end
         end)
     else -- Job garages only for cars that are owned by someone (for sharing and service)
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {
-            plate,
-        }, function(result)
+        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {plate}, function(result)
             if result[1] then
                 cb(true)
             else
