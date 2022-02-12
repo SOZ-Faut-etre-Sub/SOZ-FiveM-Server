@@ -70,9 +70,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(sour
             end
         end)
     elseif type == "house" then -- House garages only for player cars that have keys of the house
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {
-            plate,
-        }, function(result)
+        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
             if result[1] then
                 local hasHouseKey = exports["qb-houses"]:hasKey(result[1].license, result[1].citizenid, house)
                 if hasHouseKey then
@@ -85,9 +83,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(sour
             end
         end)
     elseif type == "gang" then -- Gang garages only for gang members cars (for sharing)
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {
-            plate,
-        }, function(result)
+        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
             if result[1] then
                 -- Check if found owner is part of the gang
                 local resultplayer = MySQL.Sync.fetchSingle("SELECT * FROM players WHERE citizenid = ?", {
