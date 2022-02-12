@@ -50,7 +50,7 @@ RegisterNetEvent("admin:server:spectate", function(player)
     local src = source
     local targetped = GetPlayerPed(player.id)
     local coords = GetEntityCoords(targetped)
-    TriggerClientEvent('admin:client:spectate', src, player.id, coords)
+    TriggerClientEvent("admin:client:spectate", src, player.id, coords)
 end)
 
 RegisterNetEvent("admin:server:freeze", function(player)
@@ -68,20 +68,20 @@ RegisterNetEvent("admin:server:intovehicle", function(player)
     local src = source
     local admin = GetPlayerPed(src)
     local targetPed = GetPlayerPed(player.id)
-    local vehicule = GetVehiclePedIsIn(targetPed,false)
+    local vehicule = GetVehiclePedIsIn(targetPed, false)
     local seat = -1
     if vehicule ~= 0 then
-        for i=0,8,1 do
-            if GetPedInVehicleSeat(vehicule,i) == 0 then
+        for i = 0, 8, 1 do
+            if GetPedInVehicleSeat(vehicule, i) == 0 then
                 seat = i
                 break
             end
         end
         if seat ~= -1 then
-            SetPedIntoVehicle(admin,vehicule,seat)
-            TriggerClientEvent('QBCore:Notify', src, 'Monté dans le véhicule', 'success', 5000)
+            SetPedIntoVehicle(admin, vehicule, seat)
+            TriggerClientEvent("QBCore:Notify", src, "Monté dans le véhicule", "success", 5000)
         else
-            TriggerClientEvent('QBCore:Notify', src, 'Le véhicule n\'a pas de siège libre!', 'danger', 5000)
+            TriggerClientEvent("QBCore:Notify", src, "Le véhicule n'a pas de siège libre!", "danger", 5000)
         end
     end
 end)
