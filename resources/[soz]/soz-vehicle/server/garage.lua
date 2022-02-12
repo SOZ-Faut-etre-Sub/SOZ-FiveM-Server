@@ -42,10 +42,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(s
             end
         end)
     else -- House, Job and Gang, give all cars in the garage
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE garage = ? AND state = ?", {
-            garage,
-            1,
-        }, function(result)
+        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE garage = ? AND state = ?", {garage, 1}, function(result)
             if result[1] then
                 cb(result)
             else
