@@ -1234,9 +1234,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                 end
             end
         end)
-        local button2 = menu:AddButton({
-            label = "Sortir véhicule",
-        })
+        local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
             ParkingPublicList:Close()
             SortirMenu(type, garage, indexgarage)
@@ -1257,17 +1255,13 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                 end
             end
         end)
-        local button2 = menu:AddButton({
-            label = "Sortir véhicule",
-        })
+        local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
             ParkingPriveList:Close()
             SortirMenu(type, garage, indexgarage)
         end)
     elseif type == "depot" then
-        local button2 = menu:AddButton({
-            label = "Sortir véhicule",
-        })
+        local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
             ParkingFourriereList:Close()
             SortirMenu(type, garage, indexgarage)
