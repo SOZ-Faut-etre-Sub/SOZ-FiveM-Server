@@ -2,7 +2,9 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 
 local function GeneratePlate()
     local plate = QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(2)
-    local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {plate})
+    local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {
+        plate,
+    })
     if result then
         return GeneratePlate()
     else
@@ -44,9 +46,19 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
     })
     if vehiclestock[1].stock > 0 then
         if money > vehiclePrice then
-            MySQL.Async.insert("INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                               {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0})
-            MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
+            MySQL.Async.insert(
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", {
+                    pData.PlayerData.license,
+                    cid,
+                    vehicle,
+                    GetHashKey(vehicle),
+                    "{}",
+                    plate,
+                    0,
+                })
+            MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {
+                vehicle,
+            })
             TriggerClientEvent("QBCore:Notify", src, "Merci pour votre achat!", "success")
             TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
             pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
