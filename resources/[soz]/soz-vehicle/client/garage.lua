@@ -1219,9 +1219,7 @@ end)
 local function ParkingPanel(menu, type, garage, indexgarage)
 
     if type == "public" then
-        local button = menu:AddButton({
-            label = "Ranger véhicule",
-        })
+        local button = menu:AddButton({label = "Ranger véhicule"})
         button:On("select", function()
             local curVeh = GetPlayersLastVehicle()
             local vehClass = GetVehicleClass(curVeh)
@@ -1240,9 +1238,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             SortirMenu(type, garage, indexgarage)
         end)
     elseif type == "private" then
-        local button = menu:AddButton({
-            label = "Ranger véhicule",
-        })
+        local button = menu:AddButton({label = "Ranger véhicule"})
         button:On("select", function()
             local curVeh = GetPlayersLastVehicle()
             local vehClass = GetVehicleClass(curVeh)
