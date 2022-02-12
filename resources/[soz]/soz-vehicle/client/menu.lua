@@ -12,16 +12,7 @@ local function EngineMenu(vehicle)
     local engine = vehicleMenu:AddSlider({
         label = "Contact du moteur",
         value = nil,
-        values = {
-            {
-                label = "Allumé",
-                value = true,
-            },
-            {
-                label = "Éteint",
-                value = false,
-            },
-        },
+        values = {{label = "Allumé", value = true}, {label = "Éteint", value = false}},
     })
     engine:On("select", function(item, value)
         -- SetVehicleEngineOn(vehicle, value, false, true)
