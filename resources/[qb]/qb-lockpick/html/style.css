@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
+html, body {
+	 width: 100%;
+	 height: 100%;
+	 padding: 0;
+	 margin: 0;
+	 font-family: 'Poppins', sans-serif;
+}
+ body {
+	 display: inline-block;
+	 overflow: hidden;
+}
+
+#wrap {
+	 display: none;
+	 position: relative;
+	 width: 12%;
+	 margin: 5% auto;
+	 overflow: visible;
+}
+
+p {
+	 color: #fde470;
+	 color: #2f2;
+	 text-align: center;
+	 font-weight: 400;
+	 font-size: 1.2em;
+	 padding: 0;
+	 margin: 0.5em;
+}
+ p.disclaimer {
+	 position: absolute;
+	 bottom: 0;
+	 left: 0;
+	 opacity: 0.5;
+	 font-size: 0.9em;
+	 color: #000;
+	 font-weight: 300;
+}
+ #collar {
+	 display: block;
+	 position: relative;
+	 width: 100%;
+	 height: 100%;
+}
+ #cylinder {
+	 display: block;
+	 background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/cylinder.png');
+	 background-size: cover;
+	 width: 69.914%;
+	 height: 69.914%;
+	 position: absolute;
+	 top: 14.9%;
+	 left: 15%;
+}
+ #driver {
+	 display: block;
+	 width: 172.1739%;
+	 height: 84%;
+	 background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/driver.png');
+	 background-size: cover;
+	 position: absolute;
+	 top: 57%;
+	 left: 46%;
+	 transform-origin: 3% -3%;
+}
+ #pin {
+	 display: block;
+	 background-size: cover;
+	 width: 7.1304%;
+	 height: 146.4347%;
+	 position: absolute;
+	 left: 47.4%;
+	 top: -98%;
+	 transform-origin: 50% 99%;
+}
+ #pin .top {
+	 display: block;
+	 width: 100%;
+	 height: 50%;
+	 position: absolute;
+	 top: 0;
+	 left: 0;
+	 background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/pinTop.png');
+	 background-size: cover;
+}
+ #pin .bott {
+	 display: block;
+	 width: 100%;
+	 height: 50%;
+	 position: absolute;
+	 top: 50%;
+	 left: 0;
+	 background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/95637/pinBott.png');
+	 background-size: cover;
+}
+ #modal {
+	 display: none;
+	 overflow: auto;
+	 position: fixed;
+	 top: 0;
+	 left: 0;
+	 width: 100%;
+	 height: 100%;
+	 background: rgba(0, 0, 0, 0.8);
+	 text-align: center;
+}
+ #modal div {
+	 margin-top: 5%;
+	 display: inline-block;
+	 background: #fff;
+	 border-radius: 20px;
+	 box-sizing: border-box;
+	 padding: 1%;
+}
+#modal div h1 {
+	 margin-bottom: 0.22em;
+}
+ #modal div h2 {
+	 margin-top: 0;
+	 margin-bottom: 1.5em;
+	 font-size: 1.4em;
+}
+ #modal div h3 {
+	 font-size: 1.1em;
+}
+ #modal div h4 {
+	 font-size: 0.8em;
+}
+ #modal #win {
+	 display: none;
+}
+ #modal #lose {
+	 display: none;
+}
+ 
