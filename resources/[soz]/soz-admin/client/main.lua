@@ -80,11 +80,13 @@ local function OpenPlayerMenus(player)
     Players:ClearItems()
     MenuV:OpenMenu(Players)
     local elements = {
-        [1] = {label = "Observer", value = "spectate", description = "Observe les actions de " .. player.cid .. ""},
-        [2] = {label = "Freeze", value = "freeze", description = "Freeze le joueur " .. player.cid .. ""},
-        [3] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
-        [4] = {label = "Amène sur", value = "bring", description = "Amène " .. player.cid .. " sur ta position"},
-        [5] = {
+        [1] = {label = "Tuer", value = "kill", description = "Tue le joueur  " .. player.cid .. ""},
+        [2] = {label = "Revive", value = "revive", description = "Revive le joueur " .. player.cid .. ""},
+        [3] = {label = "Observer", value = "spectate", description = "Observe les actions de " .. player.cid .. ""},
+        [4] = {label = "Freeze", value = "freeze", description = "Freeze le joueur " .. player.cid .. ""},
+        [5] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
+        [6] = {label = "Amène sur", value = "bring", description = "Amène " .. player.cid .. " sur ta position"},
+        [7] = {
             label = "Assis-toi dans son véhicule",
             value = "intovehicle",
             description = "Assis-toi dans le véhicule de " .. player.cid .. "",

@@ -87,3 +87,11 @@ RegisterNetEvent("admin:server:intovehicle", function(player)
         TriggerClientEvent("QBCore:Notify", src, "Le joueur n'est pas dans un véhicule!", "error", 5000)
     end
 end)
+
+RegisterNetEvent("admin:server:kill", function(player)
+    TriggerClientEvent("core:client:KillPlayer", player.id)
+end)
+
+RegisterNetEvent("admin:server:revive", function(player)
+    TriggerClientEvent("core:client:Revive", player.id)
+end)
