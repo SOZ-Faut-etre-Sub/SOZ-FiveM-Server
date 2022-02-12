@@ -30,9 +30,7 @@ RegisterNetEvent("vehiclekeys:server:SetVehicleOwner", function(plate)
                 VehicleList[plate].owners[Player.PlayerData.citizenid] = true
             else
                 -- Plate not currently tracked so store a new one with one owner
-                VehicleList[plate] = {
-                    owners = {},
-                }
+                VehicleList[plate] = {owners = {}}
                 VehicleList[plate].owners[Player.PlayerData.citizenid] = true
             end
         else
