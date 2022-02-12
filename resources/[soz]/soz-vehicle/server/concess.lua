@@ -47,18 +47,9 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
     if vehiclestock[1].stock > 0 then
         if money > vehiclePrice then
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", {
-                    pData.PlayerData.license,
-                    cid,
-                    vehicle,
-                    GetHashKey(vehicle),
-                    "{}",
-                    plate,
-                    0,
-                })
-            MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {
-                vehicle,
-            })
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0})
+            MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
             TriggerClientEvent("QBCore:Notify", src, "Merci pour votre achat!", "success")
             TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
             pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
