@@ -67,7 +67,7 @@ RegisterNetEvent("jobs:religion:fix")
 AddEventHandler("jobs:religion:fix", function(ped)
     TriggerEvent("animations:client:EmoteCommandStart", {"namaste"})
     FreezeEntityPosition(ped, true)
-    TaskPlayAnim(ped, nil, 'namaste', 8.0, 8.0, 10000, 0, 0, 0, 0, 0)
+    TaskPlayAnim(ped, nil, "namaste", 8.0, 8.0, 10000, 0, 0, 0, 0, 0)
     QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 10000, false, true,
                                  {
         disableMovement = true,
@@ -96,7 +96,8 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    religion_vehicule = CreateVehicle(model, Config.religion_vehicule.x, Config.religion_vehicule.y, Config.religion_vehicule.z, Config.religion_vehicule.w, true, false)
+    religion_vehicule = CreateVehicle(model, Config.religion_vehicule.x, Config.religion_vehicule.y, Config.religion_vehicule.z, Config.religion_vehicule.w,
+                                      true, false)
     SetModelAsNoLongerNeeded(model)
 end
 
@@ -177,7 +178,7 @@ AddEventHandler("jobs:religion:start", function()
                 end,
                 action = function(entity)
                     TriggerEvent("jobs:religion:fix", entity)
-                end
+                end,
             },
         },
         distance = 2.5,
