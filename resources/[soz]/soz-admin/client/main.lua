@@ -110,7 +110,7 @@ local function OpenVehiculeMenus()
     Vehicules:ClearItems()
     MenuV:OpenMenu(Vehicules)
     local elements = {
-        [1] = {label = "Fix", value = "fix", description = "Répare le véhicule" },
+        [1] = {label = "Fix", value = "fix", description = "Répare le véhicule"},
         [2] = {label = "Supprime", value = "dv", description = "Supprime le véhicule"},
     }
     for k, v in ipairs(elements) do
@@ -164,11 +164,7 @@ local function AdminPanel(menu)
         value = PlayerList,
         description = "Voir la liste des joueurs",
     })
-    local vehmenu = menu:AddButton({
-        label = "Menu Véhicules",
-        value = Vehicules,
-        description = "Option du véhicule",
-    })
+    local vehmenu = menu:AddButton({label = "Menu Véhicules", value = Vehicules, description = "Option du véhicule"})
     local vehspawn = menu:AddButton({
         label = "Spawn Véhicules",
         value = VehiculeList,
