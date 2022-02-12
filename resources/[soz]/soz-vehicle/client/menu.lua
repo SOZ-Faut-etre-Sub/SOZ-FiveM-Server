@@ -1,12 +1,5 @@
 local vehicleMenu = MenuV:CreateMenu(nil, "", "menu_vehicle", "soz", "vehicle")
-local doorName = {
-    "Conducteur avant",
-    "Passager avant",
-    "Conducteur arrière",
-    "Passager arrière",
-    "Capot",
-    "Coffre",
-}
+local doorName = {"Conducteur avant", "Passager avant", "Conducteur arrière", "Passager arrière", "Capot", "Coffre"}
 
 local function EngineMenu(vehicle)
     local engine = vehicleMenu:AddSlider({
