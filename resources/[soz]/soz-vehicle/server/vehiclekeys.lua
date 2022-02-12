@@ -38,9 +38,7 @@ RegisterNetEvent("vehiclekeys:server:SetVehicleOwner", function(plate)
         else
             -- Initialize new VehicleList
             VehicleList = {}
-            VehicleList[plate] = {
-                owners = {},
-            }
+            VehicleList[plate] = {owners = {}}
             VehicleList[plate].owners[Player.PlayerData.citizenid] = true
         end
     else
