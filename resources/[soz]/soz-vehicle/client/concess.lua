@@ -26,7 +26,7 @@ local function clean()
             SetEntityAsMissionEntity(vehicles, true, true)
             DeleteVehicle(vehicles)
         else
-            stillthere=false
+            stillthere = false
         end
     end
 end
