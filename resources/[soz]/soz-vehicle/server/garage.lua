@@ -159,7 +159,6 @@ RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, ind
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local moneyBalance = Player.PlayerData.money["money"]
-
     MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
         if result[1] then
             if moneyBalance >= result[1].depotprice then
@@ -176,7 +175,6 @@ RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, ind
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local moneyBalance = Player.PlayerData.money["money"]
-
     if moneyBalance >= price then
         Player.Functions.RemoveMoney("money", price, "paid-prive")
         TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
@@ -186,11 +184,10 @@ RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, ind
 end)
 
 -- External Calls
--- Call from qb-vehiclesales
 QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleOwner", function(source, cb, plate)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
-    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ? AND citizenid = ?", {
+    MySQL.Async.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ? AND citizenid = ?", {
         plate,
         pData.PlayerData.citizenid,
     }, function(result)
@@ -202,12 +199,10 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleOwner", function(s
     end)
 end)
 
--- Call from qb-phone
 QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerVehicles", function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
     local Vehicles = {}
-
-    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ?", {Player.PlayerData.citizenid}, function(result)
+    MySQL.Async.fetchSingle("SELECT * FROM player_vehicles WHERE citizenid = ?", {Player.PlayerData.citizenid}, function(result)
         if result[1] then
             for k, v in pairs(result) do
                 local VehicleData = QBCore.Shared.Vehicles[v.vehicle]
