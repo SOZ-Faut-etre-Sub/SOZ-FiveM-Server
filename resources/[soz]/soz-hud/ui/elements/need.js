@@ -11,7 +11,7 @@ class PlayerNeed extends SozUiElement {
   }
 
   renderHTMLComponent() {
-    if (this.value > 0 || this.type === 'hunger' || this.type === 'thirst') {
+    if ((this.value > 0 && (this.type !== 'hunger' || this.type !== 'thirst')) && ((this.type === 'hunger' || this.type === 'thirst') && this.value <= 50)) {
       if (this.root.innerHTML.indexOf('status') !== -1) { // Check if component is already render
         this.root.querySelector('.progressbar .progress').style.width = `${this.value}%`
       } else {
