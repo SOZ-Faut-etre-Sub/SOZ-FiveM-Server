@@ -51,7 +51,9 @@ end
 --- @param menu Menu
 --- @param shop string
 function ShopShell:GenerateMenu(menu, shop)
-    if self:GetShopData(shop) == nil then return end
+    if self:GetShopData(shop) == nil then
+        return
+    end
 
     menu:ClearItems()
     menu:SetSubtitle(self:GetShopData(shop).label)
@@ -79,6 +81,5 @@ function ShopShell:GenerateMenu(menu, shop)
 
     menu:Open()
 end
-
 
 ShopContext["shop"] = ShopShell.new()

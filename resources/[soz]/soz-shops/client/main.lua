@@ -31,14 +31,15 @@ CreateThread(function()
                             icon = "fas fa-shopping-cart",
                             label = "Accéder au magasin",
                             canInteract = function()
-                                return currentShop ~= nil and (Config.Locations[currentShop].type == 'weapon' or Config.Locations[currentShop].type == 'shop')
+                                return currentShop ~= nil and (Config.Locations[currentShop].type == "weapon" or Config.Locations[currentShop].type == "shop")
                             end,
                         },
                         {
                             event = "shops:client:GetShop",
+                            icon = "far fa-duck",
                             label = "Voir les tatouages",
                             canInteract = function()
-                                return currentShop ~= nil and Config.Locations[currentShop].type == 'tattoo'
+                                return currentShop ~= nil and Config.Locations[currentShop].type == "tattoo"
                             end,
                         },
                     },
