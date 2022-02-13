@@ -124,7 +124,7 @@ function ActionStart()
 
                             local player = PlayerPedId()
                             if (DoesEntityExist(player) and not IsEntityDead(player)) then
-                                loadAnimDict(Action.animation.animDict)
+                                QBCore.Functions.RequestAnimDict(Action.animation.animDict)
                                 TaskPlayAnim(player, Action.animation.animDict, Action.animation.anim, 3.0, 3.0, -1, Action.animation.flags, 0, 0, 0, 0)
                             end
                         else
@@ -242,13 +242,6 @@ function ActionCleanup()
     prop_net = nil
     propTwo_net = nil
     runProgThread = false
-end
-
-function loadAnimDict(dict)
-    while (not HasAnimDictLoaded(dict)) do
-        RequestAnimDict(dict)
-        Wait(5)
-    end
 end
 
 function DisableActions(ped)
