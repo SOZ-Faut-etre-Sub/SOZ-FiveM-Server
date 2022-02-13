@@ -134,7 +134,7 @@ local function AdminPanel(menu)
         label = "Copier les coords",
         description = "Copie les coords",
         value = "coords",
-        values = {{label = "vector4", value = "coords4"}, {label = "vector3", value = "coords3"}}
+        values = {{label = "vector4", value = "coords4"}, {label = "vector3", value = "coords3"}},
     })
     local tpm = menu:AddButton({label = "Tpm", description = "Téléport sur le marqueur"})
     local playerlist = menu:AddButton({
