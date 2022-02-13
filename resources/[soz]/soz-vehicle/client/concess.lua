@@ -17,9 +17,21 @@ for k, voiture in pairs(QBCore.Shared.Vehicles) do
     end
 end
 
-local veh
-local function CarModels(vehicule)
+local function clean()
+    local vcoords = vector3(-46.64, -1097.53, 25.44)
+    local stillthere = true
+    while stillthere do
+        local vehicles = QBCore.Functions.GetClosestVehicle(vcoords)
+        if #(vcoords - GetEntityCoords(vehicles)) <= 2.0 then
+            SetEntityAsMissionEntity(vehicles, true, true)
+            DeleteVehicle(vehicles)
+        else
+            stillthere=false
+        end
+    end
+end
 
+local function CarModels(vehicule)
     local voiture = vehicule
     local model = GetHashKey(voiture["model"])
     RequestModel(model)
@@ -27,7 +39,7 @@ local function CarModels(vehicule)
         Citizen.Wait(10)
     end
     TriggerEvent("soz-concess:client:createcam", "")
-    veh = CreateVehicle(model, -46.64, -1097.53, 25.44, false, false)
+    local veh = CreateVehicle(model, -46.64, -1097.53, 25.44, false, false)
     SetModelAsNoLongerNeeded(model)
     SetVehicleOnGroundProperly(veh)
     SetEntityInvincible(veh, true)
@@ -40,7 +52,7 @@ local function CarModels(vehicule)
             Citizen.Wait(0)
             if IsControlPressed(0, 176) or IsControlPressed(0, 177) then
                 TriggerEvent("soz-concess:client:deletecam", "")
-                DeleteVehicle(veh)
+                clean()
                 break
             end
         end
@@ -48,12 +60,7 @@ local function CarModels(vehicule)
 end
 
 local function ChooseCarModelsMenu(vehicule)
-    local vcoords = vector3(-46.64, -1097.53, 25.44)
-    local vehicles = QBCore.Functions.GetClosestVehicle(vcoords)
-    if #(vcoords - GetEntityCoords(vehicles)) <= 2.0 then
-        SetEntityAsMissionEntity(vehicles, true, true)
-        DeleteVehicle(vehicles)
-    end
+    clean()
     VehiculeChoose:ClearItems()
     MenuV:OpenMenu(VehiculeChoose)
     local voiture = vehicule
@@ -91,12 +98,7 @@ local function OpenCarModelsMenu(category)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
     VehiculeModel:On("switch", function(item, currentItem, prevItem)
-        local vcoords = vector3(-46.64, -1097.53, 25.44)
-        local vehicles = QBCore.Functions.GetClosestVehicle(vcoords)
-        if #(vcoords - GetEntityCoords(vehicles)) <= 2.0 then
-            SetEntityAsMissionEntity(vehicles, true, true)
-            DeleteVehicle(vehicles)
-        end
+        clean()
         CarModels(currentItem.Value)
     end)
     QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(vehiclestorage)
