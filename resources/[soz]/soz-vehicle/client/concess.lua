@@ -49,12 +49,10 @@ end
 
 local function ChooseCarModelsMenu(vehicule)
     local vcoords = vector3(-46.64, -1097.53, 25.44)
-    local vehicles = GetGamePool("CVehicle")
-    for k, v in pairs(vehicles) do
-        if #(vcoords - GetEntityCoords(v)) <= 2.0 then
-            SetEntityAsMissionEntity(v, true, true)
-            DeleteVehicle(v)
-        end
+    local vehicles = QBCore.Functions.GetClosestVehicle(vcoords)
+    if #(vcoords - GetEntityCoords(vehicles)) <= 2.0 then
+        SetEntityAsMissionEntity(vehicles, true, true)
+        DeleteVehicle(vehicles)
     end
     VehiculeChoose:ClearItems()
     MenuV:OpenMenu(VehiculeChoose)
@@ -94,12 +92,10 @@ local function OpenCarModelsMenu(category)
     end)
     VehiculeModel:On("switch", function(item, currentItem, prevItem)
         local vcoords = vector3(-46.64, -1097.53, 25.44)
-        local vehicles = GetGamePool("CVehicle")
-        for k, v in pairs(vehicles) do
-            if #(vcoords - GetEntityCoords(v)) <= 2.0 then
-                SetEntityAsMissionEntity(v, true, true)
-                DeleteVehicle(v)
-            end
+        local vehicles = QBCore.Functions.GetClosestVehicle(vcoords)
+        if #(vcoords - GetEntityCoords(vehicles)) <= 2.0 then
+            SetEntityAsMissionEntity(vehicles, true, true)
+            DeleteVehicle(vehicles)
         end
         CarModels(currentItem.Value)
     end)
