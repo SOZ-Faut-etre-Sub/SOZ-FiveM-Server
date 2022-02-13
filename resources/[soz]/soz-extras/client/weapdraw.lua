@@ -109,10 +109,10 @@ CreateThread(function()
 
                 local newWeap = GetSelectedPedWeapon(ped)
                 SetCurrentPedWeapon(ped, currWeapon, true)
-                loadAnimDict("reaction@intimidation@1h")
-                loadAnimDict("reaction@intimidation@cop@unarmed")
-                loadAnimDict("rcmjosh4")
-                loadAnimDict("weapons@pistol@")
+                QBCore.Functions.RequestAnimDict("reaction@intimidation@1h")
+                QBCore.Functions.RequestAnimDict("reaction@intimidation@cop@unarmed")
+                QBCore.Functions.RequestAnimDict("rcmjosh4")
+                QBCore.Functions.RequestAnimDict("weapons@pistol@")
                 if CheckWeapon(newWeap) then
                     if holstered then
                         if QBCore.Functions.GetPlayerData().job.name == "police" then
@@ -305,11 +305,4 @@ function IsWeaponHolsterable(weap)
         end
     end
     return false
-end
-
-function loadAnimDict(dict)
-    while (not HasAnimDictLoaded(dict)) do
-        RequestAnimDict(dict)
-        Wait(5)
-    end
 end

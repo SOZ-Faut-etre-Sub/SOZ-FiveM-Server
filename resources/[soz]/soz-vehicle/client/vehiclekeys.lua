@@ -8,13 +8,6 @@ local usingAdvanced
 
 -- Functions
 
-local function loadAnimDict(dict)
-    while (not HasAnimDictLoaded(dict)) do
-        RequestAnimDict(dict)
-        Wait(0)
-    end
-end
-
 local function HasVehicleKey(plate)
     QBCore.Functions.TriggerCallback("vehiclekeys:server:CheckHasKey", function(result)
         if result then
@@ -39,7 +32,7 @@ local function LockVehicle()
         QBCore.Functions.TriggerCallback("vehiclekeys:server:CheckHasKey", function(result)
             if result then
                 local vehLockStatus = GetVehicleDoorLockStatus(veh)
-                loadAnimDict("anim@mp_player_intmenu@key_fob@")
+                QBCore.Functions.RequestAnimDict("anim@mp_player_intmenu@key_fob@")
                 TaskPlayAnim(ped, "anim@mp_player_intmenu@key_fob@", "fob_click", 3.0, 3.0, -1, 49, 0, false, false, false)
 
                 if vehLockStatus == 1 then
