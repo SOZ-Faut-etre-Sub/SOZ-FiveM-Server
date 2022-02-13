@@ -1,6 +1,7 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
 local HudForcedStateDisplay = true
+PlayerInVehicle, PlayerHaveGPS, PlayerHaveCompass = false, false, false
 HudDisplayed, HudRadar = false, true
 --- @class PlayerData
 local HudPlayerStatus = {
@@ -27,6 +28,18 @@ local HudVehicleStatus = {
 
 --- Update Functions
 
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
+    PlayerHaveGPS, PlayerHaveCompass = false, false
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == "gps" then
+            PlayerHaveGPS = true
+        end
+        if item.name == "compass" then
+            PlayerHaveCompass = true
+        end
+    end
+end)
+
 --- Global Hud display function
 --- @param state boolean
 local function setHudDisplay(state)
@@ -41,7 +54,11 @@ end
 local function setHudRadar(state)
     if HudRadar ~= state then
         HudRadar = state
-        DisplayRadar(HudRadar)
+        if PlayerHaveGPS then
+            DisplayRadar(HudRadar)
+        else
+            DisplayRadar(false)
+        end
         SendNUIMessage({action = "speedometer", show = HudRadar})
     end
 end
@@ -137,6 +154,7 @@ CreateThread(function()
             if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
 
+                PlayerInVehicle = true
                 setHudRadar(true)
                 setVehicleData({
                     speed = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
@@ -146,6 +164,7 @@ CreateThread(function()
                     highBeamsOn = highBeamsOn,
                 })
             else
+                PlayerInVehicle = false
                 setHudRadar(false)
             end
         else
