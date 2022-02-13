@@ -4,14 +4,19 @@ local PoleMenu = MenuV:CreateMenu(nil, "", "menu_job_poleemploi", "soz", "job-pa
 
 local adsl_position = {x = 479.17, y = -107.53, z = 63.16}
 local livraison_position = {x = -424.06, y = -2789.62, z = 6.4}
+local religion_position = {x = -766.26, y = -24.39, z = 41.08}
+local metal_position = {x = -343.23, y = -1554.57, z = 25.22}
 local pole_emploi_coords = vector3(236.53, -409.22, 47.92)
 
-QBCore.Functions.CreateBlip("pole_emploi_local", {
-    name = "Pôle emploi",
-    coords = pole_emploi_coords,
-    sprite = 280,
-    color = 2,
-})
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    QBCore.Functions.CreateBlip("pole_emploi_local", {
+        name = "Pôle emploi",
+        coords = pole_emploi_coords,
+        sprite = 280,
+        color = 2,
+    })
+
+end)
 
 exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
     name = "pole emploi",
@@ -35,7 +40,7 @@ local function JobPosition(job, coords, sprite)
     SetBlipScale(blip, 1.0)
     SetBlipSprite(blip, sprite)
     SetBlipColour(blip, 32)
-    AddTextEntry(job, "commencer le job")
+    AddTextEntry(job, "Commencer le job")
     BeginTextCommandSetBlipName(job)
     EndTextCommandSetBlipName(blip)
     SetBlipCategory(blip, 2)
@@ -43,12 +48,20 @@ end
 
 local function JobPanel(menu)
     local adsl = menu:AddButton({
-        label = "job adsl",
-        description = "rendez vous au point sur votre gps pour commencez le job adsl",
+        label = "Job: Poseur d'Adsl",
+        description = "Rendez vous au point sur votre gps pour commencez le job adsl",
     })
     local livraison = menu:AddButton({
-        label = "job de livraison",
-        description = "rendez vous au point sur votre gps pour commencez le job de livraison",
+        label = "Job: Livreur de fougère",
+        description = "Rendez vous au point sur votre gps pour commencez le job de livraison",
+    })
+    local religion = menu:AddButton({
+        label = "Job: Témoin d'épsilon",
+        description = "Rendez vous au point sur votre gps pour commencez le job de témoin d'épsilon",
+    })
+    local metal = menu:AddButton({
+        label = "Job: Récolteur de métal",
+        description = "Rendez vous au point sur votre gps pour commencez le job de récolteur de métal",
     })
     adsl:On("select", function()
         if blip ~= nil then
@@ -61,6 +74,18 @@ local function JobPanel(menu)
             destroyblip(blip)
         end
         JobPosition("livraison", livraison_position, 280)
+    end)
+    religion:On("select", function()
+        if blip ~= nil then
+            destroyblip(blip)
+        end
+        JobPosition("metal", religion_position, 280)
+    end)
+    metal:On("select", function()
+        if blip ~= nil then
+            destroyblip(blip)
+        end
+        JobPosition("metal", metal_position, 280)
     end)
 end
 
@@ -85,4 +110,22 @@ end
 function destroyblip(blip)
     RemoveBlip(blip)
     blip = nil
+end
+
+function createblip(name, description, sprite, coords)
+    job_blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+    SetBlipScale(job_blip, 1.0)
+    SetBlipSprite(job_blip, sprite)
+    SetBlipColour(job_blip, 32)
+    AddTextEntry(name, description)
+    BeginTextCommandSetBlipName(name)
+    EndTextCommandSetBlipName(job_blip)
+    SetBlipCategory(job_blip, 2)
+end
+
+function DrawInteractionMarker(ObjectifCoord, show)
+    local a, b, c, d, entity = GetShapeTestResult(StartShapeTestCapsule(ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z, ObjectifCoord.x, ObjectifCoord.y,
+                                                                        ObjectifCoord.z, 1.0, 16, 0, 7))
+    SetEntityDrawOutlineColor(100, 163, 16, 50)
+    SetEntityDrawOutline(entity, show)
 end

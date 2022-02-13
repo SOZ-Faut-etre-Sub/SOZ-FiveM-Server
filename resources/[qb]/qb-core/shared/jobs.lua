@@ -302,4 +302,26 @@ QBShared.Jobs                       = {
             },
         },
     },
+    ['religion']   = {
+        label       = 'religion',
+        defaultDuty = true,
+        offDutyPay  = false,
+        grades      = {
+            ['0'] = {
+                name    = 'Intérimaire',
+                payment = 0
+            },
+        },
+    },
+    ['metal']   = {
+        label       = 'metal',
+        defaultDuty = true,
+        offDutyPay  = false,
+        grades      = {
+            ['0'] = {
+                name    = 'Intérimaire',
+                payment = 0
+            },
+        },
+    },
 }

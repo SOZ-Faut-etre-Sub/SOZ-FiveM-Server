@@ -5,6 +5,8 @@ local ped_job = {
     {modelHash = "s_m_m_postal_01", x = -424.06, y = -2789.62, z = 6.4, rotation = 314.46, NetworkSync = true},
     -- temoin d'epsylon
     {modelHash = "ig_priest", x = -766.26, y = -24.39, z = 41.08, rotation = 213.06, NetworkSync = true},
+    -- recolteur de métal
+    {modelHash = "s_m_y_construct_02", x = -343.23, y = -1554.57, z = 25.22, rotation = 179.11, NetworkSync = true},
     -- pole emploie
     {modelHash = "cs_barry", x = 236.53, y = -409.22, z = 47.92, rotation = 341.95, NetworkSync = true},
 }
