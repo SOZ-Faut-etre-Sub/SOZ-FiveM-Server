@@ -8,7 +8,8 @@ local function EngineMenu(vehicle)
         values = {{label = "Allumé", value = true}, {label = "Éteint", value = false}},
     })
     engine:On("select", function(item, value)
-        SetVehicleEngineOn(vehicle, value, false, true)
+        -- SetVehicleEngineOn(vehicle, value, false, true)
+        TriggerEvent("vehiclekeys:client:ToggleEngine", value)
     end)
 end
 

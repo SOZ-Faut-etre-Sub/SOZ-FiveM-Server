@@ -150,3 +150,261 @@ Config.FuelUsage = {
     [0.1] = 0.1,
     [0.0] = 0.0,
 }
+
+Garages = {
+    ["motelgarage"] = {
+        label = "Motel Parking",
+        blipcoord = vector3(273.43, -343.99, 44.91),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["spanishave"] = {
+        label = "Spanish Ave Parking",
+        blipcoord = vector3(-1178.29, -726.49, 20.73),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["greatoceanp"] = {
+        label = "Great Ocean Parking",
+        blipcoord = vector3(1455.84, 6546.71, 14.89),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["sandyshores"] = {
+        label = "Sandy Shores Parking",
+        blipcoord = vector3(1503.52, 3763.37, 33.99),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["airportprivate"] = {
+        label = "Airport Private Parking",
+        blipcoord = vector3(-987.87, -2698.61, 13.83),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["chumashp"] = {
+        label = "Chumash Parking",
+        blipcoord = vector3(-3135.51, 1105.58, 20.64),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["stadiump"] = {
+        label = "Stadium Parking",
+        blipcoord = vector3(-75.89, -2004.11, 18.03),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car",
+    },
+    ["diamondp"] = {
+        label = "Diamond Parking",
+        blipcoord = vector3(890.21, -3.77, 78.76),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["lagunapi"] = {
+        label = "Laguna Parking",
+        blipcoord = vector3(364.37, 297.83, 103.49),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["beachp"] = {
+        label = "Beach Parking",
+        blipcoord = vector3(-1183.1, -1511.11, 4.36),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["themotorhotel"] = {
+        label = "The Motor Hotel Parking",
+        blipcoord = vector3(1137.77, 2663.54, 37.9),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["marinadrive"] = {
+        label = "Marina Drive Parking",
+        blipcoord = vector3(952.2, 3608.47, 32.83),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["shambles"] = {
+        label = "Shambles Parking",
+        blipcoord = vector3(1002.58, -2362.77, 30.51),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["pillboxgarage"] = {
+        label = "Pillbox Garage Parking",
+        blipcoord = vector3(215.9499, -809.698, 30.731),
+        showBlip = true,
+        blipName = "Parking Privé",
+        blipNumber = 357,
+        type = "private", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["airportpublic"] = {
+        label = "Airport Public Parking",
+        blipcoord = vector3(-614.01, -2234.77, 6.0),
+        showBlip = true,
+        blipName = "Parking Public",
+        blipNumber = 357,
+        type = "public", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["haanparking"] = {
+        label = "Bell Farms Parking",
+        blipcoord = vector3(90.4, 6388.08, 31.23),
+        showBlip = true,
+        blipName = "Parking Public",
+        blipNumber = 357,
+        type = "public", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["fourriere"] = {
+        label = "Fourrière",
+        blipcoord = vector3(491.0, -1314.69, 29.25),
+        showBlip = true,
+        blipName = "Fourrière",
+        blipNumber = 68,
+        type = "depot", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+    },
+    ["police"] = {
+        label = "Police",
+        blipcoord = vector3(454.6, -1017.4, 28.4),
+        showBlip = false,
+        blipName = "Police",
+        blipNumber = 357,
+        type = "job", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "police",
+    },
+    --[[
+    ["intairport"] = {
+        label = "Airport Heliport",
+        blipcoord = vector3(-928.84, -2994.38, 19.85),
+        showBlip = false,
+        blipName = "Héliport",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
+    ["higginsheli"] = {
+        label = "Higgins Helitours",
+        blipcoord = vector3(-753.27, -1511.5, 5.01),
+        showBlip = false,
+        blipName = "Héliport",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
+    ["airsshores"] = {
+        label = "Sandy Shores",
+        blipcoord = vector3(1758.19, 3296.66, 41.14),
+        showBlip = false,
+        blipName = "Héliport",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
+    ["airdepot"] = {
+        label = "Dépot Aéronef",
+        blipcoord = vector3(-1243.29, -3392.3, 13.94),
+        showBlip = false,
+        blipName = "Dépot Aéronef",
+        blipNumber = 359,
+        type = "depot", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
+    ["lsymc"] = {
+        label = "Port LSYMC",
+        blipcoord = vector3(-794.66, -1510.83, 1.59),
+        showBlip = false,
+        blipName = "Marina",
+        blipNumber = 356,
+        type = "public", -- public, job, gang, depot
+        vehicle = "sea", -- car, air, sea
+    },
+    ["paleto"] = {
+        label = "Port Paleto",
+        blipcoord = vector3(-277.46, 6637.2, 7.48),
+        showBlip = false,
+        blipName = "Marina",
+        blipNumber = 356,
+        type = "public", -- public, job, gang, depot
+        vehicle = "sea", -- car, air, sea
+    },
+    ["millars"] = {
+        label = "Port Millars",
+        blipcoord = vector3(1299.24, 4216.69, 33.9),
+        showBlip = false,
+        blipName = "Marina",
+        blipNumber = 356,
+        type = "public", -- public, job, gang, depot
+        vehicle = "sea", -- car, air, sea
+    },
+    ["catfish"] = {
+        label = "Port Catfish",
+        blipcoord = vector3(3865.66, 4463.73, 2.72),
+        showBlip = false,
+        blipName = "Marina",
+        blipNumber = 356,
+        type = "public", -- public, job, gang, depot
+        vehicle = "sea", -- car, air, sea
+    },
+    ["seadepot"] = {
+        label = "Dépot LSYMC",
+        blipcoord = vector3(-772.98, -1430.76, 1.59),
+        showBlip = false,
+        blipName = "Dépot LSYMC",
+        blipNumber = 356,
+        type = "depot", -- public, job, gang, depot
+        vehicle = "sea", -- car, air, sea
+    },
+    --]]
+}
+
+HouseGarages = {}
+
+-- All chances are 0-1 <= so lower == less chance, higher == higher chance
+Config.RemoveLockpickNormal = 0.5 -- Chance to remove lockpick on fail
+Config.RemoveLockpickAdvanced = 0.2 -- Chance to remove advanced lockpick on fail
+Config.AlertCooldown = 10000 -- 10 seconds
+Config.PoliceAlertChance = 0.5 -- Chance of alerting police during the day
+Config.PoliceNightAlertChance = 0.25 -- Chance of alerting police at night (times:01-06)

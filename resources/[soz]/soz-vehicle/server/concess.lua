@@ -37,15 +37,14 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
     local money = pData.PlayerData.money["money"]
     local vehiclePrice = QBCore.Shared.Vehicles[vehicle]["price"]
     local plate = GeneratePlate()
-    -- A mettre quand on achète le véhicule TODO en même temps que la vente JcJ chez la police
-    -- os.date("%d/%m/%Y")
     local vehiclestock = MySQL.Sync.fetchAll("SELECT stock FROM concess_storage WHERE model = @model", {
         ["@model"] = vehicle,
     })
     if vehiclestock[1].stock > 0 then
         if money > vehiclePrice then
-            MySQL.Async.insert("INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                               {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0})
+            MySQL.Async.insert(
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0, os.time()})
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
             TriggerClientEvent("QBCore:Notify", src, "Merci pour votre achat!", "success")
             TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
