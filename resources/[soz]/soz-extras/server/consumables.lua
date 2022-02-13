@@ -105,12 +105,10 @@ end)
 
 ----------- / Lockpicking
 
-QBCore.Functions.CreateUseableItem("lockpick", function(source, item)
-    local Player = QBCore.Functions.GetPlayer(source)
+QBCore.Functions.CreateUseableItem("lockpick", function(source)
     TriggerClientEvent("lockpicks:UseLockpick", source, false)
 end)
 
-QBCore.Functions.CreateUseableItem("advancedlockpick", function(source, item)
-    local Player = QBCore.Functions.GetPlayer(source)
+QBCore.Functions.CreateUseableItem("advancedlockpick", function(source)
     TriggerClientEvent("lockpicks:UseLockpick", source, true)
 end)
