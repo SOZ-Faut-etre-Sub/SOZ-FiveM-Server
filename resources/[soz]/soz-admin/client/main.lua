@@ -113,6 +113,11 @@ local function OpenVehiculeMenus()
         [1] = {label = "Fix", value = "fix", description = "Répare le véhicule"},
         [2] = {label = "Supprime", value = "dv", description = "Supprime le véhicule"},
     }
+    local vehspawn = Vehicules:AddButton({
+        label = "Spawn Véhicules",
+        value = VehiculeList,
+        description = "Voir la liste des Véhicules",
+    })
     for k, v in ipairs(elements) do
         local menu_button10 = Vehicules:AddButton({
             label = " " .. v.label,
@@ -124,6 +129,20 @@ local function OpenVehiculeMenus()
             end,
         })
     end
+    vehspawn:On("Select", function(item)
+        VehiculeList:ClearItems()
+        for k, v in pairs(vehicles) do
+            local menu_button10 = VehiculeList:AddButton({
+                label = k,
+                value = v,
+                description = "Nom de catégorie",
+                select = function(btn)
+                    local select = btn.Value
+                    OpenCarModelsMenu(select)
+                end,
+            })
+        end
+    end)
 end
 
 local function OpenCarModelsMenu(category)
@@ -165,11 +184,6 @@ local function AdminPanel(menu)
         description = "Voir la liste des joueurs",
     })
     local vehmenu = menu:AddButton({label = "Menu Véhicules", value = Vehicules, description = "Option du véhicule"})
-    local vehspawn = menu:AddButton({
-        label = "Spawn Véhicules",
-        value = VehiculeList,
-        description = "Voir la liste des Véhicules",
-    })
     local heal = menu:AddButton({label = "max faim/soif", description = "reset la faim et la soif"})
 
     noclip:On("change", function()
@@ -213,21 +227,6 @@ local function AdminPanel(menu)
                 })
             end
         end)
-    end)
-
-    vehspawn:On("Select", function(item)
-        VehiculeList:ClearItems()
-        for k, v in pairs(vehicles) do
-            local menu_button10 = VehiculeList:AddButton({
-                label = k,
-                value = v,
-                description = "Nom de catégorie",
-                select = function(btn)
-                    local select = btn.Value
-                    OpenCarModelsMenu(select)
-                end,
-            })
-        end
     end)
 
 end
