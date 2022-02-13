@@ -235,7 +235,7 @@ end)
 
 -- command
 
-RegisterKeyMapping("togglelocks", "Toggle Vehicle Locks", "keyboard", "L")
+RegisterKeyMapping("togglelocks", "Toggle Vehicle Locks", "keyboard", "U")
 RegisterCommand("togglelocks", function()
     LockVehicle()
 end)
