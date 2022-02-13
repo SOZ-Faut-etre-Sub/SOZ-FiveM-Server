@@ -159,15 +159,11 @@ RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, ind
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local moneyBalance = Player.PlayerData.money["money"]
-    local bankBalance = Player.PlayerData.money["bank"]
 
     MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
         if result[1] then
             if moneyBalance >= result[1].depotprice then
                 Player.Functions.RemoveMoney("money", result[1].depotprice, "paid-depot")
-                TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
-            elseif bankBalance >= result[1].depotprice then
-                Player.Functions.RemoveMoney("bank", result[1].depotprice, "paid-depot")
                 TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
             else
                 TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_enough"), "error")
@@ -180,13 +176,9 @@ RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, ind
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local moneyBalance = Player.PlayerData.money["money"]
-    local bankBalance = Player.PlayerData.money["bank"]
 
     if moneyBalance >= price then
         Player.Functions.RemoveMoney("money", price, "paid-prive")
-        TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
-    elseif bankBalance >= price then
-        Player.Functions.RemoveMoney("bank", price, "paid-prive")
         TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
     else
         TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_enough"), "error")
