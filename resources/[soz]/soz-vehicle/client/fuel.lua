@@ -86,7 +86,7 @@ AddEventHandler("fuel:refuelFromPump", function(pumpObject, ped, vehicle)
                 TaskTurnPedToFaceEntity(ped, vehicle, 1000)
                 Wait(1000)
                 SetCurrentPedWeapon(ped, -1569615261, true)
-                LoadAnimDict("timetable@gardener@filling_can")
+                QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
                 TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
 
                 local newFuel = currentFuel + ((fuelinputcout / Config.RefillCost) * 100)
@@ -415,15 +415,6 @@ function SetFuel(vehicle, fuel)
     if type(fuel) == "number" and fuel >= 0 and fuel <= 100 then
         SetVehicleFuelLevel(vehicle, fuel + 0.0)
         DecorSetFloat(vehicle, Config.FuelDecor, GetVehicleFuelLevel(vehicle))
-    end
-end
-
-function LoadAnimDict(dict)
-    if not HasAnimDictLoaded(dict) then
-        RequestAnimDict(dict)
-        while not HasAnimDictLoaded(dict) do
-            Wait(1)
-        end
     end
 end
 
