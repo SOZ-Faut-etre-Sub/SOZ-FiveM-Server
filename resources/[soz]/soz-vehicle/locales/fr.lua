@@ -30,8 +30,8 @@ local Translations = {
             depot_air = "Fourrière %{value}",
             vehicles = "Véhicules disponibles",
             depot = "%{value} [ %{value2} ] - Coût: $%{value3}",
-            public = "%{value} [ %{value2} ] - Coût: $%{value3}",
-            private = "%{value} [ %{value2} ]",
+            public = "%{value} [ %{value2} ]",
+            private = "%{value} [ %{value2} ] - Coût: $%{value3}",
         },
         leave = {
             car = "⬅ Quitter le garage",
