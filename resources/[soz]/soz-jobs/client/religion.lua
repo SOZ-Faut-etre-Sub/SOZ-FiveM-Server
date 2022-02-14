@@ -4,39 +4,38 @@ local OnJob = false
 local JobOutfit = false
 local JobVehicle = false
 local InVehicle = false
-local JobCounter = 0
 local ObjectifCoord = {}
 local DrawDistance = 100
 
-exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 1, {
-    name = "job adsl",
+exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07), 1, 1, {
+    name = "job religion",
     heading = 0,
     debugPoly = false,
 }, {
     options = {
         {
             type = "client",
-            event = "jobs:adsl:begin",
+            event = "jobs:religion:begin",
             icon = "fas fa-sign-in-alt",
-            label = "Commencer le job adsl",
+            label = "Commencer le job religion",
             job = "unemployed",
         },
         {
             type = "client",
-            event = "jobs:adsl:tenue",
+            event = "jobs:religion:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "adsl",
+            job = "religion",
             canInteract = function()
                 return JobOutfit == false
             end,
         },
         {
             type = "client",
-            event = "jobs:adsl:vehicle",
+            event = "jobs:religion:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = "adsl",
+            job = "religion",
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -45,29 +44,31 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
         },
         {
             type = "client",
-            event = "jobs:adsl:restart",
+            event = "jobs:religion:restart",
             icon = "fas fa-sign-in-alt",
-            label = "Continuer le job adsl",
-            job = "adsl",
+            label = "Continuer le job religion",
+            job = "religion",
             canInteract = function()
                 return OnJob == false
             end,
         },
         {
             type = "client",
-            event = "jobs:adsl:end",
+            event = "jobs:religion:end",
             icon = "fas fa-sign-in-alt",
-            label = "Finir le job adsl",
-            job = "adsl",
+            label = "Finir le job religion",
+            job = "religion",
         },
     },
     distance = 2.5,
 })
 
-RegisterNetEvent("jobs:adsl:fix")
-AddEventHandler("jobs:adsl:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
-    QBCore.Functions.Progressbar("adsl_fix", "Répare l'adsl..", 30000, false, true,
+RegisterNetEvent("jobs:religion:fix")
+AddEventHandler("jobs:religion:fix", function(ped)
+    TriggerEvent("animations:client:EmoteCommandStart", {"namaste"})
+    FreezeEntityPosition(ped, true)
+    TaskPlayAnim(ped, nil, "namaste", 8.0, 8.0, 10000, 0, 0, 0, 0, 0)
+    QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -75,24 +76,18 @@ AddEventHandler("jobs:adsl:fix", function()
         disableCombat = true,
     }, {}, {}, {}, function()
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-        exports["qb-target"]:RemoveZone("adsl_zone")
+        exports["qb-target"]:RemoveZone("religion_zone")
         destroyblip(job_blip)
-        DrawInteractionMarker(ObjectifCoord, false)
-        DrawDistance = 0
         payout_counter = payout_counter + 1
-        JobCounter = JobCounter + 1
+        FreezeEntityPosition(ped, false)
         ClearGpsMultiRoute()
-        if JobCounter >= 4 then
-            OnJob = false
-            TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
-        else
-            TriggerEvent("jobs:adsl:start")
-        end
+        OnJob = false
+        TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
     end)
 end)
 
 local function SpawnVehicule()
-    local ModelHash = "utillitruck3"
+    local ModelHash = "romero"
     local model = GetHashKey(ModelHash)
     if not IsModelInCdimage(model) then
         return
@@ -100,50 +95,50 @@ local function SpawnVehicule()
     RequestModel(model)
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
-        print(test)
     end
-    adsl_vehicule = CreateVehicle(model, Config.adsl_vehicule.x, Config.adsl_vehicule.y, Config.adsl_vehicule.z, Config.adsl_vehicule.w, true, false)
+    religion_vehicule = CreateVehicle(model, Config.religion_vehicule.x, Config.religion_vehicule.y, Config.religion_vehicule.z, Config.religion_vehicule.w,
+                                      true, false)
     SetModelAsNoLongerNeeded(model)
 end
 
-RegisterNetEvent("jobs:adsl:begin")
-AddEventHandler("jobs:adsl:begin", function()
+RegisterNetEvent("jobs:religion:begin")
+AddEventHandler("jobs:religion:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "adsl")
+    TriggerServerEvent("job:set:pole", "religion")
     OnJob = true
 end)
 
-RegisterNetEvent("jobs:adsl:tenue")
-AddEventHandler("jobs:adsl:tenue", function()
+RegisterNetEvent("jobs:religion:tenue")
+AddEventHandler("jobs:religion:tenue", function()
     TriggerServerEvent("job:anounce", "Sortez le véhicule")
     JobOutfit = true
 end)
 
-RegisterNetEvent("jobs:adsl:vehicle")
-AddEventHandler("jobs:adsl:vehicle", function()
+RegisterNetEvent("jobs:religion:vehicle")
+AddEventHandler("jobs:religion:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, Config.adsl_vehicule)
+    createblip("Véhicule", "Montez dans le véhicule", 225, Config.religion_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
-        if IsPedInVehicle(player, adsl_vehicule, true) == 1 then
+        if IsPedInVehicle(player, religion_vehicule, true) == 1 then
             InVehicle = true
         end
     end
     destroyblip(job_blip)
-    TriggerEvent("jobs:adsl:start")
+    TriggerEvent("jobs:religion:start")
 end)
 
-RegisterNetEvent("jobs:adsl:restart")
-AddEventHandler("jobs:adsl:restart", function()
+RegisterNetEvent("jobs:religion:restart")
+AddEventHandler("jobs:religion:restart", function()
     JobCounter = 0
-    TriggerEvent("jobs:adsl:start")
+    TriggerEvent("jobs:religion:start")
 end)
 
 local function random_coord()
-    local result = Config.adsl[math.random(#Config.adsl)]
+    local result = Config.religion[math.random(#Config.religion)]
     if result.x == JobDone then
         random_coord()
     end
@@ -151,29 +146,42 @@ local function random_coord()
     return result
 end
 
-RegisterNetEvent("jobs:adsl:start")
-AddEventHandler("jobs:adsl:start", function()
-    if JobCounter == 0 then
-        TriggerServerEvent("job:anounce", "Réparez le boitier adsl")
-    else
-        TriggerServerEvent("job:anounce", "Réparez le prochain boitier adsl")
-    end
+RegisterNetEvent("jobs:religion:start")
+AddEventHandler("jobs:religion:start", function()
+    TriggerServerEvent("job:anounce", "Rendez vous dans la zone")
     local coords = random_coord()
-    createblip("ADSL", "Réparer l'adsl", 761, coords)
+    createblip("religion", "Zone de conversion", 480, coords)
     ClearGpsMultiRoute()
     StartGpsMultiRoute(6, true, true)
     AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
     SetGpsMultiRouteRender(true)
-    exports["qb-target"]:AddBoxZone("adsl_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
+    exports["qb-target"]:AddBoxZone("religion_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
-        name = "adsl_zone",
+        name = "religion_zone",
         heading = coords.heading,
         minZ = coords.minZ,
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:adsl:fix", icon = "fas fa-sign-in-alt", label = "Réparer l'adsl"}},
-        distance = 1.5,
+        options = {
+            {
+                type = "client",
+                icon = "fas fa-sign-in-alt",
+                label = "Parler d'epsylon",
+                canInteract = function(entity)
+                    local type = GetEntityType(entity)
+                    if type == 1 then
+                        return true
+                    else
+                        return false
+                    end
+                end,
+                action = function(entity)
+                    TriggerEvent("jobs:religion:fix", entity)
+                end,
+            },
+        },
+        distance = 2.5,
     })
     ObjectifCoord = coords
     DrawDistance = 100
@@ -183,21 +191,19 @@ AddEventHandler("jobs:adsl:start", function()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
-    DrawInteractionMarker(ObjectifCoord, true)
+    TriggerServerEvent("job:anounce", "Parler à une personne d'epsylon")
 end)
 
-RegisterNetEvent("jobs:adsl:end")
-AddEventHandler("jobs:adsl:end", function()
+RegisterNetEvent("jobs:religion:end")
+AddEventHandler("jobs:religion:end", function()
     TriggerServerEvent("job:set:unemployed")
     local money = Config.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    QBCore.Functions.DeleteVehicle(adsl_vehicule)
+    QBCore.Functions.DeleteVehicle(religion_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")
     destroyblip(job_blip)
     OnJob = false
     JobOutfit = false
     JobVehicle = false
-    JobCounter = 0
     payout_counter = 0
-    DrawDistance = 0
 end)
