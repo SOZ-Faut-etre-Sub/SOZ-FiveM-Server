@@ -38,12 +38,7 @@ Config.BlacklistedScenarios = {
         "WORLD_VEHICLE_POLICE_CAR",
         "WORLD_VEHICLE_POLICE_BIKE",
     },
-    ["GROUPS"] = {
-        2017590552,
-        2141866469,
-        1409640232,
-        GetHashKey("ng_planes"),
-    },
+    ["GROUPS"] = {2017590552, 2141866469, 1409640232, GetHashKey("ng_planes")},
 }
 
 Config.BlacklistedVehs = {
