@@ -3,9 +3,10 @@ Config = {}
 Config.BlipName = "Auto-école"
 Config.BlipSprite = 545
 Config.BlipColor = 25
+-- Blip coords are the same as Config.Peds.secretary (x, y)
 
 Config.Peds = {
-    ["inspector"] = {
+    ["instructor"] = {
         modelHash = "cs_manuel",
         x = 0.0, y = 0.0, z = 0.0, rotation = 0.0,
         networkSync = true
@@ -21,10 +22,10 @@ Config.Licenses = {
     ["car"] = {
         vehicle = {
             modelHash = "dilettante2",
-            x = 0.0, y = 0.0, z = 0.0, heading = 0.0,
+            x = -809.18, y = -1319.61, z = 4.49, rotation = 170.42,
             networkSync = true
         },
-        event = "",
+        event = "soz-driving-license:client:start_car",
         price = 1000,
         icon = "fas fa-car",
         label = "Passer le permis voiture ($%s)",
@@ -32,7 +33,7 @@ Config.Licenses = {
     ["truck"] = {
         vehicle = {
             modelHash = "",
-            x = 0.0, y = 0.0, z = 0.0, heading = 0.0,
+            x = 0.0, y = 0.0, z = 0.0, rotation = 0.0,
             networkSync = true
         },
         event = "",
@@ -43,7 +44,7 @@ Config.Licenses = {
     ["motorcycle"] = {
         vehicle = {
             modelHash = "",
-            x = 0.0, y = 0.0, z = 0.0, heading = 0.0,
+            x = 0.0, y = 0.0, z = 0.0, rotation = 0.0,
             networkSync = true
         },
         event = "",
