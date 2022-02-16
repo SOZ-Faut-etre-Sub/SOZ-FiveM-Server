@@ -47,16 +47,38 @@ local function setupModel(model)
     RequestModel(model)
     while not HasModelLoaded(model) do
         RequestModel(model)
-        Wait(0)
+        Citizen.Wait(0)
     end
+end
+
+---Test wether or not spawn location is already occupied
+---@param x number
+---@param y number
+---@param z number
+local function IsSpawnPointFree(x, y, z)
+    return not IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)
 end
 
 AddEventHandler("soz-driving-license:client:start_car", function()
     Citizen.CreateThread(function ()
-        -- TODO:
-        -- Make player pay
         -- Check if spawn location is free
+        local vData = Config.Licenses["car"].vehicle
+        if not vData then return end
+        if not IsSpawnPointFree(vData.x, vData.y, vData.z) then
+            TriggerEvent(
+                "hud:client:DrawNotification",
+                "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen."
+            )
+            return
+        end
 
+        -- Make player pay
+        TriggerServerEvent("soz-driving-license:server:pay", "car")
+    end)
+end)
+
+RegisterNetEvent("soz-driving-license:client:spawn_car", function()
+    Citizen.CreateThread(function ()
         -- Fade to black screen
         local fadeDelay = 500
         DoScreenFadeOut(fadeDelay)
