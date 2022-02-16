@@ -1,5 +1,7 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
+local passingExam = false -- Is a driving exam running ?
+
 Citizen.CreateThread(function()
     -- Blip
     if not QBCore.Functions.GetBlip("driving_school") then
@@ -57,6 +59,95 @@ end
 ---@param z number
 local function IsSpawnPointFree(x, y, z)
     return not IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)
+end
+
+---Get next checkpoint in table
+---@param tbl table Checkpoints table
+---@param pop boolean Should table item be poped
+---@return table
+local function getNextCheckpoint(tbl, pop)
+    if not next(tbl) then return {x = 0.0, y = 0.0, z = 0.0} end
+
+    local cp = tbl[1]
+    if pop then table.remove(tbl, 1) end
+
+    return cp
+end
+
+---Display checkpoint, waypoint and message to player
+---@param checkpoint table Checkpoint to be displayed
+---@param nextCheckpoint table Following checkpoint
+---@return number
+local function DisplayCheckpoint(checkpoint, nextCheckpoint)
+    -- Draw Checkpoint
+    local cpColor = Config.CheckpointColor
+    local cpSize = Config.CheckpointSize
+    local cpId = CreateCheckpoint(
+        Config.CheckpointType,
+        checkpoint.x, checkpoint.y, checkpoint.z,
+        nextCheckpoint.x or 0.0, nextCheckpoint.y or 0.0, nextCheckpoint.z or 0.0,
+        cpSize,
+        cpColor.r, cpColor.g, cpColor.b, cpColor.a, 0
+    )
+    SetCheckpointCylinderHeight(cpId, cpSize, cpSize, cpSize)
+
+    -- Add GPS waypoint
+    SetNewWaypoint(checkpoint.x, checkpoint.y)
+
+    -- Display message if available
+    if checkpoint.message then
+        local msg = checkpoint.message
+        if type(msg) == "string" then msg = {msg} end
+
+        for i = 1, #msg, 1 do
+            exports["soz-hud"]:DrawAdvancedNotification(
+                "Instructeur auto-école", "Information", msg[i],
+                "CHAR_BLANK_ENTRY", 1, false, false, 140
+            )
+        end
+    end
+
+    return cpId
+end
+
+---Run thread responsible for driving exam
+---@param licenseType any
+local function startExamLoop(licenseType)
+    Citizen.CreateThread(function ()
+        local checkpoints = Config.Checkpoints[licenseType]
+        if not checkpoints then return end
+        checkpoints = {table.unpack(checkpoints)}
+
+        -- Draw first checkpoint
+        local checkpoint = getNextCheckpoint(checkpoints, true)
+        local nextCheckpoint = getNextCheckpoint(checkpoints, false)
+        local cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
+
+        local pid = PlayerPedId()
+
+        while passingExam do -- Exam loop
+            local playerCoords = GetEntityCoords(pid)
+            local dist = #(vector3(checkpoint.x, checkpoint.y, checkpoint.z) - playerCoords)
+
+            if dist < Config.CheckpointSize then
+                DeleteCheckpoint(cpId)
+                checkpoint = getNextCheckpoint(checkpoints, true)
+                nextCheckpoint = getNextCheckpoint(checkpoints, false)
+                if checkpoint then
+                    -- Draw next one
+                    cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
+                else
+                    -- Terminate exam
+                    passingExam = false
+                    -- TODO Validate exam OK
+                end
+            end
+
+            -- TODO Check for penalties
+
+            Citizen.Wait(0)
+        end
+    end)
 end
 
 AddEventHandler("soz-driving-license:client:start_car", function()
@@ -121,5 +212,9 @@ RegisterNetEvent("soz-driving-license:client:spawn_car", function()
 
         -- Clear black screen
         DoScreenFadeIn(fadeDelay)
+
+        -- Start exam
+        passingExam = true
+        startExamLoop("car")
     end)
 end)

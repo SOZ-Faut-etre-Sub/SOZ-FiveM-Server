@@ -54,3 +54,27 @@ Config.Licenses = {
     },
 }
 
+Config.CheckpointType = 0
+Config.CheckpointSize = 3.0
+Config.CheckpointColor = {r = 12, g = 123, b = 86, a = 150}
+
+Config.Checkpoints = {
+    ["car"] = {
+        {
+            x = -819.35, y = -1324.4, z = 4.0,
+            message = {
+                "Ton examen va débuter. Boulce ta ceinture et nous pouvons partir.",
+                "Suis ton GPS à allure modérée, et respecte les autres usagers de la route."
+            }
+        },
+        {x = -837.18, y = -1303.95, z = 3.49},
+        {
+            x = -822.96, y = -1280.86, z = 3.49,
+            message = "Continue comme ça !"
+        },
+        {x = -794.46, y = -1300.71, z = 3.49},
+        {x = -803.86, y = -1326.61, z = 3.49},
+    },
+    ["truck"] = {},
+    ["motorcycle"] = {},
+}
