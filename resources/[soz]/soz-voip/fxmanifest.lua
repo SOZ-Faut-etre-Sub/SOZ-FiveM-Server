@@ -25,7 +25,7 @@ files {"ui/*.ogg", "ui/css/*.css", "ui/js/*.js", "ui/*.svg", "ui/index.html"}
 
 ui_page "ui/index.html"
 
-provides {"mumble-voip", "tokovoip", "toko-voip", "tokovoip_script"}
+provides {"pma-voice"}
 
 convar_category "PMA-Voice" {
     "PMA-Voice Configuration Options",
@@ -40,7 +40,7 @@ convar_category "PMA-Voice" {
         {"Voice phone volume", "$voice_defaultPhoneVolume", "CV_STRING", "0.6"},
         {"Enable radios", "$voice_enableRadios", "CV_INT", "1"},
         {"Enable phones", "$voice_enablePhones", "CV_INT", "1"},
-        {"Enable sublix", "$voice_enableSubmix", "CV_INT", "0"},
+        {"Enable sublix", "$voice_enableSubmix", "CV_INT", "1"},
         {"Enable radio animation", "$voice_enableRadioAnim", "CV_INT", "0"},
         {"Radio key", "$voice_defaultRadio", "CV_STRING", "LALT"},
         {"UI refresh rate", "$voice_uiRefreshRate", "CV_INT", "200"},

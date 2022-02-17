@@ -57,14 +57,6 @@ Citizen.CreateThreadNow(function()
         logger.warn(
             "It's recommended to have 'voice_useSendingRangeOnly' set to true you can do that with 'setr voice_useSendingRangeOnly true', this prevents players who directly join the mumble server from broadcasting to players.")
     end
-
-    if GetConvar("gamename", "fivem") == "rdr3" then
-        if nativeAudio == "true" then
-            logger.warn("RedM doesn't currently support native audio, automatically switching to 3d audio. This also means that submixes will not work.")
-            SetConvarReplicated("voice_useNativeAudio", "false")
-            SetConvarReplicated("voice_use3dAudio", "true")
-        end
-    end
 end)
 
 AddEventHandler("playerJoining", function()
