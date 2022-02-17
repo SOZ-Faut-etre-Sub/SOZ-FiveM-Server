@@ -1,5 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
+local playerInsideZone = false -- Is player inside for for NPC interaction ?
 local passingExam = false -- Is a driving exam running ?
 
 Citizen.CreateThread(function()
@@ -20,7 +21,10 @@ Citizen.CreateThread(function()
         table.insert(options, {
             event = data.event,
             icon = data.icon,
-            label = string.format(data.label, data.price)
+            label = string.format(data.label, data.price),
+            canInteract = function()
+                return playerInsideZone
+            end,
         })
     end
 
@@ -38,10 +42,20 @@ Citizen.CreateThread(function()
             scenario = "WORLD_HUMAN_CLIPBOARD",
             target = {
                 options = options,
-                distance = 2.5,
+                distance = 1.5,
             },
         },
     })
+
+    -- BoxZone
+    local zone = BoxZone:Create(vector3(sData.x, sData.y, sData.z), 3.0, 3.0, {
+        name = "drivingschool",
+        heading = sData.rotation,
+    })
+    zone:onPlayerInOut(function (isInside)
+        playerInsideZone = isInside
+    end)
+
 end)
 
 -- TODO To be moved elsewhere
