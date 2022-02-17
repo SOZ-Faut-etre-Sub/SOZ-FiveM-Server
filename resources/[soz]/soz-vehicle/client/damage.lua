@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
             if newVehEng + newVehBody <= (vehEng + vehBody) - 30 then
                 if vehEng ~= 0.0 and vehBody ~= 0.0 then
                     -- Get all vehicle damages and add random to calculate wait time
-                    local wait = (newVehEng / vehEng + newVehBody / vehBody) + math.random(1000, 3000)
+                    local wait = (newVehEng / vehEng + newVehBody / vehBody) + math.random(0, 1000)
 
                     CreateThread(function()
                         DisableVehicle(vehicle, math.abs(wait))
