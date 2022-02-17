@@ -168,12 +168,7 @@ RegisterNetEvent("soz-character:client:closeNUIdefault", function()
     SetNuiFocus(false, false)
     TriggerEvent("QBCore:Client:OnPlayerLoaded")
     -- TriggerEvent('qb-weathersync:client:EnableSync')
-    TriggerEvent("cui_character:open", {
-        "identity",
-        "features",
-        "style",
-        "spawn",
-    }, false)
+    TriggerEvent("cui_character:open", {"identity", "features", "style", "spawn"}, false)
 end)
 
 RegisterNetEvent("soz-character:client:NcDataPed", function()
@@ -229,10 +224,7 @@ RegisterNetEvent("soz-character:client:NcDataPed", function()
             local PlayerData = QBCore.Functions.GetPlayerData()
             local InJail = false
             SetNuiFocus(true, true)
-            SendNUIMessage({
-                action = "spawn",
-                injail = InJail,
-            })
+            SendNUIMessage({action = "spawn", injail = InJail})
         end
     end)
 end)

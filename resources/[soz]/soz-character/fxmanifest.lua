@@ -10,15 +10,8 @@ shared_script "config.lua"
 client_script "client/main.lua"
 server_script "server/main.lua"
 
-files {
-    "html/index.html",
-    "html/css/style.css",
-    "html/js/script.js",
-    "html/img/*",
-}
+files {"html/index.html", "html/css/style.css", "html/js/script.js", "html/img/*"}
 
-dependencies {
-    "qb-core",
-}
+dependencies {"qb-core"}
 
 lua54 "yes"
