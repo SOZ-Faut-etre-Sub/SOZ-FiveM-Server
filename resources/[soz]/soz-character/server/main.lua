@@ -48,18 +48,14 @@ RegisterNetEvent("soz-character:server:createCharacter", function(data)
     end
 end)
 
-RegisterNetEvent("soz-character:server:GetUserLicense", function(source)
-    local src = source
-    local license = QBCore.Functions.GetIdentifier(src, "license")
-    return license
-end)
-
 -- Callbacks
 
 QBCore.Functions.CreateCallback("soz-character:server:GetUserCharacters", function(source, cb)
     local src = source
     local license = QBCore.Functions.GetIdentifier(src, "license")
-    exports.oxmysql:execute("SELECT * FROM players WHERE license = ?", {license}, function(result)
+    exports.oxmysql:execute("SELECT * FROM players WHERE license = ?", {
+        license,
+    }, function(result)
         cb(result)
     end)
 end)
@@ -67,7 +63,9 @@ end)
 QBCore.Functions.CreateCallback("soz-character:server:GetUserTempCharacters", function(source, cb)
     local src = source
     local license = QBCore.Functions.GetIdentifier(src, "license")
-    exports.oxmysql:execute("SELECT * FROM player_temp WHERE license = ?", {license}, function(result)
+    exports.oxmysql:execute("SELECT * FROM player_temp WHERE license = ?", {
+        license,
+    }, function(result)
         cb(result)
     end)
 end)
@@ -75,7 +73,9 @@ end)
 QBCore.Functions.CreateCallback("soz-character:server:getSkin", function(source, cb)
     local license = QBCore.Functions.GetIdentifier(source, "license")
     local ply2Chars = nil
-    exports.oxmysql:execute("SELECT * FROM players WHERE license = ?", {license}, function(result2)
+    exports.oxmysql:execute("SELECT * FROM players WHERE license = ?", {
+        license,
+    }, function(result2)
         ply2Chars = result2
         local cid2 = ply2Chars[1].citizenid
         local result = exports.oxmysql:executeSync("SELECT * FROM playerskins WHERE citizenid = ? AND active = ?", {
