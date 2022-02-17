@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
     end
 
     while true do
-        if HudDisplayed then
+        if PlayerHaveCompass and HudDisplayed and PlayerInVehicle then
             local pxDegree = compass.width / compass.fov
             local playerHeadingDegrees = 0
 
