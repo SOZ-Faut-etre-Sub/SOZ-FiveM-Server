@@ -6,6 +6,7 @@ local PlayerList = MenuV:InheritMenu(AdminMenu)
 local VehiculeList = MenuV:InheritMenu(AdminMenu)
 local VehiculeModel = MenuV:InheritMenu(AdminMenu)
 local Players = MenuV:InheritMenu(AdminMenu)
+local Vehicules = MenuV:InheritMenu(AdminMenu)
 
 local noclip_check = false
 local coords_check = false
@@ -80,8 +81,17 @@ local function OpenPlayerMenus(player)
     Players:ClearItems()
     MenuV:OpenMenu(Players)
     local elements = {
-        [1] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
-        [2] = {label = "Amène sur", value = "bring", description = " Amène " .. player.cid .. " sur ta position"},
+        [1] = {label = "Tuer", value = "kill", description = "Tue le joueur  " .. player.cid .. ""},
+        [2] = {label = "Revive", value = "revive", description = "Revive le joueur " .. player.cid .. ""},
+        [3] = {label = "Observer", value = "spectate", description = "Observe les actions de " .. player.cid .. ""},
+        [4] = {label = "Freeze", value = "freeze", description = "Freeze le joueur " .. player.cid .. ""},
+        [5] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
+        [6] = {label = "Amène sur", value = "bring", description = "Amène " .. player.cid .. " sur ta position"},
+        [7] = {
+            label = "Assis-toi dans son véhicule",
+            value = "intovehicle",
+            description = "Assis-toi dans le véhicule de " .. player.cid .. "",
+        },
     }
     for k, v in ipairs(elements) do
         local menu_button10 = Players:AddButton({
@@ -94,6 +104,45 @@ local function OpenPlayerMenus(player)
             end,
         })
     end
+end
+
+local function OpenVehiculeMenus()
+    Vehicules:ClearItems()
+    MenuV:OpenMenu(Vehicules)
+    local elements = {
+        [1] = {label = "Fix", value = "fix", description = "Répare le véhicule"},
+        [2] = {label = "Supprime", value = "dv", description = "Supprime le véhicule"},
+    }
+    local vehspawn = Vehicules:AddButton({
+        label = "Spawn Véhicules",
+        value = VehiculeList,
+        description = "Voir la liste des Véhicules",
+    })
+    for k, v in ipairs(elements) do
+        local menu_button10 = Vehicules:AddButton({
+            label = " " .. v.label,
+            value = v.value,
+            description = v.description,
+            select = function(btn)
+                local values = btn.Value
+                TriggerServerEvent("QBCore:CallCommand", values, {})
+            end,
+        })
+    end
+    vehspawn:On("Select", function(item)
+        VehiculeList:ClearItems()
+        for k, v in pairs(vehicles) do
+            local menu_button10 = VehiculeList:AddButton({
+                label = k,
+                value = v,
+                description = "Nom de catégorie",
+                select = function(btn)
+                    local select = btn.Value
+                    OpenCarModelsMenu(select)
+                end,
+            })
+        end
+    end)
 end
 
 local function OpenCarModelsMenu(category)
@@ -134,11 +183,7 @@ local function AdminPanel(menu)
         value = PlayerList,
         description = "Voir la liste des joueurs",
     })
-    local vehspawn = menu:AddButton({
-        label = "Spawn Véhicules",
-        value = VehiculeList,
-        description = "Voir la liste des Véhicules",
-    })
+    local vehmenu = menu:AddButton({label = "Menu Véhicules", value = Vehicules, description = "Option du véhicule"})
     local heal = menu:AddButton({label = "max faim/soif", description = "reset la faim et la soif"})
 
     noclip:On("change", function()
@@ -153,6 +198,10 @@ local function AdminPanel(menu)
 
     copy_coords:On("select", function()
         CopyToClipboard("coords")
+    end)
+
+    vehmenu:On("select", function()
+        OpenVehiculeMenus()
     end)
 
     tpm:On("select", function()
@@ -178,21 +227,6 @@ local function AdminPanel(menu)
                 })
             end
         end)
-    end)
-
-    vehspawn:On("Select", function(item)
-        VehiculeList:ClearItems()
-        for k, v in pairs(vehicles) do
-            local menu_button10 = VehiculeList:AddButton({
-                label = k,
-                value = v,
-                description = "Nom de catégorie",
-                select = function(btn)
-                    local select = btn.Value
-                    OpenCarModelsMenu(select)
-                end,
-            })
-        end
     end)
 
 end
