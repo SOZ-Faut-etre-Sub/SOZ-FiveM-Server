@@ -231,10 +231,6 @@ function loadTabContent(tabName, charData, clothesData, identityData) {
             let male = (charData.sex == 0)
             loadClothesTab(tab, clothesData, male)
         }
-        else if ((tabName == 'spawn') && clothesData) {
-            let male = (charData.sex == 0)
-            loadClothesTab(tab, clothesData, male)
-        }
         refreshContentData(tab, charData);
         if (tabName == 'identity') {
             updatePortrait('mom');
@@ -575,8 +571,8 @@ $('#main .menuclose').on('click', function(evt) {
         accept = false;
     }
 
-    let action = accept ? 'sauvegarder' : 'discard';
-    let message = 'Vous êtez sûr de vouloir ' + action + ' votre tenue et partir?';
+    let action = accept ? 'save' : 'discard';
+    let message = 'Are you sure you want to ' + action + ' your changes and exit?';
     let popupData = { 
         title: 'confirmation', 
         message: message
@@ -795,16 +791,6 @@ function updateComponent(drawable, dvalue, texture, tvalue, index) {
 //       as it needs to check for 'forced components' (torso parts etc.)
 function updateApparelComponent(drwkey, drwval, texkey, texval, cmpid) {
     $.post('https://cui_character/updateApparelComponent', JSON.stringify({
-        drwkey: drwkey,
-        drwval: drwval,
-        texkey: texkey,
-        texval: texval,
-        cmpid: cmpid,
-    }));
-}
-
-function updateSpawnComponent(drwkey, drwval, texkey, texval, cmpid) {
-    $.post('https://cui_character/updateSpawnComponent', JSON.stringify({
         drwkey: drwkey,
         drwval: drwval,
         texkey: texkey,
@@ -1078,7 +1064,6 @@ $(document).on('change', 'select.clotheslist.component', function(evt) {
     let texkey = $(this).data('texkey');
     let texval = selected.data('texture');
     let cmpid = selected.data('component');
-    updateSpawnComponent(drwkey, drwval, texkey, texval, cmpid);
     updateApparelComponent(drwkey, drwval, texkey, texval, cmpid);
 });
 
@@ -1214,14 +1199,6 @@ function refreshContentData(element, data) {
         refreshPropList(element, '#glasses', 1, data.glasses_1, data.glasses_2);
         refreshPropList(element, '#lefthand', 6, data.lefthand_1, data.lefthand_2);
         refreshPropList(element, '#righthand', 7, data.righthand_1, data.righthand_2);
-    }
-    if (element.is('#spawn')) {
-        // components
-        refreshComponentList(element, '#topover', 11, data.torso_1, data.torso_2);
-        refreshComponentList(element, '#topunder', 8, data.tshirt_1, data.tshirt_2);
-		refreshComponentList(element, '#arms', 3, data.arms_1, data.arms_2);
-        refreshComponentList(element, '#pants', 4, data.pants_1, data.pants_2);
-        refreshComponentList(element, '#shoes', 6, data.shoes_1, data.shoes_2);
     }
     else
     /*  Loading path for any other tab  */
