@@ -62,16 +62,6 @@ RegisterNUICallback("SpawnPlayer", function(data)
     SpawnPlayer(data.SpawnId)
 end)
 
-RegisterNUICallback("SpawnJail", function(data)
-    DoScreenFadeOut(250)
-    Citizen.Wait(100)
-    SetSkyCam(false)
-    TriggerEvent("QBCore:Client:OnPlayerLoaded")
-    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
-    Citizen.Wait(100)
-    TriggerEvent("prison:client:spawn:prison")
-end)
-
 RegisterNUICallback("Close", function()
     SetNuiFocus(false, false)
 end)
@@ -221,10 +211,8 @@ RegisterNetEvent("soz-character:client:NcDataPed", function()
                 end
             end)
         else
-            local PlayerData = QBCore.Functions.GetPlayerData()
-            local InJail = false
             SetNuiFocus(true, true)
-            SendNUIMessage({action = "spawn", injail = InJail})
+            SendNUIMessage({action = "spawn"})
         end
     end)
 end)
