@@ -62,18 +62,20 @@ end
 
 local function CopyToClipboard(dataType)
     local ped = PlayerPedId()
-    if dataType == "coords" then
+    if dataType == "coords3" then
         local coords = GetEntityCoords(ped)
         local x = round(coords.x, 2)
         local y = round(coords.y, 2)
         local z = round(coords.z, 2)
         SendNUIMessage({string = string.format("vector3(%s, %s, %s)", x, y, z)})
-        QBCore.Functions.Notify("Coordonnées copier!", "success")
-    elseif dataType == "heading" then
+    elseif dataType == "coords4" then
+        local coords = GetEntityCoords(ped)
+        local x = round(coords.x, 2)
+        local y = round(coords.y, 2)
+        local z = round(coords.z, 2)
         local heading = GetEntityHeading(ped)
         local h = round(heading, 2)
-        SendNUIMessage({string = h})
-        QBCore.Functions.Notify("Orientation copier!", "success")
+        SendNUIMessage({string = string.format("vector4(%s, %s, %s, %s)", x, y, z, h)})
     end
 end
 
@@ -165,6 +167,7 @@ local function SetFoodandDrink()
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + 100)
 end
 
+---@param menu Menu
 local function AdminPanel(menu)
     local noclip = menu:AddCheckbox({
         label = "Noclip",
@@ -176,7 +179,12 @@ local function AdminPanel(menu)
         value = coords_check,
         description = "Affiche les coords",
     })
-    local copy_coords = menu:AddButton({label = "Copier les coords", description = "Copie les coords"})
+    local copy_coords = menu:AddSlider({
+        label = "Copier les coords",
+        description = "Copie les coords",
+        value = "coords",
+        values = {{label = "vector4", value = "coords4"}, {label = "vector3", value = "coords3"}},
+    })
     local tpm = menu:AddButton({label = "Tpm", description = "Téléport sur le marqueur"})
     local playerlist = menu:AddButton({
         label = "Gestion des joueurs",
@@ -196,8 +204,8 @@ local function AdminPanel(menu)
         ToggleShowCoordinates()
     end)
 
-    copy_coords:On("select", function()
-        CopyToClipboard("coords")
+    copy_coords:On("select", function(_, value)
+        CopyToClipboard(value)
     end)
 
     vehmenu:On("select", function()

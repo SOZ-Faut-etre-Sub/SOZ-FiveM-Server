@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-shared_scripts {"config.lua"}
+shared_scripts {"config/*.lua", "config/*.json"}
 
 client_scripts {
     "@menuv/menuv.lua",
@@ -14,8 +14,15 @@ client_scripts {
     "client/location/robsliquor.lua",
     "client/location/ltdgasoline.lua",
     "client/location/247supermarket.lua",
+    "client/location/tattoo.lua",
 
     "client/main.lua",
+    "client/tattoo.lua",
+
+    "client/shops/base.lua",
+    "client/shops/tattoo.lua",
+
+    "client/events.lua",
 }
 server_scripts {"server/main.lua"}
 

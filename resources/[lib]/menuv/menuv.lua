@@ -2240,6 +2240,20 @@ function MenuV:IsNamespaceAvailable(namespace)
 end
 
 
+--- Checks if namespace is available
+---@param namespace string Namespace
+---@return boolean Returns `true` if given namespace is available
+function MenuV:DeleteNamespace(namespace)
+    namespace = lower(Utilities:Ensure(namespace, 'unknown'))
+
+    ---@param v Menu
+    for k, v in pairs(self.Menus or {}) do
+        if namespace == v.Namespace then
+            self.Menus[k] = nil
+        end
+    end
+end
+
 --- Mark MenuV as loaded when `main` resource is loaded
 exports['menuv']:IsLoaded(function()
     MenuV.Loaded = true

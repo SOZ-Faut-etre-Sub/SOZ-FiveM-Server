@@ -40,7 +40,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        if HudDisplayed then
+        if PlayerHaveCompass and HudDisplayed and PlayerInVehicle then
             drawText(table.concat(street, " & "), streetName.position.x, streetName.position.y, {
                 size = streetName.textSize,
                 font = 1,
