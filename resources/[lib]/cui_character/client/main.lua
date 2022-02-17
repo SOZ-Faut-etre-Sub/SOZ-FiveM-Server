@@ -57,13 +57,13 @@ function setVisible(visible)
         show = visible
     })
     isVisible = visible
-    DisplayRadar(false)
+    DisplayRadar(not visible)
 end
 
 function ResetAllTabs()
     local clothes = nil
     for k, v in pairs(openTabs) do
-        if openTabs[k] == 'apparel' or openTabs[k] == 'spawn' then
+        if openTabs[k] == 'apparel' then
             clothes = GetClothesData()
         end
     end
@@ -349,7 +349,7 @@ RegisterNetEvent('cui_character:open', function(tabs, cancelable)
                 end
                 identityLoaded = true
             end
-        elseif (tabName == 'apparel' or tabName == 'spawn') then
+        elseif tabName == 'apparel' then
             -- load clothes data from natives here
             clothes = GetClothesData()
         end
@@ -712,60 +712,6 @@ RegisterNUICallback('updateApparelComponent', function(data, cb)
         end
     end
 end)
-
-RegisterNUICallback('updateSpawnComponent', function(data, cb)
-    local drawableKey = data['drwkey']
-    local textureKey = data['texkey']
-    local component = tonumber(data['cmpid'])
-    currentChar[drawableKey] = tonumber(data['drwval'])
-    currentChar[textureKey] = tonumber(data['texval'])
-
-    local playerPed = PlayerPedId()
-    SetPedComponentVariation(playerPed, component, currentChar[drawableKey], currentChar[textureKey], 2)
-
-    -- Some clothes have 'forced components' that change torso and other parts.
-    -- adapted from: https://gist.github.com/root-cause/3b80234367b0c856d60bf5cb4b826f86
-    local hash = GetHashNameForComponent(playerPed, component, currentChar[drawableKey], currentChar[textureKey])
-    local fcDrawable, fcTexture, fcType = -1, -1, -1
-    local fcCount = GetShopPedApparelForcedComponentCount(hash) - 1
-    for fcId = 0, fcCount do
-        local fcNameHash, fcEnumVal, f5, f7, f8 = -1, -1, -1, -1, -1
-        fcNameHash, fcEnumVal, fcType = GetForcedComponent(hash, fcId)
-
-        -- only set torsos, using other types here seems to glitch out
-        if fcType == 3 then
-            if (fcNameHash == 0) or (fcNameHash == GetHashKey('0')) then
-                fcDrawable = fcEnumVal
-                fcTexture = 0
-            else
-                fcType, fcDrawable, fcTexture = GetComponentDataFromHash(fcNameHash)
-            end
-
-            -- Apply component to ped, save it in current character data
-            if IsPedComponentVariationValid(playerPed, fcType, fcDrawable, fcTexture) then
-                currentChar['arms_1'] = fcDrawable
-                currentChar['arms_2'] = fcTexture
-                SetPedComponentVariation(playerPed, fcType, fcDrawable, fcTexture, 2)
-            end
-        end
-    end
-
-    -- Forced components do not pick proper torso for 'None' variant, need manual correction
-    if GetEntityModel(playerPed) == GetHashKey('mp_f_freemode_01') then
-        if (GetPedDrawableVariation(playerPed, 11) == 15) and (GetPedTextureVariation(playerPed, 11) == 16) then
-            currentChar['arms_1'] = 15
-            currentChar['arms_2'] = 0
-            SetPedComponentVariation(playerPed, 3, 15, 0, 2);
-        end
-    elseif GetEntityModel(playerPed) == GetHashKey('mp_m_freemode_01') then
-        if (GetPedDrawableVariation(playerPed, 11) == 15) and (GetPedTextureVariation(playerPed, 11) == 0) then
-            currentChar['arms_1'] = 15
-            currentChar['arms_2'] = 0
-            SetPedComponentVariation(playerPed, 3, 15, 0, 2);
-        end
-    end
-end)
-
 
 RegisterNUICallback('updateApparelProp', function(data, cb)
     local drawableKey = data['drwkey']
