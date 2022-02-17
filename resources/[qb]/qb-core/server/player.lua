@@ -61,12 +61,15 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or math.random(11, 99) .. 'Z' .. math.random(1111, 9999) .. 'T' .. math.random(1111, 9999)
     -- Metadata
     PlayerData.metadata = PlayerData.metadata or {}
+    -- Skin
+    PlayerData.metadata['tattoo'] = PlayerData.metadata['tattoo'] or {}
+    -- Status
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['stress'] = PlayerData.metadata['stress'] or 0
+    PlayerData.metadata['armor'] = PlayerData.metadata['armor'] or 0
     PlayerData.metadata['isdead'] = PlayerData.metadata['isdead'] or false
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
-    PlayerData.metadata['armor'] = PlayerData.metadata['armor'] or 0
     PlayerData.metadata['ishandcuffed'] = PlayerData.metadata['ishandcuffed'] or false
     PlayerData.metadata['tracker'] = PlayerData.metadata['tracker'] or false
     PlayerData.metadata['injail'] = PlayerData.metadata['injail'] or 0
