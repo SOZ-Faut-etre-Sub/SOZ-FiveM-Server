@@ -144,7 +144,7 @@ end
 
 --- function playMicClicks
 ---plays the mic click if the player has them enabled.
----@param clickType boolean whether to play the 'on' or 'off' click. 
+---@param clickType boolean whether to play the 'on' or 'off' click.
 function playMicClicks(clickType)
     if micClicks ~= "true" then
         return
@@ -201,20 +201,3 @@ CreateThread(function()
         end
     end
 end)
-
-if gameVersion == "redm" then
-    CreateThread(function()
-        while true do
-            if IsControlJustPressed(0, 0xA5BDCD3C --[[ Right Bracket ]] ) then
-                ExecuteCommand("cycleproximity")
-            end
-            if IsControlJustPressed(0, 0x430593AA --[[ Left Bracket ]] ) then
-                ExecuteCommand("+radiotalk")
-            elseif IsControlJustReleased(0, 0x430593AA --[[ Left Bracket ]] ) then
-                ExecuteCommand("-radiotalk")
-            end
-
-            Wait(0)
-        end
-    end)
-end

@@ -1,0 +1,66 @@
+.container {
+    position: absolute;
+    bottom: 1vh;
+    left: 1vw;
+    z-index: 0;
+}
+
+.radio {
+    height: 40vh;
+    z-index: 10;
+}
+
+.screen {
+    position: absolute;
+    bottom: 16.5vh;
+    left: 2vw;
+    z-index: -1;
+    height: 7vh;
+    width: 5vw;
+}
+
+/* Actions */
+.action_enable {
+    position: absolute;
+    bottom: 26.5vh;
+    left: 1.2vw;
+    height: 4vh;
+    width: 2vw;
+    background-color: transparent;
+    -webkit-mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    transition: background-color .5s;
+}
+.action_enable:hover {
+    background-color: rgba(255,255,255,.50);
+}
+
+.action_freq_primary {
+    position: absolute;
+    bottom: 11.3vh;
+    left: 2.5vw;
+    height: 2vh;
+    width: 1.5vw;
+    background-color: transparent;
+    -webkit-mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    transition: background-color .5s;
+}
+.action_freq_primary:hover {
+    background-color: rgba(255,255,255,.50);
+}
+
+.action_freq_secondary {
+    position: absolute;
+    bottom: 11.3vh;
+    left: 4.8vw;
+    height: 2vh;
+    width: 1.5vw;
+    background-color: transparent;
+    -webkit-mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    transition: background-color .5s;
+}
+.action_freq_secondary:hover {
+    background-color: rgba(255,255,255,.50);
+}
