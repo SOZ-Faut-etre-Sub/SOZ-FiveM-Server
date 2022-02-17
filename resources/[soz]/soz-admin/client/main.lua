@@ -106,6 +106,21 @@ local function OpenPlayerMenus(player)
     end
 end
 
+local function OpenCarModelsMenu(category)
+    VehiculeModel:ClearItems()
+    MenuV:OpenMenu(VehiculeModel)
+    for k, v in pairs(category) do
+        local menu_button10 = VehiculeModel:AddButton({
+            label = v["name"],
+            value = k,
+            description = "Frayer " .. v["name"],
+            select = function(btn)
+                TriggerServerEvent("QBCore:CallCommand", "car", {k})
+            end,
+        })
+    end
+end
+
 local function OpenVehiculeMenus()
     Vehicules:ClearItems()
     MenuV:OpenMenu(Vehicules)
@@ -143,21 +158,6 @@ local function OpenVehiculeMenus()
             })
         end
     end)
-end
-
-local function OpenCarModelsMenu(category)
-    VehiculeModel:ClearItems()
-    MenuV:OpenMenu(VehiculeModel)
-    for k, v in pairs(category) do
-        local menu_button10 = VehiculeModel:AddButton({
-            label = v["name"],
-            value = k,
-            description = "Frayer " .. v["name"],
-            select = function(btn)
-                TriggerServerEvent("QBCore:CallCommand", "car", {k})
-            end,
-        })
-    end
 end
 
 local function SetFoodandDrink()
