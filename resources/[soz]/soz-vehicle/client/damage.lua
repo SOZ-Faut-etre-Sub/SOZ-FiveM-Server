@@ -1,4 +1,4 @@
-local vehEng, vehBody = 1000, 1000
+local vehEng, vehBody = 0, 0
 
 local function DisableVehicle(vehicle, time)
     local tick = 0.0
