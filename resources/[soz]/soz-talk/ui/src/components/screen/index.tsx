@@ -1,6 +1,7 @@
 import {FunctionalComponent} from 'preact';
 import {RadioScreen} from "../../types/RadioScreen";
 import style from './style.module.css';
+import {useCallback} from "preact/hooks";
 
 const VolumeIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -10,21 +11,47 @@ const VolumeIcon = () => (
     </svg>
 )
 
-const Screen: FunctionalComponent<RadioScreen> = ({ enabled, currentFrequency, primaryFrequency, secondaryFrequency }) => (
-    <div class={`${style.screen} ${enabled ? style.enabled : ''}`}>
-        {enabled && (
-            <>
-                <div className={style.frequency}>
-                    <span>{currentFrequency === 'primary' ? 'F1' : 'F2'}</span>
-                    <span>{(currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency).toFixed(1)}</span>
-                </div>
-                <span className={style.volume}>
-                    <VolumeIcon />
-                    {currentFrequency === 'primary' ? primaryFrequency.volume : secondaryFrequency.volume}%
-                </span>
-            </>
-        )}
-    </div>
-)
+const Screen: FunctionalComponent<RadioScreen> = ({
+    enabled,
+    currentFrequency,
+    primaryFrequency,
+    setPrimaryFrequency,
+    secondaryFrequency,
+    setSecondaryFrequency
+}) => {
+    const handleFrequencyChange = useCallback((e: any) => { // TODO find better type
+        let frequencyValue = currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency
+        if (/^[0-9]{3}\.[0-9]$/.test(e.target.value)) {
+            frequencyValue = parseFloat(e.target.value)
+        }
+        if (currentFrequency === 'primary') {
+            setPrimaryFrequency(s => ({...s, ...{frequency: frequencyValue}}))
+        } else {
+            setSecondaryFrequency(s => ({...s, ...{frequency: frequencyValue}}))
+        }
+    }, [currentFrequency, setPrimaryFrequency, setSecondaryFrequency])
+
+    return (
+        <div class={`${style.screen} ${enabled ? style.enabled : ''}`}>
+            {enabled && (
+                <>
+                    <div className={style.frequency}>
+                        <span>{currentFrequency === 'primary' ? 'F1' : 'F2'}</span>
+                        <input
+                            type="text"
+                            maxLength={5}
+                            value={(currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency).toFixed(1)}
+                            onChange={handleFrequencyChange}
+                        />
+                    </div>
+                    <span className={style.volume}>
+                        <VolumeIcon/>
+                        {currentFrequency === 'primary' ? primaryFrequency.volume : secondaryFrequency.volume}%
+                    </span>
+                </>
+            )}
+        </div>
+    )
+}
 
 export default Screen;

@@ -1,4 +1,5 @@
 # pma-voice
+
 A voice system designed around the use of FiveM/RedM internal mumble server.
 
 ## Support
@@ -9,9 +10,11 @@ Please report any issues you have in the GitHub [Issues](https://github.com/Avar
 
 # Compatibility Notice:
 
-This script is not compatible with other voice systems (duh), that means if you have vMenus voice chat you will **have** to [disable](https://docs.vespura.com/vmenu/faq/#q-how-do-i-disable-voice-chat) it.
+This script is not compatible with other voice systems (duh), that means if you have vMenus voice chat you will **have**
+to [disable](https://docs.vespura.com/vmenu/faq/#q-how-do-i-disable-voice-chat) it.
 
-Please do not override `NetworkSetTalkerProximity`, `MumbleSetAudioInputDistance`, `MumbleSetAudioOutputDistance` or `NetworkSetVoiceActive` in any of your other scripts as there have been cases where it breaks pma-voice.
+Please do not override `NetworkSetTalkerProximity`, `MumbleSetAudioInputDistance`, `MumbleSetAudioOutputDistance` or `NetworkSetVoiceActive` in any of your
+other scripts as there have been cases where it breaks pma-voice.
 
 # Credits
 
@@ -30,8 +33,9 @@ Native audio will not work on RedM, you will have to use 3d audio.
 
 | ConVar                     | Default | Description                                                   | Parameter(s) |
 |----------------------------|---------|---------------------------------------------------------------|--------------|
-| voice_useNativeAudio       |  false  | **This will not work for RedM** Uses the games native audio, will add 3d sound, echo, reverb, and more. **Required for submixs**   | boolean      |
-| voice_use2dAudio           |  false  | Uses 2d audio, will result in same volume sound no matter where they're at until they leave proximity. | boolean      
+| voice_useNativeAudio       |  false  | **This will not work for RedM** Uses the games native audio, will add 3d sound, echo, reverb, and more. **Required for
+submixs**   | boolean      |
+| voice_use2dAudio           |  false  | Uses 2d audio, will result in same volume sound no matter where they're at until they leave proximity. | boolean
 | voice_use3dAudio           |  false  | Uses 3d audio | boolean |
 | voice_useSendingRangeOnly  |  false  | Only allows you to hear people within your hear/send range, prevents people from connecting to your mumble server and trolling. | boolean      |
 
@@ -54,8 +58,10 @@ All of the configs here are set using `setr [voice_configOption] [int]` OR `setr
 | voice_enableUi               |    1    | Enables the built in user interface                            | int          |
 | voice_enableProximityCycle   |    1    | Enables the usage of the F11 proximity key, if disabled players are stuck on the first proximity  | int          |
 | voice_defaultCycle           |   F11   | The default key to cycle the players proximity. You can find a list of valid keys [in the Cfx docs](https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/)                | string       |
-| voice_defaultRadioVolume          |   0.3   | The default volume to set the radio to (has to be between 0.0 and 1.0) *NOTE: Only new joins will have the new value, players that already joined will not.* | float       |
-| voice_defaultPhoneVolume          |   0.6   | The default volume to set the phone to (has to be between 0.0 and 1.0) *NOTE: Only new joins will have the new value, players that already joined will not.* | float       |
+| voice_defaultRadioVolume          |   0.3   | The default volume to set the radio to (has to be between 0.0 and 1.0) *NOTE: Only new joins will have the new
+value, players that already joined will not.* | float       |
+| voice_defaultPhoneVolume          |   0.6   | The default volume to set the phone to (has to be between 0.0 and 1.0) *NOTE: Only new joins will have the new
+value, players that already joined will not.* | float       |
 | voice_defaultVoiceMode  |  2      | Default proximity voice value when player joins server. (Voice Modes; 1:Whisper, 2:Normal, 3:Shouting) | int      |
 
 ### Phone & Radio
@@ -64,7 +70,8 @@ All of the configs here are set using `setr [voice_configOption] [int]` OR `setr
 |-------------------------|---------|--------------------------------------------------------------------|--------------|
 | voice_enableRadios           |    1    | Enables the radio sub-modules                                 | int          |
 | voice_enablePhones           |    1    | Enables the phone sub-modules                                 | int          |
-| voice_enableSubmix      |    0    | Enables the submix which adds a radio/phone style submix to their voice **NOTE: Submixs require native audio** | int          |
+| voice_enableSubmix      |    0    | Enables the submix which adds a radio/phone style submix to their voice **NOTE: Submixs require native
+audio** | int          |
 | voice_enableRadioAnim        |   0     | Enables (grab shoulder mic) animation while talking on the radio.          | int          |
 | voice_defaultRadio           |   LALT  | The default key to use the radio. You can find a list of valid keys [in the FiveM docs](https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/)                             | string       |
 
@@ -75,16 +82,14 @@ All of the configs here are set using `setr [voice_configOption] [int]` OR `setr
 | voice_refreshRate   |   200    | How often the UI/Proximity is refreshed | int     |
 
 ### External Server & Misc.
+
 | ConVar                  | Default | Description                                                        | Parameter(s) |
 |-------------------------|---------|--------------------------------------------------------------------|--------------|
 | voice_allowSetIntent         |   1  | Whether or not to allow players to set their audio intents (you can see more [here](https://docs.fivem.net/natives/?_0x6383526B))  | int       |
 | voice_externalAddress        |   none  | The external address to use to connect to the mumble server   | string       |
 | voice_externalPort           |   0     | The external port to use                                      | int          |
 | voice_debugMode              |   0     | 1 for basic logs, 4 for verbose logs                          | int          |
-| voice_externalDisallowJoin   |   0     | Disables players being allowed to join the server, should only be used if you're using a FXServer as a external mumble server. | int          |
 | voice_hideEndpoints     | 1   | Hides the mumble address in logs *NOTE: You should only care to hide this for a external server.* | int        |
-
-
 
 ### Aces
 
@@ -100,7 +105,7 @@ This would only allow the superadmin group to mute players.
 #### Client
 
 ##### Setters
- 
+
 | Export              | Description                 | Parameter(s) |
 |---------------------|-----------------------------|--------------|
 | [setVoiceProperty](docs/client-setters/setVoiceProperty.md)    | Set config options          | string, any  |
@@ -130,8 +135,7 @@ Supported from mumble-voip / toko-voip
 
 #### Getters
 
-The majority of setters are done through player states, while a small 
-
+The majority of setters are done through player states, while a small
 
 | State Bag     | Description                                                  | Return Type  |
 |---------------|--------------------------------------------------------------|--------------|
@@ -149,7 +153,6 @@ These are events designed for third-party resource integration. These are emitte
 | [pma-voice:radioActive](docs/client-getters/events.md) | Triggered when the radio is activated / deactivated | boolean |
 | [pma-voice:setTalkingMode](docs/client-getters/events.md) | Triggered on proximity mode change with the voice mode id | int |
 
-
 #### Server
 
 ##### Setters
@@ -160,10 +163,10 @@ These are events designed for third-party resource integration. These are emitte
 | [setPlayerCall](docs/server-setters/setPlayerCall.md)        | Sets the players call channel        | int, int     |
 | [addChannelCheck](docs/server-setters/addChannelCheck.md)      | Adds a channel check to the players radio channel | int, function |
 
-
 ##### Getters
 
 ###### State Bags
+
 You can access the state with `Player(source).state['state bag here']`
 
 | State Bag     | Description                                                  | Return Type  |

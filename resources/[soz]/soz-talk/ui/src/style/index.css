@@ -7,6 +7,13 @@
     user-select: none;
 }
 
+input {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
 body {
     font-family: 'VT323', sans-serif;
     overflow: hidden;

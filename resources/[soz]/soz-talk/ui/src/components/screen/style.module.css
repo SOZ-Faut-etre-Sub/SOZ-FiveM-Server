@@ -1,5 +1,5 @@
 .screen {
-    background: rgb(169, 166, 166);
+    background: rgb(133, 141, 122);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -14,11 +14,24 @@
 .frequency {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0 .5vw;
 }
 
 .frequency span {
+    font-size: 1.5vh;
+}
+
+.frequency input {
+    position: relative;
+    font-family: 'VT323', sans-serif;
     font-size: 2.2vh;
+    background: transparent;
+    text-align: right;
+    border: none;
+    outline: none;
+    width: 100%;
+    z-index: 15;
 }
 
 .volume {

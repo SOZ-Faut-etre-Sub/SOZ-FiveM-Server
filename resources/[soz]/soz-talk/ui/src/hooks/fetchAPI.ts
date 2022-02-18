@@ -2,6 +2,7 @@ const BASE_PATH = 'https://soz-talk'
 
 export default function fetchAPI(path: string, data: Object = {}, callback: Function) {
     if (import.meta.env.DEV) {
+        console.debug(`fetch ${path}`, data, callback)
         callback()
         return
     }
