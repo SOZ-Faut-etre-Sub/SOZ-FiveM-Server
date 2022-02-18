@@ -4,12 +4,12 @@ lua54 "yes"
 
 description "SOZ-Talk"
 
-ui_page("html/ui.html")
+ui_page("html/index.html")
 
-files {"html/ui.html", "html/js/script.js", "html/css/style.css", "html/img/cursor.png", "html/img/radio.png"}
+files {"html/index.html", "html/assets/*"}
 
 shared_script "config.lua"
 
-client_script "client/radio.lua"
+client_scripts {"client/main.lua", "client/radio.lua"}
 
-server_script "server/radio.lua"
+server_script "server/main.lua"

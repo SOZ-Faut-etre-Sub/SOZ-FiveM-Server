@@ -48,7 +48,6 @@ convar_category "PMA-Voice" {
         {"External mumble server address", "$voice_externalAddress", "CV_STRING", ""},
         {"External mumble server port", "$voice_externalPort", "CV_INT", "0"},
         {"Voice debug mode", "$voice_debugMode", "CV_INT", "0"},
-        {"Disable players being allowed to join", "$voice_externalDisallowJoin", "CV_INT", "0"},
         {"Hide server endpoints in logs", "$voice_hideEndpoints", "CV_INT", "1"},
     },
 }

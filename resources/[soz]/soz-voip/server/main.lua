@@ -82,14 +82,6 @@ AddEventHandler("playerDropped", function()
     end
 end)
 
-if GetConvarInt("voice_externalDisallowJoin", 0) == 1 then
-    AddEventHandler("playerConnecting", function(_, _, deferral)
-        deferral.defer()
-        Wait(0)
-        deferral.done("This server is not accepting connections.")
-    end)
-end
-
 -- only meant for internal use so no documentation
 function isValidPlayer(source)
     return voiceData[source]
