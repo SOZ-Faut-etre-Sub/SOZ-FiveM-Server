@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
             local newVehEng, newVehBody = GetVehicleEngineHealth(vehicle), GetVehicleBodyHealth(vehicle)
 
             if newVehEng + newVehBody <= (vehEng + vehBody) - 200 then
-                if vehEng ~= 1000.0 and vehBody ~= 1000.0 then
+                if vehEng ~= 0.0 and vehBody ~= 0.0 then
                     -- Get all vehicle damages and add random to calculate wait time
                     local wait = (vehEng / newVehEng + vehBody / newVehBody) * math.random(1000, 2000)
                     CreateThread(function()
