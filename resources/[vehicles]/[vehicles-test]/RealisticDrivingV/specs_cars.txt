@@ -1,0 +1,1962 @@
+Realistic Driving V, basic performance data
+Author: Killatomate
+
+Performance of each car is based on this data. All cars were measured and tweaked INGAME to meet these specifications with high accuracy! (less than 4% deviation)
+detailed notes about handling characteristics and brake settings are not included.
+Researching this data took 180+ hours. Do not use/publish this data without giving proper credit!
+
+use 'Ctrl + F' to search for vehicles (357).
+
+
+
+=======  Supercar  =============================================
+
+Adder (Bugatti Veyron 16.4)
+AWD, 1888 kg, 1184bhp, 7-speed automated manual DCT, easy handling, drag coeff 0.36-0.41 (dynamic)
+0-100kmh: 2.6s
+0-200kmh: 7.3s
+0-300kmh: 16.6s
+top speed: 419 kmh (370kmh with active downforce)
+120-0 kmh: 12.4 m/s2
+downforce: 350kg at 360kmh (low!)
+Lat Accel 200ft: 1.00g
+Lat Accel speed: 1.25g max
+
+Autarch (SCG 003 Stradale 2017)
+RWD, 1200 kg, 800hp, 7-speed automated manual DCT
+0-100kmh: 2.9s
+0-200kmh: 6.9s ?
+0-300kmh: 17.0s ?
+top speed: 375 kmh
+120-0 kmh: 13.0 m/s2 ?
+downforce: 700kg at 250kmh
+Lat Accel 200ft: ? g
+Lat Accel speed: 2.0g max
+
+Banshee2 (Dodge Viper Venom 700R)
+RWD, 1350 kg, 700+ HP, 6-speed manual, good downforce, high drag
+0-100kmh: 3.3s
+0-200kmh: 9.4s
+0-300kmh: 28.0s
+top speed: 325 kmh
+200-0 kmh: 12.4 m/s2 ?
+downforce: up to 400kg at 250kmh
+Lat Accel 200ft: 1.10g
+
+Bullet (Ford GT 2005)
+RWD, 1550 kg, 560 HP, 6-speed manual, frontal downforce, unstable rear
+0-100kmh: 3.8s
+0-200kmh: 11.7s
+0-300kmh: 33.2s
+top speed: 340 kmh
+Lat Accel 200ft: 0.98g
+
+Cheetah (Ferrari Enzo)
+RWD, 1300 kg, 660 HP, 6-speed automated manual, F1 transmission, good downforce
+0-100kmh: 3.5s
+0-200kmh: 9.3s
+0-300kmh: 26.0s
+top speed: 355 kmh
+downforce: 750kg @ 300kmh
+Lat Accel 200ft: 1.05g
+Lat Accel speed: 1.20g @ 200kmh, 1.61g @ 300kmh?
+
+Cyclone (Rimac Concept One 2013)
+4WD (FWD), 2000kg, 1088hp, torque vectoring, 2-speed transmission (1st gear ends at 130kmh)
+0-100kmh: 2.7s
+0-200kmh: 6.7s (6.3s)
+0-300kmh: 17.0 (14.3s)
+top speed: 318 kmh (318-355 kmh)
+downforce: 485kg max
+
+EntityXF (Koenigsegg CC8S 2004)
+RWD, 1250 kg, 655 HP, 6-speed manual, low downforce, very low drag, unstable rear
+0-100kmh: 3.5s
+0-160kmh: 8.2s
+0-240kmh: 17.0s
+0-290kmh: 24.0s
+top speed: 380 kmh
+200-0 kmh: 11.9 m/s2
+downforce: low (medium with splitter and skirts)
+Lat Accel: 1.35g max (without splitter and skirts)
+
+Entity2 (XXR)(Koenigsegg Agera R 2013)
+RWD, 1450kg, 1140hp, 7-speed DCT, drag coefficient 0.37
+0-100kmh: 2.9s
+0-200kmh: 7.9s
+0-300kmh: 14.6s
+top speed: 439 kmh
+Downforce: 300kg at 250kmh
+Lat Accel speed: 1.6g max
+wgt-distr: 44/56
+
+//Entity2 (XXR)(Koenigsegg Agera RS 1M 2016)
+//RWD, 1400 kg, 1360 hp, 7-speed DCT
+//0-100kmh: 2.9s
+//0-200kmh: 6.9s
+//0-300kmh: 12.5s
+//0-400kmh: 27.0s
+//300-0kmh: 6.1s
+//400-0kmh: 9.6s
+//top speed: 447 kmh
+//Downforce: 450kg at 250kmh
+
+ETR1 (SHEAVA)(Lexus LFA Nurburgring 2012, with bodykit)
+RWD, 1530 kg, 570 HP, 6-speed automated manual (shift time: 200ms), good downforce, racing suspension, responsive engine, Nordschleife 7:16
+0-100kmh: 3.7s
+0-160kmh: 7.5s
+0-200kmh: 11.2s
+top speed: 325 kmh (312 with wing)
+200-0kmh: 12.2 m/s2 ?
+downforce: considerable
+Lat Accel 200ft: 1.05g
+wgt-distr: 47/53
+
+;SHEAVA (ETR1)(Lexus LF-LC 2017, prototype)
+;RWD, kg, 470 HP, 6-speed automated manual, good downforce
+;0-100kmh: 4.4s
+;0-160kmh: ?
+;0-200kmh: ?
+;top speed: ? kmh
+;200-0kmh: 12.2 m/s2 ?
+;downforce: ?
+;Lat Accel 200ft: 1.05g ?
+;wgt-distr: 47/53 ?
+
+FMJ (Ford GT 2017, prototype)
+RWD, 1320kg, 630+ hp, 7-speed automated manual, racing suspension, power oversteer
+0-100kmh: 3.3s ?
+0-200kmh: 9.3s ?
+0-300kmh: 28.0s ?
+top speed: 340 kmh ?
+200-0kmh: 12.3 m/s2 ?
+Lat Accel 200ft: 1.07g ?
+Lat Accel speed: 1.40g max?
+wgt-distr: ?
+
+GP1 (McLaren F1 1996)
+RWD, 1150 kg, 627 HP, 6-speed manual, low drag, low base grip, weak brakes, low stability
+0-100kmh: 3.4s
+0-160kmh: 6.2s
+0-200kmh: 9.4s
+0-300kmh: 22.0s
+top speed: 370 kmh
+Lat Accel 200ft: 0.87g
+Lat Accel max: 1.2g
+wgt-distr: 42/58
+
+Infernus (Lamborghini Murcielago LP640 2006)
+AWD, 1800 kg, 640 HP, 6-speed automated manual, good downforce, frontal downforce, unstable braking, understeer on corner exit
+0-100kmh: 3.3s
+0-200kmh: 10.4s
+0-300kmh: 32.0s
+top speed: 340 kmh
+200-0kmh: 11.5 m/s2
+Lat Accel 200ft: 1.05g
+wgt-distr: 42/58
+
+ItaliGTB (McLaren 570GT)
+RWD, 1500 kg, 570 HP, 7-speed DCT, understeer
+0-100kmh: 3.4s
+0-160kmh: 6.6s
+0-200kmh: 9.8s
+top speed: 328 kmh
+200-0kmh: ? m/s2
+Lat Accel 200ft: 1.06g
+
+ItaliGTB2 (McLaren 570S with P1 facelift?)
+RWD, 1400 kg, 570 HP, 7-speed DCT, slight understeer
+0-100kmh: 3.0s
+0-160kmh: 5.9s
+0-200kmh: 8.6s
+top speed: 328 kmh
+200-0kmh: ? m/s2
+Lat Accel 200ft: 1.08g
+
+Nero (Bugatti Chiron 2016)
+4WD, 2000 kg, 1500 HP, 7-speed automatic DCT
+0-100kmh: 2.6s
+0-200kmh: 6.6s
+0-300kmh: 13.9s
+top speed: 430 kmh
+
+Nero2 (Bugatti Vision Gran Turismo 2016 Concept)
+4WD, 1800 kg, 1500 HP, 7-speed automatic DCT, increased drag, increased downforce
+0-100kmh: 2.4s
+0-200kmh: 6.2s
+0-300kmh: 13.7s
+top speed: 380 kmh
+
+Osiris (Pagani Huayra)
+RWD, 1360 kg, 730 HP, 7-speed automated manual single-clutch, very low drag, good grip, low stability, very high wheelspin, power oversteer
+0-100kmh: 3.2s
+0-160kmh: 6.4s
+0-200kmh: 8.8s ?
+top speed: 360 kmh
+200-0kmh: 12.5 m/s2
+downforce: less than 500kg? (large addon wing generates 500kg at 250kmh)
+Lat Accel 200ft: 1.12g?
+Lat Accel speed: 1.66g max
+wgt-distr: 44/56
+
+Penetrator (Jaguar XJ-220 1992)
+RWD, 1500 kg, 550 HP, 5-speed manual, low drag, average downforce, bad brakes, no ABS, heavy steering and pedals, low agility
+0-100kmh: 3.8s
+0-160kmh: 7.3s
+0-200kmh: 12.0s
+0-240kmh: 17.3s
+top speed: 345 kmh, long gear ratio
+
+Pfister811 (Porsche 918 Spyder 2014)
+4WD, 1675 kg, 887 HP, 7-speed automated manual DCT, good braking, grip and downforce, balanced cornering, responsive engine
+0-100kmh: 2.7s
+0-200kmh: 7.2s
+0-300kmh: 19.1s
+top speed: 345 kmh
+200-0kmh: 12.8 m/s2
+downforce: 4% less grip increase with speed compared to McLaren P1
+Lat Accel 200ft: 1.12g (max: 1.9g) (max for Porsche 911 GT2 RS: 1.4g)
+Lat Accel speed: 1.52g @ 190kmh (1.9g max)
+wgt-distr: 43/57
+
+LE7B (RE-7B)(Nissan R390 GT1 1998 LeMans)
+RWD, 1050 kg, 558 HP, 6-speed manual, good downforce, racing suspension, power oversteer, TC can cut throttle, unstable brakes, no ABS
+0-100kmh: 3.3s
+0-160kmh: 6.6s
+top speed: 324 kmh (354 without wing)
+200-0kmh: 11.9 m/s2, no ABS
+downforce: 420kg at 250 kmh ?
+Lat Accel 200ft: 1.10g ?
+Lat Accel: 1.80g max ?
+
+Reaper (Lamborghini Huracan LP580-2 2016)
+RWD, 1390 kg, 580 HP, 7-speed automated DCT, understeer
+0-100kmh: 3.4s
+0-200kmh: 9.1s
+0-250kmh: 14.3s
+top speed: 320 kmh
+
+SC1 (BMW M1 Concept 2009)
+4WD, 1550kg, 540hp? (hybrid), 6-speed DCT
+0-100kmh: 3.6s ?
+0-200kmh: 12.3s ?
+top speed: 295 kmh ?
+200-0 kmh: 11.7 m/s2 ?
+
+Sultan RS (Subaru Impreza WRX STi v5 WRC 1999)
+AWD, 1270 kg, 335 HP, 6-speed manual	
+0-100kmh: 4.2 s
+0-160kmh: 10.6 s
+0-200kmh: ?
+top speed: 260 kmh
+
+T20 (McLaren P1 2014)
+RWD, 1500 kg, 916 HP, 7-speed automated manual DCT, slight understeer, wheelspin, power oversteer
+0-100kmh: 3.0s
+0-200kmh: 7.0s
+0-300kmh: 17.5s
+top speed: 350 kmh
+200-0kmh: 12.6 m/s2
+downforce: 600kg @ 260kmh
+Lat Accel 200ft: 1.10g?
+Lat Accel speed: 1.55g @ 190kmh (1.9g max)
+wgt-distr: 41/59
+
+Taipan (Hennessey Venom F5 2019)(throttled)
+RWD, 1400 kg, 1600 hp, 6-speed manual, drag coefficient 0.33
+0-100kmh: ?s
+0-200kmh: ?s
+0-300kmh: 13.0s (10.0s)
+Accel at 300kmh: 0.6g
+top speed: 470 kmh (484 kmh)
+
+Tempesta (Lotus Esprit 2014 Prototype)
+RWD, 1450 kg, 612 HP, 7-speed DCT
+0-100kmh: 3.4s
+0-200kmh: 9.7s
+top speed: 330 kmh
+Lat Accel 200ft: 1.04g
+
+//Tempesta (Lamborghini Centenario)
+//AWD, 1550 kg, 770 HP, 7-speed
+//0-100kmh: 2.9s
+//0-200kmh: 8.8s
+//0-300kmh: 14.0s
+//top speed: 350 kmh
+//200-0kmh: ? m/s2
+//downforce: wing generates 230kg at 280kmh
+
+Tezeract (Lamborghini Terzo Millennio 2018 Concept)
+4WD, 1700? kg, ? hp, 1-speed transmission
+0-100kmh: 2.8 s ?
+0-200kmh: 7.4 s ?
+top speed: 340 kmh ?
+
+TurismoR (LaFerrari 2014)
+RWD, 1585 kg, 950 HP, 7-speed automatic DCT, lacking downforce, wheelspin, power oversteer, understeery brakes, "boaty" suspension
+0-100kmh: 3.0s
+0-200kmh: 7.0s
+0-300kmh: 15.0s
+top speed: 355 kmh
+200-0kmh: 12.5 m/s2
+downforce: similar to Ferrari Enzo, 9% less grip increase with speed compared to McLaren P1
+Lat Accel 200ft: 1.07g?
+Lat Accel speed: 1.36g @ 200kmh
+wgt-distr: 41/59
+
+Tyrant (Apollo Arrow 2017)
+RWD, 1350kg, 1014 hp, early shifting
+0-100kmh: 2.9s
+0-200kmh: 6.9s ?
+top speed: 354 kmh
+downforce: high (600+kg @ 250kmh?)
+
+Tyrus (McLaren F1 GTR Longtail 1997, with wing)
+RWD, 950 kg, 620 HP, 6-speed automated manual, good rear downforce, slight oversteer, power oversteer, unstable brakes, no ABS
+0-100kmh: 2.9s
+0-160kmh: 5.9s
+0-200kmh: 8.7s
+0-300kmh: 23.5s
+top speed: 334 kmh (with wing)
+200-0kmh: 11.9 m/s2, no ABS
+downforce: less downforce than Ferrari Enzo, but noticeably better lap times, acceleration and grip 
+Lat Accel 200ft: 1.12g ?
+Lat Accel speed: 1.4g max without wing, 1.65g? with front splitter and rear wing
+wgt-distr: 42/58
+
+Vacca (Lamborghini Gallardo LP560-4 2008)
+AWD, 1510 kg, 560 HP, 6-speed automated manual, low grip, very low downforce, unstable ineffective braking
+0-100kmh: 3.6s
+0-200kmh: 11.0s
+top speed: 325 kmh
+200-0kmh: 10.7 m/s2
+Lat Accel 200ft: 0.99g
+
+Vagner (Aston Martin Valkyrie 2018 concept)
+RWD, 1050 kg, 1130hp, 7-speed automated manual DCT
+0-100kmh: 2.5s
+0-200kmh: 6.3s ?
+0-300kmh: 13.2s ?
+top speed: 350 kmh
+120-0 kmh: 13.2 m/s2 ?
+downforce: 1800kg at ? kmh
+Lat Accel 200ft: ?
+
+Vigilante (batmobile)
+
+
+Visione (McLaren P1 LM 2016 [+ Ferrari Xezri 2011 concept])
+RWD, 1450 kg, 1000 HP, 7-speed automated DCT, wheelspin, power oversteer
+0-100kmh: 2.7s
+0-200kmh: 6.5s ?
+0-300kmh: 16.5s ?
+top speed: 355 kmh
+200-0kmh: 12.9 m/s2
+downforce: 650+ kg @ 250kmh
+Lat Accel 200ft: 1.12g ?
+Lat Accel speed: 1.70g? @ 190kmh (2.1g max ?)
+wgt-distr: 41/59
+
+Voltic (Tesla Roadster Sport)
+RWD, 1280 kg, 300 HP, single-speed transmission
+0-100kmh: 3.9s
+0-160kmh: 12.0s
+top speed: 202 kmh
+
+Voltic2 Rocket Drive
+
+
+X80 (PROTOTIPO)(Ferrari F80 2016 CONCEPT)
+RWD, 970 kg, 900 hp + KERS, 7-speed sequential, high downforce, high drag (0.44 drag coefficient), high wheelspin, power-oversteer
+0-100kmh: 2.6s
+0-200kmh: 6.4s ?
+0-300kmh: 13.5s ?
+top speed: 362 kmh (340 with additional wing)
+200-0kmh: 13.3 m/s2 ?
+downforce: high - very high
+Lat Accel 200ft: 1.14g? (X80 has normal road tires!)
+Lat Accel speed: 2.3g max?
+wgt-distr: 42/58 ?
+
+XA-21 (Jaguar C-X75 2012 concept)
+4WD, 1650 kg, 850hp, 7-speed automated manual (200ms)
+0-100kmh: 3.0s
+0-200kmh: 8.3s ?
+top speed: 330 kmh
+downforce: 200kg at 320kmh (low)
+
+Zentorno (Lamborghini Sesto Elemento 2010)
+AWD, 1000kg, 570hp, 6-speed automated manual
+0-100kmh: 2.6s
+0-200kmh: 7.8s
+top speed: 336 kmh
+Lap time: close to Huayra
+
+
+=======  Sport  =============================================
+
+Alpha (Cadillac Elmiraj)
+RWD, 1900 kg, 480 HP, 6-speed
+0-100kmh: 4.8s?
+top speed: 305 kmh?
+
+Banshee (Dodge Viper SRT-10)
+RWD, 1550 kg, 500 HP, 6-speed manual
+0-100kmh: 3.8s
+0-160kmh: 8.4s
+0-200kmh: 12.1s
+top speed: 310 kmh
+Lat Accel 200ft: 1.05g
+
+BestiaGTS (Ferrari FF 2011)
+assisted RWD, 1900 kg, 660 HP, 7-speed automated manual DCT, slight understeer, gentle oversteer, average grip
+0-100kmh: 3.7s
+0-160kmh: 7.6s
+0-200kmh: 11.2s
+top speed: 335 kmh
+
+Blista2 (Honda CR-X SiR 1990)
+FWD, 1000 kg, 160 HP, 5-speed manual, no ABS, oversteer
+0-100kmh: 7.4s ?
+top speed: 217 kmh ?
+
+Blista3 (Honda CR-X SiR decal)
+FWD, 1000 kg, 160 HP, 5-speed manual
+0-100kmh: 7.4s ?
+top speed: 217 kmh ?
+
+Buffalo (Dodge Charger SRT-8 2006)
+RWD, 1900 kg, 430 HP, 6-speed manual
+0-100kmh: 5.4s
+0-160kmh: 11.4s
+top speed: 265 kmh
+
+Buffalo2 (Dodge Charger SRT-8 2011)
+RWD, 2000 kg, 475 HP, 5-speed automatic
+0-100kmh: 4.3s
+0-160kmh: 9.9s
+top speed: 282 kmh
+
+Buffalo3 (Dodge Charger SRT-8 Racing)
+RWD, 1650 kg, 493 HP, 6-speed manual
+0-100kmh: 3.7s
+0-160kmh: 8.7s
+top speed: 290 kmh
+
+Carboniz (Ferrari F12 Berlinetta)
+RWD, 1550 kg, 730 HP, 7-speed automated manual DCT, low drag, below average cornering
+0-100kmh: 3.1s
+0-200kmh: 8.5s
+top speed: 360 kmh
+
+Comet (Porsche 911 GT2 [996] 2004)
+RWD, 1420 kg, 483 HP, 6-speed manual, good cornering, good handling
+0-100kmh: 3.7s
+0-160kmh: 8.7s
+0-200kmh: 11.8s
+top speed: 319 kmh
+
+Comet3 (Porsche 934 RSR 3.0 1976, modified)
+RWD, 1200 kg, 490 HP, 5-speed manual, no ABS
+0-100kmh: 4.4s
+top speed: 290 kmh
+
+Comet4 (Retro SAFARI)(Porsche 953 1984)
+AWD, 1250kg, 300hp, 5-speed manual, no ABS
+0-100kmh: 5.9s ?
+top speed: 245 kmh
+
+Comet5 (Comet SR)(Porsche 911 GT2 RS [997] 2011)
+RWD, 1400 kg, 620 HP, 6-speed manual, good cornering, good handling
+0-100kmh: 3.4s
+0-200kmh: 9.4s
+top speed: 336 kmh
+Lat Accel 200ft: 1.09g
+
+Coquette (Chevrolet Corvette C7 Z06 2015)
+RWD, 1600 kg, 625 HP, 6-speed automatic, low stability, oversteer, good brakes, low downforce
+0-100kmh: 3.2s
+0-160kmh: 7.2s
+0-240kmh: 17.8s
+top speed: 315 kmh
+
+Elegy (Nissan Skyline R33 GT-R Nismo 400R 1997)
+4WD, 1550 kg, 400 HP, 6-speed manual, no ABS, slight oversteer
+0-100kmh: 4.0s
+top speed: 300 kmh
+
+Elegy2 (Nissan GT-R SpecV 2009)
+4WD, 1700 kg, 492 HP, 6-speed DCT with slow shifts, high stability, stiff suspension, weak brakes, low downforce, very low drag
+0-100kmh: 3.3s
+0-200kmh: 13.3s
+top speed: 308 kmh
+Lat Accel 200ft: 1.02g
+
+Feltzer (Mercedes SL65 AMG Black Series 2009)
+RWD, 2050 kg, 670 HP, 6-speed automatic, heavy, bad grip, understeer
+0-100kmh: 3.8s
+0-160kmh: 7.7s
+0-200kmh: 10.9s
+top speed: 320 kmh
+Lat Accel 200ft: 0.95g
+
+FlashGT (Ford Fiesta RS WRC 2012)
+4WD, 1300kg, 380hp, 6-speed automated manual, dynamic torque distribution
+0-100kmh: 3.0s
+0-160kmh: ?
+top speed: 180-225 kmh (gear ratio)
+Lat Accel 200ft: 1.02 g
+
+Furore GT (Maserati Alfieri 2016)
+4WD, 1900 kg, 450 HP, 6-speed automated manual, slight understeer
+0-100kmh: 4.3s
+0-160kmh: 10.7s
+0-200kmh: 16.8s
+top speed: 305 kmh
+
+Fusilade (Chrysler Crossfire SRT-6)
+RWD, 1500 kg, 335 HP, 5-speed automatic, medium grip
+0-100kmh: 5.0s
+0-200kmh: 19.5s
+top speed: 260 kmh ?
+
+Futo (Toyota Corolla Levin 4A-GE 20V 1995)
+RWD, 1050 kg, 165 PS, 6-speed manual
+0-100kmh: 6.3s
+0-160kmh:
+top speed: 210 kmh ?
+
+GB200 (Ford RS200 1985)
+AWD, 1150kg, 444 hp, 5-speed manual, no ABS
+0-100kmh: 3.9s
+0-160kmh: 7.3s
+top speed: 190-225 kmh (gear ratio)
+
+Hotwing Sabre (Chevrolet Lumina NASCAR 1991)
+RWD, 1500kg, 700hp, 4-speed transmission
+0-100kmh: 3.3s ?
+0-200kmh: 9.3s ?
+top speed: 330 kmh ?
+
+Jester (Acura NSX 2017)
+4WD, 1780 kg, 581 HP, 9-speed automatic DCT, good brakes, unstable during braking, power oversteer
+0-100kmh: 3.3s
+0-160kmh: 6.9s
+0-200kmh: 10.5s
+top speed: 308 kmh
+Lat Accel 300ft: 1.06g
+Wgt-Distr: 42/58
+
+Jester2 (Acura NSX GT3 2017)
+RWD, 1400 kg, 500+ HP, 6-speed sequential, extra downforce
+0-100kmh: 3.0s
+0-160kmh: 6.5s
+0-200kmh: 10.1s
+top speed: 298 kmh ?
+
+Khamelion (Fisker Karma 2012)
+RWD, 2400 kg, 408 HP, single-speed transmission
+0-100kmh: 6.3s
+top speed: 205 kmh
+
+Kuruma (Mitsubishi Lancer Evo X MR)
+4WD, 1600 kg, 330 HP, 6-speed manual, good downforce
+0-100kmh: 4.3s
+top speed: 260 kmh
+
+Kuruma2 (Mitsubishi Lancer Evo X MR, armored)
+4WD, 3200 kg, 330 HP, 6-speed manual
+0-100kmh: 7.5s ?
+top speed: 225 kmh?
+
+Lynx (Jaguar F-Type R Coupe 2014)
+RWD, 1680kg, 550 HP, 6-speed manual, low downforce
+0-100kmh: 3.8s
+0-160kmh: 8.0s
+0-200kmh: 12.4s
+top speed: 315 kmh
+200-0kmh: 12.0 m/s2 ?
+Lat Accel 200ft: 1.00g
+
+Massacro (Aston Martin Vanquish 2014)
+RWD, 1750 kg, 576 HP, 8-speed automatic single-clutch, low grip
+0-100kmh: 3.8s
+0-160kmh: 8.3s
+0-200kmh: 13.9s
+top speed: 324 kmh
+Lat Accel 200ft: 0.97g
+
+Massacro2 (Aston Martin Vanquish 2014 racecar)
+RWD, 1450 kg, 590 HP, 6-speed manual, increased grip/drag
+0-100kmh: 3.5s
+0-160kmh: 7.9s
+top speed: 295 kmh
+Lat Accel 200ft: 1.07g
+
+Neon (Porsche Mission E Carrera S 2019)
+4WD, 2000kg, 536hp, 1-speed transmission
+0-100kmh: 3.7s
+0-200kmh: 13.0s
+top speed: 270 kmh ?
+
+NineF (Audi R8 V10 Plus 2013)
+AWD, 1600 kg, 550 HP, 6-speed manual, low downforce, average brakes, unstable rear
+0-100kmh  3.4s
+0-200kmh 10.4s
+top speed: 319 kmh
+Lat Accel 200ft: 0.96g
+
+Omnis (Audi Sport Quattro S1 E2 1986)
+4WD, 1150 kg, 600 HP, 6-speed manual, high drag, front heavy, fast turn-in, unstable rear, understeer, no ABS
+0-100kmh: 3.1s
+top speed: 260+ kmh
+100-0 kmh: 10.5 m/s2 ?
+
+Pariah (Aston Martin Vanquish Zagato 2017)
+RWD, 1650? kg, 580 HP, 8-speed automatic single-clutch
+0-100kmh: 3.6s
+0-200kmh: ?
+top speed: 310 kmh
+
+Penumbra (Mitsubishi Eclipse GT 2012)
+FWD, 1600 kg, 280 HP, 6-speed manual
+0-100kmh: 6.9
+0-160kmh: 14.0
+top speed: 240 kmh
+
+Raiden (Tesla Model S 70D 2015)
+4WD, 2250kg, 329hp, 1-speed transmission
+0-100kmh: 5.4s
+to speed: 225 kmh
+
+Rapid GT (Aston Martin V8 Vantage)
+RWD, 1700 kg, 430 HP, 6-speed automatic, slight understeer
+0-100kmh  4.5s
+0-200kmh 16.5s
+top speed: 295 kmh
+
+Revolter (Cadillac Escala Concept 2016)
+RWD, 2600? kg, 500 hp Twin-Turbo V-8, automatic transmission
+0-100kmh: 5.4s ?
+top speed: 280 kmh ?
+
+Ruston (VUHL 05 2014)
+RWD, 750kg, 285 HP, 6-speed manual, oversteer, effective brakes, no ABS
+0-100kmh: 3.7s
+0-160kmh: 9.6s ?
+top speed: 245 kmh
+Braking: 13.5 m/s2
+wgt-distr: 38/62
+
+Schafter3 (SWB V12)(Mercedes W212 E63 AMG 2011)
+RWD, 1800 kg, 525 HP, 7-speed automatic, very bad downforce
+0-100kmh: 4.3s
+0-200kmh: 13.3s
+top speed: 300+ kmh
+
+Schwarzer (Mercedes C63 AMG 2012)
+RWD, 1800 kg, 487 HP, 7-speed automated manual MCT, slight oversteer
+0-100kmh: 4.3s
+0-200kmh: 13.3s
+0-250kmh: 22.9s
+top speed: 290 kmh
+
+Sentinel3 (Sentinel Classic)(BMW M3 E30 Sport 1990)
+RWD, 1275kg, 235hp, 5-speed manual, ABS
+0-100kmh: 6.5s
+0-200kmh: 30.5s
+top speed: 245 kmh
+wgt-distr: 48/52
+
+Seven70 (Aston Martin One-77 2009)
+RWD, 1600 kg, 750 HP, 6-speed automated manual
+0-100kmh: 3.3s
+0-200kmh: ?
+top speed: 350 kmh
+
+Specter (Aston Martin DB10 Custom 2015)
+RWD, 1650 kg, 450 HP, 6-speed manual
+0-100kmh: 4.4s
+top speed: 308 kmh
+
+Specter2 (Aston Martin DB10 Custom 2015, widebody, tuned)
+RWD, 1700 kg, 495 HP, 6-speed manual
+0-100kmh: 4.1s
+top speed: 320 kmh
+
+Streiter (Mercedes-Benz E-Class All Terrain 4x4² 2017)
+4WD, 2050kg, 329 hp, 9-speed automatic
+0-100kmh: 6.2s
+top speed: 250 kmh
+
+Sultan (Subaru Impreza WRX STi 2005)
+4WD, 1500kg, 280 HP, 6-speed manual	
+0-100kmh: 5.5s
+0-160kmh: 12.8s
+0-200kmh: 21.9s
+top speed: 255 kmh
+
+Surano (Mercedes SLS AMG Roadster 2011)
+RWD, 1700 kg, 570 HP, 7-speed automated manual DCT, medium oversteer
+0-100kmh: 3.7s
+0-200kmh: 10.9s
+0-250kmh: 19.3s
+top speed: 324 kmh
+
+Tampa2 (Ford Mustang Hoonicorn)
+AWD, 1200 kg, 845 HP, 6-speed manual, high drag, unstable rear
+0-200kmh: 8.0s ?
+top speed: 320 kmh ?
+
+Tropos Rallye (Lancia Stratos HF 1977, rally version)
+RWD, 1020 kg, 320 HP 24 valve, 5-speed manual, 120% gravity, low downforce, high drag, twitchy, little understeer, no ABS
+0-100kmh: 4.4s
+top speed: 240+ kmh
+100-0 kmh: 9.9 m/s2 ?
+
+Verlier (Verlierer2)(TVR Sagaris 2006)
+RWD, 1100 kg, 400 hp, 5-speed manual, no electronic stability, oversteer
+0-100kmh: 3.7s
+0-160kmh: 8.1s
+0-200kmh: 13.3s
+top speed: 298 kmh
+
+
+=======  Coupe  =============================================
+
+CogCabrio (Bentley Continental GTC 2006)
+4WD, 2500 kg, 507 HP, 6-speed automatic
+0-100kmh: 5.0s
+0-160kmh: 10.8s
+0-200kmh: 16.4s
+top speed: 314 kmh
+
+Exemplar (Aston Martin Rapide 2010)
+RWD, 2000 kg, 470 HP, 6-speed automatic
+0-100kmh: 4.9s
+0-160kmh: 11.3s
+0-200kmh: 17.6s
+top speed: 295 kmh
+
+F620 (Jaguar XKR 2009)
+RWD, 1700 kg, 510 HP, 6-speed automatic
+0-100kmh: 4.7s
+0-160kmh: 9.1s
+0-200kmh: 13.4s
+top speed: 290 kmh
+
+Felon (Maserati Quattroporte S 2009)
+RWD, 2000 kg, 424 HP, 6-speed automatic, slight oversteer
+0-100kmh: 5.4s
+0-160kmh: 11.7s
+top speed: 280 kmh
+
+Felon2 (Maserati Quattroporte S 2-door cabrio, fictional)
+RWD, 2100 kg, 424 HP, 6-speed automatic
+0-100kmh: 5.5s
+0-160kmh: 12.0s
+top speed: 270 kmh
+
+Jackal (Jaguar XF 2009)
+RWD, 1900 kg, 385 HP, 6-speed automatic
+0-100kmh: 5.6s
+0-160kmh: 12.3s
+top speed: 250 kmh
+
+Oracle1 (XS)(BMW 745i E65 2004)
+RWD, 1900 kg, 329 HP, 6-speed automatic, slight oversteer
+0-100kmh: 6.0s
+0-160kmh: 13.7s
+top speed: 250 kmh
+
+Oracle2 (LWB)(BMW 740i 2011)
+RWD, 1950 kg, 326 HP, 6-speed automatic, slight oversteer
+0-100kmh: 5.9s
+0-160kmh: 13.4s
+top speed: 250 kmh
+
+Sentinel2 (BMW 335i E93 Convertible)
+RWD, 1900 kg, 306 HP, 6-speed manual, medium oversteer
+0-100kmh: 5.3s
+0-160kmh: 12.5s
+top speed: 260 kmh
+
+Sentinel XS (BMW 335i E93 hardtop)
+RWD, 1900 kg, 306 HP, 6-speed manual, medium oversteer
+0-100kmh: 5.3s
+0-160kmh: 12.5s
+top speed: 260 kmh
+
+Windsor (Rolls-Royce Wraith)
+RWD, 2500 kg, 623 HP, 8-speed automatic
+0-100kmh: 4.9s
+0-200kmh: 15.9s
+top speed: 280 kmh
+
+Zion (BMW 650i E63 hardtop)
+RWD, 1900 kg, 365 HP, 6-speed automatic, mild oversteer
+0-100kmh: 5.0s
+0-160kmh: 11.3s
+0-200kmh: 16.8s
+top speed: 265 kmh
+
+Zion Cabrio (BMW 650i E63 Cabrio)
+RWD, 1900 kg, 365 HP, 6-speed automatic, mild oversteer
+0-100kmh: 5.0s
+0-160kmh: 11.3s
+0-200kmh: 16.8s
+top speed: 265 kmh
+
+
+=======  Sedan  =============================================
+
+Asea (Dacia Logan 2012)
+FWD, 1200 kg, 105 HP 1.6L, 5-speed manual
+0-100kmh: 10.8s
+top speed: 183 kmh
+
+Asterope (Toyota Aurion XV40)
+FWD, 1650 kg, 273 HP, 6-speed manual
+0-100kmh: 6.8s
+top speed: 242 kmh
+
+Cog55 (Bentley Continental Flying Spur Speed 2013)
+4WD, 2500 kg, 610 hp, 8-speed automatic, softer suspension
+0-100kmh: 5.1s
+top speed: 320 kmh
+
+Cog552 (armored)(Bentley Continental Flying Spur 2013, armored)
+4WD, 3700 kg, 610 hp, 8-speed automatic
+0-100kmh: 8.0s
+top speed: 250 kmh
+
+Cognosc (Bentley Continental Flying Spur 2006)
+4WD, 2700 kg, 560 hp, 6-speed automatic
+0-100kmh: 5.4s
+top speed: 310 kmh
+
+Cognosc2 (armored)(Bentley Continental Flying Spur 2006, armored)
+4WD, 3900 kg, 560 hp, 6-speed automatic
+0-100kmh: 8.5s
+top speed: 250 kmh
+
+Emperor (Cadillac Fleetwood Brougham 1977)
+RWD, 1900 kg, 135 HP 4.1L, 4-speed automatic
+0-100kmh: 13.1s
+top speed: 168 kmh
+
+Fugitive (Holden Caprice SS 2006)
+RWD, 1900 kg, 332 HP, 5-speed automatic
+0-100kmh: 6.1s
+0-200kmh: 24.4s
+top speed: 270 kmh
+
+Glendale (Mercedes W114 280E 1976)
+RWD, 1500 kg, 185 HP, 5-speed manual
+0-100kmh: 9.9s
+top speed: 200 kmh
+
+Ingot (Volkswagen Passat B4 VR6 1997)
+FWD, 1350 kg, 174 HP 2.8L, 5-speed manual
+0-100kmh: 9.0s
+top speed: 219 kmh
+
+Intruder (Infiniti Q45 2006)
+RWD, 1900 kg , 345 HP 4.5L, 5-speed automatic
+0-100kmh: 6.1s
+0-200kmh: 23.2s
+top speed: 270 kmh ?
+
+Limo2 (turret)(Mercedes E-Class W212 Six-Door Stretch)
+RWD, 3900 kg, 386 HP 5.5L, 6-speed manual
+0-100kmh: 9.1s
+top speed: 225 kmh
+
+Premier (Daewoo Lacetti Sedan 2007 facelift)
+FWD, 1250 kg, 134 HP, 5-speed manual
+0-100kmh: 9.8s
+top speed: 202 kmh
+
+Primo (Cadillac Seville Touring Sedan 1993)
+FWD, 1700 kg, 295 HP 4.5L, 4-speed automatic
+0-100kmh: 6.7s
+top speed: 232 kmh
+
+Regina (Plymouth Fury Suburban 1973)
+RWD, 1800 kg, 230 HP 5.2L V8, 4-speed manual
+0-100kmh: 11.3s ?
+top speed: 192 kmh
+
+Romero Hearse (Lincoln Town Car L 2004, modified)
+RWD, 2300 kg, 239 HP 4.6L, 4-speed automatic
+0-100kmh: 9.5s
+top speed: 200 kmh
+
+Schafter2 (Mercedes W212 E550 2010)
+RWD, 1900 kg, 386 HP 5.5L, 6-speed manual
+0-100kmh: 5.2s
+0-200kmh: 18.2s
+top speed: 285 kmh
+
+Schafter4 (LWB)(Mercedes W212 E550 LWB 2010)
+RWD, 2100 kg, 386 HP 5.5L, 6-speed manual
+0-100kmh: 5.4s
+0-200kmh: 18.4s
+top speed: 285 kmh
+
+Schafter5 (V12 armored)(Mercedes W212 E63 AMG 2011, armored)
+RWD, 3000 kg, 525 HP, 7-speed automatic
+0-100kmh: 6.9s
+top speed: 260 kmh
+
+Schafter6 (LWB armored)(Mercedes W212 E550 LWB 2010, armored)
+RWD, 3200 kg, 386 HP 5.5L, 6-speed manual
+0-100kmh: 8.0s
+top speed: 250 kmh
+
+Stanier (Ford Crown Victoria 1997)
+RWD, 1800 kg, 212 HP 4.6L(interceptor 251hp), 4-speed automatic
+0-100kmh: 9.5s
+top speed: 218 kmh
+
+Stratum (Honda Accord Station Wagon SiR 1997)
+FWD, 1400 kg, 192 HP, 4-speed automatic, good grip
+0-100kmh: 8.9s
+top speed: 210 kmh ?
+
+Stretch (Lincoln Town Car Stretch 9-Seater 2004)
+RWD, 2700 kg, 300 HP, 6-speed automatic
+0-100kmh: 11.0s
+top speed: 210 kmh
+
+Super Diamond (Rolls-Royce Phantom)
+RWD, 2600 kg, 456 HP 6.75L, 6-speed automatic
+0-100kmh: 5.9s
+0-200kmh: 24.4s
+top speed: 250 kmh
+
+Surge (Chevrolet Volt)
+FWD, 1750 kg, 149 HP, single-speed transmission
+0-100kmh: 9.1s
+top speed: 164 kmh
+
+Tailgater (Audi A6 4.2 Quattro 2010)
+4WD, 1850 kg, 350 HP 4.2L, 6-speed manual, very bad downforce
+0-100kmh: 5.9s
+0-200kmh: 22.7s
+top speed: 260 kmh
+
+Warrener (Nissan Skyline PG C-10 GTR 1970)
+RWD, 1150 kg, 160 HP 2.0L, 5-speed manual
+0-100kmh: 8.3s ?
+top speed: 195 kmh
+
+Washington (Lincoln Town Car Executive Sedan 2004)
+RWD, 2000 kg, 239 HP 4.6L, 4-speed automatic
+0-100kmh: 8.7s
+top speed: 220 kmh
+
+
+=======  Compact  =============================================
+
+Blista1 (Honda Civic Type R 2004)
+FWD, 1350 kg, 215 HP, 6-speed manual
+0-100kmh: 6.7s
+0-160kmh: 15.8s
+top speed: 235 kmh
+
+Brioso (Fiat Abarth 695 biposto 2014)
+FWD, 980 kg, 190 HP, 5-speed manual, low downforce
+0-100kmh: 5.9s
+0-130kmh: 9.3s
+top speed: 230 kmh
+
+Dilettante (Toyota Prius XW20 2008)
+FWD, 1450 kg, 110 HP, single-speed transmission
+0-100kmh: 11.5s
+top speed: 176 kmh
+
+Issi (Mini Cooper S Convertible 2005)
+FWD, 1300 kg, 170 HP, 6-speed manual
+0-100kmh: 7.5s
+0-160kmh: 17.9s
+top speed: 222 kmh
+
+Panto (Smart Fortwo Brabus 2010)
+RWD, 850 kg, 102 HP, 5-speed automated manual, understeer
+0-100kmh: 8.9s
+top speed: 154 kmh
+
+Prairie (Hyundai GK Tiburon GT V6 2006)
+FWD, 1250 kg, 184 HP, 6-speed manual, oversteer
+0-100kmh: 7.2s
+top speed: 226 kmh
+
+Rhapsody1(!) (AMC Pacer Wagon 1979)
+RWD, 1400 kg, 132 HP 4.6L, 4-speed manual, oversteer
+0-100kmh: 12.0s
+top speed: 145 kmh
+
+
+=======  Classic Sportscar  =============================================
+
+Ardent (Lotus Esprit V8 1996, weaponized, bulletproof tires, no armor)
+RWD, 1450 kg (1350kg), 350hp, 5-speed manual (slow transmission), ABS, considerable oversteer
+0-100kmh: 4.6s
+0-160kmh: 10.1s
+0-200kmh: 15.5s
+top speed: 282 kmh
+120-0kmh: 10.5 m/s2
+Lat Accel 200ft: 0.92g 
+
+Casco (Maserati 3500 GT 1961)
+RWD, 1450 kg, 248 HP, 5-speed manual
+0-100kmh: 6.8s
+top speed: 235 kmh
+
+Cheetah Classic (Ferrari Testarossa 1986) drag coeff: 0.36
+RWD, 1750 kg, 390hp, 5-speed manual, no ABS, snap oversteer / loose rear, high center of mass and body roll
+0-100kmh: 5.3s
+0-200kmh: 18.8s
+top speed: 290 kmh
+wgt-distr: 40/60
+downforce: low
+
+Coquette2 (Chevrolet Corvette C2 1966)
+RWD, 1550 kg, 430 HP, 4-speed manual, good brakes, slight understeer
+0-100kmh: 4.9s
+top speed: 275 kmh
+
+Deluxo (DeLorean DMC-12 1982) AIRCRAFT
+1250kg, 130 hp, 5-speed manual, no ABS
+0-100kmh: 8.6s
+top speed: 180 kmh
+
+Franken Stange (BType2)(Cadillac 341A Town Sedan 1931, heavily modified)
+RWD, 2000 kg, 240 HP V12, 6-speed manual
+0-100kmh: 8.1s
+top speed: 205 kmh
+
+Infernus2 (Lamborghini Diablo SV 1996)
+RWD, 1600 kg, 510 HP, 5-speed manual, oversteer
+0-100kmh: 4.2s
+0-160kmh: 9.4s
+0-200kmh: 14.8s
+top speed: 333 kmh
+Lat Accel 200ft: 0.95g
+wgt-distr: 41/59
+
+JB700 (Aston Martin DB5 Vantage 1964)
+RWD, 1500 kg, 325 HP, 5-speed manual, slight understeer
+0-100kmh: 6.0s
+top speed: 260 kmh
+
+Jester3 (classic)(Toyota Supra JZ A80 (MKIV) Turbo 1993)
+RWD, 1600kg, 326hp, 6-speed manual, good brakes
+0-100kmh: 4.9s
+0-160kmh: 12.3s
+top speed: 285 kmh
+Wgt-Distr: 53/47
+Lat Accel 200ft: 0.95g
+
+Mamba (AC Shelby Cobra MkIII 1966)
+RWD, 1100 kg, 430 hp, 4-speed manual
+0-100kmh: 4.4s
+top speed: 262 kmh
+
+Manana (Buick Electra 1971)
+RWD, 2100 kg, 315 HP, 3-speed automatic
+0-100kmh: 8.6s
+top speed: 195 kmh
+
+Monroe (Lamborghini Miura P400S 1968)
+RWD, 1200 kg, 370 HP, 5-speed manual
+0-100kmh: 5.8s
+0-160kmh: 12.5s
+top speed: 288 kmh
+
+Peyote (Ford Thunderbird 1957 V8 Supercharged OD)
+RWD, 1550 kg, 300 HP, 4-speed manual
+0-100kmh: 7.1s
+top speed: 192 kmh
+
+Pigalle (citroen SM 1973)
+FWD, 1550 kg, 183 HP V6, 5-speed manual, no ABS
+0-100kmh: 8.4s
+top speed: 225 kmh
+
+RapidGT3 Classic (Aston Martin V8 Vantage 1977)
+RWD, 1850 kg, 385hp, 5-speed manual, slight understeer
+0-100kmh: 5.5s
+top speed: 258 kmh
+
+Retinue (Ford Escort mk1 RS1600 1970)
+RWD, 830 kg, 117hp, 4-speed manual, no ABS, considerable oversteer
+0-100kmh: 9.1s
+top speed: 184 kmh
+
+Roosevelt (BType)(Cadillac 341A Town Sedan 1931, modified)
+RWD, 2300 kg, 138 HP V12, 4-speed manual
+0-100kmh: 16.0s
+top speed: 180 kmh
+
+//Roosevelt (Cadillac 341A Town Sedan 1928, armored)
+//RWD, 3100 kg, 91+ HP, 3-speed manual
+//0-100kmh: ?
+//top speed: 176 kmh
+
+Savestra (Mazda RX-3 SP (Savanna) Race Car 1976)
+RWD, 900kg, 240hp (130), 4-speed manual, heavy steering, bad brakes, no ABS
+0-100kmh: 6.6s ? (9.9)
+top speed: 240 kmh ? (185)
+
+Stinger (Ferrari 250 GT Spyder California 1961)
+RWD, 1200 kg, 280 HP, 4-speed manual
+0-100kmh: 6.9s ?
+top speed: 270 kmh
+
+Stinger GT (Ferrari 250 GTO 1962)
+RWD, 900 kg, 300 HP, 5-speed manual
+0-100kmh: 6.1s
+0-160kmh: 13.2s
+top speed: 280 kmh
+
+Stirling GT (Feltzer3) (Mercedes 300 SLR Uhlenhaut Coupe 1956)
+RWD, 1150 kg, 315 HP, 5-speed manual
+0-100kmh: 6.7s ?
+top speed: 285 kmh
+
+Stromberg (Lotus Esprit S1 "Wet Nellie" 1976)	Distorted TractionBias
+RWD, 950kg, 162 hp, 5-speed manual, no ABS
+0-100kmh: 6.9s
+top speed: 220 kmh
+
+Torero (Lamborghini Countach 1988 25th anniversary)
+RWD, 1600 kg, 420hp, 5-speed manual, no ABS, understeer, snap oversteer
+0-100kmh: 4.8s
+0-200kmh: 17.0s
+top speed: 298 kmh
+wgt-distr: 41/59
+downforce: low (rear wing cosmetic)
+
+Tornado (Chevrolet Bel Air 1958)
+RWD, 1750 kg, 315 HP, 3-speed manual
+0-100kmh: 8.9s
+top speed: 185 kmh
+
+Tornado6 Rat Rod
+
+
+Turismo2 (Ferrari F40 1988)
+RWD, 1350 kg, 478 HP, 5-speed manual, power oversteer, low stability, no ABS
+0-100kmh: 4.4s
+0-160kmh: 8.2s
+0-200kmh: 12.2s
+0-250kmh: 22.0s
+top speed: 317 kmh
+Lat Accel 200ft: 1.01g
+wgt-distr: 41/59 ?
+
+Viseris (De Tomaso Pantera V8 GT5 1980)		Hardcoded Adv Handling Flags! (RPM limiter, bouncy suspension)
+RWD, 1500kg, 355hp, 5-speed manual, no ABS
+0-100kmh: 5.3s
+top speed: 280 kmh
+
+Z190 (Nissan Datsun 240Z 1971)		physics issues
+RWD, 1100kg, 151hp, 5-speed manual, no ABS
+0-100kmh: 8.3s
+top speed: 201 kmh
+
+ZType (Bugatti Type 57S Supercharged Atlantic Coupe 1938)
+RWD, 1000 kg, 220 HP, 4-speed manual
+0-100kmh: 9.7s ?
+top speed: 210 kmh
+
+//ZType (Talbot-Lago T-150 CSS 1938)
+//RWD, 1500 kg, 145 HP, 4-speed manual
+//0-100kmh: ?
+//top speed: 186 kmh
+
+
+=======  Muscle  =============================================
+
+Blade (Ford Falcon Sprint 1965)
+RWD, 1350 kg, 205 HP 4.7L V8, 4-speed manual
+0-100kmh: 10.9s
+top speed: 175 kmh
+
+Buccaneer (Buick Riviera Gran Sport 1965)
+RWD, 1850 kg, 360 HP 7.0L, 3-speed automatic, sport suspension
+0-100kmh: 7.8s
+top speed: 205 kmh
+
+Chino (Lincoln Continental 2-door Hardtop 1965)
+RWD, 2300 kg, 340 HP 7.6L, 3-speed automatic
+0-100kmh: 9.4s
+top speed: 202 kmh
+
+Coquette3 (BlackFin)(Chevrolet Corvette C1 1957)
+RWD, 1400 kg, 290 HP 4.6L, 4-speed manual, oversteer, wheelspin
+0-100kmh: 6.1s
+top speed: 225 kmh
+
+Dominator (Ford Mustang GT 2008)
+RWD; 1600 kg, 318 HP, 6-speed manual, considerable oversteer
+0-100kmh: 5.4s
+0-200kmh: 23.5s
+top speed: 240 kmh
+
+Dominator2 (Ford Mustang GT 2008 racecar)
+RWD; 1450 kg, 395 HP, 6-speed manual, good grip, good brakes
+0-100kmh: 4.6s
+0-200kmh: 17.9s
+top speed: 265 kmh
+
+Dominator3 (GTX)(Ford Mustang GT 5.0 2015)
+RWD, 1650kg, 435hp, 6-speed manual
+0-100kmh: 5.2s
+0-160kmh: 10.7s
+0-200kmh: 16.5s
+top speed: 260+ kmh
+
+Dukes (Dodge Charger R/T 1969)
+RWD, 1700 kg, 380 HP 7.2L V8, 4-speed manual
+0-100kmh: 5.9s
+top speed: 204 kmh
+
+Dukes2 (Dodge Charger R/T 1969, engine mod, armored)
+RWD, 3100 kg, 450 HP 7.2L V8, 4-speed manual
+0-100kmh: 8.4s
+top speed: 200 kmh
+
+Ellie (Ford Mustang Shelby GT500 1967)
+RWD, 1550kg, 360hp, 4-speed manual, no ABS
+0-100kmh: 6.5s
+top speed: 250 kmh
+
+Gauntlet (Dodge Challenger SRT-8 2009)
+RWD, 1900 kg, 430 HP 6.1L V8, 5-speed manual, sport suspension, oversteer
+0-100kmh: 4.8s
+0-200kmh: 18.5s
+top speed: 275 kmh
+
+Gauntlet2 (Dodge Challenger SRT-8 2009 racecar)
+RWD, 1650 kg, 400 HP, 6-speed manual, good grip, good brakes
+0-100kmh: 4.8s
+0-200kmh: 18.0s
+top speed: 268 kmh
+
+Hotknife (Hot Rod, Ford Model B 1932 heavily modified)
+RWD, 1100 kg, 300 HP V8, 5-speed manual, lightweight, poor stability
+0-100kmh: 5.2s
+top speed: 210+ kmh
+
+Lurcher (Buick Riviera 1965 Stretch Hearse)
+RWD, 2250 kg, 325 HP 6.6L, 3-speed automatic
+0-100kmh: 8.9s
+top speed: 185 kmh
+
+Niteshad (Nightshade)(Chevrolet Camaro Z28 1970 widebody?)
+RWD, 1800 kg, 360 hp, 4-speed manual
+0-100kmh: 6.3s
+top speed: 218 kmh
+
+Phoenix (Pontiac Firebird Trans Am 1979)
+RWD, 1650 kg, 220 HP 6.6L V8, 4-speed manual, soft suspension
+0-100kmh: 7.1s
+top speed: 215 kmh
+
+Picador (Holden HJ Utility GTS 1973)
+RWD, 1350 kg, 275 HP 5.7L V8, 4-speed manual, slight understeer
+0-100kmh: 7.0s
+top speed: 205 kmh
+
+RLoader (Rat Rod Beater, heavily modified Dodge Power Wagon WDX Flat Bed 1947)
+RWD, 2200 kg, 4-speed manual
+
+RLoader2 (Rat Rod Restored, heaviliy modified Dodge Power Wagon WDX Flat Bed 1947)
+RWD, 2600 kg, 4-speed manual
+
+Ruiner (Chevrolet Camaro IROC-Z 1986)
+RWD, 1500 kg, 223 HP 5.7L V8, 4-speed
+0-100kmh: 6.9s
+top speed: 235 kmh
+
+Ruiner2 (Pontiac Trans AM 1982 KITT Turbo Boost)
+RWD, 1700 kg, 280+ HP, 5-speed manual, low drag
+0-100kmh: 5.7s
+top speed: 250 kmh
+
+SabreGT (Buick GSX Gran Sport 455 Stage 2, 1970)
+RWD, 1800 kg, 425 HP 7.5L V8, 4-speed manual
+0-100kmh: 6.0s
+top speed: 242 kmh
+
+Slamvan (Ford F-100 Pickup SWB 1956)
+RWD, 1600 kg, 210 HP 5.1L V8 modified, 4-speed manual
+
+Slamvan2 (Ford F-100 Van SWB 1956)
+RWD, 1750 kg, 210 HP 5.1L V8 modified, 4-speed manual
+
+Stalion (Oldsmobile Cutlass Convertible 1969)
+RWD, 1650 kg, 310 HP 5.7L V8, 4-speed manual, boaty
+0-100kmh: 7.2s
+top speed: 193 kmh ?
+
+Stalion2 (Oldsmobile Cutlass 1969, racecar conversion)
+RWD, 1400 kg, 380 HP 7.5L V8, 4-speed manual, racing suspension, improved grip, brakes
+0-100kmh: 5.7s
+top speed: 210+ kmh
+
+Tampa (Ford Mustang Boss 302 1969)
+RWD, 1700 kg, 340 hp, 4-speed manual
+0-100kmh: 6.9s
+top speed: 215 kmh
+
+//Tampa (Chevrolet Nova SS 396 1969)
+//RWD, 1600 kg, 375 hp, 4-speed manual, disc brakes, oversteer
+//0-100kmh: 5.9s
+//top speed: 230 kmh
+
+Tampa3 (Ford Mustang Boss 302 1969, weaponized, bulletproof tires, no armor)
+RWD, 2100 kg, 350 hp, 4-speed manual
+0-100kmh: 7.4s
+top speed: 208 kmh
+
+Virgo (Cadillac Eldorado 429, 1967)
+FWD, 2200 kg, 340 HP 7.0L V8, 3-speed automatic, disc brakes, boaty
+0-100kmh: 8.4s
+0-160kmh: 24.5s
+top speed: 196 kmh
+
+Virgo3 (classic)(Mercury Cougar XR-7 2-Door 1977)
+RWD, 2000 kg, 173 HP 6.6L V8, 3-speed automatic, disc brakes
+0-100kmh: 11.6s
+top speed: 186 kmh
+
+Vigero (Chevrolet Camaro SS 396, 1969)
+RWD, 1550 kg, 375 HP 6.5L V8, 4-speed manual, disc brakes, considerable oversteer
+0-100kmh: 6.1s
+top speed: 232 kmh
+
+Voodoo2 (Chevrolet Impala Turbo-Fire 283, 1959)
+RWD, 1900 kg, 230 HP 4.6L, 4-speed manual, understeer, beater
+0-100kmh: 13.0s
+top speed: 178 kmh
+
+
+=======  Lowrider  =============================================
+
+Buccaneer2 (Buick Riviera Gran Sport 1965)
+RWD, 1850 kg, 360 HP 7.0L, 3-speed automatic, sport suspension
+0-100kmh: 7.8s
+top speed: 205 kmh
+
+Chino2 (Lincoln Continental 2-door 1965, tuned)
+RWD, 2300 kg, 360 HP 7.6L, 3-speed automatic
+0-100kmh: 9.0s
+top speed: 205 kmh
+
+Faction (Buick Regal GN Turbo 2-Door Coupe 1987)
+RWD, 1500 kg, 245 hp 3.8L Turbo, 4-speed automatic
+0-100kmh: 7.0s
+top speed: 210 kmh
+
+Faction3 Donk
+
+
+Minivan2 custom (Ford Windstar 2002, modified)
+FWD, 2000 kg, 245 HP 3.8L, 5-speed manual, poor aerodynamics
+0-100kmh: 7.8s
+top speed: 198 kmh
+
+Moonbeam (Chevrolet Astro Van 1985)
+RWD, 1800 kg, 200 hp 4.3L, 4-speed automatic
+0-100kmh: 11.4 s
+top speed: 187 kmh
+
+Primo2 (Cadillac Seville Touring Sedan 1993)
+FWD, 1700 kg, 295 HP 4.5L, 4-speed automatic
+0-100kmh: 6.7s
+top speed: 232 kmh
+
+SabreGT2 Turbo Custom (Buick GSX Gran Sport 455 Stage 2, 1970, modified)
+RWD, 1750 kg, 440 HP 7.5L V8, 5-speed manual, hydraulics
+0-100kmh: 5.1s
+top speed: 255 kmh
+
+Slamvan3 custom
+
+
+Tornado5 custom
+
+
+Virgo2 (classic custom)(Mercury Cougar XR-7 2-Door 1977, modified, tuned)
+RWD, 2000 kg, 185 HP 6.6L V8, 4-speed automatic, disc brakes
+0-100kmh: 10.0s
+top speed: 191 kmh
+
+Voodoo1 (Chevrolet Impala Turbo-Fire 283, 1959, tuned)
+RWD, 1900 kg, 250 HP 4.6L, 4-speed manual, understeer
+0-100kmh: 11.9s
+top speed: 188 kmh
+
+
+=======  SUV  =============================================
+
+Baller1 (Range Rover L322 Vogue 2003)
+4WD, 2600 kg, 272 HP, 6-speed automatic, understeer
+0-100kmh: 8.9s
+top speed: 210 kmh
+
+Baller2 (Range Rover Evoque 2012)
+4WD, 2000 kg, 241 HP, 6-speed manual, understeer
+0-100kmh: 7.6s
+top speed: 217 kmh
+
+Baller3 (Baller LE)(Range Rover Sport SVR 2015)
+4WD, 2200 kg, 510 hp, 8-speed automatic
+0-100kmh: 5.4s
+top speed: 250 kmh
+
+Baller4 (Baller LE LWB)(Range Rover Sport SVR 2015)
+4WD, 2300 kg, 510 hp, 8-speed automatic
+0-100kmh: 5.6s
+top speed: 250 kmh
+
+Baller5 (Baller LE armored)(Range Rover Sport SVR 2015, armored)
+4WD, 3300 kg, 510 hp, 8-speed automatic
+0-100kmh: 8.4s
+top speed: 230 kmh
+
+Baller6 (Baller LE LWB armored)(Range Rover Sport SVR 2015, armored)
+4WD, 3500 kg, 510 hp, 8-speed automatic
+0-100kmh: 8.7s
+top speed: 230 kmh
+
+BJXL (Toyota FJ Cruiser TRD)
+4WD, 2100 kg, 270 HP 4.0L, 4-speed manual, bad grip
+0-100kmh: 8.3s
+top speed: 186 kmh
+
+Cavcade (Cadillac Escalade 2006)
+4WD, 2700 kg, 345 HP 6.0L, 6-speed automatic, understeer
+0-100kmh: 7.5s
+top speed: 230 kmh
+
+Contender
+
+Dubsta1 (Mercedes 463 G55 AMG 2005)
+4WD, 2600 kg, 469 HP 6.0L, 5-speed automatic, understeer
+0-100kmh: 5.3s
+top speed: 240 kmh
+
+//Dubsta1 (Mercedes 463 G550 2005)
+//4WD, 2600 kg, 382 HP, 7-speed automatic
+//0-100kmh: 7.3s
+//top speed: 235 kmh
+
+FQ2 (Infiniti FX37 2010)
+4WD, 2050 kg, 320 HP, 7-speed automatic
+0-100kmh: 6.5s
+0-160kmh: 16.9s
+top speed: 233 kmh
+
+Granger (GMT931 Chevrolet Suburban)
+4WD, 2100? kg, 403 HP, 6-speed automatic
+0-100kmh:  8.2s
+top speed: 205 kmh ?
+
+Gresley (Dodge Durango AWD 2011)
+4WD, 2300 kg, 290 HP 3.6L, 5-speed automatic, understeer
+0-100kmh: 8.5
+top speed: 210 kmh
+
+Habanero (Lexus RX 330 AWD 2006)
+4WD, 2100 kg, 230 HP 3.3L, 5-speed automatic, slight oversteer
+0-100kmh: 9.0s
+top speed: 200 kmh
+
+Huntley S (Bentley SUV Concept Car 2015)
+4WD, 2800 kg, 580 HP 6.0L V12 TDI, 8-speed automatic, bad offroad grip
+0-100kmh: 5.0s
+0-160kmh: 10.9s
+0-200kmh: 18.4s
+top speed: 285 kmh
+
+Landstalker (Ford Expedition 4WD 2006)
+4WD, 2700 kg, 260 HP 5.4L, 4-speed automatic, understeer
+0-100kmh: 10.1s
+top speed: 190 kmh ?
+
+Mesa (-> Mesa3)(Jeep Wrangler Unlimited, with street tires)
+4WD, 1900 kg, 285 HP 3.6L, 6-speed manual
+0-100kmh:  8.4s
+top speed: 205 kmh ?
+
+Patriot (AM General Hummer H2 2006)
+4WD, 3000 kg, 325 HP 6.0L, 4-speed automatic
+0-100kmh: 10.8s
+top speed: 159 kmh
+
+Radi (Ford Edge Sport 2011)
+4WD, 2050 kg, 305 HP 3.7L V6, 6-speed automatic, understeer, bad brakes
+0-100kmh: 7.3s
+0-160kmh: 19.1s
+top speed: 220 kmh
+
+Rocoto (Porsche Cayenne S 2010)
+4WD, 2300 kg, 385 HP, 6-speed manual
+0-100kmh: 6.5s
+0-160kmh: 14.8s
+top speed: 250 kmh
+
+Seminole (Jeep Grand Cherokee 2006)
+4WD, 2100 kg, 230 HP 4.7L V8, 5-speed automatic
+0-100kmh: 9.5s
+top speed: 205 kmh ?
+
+Serrano1 (Mercedes W164 ML550 2006)
+4WD, 2200 kg, 386 HP 5.5L V8, 7-speed automatic
+0-100kmh: 6.0s
+0-160kmh: 14.0s
+top speed: 250 kmh
+
+XLS (Mercedes-Benz GLS 550 2013)
+4WD, 2500 kg, 435 HP, 7-speed automatic
+0-100kmh: 5.2s
+top speed: 250 kmh
+
+XLS2 (Mercedes-Benz GLS 550 2013, armored)
+4WD, 3100 kg, 435 HP, 7-speed automatic
+0-100kmh: 7.0s
+top speed: 240 kmh
+
+
+=======  Offroad  =============================================
+
+BFInject (VW Beetle Turbo 1600cc Baja)
+RWD, 890kg, 40" Sand Paddle Tires, 5-speed manual
+0-100kmh: 6.8s
+top speed: 178 kmh
+
+Bifta (Meyers Manx 1970 remake)
+RWD, 750? kg, 1776cc 200 HP, 4-speed manual
+0-100kmh: 6.2s ?
+top speed: 180+ kmh
+
+Blazer (Quad)
+
+Blazer2 (Lifeguard Quad)
+
+Bodhi2 (Kaiser-Jeep M715)
+4WD, 3400 kg, 133 bhp, 4-speed-manual
+top speed: 100 kmh
+
+Brawler (Local Motors Rally Fighter 2013) Gravity
+RWD, 1800 kg, 430 hp 6.2L, 4-speed automatic, slight understeer
+0-100kmh: 6.4s
+Top speed: 210 kmh
+
+Dloader (Dodge Power Wagon 1946)
+4WD, 3800kg, 92 HP, 4-speed manual
+top speed: 95 kmh ?
+
+Dubsta3 (Mercedes G 63 AMG 6x6)
+6WD, 3950 kg, 544 HP 5.5L, 6-speed automatic
+0-100kmh: 7.2s
+top speed: 175+ kmh
+
+Dune Buggy (VW Beetle chassis stripped, with 180 HP Corvair engine)
+RWD, 650 kg, 180 HP
+0-100kmh: 6.5s
+top speed: 180 kmh
+
+Dune2 (Alien Dune Buggy)
+RWD, 700 kg, 180 HP
+0-100kmh: 6.8s
+top speed: 175 kmh
+
+Dune3 FAV
+
+
+Guardian (Ford F-650 Crew Cab SWB custom [F650 Pickups Supertruck] 2012)
+4WD, 4200 kg, 360 hp, 6-speed automatic
+0-100kmh: 14.5s ?
+top speed: 140 kmh ?
+
+Insurgent (Terradyne GURKHA RPV)
+4WD, 6900 kg, 300 HP, 6-speed automatic
+top sped: 114 kmh
+
+Insurgent2 (Terradyne GURKHA MPV)
+4WD, 7700 kg, 300 HP, 6-speed automatic
+top speed: 111 kmh
+
+Kalahari (Citröen Mehari 4x4 1982)
+4WD, 720kg, 29 HP, 4-speed manual
+0-100kmh: ?
+top speed: 105 kmh
+
+Marshall
+
+Mesa3 (Jeep Wrangler Unlimited Rubicon, with mud tires)
+4WD, 2100 kg, 6-speed manual
+0-100kmh:  8.4s
+top speed: 205 kmh ?
+
+Monster
+
+Rancher XL (Chevrolet Suburban 1985)
+4WD, 2250 kg, 240 HP 5.7L, 4-speed manual
+0-100kmh: 10.5s ?
+tops speed: 170 kmh ?
+
+Rebel (Toyota Hilux V6 1987)
+4WD, 1350kg, sand tires
+0-100kmh: 8.3s
+top speed: 175 kmh
+
+Rebel2 (Toyota Hilux V6 1987)
+4WD, 1350kg, sand tires
+0-100kmh: 8.3s
+top speed: 175 kmh
+
+Sandking (Ford F-350 Super Duty)
+4WD, 3700 kg, 400 HP V8, 40" mud tires
+0-100kmh: 8.5s
+0-140kmh: 17.5s
+top speed: 150 kmh
+
+Sadler (Ford F-250 Super Duty Crew Cab 4WD 2008)
+4WD, 3400 kg, 300 HP 5.4L, 6-speed manual
+0-100kmh: 9.3s
+top speed: 175 kmh
+
+Technical (Toyota Hilux V6 1987, Mounted MG)
+4WD, 1500kg, mud tires
+0-100kmh: 8.8s
+top speed: 172 kmh
+
+Trophy
+
+Trophy2 (Desert Raid)(Red Bull SMG Buggy)
+RWD, 1400 kg, 420 HP,
+0-100kmh: 5.2s ?
+top speed: 220 kmh ?
+
+
+=======  Van  =============================================
+
+Bison (Dodge Ram 2500 Crew Cab AWD 2011)
+4WD, 3200 kg, 383 HP 5.7L, 6-speed manual
+0-100kmh: 9.3s
+top speed: 180 kmh
+
+Bobcat (Chevrolet K2500 Extended Bed 1997)
+4WD, 2550 kg, 290 HP 7.4L V8, 5-speed manual
+0-100kmh: 9.7s
+top speed: 180 kmh
+
+Boxville (Chevrolet Step Van P30 12 ft)
+RWD, 3900+ kg curb, 240 hp, 4-speed manual
+0-100kmh: 18.5s ?
+top speed: 135 kmh ?
+
+Burrito (Chevrolet Express G3500 Cargo LWB 1996)
+RWD, 2800+ kg curb, 245 hp 5.7L, 4-speed automatic
+0-100kmh: 11.5s
+top speed: 186 kmh
+
+Camper (Chevrolet Express G4500 LWB Cutaway 1996 Recreational Vehicle)
+RWD, 3600+ kg curb, 245 hp 5.7L, 5-speed automatic
+0-100kmh: 15.5s
+top speed: 155 kmh
+
+Clown Van (Speedo2)(Ford E-150 Cargo Van 2005)
+RWD, 2200+ kg curb, 255 hp 5.4L, 5-speed automatic
+0-100kmh: 10.5s
+top speed: 192 kmh ?
+
+Gang Burrito (Chevrolet Express G3500 Cargo LWB 1996 modified)
+RWD, 2700 kg curb, 245 hp 5.7L, 4-speed automatic
+0-100kmh: 11.1s
+top speed: 188 kmh
+
+JOURNEY
+
+Minivan (Ford Windstar 2002)
+FWD, 1900 kg, 200 HP 3.8L, 4-speed automatic, poor aerodynamics
+0-100kmh: 9.9s
+top speed: 170 kmh
+
+Paradise (Ford E-250 Recreational Van 2009)
+RWD, 2350 kg curb, 255 hp 5.4L, 5-speed automatic
+0-100kmh: 11.0s ?
+top speed: 184 kmh ?
+
+Pony (GMC Vandura G2500 1995)
+RWD, 2400+ kg curb, 200 hp 5.7L, 4-speed automatic
+0-100kmh: 12.5s ?
+top speed: 180 kmh ?
+
+Rental Shuttle Bus (TOURBUS)(Chevrolet Express G4500 Shuttle Bus 1996)
+RWD, 5200+ kg curb, 245 hp 5.7L, 5-speed automatic
+0-100kmh: 18.0s
+top speed: 160 kmh
+
+Rumpo (Ford E-250 Cargo Van 2009)
+RWD, 2400+ kg curb, 255 hp 5.4L, 5-speed automatic
+0-100kmh: 11.1s ?
+top speed: 184 kmh ?
+
+Rumpo3
+
+Speedo (Ford E-150 Cargo Van 2005)
+RWD, 2200+ kg curb, 255 hp 5.4L, 5-speed automatic
+0-100kmh: 10.5s
+top speed: 192 kmh ?
+
+Taco Van (Chevrolet Step Van P30 14 ft Extended)
+RWD, 5500+ kg curb, 240 hp, 4-speed manual
+0-100kmh: 21.0s ?
+top speed: 132 kmh ?
+
+Surfer (Volkswagen Type 2 T1 Kombi Bus 1966)
+RWD, 1170 kg, 54 HP 1.5L, 4-speed manual
+0-100kmh: ?
+top speed: 110 kmh
+
+TourBus (Chevrolet Express G4500 LWB Shuttle Bus 1996)
+RWD, 5200+ kg curb, 245 hp 5.7L, 5-speed automatic
+0-100kmh: 18.0s
+top speed: 160 kmh
+
+Utility Truck 3 (utiltruc3)(Ford F-250 Cutaway 20" wheels 1997 ?)
+RWD, 3500 kg, 235 hp 5.4L, 6-speed manual
+0-100kmh: 14.8s ?
+top speed: 167 kmh ?
+
+Youga (Dodge Ram Van B2500 SWB 2002)
+RWD, 2400 kg, 220 HP 5.2L, 4-speed automatic
+0-100kmh: 10.5s ?
+top speed: 172 kmh
+
+Youga2
+
+
+=======  Service  =============================================
+
+Taxi2 (Ford Crown Victoria P72 Taxi 2006)
+RWD, 1800 kg, 210 HP 4.6L, 4-speed automatic
+0-100kmh: 9.7s
+top speed: 212 kmh
+
+
+=======  Emergency  =============================================
+
+Ambulance (Chevrolet Express G4500 Cutaway 1996 LAFD Type III Ambulance)
+RWD, 2900+ kg curb, 245 hp 5.7L, 5-speed automatic
+0-100kmh: 12.5s
+top speed: 172 kmh
+
+Firetruck (LAFD Seagrave Pumper)
+RWD, 7500 kg curb, 750 gallons, 500 hp 11.9L, 6-speed automatic
+0-100kmh: 18.0s ?
+top speed: 140 kmh ?
+
+
+=======  Police  =============================================
+
+Crusader Military (Jeep Wrangler Rubicon)
+4WD, 2000 kg, 6-speed manual
+0-100kmh:  8.4s
+top speed: 205 kmh ?
+
+FBI1 (Dodge Charger SRT-8 Police Kit)
+RWD, 2000 kg, 430 HP, 6-speed manual
+0-100kmh: 5.7s
+0-160kmh: 12.9s
+top speed: 255 kmh
+
+FBI2 (FIB Granger)(GMT931 Chevrolet Suburban)
+4WD, 2000 kg, 403 HP, 6-speed automatic
+0-100kmh:  8.2s
+top speed: 205? kmh
+
+Lifeguard SUV (LGUARD Granger)(GMT931 Chevrolet Suburban)
+4WD, 2000 kg, 403 HP, 6-speed automatic
+0-100kmh:  8.2s
+top speed: 205 kmh ?
+
+Park Ranger (Granger)(GMT931 Chevrolet Suburban)
+4WD, 2000 kg, 403 HP, 6-speed automatic
+0-100kmh:  8.2s
+top speed: 205 kmh ?
+
+Sheriff SUV (Granger)(GMT931 Chevrolet Suburban)
+4WD, 2000 kg, 403 HP, 6-speed automatic
+0-100kmh:  8.2s
+top speed: 205? kmh
+
+Police1 (Crown Victoria Police Interceptor)
+RWD, 1800 kg, 251 HP 4.6L, 4-speed automatic
+0-100kmh: 8.2s ?
+top speed: 230 kmh ?
+
+Police2 (Dodge Charger SRT)
+RWD, 1900 kg,
+0-100kmh: 5.2s
+top speed: 265 kmh
+
+Police3 (Ford Taurus Interceptor)
+physics problems!
+
+Police4 (unmarked Crown Victoria Police Interceptor)
+RWD, 1800 kg, 251 HP 4.6L, 4-speed automatic
+0-100kmh: 8.2s ?
+top speed: 230 kmh ?
+
+PoliceT (Burrito)(Chevrolet Savana 1996)
+RWD, 2500 kg, 250(280) HP, 4-speed automatic
+0-100kmh: 9.0s
+
+Sheriff (Crown Victoria Police Interceptor)
+RWD, 1800 kg, 251 HP 4.6L, 4-speed automatic
+0-100kmh: 8.2s ?
+top speed: 230 kmh ?
+
+
+==========================================================
+
+Fastest cars (top 100):
+
+1.  Taipan (Hennessey Venom F5 2019)
+2.  Entity XXR (Koenigsegg Agera R 2013)
+3.  Nero Custom (Bugatti Vision Gran Turismo 2016 Concept)
+4.  Nero (Bugatti Chiron 2016)
+5.  Adder (Bugatti Veyron 16.4)
+6.  X80 (Ferrari F80 2016 CONCEPT)
+7.  Vagner (Aston Martin Valkyrie 2018 concept)
+8.  Visione (McLaren P1 LM 2016)
+9.  Autarch (SCG 003 Stradale 2017)
+10. Tyrant (Apollo Arrow 2017)
+11. TurismoR (LaFerrari 2014)
+12. T20 (McLaren P1 2014)
+13. Pfister811 (Porsche 918 Spyder 2013)
+14. Zentorno (Lamborghini Sesto Elemento)
+15. Tezeract (Lamborghini Terzo Millennio 2018 Concept)
+16. Cyclone (Rimac Concept One 2013)
+17. Entity XF (Koenigsegg CC8S 2004)
+18. Osiris (Pagani Huayra)
+19. Tyrus (McLaren F1 GTR Longtail 1997)
+20. RE-7B (Nissan R390 GT1 1998 LeMans)
+21. GP1 (McLaren F1 1996)
+22. Seven70 (Aston Martin One-77 2009)
+23. Tampa2 (Ford Mustang Hoonicorn)
+24. Carboniz (Ferrari F12 Berlinetta)
+25. Cheetah (Ferrari Enzo)
+26. Infernus (Lamborghini Murcielago LP 640)
+27. ItaliGTB2 (McLaren 570S with P1 facelift?)
+28. ItaliGTB (McLaren 570GT)
+29. Tempesta (Lotus Esprit 2014 Prototype)
+30. Jester2 (Acura NSX 2016 Concept-GT GT500)
+31. Jester (Acura NSX 2016)
+32. Banshee2 (Dodge Viper Venom 700R)
+33. XA-21 (Jaguar C-X75 2012 concept)
+34. FMJ (Ford GT 2017, prototype)
+35. Coquette (Chevrolet Corvette C7 Z06 2015)
+36. Bullet (Ford GT 2005)
+37. BestiaGTS (Ferrari FF 2011)
+38. Reaper (Lamborghini Huracan LP580-2 2016)
+39. Comet SR (Porsche 911 GT2 RS [997] 2011)
+40. Sabre Hotwing (Chevrolet Lumina NASCAR 1991)
+41. Vacca (Lamborghini Gallardo LP 560-4)
+42. ETR1 (Lexus LFA Nurburgring 2012)
+43. Penetrator (Jaguar XJ-220 1992)
+44. Massacro2 (Aston Martin Vanquish 2014 racecar)
+45. Massacro (Aston Martin Vanquish 2014)
+46. Comet2 (Porsche 996 GT2)
+47. Elegy2 (Nissan GT-R SpecV 2009)
+48. Omnis (Audi Sport Quattro S1 E2 1986)
+49. Surano (Mercedes SLS AMG Roadster 2011)
+50. NineF (Audi R8 V10 Spyder)
+51. Lynx (Jaguar F-Type R Coupe 2014)
+52. Banshee (Dodge Viper SRT-10)
+53. Pariah (Aston Martin Vanquish Zagato 2017)
+54. Verlierer2 (TVR Sagaris 2006)
+55. Comet3 (Porsche 934 RSR 3.0 1976, modified)
+56. SC1 (BMW M1 Concept 2009)
+57. Feltzer2 (Mercedes SL65 AMG 2010)
+58. Specter2 (Aston Martin DB10 Custom 2015, widebody, tuned)
+59. Specter (Aston Martin DB10 Custom 2015)
+60. Neon (Porsche Mission E Carrera S 2019)
+61. Infernus2 (Lamborghini Diablo SV 1996)
+62. Turismo2 (Ferrari F40 1988)
+63. Elegy (Nissan Skyline R33 GT-R Nismo 400R 1997)
+64. Buffalo3 (Dodge Charger SRT-8 racecar)
+65. Buffalo2 (Dodge Charger SRT-8 2011)
+66. Furore GT (Maserati Alfieri 2016)
+67. Schafter3 (Mercedes W212 E63 AMG 2011)
+68. Schwarzer (Mercedes C63 AMG 2012)
+69. Sultan RS (Subaru Impreza WRX STi v5 WRC 1999)
+70. Rapid GT (Aston Martin V8 Vantage)
+71. Torero (Lamborghini Countach 1988 25th anniversary)
+72. Ardent (Lotus Esprit V8 1996 weaponized)
+73. Kuruma (Mitsubishi Lancer Evo X MR)
+74. F620 (Jaguar XKR 2009)
+75. Cheetah Classic (Ferrari Testarossa 1986)
+76. Dominator2 (Ford Mustang GT 2008 racecar)
+77. Gauntlet2 (Dodge Challenger SRT-8 2009 racecar)
+78. Alpha (Cadillac Elmiraj)
+79. Windsor (Rolls-Royce Wraith)
+80. Mamba (AC Shelby Cobra MkIII 1966)
+81. Tropos Rallye (Lancia Stratos HF 1977, rally version)
+82. Coquette2 (Chevrolet Corvette C2 1966)
+83. Huntley S (Bentley SUV Concept Car 2015)
+84. CogCabrio (Bentley Continental GTC 2006)
+85. Exemplar (Aston Martin Rapide 2010)
+86. Cog55 (Bentley Continental Flying Spur Speed 2013)
+87. Jester Classic (Toyota Supra JZ A80 (MKIV) Turbo 1993)
+88. Zion (BMW 650i E63 hardtop)
+89. Fusilade (Chrysler Crossfire SRT-6)
+90. Schafter2 (Mercedes W212 E550 2010)
+91. Revolter (Cadillac Escala Concept 2016)
+92. Sentinel XS (BMW 335i E93 hardtop)
+93. Viseris (De Tomaso Pantera V8 GT5 1980)
+94. Felon (Maserati Quattroporte S 2009)
+95. Jackal (Jaguar XF 2009)
+96. Monroe (Lamborghini Miura P400S 1968)
+
+Fastest Electric Cars:
+1. Tezeract
+2. Cyclone
+3. Neon
+4. Voltic
+5. Raiden
+6. Khameleon
+7. Surge
+8. Dilettante
+
+
+Slowest cars (no heavy trucks):
+
+1.  Surfer (Volkswagen Type 2 T1 Kombi Bus 1966)
+2.  Kalahari (Citröen Mehari 4x4 1982)
+3.  Bodhi2 (Kaiser-Jeep M715)
+4.  Taco Van (Chevrolet Step Van P30 14 ft Extended)
+5.  Boxville (Chevrolet Step Van P30 12 ft)
+6.  TourBus (Chevrolet Express G4500 LWB Shuttle Bus 1996)
+7.  Camper (Chevrolet Express G4500 LWB Cutaway 1996 Recreational Vehicle)
+8.  Roosevelt (Cadillac 341A Town Sedan 1931, modified)
+9.  Utility Truck 3 (Ford F-250 Cutaway 20" wheels 1997)
+10. Guardian (Ford F-650 Crew Cab SWB custom [F650 Pickups Supertruck] 2012)
+11. Emperor (Cadillac Fleetwood Brougham 1977)
+12. Voodoo2 (Chevrolet Impala Turbo-Fire 283, 1959)
+13. Pony (GMC Vandura G2500 1995)
+14. Dilettante (Toyota Prius XW20 2008)
+15. Regina (Plymouth Fury Suburban 1973)
+16. Asea (Dacia Logan 2012)
+17. Panto (Smart Fortwo Brabus 2010)
+18. Tornado (Chevrolet Bel Air 1958)
+
