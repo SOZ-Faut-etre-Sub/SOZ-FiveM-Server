@@ -6,10 +6,17 @@ description "Driving licenses - car, truck, motorcycle"
 
 shared_script "config.lua"
 
-client_script {
+client_scripts {
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
-    "client.lua",
+    "client/penalties.lua",
+    "client/main.lua",
 }
 
 server_script "server.lua"
+
+dependencies {
+    "qb-core",
+    "qb-target",
+    "soz-hud"
+}
