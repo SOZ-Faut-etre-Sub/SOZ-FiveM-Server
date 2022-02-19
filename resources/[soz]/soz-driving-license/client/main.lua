@@ -227,6 +227,7 @@ RegisterNetEvent("soz-driving-license:client:spawn_car", function()
         SetVehicleNumberPlateText(vehicle, Config.VehiclePlateText)
         SetVehicleDoorsLockedForPlayer(vehicle, playerPed, false)
         SetVehRadioStation(vehicle, "OFF")
+        SetVehicleFuelLevel(vehicle, 100.0)
 
         -- Clear black screen
         DoScreenFadeIn(fadeDelay)
@@ -243,5 +244,10 @@ function TerminateExam(isSuccess)
     print("TERMINATE EXAM ", isSuccess)
     passingExam = false
     -- TODO
+    -- How to terminate exam : stop and exit vehicle, teleport ?
     -- Manage isSuccess
 end
+
+---EXPORTS Is this player currently passing a driving school exam ?
+---@return boolean
+exports("IsPassingExam", function () return passingExam end)
