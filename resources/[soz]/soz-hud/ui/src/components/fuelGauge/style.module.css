@@ -1,0 +1,9 @@
+.fuel {
+    position: relative;
+    right: 20px;
+    top: 60px;
+}
+
+.fuel g {
+    transform: translate(16px, 13px);
+}

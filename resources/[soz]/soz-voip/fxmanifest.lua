@@ -21,12 +21,6 @@ client_scripts {
 
 server_scripts {"server/**/*.lua", "server/**/*.js"}
 
-files {"ui/*.ogg", "ui/css/*.css", "ui/js/*.js", "ui/*.svg", "ui/index.html"}
-
-ui_page "ui/index.html"
-
-provides {"pma-voice"}
-
 convar_category "PMA-Voice" {
     "PMA-Voice Configuration Options",
     {

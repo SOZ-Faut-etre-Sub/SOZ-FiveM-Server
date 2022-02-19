@@ -1,0 +1,15 @@
+.lights {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgba(255, 255, 255, .3);
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+}
+
+.lights * {
+    transition: all .5s;
+}

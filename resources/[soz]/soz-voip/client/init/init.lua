@@ -23,11 +23,7 @@ AddEventHandler("onClientResourceStart", function(resource)
         SetResourceKvp("pma-voice_enableMicClicks", tostring(true))
         micClicks = "true"
     end
-    sendUIMessage({
-        uiEnabled = GetConvarInt("voice_enableUi", 1) == 1,
-        voiceModes = json.encode(Cfg.voiceModes),
-        voiceMode = mode - 1,
-    })
+    TriggerEvent("hud:client:UpdateVoiceMode", mode - 1)
 
     -- Reinitialize channels if they're set.
     if LocalPlayer.state.radioChannel ~= 0 then

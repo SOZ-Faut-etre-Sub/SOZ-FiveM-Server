@@ -1,0 +1,17 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+#app {
+    position: absolute;
+    inset: 0;
+}
