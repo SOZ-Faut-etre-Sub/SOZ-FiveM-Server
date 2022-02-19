@@ -85,7 +85,13 @@ local function setPlayerData(data)
     HudPlayerStatus = data
 
     if shouldUpdate then
-        SendNUIMessage({action = "update_needs", health = data.health, armor = data.armor, hunger = data.hunger, thirst = data.thirst})
+        SendNUIMessage({
+            action = "update_needs",
+            health = data.health,
+            armor = data.armor,
+            hunger = data.hunger,
+            thirst = data.thirst,
+        })
     end
 end
 
@@ -112,7 +118,6 @@ local function setVehicleData(data)
         })
     end
 end
-
 
 --- UpdateVoiceMode data
 --- @param data VoiceData

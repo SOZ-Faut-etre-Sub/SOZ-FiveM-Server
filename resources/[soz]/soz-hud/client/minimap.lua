@@ -5,7 +5,7 @@ function getMapPosition()
     local scaleX = 1 / resX
     local scaleY = 1 / resY
     local minimapRawX, minimapRawY
-    SetScriptGfxAlign(string.byte('L'), string.byte('B'))
+    SetScriptGfxAlign(string.byte("L"), string.byte("B"))
     minimapRawX, minimapRawY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
     minimap.width = scaleX * (resX / (4 * aspectRatio))
     minimap.height = scaleY * (resY / (5.674))
@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
 
     AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "soz_minimap", "radarmasksm")
 
-    SendNUIMessage({event = 'hud_minimap_pos', data = getMapPosition()})
+    SendNUIMessage({event = "hud_minimap_pos", data = getMapPosition()})
 
     local minimap = RequestScaleformMovie("minimap")
     SetRadarBigmapEnabled(true, false)
