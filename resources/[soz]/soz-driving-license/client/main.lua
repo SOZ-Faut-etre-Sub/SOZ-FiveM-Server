@@ -116,7 +116,7 @@ local function DisplayCheckpoint(checkpoint, nextCheckpoint)
         for i = 1, #msg, 1 do
             exports["soz-hud"]:DrawAdvancedNotification(
                 "Instructeur auto-école", "Information", msg[i],
-                "CHAR_BLANK_ENTRY", 1, false, false, 140
+                "CHAR_BLANK_ENTRY", 1, false, false, 170
             )
         end
     end
@@ -126,7 +126,7 @@ end
 
 ---Run thread responsible for driving exam
 ---@param licenseType any
-local function startExamLoop(licenseType)
+local function startExamLoop(licenseType, context)
     Citizen.CreateThread(function ()
         local checkpoints = Config.Checkpoints[licenseType]
         if not checkpoints then return end
@@ -138,7 +138,12 @@ local function startExamLoop(licenseType)
         local cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
 
         local pid = PlayerPedId()
+        context.player = pid -- Add this player to context
 
+        -- Start penalty check loop
+        PenaltyCheckingLoop(context)
+
+        -- Checkpoint loop
         while passingExam do -- Exam loop
             local playerCoords = GetEntityCoords(pid)
             local dist = #(vector3(checkpoint.x, checkpoint.y, checkpoint.z) - playerCoords)
@@ -151,16 +156,15 @@ local function startExamLoop(licenseType)
                     -- Draw next one
                     cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
                 else
-                    -- Terminate exam
-                    passingExam = false
-                    -- TODO Validate exam OK
+                    TerminateExam(true)
                 end
             end
-
-            -- TODO Check for penalties
-
+            
             Citizen.Wait(0)
         end
+
+        -- Cleanup checkpoints
+        DeleteCheckpoint(cpId)
     end)
 end
 
@@ -220,7 +224,7 @@ RegisterNetEvent("soz-driving-license:client:spawn_car", function()
 
         SetPedIntoVehicle(playerPed, vehicle, -1)
         SetPedIntoVehicle(instructor, vehicle, 0)
-        SetVehicleNumberPlateText(vehicle, "P3RM15")
+        SetVehicleNumberPlateText(vehicle, Config.VehiclePlateText)
         SetVehicleDoorsLockedForPlayer(vehicle, playerPed, false)
         SetVehRadioStation(vehicle, "OFF")
 
@@ -229,6 +233,15 @@ RegisterNetEvent("soz-driving-license:client:spawn_car", function()
 
         -- Start exam
         passingExam = true
-        startExamLoop("car")
+        startExamLoop("car", { ["vehicle"] = vehicle })
     end)
 end)
+
+function TerminateExam(isSuccess)
+    CleanUpPenaltySystem()
+
+    print("TERMINATE EXAM ", isSuccess)
+    passingExam = false
+    -- TODO
+    -- Manage isSuccess
+end

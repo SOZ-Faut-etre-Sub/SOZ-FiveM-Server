@@ -54,6 +54,11 @@ Config.Licenses = {
     },
 }
 
+Config.VehiclePlateText = "P3RM15"
+
+Config.PenaltyTickDelay = 200 -- in ms
+Config.PenaltyMaxDuration = 3000 -- in ms
+
 Config.CheckpointType = 0
 Config.CheckpointSize = 3.0
 Config.CheckpointColor = {r = 12, g = 123, b = 86, a = 150}
@@ -63,7 +68,7 @@ Config.Checkpoints = {
         {
             x = -819.35, y = -1324.4, z = 4.0,
             message = {
-                "Ton examen va débuter. Boulce ta ceinture et nous pouvons partir.",
+                "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
                 "Suis ton GPS à allure modérée, et respecte les autres usagers de la route."
             }
         },
