@@ -1,0 +1,28 @@
+.status {
+    display: flex;
+    padding: .3rem;
+    margin: .3rem 0;
+    border-radius: .3rem;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.icon {
+    padding-left: .2rem;
+    padding-right: .5rem;
+    height: .8rem;
+    width: .8rem;
+    color: rgba(255, 255, 255, .65);
+}
+
+.progressbar {
+    display: flex;
+    width: 100%;
+    border-radius: .15rem;
+    overflow: hidden;
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    transition: width 1s;
+}

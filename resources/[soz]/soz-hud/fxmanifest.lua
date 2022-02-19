@@ -2,9 +2,9 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-ui_page "ui/index.html"
+ui_page "html/index.html"
 
-files {"themes/*", "ui/index.html", "ui/app.js", "ui/elements/*.js", "ui/fonts/*.ttf", "ui/app.css", "ui/sprite.svg"}
+files {"themes/*", "html/index.html", "html/assets/*"}
 
 shared_script "config.lua"
 

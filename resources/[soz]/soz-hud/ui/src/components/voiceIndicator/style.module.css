@@ -1,0 +1,25 @@
+.voiceInfo {
+    position: fixed;
+    right: 13vw;
+    bottom: 1.5rem;
+    color: rgba(255, 255, 255, .75);
+}
+
+.icon {
+    opacity: 0;
+    width: 3rem;
+    height: 3rem;
+    animation: display-in 3s;
+}
+
+@keyframes display-in {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
