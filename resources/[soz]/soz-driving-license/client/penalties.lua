@@ -101,7 +101,7 @@ local function GetPenalties()
     }
 end
 
-local function DiplayNotification(type_, penalty)
+local function DiplayInstructorNotification(type_, penalty)
     local subtitle, message, color
     if type_ == "WARNING" then
         penalty.warning = true
@@ -138,12 +138,12 @@ function PenaltyCheckingLoop(context)
 
                     -- Trigger warning
                     if not p.noWarning and newDuration > 0 and not p.warning then
-                        DiplayNotification("WARNING", p)
+                        DiplayInstructorNotification("WARNING", p)
                     end
 
                     -- Terminate exam
                     if newDuration >= Config.PenaltyMaxDuration then
-                        DiplayNotification("FAIL", p)
+                        DiplayInstructorNotification("FAIL", p)
                         TerminateExam(false)
                     end
 

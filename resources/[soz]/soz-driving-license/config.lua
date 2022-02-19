@@ -63,22 +63,25 @@ Config.CheckpointType = 0
 Config.CheckpointSize = 3.0
 Config.CheckpointColor = {r = 12, g = 123, b = 86, a = 150}
 
+Config.InstructorStartSpeech = {
+    "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
+    "Suis ton GPS à allure modérée, et respecte les autres usagers de la route."
+}
+
 Config.Checkpoints = {
     ["car"] = {
+        {x = -704.06, y = -1246.4, z = 8.88},
+        {x = -751.81, y = -1128.65, z = 9.18},
         {
-            x = -819.35, y = -1324.4, z = 4.0,
-            message = {
-                "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
-                "Suis ton GPS à allure modérée, et respecte les autres usagers de la route."
-            }
+            x = -630.52, y = -975.5, z = 19.9,
+            message = "Ici, ce sont les bureaux de ~p~Twitch New~s~. Ils ne racontent que des salades..."
         },
-        {x = -837.18, y = -1303.95, z = 3.49},
+        {x = -543.82, y = -1103.21, z = 20.88},
+        {x = -630.09, y = -1265.14, z = 9.49},
         {
-            x = -822.96, y = -1280.86, z = 3.49,
-            message = "Continue comme ça !"
+            x = -818.22, y = -1330.59, z = 3.58,
+            message = "Tu es arrivé au bout. Bien joué !"
         },
-        {x = -794.46, y = -1300.71, z = 3.49},
-        {x = -803.86, y = -1326.61, z = 3.49},
     },
     ["truck"] = {},
     ["motorcycle"] = {},
