@@ -80,7 +80,8 @@ end
 ---@param pop boolean Should table item be poped
 ---@return table
 local function getNextCheckpoint(tbl, pop)
-    if not next(tbl) then return {x = 0.0, y = 0.0, z = 0.0} end
+    -- if not next(tbl) then return {x = 0.0, y = 0.0, z = 0.0} end
+    if not next(tbl) then return nil end
 
     local cp = tbl[1]
     if pop then table.remove(tbl, 1) end
@@ -93,11 +94,18 @@ end
 ---@param nextCheckpoint table Following checkpoint
 ---@return number
 local function DisplayCheckpoint(checkpoint, nextCheckpoint)
-    -- Draw Checkpoint
+    local cpType = Config.CheckpointType
+    if not nextCheckpoint then -- Last check point
+        nextCheckpoint = {}
+        cpType = 4 -- Chequered flag
+    end
+
     local cpColor = Config.CheckpointColor
     local cpSize = Config.CheckpointSize
+
+    -- Draw Checkpoint
     local cpId = CreateCheckpoint(
-        Config.CheckpointType,
+        cpType,
         checkpoint.x, checkpoint.y, checkpoint.z,
         nextCheckpoint.x or 0.0, nextCheckpoint.y or 0.0, nextCheckpoint.z or 0.0,
         cpSize,
@@ -108,19 +116,6 @@ local function DisplayCheckpoint(checkpoint, nextCheckpoint)
     -- Add GPS waypoint
     SetNewWaypoint(checkpoint.x, checkpoint.y)
 
-    -- Display message if available
-    if checkpoint.message then
-        local msg = checkpoint.message
-        if type(msg) == "string" then msg = {msg} end
-
-        for i = 1, #msg, 1 do
-            exports["soz-hud"]:DrawAdvancedNotification(
-                "Instructeur auto-école", "Information", msg[i],
-                "CHAR_BLANK_ENTRY", 1, false, false, 170
-            )
-        end
-    end
-
     return cpId
 end
 
@@ -128,20 +123,27 @@ end
 ---@param licenseType any
 local function startExamLoop(licenseType, context)
     Citizen.CreateThread(function ()
-        local checkpoints = Config.Checkpoints[licenseType]
-        if not checkpoints then return end
-        checkpoints = {table.unpack(checkpoints)}
-
-        -- Draw first checkpoint
-        local checkpoint = getNextCheckpoint(checkpoints, true)
-        local nextCheckpoint = getNextCheckpoint(checkpoints, false)
-        local cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
-
         local pid = PlayerPedId()
         context.player = pid -- Add this player to context
 
         -- Start penalty check loop
         PenaltyCheckingLoop(context)
+
+        -- Diplay Instructor start speech
+        for i = 1, #Config.InstructorStartSpeech, 1 do
+            DiplayInstructorNotification("INFO", Config.InstructorStartSpeech[i])
+        end
+
+        -- Checkpoints
+        local checkpoints = Config.Checkpoints[licenseType]
+        if not checkpoints then return end
+        checkpoints = {table.unpack(checkpoints)}
+
+        -- Setup first checkpoint
+        local prevCheckpoint = nil
+        local checkpoint = getNextCheckpoint(checkpoints, true)
+        local nextCheckpoint = getNextCheckpoint(checkpoints, false)
+        local cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
 
         -- Checkpoint loop
         while passingExam do -- Exam loop
@@ -150,16 +152,28 @@ local function startExamLoop(licenseType, context)
 
             if dist < Config.CheckpointSize then
                 DeleteCheckpoint(cpId)
+
+                -- Display message if set (stored on previous checkpoint)
+                prevCheckpoint = checkpoint
+                if prevCheckpoint and prevCheckpoint.message then
+                    local msg = prevCheckpoint.message
+                    if type(msg) == "string" then msg = {msg} end
+
+                    for i = 1, #msg, 1 do
+                        DiplayInstructorNotification("INFO", msg[i])
+                    end
+                end
+
+                -- Draw next checkpoint
                 checkpoint = getNextCheckpoint(checkpoints, true)
                 nextCheckpoint = getNextCheckpoint(checkpoints, false)
                 if checkpoint then
-                    -- Draw next one
                     cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
                 else
                     TerminateExam(true)
                 end
             end
-            
+
             Citizen.Wait(0)
         end
 
