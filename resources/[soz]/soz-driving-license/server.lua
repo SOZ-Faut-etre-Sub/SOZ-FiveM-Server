@@ -8,7 +8,7 @@ RegisterNetEvent("soz-driving-license:server:pay", function(licenseType)
     if not lData or type(lData.price) ~= "number" then return end
 
     if Player.Functions.RemoveMoney("money", lData.price) then
-        TriggerClientEvent("soz-driving-license:client:spawn_car", Player.PlayerData.source)
+        TriggerClientEvent("soz-driving-license:client:spawn_vehicle", Player.PlayerData.source, licenseType)
     else
         TriggerClientEvent(
             "hud:client:DrawNotification",

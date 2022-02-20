@@ -17,9 +17,10 @@ Citizen.CreateThread(function()
 
     -- Format licenses target options
     local options = {}
-    for _, data in pairs(Config.Licenses) do
+    for licenseType, data in pairs(Config.Licenses) do
         table.insert(options, {
-            event = data.event,
+            license = licenseType,
+            event = "soz-driving-license:client:start_exam",
             icon = data.icon,
             label = string.format(data.label, data.price),
             canInteract = function()
@@ -80,7 +81,6 @@ end
 ---@param pop boolean Should table item be poped
 ---@return table
 local function getNextCheckpoint(tbl, pop)
-    -- if not next(tbl) then return {x = 0.0, y = 0.0, z = 0.0} end
     if not next(tbl) then return nil end
 
     local cp = tbl[1]
@@ -124,7 +124,10 @@ end
 local function startExamLoop(licenseType, context)
     Citizen.CreateThread(function ()
         local pid = PlayerPedId()
-        context.player = pid -- Add this player to context
+        
+        -- Populate context
+        context.player = pid
+        context.licenseType = licenseType
 
         -- Start penalty check loop
         PenaltyCheckingLoop(context)
@@ -182,25 +185,7 @@ local function startExamLoop(licenseType, context)
     end)
 end
 
-AddEventHandler("soz-driving-license:client:start_car", function()
-    Citizen.CreateThread(function ()
-        -- Check if spawn location is free
-        local vData = Config.Licenses["car"].vehicle
-        if not vData then return end
-        if not IsSpawnPointFree(vData.x, vData.y, vData.z) then
-            TriggerEvent(
-                "hud:client:DrawNotification",
-                "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen."
-            )
-            return
-        end
-
-        -- Make player pay
-        TriggerServerEvent("soz-driving-license:server:pay", "car")
-    end)
-end)
-
-RegisterNetEvent("soz-driving-license:client:spawn_car", function()
+local function SetupDrivingSchoolExam(licenceType)
     Citizen.CreateThread(function ()
         -- Fade to black screen
         local fadeDelay = 500
@@ -225,7 +210,7 @@ RegisterNetEvent("soz-driving-license:client:spawn_car", function()
         local playerPed = PlayerPedId()
 
         -- Spawn car
-        local vData = Config.Licenses["car"].vehicle
+        local vData = Config.Licenses[licenceType].vehicle
         setupModel(vData.modelHash)
         local vehicle = CreateVehicle(
             vData.modelHash,
@@ -248,9 +233,9 @@ RegisterNetEvent("soz-driving-license:client:spawn_car", function()
 
         -- Start exam
         passingExam = true
-        startExamLoop("car", { ["vehicle"] = vehicle })
+        startExamLoop(licenceType, { ["vehicle"] = vehicle })
     end)
-end)
+end
 
 function TerminateExam(isSuccess)
     CleanUpPenaltySystem()
@@ -261,6 +246,32 @@ function TerminateExam(isSuccess)
     -- How to terminate exam : stop and exit vehicle, teleport ?
     -- Manage isSuccess
 end
+
+---
+--- EVENTS
+---
+AddEventHandler("soz-driving-license:client:start_exam", function(data)
+    Citizen.CreateThread(function ()
+        -- Check if spawn location is free
+        local licenseType = data.license
+        local vData = Config.Licenses[licenseType].vehicle
+        if not vData then return end
+        if not IsSpawnPointFree(vData.x, vData.y, vData.z) then
+            TriggerEvent(
+                "hud:client:DrawNotification",
+                "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen."
+            )
+            return
+        end
+
+        -- Make player pay
+        TriggerServerEvent("soz-driving-license:server:pay", licenseType)
+    end)
+end)
+
+RegisterNetEvent("soz-driving-license:client:spawn_vehicle", function(licenseType)
+    SetupDrivingSchoolExam(licenseType)
+end)
 
 ---EXPORTS Is this player currently passing a driving school exam ?
 ---@return boolean
