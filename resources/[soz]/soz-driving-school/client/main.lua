@@ -234,17 +234,24 @@ local function SetupDrivingSchoolExam(licenceType)
     end)
 end
 
+local function RunExitSequence()
+    -- Player
+    local pid = PlayerPedId()
+    TaskLeaveVehicle(pid, vehicleEntity, 0)
+    -- Instructor
+    TaskLeaveVehicle(instructorEntity, vehicleEntity, 0)
+end
+
 function TerminateExam(isSuccess)
+    RunExitSequence()
+
     SetEntityAsNoLongerNeeded(instructorEntity)
     SetEntityAsNoLongerNeeded(vehicleEntity)
     CleanUpPenaltySystem()
     DeleteWaypoint()
+    passingExam = false
 
     print("TERMINATE EXAM ", isSuccess)
-    passingExam = false
-    -- TODO
-    -- How to terminate exam : stop and exit vehicle, teleport ?
-    -- Manage isSuccess
 end
 
 ---
