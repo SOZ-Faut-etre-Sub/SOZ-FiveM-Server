@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-description "Driving licenses - car, truck, motorcycle"
+description "Driving School - car, truck, motorcycle"
 
 shared_script "config.lua"
 
