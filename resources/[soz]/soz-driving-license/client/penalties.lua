@@ -13,8 +13,8 @@ AddEventHandler("gameEventTriggered", function (name, args)
     end
 end)
 
-local function GetPenalties()
-    return {
+local function GetPenalties(licenseType)
+    local all_penalties = {
         ["overspeed"] = {
             duration = 0,
             warning = false,
@@ -42,6 +42,7 @@ local function GetPenalties()
         },
 
         ["seatbelt"] = {
+            exclude = {"motorcycle"},
             duration = -5000,
             warning = false,
             warningMsg = "Boucle ta ceinture ! La sécurité avant tout.",
@@ -99,6 +100,19 @@ local function GetPenalties()
             end
         },
     }
+
+    -- Filter penalties to remove excluded ones for this license type
+    local penalties = {}
+    for key, data in pairs(all_penalties) do
+        local toBeExcluded = false
+        if data.exclude and type(data.exclude) == "table" then
+            for _, license in ipairs(data.exclude) do
+                if license == licenseType then toBeExcluded = true end
+            end
+        end
+        if not toBeExcluded then penalties[key] = data end
+    end
+    return penalties
 end
 
 local function DiplayInstructorNotification(type_, penalty)
@@ -125,11 +139,12 @@ local penalties
 local penaltyLoopIsRunning = false
 function PenaltyCheckingLoop(context)
     penaltyLoopIsRunning = true
-    penalties = GetPenalties()
+    penalties = GetPenalties(context.licenseType)
 
     Citizen.CreateThread(function ()
         while penaltyLoopIsRunning do
             for _, p in pairs(penalties) do
+
                 context.self = p -- Add penalty definition to context
 
                 if p.isValid and not p.isValid(context) then

@@ -25,30 +25,27 @@ Config.Licenses = {
             x = -809.18, y = -1319.61, z = 4.49, rotation = 170.42,
             networkSync = true
         },
-        event = "soz-driving-license:client:start_car",
-        price = 1000,
+        price = 1,
         icon = "fas fa-car",
         label = "Passer le permis voiture ($%s)",
     },
     ["truck"] = {
         vehicle = {
-            modelHash = "",
-            x = 0.0, y = 0.0, z = 0.0, rotation = 0.0,
+            modelHash = "boxville4",
+            x = -828.87, y = -1264.37, z = 4.57, rotation = 139.59,
             networkSync = true
         },
-        event = "",
-        price = 2500,
+        price = 1,
         icon = "fas fa-truck",
         label = "Passer le permis camion ($%s)",
     },
     ["motorcycle"] = {
         vehicle = {
-            modelHash = "",
-            x = 0.0, y = 0.0, z = 0.0, rotation = 0.0,
+            modelHash = "faggio",
+            x = -805.25, y = -1336.23, z = 4.62, rotation = 315.04,
             networkSync = true
         },
-        event = "",
-        price = 1000,
+        price = 1,
         icon = "fas fa-motorcycle",
         label = "Passer le permis moto ($%s)",
     },
@@ -74,7 +71,7 @@ Config.Checkpoints = {
         {x = -751.81, y = -1128.65, z = 9.18},
         {
             x = -630.52, y = -975.5, z = 19.9,
-            message = "Ici, ce sont les bureaux de ~p~Twitch New~s~. Ils ne racontent que des salades..."
+            message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades..."
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
@@ -83,6 +80,32 @@ Config.Checkpoints = {
             message = "Tu es arrivé au bout. Bien joué !"
         },
     },
-    ["truck"] = {},
-    ["motorcycle"] = {},
+    ["truck"] = {
+        {x = -704.06, y = -1246.4, z = 8.88},
+        {x = -751.81, y = -1128.65, z = 9.18},
+        {
+            x = -630.52, y = -975.5, z = 19.9,
+            message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades..."
+        },
+        {x = -543.82, y = -1103.21, z = 20.88},
+        {x = -630.09, y = -1265.14, z = 9.49},
+        {
+            x = -818.22, y = -1330.59, z = 3.58,
+            message = "Tu es arrivé au bout. Bien joué !"
+        },
+    },
+    ["motorcycle"] = {
+        {x = -704.06, y = -1246.4, z = 8.88},
+        {x = -751.81, y = -1128.65, z = 9.18},
+        {
+            x = -630.52, y = -975.5, z = 19.9,
+            message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades..."
+        },
+        {x = -543.82, y = -1103.21, z = 20.88},
+        {x = -630.09, y = -1265.14, z = 9.49},
+        {
+            x = -818.22, y = -1330.59, z = 3.58,
+            message = "Tu es arrivé au bout. Bien joué !"
+        },
+    },
 }
