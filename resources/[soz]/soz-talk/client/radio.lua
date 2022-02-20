@@ -25,9 +25,9 @@ local function closeEvent()
     TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.6)
 end
 
-local function connecttoradio(channel)
+local function connecttoradio(channel, isPrimary)
     if tostring(channel) ~= nil then
-        exports["soz-voip"]:setRadioChannel(channel)
+        exports["soz-voip"]:setRadioChannel(channel, isPrimary)
         QBCore.Functions.Notify(Config.messages["joined_to_radio"] .. channel .. " MHz", "success")
     end
 end
@@ -36,17 +36,53 @@ local function leaveradio()
     closeEvent()
     primaryRadio.frequency = 0
     exports["soz-voip"]:setRadioChannel(0)
-    exports["soz-voip"]:setVoiceProperty("radioEnabled", false)
     QBCore.Functions.Notify(Config.messages["you_leave"], "error")
 end
 
 local function toggleRadio(toggle)
+    SetNuiFocus(toggle, toggle)
+    SetNuiFocusKeepInput(toggle)
     radioOpen = toggle
-    SetNuiFocus(radioOpen, radioOpen)
-    SetNuiFocusKeepInput(radioOpen)
+
     if radioOpen then
         toggleRadioAnimation(true)
         SendNUIMessage({type = "radio", action = "open"})
+
+        CreateThread(function()
+            while radioOpen do
+                DisableControlAction(0, 0, true) -- Next Camera
+                DisableControlAction(0, 1, true) -- Look Left/Right
+                DisableControlAction(0, 2, true) -- Look up/Down
+                DisableControlAction(0, 16, true) -- Next Weapon
+                DisableControlAction(0, 17, true) -- Select Previous Weapon
+                DisableControlAction(0, 22, true) -- Jump
+                DisableControlAction(0, 24, true) -- Attack
+                DisableControlAction(0, 25, true) -- Aim
+                DisableControlAction(0, 26, true) -- Look Behind
+                DisableControlAction(0, 36, true) -- Input Duck/Sneak
+                DisableControlAction(0, 37, true) -- Weapon Wheel
+                DisableControlAction(0, 44, true) -- Cover
+                DisableControlAction(0, 47, true) -- Detonate
+                DisableControlAction(0, 55, true) -- Dive
+                DisableControlAction(0, 75, true) -- Exit Vehicle
+                DisableControlAction(0, 76, true) -- Vehicle Handbrake
+                DisableControlAction(0, 81, true) -- Next Radio (Vehicle)
+                DisableControlAction(0, 82, true) -- Previous Radio (Vehicle)
+                DisableControlAction(0, 91, true) -- Passenger Aim (Vehicle)
+                DisableControlAction(0, 92, true) -- Passenger Attack (Vehicle)
+                DisableControlAction(0, 99, true) -- Select Next Weapon (Vehicle)
+                DisableControlAction(0, 106, true) -- Control Override (Vehicle)
+                DisableControlAction(0, 114, true) -- Fly Attack (Flying)
+                DisableControlAction(0, 115, true) -- Next Weapon (Flying)
+                DisableControlAction(0, 121, true) -- Fly Camera (Flying)
+                DisableControlAction(0, 122, true) -- Control OVerride (Flying)
+                DisableControlAction(0, 135, true) -- Control OVerride (Sub)
+                DisableControlAction(0, 200, true) -- Pause Menu
+                DisableControlAction(0, 245, true) -- Chat
+
+                Wait(0)
+            end
+        end)
     else
         toggleRadioAnimation(false)
         SendNUIMessage({type = "radio", action = "close"})
@@ -60,9 +96,7 @@ end)
 
 RegisterNUICallback("radio/enable", function(data, cb)
     radioEnabled = data.state
-    if radioEnabled then
-        exports["soz-voip"]:setVoiceProperty("radioEnabled", true)
-    else
+    if not radioEnabled then
         leaveradio()
     end
     cb("ok")
@@ -71,11 +105,12 @@ end)
 RegisterNUICallback("radio/change_frequency", function(data, cb)
     if data.primary then
         primaryRadio.frequency = data.primary
-        connecttoradio(primaryRadio.frequency)
+        connecttoradio(primaryRadio.frequency, true)
         cb("ok")
     end
     if data.secondary then
         secondaryRadio.frequency = data.secondary
+        connecttoradio(secondaryRadio.frequency, false)
         cb("ok")
     end
 end)
@@ -83,12 +118,12 @@ end)
 RegisterNUICallback("radio/change_volume", function(data, cb)
     if data.primary then
         primaryRadio.volume = data.primary
-        exports["soz-voip"]:setRadioVolume(primaryRadio.volume)
-        QBCore.Functions.Notify(Config.messages["volume_radio"] .. primaryRadio.volume, "success")
+        exports["soz-voip"]:setVolume("primaryRadio", primaryRadio.volume)
         cb("ok")
     end
     if data.secondary then
         secondaryRadio.volume = data.secondary
+        exports["soz-voip"]:setVolume("secondaryRadio", secondaryRadio.volume)
         cb("ok")
     end
 end)
