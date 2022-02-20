@@ -6,6 +6,7 @@ local PlayerList = MenuV:InheritMenu(AdminMenu)
 local VehiculeList = MenuV:InheritMenu(AdminMenu)
 local VehiculeModel = MenuV:InheritMenu(AdminMenu)
 local Players = MenuV:InheritMenu(AdminMenu)
+local Vehicules = MenuV:InheritMenu(AdminMenu)
 
 local noclip_check = false
 local coords_check = false
@@ -61,18 +62,20 @@ end
 
 local function CopyToClipboard(dataType)
     local ped = PlayerPedId()
-    if dataType == "coords" then
+    if dataType == "coords3" then
         local coords = GetEntityCoords(ped)
         local x = round(coords.x, 2)
         local y = round(coords.y, 2)
         local z = round(coords.z, 2)
         SendNUIMessage({string = string.format("vector3(%s, %s, %s)", x, y, z)})
-        QBCore.Functions.Notify("Coordonnées copier!", "success")
-    elseif dataType == "heading" then
+    elseif dataType == "coords4" then
+        local coords = GetEntityCoords(ped)
+        local x = round(coords.x, 2)
+        local y = round(coords.y, 2)
+        local z = round(coords.z, 2)
         local heading = GetEntityHeading(ped)
         local h = round(heading, 2)
-        SendNUIMessage({string = h})
-        QBCore.Functions.Notify("Orientation copier!", "success")
+        SendNUIMessage({string = string.format("vector4(%s, %s, %s, %s)", x, y, z, h)})
     end
 end
 
@@ -80,8 +83,17 @@ local function OpenPlayerMenus(player)
     Players:ClearItems()
     MenuV:OpenMenu(Players)
     local elements = {
-        [1] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
-        [2] = {label = "Amène sur", value = "bring", description = " Amène " .. player.cid .. " sur ta position"},
+        [1] = {label = "Tuer", value = "kill", description = "Tue le joueur  " .. player.cid .. ""},
+        [2] = {label = "Revive", value = "revive", description = "Revive le joueur " .. player.cid .. ""},
+        [3] = {label = "Observer", value = "spectate", description = "Observe les actions de " .. player.cid .. ""},
+        [4] = {label = "Freeze", value = "freeze", description = "Freeze le joueur " .. player.cid .. ""},
+        [5] = {label = "Aller sur", value = "goto", description = "Va sur la position de " .. player.cid .. ""},
+        [6] = {label = "Amène sur", value = "bring", description = "Amène " .. player.cid .. " sur ta position"},
+        [7] = {
+            label = "Assis-toi dans son véhicule",
+            value = "intovehicle",
+            description = "Assis-toi dans le véhicule de " .. player.cid .. "",
+        },
     }
     for k, v in ipairs(elements) do
         local menu_button10 = Players:AddButton({
@@ -111,11 +123,51 @@ local function OpenCarModelsMenu(category)
     end
 end
 
+local function OpenVehiculeMenus()
+    Vehicules:ClearItems()
+    MenuV:OpenMenu(Vehicules)
+    local elements = {
+        [1] = {label = "Fix", value = "fix", description = "Répare le véhicule"},
+        [2] = {label = "Supprime", value = "dv", description = "Supprime le véhicule"},
+    }
+    local vehspawn = Vehicules:AddButton({
+        label = "Spawn Véhicules",
+        value = VehiculeList,
+        description = "Voir la liste des Véhicules",
+    })
+    for k, v in ipairs(elements) do
+        local menu_button10 = Vehicules:AddButton({
+            label = " " .. v.label,
+            value = v.value,
+            description = v.description,
+            select = function(btn)
+                local values = btn.Value
+                TriggerServerEvent("QBCore:CallCommand", values, {})
+            end,
+        })
+    end
+    vehspawn:On("Select", function(item)
+        VehiculeList:ClearItems()
+        for k, v in pairs(vehicles) do
+            local menu_button10 = VehiculeList:AddButton({
+                label = k,
+                value = v,
+                description = "Nom de catégorie",
+                select = function(btn)
+                    local select = btn.Value
+                    OpenCarModelsMenu(select)
+                end,
+            })
+        end
+    end)
+end
+
 local function SetFoodandDrink()
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + 100)
 end
 
+---@param menu Menu
 local function AdminPanel(menu)
     local noclip = menu:AddCheckbox({
         label = "Noclip",
@@ -127,18 +179,19 @@ local function AdminPanel(menu)
         value = coords_check,
         description = "Affiche les coords",
     })
-    local copy_coords = menu:AddButton({label = "Copier les coords", description = "Copie les coords"})
+    local copy_coords = menu:AddSlider({
+        label = "Copier les coords",
+        description = "Copie les coords",
+        value = "coords",
+        values = {{label = "vector4", value = "coords4"}, {label = "vector3", value = "coords3"}},
+    })
     local tpm = menu:AddButton({label = "Tpm", description = "Téléport sur le marqueur"})
     local playerlist = menu:AddButton({
         label = "Gestion des joueurs",
         value = PlayerList,
         description = "Voir la liste des joueurs",
     })
-    local vehspawn = menu:AddButton({
-        label = "Spawn Véhicules",
-        value = VehiculeList,
-        description = "Voir la liste des Véhicules",
-    })
+    local vehmenu = menu:AddButton({label = "Menu Véhicules", value = Vehicules, description = "Option du véhicule"})
     local heal = menu:AddButton({label = "max faim/soif", description = "reset la faim et la soif"})
 
     noclip:On("change", function()
@@ -151,8 +204,12 @@ local function AdminPanel(menu)
         ToggleShowCoordinates()
     end)
 
-    copy_coords:On("select", function()
-        CopyToClipboard("coords")
+    copy_coords:On("select", function(_, value)
+        CopyToClipboard(value)
+    end)
+
+    vehmenu:On("select", function()
+        OpenVehiculeMenus()
     end)
 
     tpm:On("select", function()
@@ -178,21 +235,6 @@ local function AdminPanel(menu)
                 })
             end
         end)
-    end)
-
-    vehspawn:On("Select", function(item)
-        VehiculeList:ClearItems()
-        for k, v in pairs(vehicles) do
-            local menu_button10 = VehiculeList:AddButton({
-                label = k,
-                value = v,
-                description = "Nom de catégorie",
-                select = function(btn)
-                    local select = btn.Value
-                    OpenCarModelsMenu(select)
-                end,
-            })
-        end
     end)
 
 end
