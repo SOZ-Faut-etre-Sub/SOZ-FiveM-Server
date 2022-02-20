@@ -2,6 +2,8 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 
 local playerInsideZone = false -- Is player inside for for NPC interaction ?
 local passingExam = false -- Is a driving exam running ?
+local instructorEntity
+local vehicleEntity
 
 Citizen.CreateThread(function()
     -- Blip
@@ -153,6 +155,7 @@ local function startExamLoop(licenseType, context)
 
             if dist < Config.CheckpointSize then
                 DeleteCheckpoint(cpId)
+                PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET", false)
 
                 -- Display message if set (stored on previous checkpoint)
                 prevCheckpoint = checkpoint
@@ -197,9 +200,6 @@ local function SetupDrivingSchoolExam(licenceType)
         setupModel(iData.modelHash)
         local instructor = CreatePed(4, iData.modelHash, iData.x, iData.y, iData.z - 1, iData.rotation, iData.networkSync, false)
 
-        SetModelAsNoLongerNeeded(iData.modelHash)
-        SetEntityAsNoLongerNeeded(instructor)
-
         SetBlockingOfNonTemporaryEvents(instructor, true)
         SetEntityInvincible(instructor, true)
 
@@ -210,15 +210,20 @@ local function SetupDrivingSchoolExam(licenceType)
         setupModel(vData.modelHash)
         local vehicle = CreateVehicle(vData.modelHash, vData.x, vData.y, vData.z, vData.rotation, true, false)
 
-        SetModelAsNoLongerNeeded(vData.modelHash)
-        SetEntityAsNoLongerNeeded(vehicle)
-
         SetPedIntoVehicle(playerPed, vehicle, -1)
         SetPedIntoVehicle(instructor, vehicle, 0)
         SetVehicleNumberPlateText(vehicle, Config.VehiclePlateText)
         SetVehicleDoorsLockedForPlayer(vehicle, playerPed, false)
         SetVehRadioStation(vehicle, "OFF")
         SetVehicleFuelLevel(vehicle, 100.0)
+
+        -- Unload models
+        SetModelAsNoLongerNeeded(iData.modelHash)
+        SetModelAsNoLongerNeeded(vData.modelHash)
+
+        -- Store instructor & vehicle entity globally for future clean up
+        instructorEntity = instructor
+        vehicleEntity = vehicle
 
         -- Clear black screen
         DoScreenFadeIn(fadeDelay)
@@ -230,6 +235,8 @@ local function SetupDrivingSchoolExam(licenceType)
 end
 
 function TerminateExam(isSuccess)
+    SetEntityAsNoLongerNeeded(instructorEntity)
+    SetEntityAsNoLongerNeeded(vehicleEntity)
     CleanUpPenaltySystem()
     DeleteWaypoint()
 
