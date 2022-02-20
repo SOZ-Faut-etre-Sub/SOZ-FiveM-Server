@@ -239,6 +239,7 @@ end
 
 function TerminateExam(isSuccess)
     CleanUpPenaltySystem()
+    DeleteWaypoint()
 
     print("TERMINATE EXAM ", isSuccess)
     passingExam = false

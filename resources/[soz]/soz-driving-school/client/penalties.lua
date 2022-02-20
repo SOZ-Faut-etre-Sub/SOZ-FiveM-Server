@@ -27,10 +27,10 @@ local function GetPenalties(licenseType)
             end
         },
 
-        ["out_of_car"] = {
+        ["out_of_veh"] = {
             duration = 0,
             warning = false,
-            warningMsg = "Remonte dans la voiture !",
+            warningMsg = "Remonte dans le vehicule !",
             failMsg = "Pour passer le permis, il faut être DANS le véhicule !",
             isValid = function (context)
                 local inVehicle = IsPedInAnyVehicle(context.player, true)
