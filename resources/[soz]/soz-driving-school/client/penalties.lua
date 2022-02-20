@@ -1,10 +1,10 @@
 local seatBeltState = false
-AddEventHandler("hud:client:UpdateSeatbelt", function (newState)
+AddEventHandler("hud:client:UpdateSeatbelt", function(newState)
     seatBeltState = newState
 end)
 
 local undrivableVehicles = {}
-AddEventHandler("gameEventTriggered", function (name, args)
+AddEventHandler("gameEventTriggered", function(name, args)
     if name == "CEventNetworkVehicleUndrivable" then
         local ped = args[1]
         if GetEntityType(ped) == 2 and IsEntityDead(ped) then
@@ -20,11 +20,13 @@ local function GetPenalties(licenseType)
             warning = false,
             warningMsg = "Attention à ta vitesse ! Ne dépasse pas les 90 km/h.",
             failMsg = "Tu n'as pas su maîtriser ta vitesse. On arrête là...",
-            isValid = function (context)
+            isValid = function(context)
                 local speed = math.ceil(GetEntitySpeed(context.vehicle) * 3.6)
-                if speed > 90.0 then return false end
+                if speed > 90.0 then
+                    return false
+                end
                 return true
-            end
+            end,
         },
 
         ["out_of_veh"] = {
@@ -32,13 +34,15 @@ local function GetPenalties(licenseType)
             warning = false,
             warningMsg = "Remonte dans le vehicule !",
             failMsg = "Pour passer le permis, il faut être DANS le véhicule !",
-            isValid = function (context)
+            isValid = function(context)
                 local inVehicle = IsPedInAnyVehicle(context.player, true)
-                if not inVehicle then return false end
+                if not inVehicle then
+                    return false
+                end
 
                 local vehIn = GetVehiclePedIsIn(context.player, false)
                 return vehIn == context.vehicle
-            end
+            end,
         },
 
         ["seatbelt"] = {
@@ -47,21 +51,23 @@ local function GetPenalties(licenseType)
             warning = false,
             warningMsg = "Boucle ta ceinture ! La sécurité avant tout.",
             failMsg = "La ceinture ce n'est pas pour les ienchs ! C'est terminé.",
-            isValid = function () return seatBeltState end
+            isValid = function()
+                return seatBeltState
+            end,
         },
 
         ["undrivable"] = {
             duration = Config.PenaltyMaxDuration,
             noWarning = true,
             failMsg = "C'est perdu ! Ce véhicule n'ira plus très loin...",
-            isValid = function (context)
+            isValid = function(context)
                 for i = 1, #undrivableVehicles, 1 do
                     if undrivableVehicles[i] == context.vehicle then
                         return false
                     end
                 end
                 return true
-            end
+            end,
         },
 
         ["phone"] = {
@@ -69,11 +75,13 @@ local function GetPenalties(licenseType)
             warning = false,
             warningMsg = "Range ce téléphone ! Regarde la route !",
             failMsg = "Le téléphone est interdit au volant !",
-            isValid = function ()
+            isValid = function()
                 if #exports["soz-phone"] > 0 then
                     return exports["soz-phone"]:IsPhoneVisible()
-                else return true end
-            end
+                else
+                    return true
+                end
+            end,
         },
 
         ["damage"] = {
@@ -83,21 +91,23 @@ local function GetPenalties(licenseType)
             warningThreshold = 995,
             warningMsg = "Ne casse pas tout ! Attention aux dégâts.",
             failMsg = "C'est trop de dégâts ! On arrête les frais.",
-            isValid = function (context)
+            isValid = function(context)
                 local this = context.self
                 local health = GetEntityHealth(context.vehicle)
                 if health <= this.warningThreshold then
                     -- Since this penalty is not time based, duration is manually set every iteration
                     this.duration = Config.PenaltyTickDelay + 1
-                    if health >= this.minThreshold then 
-                        if not this.warning then return false end
+                    if health >= this.minThreshold then
+                        if not this.warning then
+                            return false
+                        end
                     else
                         this.duration = Config.PenaltyMaxDuration
                         return false
                     end
                 end
                 return true
-            end
+            end,
         },
     }
 
@@ -107,10 +117,14 @@ local function GetPenalties(licenseType)
         local toBeExcluded = false
         if data.exclude and type(data.exclude) == "table" then
             for _, license in ipairs(data.exclude) do
-                if license == licenseType then toBeExcluded = true end
+                if license == licenseType then
+                    toBeExcluded = true
+                end
             end
         end
-        if not toBeExcluded then penalties[key] = data end
+        if not toBeExcluded then
+            penalties[key] = data
+        end
     end
     return penalties
 end
@@ -129,10 +143,7 @@ local function DiplayInstructorNotification(type_, penalty)
         color = 130
     end
 
-    exports["soz-hud"]:DrawAdvancedNotification(
-        "Instructeur auto-école", subtitle, message,
-        "CHAR_BLANK_ENTRY", 1, false, false, color
-    )
+    exports["soz-hud"]:DrawAdvancedNotification("Instructeur auto-école", subtitle, message, "CHAR_BLANK_ENTRY", 1, false, false, color)
 end
 
 local penalties
@@ -141,7 +152,7 @@ function PenaltyCheckingLoop(context)
     penaltyLoopIsRunning = true
     penalties = GetPenalties(context.licenseType)
 
-    Citizen.CreateThread(function ()
+    Citizen.CreateThread(function()
         while penaltyLoopIsRunning do
             for _, p in pairs(penalties) do
 
@@ -162,7 +173,7 @@ function PenaltyCheckingLoop(context)
                         TerminateExam(false)
                     end
 
-                -- Decrement penalty cooldown
+                    -- Decrement penalty cooldown
                 elseif not p.noWarning and p.duration and p.duration > 0 then
                     if p.duration <= Config.PenaltyTickDelay then
                         p.duration = 0

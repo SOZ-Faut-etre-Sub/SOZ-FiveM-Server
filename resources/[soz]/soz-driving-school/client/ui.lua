@@ -17,8 +17,5 @@ function DiplayInstructorNotification(type_, penalty)
         color = 130
     end
 
-    exports["soz-hud"]:DrawAdvancedNotification(
-        "Instructeur auto-école", subtitle, message,
-        "CHAR_BLANK_ENTRY", 1, false, false, color
-    )
+    exports["soz-hud"]:DrawAdvancedNotification("Instructeur auto-école", subtitle, message, "CHAR_BLANK_ENTRY", 1, false, false, color)
 end

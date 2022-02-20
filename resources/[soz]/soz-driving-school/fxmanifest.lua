@@ -16,8 +16,4 @@ client_scripts {
 
 server_script "server.lua"
 
-dependencies {
-    "qb-core",
-    "qb-target",
-    "soz-hud"
-}
+dependencies {"qb-core", "qb-target", "soz-hud"}
