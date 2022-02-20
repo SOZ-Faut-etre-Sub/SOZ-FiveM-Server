@@ -11,7 +11,7 @@ Citizen.CreateThread(function()
             name = Config.BlipName,
             coords = vector2(blipCoords.x, blipCoords.y),
             sprite = Config.BlipSprite,
-            color = Config.BlipColor
+            color = Config.BlipColor,
         })
     end
 
@@ -41,10 +41,7 @@ Citizen.CreateThread(function()
             invincible = true,
             blockevents = true,
             scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {
-                options = options,
-                distance = 1.5,
-            },
+            target = {options = options, distance = 1.5},
         },
     })
 
@@ -53,7 +50,7 @@ Citizen.CreateThread(function()
         name = "drivingschool",
         heading = sData.rotation,
     })
-    zone:onPlayerInOut(function (isInside)
+    zone:onPlayerInOut(function(isInside)
         playerInsideZone = isInside
     end)
 
@@ -81,10 +78,14 @@ end
 ---@param pop boolean Should table item be poped
 ---@return table
 local function getNextCheckpoint(tbl, pop)
-    if not next(tbl) then return nil end
+    if not next(tbl) then
+        return nil
+    end
 
     local cp = tbl[1]
-    if pop then table.remove(tbl, 1) end
+    if pop then
+        table.remove(tbl, 1)
+    end
 
     return cp
 end
@@ -104,13 +105,8 @@ local function DisplayCheckpoint(checkpoint, nextCheckpoint)
     local cpSize = Config.CheckpointSize
 
     -- Draw Checkpoint
-    local cpId = CreateCheckpoint(
-        cpType,
-        checkpoint.x, checkpoint.y, checkpoint.z,
-        nextCheckpoint.x or 0.0, nextCheckpoint.y or 0.0, nextCheckpoint.z or 0.0,
-        cpSize,
-        cpColor.r, cpColor.g, cpColor.b, cpColor.a, 0
-    )
+    local cpId = CreateCheckpoint(cpType, checkpoint.x, checkpoint.y, checkpoint.z, nextCheckpoint.x or 0.0, nextCheckpoint.y or 0.0, nextCheckpoint.z or 0.0,
+                                  cpSize, cpColor.r, cpColor.g, cpColor.b, cpColor.a, 0)
     SetCheckpointCylinderHeight(cpId, cpSize, cpSize, cpSize)
 
     -- Add GPS waypoint
@@ -122,9 +118,9 @@ end
 ---Run thread responsible for driving exam
 ---@param licenseType any
 local function startExamLoop(licenseType, context)
-    Citizen.CreateThread(function ()
+    Citizen.CreateThread(function()
         local pid = PlayerPedId()
-        
+
         -- Populate context
         context.player = pid
         context.licenseType = licenseType
@@ -139,7 +135,9 @@ local function startExamLoop(licenseType, context)
 
         -- Checkpoints
         local checkpoints = Config.Checkpoints[licenseType]
-        if not checkpoints then return end
+        if not checkpoints then
+            return
+        end
         checkpoints = {table.unpack(checkpoints)}
 
         -- Setup first checkpoint
@@ -160,7 +158,9 @@ local function startExamLoop(licenseType, context)
                 prevCheckpoint = checkpoint
                 if prevCheckpoint and prevCheckpoint.message then
                     local msg = prevCheckpoint.message
-                    if type(msg) == "string" then msg = {msg} end
+                    if type(msg) == "string" then
+                        msg = {msg}
+                    end
 
                     for i = 1, #msg, 1 do
                         DiplayInstructorNotification("INFO", msg[i])
@@ -186,7 +186,7 @@ local function startExamLoop(licenseType, context)
 end
 
 local function SetupDrivingSchoolExam(licenceType)
-    Citizen.CreateThread(function ()
+    Citizen.CreateThread(function()
         -- Fade to black screen
         local fadeDelay = 500
         DoScreenFadeOut(fadeDelay)
@@ -195,11 +195,7 @@ local function SetupDrivingSchoolExam(licenceType)
         -- Instructor Ped
         local iData = Config.Peds.instructor
         setupModel(iData.modelHash)
-        local instructor = CreatePed(
-            4, iData.modelHash,
-            iData.x, iData.y, iData.z - 1, iData.rotation,
-            iData.networkSync, false
-        )
+        local instructor = CreatePed(4, iData.modelHash, iData.x, iData.y, iData.z - 1, iData.rotation, iData.networkSync, false)
 
         SetModelAsNoLongerNeeded(iData.modelHash)
         SetEntityAsNoLongerNeeded(instructor)
@@ -212,11 +208,7 @@ local function SetupDrivingSchoolExam(licenceType)
         -- Spawn car
         local vData = Config.Licenses[licenceType].vehicle
         setupModel(vData.modelHash)
-        local vehicle = CreateVehicle(
-            vData.modelHash,
-            vData.x, vData.y, vData.z, vData.rotation,
-            true, false
-        )
+        local vehicle = CreateVehicle(vData.modelHash, vData.x, vData.y, vData.z, vData.rotation, true, false)
 
         SetModelAsNoLongerNeeded(vData.modelHash)
         SetEntityAsNoLongerNeeded(vehicle)
@@ -233,7 +225,7 @@ local function SetupDrivingSchoolExam(licenceType)
 
         -- Start exam
         passingExam = true
-        startExamLoop(licenceType, { ["vehicle"] = vehicle })
+        startExamLoop(licenceType, {["vehicle"] = vehicle})
     end)
 end
 
@@ -252,16 +244,15 @@ end
 --- EVENTS
 ---
 AddEventHandler("soz-driving-license:client:start_exam", function(data)
-    Citizen.CreateThread(function ()
+    Citizen.CreateThread(function()
         -- Check if spawn location is free
         local licenseType = data.license
         local vData = Config.Licenses[licenseType].vehicle
-        if not vData then return end
+        if not vData then
+            return
+        end
         if not IsSpawnPointFree(vData.x, vData.y, vData.z) then
-            TriggerEvent(
-                "hud:client:DrawNotification",
-                "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen."
-            )
+            TriggerEvent("hud:client:DrawNotification", "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.")
             return
         end
 
@@ -276,4 +267,6 @@ end)
 
 ---EXPORTS Is this player currently passing a driving school exam ?
 ---@return boolean
-exports("IsPassingExam", function () return passingExam end)
+exports("IsPassingExam", function()
+    return passingExam
+end)
