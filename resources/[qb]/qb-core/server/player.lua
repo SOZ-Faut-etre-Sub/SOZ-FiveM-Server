@@ -97,9 +97,15 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ['date'] = nil
     }
     PlayerData.metadata['licences'] = PlayerData.metadata['licences'] or {
-        ['driver'] = true,
-        ['business'] = false,
-        ['weapon'] = false
+        ['car'] = 0,
+        ['truck'] = 0,
+        ['motorcycle'] = 0,
+        ['heli'] = 0,
+        ['boat'] = 0,
+        ['weapon'] = false,
+        ['hunting'] = false,
+        ['fishing'] = false,
+        ['rescuer'] = false,
     }
     PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
 -- use only house and then house type for villa appart or house?
