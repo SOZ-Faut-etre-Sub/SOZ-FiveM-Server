@@ -21,22 +21,22 @@ local function toggleRadioAnimation(pState)
     end
 end
 
-local function closeEvent()
-    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.6)
+local function clickSound()
+    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.3)
 end
 
-local function connecttoradio(channel, isPrimary)
-    if tostring(channel) ~= nil then
+local function connectToRadio(channel, isPrimary)
+    if tonumber(channel) ~= nil and tonumber(channel) >= 1000 and tonumber(channel) <= 9999 then
         exports["soz-voip"]:setRadioChannel(channel, isPrimary)
-        QBCore.Functions.Notify(Config.messages["joined_to_radio"] .. channel .. " MHz", "success")
     end
 end
 
-local function leaveradio()
-    closeEvent()
+local function leaveRadio()
     primaryRadio.frequency = 0
-    exports["soz-voip"]:setRadioChannel(0)
-    QBCore.Functions.Notify(Config.messages["you_leave"], "error")
+    secondaryRadio.frequency = 0
+    exports["soz-voip"]:setRadioChannel(0, true)
+    exports["soz-voip"]:setRadioChannel(0, false)
+    clickSound()
 end
 
 local function toggleRadio(toggle)
@@ -50,7 +50,8 @@ local function toggleRadio(toggle)
 
         CreateThread(function()
             while radioOpen do
-                DisableControlAction(0, 0, true) -- Next Camera
+                Wait(0)
+
                 DisableControlAction(0, 1, true) -- Look Left/Right
                 DisableControlAction(0, 2, true) -- Look up/Down
                 DisableControlAction(0, 16, true) -- Next Weapon
@@ -79,8 +80,6 @@ local function toggleRadio(toggle)
                 DisableControlAction(0, 135, true) -- Control OVerride (Sub)
                 DisableControlAction(0, 200, true) -- Pause Menu
                 DisableControlAction(0, 245, true) -- Chat
-
-                Wait(0)
             end
         end)
     else
@@ -92,40 +91,42 @@ end
 --- NUI
 RegisterNUICallback("radio/toggle", function(data, cb)
     toggleRadio(data.state)
+    cb("ok")
 end)
 
 RegisterNUICallback("radio/enable", function(data, cb)
     radioEnabled = data.state
     if not radioEnabled then
-        leaveradio()
+        leaveRadio()
     end
+    clickSound()
     cb("ok")
 end)
 
 RegisterNUICallback("radio/change_frequency", function(data, cb)
-    if data.primary then
+    if data.primary and tonumber(data.primary) >= 1000 and tonumber(data.primary) <= 9999 then
         primaryRadio.frequency = data.primary
-        connecttoradio(primaryRadio.frequency, true)
-        cb("ok")
+        connectToRadio(primaryRadio.frequency, true)
     end
-    if data.secondary then
+    if data.secondary and tonumber(data.secondary) >= 1000 and tonumber(data.secondary) <= 9999 then
         secondaryRadio.frequency = data.secondary
-        connecttoradio(secondaryRadio.frequency, false)
-        cb("ok")
+        connectToRadio(secondaryRadio.frequency, false)
     end
+    clickSound()
+    cb("ok")
 end)
 
 RegisterNUICallback("radio/change_volume", function(data, cb)
     if data.primary then
         primaryRadio.volume = data.primary
         exports["soz-voip"]:setVolume("primaryRadio", primaryRadio.volume)
-        cb("ok")
     end
     if data.secondary then
         secondaryRadio.volume = data.secondary
         exports["soz-voip"]:setVolume("secondaryRadio", secondaryRadio.volume)
-        cb("ok")
     end
+    clickSound()
+    cb("ok")
 end)
 
 --- Events
@@ -134,7 +135,7 @@ RegisterNetEvent("talk:radio:use", function()
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
-    leaveradio()
+    leaveRadio()
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
@@ -148,7 +149,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 
     if not haveItem then
-        leaveradio()
+        leaveRadio()
     end
 end)
 
