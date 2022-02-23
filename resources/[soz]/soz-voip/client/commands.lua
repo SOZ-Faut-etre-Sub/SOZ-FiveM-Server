@@ -1,4 +1,3 @@
-
 --- Voice Mode
 RegisterCommand("voip-voice_up", function()
     if not CurrentPlayer.VoiceModeUpdateAllowed then
@@ -12,10 +11,10 @@ RegisterCommand("voip-voice_up", function()
         TriggerEvent("pma-voice:setTalkingMode", CurrentPlayer.VoiceMode)
     end
 end, false)
-RegisterKeyMapping("voip-voice_up", "Parler plus fort", "keyboard", Config.Keys['voice_up'])
+RegisterKeyMapping("voip-voice_up", "Parler plus fort", "keyboard", Config.Keys["voice_up"])
 
 RegisterCommand("voip-voice_down", function()
-    if  not CurrentPlayer.VoiceModeUpdateAllowed then
+    if not CurrentPlayer.VoiceModeUpdateAllowed then
         return
     end
 
@@ -26,7 +25,7 @@ RegisterCommand("voip-voice_down", function()
         TriggerEvent("pma-voice:setTalkingMode", CurrentPlayer.VoiceMode)
     end
 end, false)
-RegisterKeyMapping("voip-voice_down", "Parler moins fort", "keyboard", Config.Keys['voice_down'])
+RegisterKeyMapping("voip-voice_down", "Parler moins fort", "keyboard", Config.Keys["voice_down"])
 
 --- Proximity voice update
 function setProximityState(proximityRange, isCustom)

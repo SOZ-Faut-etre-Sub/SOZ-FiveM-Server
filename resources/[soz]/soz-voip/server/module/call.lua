@@ -70,13 +70,6 @@ end
 setmetatable(VoicePhone, {__index = VoiceModuleShell})
 voiceModule["call"] = VoicePhone.new()
 
-
-
-
-
-
-
-
 --- OLD
 exports("setPlayerCall", function(source, channel)
     VoicePhone:setPlayer(source, channel)

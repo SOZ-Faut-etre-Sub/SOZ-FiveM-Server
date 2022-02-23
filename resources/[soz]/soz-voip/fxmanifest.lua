@@ -31,7 +31,4 @@ convar_category "PMA-Voice" {
     },
 }
 
-dependencies {
-    "/onesync",
-    "interact-sound"
-}
+dependencies {"/onesync", "interact-sound"}

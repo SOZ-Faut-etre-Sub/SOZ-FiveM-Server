@@ -9,7 +9,6 @@ function defaultVoiceDataTable()
     return {call = 0, primaryRadio = 0, secondaryRadio = 0}
 end
 
-
 local function setupPlayerStateBag(source)
     local player = Player(source).state
     if not player.voipInit then
@@ -62,18 +61,6 @@ RegisterNetEvent("voip:setPlayerTalking", function(module, talking, extra)
 end)
 
 --- Exports
-exports("", function()
-
-end)
-
-
-
-
-
-
-
-
---- OLD
-exports("isValidPlayer", function (source)
+exports("isValidPlayer", function(source)
     return voiceData[source]
 end)
