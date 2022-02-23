@@ -215,7 +215,7 @@ local function SetupDrivingSchoolExam(licenceType)
         SetVehicleNumberPlateText(vehicle, Config.VehiclePlateText)
         SetVehicleDoorsLockedForPlayer(vehicle, playerPed, false)
         SetVehRadioStation(vehicle, "OFF")
-        SetVehicleFuelLevel(vehicle, 100.0)
+        exports["soz-vehicle"]:SetFuel(vehicle, 100.0)
 
         -- Unload models
         SetModelAsNoLongerNeeded(iData.modelHash)
