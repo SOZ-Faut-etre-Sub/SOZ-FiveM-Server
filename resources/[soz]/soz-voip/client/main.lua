@@ -1,4 +1,3 @@
-
 CurrentPlayer = {
     ServerId = GetPlayerServerId(PlayerId()),
     IsListenerEnabled = false,
@@ -11,7 +10,7 @@ CurrentPlayer = {
 
     Volume = table.deepclone(Config.DefaultVolume),
 
-    RadioButtonPressed = false
+    RadioButtonPressed = false,
 }
 
 ---Events
@@ -42,7 +41,11 @@ end)
 
 AddEventHandler("mumbleConnected", function()
     local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
-    LocalPlayer.state:set("proximity", {index = CurrentPlayer.VoiceMode, distance = voiceModeData[1], mode = voiceModeData[2]}, true)
+    LocalPlayer.state:set("proximity", {
+        index = CurrentPlayer.VoiceMode,
+        distance = voiceModeData[1],
+        mode = voiceModeData[2],
+    }, true)
 
     MumbleSetTalkerProximity(voiceModeData[1] + 0.0)
     MumbleClearVoiceTarget(Config.VoiceTarget)
@@ -57,7 +60,6 @@ AddEventHandler("mumbleConnected", function()
 
     addNearbyPlayers()
 end)
-
 
 RegisterNetEvent("onPlayerDropped", function(serverId)
     if CurrentPlayer.IsListenerEnabled then

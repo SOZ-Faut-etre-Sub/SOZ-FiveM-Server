@@ -130,10 +130,18 @@ local function fnRadioTalkRelease(radioChannel, isPrimary)
 end
 
 --- Commands
-RegisterCommand("+primaryradiotalk", function () fnRadioTalkPush(primaryRadioChannel, true) end, false)
-RegisterCommand("-primaryradiotalk", function () fnRadioTalkRelease(primaryRadioChannel, true) end, false)
+RegisterCommand("+primaryradiotalk", function()
+    fnRadioTalkPush(primaryRadioChannel, true)
+end, false)
+RegisterCommand("-primaryradiotalk", function()
+    fnRadioTalkRelease(primaryRadioChannel, true)
+end, false)
 RegisterKeyMapping("+primaryradiotalk", "Parler en radio (primaire)", "keyboard", "")
 
-RegisterCommand("+secondaryradiotalk", function () fnRadioTalkPush(secondaryRadioChannel, false) end, false)
-RegisterCommand("-secondaryradiotalk", function () fnRadioTalkRelease(secondaryRadioChannel, false) end, false)
+RegisterCommand("+secondaryradiotalk", function()
+    fnRadioTalkPush(secondaryRadioChannel, false)
+end, false)
+RegisterCommand("-secondaryradiotalk", function()
+    fnRadioTalkRelease(secondaryRadioChannel, false)
+end, false)
 RegisterKeyMapping("+secondaryradiotalk", "Parler en radio (secondaire)", "keyboard", "")
