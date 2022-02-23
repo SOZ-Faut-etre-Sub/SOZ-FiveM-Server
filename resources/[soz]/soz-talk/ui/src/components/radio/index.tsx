@@ -34,9 +34,12 @@ const Radio: FunctionalComponent = () => {
         }
     }, [currentFrequency, setPrimaryFrequency, setSecondaryFrequency])
     const handleFrequencyChange = useCallback(() => {
-        fetchAPI('/radio/change_frequency', {
-            [currentFrequency]: (currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency) * 10
-        }, () => {})
+        const frequency = (currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency) * 10
+        if (frequency >= 1000 && frequency <= 9999) {
+            fetchAPI('/radio/change_frequency', {
+                [currentFrequency]: frequency
+            }, () => {})
+        }
     }, [currentFrequency, primaryFrequency, secondaryFrequency])
 
     /*
