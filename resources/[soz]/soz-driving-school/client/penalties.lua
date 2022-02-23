@@ -129,23 +129,6 @@ local function GetPenalties(licenseType)
     return penalties
 end
 
-local function DiplayInstructorNotification(type_, penalty)
-    local subtitle, message, color
-    if type_ == "WARNING" then
-        penalty.warning = true
-        subtitle = "Avertissement"
-        message = penalty.warningMsg
-        color = 90
-
-    elseif type_ == "FAIL" then
-        subtitle = "Fin de l'examen"
-        message = penalty.failMsg
-        color = 130
-    end
-
-    exports["soz-hud"]:DrawAdvancedNotification("Instructeur auto-école", subtitle, message, "CHAR_BLANK_ENTRY", 1, false, false, color)
-end
-
 local penalties
 local penaltyLoopIsRunning = false
 function PenaltyCheckingLoop(context)
