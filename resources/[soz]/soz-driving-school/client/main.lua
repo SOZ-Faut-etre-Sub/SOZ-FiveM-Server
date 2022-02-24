@@ -251,7 +251,11 @@ function TerminateExam(isSuccess)
     DeleteWaypoint()
     passingExam = false
 
-    print("TERMINATE EXAM ", isSuccess)
+    if isSuccess then
+        TriggerServerEvent("soz-driving-license:server:update_license", "car")
+        exports["soz-hud"]:DrawAdvancedNotification(Config.BlipName, "Réussite", "Félicitations ! Vous venez d'obtenir votre permis", "CHAR_BLANK_ENTRY", 1,
+                                                    false, false, 210)
+    end
 end
 
 ---

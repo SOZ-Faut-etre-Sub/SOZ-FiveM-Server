@@ -30,18 +30,21 @@ Config.Licenses = {
         price = 1,
         icon = "fas fa-car",
         label = "Passer le permis voiture ($%s)",
+        points = 12,
     },
     ["truck"] = {
         vehicle = {modelHash = "boxville4", x = -828.87, y = -1264.37, z = 4.57, rotation = 139.59, networkSync = true},
         price = 1,
         icon = "fas fa-truck",
         label = "Passer le permis camion ($%s)",
+        points = 12,
     },
     ["motorcycle"] = {
         vehicle = {modelHash = "faggio", x = -805.25, y = -1336.23, z = 4.62, rotation = 315.04, networkSync = true},
         price = 1,
         icon = "fas fa-motorcycle",
         label = "Passer le permis moto ($%s)",
+        points = 12,
     },
 }
 
