@@ -57,6 +57,7 @@ export const NotificationBar = () => {
             <Transition
                 appear={true}
                 show={barUncollapsed}
+                unmount={false}
                 className="absolute inset-x-0 h-full w-full z-50"
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="-translate-y-full"

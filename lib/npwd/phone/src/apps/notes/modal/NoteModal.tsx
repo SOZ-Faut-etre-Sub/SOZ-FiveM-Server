@@ -104,6 +104,7 @@ export const NoteModal: React.FC = () => {
         <Transition
             appear={true}
             show={modalVisible}
+            unmount={false}
             as="div"
             className="absolute inset-x-0 z-40"
             enter="transition ease-in-out duration-300 transform"

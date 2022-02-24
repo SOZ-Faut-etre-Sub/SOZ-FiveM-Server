@@ -31,6 +31,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({open, onClose, options}
         <Transition
             appear={true}
             show={open}
+            unmount={false}
             className="absolute inset-x-0 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="translate-x-full"

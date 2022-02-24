@@ -11,7 +11,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import {RewriteFrames} from '@sentry/integrations';
 import attachWindowDebug from './os/debug/AttachWindowDebug';
-import {createBrowserHistory} from 'history';
 import {NuiProvider} from 'fivem-nui-react-lib';
 import {RecoilRootManager} from './lib/RecoilRootManager';
 import {RecoilDebugObserver} from './lib/RecoilDebugObserver';
@@ -19,8 +18,6 @@ import './i18n';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
-
-const history = createBrowserHistory();
 
 const rootDir = __dirname ?? process.cwd();
 // Enable Sentry when config setting is true and when in prod
@@ -34,9 +31,7 @@ if (
         autoSessionTracking: true,
         release: process.env.REACT_APP_VERSION,
         integrations: [
-            new Integrations.BrowserTracing({
-                routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
-            }),
+            new Integrations.BrowserTracing(),
             // @ts-ignore
             new RewriteFrames({
                 root: rootDir,
