@@ -1,78 +1,68 @@
-local wasProximityDisabledFromOverride = false
-disableProximityCycle = false
-RegisterCommand("setvoiceintent", function(source, args)
-    if GetConvarInt("voice_allowSetIntent", 1) == 1 then
-        local intent = args[1]
-        if intent == "speech" then
-            MumbleSetAudioInputIntent(GetHashKey("speech"))
-        elseif intent == "music" then
-            MumbleSetAudioInputIntent(GetHashKey("music"))
-        end
-        LocalPlayer.state:set("voiceIntent", intent, true)
-    end
-end)
-
--- TODO: Better implementation of this?
-RegisterCommand("vol", function(_, args)
-    if not args[1] then
+--- Voice Mode
+RegisterCommand("voip-voice_up", function()
+    if not CurrentPlayer.VoiceModeUpdateAllowed then
         return
     end
-    setVolume(tonumber(args[1]))
-end)
 
-exports("setAllowProximityCycleState", function(state)
-    type_check({state, "boolean"})
-    disableProximityCycle = state
-end)
+    if CurrentPlayer.VoiceMode + 1 <= #Config.VoiceModes then
+        CurrentPlayer.VoiceMode = CurrentPlayer.VoiceMode + 1
 
+        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode][1], false)
+        TriggerEvent("pma-voice:setTalkingMode", CurrentPlayer.VoiceMode)
+    end
+end, false)
+RegisterKeyMapping("voip-voice_up", "Parler plus fort", "keyboard", Config.Keys["voice_up"])
+
+RegisterCommand("voip-voice_down", function()
+    if not CurrentPlayer.VoiceModeUpdateAllowed then
+        return
+    end
+
+    if CurrentPlayer.VoiceMode - 1 > 0 then
+        CurrentPlayer.VoiceMode = CurrentPlayer.VoiceMode - 1
+
+        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode][1], false)
+        TriggerEvent("pma-voice:setTalkingMode", CurrentPlayer.VoiceMode)
+    end
+end, false)
+RegisterKeyMapping("voip-voice_down", "Parler moins fort", "keyboard", Config.Keys["voice_down"])
+
+--- Proximity voice update
 function setProximityState(proximityRange, isCustom)
-    local voiceModeData = Cfg.voiceModes[mode]
+    local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
     MumbleSetTalkerProximity(proximityRange + 0.0)
     LocalPlayer.state:set("proximity", {
-        index = mode,
+        index = CurrentPlayer.VoiceMode,
         distance = proximityRange,
         mode = isCustom and "Custom" or voiceModeData[2],
     }, true)
-    sendUIMessage({
-        -- JS expects this value to be - 1, "custom" voice is on the last index
-        voiceMode = isCustom and #Cfg.voiceModes or mode - 1,
-    })
+    TriggerEvent("hud:client:UpdateVoiceMode", isCustom and #Config.VoiceModes or CurrentPlayer.VoiceMode - 1)
 end
 
 exports("overrideProximityRange", function(range, disableCycle)
     type_check({range, "number"})
     setProximityState(range, true)
     if disableCycle then
-        disableProximityCycle = true
-        wasProximityDisabledFromOverride = true
+        CurrentPlayer.VoiceModeUpdateAllowed = false
+        CurrentPlayer.VoiceModeProximityIsOverride = true
     end
 end)
 
 exports("clearProximityOverride", function()
-    local voiceModeData = Cfg.voiceModes[mode]
+    local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
     setProximityState(voiceModeData[1], false)
-    if wasProximityDisabledFromOverride then
-        disableProximityCycle = false
+    if CurrentPlayer.VoiceModeProximityIsOverride then
+        CurrentPlayer.VoiceModeUpdateAllowed = true
+        CurrentPlayer.VoiceModeProximityIsOverride = false
     end
 end)
 
-RegisterCommand("cycleproximity", function()
-    -- Proximity is either disabled, or manually overwritten.
-    if GetConvarInt("voice_enableProximityCycle", 1) ~= 1 or disableProximityCycle then
-        return
+--- Intent
+exports("setVoiceIntent", function(intent)
+    if intent == "speech" then
+        MumbleSetAudioInputIntent(GetHashKey("speech"))
+    elseif intent == "music" then
+        MumbleSetAudioInputIntent(GetHashKey("music"))
     end
-    local newMode = mode + 1
-
-    -- If we're within the range of our voice modes, allow the increase, otherwise reset to the first state
-    if newMode <= #Cfg.voiceModes then
-        mode = newMode
-    else
-        mode = 1
-    end
-
-    setProximityState(Cfg.voiceModes[mode][1], false)
-    TriggerEvent("pma-voice:setTalkingMode", mode)
-end, false)
-if gameVersion == "fivem" then
-    RegisterKeyMapping("cycleproximity", "Cycle Proximity", "keyboard", GetConvar("voice_defaultCycle", "F11"))
-end
+    LocalPlayer.state:set("voiceIntent", intent, true)
+end)

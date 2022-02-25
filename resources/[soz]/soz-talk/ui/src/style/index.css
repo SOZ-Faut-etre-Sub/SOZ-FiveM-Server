@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+body {
+    font-family: 'VT323', sans-serif;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+#app {
+    /*display:none;*/
+    position: absolute;
+    inset: 0;
+}

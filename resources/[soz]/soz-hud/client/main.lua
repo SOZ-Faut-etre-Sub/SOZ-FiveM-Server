@@ -6,6 +6,10 @@ HudDisplayed, HudRadar = false, true
 --- @class PlayerData
 local HudPlayerStatus = {
     --- @type number
+    health = 200,
+    --- @type number
+    armor = 0,
+    --- @type number
     hunger = 100,
     --- @type number
     thirst = 100,
@@ -24,6 +28,11 @@ local HudVehicleStatus = {
     lightsOn = false,
     --- @type boolean
     highBeamsOn = false,
+}
+--- @class VoiceData
+local HudVoiceStatus = {
+    --- @type number
+    voiceMode = 0,
 }
 
 --- Update Functions
@@ -76,7 +85,13 @@ local function setPlayerData(data)
     HudPlayerStatus = data
 
     if shouldUpdate then
-        SendNUIMessage({action = "update_needs", hunger = data.hunger, thirst = data.thirst})
+        SendNUIMessage({
+            action = "update_needs",
+            health = data.health,
+            armor = data.armor,
+            hunger = data.hunger,
+            thirst = data.thirst,
+        })
     end
 end
 
@@ -104,6 +119,23 @@ local function setVehicleData(data)
     end
 end
 
+--- UpdateVoiceMode data
+--- @param data VoiceData
+local function setVoiceData(data)
+    local shouldUpdate = false
+    for k, v in pairs(data) do
+        if HudVoiceStatus[k] ~= v then
+            shouldUpdate = true
+            break
+        end
+    end
+    HudVoiceStatus = data
+
+    if shouldUpdate then
+        SendNUIMessage({action = "voiceMode", voiceMode = data.voiceMode})
+    end
+end
+
 --- Events
 
 --- Populate value at player login
@@ -116,8 +148,16 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     end)
 end)
 
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
+    setPlayerData({armor = PlayerData.metadata["armor"]})
+end)
+
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
     setHudDisplay(false)
+end)
+
+RegisterNetEvent("hud:client:UpdateVoiceMode", function(mode)
+    setVoiceData({voiceMode = mode})
 end)
 
 --- Keep same name as qb-hud
@@ -150,6 +190,7 @@ CreateThread(function()
 
         if LocalPlayer.state.isLoggedIn then
             setHudDisplay(not IsPauseMenuActive())
+            setPlayerData({health = GetEntityHealth(player)})
 
             if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)

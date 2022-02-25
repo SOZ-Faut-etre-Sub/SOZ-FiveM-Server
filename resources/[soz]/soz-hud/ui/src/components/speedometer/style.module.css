@@ -1,0 +1,62 @@
+.speedometer {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30vw;
+    bottom: 1.2vh;
+    left: 35vw;
+    transition: opacity .5s;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .7))
+}
+
+.seatbelt {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: rgba(255, 255, 255, .3);
+    animation-duration: 2s;
+}
+
+.belt {
+    animation-name: belt;
+}
+.nobelt {
+    animation-name: nobelt;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+}
+
+.gauge {
+    display: flex;
+    justify-content: center;
+    margin-right: -40px;
+}
+
+@keyframes belt {
+    from {
+        color: rgba(255, 255, 255, .3);
+    }
+    50% {
+        color: #2ecc71;
+    }
+
+    to {
+        color: rgba(255, 255, 255, .3);
+    }
+}
+
+@keyframes nobelt {
+    from {
+        color: rgba(255, 255, 255, .3);
+    }
+    50% {
+        color: rgb(255,2,69);
+    }
+
+    to {
+        color: rgba(255, 255, 255, .3);
+    }
+}
