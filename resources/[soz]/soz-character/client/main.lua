@@ -58,12 +58,9 @@ AddEventHandler("soz-character:client:choose:spawn", function()
 end)
 
 RegisterNUICallback("SpawnPlayer", function(data)
-    Citizen.Wait(2000)
-    SpawnPlayer(data.SpawnId)
-end)
-
-RegisterNUICallback("Close", function()
     SetNuiFocus(false, false)
+    SendNUIMessage({action = "close"})
+    SpawnPlayer(data.SpawnId)
 end)
 
 RegisterNUICallback("Click", function()
@@ -212,7 +209,7 @@ RegisterNetEvent("soz-character:client:NcDataPed", function()
             end)
         else
             SetNuiFocus(true, true)
-            SendNUIMessage({action = "spawn"})
+            SendNUIMessage({action = "open"})
         end
     end)
 end)
