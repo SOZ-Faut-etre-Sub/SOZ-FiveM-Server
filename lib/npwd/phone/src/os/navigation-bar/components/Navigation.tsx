@@ -23,6 +23,7 @@ export const Navigation = () => {
         <Transition
             appear={true}
             show={true}
+            unmount={false}
             className="absolute bottom-0 inset-x-px flex justify-center items-center h-10 z-50"
             enter="transition-opacity duration-75"
             enterFrom="opacity-0"
