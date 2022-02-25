@@ -6,11 +6,11 @@ version "1.0.0"
 
 ui_page "html/index.html"
 
+files {"html/index.html", "html/assets/*"}
+
 shared_script "config.lua"
 client_script "client/main.lua"
 server_script "server/main.lua"
-
-files {"html/index.html", "html/css/style.css", "html/js/script.js", "html/img/*"}
 
 dependencies {"qb-core"}
 
