@@ -58,6 +58,7 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
         <>
             <Transition
                 show={isOpen}
+                unmount={false}
                 enter="transition duration-100 ease-out"
                 enterFrom="transform scale-95 opacity-0"
                 enterTo="transform scale-100 opacity-100"

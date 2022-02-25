@@ -1,7 +1,7 @@
 import React from 'react';
 import {MarketplaceEvents, MarketplaceListing} from '@typings/marketplace';
 import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router';
+import {useHistory} from 'react-router-dom';
 import {fetchNui} from '../../../../utils/fetchNui';
 import {useSnackbar} from '@os/snackbar/hooks/useSnackbar';
 import {ServerPromiseResp} from '@typings/common';

@@ -4,7 +4,7 @@ import {fetchNui} from '@utils/fetchNui';
 import {ServerPromiseResp} from '@typings/common';
 import {Society, SocietyEvents, PreDBSociety} from '@typings/society';
 import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router';
+import {useHistory} from 'react-router-dom';
 
 export const useContactsAPI = () => {
     const {addAlert} = useSnackbar();

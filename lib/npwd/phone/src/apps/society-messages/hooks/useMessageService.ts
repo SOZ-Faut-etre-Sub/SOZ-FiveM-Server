@@ -1,5 +1,5 @@
 import {useNuiEvent} from 'fivem-nui-react-lib';
-import {useLocation} from "react-router";
+import {useLocation} from "react-router-dom";
 import {usePhoneVisibility} from "@os/phone/hooks/usePhoneVisibility";
 import {useMessageNotifications} from "./useMessageNotifications";
 import {SocietyEvents, SocietyMessage} from "@typings/society";
