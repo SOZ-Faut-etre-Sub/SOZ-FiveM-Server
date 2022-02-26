@@ -10,7 +10,9 @@ client_scripts {
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
     "client/ui.lua",
+    "client/exam.lua",
     "client/penalties.lua",
+    "client/events.lua",
     "client/main.lua",
 }
 
