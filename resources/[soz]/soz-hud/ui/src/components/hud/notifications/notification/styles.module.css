@@ -2,6 +2,7 @@
     position: relative;
     width: 100%;
     padding: .5rem .8rem;
+    font-size: 0.8rem;
     overflow: hidden;
     margin-bottom: .3rem;
     transition: all 0.3s ease-out;
@@ -59,7 +60,7 @@
 }
 
 .text {
-    padding: .7rem 0;
+    padding: .3rem 0;
 }
 
 .progressbar {
