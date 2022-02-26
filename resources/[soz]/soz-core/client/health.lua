@@ -23,7 +23,7 @@ AddEventHandler("core:client:Revive", function()
     ResetAll()
     ResetPedMovementClipset(player, 0.0)
 
-    QBCore.Functions.Notify("Vous êtes guéri!")
+    exports["soz-hud"]:DrawNotification("Vous êtes guéri!")
 end)
 
 function ResetAll()

@@ -46,13 +46,13 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
                 "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0, os.time()})
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
-            TriggerClientEvent("QBCore:Notify", src, "Merci pour votre achat!", "success")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat!")
             TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
             pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
         else
-            TriggerClientEvent("QBCore:Notify", src, "Pas assez d'argent", "error")
+            TriggerClientEvent("hud:client:DrawNotification", src, "~r~Pas assez d'argent")
         end
     else
-        TriggerClientEvent("QBCore:Notify", src, "Plus de stock", "error")
+        TriggerClientEvent("hud:client:DrawNotification", src, "~r~Plus de stock")
     end
 end)
