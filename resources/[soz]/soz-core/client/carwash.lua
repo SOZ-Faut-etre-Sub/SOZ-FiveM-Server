@@ -31,7 +31,7 @@ RegisterNetEvent("qb-carwash:client:washCar", function()
         WashDecalsFromVehicle(PedVehicle, 1.0)
         washingVehicle = false
     end, function() -- Cancel
-            exports["soz-hud"]:DrawNotification("~r~Washing canceled ..")
+        exports["soz-hud"]:DrawNotification("~r~Washing canceled ..")
         washingVehicle = false
     end)
 end)
