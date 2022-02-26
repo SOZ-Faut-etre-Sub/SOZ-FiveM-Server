@@ -1,11 +1,21 @@
+function RequestStreamedTexture(dictionary)
+    if not HasStreamedTextureDictLoaded(dictionary) then
+        CreateThread(function()
+            RequestStreamedTextureDict(dictionary)
+
+            repeat
+                Wait(10)
+            until HasStreamedTextureDictLoaded(dictionary)
+        end)
+    end
+end
+
 --- DrawNotification Display basic notification
---- @param msg string Notification message
+--- @param message string Notification message
 --- @param flash boolean Notification flash on the screen
---- @param save boolean Save notification in the brief ?
-local function DrawNotification(msg, flash, save)
-    BeginTextCommandThefeedPost("STRING")
-    AddTextComponentSubstringPlayerName(msg)
-    EndTextCommandThefeedPostTicker(flash or true, save or true)
+--- @param delay number Set Notification display time
+local function DrawNotification(message, flash, delay)
+    SendNUIMessage({action = "draw_basic_notification", message = message, flash = flash, delay = delay})
 end
 
 RegisterNetEvent("hud:client:DrawNotification", function(msg, flash, save)
@@ -15,26 +25,27 @@ end)
 exports("DrawNotification", DrawNotification)
 
 --- DrawAdvancedNotification Display advanced notification
---- @param msg string Notification message
+--- @param message string Notification message
 --- @param title string Notification title
 --- @param subtitle string Notification subtitle
 --- @param image string Notification image (https://wiki.gtanet.work/index.php?title=Notification_Pictures)
---- @param iconType number Notification icon (https://docs.fivem.net/natives/?_0x1CCD9A37359072CF)
 --- @param flash boolean Notification flash on the screen
---- @param save boolean Save notification in the brief ?
---- @param color number Notification color (https://gyazo.com/68bd384455fceb0a85a8729e48216e15)
-local function DrawAdvancedNotification(title, subtitle, msg, image, iconType, flash, save, color)
-    BeginTextCommandThefeedPost("STRING")
-    AddTextComponentSubstringPlayerName(msg)
-    if color then
-        ThefeedNextPostBackgroundColor(color)
-    end
-    EndTextCommandThefeedPostMessagetext(image, image, flash, iconType, title, subtitle)
-    EndTextCommandThefeedPostTicker(flash or true, save or true)
+--- @param delay number Set Notification display time
+local function DrawAdvancedNotification(title, subtitle, message, image, flash, delay)
+    RequestStreamedTexture(image)
+    SendNUIMessage({
+        action = "draw_advanced_notification",
+        title = title,
+        subtitle = subtitle,
+        message = message,
+        image = image,
+        flash = flash,
+        delay = delay,
+    })
 end
 
-RegisterNetEvent("hud:client:DrawAdvancedNotification", function(title, subtitle, msg, image, iconType, flash, save, color)
-    DrawAdvancedNotification(title, subtitle, msg, image, iconType, flash, save, color)
+RegisterNetEvent("hud:client:DrawAdvancedNotification", function(title, subtitle, message, image, flash, delay)
+    DrawAdvancedNotification(title, subtitle, message, image, flash, delay)
 end)
 
 exports("DrawAdvancedNotification", DrawAdvancedNotification)
