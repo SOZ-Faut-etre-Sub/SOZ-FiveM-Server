@@ -18,8 +18,8 @@ local function DrawNotification(message, flash, delay)
     SendNUIMessage({action = "draw_basic_notification", message = message, flash = flash, delay = delay})
 end
 
-RegisterNetEvent("hud:client:DrawNotification", function(msg, flash, save)
-    DrawNotification(msg, flash, save)
+RegisterNetEvent("hud:client:DrawNotification", function(msg, flash, delay)
+    DrawNotification(msg, flash, delay)
 end)
 
 exports("DrawNotification", DrawNotification)
