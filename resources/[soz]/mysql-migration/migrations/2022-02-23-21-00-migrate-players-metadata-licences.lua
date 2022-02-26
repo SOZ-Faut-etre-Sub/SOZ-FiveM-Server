@@ -14,6 +14,6 @@ table.insert(migrations, {
                 'fishing', false,
                 'rescuer', false
             ))
-        ]]
+        ]],
     }
 })
