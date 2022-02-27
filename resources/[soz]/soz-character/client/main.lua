@@ -27,7 +27,6 @@ function ClearScreen()
     ClearOverrideWeather()
 end
 
---InitialSetup()
 CreateThread(function()
     while true do
         Wait(0)
