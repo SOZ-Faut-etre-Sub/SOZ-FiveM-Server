@@ -1,4 +1,4 @@
-local vehEng, vehBody = 1000, 1000
+local vehEng, vehBody = 0, 0
 
 local function DisableVehicle(vehicle, time)
     local tick = 0.0
@@ -32,8 +32,7 @@ Citizen.CreateThread(function()
         if IsPedInAnyVehicle(player, true) and GetPedInVehicleSeat(vehicle, -1) == player then
             local newVehEng, newVehBody = GetVehicleEngineHealth(vehicle), GetVehicleBodyHealth(vehicle)
             if newVehEng + newVehBody <= (vehEng + vehBody) - 200 then
-                if vehEng ~= 1000.0 and vehBody ~= 1000.0 then
-
+                if newVehEng ~= 0.0 and newVehBody ~= 0.0 then
                     -- Get all vehicle damages and add random to calculate wait time
                     local wait = (vehEng / newVehEng + vehBody / newVehBody) * math.random(100, 500)
                     CreateThread(function()
@@ -41,10 +40,9 @@ Citizen.CreateThread(function()
                     end)
                 end
             end
-            
             vehEng, vehBody = newVehEng, newVehBody
         else
-            vehEng, vehBody = 1000, 1000
+            vehEng, vehBody = 0, 0
             Wait(5000)
         end
         Wait(500)
