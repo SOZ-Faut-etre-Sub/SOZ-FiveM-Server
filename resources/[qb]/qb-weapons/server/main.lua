@@ -65,7 +65,7 @@ QBCore.Functions.CreateCallback('weapons:server:RemoveAttachment', function(sour
                 table.remove(Inventory[ItemData.slot].metadata.attachments, key)
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 exports['soz-inventory']:AddItem(Player.PlayerData.source, AttachmentComponent.item, 1)
-                TriggerClientEvent("QBCore:Notify", src, "You removed "..AttachmentComponent.label.." from your weapon!", "error")
+                TriggerClientEvent("hud:client:DrawNotification", src, "~r~You removed "..AttachmentComponent.label.." from your weapon!")
                 cb(Inventory[ItemData.slot].metadata.attachments)
             else
                 cb(false)
@@ -122,15 +122,15 @@ QBCore.Functions.CreateCallback("weapons:server:RepairWeapon", function(source, 
                     cb(false)
                 end
             else
-                TriggerClientEvent("QBCore:Notify", src, "This weapon is not dammaged..", "error")
+                TriggerClientEvent("hud:client:DrawNotification", src, "~r~This weapon is not dammaged..")
                 cb(false)
             end
         else
-            TriggerClientEvent("QBCore:Notify", src, "This weapon is not dammaged..", "error")
+            TriggerClientEvent("hud:client:DrawNotification", src, "~r~This weapon is not dammaged..")
             cb(false)
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, "You don't have a weapon in your hands..", "error")
+        TriggerClientEvent('hud:client:DrawNotification', src, "~r~You don't have a weapon in your hands..")
         TriggerClientEvent('weapons:client:SetCurrentWeapon', src, {}, false)
         cb(false)
     end
@@ -186,7 +186,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                     else
                         WeaponSlot.metadata.quality = 0
                         TriggerClientEvent('inventory:client:UseWeapon', src, data)
-                        TriggerClientEvent('QBCore:Notify', src, "Your weapon is broken, you need to repair it before you can use it again.", "error")
+                        TriggerClientEvent('hud:client:DrawNotification', src, "~r~Your weapon is broken, you need to repair it before you can use it again.")
                         break
                     end
                 end
@@ -198,7 +198,7 @@ RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmou
                     else
                         WeaponSlot.metadata.quality = 0
                         TriggerClientEvent('inventory:client:UseWeapon', src, data)
-                        TriggerClientEvent('QBCore:Notify', src, "Your weapon is broken, you need to repair it before you can use it again.", "error")
+                        TriggerClientEvent('hud:client:DrawNotification', src, "~r~Your weapon is broken, you need to repair it before you can use it again.")
                         break
                     end
                 end
@@ -236,7 +236,7 @@ RegisterNetEvent("weapons:server:EquipAttachment", function(ItemData, CurrentWea
                 Player.Functions.SetInventory(Player.PlayerData.items, true)
                 exports['soz-inventory']:RemoveItem(Player.PlayerData.source, ItemData.name, 1)
             else
-                TriggerClientEvent("QBCore:Notify", src, "You already have a "..AttachmentData.label:lower().." on your weapon.", "error", 3500)
+                TriggerClientEvent("hud:client:DrawNotification", src, "~r~You already have a "..AttachmentData.label:lower().." on your weapon.")
             end
         else
             Inventory[CurrentWeaponData.slot].metadata.attachments = {}

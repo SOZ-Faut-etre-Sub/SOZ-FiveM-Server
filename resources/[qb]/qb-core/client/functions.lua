@@ -126,35 +126,6 @@ function QBCore.Functions.RequestAnimDict(animDict)
 	end
 end
 
-RegisterNUICallback('getNotifyConfig', function(_, cb)
-    cb(QBCore.Config.Notify)
-end)
-
-function QBCore.Functions.Notify(text, textype, length)
-    if type(text) == "table" then
-        local ttext = text.text or 'Placeholder'
-        local caption = text.caption or 'Placeholder'
-        local ttype = textype or 'primary'
-        local length = length or 5000
-        SendNUIMessage({
-            action = 'notify',
-            type = ttype,
-            length = length,
-            text = ttext,
-            caption = caption
-        })
-    else
-        local ttype = textype or 'primary'
-        local length = length or 5000
-        SendNUIMessage({
-            action = 'notify',
-            type = ttype,
-            length = length,
-            text = text
-        })
-    end
-end
-
 function QBCore.Debug(resource, obj, depth)
     TriggerServerEvent('QBCore:DebugSomething', resource, obj, depth)
 end

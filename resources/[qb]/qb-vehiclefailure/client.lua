@@ -55,7 +55,7 @@ local function CleanVehicle(vehicle)
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        QBCore.Functions.Notify(Lang:t("success.cleaned_veh"))
+        exports["soz-hud"]:DrawNotification(Lang:t("success.cleaned_veh"))
         SetVehicleDirtLevel(vehicle, 0.1)
         SetVehicleUndriveable(vehicle, false)
         WashDecalsFromVehicle(vehicle, 1.0)
@@ -64,7 +64,7 @@ local function CleanVehicle(vehicle)
         ClearAllPedProps(ped)
         ClearPedTasks(ped)
     end, function() -- Cancel
-        QBCore.Functions.Notify(Lang:t("error.failed_notification"), "error")
+        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"))
         ClearAllPedProps(ped)
         ClearPedTasks(ped)
     end)
@@ -96,7 +96,7 @@ local function RepairVehicleFull(vehicle)
         flags = 16,
     }, {}, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify(Lang:t("success.repaired_veh"))
+        exports["soz-hud"]:DrawNotification(Lang:t("success.repaired_veh"))
         SetVehicleEngineHealth(vehicle, 1000.0)
         SetVehicleEngineOn(vehicle, true, false)
         SetVehicleTyreFixed(vehicle, 0)
@@ -112,7 +112,7 @@ local function RepairVehicleFull(vehicle)
         TriggerServerEvent("qb-vehiclefailure:removeItem", "advancedrepairkit")
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify(Lang:t("error.failed_notification"), "error")
+        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"))
         if (IsBackEngine(GetEntityModel(vehicle))) then
             SetVehicleDoorShut(vehicle, 5, false)
         else
@@ -138,7 +138,7 @@ local function RepairVehicle(vehicle)
         flags = 16,
     }, {}, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify(Lang:t("success.repaired_veh"))
+        exports["soz-hud"]:DrawNotification(Lang:t("success.repaired_veh"))
         SetVehicleEngineHealth(vehicle, 500.0)
         SetVehicleEngineOn(vehicle, true, false)
         SetVehicleTyreFixed(vehicle, 0)
@@ -154,7 +154,7 @@ local function RepairVehicle(vehicle)
         TriggerServerEvent("qb-vehiclefailure:removeItem", "repairkit")
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify(Lang:t("error.failed_notification"), "error")
+        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"))
         if (IsBackEngine(GetEntityModel(vehicle))) then
             SetVehicleDoorShut(vehicle, 5, false)
         else
@@ -226,16 +226,16 @@ RegisterNetEvent("qb-vehiclefailure:client:RepairVehicle", function()
             end
         else
             if #(pos - vehpos) > 4.9 then
-                QBCore.Functions.Notify(Lang:t("error.out_range_veh"), "error")
+                exports["soz-hud"]:DrawNotification(Lang:t("error.out_range_veh"))
             else
-                QBCore.Functions.Notify(Lang:t("error.inside_veh"), "error")
+                exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh"))
             end
         end
     else
         if vehicle == nil or vehicle == 0 then
-            QBCore.Functions.Notify(Lang:t("error.not_near_veh"), "error")
+            exports["soz-hud"]:DrawNotification(Lang:t("error.not_near_veh"))
         else
-            QBCore.Functions.Notify(Lang:t("error.healthy_veh"), "error")
+            exports["soz-hud"]:DrawNotification(Lang:t("error.healthy_veh"))
         end
     end
 end)
@@ -276,13 +276,13 @@ RegisterNetEvent("qb-vehiclefailure:client:RepairVehicleFull", function()
             end
         else
             if #(pos - vehpos) > 4.9 then
-                QBCore.Functions.Notify(Lang:t("error.out_range_veh"), "error")
+                exports["soz-hud"]:DrawNotification(Lang:t("error.out_range_veh"))
             else
-                QBCore.Functions.Notify(Lang:t("error.inside_veh"), "error")
+                exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh"))
             end
         end
     else
-        QBCore.Functions.Notify(Lang:t("error.not_near_veh"), "error")
+        exports["soz-hud"]:DrawNotification(Lang:t("error.not_near_veh"))
     end
 end)
 
@@ -293,7 +293,7 @@ RegisterNetEvent("iens:repaira", function()
         SetVehicleDirtLevel(vehicle)
         SetVehicleUndriveable(vehicle, false)
         WashDecalsFromVehicle(vehicle, 1.0)
-        QBCore.Functions.Notify(Lang:t("success.repaired_veh"))
+        exports["soz-hud"]:DrawNotification(Lang:t("success.repaired_veh"))
         SetVehicleFixed(vehicle)
         healthBodyLast = 1000.0
         healthEngineLast = 1000.0
@@ -301,16 +301,16 @@ RegisterNetEvent("iens:repaira", function()
         SetVehicleEngineOn(vehicle, true, false)
         return
     else
-        QBCore.Functions.Notify(Lang:t("error.inside_veh_req"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"))
     end
 end)
 
 RegisterNetEvent("iens:besked", function()
-    QBCore.Functions.Notify(Lang:t("error.roadside_avail"))
+    exports["soz-hud"]:DrawNotification(Lang:t("error.roadside_avail"))
 end)
 
 RegisterNetEvent("iens:notAllowed", function()
-    QBCore.Functions.Notify(Lang:t("error.no_permission"))
+    exports["soz-hud"]:DrawNotification(Lang:t("error.no_permission"))
 end)
 
 RegisterNetEvent("iens:repair", function()
@@ -330,11 +330,11 @@ RegisterNetEvent("iens:repair", function()
                 SetVehicleEngineOn(vehicle, true, false)
                 SetVehicleOilLevel(vehicle, (GetVehicleOilLevel(vehicle) / 3) - 0.5)
             else
-                QBCore.Functions.Notify(Lang:t("error.veh_damaged"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.veh_damaged"))
             end
         end
     else
-        QBCore.Functions.Notify(Lang:t("error.inside_veh_req"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"))
     end
 end)
 

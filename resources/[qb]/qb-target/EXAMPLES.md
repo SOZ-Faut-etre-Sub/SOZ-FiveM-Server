@@ -3,8 +3,8 @@
 ### All the exports have to be on the client-side to work!
 
 ## AddBoxZone / Job Check
-This is an example setup for a police job. The resource defines a BoxZone around a clipboard in the `gabz_mrpd` MLO. 
-It's a simple set-up, we provide a **unique** name, define its center point with the vector3, define a length and a width, and then we define some options; the unique name again, the heading of the box, a bool to display a debug poly, and the height of the zone. 
+This is an example setup for a police job. The resource defines a BoxZone around a clipboard in the `gabz_mrpd` MLO.
+It's a simple set-up, we provide a **unique** name, define its center point with the vector3, define a length and a width, and then we define some options; the unique name again, the heading of the box, a bool to display a debug poly, and the height of the zone.
 
 Then, in the actual options themselves, we define 'police' as our required job.
 
@@ -97,7 +97,7 @@ citizenid = {
 }
 ```
 
-When defining multiple jobs or gangs, you **must** provide a minimum grade, even if you don't need one. This is due to how key/value tables work. Just set the minimum grade to 0. 
+When defining multiple jobs or gangs, you **must** provide a minimum grade, even if you don't need one. This is due to how key/value tables work. Just set the minimum grade to 0.
 
 ## AddTargetModel / item / canInteract()
 
@@ -124,10 +124,10 @@ exports['qb-target']:AddTargetModel(Config.Peds, {
 			icon = "fas fa-sack-dollar",
 			label = "Rob",
 			canInteract = function(entity)
-				if not IsPedAPlayer(entity) then 
+				if not IsPedAPlayer(entity) then
 					return IsEntityDead(entity)
 				end
-			end, 
+			end,
 		},
 	},
 	distance = 2.5,
@@ -158,10 +158,10 @@ Config.TargetModels = {
                 icon = "fas fa-sack-dollar",
                 label = "Rob",
                 canInteract = function(entity)
-			        if not IsPedAPlayer(entity) then 
+			        if not IsPedAPlayer(entity) then
 				        return IsEntityDead(entity)
 			        end
-		        end, 
+		        end,
             },
         },
         distance = 2.5,
@@ -210,7 +210,7 @@ Config.TargetEntities = {
 ```
 
 ## Passing Item Data
-In this example, we define the model of the coffee machines you see around the map, and allow players to purchase a coffee. You'll have to provide your own logic for the purchase, but this is how you would handle it with qb-target, and how you would pass data through to an event for future use. 
+In this example, we define the model of the coffee machines you see around the map, and allow players to purchase a coffee. You'll have to provide your own logic for the purchase, but this is how you would handle it with qb-target, and how you would pass data through to an event for future use.
 
 This is an example using **exports**
 This example is **not** advised to use with the provided config
@@ -231,7 +231,7 @@ exports['qb-target']:AddTargetModel(690372739, {
 
 RegisterNetEvent('coffee:buy',function(data)
     -- server event to buy the item here
-    QBCore.Functions.Notify("You purchased a " .. data.label .. " for $" .. data.price .. ". Enjoy!", 'success')
+	exports["soz-hud"]:DrawNotification("You purchased a " .. data.label .. " for $" .. data.price .. ". Enjoy!")
 end)
 ```
 
@@ -271,11 +271,11 @@ AddEventHandler('plantpotato',function()
 				plant = plant,
 				job = "farmer",
 				canInteract = function(entity)
-					if Entity(entity).state.growth >= 100 then 
+					if Entity(entity).state.growth >= 100 then
 						  return true
-					else 
+					else
 						  return false
-					end 
+					end
 				end,
 			},
 		},
