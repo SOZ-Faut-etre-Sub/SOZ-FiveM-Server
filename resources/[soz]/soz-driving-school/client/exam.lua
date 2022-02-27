@@ -112,7 +112,7 @@ local function startExamLoop(licenseType, context)
                 if checkpoint then
                     cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
                 else
-                    TerminateExam(true)
+                    TerminateExam(true, licenseType)
                 end
             end
 
@@ -178,7 +178,7 @@ local function RunExitSequence()
     TaskLeaveVehicle(instructorEntity, vehicleEntity, 0)
 end
 
-function TerminateExam(isSuccess)
+function TerminateExam(isSuccess, licenseType)
     RunExitSequence()
 
     SetEntityAsNoLongerNeeded(instructorEntity)
@@ -188,7 +188,7 @@ function TerminateExam(isSuccess)
     passingExam = false
 
     if isSuccess then
-        TriggerServerEvent("soz-driving-license:server:update_license", "car")
+        TriggerServerEvent("soz-driving-license:server:update_license", licenseType)
         exports["soz-hud"]:DrawAdvancedNotification(Config.BlipName, "Réussite", "Félicitations ! Vous venez d'obtenir votre permis", "CHAR_BLANK_ENTRY", 1,
                                                     false, false, 210)
     end

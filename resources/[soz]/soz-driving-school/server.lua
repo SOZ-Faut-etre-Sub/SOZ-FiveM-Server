@@ -26,13 +26,12 @@ RegisterNetEvent("soz-driving-license:server:update_license", function(licenseTy
 
     local licences = Player.PlayerData.metadata["licences"]
     local licenceTbl = Config.Licenses[licenseType]
-    if not licences or not licenceTbl or not licenceTbl[licenseType] then
+    if not licences or not licenceTbl then
         return
     end
 
     -- Update licence value
-    local newLicences = {table.unpack(licences)}
-    newLicences[licenseType] = licenceTbl.points or true
-
-    Player.Functions.SetMetaData("licences", newLicences)
+    licences[licenseType] = licenceTbl.points or true
+    Player.Functions.SetMetaData("licences", licences)
+    Player.Functions.Save(source)
 end)
