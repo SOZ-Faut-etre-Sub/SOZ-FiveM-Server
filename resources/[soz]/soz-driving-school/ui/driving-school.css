@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Prompt:400,500');
+body, html {
+    width: 99%;
+    height: 99%;
+    font-family: 'Prompt', sans-serif;
+}
+#wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.container {
+    position: relative;
+    margin: 0 auto;
+}
+.content {
+    position: absolute;
+    top: 20%;
+    left: 7%;
+    width: 86%;
+    height: 70%;
+    display: flex;
+}
+.is-half {
+    width: 50%;
+}
+#left-col {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    height: auto;
+    padding-bottom: 6.5%;
+}
+#right-col {
+    display: flex;
+    justify-content: space-evenly;
+    height: 88%;
+}
+.items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: auto;
+    height: 100%;
+}
+.items div, .item {
+    height: 11%;
+}
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.item.small {
+    font-size: .7rem;
+}
+.text-small {
+    font-size: .75em;
+    line-height: .5em;
+    font-weight: initial;
+}
+.text-bold {
+    font-weight: 500;
+}
+.small-lh {
+    line-height: 1rem;
+    font-weight: 600;
+}
