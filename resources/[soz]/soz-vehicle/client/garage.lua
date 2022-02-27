@@ -91,7 +91,7 @@ local function SortirMenu(type, garage, indexgarage)
 
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
             if result == nil then
-                QBCore.Functions.Notify(Lang:t("error.no_vehicles"), "error", 5000)
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
             else
                 for k, v in pairs(result) do
                     local enginePercent = round(v.engine / 10, 0)
@@ -135,7 +135,7 @@ local function SortirMenu(type, garage, indexgarage)
         })
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
             if result == nil then
-                QBCore.Functions.Notify(Lang:t("error.no_vehicles"), "error", 5000)
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
             else
                 for k, v in pairs(result) do
                     local enginePercent = round(v.engine / 10, 0)
@@ -174,7 +174,7 @@ local function SortirMenu(type, garage, indexgarage)
 
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
             if result == nil then
-                QBCore.Functions.Notify(Lang:t("error.no_vehicles"), "error", 5000)
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
             else
                 for k, v in pairs(result) do
                     local enginePercent = round(v.engine / 10, 0)
@@ -215,7 +215,7 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
         if not VehExists then
             spawn = true
         else
-            QBCore.Functions.Notify(Lang:t("error.not_impound"), "error", 5000)
+            exports["soz-hud"]:DrawNotification(Lang:t("error.not_impound"))
             spawn = false
         end
     else
@@ -283,7 +283,7 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
         end
         local newlocation = vec4(location.x, location.y, location.z, heading)
         if placedispo == 0 then
-            QBCore.Functions.Notify("Déjà une voiture sur un des parking", "primary", 4500)
+            exports["soz-hud"]:DrawNotification("Déjà une voiture sur un des parking", "primary", 4500)
         else
             QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
                 QBCore.Functions.TriggerCallback("qb-garage:server:GetVehicleProperties", function(properties)
@@ -301,7 +301,7 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                     SetVehicleEngineOn(veh, true, true)
                 end, vehicle.plate)
             end, newlocation, true)
-            QBCore.Functions.Notify(Lang:t("success.vehicle_out"), "primary", 4500)
+            exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
         end
     end
 end)
@@ -332,13 +332,13 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     OutsideVehicles[plate] = nil
                     TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
                 end
-                QBCore.Functions.Notify(Lang:t("success.vehicle_parked"), "primary", 4500)
+                exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
             else
-                QBCore.Functions.Notify(Lang:t("error.not_owned"), "error", 3500)
+                exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
             end
         end, plate, type, indexgarage, PlayerGang.name)
     else
-        QBCore.Functions.Notify(Lang:t("error.not_in_parking"), "error", 3500)
+        exports["soz-hud"]:DrawNotification(Lang:t("error.not_in_parking"), "error", 3500)
     end
 end
 
@@ -403,7 +403,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                     ParkingPublicList:Close()
                     enterVehicle(curVeh, indexgarage, type)
                 else
-                    QBCore.Functions.Notify(Lang:t("error.not_correct_type"), "error", 3500)
+                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
                 end
             end
         end)
@@ -422,7 +422,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                     ParkingPriveList:Close()
                     enterVehicle(curVeh, indexgarage, type)
                 else
-                    QBCore.Functions.Notify(Lang:t("error.not_correct_type"), "error", 3500)
+                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
                 end
             end
         end)
