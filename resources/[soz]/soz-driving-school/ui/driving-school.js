@@ -1,72 +1,57 @@
 const LICENSES = {
     car: {
-        icon: "&#x1f697;",
         type: "car",
         verbose: "VOITURE",
         hasPoint: true
     },
     truck: {
-        icon: "&#x1f69a;",
         type: "truck",
         verbose: "POID-LOURD",
         hasPoint: true
     },
     motorcycle: {
-        icon: "&#x1f6f5;",
         type: "motorcycle",
         verbose: "MOTO",
         hasPoint: true
     },
     heli: {
-        icon: "&#x1f681;",
         type: "heli",
         verbose: "HÉLICOPTÈRE",
         hasPoint: true
     },
     boat: {
-        icon: "&#x26f5;",
         type: "boat",
         verbose: "BÂTEAU",
         hasPoint: true
     },
     weapon: {
-        icon: "&#x1f52b;",
         type: "weapon",
         verbose: "PORT D'ARME"
     },
     hunting: {
-        icon: "&#x1f98c;",
         type: "hunting",
         verbose: "CHASSE"
     },
     fishing: {
-        icon: "&#x1f3a3;",
         type: "fishing",
         verbose: "PÊCHE"
     },
     rescuer: {
-        icon: "&#x26d1;&#xfe0f;",
         type: "rescuer",
         verbose: "SECOURISTE"
     }
 };
 
 function displayLicensesData(playerLicenses = {}) {
-    const iconsElement = document.querySelector('#icons');
     const licensesElement = document.querySelector('#licenses');
     const pointsElement = document.querySelector('#points');
 
     // Reset any existing content
-    iconsElement.innerHTML = null;
     licensesElement.innerHTML = null;
     pointsElement.innerHTML = null;
 
     Object.entries(LICENSES).forEach(([licenseType, data]) => {
         const playerLicenseData = playerLicenses[licenseType];
-
-
-        // Add icon
-        iconsElement.innerHTML += `<div class="item">${data.icon}</div>`;
 
         // Add license type anc validity
         const validity = !!playerLicenseData ? "VALIDE" : "NON VALIDE";
@@ -82,11 +67,10 @@ function displayLicensesData(playerLicenses = {}) {
             const points = playerLicenseData || 0;
             console.log('pts', points, licenseType)
             pointsElement.innerHTML += `
-                <div class="item">
-                <div class="text-bold small-lh">
-                <span>${points}</span>
-                <span class="text-small">PTS</span>
-                </div>
+                <div class="item text-center">
+                    <div class="text-bold text-small small-lh">
+                        ${!!points ? points + " POINTS" : "-" }
+                    </div>
                 </div>
             `;
         } else {
@@ -104,7 +88,7 @@ function displayPlayerName(firstName = '', lastName = '') {
 }
 
 function setVisible(value) {
-    document.querySelector("#wrapper").style.opacity = value ? 1 : 0;
+    document.querySelector(".super-wrapper").style.opacity = value ? 1 : 0;
 }
 
 window.addEventListener("message", (event) => {
