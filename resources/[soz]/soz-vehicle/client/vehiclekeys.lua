@@ -46,9 +46,9 @@ local function LockVehicle()
                         SetVehicleLights(veh, 1)
                         Wait(200)
                         SetVehicleLights(veh, 0)
-                        QBCore.Functions.Notify("Véhicule verrouillé !")
+                        exports["soz-hud"]:DrawNotification("Véhicule verrouillé !")
                     else
-                        QBCore.Functions.Notify("Problème avec la serrure !")
+                        exports["soz-hud"]:DrawNotification("Problème avec la serrure !")
                     end
                 else
                     Wait(750)
@@ -61,13 +61,13 @@ local function LockVehicle()
                         SetVehicleLights(veh, 1)
                         Wait(200)
                         SetVehicleLights(veh, 0)
-                        QBCore.Functions.Notify("Véhicule déverrouillé !")
+                        exports["soz-hud"]:DrawNotification("Véhicule déverrouillé !")
                     else
-                        QBCore.Functions.Notify("Problème avec la serrure !")
+                        exports["soz-hud"]:DrawNotification("Problème avec la serrure !")
                     end
                 end
             else
-                QBCore.Functions.Notify("Vous n'avez pas les clés..", "error")
+                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas les clés..")
             end
         end, plate)
     end
@@ -149,14 +149,14 @@ local function lockpickFinish(success)
     local chance = math.random()
     if success then
         TriggerServerEvent("hud:server:GainStress", math.random(1, 4))
-        QBCore.Functions.Notify("Porte ouverte!", "success")
+        exports["soz-hud"]:DrawNotification("Porte ouverte!")
         SetVehicleDoorsLocked(vehicle, 1)
         lockpicked = true
         lockpickedPlate = QBCore.Functions.GetPlate(vehicle)
     else
         PoliceCall()
         TriggerServerEvent("hud:server:GainStress", math.random(1, 4))
-        QBCore.Functions.Notify("Quelqu'un a appelé la police!", "error")
+        exports["soz-hud"]:DrawNotification("~r~Quelqu'un a appelé la police!")
     end
     if usingAdvanced then
         if chance <= Config.RemoveLockpickAdvanced then

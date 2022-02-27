@@ -93,10 +93,6 @@ RegisterNetEvent('QBCore:Player:UpdatePlayerData', function()
     TriggerServerEvent('QBCore:UpdatePlayer')
 end)
 
-RegisterNetEvent('QBCore:Notify', function(text, type, length)
-    QBCore.Functions.Notify(text, type, length)
-end)
-
 RegisterNetEvent('QBCore:Client:TriggerCallback', function(name, ...)
     if QBCore.ServerCallbacks[name] then
         QBCore.ServerCallbacks[name](...)

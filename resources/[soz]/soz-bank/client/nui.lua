@@ -40,7 +40,7 @@ end)
 RegisterNUICallback("createOffshoreAccount", function(data, cb)
     QBCore.Functions.TriggerCallback("banking:server:createOffshoreAccount", function(success, reason)
         if success then
-            exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Création de compte", "Vous avez crée un nouveau compte", "CHAR_BANK_MAZE", 9)
+            exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Création de compte", "Vous avez crée un nouveau compte", "CHAR_BANK_MAZE")
         else
             exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
         end
@@ -54,7 +54,7 @@ RegisterNUICallback("doDeposit", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE", 9)
+                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end
@@ -69,7 +69,7 @@ RegisterNUICallback("doOffshoreDeposit", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertOffshoreMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE", 9)
+                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end
@@ -84,7 +84,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE", 9)
+                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end
@@ -100,7 +100,7 @@ RegisterNUICallback("doTransfer", function(data, cb)
         QBCore.Functions.TriggerCallback("banking:server:TransfertMoney", function(success, reason)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$", "Vous avez transférer de l'argent sur un compte",
-                                                            "CHAR_BANK_MAZE", 9)
+                                                            "CHAR_BANK_MAZE")
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
             end

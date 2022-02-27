@@ -50,13 +50,13 @@ RegisterNetEvent("vehiclekeys:server:GiveVehicleKeys", function(plate, target)
     if CheckOwner(plate, Player.PlayerData.citizenid) then
         if QBCore.Functions.GetPlayer(target) ~= nil then
             TriggerClientEvent("vehiclekeys:client:SetOwner", target, plate)
-            TriggerClientEvent("QBCore:Notify", src, "Vous avez donné les clés !")
-            TriggerClientEvent("QBCore:Notify", target, "Vous avez reçu les clés !")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Vous avez donné les clés !")
+            TriggerClientEvent("hud:client:DrawNotification", target, "Vous avez reçu les clés !")
         else
-            TriggerClientEvent("QBCore:Notify", source, "La personne dort", "error")
+            TriggerClientEvent("hud:client:DrawNotification", source, "~r~La personne dort")
         end
     else
-        TriggerClientEvent("QBCore:Notify", source, "Vous ne possédez pas ce véhicule", "error")
+        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Vous ne possédez pas ce véhicule")
     end
 end)
 
