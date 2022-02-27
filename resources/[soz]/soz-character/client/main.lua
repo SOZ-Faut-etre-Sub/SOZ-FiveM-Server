@@ -27,16 +27,13 @@ function ClearScreen()
     ClearOverrideWeather()
 end
 
-InitialSetup()
+--InitialSetup()
 CreateThread(function()
     while true do
         Wait(0)
         if NetworkIsSessionStarted() then
             InitialSetup()
             SetSkyCamLoading(true)
-            ShutdownLoadingScreen()
-            ShutdownLoadingScreenNui()
-            ClearScreen()
             ToggleSound(false)
             ClearDrawOrigin()
             TriggerEvent("soz-character:client:choose:spawn")
@@ -76,6 +73,8 @@ function SetSkyCamLoading(bool)
         ShakeCam(Cam2, "HAND_SHAKE", 0.15)
         SetEntityVisible(PlayerPedId(), false)
         RenderScriptCams(true, false, 3000, 1, 1)
+        ShutdownLoadingScreen()
+        ShutdownLoadingScreenNui()
         Citizen.Wait(2000)
         SetFocusArea(-265.51, -811.01, 31.85 + 175, 0.0, 0.0, 0.0)
         SetCamParams(Cam2, -400.00, 1700.00, 31.85 + 3000, -85.00, 0.00, 260.00, 100.0, 5000, 0, 0, 2)
@@ -93,8 +92,6 @@ end
 
 function SetSkyCam(bool)
     if bool then
-        ClearCloudHat()
-        ClearOverrideWeather()
         Cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -400.00, 1700.00, 31.85 + 3000, -85.00, 0.00, 260.00, 100.00, false, 0)
         SetCamActive(Cam, true)
         SetFocusArea(-265.51, -811.01, 31.85 + 175, 0.0, 0.0, 0.0)
@@ -208,6 +205,7 @@ RegisterNetEvent("soz-character:client:NcDataPed", function()
                 end
             end)
         else
+            ClearScreen()
             SetNuiFocus(true, true)
             SendNUIMessage({action = "open"})
         end
