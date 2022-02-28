@@ -7,6 +7,7 @@ import VehicleDataProvider from "../context/vehicle";
 import PlayerProvider from "../context/player";
 import GameProvider from "../context/game";
 import Minimap from "./hud/minimap";
+import Notifications from "./hud/notifications";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
                 <VoiceModeProvider>
                     <VehicleDataProvider>
                         <main style={{transition: "opacity .5s", opacity: displayHUD ? 1.0 : 0.0}}>
+                            <Notifications />
                             <Minimap />
                             <VoiceIndicator />
                             <PlayerNeeds />

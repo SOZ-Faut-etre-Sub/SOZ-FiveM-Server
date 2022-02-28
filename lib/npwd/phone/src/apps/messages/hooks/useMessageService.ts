@@ -3,7 +3,7 @@ import {Message, MessageConversationResponse, MessageEvents} from '@typings/mess
 import {useMessageActions} from './useMessageActions';
 import {useCallback} from 'react';
 import {useMessageNotifications} from './useMessageNotifications';
-import {useLocation} from 'react-router';
+import {useLocation} from 'react-router-dom';
 import {usePhoneVisibility} from '@os/phone/hooks/usePhoneVisibility';
 import {useContactActions} from '../../contacts/hooks/useContactActions';
 

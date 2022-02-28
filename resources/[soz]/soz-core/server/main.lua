@@ -6,7 +6,7 @@ end)
 
 QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     local src = source
-    TriggerClientEvent("QBCore:Notify", src, "ID: " .. src)
+    TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)
 end)
 
 RegisterNetEvent("qb-carwash:server:washCar", function()
@@ -16,7 +16,7 @@ RegisterNetEvent("qb-carwash:server:washCar", function()
     if Player.Functions.RemoveMoney("money", Config.DefaultPrice, "car-washed") then
         TriggerClientEvent("qb-carwash:client:washCar", src)
     else
-        TriggerClientEvent("QBCore:Notify", src, "You dont have enough money..", "error")
+        TriggerClientEvent("hud:client:DrawNotification", src, "~r~You dont have enough money..")
     end
 end)
 

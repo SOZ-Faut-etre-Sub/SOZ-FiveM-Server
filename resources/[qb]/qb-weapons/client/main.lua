@@ -92,19 +92,19 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
                         TaskReloadWeapon(ped)
                         TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + amount)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
-                        TriggerEvent('QBCore:Notify', 'Reloaded', "success")
+                        exports["soz-hud"]:DrawNotification("Reloaded")
                     end
                 end, function()
-                    QBCore.Functions.Notify("Canceled", "error")
+                    exports["soz-hud"]:DrawNotification("~r~Canceled")
                 end)
             else
-                QBCore.Functions.Notify("Max Ammo Capacity", "error")
+                exports["soz-hud"]:DrawNotification("~r~Max Ammo Capacity")
             end
         else
-            QBCore.Functions.Notify("You have no weapon.", "error")
+            exports["soz-hud"]:DrawNotification("~r~You have no weapon.")
         end
     else
-        QBCore.Functions.Notify("You have no weapon.", "error")
+        exports["soz-hud"]:DrawNotification("~r~You have no weapon.")
     end
 end)
 
@@ -118,11 +118,11 @@ RegisterNetEvent("weapons:client:EquipAttachment", function(ItemData, attachment
             if WeaponAttachments[WeaponData.name][attachment]['item'] == ItemData.name then
                 TriggerServerEvent("weapons:server:EquipAttachment", ItemData, CurrentWeaponData, WeaponAttachments[WeaponData.name][attachment])
             else
-                QBCore.Functions.Notify("This weapon does not support this attachment.", "error")
+                exports["soz-hud"]:DrawNotification("~r~This weapon does not support this attachment.")
             end
         end
     else
-        QBCore.Functions.Notify("You dont have a weapon in your hand.", "error")
+        exports["soz-hud"]:DrawNotification("~r~You dont have a weapon in your hand.")
     end
 end)
 
@@ -187,7 +187,7 @@ CreateThread(function()
                     else
                         if weapon ~= -1569615261 then
                             TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]["name"])
-                            QBCore.Functions.Notify("This weapon is broken and can not be used.", "error")
+                            exports["soz-hud"]:DrawNotification("~r~This weapon is broken and can not be used.")
                             MultiplierAmount = 0
                         end
                     end

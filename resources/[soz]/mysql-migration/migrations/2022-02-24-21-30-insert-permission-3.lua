@@ -1,5 +1,5 @@
 table.insert(migrations, {
-    name = "insert-permission-2",
+    name = "insert-permission-3",
     queries = {
         [[
             INSERT INTO permissions (

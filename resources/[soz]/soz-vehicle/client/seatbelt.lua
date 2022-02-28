@@ -69,7 +69,7 @@ RegisterNetEvent("seatbelt:client:UseHarness", function(ItemData)
             end)
         end
     else
-        QBCore.Functions.Notify("You're not in a car.", "error")
+        exports["soz-hud"]:DrawNotification("~r~You're not in a car.")
     end
 end)
 

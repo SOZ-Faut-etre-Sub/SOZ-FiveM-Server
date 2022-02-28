@@ -48,12 +48,6 @@ RegisterNetEvent("soz-character:server:createCharacter", function(data)
     end
 end)
 
-RegisterNetEvent("soz-character:server:GetUserLicense", function(source)
-    local src = source
-    local license = QBCore.Functions.GetIdentifier(src, "license")
-    return license
-end)
-
 -- Callbacks
 
 QBCore.Functions.CreateCallback("soz-character:server:GetUserCharacters", function(source, cb)
