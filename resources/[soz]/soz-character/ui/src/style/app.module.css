@@ -1,0 +1,64 @@
+.app {
+    padding: 5vh 5vw;
+}
+
+.header {
+    position: relative;
+    text-transform: uppercase;
+}
+
+.header * {
+    padding: 0;
+    margin: 0;
+    filter: drop-shadow(0px 0px 7px rgba(0,0,0,.5));
+}
+
+.header h1 {
+    font-size: 1.3rem;
+    color: #ffffff;
+}
+
+.header h2 {
+    font-size: 2rem;
+    line-height: 1rem;
+    color: #46EA18;
+}
+
+.corner_top_right {
+    position: absolute;
+    z-index: -1;
+    top: 5vh;
+    right: 5vw;
+    width: 30vw;
+    height: 80vh;
+
+    border-top-style: solid;
+    border-right-style: solid;
+    border-width: .1rem;
+    border-image: linear-gradient(230deg, #46EA18 0%, transparent 80%) 5;
+}
+
+.corner_top_right svg {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+}
+
+.corner_bottom_left {
+    position: absolute;
+    z-index: -1;
+    bottom: 5vh;
+    width: 80vw;
+    height: 30vh;
+
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-width: .1rem;
+    border-image: linear-gradient(15deg, #46EA18 0%, transparent 80%) 5;
+}
+
+.corner_bottom_left svg {
+    position: absolute;
+    bottom: -5px;
+    left: -7px;
+}

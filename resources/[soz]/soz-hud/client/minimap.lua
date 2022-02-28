@@ -30,8 +30,6 @@ Citizen.CreateThread(function()
     SendNUIMessage({event = "hud_minimap_pos", data = getMapPosition()})
 
     local minimap = RequestScaleformMovie("minimap")
-    SetRadarBigmapEnabled(true, false)
-    Wait(0)
     SetRadarBigmapEnabled(false, false)
 
     while true do

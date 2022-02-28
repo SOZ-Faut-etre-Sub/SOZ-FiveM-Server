@@ -31,6 +31,7 @@ export const GalleryGrid = () => {
             <Transition
                 appear={true}
                 show={true}
+                unmount={false}
                 className="mt-4 h-full flex flex-col"
                 enter="transition-all duration-300"
                 enterFrom="translate-x-0"

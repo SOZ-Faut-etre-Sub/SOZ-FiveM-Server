@@ -61,7 +61,7 @@ RegisterNetEvent('QBCore:Command:SpawnVehicle', function(vehName)
     end
     local vehicle = CreateVehicle(hash, GetEntityCoords(ped), GetEntityHeading(ped), true, false)
     TaskWarpPedIntoVehicle(ped, vehicle, -1)
-    SetModelAsNoLongerNeeded(vehicle)
+    SetModelAsNoLongerNeeded(hash)
     TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(vehicle))
 end)
 
@@ -91,10 +91,6 @@ end)
 
 RegisterNetEvent('QBCore:Player:UpdatePlayerData', function()
     TriggerServerEvent('QBCore:UpdatePlayer')
-end)
-
-RegisterNetEvent('QBCore:Notify', function(text, type, length)
-    QBCore.Functions.Notify(text, type, length)
 end)
 
 RegisterNetEvent('QBCore:Client:TriggerCallback', function(name, ...)

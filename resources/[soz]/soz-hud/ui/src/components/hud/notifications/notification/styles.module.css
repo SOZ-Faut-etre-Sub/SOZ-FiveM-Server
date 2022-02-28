@@ -1,0 +1,79 @@
+.notification {
+    position: relative;
+    width: 100%;
+    padding: .5rem .8rem;
+    font-size: 0.8rem;
+    overflow: hidden;
+    margin-bottom: .3rem;
+    transition: all 0.3s ease-out;
+
+    border-radius: .3rem;
+    color: #fff;
+    background: linear-gradient(to right, rgba(0,0,0,.6) 50%, rgba(0,0,0,.25));
+}
+
+.notification * {
+    padding: 0;
+    margin: 0;
+}
+
+.notification.slideIn {
+    animation-name: slideIn;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+}
+
+.notification.slideOut {
+    transform: translateX(-5vw);
+    opacity: 0;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-5vw);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0vw);
+        opacity: 1;
+    }
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: .5rem;
+    width: 100%;
+}
+
+.header img {
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+.header_text {
+    display: flex;
+    flex-direction: column;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.text {
+    padding: .3rem 0;
+}
+
+.progressbar {
+    display: flex;
+    height: .1rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    transition-property: width;
+    background: rgba(255,255,255,.5);
+}

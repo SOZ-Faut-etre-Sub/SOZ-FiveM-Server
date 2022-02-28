@@ -165,7 +165,7 @@ RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, ind
                 Player.Functions.RemoveMoney("money", result[1].depotprice, "paid-depot")
                 TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
             else
-                TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_enough"), "error")
+                TriggerClientEvent("hud:client:DrawNotification", src, Lang:t("error.not_enough"))
             end
         end
     end)
@@ -179,7 +179,7 @@ RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, ind
         Player.Functions.RemoveMoney("money", price, "paid-prive")
         TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
     else
-        TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_enough"), "error")
+        TriggerClientEvent("hud:client:DrawNotification", src, Lang:t("error.not_enough"))
     end
 end)
 
