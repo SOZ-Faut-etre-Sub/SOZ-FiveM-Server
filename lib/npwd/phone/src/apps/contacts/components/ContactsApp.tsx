@@ -8,7 +8,7 @@ import {Transition} from '@headlessui/react';
 import {ContactList} from "./List/ContactList";
 import {PlusIcon} from "@heroicons/react/outline";
 import {AppTitle} from "@ui/components/AppTitle";
-import {useLocation} from "react-router";
+import {useLocation} from "react-router-dom";
 import {useApp} from "@os/apps/hooks/useApps";
 
 
@@ -23,6 +23,7 @@ export const ContactsApp: React.FC = () => {
         <Transition
             appear={true}
             show={true}
+            unmount={false}
             className="mt-4 h-full flex flex-col"
             enter="transition-all origin-[70%_90%] duration-500"
             enterFrom="scale-[0.0] opacity-0"

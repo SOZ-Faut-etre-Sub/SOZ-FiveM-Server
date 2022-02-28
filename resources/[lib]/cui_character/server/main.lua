@@ -10,10 +10,10 @@ QBCore.Functions.CreateCallback('cui_character:checkMoney', function(source, cb,
     if cashamount >= amount then
         cb(true)
         Player.Functions.RemoveMoney('money', amount)
-        TriggerClientEvent('QBCore:Notify', _source, 'Paid $' ..amount, 'success')
+        TriggerClientEvent('hud:client:DrawNotification', _source, 'Paid $' ..amount)
     else
         cb(false)
-        TriggerClientEvent('QBCore:Notify', _source, 'Not Enough Money', 'error')
+        TriggerClientEvent('hud:client:DrawNotification', _source, '~r~Not Enough Money')
     end
 end)
 
@@ -44,7 +44,7 @@ end)
 
 RegisterNetEvent('cui_character:requestPlayerData', function()
     	local _source= source
-	local Player = QBCore.Functions.GetPlayer(_source)   
+	local Player = QBCore.Functions.GetPlayer(_source)
     	local citizenid = Player.PlayerData.citizenid
 
     	if citizenid then

@@ -79,12 +79,12 @@ RegisterNetEvent("admin:server:intovehicle", function(player)
         end
         if seat ~= -1 then
             SetPedIntoVehicle(admin, vehicule, seat)
-            TriggerClientEvent("QBCore:Notify", src, "Monté dans le véhicule", "success", 5000)
+            TriggerClientEvent("hud:client:DrawNotification", src, "Monté dans le véhicule")
         else
-            TriggerClientEvent("QBCore:Notify", src, "Le véhicule n'a pas de siège libre!", "error", 5000)
+            TriggerClientEvent("hud:client:DrawNotification", src, "~r~Le véhicule n'a pas de siège libre!")
         end
     else
-        TriggerClientEvent("QBCore:Notify", src, "Le joueur n'est pas dans un véhicule!", "error", 5000)
+        TriggerClientEvent("hud:client:DrawNotification", src, "~r~Le joueur n'est pas dans un véhicule!")
     end
 end)
 

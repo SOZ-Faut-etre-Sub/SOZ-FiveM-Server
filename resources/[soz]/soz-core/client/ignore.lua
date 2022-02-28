@@ -17,6 +17,8 @@ AddEventHandler("populationPedCreating", function(x, y, z, model)
 end)
 
 CreateThread(function() -- all these should only need to be called once
+    SetPlayerHealthRechargeLimit(PlayerId(), 0)
+    SetFlashLightKeepOnWhileMoving(true)
     StartAudioScene("CHARACTER_CHANGE_IN_SKY_SCENE")
     SetAudioFlag("PoliceScannerDisabled", true)
     SetGarbageTrucks(false)

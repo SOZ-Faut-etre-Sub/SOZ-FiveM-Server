@@ -4,7 +4,7 @@ QBCore.Commands.Add("clearinv", "Clear Players Inventory (Admin Only)", {{name =
     if Player then
         Inventory.Clear(Player.PlayerData.source, false)
     else
-        TriggerClientEvent("QBCore:Notify", source, "Player Not Online", "error")
+        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Player Not Online")
     end
 end, "admin")
 

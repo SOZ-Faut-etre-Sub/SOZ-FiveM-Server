@@ -19,6 +19,7 @@ export const HomeApp: React.FC = () => {
             <Transition
                 appear={true}
                 show={true}
+                unmount={false}
                 className="mt-4 h-full flex flex-col justify-between"
                 enter="transition-transform duration-700"
                 enterFrom="scale-[3.0]"
