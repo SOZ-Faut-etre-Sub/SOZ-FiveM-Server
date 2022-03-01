@@ -19,3 +19,18 @@ end)
 RegisterNetEvent("soz-driving-license:client:spawn_vehicle", function(licenseType)
     SetupDrivingSchoolExam(licenseType)
 end)
+
+--
+-- NUI related events
+--
+AddEventHandler("soz-driving-school:client:request-nui-data", function (target)
+    TriggerServerEvent("soz-driving-school:server:show-license", target)
+end)
+
+RegisterNetEvent("soz-driving-school:client:show-licence", function (data)
+    SendNUIMessage(data)
+end)
+
+AddEventHandler("soz-driving-school:client:hide-license", function ()
+    SendNUIMessage({type = "hide"})
+end)
