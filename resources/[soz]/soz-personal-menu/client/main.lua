@@ -14,6 +14,7 @@ local function GenerateMenu()
     personalMenu:ClearItems()
     personalMenu:SetSubtitle(string.format("%s %s", PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
 
+    LicensesEntry(personalMenu)
     InvoiceEntry(personalMenu)
     HudToggleEntry(personalMenu)
 
