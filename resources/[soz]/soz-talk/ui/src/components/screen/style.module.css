@@ -34,14 +34,21 @@
     z-index: 15;
 }
 
-.volume {
-    display: flex;
-    align-items: center;
-    padding: 0 .5vw;
-    font-size: 1.5vh;
+.meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: left;
+    gap: .5rem;
+    padding: 0 .6vw;
+    font-size: 1vh;
 }
 
-.volume svg {
+.meta div {
+    display: flex;
+    align-items: center;
+}
+
+.meta svg {
     height: 1.2vh;
     width: 1.2vh;
     margin-right: .2rem;

@@ -1,8 +1,15 @@
 import {StateUpdater} from "preact/compat";
 
+export enum Ear {
+    Left,
+    Both,
+    Right
+}
+
 export interface Frequency {
     frequency: number
     volume: number
+    ear: Ear
 }
 
 export type FrequencyType = 'primary' | 'secondary'

@@ -8,6 +8,8 @@ CurrentPlayer = {
     VoiceModeUpdateAllowed = true,
     VoiceModeProximityIsOverride = false,
 
+    --- 0: left | 1: both | 2: right
+    Ear = {["primaryRadio"] = 1, ["secondaryRadio"] = 1},
     Volume = table.deepclone(Config.DefaultVolume),
 
     RadioButtonPressed = false,
