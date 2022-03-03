@@ -13,8 +13,16 @@ AddAudioSubmixOutput(phoneEffectId, 1)
 function ApplySubmixEffect(moduleType, player)
     if moduleType == "primaryRadio" then
         MumbleSetSubmixForServerId(player, radioEffectId)
+        SetAudioSubmixOutputVolumes(radioEffectId, 0, CurrentPlayer.Ear["primaryRadio"] <= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0,
+                                    CurrentPlayer.Ear["primaryRadio"] >= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0,
+                                    CurrentPlayer.Ear["primaryRadio"] <= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0,
+                                    CurrentPlayer.Ear["primaryRadio"] >= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0, 1.0, 1.0)
     elseif moduleType == "secondaryRadio" then
         MumbleSetSubmixForServerId(player, radioEffectId)
+        SetAudioSubmixOutputVolumes(radioEffectId, 0, CurrentPlayer.Ear["secondaryRadio"] <= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0,
+                                    CurrentPlayer.Ear["secondaryRadio"] >= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0,
+                                    CurrentPlayer.Ear["secondaryRadio"] <= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0,
+                                    CurrentPlayer.Ear["secondaryRadio"] >= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0, 1.0, 1.0)
     elseif moduleType == "phone" then
         MumbleSetSubmixForServerId(player, phoneEffectId)
     end
@@ -23,3 +31,9 @@ end
 function RemoveSubmixEffect(player)
     MumbleSetSubmixForServerId(player, -1)
 end
+
+exports("setVoiceEar", function(_type, ear)
+    if CurrentPlayer.Ear[_type] then
+        CurrentPlayer.Ear[_type] = ear
+    end
+end)
