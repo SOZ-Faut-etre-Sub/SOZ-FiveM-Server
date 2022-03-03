@@ -27,7 +27,6 @@ local function getNextCheckpoint(tbl, pop)
     return cp
 end
 
-
 ---Display checkpoint, waypoint and message to player
 ---@param checkpoint table Checkpoint to be displayed
 ---@param nextCheckpoint table Following checkpoint
@@ -186,6 +185,7 @@ function TerminateExam(isSuccess, licenseType)
     CleanUpPenaltySystem()
     DeleteWaypoint()
     passingExam = false
+    WarnedNoGps = false
 
     if isSuccess then
         TriggerServerEvent("soz-driving-license:server:update_license", licenseType)

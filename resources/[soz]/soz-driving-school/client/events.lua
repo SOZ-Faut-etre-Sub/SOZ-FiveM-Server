@@ -1,3 +1,16 @@
+local QBCore = exports["qb-core"]:GetCoreObject()
+
+WarnedNoGps = false -- This value is reset on exam.TerminateExam()
+local function playerHasGps()
+    local PlayerData = QBCore.Functions.GetPlayerData() or {}
+    for _, item in pairs(PlayerData.items) do
+        if item.name == "gps" then
+            return true
+        end
+    end
+    return false
+end
+
 AddEventHandler("soz-driving-license:client:start_exam", function(data)
     Citizen.CreateThread(function()
         -- Check if spawn location is free
@@ -6,6 +19,16 @@ AddEventHandler("soz-driving-license:client:start_exam", function(data)
         if not vData then
             return
         end
+
+        -- Check if player has a GPS
+        local hasGps = playerHasGps()
+        if not hasGps and not WarnedNoGps then
+            WarnedNoGps = true
+            exports["soz-hud"]:DrawNotification("Un GPS est fortement recommandé pour le passage du permis. L'hôtesse d'accueil peut vous en vendre un.", false, Config.NotificationDelay)
+            return
+        end
+
+        -- Check if vehicle spawn point free
         if not IsSpawnPointFree(vData.x, vData.y, vData.z) then
             TriggerEvent("hud:client:DrawNotification", "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.")
             return
