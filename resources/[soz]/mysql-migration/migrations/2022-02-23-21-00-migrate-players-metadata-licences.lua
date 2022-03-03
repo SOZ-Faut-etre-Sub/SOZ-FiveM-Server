@@ -15,5 +15,5 @@ table.insert(migrations, {
                 'rescuer', false
             ))
         ]],
-    }
+    },
 })

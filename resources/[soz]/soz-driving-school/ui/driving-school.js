@@ -65,7 +65,6 @@ function displayLicensesData(playerLicenses = {}) {
         // Add points
         if (data.hasPoint) {
             const points = playerLicenseData || 0;
-            console.log('pts', points, licenseType)
             pointsElement.innerHTML += `
                 <div class="item text-center">
                     <div class="text-bold text-small small-lh">
@@ -92,7 +91,6 @@ function setVisible(value) {
 }
 
 window.addEventListener("message", (event) => {
-    console.log('EVT', event.data.type);
     if (event.data.type === "show") {
         displayLicensesData(event.data.licences);
         displayPlayerName(
