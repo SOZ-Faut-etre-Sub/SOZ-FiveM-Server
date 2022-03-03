@@ -22,8 +22,7 @@ function LicensesEntry(menu)
         elseif value == "show" then
             local closestPlayer, distance = QBCore.Functions.GetClosestPlayer()
             if closestPlayer ~= -1 and distance < 2.0 then
-                target = closestPlayer.PlayerData.source
-
+                target = GetPlayerServerId(closestPlayer)
             else
                 exports["soz-hud"]:DrawNotification("~r~Il n'y a personne à proximité", false, 3000)
                 return
