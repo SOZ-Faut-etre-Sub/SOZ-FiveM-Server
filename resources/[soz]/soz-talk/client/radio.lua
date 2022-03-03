@@ -32,59 +32,31 @@ local function connectToRadio(channel, isPrimary)
 end
 
 local function leaveRadio()
-    primaryRadio.frequency = 0
-    secondaryRadio.frequency = 0
-    exports["soz-voip"]:setRadioChannel(0, true)
-    exports["soz-voip"]:setRadioChannel(0, false)
-    clickSound()
+    if primaryRadio.frequency ~= 0 or secondaryRadio.frequency ~= 0 then
+        primaryRadio.frequency = 0
+        secondaryRadio.frequency = 0
+        exports["soz-voip"]:setRadioChannel(0, true)
+        exports["soz-voip"]:setRadioChannel(0, false)
+
+        clickSound()
+    end
 end
 
 local function toggleRadio(toggle)
-    SetNuiFocus(toggle, toggle)
-    SetNuiFocusKeepInput(toggle)
     radioOpen = toggle
+    SetNuiFocus(radioOpen, radioOpen)
+    SetNuiFocusKeepInput(radioOpen)
 
     if radioOpen then
         toggleRadioAnimation(true)
         SendNUIMessage({type = "radio", action = "open"})
 
-        CreateThread(function()
-            while radioOpen do
-                Wait(0)
-
-                DisableControlAction(0, 1, true) -- Look Left/Right
-                DisableControlAction(0, 2, true) -- Look up/Down
-                DisableControlAction(0, 16, true) -- Next Weapon
-                DisableControlAction(0, 17, true) -- Select Previous Weapon
-                DisableControlAction(0, 22, true) -- Jump
-                DisableControlAction(0, 24, true) -- Attack
-                DisableControlAction(0, 25, true) -- Aim
-                DisableControlAction(0, 26, true) -- Look Behind
-                DisableControlAction(0, 36, true) -- Input Duck/Sneak
-                DisableControlAction(0, 37, true) -- Weapon Wheel
-                DisableControlAction(0, 44, true) -- Cover
-                DisableControlAction(0, 47, true) -- Detonate
-                DisableControlAction(0, 55, true) -- Dive
-                DisableControlAction(0, 75, true) -- Exit Vehicle
-                DisableControlAction(0, 76, true) -- Vehicle Handbrake
-                DisableControlAction(0, 81, true) -- Next Radio (Vehicle)
-                DisableControlAction(0, 82, true) -- Previous Radio (Vehicle)
-                DisableControlAction(0, 91, true) -- Passenger Aim (Vehicle)
-                DisableControlAction(0, 92, true) -- Passenger Attack (Vehicle)
-                DisableControlAction(0, 99, true) -- Select Next Weapon (Vehicle)
-                DisableControlAction(0, 106, true) -- Control Override (Vehicle)
-                DisableControlAction(0, 114, true) -- Fly Attack (Flying)
-                DisableControlAction(0, 115, true) -- Next Weapon (Flying)
-                DisableControlAction(0, 121, true) -- Fly Camera (Flying)
-                DisableControlAction(0, 122, true) -- Control OVerride (Flying)
-                DisableControlAction(0, 135, true) -- Control OVerride (Sub)
-                DisableControlAction(0, 200, true) -- Pause Menu
-                DisableControlAction(0, 245, true) -- Chat
-            end
-        end)
+        TriggerEvent("talk:action:disable")
     else
         toggleRadioAnimation(false)
         SendNUIMessage({type = "radio", action = "close"})
+
+        TriggerEvent("talk:action:enable")
     end
 end
 
@@ -111,6 +83,17 @@ RegisterNUICallback("radio/change_frequency", function(data, cb)
     if data.secondary and tonumber(data.secondary) >= 1000 and tonumber(data.secondary) <= 9999 then
         secondaryRadio.frequency = data.secondary
         connectToRadio(secondaryRadio.frequency, false)
+    end
+    clickSound()
+    cb("ok")
+end)
+
+RegisterNUICallback("radio/change_ear", function(data, cb)
+    if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
+        exports["soz-voip"]:setVoiceEar("primaryRadio", tonumber(data.primary))
+    end
+    if data.secondary and tonumber(data.secondary) >= 0 and tonumber(data.secondary) <= 2 then
+        exports["soz-voip"]:setVoiceEar("secondaryRadio", tonumber(data.primary))
     end
     clickSound()
     cb("ok")
