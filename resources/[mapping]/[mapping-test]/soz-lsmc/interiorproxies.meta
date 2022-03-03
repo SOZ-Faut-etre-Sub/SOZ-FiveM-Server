@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SInteriorOrderData>
+  <startFrom value="3000" />
+  <proxies>
+	<Item>v_lsmc_int</Item>
+  </proxies>
+</SInteriorOrderData>
