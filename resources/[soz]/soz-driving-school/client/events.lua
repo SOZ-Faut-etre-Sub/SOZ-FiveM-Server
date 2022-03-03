@@ -24,7 +24,8 @@ AddEventHandler("soz-driving-license:client:start_exam", function(data)
         local hasGps = playerHasGps()
         if not hasGps and not WarnedNoGps then
             WarnedNoGps = true
-            exports["soz-hud"]:DrawNotification("Un GPS est fortement recommandé pour le passage du permis. L'hôtesse d'accueil peut vous en vendre un.", false, Config.NotificationDelay)
+            exports["soz-hud"]:DrawNotification("Un GPS est fortement recommandé pour le passage du permis. L'hôtesse d'accueil peut vous en vendre un.",
+                                                false, Config.NotificationDelay)
             return
         end
 
@@ -46,14 +47,14 @@ end)
 --
 -- NUI related events
 --
-AddEventHandler("soz-driving-school:client:request-nui-data", function (target)
+AddEventHandler("soz-driving-school:client:request-nui-data", function(target)
     TriggerServerEvent("soz-driving-school:server:show-license", target)
 end)
 
-RegisterNetEvent("soz-driving-school:client:show-licence", function (data)
+RegisterNetEvent("soz-driving-school:client:show-licence", function(data)
     SendNUIMessage(data)
 end)
 
-AddEventHandler("soz-driving-school:client:hide-license", function ()
+AddEventHandler("soz-driving-school:client:hide-license", function()
     SendNUIMessage({type = "hide"})
 end)

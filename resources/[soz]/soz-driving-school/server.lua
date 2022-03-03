@@ -36,7 +36,7 @@ RegisterNetEvent("soz-driving-license:server:update_license", function(licenseTy
     Player.Functions.Save(source)
 end)
 
-RegisterNetEvent("soz-driving-school:server:show-license", function (target)
+RegisterNetEvent("soz-driving-school:server:show-license", function(target)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -48,10 +48,11 @@ RegisterNetEvent("soz-driving-school:server:show-license", function (target)
         return
     end
 
-    TriggerClientEvent("soz-driving-school:client:show-licence", target, {
+    TriggerClientEvent("soz-driving-school:client:show-licence", target,
+                       {
         type = "show",
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
-        licences = licences
+        licences = licences,
     })
 end)
