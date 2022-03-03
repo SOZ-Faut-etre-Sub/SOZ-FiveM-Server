@@ -1,4 +1,4 @@
-function RequestStreamedTexture(dictionary)
+function RequestStreamedTexture(dictionary, cb)
     if not HasStreamedTextureDictLoaded(dictionary) then
         CreateThread(function()
             RequestStreamedTextureDict(dictionary)
@@ -6,7 +6,11 @@ function RequestStreamedTexture(dictionary)
             repeat
                 Wait(10)
             until HasStreamedTextureDictLoaded(dictionary)
+
+            cb()
         end)
+    else
+        cb()
     end
 end
 
@@ -32,16 +36,17 @@ exports("DrawNotification", DrawNotification)
 --- @param flash boolean Notification flash on the screen
 --- @param delay number Set Notification display time
 local function DrawAdvancedNotification(title, subtitle, message, image, flash, delay)
-    RequestStreamedTexture(image)
-    SendNUIMessage({
-        action = "draw_advanced_notification",
-        title = title,
-        subtitle = subtitle,
-        message = message,
-        image = image,
-        flash = flash,
-        delay = delay,
-    })
+    RequestStreamedTexture(image, function()
+        SendNUIMessage({
+            action = "draw_advanced_notification",
+            title = title,
+            subtitle = subtitle,
+            message = message,
+            image = image,
+            flash = flash,
+            delay = delay,
+        })
+    end)
 end
 
 RegisterNetEvent("hud:client:DrawAdvancedNotification", function(title, subtitle, message, image, flash, delay)
