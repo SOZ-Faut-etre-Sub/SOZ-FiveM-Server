@@ -51,18 +51,9 @@ local function notif()
 end
 
 local function JobPanel(menu)
-    local adsl = menu:AddButton({
-        label = "Adsl",
-        description = " Poseur de cable d'ADSL ",
-    })
-    local livraison = menu:AddButton({
-        label = "Fougère Prime",
-        description = "Livraison à Domicile",
-    })
-    local religion = menu:AddButton({
-        label = "InfoChat",
-        description = "Religion",
-    })
+    local adsl = menu:AddButton({label = "Adsl", description = " Poseur de cable d'ADSL "})
+    local livraison = menu:AddButton({label = "Fougère Prime", description = "Livraison à Domicile"})
+    local religion = menu:AddButton({label = "InfoChat", description = "Religion"})
     local metal = menu:AddButton({
         label = "DeMetal Company",
         description = "Récolte de metal, Industrie Métallurgique",
