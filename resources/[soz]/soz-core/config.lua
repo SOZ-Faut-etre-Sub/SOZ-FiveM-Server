@@ -41,8 +41,7 @@ Config.BlacklistedScenarios = {
     ["GROUPS"] = {2017590552, 2141866469, 1409640232, GetHashKey("ng_planes")},
 }
 
-
-Config.BlacklistedVehs = {--[[
+Config.BlacklistedVehs = { --[[
     [GetHashKey("SHAMAL")] = true,
     [GetHashKey("LUXOR")] = true,
     [GetHashKey("LUXOR2")] = true,
