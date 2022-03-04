@@ -66,7 +66,7 @@ end)
 function SetSkyCamLoading(bool)
     if bool then
         DisplayRadar(false)
-        Cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -421.0049, 1155.414, 324.8574 + 1000, -85.00, 0.00, 260.00, 100.00, false, 0)
+        Cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -421.0049, 1155.414, 324.8574 + 100, -85.00, 0.00, 260.00, 100.00, false, 0)
         SetCamActive(Cam2, true)
         SetFocusArea(-421.0049, 1155.414, 324.8574 + 10, 50, 0.0, 0.0)
         ShakeCam(Cam2, "HAND_SHAKE", 0.15)
