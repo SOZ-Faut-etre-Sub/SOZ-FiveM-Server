@@ -100,10 +100,11 @@ local function SpawnVehicule()
     RequestModel(model)
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
-        print(test)
     end
     adsl_vehicule = CreateVehicle(model, Config.adsl_vehicule.x, Config.adsl_vehicule.y, Config.adsl_vehicule.z, Config.adsl_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
+    VehPlate = QBCore.Functions.GetPlate(adsl_vehicule)
+    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
 end
 
 RegisterNetEvent("jobs:adsl:begin")
