@@ -104,6 +104,8 @@ local function SpawnVehicule()
     end
     metal_vehicule = CreateVehicle(model, Config.metal_vehicule.x, Config.metal_vehicule.y, Config.metal_vehicule.z, Config.metal_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
+    VehPlate = QBCore.Functions.GetPlate(metal_vehicule)
+    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
 end
 
 RegisterNetEvent("jobs:metal:vente")
