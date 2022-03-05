@@ -17,6 +17,15 @@ end
 
 function InitialSetup()
     SetManualShutdownLoadingScreenNui(true)
+
+    if IsScreenFadedOut() then
+        DoScreenFadeIn(500)
+
+        while not IsScreenFadedIn() do
+            Citizen.Wait(0)
+        end
+    end
+
     ToggleSound(muteSound)
 end
 
@@ -30,12 +39,16 @@ end
 CreateThread(function()
     while true do
         Wait(0)
-        if NetworkIsSessionStarted() then
+
+        local playerPed = PlayerPedId()
+
+        if playerPed and playerPed ~= -1 and NetworkIsPlayerActive(PlayerId()) then
             InitialSetup()
             SetSkyCamLoading(true)
             ToggleSound(false)
             ClearDrawOrigin()
             TriggerEvent("soz-character:client:choose:spawn")
+
             return
         end
     end
