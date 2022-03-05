@@ -1,7 +1,7 @@
 function LicensesEntry(menu)
     local licensesSlider = menu:AddSlider({
         label = "Mes permis",
-        descritpion = "Voir/Montrer vos permis",
+        description = "Voir/Montrer vos permis",
         values = {
             {label = "Voir", value = "see"},
             {label = "Montrer", value = "show"},

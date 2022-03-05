@@ -1,7 +1,5 @@
 Config = {}
 
-Config.NotificationDelay = 4000 -- in ms
-
 Config.BlipName = "Auto-école"
 Config.BlipSprite = 545
 Config.BlipColor = 25
@@ -53,7 +51,8 @@ Config.Licenses = {
 Config.VehiclePlateText = "P3RM15"
 
 Config.PenaltyTickDelay = 200 -- in ms
-Config.PenaltyMaxDuration = 3000 -- in ms
+Config.PenaltyMaxDuration = 4000 -- in ms
+Config.NotificationDelay = Config.PenaltyMaxDuration -- in ms
 
 Config.CheckpointType = 0
 Config.CheckpointSize = 3.0
