@@ -126,9 +126,7 @@ end
 function SetupDrivingSchoolExam(licenceType)
     Citizen.CreateThread(function()
         -- Fade to black screen
-        local fadeDelay = 500
-        DoScreenFadeOut(fadeDelay)
-        Citizen.Wait(fadeDelay)
+        ScreenFadeOut()
 
         -- Instructor Ped
         local iData = Config.Peds.instructor
@@ -161,7 +159,7 @@ function SetupDrivingSchoolExam(licenceType)
         vehicleEntity = vehicle
 
         -- Clear black screen
-        DoScreenFadeIn(fadeDelay)
+        ScreenFadeIn()
 
         -- Start exam
         passingExam = true
@@ -177,11 +175,33 @@ local function RunExitSequence()
     TaskLeaveVehicle(instructorEntity, vehicleEntity, 0)
 end
 
+local function HandleVehicleAndPed(isSuccess, instructor, vehicle)
+    if isSuccess then
+        Citizen.CreateThread(function ()
+            -- Fade to black screen
+            ScreenFadeOut()
+
+            -- Delete ped and vehicle
+            DeletePed(instructor)
+            DeleteVehicle(vehicle)
+
+            -- Spawn user to driving school
+            local ped = PlayerPedId()
+            SetEntityCoords(ped, Config.PlayerDefaultLocation)
+            SetEntityRotation(ped, 0.0, 0.0, Config.PlayerDefaultLocation.w, 0, false)
+
+            ScreenFadeIn()
+        end)
+    else
+        SetEntityAsNoLongerNeeded(instructor)
+        SetEntityAsNoLongerNeeded(vehicle)
+    end
+end
+
 function TerminateExam(isSuccess, licenseType)
     RunExitSequence()
 
-    SetEntityAsNoLongerNeeded(instructorEntity)
-    SetEntityAsNoLongerNeeded(vehicleEntity)
+    HandleVehicleAndPed(isSuccess, instructorEntity, vehicleEntity)
     CleanUpPenaltySystem()
     DeleteWaypoint()
     passingExam = false

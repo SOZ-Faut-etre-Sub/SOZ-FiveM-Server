@@ -5,6 +5,9 @@ Config.BlipSprite = 545
 Config.BlipColor = 25
 -- Blip coords are the same as Config.Peds.secretary (x, y)
 
+-- Coords where to teleport player to, at the end of exam
+Config.PlayerDefaultLocation = vector4(-817.49, -1345.06, 4.15, 231.08)
+
 Config.Peds = {
     ["instructor"] = {modelHash = "cs_manuel", x = 0.0, y = 0.0, z = 0.0, rotation = 0.0, networkSync = true},
     ["secretary"] = {
