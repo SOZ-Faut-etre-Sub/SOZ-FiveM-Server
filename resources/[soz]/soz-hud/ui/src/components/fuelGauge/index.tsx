@@ -5,9 +5,9 @@ import {fuelGauge} from "../../types/vehicle";
 const FuelGauge: FunctionalComponent<fuelGauge> = ({value}) => {
     const gaugeColor = () => {
         if (value <= 25) {
-            return '#ff0245'
+            return '#0e2e04'
         } else if (value <= 35) {
-            return '#ffaf02'
+            return '#23740c'
         } else {
             return '#ffffff'
         }
