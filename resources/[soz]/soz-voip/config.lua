@@ -11,3 +11,5 @@ Config.VoiceModes = {
 }
 
 Config.VoiceTarget = 1
+
+Config.ShortRangeRadio = 3000.0
