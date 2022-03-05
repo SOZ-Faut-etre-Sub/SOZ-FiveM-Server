@@ -4,6 +4,10 @@
     top: 60px;
 }
 
+.fuel path {
+    transition: all .3s;
+}
+
 .fuel g {
     transform: translate(16px, 13px);
 }
