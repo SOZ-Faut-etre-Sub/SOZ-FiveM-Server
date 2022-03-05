@@ -46,45 +46,44 @@ local function JobPosition(job, coords, sprite)
     SetBlipCategory(blip, 2)
 end
 
+local function notif()
+    TriggerServerEvent("job:anounce", "Rendez vous au point sur votre carte pour prendre le métier")
+end
+
 local function JobPanel(menu)
-    local adsl = menu:AddButton({
-        label = "Job: Poseur d'Adsl",
-        description = "Rendez vous au point sur votre gps pour commencez le job adsl",
-    })
-    local livraison = menu:AddButton({
-        label = "Job: Livreur de fougère",
-        description = "Rendez vous au point sur votre gps pour commencez le job de livraison",
-    })
-    local religion = menu:AddButton({
-        label = "Job: Témoin d'épsilon",
-        description = "Rendez vous au point sur votre gps pour commencez le job de témoin d'épsilon",
-    })
+    local adsl = menu:AddButton({label = "Adsl", description = " Poseur de cable d'ADSL "})
+    local livraison = menu:AddButton({label = "Fougère Prime", description = "Livraison à Domicile"})
+    local religion = menu:AddButton({label = "InfoChat", description = "Religion"})
     local metal = menu:AddButton({
-        label = "Job: Récolteur de métal",
-        description = "Rendez vous au point sur votre gps pour commencez le job de récolteur de métal",
+        label = "DeMetal Company",
+        description = "Récolte de metal, Industrie Métallurgique",
     })
     adsl:On("select", function()
         if blip ~= nil then
             destroyblip(blip)
         end
+        notif()
         JobPosition("adsl", adsl_position, 280)
     end)
     livraison:On("select", function()
         if blip ~= nil then
             destroyblip(blip)
         end
+        notif()
         JobPosition("livraison", livraison_position, 280)
     end)
     religion:On("select", function()
         if blip ~= nil then
             destroyblip(blip)
         end
+        notif()
         JobPosition("metal", religion_position, 280)
     end)
     metal:On("select", function()
         if blip ~= nil then
             destroyblip(blip)
         end
+        notif()
         JobPosition("metal", metal_position, 280)
     end)
 end
