@@ -59,6 +59,11 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
             }, () => {})
         }
     }, [currentFrequency, primaryFrequency, secondaryFrequency])
+    const handleClose = useCallback(() => {
+        fetchAPI(`/${props.type}/toggle`, {state: false}, () => {
+            setDisplay(false)
+        })
+    }, [setDisplay])
 
     /*
     * Events handlers
@@ -95,21 +100,11 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
         }
     }, [])
 
-    const onEscapeFunction = useCallback((event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-            fetchAPI(`/${props.type}/toggle`, {state: false}, () => {
-                setDisplay(false)
-            })
-        }
-    }, [])
-
     useEffect(() => {
         window.addEventListener('message', onMessageReceived)
-        window.addEventListener('keydown', onEscapeFunction)
 
         return () => {
             window.removeEventListener('message', onMessageReceived)
-            window.removeEventListener('keydown', onEscapeFunction)
         }
     }, []);
 
@@ -128,6 +123,7 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
             </div>
             <div class={style.actions}>
                 <div class={style.action_enable} onClick={toggleRadio}/>
+                <div class={style.action_close} onClick={handleClose}>x</div>
                 <div class={style.action_validate} onClick={handleFrequencyChange}/>
                 <div class={style.action_mix} onClick={handleMixChange}/>
 
