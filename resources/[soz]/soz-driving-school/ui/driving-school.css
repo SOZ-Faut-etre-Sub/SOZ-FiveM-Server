@@ -81,7 +81,7 @@ body, html {
         width: 500px;
     }
 }
-@media all and (min-width: 1921px) and (max-width: 2560px) {
+@media all and (min-width: 1921px) and (max-width: 4095px) {
     body {
         font-size: 1.2em;
     }
@@ -89,7 +89,7 @@ body, html {
         width: 600px;
     }
 }
-@media all and (min-width: 2561px){
+@media all and (min-width: 4096px){
     body {
         font-size: 2em;
     }
