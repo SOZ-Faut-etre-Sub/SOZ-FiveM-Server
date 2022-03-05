@@ -177,12 +177,14 @@ CreateThread(function()
                 currentVehicle = GetVehiclePedIsUsing(ped)
 
                 setupStateBagForVehicle()
+                LocalPlayer.state:set("useLongRangeRadio", true, true)
             end
         else
             if isInVehicle and not IsPedInAnyVehicle(ped, false) or IsPlayerDead(PlayerId()) then
                 isInVehicle = false
                 currentVehicle = 0
 
+                LocalPlayer.state:set("useLongRangeRadio", false, true)
                 exports["soz-talk"]:ReconnectToRadio()
             end
         end
