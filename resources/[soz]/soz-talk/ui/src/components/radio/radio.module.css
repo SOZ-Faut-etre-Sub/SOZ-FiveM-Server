@@ -1,0 +1,104 @@
+.container {
+    position: absolute;
+    bottom: -50vh;
+    left: 1vw;
+    transition: bottom .3s;
+}
+
+.container_show {
+    bottom: 1vh;
+}
+
+.container_hide {
+    bottom: -50vh;
+}
+
+.radio {
+    position: relative;
+    height: 40vh;
+    z-index: 5;
+}
+
+.screen {
+    position: absolute;
+    bottom: 16.5vh;
+    left: 2vw;
+    height: 7vh;
+    width: 5vw;
+}
+
+
+/* Actions */
+.actions {
+    position: relative;
+    z-index: 10;
+}
+.action_style {
+    cursor: pointer;
+    background-color: transparent;
+    -webkit-mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    transition: background-color .5s;
+}
+.action_style:hover {
+    background-color: rgba(255,255,255,.50);
+}
+
+.action_enable {
+    position: absolute;
+    bottom: 26.5vh;
+    left: 1.2vw;
+    height: 4vh;
+    width: 2vw;
+    composes: action_style;
+}
+.action_validate {
+    position: absolute;
+    bottom: 15.1vh;
+    left: 8.1vw;
+    height: 4vh;
+    width: 1vw;
+    composes: action_style;
+}
+.action_mix {
+    position: absolute;
+    bottom: 13.8vh;
+    left: 3.7vw;
+    height: 2vh;
+    width: 1.6vw;
+    composes: action_style;
+}
+
+.action_volume_up {
+    position: absolute;
+    bottom: 13.5vh;
+    left: 1.4vw;
+    height: 2vh;
+    width: 1.5vw;
+    composes: action_style;
+}
+.action_volume_down {
+    position: absolute;
+    bottom: 13.5vh;
+    left: 6vw;
+    height: 2vh;
+    width: 1.5vw;
+    composes: action_style;
+}
+
+.action_freq_primary {
+    position: absolute;
+    bottom: 11.3vh;
+    left: 2.5vw;
+    height: 2vh;
+    width: 1.5vw;
+    composes: action_style;
+}
+.action_freq_secondary {
+    position: absolute;
+    bottom: 11.3vh;
+    left: 4.8vw;
+    height: 2vh;
+    width: 1.5vw;
+    composes: action_style;
+}

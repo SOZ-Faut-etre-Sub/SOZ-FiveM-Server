@@ -3,7 +3,8 @@ import Radio from "./radio";
 const App = () => {
     return (
         <>
-            <Radio />
+            <Radio type="radio" />
+            <Radio type="cibi" />
         </>
     )
 }

@@ -1,32 +1,38 @@
 .container {
     position: absolute;
-    bottom: 1vh;
-    left: 1vw;
-    transition: bottom .3s;
+    bottom: 40vh;
+    left: -80vh;
+    transition: left .3s;
 }
 
 .container_show {
-    bottom: 1vh;
+    left: 1vw;
 }
 
 .container_hide {
-    bottom: -50vh;
+    left: -80vh;
 }
 
 .radio {
     position: relative;
-    height: 40vh;
+    width: 40vw;
     z-index: 5;
 }
 
 .screen {
     position: absolute;
-    bottom: 16.5vh;
-    left: 2vw;
-    height: 7vh;
-    width: 5vw;
+    bottom: 6vh;
+    left: 17.3vw;
+    height: 13.2vh;
+    width: 15vw;
 }
 
+.screen * {
+    font-size: 1.8rem;
+}
+.screen * span, .screen * input {
+    font-size: 2.5rem !important;
+}
 
 /* Actions */
 .actions {
@@ -46,59 +52,51 @@
 
 .action_enable {
     position: absolute;
-    bottom: 26.5vh;
-    left: 1.2vw;
-    height: 4vh;
-    width: 2vw;
+    bottom: 13vh;
+    left: 35vw;
+    height: 7vh;
+    width: 5vw;
     composes: action_style;
 }
 .action_validate {
     position: absolute;
-    bottom: 15.1vh;
-    left: 8.1vw;
-    height: 4vh;
-    width: 1vw;
-    composes: action_style;
-}
-.action_mix {
-    position: absolute;
-    bottom: 13.8vh;
-    left: 3.7vw;
-    height: 2vh;
-    width: 1.6vw;
+    bottom: 2.5vh;
+    left: 10.8vw;
+    height: 7vh;
+    width: 4.5vw;
     composes: action_style;
 }
 
 .action_volume_up {
     position: absolute;
-    bottom: 13.5vh;
-    left: 1.4vw;
-    height: 2vh;
-    width: 1.5vw;
+    bottom: 2vh;
+    left: 26.6vw;
+    height: 2.2vh;
+    width: 2.6vw;
     composes: action_style;
 }
 .action_volume_down {
     position: absolute;
-    bottom: 13.5vh;
-    left: 6vw;
-    height: 2vh;
-    width: 1.5vw;
+    bottom: 2vh;
+    left: 29.7vw;
+    height: 2.2vh;
+    width: 2.6vw;
     composes: action_style;
 }
 
 .action_freq_primary {
     position: absolute;
-    bottom: 11.3vh;
-    left: 2.5vw;
-    height: 2vh;
-    width: 1.5vw;
+    bottom: 2vh;
+    left: 20.5vw;
+    height: 2.2vh;
+    width: 2.6vw;
     composes: action_style;
 }
 .action_freq_secondary {
     position: absolute;
-    bottom: 11.3vh;
-    left: 4.8vw;
-    height: 2vh;
-    width: 1.5vw;
+    bottom: 2vh;
+    left: 23.6vw;
+    height: 2.2vh;
+    width: 2.6vw;
     composes: action_style;
 }
