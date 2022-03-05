@@ -53,12 +53,12 @@ function displayLicensesData(playerLicenses = {}) {
     Object.entries(LICENSES).forEach(([licenseType, data]) => {
         const playerLicenseData = playerLicenses[licenseType];
 
-        // Add license type anc validity
+        // Add license type and validity
         const validity = !!playerLicenseData ? "VALIDE" : "NON VALIDE";
         licensesElement.innerHTML += `
             <div class="item small">
                 <div class="text-small">${data.verbose}</div>
-                <div class="text-bold small-lh" id="validity-car">${validity}</div>
+                <div class="text-bold small-lh">${validity}</div>
             </div>
         `;
 
@@ -86,7 +86,15 @@ function displayPlayerName(firstName = '', lastName = '') {
     lastNameElement.innerText = lastName.toUpperCase();
 }
 
+let timeout
 function setVisible(value) {
+    if (value) {
+        timeout = setTimeout(() => {
+            setVisible(false)
+        }, 4000);
+    } else if (timeout) {
+        clearTimeout(timeout)
+    }
     document.querySelector(".super-wrapper").style.opacity = value ? 1 : 0;
 }
 
