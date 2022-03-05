@@ -2,6 +2,7 @@
 body, html {
     width: 100%;
     height: 100%;
+    font-size: 16px;
     font-family: 'Prompt', sans-serif;
     margin: 0;
     padding: 0;
@@ -59,11 +60,11 @@ body, html {
     justify-content: center;
 }
 .item.small {
-    font-size: .7rem;
+    font-size: .7em;
 }
 .text-small {
     font-size: .75em;
-    line-height: .5em;
+    line-height: .2em;
     font-weight: initial;
 }
 .text-bold {
@@ -73,5 +74,26 @@ body, html {
     text-align: center;
 }
 .small-lh {
-    line-height: 1rem;
+    line-height: 1.2em;
+}
+@media all and (max-width: 1920px) {
+    #bg-img {
+        width: 500px;
+    }
+}
+@media all and (min-width: 1921px) and (max-width: 2560px) {
+    body {
+        font-size: 1.2em;
+    }
+    #bg-img {
+        width: 600px;
+    }
+}
+@media all and (min-width: 2561px){
+    body {
+        font-size: 2em;
+    }
+    #bg-img {
+        width: 1000px;
+    }
 }
