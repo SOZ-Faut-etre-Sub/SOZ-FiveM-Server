@@ -16,8 +16,6 @@ function ToggleSound(state)
 end
 
 function InitialSetup()
-    SetManualShutdownLoadingScreenNui(true)
-
     if IsScreenFadedOut() then
         DoScreenFadeIn(500)
 
