@@ -35,24 +35,3 @@ RegisterNetEvent("soz-driving-license:server:update_license", function(licenseTy
     Player.Functions.SetMetaData("licences", licences)
     Player.Functions.Save(source)
 end)
-
-RegisterNetEvent("soz-driving-school:server:show-license", function(target)
-    local Player = QBCore.Functions.GetPlayer(source)
-    if not Player then
-        return
-    end
-
-    local charinfo = Player.PlayerData.charinfo
-    local licences = Player.PlayerData.metadata["licences"]
-    if not charinfo or not licences then
-        return
-    end
-
-    TriggerClientEvent("soz-driving-school:client:show-licence", target,
-                       {
-        type = "show",
-        firstName = charinfo.firstname,
-        lastName = charinfo.lastname,
-        licences = licences,
-    })
-end)
