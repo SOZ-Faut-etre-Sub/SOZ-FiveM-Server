@@ -11,6 +11,7 @@ RegisterNetEvent("admin:client:spectate", function(targetPed, coords)
         isSpectating = true
         SetEntityVisible(myPed, false)
         SetEntityInvincible(myPed, true)
+        SetEntityCollision(myPed, false, false);
         lastSpectateCoord = GetEntityCoords(myPed)
         SetEntityCoords(myPed, coords)
         NetworkSetInSpectatorMode(true, target)
@@ -20,6 +21,7 @@ RegisterNetEvent("admin:client:spectate", function(targetPed, coords)
         SetEntityCoords(myPed, lastSpectateCoord)
         SetEntityVisible(myPed, true)
         SetEntityInvincible(myPed, false)
+        SetEntityCollision(myPed, true, true);
         lastSpectateCoord = nil
     end
 end)
