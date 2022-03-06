@@ -61,7 +61,8 @@ local function ForceWaypointDisplay(x, y)
 end
 
 ---Run thread responsible for driving exam
----@param licenseType any
+---@param licenseType string key referencing license type on Config.Licenses
+---@param context table Contextual data that is to be used during penalty checking loop
 local function startExamLoop(licenseType, context)
     Citizen.CreateThread(function()
         local pid = PlayerPedId()
@@ -69,9 +70,6 @@ local function startExamLoop(licenseType, context)
         -- Populate context
         context.player = pid
         context.licenseType = licenseType
-
-        -- Start penalty check loop
-        PenaltyCheckingLoop(context)
 
         -- Diplay Instructor start speech
         for i = 1, #Config.InstructorStartSpeech, 1 do
@@ -100,6 +98,11 @@ local function startExamLoop(licenseType, context)
         -- Checkpoint loop
         while passingExam do -- Exam loop
             local playerCoords = GetEntityCoords(pid)
+
+            -- Start penalty check loop
+            StartPenaltyLoop(playerCoords, context)
+
+            -- Player distance to current checkpoint
             local dist = #(vector3(checkpoint.x, checkpoint.y, checkpoint.z) - playerCoords)
 
             -- Force Waypoint display
@@ -141,8 +144,13 @@ local function startExamLoop(licenseType, context)
     end)
 end
 
-function SetupDrivingSchoolExam(licenceType)
+function SetupDrivingSchoolExam(licenseType)
     Citizen.CreateThread(function()
+        local license = Config.Licenses[licenseType]
+        if not license then
+            return
+        end
+
         -- Fade to black screen
         ScreenFadeOut()
 
@@ -157,7 +165,7 @@ function SetupDrivingSchoolExam(licenceType)
         local playerPed = PlayerPedId()
 
         -- Spawn car
-        local vData = Config.Licenses[licenceType].vehicle
+        local vData = license.vehicle
         setupModel(vData.modelHash)
         local vehicle = CreateVehicle(vData.modelHash, vData.x, vData.y, vData.z, vData.rotation, true, false)
 
@@ -181,7 +189,7 @@ function SetupDrivingSchoolExam(licenceType)
 
         -- Start exam
         passingExam = true
-        startExamLoop(licenceType, {["vehicle"] = vehicle})
+        startExamLoop(licenseType, {["vehicle"] = vehicle, ["license"] = license})
     end)
 end
 
