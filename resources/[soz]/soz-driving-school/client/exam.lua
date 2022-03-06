@@ -76,6 +76,12 @@ local function startExamLoop(licenseType, context)
             return
         end
         checkpoints = {table.unpack(checkpoints)}
+        --- Add final checkpoint
+        local finalCheckpoint = Config.FinalCheckpoints[licenseType]
+        if not checkpoints then
+            return
+        end
+        table.insert(checkpoints, finalCheckpoint)
 
         -- Setup first checkpoint
         local prevCheckpoint = nil
