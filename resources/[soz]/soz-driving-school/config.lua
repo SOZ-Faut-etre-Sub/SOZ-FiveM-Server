@@ -107,3 +107,10 @@ Config.Checkpoints = {
         {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
 }
+
+Config.FinalCheckpointLandVehicle = {x = -763.07, y = -1322.39, z = 3.42, message = "Tu es arrivé au bout. Bien joué !"}
+Config.FinalCheckpoints = {
+    ["car"] = Config.FinalCheckpointLandVehicle,
+    ["truck"] = Config.FinalCheckpointLandVehicle,
+    ["motorcycle"] = Config.FinalCheckpointLandVehicle,
+}
