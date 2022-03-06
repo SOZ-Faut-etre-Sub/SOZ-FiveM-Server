@@ -23,3 +23,7 @@
     color: white;
     font-size: 1.8rem;
 }
+
+.gauge path {
+    transition: all .3s;
+}

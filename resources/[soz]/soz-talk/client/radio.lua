@@ -21,10 +21,6 @@ local function toggleRadioAnimation(pState)
     end
 end
 
-local function clickSound()
-    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.3)
-end
-
 local function connectToRadio(channel, isPrimary)
     if tonumber(channel) ~= nil and tonumber(channel) >= 1000 and tonumber(channel) <= 9999 then
         exports["soz-voip"]:setRadioChannel(channel, isPrimary)
@@ -137,6 +133,15 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
 end)
 
 --- Exports
+exports("ReconnectToRadio", function()
+    if primaryRadio.frequency ~= 0.0 then
+        connectToRadio(primaryRadio.frequency, true)
+    end
+    if secondaryRadio.frequency ~= 0.0 then
+        connectToRadio(secondaryRadio.frequency, false)
+    end
+end)
+
 exports("IsRadioOn", function()
     return primaryRadio.frequency ~= 0.0 and secondaryRadio.frequency ~= 0.0
 end)

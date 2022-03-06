@@ -1,0 +1,119 @@
+.container {
+    position: absolute;
+    bottom: 40vh;
+    left: -80vh;
+    transition: left .3s;
+}
+
+.container_show {
+    left: 1vw;
+}
+
+.container_hide {
+    left: -80vh;
+}
+
+.radio {
+    position: relative;
+    width: 40vw;
+    z-index: 5;
+}
+
+.screen {
+    position: absolute;
+    bottom: 6vh;
+    left: 17.3vw;
+    height: 13.2vh;
+    width: 15vw;
+}
+
+.screen * {
+    font-size: 1.8rem;
+}
+.screen * span, .screen * input {
+    font-size: 2.5rem !important;
+}
+
+/* Actions */
+.actions {
+    position: relative;
+    z-index: 10;
+}
+.action_style {
+    cursor: pointer;
+    background-color: transparent;
+    -webkit-mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    mask-image: radial-gradient(black, rgba(0,0,0,.1), transparent);
+    transition: background-color .5s;
+}
+.action_style:hover {
+    background-color: rgba(255,255,255,.50);
+}
+
+.action_enable {
+    position: absolute;
+    bottom: 13vh;
+    left: 35vw;
+    height: 7vh;
+    width: 5vw;
+    composes: action_style;
+}
+.action_close {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 20.5vh;
+    left: 39.5vw;
+    height: 1rem;
+    width: 1rem;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    cursor: pointer;
+    border-radius: .2rem;
+    background: rgba(0,0,0,.4);
+    border: 1px solid rgba(0,0,0,.6);
+}
+.action_validate {
+    position: absolute;
+    bottom: 2.5vh;
+    left: 10.8vw;
+    height: 7vh;
+    width: 4.5vw;
+    composes: action_style;
+}
+
+.action_volume_up {
+    position: absolute;
+    bottom: 2vh;
+    left: 26.6vw;
+    height: 2.2vh;
+    width: 2.6vw;
+    composes: action_style;
+}
+.action_volume_down {
+    position: absolute;
+    bottom: 2vh;
+    left: 29.7vw;
+    height: 2.2vh;
+    width: 2.6vw;
+    composes: action_style;
+}
+
+.action_freq_primary {
+    position: absolute;
+    bottom: 2vh;
+    left: 20.5vw;
+    height: 2.2vh;
+    width: 2.6vw;
+    composes: action_style;
+}
+.action_freq_secondary {
+    position: absolute;
+    bottom: 2vh;
+    left: 23.6vw;
+    height: 2.2vh;
+    width: 2.6vw;
+    composes: action_style;
+}

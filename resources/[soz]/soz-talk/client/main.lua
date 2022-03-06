@@ -55,3 +55,7 @@ RegisterNetEvent("talk:action:disable", function()
         end
     end)
 end)
+
+function clickSound()
+    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.3)
+end
