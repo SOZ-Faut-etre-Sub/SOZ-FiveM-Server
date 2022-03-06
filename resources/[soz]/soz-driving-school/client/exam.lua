@@ -52,8 +52,17 @@ local function DisplayCheckpoint(checkpoint, nextCheckpoint)
     return cpId
 end
 
+---Force waypoint to be displayed on minimap.
+---Prevent the game from removing waypoint when player is nearby.
+local function ForceWaypointDisplay(x, y)
+    if not IsWaypointActive() then
+        SetNewWaypoint(x, y)
+    end
+end
+
 ---Run thread responsible for driving exam
----@param licenseType any
+---@param licenseType string key referencing license type on Config.Licenses
+---@param context table Contextual data that is to be used during penalty checking loop
 local function startExamLoop(licenseType, context)
     Citizen.CreateThread(function()
         local pid = PlayerPedId()
@@ -61,9 +70,6 @@ local function startExamLoop(licenseType, context)
         -- Populate context
         context.player = pid
         context.licenseType = licenseType
-
-        -- Start penalty check loop
-        PenaltyCheckingLoop(context)
 
         -- Diplay Instructor start speech
         for i = 1, #Config.InstructorStartSpeech, 1 do
@@ -76,6 +82,12 @@ local function startExamLoop(licenseType, context)
             return
         end
         checkpoints = {table.unpack(checkpoints)}
+        --- Add final checkpoint
+        local finalCheckpoint = Config.FinalCheckpoints[licenseType]
+        if not checkpoints then
+            return
+        end
+        table.insert(checkpoints, finalCheckpoint)
 
         -- Setup first checkpoint
         local prevCheckpoint = nil
@@ -86,8 +98,17 @@ local function startExamLoop(licenseType, context)
         -- Checkpoint loop
         while passingExam do -- Exam loop
             local playerCoords = GetEntityCoords(pid)
+
+            -- Start penalty check loop
+            StartPenaltyLoop(playerCoords, context)
+
+            -- Player distance to current checkpoint
             local dist = #(vector3(checkpoint.x, checkpoint.y, checkpoint.z) - playerCoords)
 
+            -- Force Waypoint display
+            ForceWaypointDisplay(checkpoint.x, checkpoint.y)
+
+            -- On checkpoint entered
             if dist < Config.CheckpointSize then
                 DeleteCheckpoint(cpId)
                 PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET", false)
@@ -123,12 +144,15 @@ local function startExamLoop(licenseType, context)
     end)
 end
 
-function SetupDrivingSchoolExam(licenceType)
+function SetupDrivingSchoolExam(licenseType)
     Citizen.CreateThread(function()
+        local license = Config.Licenses[licenseType]
+        if not license then
+            return
+        end
+
         -- Fade to black screen
-        local fadeDelay = 500
-        DoScreenFadeOut(fadeDelay)
-        Citizen.Wait(fadeDelay)
+        ScreenFadeOut()
 
         -- Instructor Ped
         local iData = Config.Peds.instructor
@@ -141,7 +165,7 @@ function SetupDrivingSchoolExam(licenceType)
         local playerPed = PlayerPedId()
 
         -- Spawn car
-        local vData = Config.Licenses[licenceType].vehicle
+        local vData = license.vehicle
         setupModel(vData.modelHash)
         local vehicle = CreateVehicle(vData.modelHash, vData.x, vData.y, vData.z, vData.rotation, true, false)
 
@@ -161,11 +185,11 @@ function SetupDrivingSchoolExam(licenceType)
         vehicleEntity = vehicle
 
         -- Clear black screen
-        DoScreenFadeIn(fadeDelay)
+        ScreenFadeIn()
 
         -- Start exam
         passingExam = true
-        startExamLoop(licenceType, {["vehicle"] = vehicle})
+        startExamLoop(licenseType, {["vehicle"] = vehicle, ["license"] = license})
     end)
 end
 
@@ -177,11 +201,33 @@ local function RunExitSequence()
     TaskLeaveVehicle(instructorEntity, vehicleEntity, 0)
 end
 
+local function HandleVehicleAndPed(isSuccess, instructor, vehicle)
+    if isSuccess then
+        Citizen.CreateThread(function()
+            -- Fade to black screen
+            ScreenFadeOut()
+
+            -- Delete ped and vehicle
+            DeletePed(instructor)
+            DeleteVehicle(vehicle)
+
+            -- Spawn user to driving school
+            local ped = PlayerPedId()
+            SetEntityCoords(ped, Config.PlayerDefaultLocation)
+            SetEntityRotation(ped, 0.0, 0.0, Config.PlayerDefaultLocation.w, 0, false)
+
+            ScreenFadeIn()
+        end)
+    else
+        SetEntityAsNoLongerNeeded(instructor)
+        SetEntityAsNoLongerNeeded(vehicle)
+    end
+end
+
 function TerminateExam(isSuccess, licenseType)
     RunExitSequence()
 
-    SetEntityAsNoLongerNeeded(instructorEntity)
-    SetEntityAsNoLongerNeeded(vehicleEntity)
+    HandleVehicleAndPed(isSuccess, instructorEntity, vehicleEntity)
     CleanUpPenaltySystem()
     DeleteWaypoint()
     passingExam = false

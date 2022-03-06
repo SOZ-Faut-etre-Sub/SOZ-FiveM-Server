@@ -47,7 +47,7 @@ local function GetPenalties(licenseType)
 
         ["seatbelt"] = {
             exclude = {"motorcycle"},
-            duration = -5000,
+            duration = 0,
             warning = false,
             warningMsg = "Boucle ta ceinture ! La sécurité avant tout.",
             failMsg = "La ceinture ce n'est pas pour les ienchs ! C'est terminé.",
@@ -174,6 +174,19 @@ function PenaltyCheckingLoop(context)
     end)
 end
 
+---PenaltyLoop start is deferred until car moves
+---@param context table Contextual data that is to be used during penalty checking loop
+function StartPenaltyLoop(playerCoords, context)
+    if not penaltyLoopIsRunning then
+        local veh = context.license.vehicle
+        local vehicleCoords = vector3(veh.x, veh.y, veh.z)
+        if #(playerCoords - vehicleCoords) > 1.0 then
+            PenaltyCheckingLoop(context)
+        end
+    end
+end
+
+---Reset penalty system
 function CleanUpPenaltySystem()
     -- Terminate penalty loop
     penaltyLoopIsRunning = false
