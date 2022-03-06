@@ -14,6 +14,7 @@ local function setupPlayerStateBag(source)
     if not player.voipInit then
         player:set("proximity", {}, true)
         player:set("voiceIntent", "speech", true)
+        player:set("useLongRangeRadio", false, true)
 
         player:set("phone", Config.DefaultVolume["phone"], true)
         player:set("primaryRadio", Config.DefaultVolume["primaryRadio"], true)

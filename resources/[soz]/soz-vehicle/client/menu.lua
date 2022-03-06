@@ -1,15 +1,21 @@
 local vehicleMenu = MenuV:CreateMenu(nil, "", "menu_vehicle", "soz", "vehicle")
 local doorName = {"Conducteur avant", "Passager avant", "Conducteur arrière", "Passager arrière", "Capot", "Coffre"}
 
-local function EngineMenu(vehicle)
+local function EngineMenu()
     local engine = vehicleMenu:AddSlider({
         label = "Contact du moteur",
         value = nil,
         values = {{label = "Allumé", value = true}, {label = "Éteint", value = false}},
     })
     engine:On("select", function(item, value)
-        -- SetVehicleEngineOn(vehicle, value, false, true)
         TriggerEvent("vehiclekeys:client:ToggleEngine", value)
+    end)
+end
+
+local function CibiMenu()
+    local cibi = vehicleMenu:AddButton({label = "Radio longue portée", value = nil})
+    cibi:On("select", function()
+        TriggerEvent("talk:cibi:use")
     end)
 end
 
@@ -55,12 +61,18 @@ local function GenerateMenu()
     local player = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(player, false)
 
-    if IsPedInAnyVehicle(player, false) and GetPedInVehicleSeat(vehicle, -1) == player then
+    if IsPedInAnyVehicle(player, false) then
         vehicleMenu:ClearItems()
 
-        EngineMenu(vehicle)
-        SpeedLimiterMenu(vehicle)
-        DoorManagementMenu(vehicle)
+        if GetPedInVehicleSeat(vehicle, -1) == player then
+            EngineMenu()
+            CibiMenu()
+            SpeedLimiterMenu(vehicle)
+            DoorManagementMenu(vehicle)
+        end
+        if GetPedInVehicleSeat(vehicle, 0) == player then
+            CibiMenu()
+        end
 
         if vehicleMenu.IsOpen then
             vehicleMenu:Close()
