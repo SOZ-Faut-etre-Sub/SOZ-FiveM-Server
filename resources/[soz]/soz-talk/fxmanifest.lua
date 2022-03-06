@@ -10,6 +10,6 @@ files {"html/index.html", "html/assets/*"}
 
 shared_script "config.lua"
 
-client_scripts {"client/main.lua", "client/radio.lua"}
+client_scripts {"client/main.lua", "client/radio.lua", "client/cibi.lua"}
 
 server_script "server/main.lua"
