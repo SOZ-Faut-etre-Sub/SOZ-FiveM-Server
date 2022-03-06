@@ -203,7 +203,7 @@ end
 
 local function HandleVehicleAndPed(isSuccess, instructor, vehicle)
     if isSuccess then
-        Citizen.CreateThread(function ()
+        Citizen.CreateThread(function()
             -- Fade to black screen
             ScreenFadeOut()
 
