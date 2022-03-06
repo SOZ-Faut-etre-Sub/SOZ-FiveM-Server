@@ -1,11 +1,12 @@
 Config = {}
 
-Config.NotificationDelay = 4000 -- in ms
-
 Config.BlipName = "Auto-école"
 Config.BlipSprite = 545
 Config.BlipColor = 25
 -- Blip coords are the same as Config.Peds.secretary (x, y)
+
+-- Coords where to teleport player to, at the end of exam
+Config.PlayerDefaultLocation = vector4(-817.49, -1345.06, 4.15, 231.08)
 
 Config.Peds = {
     ["instructor"] = {modelHash = "cs_manuel", x = 0.0, y = 0.0, z = 0.0, rotation = 0.0, networkSync = true},
@@ -53,7 +54,8 @@ Config.Licenses = {
 Config.VehiclePlateText = "P3RM15"
 
 Config.PenaltyTickDelay = 200 -- in ms
-Config.PenaltyMaxDuration = 3000 -- in ms
+Config.PenaltyMaxDuration = 4000 -- in ms
+Config.NotificationDelay = Config.PenaltyMaxDuration -- in ms
 
 Config.CheckpointType = 0
 Config.CheckpointSize = 3.0
@@ -76,7 +78,6 @@ Config.Checkpoints = {
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
-        {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
     ["truck"] = {
         {x = -704.06, y = -1246.4, z = 8.88},
@@ -89,7 +90,6 @@ Config.Checkpoints = {
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
-        {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
     ["motorcycle"] = {
         {x = -704.06, y = -1246.4, z = 8.88},
@@ -102,6 +102,17 @@ Config.Checkpoints = {
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
-        {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
+}
+
+Config.FinalCheckpointLandVehicle = {
+    x = -763.07,
+    y = -1322.39,
+    z = 3.42,
+    message = "Tu es arrivé au bout. Bien joué !",
+}
+Config.FinalCheckpoints = {
+    ["car"] = Config.FinalCheckpointLandVehicle,
+    ["truck"] = Config.FinalCheckpointLandVehicle,
+    ["motorcycle"] = Config.FinalCheckpointLandVehicle,
 }
