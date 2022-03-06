@@ -1,13 +1,14 @@
 local fadeDelay = 500
 
 --- Fade out to black screen
---- /!\ MUST BE EXECUTED WITHIN A THREAD
+--- /!\ SHOULD BE EXECUTED WITHIN A THREAD
 function ScreenFadeOut()
     DoScreenFadeOut(fadeDelay)
     Citizen.Wait(fadeDelay)
 end
 
 --- Fade in, from black screen to game
+--- /!\ SHOULD BE EXECUTED WITHIN A THREAD
 function ScreenFadeIn()
     DoScreenFadeIn(fadeDelay)
 end

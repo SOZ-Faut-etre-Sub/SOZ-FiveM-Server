@@ -78,7 +78,6 @@ Config.Checkpoints = {
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
-        {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
     ["truck"] = {
         {x = -704.06, y = -1246.4, z = 8.88},
@@ -91,7 +90,6 @@ Config.Checkpoints = {
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
-        {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
     ["motorcycle"] = {
         {x = -704.06, y = -1246.4, z = 8.88},
@@ -104,7 +102,6 @@ Config.Checkpoints = {
         },
         {x = -543.82, y = -1103.21, z = 20.88},
         {x = -630.09, y = -1265.14, z = 9.49},
-        {x = -818.22, y = -1330.59, z = 3.58, message = "Tu es arrivé au bout. Bien joué !"},
     },
 }
 
