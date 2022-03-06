@@ -11,7 +11,7 @@ function LicensesEntry(menu)
 
     licensesSlider:On("select", function(_, value)
         if value == "hide" then
-            TriggerEvent("soz-driving-school:client:hide-license")
+            TriggerEvent("soz-identity:client:hide-license")
             return
         end
 
@@ -30,6 +30,6 @@ function LicensesEntry(menu)
         end
 
         -- Request data to server and display NUI
-        TriggerEvent("soz-driving-school:client:request-nui-data", target)
+        TriggerEvent("soz-identity:client:request-nui-data", target)
     end)
 end
