@@ -121,16 +121,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     }
     -- Job
     PlayerData.job = PlayerData.job or {}
-    PlayerData.job.name = PlayerData.job.name or 'unemployed'
-    PlayerData.job.label = PlayerData.job.label or 'Civilian'
-    PlayerData.job.payment = PlayerData.job.payment or 10
-    if QBCore.Shared.ForceJobDefaultDutyAtLogin or PlayerData.job.onduty == nil then
-        PlayerData.job.onduty = QBCore.Shared.Jobs[PlayerData.job.name].defaultDuty
-    end
-    PlayerData.job.isboss = PlayerData.job.isboss or false
-    PlayerData.job.grade = PlayerData.job.grade or {}
-    PlayerData.job.grade.name = PlayerData.job.grade.name or 'Freelancer'
-    PlayerData.job.grade.level = PlayerData.job.grade.level or 0
+    PlayerData.job.id = PlayerData.job.id or 'unemployed'
+    PlayerData.job.label = PlayerData.job.label or 'Chomeur'
+    PlayerData.job.onduty = false
+    PlayerData.job.grade = PlayerData.job.grade or nil
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
     PlayerData.gang.name = PlayerData.gang.name or 'none'
@@ -178,36 +172,14 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.SetJob = function(job, grade)
-        local job = job:lower()
-        local grade = tostring(grade) or '0'
+        self.PlayerData.job = job
+        self.PlayerData.job.grade = grade
+        self.Functions.UpdatePlayerData()
 
-        if QBCore.Shared.Jobs[job] then
-            self.PlayerData.job.name = job
-            self.PlayerData.job.label = QBCore.Shared.Jobs[job].label
-            self.PlayerData.job.onduty = QBCore.Shared.Jobs[job].defaultDuty
+        TriggerClientEvent('QBCore:Client:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
+        TriggerEvent('QBCore:Server:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
 
-            if QBCore.Shared.Jobs[job].grades[grade] then
-                local jobgrade = QBCore.Shared.Jobs[job].grades[grade]
-                self.PlayerData.job.grade = {}
-                self.PlayerData.job.grade.name = jobgrade.name
-                self.PlayerData.job.grade.level = tonumber(grade)
-                self.PlayerData.job.payment = jobgrade.payment or 30
-                self.PlayerData.job.isboss = jobgrade.isboss or false
-            else
-                self.PlayerData.job.grade = {}
-                self.PlayerData.job.grade.name = 'No Grades'
-                self.PlayerData.job.grade.level = 0
-                self.PlayerData.job.payment = 30
-                self.PlayerData.job.isboss = false
-            end
-
-            self.Functions.UpdatePlayerData()
-            TriggerClientEvent('QBCore:Client:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
-            TriggerEvent('QBCore:Server:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
-            return true
-        end
-
-        return false
+        return true
     end
 
     self.Functions.SetGang = function(gang, grade)
@@ -252,7 +224,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.AddJobReputation = function(amount)
         local amount = tonumber(amount)
-        self.PlayerData.metadata['jobrep'][self.PlayerData.job.name] = self.PlayerData.metadata['jobrep'][self.PlayerData.job.name] + amount
+        self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] = self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] + amount
         self.Functions.UpdatePlayerData()
     end
 

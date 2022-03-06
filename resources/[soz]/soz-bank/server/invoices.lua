@@ -56,7 +56,7 @@ end
 RegisterNetEvent("banking:server:sendInvoice", function(label, amount)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if amount ~= nil and tonumber(amount) > 0 then
+    if amount ~= nil and tonumber(amount) > 0 then -- @TODO Jobs: rework this
         local id = MySQL.insert.await("INSERT INTO invoices (citizenid,emitter,emitterName,label,amount) VALUES (?,?,?,?,?) ", {
             Player.PlayerData.citizenid,
             "safe_" .. Player.PlayerData.job.name,
@@ -70,8 +70,8 @@ RegisterNetEvent("banking:server:sendInvoice", function(label, amount)
         end
 
         PlayersInvoices[Player.PlayerData.citizenid][id] = {
-            emitterAccount = Player.PlayerData.job.name,
-            emitterName = QBCore.Shared.Jobs[Player.PlayerData.job.name].label,
+            emitterAccount = Player.PlayerData.job.id,
+            emitterName = QBCore.Shared.Jobs[Player.PlayerData.job.id].label,
             title = label,
             amount = tonumber(amount),
         }

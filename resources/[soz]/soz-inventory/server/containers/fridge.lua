@@ -53,7 +53,7 @@ function FridgeInventory:AccessAllowed(owner, playerId)
     local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
 
     if Player then
-        return Player.PlayerData.job.name == owner
+        return Player.PlayerData.job.id == owner
     else
         return false
     end

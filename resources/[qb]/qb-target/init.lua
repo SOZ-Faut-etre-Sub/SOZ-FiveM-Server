@@ -112,7 +112,7 @@ CreateThread(function()
 			return 0
 		end
 
-		JobCheck = function(job)
+		JobCheck = function(job) -- @TODO: rework this part
 			if type(job) == 'table' then
 				job = job[PlayerData.job.name]
 				if PlayerData.job.grade.level >= job then

@@ -6,14 +6,15 @@ end
 function PaycheckLoop()
     local Players = QBCore.Functions.GetQBPlayers()
     for _, Player in pairs(Players) do
-        local payment = Player.PlayerData.job.payment
+        local grade = Player.PlayerData.job.grade or {}
+        local payment = grade.salary or 0
 
         if Player.PlayerData.metadata["injail"] == 0 and Player.PlayerData.job and payment > 0 then
-            if Player.PlayerData.job.name == "unemployed" then
+            if Player.PlayerData.job.id == "unemployed" then
                 Account.AddMoney(Player.PlayerData.charinfo.account, payment)
                 NotifyPaycheck(Player.PlayerData.source)
             else
-                Account.TransfertMoney(Player.PlayerData.job.name, Player.PlayerData.charinfo.account, payment, function(success, reason)
+                Account.TransfertMoney(Player.PlayerData.job.id, Player.PlayerData.charinfo.account, payment, function(success, reason)
                     if success then
                         NotifyPaycheck(Player.PlayerData.source)
                     else

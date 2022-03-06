@@ -141,10 +141,10 @@ class _PlayerService {
    */
   async handlePlayerJobUpdate(source: number, job: QBJob) {
     const player = PlayerService.getPlayer(source)
-    const jobName = job.name
+    const jobId = job.id
 
-    if (SocietyNumberList[jobName] !== undefined) {
-      player.setSocietyPhoneNumber(SocietyNumberList[jobName])
+    if (SocietyNumberList[jobId] !== undefined) {
+      player.setSocietyPhoneNumber(SocietyNumberList[jobId])
     } else {
       player.setSocietyPhoneNumber(null)
     }
