@@ -107,9 +107,14 @@ function VoiceRadio:setTalking(source, talking, isPrimary)
 
     if radioTbl then
         radioTbl[source] = talking
+
+        local sourcePlayerCoords = GetEntityCoords(GetPlayerPed(source))
+
         for player, _ in pairs(radioTbl) do
             if player ~= source then
-                TriggerClientEvent("pma-voice:setTalkingOnRadio", player, source, talking, isPrimary)
+                if Player(source).state.useLongRangeRadio or #(sourcePlayerCoords - GetEntityCoords(GetPlayerPed(player))) <= Config.ShortRangeRadio then
+                    TriggerClientEvent("pma-voice:setTalkingOnRadio", player, source, talking, isPrimary)
+                end
             end
         end
     end
