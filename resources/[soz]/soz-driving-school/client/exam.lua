@@ -52,6 +52,14 @@ local function DisplayCheckpoint(checkpoint, nextCheckpoint)
     return cpId
 end
 
+---Force waypoint to be displayed on minimap.
+---Prevent the game from removing waypoint when player is nearby.
+local function ForceWaypointDisplay(x, y)
+    if not IsWaypointActive() then
+        SetNewWaypoint(x, y)
+    end
+end
+
 ---Run thread responsible for driving exam
 ---@param licenseType any
 local function startExamLoop(licenseType, context)
@@ -94,6 +102,10 @@ local function startExamLoop(licenseType, context)
             local playerCoords = GetEntityCoords(pid)
             local dist = #(vector3(checkpoint.x, checkpoint.y, checkpoint.z) - playerCoords)
 
+            -- Force Waypoint display
+            ForceWaypointDisplay(checkpoint.x, checkpoint.y)
+
+            -- On checkpoint entered
             if dist < Config.CheckpointSize then
                 DeleteCheckpoint(cpId)
                 PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET", false)
