@@ -83,7 +83,7 @@ function QBCore.Functions.GetPlayersOnDuty(job)
     local count = 0
 
     for src, Player in pairs(QBCore.Players) do
-        if Player.PlayerData.job.name == job then
+        if Player.PlayerData.job.id == job then
             if Player.PlayerData.job.onduty then
                 players[#players + 1] = src
                 count = count + 1
@@ -98,7 +98,7 @@ function QBCore.Functions.GetDutyCount(job)
     local count = 0
 
     for _, Player in pairs(QBCore.Functions.GetQBPlayers()) do
-        if Player.PlayerData.job.name == job then
+        if Player.PlayerData.job.id == job then
             if Player.PlayerData.job.onduty then
                 count = count + 1
             end

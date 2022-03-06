@@ -17,6 +17,17 @@ Config.JobType = {
     Garagist = 'garagist',
 }
 
+Config.JobPermission = {
+    AddGrade = 'add_grade',
+    RemoveGrade = 'remove_grade',
+    AddPermission = 'add_permission',
+    RemovePermission = 'remove_permission',
+    SetGradeSalary = 'set_grade_salary',
+    SetDefaultGrade = 'set_default_grade',
+    RecruitPlayer = 'recruit_player',
+    FirePlayer = 'fire_player',
+}
+
 Config.Jobs = {
     [Config.JobType.Unemployed] = {
         label = 'Chomeur',

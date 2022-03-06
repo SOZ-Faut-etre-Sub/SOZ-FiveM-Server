@@ -126,7 +126,7 @@ end
 CreateThread(function()
     while true do
         for id, safe in pairs(Config.SafeStorages) do
-            if safe.owner == nil or (PlayerData.job ~= nil and PlayerData.job.name == safe.owner) then
+            if safe.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == safe.owner) then
                 local dist = #(GetEntityCoords(PlayerPedId()) - safe.position)
 
                 if dist <= 1.5 then
