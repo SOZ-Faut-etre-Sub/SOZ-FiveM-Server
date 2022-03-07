@@ -15,6 +15,7 @@ RegisterNetEvent("soz-identity:server:show-license", function(target)
     TriggerClientEvent("soz-identity:client:show-licence", target,
                        {
         type = "show",
+        scope = "licenses",
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         licences = licences,
