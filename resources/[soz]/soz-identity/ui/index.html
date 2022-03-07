@@ -1,16 +1,31 @@
 <html lang="fr">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <link rel="stylesheet" href="driving-school.css">
+        <link rel="stylesheet" href="soz-identity.css">
     </head>
     <body>
-        <div class="super-wrapper" style="opacity: 0; transition-property: opacity; transition-duration: 500ms;">
+        <!-- IDENTITY -->
+        <div class="super-wrapper" id="identity" style="display: none; opacity: 0; transition-property: opacity; transition-duration: 500ms;">
             <div class="wrapper">
                 <div class="container">
-                    <img id="bg-img" src="./background-licenses.png" alt="Permis">
+                    <img class="bg-img "src="./background-identity.png" alt="Identité">
 
                     <div class="content">
-                        <div class="is-half" id="left-col">
+                        <div class="is-half left-col" id="left-col-identity"></div>
+                        <div class="is-half right-col" id="right-col-identity"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LICENSES -->
+        <div class="super-wrapper" id="licenses" style="display: none; opacity: 0; transition-property: opacity; transition-duration: 500ms;">
+            <div class="wrapper">
+                <div class="container">
+                    <img class="bg-img" src="./background-licenses.png" alt="Permis">
+
+                    <div class="content">
+                        <div class="is-half left-col" id="left-col-licenses">
                             <div>
                                 <div class="text-small">Nom</div>
                                 <div id="last_name"></div>
@@ -20,9 +35,9 @@
                                 <div id="first_name"></div>
                             </div>
                         </div>
-                        <div class="is-half" id="right-col">
+                        <div class="is-half right-col" id="right-col-licenses">
                             <div style="width: 10%;"></div>
-                            <div id="licenses" class="items"></div>
+                            <div id="validities" class="items"></div>
                             <div id="points" class="items"></div>
                         </div>
                     </div>
@@ -30,6 +45,8 @@
             </div>
         </div>
 
-        <script src="driving-school.js" type="application/javascript" defer></script>
+        <script src="identity.js" type="application/javascript" defer></script>
+        <script src="licenses.js" type="application/javascript" defer></script>
+        <script src="main.js" type="application/javascript" defer></script>
     </body>
 </html>
