@@ -30,6 +30,6 @@ function LicensesEntry(menu)
         end
 
         -- Request data to server and display NUI
-        TriggerEvent("soz-identity:client:request-nui-data", target)
+        TriggerEvent("soz-identity:client:request-licenses-data", target)
     end)
 end

@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterNetEvent("soz-identity:server:show-license", function(target)
+RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -12,12 +12,20 @@ RegisterNetEvent("soz-identity:server:show-license", function(target)
         return
     end
 
-    TriggerClientEvent("soz-identity:client:show-licence", target,
-                       {
+    local gender = "Masculin"
+    if charinfo.gender then
+        gender = "Féminin"
+    end
+
+    TriggerClientEvent("soz-identity:client:show-ui", target, {
         type = "show",
-        scope = "licenses",
-        firstName = charinfo.firstname,
+        scope = scope,
+        firstName = "Lorem",
         lastName = charinfo.lastname,
         licences = licences,
+        nationality = charinfo.nationality,
+        gender = gender,
+        address = "-",
+        phone = charinfo.phone
     })
 end)
