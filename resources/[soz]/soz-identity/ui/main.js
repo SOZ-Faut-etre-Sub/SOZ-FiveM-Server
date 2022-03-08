@@ -43,7 +43,15 @@ async function setVisible(value) {
 
 // NUI Events
 window.addEventListener("message", (event) => {
-    if (event.data.type === "show") {
+    const scope = event.data.scope
+    const type = event.data.type
+
+    if (scope === "identity" && type === "show") {
+        displayIdentityData(event.data);
+        setVisible(event.data.scope);
+    }
+    
+    if (scope === "licenses" && type === "show") {
         displayLicensesData(event.data.licences);
         displayPlayerName(
             event.data.firstName,
@@ -51,6 +59,7 @@ window.addEventListener("message", (event) => {
         );
         setVisible(event.data.scope);
     }
+
     if (event.data.type === "hide") {
         setVisible(false);
     }

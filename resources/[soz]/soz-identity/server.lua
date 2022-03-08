@@ -13,7 +13,7 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
     end
 
     local gender = "Masculin"
-    if charinfo.gender then
+    if charinfo.gender > 0 then
         gender = "Féminin"
     end
 
