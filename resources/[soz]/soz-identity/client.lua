@@ -19,6 +19,6 @@ RegisterNetEvent("soz-identity:client:show-ui", function(data)
 end)
 
 -- HIDE ALL
-AddEventHandler("soz-identity:client:hide-license", function()
+AddEventHandler("soz-identity:client:hide", function()
     SendNUIMessage({type = "hide"})
 end)
