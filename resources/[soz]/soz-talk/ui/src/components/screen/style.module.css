@@ -19,13 +19,13 @@
 }
 
 .frequency span {
-    font-size: 1.5vh;
+    font-size: 1.2rem;
 }
 
 .frequency input {
     position: relative;
     font-family: 'VT323', sans-serif;
-    font-size: 2.2vh;
+    font-size: 1.5rem;
     background: transparent;
     text-align: right;
     border: none;
@@ -34,14 +34,21 @@
     z-index: 15;
 }
 
-.volume {
-    display: flex;
-    align-items: center;
-    padding: 0 .5vw;
-    font-size: 1.5vh;
+.meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: left;
+    gap: .5rem;
+    padding: 0 .6vw;
+    font-size: 0.8rem;
 }
 
-.volume svg {
+.meta div {
+    display: flex;
+    align-items: center;
+}
+
+.meta svg {
     height: 1.2vh;
     width: 1.2vh;
     margin-right: .2rem;

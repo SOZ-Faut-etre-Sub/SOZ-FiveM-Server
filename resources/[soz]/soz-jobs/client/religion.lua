@@ -99,6 +99,8 @@ local function SpawnVehicule()
     religion_vehicule = CreateVehicle(model, Config.religion_vehicule.x, Config.religion_vehicule.y, Config.religion_vehicule.z, Config.religion_vehicule.w,
                                       true, false)
     SetModelAsNoLongerNeeded(model)
+    VehPlate = QBCore.Functions.GetPlate(religion_vehicule)
+    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
 end
 
 RegisterNetEvent("jobs:religion:begin")

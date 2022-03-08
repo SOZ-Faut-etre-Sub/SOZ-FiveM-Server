@@ -7,7 +7,7 @@ const SpeedGauge: FunctionalComponent<speedGauge> = ({value}) => {
 
     return (
         <>
-            <svg width="100" height="100">
+            <svg class={style.gauge} width="100" height="100">
                 <path
                     d="M92 47.0775C92 22.1819 71.8528 2 47 2C22.1472 2 2 22.1819 2 47.0775C2 61.1597 8.44627 73.7337 18.5441 82"
                     fill="none"
@@ -25,8 +25,8 @@ const SpeedGauge: FunctionalComponent<speedGauge> = ({value}) => {
                     style={{strokeDashoffset: -(200 - speed)}}/>
                 <defs>
                     <linearGradient id="gradient">
-                        <stop offset="30%" stop-color="rgba(255, 255, 255, .8)"/>
-                        <stop offset="100%" stop-color="#FF0245"/>
+                        <stop offset="10%" stop-color={"rgba(255, 255, 255, .8)"}/>
+                        <stop offset="100%" stop-color={"#23740c"}/>
                     </linearGradient>
                 </defs>
             </svg>

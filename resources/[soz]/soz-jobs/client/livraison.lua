@@ -106,6 +106,8 @@ local function SpawnVehicule()
     livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z,
                                        Config.livraison_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
+    VehPlate = QBCore.Functions.GetPlate(livraison_vehicule)
+    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
 end
 
 RegisterNetEvent("jobs:livraison:begin")

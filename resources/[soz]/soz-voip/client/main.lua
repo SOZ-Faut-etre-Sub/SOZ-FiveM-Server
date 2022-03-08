@@ -8,6 +8,8 @@ CurrentPlayer = {
     VoiceModeUpdateAllowed = true,
     VoiceModeProximityIsOverride = false,
 
+    --- 0: left | 1: both | 2: right
+    Ear = {["primaryRadio"] = 1, ["secondaryRadio"] = 1},
     Volume = table.deepclone(Config.DefaultVolume),
 
     RadioButtonPressed = false,
@@ -21,14 +23,14 @@ AddEventHandler("onClientResourceStart", function(resource)
 
     TriggerEvent("hud:client:UpdateVoiceMode", CurrentPlayer.VoiceMode - 1)
 
-    if LocalPlayer.state.primaryRadioChannel ~= 0 then
+    if LocalPlayer.state.primaryRadioChannel ~= nil then
         setRadioChannel(LocalPlayer.state.primaryRadioChannel, true)
     end
-    if LocalPlayer.state.secondaryRadioChannel ~= 0 then
+    if LocalPlayer.state.secondaryRadioChannel ~= nil then
         setRadioChannel(LocalPlayer.state.secondaryRadioChannel, false)
     end
 
-    if LocalPlayer.state.callChannel ~= 0 then
+    if LocalPlayer.state.callChannel ~= nil then
         setCallChannel(LocalPlayer.state.callChannel)
     end
 end)

@@ -16,7 +16,14 @@ function ToggleSound(state)
 end
 
 function InitialSetup()
-    SetManualShutdownLoadingScreenNui(true)
+    if IsScreenFadedOut() then
+        DoScreenFadeIn(500)
+
+        while not IsScreenFadedIn() do
+            Citizen.Wait(0)
+        end
+    end
+
     ToggleSound(muteSound)
 end
 
@@ -30,12 +37,16 @@ end
 CreateThread(function()
     while true do
         Wait(0)
-        if NetworkIsSessionStarted() then
+
+        local playerPed = PlayerPedId()
+
+        if playerPed and playerPed ~= -1 and NetworkIsPlayerActive(PlayerId()) then
             InitialSetup()
             SetSkyCamLoading(true)
             ToggleSound(false)
             ClearDrawOrigin()
             TriggerEvent("soz-character:client:choose:spawn")
+
             return
         end
     end
@@ -66,7 +77,7 @@ end)
 function SetSkyCamLoading(bool)
     if bool then
         DisplayRadar(false)
-        Cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -421.0049, 1155.414, 324.8574 + 100, -85.00, 0.00, 260.00, 100.00, false, 0)
+        Cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -421.0049, 1155.414, 324.8574 + 1000, -85.00, 0.00, 260.00, 100.00, false, 0)
         SetCamActive(Cam2, true)
         SetFocusArea(-421.0049, 1155.414, 324.8574 + 10, 50, 0.0, 0.0)
         ShakeCam(Cam2, "HAND_SHAKE", 0.15)

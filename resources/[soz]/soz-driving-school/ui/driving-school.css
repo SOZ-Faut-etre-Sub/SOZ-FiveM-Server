@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Prompt:400,500');
+body, html {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Prompt', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.super-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    position: relative;
+    margin: 0 auto;
+}
+.content {
+    position: absolute;
+    top: 20%;
+    left: 7%;
+    width: 86%;
+    height: 70%;
+    display: flex;
+}
+.is-half {
+    width: 50%;
+}
+#left-col {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    height: auto;
+    padding-bottom: 6.5%;
+}
+#right-col {
+    display: flex;
+    justify-content: space-evenly;
+    height: 87%;
+}
+.items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: auto;
+    height: 100%;
+}
+.items div, .item {
+    height: 11%;
+}
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.item.small {
+    font-size: .7em;
+}
+.text-small {
+    font-size: .75em;
+    line-height: .2em;
+    font-weight: initial;
+}
+.text-bold {
+    font-weight: 600;
+}
+.text-center {
+    text-align: center;
+}
+.small-lh {
+    line-height: 1.2em;
+}
+@media all and (max-width: 1920px) {
+    #bg-img {
+        width: 500px;
+    }
+}
+@media all and (min-width: 1921px) and (max-width: 4095px) {
+    body {
+        font-size: 1.2em;
+    }
+    #bg-img {
+        width: 600px;
+    }
+}
+@media all and (min-width: 4096px){
+    body {
+        font-size: 2em;
+    }
+    #bg-img {
+        width: 1000px;
+    }
+}

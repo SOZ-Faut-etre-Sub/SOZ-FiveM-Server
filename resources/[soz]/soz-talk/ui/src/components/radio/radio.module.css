@@ -1,6 +1,6 @@
 .container {
     position: absolute;
-    bottom: 1vh;
+    bottom: -50vh;
     left: 1vw;
     transition: bottom .3s;
 }
@@ -52,12 +52,37 @@
     width: 2vw;
     composes: action_style;
 }
+.action_close {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 39.5vh;
+    left: 7vw;
+    height: 1rem;
+    width: 1rem;
+    margin: 0;
+    padding: 0;
+    border-radius: .2rem;
+    color: #fff;
+    cursor: pointer;
+    background: rgba(0,0,0,.4);
+    border: 1px solid rgba(0,0,0,.6);
+}
 .action_validate {
     position: absolute;
     bottom: 15.1vh;
     left: 8.1vw;
     height: 4vh;
     width: 1vw;
+    composes: action_style;
+}
+.action_mix {
+    position: absolute;
+    bottom: 13.8vh;
+    left: 3.7vw;
+    height: 2vh;
+    width: 1.6vw;
     composes: action_style;
 }
 
