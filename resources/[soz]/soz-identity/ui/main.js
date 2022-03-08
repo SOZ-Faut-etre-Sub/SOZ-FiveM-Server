@@ -3,30 +3,45 @@ function Delay(delay) {
         setTimeout(() => {
             resolve();
         }, delay);
-    })
+    });
+}
+
+async function HideUI(...elements) {
+    elements.forEach(el => {
+        el.style.opacity = 0;
+    });
+    await Delay();
+    elements.forEach(el => {
+        el.style.display =  "none";
+    });
+    return;
 }
 
 let timeout
-async function setVisible(value) {
-    if (value) {
-        timeout = setTimeout(() => {
-            setVisible(false);
-        }, 4000);
-    } else if (timeout) {
-        clearTimeout(timeout);
-    }
+function SetTimeout() {
+    if (timeout) clearTimeout(timeout)
+    timeout = setTimeout(() => {
+        setVisible(false);
+    }, 4000);
+}
 
+async function setVisible(value) {
     const identityElement = document.querySelector("#identity");
     const licensesElement = document.querySelector("#licenses");
 
-    // HIDE ALL
-    if (!value) {
-        identityElement.style.opacity = 0;
-        licensesElement.style.opacity = 0;
-        await Delay(250);
-        identityElement.style.display = "none";
-        licensesElement.style.display = "none";
-        return
+    if (value && !timeout) {
+        // Display document when nothing on screen
+        SetTimeout();
+
+    } else if (value && timeout) {
+        // Display document while one is already being displayed
+        await HideUI(identityElement, licensesElement);
+        SetTimeout();
+
+    } else if (!value && timeout) {
+        // Hide any document
+        clearTimeout(timeout);
+        await HideUI(identityElement, licensesElement);
     }
 
     // Display identity or licences
