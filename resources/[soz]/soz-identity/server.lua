@@ -26,6 +26,6 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
         nationality = charinfo.nationality,
         gender = gender,
         address = "-",
-        phone = charinfo.phone
+        phone = charinfo.phone,
     })
 end)

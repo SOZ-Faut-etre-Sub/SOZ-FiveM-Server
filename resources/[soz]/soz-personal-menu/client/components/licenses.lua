@@ -1,11 +1,23 @@
 function LicensesEntry(menu)
-    local identitySubmenu = MenuV:InheritMenu(menu, {subtitle="Gestion de l'identité"})
+    local identitySubmenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de l'identité"})
 
-    menu:AddButton({label = "Mon identité", value = identitySubmenu, description = "Voir/Montrer vos papiers d'identité"})
+    menu:AddButton({
+        label = "Mon identité",
+        value = identitySubmenu,
+        description = "Voir/Montrer vos papiers d'identité",
+    })
 
     local sliders = {
-        {label = "Ma carte d'identité", description = "Voir/Montrer vos papiers d'identité", event = "soz-identity:client:request-identity-data"},
-        {label = "Mes permis", description = "Voir/Montrer vos permis", event = "soz-identity:client:request-licenses-data"},
+        {
+            label = "Ma carte d'identité",
+            description = "Voir/Montrer vos papiers d'identité",
+            event = "soz-identity:client:request-identity-data",
+        },
+        {
+            label = "Mes permis",
+            description = "Voir/Montrer vos permis",
+            event = "soz-identity:client:request-licenses-data",
+        },
     }
 
     -- SLIDERS (identity + licenses)
@@ -13,13 +25,10 @@ function LicensesEntry(menu)
         local slider = identitySubmenu:AddSlider({
             label = data.label,
             discription = data.description,
-            values = {
-                {label = "Voir", value = "see"},
-                {label = "Montrer", value = "show"},
-            },
+            values = {{label = "Voir", value = "see"}, {label = "Montrer", value = "show"}},
         })
 
-        slider:On("select", function (_, value)
+        slider:On("select", function(_, value)
             local target
             if value == "see" then
                 target = QBCore.Functions.GetPlayerData().source
@@ -40,9 +49,13 @@ function LicensesEntry(menu)
     end
 
     --- HIDE BUTTON
-    local hideButton = identitySubmenu:AddButton({label = "Masquer les papiers", value = "hide", description = "Masquer carte d'identité ou permis"})
+    local hideButton = identitySubmenu:AddButton({
+        label = "Masquer les papiers",
+        value = "hide",
+        description = "Masquer carte d'identité ou permis",
+    })
 
-    hideButton:On("select", function ()
+    hideButton:On("select", function()
         TriggerEvent("soz-identity:client:hide")
     end)
 end
