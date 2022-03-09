@@ -74,6 +74,7 @@ export const NoteModal: React.FC = () => {
                 leave="transition duration-75 ease-out"
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
+                style={{ willChange: 'transform,opacity' }}
             >
                 <Menu.Items
                     className="absolute right-0 w-56 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
@@ -113,6 +114,7 @@ export const NoteModal: React.FC = () => {
             leave="transition ease-in-out duration-300 transform"
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
+            style={{ willChange: 'transform' }}
         >
             <AppWrapper>
                 <AppTitle title={t('APPS_NOTES')} isBigHeader={false} action={NoteActions}>

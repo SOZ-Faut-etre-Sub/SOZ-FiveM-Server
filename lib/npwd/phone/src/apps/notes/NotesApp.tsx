@@ -42,18 +42,7 @@ export const NotesApp: React.FC = () => {
     }, [setModalVisible, title, content, setSelectedNote]);
 
     return (
-        <Transition
-            appear={true}
-            show={true}
-            unmount={false}
-            className="mt-4 h-full flex flex-col"
-            enter="transition-all origin-[35%_10%] duration-500"
-            enterFrom="scale-[0.0] opacity-0"
-            enterTo="scale-100 opacity-100"
-            leave="transition-all origin-[35%_10%] duration-500"
-            leaveFrom="scale-100 opacity-100"
-            leaveTo="scale-[0.0] opacity-0"
-        >
+        <>
             <NoteModal/>
             <AppWrapper>
                 <AppTitle app={notesApp}/>
@@ -79,6 +68,6 @@ export const NotesApp: React.FC = () => {
                     </div>
                 </Transition>
             </AppWrapper>
-        </Transition>
+        </>
     );
 };

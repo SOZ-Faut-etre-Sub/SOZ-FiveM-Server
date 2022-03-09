@@ -31,6 +31,7 @@ export const Navigation = () => {
             leave="transition-opacity duration-150"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
+            style={{ willChange: 'opacity' }}
         >
             <div className={`${color()} bg-opacity-70 rounded-full cursor-pointer h-[0.53rem] w-2/5 transition-colors ease-in-out duration-300`} onClick={() => {
                 history.push('/')
