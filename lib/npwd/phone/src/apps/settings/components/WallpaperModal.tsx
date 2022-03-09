@@ -63,6 +63,7 @@ const WallpaperModal: React.FC = () => {
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
+                style={{ willChange: 'transform,opacity' }}
             >
                 <AppWrapper>
                     <AppTitle title="Fond d'écran" isBigHeader={false}>

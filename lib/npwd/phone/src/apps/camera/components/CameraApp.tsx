@@ -3,7 +3,6 @@ import {AppWrapper} from '@ui/components';
 import {AppContent} from '@ui/components/AppContent';
 import {useHistory} from 'react-router-dom';
 import useInterval from "../hooks/useInterval";
-import {Transition} from '@headlessui/react';
 import {ChevronUpIcon, RefreshIcon} from "@heroicons/react/outline";
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
@@ -56,41 +55,28 @@ const CameraApp: React.FC = () => {
     }, [])
 
     return (
-        <Transition
-            appear={true}
-            show={true}
-            unmount={false}
-            className="h-full flex flex-col"
-            enter="transition-all origin-[80%_80%] duration-500"
-            enterFrom="scale-[0.0] opacity-0"
-            enterTo="scale-100 opacity-100"
-            leave="transition-all origin-[80%_80%] duration-500"
-            leaveFrom="scale-100 opacity-100"
-            leaveTo="scale-[0.0] opacity-0"
-        >
-            <AppWrapper>
-                <AppContent className="flex flex-col justify-between h-full">
-                    <div className="grid grid-cols-3 place-items-center mx-5 my-2">
-                        <div className="flex place-self-start">
-                            <EmojiHappyIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
-                            <LightningBoltIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
-                        </div>
-                        <ChevronUpIcon className="h-7 w-7 p-1 bg-white bg-opacity-25 text-white rounded-full" />
-                        <div className="flex place-self-end">
-                            <CubeIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
-                            <ColorSwatchIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
-                        </div>
+        <AppWrapper>
+            <AppContent className="flex flex-col justify-between h-full">
+                <div className="grid grid-cols-3 place-items-center mx-5 my-2">
+                    <div className="flex place-self-start">
+                        <EmojiHappyIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
+                        <LightningBoltIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
                     </div>
-                    <div className="bg-center bg-cover h-[550px] w-full" style={{backgroundImage: `url(${image})`}}/>
-                    <div className="flex justify-between items-center mb-14 mx-4">
-                        <div className="bg-center bg-cover w-16 aspect-square rounded-xl cursor-pointer" style={{backgroundImage: `url(${(photos[0] && photos[0].image) || null})`}}
-                             onClick={() => history.push('/photo')}/>
-                        <div className="bg-white h-16 w-16 rounded-full ring ring-white ring-offset-2 ring-offset-black cursor-pointer" onClick={handleTakePhoto}/>
-                        <RefreshIcon className="bg-[#1D1D1D] text-white p-2 h-12 w-12 rounded-full cursor-pointer" onClick={toggleCameraPhotoMode}/>
+                    <ChevronUpIcon className="h-7 w-7 p-1 bg-white bg-opacity-25 text-white rounded-full" />
+                    <div className="flex place-self-end">
+                        <CubeIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
+                        <ColorSwatchIcon className="h-7 w-7 p-1 border border-white border-opacity-25 text-white mx-1 rounded-full" />
                     </div>
-                </AppContent>
-            </AppWrapper>
-        </Transition>
+                </div>
+                <div className="bg-center bg-cover h-[550px] w-full" style={{backgroundImage: `url(${image})`}}/>
+                <div className="flex justify-between items-center mb-14 mx-4">
+                    <div className="bg-center bg-cover w-16 aspect-square rounded-xl cursor-pointer" style={{backgroundImage: `url(${(photos[0] && photos[0].image) || null})`}}
+                         onClick={() => history.push('/photo')}/>
+                    <div className="bg-white h-16 w-16 rounded-full ring ring-white ring-offset-2 ring-offset-black cursor-pointer" onClick={handleTakePhoto}/>
+                    <RefreshIcon className="bg-[#1D1D1D] text-white p-2 h-12 w-12 rounded-full cursor-pointer" onClick={toggleCameraPhotoMode}/>
+                </div>
+            </AppContent>
+        </AppWrapper>
     )
 };
 

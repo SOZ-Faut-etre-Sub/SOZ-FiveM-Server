@@ -39,6 +39,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({open, onClose, options}
             leave="transition ease-in-out duration-300 transform"
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
+            style={{ willChange: 'transform' }}
         >
             <AppWrapper>
                 <AppTitle title="Configuration" isBigHeader={false}>

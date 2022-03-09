@@ -21,8 +21,8 @@ export const HomeApp: React.FC = () => {
     });
 
     return (
-        <AppWrapper>
-            <div ref={appRef} className="mt-4 h-full flex flex-col justify-between">
+        <div ref={appRef} className={`p-0 m-0 relative flex flex-col h-full w-full min-h-[720px]`}>
+            <div className="mt-4 h-full flex flex-col justify-between">
                 <div className="mt-4 px-1">
                     <AppsGrid items={filteredApps}/>
                 </div>
@@ -30,6 +30,6 @@ export const HomeApp: React.FC = () => {
                     <AppsGrid items={homeApps}/>
                 </div>
             </div>
-        </AppWrapper>
+        </div>
     );
 };
