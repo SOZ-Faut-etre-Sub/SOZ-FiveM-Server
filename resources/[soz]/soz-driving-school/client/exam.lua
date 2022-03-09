@@ -117,6 +117,8 @@ local function startExamLoop(licenseType, context)
         end
         table.insert(checkpoints, finalCheckpoint)
 
+        local totalCp = #checkpoints
+
         -- Setup first checkpoint
         local prevCheckpoint = nil
         local checkpoint = getNextCheckpoint(checkpoints, true)
@@ -151,6 +153,11 @@ local function startExamLoop(licenseType, context)
                     for i = 1, #msg, 1 do
                         DiplayInstructorNotification("INFO", msg[i])
                     end
+                end
+
+                -- Display checkpoint count
+                if #checkpoints > 0 then
+                    exports["soz-hud"]:DrawNotification(string.format("Checkpoint %s/%s", totalCp - #checkpoints, totalCp))
                 end
 
                 -- Draw next checkpoint
