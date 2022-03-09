@@ -9,9 +9,4 @@ client_script "client.lua"
 server_script "server.lua"
 
 ui_page "ui/index.html"
-files {
-    "ui/index.html",
-    "ui/soz-identity.css",
-    "ui/*.js",
-    "ui/*.png"
-}
+files {"ui/index.html", "ui/soz-identity.css", "ui/*.js", "ui/*.png"}
