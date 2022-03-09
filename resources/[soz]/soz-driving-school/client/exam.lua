@@ -10,6 +10,25 @@ function IsSpawnPointFree(x, y, z)
     return not IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)
 end
 
+---Draw random checkpoints from a list of checkpoints
+---@param allCheckpoints table
+---@param count number Number of checkpoints that are to be drawn
+local function GetRandomCheckpoints(allCheckpoints, count)
+    if count > #allCheckpoints then
+        count = #allCheckpoints
+    end
+
+    local allCpCopy = {table.unpack(allCheckpoints)}
+    local checkpoints = {}
+    repeat
+        local idx = math.random(1, #allCpCopy)
+        local cp = allCpCopy[idx]
+        table.insert(checkpoints, cp)
+        table.remove(allCpCopy, idx)
+    until #checkpoints == count - 1 -- Remove final checkpoints
+    return checkpoints
+end
+
 ---Get next checkpoint in table
 ---@param tbl table Checkpoints table
 ---@param pop boolean Should table item be poped
@@ -86,7 +105,7 @@ local function startExamLoop(licenseType, context)
         end
 
         -- Checkpoints
-        local checkpoints = Config.Checkpoints[licenseType]
+        local checkpoints = GetRandomCheckpoints(Config.Checkpoints, Config.CheckpointCount)
         if not checkpoints then
             return
         end

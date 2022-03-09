@@ -69,43 +69,18 @@ Config.InstructorStartSpeech = {
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
 
+Config.CheckpointCount = 5 -- Number of checkpoints during exam (including final checkpoint)
 Config.Checkpoints = {
-    ["car"] = {
-        {x = -704.06, y = -1246.4, z = 8.88},
-        {x = -751.81, y = -1128.65, z = 9.18},
-        {
-            x = -630.52,
-            y = -975.5,
-            z = 19.9,
-            message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades...",
-        },
-        {x = -543.82, y = -1103.21, z = 20.88},
-        {x = -630.09, y = -1265.14, z = 9.49},
+    {x = -704.06, y = -1246.4, z = 8.88},
+    {x = -751.81, y = -1128.65, z = 9.18},
+    {
+        x = -630.52,
+        y = -975.5,
+        z = 19.9,
+        message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades...",
     },
-    ["truck"] = {
-        {x = -704.06, y = -1246.4, z = 8.88},
-        {x = -751.81, y = -1128.65, z = 9.18},
-        {
-            x = -630.52,
-            y = -975.5,
-            z = 19.9,
-            message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades...",
-        },
-        {x = -543.82, y = -1103.21, z = 20.88},
-        {x = -630.09, y = -1265.14, z = 9.49},
-    },
-    ["motorcycle"] = {
-        {x = -704.06, y = -1246.4, z = 8.88},
-        {x = -751.81, y = -1128.65, z = 9.18},
-        {
-            x = -630.52,
-            y = -975.5,
-            z = 19.9,
-            message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades...",
-        },
-        {x = -543.82, y = -1103.21, z = 20.88},
-        {x = -630.09, y = -1265.14, z = 9.49},
-    },
+    {x = -543.82, y = -1103.21, z = 20.88},
+    {x = -630.09, y = -1265.14, z = 9.49},
 }
 
 Config.FinalCheckpointLandVehicle = {
