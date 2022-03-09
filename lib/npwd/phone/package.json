@@ -61,9 +61,6 @@
     "build": "craco build",
     "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
