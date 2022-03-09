@@ -73,7 +73,16 @@ local function startExamLoop(licenseType, context)
 
         -- Diplay Instructor start speech
         for i = 1, #Config.InstructorStartSpeech, 1 do
-            DiplayInstructorNotification("INFO", Config.InstructorStartSpeech[i])
+            local msg
+            local el = Config.InstructorStartSpeech[i]
+            if type(el) == "string" then
+                msg = el
+            elseif type(el) == "table" then
+                msg = Config.InstructorStartSpeech[i][licenseType]
+            end
+            if msg then
+                DiplayInstructorNotification("INFO", msg)
+            end
         end
 
         -- Checkpoints
