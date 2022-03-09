@@ -69,7 +69,7 @@ Config.InstructorStartSpeech = {
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
 
-Config.CheckpointCount = 5 -- Number of checkpoints during exam (including final checkpoint)
+Config.CheckpointCount = 6 -- Number of checkpoints during exam (including final checkpoint)
 Config.Checkpoints = {
     {x = -704.06, y = -1246.4, z = 8.88},
     {x = -751.81, y = -1128.65, z = 9.18},
