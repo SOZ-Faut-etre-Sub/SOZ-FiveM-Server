@@ -62,7 +62,10 @@ Config.CheckpointSize = 3.0
 Config.CheckpointColor = {r = 12, g = 123, b = 86, a = 150}
 
 Config.InstructorStartSpeech = {
-    "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
+    {
+        ["car"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
+        ["truck"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
+    },
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
 
