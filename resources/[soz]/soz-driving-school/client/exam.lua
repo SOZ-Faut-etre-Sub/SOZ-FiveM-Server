@@ -139,7 +139,6 @@ local function startExamLoop(licenseType, context)
             -- On checkpoint entered
             if dist < Config.CheckpointSize then
                 DeleteCheckpoint(cpId)
-                PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET", false)
 
                 -- Display message if set (stored on previous checkpoint)
                 prevCheckpoint = checkpoint
