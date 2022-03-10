@@ -120,7 +120,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         InstalledApps = {},
     }
     -- Job
-    PlayerData.job = PlayerData.job or {}
+    if not PlayerData.job or type(PlayerData.job) ~= 'table' then
+        PlayerData.job = {}
+    end
+
     PlayerData.job.id = PlayerData.job.id or 'unemployed'
     PlayerData.job.label = PlayerData.job.label or 'Chomeur'
     PlayerData.job.onduty = false
@@ -136,6 +139,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Other
     PlayerData.position = PlayerData.position or QBConfig.DefaultSpawn
     PlayerData.LoggedIn = true
+
     QBCore.Player.CreatePlayer(PlayerData)
 end
 

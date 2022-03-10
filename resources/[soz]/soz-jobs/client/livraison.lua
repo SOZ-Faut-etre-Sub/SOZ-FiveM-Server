@@ -19,14 +19,14 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job de livraison",
-            job = "unemployed",
+            job = Config.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:livraison:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "livraison",
+            job = Config.JobType.Delivery,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,7 +36,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir la moto",
-            job = "livraison",
+            job = Config.JobType.Delivery,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,7 +48,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job de livraison",
-            job = "livraison",
+            job = Config.JobType.Delivery,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,7 +58,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job de livraison",
-            job = "livraison",
+            job = Config.JobType.Delivery,
         },
     },
     distance = 2.5,
@@ -113,7 +113,7 @@ end
 RegisterNetEvent("jobs:livraison:begin")
 AddEventHandler("jobs:livraison:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "livraison")
+    TriggerServerEvent("job:set:pole", Config.JobType.Delivery)
     OnJob = true
 end)
 

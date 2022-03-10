@@ -19,14 +19,14 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job metal",
-            job = "unemployed",
+            job = Config.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:metal:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "metal",
+            job = Config.JobType.Scrapper,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,7 +36,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = "metal",
+            job = Config.JobType.Scrapper,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,7 +48,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job metal",
-            job = "metal",
+            job = Config.JobType.Scrapper,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,7 +58,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:vente",
             icon = "fas fa-sign-in-alt",
             label = "Vendre du métal",
-            job = "metal",
+            job = Config.JobType.Scrapper,
             item = "metalscrap",
         },
         {
@@ -66,7 +66,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job de récolte de metal",
-            job = "metal",
+            job = Config.JobType.Scrapper,
         },
     },
     distance = 2.5,
@@ -118,7 +118,7 @@ end)
 RegisterNetEvent("jobs:metal:begin")
 AddEventHandler("jobs:metal:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "metal")
+    TriggerServerEvent("job:set:pole", Config.JobType.Scrapper)
     OnJob = true
 end)
 
