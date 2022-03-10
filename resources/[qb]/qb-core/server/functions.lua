@@ -192,6 +192,19 @@ function QBCore.Functions.TriggerCallback(name, source, cb, ...)
     end
 end
 
+function QBCore.Functions.TriggerCallbackAwait(name, source, ...)
+    local src = source
+    local result
+
+    if QBCore.ServerCallbacks[name] then
+        QBCore.ServerCallbacks[name](src, function(res)
+            result = res
+        end, ...)
+    end
+
+    return result
+end
+
 -- Items
 
 function QBCore.Functions.CreateUseableItem(item, cb)

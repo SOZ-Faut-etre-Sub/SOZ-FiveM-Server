@@ -19,14 +19,14 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job adsl",
-            job = "unemployed",
+            job = Config.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:adsl:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "adsl",
+            job = Config.JobType.Adsl,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,7 +36,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = "adsl",
+            job = Config.JobType.Adsl,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,7 +48,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job adsl",
-            job = "adsl",
+            job = Config.JobType.Adsl,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,7 +58,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job adsl",
-            job = "adsl",
+            job = Config.JobType.Adsl,
         },
     },
     distance = 2.5,
@@ -110,7 +110,7 @@ end
 RegisterNetEvent("jobs:adsl:begin")
 AddEventHandler("jobs:adsl:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "adsl")
+    TriggerServerEvent("job:set:pole", Config.JobType.Adsl)
     OnJob = true
 end)
 

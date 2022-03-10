@@ -18,14 +18,14 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job religion",
-            job = "unemployed",
+            job = Config.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:religion:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "religion",
+            job = Config.JobType.Religious,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -35,7 +35,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = "religion",
+            job = Config.JobType.Religious,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -47,7 +47,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job religion",
-            job = "religion",
+            job = Config.JobType.Religious,
             canInteract = function()
                 return OnJob == false
             end,
@@ -57,7 +57,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job religion",
-            job = "religion",
+            job = Config.JobType.Religious,
         },
     },
     distance = 2.5,
@@ -106,7 +106,7 @@ end
 RegisterNetEvent("jobs:religion:begin")
 AddEventHandler("jobs:religion:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "religion")
+    TriggerServerEvent("job:set:pole", Config.JobType.Religious)
     OnJob = true
 end)
 

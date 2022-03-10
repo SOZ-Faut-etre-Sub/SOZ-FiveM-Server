@@ -6,9 +6,16 @@ RegisterServerEvent("job:set:unemployed", function()
     Player.Functions.SetJob("unemployed", 0)
 end)
 
-RegisterServerEvent("job:set:pole", function(job)
+RegisterServerEvent("job:set:pole", function(jobId)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencer le travail: %s", job))
+    local job = Config.Jobs[jobId]
+
+    if not job then
+        return
+    end
+
+    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencer le travail: %s", job.label))
+
     Player.Functions.SetJob(job, 0)
 end)
 

@@ -135,6 +135,16 @@ function QBCore.Functions.TriggerCallback(name, cb, ...)
     TriggerServerEvent('QBCore:Server:TriggerCallback', name, ...)
 end
 
+function QBCore.Functions.TriggerCallbackAwait(name, ...)
+    local p = promise.new()
+
+    QBCore.Functions.TriggerCallback(name, function(result)
+        p:resolve(result)
+    end, ...)
+
+    return Citizen.Await(p)
+end
+
 function QBCore.Functions.Progressbar(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
     exports['progressbar']:Progress({
         name = name:lower(),

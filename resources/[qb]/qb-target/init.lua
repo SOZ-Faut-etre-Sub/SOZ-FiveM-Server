@@ -112,15 +112,17 @@ CreateThread(function()
 			return 0
 		end
 
-		JobCheck = function(job) -- @TODO: rework this part
-			if type(job) == 'table' then
-				job = job[PlayerData.job.name]
-				if PlayerData.job.grade.level >= job then
+		JobCheck = function(job, permission)
+			if job == 'all' or job == PlayerData.job.id then
+				if permission then
+					-- @TODO Avoid network call here (spam) need to check in memory, so we need to sync job config on client side only when updated, and compare it here
+					-- return QBCore.Functions.TriggerCallbackAwait("soz-jobs:HasJobGradePermission", PlayerData.job.id, PlayerData.job.grade.id, permission)
 					return true
 				end
-			elseif job == 'all' or job == PlayerData.job.name then
+
 				return true
 			end
+
 			return false
 		end
 
@@ -173,7 +175,7 @@ end)
 
 function CheckOptions(data, entity, distance)
 	if distance and data.distance and distance > data.distance then return false end
-	if data.job and not JobCheck(data.job) then return false end
+	if data.job and not JobCheck(data.job, data.jobPermission or nil) then return false end
 	if data.gang and not GangCheck(data.gang) then return false end
 	if data.item and ItemCount(data.item) < 1 then return false end
 	if data.citizenid and not CitizenCheck(data.citizenid) then return false end
