@@ -76,6 +76,7 @@ end
 local function ForceWaypointDisplay(x, y)
     if not IsWaypointActive() then
         SetNewWaypoint(x, y)
+        SetMinimapBlockWaypoint(true)
     end
 end
 
@@ -137,6 +138,7 @@ local function startExamLoop(licenseType, context)
 
             -- Force Waypoint display
             ForceWaypointDisplay(checkpoint.x, checkpoint.y)
+            DisplayRadar(true)
 
             -- On checkpoint entered
             if dist < Config.CheckpointSize then
@@ -265,8 +267,9 @@ function TerminateExam(isSuccess, licenseType)
     HandleVehicleAndPed(isSuccess, instructorEntity, vehicleEntity)
     CleanUpPenaltySystem()
     DeleteWaypoint()
+    SetMinimapBlockWaypoint(false)
     passingExam = false
-    WarnedNoGps = false
+    DisplayRadar(false)
 
     if isSuccess then
         TriggerServerEvent("soz-driving-license:server:update_license", licenseType)
