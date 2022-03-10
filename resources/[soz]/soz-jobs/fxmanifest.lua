@@ -21,3 +21,4 @@ client_script {
 
 server_script "server/server.lua"
 
+dependencies {"qb-target"}
