@@ -3,7 +3,7 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 RegisterServerEvent("job:set:unemployed", function()
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
     TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous êtes à nouveau sans emploie"))
-    Player.Functions.SetJob("unemployed", 0)
+    Player.Functions.SetJob(Config.JobType.Unemployed, nil)
 end)
 
 RegisterServerEvent("job:set:pole", function(jobId)
@@ -16,7 +16,9 @@ RegisterServerEvent("job:set:pole", function(jobId)
 
     TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencer le travail: %s", job.label))
 
-    Player.Functions.SetJob(job, 0)
+    -- @TODO Set default job
+
+    Player.Functions.SetJob(jobId, nil)
 end)
 
 RegisterServerEvent("job:payout", function(money)

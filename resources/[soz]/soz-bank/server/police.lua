@@ -7,7 +7,7 @@ QBCore.Functions.CreateCallback("police:getOtherPlayerData", function(source, cb
 
         local data = {
             name = Target.Functions.GetName(),
-            job = Target.PlayerData.job.label,
+            job = Target.PlayerData.job.id,
             marked_money = Target.PlayerData.money["marked_money"],
         }
 

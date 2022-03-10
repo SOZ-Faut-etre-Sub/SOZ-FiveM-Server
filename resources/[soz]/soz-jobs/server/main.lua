@@ -68,3 +68,9 @@ QBCore.Functions.CreateCallback("soz-jobs:HasPlayerPermission", function(source,
 
     cb(CheckJobPermission(player.PlayerData.job.id, player.PlayerData.job.grade.id, permission))
 end)
+
+RegisterServerEvent("job:grade:remove", function(id)
+    local Player = QBCore.Functions.GetPlayer(tonumber(source))
+    -- Check permissions
+
+end)

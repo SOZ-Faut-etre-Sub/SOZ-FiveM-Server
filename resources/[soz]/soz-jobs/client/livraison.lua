@@ -98,10 +98,8 @@ local function SpawnVehicule()
         return
     end
     RequestModel(model)
-    print("model load")
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
-        print(test)
     end
     livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z,
                                        Config.livraison_vehicule.w, true, false)

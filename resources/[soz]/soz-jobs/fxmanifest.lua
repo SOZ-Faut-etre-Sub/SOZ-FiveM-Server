@@ -10,6 +10,7 @@ client_script {
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
     "@menuv/menuv.lua",
+    "client/main.lua",
     "client/adsl.lua",
     "client/pedlist.lua",
     "client/spawnped.lua",
