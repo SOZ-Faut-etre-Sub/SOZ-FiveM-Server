@@ -42,7 +42,9 @@ table.insert(migrations, {
                 ('cash-transfer', 'Patron', 0, 1, 0, '[]'),
                 ('cash-transfer', 'Employé', 0, 0, 1, '[]'),
                 ('garagist', 'Patron', 0, 1, 0, '[]'),
-                ('garagist', 'Employé', 0, 0, 1, '[]')
+                ('garagist', 'Employé', 0, 0, 1, '[]'),
+                ('debug', 'Patron', 0, 1, 0, '[]'),
+                ('debug', 'Employé', 0, 0, 1, '[]')
             ;
         ]],
     },

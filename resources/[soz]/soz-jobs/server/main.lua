@@ -1,5 +1,9 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
+exports('GetCoreObject', function()
+    return SozJobCore
+end)
+
 MySQL.ready(function()
     SynchroniseJob()
 end)
@@ -8,14 +12,14 @@ function SynchroniseJob()
     local jobGrades = MySQL.query.await("SELECT * FROM job_grades", {})
     local tmpGrades = {}
 
-    for _, jobId in pairs(Config.JobType) do
+    for _, jobId in pairs(SozJobCore.JobType) do
         tmpGrades[jobId] = {}
     end
 
     if jobGrades then
         for _, jobGrade in ipairs(jobGrades) do
-            if not Config.Jobs[jobGrade.jobId] then
-                exports["soz-monitor"]:Log("ERROR", ("Job %s (grade %s) is not present in configuration !"):format(jobGrade.jobId, jobGrade.name))
+            if not SozJobCore.Jobs[jobGrade.jobId] then
+                exports["soz-monitor"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCoreuration !"):format(jobGrade.jobId, jobGrade.name))
                 goto continue
             end
 
@@ -26,23 +30,31 @@ function SynchroniseJob()
         end
     end
 
-    for _, jobId in pairs(Config.JobType) do
-        Config.Jobs[jobId].grades = tmpGrades[jobId]
+    for _, jobId in pairs(SozJobCore.JobType) do
+        SozJobCore.Jobs[jobId].grades = tmpGrades[jobId]
     end
 
-    TriggerClientEvent("soz-jobs:Client:OnJobSync", -1, Config.Jobs)
+    TriggerClientEvent("soz-jobs:Client:OnJobSync", -1, SozJobCore.Jobs)
+end
+
+function CheckPlayerJobPermission(player, permission)
+    if not player then
+        return false
+    end
+
+    return CheckJobPermission(player.job.id, player.job.grade, permission)
 end
 
 function CheckJobPermission(jobId, gradeId, permission)
-    if not Config.Jobs[jobId] then
+    if not SozJobCore.Jobs[jobId] then
         return false
     end
 
-    if not Config.Jobs[jobId].grades[tostring(gradeId)] then
+    if not SozJobCore.Jobs[jobId].grades[tostring(gradeId)] then
         return false
     end
 
-    local grade = Config.Jobs[jobId].grades[tostring(gradeId)]
+    local grade = SozJobCore.Jobs[jobId].grades[tostring(gradeId)]
 
     if grade.owner == true then
         return true
@@ -70,5 +82,5 @@ QBCore.Functions.CreateCallback("soz-jobs:HasPlayerPermission", function(source,
 end)
 
 RegisterServerEvent("soz-jobs:AskJobSync", function()
-    TriggerClientEvent("soz-jobs:Client:OnJobSync", source, Config.Jobs)
+    TriggerClientEvent("soz-jobs:Client:OnJobSync", source, SozJobCore.Jobs)
 end)

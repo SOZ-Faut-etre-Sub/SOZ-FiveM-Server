@@ -1,6 +1,6 @@
-Config = {}
+SozJobCore = {}
 
-Config.JobType = {
+SozJobCore.JobType = {
     Unemployed = 'unemployed',
     Adsl = 'adsl',
     Delivery = 'delivery',
@@ -15,9 +15,10 @@ Config.JobType = {
     Oil = 'oil',
     CashTransfer = 'cash-transfer',
     Garagist = 'garagist',
+    Debug = 'debug',
 }
 
-Config.JobPermission = {
+SozJobCore.JobPermission = {
     AddGrade = 'add_grade',
     RemoveGrade = 'remove_grade',
     AddPermission = 'add_permission',
@@ -28,12 +29,12 @@ Config.JobPermission = {
     FirePlayer = 'fire_player',
 }
 
-Config.Jobs = {
-    [Config.JobType.Unemployed] = {
+SozJobCore.Jobs = {
+    [SozJobCore.JobType.Unemployed] = {
         label = 'Chomeur',
         grades = {},
     },
-    [Config.JobType.Adsl] = {
+    [SozJobCore.JobType.Adsl] = {
         label = 'Adsl',
         temporary = {
             payout = 25,
@@ -51,7 +52,7 @@ Config.Jobs = {
         },
         grades = {},
     },
-    [Config.JobType.Delivery] = {
+    [SozJobCore.JobType.Delivery] = {
         label = 'Livraison',
         temporary = {
             payout = 25,
@@ -66,7 +67,7 @@ Config.Jobs = {
         },
         grades = {},
     },
-    [Config.JobType.Religious] = {
+    [SozJobCore.JobType.Religious] = {
         label = 'Religion',
         temporary = {
             payout = 150,
@@ -79,7 +80,7 @@ Config.Jobs = {
         },
         grades = {},
     },
-    [Config.JobType.Scrapper] = {
+    [SozJobCore.JobType.Scrapper] = {
         label = 'Métallurgie',
         temporary = {
             payout = 5,
@@ -94,57 +95,61 @@ Config.Jobs = {
         },
         grades = {},
     },
-    [Config.JobType.Police] = {
+    [SozJobCore.JobType.Police] = {
         label = 'Police',
         grades = {},
     },
-    [Config.JobType.Medic] = {
+    [SozJobCore.JobType.Medic] = {
         label = 'Médécin',
         grades = {},
     },
-    [Config.JobType.Taxi] = {
+    [SozJobCore.JobType.Taxi] = {
         label = 'Taxi',
         grades = {},
     },
-    [Config.JobType.Food] = {
+    [SozJobCore.JobType.Food] = {
         label = 'Food & Drink',
         grades = {},
     },
-    [Config.JobType.News] = {
+    [SozJobCore.JobType.News] = {
         label = 'Twitch News',
         grades = {},
     },
-    [Config.JobType.Garbage] = {
+    [SozJobCore.JobType.Garbage] = {
         label = 'Eboueur',
         grades = {},
     },
-    [Config.JobType.Oil] = {
+    [SozJobCore.JobType.Oil] = {
         label = 'Pompiste',
         grades = {},
     },
-    [Config.JobType.CashTransfer] = {
+    [SozJobCore.JobType.CashTransfer] = {
         label = 'Transport de fond',
         grades = {},
     },
-    [Config.JobType.Garagist] = {
+    [SozJobCore.JobType.Garagist] = {
         label = 'Méchanicien',
+        grades = {},
+    },
+    [SozJobCore.JobType.Debug] = {
+        label = 'Debug job',
         grades = {},
     },
 }
 
-Config.adsl_payout = 25
-Config.adsl_vehicule = {x = 500.79, y = -105.88, z = 62.07, w = 253.78}
+SozJobCore.adsl_payout = 25
+SozJobCore.adsl_vehicule = {x = 500.79, y = -105.88, z = 62.07, w = 253.78}
 
-Config.livraison_payout = 25
-Config.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
+SozJobCore.livraison_payout = 25
+SozJobCore.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
 
-Config.religion_payout = 150
-Config.religion_vehicule = {x = -763.69, y = -39.26, z = 37.69, w = 119.87}
+SozJobCore.religion_payout = 150
+SozJobCore.religion_vehicule = {x = -763.69, y = -39.26, z = 37.69, w = 119.87}
 
-Config.metal_payout = 5
-Config.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
+SozJobCore.metal_payout = 5
+SozJobCore.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
 
-Config.adsl = {
+SozJobCore.adsl = {
     {x = 406.88, y = -968.05, z = 29.45, sx = 1.8, sy = 1.2, heading = 358, minZ = 27.8, maxZ = 30.4},
     {x = -245.4, y = -705.67, z = 33.57, sx = 1.8, sy = 0.8, heading = 343, minZ = 32.17, maxZ = 34.17},
     {x = -588.54, y = -225.87, z = 36.43, sx = 1.6, sy = 1.2, heading = 29, minZ = 35.03, maxZ = 37.43},
@@ -155,7 +160,7 @@ Config.adsl = {
     {x = -298.36, y = -154.46, z = 41.33, sx = 1.6, sy = 0.6, heading = 358, minZ = 19.93, maxZ = 41.73},
 }
 
-Config.livraison = {
+SozJobCore.livraison = {
     {x = 859.15, y = -531.95, z = 57.33, sx = 1, sy = 1, heading = 0, minZ = 56.08, maxZ = 58.08},
     {x = -1225.8, y = -1094.27, z = 8.17, sx = 1, sy = 1, heading = 0, minZ = 6.77, maxZ = 8.57},
     {x = -618.08, y = -950.34, z = 21.7, sx = 1, sy = 1, heading = 0, minZ = 20.5, maxZ = 21.9},
@@ -163,13 +168,13 @@ Config.livraison = {
     {x = -1365.82, y = -686.5, z = 25.32, sx = 1, sy = 1, heading = 37, minZ = 23.72, maxZ = 25.32},
 }
 
-Config.religion = {
+SozJobCore.religion = {
     {x = -1517.37, y = -433.94, z = 63.06, sx = 45.4, sy = 53.8, heading = 49, minZ = 34.46, maxZ = 43.46},
     {x = 235.83, y = 235.83, z = 37.57, sx = 45.8, sy = 54.0, heading = 340, minZ = 26.77, maxZ = 34.17},
     {x = -1221.01, y = -1546.34, z = 18.48, sx = 48.8, sy = 76.6, heading = 305, minZ = 3.08, maxZ = 7.08},
 }
 
-Config.metal = {
+SozJobCore.metal = {
     {x = -454.83, y = -1678.6, z = 19.03, sx = 4.2, sy = 2.4, heading = 336, minZ = 17.83, maxZ = 19.83},
     {x = -443.72, y = -1676.47, z = 19.03, sx = 2.25, sy = 4.0, heading = 340, minZ = 17.28, maxZ = 19.88},
     {x = -474.17, y = -1677.17, z = 19.0, sx = 2.8, sy = 2.2, heading = 335, minZ = 17.4, maxZ = 19.4},

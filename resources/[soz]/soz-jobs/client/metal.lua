@@ -19,14 +19,14 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job metal",
-            job = Config.JobType.Unemployed,
+            job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:metal:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = Config.JobType.Scrapper,
+            job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,7 +36,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = Config.JobType.Scrapper,
+            job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,7 +48,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job metal",
-            job = Config.JobType.Scrapper,
+            job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,7 +58,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:vente",
             icon = "fas fa-sign-in-alt",
             label = "Vendre du métal",
-            job = Config.JobType.Scrapper,
+            job = SozJobCore.JobType.Scrapper,
             item = "metalscrap",
         },
         {
@@ -66,7 +66,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             event = "jobs:metal:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job de récolte de metal",
-            job = Config.JobType.Scrapper,
+            job = SozJobCore.JobType.Scrapper,
         },
     },
     distance = 2.5,
@@ -102,7 +102,7 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    metal_vehicule = CreateVehicle(model, Config.metal_vehicule.x, Config.metal_vehicule.y, Config.metal_vehicule.z, Config.metal_vehicule.w, true, false)
+    metal_vehicule = CreateVehicle(model, SozJobCore.metal_vehicule.x, SozJobCore.metal_vehicule.y, SozJobCore.metal_vehicule.z, SozJobCore.metal_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(metal_vehicule)
     TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
@@ -118,7 +118,7 @@ end)
 RegisterNetEvent("jobs:metal:begin")
 AddEventHandler("jobs:metal:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", Config.JobType.Scrapper)
+    TriggerServerEvent("job:set:pole", SozJobCore.JobType.Scrapper)
     OnJob = true
 end)
 
@@ -133,7 +133,7 @@ AddEventHandler("jobs:metal:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, Config.metal_vehicule)
+    createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.metal_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
@@ -152,7 +152,7 @@ AddEventHandler("jobs:metal:restart", function()
 end)
 
 local function random_coord()
-    local result = Config.metal[math.random(#Config.metal)]
+    local result = SozJobCore.metal[math.random(#SozJobCore.metal)]
     if result.x == JobDone then
         random_coord()
     end
