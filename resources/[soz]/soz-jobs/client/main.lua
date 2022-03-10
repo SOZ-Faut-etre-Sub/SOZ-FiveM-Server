@@ -20,5 +20,9 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
 end)
 
 RegisterNetEvent("soz-jobs:Client:OnJobSync", function(jobs)
-    Config.Jobs = jobs
+    SozJobCore.Jobs = jobs
+end)
+
+exports('GetCoreObject', function()
+    return SozJobCore
 end)

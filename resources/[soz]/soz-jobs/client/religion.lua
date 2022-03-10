@@ -18,14 +18,14 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job religion",
-            job = Config.JobType.Unemployed,
+            job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:religion:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = Config.JobType.Religious,
+            job = SozJobCore.JobType.Religious,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -35,7 +35,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = Config.JobType.Religious,
+            job = SozJobCore.JobType.Religious,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -47,7 +47,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job religion",
-            job = Config.JobType.Religious,
+            job = SozJobCore.JobType.Religious,
             canInteract = function()
                 return OnJob == false
             end,
@@ -57,7 +57,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             event = "jobs:religion:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job religion",
-            job = Config.JobType.Religious,
+            job = SozJobCore.JobType.Religious,
         },
     },
     distance = 2.5,
@@ -96,7 +96,7 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    religion_vehicule = CreateVehicle(model, Config.religion_vehicule.x, Config.religion_vehicule.y, Config.religion_vehicule.z, Config.religion_vehicule.w,
+    religion_vehicule = CreateVehicle(model, SozJobCore.religion_vehicule.x, SozJobCore.religion_vehicule.y, SozJobCore.religion_vehicule.z, SozJobCore.religion_vehicule.w,
                                       true, false)
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(religion_vehicule)
@@ -106,7 +106,7 @@ end
 RegisterNetEvent("jobs:religion:begin")
 AddEventHandler("jobs:religion:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", Config.JobType.Religious)
+    TriggerServerEvent("job:set:pole", SozJobCore.JobType.Religious)
     OnJob = true
 end)
 
@@ -121,7 +121,7 @@ AddEventHandler("jobs:religion:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, Config.religion_vehicule)
+    createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.religion_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
@@ -140,7 +140,7 @@ AddEventHandler("jobs:religion:restart", function()
 end)
 
 local function random_coord()
-    local result = Config.religion[math.random(#Config.religion)]
+    local result = SozJobCore.religion[math.random(#SozJobCore.religion)]
     if result.x == JobDone then
         random_coord()
     end
@@ -199,7 +199,7 @@ end)
 RegisterNetEvent("jobs:religion:end")
 AddEventHandler("jobs:religion:end", function()
     TriggerServerEvent("job:set:unemployed")
-    local money = Config.adsl_payout * payout_counter
+    local money = SozJobCore.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
     QBCore.Functions.DeleteVehicle(religion_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")

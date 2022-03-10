@@ -3,12 +3,12 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 RegisterServerEvent("job:set:unemployed", function()
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
     TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous êtes à nouveau sans emploie"))
-    Player.Functions.SetJob(Config.JobType.Unemployed, nil)
+    Player.Functions.SetJob(SozJobCore.JobType.Unemployed, nil)
 end)
 
 RegisterServerEvent("job:set:pole", function(jobId)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    local job = Config.Jobs[jobId]
+    local job = SozJobCore.Jobs[jobId]
 
     if not job then
         return
@@ -16,9 +16,17 @@ RegisterServerEvent("job:set:pole", function(jobId)
 
     TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencer le travail: %s", job.label))
 
-    -- @TODO Set default grade
+    local gradeId = nil
 
-    Player.Functions.SetJob(jobId, nil)
+    for id, grade in ipairs(job.grades) do
+        if grade.is_default then
+            gradeId = id
+
+            break
+        end
+    end
+
+    Player.Functions.SetJob(jobId, gradeId)
 end)
 
 RegisterServerEvent("job:payout", function(money)
@@ -50,7 +58,7 @@ RegisterServerEvent("job:remove:metal", function(amount)
     if tonumber(amount) <= tonumber(totalAmount) then
         exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "metalscrap", amount, nil)
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez vendu %s metalscrap", amount))
-        local payout = amount * Config.metal_payout
+        local payout = amount * SozJobCore.metal_payout
         TriggerEvent("job:payout:metal", payout, source)
     else
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous essayer de vendre plus que se que vous possédez", amount))

@@ -1,6 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-local personalMenu = MenuV:CreateMenu(nil, "", "menu_personal", "soz", "personal")
-local PlayerData = QBCore.Functions.GetPlayerData()
+personalMenu = MenuV:CreateMenu(nil, "", "menu_personal", "soz", "personal")
+PlayerData = QBCore.Functions.GetPlayerData()
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -17,6 +17,7 @@ local function GenerateMenu()
     LicensesEntry(personalMenu)
     InvoiceEntry(personalMenu)
     HudToggleEntry(personalMenu)
+    JobEntry(personalMenu)
 
     if personalMenu.IsOpen then
         personalMenu:Close()
