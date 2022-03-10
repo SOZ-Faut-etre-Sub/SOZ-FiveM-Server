@@ -125,7 +125,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     end
 
     PlayerData.job.id = PlayerData.job.id or 'unemployed'
-    PlayerData.job.label = PlayerData.job.label or 'Chomeur'
     PlayerData.job.onduty = false
     PlayerData.job.grade = PlayerData.job.grade or nil
     -- Gang
@@ -175,9 +174,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
         end
     end
 
-    self.Functions.SetJob = function(job, grade)
-        self.PlayerData.job = job
-        self.PlayerData.job.grade = grade
+    self.Functions.SetJob = function(jobId, gradeId)
+        self.PlayerData.job = {
+            id = jobId,
+            grade = gradeId,
+            onduty = self.PlayerData.job.onduty or false,
+        }
         self.Functions.UpdatePlayerData()
 
         TriggerClientEvent('QBCore:Client:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
