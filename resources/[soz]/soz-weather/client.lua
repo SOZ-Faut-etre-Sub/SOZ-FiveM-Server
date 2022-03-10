@@ -24,7 +24,7 @@ CreateThread(function()
     while true do
         Wait(0)
         if NetworkIsSessionStarted() then
-            TriggerEvent("soz-weather:init")
+            TriggerServerEvent("soz-weather:init")
             return
         end
     end

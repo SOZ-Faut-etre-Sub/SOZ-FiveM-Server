@@ -20,7 +20,7 @@ function SynchroniseJob()
             end
 
             jobGrade.permissions = json.decode(jobGrade.permissions)
-            tmpGrades[jobGrade.jobId][jobGrade.name] = jobGrade
+            tmpGrades[jobGrade.jobId][tostring(jobGrade.id)] = jobGrade
 
             ::continue::
         end
@@ -30,7 +30,7 @@ function SynchroniseJob()
         Config.Jobs[jobId].grades = tmpGrades[jobId]
     end
 
-    -- @TODO Sync job config on client side
+    TriggerClientEvent("soz-jobs:Client:OnJobSync", -1, Config.Jobs)
 end
 
 function CheckJobPermission(jobId, gradeId, permission)
@@ -38,11 +38,11 @@ function CheckJobPermission(jobId, gradeId, permission)
         return false
     end
 
-    if not Config.Jobs[jobId].grades[gradeId] then
+    if not Config.Jobs[jobId].grades[tostring(gradeId)] then
         return false
     end
 
-    local grade = Config.Jobs[jobId].grades[gradeId]
+    local grade = Config.Jobs[jobId].grades[tostring(gradeId)]
 
     if grade.owner == true then
         return true
@@ -69,8 +69,6 @@ QBCore.Functions.CreateCallback("soz-jobs:HasPlayerPermission", function(source,
     cb(CheckJobPermission(player.PlayerData.job.id, player.PlayerData.job.grade.id, permission))
 end)
 
-RegisterServerEvent("job:grade:remove", function(id)
-    local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    -- Check permissions
-
+RegisterServerEvent("soz-jobs:AskJobSync", function()
+    TriggerClientEvent("soz-jobs:Client:OnJobSync", source, Config.Jobs)
 end)

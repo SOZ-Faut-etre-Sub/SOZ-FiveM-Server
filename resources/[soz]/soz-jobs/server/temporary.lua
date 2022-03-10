@@ -16,7 +16,7 @@ RegisterServerEvent("job:set:pole", function(jobId)
 
     TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencer le travail: %s", job.label))
 
-    -- @TODO Set default job
+    -- @TODO Set default grade
 
     Player.Functions.SetJob(jobId, nil)
 end)
