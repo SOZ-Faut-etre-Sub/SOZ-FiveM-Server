@@ -49,9 +49,7 @@ end)
 
 QBCore.Functions.CreateCallback("qb-vehicletuning:server:IsVehicleOwned", function(source, cb, plate)
     local retval = false
-    local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {
-        plate,
-    })
+    local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {plate})
     if result then
         retval = true
     end
@@ -101,9 +99,7 @@ RegisterNetEvent("vehiclemod:server:saveStatus", function(plate)
 end)
 
 function IsVehicleOwned(plate)
-    local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {
-        plate,
-    })
+    local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {plate})
     if result then
         return true
     else
@@ -113,24 +109,17 @@ end
 
 function GetVehicleStatus(plate)
     local retval = nil
-    local result = MySQL.Sync.fetchAll("SELECT status FROM player_vehicles WHERE plate = ?", {
-        plate,
-    })
+    local result = MySQL.Sync.fetchAll("SELECT status FROM player_vehicles WHERE plate = ?", {plate})
     if result[1] ~= nil then
         retval = result[1].status ~= nil and json.decode(result[1].status) or nil
     end
     return retval
 end
 
-QBCore.Commands.Add("setvehiclestatus", "Set Vehicle Status", {
-    {
-        name = "part",
-        help = "Type The Part You Want To Edit",
-    },
-    {
-        name = "amount",
-        help = "The Percentage Fixed",
-    },
+QBCore.Commands.Add("setvehiclestatus", "Set Vehicle Status",
+                    {
+    {name = "part", help = "Type The Part You Want To Edit"},
+    {name = "amount", help = "The Percentage Fixed"},
 }, true, function(source, args)
     local part = args[1]:lower()
     local level = tonumber(args[2])
@@ -178,10 +167,7 @@ end)
 RegisterNetEvent("updateVehicle", function(myCar)
     local src = source
     if IsVehicleOwned(myCar.plate) then
-        MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {
-            json.encode(myCar),
-            myCar.plate,
-        })
+        MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {json.encode(myCar), myCar.plate})
     end
 end)
 
