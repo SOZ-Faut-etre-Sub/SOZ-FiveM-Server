@@ -94,6 +94,7 @@ Config.Peds = {
 -- Functions
 -------------------------------------------------------------------------------
 local function JobCheck() return true end
+local function SousMenu() return true end
 local function GangCheck() return true end
 local function ItemCount() return true end
 local function CitizenCheck() return true end
@@ -131,6 +132,14 @@ CreateThread(function()
 					return true
 				end
 			elseif gang == 'all' or gang == PlayerData.gang.name then
+				return true
+			end
+			return false
+		end
+
+		SousMenu = function(menu)
+			print("test")
+			if menu == true then
 				return true
 			end
 			return false
@@ -174,6 +183,7 @@ end)
 function CheckOptions(data, entity, distance)
 	if distance and data.distance and distance > data.distance then return false end
 	if data.job and not JobCheck(data.job) then return false end
+	if data.menu and SousMenu(data.menu) then return false end
 	if data.gang and not GangCheck(data.gang) then return false end
 	if data.item and ItemCount(data.item) < 1 then return false end
 	if data.citizenid and not CitizenCheck(data.citizenid) then return false end
