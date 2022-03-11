@@ -19,7 +19,7 @@ RegisterServerEvent("job:set:pole", function(jobId)
     local gradeId = nil
 
     for id, grade in ipairs(job.grades) do
-        if grade.is_default then
+        if grade.is_default == 1 then
             gradeId = id
 
             break

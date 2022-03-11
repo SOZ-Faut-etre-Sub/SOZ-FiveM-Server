@@ -19,20 +19,14 @@ SozJobCore.JobType = {
 }
 
 SozJobCore.JobPermission = {
-    AddGrade = 'add_grade',
-    RemoveGrade = 'remove_grade',
-    AddPermission = 'add_permission',
-    RemovePermission = 'remove_permission',
-    SetGradeSalary = 'set_grade_salary',
-    SetDefaultGrade = 'set_default_grade',
-    RecruitPlayer = 'recruit_player',
-    FirePlayer = 'fire_player',
+    ManageGrade = 'manage-grade',
 }
 
 SozJobCore.Jobs = {
     [SozJobCore.JobType.Unemployed] = {
         label = 'Chomeur',
         grades = {},
+        permissions = {},
     },
     [SozJobCore.JobType.Adsl] = {
         label = 'Adsl',
@@ -51,6 +45,7 @@ SozJobCore.Jobs = {
             },
         },
         grades = {},
+        permissions = {},
     },
     [SozJobCore.JobType.Delivery] = {
         label = 'Livraison',
@@ -66,6 +61,7 @@ SozJobCore.Jobs = {
             },
         },
         grades = {},
+        permissions = {},
     },
     [SozJobCore.JobType.Religious] = {
         label = 'Religion',
@@ -79,6 +75,7 @@ SozJobCore.Jobs = {
             },
         },
         grades = {},
+        permissions = {},
     },
     [SozJobCore.JobType.Scrapper] = {
         label = 'Métallurgie',
@@ -94,46 +91,97 @@ SozJobCore.Jobs = {
             }
         },
         grades = {},
+        permissions = {},
     },
     [SozJobCore.JobType.Police] = {
         label = 'Police',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Medic] = {
         label = 'Médécin',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Taxi] = {
         label = 'Taxi',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Food] = {
         label = 'Food & Drink',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.News] = {
         label = 'Twitch News',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Garbage] = {
         label = 'Eboueur',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Oil] = {
         label = 'Pompiste',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.CashTransfer] = {
         label = 'Transport de fond',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Garagist] = {
         label = 'Méchanicien',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
     [SozJobCore.JobType.Debug] = {
         label = 'Debug job',
         grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {
+                label = 'Gestion des grades',
+            },
+        },
     },
 }
 
