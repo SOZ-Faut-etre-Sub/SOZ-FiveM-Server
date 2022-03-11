@@ -135,12 +135,32 @@ function QBCore.Functions.TriggerCallback(name, cb, ...)
     TriggerServerEvent('QBCore:Server:TriggerCallback', name, ...)
 end
 
-function QBCore.Functions.TriggerCallbackAwait(name, ...)
+function QBCore.Functions.TriggerRpc(name, ...)
+    local eventResponseId = UuidV4()
     local p = promise.new()
 
-    QBCore.Functions.TriggerCallback(name, function(result)
+    local event = RegisterNetEvent(eventResponseId, function(result)
+        RemoveEventHandler(QBCore.ServerRPC[eventResponseId].event)
+        QBCore.ServerRPC[eventResponseId] = nil
         p:resolve(result)
-    end, ...)
+    end)
+
+    QBCore.ServerRPC[eventResponseId] = {
+        name = name,
+        args = {...},
+        promise = p,
+        event = event,
+    }
+
+    Citizen.SetTimeout(1000, function()
+        if QBCore.ServerRPC[eventResponseId] then
+            p:reject('RPC timed out for event: ' .. QBCore.ServerRPC[eventResponseId].name)
+            RemoveEventHandler(QBCore.ServerRPC[eventResponseId].event)
+            QBCore.ServerRPC[eventResponseId] = nil
+        end
+    end)
+
+    TriggerServerEvent('QBCore:Server:TriggerRpc', name, eventResponseId, ...)
 
     return Citizen.Await(p)
 end

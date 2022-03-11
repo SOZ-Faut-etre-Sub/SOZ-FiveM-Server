@@ -192,15 +192,12 @@ function QBCore.Functions.TriggerCallback(name, source, cb, ...)
     end
 end
 
-function QBCore.Functions.TriggerCallbackAwait(name, source, ...)
-    local src = source
+function QBCore.Functions.TriggerRpc(name, source, ...)
     local result
 
-    if QBCore.ServerCallbacks[name] then
-        QBCore.ServerCallbacks[name](src, function(res)
-            result = res
-        end, ...)
-    end
+    QBCore.Functions.TriggerCallback(name, source, function(res)
+        result = res
+    end, ...)
 
     return result
 end
