@@ -135,6 +135,36 @@ function QBCore.Functions.TriggerCallback(name, cb, ...)
     TriggerServerEvent('QBCore:Server:TriggerCallback', name, ...)
 end
 
+function QBCore.Functions.TriggerRpc(name, ...)
+    local eventResponseId = UuidV4()
+    local p = promise.new()
+
+    local event = RegisterNetEvent(eventResponseId, function(result)
+        RemoveEventHandler(QBCore.ServerRPC[eventResponseId].event)
+        QBCore.ServerRPC[eventResponseId] = nil
+        p:resolve(result)
+    end)
+
+    QBCore.ServerRPC[eventResponseId] = {
+        name = name,
+        args = {...},
+        promise = p,
+        event = event,
+    }
+
+    Citizen.SetTimeout(1000, function()
+        if QBCore.ServerRPC[eventResponseId] then
+            p:reject('RPC timed out for event: ' .. QBCore.ServerRPC[eventResponseId].name)
+            RemoveEventHandler(QBCore.ServerRPC[eventResponseId].event)
+            QBCore.ServerRPC[eventResponseId] = nil
+        end
+    end)
+
+    TriggerServerEvent('QBCore:Server:TriggerRpc', name, eventResponseId, ...)
+
+    return Citizen.Await(p)
+end
+
 function QBCore.Functions.Progressbar(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
     exports['progressbar']:Progress({
         name = name:lower(),

@@ -7,7 +7,7 @@ QBCore.Functions.CreateCallback("police:getOtherPlayerData", function(source, cb
 
         local data = {
             name = Target.Functions.GetName(),
-            job = Target.PlayerData.job.label,
+            job = Target.PlayerData.job.id,
             marked_money = Target.PlayerData.money["marked_money"],
         }
 
@@ -19,7 +19,7 @@ RegisterNetEvent("police:confiscateMoney", function(target)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(target)
 
-    if Player.PlayerData.job.name ~= "police" then
+    if Player.PlayerData.job.id ~= "police" then
         print(("police: %s attempted to confiscate!"):format(Player.Functions.GetName()))
         return
     end

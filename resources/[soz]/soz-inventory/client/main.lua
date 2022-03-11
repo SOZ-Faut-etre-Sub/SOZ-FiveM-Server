@@ -54,7 +54,7 @@ end)
 CreateThread(function()
     while true do
         for id, storage in pairs(Config.Storages) do
-            if storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.name == storage.owner) then
+            if storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == storage.owner) then
                 local dist = #(GetEntityCoords(PlayerPedId()) - storage.position)
 
                 if dist <= 80.0 then
