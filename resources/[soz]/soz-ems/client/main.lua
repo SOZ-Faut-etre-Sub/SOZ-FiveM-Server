@@ -1,18 +1,22 @@
-isDead = false
+QBCore = exports['qb-core']:GetCoreObject()
 
-RegisterNetEvent("core:client:KillPlayer")
-AddEventHandler("core:client:KillPlayer", function()
+IsDead = false
+isInHospitalBed = false
+DeathTime = 0
+
+RegisterNetEvent("soz_ems:client:KillPlayer")
+AddEventHandler("soz_ems:client:KillPlayer", function()
     SetEntityHealth(PlayerPedId(), 0)
 end)
 
-RegisterNetEvent("core:client:Revive")
-AddEventHandler("core:client:Revive", function()
+RegisterNetEvent("soz_ems:client:Revive")
+AddEventHandler("soz_ems:client:Revive", function()
     local player = PlayerPedId()
 
-    if isDead then
+    if IsDead then
         local playerPos = GetEntityCoords(player, true)
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
-        isDead = false
+        IsDead = false
         SetEntityInvincible(player, false)
     end
 
@@ -27,6 +31,8 @@ AddEventHandler("core:client:Revive", function()
 end)
 
 function ResetAll()
+    IsDead = false
+    DeathTime = 0
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
 end
