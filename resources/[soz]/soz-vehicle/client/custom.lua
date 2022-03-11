@@ -51,19 +51,13 @@ function CheckValidMods(category, id)
             end
         end
 
-        validMods[i] = {
-            id = (i - 1),
-            name = modName,
-        }
+        validMods[i] = {id = (i - 1), name = modName}
 
         amountValidMods = amountValidMods + 1
     end
 
     if modAmount > 0 then
-        table.insert(validMods, 1, {
-            id = -1,
-            name = "Stock " .. category,
-        })
+        table.insert(validMods, 1, {id = -1, name = "Stock " .. category})
     end
 
     return validMods, amountValidMods
@@ -296,32 +290,30 @@ local function OpenUpgrade(menu, v, k)
 
                 if Config.maxVehiclePerformanceUpgrades == 0 then
                     if currentMod == n.id then
-                        menu:AddButton({
-                            label = "Installed",
-                        })
+                        menu:AddButton({label = "Installed"})
                     else
                         menu:AddButton({
                             label = n.name,
                             description = "Acheter 💸 $" .. Config.vehicleCustomisationPricesCustom.performance.prices[tempNum],
                             select = function()
                                 menu:Close()
-                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, Config.vehicleCustomisationPricesCustom.performance.prices[tempNum])
+                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, 
+                                                   Config.vehicleCustomisationPricesCustom.performance.prices[tempNum])
                             end,
                         })
                     end
                 else
                     if tempNum <= (Config.maxVehiclePerformanceUpgrades + 1) then
                         if currentMod == n.id then
-                            menu:AddButton({
-                                label = "Installed",
-                            })
+                            menu:AddButton({label = "Installed"})
                         else
                             menu:AddButton({
                                 label = n.name,
                                 description = "Acheter 💸 $" .. Config.vehicleCustomisationPricesCustom.performance.prices[tempNum],
                                 select = function()
                                     menu:Close()
-                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, Config.vehicleCustomisationPricesCustom.performance.prices[tempNum])
+                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n,
+                                                       Config.vehicleCustomisationPricesCustom.performance.prices[tempNum])
                                 end,
                             })
                         end
@@ -331,9 +323,7 @@ local function OpenUpgrade(menu, v, k)
         elseif v.id == 18 then
             local currentTurboState = GetCurrentTurboState()
             if currentTurboState == 0 then
-                menu:AddButton({
-                    label = "Disable - Installed",
-                })
+                menu:AddButton({label = "Disable - Installed"})
                 menu:AddButton({
                     label = "Enable",
                     description = "Acheter 💸 $" .. Config.vehicleCustomisationPricesCustom.turbo.price,
@@ -348,13 +338,11 @@ local function OpenUpgrade(menu, v, k)
                     description = "Gratuit 💸",
                     select = function()
                         menu:Close()
-                        TriggerEvent('soz-custom:client:applymod', v.id, 0)
+                        TriggerEvent("soz-custom:client:applymod", v.id, 0)
                         exports["soz-hud"]:DrawNotification("Le turbo a été enlevé!")
                     end,
                 })
-                menu:AddButton({
-                    label = "Enable - Installed",
-                })
+                menu:AddButton({label = "Enable - Installed"})
             end
         end
     end
@@ -397,7 +385,7 @@ local function OpenMenu(menu)
             TriggerEvent("soz-mechanicjob:client:UnattachVehicle")
             exports["soz-hud"]:DrawNotification("Véhicule libéré")
             menu:Close()
-            SetVehicleDoorsLocked(veh,1)
+            SetVehicleDoorsLocked(veh, 1)
         end,
     })
     menu:AddButton({
@@ -511,34 +499,34 @@ end)
 
 local lszones = {
     BoxZone:Create(vector3(-339.42, -138.23, 39.01), 7, 6, {
-        name="Vehiclecustom1_z",
-        heading=70,
-        minZ=38.01,
-        maxZ=42.01
+        name = "Vehiclecustom1_z",
+        heading = 70,
+        minZ = 38.01,
+        maxZ = 42.01,
     }),
     BoxZone:Create(vector3(-1155.99, -2005.25, 13.18), 7, 6, {
-        name="Vehiclecustom2_z",
-        heading=315,
-        minZ=12.18,
-        maxZ=16.18
+        name = "Vehiclecustom2_z",
+        heading = 315,
+        minZ = 12.18,
+        maxZ = 16.18,
     }),
     BoxZone:Create(vector3(731.54, -1088.73, 22.19), 7, 6, {
-        name="Vehiclecustom3_z",
-        heading=90,
-        minZ=21.19,
-        maxZ=25.19
+        name = "Vehiclecustom3_z",
+        heading = 90,
+        minZ = 21.19,
+        maxZ = 25.19,
     }),
     BoxZone:Create(vector3(110.36, 6626.7, 31.87), 7, 6, {
-        name="Vehiclecustom4_z",
-        heading=45,
-        minZ=30.87,
-        maxZ=34.87
+        name = "Vehiclecustom4_z",
+        heading = 45,
+        minZ = 30.87,
+        maxZ = 34.87,
     }),
     BoxZone:Create(vector3(1174.9, 2640.06, 37.77), 7, 6, {
-        name="Vehiclecustom5_z",
-        heading=0,
-        minZ=36.77,
-        maxZ=40.77
+        name = "Vehiclecustom5_z",
+        heading = 0,
+        minZ = 36.77,
+        maxZ = 40.77,
     }),
 }
 
@@ -547,15 +535,15 @@ for int = 1, 5 do
     lszones[int]:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
             if Config.AttachedVehicle == nil then
-            if IsPedInAnyVehicle(PlayerPedId()) then
-                local veh = GetVehiclePedIsIn(PlayerPedId())
-                if not IsThisModelABicycle(GetEntityModel(veh)) then
-                    insidecustom = true
-                else
-                    exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                if IsPedInAnyVehicle(PlayerPedId()) then
+                    local veh = GetVehiclePedIsIn(PlayerPedId())
+                    if not IsThisModelABicycle(GetEntityModel(veh)) then
+                        insidecustom = true
+                    else
+                        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                    end
                 end
             end
-        end
         else
             insidecustom = false
             VehiculeOptions:Close()
@@ -572,7 +560,7 @@ CreateThread(function()
                 local veh = GetVehiclePedIsIn(PlayerPedId())
                 Config.AttachedVehicle = veh
                 TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", veh)
-                SetVehicleDoorsLocked(veh,4)
+                SetVehicleDoorsLocked(veh, 4)
                 GenerateOpenMenu()
             end
         end
