@@ -5,12 +5,14 @@ end
 
 function PaycheckLoop()
     local Players = QBCore.Functions.GetQBPlayers()
+    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
+
     for _, Player in pairs(Players) do
-        local grade = Player.PlayerData.job.grade or {}
+        local grade = SozJobCore.Jobs[Player.PlayerData.job.id].grades[tostring(Player.PlayerData.job.grade)] or nil
         local payment = grade.salary or 0
 
         if Player.PlayerData.metadata["injail"] == 0 and Player.PlayerData.job and payment > 0 then
-            if Player.PlayerData.job.id == "unemployed" then
+            if Player.PlayerData.job.id == SozJobCore.JobType.Unemployed then
                 Account.AddMoney(Player.PlayerData.charinfo.account, payment)
                 NotifyPaycheck(Player.PlayerData.source)
             else
@@ -27,4 +29,6 @@ function PaycheckLoop()
     SetTimeout(Config.PayCheckTimeOut * (60 * 1000), PaycheckLoop)
 end
 
-PaycheckLoop()
+Citizen.CreateThread(function()
+    SetTimeout(Config.PayCheckTimeOut * (60 * 1000), PaycheckLoop)
+end)

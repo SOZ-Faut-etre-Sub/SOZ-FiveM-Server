@@ -65,7 +65,6 @@ const ContactsInfoPage: React.FC = () => {
         <Transition
             appear={true}
             show={true}
-            unmount={false}
             className="absolute inset-x-0 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="translate-x-full"
