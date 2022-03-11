@@ -19,7 +19,6 @@ export const HomeApp: React.FC = () => {
             <Transition
                 appear={true}
                 show={true}
-                unmount={false}
                 className="mt-4 h-full flex flex-col justify-between"
                 enter="transition-transform duration-700"
                 enterFrom="scale-[3.0]"
@@ -31,7 +30,7 @@ export const HomeApp: React.FC = () => {
                 <div className="mt-4 px-1">
                     <AppsGrid items={filteredApps}/>
                 </div>
-                <div className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} bg-opacity-25 backdrop-blur rounded-[20px] mb-10 py-2 mx-2`}>
+                <div className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} bg-opacity-25 rounded-[20px] mb-10 py-2 mx-2`}>
                     <AppsGrid items={homeApps}/>
                 </div>
             </Transition>

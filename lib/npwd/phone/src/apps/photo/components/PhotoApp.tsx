@@ -12,7 +12,6 @@ const PhotoApp: React.FC = () => (
     <Transition
         appear={true}
         show={true}
-        unmount={false}
         className="mt-4 h-full flex flex-col"
         enter="transition-all origin-[80%_10%] duration-500"
         enterFrom="scale-[0.0] opacity-0"
