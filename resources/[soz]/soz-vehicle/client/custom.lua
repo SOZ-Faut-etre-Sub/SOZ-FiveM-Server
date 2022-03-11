@@ -3,8 +3,6 @@ QBCore = exports["qb-core"]:GetCoreObject()
 VehicleStatus = {}
 local effectTimer = 0
 
--- #[Local Functions]#--
-
 function GetCurrentMod(id)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
@@ -97,8 +95,6 @@ end
 exports("GetVehicleStatusList", GetVehicleStatusList)
 exports("GetVehicleStatus", GetVehicleStatus)
 exports("SetVehicleStatus", SetVehicleStatus)
-
--- Functions
 
 local function ApplyEffects(vehicle)
     local plate = QBCore.Functions.GetPlate(vehicle)
@@ -261,7 +257,7 @@ local function ApplyEffects(vehicle)
     end
 end
 
-local VehiculeOptions = MenuV:CreateMenu(nil, "LS Customs", "menu_shop_vehicle_car", "soz", "custom:vehicle:options")
+local VehiculeOptions = MenuV:CreateMenu(nil, "LS Customs", "menu_shop_lscustoms", "soz", "custom:vehicle:options")
 local Upgrade = MenuV:InheritMenu(VehiculeOptions, "Upgrade")
 local UpgradeMenu = MenuV:InheritMenu(Upgrade, "Upgrade Menu")
 
@@ -275,12 +271,12 @@ local function OpenUpgrade(menu, v, k)
             menu:Close()
         end,
     })
-    -- #[Mods Menu]#--
+
     local validMods, amountValidMods = CheckValidMods(v.category, v.id)
     local currentMod, currentModName = GetCurrentMod(v.id)
 
     if amountValidMods > 0 or v.id == 18 then
-        if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance Upgrades
+        if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance
             local tempNum = 0
             for m, n in pairs(validMods) do
                 tempNum = tempNum + 1
@@ -476,8 +472,6 @@ RegisterNetEvent("vehiclemod:client:setPartLevel", function(part, level)
         exports["soz-hud"]:DrawNotification("~r~You Are Not The Driver Or On A Bicycle")
     end
 end)
-
--- Threads
 
 CreateThread(function()
     for k, v in pairs(Config.lscustom) do
