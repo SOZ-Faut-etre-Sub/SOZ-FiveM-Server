@@ -1,14 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@font-face {
+    font-family: 'SF Pro';
+    src: url("/public/SF-Pro.ttf") format("truetype");
+    /* (C) 2015 Apple Inc. */
+}
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'SF Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 20px;
+  font-weight: 600;
   margin: 0;
   padding: 0;
   width: 100vw;
