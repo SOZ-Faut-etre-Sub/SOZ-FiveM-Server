@@ -18,7 +18,6 @@ export const NotificationAlert = () => {
             leave="transition ease-in-out duration-300 transform"
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
-            style={{ willChange: 'transform' }}
         >
             <div>
                 <Alert
