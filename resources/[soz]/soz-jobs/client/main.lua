@@ -23,6 +23,6 @@ RegisterNetEvent("soz-jobs:Client:OnJobSync", function(jobs)
     SozJobCore.Jobs = jobs
 end)
 
-exports('GetCoreObject', function()
+exports("GetCoreObject", function()
     return SozJobCore
 end)

@@ -96,8 +96,8 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    religion_vehicule = CreateVehicle(model, SozJobCore.religion_vehicule.x, SozJobCore.religion_vehicule.y, SozJobCore.religion_vehicule.z, SozJobCore.religion_vehicule.w,
-                                      true, false)
+    religion_vehicule = CreateVehicle(model, SozJobCore.religion_vehicule.x, SozJobCore.religion_vehicule.y, SozJobCore.religion_vehicule.z,
+                                      SozJobCore.religion_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(religion_vehicule)
     TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)

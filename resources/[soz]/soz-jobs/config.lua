@@ -1,35 +1,29 @@
 SozJobCore = {}
 
 SozJobCore.JobType = {
-    Unemployed = 'unemployed',
-    Adsl = 'adsl',
-    Delivery = 'delivery',
-    Religious = 'religious',
-    Scrapper = 'scrapper',
-    Police = 'police',
-    Medic = 'medic',
-    Taxi = 'taxi',
-    Food = 'food',
-    News = 'news',
-    Garbage = 'garbage',
-    Oil = 'oil',
-    CashTransfer = 'cash-transfer',
-    Garagist = 'garagist',
-    Debug = 'debug',
+    Unemployed = "unemployed",
+    Adsl = "adsl",
+    Delivery = "delivery",
+    Religious = "religious",
+    Scrapper = "scrapper",
+    Police = "police",
+    Medic = "medic",
+    Taxi = "taxi",
+    Food = "food",
+    News = "news",
+    Garbage = "garbage",
+    Oil = "oil",
+    CashTransfer = "cash-transfer",
+    Garagist = "garagist",
+    Debug = "debug",
 }
 
-SozJobCore.JobPermission = {
-    ManageGrade = 'manage-grade',
-}
+SozJobCore.JobPermission = {ManageGrade = "manage-grade"}
 
 SozJobCore.Jobs = {
-    [SozJobCore.JobType.Unemployed] = {
-        label = 'Chomeur',
-        grades = {},
-        permissions = {},
-    },
+    [SozJobCore.JobType.Unemployed] = {label = "Chomeur", grades = {}, permissions = {}},
     [SozJobCore.JobType.Adsl] = {
-        label = 'Adsl',
+        label = "Adsl",
         temporary = {
             payout = 25,
             vehicule_position = {x = 500.79, y = -105.88, z = 62.07, w = 253.78},
@@ -48,7 +42,7 @@ SozJobCore.Jobs = {
         permissions = {},
     },
     [SozJobCore.JobType.Delivery] = {
-        label = 'Livraison',
+        label = "Livraison",
         temporary = {
             payout = 25,
             vehicule_position = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52},
@@ -64,7 +58,7 @@ SozJobCore.Jobs = {
         permissions = {},
     },
     [SozJobCore.JobType.Religious] = {
-        label = 'Religion',
+        label = "Religion",
         temporary = {
             payout = 150,
             vehicule_position = {x = -763.69, y = -39.26, z = 37.69, w = 119.87},
@@ -78,7 +72,7 @@ SozJobCore.Jobs = {
         permissions = {},
     },
     [SozJobCore.JobType.Scrapper] = {
-        label = 'Métallurgie',
+        label = "Métallurgie",
         temporary = {
             payout = 5,
             vehicule_position = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67},
@@ -88,100 +82,60 @@ SozJobCore.Jobs = {
                 {x = -474.17, y = -1677.17, z = 19.0, sx = 2.8, sy = 2.2, heading = 335, minZ = 17.4, maxZ = 19.4},
                 {x = -474.31, y = -1680.6, z = 19.03, sx = 2.2, sy = 3.0, heading = 337, minZ = 17.63, maxZ = 19.63},
                 {x = -475.62, y = -1729.28, z = 18.69, sx = 2.4, sy = 4.4, heading = 14, minZ = 17.49, maxZ = 19.49},
-            }
+            },
         },
         grades = {},
         permissions = {},
     },
     [SozJobCore.JobType.Police] = {
-        label = 'Police',
+        label = "Police",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Medic] = {
-        label = 'Médécin',
+        label = "Médécin",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Taxi] = {
-        label = 'Taxi',
+        label = "Taxi",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Food] = {
-        label = 'Food & Drink',
+        label = "Food & Drink",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.News] = {
-        label = 'Twitch News',
+        label = "Twitch News",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Garbage] = {
-        label = 'Eboueur',
+        label = "Eboueur",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Oil] = {
-        label = 'Pompiste',
+        label = "Pompiste",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.CashTransfer] = {
-        label = 'Transport de fond',
+        label = "Transport de fond",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Garagist] = {
-        label = 'Méchanicien',
+        label = "Méchanicien",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Debug] = {
-        label = 'Debug job',
+        label = "Debug job",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {
-                label = 'Gestion des grades',
-            },
-        },
+        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
 }
 
