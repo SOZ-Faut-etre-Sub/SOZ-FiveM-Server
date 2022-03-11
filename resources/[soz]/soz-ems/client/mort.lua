@@ -1,11 +1,4 @@
-hold = 5
-
-local function loadAnimDict(dict)
-    while (not HasAnimDictLoaded(dict)) do
-        RequestAnimDict(dict)
-        Wait(5)
-    end
-end
+local hold = 5
 
 local function OnDeath()
     if not IsDead then
@@ -25,7 +18,6 @@ local function OnDeath()
             SetEntityInvincible(player, true)
             SetEntityHealth(player, GetEntityMaxHealth(player))
 
-            loadAnimDict("dead")
             TaskPlayAnim(player, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
         end
     end
@@ -108,6 +100,19 @@ CreateThread(function()
                     DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler l'untité X", 255, 255, 255, 255)
                 end
             end
+
+            if IsPedInAnyVehicle(ped, false) then
+                if not IsEntityPlayingAnim(ped, "veh@low@front_ps@idle_duck", "sit", 3) then
+                    TaskPlayAnim(ped, "veh@low@front_ps@idle_duck", "sit", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+                end
+            else
+                if isInHospitalBed then
+                    if not IsEntityPlayingAnim(ped, "anim@gangops@morgue@table@", "body_search", 3) then
+                        TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+                    end
+                end
+            end
+
             SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
         end
         Wait(sleep)
