@@ -57,7 +57,6 @@ export const NotificationBar = () => {
             <Transition
                 appear={true}
                 show={barUncollapsed}
-                unmount={false}
                 className="absolute inset-x-0 h-full w-full z-50"
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="-translate-y-full"
@@ -65,7 +64,6 @@ export const NotificationBar = () => {
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="translate-y-0"
                 leaveTo="-translate-y-full"
-                style={{ willChange: 'transform' }}
             >
                 <div className="h-full bg-black bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
                     <div className="my-20 font-light text-6xl">

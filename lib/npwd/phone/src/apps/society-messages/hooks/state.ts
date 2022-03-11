@@ -33,5 +33,3 @@ export const messageState = {
 export const useMessagesState = () => useRecoilState(messageState.messages);
 export const useMessagesValue = () => useRecoilValue(messageState.messages);
 export const useSetMessages = () => useSetRecoilState(messageState.messages);
-
-
