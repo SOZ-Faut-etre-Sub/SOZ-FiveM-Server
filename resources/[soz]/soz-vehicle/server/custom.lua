@@ -100,11 +100,7 @@ end)
 
 function IsVehicleOwned(plate)
     local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {plate})
-    if result then
-        return true
-    else
-        return false
-    end
+    return result
 end
 
 function GetVehicleStatus(plate)
