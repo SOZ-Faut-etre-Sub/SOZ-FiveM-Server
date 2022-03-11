@@ -19,7 +19,7 @@ end
 
 function ShopShell:FilterItems(shop)
     local items = {}
-    local playerjob = QBCore.Functions.GetPlayerData().job.name
+    local playerjob = QBCore.Functions.GetPlayerData().job.id
 
     for _, product in pairs(self:GetShopData(shop).products) do
         if not product.requiredJob then
