@@ -7,6 +7,18 @@ RegisterServerEvent("job:recruit", function(target)
     if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
         return
     end
+
+    local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+
+    if targetPlayer.PlayerData.job.id ~= SozJobCore.JobType.Unemployed then
+        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Le joueur est déjà employé dans une autre entreprise !")
+
+        return
+    end
+
+    targetPlayer.Functions.SetJob(player.PlayerData.job.id, GetJobDefaultGrade(player.PlayerData.job.id))
+
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le joueur a été recruté dans l'entreprise !")
 end)
 
 RegisterServerEvent("job:fire", function(target)
@@ -16,15 +28,39 @@ RegisterServerEvent("job:fire", function(target)
     if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
         return
     end
+
+    local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+
+    if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
+        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Le joueur n'est pas dans votre entreprise !")
+
+        return
+    end
+
+    targetPlayer.Functions.SetJob(SozJobCore.JobType.Unemployed, GetJobDefaultGrade(SozJobCore.JobType.Unemployed))
+
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le joueur a été viré de l'entreprise !")
 end)
 
-RegisterServerEvent("job:set-grade", function(target, grade)
+RegisterServerEvent("job:promote", function(target, gradeId)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
     if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
         return
     end
+
+    local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+
+    if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
+        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Le joueur n'est pas dans votre entreprise !")
+
+        return
+    end
+
+    targetPlayer.Functions.SetJob(targetPlayer.PlayerData.job.id, gradeId)
+
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le joueur a été promu !")
 end)
 
 RegisterServerEvent("job:grade:add", function(name)
@@ -46,7 +82,7 @@ RegisterServerEvent("job:grade:add", function(name)
         ["@name"] = name,
     })
 
-    TriggerClientEvent("hud:client:DrawNotification", source, "~g~La grade a été ajouté !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le grade a été ajouté !")
     SynchroniseJob()
 end)
 
@@ -84,7 +120,7 @@ RegisterServerEvent("job:grade:remove", function(id)
 
     -- @TODO Check if there is player with this grade ?
     MySQL.execute.await("DELETE FROM `job_grades` WHERE `id` = @id", {["@id"] = id})
-    TriggerClientEvent("hud:client:DrawNotification", source, "~g~La grade a été supprimé ! !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le grade a été supprimé ! !")
     SynchroniseJob()
 end)
 
@@ -110,7 +146,7 @@ RegisterServerEvent("job:grade:set-default", function(id)
 
     MySQL.execute.await("UPDATE `job_grades` SET is_default = 0 WHERE jobId = @id", {["@id"] = player.PlayerData.job.id})
     MySQL.execute.await("UPDATE `job_grades` SET is_default = 1 WHERE id = @id", {["@id"] = id})
-    TriggerClientEvent("hud:client:DrawNotification", source, "~g~La grade a été défini par défaut !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le grade a été défini par défaut !")
     SynchroniseJob()
 end)
 
@@ -141,7 +177,7 @@ RegisterServerEvent("job:grade:set-salary", function(id, salary)
     end
 
     MySQL.execute.await("UPDATE `job_grades` SET salary = @salary WHERE id = @id", {["@id"] = id, ["@salary"] = salary})
-    TriggerClientEvent("hud:client:DrawNotification", source, "~g~La salaire a bien été défini !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Le salaire a bien été défini !")
     SynchroniseJob()
 end)
 

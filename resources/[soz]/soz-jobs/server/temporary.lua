@@ -26,7 +26,7 @@ RegisterServerEvent("job:set:pole", function(jobId)
         end
     end
 
-    Player.Functions.SetJob(jobId, gradeId)
+    Player.Functions.SetJob(jobId, GetJobDefaultGrade(jobId))
 end)
 
 RegisterServerEvent("job:payout", function(money)

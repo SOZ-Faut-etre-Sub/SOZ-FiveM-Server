@@ -115,9 +115,9 @@ CreateThread(function()
 		JobCheck = function(job, permission)
 			if job == 'all' or job == PlayerData.job.id then
 				if permission then
-					-- @TODO Avoid network call here (spam) need to check in memory, so we need to sync job config on client side only when updated, and compare it here
-					-- return QBCore.Functions.TriggerCallbackAwait("soz-jobs:HasJobGradePermission", PlayerData.job.id, PlayerData.job.grade.id, permission)
-					return true
+					local SozJobCore = exports["soz-jobs"]:GetCoreObject()
+
+					return SozJobCore.Functions.HasPermission(permission)
 				end
 
 				return true

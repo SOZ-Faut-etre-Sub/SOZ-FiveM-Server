@@ -19,7 +19,7 @@ function SynchroniseJob()
     if jobGrades then
         for _, jobGrade in ipairs(jobGrades) do
             if not SozJobCore.Jobs[jobGrade.jobId] then
-                exports["soz-monitor"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCoreuration !"):format(jobGrade.jobId, jobGrade.name))
+                exports["soz-monitor"]:Log("ERROR", ("Job %s (grade %s) is not present in SozJobCore !"):format(jobGrade.jobId, jobGrade.name))
                 goto continue
             end
 
@@ -43,6 +43,25 @@ function CheckPlayerJobPermission(player, permission)
     end
 
     return CheckJobPermission(player.job.id, player.job.grade, permission)
+end
+
+function GetJobDefaultGrade(jobId)
+    local gradeId
+    local job = SozJobCore.Jobs[jobId]
+
+    if not job then
+        return gradeId
+    end
+
+    for id, grade in ipairs(job.grades) do
+        if grade.is_default == 1 then
+            gradeId = id
+
+            break
+        end
+    end
+
+    return gradeId
 end
 
 function CheckJobPermission(jobId, gradeId, permission)
@@ -73,14 +92,10 @@ function CheckJobPermission(jobId, gradeId, permission)
     return false
 end
 
-QBCore.Functions.CreateCallback("soz-jobs:HasJobGradePermission", function(source, cb, jobId, gradeId, permission)
-    cb(CheckJobPermission(jobId, gradeId, permission))
-end)
+QBCore.Functions.CreateCallback("soz-jobs:GetPlayerJob", function(source, cb, target)
+    local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
 
-QBCore.Functions.CreateCallback("soz-jobs:HasPlayerPermission", function(source, cb, permission)
-    local player = QBCore.Functions.GetPlayer(source)
-
-    cb(CheckJobPermission(player.PlayerData.job.id, player.PlayerData.job.grade.id, permission))
+    cb(targetPlayer.PlayerData.job)
 end)
 
 RegisterServerEvent("soz-jobs:AskJobSync", function()
