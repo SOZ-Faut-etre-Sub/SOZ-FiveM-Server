@@ -385,8 +385,7 @@ local function EnableTarget()
 		DisableTarget(false)
 	end
 end
-
-local function AddCircleZone(name, center, radius, options, targetoptions)
+ function AddCircleZone(name, center, radius, options, targetoptions)
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = CircleZone:Create(center, radius, options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
