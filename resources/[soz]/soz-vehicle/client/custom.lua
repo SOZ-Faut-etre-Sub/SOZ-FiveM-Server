@@ -64,9 +64,6 @@ function CheckValidMods(category, id)
 end
 
 RegisterNetEvent("soz-custom:client:applymod", function(categoryID, modID)
-    print("rrer")
-    print(categoryID)
-    print(modID)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
 
