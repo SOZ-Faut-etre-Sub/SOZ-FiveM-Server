@@ -294,7 +294,8 @@ local function OpenUpgrade(menu, v, k)
                             description = "Acheter 💸 $" .. Config.vehicleCustomisationPricesCustom.performance.prices[tempNum],
                             select = function()
                                 menu:Close()
-                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, Config.vehicleCustomisationPricesCustom.performance.prices[tempNum])
+                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, 
+                                                   Config.vehicleCustomisationPricesCustom.performance.prices[tempNum])
                             end,
                         })
                     end
