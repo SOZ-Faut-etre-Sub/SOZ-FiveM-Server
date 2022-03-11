@@ -16,15 +16,20 @@ function ToggleSound(state)
 end
 
 function InitialSetup()
+    local playerPed = PlayerPedId()
+    ClearPedTasksImmediately(playerPed)
     if IsScreenFadedOut() then
         DoScreenFadeIn(500)
-
         while not IsScreenFadedIn() do
             Citizen.Wait(0)
         end
     end
-
+    SetManualShutdownLoadingScreenNui(true)
     ToggleSound(muteSound)
+    SetSkyCamLoading(true)
+    ToggleSound(false)
+    ClearDrawOrigin()
+    TriggerEvent("soz-character:client:choose:spawn")
 end
 
 function ClearScreen()
@@ -36,18 +41,13 @@ end
 
 CreateThread(function()
     while true do
-        Wait(0)
-
-        local playerPed = PlayerPedId()
-
-        if playerPed and playerPed ~= -1 and NetworkIsPlayerActive(PlayerId()) then
-            InitialSetup()
-            SetSkyCamLoading(true)
-            ToggleSound(false)
-            ClearDrawOrigin()
-            TriggerEvent("soz-character:client:choose:spawn")
-
-            return
+        Wait(50)
+        if NetworkIsSessionStarted() then
+            local playerPed = PlayerPedId()
+            if playerPed and playerPed ~= -1 and NetworkIsPlayerActive(PlayerId()) then
+                InitialSetup()
+                return
+            end
         end
     end
 end)
@@ -77,19 +77,31 @@ end)
 function SetSkyCamLoading(bool)
     if bool then
         DisplayRadar(false)
-        Cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -421.0049, 1155.414, 324.8574 + 1000, -85.00, 0.00, 260.00, 100.00, false, 0)
+        Cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -421.0049, 1155.414, 324.8574 + 500, -85.00, 0.00, 260.00, 100.00, false, 0)
         SetCamActive(Cam2, true)
         SetFocusArea(-421.0049, 1155.414, 324.8574 + 10, 50, 0.0, 0.0)
         ShakeCam(Cam2, "HAND_SHAKE", 0.15)
         SetEntityVisible(PlayerPedId(), false)
         RenderScriptCams(true, false, 3000, 1, 1)
+
+        DoScreenFadeOut(500)
+        while not IsScreenFadedOut() do
+            Citizen.Wait(0)
+        end
         ShutdownLoadingScreen()
         ShutdownLoadingScreenNui()
-        Citizen.Wait(2000)
+
         SetFocusArea(-265.51, -811.01, 31.85 + 175, 0.0, 0.0, 0.0)
-        SetCamParams(Cam2, -400.00, 1700.00, 31.85 + 3000, -85.00, 0.00, 260.00, 100.0, 5000, 0, 0, 2)
+        SetCamParams(Cam2, -400.00, 1700.00, 31.85 + 3000, -85.00, 0.00, 260.00, 100.0, 5500, 0, 0, 2)
         SetEntityCoords(PlayerPedId(), -421.0049, 1155.414, 324.8574 - 0.9, 0, 0, 0, false)
         SetEntityHeading(PlayerPedId(), 80)
+        Citizen.Wait(500)
+        if IsScreenFadedOut() then
+            DoScreenFadeIn(500)
+            while not IsScreenFadedIn() do
+                Citizen.Wait(0)
+            end
+        end
         Citizen.Wait(4500)
     else
         if DoesCamExist(Cam2) then

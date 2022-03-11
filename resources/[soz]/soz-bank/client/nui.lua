@@ -28,7 +28,7 @@ RegisterNetEvent("banking:openATMScreen", function()
 end)
 
 RegisterNetEvent("banking:openSocietyBankScreen", function()
-    openBankScreen(PlayerData.job.name)
+    openBankScreen(PlayerData.job.id)
 end)
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
