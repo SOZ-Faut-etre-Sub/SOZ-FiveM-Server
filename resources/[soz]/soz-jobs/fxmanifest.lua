@@ -11,6 +11,7 @@ client_script {
     "@PolyZone/BoxZone.lua",
     "@menuv/menuv.lua",
     "client/main.lua",
+    "client/functions.lua",
     "client/adsl.lua",
     "client/pedlist.lua",
     "client/spawnped.lua",

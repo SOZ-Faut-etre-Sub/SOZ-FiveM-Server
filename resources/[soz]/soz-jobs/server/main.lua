@@ -50,13 +50,15 @@ function CheckJobPermission(jobId, gradeId, permission)
         return false
     end
 
-    if not SozJobCore.Jobs[jobId].grades[tostring(gradeId)] then
+    local job = SozJobCore.Jobs[jobId]
+
+    if not job.grades[tostring(gradeId)] then
         return false
     end
 
-    local grade = SozJobCore.Jobs[jobId].grades[tostring(gradeId)]
+    local grade = job.grades[tostring(gradeId)]
 
-    if grade.owner == true then
+    if grade.owner == 1 then
         return true
     end
 
