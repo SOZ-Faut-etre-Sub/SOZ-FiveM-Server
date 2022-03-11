@@ -1,3 +1,3 @@
 Config = {}
 
-Config.DeathTime = 15
+Config.DeathTime = 300
