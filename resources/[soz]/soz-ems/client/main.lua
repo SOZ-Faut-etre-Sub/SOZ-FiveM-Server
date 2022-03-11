@@ -33,6 +33,7 @@ end)
 function ResetAll()
     IsDead = false
     DeathTime = 0
+    ClearPedTasks()
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
 end
