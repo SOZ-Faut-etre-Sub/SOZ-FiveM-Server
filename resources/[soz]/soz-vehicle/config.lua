@@ -434,22 +434,22 @@ Config.MaxStatusValues = {
 }
 
 Config.ValuesLabels = {
-    ["engine"] = "Motor",
-    ["body"] = "Body",
-    ["radiator"] = "Radiator",
-    ["axle"] = "Drive Shaft",
-    ["brakes"] = "Brakes",
-    ["clutch"] = "Clutch",
-    ["fuel"] = "Fuel Ttank",
+    ["engine"] = "Moteur",
+    ["body"] = "Carrosserie",
+    ["radiator"] = "Radiateur",
+    ["axle"] = "Transmission",
+    ["brakes"] = "Freins",
+    ["clutch"] = "Embrayage",
+    ["fuel"] = "Réservoir",
 }
 
 Config.vehicleCustomisationCustom = {
-    {category = "Engine Upgrade", id = 11},
-    {category = "Brake Upgrade", id = 12},
-    {category = "Transmission Upgrade", id = 13},
-    {category = "Suspension Upgrade", id = 15},
-    {category = "Armour Upgrade", id = 16},
-    {category = "Turbo Upgrade", id = 18},
+    {category = "Upgrade Moteur", id = 11},
+    {category = "Upgrade Freins", id = 12},
+    {category = "Upgrade Transmission", id = 13},
+    {category = "Upgrade Suspension", id = 15},
+    {category = "Upgrade Armure", id = 16},
+    {category = "Upgrade Turbo", id = 18},
 }
 
 Config.vehicleCustomisationPricesCustom = {
