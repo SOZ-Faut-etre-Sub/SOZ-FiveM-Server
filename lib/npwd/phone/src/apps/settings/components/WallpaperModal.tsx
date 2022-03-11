@@ -55,7 +55,6 @@ const WallpaperModal: React.FC = () => {
             <Transition
                 appear={true}
                 show={customWallpaperModal}
-                unmount={false}
                 className="absolute inset-x-0 z-40"
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="translate-x-full"
@@ -63,7 +62,6 @@ const WallpaperModal: React.FC = () => {
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
-                style={{ willChange: 'transform,opacity' }}
             >
                 <AppWrapper>
                     <AppTitle title="Fond d'écran" isBigHeader={false}>
@@ -95,7 +93,6 @@ const WallpaperModal: React.FC = () => {
             <Transition
                 appear={true}
                 show={wallpaperModal}
-                unmount={false}
                 className="absolute top-[45%] z-40"
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="scale-0"
