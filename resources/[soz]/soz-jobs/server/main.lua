@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-exports('GetCoreObject', function()
+exports("GetCoreObject", function()
     return SozJobCore
 end)
 

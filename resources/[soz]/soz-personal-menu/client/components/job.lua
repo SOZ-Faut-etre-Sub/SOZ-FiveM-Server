@@ -1,5 +1,5 @@
 function JobEntry(menu)
-    local SozJobCore = exports['soz-jobs']:GetCoreObject()
+    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
     local job = SozJobCore.Jobs[PlayerData.job.id]
 
     if not job then
@@ -16,7 +16,7 @@ function JobEntry(menu)
     local gradeMenu = MenuV:InheritMenu(jobMenu, {subtitle = "Gestion grades"})
     jobMenu:AddButton({label = "Gestion grade", value = gradeMenu, description = "Gérer vos grades"})
 
-    gradeMenu:AddButton({label = "Ajouter un grade", value = "add_grade"}):On("select", function ()
+    gradeMenu:AddButton({label = "Ajouter un grade", value = "add_grade"}):On("select", function()
         local gradeName = exports["soz-hud"]:Input("Nom du grade :", 32)
 
         if gradeName == "" or gradeName == nil then
@@ -37,9 +37,17 @@ function JobEntry(menu)
         end
 
         local gradeItemMenu = MenuV:InheritMenu(gradeMenu, {subtitle = label})
-        gradeMenu:AddButton({label = label, value = gradeItemMenu, description = "Gérer le grade '" .. grade.name .. "'"})
+        gradeMenu:AddButton({
+            label = label,
+            value = gradeItemMenu,
+            description = "Gérer le grade '" .. grade.name .. "'",
+        })
 
-        gradeItemMenu:AddConfirm({ label = "Supprimer", description = ("Etes vous sur de vouloir supprimer le grade %s ?"):format(grade.name), value = "n", }):On("confirm", function()
+        gradeItemMenu:AddConfirm({
+            label = "Supprimer",
+            description = ("Etes vous sur de vouloir supprimer le grade %s ?"):format(grade.name),
+            value = "n",
+        }):On("confirm", function()
             TriggerServerEvent("job:grade:remove", gradeId)
             gradeItemMenu:Close()
             gradeMenu:Close()
@@ -48,10 +56,7 @@ function JobEntry(menu)
         end)
 
         if grade.is_default == 0 then
-            gradeItemMenu:AddButton({
-                label = "Définir par défaut",
-                value = "set_default",
-            }):On("select", function()
+            gradeItemMenu:AddButton({label = "Définir par défaut", value = "set_default"}):On("select", function()
                 TriggerServerEvent("job:grade:set-default", gradeId)
                 gradeItemMenu:Close()
                 gradeMenu:Close()
@@ -60,7 +65,7 @@ function JobEntry(menu)
             end)
         end
 
-        gradeItemMenu:AddButton({label = "Changer le salaire (" .. grade.salary .. ")", value = "set_salary"}):On("select", function ()
+        gradeItemMenu:AddButton({label = "Changer le salaire (" .. grade.salary .. ")", value = "set_salary"}):On("select", function()
             local salary = exports["soz-hud"]:Input("Nouveau salaire :", 32)
 
             if salary == "" or salary == nil then
@@ -91,7 +96,11 @@ function JobEntry(menu)
                 end
             end
 
-            local permissionConfirm = gradeItemMenu:AddConfirm({ label = label, description = "Activer / Désactiver la permission ?", value = value, });
+            local permissionConfirm = gradeItemMenu:AddConfirm({
+                label = label,
+                description = "Activer / Désactiver la permission ?",
+                value = value,
+            });
 
             permissionConfirm:On("confirm", function()
                 TriggerServerEvent("job:grade:add-permission", gradeId, permissionId)

@@ -101,7 +101,8 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    adsl_vehicule = CreateVehicle(model, SozJobCore.adsl_vehicule.x, SozJobCore.adsl_vehicule.y, SozJobCore.adsl_vehicule.z, SozJobCore.adsl_vehicule.w, true, false)
+    adsl_vehicule = CreateVehicle(model, SozJobCore.adsl_vehicule.x, SozJobCore.adsl_vehicule.y, SozJobCore.adsl_vehicule.z, SozJobCore.adsl_vehicule.w, true,
+                                  false)
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(adsl_vehicule)
     TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)

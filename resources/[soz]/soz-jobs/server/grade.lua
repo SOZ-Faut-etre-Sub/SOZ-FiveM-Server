@@ -18,6 +18,15 @@ RegisterServerEvent("job:fire", function(target)
     end
 end)
 
+RegisterServerEvent("job:set-grade", function(target, grade)
+    local source = source
+    local player = QBCore.Functions.GetPlayer(tonumber(source))
+
+    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+        return
+    end
+end)
+
 RegisterServerEvent("job:grade:add", function(name)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
@@ -34,7 +43,7 @@ RegisterServerEvent("job:grade:add", function(name)
 
     MySQL.insert.await("INSERT INTO job_grades (jobId, name) VALUES (@jobId, @name)", {
         ["@jobId"] = player.PlayerData.job.id,
-        ["@name"] = name
+        ["@name"] = name,
     })
 
     TriggerClientEvent("hud:client:DrawNotification", source, "~g~La grade a été ajouté !")
@@ -170,7 +179,10 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
 
     table.insert(newPermissions, permission)
 
-    MySQL.execute.await("UPDATE `job_grades` SET permissions = @permissions WHERE id = @id", {["@id"] = id, ["@permissions"] = json.encode(newPermissions)})
+    MySQL.execute.await("UPDATE `job_grades` SET permissions = @permissions WHERE id = @id", {
+        ["@id"] = id,
+        ["@permissions"] = json.encode(newPermissions),
+    })
     TriggerClientEvent("hud:client:DrawNotification", source, "~g~La permission a bien été ajouté !")
     SynchroniseJob()
 end)
@@ -207,7 +219,10 @@ RegisterServerEvent("job:grade:remove-permission", function(id, permission)
         end
     end
 
-    MySQL.execute.await("UPDATE `job_grades` SET permissions = @permissions WHERE id = @id", {["@id"] = id, ["@permissions"] = json.encode(newPermissions)})
+    MySQL.execute.await("UPDATE `job_grades` SET permissions = @permissions WHERE id = @id", {
+        ["@id"] = id,
+        ["@permissions"] = json.encode(newPermissions),
+    })
     TriggerClientEvent("hud:client:DrawNotification", source, "~g~La permission a bien été supprimé !")
     SynchroniseJob()
 end)
