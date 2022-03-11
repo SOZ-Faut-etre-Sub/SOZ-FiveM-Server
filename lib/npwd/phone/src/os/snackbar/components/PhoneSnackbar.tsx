@@ -19,7 +19,6 @@ export const PhoneSnackbar: React.FC = () => {
         <Transition
             appear={true}
             show={isOpen}
-            unmount={false}
             className="absolute inset-x-0 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="-translate-y-full"
@@ -27,7 +26,6 @@ export const PhoneSnackbar: React.FC = () => {
             leave="transition ease-in-out duration-300 transform"
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
-            style={{ willChange: 'transform' }}
         >
             <Alert severity={alert?.type || 'info'} onClose={handleClose}>
                 {alert?.message || ''}

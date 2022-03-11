@@ -10,7 +10,6 @@ export const NotificationAlert = () => {
         <Transition
             appear={true}
             show={!!currentAlert}
-            unmount={false}
             className="absolute inset-x-0 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="-translate-y-full"
@@ -18,7 +17,6 @@ export const NotificationAlert = () => {
             leave="transition ease-in-out duration-300 transform"
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
-            style={{ willChange: 'transform' }}
         >
             <div>
                 <Alert

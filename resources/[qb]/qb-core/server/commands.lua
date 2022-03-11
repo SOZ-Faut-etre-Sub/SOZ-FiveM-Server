@@ -142,7 +142,7 @@ end, 'admin')
 QBCore.Commands.Add('job', 'Check Your Job', {}, false, function(source)
     local src = source
     local PlayerJob = QBCore.Functions.GetPlayer(src).PlayerData.job
-    TriggerClientEvent('hud:client:DrawNotification', src, string.format('[Job]: %s [Grade]: %s [On Duty]: %s', PlayerJob.label, PlayerJob.grade.name, PlayerJob.onduty))
+    TriggerClientEvent('hud:client:DrawNotification', src, string.format('[Job]: %s [Grade]: %s [On Duty]: %s', PlayerJob.id, PlayerJob.grade, PlayerJob.onduty))
 end, 'user')
 
 QBCore.Commands.Add('setjob', 'Set A Players Job (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'job', help = 'Job name' }, { name = 'grade', help = 'Grade' } }, true, function(source, args)

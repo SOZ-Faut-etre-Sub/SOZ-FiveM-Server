@@ -19,14 +19,14 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job de livraison",
-            job = "unemployed",
+            job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:livraison:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "livraison",
+            job = SozJobCore.JobType.Delivery,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,7 +36,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir la moto",
-            job = "livraison",
+            job = SozJobCore.JobType.Delivery,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,7 +48,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job de livraison",
-            job = "livraison",
+            job = SozJobCore.JobType.Delivery,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,7 +58,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             event = "jobs:livraison:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job de livraison",
-            job = "livraison",
+            job = SozJobCore.JobType.Delivery,
         },
     },
     distance = 2.5,
@@ -98,13 +98,11 @@ local function SpawnVehicule()
         return
     end
     RequestModel(model)
-    print("model load")
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
-        print(test)
     end
-    livraison_vehicule = CreateVehicle(model, Config.livraison_vehicule.x, Config.livraison_vehicule.y, Config.livraison_vehicule.z,
-                                       Config.livraison_vehicule.w, true, false)
+    livraison_vehicule = CreateVehicle(model, SozJobCore.livraison_vehicule.x, SozJobCore.livraison_vehicule.y, SozJobCore.livraison_vehicule.z,
+                                       SozJobCore.livraison_vehicule.w, true, false)
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(livraison_vehicule)
     TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
@@ -113,7 +111,7 @@ end
 RegisterNetEvent("jobs:livraison:begin")
 AddEventHandler("jobs:livraison:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "livraison")
+    TriggerServerEvent("job:set:pole", SozJobCore.JobType.Delivery)
     OnJob = true
 end)
 
@@ -128,7 +126,7 @@ AddEventHandler("jobs:livraison:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, Config.livraison_vehicule)
+    createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.livraison_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
@@ -147,7 +145,7 @@ AddEventHandler("jobs:livraison:restart", function()
 end)
 
 local function random_coord()
-    local result = Config.livraison[math.random(#Config.livraison)]
+    local result = SozJobCore.livraison[math.random(#SozJobCore.livraison)]
     if result.x == JobDone then
         random_coord()
     end
@@ -195,7 +193,7 @@ end)
 RegisterNetEvent("jobs:livraison:end")
 AddEventHandler("jobs:livraison:end", function()
     TriggerServerEvent("job:set:unemployed")
-    local money = Config.livraison_payout * payout_counter
+    local money = SozJobCore.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
     QBCore.Functions.DeleteVehicle(livraison_vehicule)
     exports["qb-target"]:RemoveZone("livraison_zone")

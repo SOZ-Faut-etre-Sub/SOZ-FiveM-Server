@@ -7,7 +7,7 @@ Citizen.CreateThread(function()
         local coords = GetEntityCoords(PlayerPedId())
 
         if LocalPlayer.state.isLoggedIn then
-            if PlayerData.job ~= nil and PlayerData.job.name == "police" then
+            if PlayerData.job ~= nil and PlayerData.job.id == "police" then
                 if GetDistanceBetweenCoords(coords, Config.MoneyChecker, true) < 1.5 then
                     QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour vérifier l'argent")
 
@@ -69,7 +69,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
-            if PlayerData.job ~= nil and PlayerData.job.name == "police" then
+            if PlayerData.job ~= nil and PlayerData.job.id == "police" then
                 DrawMarker(27, Config.MoneyChecker, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.5, 1.5, 1.5, 39, 112, 186, 50, false, false, 2)
             else
                 Wait(1000)
