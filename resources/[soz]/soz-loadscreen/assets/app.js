@@ -18,6 +18,11 @@ document.querySelector('.info').addEventListener('click', function () {
 window.addEventListener('message', function(e) {
     if (e.data.eventName === 'initFunctionInvoking' && e.data.name === 'FinalizeLoad') {
         document.getElementById('video').style.opacity = '0'
-        musique.pause()
+
+        setInterval(function () {
+            if (musique.volume > 0.01) {
+                musique.volume -= 0.01
+            }
+        }, 50);
     }
 });
