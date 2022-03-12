@@ -5,13 +5,22 @@ const IDENTITY = {
     gender: "Sexe",
     address: "Domicile - Adresse",
     phone: "Numéro de téléphone"
+};
+
+function displayMugshot(mugshot) {
+    const img = new Image();
+    img.src = `https://nui-img/${mugshot}/${mugshot}`;
+
+    const containerElement = document.querySelector("#left-col-identity");
+    containerElement.innerHTML = null;
+    containerElement.appendChild(img);
 }
 
 function displayIdentityData(playerData) {
     const identityElement = document.querySelector("#right-col-identity");
 
     // Reset any existing content
-    identityElement.innerHTML = null
+    identityElement.innerHTML = null;
 
     Object.entries(IDENTITY).forEach(([key, label]) => {
         const value = playerData[key];

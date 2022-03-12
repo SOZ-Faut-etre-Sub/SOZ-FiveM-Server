@@ -65,6 +65,10 @@ window.addEventListener("message", (event) => {
         displayIdentityData(event.data);
         setVisible(event.data.scope);
     }
+
+    if (scope === "mugshot") {
+        displayMugshot(event.data.mugshot);
+    }
     
     if (scope === "licenses" && type === "show") {
         displayLicensesData(event.data.licences);
