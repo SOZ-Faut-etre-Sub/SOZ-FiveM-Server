@@ -1,26 +1,27 @@
 local function Shutdown()
-    -- Make game screen black
-    DoScreenFadeOut(0)
+    Citizen.CreateThread(function()
+        -- Shutdown gta loading screen as it's not needed
+        ShutdownLoadingScreen()
 
-    while not IsScreenFadedOut() do
-        Citizen.Wait(0)
-    end
+        -- Make game screen black
+        DoScreenFadeOut(1000)
+        Citizen.Wait(1000)
 
-    -- Shutdown the game
-    -- SendLoadingScreenMessage(json.encode({
-    --    shutdown = true,
-    -- }))
-    -- Wait(1000)
+        while not IsScreenFadedOut() do
+            Citizen.Wait(0)
+        end
 
-    ShutdownLoadingScreen()
-    ShutdownLoadingScreenNui(true)
+        -- Shutdown our loading screen
+        ShutdownLoadingScreenNui(true)
 
-    -- Remove black screen
-    DoScreenFadeIn(1000)
+        -- Remove black screen
+        DoScreenFadeIn(1000)
+        Citizen.Wait(1000)
 
-    while not IsScreenFadedIn() do
-        Citizen.Wait(0)
-    end
+        while not IsScreenFadedIn() do
+            Citizen.Wait(0)
+        end
+    end)
 end
 
 exports("Shutdown", Shutdown)

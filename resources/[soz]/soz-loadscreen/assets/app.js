@@ -14,3 +14,10 @@ document.querySelector('.info').addEventListener('click', function () {
         app.querySelector('.pause').style.display = 'block'
     }
 })
+
+window.addEventListener('message', function(e) {
+    if (e.data.eventName === 'initFunctionInvoking' && e.data.name === 'FinalizeLoad') {
+        document.getElementById('video').style.opacity = '0'
+        musique.pause()
+    }
+});
