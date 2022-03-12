@@ -41,13 +41,19 @@ body, html {
 .left-col {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     height: auto;
 }
 .right-col {
     display: flex;
     justify-content: space-evenly;
 }
-#left-col-identity {}
+#left-col-identity img {
+    opacity: 0.95;
+    width: 120px;
+    height: 120px;
+    background-color: black;
+}
 #right-col-identity {
     flex-direction: column;
     padding-top: 3%;

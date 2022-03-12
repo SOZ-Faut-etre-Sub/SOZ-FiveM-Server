@@ -4,7 +4,7 @@ lua54 "yes"
 
 description "Player identity papers"
 
-client_script "client.lua"
+client_scripts {"client/*.lua"}
 
 server_script "server.lua"
 
