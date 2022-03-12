@@ -21,15 +21,11 @@ local cloakroomActions = {
         event = "lspd:cloakroom:openStash",
         label = "Ouvrir mon casier",
         job = "police",
-    }
+    },
 }
 
-exports["qb-target"]:AddBoxZone("lspd:duty", vector3(615.900574, 15.299749, 82.797417), 0.45, 0.35, {
-    name = "lspd:duty",
-    heading = 58.0,
-    minZ = 82.697417,
-    maxZ = 82.897417,
-}, {
+exports["qb-target"]:AddBoxZone("lspd:duty", vector3(615.900574, 15.299749, 82.797417), 0.45, 0.35,
+                                {name = "lspd:duty", heading = 58.0, minZ = 82.697417, maxZ = 82.897417}, {
     options = {
         {
             event = "lspd:ToggleDuty",
@@ -50,23 +46,21 @@ exports["qb-target"]:AddBoxZone("lspd:duty", vector3(615.900574, 15.299749, 82.7
             job = "police",
         },
     },
-    distance = 2.5
+    distance = 2.5,
 })
 
 CreateThread(function()
-    exports["qb-target"]:AddBoxZone("lspd:cloakroom:man", vector3(626.93, 2.18, 76.63), 7.0, 8.4, {
-        name="lspd:cloakroom:man",
-        heading=350,
-        minZ=75.62,
-        maxZ=78.62,
-    }, {options = cloakroomActions, distance = 2.5})
+    exports["qb-target"]:AddBoxZone("lspd:cloakroom:man", vector3(626.93, 2.18, 76.63), 7.0, 8.4,
+                                    {name = "lspd:cloakroom:man", heading = 350, minZ = 75.62, maxZ = 78.62}, {
+        options = cloakroomActions,
+        distance = 2.5,
+    })
 
-    exports["qb-target"]:AddBoxZone("lspd:cloakroom:woman", vector3(624.58, -5.48, 76.63), 6.8, 6.4, {
-        name="lspd:cloakroom:woman",
-        heading=350,
-        minZ=75.62,
-        maxZ=78.62,
-    }, {options = cloakroomActions, distance = 2.5})
+    exports["qb-target"]:AddBoxZone("lspd:cloakroom:woman", vector3(624.58, -5.48, 76.63), 6.8, 6.4,
+                                    {name = "lspd:cloakroom:woman", heading = 350, minZ = 75.62, maxZ = 78.62}, {
+        options = cloakroomActions,
+        distance = 2.5,
+    })
 end)
 
 --- Events
