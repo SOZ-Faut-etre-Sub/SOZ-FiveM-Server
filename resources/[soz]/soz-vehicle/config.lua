@@ -408,3 +408,51 @@ Config.RemoveLockpickAdvanced = 0.2 -- Chance to remove advanced lockpick on fai
 Config.AlertCooldown = 10000 -- 10 seconds
 Config.PoliceAlertChance = 0.5 -- Chance of alerting police during the day
 Config.PoliceNightAlertChance = 0.25 -- Chance of alerting police at night (times:01-06)
+
+-- LS CUSTOM
+
+Config.AttachedVehicle = nil
+
+Config.maxVehiclePerformanceUpgrades = 0 -- 0 pour pas de limite d'upgrade
+
+Config.lscustom = {
+    [1] = {coords = vector3(-337.38, -136.92, 38.01), blip = true},
+    [2] = {coords = vector3(-1155.53, -2007.18, 12.175), blip = true},
+    [3] = {coords = vector3(731.81, -1088.82, 21.169), blip = true},
+    [4] = {coords = vector3(1175.04, 2640.21, 36.749), blip = true},
+    [5] = {coords = vector3(110.99, 6626.39, 30.792), blip = true},
+}
+
+Config.MaxStatusValues = {
+    ["engine"] = 1000.0,
+    ["body"] = 1000.0,
+    ["radiator"] = 100,
+    ["axle"] = 100,
+    ["brakes"] = 100,
+    ["clutch"] = 100,
+    ["fuel"] = 100,
+}
+
+Config.ValuesLabels = {
+    ["engine"] = "Moteur",
+    ["body"] = "Carrosserie",
+    ["radiator"] = "Radiateur",
+    ["axle"] = "Transmission",
+    ["brakes"] = "Freins",
+    ["clutch"] = "Embrayage",
+    ["fuel"] = "Réservoir",
+}
+
+Config.vehicleCustomisationCustom = {
+    {category = "Upgrade Moteur", id = 11},
+    {category = "Upgrade Freins", id = 12},
+    {category = "Upgrade Transmission", id = 13},
+    {category = "Upgrade Suspension", id = 15},
+    {category = "Upgrade Armure", id = 16},
+    {category = "Upgrade Turbo", id = 18},
+}
+
+Config.vehicleCustomisationPricesCustom = {
+    performance = {prices = {0, 3250, 5500, 10450, 15250, 20500}},
+    turbo = {price = 15000},
+}

@@ -2,11 +2,7 @@ import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
 import { playerLogger } from './player.utils';
 import { PhoneEvents } from '../../../typings/phone';
-import {SocietyEvents, SocietyMessage} from "../../../typings/society";
-import SocietyService from "../societies/societies.service";
-import {societiesLogger} from "../societies/societies.utils";
-import {PromiseEventResp, PromiseRequest} from "../lib/PromiseNetEvents/promise.types";
-import {ServerPromiseResp} from "../../../typings/common";
+import {SocietyEvents} from "../../../typings/society";
 
 onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
   const src = getSource();
@@ -47,12 +43,12 @@ on('QBCore:Server:PlayerUnload', async () => {
   }
 });
 
-// Can use this to debug the player table if needed. Disabled by default
-// RegisterCommand(
-//   'getPlayers',
-//   () => {
-//     playerLogger.debug(Players);
-//   },
-//   false,
-// );
+on('onServerResourceStart', async (resource: string) => {
+    if (resource === GetCurrentResourceName()) {
+        const QBCore = global.exports["qb-core"].GetCoreObject();
 
+        for (const player of QBCore.Functions.GetQBPlayers()) {
+            await PlayerService.handleNewPlayerJoined(player);
+        }
+    }
+});
