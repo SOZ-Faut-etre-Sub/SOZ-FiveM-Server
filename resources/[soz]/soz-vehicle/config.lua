@@ -444,12 +444,12 @@ Config.ValuesLabels = {
 }
 
 Config.vehicleCustomisationCustom = {
-    {category = "Upgrade Moteur", id = 11},
-    {category = "Upgrade Freins", id = 12},
-    {category = "Upgrade Transmission", id = 13},
-    {category = "Upgrade Suspension", id = 15},
-    {category = "Upgrade Armure", id = 16},
-    {category = "Upgrade Turbo", id = 18},
+    {category = "Amélioration Moteur", id = 11},
+    {category = "Amélioration Freins", id = 12},
+    {category = "Amélioration Transmission", id = 13},
+    {category = "Amélioration Suspension", id = 15},
+    {category = "Amélioration Armure", id = 16},
+    {category = "Amélioration Turbo", id = 18},
 }
 
 Config.vehicleCustomisationPricesCustom = {
