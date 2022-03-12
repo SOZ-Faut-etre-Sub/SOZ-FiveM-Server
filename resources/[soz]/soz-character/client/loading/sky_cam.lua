@@ -53,7 +53,8 @@ end
 
 function StopZoomSkyCam()
     if DoesCamExist(ZoomSkyCam) then
-        RenderScriptCams(false, true, 1500, true, true)
+        RenderScriptCams(false, true, 4500, true, true)
+        Citizen.Wait(3000)
         SetCamActive(ZoomSkyCam, false)
         DestroyCam(ZoomSkyCam, true)
         ClearFocus()
