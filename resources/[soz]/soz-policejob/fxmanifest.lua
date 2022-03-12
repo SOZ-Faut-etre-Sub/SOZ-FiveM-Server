@@ -4,7 +4,7 @@ game "gta5"
 
 description "SOZ Job Police"
 
-shared_scripts {"config.lua"}
+shared_scripts {"config.lua", "shared/utils.lua"}
 
 client_scripts {"@menuv/menuv.lua", "client/main.lua", "client/menu.lua"}
 

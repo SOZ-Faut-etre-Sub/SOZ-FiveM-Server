@@ -5,10 +5,20 @@ local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "lspd:menu
 --- @param menu Menu
 local function RedAlertEntity(menu)
     menu:AddButton({
+        icon = "🚨",
         label = "Code Rouge",
         value = nil,
         select = function()
-            -- TriggerServerEvent("QBCore:CallCommand", "car", {k})
+            local ped = PlayerPedId()
+            local coords = GetEntityCoords(ped)
+            local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
+
+            TriggerServerEvent('npwd:sendSocietyMessage', 'npwd:sendSocietyMessage:'..GenUUID(), {
+                anonymous = false,
+                number = "555-LSPD",
+                message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
+                position = true,
+            })
         end,
     })
 end
@@ -83,4 +93,8 @@ end
 function GenerateKeyMapping()
     RegisterKeyMapping("lspd-menu", "Ouvrir le menu entreprise [LSPD]", "keyboard", "F3")
     RegisterCommand("lspd-menu", GenerateMenu, false)
+end
+
+if PlayerData.job.id == "police" then
+    GenerateKeyMapping()
 end
