@@ -76,11 +76,7 @@ local function GetPenalties(licenseType)
             warningMsg = "Range ce téléphone ! Regarde la route !",
             failMsg = "Le téléphone est interdit au volant !",
             isValid = function()
-                if #exports["soz-phone"] > 0 then
-                    return exports["soz-phone"]:IsPhoneVisible()
-                else
-                    return true
-                end
+                return not exports["soz-phone"]:isPhoneVisible()
             end,
         },
 
