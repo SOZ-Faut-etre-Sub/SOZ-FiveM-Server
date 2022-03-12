@@ -20,6 +20,8 @@ body {
 
 video {
     animation: fadein 3s;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
 }
 
 .info {
