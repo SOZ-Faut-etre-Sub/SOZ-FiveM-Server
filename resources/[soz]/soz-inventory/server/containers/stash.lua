@@ -33,7 +33,11 @@ end
 --- @return boolean
 function StashInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ? AND owner = ?", {inventory, id, owner})
+    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ? AND owner = ?", {
+        inventory,
+        id,
+        owner,
+    })
     return true
 end
 
@@ -41,9 +45,7 @@ end
 --- @param item table
 --- @return boolean
 function StashInventory:AllowedItems(item)
-    local typeAllowed = {
-        ["item"] = true,
-    }
+    local typeAllowed = {["item"] = true}
     return typeAllowed[item.type or ""] or false
 end
 
