@@ -44,7 +44,7 @@ end)
 --- Management
 function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
     if _G.Container[invType] == nil then
-        print("Inventory type not valid !")
+        print(("Inventory type (%s) not valid !"):format(invType))
         return
     end
 

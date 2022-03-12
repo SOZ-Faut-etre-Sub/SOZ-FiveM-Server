@@ -13,9 +13,11 @@ server_scripts {
     "server/containers/base.lua",
     "server/containers/armory.lua",
     "server/containers/bin.lua",
+    "server/containers/boss_storage.lua",
     "server/containers/fridge.lua",
     "server/containers/player.lua",
     "server/containers/seizure.lua",
+    "server/containers/stash.lua",
     "server/containers/storage.lua",
     "server/containers/trunk.lua",
 

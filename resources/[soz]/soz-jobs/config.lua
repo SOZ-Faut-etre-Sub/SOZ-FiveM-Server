@@ -18,7 +18,7 @@ SozJobCore.JobType = {
     Debug = "debug",
 }
 
-SozJobCore.JobPermission = {ManageGrade = "manage-grade"}
+SozJobCore.JobPermission = {ManageGrade = "manage-grade", SocietyPrivateStorage = "society-private-storage"}
 
 SozJobCore.Jobs = {
     [SozJobCore.JobType.Unemployed] = {label = "Chomeur", grades = {}, permissions = {}},
@@ -88,9 +88,12 @@ SozJobCore.Jobs = {
         permissions = {},
     },
     [SozJobCore.JobType.Police] = {
-        label = "Police",
+        label = "LSPD",
         grades = {},
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+        },
     },
     [SozJobCore.JobType.Medic] = {
         label = "Médécin",

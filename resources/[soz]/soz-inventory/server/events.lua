@@ -11,10 +11,16 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
         end
     elseif storageType == "trunk" then
-        targetInv = Inventory("plate_" .. invID)
+        targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("plate_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+        end
+    elseif storageType == "stash" then
+        targetInv = Inventory("stash_" .. invID)
+
+        if targetInv == nil then
+            targetInv = Inventory.Create("stash_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
         end
     end
 

@@ -1,11 +1,11 @@
---- @class SeizureInventory
-SeizureInventory = {}
+--- @class BossStorageInventory
+BossStorageInventory = {}
 
-function SeizureInventory.new()
+function BossStorageInventory.new()
     return setmetatable({}, {
-        __index = SeizureInventory,
+        __index = BossStorageInventory,
         __tostring = function()
-            return "SeizureInventory"
+            return "BossStorageInventory"
         end,
     })
 end
@@ -14,12 +14,12 @@ end
 --- @param id any
 --- @param citizenid any
 --- @return table
-function SeizureInventory:load(id, owner)
+function BossStorageInventory:load(id, owner)
     local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
         exports.oxmysql:execute("INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name", {
             id,
-            "seizure",
+            "boss_storage",
             owner,
         })
     end
@@ -31,7 +31,7 @@ end
 --- @param owner any
 --- @param inventory table
 --- @return boolean
-function SeizureInventory:save(id, owner, inventory)
+function BossStorageInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
     exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
@@ -40,26 +40,20 @@ end
 --- AllowedItems
 --- @param item table
 --- @return boolean
-function SeizureInventory:AllowedItems(item)
-    local typeAllowed = {
-        ["weapon"] = true,
-        ["weapon_attachment"] = true,
-        ["weapon_ammo"] = true,
-        ["drug"] = true,
-        ["item"] = true,
-    }
-    return typeAllowed[item.type or ""] or false
+function BossStorageInventory:AllowedItems(item)
+    return true
 end
 
 --- AccessAllowed
 --- @param owner string
 --- @param player Player
 --- @return boolean
-function SeizureInventory:AccessAllowed(owner, playerId)
+function BossStorageInventory:AccessAllowed(owner, playerId)
+    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
     local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
 
     if Player then
-        return Player.PlayerData.job.id == owner and Player.PlayerData.job.onduty
+        return Player.PlayerData.job.id == owner and SozJobCore.Functions.HasPermission(Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
     else
         return false
     end
@@ -69,10 +63,10 @@ end
 --- @param id any
 --- @param items table
 --- @return boolean
-function SeizureInventory:sync(id, items)
+function BossStorageInventory:sync(id, items)
     -- Do nothing
 end
 
 --- Exports functions
-setmetatable(SeizureInventory, {__index = InventoryShell})
-_G.Container["seizure"] = SeizureInventory.new()
+setmetatable(BossStorageInventory, {__index = InventoryShell})
+_G.Container["boss_storage"] = BossStorageInventory.new()
