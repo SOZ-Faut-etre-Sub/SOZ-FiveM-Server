@@ -73,7 +73,12 @@ window.onkeyup = function (event) {
 SOZinventory.setupContainer = function (container, inventory){
   container.innerHTML = ''
   container.dataset.inventoryId = inventory.id
-  container.parentNode.querySelector('header').style.background = `url("/ui/img/${inventory.type}.jpg") no-repeat`
+
+  let headerImage = inventory.type
+  if (inventory.type === 'boss_storage') headerImage = 'default'
+  if (inventory.type === 'stash') headerImage = 'storage'
+
+  container.parentNode.querySelector('header').style.background = `url("/ui/img/${headerImage}.jpg") no-repeat`
   container.parentNode.querySelector('header').style.backgroundSize = "cover"
   container.parentNode.querySelector('header span').innerText = `${inventory.weight/1000}/${inventory.maxWeight/1000} Kg`
 
