@@ -98,15 +98,7 @@ MenuV.Keys = setmetatable({ data = {}, __class = 'MenuVKeys', __type = 'keys' },
                 local action = newState and not prevState and 'KEY_PRESSED' or 'KEY_RELEASED'
                 local key = Utilities:Ensure(rawKey.action, 'UNKNOWN')
 
-                if action == 'KEY_PRESSED' then
-                    while rawKey.status do
-                        SendNUIMessage({ action = action, key = key })
-
-                        Wait(150)
-                    end
-                elseif action == 'KEY_RELEASED' then
-                    SendNUIMessage({ action = action, key = key })
-                end
+                SendNUIMessage({ action = action, key = key })
             end
         end
     end,
