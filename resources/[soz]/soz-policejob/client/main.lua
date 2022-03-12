@@ -3,6 +3,10 @@ PlayerData = QBCore.Functions.GetPlayerData()
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
+
+    if PlayerData.job.id == "police" then
+        GenerateKeyMapping()
+    end
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
@@ -11,6 +15,10 @@ end)
 
 RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
     PlayerData.job = JobInfo
+
+    if PlayerData.job.id == "police" then
+        GenerateKeyMapping()
+    end
 end)
 
 --- Targets
@@ -24,32 +32,32 @@ local cloakroomActions = {
     },
 }
 
-exports["qb-target"]:AddBoxZone("lspd:duty", vector3(615.900574, 15.299749, 82.797417), 0.45, 0.35,
-                                {name = "lspd:duty", heading = 58.0, minZ = 82.697417, maxZ = 82.897417}, {
-    options = {
-        {
-            event = "lspd:ToggleDuty",
-            icon = "fas fa-sign-in-alt",
-            label = "Prise de service",
-            canInteract = function()
-                return not PlayerData.job.onduty
-            end,
-            job = "police",
-        },
-        {
-            event = "lspd:ToggleDuty",
-            icon = "fas fa-sign-out-alt",
-            label = "Fin de service",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            job = "police",
-        },
-    },
-    distance = 2.5,
-})
-
 CreateThread(function()
+    exports["qb-target"]:AddBoxZone("lspd:duty", vector3(615.900574, 15.299749, 82.797417), 0.45, 0.35,
+                                    {name = "lspd:duty", heading = 58.0, minZ = 82.697417, maxZ = 82.897417}, {
+        options = {
+            {
+                event = "lspd:ToggleDuty",
+                icon = "fas fa-sign-in-alt",
+                label = "Prise de service",
+                canInteract = function()
+                    return not PlayerData.job.onduty
+                end,
+                job = "police",
+            },
+            {
+                event = "lspd:ToggleDuty",
+                icon = "fas fa-sign-out-alt",
+                label = "Fin de service",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "police",
+            },
+        },
+        distance = 2.5,
+    })
+
     exports["qb-target"]:AddBoxZone("lspd:cloakroom:man", vector3(626.93, 2.18, 76.63), 7.0, 8.4,
                                     {name = "lspd:cloakroom:man", heading = 350, minZ = 75.62, maxZ = 78.62}, {
         options = cloakroomActions,
