@@ -50,5 +50,5 @@ type SocietyNumber = {
 
 export const SocietyNumberList: SocietyNumber = {
   police: '555-LSPD',
-  ambulance: '555-LSMS',
+  medic: '555-LSMS',
 }
