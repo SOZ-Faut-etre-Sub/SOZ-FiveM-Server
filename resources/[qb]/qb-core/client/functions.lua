@@ -287,6 +287,21 @@ function QBCore.Functions.GetPlayersFromCoords(coords, distance)
     return closePlayers
 end
 
+function QBCore.Functions.GetVehicleInDirection()
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+    local inDirection = GetOffsetFromEntityInWorldCoords(ped, 0.0, 5.0, 0.0)
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(coords, inDirection, 10, ped, 0)
+    local _, hit, _, _, entityHit = GetShapeTestResult(rayHandle)
+
+    if hit == 1 and GetEntityType(entityHit) == 2 then
+        local entityCoords = GetEntityCoords(entityHit)
+        return entityHit, entityCoords
+    end
+
+    return nil
+end
+
 function QBCore.Functions.GetClosestVehicle(coords)
     local ped = PlayerPedId()
     local vehicles = GetGamePool('CVehicle')
