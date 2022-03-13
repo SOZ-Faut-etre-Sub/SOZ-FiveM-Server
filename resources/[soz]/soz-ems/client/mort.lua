@@ -29,7 +29,11 @@ function DeathTimer()
         DeathTime = DeathTime - 1
         if DeathTime <= 0 then
             if IsControlPressed(0, 38) and hold <= 0 and not isInHospitalBed then
-                print("should respawn")
+                TriggerEvent("soz-ems:client:respawn")
+                hold = 5
+            end
+            if IsControlPressed(0, 38) and hold <= 0 and isInHospitalBed then
+                TriggerEvent("soz_ems:client:Revive")
                 hold = 5
             end
             if IsControlPressed(0, 38) then
@@ -95,7 +99,7 @@ CreateThread(function()
 
             if not isInHospitalBed then
                 if DeathTime > 0 then
-                    DrawTxt(0.93, 1.44, 1.0, 1.0, 0.6, "Réapparaître dans : ~r~" .. math.ceil(DeathTime) .. "~w~ secondes", 255, 255, 255, 255)
+                    DrawTxt(0.93, 1.44, 1.0, 1.0, 0.6, "Mort: ~r~" .. math.ceil(DeathTime) .. "~w~ secondes restant", 255, 255, 255, 255)
                 else
                     DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler l'untité X", 255, 255, 255, 255)
                 end
@@ -110,6 +114,8 @@ CreateThread(function()
                     if not IsEntityPlayingAnim(ped, "anim@gangops@morgue@table@", "body_search", 3) then
                         TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                     end
+                    DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour vous levez ou attender un médecin", 255, 255, 255,
+                            255)
                 end
             end
 
