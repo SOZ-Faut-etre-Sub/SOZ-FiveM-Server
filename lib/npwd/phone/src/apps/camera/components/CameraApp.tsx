@@ -59,7 +59,6 @@ const CameraApp: React.FC = () => {
         <Transition
             appear={true}
             show={true}
-            unmount={false}
             className="h-full flex flex-col"
             enter="transition-all origin-[80%_80%] duration-500"
             enterFrom="scale-[0.0] opacity-0"

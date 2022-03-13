@@ -19,14 +19,14 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:begin",
             icon = "fas fa-sign-in-alt",
             label = "Commencer le job adsl",
-            job = "unemployed",
+            job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:adsl:tenue",
             icon = "fas fa-sign-in-alt",
             label = "Prendre la tenue",
-            job = "adsl",
+            job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,7 +36,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:vehicle",
             icon = "fas fa-sign-in-alt",
             label = "Sortir le véhicule",
-            job = "adsl",
+            job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,7 +48,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:restart",
             icon = "fas fa-sign-in-alt",
             label = "Continuer le job adsl",
-            job = "adsl",
+            job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,7 +58,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:end",
             icon = "fas fa-sign-in-alt",
             label = "Finir le job adsl",
-            job = "adsl",
+            job = SozJobCore.JobType.Adsl,
         },
     },
     distance = 2.5,
@@ -101,7 +101,8 @@ local function SpawnVehicule()
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
     end
-    adsl_vehicule = CreateVehicle(model, Config.adsl_vehicule.x, Config.adsl_vehicule.y, Config.adsl_vehicule.z, Config.adsl_vehicule.w, true, false)
+    adsl_vehicule = CreateVehicle(model, SozJobCore.adsl_vehicule.x, SozJobCore.adsl_vehicule.y, SozJobCore.adsl_vehicule.z, SozJobCore.adsl_vehicule.w, true,
+                                  false)
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(adsl_vehicule)
     TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
@@ -110,7 +111,7 @@ end
 RegisterNetEvent("jobs:adsl:begin")
 AddEventHandler("jobs:adsl:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
-    TriggerServerEvent("job:set:pole", "adsl")
+    TriggerServerEvent("job:set:pole", SozJobCore.JobType.Adsl)
     OnJob = true
 end)
 
@@ -125,7 +126,7 @@ AddEventHandler("jobs:adsl:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, Config.adsl_vehicule)
+    createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.adsl_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
@@ -144,7 +145,7 @@ AddEventHandler("jobs:adsl:restart", function()
 end)
 
 local function random_coord()
-    local result = Config.adsl[math.random(#Config.adsl)]
+    local result = SozJobCore.adsl[math.random(#SozJobCore.adsl)]
     if result.x == JobDone then
         random_coord()
     end
@@ -190,7 +191,7 @@ end)
 RegisterNetEvent("jobs:adsl:end")
 AddEventHandler("jobs:adsl:end", function()
     TriggerServerEvent("job:set:unemployed")
-    local money = Config.adsl_payout * payout_counter
+    local money = SozJobCore.adsl_payout * payout_counter
     TriggerServerEvent("job:payout", money)
     QBCore.Functions.DeleteVehicle(adsl_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")

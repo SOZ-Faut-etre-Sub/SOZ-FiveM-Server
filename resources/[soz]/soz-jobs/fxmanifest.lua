@@ -7,18 +7,20 @@ description "job entreprise et pole emploie"
 shared_script "config.lua"
 
 client_script {
-    "client/adsl.lua",
-    "client/pedlist.lua",
-    "client/spawnped.lua",
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
     "@menuv/menuv.lua",
+    "client/main.lua",
+    "client/functions.lua",
+    "client/adsl.lua",
+    "client/pedlist.lua",
+    "client/spawnped.lua",
     "client/livraison.lua",
     "client/pole.lua",
     "client/metal.lua",
     "client/religion.lua",
 }
 
-server_script "server/server.lua"
+server_script {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/grade.lua", "server/temporary.lua"}
 
 dependencies {"qb-target"}

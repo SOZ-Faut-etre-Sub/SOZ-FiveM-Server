@@ -21,11 +21,11 @@ const App = () => {
     return (
         <SpawnProvider>
             <main class={style.app} style={{transition: "opacity .5s", opacity: display ? 1.0 : 0.0}}>
-                <header class={style.header} style={{transition: "top .5s", top: display ? '0vh' : '1vh'}}>
+                <header class={style.header} style={{transition: "transform .5s", transform: display ? 'translateY(0)' : 'translateY(1vh)'}}>
                     <h1>Démarrage</h1>
                     <h2>ZeraWorld</h2>
                 </header>
-                <LocationPreview style={{position: 'relative', transition: "top .5s", top: display ? '0vh' : '-1vh'}} />
+                <LocationPreview style={{position: 'relative', transition: "transform .5s", transform: display ? 'translateY(0)' : 'translateY(-1vh)'}} />
                 <LocationPicker />
                 <footer class={style.footer}>
                     <div class={style.corner_top_right}>

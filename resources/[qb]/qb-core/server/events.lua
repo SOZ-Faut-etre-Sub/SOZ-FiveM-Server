@@ -125,6 +125,13 @@ RegisterNetEvent('QBCore:Server:TriggerCallback', function(name, ...)
     end, ...)
 end)
 
+RegisterNetEvent('QBCore:Server:TriggerRpc', function(name, id, ...)
+    local src = source
+    QBCore.Functions.TriggerCallback(name, src, function(...)
+        TriggerClientEvent(id, src, ...)
+    end, ...)
+end)
+
 -- Player
 
 RegisterNetEvent('QBCore:UpdatePlayer', function()
@@ -200,7 +207,7 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
             local isGod = QBCore.Functions.HasPermission(src, 'god')
             local hasPerm = QBCore.Functions.HasPermission(src, QBCore.Commands.List[command].permission)
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
-            if (QBCore.Commands.List[command].permission == Player.PlayerData.job.name) or isGod or hasPerm or isPrincipal then
+            if (QBCore.Commands.List[command].permission == Player.PlayerData.job.id) or isGod or hasPerm or isPrincipal then
                 if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
                     TriggerClientEvent('hud:client:DrawNotification', src, '~r~All arguments must be filled out!')
                 else
