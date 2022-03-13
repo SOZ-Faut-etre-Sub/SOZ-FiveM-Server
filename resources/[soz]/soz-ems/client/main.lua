@@ -39,7 +39,6 @@ function ResetAll()
     DeathTime = 0
     isInHospitalBed = false
     ClearPedTasks()
-    SetEntityInvincible(player, false)
     TriggerScreenblurFadeOut()
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
