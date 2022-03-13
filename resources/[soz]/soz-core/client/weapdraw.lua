@@ -115,7 +115,7 @@ CreateThread(function()
                 QBCore.Functions.RequestAnimDict("weapons@pistol@")
                 if CheckWeapon(newWeap) then
                     if holstered then
-                        if QBCore.Functions.GetPlayerData().job.name == "police" then
+                        if QBCore.Functions.GetPlayerData().job.id == "police" then
                             -- TaskPlayAnim(ped, "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
                             canFire = false
                             currentHoldster = GetPedDrawableVariation(ped, 7)
@@ -149,7 +149,7 @@ CreateThread(function()
                             canFire = true
                         end
                     elseif newWeap ~= currWeapon and CheckWeapon(currWeapon) then
-                        if QBCore.Functions.GetPlayerData().job.name == "police" then
+                        if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
 
                             TaskPlayAnimAdvanced(ped, "reaction@intimidation@cop@unarmed", "intro", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0,
@@ -197,7 +197,7 @@ CreateThread(function()
                             canFire = true
                         end
                     else
-                        if QBCore.Functions.GetPlayerData().job.name == "police" then
+                        if QBCore.Functions.GetPlayerData().job.id == "police" then
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
                             currentHoldster = GetPedDrawableVariation(ped, 7)
                             TaskPlayAnimAdvanced(ped, "rcmjosh4", "josh_leadout_cop2", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0, 0, 0)
@@ -233,7 +233,7 @@ CreateThread(function()
                     end
                 else
                     if not holstered and CheckWeapon(currWeapon) then
-                        if QBCore.Functions.GetPlayerData().job.name == "police" then
+                        if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
                             TaskPlayAnimAdvanced(ped, "reaction@intimidation@cop@unarmed", "intro", GetEntityCoords(ped, true), 0, 0, rot, 3.0, 3.0, -1, 50, 0,
                                                  0, 0)
