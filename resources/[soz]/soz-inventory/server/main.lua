@@ -567,7 +567,7 @@ end
 --- Create Player Storage
 local function CreatePlayerInventory(player --[[PlayerData]] )
     return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
-                     player.citizenid)
+                            player.citizenid)
 end
 
 exports("CreatePlayerInventory", CreatePlayerInventory)
