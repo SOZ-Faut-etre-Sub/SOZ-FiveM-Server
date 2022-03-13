@@ -138,7 +138,6 @@ CreateThread(function()
 		end
 
 		SousMenu = function(menu)
-			print("test")
 			if menu == true then
 				return true
 			end
