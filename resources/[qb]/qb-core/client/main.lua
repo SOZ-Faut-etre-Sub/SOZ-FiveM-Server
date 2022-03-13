@@ -3,6 +3,7 @@ QBCore.PlayerData = {}
 QBCore.Config = QBConfig
 QBCore.Shared = QBShared
 QBCore.ServerCallbacks = {}
+QBCore.ServerRPC = {}
 
 exports('GetCoreObject', function()
     return QBCore

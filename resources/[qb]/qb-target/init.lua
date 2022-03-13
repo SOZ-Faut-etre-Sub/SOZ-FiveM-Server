@@ -113,15 +113,17 @@ CreateThread(function()
 			return 0
 		end
 
-		JobCheck = function(job)
-			if type(job) == 'table' then
-				job = job[PlayerData.job.name]
-				if PlayerData.job.grade.level >= job then
-					return true
+		JobCheck = function(job, permission)
+			if job == 'all' or job == PlayerData.job.id then
+				if permission then
+					local SozJobCore = exports["soz-jobs"]:GetCoreObject()
+
+					return SozJobCore.Functions.HasPermission(permission)
 				end
-			elseif job == 'all' or job == PlayerData.job.name then
+
 				return true
 			end
+
 			return false
 		end
 

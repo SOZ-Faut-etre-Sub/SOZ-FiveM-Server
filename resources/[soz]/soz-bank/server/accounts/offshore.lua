@@ -36,7 +36,7 @@ function OffShoreAccount:AccessAllowed(owner, player)
     local Player = QBCore.Functions.GetPlayer(tonumber(player))
 
     if Player then
-        return Player.PlayerData.job.name == owner and Player.PlayerData.job.isboss
+        return Player.PlayerData.job.id == owner and Player.PlayerData.job.owner
     else
         return false
     end
