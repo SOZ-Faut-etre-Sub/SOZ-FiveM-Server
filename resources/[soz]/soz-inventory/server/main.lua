@@ -565,10 +565,12 @@ end
 ---
 
 --- Create Player Storage
-RegisterNetEvent("inventory:CreatePlayerInventory", function(player --[[PlayerData]] )
-    Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
+local function CreatePlayerInventory(player --[[PlayerData]] )
+    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
                      player.citizenid)
-end)
+end
+
+exports("CreatePlayerInventory", CreatePlayerInventory)
 
 --- Drop Player Storage
 RegisterNetEvent("inventory:DropPlayerInventory", function(playerID --[[PlayerData]] )
