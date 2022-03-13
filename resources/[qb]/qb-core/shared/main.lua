@@ -74,9 +74,3 @@ QBShared.SetDefaultVehicleExtras = function (vehicle, config)
         QBShared.ChangeVehicleExtra(vehicle, tonumber(id), true)
     end
 end
-
-QBShared.StarterItems = {
-    ['phone'] = { amount = 1, item = 'Telephone' },
-    ['id_card'] = { amount = 1, item = 'Carte ID' },
-    ['driver_license'] = { amount = 1, item = 'Permis de conduire' },
-}
