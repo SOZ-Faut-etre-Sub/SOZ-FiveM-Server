@@ -1,9 +1,11 @@
-local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "lspd:menu")
+PoliceJob.Functions.Menu = {}
+PoliceJob.Menus = {}
 
---- Functions
+--- Menu item
 
 --- @param menu Menu
-local function RedAlertEntity(menu)
+--- @param societyNumber string
+local function RedAlertEntity(menu, societyNumber)
     menu:AddButton({
         icon = "🚨",
         label = "Code Rouge",
@@ -13,9 +15,9 @@ local function RedAlertEntity(menu)
             local coords = GetEntityCoords(ped)
             local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
 
-            TriggerServerEvent('npwd:sendSocietyMessage', 'npwd:sendSocietyMessage:'..GenUUID(), {
+            TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. GenUUID(), {
                 anonymous = false,
-                number = "555-LSPD",
+                number = societyNumber,
                 message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
                 position = true,
             })
@@ -68,33 +70,63 @@ local function BadgeEntity(menu)
     })
 end
 
+--- Functions
+PoliceJob.Functions.Menu.MenuAccessIsValid = function(job)
+    if not PoliceJob.Menus[job] then
+        return false
+    end
+    for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+        if PlayerData.job.id == allowedJob then
+            return true
+        end
+    end
+
+    return false
+end
+
+PoliceJob.Functions.Menu.GenerateKeyMapping = function(job)
+    if not PoliceJob.Functions.Menu.MenuAccessIsValid(job) then
+        return
+    end
+
+    RegisterKeyMapping("society-menu-police", ("Ouvrir le menu entreprise [%s]"):format(SozJobCore.Jobs[job].label), "keyboard", "F3")
+    RegisterCommand("society-menu-police", PoliceJob.Functions.Menu.GenerateMenu(job), false)
+end
+
+PoliceJob.Functions.Menu.GenerateMenu = function(job)
+    return function()
+        if not PoliceJob.Functions.Menu.MenuAccessIsValid(job) then
+            return
+        end
+
+        --- @type Menu
+        local menu = PoliceJob.Menus[job].menu
+
+        menu:ClearItems()
+
+        RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+
+        if PlayerData.job.onduty then
+            BadgeEntity(menu)
+        end
+
+        if menu.IsOpen then
+            MenuV:CloseAll(function()
+                menu:Close()
+            end)
+        else
+            MenuV:CloseAll(function()
+                menu:Open()
+            end)
+        end
+    end
+end
+
 --- Menu management
-function GenerateMenu()
-    societyMenu:ClearItems()
-    societyMenu:SetSubtitle(string.format("%s %s", PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
+CreateThread(function()
+    Wait(1000)
 
-    RedAlertEntity(societyMenu)
-
-    if PlayerData.job.onduty then
-        BadgeEntity(societyMenu)
+    if PlayerData.job ~= nil then
+        PoliceJob.Functions.Menu.GenerateKeyMapping(PlayerData.job.id)
     end
-
-    if societyMenu.IsOpen then
-        MenuV:CloseAll(function()
-            societyMenu:Close()
-        end)
-    else
-        MenuV:CloseAll(function()
-            societyMenu:Open()
-        end)
-    end
-end
-
-function GenerateKeyMapping()
-    RegisterKeyMapping("lspd-menu", "Ouvrir le menu entreprise [LSPD]", "keyboard", "F3")
-    RegisterCommand("lspd-menu", GenerateMenu, false)
-end
-
-if PlayerData.job.id == "police" then
-    GenerateKeyMapping()
-end
+end)
