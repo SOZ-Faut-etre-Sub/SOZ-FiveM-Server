@@ -10,15 +10,28 @@ local function OnDeath()
         end
 
         if IsDead then
-            local position = GetEntityCoords(player)
+            local pos = GetEntityCoords(player)
             local heading = GetEntityHeading(player)
 
             local ped = PlayerPedId()
 
+            if IsPedInAnyVehicle(ped) then
+                local veh = GetVehiclePedIsIn(ped)
+                local vehseats = GetVehicleModelNumberOfSeats(GetHashKey(GetEntityModel(veh)))
+                for i = -1, vehseats do
+                    local occupant = GetPedInVehicleSeat(veh, i)
+                    if occupant == ped then
+                        NetworkResurrectLocalPlayer(pos.x, pos.y, pos.z + 0.5, heading, true, false)
+                        SetPedIntoVehicle(ped, veh, i)
+                    end
+                end
+            else
+                NetworkResurrectLocalPlayer(pos.x, pos.y, pos.z + 0.5, heading, true, false)
+            end
+
             SetEntityInvincible(player, true)
             SetEntityHealth(player, GetEntityMaxHealth(player))
-
-            TaskPlayAnim(player, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+            TriggerScreenblurFadeIn()
         end
     end
 end
@@ -111,11 +124,15 @@ CreateThread(function()
                 end
             else
                 if isInHospitalBed then
-                    if not IsEntityPlayingAnim(ped, "anim@gangops@morgue@table@", "body_search", 3) then
-                        TaskPlayAnim(ped, "anim@gangops@morgue@table@", "body_search", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+                    if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
+                        TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                     end
                     DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour vous levez ou attender un médecin", 255, 255, 255,
                             255)
+                else
+                    if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
+                        TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+                    end
                 end
             end
 
