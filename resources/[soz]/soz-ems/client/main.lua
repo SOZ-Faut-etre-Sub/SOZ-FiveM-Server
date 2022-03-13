@@ -39,6 +39,8 @@ function ResetAll()
     DeathTime = 0
     isInHospitalBed = false
     ClearPedTasks()
+    SetEntityInvincible(player, false)
+    TriggerScreenblurFadeOut()
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
 end
@@ -52,8 +54,8 @@ AddEventHandler("soz-ems:client:respawn", function()
         end
     end
     SetPedCoordsKeepVehicle(player, Config.Locations["lit"][HospitalBedId].coords.x, Config.Locations["lit"][HospitalBedId].coords.y,
-                            Config.Locations["lit"][HospitalBedId].coords.z)
-    SetPedToRagdoll(player, 1000, 1000, 0, 0, 0, 0)
+                            Config.Locations["lit"][HospitalBedId].coords.z + 0.5)
+    SetEntityHeading(player, 320)
     TriggerServerEvent("soz-ems:server:setLit", HospitalBedId, true)
     isInHospitalBed = true
 end)
