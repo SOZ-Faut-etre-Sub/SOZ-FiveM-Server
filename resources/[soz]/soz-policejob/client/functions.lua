@@ -12,3 +12,29 @@ PoliceJob.Functions.GetCloakroomAction = function(job)
         },
     }
 end
+
+---@param job string
+PoliceJob.Functions.GetDutyAction = function(job)
+    return {
+        {
+            type = "server",
+            event = "QBCore:ToggleDuty",
+            icon = "fas fa-sign-in-alt",
+            label = "Prise de service",
+            canInteract = function()
+                return not PlayerData.job.onduty
+            end,
+            job = job,
+        },
+        {
+            type = "server",
+            event = "QBCore:ToggleDuty",
+            icon = "fas fa-sign-out-alt",
+            label = "Fin de service",
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            job = job,
+        },
+    }
+end
