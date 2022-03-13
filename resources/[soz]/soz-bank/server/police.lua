@@ -26,7 +26,7 @@ RegisterNetEvent("police:confiscateMoney", function(target)
 
     local markedAmount = Target.Functions.GetMoney("marked_money")
     if Target.Functions.RemoveMoney("marked_money", markedAmount) then
-        Player.Functions.AddMoney("marked_money", markedAmount)
+        exports['soz-inventory']:AddItem(Player.PlayerData.source, "moneybag", 1, false, {cash = markedAmount})
 
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
                            string.format("Vous avez confisqué ~g~%s$~s~ d'argent sale à ~y~%s~s~", markedAmount, Target.Functions.GetName()))

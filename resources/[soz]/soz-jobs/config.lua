@@ -6,7 +6,8 @@ SozJobCore.JobType = {
     Delivery = "delivery",
     Religious = "religious",
     Scrapper = "scrapper",
-    Police = "police",
+    LSPD = "lspd",
+    LSCS = "lscs",
     Medic = "medic",
     Taxi = "taxi",
     Food = "food",
@@ -87,8 +88,16 @@ SozJobCore.Jobs = {
         grades = {},
         permissions = {},
     },
-    [SozJobCore.JobType.Police] = {
+    [SozJobCore.JobType.LSPD] = {
         label = "LSPD",
+        grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+        },
+    },
+    [SozJobCore.JobType.LSCS] = {
+        label = "LSCS",
         grades = {},
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},

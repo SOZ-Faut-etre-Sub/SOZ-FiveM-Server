@@ -20,7 +20,7 @@ Config.ErrorMessage = {
 Config.MoneyChecker = vector3(587.51, 13.24, 75.70)
 
 Config.SafeStorages = {
-    ["safe_police"] = {label = "Coffre police", owner = "police", position = vector3(629.6, -24.31, 89.51)},
+    ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(629.6, -24.31, 89.51)},
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
