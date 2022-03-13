@@ -10,7 +10,8 @@ client_scripts {
     "@menuv/menuv.lua",
     "client/main.lua",
     "client/functions.lua",
-    "client/menu.lua",
+    "client/animations.lua",
+    "client/interactions/*.lua",
     "client/stations/*.lua",
 }
 

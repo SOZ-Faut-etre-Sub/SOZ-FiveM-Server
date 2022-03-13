@@ -12,11 +12,7 @@ CreateThread(function()
                                     {name = "lscs:duty", heading = 65.0, minZ = 31.492176, maxZ = 32.1},
                                     {options = PoliceJob.Functions.GetDutyAction("lscs"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("lscs:cloakroom:man", vector3(626.93, 2.18, 76.63), 7.0, 8.4,
-                                    {name = "lscs:cloakroom:man", heading = 350, minZ = 75.62, maxZ = 78.62},
-                                    {options = PoliceJob.Functions.GetCloakroomAction("lscs"), distance = 2.5})
-
-    exports["qb-target"]:AddBoxZone("lscs:cloakroom:woman", vector3(624.58, -5.48, 76.63), 6.8, 6.4,
-                                    {name = "lscs:cloakroom:woman", heading = 350, minZ = 75.62, maxZ = 78.62},
+    exports["qb-target"]:AddBoxZone("lscs:cloakroom", vector3(-438.71, 5990.6, 31.72), 4.4, 6.6,
+                                    {name = "lscs:cloakroom", heading = 315, minZ = 30.72, maxZ = 33.72},
                                     {options = PoliceJob.Functions.GetCloakroomAction("lscs"), distance = 2.5})
 end)
