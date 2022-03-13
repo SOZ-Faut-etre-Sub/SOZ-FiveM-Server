@@ -393,7 +393,8 @@ function QBCore.Player.Save(source)
             metadata = json.encode(PlayerData.metadata),
             is_default = PlayerData.is_default,
         })
-        TriggerEvent('inventory:CreatePlayerInventory', PlayerData)
+
+        exports['soz-inventory']:CreatePlayerInventory(PlayerData)
         exports['soz-monitor']:Log('INFO', 'Save player !', PlayerData)
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', PlayerData)

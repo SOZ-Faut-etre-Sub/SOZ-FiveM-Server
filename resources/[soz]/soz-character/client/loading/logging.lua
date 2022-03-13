@@ -84,12 +84,10 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
 
     -- Shutdown loading screen
     if shutdownLoadingScreen then
-        print("Shutdown loading screen")
         exports["soz-loadscreen"]:Shutdown()
     end
 
     -- Display ui and trigger last events
-    DisplayRadar(true)
     TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
     TriggerEvent("QBCore:Client:OnPlayerLoaded")
 end
