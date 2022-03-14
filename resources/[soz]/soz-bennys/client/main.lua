@@ -65,31 +65,30 @@ function ScrapAnim(time)
     end)
 end
 
-
-RegisterNetEvent("soz-garagist:client:RepaireeePart", function(part)
+RegisterNetEvent("soz-bennys:client:RepaireeePart", function(part)
     local veh = Config.AttachedVehicle
     local plate = QBCore.Functions.GetPlate(veh)
     if part == "engine" then
         SetVehicleEngineHealth(veh, Config.MaxStatusValues[part])
-        TriggerServerEvent("soz-garagist:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
     elseif part == "body" then
         local enhealth = GetVehicleEngineHealth(veh)
         SetVehicleBodyHealth(veh, Config.MaxStatusValues[part])
-        TriggerServerEvent("soz-garagist:server:updatePart", plate, "body", Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", Config.MaxStatusValues[part])
         SetVehicleFixed(veh)
         SetVehicleEngineHealth(veh, enhealth)
     else
-        TriggerServerEvent("soz-garagist:server:updatePart", plate, part, Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-bennys:server:updatePart", plate, part, Config.MaxStatusValues[part])
     end
     exports["soz-hud"]:DrawNotification("Le " .. Config.ValuesLabels[part] .. " est réparé!")
 end)
 
-RegisterNetEvent("soz-garagist:client:fixEverything", function()
+RegisterNetEvent("soz-bennys:client:fixEverything", function()
     if (IsPedInAnyVehicle(PlayerPedId(), false)) then
         local veh = GetVehiclePedIsIn(PlayerPedId(), false)
         if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
             local plate = QBCore.Functions.GetPlate(veh)
-            TriggerServerEvent("soz-garagist:server:fixEverything", plate)
+            TriggerServerEvent("soz-bennys:server:fixEverything", plate)
         else
             exports["soz-hud"]:DrawNotification("~r~You Are Not The Driver Or On A Bicycle")
         end
@@ -115,7 +114,7 @@ function GetVehicleStatus(plate, part)
 end
 
 function SetVehicleStatus(plate, part, level)
-    TriggerServerEvent("soz-garagist:server:updatePart", plate, part, level)
+    TriggerServerEvent("soz-bennys:server:updatePart", plate, part, level)
 end
 
 exports("GetVehicleStatusList", GetVehicleStatusList)
@@ -283,11 +282,11 @@ function ApplyEffects(vehicle)
     end
 end
 
-RegisterNetEvent("soz-garagist:client:setVehicleStatus", function(plate, status)
+RegisterNetEvent("soz-bennys:client:setVehicleStatus", function(plate, status)
     VehicleStatus[plate] = status
 end)
 
-RegisterNetEvent("soz-garagist:client:getVehicleStatus", function(plate, status)
+RegisterNetEvent("soz-bennys:client:getVehicleStatus", function(plate, status)
     if not (IsPedInAnyVehicle(PlayerPedId(), false)) then
         local veh = GetVehiclePedIsIn(PlayerPedId(), true)
         if veh ~= nil and veh ~= 0 then
@@ -315,7 +314,7 @@ RegisterNetEvent("soz-garagist:client:getVehicleStatus", function(plate, status)
     end
 end)
 
-RegisterNetEvent("soz-garagist:client:repairPart", function(part, level, needAmount)
+RegisterNetEvent("soz-bennys:client:repairPart", function(part, level, needAmount)
     if IsPedInAnyVehicle(PlayerPedId(), true) then
         local veh = GetVehiclePedIsIn(PlayerPedId(), true)
         if veh ~= nil and veh ~= 0 then
@@ -344,11 +343,11 @@ RegisterNetEvent("soz-garagist:client:repairPart", function(part, level, needAmo
                                 SetVehicleBodyHealth(veh, GetVehicleBodyHealth(veh) + level)
                                 SetVehicleFixed(veh)
                                 SetVehicleEngineHealth(veh, enhealth)
-                                TriggerServerEvent("soz-garagist:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
+                                TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
                                 TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], needAmount)
                                 TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.RepairCost[part]], "remove")
                             elseif part ~= "engine" then
-                                TriggerServerEvent("soz-garagist:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
+                                TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
                                 TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], level)
                                 TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.RepairCost[part]], "remove")
                             end
@@ -384,10 +383,10 @@ CreateThread(function()
                 local bodyHealth = GetVehicleBodyHealth(veh)
                 local plate = QBCore.Functions.GetPlate(veh)
                 if VehicleStatus[plate] == nil then
-                    TriggerServerEvent("soz-garagist:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
+                    TriggerServerEvent("soz-bennys:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
                 else
-                    TriggerServerEvent("soz-garagist:server:updatePart", plate, "engine", engineHealth)
-                    TriggerServerEvent("soz-garagist:server:updatePart", plate, "body", bodyHealth)
+                    TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", engineHealth)
+                    TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", bodyHealth)
                     effectTimer = effectTimer + 1
                     if effectTimer >= math.random(10, 15) then
                         ApplyEffects(veh)
@@ -408,7 +407,7 @@ end)
 local function UnattachVehicle()
     FreezeEntityPosition(Config.AttachedVehicle, false)
     Config.AttachedVehicle = nil
-    TriggerServerEvent("soz-garagist:server:SetAttachedVehicle", false)
+    TriggerServerEvent("soz-bennys:server:SetAttachedVehicle", false)
 end
 
 local function SpawnListVehicle(model)
@@ -439,7 +438,7 @@ local function RepairPart(part)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-        TriggerEvent("soz-garagist:client:RepaireeePart", part)
+        TriggerEvent("soz-bennys:client:RepaireeePart", part)
         SetTimeout(250, function()
             OpenPartsMenu(Status)
         end)
@@ -465,16 +464,16 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     QBCore.Functions.GetPlayerData(function(PlayerData)
         PlayerJob = PlayerData.job
         if PlayerData.job.onduty then
-            if PlayerData.job.name == "garagist" then
+            if PlayerData.job.name == "bennys" then
                 TriggerServerEvent("QBCore:ToggleDuty")
             end
         end
     end)
-    QBCore.Functions.TriggerCallback("soz-garagist:server:GetAttachedVehicle", function(veh)
+    QBCore.Functions.TriggerCallback("soz-bennys:server:GetAttachedVehicle", function(veh)
         Config.AttachedVehicle = veh
     end)
 
-    QBCore.Functions.TriggerCallback("soz-garagist:server:GetDrivingDistances", function(retval)
+    QBCore.Functions.TriggerCallback("soz-bennys:server:GetDrivingDistances", function(retval)
         DrivingDistance = retval
     end)
 end)
@@ -488,7 +487,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
     OnDuty = duty
 end)
 
-RegisterNetEvent("soz-garagist:client:SetAttachedVehicle", function(veh)
+RegisterNetEvent("soz-bennys:client:SetAttachedVehicle", function(veh)
     if veh ~= false then
         Config.AttachedVehicle = veh
     else

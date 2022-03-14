@@ -1,7 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 local VehicleStatus = {}
 
-RegisterNetEvent("soz-garagist:server:SaveVehicleProps", function(vehicleProps)
+RegisterNetEvent("soz-bennys:server:SaveVehicleProps", function(vehicleProps)
     if IsVehicleOwned(vehicleProps.plate) then
         MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {
             json.encode(vehicleProps),
@@ -10,7 +10,7 @@ RegisterNetEvent("soz-garagist:server:SaveVehicleProps", function(vehicleProps)
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
+RegisterNetEvent("soz-bennys:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
     engineHealth = engineHealth ~= nil and engineHealth or 1000.0
     bodyHealth = bodyHealth ~= nil and bodyHealth or 1000.0
     if VehicleStatus[plate] == nil then
@@ -28,7 +28,7 @@ RegisterNetEvent("soz-garagist:server:setupVehicleStatus", function(plate, engin
                 }
             end
             VehicleStatus[plate] = statusInfo
-            TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, statusInfo)
+            TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, statusInfo)
         else
             local statusInfo = {
                 ["engine"] = engineHealth,
@@ -40,19 +40,19 @@ RegisterNetEvent("soz-garagist:server:setupVehicleStatus", function(plate, engin
                 ["fuel"] = Config.MaxStatusValues["fuel"],
             }
             VehicleStatus[plate] = statusInfo
-            TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, statusInfo)
+            TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, statusInfo)
         end
     else
-        TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
+        TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:LoadStatus", function(veh, plate)
+RegisterNetEvent("soz-bennys:server:LoadStatus", function(veh, plate)
     VehicleStatus[plate] = veh
-    TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, veh)
+    TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, veh)
 end)
 
-RegisterNetEvent("soz-garagist:server:updatePart", function(plate, part, level)
+RegisterNetEvent("soz-bennys:server:updatePart", function(plate, part, level)
     if VehicleStatus[plate] ~= nil then
         if part == "engine" or part == "body" then
             VehicleStatus[plate][part] = level
@@ -69,18 +69,18 @@ RegisterNetEvent("soz-garagist:server:updatePart", function(plate, part, level)
                 VehicleStatus[plate][part] = 100
             end
         end
-        TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
+        TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:SetPartLevel", function(plate, part, level)
+RegisterNetEvent("soz-bennys:server:SetPartLevel", function(plate, part, level)
     if VehicleStatus[plate] ~= nil then
         VehicleStatus[plate][part] = level
-        TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
+        TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:saveStatus", function(plate)
+RegisterNetEvent("soz-bennys:server:saveStatus", function(plate)
     if VehicleStatus[plate] ~= nil then
         MySQL.Async.execute("UPDATE player_vehicles SET status = ? WHERE plate = ?", {
             json.encode(VehicleStatus[plate]),
@@ -89,7 +89,7 @@ RegisterNetEvent("soz-garagist:server:saveStatus", function(plate)
     end
 end)
 
-QBCore.Functions.CreateCallback("soz-garagist:server:IsVehicleOwned", function(source, cb, plate)
+QBCore.Functions.CreateCallback("soz-bennys:server:IsVehicleOwned", function(source, cb, plate)
     local retval = false
     local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {plate})
     if result then
@@ -114,28 +114,28 @@ QBCore.Commands.Add("setvehiclestatus", "Set Vehicle Status",
 }, true, function(source, args)
     local part = args[1]:lower()
     local level = tonumber(args[2])
-    TriggerClientEvent("soz-garagist:client:setPartLevel", source, part, level)
+    TriggerClientEvent("soz-bennys:client:setPartLevel", source, part, level)
 end, "god")
 
-RegisterNetEvent("soz-garagist:server:fixEverything", function(plate)
+RegisterNetEvent("soz-bennys:server:fixEverything", function(plate)
     if VehicleStatus[plate] ~= nil then
         for k, v in pairs(Config.MaxStatusValues) do
             VehicleStatus[plate][k] = v
         end
-        TriggerClientEvent("soz-garagist:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
+        TriggerClientEvent("soz-bennys:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
 end)
 
-QBCore.Functions.CreateCallback("soz-garagist:server:GetAttachedVehicle", function(source, cb)
+QBCore.Functions.CreateCallback("soz-bennys:server:GetAttachedVehicle", function(source, cb)
     cb(Config.AttachedVehicle)
 end)
 
-QBCore.Functions.CreateCallback("soz-garagist:server:IsMechanicAvailable", function(source, cb)
+QBCore.Functions.CreateCallback("soz-bennys:server:IsMechanicAvailable", function(source, cb)
     local amount = 0
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
         local Player = QBCore.Functions.GetPlayer(v)
         if Player ~= nil then
-            if (Player.PlayerData.job.name == "garagist" and Player.PlayerData.job.onduty) then
+            if (Player.PlayerData.job.name == "bennys" and Player.PlayerData.job.onduty) then
                 amount = amount + 1
             end
         end
@@ -143,7 +143,7 @@ QBCore.Functions.CreateCallback("soz-garagist:server:IsMechanicAvailable", funct
     cb(amount)
 end)
 
-QBCore.Functions.CreateCallback("soz-garagist:server:GetStatus", function(source, cb, plate)
+QBCore.Functions.CreateCallback("soz-bennys:server:GetStatus", function(source, cb, plate)
     if VehicleStatus[plate] ~= nil and next(VehicleStatus[plate]) ~= nil then
         cb(VehicleStatus[plate])
     else
@@ -151,24 +151,24 @@ QBCore.Functions.CreateCallback("soz-garagist:server:GetStatus", function(source
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:SetAttachedVehicle", function(veh)
+RegisterNetEvent("soz-bennys:server:SetAttachedVehicle", function(veh)
     if veh ~= false then
         Config.AttachedVehicle = veh
-        TriggerClientEvent("soz-garagist:client:SetAttachedVehicle", -1, veh)
+        TriggerClientEvent("soz-bennys:client:SetAttachedVehicle", -1, veh)
     else
         Config.AttachedVehicle = nil
-        TriggerClientEvent("soz-garagist:client:SetAttachedVehicle", -1, false)
+        TriggerClientEvent("soz-bennys:client:SetAttachedVehicle", -1, false)
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:CheckForItems", function(part)
+RegisterNetEvent("soz-bennys:server:CheckForItems", function(part)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local RepairPart = Player.Functions.GetItemByName(Config.RepairCostAmount[part].item)
 
     if RepairPart ~= nil then
         if RepairPart.amount >= Config.RepairCostAmount[part].costs then
-            TriggerClientEvent("soz-garagist:client:RepaireeePart", src, part)
+            TriggerClientEvent("soz-bennys:client:RepaireeePart", src, part)
             Player.Functions.RemoveItem(Config.RepairCostAmount[part].item, Config.RepairCostAmount[part].costs)
 
             for i = 1, Config.RepairCostAmount[part].costs, 1 do
@@ -185,13 +185,13 @@ RegisterNetEvent("soz-garagist:server:CheckForItems", function(part)
     end
 end)
 
-RegisterNetEvent("soz-garagist:server:Removeitem", function(item, amount)
+RegisterNetEvent("soz-bennys:server:Removeitem", function(item, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     Player.Functions.RemoveItem(item, amount)
 end)
 
-QBCore.Functions.CreateCallback("soz-garagist:server:GetStatus", function(source, cb, plate)
+QBCore.Functions.CreateCallback("soz-bennys:server:GetStatus", function(source, cb, plate)
     if VehicleStatus[plate] ~= nil and next(VehicleStatus[plate]) ~= nil then
         cb(VehicleStatus[plate])
     else
