@@ -89,9 +89,9 @@ RegisterNetEvent("admin:server:intovehicle", function(player)
 end)
 
 RegisterNetEvent("admin:server:kill", function(player)
-    TriggerClientEvent("core:client:KillPlayer", player.id)
+    TriggerClientEvent("soz_ems:client:KillPlayer", player.id)
 end)
 
 RegisterNetEvent("admin:server:revive", function(player)
-    TriggerClientEvent("core:client:Revive", player.id)
+    TriggerClientEvent("soz_ems:client:Revive", player.id)
 end)
