@@ -33,7 +33,6 @@ local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choose a Wheel")
 local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Old Livery")
 local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Plate Index")
 
-
 local function OpenChooseWheelMenu(menu, k, v)
     menu:ClearItems()
     MenuV:OpenMenu(menu)
@@ -1056,7 +1055,6 @@ RegisterNetEvent("qb-vehicletuning:client:SetAttachedVehicle", function(veh)
         Config.AttachedVehicle = nil
     end
 end)
-
 
 -----------------------
 -- POLYZONES & BLIPS --
