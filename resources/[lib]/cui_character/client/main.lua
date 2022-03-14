@@ -1471,6 +1471,7 @@ if Config.EnableClothingShops then
             local blip = AddBlipForCoord(v)
             SetBlipSprite(blip, 73)
             SetBlipColour(blip, 84)
+            SetBlipScale(blip, 0.8)
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName('STRING')
@@ -1486,6 +1487,7 @@ if Config.EnableBarberShops then
             local blip = AddBlipForCoord(v)
             SetBlipSprite(blip, 71)
             SetBlipColour(blip, 84)
+            SetBlipScale(blip, 0.8)
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName('STRING')
@@ -1501,6 +1503,7 @@ if Config.EnablePlasticSurgeryUnits then
             local blip = AddBlipForCoord(v)
             SetBlipSprite(blip, 102)
             SetBlipColour(blip, 84)
+            SetBlipScale(blip, 0.8)
             SetBlipAsShortRange(blip, true)
 
             BeginTextCommandSetBlipName('STRING')

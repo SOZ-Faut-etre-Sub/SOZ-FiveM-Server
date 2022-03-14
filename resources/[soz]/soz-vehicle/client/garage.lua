@@ -320,7 +320,7 @@ CreateThread(function()
             local Garage = AddBlipForCoord(garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z)
             SetBlipSprite(Garage, garage.blipNumber)
             SetBlipDisplay(Garage, 4)
-            SetBlipScale(Garage, 0.60)
+            SetBlipScale(Garage, 0.80)
             SetBlipAsShortRange(Garage, true)
             if garage.type == "private" then
                 SetBlipColour(Garage, 5)
