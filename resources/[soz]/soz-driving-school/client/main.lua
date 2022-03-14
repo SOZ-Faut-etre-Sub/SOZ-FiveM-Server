@@ -11,6 +11,7 @@ Citizen.CreateThread(function()
             coords = vector2(blipCoords.x, blipCoords.y),
             sprite = Config.BlipSprite,
             color = Config.BlipColor,
+            scale = Config.BlipScale,
         })
     end
 
