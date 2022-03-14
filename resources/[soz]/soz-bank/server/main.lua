@@ -106,6 +106,10 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
     cb(false, "unknown")
 end)
 
+RegisterNetEvent("banking:server:TransfertMoney", function(accountSource, accountTarget, amount)
+    Account.TransfertMoney(accountSource, accountTarget, amount)
+end)
+
 RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeStorage, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local CurrentMoney = Player.Functions.GetMoney(money_type)
