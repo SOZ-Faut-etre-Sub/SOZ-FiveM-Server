@@ -1,4 +1,4 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 
 --- Cuff
 RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
