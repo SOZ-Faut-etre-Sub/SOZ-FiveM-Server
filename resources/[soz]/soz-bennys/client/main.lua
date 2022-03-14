@@ -345,11 +345,9 @@ RegisterNetEvent("soz-bennys:client:repairPart", function(part, level, needAmoun
                                 SetVehicleEngineHealth(veh, enhealth)
                                 TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
                                 TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], needAmount)
-                                TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.RepairCost[part]], "remove")
                             elseif part ~= "engine" then
                                 TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
                                 TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], level)
-                                TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.RepairCost[part]], "remove")
                             end
                         end, function() -- Cancel
                             openingDoor = false
@@ -464,14 +462,12 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     QBCore.Functions.GetPlayerData(function(PlayerData)
         PlayerJob = PlayerData.job
         if PlayerData.job.onduty then
-            if PlayerData.job.name == "bennys" then
+            if PlayerData.job.id == "bennys" then
                 TriggerServerEvent("QBCore:ToggleDuty")
             end
         end
     end)
-    QBCore.Functions.TriggerCallback("soz-bennys:server:GetAttachedVehicle", function(veh)
-        Config.AttachedVehicle = veh
-    end)
+    Config.AttachedVehicle = QBCore.Functions.TriggerRpc("soz-bennys:server:GetAttachedVehicle")
 
     QBCore.Functions.TriggerCallback("soz-bennys:server:GetDrivingDistances", function(retval)
         DrivingDistance = retval
