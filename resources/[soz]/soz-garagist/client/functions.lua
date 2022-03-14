@@ -1,4 +1,3 @@
-
 local originalCategory = nil
 local originalMod = nil
 local originalPrimaryColour = nil
