@@ -292,7 +292,8 @@ Config.vehicleResprayOptions = {
     {
         category = "Metallic",
         id = 1,
-        colours = {{name = "Black", id = 0},
+        colours = {
+            {name = "Black", id = 0},
             {name = "Carbon Black", id = 147},
             {name = "Graphite", id = 1},
             {name = "Anhracite Black", id = 11},
