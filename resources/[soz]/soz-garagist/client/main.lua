@@ -6,32 +6,32 @@ local onDuty = false
 local effectTimer = 0
 
 local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:options")
-local Status = MenuV:InheritMenu(VehiculeOptions, "Status")
-local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Customisation")
+local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
+local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
 local NoDamage = MenuV:InheritMenu(Status, "No Damage")
 local PartMenu = MenuV:InheritMenu(Status, "Part Menu")
 local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:wash")
 
 local SpoilersMenu = MenuV:InheritMenu(VehiculeCustom, "Choisir un mod")
-local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Vehicle Extras Customisation")
+local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Personnalisations autres")
 local ResprayMenu = MenuV:InheritMenu(VehiculeCustom, "Peinture")
-local ResprayTypeMenu = MenuV:InheritMenu(ResprayMenu, "Peinture Types")
-local ResprayColoursMenu = MenuV:InheritMenu(ResprayMenu, "Peinture Colours")
-local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Window Tint")
-local NeonsMenu = MenuV:InheritMenu(VehiculeCustom, "Neons")
-local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Neon State")
-local NeonColoursMenu = MenuV:InheritMenu(NeonsMenu, "Neon Colours")
-local XenonsMenu = MenuV:InheritMenu(VehiculeCustom, "Xenons")
-local XenonsHeadlightsMenu = MenuV:InheritMenu(XenonsMenu, "Xenons Headlights")
-local XenonsColoursMenu = MenuV:InheritMenu(XenonsMenu, "Xenons Colours")
+local ResprayTypeMenu = MenuV:InheritMenu(ResprayMenu, "Type de Peinture")
+local ResprayColoursMenu = MenuV:InheritMenu(ResprayMenu, "Couleurs de Peinture")
+local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinte Fenêtre")
+local NeonsMenu = MenuV:InheritMenu(VehiculeCustom, "Néons")
+local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Etat des Néons")
+local NeonColoursMenu = MenuV:InheritMenu(NeonsMenu, "Couleur des Néons")
+local XenonsMenu = MenuV:InheritMenu(VehiculeCustom, "Xénons")
+local XenonsHeadlightsMenu = MenuV:InheritMenu(XenonsMenu, "Phares des Xénons")
+local XenonsColoursMenu = MenuV:InheritMenu(XenonsMenu, "Couleur des Xénons")
 
-local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Wheels")
-local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Tyre Smoke Customisation")
-local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Enable or Disable Custom Wheels")
-local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choose a Wheel")
+local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Roues")
+local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fumée de roue")
+local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Activer ou désactiver les roues personnalisées")
+local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choisir une roue")
 
-local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Old Livery")
-local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Plate Index")
+local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Livrée de base")
+local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Immatriculation")
 
 local function OpenChooseWheelMenu(menu, k, v)
     menu:ClearItems()
@@ -72,16 +72,16 @@ local function OpenCustomWheelsMenu(menu)
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Wheels",
+        label = "Roues",
         select = function()
             menu:Close()
         end,
     })
     local currentCustomWheelState = GetCurrentCustomWheelState()
     if currentCustomWheelState == 0 then
-        menu:AddButton({label = "Disable ~g~- Installé", description = ""})
+        menu:AddButton({label = "Désactiver", rightLabel ="~g~Installé", description = ""})
         menu:AddButton({
-            label = "Enable",
+            label = "Activer",
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
@@ -90,14 +90,14 @@ local function OpenCustomWheelsMenu(menu)
         })
     else
         menu:AddButton({
-            label = "Disable",
+            label = "Désactiver",
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
                 ApplyCustomWheel(0)
             end,
         })
-        menu:AddButton({label = "Enable ~g~- Installé", description = ""})
+        menu:AddButton({label = "Activer", rightLabel ="~g~Installé", description = ""})
     end
     menu:On("close", function()
         menu:Close()
@@ -118,7 +118,7 @@ local function OpenTyreSmokeMenu(menu)
     local currentWheelSmokeR, currentWheelSmokeG, currentWheelSmokeB = GetCurrentVehicleWheelSmokeColour()
     for k, v in ipairs(Config.vehicleTyreSmokeOptions) do
         if v.r == currentWheelSmokeR and v.g == currentWheelSmokeG and v.b == currentWheelSmokeB then
-            menu:AddButton({label = v.name .. " ~g~- Installé"})
+            menu:AddButton({label = v.name, rightLabel ="~g~Installé"})
         else
             menu:AddButton({
                 label = v.name,
@@ -299,7 +299,7 @@ local function OpenNeonColoursMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonColours) do
         if currentNeonR == Config.vehicleNeonOptions.neonColours[k].r and currentNeonG == Config.vehicleNeonOptions.neonColours[k].g and currentNeonB ==
             Config.vehicleNeonOptions.neonColours[k].b then
-            menu:AddButton({label = v.name .. " ~g~- Installé", value = k})
+            menu:AddButton({label = v.name, rightLabel ="~g~Installé", value = k})
         else
             menu:AddButton({
                 label = v.name,
@@ -337,9 +337,9 @@ local function OpenNeonStateMenu(menu, v, k)
         end,
     })
     if currentNeonState == 0 then
-        menu:AddButton({label = "Disable ~g~- Installé", value = 0})
+        menu:AddButton({label = "Désactiver ~g~- Installé", value = 0})
         menu:AddButton({
-            label = "Enable",
+            label = "Activer",
             value = 1,
             description = "Améliorer 🔧",
             select = function()
@@ -349,7 +349,7 @@ local function OpenNeonStateMenu(menu, v, k)
         })
     else
         menu:AddButton({
-            label = "Disable - $0",
+            label = "Désactiver - $0",
             value = 0,
             description = "Améliorer 🔧",
             select = function()
@@ -357,7 +357,7 @@ local function OpenNeonStateMenu(menu, v, k)
                 ApplyNeon(v.id, 0)
             end,
         })
-        menu:AddButton({label = "Enable ~g~- Installé", value = 1})
+        menu:AddButton({label = "Activer ~g~- Installé", value = 1})
     end
     local eventneonstateon = menu:On("switch", function(item, currentItem, prevItem)
         PreviewNeon(v.id, currentItem.Value)
@@ -383,7 +383,7 @@ local function OpenNeonsMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonTypes) do
         menu:AddButton({
             label = v.name,
-            description = "Enable or Disable Neon",
+            description = "Activer ou Désactiver Neon",
             select = function()
                 OpenNeonStateMenu(NeonStateMenu, v, k)
             end,
@@ -411,7 +411,7 @@ local function OpenXenonsColoursMenu(menu)
     local currentXenonColour = GetCurrentXenonColour()
     for k, v in ipairs(Config.vehicleXenonOptions.xenonColours) do
         if currentXenonColour == v.id then
-            menu:AddButton({label = v.name .. " ~g~- Installé", value = v.id})
+            menu:AddButton({label = v.name, rightLabel ="~g~Installé", value = v.id})
         else
             menu:AddButton({
                 label = v.name,
@@ -447,9 +447,9 @@ local function OpenXenonsHeadlightsMenu(menu)
     })
     local currentXenonState = GetCurrentXenonState()
     if currentXenonState == 0 then
-        menu:AddButton({label = "Disable Xenons ~g~- Installé", description = ""})
+        menu:AddButton({label = "Désactiver Xenons ~g~- Installé", description = ""})
         menu:AddButton({
-            label = "Enable Xenons",
+            label = "Activer Xenons",
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
@@ -458,14 +458,14 @@ local function OpenXenonsHeadlightsMenu(menu)
         })
     else
         menu:AddButton({
-            label = "Disable Xenons - $0",
+            label = "Désactiver Xenons - $0",
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
                 ApplyXenonLights(22, 0)
             end,
         })
-        menu:AddButton({label = "Enable Xenons ~g~- Installé"})
+        menu:AddButton({label = "Activer Xenons ~g~- Installé"})
     end
     menu:On("close", function()
         menu:Close()
@@ -513,7 +513,7 @@ local function OpenWindowTintMenu(menu)
 
     for k, v in ipairs(Config.vehicleWindowTintOptions) do
         if currentWindowTint == v.id then
-            menu:AddButton({label = v.name .. " ~g~- Installé", value = v.id})
+            menu:AddButton({label = v.name, rightLabel ="~g~Installé", value = v.id})
         else
             menu:AddButton({
                 label = v.name,
@@ -672,7 +672,7 @@ local function OpenPlateIndexMenu(menu)
         for i = 0, #plateTypes - 1 do
             if i ~= 4 then
                 if tempPlateIndex == i then
-                    menu:AddButton({label = plateTypes[i + 1] .. " ~g~- Installé", value = i + 1})
+                    menu:AddButton({label = plateTypes[i + 1], rightLabel ="~g~Installé", value = i + 1})
                 else
                     menu:AddButton({
                         label = plateTypes[i + 1],
@@ -814,44 +814,44 @@ local function OpenCustom(menu)
     })
     if not isMotorcycle then
         menu:AddButton({
-            label = "Window Tint",
+            label = "Teinte Fenêtre",
             select = function()
                 OpenWindowTintMenu(WindowTintMenu)
             end,
         })
         menu:AddButton({
-            label = "Neons",
+            label = "Néons",
             select = function()
                 OpenNeonsMenu(NeonsMenu)
             end,
         })
     end
     menu:AddButton({
-        label = "Xenons",
+        label = "Xénons",
         select = function()
             OpenXenonsMenu(XenonsMenu)
         end,
     })
     menu:AddButton({
-        label = "Wheels",
+        label = "Roues",
         select = function()
             OpenWheelsMenu(WheelsMenu, isMotorcycle)
         end,
     })
     menu:AddButton({
-        label = "Old Livery",
+        label = "Livrée de base",
         select = function()
             OpenOldLiveryMenu(OldLiveryMenu)
         end,
     })
     menu:AddButton({
-        label = "Plate Index",
+        label = "Immatriculation",
         select = function()
             OpenPlateIndexMenu(PlateIndexMenu)
         end,
     })
     menu:AddButton({
-        label = "Vehicle Extras",
+        label = "Autres",
         select = function()
             OpenExtrasMenu(ExtrasMenu)
         end,
