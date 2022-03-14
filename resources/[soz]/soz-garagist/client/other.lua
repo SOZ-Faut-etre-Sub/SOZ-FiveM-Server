@@ -1,3 +1,5 @@
+VehicleStatus = {}
+
 RegisterNetEvent("soz-garagist:client:RepaireeePart", function(part)
     local veh = Config.AttachedVehicle
     local plate = QBCore.Functions.GetPlate(veh)

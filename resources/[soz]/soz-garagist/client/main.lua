@@ -1,6 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-VehicleStatus = {}
 local PlayerJob = {}
 local onDuty = false
 local effectTimer = 0
@@ -79,7 +78,7 @@ local function OpenCustomWheelsMenu(menu)
     })
     local currentCustomWheelState = GetCurrentCustomWheelState()
     if currentCustomWheelState == 0 then
-        menu:AddButton({label = "Désactiver", rightLabel ="~g~Installé", description = ""})
+        menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé", description = ""})
         menu:AddButton({
             label = "Activer",
             description = "Améliorer 🔧",
@@ -97,7 +96,7 @@ local function OpenCustomWheelsMenu(menu)
                 ApplyCustomWheel(0)
             end,
         })
-        menu:AddButton({label = "Activer", rightLabel ="~g~Installé", description = ""})
+        menu:AddButton({label = "Activer", rightLabel = "~g~Installé", description = ""})
     end
     menu:On("close", function()
         menu:Close()
@@ -118,7 +117,7 @@ local function OpenTyreSmokeMenu(menu)
     local currentWheelSmokeR, currentWheelSmokeG, currentWheelSmokeB = GetCurrentVehicleWheelSmokeColour()
     for k, v in ipairs(Config.vehicleTyreSmokeOptions) do
         if v.r == currentWheelSmokeR and v.g == currentWheelSmokeG and v.b == currentWheelSmokeB then
-            menu:AddButton({label = v.name, rightLabel ="~g~Installé"})
+            menu:AddButton({label = v.name, rightLabel = "~g~Installé"})
         else
             menu:AddButton({
                 label = v.name,
@@ -299,7 +298,7 @@ local function OpenNeonColoursMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonColours) do
         if currentNeonR == Config.vehicleNeonOptions.neonColours[k].r and currentNeonG == Config.vehicleNeonOptions.neonColours[k].g and currentNeonB ==
             Config.vehicleNeonOptions.neonColours[k].b then
-            menu:AddButton({label = v.name, rightLabel ="~g~Installé", value = k})
+            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = k})
         else
             menu:AddButton({
                 label = v.name,
@@ -411,7 +410,7 @@ local function OpenXenonsColoursMenu(menu)
     local currentXenonColour = GetCurrentXenonColour()
     for k, v in ipairs(Config.vehicleXenonOptions.xenonColours) do
         if currentXenonColour == v.id then
-            menu:AddButton({label = v.name, rightLabel ="~g~Installé", value = v.id})
+            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
         else
             menu:AddButton({
                 label = v.name,
@@ -513,7 +512,7 @@ local function OpenWindowTintMenu(menu)
 
     for k, v in ipairs(Config.vehicleWindowTintOptions) do
         if currentWindowTint == v.id then
-            menu:AddButton({label = v.name, rightLabel ="~g~Installé", value = v.id})
+            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
         else
             menu:AddButton({
                 label = v.name,
@@ -672,7 +671,7 @@ local function OpenPlateIndexMenu(menu)
         for i = 0, #plateTypes - 1 do
             if i ~= 4 then
                 if tempPlateIndex == i then
-                    menu:AddButton({label = plateTypes[i + 1], rightLabel ="~g~Installé", value = i + 1})
+                    menu:AddButton({label = plateTypes[i + 1], rightLabel = "~g~Installé", value = i + 1})
                 else
                     menu:AddButton({
                         label = plateTypes[i + 1],
