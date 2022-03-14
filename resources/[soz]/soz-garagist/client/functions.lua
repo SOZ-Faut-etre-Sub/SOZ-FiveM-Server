@@ -645,4 +645,3 @@ function ApplyTyreSmoke(r, g, b)
     ToggleVehicleMod(plyVeh, 20, true)
     SetVehicleTyreSmokeColor(plyVeh, r, g, b)
 end
-
