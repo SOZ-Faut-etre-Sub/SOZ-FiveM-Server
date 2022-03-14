@@ -79,6 +79,11 @@ local function EnableNUI(options)
 	end
 end
 
+local function EnablePreShow(options)
+	SendNUIMessage({response = "validTarget", data = options})
+end
+
+
 exports('EnableNUI', EnableNUI)
 
 local function LeftTarget()
@@ -133,6 +138,7 @@ local function CheckEntity(hit, datatable, entity, distance)
 		if nuiData[1] then
 			success = true
 			SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
+			EnablePreShow(nuiData)
 			DrawOutlineEntity(entity, true)
 			while targetActive and success do
 				local _, _, dist, entity2, _ = RaycastCamera(hit, GetEntityCoords(playerPed))
@@ -264,6 +270,7 @@ local function EnableTarget()
 								if nuiData[1] then
 									success = true
 									SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
+									EnablePreShow(nuiData)
 									DrawOutlineEntity(entity, true)
 									while targetActive and success do
 										local _, _, dist, entity2, _ = RaycastCamera(hit, GetEntityCoords(playerPed))
@@ -349,6 +356,7 @@ local function EnableTarget()
 							TriggerServerEvent(CurrentResourceName..':server:enterPolyZone', sendData[slot])
 							success = true
 							SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
+							EnablePreShow(nuiData)
 							DrawOutlineEntity(entity, true)
 							while targetActive and success do
 								_, coords, distance, _, _ = RaycastCamera(hit, GetEntityCoords(playerPed))
@@ -377,8 +385,7 @@ local function EnableTarget()
 		DisableTarget(false)
 	end
 end
-
-local function AddCircleZone(name, center, radius, options, targetoptions)
+ function AddCircleZone(name, center, radius, options, targetoptions)
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = CircleZone:Create(center, radius, options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
