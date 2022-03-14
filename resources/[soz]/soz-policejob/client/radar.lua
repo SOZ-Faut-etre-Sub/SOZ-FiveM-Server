@@ -1,6 +1,6 @@
 CreateThread(function()
     for radarID, radar in pairs(Config.Radars) do
-        local SpeedZone = CircleZone:Create(radar.zone, radar.zoneRadius, {})
+        local SpeedZone = CircleZone:Create(radar.zone, radar.zoneRadius, {useZ = true})
 
         SpeedZone:onPlayerInOut(function(isInside)
             if isInside then

@@ -70,6 +70,28 @@ local function BadgeEntity(menu)
     })
 end
 
+--- @param menu Menu
+local function RadarEntity(menu, job)
+    local radarItem = menu:AddCheckbox({label = "Afficher les radars sur le GPS"})
+
+    radarItem:On("change", function(menu, value)
+        for radarID, radar in pairs(Config.Radars) do
+            if radar.station == job then
+                if not QBCore.Functions.GetBlip("police_radar_" .. radarID) then
+                    QBCore.Functions.CreateBlip("police_radar_" .. radarID, {
+                        name = "Radar",
+                        coords = radar.props,
+                        sprite = 184,
+                        scale = 0.5,
+                    })
+                end
+
+                QBCore.Functions.HideBlip("police_radar_" .. radarID, not value)
+            end
+        end
+    end)
+end
+
 --- Functions
 PoliceJob.Functions.Menu.MenuAccessIsValid = function(job)
     if not PoliceJob.Menus[job] then
@@ -108,6 +130,7 @@ PoliceJob.Functions.Menu.GenerateMenu = function(job)
 
         if PlayerData.job.onduty then
             BadgeEntity(menu)
+            RadarEntity(menu, job)
         end
 
         if menu.IsOpen then
