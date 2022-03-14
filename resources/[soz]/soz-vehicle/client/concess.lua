@@ -84,6 +84,10 @@ local function ChooseCarModelsMenu(vehicule)
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", voiture["model"])
         end,
     })
+    VehiculeChoose:On("close", function()
+        VehiculeChoose:Close()
+        VehiculeChoose:ClearItems()
+    end)
 end
 
 local function OpenCarModelsMenu(category)
@@ -97,9 +101,14 @@ local function OpenCarModelsMenu(category)
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
-    VehiculeModel:On("switch", function(item, currentItem, prevItem)
+    local eventmodelswitch = VehiculeModel:On("switch", function(item, currentItem, prevItem)
         clean()
         CarModels(currentItem.Value)
+    end)
+    VehiculeModel:On("close", function()
+        VehiculeModel:RemoveOnEvent("switch", eventmodelswitch)
+        VehiculeModel:Close()
+        VehiculeModel:ClearItems()
     end)
     QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(vehiclestorage)
         for k, voiture in pairs(vehicules) do
@@ -122,15 +131,17 @@ local function OpenCarModelsMenu(category)
                         newlabel = "^9" .. voiture["name"]
                         VehiculeModel:AddButton({
                             label = newlabel,
+                            rightlabel = "💸 " .. voiture["price"] .. "$",
                             value = voiture,
-                            description = "❌ HORS STOCK de " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
+                            description = "❌ HORS STOCK de " .. voiture["name"],
                         })
                     elseif y.stock == 1 then
                         newlabel = "~o~" .. voiture["name"]
                         VehiculeModel:AddButton({
                             label = newlabel,
+                            rightlabel = "💸 " .. voiture["price"] .. "$",
                             value = voiture,
-                            description = "⚠ Stock limité de  " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
+                            description = "⚠ Stock limité de  " .. voiture["name"],
                             select = function(btn)
                                 local select = btn.Value
                                 ChooseCarModelsMenu(voiture)
@@ -139,8 +150,9 @@ local function OpenCarModelsMenu(category)
                     else
                         VehiculeModel:AddButton({
                             label = newlabel,
+                            rightlabel = "💸 " .. voiture["price"] .. "$",
                             value = voiture,
-                            description = "Acheter  " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
+                            description = "Acheter  " .. voiture["name"],
                             select = function(btn)
                                 local select = btn.Value
                                 ChooseCarModelsMenu(voiture)
