@@ -929,7 +929,7 @@ local function OpenNeonColoursMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonColours) do
         if currentNeonR == Config.vehicleNeonOptions.neonColours[k].r and currentNeonG == Config.vehicleNeonOptions.neonColours[k].g and currentNeonB ==
             Config.vehicleNeonOptions.neonColours[k].b then
-                menu:AddButton({label = v.name .. " ~g~- Installed", value = k})
+            menu:AddButton({label = v.name .. " ~g~- Installed", value = k})
         else
             menu:AddButton({
                 label = v.name,
