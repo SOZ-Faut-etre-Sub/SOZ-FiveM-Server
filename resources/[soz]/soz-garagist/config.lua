@@ -45,18 +45,19 @@ Config.vehicleWindowTintOptions = {
 Config.vehicleXenonOptions = {
     xenonColours = {
         {name = "Stock", id = 255},
-        {name = "Blanc",id = 0}, {name = "Bleu",id = 1},
-        {name = "Bleu électrique",id = 2},
-        {name = "Vert menthe",id = 3},
-        {name = "Citron vert",id = 4},
-        {name = "Jaune",id = 5},
-        {name = "Douche dorée",id = 6},
-        {name = "Orange",id = 7},
-        {name = "Rouge",id = 8},
-        {name = "Rose poney",id = 9},
-        {name = "Rose chaud",id = 10},
-        {name = "Violet",id = 11},
-        {name = "Noir léger",id = 12},
+        {name = "Blanc", id = 0},
+        {name = "Bleu", id = 1},
+        {name = "Bleu électrique", id = 2},
+        {name = "Vert menthe", id = 3},
+        {name = "Citron vert", id = 4},
+        {name = "Jaune", id = 5},
+        {name = "Douche dorée", id = 6},
+        {name = "Orange", id = 7},
+        {name = "Rouge", id = 8},
+        {name = "Rose poney", id = 9},
+        {name = "Rose chaud", id = 10},
+        {name = "Violet", id = 11},
+        {name = "Noir léger", id = 12},
     }
 }
 
@@ -74,148 +75,45 @@ Config.vehicleWheelOptions = {
 }
 
 Config.vehicleTyreSmokeOptions = {
-    {
-        name = "Fumée blanche",
-        r = 254,
-        g = 254,
-        b = 254
-    }, 
-    {
-        name = "Fumée noire",
-        r = 1,
-        g = 1,
-        b = 1
-    },
-    {
-        name = "Fumée bleue",
-        r = 0,
-        g = 150,
-        b = 255
-    },
-    {
-        name = "Fumée jaune",
-        r = 255,
-        g = 255,
-        b = 50
-    },
-    {
-        name = "Fumée orange",
-        r = 255,
-        g = 153,
-        b = 51
-    },
-    {
-        name = "Fumée rouge",
-        r = 255,
-        g = 10,
-        b = 10
-    },
-    {
-        name = "Fumée verte",
-        r = 10,
-        g = 255,
-        b = 10
-    },
-    {
-        name = "Fumée violette",
-        r = 153,
-        g = 10,
-        b = 153
-    },
-    {
-        name = "Fumée rose",
-        r = 255,
-        g = 102,
-        b = 178
-    },
-    {
-        name = "Fumée grise",
-        r = 128,
-        g = 128,
-        b = 128
-    }
+    {name = "Fumée blanche", r = 254, g = 254, b = 254},
+    {name = "Fumée noire", r = 1, g = 1, b = 1},
+    {name = "Fumée bleue", r = 0, g = 150, b = 255},
+    {name = "Fumée jaune", r = 255, g = 255, b = 50},
+    {name = "Fumée orange", r = 255, g = 153, b = 51},
+    {name = "Fumée rouge", r = 255, g = 10, b = 10},
+    {name = "Fumée verte", r = 10, g = 255, b = 10},
+    {name = "Fumée violette", r = 153, g = 10, b = 153},
+    {name = "Fumée rose", r = 255, g = 102, b = 178},
+    {name = "Fumée grise", r = 128, g = 128, b = 128},
 }
 
 Config.vehicleNeonOptions = {
     category = "Néons",
-        neonTypes = {
-            {name = "Néon avant", id = 2},
-            {name = "Néon arrière", id = 3},
-            {name = "Néon gauche", id = 0},
-            {name = "Néon droit", id = 1}
-        },
+    neonTypes = {
+        {name = "Néon avant", id = 2},
+        {name = "Néon arrière", id = 3},
+        {name = "Néon gauche", id = 0},
+        {name = "Néon droit", id = 1},
+    },
     neonColours = {
-        {
-            name = "Blanc",
-            r = 222,
-            g = 222,
-            b = 255
-        }, {
-            name = "Bleu",
-            r = 2,
-            g = 21,
-            b = 255
-        }, {
-            name = "Bleu électrique",
-            r = 3,
-            g = 83,
-            b = 255
-        }, {
-            name = "Vert menthe",
-            r = 0,
-            g = 255,
-            b = 140
-        }, {
-            name = "Citron vert",
-            r = 94,
-            g = 255,
-            b = 1
-        }, {
-            name = "Jaune",
-            r = 255,
-            g = 255,
-            b = 0
-        }, {
-            name = "Douche dorée",
-            r = 255,
-            g = 150,
-            b = 0
-        }, {
-            name = "Orange",
-            r = 255,
-            g = 62,
-            b = 0
-        }, {
-            name = "Rouge",
-            r = 255,
-            g = 1,
-            b = 1
-        }, {
-            name = "Rose poney",
-            r = 255,
-            g = 50,
-            b = 100
-        }, {
-            name = "Rose chaud",
-            r = 255,
-            g = 5,
-            b = 190
-        }, {
-            name = "Violet",
-            r = 35,
-            g = 1,
-            b = 255
-        }, {
-            name = "Noir léger",
-            r = 15,
-            g = 3,
-            b = 255
-        }
-    }
+        {name = "Blanc", r = 222, g = 222, b = 255},
+        {name = "Bleu", r = 2, g = 21, b = 255},
+        {name = "Bleu électrique", r = 3, g = 83, b = 255},
+        {name = "Vert menthe", r = 0, g = 255, b = 140},
+        {name = "Citron vert", r = 94, g = 255, b = 1},
+        {name = "Jaune", r = 255, g = 255, b = 0},
+        {name = "Douche dorée", r = 255, g = 150, b = 0},
+        {name = "Orange", r = 255, g = 62, b = 0},
+        {name = "Rouge", r = 255, g = 1, b = 1},
+        {name = "Rose poney", r = 255, g = 50, b = 100},
+        {name = "Rose chaud", r = 255, g = 5, b = 190},
+        {name = "Violet", r = 35, g = 1, b = 255},
+        {name = "Noir léger", r = 15, g = 3, b = 255},
+    },
 }
 
 Config.vehicleCustomisationMechanic = {
-    {category = "Spoiler", id = 0}, 
+    {category = "Spoiler", id = 0},
     {category = "Front Bumper", id = 1},
     {category = "Rear Bumper", id = 2},
     {category = "Side Skirt", id = 3},
@@ -225,8 +123,8 @@ Config.vehicleCustomisationMechanic = {
     {category = "Hood", id = 7},
     {category = "Left Fender", id = 8},
     {category = "Right Fender", id = 9},
-    {category = "Roof",id = 10},
-    {category = "Vanity Plates",id = 25},
+    {category = "Roof", id = 10},
+    {category = "Vanity Plates", id = 25},
     {category = "Trim A", id = 27},
     {category = "Ornaments", id = 28},
     {category = "Dashboard", id = 29},
@@ -248,8 +146,10 @@ Config.vehicleCustomisationMechanic = {
     {category = "Fuel Tank", id = 45},
     {category = "Window", id = 46},
     {category = "Livery", id = 48},
-    {category = "Horns", id = 14, 
-        
+    {
+        category = "Horns",
+        id = 14,
+
         hornNames = {
             {name = "Truck Horn", id = 0},
             {name = "Cop Horn", id = 1},
@@ -302,13 +202,15 @@ Config.vehicleCustomisationMechanic = {
             {name = "Festive 2 Loop", id = 48},
             {name = "Festive 2", id = 49},
             {name = "Festive 3 Loop", id = 50},
-            {name = "Festive 3", id = 51}
-        }
-    }
+            {name = "Festive 3", id = 51},
+        },
+    },
 }
 
 Config.vehicleResprayOptions = {
-    {category = "Classic", id = 0,
+    {
+        category = "Classic",
+        id = 0,
         colours = {
             {name = "Black", id = 0},
             {name = "Carbon Black", id = 147},
@@ -384,10 +286,12 @@ Config.vehicleResprayOptions = {
             {name = "Bright Purple", id = 145},
             {name = "Cream", id = 107},
             {name = "Ice White", id = 111},
-            {name = "Frost White", id = 112}
-        }
+            {name = "Frost White", id = 112},
+        },
     },
-    {category = "Metallic", id = 1,
+    {
+        category = "Metallic",
+        id = 1,
         colours = {{name = "Black", id = 0},
             {name = "Carbon Black", id = 147},
             {name = "Graphite", id = 1},
@@ -463,9 +367,11 @@ Config.vehicleResprayOptions = {
             {name = "Cream", id = 107},
             {name = "Ice White", id = 111},
             {name = "Frost White", id = 112}
-        }
+        },
     },
-    {category = "Matte", id = 2,
+    {
+        category = "Matte",
+        id = 2,
         colours = {{name = "Black", id = 12},
             {name = "Gray", id = 13},
             {name = "Light Gray", id = 14},
@@ -485,16 +391,18 @@ Config.vehicleResprayOptions = {
             {name = "Foliage Green", id = 155},
             {name = "Olive Darb", id = 152},
             {name = "Dark Earth", id = 153},
-            {name = "Desert Tan", id = 154}
-        }
+            {name = "Desert Tan", id = 154},
+        },
     },
-    {category = "Metals", id = 3,
+    {
+        category = "Metals",
+        id = 3,
             colours = {{name = "Brushed Steel", id = 117},
             {name = "Brushed Black Steel", id = 118},
             {name = "Brushed Aluminium", id = 119},
             {name = "Pure Gold", id = 158},
             {name = "Brushed Gold", id = 159},
-            {name = "Chrome", id = 120}
-        }
-    }
+            {name = "Chrome", id = 120},
+        },
+    },
 }
