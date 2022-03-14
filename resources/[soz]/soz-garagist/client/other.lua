@@ -307,3 +307,34 @@ RegisterNetEvent("soz-garagist:client:repairPart", function(part, level, needAmo
         exports["soz-hud"]:DrawNotification("~r~Youre Not In a Vehicle")
     end
 end)
+
+CreateThread(function()
+    while true do
+        Wait(1000)
+        if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+            local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+            if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
+                local engineHealth = GetVehicleEngineHealth(veh)
+                local bodyHealth = GetVehicleBodyHealth(veh)
+                local plate = QBCore.Functions.GetPlate(veh)
+                if VehicleStatus[plate] == nil then
+                    TriggerServerEvent("vehiclemod:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
+                else
+                    TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", engineHealth)
+                    TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", bodyHealth)
+                    effectTimer = effectTimer + 1
+                    if effectTimer >= math.random(10, 15) then
+                        ApplyEffects(veh)
+                        effectTimer = 0
+                    end
+                end
+            else
+                effectTimer = 0
+                Wait(1000)
+            end
+        else
+            effectTimer = 0
+            Wait(2000)
+        end
+    end
+end)
