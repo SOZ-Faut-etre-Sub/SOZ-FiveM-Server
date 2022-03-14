@@ -1,8 +1,8 @@
 local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:options")
 local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
 local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
-local NoDamage = MenuV:InheritMenu(Status, "No Damage")
-local PartMenu = MenuV:InheritMenu(Status, "Part Menu")
+local NoDamage = MenuV:InheritMenu(Status, "Aucun dommage")
+local PartMenu = MenuV:InheritMenu(Status, "Menu pièces")
 local SpoilersMenu = MenuV:InheritMenu(VehiculeCustom, "Choisir un mod")
 local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Personnalisations autres")
 local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinte Fenêtre")
@@ -212,7 +212,7 @@ local function OpenResprayTypeMenu(menu, colorcat)
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Colour category",
+        label = "Catégories de couleur",
         select = function()
             menu:Close()
         end,
@@ -284,7 +284,7 @@ local function OpenNeonColoursMenu(menu)
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Neons Menu",
+        label = "Menu Néons",
         select = function()
             menu:Close()
         end,
@@ -324,7 +324,7 @@ local function OpenNeonStateMenu(menu, v, k)
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Neons Menu",
+        label = "Menu Néons",
         select = function()
             menu:Close()
         end,
@@ -350,7 +350,7 @@ local function OpenNeonStateMenu(menu, v, k)
                 ApplyNeon(v.id, 0)
             end,
         })
-        menu:AddButton({label = "Activer ~g~- Installé", value = 1})
+        menu:AddButton({label = "Activer", rightLabel = "~g~Installé", value = 1})
     end
     local eventneonstateon = menu:On("switch", function(item, currentItem, prevItem)
         PreviewNeon(v.id, currentItem.Value)
@@ -376,14 +376,14 @@ local function OpenNeonsMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonTypes) do
         menu:AddButton({
             label = v.name,
-            description = "Activer ou Désactiver Neon",
+            description = "Activer ou Désactiver Néon",
             select = function()
                 OpenNeonStateMenu(NeonStateMenu, v, k)
             end,
         })
     end
     menu:AddButton({
-        label = "Neon Colours",
+        label = "Couleurs de Néon",
         description = "",
         select = function()
             OpenNeonColoursMenu(NeonColoursMenu)
@@ -396,7 +396,7 @@ local function OpenXenonsColoursMenu(menu)
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Menu Xenon",
+        label = "Menu Xénon",
         select = function()
             menu:Close()
         end,
@@ -433,16 +433,16 @@ local function OpenXenonsHeadlightsMenu(menu)
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Menu Xenon",
+        label = "Menu Xénon",
         select = function()
             menu:Close()
         end,
     })
     local currentXenonState = GetCurrentXenonState()
     if currentXenonState == 0 then
-        menu:AddButton({label = "Désactiver Xenons ~g~- Installé", description = ""})
+        menu:AddButton({label = "Désactiver Xénons", rightLabel = "~g~Installé"})
         menu:AddButton({
-            label = "Activer Xenons",
+            label = "Activer Xénons",
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
@@ -458,7 +458,7 @@ local function OpenXenonsHeadlightsMenu(menu)
                 ApplyXenonLights(22, 0)
             end,
         })
-        menu:AddButton({label = "Activer Xenons ~g~- Installé"})
+        menu:AddButton({label = "Activer Xénons", rightLabel = "~g~Installé"})
     end
     menu:On("close", function()
         menu:Close()
@@ -477,14 +477,14 @@ local function OpenXenonsMenu(menu)
         end,
     })
     menu:AddButton({
-        label = "Headlights",
+        label = "Phares",
         description = "",
         select = function()
             OpenXenonsHeadlightsMenu(XenonsHeadlightsMenu)
         end,
     })
     menu:AddButton({
-        label = "Xenon Colours",
+        label = "Couleurs de Xénon",
         description = "",
         select = function()
             OpenXenonsColoursMenu(XenonsColoursMenu)
@@ -542,7 +542,7 @@ local function OpenSpoilersMenu(menu, k, v, validMods, currentMod)
     })
     for m, n in pairs(validMods) do
         if currentMod == n.id then
-            menu:AddButton({label = n.name, rightLabel = " ~g~- Installé", value = n.id})
+            menu:AddButton({label = n.name, rightLabel = "~g~Installé", value = n.id})
         else
             menu:AddButton({
                 label = n.name,
@@ -583,7 +583,7 @@ local function OpenOldLiveryMenu(menu)
         if GetVehicleClass(plyVeh) ~= 18 then
             for i = 0, GetVehicleLiveryCount(plyVeh) - 1 do
                 if tempOldLivery == i then
-                    menu:AddButton({label = i " ~g~- Installé", value = i})
+                    menu:AddButton({label = i, rightLabel = "~g~Installé", value = i})
                 else
                     menu:AddButton({
                         label = i,
@@ -631,7 +631,7 @@ local function OpenExtrasMenu(menu)
                     end,
                 })
             else
-                menu:AddButton({label = "No Option"})
+                menu:AddButton({label = "N/A"})
             end
         end
     end
