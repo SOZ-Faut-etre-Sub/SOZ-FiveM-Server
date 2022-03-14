@@ -1,10 +1,12 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports["qb-core"]:GetCoreObject()
 local VehicleStatus = {}
 
-RegisterNetEvent('qb-vehicletuning:server:SaveVehicleProps', function(vehicleProps)
+RegisterNetEvent("qb-vehicletuning:server:SaveVehicleProps", function(vehicleProps)
     if IsVehicleOwned(vehicleProps.plate) then
-        MySQL.Async.execute('UPDATE player_vehicles SET mods = ? WHERE plate = ?',
-            {json.encode(vehicleProps), vehicleProps.plate})
+        MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {
+            json.encode(vehicleProps),
+            vehicleProps.plate,
+        })
     end
 end)
 
@@ -44,7 +46,6 @@ RegisterNetEvent("vehiclemod:server:setupVehicleStatus", function(plate, engineH
         TriggerClientEvent("vehiclemod:client:setVehicleStatus", -1, plate, VehicleStatus[plate])
     end
 end)
-
 
 RegisterNetEvent("qb-vehicletuning:server:LoadStatus", function(veh, plate)
     VehicleStatus[plate] = veh
@@ -88,36 +89,44 @@ RegisterNetEvent("vehiclemod:server:saveStatus", function(plate)
     end
 end)
 
-QBCore.Functions.CreateCallback('qb-vehicletuning:server:IsVehicleOwned', function(source, cb, plate)
+QBCore.Functions.CreateCallback("qb-vehicletuning:server:IsVehicleOwned", function(source, cb, plate)
     local retval = false
-    local result = MySQL.Sync.fetchScalar('SELECT 1 from player_vehicles WHERE plate = ?', {plate})
+    local result = MySQL.Sync.fetchScalar("SELECT 1 from player_vehicles WHERE plate = ?", {
+        plate,
+    })
     if result then
         retval = true
     end
     cb(retval)
 end)
 
-
 function GetVehicleStatus(plate)
     local retval = nil
-    local result = MySQL.Sync.fetchAll("SELECT status FROM player_vehicles WHERE plate = ?", {plate})
+    local result = MySQL.Sync.fetchAll("SELECT status FROM player_vehicles WHERE plate = ?", {
+        plate,
+    })
     if result[1] ~= nil then
         retval = result[1].status ~= nil and json.decode(result[1].status) or nil
     end
     return retval
 end
 
-QBCore.Commands.Add("setvehiclestatus", "Set Vehicle Status",
-                    {
-    {name = "part", help = "Type The Part You Want To Edit"},
-    {name = "amount", help = "The Percentage Fixed"},
+QBCore.Commands.Add("setvehiclestatus", "Set Vehicle Status", {
+    {
+        name = "part",
+        help = "Type The Part You Want To Edit",
+    },
+    {
+        name = "amount",
+        help = "The Percentage Fixed",
+    },
 }, true, function(source, args)
     local part = args[1]:lower()
     local level = tonumber(args[2])
     TriggerClientEvent("vehiclemod:client:setPartLevel", source, part, level)
 end, "god")
 
-RegisterNetEvent('vehiclemod:server:fixEverything', function(plate)
+RegisterNetEvent("vehiclemod:server:fixEverything", function(plate)
     if VehicleStatus[plate] ~= nil then
         for k, v in pairs(Config.MaxStatusValues) do
             VehicleStatus[plate][k] = v
@@ -126,11 +135,11 @@ RegisterNetEvent('vehiclemod:server:fixEverything', function(plate)
     end
 end)
 
-QBCore.Functions.CreateCallback('qb-vehicletuning:server:GetAttachedVehicle', function(source, cb)
+QBCore.Functions.CreateCallback("qb-vehicletuning:server:GetAttachedVehicle", function(source, cb)
     cb(Config.AttachedVehicle)
 end)
 
-QBCore.Functions.CreateCallback('qb-vehicletuning:server:IsMechanicAvailable', function(source, cb)
+QBCore.Functions.CreateCallback("qb-vehicletuning:server:IsMechanicAvailable", function(source, cb)
     local amount = 0
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
         local Player = QBCore.Functions.GetPlayer(v)
@@ -151,114 +160,47 @@ QBCore.Functions.CreateCallback("qb-vehicletuning:server:GetStatus", function(so
     end
 end)
 
-RegisterNetEvent('qb-vehicletuning:server:SetAttachedVehicle', function(veh)
+RegisterNetEvent("qb-vehicletuning:server:SetAttachedVehicle", function(veh)
     if veh ~= false then
         Config.AttachedVehicle = veh
-        TriggerClientEvent('qb-vehicletuning:client:SetAttachedVehicle', -1, veh)
+        TriggerClientEvent("qb-vehicletuning:client:SetAttachedVehicle", -1, veh)
     else
         Config.AttachedVehicle = nil
-        TriggerClientEvent('qb-vehicletuning:client:SetAttachedVehicle', -1, false)
+        TriggerClientEvent("qb-vehicletuning:client:SetAttachedVehicle", -1, false)
     end
 end)
 
-RegisterNetEvent('qb-vehicletuning:server:CheckForItems', function(part)
+RegisterNetEvent("qb-vehicletuning:server:CheckForItems", function(part)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local RepairPart = Player.Functions.GetItemByName(Config.RepairCostAmount[part].item)
 
     if RepairPart ~= nil then
         if RepairPart.amount >= Config.RepairCostAmount[part].costs then
-            TriggerClientEvent('qb-vehicletuning:client:RepaireeePart', src, part)
+            TriggerClientEvent("qb-vehicletuning:client:RepaireeePart", src, part)
             Player.Functions.RemoveItem(Config.RepairCostAmount[part].item, Config.RepairCostAmount[part].costs)
 
             for i = 1, Config.RepairCostAmount[part].costs, 1 do
-                TriggerClientEvent('inventory:client:ItemBox', src,
-                    QBCore.Shared.Items[Config.RepairCostAmount[part].item], "remove")
+                TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[Config.RepairCostAmount[part].item], "remove")
                 Wait(500)
             end
         else
-            TriggerClientEvent('QBCore:Notify', src,
-                "You Dont Have Enough " .. QBCore.Shared.Items[Config.RepairCostAmount[part].item]["label"] .. " (min. " ..
-                    Config.RepairCostAmount[part].costs .. "x)", "error")
+            TriggerClientEvent("QBCore:Notify", src,
+                               "You Dont Have Enough " .. QBCore.Shared.Items[Config.RepairCostAmount[part].item]["label"] .. " (min. " ..
+                                   Config.RepairCostAmount[part].costs .. "x)", "error")
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, "You Do Not Have " ..
-            QBCore.Shared.Items[Config.RepairCostAmount[part].item]["label"] .. " bij je!", "error")
+        TriggerClientEvent("QBCore:Notify", src, "You Do Not Have " .. QBCore.Shared.Items[Config.RepairCostAmount[part].item]["label"] .. " bij je!", "error")
     end
 end)
 
-RegisterNetEvent('qb-vehicletuning:server:Removeitem', function(item,amount)
+RegisterNetEvent("qb-vehicletuning:server:Removeitem", function(item, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     Player.Functions.RemoveItem(item, amount)
 end)
 
-function IsAuthorized(CitizenId)
-    local retval = false
-    for _, cid in pairs(Config.AuthorizedIds) do
-        if cid == CitizenId then
-            retval = true
-            break
-        end
-    end
-    return retval
-end
-
-QBCore.Commands.Add("setmechanic", "Give Someone The Mechanic job", {{
-    name = "id",
-    help = "ID Of The Player"
-}}, false, function(source, args)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    if IsAuthorized(Player.PlayerData.citizenid) then
-        local TargetId = tonumber(args[1])
-        if TargetId ~= nil then
-            local TargetData = QBCore.Functions.GetPlayer(TargetId)
-            if TargetData ~= nil then
-                TargetData.Functions.SetJob("garagist")
-                TriggerClientEvent('QBCore:Notify', TargetData.PlayerData.source,
-                    "You Were Hired As An Autocare Employee!")
-                TriggerClientEvent('QBCore:Notify', source, "You have (" .. TargetData.PlayerData.charinfo.firstname ..
-                    ") Hired As An Autocare Employee!")
-            end
-        else
-            TriggerClientEvent('QBCore:Notify', source, "You Must Provide A Player ID!")
-        end
-    else
-        TriggerClientEvent('QBCore:Notify', source, "You Cannot Do This!", "error")
-    end
-end)
-
-QBCore.Commands.Add("firemechanic", "Fire A Mechanic", {{
-    name = "id",
-    help = "ID Of The Player"
-}}, false, function(source, args)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    if IsAuthorized(Player.PlayerData.citizenid) then
-        local TargetId = tonumber(args[1])
-        if TargetId ~= nil then
-            local TargetData = QBCore.Functions.GetPlayer(TargetId)
-            if TargetData ~= nil then
-                if TargetData.PlayerData.job.name == "garagist" then
-                    TargetData.Functions.SetJob("unemployed")
-                    TriggerClientEvent('QBCore:Notify', TargetData.PlayerData.source,
-                        "You Were Fired As An Autocare Employee!")
-                    TriggerClientEvent('QBCore:Notify', source,
-                        "You have (" .. TargetData.PlayerData.charinfo.firstname .. ") Fired As Autocare Employee!")
-                else
-                    TriggerClientEvent('QBCore:Notify', source, "Youre Not An Employee of Autocare!", "error")
-                end
-            end
-        else
-            TriggerClientEvent('QBCore:Notify', source, "You Must Provide A Player ID!", "error")
-        end
-    else
-        TriggerClientEvent('QBCore:Notify', source, "You Cannot Do This!", "error")
-    end
-end)
-
-QBCore.Functions.CreateCallback('qb-vehicletuning:server:GetStatus', function(source, cb, plate)
+QBCore.Functions.CreateCallback("qb-vehicletuning:server:GetStatus", function(source, cb, plate)
     if VehicleStatus[plate] ~= nil and next(VehicleStatus[plate]) ~= nil then
         cb(VehicleStatus[plate])
     else
@@ -269,13 +211,18 @@ end)
 RegisterNetEvent("updateVehicle", function(myCar)
     local src = source
     if IsVehicleOwned(myCar.plate) then
-        MySQL.Async.execute('UPDATE player_vehicles SET mods = ? WHERE plate = ?', {json.encode(myCar), myCar.plate})
+        MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {
+            json.encode(myCar),
+            myCar.plate,
+        })
     end
 end)
 
 function IsVehicleOwned(plate)
     local retval = false
-    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
+    local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {
+        plate,
+    })
     if result then
         retval = true
     end
