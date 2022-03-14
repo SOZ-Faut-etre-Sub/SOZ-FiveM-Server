@@ -203,19 +203,13 @@ function CheckValidMods(category, id, wheelType)
             end
         end
 
-        validMods[i] = {
-            id = (i - 1),
-            name = modName,
-        }
+        validMods[i] = {id = (i - 1), name = modName}
 
         amountValidMods = amountValidMods + 1
     end
 
     if modAmount > 0 then
-        table.insert(validMods, 1, {
-            id = -1,
-            name = "Stock " .. category,
-        })
+        table.insert(validMods, 1, {id = -1, name = "Stock " .. category})
     end
 
     if wheelType ~= nil then
@@ -715,10 +709,7 @@ local function OpenCustomWheelsMenu(menu)
     })
     local currentCustomWheelState = GetCurrentCustomWheelState()
     if currentCustomWheelState == 0 then
-        menu:AddButton({
-            label = "Disable ~g~- Installed",
-            description = "",
-        })
+        menu:AddButton({label = "Disable ~g~- Installed", description = ""})
         menu:AddButton({
             label = "Enable",
             description = "Améliorer 🔧",
@@ -736,10 +727,7 @@ local function OpenCustomWheelsMenu(menu)
                 ApplyCustomWheel(0)
             end,
         })
-        menu:AddButton({
-            label = "Enable ~g~- Installed",
-            description = "",
-        })
+        menu:AddButton({label = "Enable ~g~- Installed", description = ""})
     end
     menu:On("close", function()
         menu:Close()
@@ -760,9 +748,7 @@ local function OpenTyreSmokeMenu(menu)
     local currentWheelSmokeR, currentWheelSmokeG, currentWheelSmokeB = GetCurrentVehicleWheelSmokeColour()
     for k, v in ipairs(Config.vehicleTyreSmokeOptions) do
         if v.r == currentWheelSmokeR and v.g == currentWheelSmokeG and v.b == currentWheelSmokeB then
-            menu:AddButton({
-                label = v.name .. " ~g~- Installed",
-            })
+            menu:AddButton({label = v.name .. " ~g~- Installed"})
         else
             menu:AddButton({
                 label = v.name,
@@ -943,10 +929,7 @@ local function OpenNeonColoursMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonColours) do
         if currentNeonR == Config.vehicleNeonOptions.neonColours[k].r and currentNeonG == Config.vehicleNeonOptions.neonColours[k].g and currentNeonB ==
             Config.vehicleNeonOptions.neonColours[k].b then
-            menu:AddButton({
-                label = v.name .. " ~g~- Installed",
-                value = k,
-            })
+                menu:AddButton({label = v.name .. " ~g~- Installed", value = k})
         else
             menu:AddButton({
                 label = v.name,
@@ -984,10 +967,7 @@ local function OpenNeonStateMenu(menu, v, k)
         end,
     })
     if currentNeonState == 0 then
-        menu:AddButton({
-            label = "Disable ~g~- Installed",
-            value = 0,
-        })
+        menu:AddButton({label = "Disable ~g~- Installed", value = 0})
         menu:AddButton({
             label = "Enable",
             value = 1,
@@ -1007,10 +987,7 @@ local function OpenNeonStateMenu(menu, v, k)
                 ApplyNeon(v.id, 0)
             end,
         })
-        menu:AddButton({
-            label = "Enable ~g~- Installed",
-            value = 1,
-        })
+        menu:AddButton({label = "Enable ~g~- Installed", value = 1})
     end
     local eventneonstateon = menu:On("switch", function(item, currentItem, prevItem)
         PreviewNeon(v.id, currentItem.Value)
@@ -1064,10 +1041,7 @@ local function OpenXenonsColoursMenu(menu)
     local currentXenonColour = GetCurrentXenonColour()
     for k, v in ipairs(Config.vehicleXenonOptions.xenonColours) do
         if currentXenonColour == v.id then
-            menu:AddButton({
-                label = v.name .. " ~g~- Installed",
-                value = v.id,
-            })
+            menu:AddButton({label = v.name .. " ~g~- Installed", value = v.id})
         else
             menu:AddButton({
                 label = v.name,
@@ -1103,10 +1077,7 @@ local function OpenXenonsHeadlightsMenu(menu)
     })
     local currentXenonState = GetCurrentXenonState()
     if currentXenonState == 0 then
-        menu:AddButton({
-            label = "Disable Xenons ~g~- Installed",
-            description = "",
-        })
+        menu:AddButton({label = "Disable Xenons ~g~- Installed", description = ""})
         menu:AddButton({
             label = "Enable Xenons",
             description = "Améliorer 🔧",
@@ -1124,9 +1095,7 @@ local function OpenXenonsHeadlightsMenu(menu)
                 ApplyXenonLights(22, 0)
             end,
         })
-        menu:AddButton({
-            label = "Enable Xenons ~g~- Installed",
-        })
+        menu:AddButton({label = "Enable Xenons ~g~- Installed"})
     end
     menu:On("close", function()
         menu:Close()
@@ -1174,10 +1143,7 @@ local function OpenWindowTintMenu(menu)
 
     for k, v in ipairs(Config.vehicleWindowTintOptions) do
         if currentWindowTint == v.id then
-            menu:AddButton({
-                label = v.name .. " ~g~- Installed",
-                value = v.id,
-            })
+            menu:AddButton({label = v.name .. " ~g~- Installed", value = v.id})
         else
             menu:AddButton({
                 label = v.name,
@@ -1213,11 +1179,7 @@ local function OpenSpoilersMenu(menu, k, v, validMods, currentMod)
     })
     for m, n in pairs(validMods) do
         if currentMod == n.id then
-            menu:AddButton({
-                label = n.name,
-                rightLabel = " ~g~- Installed",
-                value = n.id,
-            })
+            menu:AddButton({label = n.name, rightLabel = " ~g~- Installed", value = n.id})
         else
             menu:AddButton({
                 label = n.name,
@@ -1258,10 +1220,7 @@ local function OpenOldLiveryMenu(menu)
         if GetVehicleClass(plyVeh) ~= 18 then
             for i = 0, GetVehicleLiveryCount(plyVeh) - 1 do
                 if tempOldLivery == i then
-                    menu:AddButton({
-                        label = i " ~g~- Installed",
-                        value = i,
-                    })
+                    menu:AddButton({label = i " ~g~- Installed", value = i})
                 else
                     menu:AddButton({
                         label = i,
@@ -1309,9 +1268,7 @@ local function OpenExtrasMenu(menu)
                     end,
                 })
             else
-                menu:AddButton({
-                    label = "No Option",
-                })
+                menu:AddButton({label = "No Option"})
             end
         end
     end
@@ -1345,10 +1302,7 @@ local function OpenPlateIndexMenu(menu)
         for i = 0, #plateTypes - 1 do
             if i ~= 4 then
                 if tempPlateIndex == i then
-                    menu:AddButton({
-                        label = plateTypes[i + 1] .. " ~g~- Installed",
-                        value = i + 1,
-                    })
+                    menu:AddButton({label = plateTypes[i + 1] .. " ~g~- Installed", value = i + 1})
                 else
                     menu:AddButton({
                         label = plateTypes[i + 1],
@@ -1662,18 +1616,15 @@ local function GenerateOpenListMenu()
 end
 
 local function RepairPart(part)
-    TriggerEvent("animations:client:EmoteCommandStart", {
-        "mechanic",
-    })
-    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true, {
+    TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
+    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true,
+                                 {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        TriggerEvent("animations:client:EmoteCommandStart", {
-            "c",
-        })
+        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
         TriggerEvent("qb-vehicletuning:client:RepaireeePart", part)
         SetTimeout(250, function()
             OpenPartsMenu(Status)
@@ -1996,16 +1947,13 @@ RegisterNetEvent("vehiclemod:client:repairPart", function(part, level, needAmoun
                             lockpickTime = lockpickTime / 10
                         end
                         ScrapAnim(lockpickTime)
-                        QBCore.Functions.Progressbar("repair_advanced", "Repair Vehicle", lockpickTime, false, true, {
+                        QBCore.Functions.Progressbar("repair_advanced", "Repair Vehicle", lockpickTime, false, true,
+                                                     {
                             disableMovement = true,
                             disableCarMovement = true,
                             disableMouse = false,
                             disableCombat = true,
-                        }, {
-                            animDict = "mp_car_bomb",
-                            anim = "car_bomb_mechanic",
-                            flags = 16,
-                        }, {}, {}, function() -- Done
+                        }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
                             openingDoor = false
                             ClearPedTasks(PlayerPedId())
                             if part == "body" then
