@@ -41,6 +41,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     local src = source
     PlayerData = PlayerData or {}
     PlayerData.source = src
+    PlayerData.is_default = PlayerData.is_default or 1
     PlayerData.citizenid = PlayerData.citizenid or QBCore.Player.CreateCitizenId()
     PlayerData.license = PlayerData.license or QBCore.Functions.GetIdentifier(src, 'license')
     PlayerData.name = GetPlayerName(src)
@@ -379,7 +380,7 @@ function QBCore.Player.Save(source)
     local pcoords = GetEntityCoords(ped)
     local PlayerData = QBCore.Players[src].PlayerData
     if PlayerData then
-        exports.oxmysql:insert('INSERT INTO players (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata', {
+        exports.oxmysql:insert('INSERT INTO players (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, is_default) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :is_default) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, is_default = :is_default', {
             citizenid = PlayerData.citizenid,
             cid = tonumber(PlayerData.cid),
             license = PlayerData.license,
@@ -389,9 +390,11 @@ function QBCore.Player.Save(source)
             job = json.encode(PlayerData.job),
             gang = json.encode(PlayerData.gang),
             position = json.encode(pcoords),
-            metadata = json.encode(PlayerData.metadata)
+            metadata = json.encode(PlayerData.metadata),
+            is_default = PlayerData.is_default,
         })
-        TriggerEvent('inventory:CreatePlayerInventory', PlayerData)
+
+        exports['soz-inventory']:CreatePlayerInventory(PlayerData)
         exports['soz-monitor']:Log('INFO', 'Save player !', PlayerData)
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', PlayerData)

@@ -23,3 +23,4 @@ client_script {
 
 server_script {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/grade.lua", "server/temporary.lua"}
 
+dependencies {"qb-target"}
