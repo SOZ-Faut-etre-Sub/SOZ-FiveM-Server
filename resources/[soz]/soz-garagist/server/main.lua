@@ -1,4 +1,4 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 local VehicleStatus = {}
 
 RegisterNetEvent("soz-garagist:server:SaveVehicleProps", function(vehicleProps)
