@@ -58,7 +58,7 @@ Config.vehicleXenonOptions = {
         {name = "Rose chaud", id = 10},
         {name = "Violet", id = 11},
         {name = "Noir léger", id = 12},
-    }
+    },
 }
 
 Config.vehicleWheelOptions = {
@@ -366,13 +366,14 @@ Config.vehicleResprayOptions = {
             {name = "Bright Purple", id = 145},
             {name = "Cream", id = 107},
             {name = "Ice White", id = 111},
-            {name = "Frost White", id = 112}
+            {name = "Frost White", id = 112},
         },
     },
     {
         category = "Matte",
         id = 2,
-        colours = {{name = "Black", id = 12},
+        colours = {
+            {name = "Black", id = 12},
             {name = "Gray", id = 13},
             {name = "Light Gray", id = 14},
             {name = "Ice White", id = 131},
@@ -397,7 +398,8 @@ Config.vehicleResprayOptions = {
     {
         category = "Metals",
         id = 3,
-            colours = {{name = "Brushed Steel", id = 117},
+        colours = {
+            {name = "Brushed Steel", id = 117},
             {name = "Brushed Black Steel", id = 118},
             {name = "Brushed Aluminium", id = 119},
             {name = "Pure Gold", id = 158},
