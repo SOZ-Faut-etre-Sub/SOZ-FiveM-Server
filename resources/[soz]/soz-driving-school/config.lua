@@ -3,6 +3,7 @@ Config = {}
 Config.BlipName = "Auto-école"
 Config.BlipSprite = 545
 Config.BlipColor = 25
+Config.BlipScale = 0.8
 -- Blip coords are the same as Config.Peds.secretary (x, y)
 
 -- Coords where to teleport player to, at the end of exam
