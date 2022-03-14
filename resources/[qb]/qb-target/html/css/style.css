@@ -34,6 +34,11 @@ body {
   text-shadow: 0.1vh 0.1vh 0.1vh #000000;
 }
 
+#target-label > div:hover {
+  transform: translateX(8%);
+  transition: all 0.8s ease-in-out;
+}
+
 #target-label > div {
   background: linear-gradient(to right, rgba(0, 0, 0, .5) 40%, rgba(0, 0, 0, 0) 100%);
 
