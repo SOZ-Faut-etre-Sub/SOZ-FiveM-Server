@@ -1,937 +1,414 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-
+VehicleStatus = {}
+OnDuty = false
 local PlayerJob = {}
-local onDuty = false
 local effectTimer = 0
 
-local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:options")
-local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
-local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
-local NoDamage = MenuV:InheritMenu(Status, "No Damage")
-local PartMenu = MenuV:InheritMenu(Status, "Part Menu")
-local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:wash")
+OriginalCategory = nil
+OriginalMod = nil
+OriginalPrimaryColour = nil
+OriginalSecondaryColour = nil
+OriginalPearlescentColour = nil
+OriginalWheelColour = nil
+OriginalDashColour = nil
+OriginalInterColour = nil
+OriginalWindowTint = nil
+OriginalWheelCategory = nil
+OriginalWheel = nil
+OriginalWheelType = nil
+OriginalCustomWheels = nil
+OriginalNeonLightState = nil
+OriginalNeonLightSide = nil
+OriginalNeonColourR = nil
+OriginalNeonColourG = nil
+OriginalNeonColourB = nil
+OriginalXenonColour = nil
+OriginalOldLivery = nil
+OriginalPlateIndex = nil
 
-local SpoilersMenu = MenuV:InheritMenu(VehiculeCustom, "Choisir un mod")
-local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Personnalisations autres")
-local ResprayMenu = MenuV:InheritMenu(VehiculeCustom, "Peinture")
-local ResprayTypeMenu = MenuV:InheritMenu(ResprayMenu, "Type de Peinture")
-local ResprayColoursMenu = MenuV:InheritMenu(ResprayMenu, "Couleurs de Peinture")
-local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinte Fenêtre")
-local NeonsMenu = MenuV:InheritMenu(VehiculeCustom, "Néons")
-local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Etat des Néons")
-local NeonColoursMenu = MenuV:InheritMenu(NeonsMenu, "Couleur des Néons")
-local XenonsMenu = MenuV:InheritMenu(VehiculeCustom, "Xénons")
-local XenonsHeadlightsMenu = MenuV:InheritMenu(XenonsMenu, "Phares des Xénons")
-local XenonsColoursMenu = MenuV:InheritMenu(XenonsMenu, "Couleur des Xénons")
+CreateThread(function()
+    local c = Config.Locations["exit"]
+    local Blip = AddBlipForCoord(c.x, c.y, c.z)
+    SetBlipSprite(Blip, 446)
+    SetBlipDisplay(Blip, 4)
+    SetBlipScale(Blip, 0.7)
+    SetBlipAsShortRange(Blip, true)
+    SetBlipColour(Blip, 0)
+    SetBlipAlpha(Blip, 0.7)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName("Benny's")
+    EndTextCommandSetBlipName(Blip)
+end)
 
-local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Roues")
-local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fumée de roue")
-local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Activer ou désactiver les roues personnalisées")
-local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choisir une roue")
-
-local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Livrée de base")
-local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Immatriculation")
-
-local function OpenChooseWheelMenu(menu, k, v)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local validMods, amountValidMods = CheckValidMods(v.category, v.wheelID, v.id)
-    for m, n in pairs(validMods) do
-        menu:AddButton({
-            label = n.name,
-            value = n.id,
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyWheel(v.category, n.id, v.id)
-                -- ApplyWheel(categoryID, wheelID, wheelType)
-            end,
-        })
+local function loadAnimDict(dict)
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Wait(5)
     end
-    local eventwheelon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewWheel(v.category, currentItem.Value, v.id)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventwheelon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalWheels()
+end
+
+function ScrapAnim(time)
+    local time = time / 1000
+    loadAnimDict("mp_car_bomb")
+    TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 3.0, 3.0, -1, 16, 0, false, false, false)
+    openingDoor = true
+    CreateThread(function()
+        while openingDoor do
+            TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
+            Wait(2000)
+            time = time - 2
+            if time <= 0 then
+                openingDoor = false
+                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+            end
+        end
     end)
 end
 
-local function OpenCustomWheelsMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Roues",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local currentCustomWheelState = GetCurrentCustomWheelState()
-    if currentCustomWheelState == 0 then
-        menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé", description = ""})
-        menu:AddButton({
-            label = "Activer",
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyCustomWheel(1)
-            end,
-        })
+
+RegisterNetEvent("soz-garagist:client:RepaireeePart", function(part)
+    local veh = Config.AttachedVehicle
+    local plate = QBCore.Functions.GetPlate(veh)
+    if part == "engine" then
+        SetVehicleEngineHealth(veh, Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-garagist:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
+    elseif part == "body" then
+        local enhealth = GetVehicleEngineHealth(veh)
+        SetVehicleBodyHealth(veh, Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-garagist:server:updatePart", plate, "body", Config.MaxStatusValues[part])
+        SetVehicleFixed(veh)
+        SetVehicleEngineHealth(veh, enhealth)
     else
-        menu:AddButton({
-            label = "Désactiver",
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyCustomWheel(0)
-            end,
-        })
-        menu:AddButton({label = "Activer", rightLabel = "~g~Installé", description = ""})
+        TriggerServerEvent("soz-garagist:server:updatePart", plate, part, Config.MaxStatusValues[part])
     end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+    exports["soz-hud"]:DrawNotification("Le " .. Config.ValuesLabels[part] .. " est réparé!")
+end)
 
-local function OpenTyreSmokeMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Wheels",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local currentWheelSmokeR, currentWheelSmokeG, currentWheelSmokeB = GetCurrentVehicleWheelSmokeColour()
-    for k, v in ipairs(Config.vehicleTyreSmokeOptions) do
-        if v.r == currentWheelSmokeR and v.g == currentWheelSmokeG and v.b == currentWheelSmokeB then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé"})
+RegisterNetEvent("soz-garagist:client:fixEverything", function()
+    if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+        if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
+            local plate = QBCore.Functions.GetPlate(veh)
+            TriggerServerEvent("soz-garagist:server:fixEverything", plate)
         else
-            menu:AddButton({
-                label = v.name,
-                description = "Améliorer 🔧",
-                select = function()
-                    menu:Close()
-                    ApplyTyreSmoke(v.r, v.g, v.b)
-                end,
-            })
+            exports["soz-hud"]:DrawNotification("~r~You Are Not The Driver Or On A Bicycle")
         end
-    end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
-
-local function OpenWheelsMenu(menu, isMotorcycle)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    for k, v in ipairs(Config.vehicleWheelOptions) do
-        if isMotorcycle then
-            if v.id == -1 or v.id == 20 or v.id == 6 then
-                menu:AddButton({
-                    label = v.category,
-                    description = "",
-                    select = function()
-                        if v.id == 20 then
-                            OpenTyreSmokeMenu(TyreSmokeMenu)
-                        elseif v.id == -1 then
-                            OpenCustomWheelsMenu(CustomWheelsMenu)
-                        elseif v.id == 6 then
-                            OpenChooseWheelMenu(ChooseWheelMenu, k, v)
-                        end
-                    end,
-                })
-            end
-        elseif v.id ~= 6 then
-            menu:AddButton({
-                label = v.category,
-                description = "",
-                select = function()
-                    if v.id == 20 then
-                        OpenTyreSmokeMenu(TyreSmokeMenu)
-                    elseif v.id == -1 then
-                        OpenCustomWheelsMenu(CustomWheelsMenu)
-                    else
-                        OpenChooseWheelMenu(ChooseWheelMenu, k, v)
-                    end
-                end,
-            })
-        end
-    end
-end
-
-local function OpenResprayColoursMenu(menu, v, colorcat)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-
-    for m, n in ipairs(v.colours) do
-        menu:AddButton({
-            label = n.name,
-            description = "Améliorer 🔧",
-            value = n.id,
-            select = function()
-                menu:Close()
-                ApplyColour(colorcat, v.id, n.id)
-            end,
-        })
-    end
-    local eventresprayon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewColour(colorcat, v.id, currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventresprayon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalColours()
-    end)
-end
-
-local function OpenResprayTypeMenu(menu, colorcat)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Colour category",
-        select = function()
-            menu:Close()
-        end,
-    })
-
-    for k, v in ipairs(Config.vehicleResprayOptions) do
-        menu:AddButton({
-            label = v.category,
-            description = "",
-            select = function()
-                OpenResprayColoursMenu(ResprayColoursMenu, v, colorcat)
-            end,
-        })
-    end
-end
-
-local function OpenResprayMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-
-    menu:AddButton({
-        label = "Couleur Principale",
-        select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 0)
-        end,
-    })
-    menu:AddButton({
-        label = "Couleur Secondaire",
-        select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 1)
-        end,
-    })
-    menu:AddButton({
-        label = "Couleur Nacré",
-        select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 2)
-        end,
-    })
-    menu:AddButton({
-        label = "Couleur des Roues",
-        select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 3)
-        end,
-    })
-    menu:AddButton({
-        label = "Couleur du Tableau de bord",
-        select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 4)
-        end,
-    })
-    menu:AddButton({
-        label = "Couleur Intérieure",
-        select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 5)
-        end,
-    })
-end
-
-local function OpenNeonColoursMenu(menu)
-    local currentNeonR, currentNeonG, currentNeonB = GetCurrentNeonColour()
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Neons Menu",
-        select = function()
-            menu:Close()
-        end,
-    })
-    for k, v in ipairs(Config.vehicleNeonOptions.neonColours) do
-        if currentNeonR == Config.vehicleNeonOptions.neonColours[k].r and currentNeonG == Config.vehicleNeonOptions.neonColours[k].g and currentNeonB ==
-            Config.vehicleNeonOptions.neonColours[k].b then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = k})
-        else
-            menu:AddButton({
-                label = v.name,
-                value = k,
-                description = "Améliorer 🔧",
-                select = function()
-                    menu:Close()
-                    ApplyNeonColour(Config.vehicleNeonOptions.neonColours[k].r, Config.vehicleNeonOptions.neonColours[k].g,
-                                    Config.vehicleNeonOptions.neonColours[k].b)
-                end,
-            })
-        end
-    end
-    local eventneoncolon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewNeonColour(Config.vehicleNeonOptions.neonColours[currentItem.Value].r, Config.vehicleNeonOptions.neonColours[currentItem.Value].g,
-                          Config.vehicleNeonOptions.neonColours[currentItem.Value].b)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventneoncolon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalNeonColours()
-    end)
-end
-
-local function OpenNeonStateMenu(menu, v, k)
-    local currentNeonState = GetCurrentNeonState(v.id)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Neons Menu",
-        select = function()
-            menu:Close()
-        end,
-    })
-    if currentNeonState == 0 then
-        menu:AddButton({label = "Désactiver ~g~- Installé", value = 0})
-        menu:AddButton({
-            label = "Activer",
-            value = 1,
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyNeon(v.id, 1)
-            end,
-        })
     else
-        menu:AddButton({
-            label = "Désactiver - $0",
-            value = 0,
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyNeon(v.id, 0)
-            end,
-        })
-        menu:AddButton({label = "Activer ~g~- Installé", value = 1})
+        exports["soz-hud"]:DrawNotification("~r~You Are Not In A Vehicle")
     end
-    local eventneonstateon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewNeon(v.id, currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventneonstateon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalNeonStates()
-    end)
-end
+end)
 
-local function OpenNeonsMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    for k, v in ipairs(Config.vehicleNeonOptions.neonTypes) do
-        menu:AddButton({
-            label = v.name,
-            description = "Activer ou Désactiver Neon",
-            select = function()
-                OpenNeonStateMenu(NeonStateMenu, v, k)
-            end,
-        })
-    end
-    menu:AddButton({
-        label = "Neon Colours",
-        description = "",
-        select = function()
-            OpenNeonColoursMenu(NeonColoursMenu)
-        end,
-    })
-end
-
-local function OpenXenonsColoursMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Menu Xenon",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local currentXenonColour = GetCurrentXenonColour()
-    for k, v in ipairs(Config.vehicleXenonOptions.xenonColours) do
-        if currentXenonColour == v.id then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
-        else
-            menu:AddButton({
-                label = v.name,
-                value = v.id,
-                description = "Améliorer 🔧",
-                select = function()
-                    menu:Close()
-                    ApplyXenonColour(v.id)
-                end,
-            })
-        end
-    end
-    local eventxenoncolon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewXenonColour(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventxenoncolon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalXenonColour()
-    end)
-end
-
-local function OpenXenonsHeadlightsMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Menu Xenon",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local currentXenonState = GetCurrentXenonState()
-    if currentXenonState == 0 then
-        menu:AddButton({label = "Désactiver Xenons ~g~- Installé", description = ""})
-        menu:AddButton({
-            label = "Activer Xenons",
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyXenonLights(22, 1)
-            end,
-        })
-    else
-        menu:AddButton({
-            label = "Désactiver Xenons - $0",
-            description = "Améliorer 🔧",
-            select = function()
-                menu:Close()
-                ApplyXenonLights(22, 0)
-            end,
-        })
-        menu:AddButton({label = "Activer Xenons ~g~- Installé"})
-    end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
-
-local function OpenXenonsMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    menu:AddButton({
-        label = "Headlights",
-        description = "",
-        select = function()
-            OpenXenonsHeadlightsMenu(XenonsHeadlightsMenu)
-        end,
-    })
-    menu:AddButton({
-        label = "Xenon Colours",
-        description = "",
-        select = function()
-            OpenXenonsColoursMenu(XenonsColoursMenu)
-        end,
-    })
-end
-
-local function OpenWindowTintMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local currentWindowTint = GetCurrentWindowTint()
-
-    for k, v in ipairs(Config.vehicleWindowTintOptions) do
-        if currentWindowTint == v.id then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
-        else
-            menu:AddButton({
-                label = v.name,
-                value = v.id,
-                description = "Améliorer 🔧",
-                select = function()
-                    menu:Close()
-                    ApplyWindowTint(v.id)
-                end,
-            })
-        end
-    end
-    local eventwindowon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewWindowTint(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventwindowon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalWindowTint()
-    end)
-end
-
-local function OpenSpoilersMenu(menu, k, v, validMods, currentMod)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    for m, n in pairs(validMods) do
-        if currentMod == n.id then
-            menu:AddButton({label = n.name, rightLabel = " ~g~- Installé", value = n.id})
-        else
-            menu:AddButton({
-                label = n.name,
-                value = n.id,
-                description = "Améliorer 🔧",
-                select = function()
-                    menu:Close()
-                    ApplyMod(v.id, n.id)
-                end,
-            })
-        end
-    end
-    local eventspoileron = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewMod(v.id, currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventspoileron)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalMod()
-    end)
-end
-
-local function OpenOldLiveryMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
-    local livCount = GetVehicleLiveryCount(plyVeh)
-    if livCount > 0 then
-        local tempOldLivery = GetVehicleLivery(plyVeh)
-        if GetVehicleClass(plyVeh) ~= 18 then
-            for i = 0, GetVehicleLiveryCount(plyVeh) - 1 do
-                if tempOldLivery == i then
-                    menu:AddButton({label = i " ~g~- Installé", value = i})
-                else
-                    menu:AddButton({
-                        label = i,
-                        value = i,
-                        description = "Améliorer 🔧",
-                        select = function()
-                            menu:Close()
-                            ApplyOldLivery(i)
-                        end,
-                    })
-                end
-            end
-        end
-    end
-    local eventoldlivon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewOldLivery(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventoldlivon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOldLivery()
-    end)
-end
-
-local function OpenExtrasMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
-    if GetVehicleClass(plyVeh) ~= 18 then
-        for i = 1, 12 do
-            if DoesExtraExist(plyVeh, i) then
-                menu:AddButton({
-                    label = "Extra " .. tostring(i) .. " Toggle",
-                    select = function()
-                        menu:Close()
-                        ApplyExtra(i)
-                    end,
-                })
-            else
-                menu:AddButton({label = "No Option"})
-            end
-        end
-    end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
-
-local function OpenPlateIndexMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
-    local tempPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
-    local plateTypes = {
-        "Blue on White #1",
-        "Yellow on Black",
-        "Yellow on Blue",
-        "Blue on White #2",
-        "Blue on White #3",
-        "North Yankton",
-    }
-    if GetVehicleClass(plyVeh) ~= 18 then
-        for i = 0, #plateTypes - 1 do
-            if i ~= 4 then
-                if tempPlateIndex == i then
-                    menu:AddButton({label = plateTypes[i + 1], rightLabel = "~g~Installé", value = i + 1})
-                else
-                    menu:AddButton({
-                        label = plateTypes[i + 1],
-                        value = i + 1,
-                        description = "Améliorer 🔧",
-                        select = function()
-                            menu:Close()
-                            ApplyPlateIndex(i + 1)
-                        end,
-                    })
-                end
-            end
-        end
-    end
-    local eventplateon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewPlateIndex(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventplateon)
-        menu:Close()
-        menu:ClearItems()
-        RestorePlateIndex()
-    end)
-end
-
-local function OpenPart(menu, v, k)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    local partName = v
-    local part = k
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    menu:AddButton({
-        label = "Réparer " .. partName .. " 🔧",
-        select = function()
-            menu:Close()
-            TriggerEvent("soz-mechanicjob:client:RepairPart", part)
-        end,
-    })
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
-
-local function OpenNoDamageMenu(menu, v, k)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        description = "Cette pièce n'est pas endommagée",
-        select = function()
-            menu:Close()
-        end,
-    })
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
-
-local function OpenPartsMenu(menu)
-    local plate = QBCore.Functions.GetPlate(Config.AttachedVehicle)
+function GetVehicleStatusList(plate)
+    local retval = nil
     if VehicleStatus[plate] ~= nil then
-        menu:ClearItems()
-        MenuV:OpenMenu(menu)
-        menu:AddButton({
-            icon = "◀",
-            label = "Menu Benny's",
-            select = function()
-                menu:Close()
-            end,
-        })
-        for k, v in pairs(Config.ValuesLabels) do
-            if math.ceil(VehicleStatus[plate][k]) ~= Config.MaxStatusValues[k] then
-                local percentage = math.ceil(VehicleStatus[plate][k])
-                if percentage > 100 then
-                    percentage = math.ceil(VehicleStatus[plate][k]) / 10
+        retval = VehicleStatus[plate]
+    end
+    return retval
+end
+
+function GetVehicleStatus(plate, part)
+    local retval = nil
+    if VehicleStatus[plate] ~= nil then
+        retval = VehicleStatus[plate][part]
+    end
+    return retval
+end
+
+function SetVehicleStatus(plate, part, level)
+    TriggerServerEvent("soz-garagist:server:updatePart", plate, part, level)
+end
+
+exports("GetVehicleStatusList", GetVehicleStatusList)
+exports("GetVehicleStatus", GetVehicleStatus)
+exports("SetVehicleStatus", SetVehicleStatus)
+
+function ApplyEffects(vehicle)
+    local plate = QBCore.Functions.GetPlate(vehicle)
+    if GetVehicleClass(vehicle) ~= 13 and GetVehicleClass(vehicle) ~= 21 and GetVehicleClass(vehicle) ~= 16 and GetVehicleClass(vehicle) ~= 15 and
+        GetVehicleClass(vehicle) ~= 14 then
+        if VehicleStatus[plate] ~= nil then
+            local chance = math.random(1, 100)
+            if VehicleStatus[plate]["radiator"] <= 80 and (chance >= 1 and chance <= 20) then
+                local engineHealth = GetVehicleEngineHealth(vehicle)
+                if VehicleStatus[plate]["radiator"] <= 80 and VehicleStatus[plate]["radiator"] >= 60 then
+                    SetVehicleEngineHealth(vehicle, engineHealth - math.random(10, 15))
+                elseif VehicleStatus[plate]["radiator"] <= 59 and VehicleStatus[plate]["radiator"] >= 40 then
+                    SetVehicleEngineHealth(vehicle, engineHealth - math.random(15, 20))
+                elseif VehicleStatus[plate]["radiator"] <= 39 and VehicleStatus[plate]["radiator"] >= 20 then
+                    SetVehicleEngineHealth(vehicle, engineHealth - math.random(20, 30))
+                elseif VehicleStatus[plate]["radiator"] <= 19 and VehicleStatus[plate]["radiator"] >= 6 then
+                    SetVehicleEngineHealth(vehicle, engineHealth - math.random(30, 40))
+                else
+                    SetVehicleEngineHealth(vehicle, engineHealth - math.random(40, 50))
                 end
-                menu:AddButton({
-                    label = v,
-                    description = "Etat: " .. percentage .. "% / 100.0%",
-                    select = function()
-                        OpenPart(PartMenu, v, k)
-                    end,
-                })
-            else
-                local percentage = math.ceil(Config.MaxStatusValues[k])
-                if percentage > 100 then
-                    percentage = math.ceil(Config.MaxStatusValues[k]) / 10
+            end
+
+            if VehicleStatus[plate]["axle"] <= 80 and (chance >= 21 and chance <= 40) then
+                if VehicleStatus[plate]["axle"] <= 80 and VehicleStatus[plate]["axle"] >= 60 then
+                    for i = 0, 360 do
+                        SetVehicleSteeringScale(vehicle, i)
+                        Wait(5)
+                    end
+                elseif VehicleStatus[plate]["axle"] <= 59 and VehicleStatus[plate]["axle"] >= 40 then
+                    for i = 0, 360 do
+                        Wait(10)
+                        SetVehicleSteeringScale(vehicle, i)
+                    end
+                elseif VehicleStatus[plate]["axle"] <= 39 and VehicleStatus[plate]["axle"] >= 20 then
+                    for i = 0, 360 do
+                        Wait(15)
+                        SetVehicleSteeringScale(vehicle, i)
+                    end
+                elseif VehicleStatus[plate]["axle"] <= 19 and VehicleStatus[plate]["axle"] >= 6 then
+                    for i = 0, 360 do
+                        Wait(20)
+                        SetVehicleSteeringScale(vehicle, i)
+                    end
+                else
+                    for i = 0, 360 do
+                        Wait(25)
+                        SetVehicleSteeringScale(vehicle, i)
+                    end
                 end
-                menu:AddButton({
-                    label = v,
-                    description = "Etat: " .. percentage .. "% / 100.0%",
-                    select = function()
-                        OpenNoDamageMenu(NoDamage)
-                    end,
-                })
+            end
+
+            if VehicleStatus[plate]["brakes"] <= 80 and (chance >= 41 and chance <= 60) then
+                if VehicleStatus[plate]["brakes"] <= 80 and VehicleStatus[plate]["brakes"] >= 60 then
+                    SetVehicleHandbrake(vehicle, true)
+                    Wait(1000)
+                    SetVehicleHandbrake(vehicle, false)
+                elseif VehicleStatus[plate]["brakes"] <= 59 and VehicleStatus[plate]["brakes"] >= 40 then
+                    SetVehicleHandbrake(vehicle, true)
+                    Wait(3000)
+                    SetVehicleHandbrake(vehicle, false)
+                elseif VehicleStatus[plate]["brakes"] <= 39 and VehicleStatus[plate]["brakes"] >= 20 then
+                    SetVehicleHandbrake(vehicle, true)
+                    Wait(5000)
+                    SetVehicleHandbrake(vehicle, false)
+                elseif VehicleStatus[plate]["brakes"] <= 19 and VehicleStatus[plate]["brakes"] >= 6 then
+                    SetVehicleHandbrake(vehicle, true)
+                    Wait(7000)
+                    SetVehicleHandbrake(vehicle, false)
+                else
+                    SetVehicleHandbrake(vehicle, true)
+                    Wait(9000)
+                    SetVehicleHandbrake(vehicle, false)
+                end
+            end
+
+            if VehicleStatus[plate]["clutch"] <= 80 and (chance >= 61 and chance <= 80) then
+                if VehicleStatus[plate]["clutch"] <= 80 and VehicleStatus[plate]["clutch"] >= 60 then
+                    SetVehicleHandbrake(vehicle, true)
+                    SetVehicleEngineOn(vehicle, 0, 0, 1)
+                    SetVehicleUndriveable(vehicle, true)
+                    Wait(50)
+                    SetVehicleEngineOn(vehicle, 1, 0, 1)
+                    SetVehicleUndriveable(vehicle, false)
+                    for i = 1, 360 do
+                        SetVehicleSteeringScale(vehicle, i)
+                        Wait(5)
+                    end
+                    Wait(500)
+                    SetVehicleHandbrake(vehicle, false)
+                elseif VehicleStatus[plate]["clutch"] <= 59 and VehicleStatus[plate]["clutch"] >= 40 then
+                    SetVehicleHandbrake(vehicle, true)
+                    SetVehicleEngineOn(vehicle, 0, 0, 1)
+                    SetVehicleUndriveable(vehicle, true)
+                    Wait(100)
+                    SetVehicleEngineOn(vehicle, 1, 0, 1)
+                    SetVehicleUndriveable(vehicle, false)
+                    for i = 1, 360 do
+                        SetVehicleSteeringScale(vehicle, i)
+                        Wait(5)
+                    end
+                    Wait(750)
+                    SetVehicleHandbrake(vehicle, false)
+                elseif VehicleStatus[plate]["clutch"] <= 39 and VehicleStatus[plate]["clutch"] >= 20 then
+                    SetVehicleHandbrake(vehicle, true)
+                    SetVehicleEngineOn(vehicle, 0, 0, 1)
+                    SetVehicleUndriveable(vehicle, true)
+                    Wait(150)
+                    SetVehicleEngineOn(vehicle, 1, 0, 1)
+                    SetVehicleUndriveable(vehicle, false)
+                    for i = 1, 360 do
+                        SetVehicleSteeringScale(vehicle, i)
+                        Wait(5)
+                    end
+                    Wait(1000)
+                    SetVehicleHandbrake(vehicle, false)
+                elseif VehicleStatus[plate]["clutch"] <= 19 and VehicleStatus[plate]["clutch"] >= 6 then
+                    SetVehicleHandbrake(vehicle, true)
+                    SetVehicleEngineOn(vehicle, 0, 0, 1)
+                    SetVehicleUndriveable(vehicle, true)
+                    Wait(200)
+                    SetVehicleEngineOn(vehicle, 1, 0, 1)
+                    SetVehicleUndriveable(vehicle, false)
+                    for i = 1, 360 do
+                        SetVehicleSteeringScale(vehicle, i)
+                        Wait(5)
+                    end
+                    Wait(1250)
+                    SetVehicleHandbrake(vehicle, false)
+                else
+                    SetVehicleHandbrake(vehicle, true)
+                    SetVehicleEngineOn(vehicle, 0, 0, 1)
+                    SetVehicleUndriveable(vehicle, true)
+                    Wait(250)
+                    SetVehicleEngineOn(vehicle, 1, 0, 1)
+                    SetVehicleUndriveable(vehicle, false)
+                    for i = 1, 360 do
+                        SetVehicleSteeringScale(vehicle, i)
+                        Wait(5)
+                    end
+                    Wait(1500)
+                    SetVehicleHandbrake(vehicle, false)
+                end
+            end
+
+            if VehicleStatus[plate]["fuel"] <= 80 and (chance >= 81 and chance <= 100) then
+                local fuel = exports["soz-vehicle"]:GetFuel(vehicle)
+                if VehicleStatus[plate]["fuel"] <= 80 and VehicleStatus[plate]["fuel"] >= 60 then
+                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 2.0)
+                elseif VehicleStatus[plate]["fuel"] <= 59 and VehicleStatus[plate]["fuel"] >= 40 then
+                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 4.0)
+                elseif VehicleStatus[plate]["fuel"] <= 39 and VehicleStatus[plate]["fuel"] >= 20 then
+                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 6.0)
+                elseif VehicleStatus[plate]["fuel"] <= 19 and VehicleStatus[plate]["fuel"] >= 6 then
+                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 8.0)
+                else
+                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 10.0)
+                end
             end
         end
     end
 end
 
-local function OpenCustom(menu)
-    local veh = GetVehiclePedIsIn(PlayerPedId(), false)
-    local isMotorcycle = GetVehicleClass(plyVeh) == 8 -- Moto
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Menu Benny's",
-        select = function()
-            menu:Close()
-        end,
-    })
-    for k, v in ipairs(Config.vehicleCustomisationMechanic) do
-        local validMods, amountValidMods = CheckValidMods(v.category, v.id)
-        local currentMod, currentModName = GetCurrentMod(v.id)
-        if amountValidMods > 0 then
-            menu:AddButton({
-                label = v.category,
-                select = function()
-                    OpenSpoilersMenu(SpoilersMenu, k, v, validMods, currentMod)
-                end,
-            })
+RegisterNetEvent("soz-garagist:client:setVehicleStatus", function(plate, status)
+    VehicleStatus[plate] = status
+end)
+
+RegisterNetEvent("soz-garagist:client:getVehicleStatus", function(plate, status)
+    if not (IsPedInAnyVehicle(PlayerPedId(), false)) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
+        if veh ~= nil and veh ~= 0 then
+            local vehpos = GetEntityCoords(veh)
+            local pos = GetEntityCoords(PlayerPedId())
+            if #(pos - vehpos) < 5.0 then
+                if not IsThisModelABicycle(GetEntityModel(veh)) then
+                    local plate = QBCore.Functions.GetPlate(veh)
+                    if VehicleStatus[plate] ~= nil then
+                        SendStatusMessage(VehicleStatus[plate])
+                    else
+                        exports["soz-hud"]:DrawNotification("~r~Etat inconnu")
+                    end
+                else
+                    exports["soz-hud"]:DrawNotification("~r~Véhicule invalide")
+                end
+            else
+                exports["soz-hud"]:DrawNotification("~r~Vous n'êtes pas assez proche du véhicule")
+            end
+        else
+            exports["soz-hud"]:DrawNotification("~r~Vous devez d'abord être dans un véhicule")
+        end
+    else
+        exports["soz-hud"]:DrawNotification("~r~Vous devez être à l'extérieur du véhicule")
+    end
+end)
+
+RegisterNetEvent("soz-garagist:client:repairPart", function(part, level, needAmount)
+    if IsPedInAnyVehicle(PlayerPedId(), true) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
+        if veh ~= nil and veh ~= 0 then
+            local vehpos = GetEntityCoords(veh)
+            local pos = GetEntityCoords(PlayerPedId())
+            if #(pos - vehpos) < 5.0 then
+                if not IsThisModelABicycle(GetEntityModel(veh)) then
+                    local plate = QBCore.Functions.GetPlate(veh)
+                    if VehicleStatus[plate] ~= nil and VehicleStatus[plate][part] ~= nil then
+                        local lockpickTime = (1000 * level)
+                        if part == "body" then
+                            lockpickTime = lockpickTime / 10
+                        end
+                        ScrapAnim(lockpickTime)
+                        QBCore.Functions.Progressbar("repair_advanced", "Repair Vehicle", lockpickTime, false, true,
+                                                     {
+                            disableMovement = true,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
+                            openingDoor = false
+                            ClearPedTasks(PlayerPedId())
+                            if part == "body" then
+                                local enhealth = GetVehicleEngineHealth(veh)
+                                SetVehicleBodyHealth(veh, GetVehicleBodyHealth(veh) + level)
+                                SetVehicleFixed(veh)
+                                SetVehicleEngineHealth(veh, enhealth)
+                                TriggerServerEvent("soz-garagist:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
+                                TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], needAmount)
+                                TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.RepairCost[part]], "remove")
+                            elseif part ~= "engine" then
+                                TriggerServerEvent("soz-garagist:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
+                                TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], level)
+                                TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.RepairCost[part]], "remove")
+                            end
+                        end, function() -- Cancel
+                            openingDoor = false
+                            ClearPedTasks(PlayerPedId())
+                            exports["soz-hud"]:DrawNotification("~r~Process Canceled")
+                        end)
+                    else
+                        exports["soz-hud"]:DrawNotification("~r~Not A Valid Part")
+                    end
+                else
+                    exports["soz-hud"]:DrawNotification("~r~Not A Valid Vehicle")
+                end
+            else
+                exports["soz-hud"]:DrawNotification("~r~You Are Not Close Enough To The Vehicle")
+            end
+        else
+            exports["soz-hud"]:DrawNotification("~r~You Must Be In The Vehicle First")
+        end
+    else
+        exports["soz-hud"]:DrawNotification("~r~Youre Not In a Vehicle")
+    end
+end)
+
+CreateThread(function()
+    while true do
+        Wait(1000)
+        if (IsPedInAnyVehicle(PlayerPedId(), false)) then
+            local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+            if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
+                local engineHealth = GetVehicleEngineHealth(veh)
+                local bodyHealth = GetVehicleBodyHealth(veh)
+                local plate = QBCore.Functions.GetPlate(veh)
+                if VehicleStatus[plate] == nil then
+                    TriggerServerEvent("soz-garagist:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
+                else
+                    TriggerServerEvent("soz-garagist:server:updatePart", plate, "engine", engineHealth)
+                    TriggerServerEvent("soz-garagist:server:updatePart", plate, "body", bodyHealth)
+                    effectTimer = effectTimer + 1
+                    if effectTimer >= math.random(10, 15) then
+                        ApplyEffects(veh)
+                        effectTimer = 0
+                    end
+                end
+            else
+                effectTimer = 0
+                Wait(1000)
+            end
+        else
+            effectTimer = 0
+            Wait(2000)
         end
     end
-    menu:AddButton({
-        label = "Peinture",
-        select = function()
-            OpenResprayMenu(ResprayMenu)
-        end,
-    })
-    if not isMotorcycle then
-        menu:AddButton({
-            label = "Teinte Fenêtre",
-            select = function()
-                OpenWindowTintMenu(WindowTintMenu)
-            end,
-        })
-        menu:AddButton({
-            label = "Néons",
-            select = function()
-                OpenNeonsMenu(NeonsMenu)
-            end,
-        })
-    end
-    menu:AddButton({
-        label = "Xénons",
-        select = function()
-            OpenXenonsMenu(XenonsMenu)
-        end,
-    })
-    menu:AddButton({
-        label = "Roues",
-        select = function()
-            OpenWheelsMenu(WheelsMenu, isMotorcycle)
-        end,
-    })
-    menu:AddButton({
-        label = "Livrée de base",
-        select = function()
-            OpenOldLiveryMenu(OldLiveryMenu)
-        end,
-    })
-    menu:AddButton({
-        label = "Immatriculation",
-        select = function()
-            OpenPlateIndexMenu(PlateIndexMenu)
-        end,
-    })
-    menu:AddButton({
-        label = "Autres",
-        select = function()
-            OpenExtrasMenu(ExtrasMenu)
-        end,
-    })
-end
-
-local function OpenMenu(menu)
-    local veh = GetVehiclePedIsIn(PlayerPedId(), false)
-    FreezeEntityPosition(veh, true)
-    SetEntityHeading(veh, 90.0)
-    menu:AddButton({
-        icon = "◀",
-        label = "Libérer le véhicule",
-        description = "Détacher le véhicule de la plateforme",
-        select = function()
-            TriggerEvent("soz-mechanicjob:client:UnattachVehicle")
-            exports["soz-hud"]:DrawNotification("Véhicule libéré")
-            FreezeEntityPosition(veh, false)
-            menu:Close()
-            saveVehicle()
-        end,
-    })
-    menu:AddButton({
-        label = "Réparation du véhicule",
-        description = "Réparer les pièces du véhicule",
-        select = function()
-            OpenPartsMenu(Status)
-        end,
-    })
-    menu:AddButton({
-        label = "Customisation du véhicule",
-        description = "Changer les composants du véhicule",
-        select = function()
-            SetVehicleModKit(veh, 0)
-            OpenCustom(VehiculeCustom)
-        end,
-    })
-end
-
-local function WashMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Fermer menu",
-        select = function()
-            menu:Close()
-        end,
-    })
-    menu:AddButton({
-        label = "Lavage",
-        description = "Laver le véhicule",
-        select = function()
-            menu:Close()
-            TriggerEvent("qb-carwash:client:washCar")
-        end,
-    })
-end
-
-local function GenerateOpenMenu()
-    if VehiculeOptions.IsOpen then
-        VehiculeOptions:Close()
-    else
-        VehiculeOptions:ClearItems()
-        OpenMenu(VehiculeOptions)
-        VehiculeOptions:Open()
-    end
-end
-
-local function GenerateWashMenu()
-    if VehiculeWash.IsOpen then
-        VehiculeWash:Close()
-    else
-        VehiculeWash:ClearItems()
-        WashMenu(VehiculeWash)
-        VehiculeWash:Open()
-    end
-end
+end)
 
 local function UnattachVehicle()
     FreezeEntityPosition(Config.AttachedVehicle, false)
     Config.AttachedVehicle = nil
-    TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", false)
+    TriggerServerEvent("soz-garagist:server:SetAttachedVehicle", false)
 end
 
 local function SpawnListVehicle(model)
@@ -952,38 +429,6 @@ local function SpawnListVehicle(model)
     end, coords, true)
 end
 
-local VehicleList = MenuV:CreateMenu(nil, "Vehicle List", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:list")
-
-local function OpenListMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Fermer menu",
-        select = function()
-            menu:Close()
-        end,
-    })
-    for k, v in pairs(Config.Vehicles) do
-        menu:AddButton({
-            label = v,
-            description = "Emprunter le " .. v .. "",
-            select = function()
-                menu:Close()
-                TriggerEvent("soz-mechanicjob:client:SpawnListVehicle", k)
-            end,
-        })
-    end
-end
-
-local function GenerateOpenListMenu()
-    if VehicleList.IsOpen then
-        VehicleList:Close()
-    else
-        VehicleList:ClearItems()
-        OpenListMenu(VehicleList)
-        VehicleList:Open()
-    end
-end
-
 local function RepairPart(part)
     TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
     QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true,
@@ -994,7 +439,7 @@ local function RepairPart(part)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-        TriggerEvent("qb-vehicletuning:client:RepaireeePart", part)
+        TriggerEvent("soz-garagist:client:RepaireeePart", part)
         SetTimeout(250, function()
             OpenPartsMenu(Status)
         end)
@@ -1003,10 +448,6 @@ local function RepairPart(part)
     end)
 
 end
-
-------------
--- EVENTS --
-------------
 
 RegisterNetEvent("soz-mechanicjob:client:UnattachVehicle", function()
     UnattachVehicle()
@@ -1029,259 +470,28 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             end
         end
     end)
-    QBCore.Functions.TriggerCallback("qb-vehicletuning:server:GetAttachedVehicle", function(veh)
+    QBCore.Functions.TriggerCallback("soz-garagist:server:GetAttachedVehicle", function(veh)
         Config.AttachedVehicle = veh
     end)
 
-    QBCore.Functions.TriggerCallback("qb-vehicletuning:server:GetDrivingDistances", function(retval)
+    QBCore.Functions.TriggerCallback("soz-garagist:server:GetDrivingDistances", function(retval)
         DrivingDistance = retval
     end)
 end)
 
 RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
     PlayerJob = JobInfo
-    onDuty = PlayerJob.onduty
+    OnDuty = PlayerJob.onduty
 end)
 
 RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    onDuty = duty
+    OnDuty = duty
 end)
 
-RegisterNetEvent("qb-vehicletuning:client:SetAttachedVehicle", function(veh)
+RegisterNetEvent("soz-garagist:client:SetAttachedVehicle", function(veh)
     if veh ~= false then
         Config.AttachedVehicle = veh
     else
         Config.AttachedVehicle = nil
-    end
-end)
-
------------------------
--- POLYZONES & BLIPS --
------------------------
-
-CreateThread(function()
-    local c = Config.Locations["exit"]
-    local Blip = AddBlipForCoord(c.x, c.y, c.z)
-    SetBlipSprite(Blip, 446)
-    SetBlipDisplay(Blip, 4)
-    SetBlipScale(Blip, 0.7)
-    SetBlipAsShortRange(Blip, true)
-    SetBlipColour(Blip, 0)
-    SetBlipAlpha(Blip, 0.7)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Benny's")
-    EndTextCommandSetBlipName(Blip)
-end)
-
-Changemecha = BoxZone:Create(vector3(-205.29, -1331.31, 34.89), 5, 5, {
-    name = "Changemecha_z",
-    heading = 0,
-    minZ = 33.89,
-    maxZ = 37.89,
-})
-
-Dutymecha = BoxZone:Create(vector3(-204.9, -1337.93, 34.89), 5, 4, {
-    name = "Dutymecha_z",
-    heading = 0,
-    minZ = 33.89,
-    maxZ = 37.89,
-})
-
-Washmecha = BoxZone:Create(vector3(-198.92, -1324.4, 30.89), 8, 6, {
-    name = "Washmecha_z",
-    heading = 270,
-    minZ = 29.89,
-    maxZ = 33.89,
-})
-
-Vehiclemecha1 = BoxZone:Create(vector3(-222.43, -1324.31, 30.89), 7, 4, {
-    name = "Vehiclemecha1_z",
-    heading = 270,
-    minZ = 29.89,
-    maxZ = 33.89,
-})
-
-Vehiclemecha2 = BoxZone:Create(vector3(-222.23, -1329.66, 30.89), 7, 4, {
-    name = "Vehiclemecha2_z",
-    heading = 270,
-    minZ = 29.89,
-    maxZ = 33.89,
-})
-
-Vehiclespawn = BoxZone:Create(vector3(-163.47, -1301.73, 31.3), 20, 18, {
-    name = "Vehiclespawn_z",
-    heading = 90,
-    minZ = 30.3,
-    maxZ = 34.3,
-})
-
-Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        exports["qb-target"]:AddTargetModel(-2094907124, {
-            options = {
-                {
-                    type = "client",
-                    -- event = "QBCore:ToggleDuty",
-                    icon = "fas fa-tshirt",
-                    label = "Se changer",
-                    targeticon = "fas fa-wrench",
-                    action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
-                        -- TriggerServerEvent("QBCore:ToggleDuty")
-                    end,
-                },
-            },
-            distance = 2.5,
-        })
-    else
-        exports["qb-target"]:RemoveTargetModel(-2094907124, "Service")
-    end
-end)
-
-Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        exports["qb-target"]:AddTargetModel(829413118, {
-            options = {
-                {
-                    type = "client",
-                    event = "QBCore:ToggleDuty",
-                    icon = "fas fa-sign-in-alt",
-                    label = "Service",
-                    targeticon = "fas fa-wrench",
-                    action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
-                        TriggerServerEvent("QBCore:ToggleDuty")
-                    end,
-                },
-            },
-            distance = 2.5,
-        })
-    else
-        exports["qb-target"]:RemoveTargetModel(829413118, "Service")
-    end
-end)
-
-local insidemecha = false
-local insidewash = false
-local insidespawn = false
-
-Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if onDuty then
-            if Config.AttachedVehicle == nil then
-                if IsPedInAnyVehicle(PlayerPedId()) then
-                    local veh = GetVehiclePedIsIn(PlayerPedId())
-                    if not IsThisModelABicycle(GetEntityModel(veh)) then
-                        insidemecha = true
-                    else
-                        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
-                    end
-                end
-            end
-        end
-    else
-        insidemecha = false
-        VehiculeOptions:Close()
-        Config.AttachedVehicle = nil
-    end
-end)
-
-Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if onDuty then
-            if Config.AttachedVehicle == nil then
-                if IsPedInAnyVehicle(PlayerPedId()) then
-                    local veh = GetVehiclePedIsIn(PlayerPedId())
-                    if not IsThisModelABicycle(GetEntityModel(veh)) then
-                        insidemecha = true
-                    else
-                        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
-                    end
-                end
-            end
-        end
-    else
-        insidemecha = false
-        VehiculeOptions:Close()
-        Config.AttachedVehicle = nil
-    end
-end)
-
-Vehiclespawn:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if onDuty then
-            insidespawn = true
-        end
-    else
-        insidespawn = false
-        VehicleList:Close()
-    end
-end)
-
-Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if onDuty then
-            if IsPedInAnyVehicle(PlayerPedId()) then
-                local veh = GetVehiclePedIsIn(PlayerPedId())
-                if not IsThisModelABicycle(GetEntityModel(veh)) then
-                    insidewash = true
-                else
-                    exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
-                end
-            end
-        end
-    else
-        insidewash = false
-        VehiculeWash:Close()
-    end
-end)
-
-CreateThread(function()
-    while true do
-        if insidemecha == true then
-            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Menu d'entretien")
-            if IsControlJustPressed(1, 51) then
-                local veh = GetVehiclePedIsIn(PlayerPedId())
-                Config.AttachedVehicle = veh
-                TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", veh)
-                GenerateOpenMenu()
-            end
-        end
-        Wait(2)
-    end
-end)
-
-CreateThread(function()
-    while true do
-        if insidewash == true then
-            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Menu de lavage")
-            if IsControlJustPressed(1, 51) then
-                GenerateWashMenu()
-            end
-        end
-        Wait(2)
-    end
-end)
-
-CreateThread(function()
-    while true do
-        if insidespawn == true then
-            if IsPedInAnyVehicle(PlayerPedId()) then
-                QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Ranger le véhicule")
-                if IsControlJustPressed(1, 51) then
-                    DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
-                end
-            else
-                QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Garage de véhicule")
-                if IsControlJustPressed(1, 51) then
-                    GenerateOpenListMenu()
-                end
-            end
-        end
-        Wait(2)
     end
 end)
