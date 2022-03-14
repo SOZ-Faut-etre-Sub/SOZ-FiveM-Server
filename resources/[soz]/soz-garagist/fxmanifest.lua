@@ -6,7 +6,19 @@ version "1.0.0"
 
 shared_script "config.lua"
 
-client_scripts {"@PolyZone/client.lua", "@PolyZone/BoxZone.lua", "@menuv/menuv.lua", "client/*.lua"}
+client_scripts {
+    "@PolyZone/client.lua",
+    "@PolyZone/BoxZone.lua",
+    "@menuv/menuv.lua",
+    "client/main.lua",
+    "client/functionsApply.lua",
+    "client/functionsGet.lua",
+    "client/functionsPreview.lua",
+    "client/functionsRestore.lua",
+    "client/menubennys.lua",
+    "client/menucarwash.lua",
+    "client/menugarage.lua",
+}
 
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
 
