@@ -19,7 +19,7 @@ RegisterNetEvent("qb-carwash:client:washCar", function()
     local PlayerPed = PlayerPedId()
     local PedVehicle = GetVehiclePedIsIn(PlayerPed)
     washingVehicle = true
-    QBCore.Functions.Progressbar("search_cabin", "Vehicle is being washed ..", math.random(4000, 8000), false, true,
+    QBCore.Functions.Progressbar("search_cabin", "Lavage de véhicule en cours ..", math.random(4000, 8000), false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -31,7 +31,7 @@ RegisterNetEvent("qb-carwash:client:washCar", function()
         WashDecalsFromVehicle(PedVehicle, 1.0)
         washingVehicle = false
     end, function() -- Cancel
-        exports["soz-hud"]:DrawNotification("~r~Washing canceled ..")
+        exports["soz-hud"]:DrawNotification("~r~Lavage annulé ..")
         washingVehicle = false
     end)
 end)
@@ -53,17 +53,17 @@ CreateThread(function()
                         if Driver == PlayerPed then
                             if not washingVehicle then
                                 DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"],
-                                            "~g~E~w~ - Washing car ($" .. Config.DefaultPrice .. ")")
+                                            "~g~E~w~ - Laver la voiture ($" .. Config.DefaultPrice .. ")")
                                 if IsControlJustPressed(0, 38) then
                                     if dirtLevel > Config.DirtLevel then
                                         TriggerServerEvent("qb-carwash:server:washCar")
                                     else
-                                        exports["soz-hud"]:DrawNotification("~r~The vehicle isn't dirty")
+                                        exports["soz-hud"]:DrawNotification("~r~Le véhicule n'est pas sale")
                                     end
                                 end
                             else
                                 DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"],
-                                            "The car wash is not available ..")
+                                            "Lavage Auto non disponible ..")
                             end
                         end
                     end
