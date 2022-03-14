@@ -2,20 +2,9 @@ Config = {}
 
 Config.AttachedVehicle = nil
 
-Config.AuthorizedIds = {
-    "insertcitizenidhere",
-}
+Config.Locations = {["exit"] = vector3(-211.91, -1323.98, 30.89), ["vehicle"] = vector4(-162.15, -1302.58, 31.32, 85.0)}
 
-Config.Locations = {
-    ["exit"] = vector3(-211.91, -1323.98, 30.89),
-    ["vehicle"] = vector4(-162.15, -1302.58, 31.32, 85.0),
-}
-
-Config.Vehicles = {
-    ["flatbed"] = "Flatbed",
-    ["towtruck"] = "Towtruck",
-    ["minivan"] = "Minivan",
-}
+Config.Vehicles = {["flatbed"] = "Flatbed", ["towtruck"] = "Towtruck", ["minivan"] = "Minivan"}
 
 Config.MaxStatusValues = {
     ["engine"] = 1000.0,
@@ -43,14 +32,14 @@ Config.vehicleResprayCategories = {
     {category = "Couleur Nacré", id = 2},
     {category = "Couleur des Roues", id = 3},
     {category = "Couleur du Tableau de bord", id = 4},
-    {category = "Couleur Intérieure", id = 5}
+    {category = "Couleur Intérieure", id = 5},
 }
 
 Config.vehicleWindowTintOptions = {
     {name = "Aucun", id = 0},
     {name = "Noir pure", id = 1},
     {name = "Fumé foncé", id = 2},
-    {name = "Fumé léger", id = 3}
+    {name = "Fumé léger", id = 3},
 }
 
 Config.vehicleXenonOptions = {
@@ -67,7 +56,7 @@ Config.vehicleXenonOptions = {
         {name = "Rose poney",id = 9},
         {name = "Rose chaud",id = 10},
         {name = "Violet",id = 11},
-        {name = "Noir léger",id = 12}
+        {name = "Noir léger",id = 12},
     }
 }
 
@@ -81,7 +70,7 @@ Config.vehicleWheelOptions = {
     {category = "Offroad", id = 4, wheelID = 23},
     {category = "Tuner", id = 5, wheelID = 23},
     {category = "Motorcycle", id = 6, wheelID = 23},
-    {category = "Highend", id = 7, wheelID = 23}
+    {category = "Highend", id = 7, wheelID = 23},
 }
 
 Config.vehicleTyreSmokeOptions = {
