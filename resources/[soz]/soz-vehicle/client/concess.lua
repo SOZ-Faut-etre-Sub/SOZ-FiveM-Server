@@ -131,7 +131,7 @@ local function OpenCarModelsMenu(category)
                         newlabel = "^9" .. voiture["name"]
                         VehiculeModel:AddButton({
                             label = newlabel,
-                            rightlabel = "💸 " .. voiture["price"] .. "$",
+                            rightLabel = "💸 " .. voiture["price"] .. "$",
                             value = voiture,
                             description = "❌ HORS STOCK de " .. voiture["name"],
                         })
@@ -139,7 +139,7 @@ local function OpenCarModelsMenu(category)
                         newlabel = "~o~" .. voiture["name"]
                         VehiculeModel:AddButton({
                             label = newlabel,
-                            rightlabel = "💸 " .. voiture["price"] .. "$",
+                            rightLabel = "💸 " .. voiture["price"] .. "$",
                             value = voiture,
                             description = "⚠ Stock limité de  " .. voiture["name"],
                             select = function(btn)
@@ -150,7 +150,7 @@ local function OpenCarModelsMenu(category)
                     else
                         VehiculeModel:AddButton({
                             label = newlabel,
-                            rightlabel = "💸 " .. voiture["price"] .. "$",
+                            rightLabel = "💸 " .. voiture["price"] .. "$",
                             value = voiture,
                             description = "Acheter  " .. voiture["name"],
                             select = function(btn)
@@ -269,7 +269,7 @@ CreateThread(function()
             local Dealer = AddBlipForCoord(Config.Shops[k]["Location"])
             SetBlipSprite(Dealer, 326)
             SetBlipDisplay(Dealer, 4)
-            SetBlipScale(Dealer, 0.75)
+            SetBlipScale(Dealer, 0.8)
             SetBlipAsShortRange(Dealer, true)
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentSubstringPlayerName(Config.Shops[k]["ShopLabel"])

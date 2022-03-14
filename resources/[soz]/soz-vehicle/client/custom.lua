@@ -256,7 +256,7 @@ CreateThread(function()
         if v.blip then
             local blip = AddBlipForCoord(v.coords.x, v.coords.y, v.coords.z)
             SetBlipSprite(blip, 72)
-            SetBlipScale(blip, 0.7)
+            SetBlipScale(blip, 0.8)
             SetBlipAsShortRange(blip, true)
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentString("LS Custom")

@@ -38,7 +38,7 @@ exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 
 
 local function JobPosition(job, coords, sprite)
     blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipScale(blip, 1.0)
+    SetBlipScale(blip, 0.8)
     SetBlipSprite(blip, sprite)
     SetBlipColour(blip, 32)
     AddTextEntry(job, "Commencer le job")
