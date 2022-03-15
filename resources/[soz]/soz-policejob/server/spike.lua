@@ -5,7 +5,6 @@ local Spikes = {}
 QBCore.Functions.CreateUseableItem("spike", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
 
-
     for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
         if Player.PlayerData.job.id == allowedJob then
             exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "spike", 1)
