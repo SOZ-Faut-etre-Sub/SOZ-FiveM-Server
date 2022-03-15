@@ -53,6 +53,8 @@ export interface Item {
     min: number;
     max: number;
     disabled: boolean;
+    portraitMale: string;
+    portraitFemale: string;
 }
 
 export interface Menu {
@@ -318,6 +320,8 @@ export default VUE.extend({
                     this.items[i].min = item.min || this.items[i].min;
                     this.items[i].max = item.max || this.items[i].max;
                     this.items[i].disabled = item.disabled || this.items[i].disabled;
+                    this.items[i].portraitMale = item.portraitMale || this.items[i].portraitMale;
+                    this.items[i].portraitFemale = item.portraitFemale || this.items[i].portraitFemale;
 
                     if ((this.index == i && this.items[i].disabled) || (this.index < 0 && !this.items[i].disabled)) {
                         this.index = this.NEXT_INDEX(this.index);

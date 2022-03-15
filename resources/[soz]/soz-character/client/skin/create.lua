@@ -26,7 +26,7 @@ local function CreateGenderSlider(menu, playerId, skin)
     return genderSlider
 end
 
-local function CreateFatherSlider(menu, playerId, skin)
+local function CreateFatherSlider(menu, heritage, playerId, skin)
     local fatherOptions = {
         { label = "Benjamin", value = 0, texture = "male_0" },
         { label = "Daniel", value = 1, texture = "male_1" },
@@ -59,6 +59,7 @@ local function CreateFatherSlider(menu, playerId, skin)
     for i, v in ipairs(fatherOptions) do
         if v.value == skin.Model.Father then
             fatherValue = i
+            heritage:SetPortraitMale(v.texture)
 
             break
         end
@@ -73,13 +74,14 @@ local function CreateFatherSlider(menu, playerId, skin)
     fatherSlider:On("change", function(_, value)
         local option = fatherOptions[value]
         skin.Model.Father = option.value
+        heritage:SetPortraitMale(option.texture)
         ApplyPlayerBodySkin(playerId, skin)
     end)
 
     return fatherSlider
 end
 
-local function CreateMotherSlider(menu, playerId, skin)
+local function CreateMotherSlider(menu, heritage, playerId, skin)
     local motherOptions = {
         { label = "Hannah", value = 21, texture = "female_0" },
         { label = "Audrey", value = 22, texture = "female_1" },
@@ -110,6 +112,7 @@ local function CreateMotherSlider(menu, playerId, skin)
     for i, v in ipairs(motherOptions) do
         if v.value == skin.Model.Mother then
             motherValue = i
+            heritage:SetPortraitFemale(v.texture)
 
             break
         end
@@ -124,6 +127,7 @@ local function CreateMotherSlider(menu, playerId, skin)
     fatherSlider:On("change", function(_, value)
         local option = motherOptions[value]
         skin.Model.Mother = option.value
+        heritage:SetPortraitFemale(option.texture)
         ApplyPlayerBodySkin(playerId, skin)
     end)
 
@@ -140,8 +144,9 @@ local function OpenCreateCharacterMenu(skin)
     local clothMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Vêtements"})
 
     CreateGenderSlider(modelMenu, playerId, skin)
-    CreateFatherSlider(modelMenu, playerId, skin)
-    CreateMotherSlider(modelMenu, playerId, skin)
+    local heritage = modelMenu:AddHeritage({ portraitMale = "male_0", portraitFemale = "female_0" })
+    CreateFatherSlider(modelMenu, heritage, playerId, skin)
+    CreateMotherSlider(modelMenu, heritage, playerId, skin)
 
     createCharacterMenu:AddButton({label = "Identité", value = modelMenu})
     createCharacterMenu:AddButton({label = "Physique", value = bodyMenu})
