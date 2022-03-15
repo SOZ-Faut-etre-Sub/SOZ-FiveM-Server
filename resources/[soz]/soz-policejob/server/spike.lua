@@ -7,8 +7,8 @@ QBCore.Functions.CreateUseableItem("spike", function(source, item)
 
     for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
         if Player.PlayerData.job.id == allowedJob then
-            exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "spike", 1)
-            TriggerClientEvent("police:client:RequestAddSpike", source)
+            exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1)
+            TriggerClientEvent("police:client:RequestAddSpike", Player.PlayerData.source)
 
             return
         end

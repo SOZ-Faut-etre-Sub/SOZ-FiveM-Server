@@ -1,5 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-
 RegisterServerEvent("job:set:unemployed", function()
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
     TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous êtes à nouveau sans emploie"))

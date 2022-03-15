@@ -14,24 +14,18 @@ CreateThread(function()
         },
         distance = 2.5,
     })
+    exports["qb-target"]:AddTargetModel({"prop_barrier_work05"}, {
+        options = {
+            {
+                label = "Supprimer la barrière",
+                icon = "fas fa-times",
+                event = "job:client:RemoveObject",
+                job = {["lspd"] = 0, ["lscs"] = 0},
+            },
+        },
+        distance = 2.5,
+    })
 end)
-
---- Functions
-
---- Used to send clean ground coord to server
-local function GetProperGroundCoord(position, heading)
-    --- Generate ghost spike
-    local spike = CreateObject(spikeModel, position.x, position.y, position.z, false)
-    SetEntityVisible(spike, false)
-    SetEntityHeading(spike, heading)
-    PlaceObjectOnGroundProperly(spike)
-
-    --- Clean entity
-    position = GetEntityCoords(spike)
-    DeleteObject(spike)
-
-    return vector4(position.x, position.y, position.z, heading)
-end
 
 --- Events
 RegisterNetEvent("police:client:RequestAddSpike", function()
@@ -47,7 +41,7 @@ RegisterNetEvent("police:client:RequestAddSpike", function()
         disableCombat = true,
     }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
-        TriggerServerEvent("police:server:AddSpike", GetProperGroundCoord(entityCoords, entityHeading))
+        TriggerServerEvent("police:server:AddSpike", QBCore.Functions.GetProperGroundCoord(spikeModel, entityCoords, entityHeading))
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
     end)

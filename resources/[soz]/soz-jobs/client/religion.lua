@@ -1,4 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
 local payout_counter = 0
 local OnJob = false
 local JobOutfit = false
