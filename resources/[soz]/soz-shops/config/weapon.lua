@@ -2,7 +2,7 @@ local shopConfig = {
     ["ammunation"] = {
         label = "Ammu-Nation",
         type = "shop",
-        blip = {sprite = 110, color = 17, scale = 0.8},
+        blip = {sprite = 110, color = 17},
         pedModel = "s_m_y_ammucity_01",
     },
 }
