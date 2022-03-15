@@ -51,7 +51,7 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     -- Load player model
     RequestModel(model)
     while not HasModelLoaded(model) do
-        Wait(10)
+        Wait(0)
     end
 
     -- Create player ped

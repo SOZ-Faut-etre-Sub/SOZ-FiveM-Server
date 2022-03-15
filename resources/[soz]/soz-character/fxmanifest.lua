@@ -11,7 +11,14 @@ files {"html/index.html", "html/assets/*"}
 shared_script "config.lua"
 
 client_script {
+    "@menuv/menuv.lua",
+
     "client/main.lua",
+
+    "client/skin/apply.lua",
+    "client/skin/camera.lua",
+    "client/skin/create.lua",
+
     "client/loading/sky_cam.lua",
     "client/loading/create.lua",
     "client/loading/logging.lua",
