@@ -10,7 +10,7 @@ CreateThread(function()
                 icon = "fas fa-times",
                 event = "police:client:RequestRemoveSpike",
                 job = {["lspd"] = 0, ["lscs"] = 0},
-            }
+            },
         },
         distance = 2.5,
     })
@@ -39,11 +39,33 @@ RegisterNetEvent("police:client:RequestAddSpike", function()
     local entityCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 2.0, 0.0)
     local entityHeading = GetEntityHeading(ped)
 
-    TriggerServerEvent("police:server:AddSpike", GetProperGroundCoord(entityCoords, entityHeading))
+    QBCore.Functions.Progressbar("spawn_object", "Lancement de la herse en cours", 2500, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        TriggerServerEvent("police:server:AddSpike", GetProperGroundCoord(entityCoords, entityHeading))
+    end, function() -- Cancel
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+    end)
 end)
 
 RegisterNetEvent("police:client:RequestRemoveSpike", function(data)
-    TriggerServerEvent("police:server:RemoveSpike", ObjToNet(data.entity))
+    QBCore.Functions.Progressbar("remove_object", "Récupération de la herse en cours", 2500, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", anim = "plant_floor", flags = 16}, {}, {}, function() -- Done
+        StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+        TriggerServerEvent("police:server:RemoveSpike", ObjToNet(data.entity))
+    end, function() -- Cancel
+        StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+    end)
 end)
 
 RegisterNetEvent("police:client:SyncSpikes", function(table)
