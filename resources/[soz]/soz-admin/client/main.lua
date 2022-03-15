@@ -240,9 +240,7 @@ local function AdminPanel(menu)
 end
 
 local function GenerateMenu()
-    if AdminMenu.IsOpen then
-        AdminMenu:Close()
-    else
+    if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= AdminMenu.UUID then
         QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed)
             if isAllowed then
                 AdminMenu:ClearItems()
@@ -251,6 +249,8 @@ local function GenerateMenu()
                 AdminMenu:Open()
             end
         end)
+    else
+        AdminMenu:Close()
     end
 end
 

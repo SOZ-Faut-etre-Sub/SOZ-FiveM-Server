@@ -19,10 +19,14 @@ local function GenerateMenu()
     HudToggleEntry(personalMenu)
     JobEntry(personalMenu)
 
-    if personalMenu.IsOpen then
-        personalMenu:Close()
+    if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= personalMenu.UUID then
+        MenuV:CloseAll(function()
+            personalMenu:Open()
+        end)
     else
-        personalMenu:Open()
+        MenuV:CloseAll(function()
+            personalMenu:Close()
+        end)
     end
 end
 
