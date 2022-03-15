@@ -19,7 +19,7 @@ end)
 CreateThread(function()
     for id, bank in pairs(Config.BankPedLocations) do
         if not QBCore.Functions.GetBlip("bank_" .. id) then
-            QBCore.Functions.CreateBlip("bank_" .. id, {name = "Banque", coords = bank, sprite = 108, color = 2, scale = 0.8})
+            QBCore.Functions.CreateBlip("bank_" .. id, {name = "Banque", coords = bank, sprite = 108, color = 2})
         end
         exports["qb-target"]:SpawnPed({
             {

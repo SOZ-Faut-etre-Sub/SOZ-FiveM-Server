@@ -1,5 +1,5 @@
 local shopConfig = {
-    ["tattoo"] = {label = "Tatoueur", type = "tattoo", blip = {sprite = 75, color = 1, scale = 0.8}, pedModel = "u_m_y_tattoo_01"},
+    ["tattoo"] = {label = "Tatoueur", type = "tattoo", blip = {sprite = 75, color = 1}, pedModel = "u_m_y_tattoo_01"},
 }
 
 Config.Products["tattoo"] = json.decode(LoadResourceFile(GetCurrentResourceName(), "config/tattoos.json"))
