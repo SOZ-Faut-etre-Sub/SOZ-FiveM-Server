@@ -8,8 +8,7 @@ ShopContext = {}
 CreateThread(function()
     for id, shop in pairs(Config.Locations) do
         if not QBCore.Functions.GetBlip("shops_" .. id) then
-            QBCore.Functions.CreateBlip("shops_" .. id,
-                                        {
+            QBCore.Functions.CreateBlip("shops_" .. id, {
                 name = shop.label,
                 coords = shop.coords,
                 sprite = shop.blip.sprite,
