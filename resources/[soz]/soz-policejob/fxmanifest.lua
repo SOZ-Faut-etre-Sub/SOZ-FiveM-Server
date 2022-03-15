@@ -19,4 +19,4 @@ client_scripts {
     "client/radar.lua",
 }
 
-server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/radar.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/radar.lua", "server/spike.lua"}
