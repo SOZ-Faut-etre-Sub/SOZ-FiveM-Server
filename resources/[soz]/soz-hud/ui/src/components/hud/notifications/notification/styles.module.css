@@ -2,19 +2,35 @@
     position: relative;
     width: 100%;
     padding: .5rem .8rem;
-    font-size: 0.8rem;
     overflow: hidden;
     margin-bottom: .3rem;
     transition: all 0.3s ease-out;
-
-    border-radius: .3rem;
+    border-radius: .4rem;
     color: #fff;
     background: linear-gradient(to right, rgba(0,0,0,.6) 50%, rgba(0,0,0,.25));
+}
+
+.notification::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #38bb13;
 }
 
 .notification * {
     padding: 0;
     margin: 0;
+}
+
+.notification p {
+    text-transform: lowercase;
+}
+
+.notification p::first-letter {
+    text-transform: uppercase;
 }
 
 .notification.slideIn {
@@ -61,19 +77,4 @@
 
 .text {
     padding: .3rem 0;
-}
-
-.progressbar {
-    display: flex;
-    height: .1rem;
-    width: 100%;
-    overflow: hidden;
-}
-
-.progress {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    transition-property: width;
-    background: rgba(255,255,255,.5);
 }
