@@ -93,10 +93,14 @@ RegisterCommand("inventory", function()
                 MoneyMenu()
                 ItemsMenu(inventory.items)
 
-                if inventoryMenu.IsOpen then
-                    inventoryMenu:Close()
+                if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= inventoryMenu.UUID then
+                    MenuV:CloseAll(function()
+                        inventoryMenu:Open()
+                    end)
                 else
-                    inventoryMenu:Open()
+                    MenuV:CloseAll(function()
+                        inventoryMenu:Close()
+                    end)
                 end
             end
         end

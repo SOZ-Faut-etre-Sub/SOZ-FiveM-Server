@@ -74,10 +74,14 @@ local function GenerateMenu()
             CibiMenu()
         end
 
-        if vehicleMenu.IsOpen then
-            vehicleMenu:Close()
+        if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= vehicleMenu.UUID then
+            MenuV:CloseAll(function()
+                vehicleMenu:Open()
+            end)
         else
-            vehicleMenu:Open()
+            MenuV:CloseAll(function()
+                vehicleMenu:Close()
+            end)
         end
     end
 end
