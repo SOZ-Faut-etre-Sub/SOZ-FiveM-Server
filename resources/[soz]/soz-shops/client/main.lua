@@ -13,6 +13,7 @@ CreateThread(function()
                 coords = shop.coords,
                 sprite = shop.blip.sprite,
                 color = shop.blip.color,
+                scale = shop.blip.scale,
             })
         end
         exports["qb-target"]:SpawnPed({

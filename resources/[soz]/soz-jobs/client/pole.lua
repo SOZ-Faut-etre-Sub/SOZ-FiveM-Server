@@ -14,6 +14,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         coords = pole_emploi_coords,
         sprite = 280,
         color = 2,
+        scale = 0.8,
     })
 
 end)
@@ -37,7 +38,7 @@ exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 
 
 local function JobPosition(job, coords, sprite)
     blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipScale(blip, 1.0)
+    SetBlipScale(blip, 0.8)
     SetBlipSprite(blip, sprite)
     SetBlipColour(blip, 32)
     AddTextEntry(job, "Commencer le job")
@@ -113,7 +114,7 @@ end
 
 function createblip(name, description, sprite, coords)
     job_blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipScale(job_blip, 1.0)
+    SetBlipScale(job_blip, 0.8)
     SetBlipSprite(job_blip, sprite)
     SetBlipColour(job_blip, 32)
     AddTextEntry(name, description)

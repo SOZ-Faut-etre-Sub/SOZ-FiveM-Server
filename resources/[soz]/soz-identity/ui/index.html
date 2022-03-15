@@ -1,0 +1,54 @@
+<html lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="soz-identity.css">
+    </head>
+    <body>
+        <!-- IDENTITY -->
+        <div class="super-wrapper" id="identity" style="display: none; opacity: 0; transition-property: opacity; transition-duration: 500ms;">
+            <div class="wrapper">
+                <div class="container">
+                    <img class="bg-img "src="./background-identity.png" alt="Identité">
+
+                    <div class="content">
+                        <div class="is-half left-col" id="left-col-identity">
+                            <img id="mugshot" />
+                        </div>
+                        <div class="is-half right-col" id="right-col-identity"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LICENSES -->
+        <div class="super-wrapper" id="licenses" style="display: none; opacity: 0; transition-property: opacity; transition-duration: 500ms;">
+            <div class="wrapper">
+                <div class="container">
+                    <img class="bg-img" src="./background-licenses.png" alt="Permis">
+
+                    <div class="content">
+                        <div class="is-half left-col" id="left-col-licenses">
+                            <div>
+                                <div class="text-small">Nom</div>
+                                <div id="last_name"></div>
+                            </div>
+                            <div>
+                                <div class="text-small">Prénom(s)</div>
+                                <div id="first_name"></div>
+                            </div>
+                        </div>
+                        <div class="is-half right-col" id="right-col-licenses">
+                            <div style="width: 10%;"></div>
+                            <div id="validities" class="items"></div>
+                            <div id="points" class="items"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="identity.js" type="application/javascript" defer></script>
+        <script src="licenses.js" type="application/javascript" defer></script>
+        <script src="main.js" type="application/javascript" defer></script>
+    </body>
+</html>

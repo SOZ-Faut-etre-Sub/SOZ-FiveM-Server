@@ -1,7 +1,7 @@
 local shopConfig = {
-    ["247"] = {label = "Supérette", type = "shop", blip = {sprite = 52, color = 2}, pedModel = "ig_ashley"},
-    ["ltd"] = {label = "Supérette", type = "shop", blip = {sprite = 52, color = 2}, pedModel = "s_m_m_autoshop_02"},
-    ["liquor"] = {label = "Supérette", type = "shop", blip = {sprite = 52, color = 2}, pedModel = "a_m_m_genfat_02"},
+    ["247"] = {label = "Supérette", type = "shop", blip = {sprite = 52, color = 2, scale = 0.8}, pedModel = "ig_ashley"},
+    ["ltd"] = {label = "Supérette", type = "shop", blip = {sprite = 52, color = 2, scale = 0.8}, pedModel = "s_m_m_autoshop_02"},
+    ["liquor"] = {label = "Supérette", type = "shop", blip = {sprite = 52, color = 2, scale = 0.8}, pedModel = "a_m_m_genfat_02"},
 }
 
 Config.Products["normal"] = {

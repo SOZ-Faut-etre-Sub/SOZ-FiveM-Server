@@ -14,7 +14,7 @@ SozJobCore.JobType = {
     Garbage = "garbage",
     Oil = "oil",
     CashTransfer = "cash-transfer",
-    Garagist = "garagist",
+    Bennys = "bennys",
     Debug = "debug",
 }
 
@@ -127,7 +127,7 @@ SozJobCore.Jobs = {
         grades = {},
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
-    [SozJobCore.JobType.Garagist] = {
+    [SozJobCore.JobType.Bennys] = {
         label = "Méchanicien",
         grades = {},
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},

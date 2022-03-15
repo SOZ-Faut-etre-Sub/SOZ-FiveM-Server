@@ -10,6 +10,25 @@ function IsSpawnPointFree(x, y, z)
     return not IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)
 end
 
+---Draw random checkpoints from a list of checkpoints
+---@param allCheckpoints table
+---@param count number Number of checkpoints that are to be drawn
+local function GetRandomCheckpoints(allCheckpoints, count)
+    if count > #allCheckpoints then
+        count = #allCheckpoints
+    end
+
+    local allCpCopy = {table.unpack(allCheckpoints)}
+    local checkpoints = {}
+    repeat
+        local idx = math.random(1, #allCpCopy)
+        local cp = allCpCopy[idx]
+        table.insert(checkpoints, cp)
+        table.remove(allCpCopy, idx)
+    until #checkpoints == count - 1 -- Remove final checkpoints
+    return checkpoints
+end
+
 ---Get next checkpoint in table
 ---@param tbl table Checkpoints table
 ---@param pop boolean Should table item be poped
@@ -57,6 +76,7 @@ end
 local function ForceWaypointDisplay(x, y)
     if not IsWaypointActive() then
         SetNewWaypoint(x, y)
+        SetMinimapBlockWaypoint(true)
     end
 end
 
@@ -73,11 +93,20 @@ local function startExamLoop(licenseType, context)
 
         -- Diplay Instructor start speech
         for i = 1, #Config.InstructorStartSpeech, 1 do
-            DiplayInstructorNotification("INFO", Config.InstructorStartSpeech[i])
+            local msg
+            local el = Config.InstructorStartSpeech[i]
+            if type(el) == "string" then
+                msg = el
+            elseif type(el) == "table" then
+                msg = Config.InstructorStartSpeech[i][licenseType]
+            end
+            if msg then
+                DiplayInstructorNotification("INFO", msg)
+            end
         end
 
         -- Checkpoints
-        local checkpoints = Config.Checkpoints[licenseType]
+        local checkpoints = GetRandomCheckpoints(Config.Checkpoints, Config.CheckpointCount)
         if not checkpoints then
             return
         end
@@ -88,6 +117,8 @@ local function startExamLoop(licenseType, context)
             return
         end
         table.insert(checkpoints, finalCheckpoint)
+
+        local totalCp = #checkpoints
 
         -- Setup first checkpoint
         local prevCheckpoint = nil
@@ -107,11 +138,11 @@ local function startExamLoop(licenseType, context)
 
             -- Force Waypoint display
             ForceWaypointDisplay(checkpoint.x, checkpoint.y)
+            DisplayRadar(true)
 
             -- On checkpoint entered
             if dist < Config.CheckpointSize then
                 DeleteCheckpoint(cpId)
-                PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET", false)
 
                 -- Display message if set (stored on previous checkpoint)
                 prevCheckpoint = checkpoint
@@ -124,6 +155,11 @@ local function startExamLoop(licenseType, context)
                     for i = 1, #msg, 1 do
                         DiplayInstructorNotification("INFO", msg[i])
                     end
+                end
+
+                -- Display checkpoint count
+                if #checkpoints > 0 then
+                    exports["soz-hud"]:DrawNotification(string.format("Checkpoint %s/%s", totalCp - #checkpoints, totalCp))
                 end
 
                 -- Draw next checkpoint
@@ -172,6 +208,7 @@ function SetupDrivingSchoolExam(licenseType)
         SetPedIntoVehicle(playerPed, vehicle, -1)
         SetPedIntoVehicle(instructor, vehicle, 0)
         SetVehicleNumberPlateText(vehicle, Config.VehiclePlateText)
+        TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", Config.VehiclePlateText)
         SetVehicleDoorsLockedForPlayer(vehicle, playerPed, false)
         SetVehRadioStation(vehicle, "OFF")
         exports["soz-vehicle"]:SetFuel(vehicle, 100.0)
@@ -230,8 +267,9 @@ function TerminateExam(isSuccess, licenseType)
     HandleVehicleAndPed(isSuccess, instructorEntity, vehicleEntity)
     CleanUpPenaltySystem()
     DeleteWaypoint()
+    SetMinimapBlockWaypoint(false)
     passingExam = false
-    WarnedNoGps = false
+    DisplayRadar(false)
 
     if isSuccess then
         TriggerServerEvent("soz-driving-license:server:update_license", licenseType)
