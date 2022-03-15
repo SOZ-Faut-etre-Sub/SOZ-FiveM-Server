@@ -2,6 +2,21 @@ Config = {}
 
 Config.Radio = {min = 1000, max = 9999}
 
+Config.AllowedRadioInVehicle = {
+    [GetHashKey("stockade")] = true,
+    [GetHashKey("ambulance")] = true,
+    [GetHashKey("fbi")] = true,
+    [GetHashKey("fbi2")] = true,
+    [GetHashKey("pbus")] = true,
+    [GetHashKey("police")] = true,
+    [GetHashKey("police2")] = true,
+    [GetHashKey("police3")] = true,
+    [GetHashKey("policeb")] = true,
+    [GetHashKey("policet")] = true,
+    [GetHashKey("sheriff")] = true,
+    [GetHashKey("sheriff2")] = true,
+}
+
 Config.messages = {
     ["not_on_radio"] = "You're not connected to a signal",
     ["on_radio"] = "You're already connected to this signal",

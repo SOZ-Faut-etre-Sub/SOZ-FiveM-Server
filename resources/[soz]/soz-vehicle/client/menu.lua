@@ -12,7 +12,11 @@ local function EngineMenu()
     end)
 end
 
-local function CibiMenu()
+local function CibiMenu(vehicle)
+    if not Entity(vehicle).state.hasRadio then
+        return
+    end
+
     local cibi = vehicleMenu:AddButton({label = "Radio longue portée", value = nil})
     cibi:On("select", function()
         TriggerEvent("talk:cibi:use")
@@ -66,7 +70,7 @@ local function GenerateMenu()
 
         if GetPedInVehicleSeat(vehicle, -1) == player then
             EngineMenu()
-            CibiMenu()
+            CibiMenu(vehicle)
             SpeedLimiterMenu(vehicle)
             DoorManagementMenu(vehicle)
         end
