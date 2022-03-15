@@ -18,6 +18,20 @@ function QBCore.Functions.GetCoords(entity)
     return vector4(coords.x, coords.y, coords.z, heading)
 end
 
+function QBCore.Functions.GetProperGroundCoord(obj, position, heading)
+    --- Generate ghost spike
+    local object = CreateObject(obj, position.x, position.y, position.z, false)
+    SetEntityVisible(object, false)
+    SetEntityHeading(object, heading)
+    PlaceObjectOnGroundProperly(object)
+
+    --- Clean entity
+    position = GetEntityCoords(object)
+    DeleteObject(object)
+
+    return vector4(position.x, position.y, position.z, heading)
+end
+
 function QBCore.Functions.HasItem(item)
     local p = promise.new()
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)

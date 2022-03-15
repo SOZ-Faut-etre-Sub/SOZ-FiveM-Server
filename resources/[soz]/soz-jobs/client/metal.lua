@@ -1,4 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
 local OnJob = false
 local JobOutfit = false
 local JobVehicle = false

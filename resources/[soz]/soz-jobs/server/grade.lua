@@ -1,5 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-
 RegisterServerEvent("job:recruit", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))

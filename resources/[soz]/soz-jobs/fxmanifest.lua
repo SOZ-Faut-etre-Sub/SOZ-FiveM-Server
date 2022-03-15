@@ -19,6 +19,7 @@ client_script {
     "client/pole.lua",
     "client/metal.lua",
     "client/religion.lua",
+    "client/utils/*.lua",
 }
 
 server_script {
@@ -27,6 +28,7 @@ server_script {
     "server/grade.lua",
     "server/functions.lua",
     "server/temporary.lua",
+    "server/objects.lua",
 }
 
 dependencies {"qb-target"}
