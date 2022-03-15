@@ -1,1 +1,55 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+
+ComponentType = {
+    Head = 0,
+    Mask = 1,
+    Hair = 2,
+    Torso = 3,
+    Legs = 4,
+    Hands = 5,
+    Foot = 6,
+    Unknown = 7,
+    Accessories1 = 8,
+    Accessories2 = 9,
+    Decals = 10,
+    Auxiliary = 11,
+}
+
+HeadOverlayType = {
+    Blemishes = 0,
+    FacialHair = 1,
+    Eyebrows = 2,
+    Ageing = 3,
+    Makeup = 4,
+    Blush = 5,
+    Complexion = 6,
+    SunDamage = 7,
+    Lipstick = 8,
+    Moles = 9,
+    ChestHair = 10,
+    BodyBlemishes = 11,
+    AddBodyBlemishes = 12,
+}
+
+FaceFeatureType = {
+    NoseWidth = 0,
+    NosePeakHeight = 1,
+    NosePeakLength = 2,
+    NoseBoneHigh = 3,
+    NosePeakLowering = 4,
+    NoseBoneTwist = 5,
+    EyebrowHigh = 6,
+    EyebrowForward = 7,
+    CheeksBoneHigh = 8,
+    CheeksBoneWidth = 9,
+    CheeksWidth = 10,
+    EyesOpening = 11,
+    LipsThickness = 12,
+    JawBoneWidth = 13,
+    JawBoneBackLength = 14,
+    ChimpBoneLowering = 15,
+    ChimpBoneLength = 16,
+    ChimpBoneWidth = 17,
+    ChimpHole = 18,
+    NeckThickness = 19,
+}

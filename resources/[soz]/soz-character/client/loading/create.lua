@@ -1,18 +1,22 @@
 function CreatePlayer(shutdownLoadingScreen)
-    -- Shutdown Loading Screen
+    ---- Shutdown Loading Screen
     if shutdownLoadingScreen then
         exports["soz-loadscreen"]:Shutdown()
     end
 
-    -- Camera effect
-    StartUnzoomSkyCam()
-    StopUnzoomSkyCam()
-    StartZoomSkyCam()
+    SpawnPlayer("spawn1")
+    CreateCharacter()
 
-    -- Select spawn on NUI
-    ClearScreen()
-    SetNuiFocus(true, true)
-    SendNUIMessage({action = "open"})
+    ---- Camera effect
+    --ClearScreen()
+    --StartUnzoomSkyCam()
+    --StopUnzoomSkyCam()
+    --StartZoomSkyCam()
+    --
+    ---- Select spawn on NUI
+    --SetNuiFocus(true, true)
+    --SendNUIMessage({action = "open"})
+    --NewCharacterCreate()
 end
 
 RegisterNUICallback("SpawnPlayer", function(data)
@@ -45,8 +49,34 @@ function SpawnPlayer(SpawnId)
         tmpCharacter.gender = 1
     end
 
-    TriggerServerEvent("soz-character:server:CreatePlayer", tmpCharacter)
-    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
+    NewCharacterCreate()
+end
+
+--function LegacyCuiCreate()
+--    TriggerServerEvent("soz-character:server:CreatePlayer", tmpCharacter)
+--    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
+--end
+
+function NewCharacterCreate()
+    local playerPed = PlayerPedId()
+    SetEntityVisible(playerPed, true)
+
+    --SetFocusEntity(playerPed)
+    --FreezeEntityPosition(playerPed, false)
+    --FreezePedCameraRotation(playerPed, false)
+    --FreezeEntityPosition(playerPed, false)
+    --DestroyAllCams(1)
+    --ClearPedTasksImmediately(playerPed)
+    --SetPedComponentVariation(playerPed, 0, 0, 0, 2)
+    --PlaceObjectOnGroundProperly(playerPed)
+    --SetBlockingOfNonTemporaryEvents(playerPed, true)
+    --RenderScriptCams(false, true, 500, true, true)
+
+    --print("yolo")
+
+    --Camera.Deactivate()
+    CreateCharacter()
+
 end
 
 RegisterNetEvent("soz-character:client:ChoosePlayerSkin", function()
