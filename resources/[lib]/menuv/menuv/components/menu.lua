@@ -58,7 +58,9 @@ function CreateEmptyItemsTable(data)
                 values = {},
                 min = U:Ensure(option.Min, 0),
                 max = U:Ensure(option.Max, 0),
-                disabled = U:Ensure(option.Disabled, false)
+                disabled = U:Ensure(option.Disabled, false),
+                portraitMale = U:Ensure(option.PortraitMale, 'male_0'),
+                portraitFemale = U:Ensure(option.PortraitFemale, 'female_0'),
             }
 
             if (option.__type == 'button' or option.__type == 'menu') then
@@ -119,7 +121,9 @@ function CreateEmptyItemsTable(data)
                     values = {},
                     min = U:Ensure(option.Min, 0),
                     max = U:Ensure(option.Max, 0),
-                    disabled = U:Ensure(option.Disabled, false)
+                    disabled = U:Ensure(option.Disabled, false),
+                    portraitMale = U:Ensure(option.PortraitMale, 'male_0'),
+                    portraitFemale = U:Ensure(option.PortraitFemale, 'female_0'),
                 }
 
                 if (option.__type == 'button' or option.__type == 'menu') then
@@ -481,6 +485,57 @@ function CreateMenu(info)
 
             if (info.Type == 'menu') then
                 item:On('select', function() item.Value() end)
+            end
+
+            if (info.TriggerUpdate) then
+                t.Items:AddItem(item)
+            else
+                local items = rawget(t.data, 'Items')
+
+                if (items) then
+                    local newIndex = #items + 1
+
+                    rawset(items.data, newIndex, item)
+
+                    return items.data[newIndex] or item
+                end
+            end
+
+            return t.Items[#t.Items] or item
+        end,
+        ---@type function
+        ---@param t Menu MenuV menu
+        ---@param info table Information about heritage
+        ---@return Item New item
+        AddHeritage = function(t, info)
+            info = U:Ensure(info, {})
+
+            info.Type = 'heritage'
+            info.disabled = true
+            info.Events = { OnSelect = {} }
+            info.PortraitMale = U:Ensure(info.PortraitMale or info.portraitMale, "male_0")
+            info.PortraitFemale = U:Ensure(info.PortraitFemale or info.portraitFemale, "female_0")
+            info.PrimaryEvent = 'OnSelect'
+            info.TriggerUpdate = not U:Ensure(info.IgnoreUpdate or info.ignoreUpdate, false)
+            info.__menu = t
+
+            LoadTextureDictionary('pause_menu_pages_char_mom_dad')
+            LoadTextureDictionary('char_creator_portraits')
+
+            local item = CreateMenuItem(info)
+
+            --- Set portrait male
+            ---@param portraitMale string Male portrait texture name
+            function item:SetPortraitMale(portraitMale)
+                portraitMale = U:Ensure(portraitMale, "male_0")
+                self.PortraitMale = portraitMale
+            end
+
+            --- Set portrait female
+            ---@param portraitFemale string Female portrait texture name
+            function item:SetPortraitFemale(portraitFemale)
+                portraitFemale = U:Ensure(portraitFemale, "female_0")
+                self.PortraitFemale = portraitFemale
             end
 
             if (info.TriggerUpdate) then
@@ -1002,6 +1057,7 @@ function CreateMenu(info)
     ---@field public NewIndex fun(t: Menu, k: string, v: any)
     ---@field public Parser fun(t: Menu, k: string, v: any)
     ---@field public AddButton fun(t: Menu, info: table):Item
+    ---@field public AddHeritage fun(t: Menu, info: table):Item
     ---@field public AddCheckbox fun(t: Menu, info: table):Item
     ---@field public AddSlider fun(t: Menu, info: table):SliderItem
     ---@field public AddRange fun(t: Menu, info: table):RangeItem

@@ -75,6 +75,33 @@
       .menuv.{{theme}} .menuv-items .menuv-desc {
         border-left: 0.375em solid rgb({{color.r}},{{color.g}},{{color.b}});
       }
+
+      .menuv.{{theme}} .menuv-items .menuv-item.menuv-heritage {
+        position: relative;
+        width: 100%;
+        height: 7vw;
+        background: url("https://nui-img/pause_menu_pages_char_mom_dad/mumdadbg") no-repeat;
+        background-size: 100%;
+      }
+
+      .menuv.{{theme}} .menuv-heritage .menuv-heritage-content {
+        width: 100%;
+        height: 100%;
+      }
+
+      .menuv.{{theme}} .menuv-heritage .menuv-heritage-mother {
+        width: auto;
+        height: 98%;
+        position: absolute;
+        left: 7%;
+      }
+
+      .menuv.{{theme}} .menuv-heritage .menuv-heritage-father {
+        width: auto;
+        height: 98%;
+        position: absolute;
+        left: 43%;
+      }
     </v-style>
     <header class="menuv-header">
       <strong v-html="FORMAT_TEXT(title)"></strong>
@@ -85,8 +112,12 @@
         <div class="media-left item-icon" v-if="ENSURE(item.icon, 'none') != 'none'">
           <span class="menuv-icon">{{ENSURE(item.icon, 'none')}}</span>
         </div>
-        <div class="media-content flex-left item-title" v-html="FORMAT_TEXT(item.label)"></div>
-        <div class="media-right">
+        <div class="menuv-heritage-content" v-if="item.type == 'heritage'">
+          <img class="menuv-heritage-mother" :src="`https://nui-img/char_creator_portraits/${item.portraitFemale}`" alt="mother" />
+          <img class="menuv-heritage-father" :src="`https://nui-img/char_creator_portraits/${item.portraitMale}`" alt="father" />
+        </div>
+        <div class="media-content flex-left item-title" v-if="item.type != 'heritage'" v-html="FORMAT_TEXT(item.label)"></div>
+        <div class="media-right" v-if="item.type != 'heritage'">
           <i v-if="item.type == 'checkbox'" :class="{'fas fa-check': item.value, 'far fa-square': !item.value}"></i>
           <input type="range" :min="item.min" :max="item.max" :value="(item.value)" v-if="item.type == 'range'">
           <span class="menuv-options" v-if="item.type == 'confirm'">
