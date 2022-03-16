@@ -8,15 +8,15 @@ function CreatePlayer(shutdownLoadingScreen)
     CreateCharacter()
 
     ---- Camera effect
-    --ClearScreen()
-    --StartUnzoomSkyCam()
-    --StopUnzoomSkyCam()
-    --StartZoomSkyCam()
+    -- ClearScreen()
+    -- StartUnzoomSkyCam()
+    -- StopUnzoomSkyCam()
+    -- StartZoomSkyCam()
     --
     ---- Select spawn on NUI
-    --SetNuiFocus(true, true)
-    --SendNUIMessage({action = "open"})
-    --NewCharacterCreate()
+    -- SetNuiFocus(true, true)
+    -- SendNUIMessage({action = "open"})
+    -- NewCharacterCreate()
 end
 
 RegisterNUICallback("SpawnPlayer", function(data)
@@ -52,29 +52,29 @@ function SpawnPlayer(SpawnId)
     NewCharacterCreate()
 end
 
---function LegacyCuiCreate()
+-- function LegacyCuiCreate()
 --    TriggerServerEvent("soz-character:server:CreatePlayer", tmpCharacter)
 --    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
---end
+-- end
 
 function NewCharacterCreate()
     local playerPed = PlayerPedId()
     SetEntityVisible(playerPed, true)
 
-    --SetFocusEntity(playerPed)
-    --FreezeEntityPosition(playerPed, false)
-    --FreezePedCameraRotation(playerPed, false)
-    --FreezeEntityPosition(playerPed, false)
-    --DestroyAllCams(1)
-    --ClearPedTasksImmediately(playerPed)
-    --SetPedComponentVariation(playerPed, 0, 0, 0, 2)
-    --PlaceObjectOnGroundProperly(playerPed)
-    --SetBlockingOfNonTemporaryEvents(playerPed, true)
-    --RenderScriptCams(false, true, 500, true, true)
+    -- SetFocusEntity(playerPed)
+    -- FreezeEntityPosition(playerPed, false)
+    -- FreezePedCameraRotation(playerPed, false)
+    -- FreezeEntityPosition(playerPed, false)
+    -- DestroyAllCams(1)
+    -- ClearPedTasksImmediately(playerPed)
+    -- SetPedComponentVariation(playerPed, 0, 0, 0, 2)
+    -- PlaceObjectOnGroundProperly(playerPed)
+    -- SetBlockingOfNonTemporaryEvents(playerPed, true)
+    -- RenderScriptCams(false, true, 500, true, true)
 
-    --print("yolo")
+    -- print("yolo")
 
-    --Camera.Deactivate()
+    -- Camera.Deactivate()
     CreateCharacter()
 
 end

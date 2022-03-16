@@ -56,6 +56,8 @@ function CreateEmptyItemsTable(data)
                 description = U:Ensure(option.Description, ''),
                 value = 'none',
                 values = {},
+                minLabel = U:Ensure(option.MinLabel, ''),
+                maxLabel = U:Ensure(option.MaxLabel, ''),
                 min = U:Ensure(option.Min, 0),
                 max = U:Ensure(option.Max, 0),
                 disabled = U:Ensure(option.Disabled, false),
@@ -119,6 +121,8 @@ function CreateEmptyItemsTable(data)
                     description = U:Ensure(option.Description, ''),
                     value = 'none',
                     values = {},
+                    minLabel = U:Ensure(option.MinLabel, 'min 1'),
+                    maxLabel = U:Ensure(option.MaxLabel, 'max 1'),
                     min = U:Ensure(option.Min, 0),
                     max = U:Ensure(option.Max, 0),
                     disabled = U:Ensure(option.Disabled, false),
@@ -698,6 +702,8 @@ function CreateMenu(info)
             info.TriggerUpdate = not U:Ensure(info.IgnoreUpdate or info.ignoreUpdate, false)
             info.__menu = t
             info.Value = U:Ensure(info.Value or info.value, 0)
+            info.MinLabel = U:Ensure(info.MinLabel or info.minLabel, '')
+            info.MaxLabel = U:Ensure(info.MaxLabel or info.maxLabel, '')
             info.Min = U:Ensure(info.Min or info.min, 0)
             info.Max = U:Ensure(info.Max or info.max, 0)
             info.Validate = function(t, k, v)
