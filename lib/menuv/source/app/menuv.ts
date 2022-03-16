@@ -50,6 +50,8 @@ export interface Item {
     value: any;
     prev_value: any;
     values: Option[];
+    minLabel: '';
+    maxLabel: '';
     min: number;
     max: number;
     disabled: boolean;
@@ -317,6 +319,8 @@ export default VUE.extend({
                     this.items[i].description = item.description || this.items[i].description;
                     this.items[i].value = item.value || this.items[i].value;
                     this.items[i].values = item.values || this.items[i].values;
+                    this.items[i].minLabel = item.minLabel || this.items[i].minLabel;
+                    this.items[i].maxLabel = item.maxLabel || this.items[i].maxLabel;
                     this.items[i].min = item.min || this.items[i].min;
                     this.items[i].max = item.max || this.items[i].max;
                     this.items[i].disabled = item.disabled || this.items[i].disabled;

@@ -84,6 +84,12 @@
         background-size: 100%;
       }
 
+      .menuv.{{theme}} .menuv-range {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+      }
       .menuv.{{theme}} .menuv-heritage .menuv-heritage-content {
         width: 100%;
         height: 100%;
@@ -119,7 +125,11 @@
         <div class="media-content flex-left item-title" v-if="item.type != 'heritage'" v-html="FORMAT_TEXT(item.label)"></div>
         <div class="media-right" v-if="item.type != 'heritage'">
           <i v-if="item.type == 'checkbox'" :class="{'fas fa-check': item.value, 'far fa-square': !item.value}"></i>
-          <input type="range" :min="item.min" :max="item.max" :value="(item.value)" v-if="item.type == 'range'">
+          <div class="menuv-range" v-if="item.type == 'range'">
+              <span class="min-range-label" v-html="FORMAT_TEXT(item.minLabel)"></span>
+              <input type="range" :min="item.min" :max="item.max" :value="(item.value)">
+              <span class="max-range-label" v-html="FORMAT_TEXT(item.maxLabel)"></span>
+          </div>
           <span class="menuv-options" v-if="item.type == 'confirm'">
             <span class="menuv-btn" :class="{'active': item.value}">YES</span>
             <span class="menuv-btn" :class="{'active': !item.value}">NO</span>

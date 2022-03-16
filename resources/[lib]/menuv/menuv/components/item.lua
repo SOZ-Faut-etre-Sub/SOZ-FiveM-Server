@@ -50,6 +50,10 @@ function CreateMenuItem(info)
         RightLabel = info.RightLabel or info.rightLabel,
         ---@type table[]
         Values = {},
+        ---@type string
+        MinLabel = U:Ensure(info.MinLabel or info.minLabel, ''),
+        ---@type string
+        MaxLabel = U:Ensure(info.MaxLabel or info.maxLabel, ''),
         ---@type number
         Min = U:Ensure(info.Min or info.min, 0),
         ---@type number
