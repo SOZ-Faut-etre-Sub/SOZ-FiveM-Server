@@ -1,11 +1,30 @@
 function CreateBodyMenu(createCharacterMenu, playerId, skin)
     local bodyMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Physique"})
 
-    -- Front
+    -- Peau
+
+    bodyMenu:AddTitle({ label = "Peau" })
+
     CreateSliderList(bodyMenu, "Rides", skin.FaceTrait.Ageing, Labels.Blemish, function(value)
         skin.FaceTrait.Ageing = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
+    CreateSliderList(bodyMenu, "Taches sur le visage", skin.FaceTrait.Blemish, Labels.Blemish, function(value)
+        skin.FaceTrait.Blemish = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateSliderList(bodyMenu, "Rougeurs", skin.FaceTrait.Ageing, Labels.Complexion, function(value)
+        skin.FaceTrait.Complexion = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateSliderList(bodyMenu, "Grains de beauté", skin.FaceTrait.Moles, Labels.Moles, function(value)
+        skin.FaceTrait.Moles = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+
+    -- Front
+    bodyMenu:AddTitle({ label = "Front" })
+
     CreateRangeSizeItem(bodyMenu, "Largeur du front", skin.FaceTrait.ChimpBoneWidth, function(value)
         skin.FaceTrait.ChimpBoneWidth = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -20,6 +39,8 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     end)
 
     -- Sourcils
+    bodyMenu:AddTitle({ label = "Yeux" })
+
     CreateRangeSizeItem(bodyMenu, "Longueur des sourcils", skin.FaceTrait.EyebrowForward, function(value)
         skin.FaceTrait.EyebrowForward = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -36,6 +57,8 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     end)
 
     -- Nez
+    bodyMenu:AddTitle({ label = "Nez" })
+
     CreateRangeSizeItem(bodyMenu, "Largeur du nez", skin.FaceTrait.NoseWidth, function(value)
         skin.FaceTrait.NoseWidth = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -62,18 +85,9 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     end)
 
     -- Joues
-    CreateSliderList(bodyMenu, "Taches sur le visage", skin.FaceTrait.Blemish, Labels.Blemish, function(value)
-        skin.FaceTrait.Blemish = value
-        ApplyPlayerBodySkin(playerId, skin)
-    end)
-    CreateSliderList(bodyMenu, "Rougeurs", skin.FaceTrait.Ageing, Labels.Complexion, function(value)
-        skin.FaceTrait.Complexion = value
-        ApplyPlayerBodySkin(playerId, skin)
-    end)
-    CreateSliderList(bodyMenu, "Grains de beauté", skin.FaceTrait.Moles, Labels.Moles, function(value)
-        skin.FaceTrait.Moles = value
-        ApplyPlayerBodySkin(playerId, skin)
-    end)
+
+    bodyMenu:AddTitle({ label = "Joues" })
+
     CreateRangeSizeItem(bodyMenu, "Hauteur des joues", skin.FaceTrait.CheeksBoneHigh, function(value)
         skin.FaceTrait.CheeksBoneHigh = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -88,12 +102,15 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     end)
 
     -- Bouche
+    bodyMenu:AddTitle({ label = "Bouche" })
+
     CreateRangeSizeItem(bodyMenu, "Epaisseur des lèvres", skin.FaceTrait.LipsThickness, function(value)
         skin.FaceTrait.LipsThickness = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
 
     -- Machoire
+    bodyMenu:AddTitle({ label = "Machoire" })
     CreateRangeSizeItem(bodyMenu, "Largeur de la machoire", skin.FaceTrait.JawBoneWidth, function(value)
         skin.FaceTrait.JawBoneWidth = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -104,12 +121,16 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     end)
 
     -- Cou
+    bodyMenu:AddTitle({ label = "Cou" })
+
     CreateRangeSizeItem(bodyMenu, "Epaisseur du cou", skin.FaceTrait.NeckThickness, function(value)
         skin.FaceTrait.NeckThickness = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
 
     -- Corps
+    bodyMenu:AddTitle({ label = "Corps" })
+
     CreateSliderList(bodyMenu, "Taches sur le corps", skin.FaceTrait.BodyBlemish, Labels.BodyBlemishes, function(value)
         skin.FaceTrait.BodyBlemish = value
         ApplyPlayerBodySkin(playerId, skin)
