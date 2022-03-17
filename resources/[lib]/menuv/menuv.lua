@@ -563,6 +563,8 @@ function CreateMenuItem(info)
         Min = U:Ensure(info.Min or info.min, 0),
         ---@type number
         Max = U:Ensure(info.Max or info.max, 0),
+        ---@type number
+        Interval = U:Ensure(info.Interval or info.interval, 1),
         ---@type boolean
         Disabled = U:Ensure(info.Disabled or info.disabled, false),
         ---@type table
@@ -845,6 +847,7 @@ function CreateEmptyItemsTable(data)
                 maxLabel = U:Ensure(option.MaxLabel, ''),
                 min = U:Ensure(option.Min, 0),
                 max = U:Ensure(option.Max, 0),
+                interval = U:Ensure(option.Interval, 1),
                 disabled = U:Ensure(option.Disabled, false),
                 portraitMale = U:Ensure(option.PortraitMale, 'male_0'),
                 portraitFemale = U:Ensure(option.PortraitFemale, 'female_0'),
@@ -906,10 +909,11 @@ function CreateEmptyItemsTable(data)
                     description = U:Ensure(option.Description, ''),
                     value = 'none',
                     values = {},
-                    minLabel = U:Ensure(option.MinLabel, 'min 1'),
-                    maxLabel = U:Ensure(option.MaxLabel, 'max 1'),
+                    minLabel = U:Ensure(option.MinLabel, ''),
+                    maxLabel = U:Ensure(option.MaxLabel, ''),
                     min = U:Ensure(option.Min, 0),
                     max = U:Ensure(option.Max, 0),
+                    interval = U:Ensure(option.Interval, 1),
                     disabled = U:Ensure(option.Disabled, false),
                     portraitMale = U:Ensure(option.PortraitMale, 'male_0'),
                     portraitFemale = U:Ensure(option.PortraitFemale, 'female_0'),
@@ -1491,6 +1495,7 @@ function CreateMenu(info)
             info.MaxLabel = U:Ensure(info.MaxLabel or info.maxLabel, '')
             info.Min = U:Ensure(info.Min or info.min, 0)
             info.Max = U:Ensure(info.Max or info.max, 0)
+            info.Interval = U:Ensure(info.Interval or info.interval, 1)
             info.Validate = function(t, k, v)
                 if (k == 'Value' or k == 'value') then
                     v = U:Ensure(v, 0)

@@ -16,8 +16,14 @@ client_script {
     "client/main.lua",
 
     "client/skin/apply.lua",
-    "client/skin/camera.lua",
-    "client/skin/create.lua",
+    "client/skin/create/camera.lua",
+    "client/skin/create/default.lua",
+    "client/skin/create/menu.lua",
+    "client/skin/create/menu_model.lua",
+    "client/skin/create/menu_body.lua",
+    "client/skin/create/menu_face.lua",
+    "client/skin/create/menu_cloth.lua",
+    "client/skin/create/create.lua",
 
     "client/loading/sky_cam.lua",
     "client/loading/create.lua",
