@@ -26,6 +26,7 @@ import {
 } from "../../../apps/society-messages/messages.theme";
 import {SocietyMessagesApp} from "../../../apps/society-messages/components/SocietyMessagesApp";
 import PhotoApp from "../../../apps/photo/components/PhotoApp";
+import {ZutomApp} from "../../../apps/zutom/ZutomApp";
 
 export interface IAppConfig {
     id: string;
@@ -119,6 +120,15 @@ export const APPS: IAppConfig[] = [
         path: '/society-messages',
         Route: () => (
             <AppRoute id="SOCIETY_MESSAGES" path="/society-messages" component={SocietyMessagesApp} emitOnOpen={false}/>
+        ),
+    },
+    {
+        id: 'ZUTOM',
+        nameLocale: 'ZUTOM',
+        color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
+        path: '/zutom',
+        Route: () => (
+            <AppRoute id="ZUTOM" path="/zutom" component={ZutomApp} emitOnOpen={false}/>
         ),
     },
     /*{
