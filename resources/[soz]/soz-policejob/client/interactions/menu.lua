@@ -106,15 +106,6 @@ PoliceJob.Functions.Menu.MenuAccessIsValid = function(job)
     return false
 end
 
-PoliceJob.Functions.Menu.GenerateKeyMapping = function(job)
-    if not PoliceJob.Functions.Menu.MenuAccessIsValid(job) then
-        return
-    end
-
-    RegisterKeyMapping("society-menu-police", ("Ouvrir le menu entreprise [%s]"):format(SozJobCore.Jobs[job].label), "keyboard", "F3")
-    RegisterCommand("society-menu-police", PoliceJob.Functions.Menu.GenerateJobMenu(job), false)
-end
-
 PoliceJob.Functions.Menu.GenerateMenu = function(job, cb)
     if not PoliceJob.Functions.Menu.MenuAccessIsValid(job) then
         return
@@ -138,16 +129,14 @@ PoliceJob.Functions.Menu.GenerateMenu = function(job, cb)
 end
 
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
-    return function()
-        PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
-            RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+    PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
+        RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
 
-            if PlayerData.job.onduty then
-                BadgeEntity(menu)
-                RadarEntity(menu, job)
-            end
-        end)
-    end
+        if PlayerData.job.onduty then
+            BadgeEntity(menu)
+            RadarEntity(menu, job)
+        end
+    end)
 end
 
 PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
@@ -195,11 +184,11 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
     end)
 end
 
---- Menu management
-CreateThread(function()
-    Wait(1000)
-
-    if PlayerData.job ~= nil then
-        PoliceJob.Functions.Menu.GenerateKeyMapping(PlayerData.job.id)
+--- Events
+RegisterNetEvent("police:client:OpenSocietyMenu", function()
+    if not PoliceJob.Functions.Menu.MenuAccessIsValid(PlayerData.job.id) then
+        return
     end
+
+    PoliceJob.Functions.Menu.GenerateJobMenu(PlayerData.job.id)
 end)
