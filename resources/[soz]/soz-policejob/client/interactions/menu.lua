@@ -15,7 +15,7 @@ local function RedAlertEntity(menu, societyNumber)
             local coords = GetEntityCoords(ped)
             local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
 
-            TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. GenUUID(), {
+            TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
                 anonymous = false,
                 number = societyNumber,
                 message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
