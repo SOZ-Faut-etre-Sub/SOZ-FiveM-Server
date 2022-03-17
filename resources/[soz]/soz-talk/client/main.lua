@@ -20,10 +20,20 @@ end)
 
 RegisterNetEvent("talk:action:disable", function()
     ActionWasDisabled = true
-    CreateThread(function()
-        while ActionWasDisabled do
+
+end)
+
+function clickSound()
+    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.3)
+end
+
+--- Loops
+CreateThread(function()
+    while true do
+        if ActionWasDisabled then
             Wait(0)
 
+            DisableControlAction(0, 0, true) -- Next Camera
             DisableControlAction(0, 1, true) -- Look Left/Right
             DisableControlAction(0, 2, true) -- Look up/Down
             DisableControlAction(0, 16, true) -- Next Weapon
@@ -37,6 +47,8 @@ RegisterNetEvent("talk:action:disable", function()
             DisableControlAction(0, 44, true) -- Cover
             DisableControlAction(0, 47, true) -- Detonate
             DisableControlAction(0, 55, true) -- Dive
+            DisableControlAction(0, 69, true) -- INPUT_VEH_ATTACK
+            DisableControlAction(0, 70, true) -- INPUT_VEH_ATTACK2
             DisableControlAction(0, 75, true) -- Exit Vehicle
             DisableControlAction(0, 76, true) -- Vehicle Handbrake
             DisableControlAction(0, 81, true) -- Next Radio (Vehicle)
@@ -52,10 +64,8 @@ RegisterNetEvent("talk:action:disable", function()
             DisableControlAction(0, 135, true) -- Control OVerride (Sub)
             DisableControlAction(0, 200, true) -- Pause Menu
             DisableControlAction(0, 245, true) -- Chat
+        else
+            Wait(100)
         end
-    end)
+    end
 end)
-
-function clickSound()
-    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.3)
-end

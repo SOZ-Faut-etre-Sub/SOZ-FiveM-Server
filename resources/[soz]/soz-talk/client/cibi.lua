@@ -158,7 +158,9 @@ end)
 
 --- Events
 RegisterNetEvent("talk:cibi:use", function()
-    toggleRadio(not radioOpen)
+    if Entity(currentVehicle).state.hasRadio then
+        toggleRadio(not radioOpen)
+    end
 end)
 
 --- Exports
@@ -176,16 +178,20 @@ CreateThread(function()
                 isInVehicle = true
                 currentVehicle = GetVehiclePedIsUsing(ped)
 
-                setupStateBagForVehicle()
-                LocalPlayer.state:set("useLongRangeRadio", true, true)
+                if Entity(currentVehicle).state.hasRadio then
+                    setupStateBagForVehicle()
+                    LocalPlayer.state:set("useLongRangeRadio", true, true)
+                end
             end
         else
             if isInVehicle and not IsPedInAnyVehicle(ped, false) or IsPlayerDead(PlayerId()) then
                 isInVehicle = false
                 currentVehicle = 0
 
-                LocalPlayer.state:set("useLongRangeRadio", false, true)
-                exports["soz-talk"]:ReconnectToRadio()
+                if Entity(currentVehicle).state.hasRadio then
+                    LocalPlayer.state:set("useLongRangeRadio", false, true)
+                    exports["soz-talk"]:ReconnectToRadio()
+                end
             end
         end
 
