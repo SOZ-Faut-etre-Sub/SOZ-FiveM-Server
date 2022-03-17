@@ -121,6 +121,31 @@
         border-bottom: 2px slide {{TEXT_COLOR(color.r, color.g, color.b)}};
         margin: 0 1rem;
       }
+
+      .menuv.{{theme}} .menuv-color-slider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider-item {
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        display: block;
+        box-sizing: content-box;
+        opacity: 0.7;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider i, .menuv.{{theme}} .menuv-color-slider svg {
+        margin: 0 !important;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider-selected {
+        border: 2px solid white;
+        opacity: 1;
+      }
     </v-style>
     <header class="menuv-header">
       <strong v-html="FORMAT_TEXT(title)"></strong>
@@ -157,6 +182,15 @@
             <span v-html="GET_SLIDER_LABEL({ uuid: item.uuid })"></span>
             <i class="fas fa-chevron-right"></i>
           </span>
+          <div class="menuv-color-slider" v-if="item.type == 'color_slider'">
+            <i class="fas fa-chevron-left"></i>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: -2 })};`"></span>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: -1 })};`"></span>
+            <span class="menuv-color-slider-item menuv-color-slider-selected" :style="`background-color: ${GET_SLIDER_RGB({ uuid: item.uuid })};`"></span>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: 1 })};`"></span>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: 2 })};`"></span>
+            <i class="fas fa-chevron-right"></i>
+          </div>
         </div>
       </li>
     </ul>

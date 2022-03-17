@@ -663,7 +663,7 @@ function CreateMenuItem(info)
                 return U:Ensure(t.Value, false)
             end
 
-            if (itemType == 'slider') then
+            if itemType == 'slider' or itemType == 'color_slider' then
                 for _, item in pairs(t.Values) do
                     if (item.Value == t.Value) then
                         return item.Value
@@ -865,7 +865,7 @@ function CreateEmptyItemsTable(data)
                 elseif (tempTable[index].value >= tempTable[index].max) then
                     tempTable[index].value = tempTable[index].max
                 end
-            elseif (option.__type == 'slider') then
+            elseif (option.__type == 'slider' or option.__type == 'color_slider') then
                 tempTable[index].value = 0
             end
 
@@ -878,10 +878,15 @@ function CreateEmptyItemsTable(data)
                 tempTable[index].values[vIndex] = {
                     label = U:Ensure(value.Label, 'Option'),
                     description = U:Ensure(value.Description, ''),
-                    value = vIndex
+                    value = vIndex,
+                    r = U:Ensure(value.R, 0),
+                    g = U:Ensure(value.G, 0),
+                    b = U:Ensure(value.B, 0),
                 }
 
-                if (option.__type == 'slider') then
+                print(json.encode(tempTable[index].values[vIndex]));
+
+                if (option.__type == 'slider' or option.__type == 'color_slider') then
                     if (U:Ensure(option.Value, 0) == valueIndex) then
                         tempTable[index].value = (valueIndex - 1)
                     end
@@ -931,7 +936,7 @@ function CreateEmptyItemsTable(data)
                     elseif (tempTable.value >= tempTable.max) then
                         tempTable.value = tempTable.max
                     end
-                elseif (option.__type == 'slider') then
+                elseif (option.__type == 'slider' or option.__type == 'color_slider') then
                     tempTable.value = 0
                 end
 
@@ -944,10 +949,13 @@ function CreateEmptyItemsTable(data)
                     tempTable.values[vIndex] = {
                         label = U:Ensure(value.Label, 'Option'),
                         description = U:Ensure(value.Description, ''),
-                        value = vIndex
+                        value = vIndex,
+                        r = U:Ensure(value.R, 0),
+                        g = U:Ensure(value.G, 0),
+                        b = U:Ensure(value.B, 0),
                     }
 
-                    if (option.__type == 'slider') then
+                    if (option.__type == 'slider' or option.__type == 'color_slider') then
                         if (U:Ensure(option.Value, 0) == valueIndex) then
                             tempTable.value = (valueIndex - 1)
                         end
@@ -1461,6 +1469,97 @@ function CreateMenu(info)
                     Label = U:Ensure(info.Label or info.label, 'Value'),
                     Description = U:Ensure(info.Description or info.description, ''),
                     Value = info.Value or info.value
+                }
+
+                insert(self.Values, value)
+            end
+
+            --- Add values to slider
+            ---@vararg table[] List of values
+            function item:AddValues(...)
+                local arguments = pack(...)
+
+                for _, argument in pairs(arguments) do
+                    if (U:Typeof(argument) == 'table') then
+                        local hasIndex = argument[1] or nil
+
+                        if (hasIndex and U:Typeof(hasIndex) == 'table') then
+                            self:AddValues(unpack(argument))
+                        else
+                            self:AddValue(argument)
+                        end
+                    end
+                end
+            end
+
+            local values = U:Ensure(info.Values or info.values, {})
+
+            if (#values > 0) then
+                item:AddValues(values)
+            end
+
+            if (info.TriggerUpdate) then
+                t.Items:AddItem(item)
+            else
+                local items = rawget(t.data, 'Items')
+
+                if (items) then
+                    local newIndex = #items + 1
+
+                    rawset(items.data, newIndex, item)
+
+                    return items.data[newIndex] or item
+                end
+            end
+
+            return t.Items[#t.Items] or item
+        end,
+        ---@type function
+        ---@param t Menu MenuV menu
+        ---@param info table Information about slider
+        ---@return SliderItem New slider item
+        AddColorSlider = function(t, info)
+            info = U:Ensure(info, {})
+
+            info.Type = 'color_slider'
+            info.Events = { OnChange = {}, OnSelect = {} }
+            info.PrimaryEvent = 'OnSelect'
+            info.TriggerUpdate = not U:Ensure(info.IgnoreUpdate or info.ignoreUpdate, false)
+            info.__menu = t
+
+            ---@class ColorSliderItem : Item
+            ---@filed private __event string Name of primary event
+            ---@field public UUID string UUID of Item
+            ---@field public Icon string Icon/Emoji for Item
+            ---@field public Label string Label of Item
+            ---@field public Description string Description of Item
+            ---@field public Value any Value of Item
+            ---@field public Values table[] List of values
+            ---@field public Min number Min range value
+            ---@field public Max number Max range value
+            ---@field public Disabled boolean Disabled state of Item
+            ---@field private Events table<string, function[]> List of registered `on` events
+            ---@field public Trigger fun(t: Item, event: string)
+            ---@field public On fun(t: Item, event: string, func: function)
+            ---@field public Validate fun(t: Item, k: string, v:any)
+            ---@field public NewIndex fun(t: Item, k: string, v: any)
+            ---@field public GetValue fun(t: Item):any
+            ---@field public AddValue fun(t: Item, info: table)
+            ---@field public AddValues fun(t: Item)
+            local item = CreateMenuItem(info)
+
+            --- Add a value to slider
+            ---@param info table Information about slider
+            function item:AddValue(info)
+                info = U:Ensure(info, {})
+
+                local value = {
+                    Label = U:Ensure(info.Label or info.label, 'Value'),
+                    Description = U:Ensure(info.Description or info.description, ''),
+                    Value = info.Value or info.value,
+                    R = U:Ensure(info.R or info.r, 0),
+                    G = U:Ensure(info.G or info.g, 0),
+                    B = U:Ensure(info.B or info.b, 0),
                 }
 
                 insert(self.Values, value)
@@ -2414,7 +2513,7 @@ REGISTER_NUI_CALLBACK('submit', function(info, cb)
                 v.Value = Utilities:Ensure(info.value, false)
             elseif (v.__type == 'range') then
                 v.Value = Utilities:Ensure(info.value, v.Min)
-            elseif (v.__type == 'slider') then
+            elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                 v.Value = Utilities:Ensure(info.value, 0) + 1
             end
 
@@ -2424,7 +2523,7 @@ REGISTER_NUI_CALLBACK('submit', function(info, cb)
                 MenuV.CurrentMenu.Items[k]:Trigger('select')
             elseif (v.__type == 'range') then
                 MenuV.CurrentMenu.Items[k]:Trigger('select', v.Value)
-            elseif (v.__type == 'slider') then
+            elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                 local option = MenuV.CurrentMenu.Items[k].Values[v.Value] or nil
 
                 if (option == nil) then return end
@@ -2518,7 +2617,7 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
             elseif (v.__type == 'range') then
                 newValue = Utilities:Ensure(info.now, v.Min)
                 oldValue = Utilities:Ensure(info.prev, v.Min)
-            elseif (v.__type == 'slider') then
+            elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                 newValue = Utilities:Ensure(info.now, 0) + 1
                 oldValue = Utilities:Ensure(info.prev, 0) + 1
             end
@@ -2533,7 +2632,7 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
 
                 if (v.__type == 'range') then
                     MenuV.CurrentMenu.Items[k]:Trigger('select', v.Value)
-                elseif (v.__type == 'slider') then
+                elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                     local option = MenuV.CurrentMenu.Items[k].Values[v.Value] or nil
 
                     if (option == nil) then return end

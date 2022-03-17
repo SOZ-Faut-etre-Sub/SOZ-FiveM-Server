@@ -158,7 +158,7 @@ function CreateMenuItem(info)
                 return U:Ensure(t.Value, false)
             end
 
-            if (itemType == 'slider') then
+            if itemType == 'slider' or itemType == 'color_slider' then
                 for _, item in pairs(t.Values) do
                     if (item.Value == t.Value) then
                         return item.Value

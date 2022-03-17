@@ -28,3 +28,22 @@ function CreateSliderList(menu, label, value, options, cb)
         cb(option.value)
     end)
 end
+
+function CreateColorSliderList(menu, label, value, options, cb)
+    local valueIndex = 1
+
+    for i, v in ipairs(options) do
+        if v.value == value then
+            valueIndex = i
+            break
+        end
+    end
+
+    local slider = menu:AddColorSlider({label = label, value = valueIndex, values = options})
+
+    slider:On("change", function(_, value)
+        local option = options[value]
+
+        cb(option.value)
+    end)
+end
