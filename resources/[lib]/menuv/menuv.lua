@@ -1257,6 +1257,34 @@ function CreateMenu(info)
         ---@param v string
         NewIndex = U:Ensure(info.NewIndex or info.newIndex, function(t, k, v)
         end),
+        AddTitle = function(t, info)
+            info = U:Ensure(info, {})
+
+            info.Type = 'title'
+            info.disabled = true
+            info.Events = { OnSelect = {} }
+            info.PrimaryEvent = 'OnSelect'
+            info.TriggerUpdate = not U:Ensure(info.IgnoreUpdate or info.ignoreUpdate, false)
+            info.__menu = t
+
+            local item = CreateMenuItem(info)
+
+            if (info.TriggerUpdate) then
+                t.Items:AddItem(item)
+            else
+                local items = rawget(t.data, 'Items')
+
+                if (items) then
+                    local newIndex = #items + 1
+
+                    rawset(items.data, newIndex, item)
+
+                    return items.data[newIndex] or item
+                end
+            end
+
+            return t.Items[#t.Items] or item
+        end,
         ---@type function
         ---@param t Menu MenuV menu
         ---@param info table Information about button

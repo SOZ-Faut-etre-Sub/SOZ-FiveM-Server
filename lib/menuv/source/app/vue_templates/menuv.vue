@@ -108,6 +108,19 @@
         position: absolute;
         left: 43%;
       }
+
+      .menuv.{{theme}} .menuv-title {
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+      }
+
+      .menuv.{{theme}} .menuv-title:before, .menuv.{{theme}} .menuv-title:after {
+        content: '';
+        flex: 0 1 100%;
+        border-bottom: 2px slide {{TEXT_COLOR(color.r, color.g, color.b)}};
+        margin: 0 1rem;
+      }
     </v-style>
     <header class="menuv-header">
       <strong v-html="FORMAT_TEXT(title)"></strong>
@@ -118,12 +131,13 @@
         <div class="media-left item-icon" v-if="ENSURE(item.icon, 'none') != 'none'">
           <span class="menuv-icon">{{ENSURE(item.icon, 'none')}}</span>
         </div>
+        <div class="menuv-title" v-if="item.type == 'title'" v-html="FORMAT_TEXT(item.label)"></div>
         <div class="menuv-heritage-content" v-if="item.type == 'heritage'">
           <img class="menuv-heritage-mother" :src="`https://nui-img/char_creator_portraits/${item.portraitFemale}`" alt="mother" />
           <img class="menuv-heritage-father" :src="`https://nui-img/char_creator_portraits/${item.portraitMale}`" alt="father" />
         </div>
-        <div class="media-content flex-left item-title" v-if="item.type != 'heritage'" v-html="FORMAT_TEXT(item.label)"></div>
-        <div class="media-right" v-if="item.type != 'heritage'">
+        <div class="media-content flex-left item-title" v-if="item.type != 'heritage' && item.type != 'title'" v-html="FORMAT_TEXT(item.label)"></div>
+        <div class="media-right" v-if="item.type != 'heritage' && item.type != 'title'">
           <i v-if="item.type == 'checkbox'" :class="{'fas fa-check': item.value, 'far fa-square': !item.value}"></i>
           <div class="menuv-range" v-if="item.type == 'range'">
               <span class="min-range-label" v-html="FORMAT_TEXT(item.minLabel)"></span>
