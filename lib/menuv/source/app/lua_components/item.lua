@@ -58,6 +58,8 @@ function CreateMenuItem(info)
         Min = U:Ensure(info.Min or info.min, 0),
         ---@type number
         Max = U:Ensure(info.Max or info.max, 0),
+        ---@type number
+        Interval = U:Ensure(info.Interval or info.interval, 1),
         ---@type boolean
         Disabled = U:Ensure(info.Disabled or info.disabled, false),
         ---@type table

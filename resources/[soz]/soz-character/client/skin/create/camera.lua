@@ -2,7 +2,7 @@ Camera = {}
 
 Camera.entity = nil
 Camera.position = vector3(0.0, 0.0, 0.0)
-Camera.currentView = "body"
+Camera.currentView = "head"
 Camera.active = false
 Camera.updateRot = false
 Camera.updateZoom = false

@@ -54,6 +54,7 @@ export interface Item {
     maxLabel: '';
     min: number;
     max: number;
+    interval: number;
     disabled: boolean;
     portraitMale: string;
     portraitFemale: string;
@@ -323,6 +324,7 @@ export default VUE.extend({
                     this.items[i].maxLabel = item.maxLabel || this.items[i].maxLabel;
                     this.items[i].min = item.min || this.items[i].min;
                     this.items[i].max = item.max || this.items[i].max;
+                    this.items[i].interval = item.interval || this.items[i].interval;
                     this.items[i].disabled = item.disabled || this.items[i].disabled;
                     this.items[i].portraitMale = item.portraitMale || this.items[i].portraitMale;
                     this.items[i].portraitFemale = item.portraitFemale || this.items[i].portraitFemale;
@@ -568,9 +570,9 @@ export default VUE.extend({
                     let new_range_index = null;
                     let range_value = item.value as number;
 
-                    if ((range_value - 1) <= item.min) { new_range_index = item.min; }
-                    else if ((range_value - 1) >= item.max) { new_range_index = item.max; }
-                    else { new_range_index = (this.items[this.index].value - 1); }
+                    if ((range_value - item.interval) <= item.min) { new_range_index = item.min; }
+                    else if ((range_value - item.interval) >= item.max) { new_range_index = item.max; }
+                    else { new_range_index = (this.items[this.index].value - item.interval); }
 
                     if (new_range_index != this.items[this.index].value) {
                         this.items[this.index].value = new_range_index;
@@ -624,9 +626,9 @@ export default VUE.extend({
                     let new_range_index = null;
                     let range_value = item.value as number;
 
-                    if ((range_value + 1) <= item.min) { new_range_index = item.min; }
-                    else if ((range_value + 1) >= item.max) { new_range_index = item.max; }
-                    else { new_range_index = (this.items[this.index].value + 1); }
+                    if ((range_value + item.interval) <= item.min) { new_range_index = item.min; }
+                    else if ((range_value + item.interval) >= item.max) { new_range_index = item.max; }
+                    else { new_range_index = (this.items[this.index].value + item.interval); }
 
                     if (new_range_index != this.items[this.index].value) {
                         this.items[this.index].value = new_range_index;
