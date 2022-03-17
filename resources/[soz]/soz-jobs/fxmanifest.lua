@@ -19,8 +19,16 @@ client_script {
     "client/pole.lua",
     "client/metal.lua",
     "client/religion.lua",
+    "client/utils/*.lua",
 }
 
-server_script {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/grade.lua", "server/temporary.lua"}
+server_script {
+    "@oxmysql/lib/MySQL.lua",
+    "server/main.lua",
+    "server/grade.lua",
+    "server/functions.lua",
+    "server/temporary.lua",
+    "server/objects.lua",
+}
 
 dependencies {"qb-target"}

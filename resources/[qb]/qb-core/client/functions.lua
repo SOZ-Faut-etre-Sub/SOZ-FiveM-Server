@@ -18,6 +18,20 @@ function QBCore.Functions.GetCoords(entity)
     return vector4(coords.x, coords.y, coords.z, heading)
 end
 
+function QBCore.Functions.GetProperGroundCoord(obj, position, heading)
+    --- Generate ghost spike
+    local object = CreateObject(obj, position.x, position.y, position.z, false)
+    SetEntityVisible(object, false)
+    SetEntityHeading(object, heading)
+    PlaceObjectOnGroundProperly(object)
+
+    --- Clean entity
+    position = GetEntityCoords(object)
+    DeleteObject(object)
+
+    return vector4(position.x, position.y, position.z, heading)
+end
+
 function QBCore.Functions.HasItem(item)
     local p = promise.new()
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
@@ -285,6 +299,21 @@ function QBCore.Functions.GetPlayersFromCoords(coords, distance)
         end
     end
     return closePlayers
+end
+
+function QBCore.Functions.GetVehicleInDirection()
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+    local inDirection = GetOffsetFromEntityInWorldCoords(ped, 0.0, 5.0, 0.0)
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(coords, inDirection, 10, ped, 0)
+    local _, hit, _, _, entityHit = GetShapeTestResult(rayHandle)
+
+    if hit == 1 and GetEntityType(entityHit) == 2 then
+        local entityCoords = GetEntityCoords(entityHit)
+        return entityHit, entityCoords
+    end
+
+    return nil
 end
 
 function QBCore.Functions.GetClosestVehicle(coords)

@@ -17,10 +17,11 @@ Config.ErrorMessage = {
 }
 
 -- TODO: move this to policejob
-Config.MoneyChecker = vector3(458.63, -979.16, 23.92)
+Config.MoneyChecker = vector3(587.51, 13.24, 75.70)
 
 Config.SafeStorages = {
-    ["safe_police"] = {label = "Coffre police", owner = "police", position = vector3(450.15, -973.15, 29.7)},
+    ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(629.6, -24.31, 89.51)},
+    ["safe_lscs"] = {label = "Coffre LSCS", owner = "lscs", position = vector3(-433.32, 6001.71, 30.75)},
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}

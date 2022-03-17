@@ -28,7 +28,7 @@ MySQL.ready(function()
                     local st = Config.Storages[v.name]
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner)
                     StorageNotLoaded[v.name] = nil
-                elseif v.type ~= "trunk" then
+                elseif v.type ~= "trunk" and v.type ~= "stash" then
                     exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
                 end
             end
@@ -44,7 +44,7 @@ end)
 --- Management
 function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
     if _G.Container[invType] == nil then
-        print("Inventory type not valid !")
+        print(("Inventory type (%s) not valid !"):format(invType))
         return
     end
 
