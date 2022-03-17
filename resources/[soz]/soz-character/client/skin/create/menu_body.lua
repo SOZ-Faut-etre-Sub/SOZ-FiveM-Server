@@ -41,11 +41,6 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     -- Sourcils
     bodyMenu:AddTitle({ label = "Yeux" })
 
-    CreateRangeSizeItem(bodyMenu, "Longueur des sourcils", skin.FaceTrait.EyebrowForward, function(value)
-        skin.FaceTrait.EyebrowForward = value
-        ApplyPlayerBodySkin(playerId, skin)
-    end)
-
     -- Oeils
     CreateSliderList(bodyMenu, "Couleur des yeux", skin.FaceTrait.EyeColor, Labels.Eye, function(value)
         skin.FaceTrait.EyeColor = value

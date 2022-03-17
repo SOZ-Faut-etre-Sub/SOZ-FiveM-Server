@@ -37,11 +37,14 @@ export interface Option {
     label: string;
     description: string;
     value: number;
+    r: number;
+    g: number;
+    b: number;
 }
 
 export interface Item {
     index: number;
-    type: 'button' | 'menu' | 'checkbox' | 'confirm' | 'range' | 'slider' | 'label' | 'unknown';
+    type: 'button' | 'menu' | 'checkbox' | 'confirm' | 'range' | 'slider' | 'label' | 'unknown' | 'heritage' | 'title' | 'color_slider';
     uuid: string;
     icon: string;
     label: string;
@@ -413,7 +416,7 @@ export default VUE.extend({
         },
         GET_SLIDER_LABEL({ uuid }: { uuid: string }) {
             for (var i = 0; i < this.items.length; i++) {
-                if (this.items[i].uuid == uuid && this.items[i].type == 'slider') {
+                if (this.items[i].uuid == uuid && (this.items[i].type == 'slider' || this.items[i].type == 'color_slider')) {
                     const currentValue = this.items[i].value as number;
                     const values = this.items[i].values;
 
@@ -424,6 +427,39 @@ export default VUE.extend({
                     }
 
                     return this.FORMAT_TEXT(values[currentValue].label || 'Unknown');
+                }
+            }
+
+            return '';
+        },
+        GET_SLIDER_RGB_OFFSET({ uuid, offset }: { uuid: string, offset: number }) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].uuid == uuid && this.items[i].type == 'color_slider') {
+                    const currentValue = this.items[i].value as number;
+                    const offsetValue = ((currentValue + offset) + this.items[i].values.length) % this.items[i].values.length;
+                    const values = this.items[i].values;
+
+                    if (values.length == 0) { return ''; }
+
+                    return `rgb(${values[offsetValue].r}, ${values[offsetValue].g}, ${values[offsetValue].b})`;
+                }
+            }
+
+            return '';
+        },
+        GET_SLIDER_RGB({ uuid }: { uuid: string }) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].uuid == uuid && this.items[i].type == 'color_slider') {
+                    const currentValue = this.items[i].value as number;
+                    const values = this.items[i].values;
+
+                    if (values.length == 0) { return ''; }
+
+                    if (currentValue < 0 || currentValue >= values.length) {
+                        return `rgb(${values[0].r}, ${values[0].g}, ${values[0].b})`;
+                    }
+
+                    return `rgb(${values[currentValue].r}, ${values[currentValue].g}, ${values[currentValue].b})`;
                 }
             }
 
@@ -583,6 +619,7 @@ export default VUE.extend({
                     }
 
                     break;
+                case 'color_slider':
                 case 'slider':
                     let new_slider_index = null;
                     const slider_value = item.value as number;
@@ -639,6 +676,7 @@ export default VUE.extend({
                     }
 
                     break;
+                case 'color_slider':
                 case 'slider':
                     let new_slider_index = null;
                     const slider_value = item.value as number;
@@ -691,6 +729,7 @@ export default VUE.extend({
 
                     this.POST(`https://menuv/submit`, { uuid: item.uuid, value: this.items[this.index].value, r: this.resource });
                     break;
+                case 'color_slider':
                 case 'slider':
                     let slider_value = item.value as number;
                     const slider_values = item.values || [];

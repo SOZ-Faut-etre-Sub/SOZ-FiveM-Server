@@ -21,7 +21,8 @@ client_script {
     "client/skin/create/menu.lua",
     "client/skin/create/menu_model.lua",
     "client/skin/create/menu_body.lua",
-    "client/skin/create/menu_face.lua",
+    "client/skin/create/menu_hair.lua",
+    "client/skin/create/menu_makeup.lua",
     "client/skin/create/menu_cloth.lua",
     "client/skin/create/create.lua",
 
