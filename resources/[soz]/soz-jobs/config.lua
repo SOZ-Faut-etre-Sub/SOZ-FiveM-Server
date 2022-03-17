@@ -91,6 +91,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.LSPD] = {
         label = "LSPD",
         grades = {},
+        menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -99,6 +100,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.LSCS] = {
         label = "LSCS",
         grades = {},
+        menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
