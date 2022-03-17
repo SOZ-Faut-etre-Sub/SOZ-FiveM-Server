@@ -884,8 +884,6 @@ function CreateEmptyItemsTable(data)
                     b = U:Ensure(value.B, 0),
                 }
 
-                print(json.encode(tempTable[index].values[vIndex]));
-
                 if (option.__type == 'slider' or option.__type == 'color_slider') then
                     if (U:Ensure(option.Value, 0) == valueIndex) then
                         tempTable[index].value = (valueIndex - 1)

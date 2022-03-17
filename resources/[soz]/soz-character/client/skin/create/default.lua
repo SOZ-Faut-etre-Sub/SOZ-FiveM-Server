@@ -1,6 +1,6 @@
 function GetDefaultBodySkin()
     return {
-        Model = {Hash = GetHashKey("mp_f_freemode_01"), Father = 0, Mother = 23, ShapeMix = 0.5, SkinMix = 0.5},
+        Model = {Hash = GetHashKey("mp_m_freemode_01"), Father = 0, Mother = 23, ShapeMix = 0.5, SkinMix = 0.5},
         Hair = {
             HairType = 0,
             HairColor = 0,
@@ -44,6 +44,7 @@ function GetDefaultBodySkin()
             LipstickType = -1,
             LipstickColor = 0,
             BlushType = -1,
+            BlushColor = 0,
             FullMakeupType = -1,
             FullMakeupDefaultColor = true,
             FullMakeupPrimaryColor = 0,
