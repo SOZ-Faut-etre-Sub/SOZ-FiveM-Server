@@ -3,6 +3,12 @@ CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
+                label = "Amendes",
+                icon = "fas fa-file-invoice-dollar",
+                event = "police:client:InvoicePlayer",
+                job = {["lspd"] = 0, ["lscs"] = 0},
+            },
+            {
                 label = "Fouiller",
                 icon = "fas fa-shopping-bag",
                 event = "police:client:SearchPlayer",
@@ -117,4 +123,9 @@ end)
 RegisterNetEvent("police:client:GetUnCuffed", function()
     ClearPedTasksImmediately(PlayerPedId())
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "Uncuff", 0.2)
+end)
+
+--- Invoices
+RegisterNetEvent("police:client:InvoicePlayer", function(data)
+    PoliceJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
 end)
