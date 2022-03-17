@@ -9,11 +9,7 @@ AddEventHandler("soz-flatbed:server:editProp", function(VehicleId, ValueName, Ne
             FlatbedProps[VehicleId] = nil
         end
     else
-        FlatbedProps[VehicleId] = {
-            Prop = NewValue,
-            Status = false,
-            Attached = nil,
-        }
+        FlatbedProps[VehicleId] = {Prop = NewValue, Status = false, Attached = nil}
     end
 end)
 
