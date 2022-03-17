@@ -112,37 +112,87 @@ PoliceJob.Functions.Menu.GenerateKeyMapping = function(job)
     end
 
     RegisterKeyMapping("society-menu-police", ("Ouvrir le menu entreprise [%s]"):format(SozJobCore.Jobs[job].label), "keyboard", "F3")
-    RegisterCommand("society-menu-police", PoliceJob.Functions.Menu.GenerateMenu(job), false)
+    RegisterCommand("society-menu-police", PoliceJob.Functions.Menu.GenerateJobMenu(job), false)
 end
 
-PoliceJob.Functions.Menu.GenerateMenu = function(job)
-    return function()
-        if not PoliceJob.Functions.Menu.MenuAccessIsValid(job) then
-            return
-        end
-
-        --- @type Menu
-        local menu = PoliceJob.Menus[job].menu
-
-        menu:ClearItems()
-
-        RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
-
-        if PlayerData.job.onduty then
-            BadgeEntity(menu)
-            RadarEntity(menu, job)
-        end
-
-        if menu.IsOpen then
-            MenuV:CloseAll(function()
-                menu:Close()
-            end)
-        else
-            MenuV:CloseAll(function()
-                menu:Open()
-            end)
-        end
+PoliceJob.Functions.Menu.GenerateMenu = function(job, cb)
+    if not PoliceJob.Functions.Menu.MenuAccessIsValid(job) then
+        return
     end
+
+    --- @type Menu
+    local menu = PoliceJob.Menus[job].menu
+    menu:ClearItems()
+
+    cb(menu)
+
+    if menu.IsOpen then
+        MenuV:CloseAll(function()
+            menu:Close()
+        end)
+    else
+        MenuV:CloseAll(function()
+            menu:Open()
+        end)
+    end
+end
+
+PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
+    return function()
+        PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
+            RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+
+            if PlayerData.job.onduty then
+                BadgeEntity(menu)
+                RadarEntity(menu, job)
+            end
+        end)
+    end
+end
+
+PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
+    local player, distance = QBCore.Functions.GetClosestPlayer()
+    if player == -1 or distance > 2.5 then
+        exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+        return
+    end
+
+    PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
+        menu:AddButton({
+            label = "Amende personnalisée",
+            value = nil,
+            select = function()
+                local title = exports["soz-hud"]:Input("Titre", 200)
+                if title == nil or title == "" then
+                    exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un title")
+                    return
+                end
+
+                local amount = exports["soz-hud"]:Input("Montant", 10)
+                if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
+                    exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un montant")
+                    return
+                end
+
+                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
+            end,
+        })
+
+        for _, finesCategory in ipairs(Config.Fines) do
+            local category = MenuV:InheritMenu(menu, {Subtitle = finesCategory.label})
+            menu:AddButton({label = finesCategory.label, value = category})
+
+            for _, fine in ipairs(finesCategory.items) do
+                category:AddButton({
+                    label = fine.label,
+                    rightLabel = "$" .. fine.price,
+                    select = function()
+                        TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fine.price)
+                    end,
+                })
+            end
+        end
+    end)
 end
 
 --- Menu management

@@ -29,6 +29,50 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("sheriff")] = true,
     [GetHashKey("sheriff2")] = true,
 }
+--- Fines
+Config.Fines = {
+    [1] = {label = "Sans catégorie", items = {{label = "TIG", price = 0}}},
+    [2] = {
+        label = "Catégorie 1",
+        items = {
+            {label = "Conduite sans permis", price = 3000},
+            {label = "Insulte / Outrage standard", price = 4000},
+            {label = "Insulte / Outrage majorée", price = 8000},
+            {label = "Rappel à la loi minorée", price = 250},
+            {label = "Rappel à la loi standard", price = 500},
+            {label = "Rappel à la loi majorée", price = 750},
+        },
+    },
+    [3] = {
+        label = "Catégorie 2",
+        items = {
+            {label = "Dégradation de bien public", price = 4000},
+            {label = "Braquage de commerce minorée", price = 1000},
+            {label = "Braquage de commerce standard", price = 2500},
+            {label = "Braquage de commerce majorée", price = 5000},
+            {label = "Port d'arme sans permis", price = 3000},
+            {label = "Vol de véhicule minorée", price = 1500},
+            {label = "Vol de véhicule standard", price = 4500},
+            {label = "Vol de véhicule majorée", price = 10000},
+        },
+    },
+    [4] = {
+        label = "Catégorie 3",
+        items = {
+            {label = "Agression à main armée standard", price = 30000},
+            {label = "Agression à main armée majorée", price = 40000},
+            {label = "Braquage de Fleeca minorée", price = 10000},
+            {label = "Braquage de Fleeca standard", price = 20000},
+            {label = "Braquage de Fleeca majorée", price = 30000},
+            {label = "Tentative de corruption", price = 15000},
+            {label = "Vol à main armée", price = 15000},
+        },
+    },
+    [5] = {label = "Catégorie 4", items = {{label = "Corruption", price = 50000}}},
+}
+
+--- Radars config
+Config.RadarAllowedVehicle = {"ambulance", "police", "police2", "police3", "policeb", "pbus", "sheriff", "sheriff2"}
 
 Config.Radars = {
     [1] = {
