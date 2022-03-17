@@ -12,5 +12,11 @@ export const SocietyContactsState: Society[] = [
         display: 'LSMS',
         number: '555-LSMS',
         avatar: 'media/society_icon/lsms.webp',
-    }
+    },
+    {
+        id: 3,
+        display: 'LSCS',
+        number: '555-LSCS',
+        avatar: 'media/society_icon/lscs.webp',
+    },
 ];

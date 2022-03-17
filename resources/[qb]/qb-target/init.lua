@@ -114,7 +114,11 @@ CreateThread(function()
 		end
 
 		JobCheck = function(job, permission)
-			if job == 'all' or job == PlayerData.job.id then
+			if type(job) == 'table' then
+				if PlayerData.job.grade >= job[PlayerData.job.id] then
+					return true
+				end
+			elseif job == 'all' or job == PlayerData.job.id then
 				if permission then
 					local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 

@@ -1,3 +1,4 @@
+local QBCore = exports["qb-core"]:GetCoreObject()
 local animDict = "missminuteman_1ig_2"
 local anim = "handsup_base"
 local handsup = false
@@ -11,7 +12,7 @@ RegisterCommand("hu", function()
         Wait(100)
     end
     handsup = not handsup
-    if exports["qb-policejob"]:IsHandcuffed() then
+    if QBCore.Functions.GetPlayerData().metadata["ishandcuffed"] then
         return
     end
     if handsup then

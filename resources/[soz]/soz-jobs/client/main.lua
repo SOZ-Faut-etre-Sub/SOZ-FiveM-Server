@@ -1,4 +1,4 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 local PromoteMenu = MenuV:CreateMenu(nil, "", "menu_job_poleemploi", "soz", "job-promote")
 PlayerData = QBCore.Functions.GetPlayerData()
 

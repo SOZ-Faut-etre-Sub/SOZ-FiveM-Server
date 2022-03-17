@@ -59,7 +59,7 @@ function SeizureInventory:AccessAllowed(owner, playerId)
     local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
 
     if Player then
-        return Player.PlayerData.job.id == owner
+        return Player.PlayerData.job.id == owner and Player.PlayerData.job.onduty
     else
         return false
     end

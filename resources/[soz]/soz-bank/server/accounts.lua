@@ -17,7 +17,9 @@ setmetatable(Account, {
 })
 
 MySQL.ready(function()
-    local EnterpriseAccountNotLoaded = table.clone(QBCore.Shared.Jobs)
+    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
+
+    local EnterpriseAccountNotLoaded = table.clone(SozJobCore.Jobs)
     local EnterpriseSafeNotLoaded = table.clone(Config.SafeStorages)
 
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
@@ -26,10 +28,12 @@ MySQL.ready(function()
                 if v.account_type == "player" then
                     Account.Create(v.accountid, v.citizenid, v.account_type, v.citizenid, v.money)
                 elseif v.account_type == "business" then
-                    Account.Create(v.businessid, QBCore.Shared.Jobs[v.businessid].label or v.name, v.account_type, v.businessid, v.money)
+                    Account.Create(v.businessid, SozJobCore.Jobs[v.businessid] and SozJobCore.Jobs[v.businessid].label or v.name, v.account_type, v.businessid,
+                                   v.money)
                     EnterpriseAccountNotLoaded[v.businessid] = nil
                 elseif v.account_type == "safestorages" then
-                    Account.Create(v.businessid, Config.SafeStorages[v.businessid].label or v.name, v.account_type, v.businessid, v.money, v.marked_money)
+                    Account.Create(v.businessid, Config.SafeStorages[v.businessid] and Config.SafeStorages[v.businessid].label or v.name, v.account_type,
+                                   v.businessid, v.money, v.marked_money)
                     EnterpriseSafeNotLoaded[v.businessid] = nil
                 elseif v.account_type == "offshore" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
