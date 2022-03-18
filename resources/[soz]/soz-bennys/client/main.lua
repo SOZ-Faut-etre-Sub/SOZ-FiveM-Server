@@ -97,7 +97,6 @@ RegisterNetEvent("soz-bennys:client:fixEverything", function()
     end
 end)
 
-
 function GetVehicleStatusList(plate)
     local retval = nil
     if VehicleStatus[plate] ~= nil then
