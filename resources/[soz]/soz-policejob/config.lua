@@ -19,6 +19,13 @@ Config.Locations = {
     },
 }
 
+--- Licenses
+Config.Licenses = {
+    ["car"] = {label = "Permis voiture"},
+    ["truck"] = {label = "Permis poids lourd"},
+    ["motorcycle"] = {label = "Permis moto"},
+}
+
 Config.RadarAllowedVehicle = {
     [GetHashKey("ambulance")] = true,
     [GetHashKey("police")] = true,

@@ -9,6 +9,12 @@ CreateThread(function()
                 job = {["lspd"] = 0, ["lscs"] = 0},
             },
             {
+                label = "Gérer les permis",
+                icon = "far fa-id-badge",
+                event = "police:client:LicensePlayer",
+                job = {["lspd"] = 0, ["lscs"] = 0},
+            },
+            {
                 label = "Fouiller",
                 icon = "fas fa-shopping-bag",
                 event = "police:client:SearchPlayer",
@@ -150,6 +156,11 @@ end)
 --- Invoices
 RegisterNetEvent("police:client:InvoicePlayer", function(data)
     PoliceJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
+end)
+
+--- License
+RegisterNetEvent("police:client:LicensePlayer", function(data)
+    PoliceJob.Functions.Menu.GenerateLicenseMenu(PlayerData.job.id, data.entity)
 end)
 
 --- Escorted
