@@ -97,7 +97,6 @@ RegisterNetEvent("soz-bennys:client:fixEverything", function()
     end
 end)
 
-
 function GetVehicleStatusList(plate)
     local retval = nil
     if VehicleStatus[plate] ~= nil then
@@ -501,16 +500,13 @@ local function Repairall(entity)
     local repairTime = (1000 - engineHealth) * 100
 
     ScrapAnim(repairTime)
-    QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true, {
+    QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
+                                 {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {
-        animDict = "mp_car_bomb",
-        anim = "car_bomb_mechanic",
-        flags = 16,
-    }, {}, {}, function() -- Done
+    }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
         ClearPedTasks(PlayerPedId())
         local plate = QBCore.Functions.GetPlate(entity)
         SetVehicleBodyHealth(entity, 1000.0)
@@ -527,7 +523,8 @@ end
 local function CleanVehicle(entity)
     local ped = PlayerPedId()
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
-    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000, 20000), false, true, {
+    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000, 20000), false, true,
+                                 {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
