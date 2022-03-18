@@ -4,8 +4,6 @@ Camera.entity = nil
 Camera.position = vector3(0.0, 0.0, 0.0)
 Camera.currentView = "head"
 Camera.active = false
-Camera.updateRot = false
-Camera.updateZoom = false
 Camera.radius = 1.25
 Camera.angleX = 30.0
 Camera.angleY = 0.0
@@ -16,7 +14,7 @@ Camera.radiusMin = 1.0
 Camera.radiusMax = 2.25
 Camera.angleYMin = -30.0
 Camera.angleYMax = 80.0
-delay = 1000
+
 Camera.Activate = function(delay)
     if delay then
         Citizen.Wait(delay)
@@ -40,6 +38,7 @@ Camera.Activate = function(delay)
     RenderScriptCams(true, true, 500, true, true)
 
     Camera.active = true
+    Citizen.CreateThread(CameraLoop)
 end
 
 Camera.Deactivate = function()
@@ -138,72 +137,74 @@ Camera.CalculatePosition = function()
     return vector3(pedCoords.x + offsetX, pedCoords.y + offsetY, pedCoords.z + offsetZ)
 end
 
-Citizen.CreateThread(function()
+function CameraLoop()
     while true do
-        if Camera.active then
-            DisableFirstPersonCamThisFrame()
+        if not Camera.active then
+            return
+        end
 
-            DisableControlAction(2, 30, true)
-            DisableControlAction(2, 31, true)
-            DisableControlAction(2, 32, true)
-            DisableControlAction(2, 33, true)
-            DisableControlAction(2, 34, true)
-            DisableControlAction(2, 35, true)
+        DisableFirstPersonCamThisFrame()
 
-            DisableControlAction(0, 25, true)
-            DisableControlAction(0, 24, true)
-            DisableControlAction(0, 0, true)
-            DisableControlAction(0, 1, true)
-            DisableControlAction(0, 2, true)
-            DisableControlAction(0, 106, true)
-            DisableControlAction(0, 142, true)
-            DisableControlAction(0, 30, true)
-            DisableControlAction(0, 31, true)
-            DisableControlAction(0, 21, true)
-            DisableControlAction(0, 47, true)
-            DisableControlAction(0, 58, true)
-            DisableControlAction(0, 263, true)
-            DisableControlAction(0, 264, true)
-            DisableControlAction(0, 257, true)
-            DisableControlAction(0, 140, true)
-            DisableControlAction(0, 141, true)
-            DisableControlAction(0, 143, true)
-            DisableControlAction(0, 75, true)
+        DisableControlAction(2, 30, true)
+        DisableControlAction(2, 31, true)
+        DisableControlAction(2, 32, true)
+        DisableControlAction(2, 33, true)
+        DisableControlAction(2, 34, true)
+        DisableControlAction(2, 35, true)
 
-            DisableControlAction(27, 75, true)
+        DisableControlAction(0, 25, true)
+        DisableControlAction(0, 24, true)
+        DisableControlAction(0, 0, true)
+        DisableControlAction(0, 1, true)
+        DisableControlAction(0, 2, true)
+        DisableControlAction(0, 106, true)
+        DisableControlAction(0, 142, true)
+        DisableControlAction(0, 30, true)
+        DisableControlAction(0, 31, true)
+        DisableControlAction(0, 21, true)
+        DisableControlAction(0, 47, true)
+        DisableControlAction(0, 58, true)
+        DisableControlAction(0, 263, true)
+        DisableControlAction(0, 264, true)
+        DisableControlAction(0, 257, true)
+        DisableControlAction(0, 140, true)
+        DisableControlAction(0, 141, true)
+        DisableControlAction(0, 143, true)
+        DisableControlAction(0, 75, true)
 
-            Camera.mouseX = GetControlNormal(0, 239)
-            Camera.mouseY = GetControlNormal(0, 240)
+        DisableControlAction(27, 75, true)
 
-            if IsDisabledControlJustReleased(0, 0) then
-                if Camera.currentView == "head" then
-                    Camera.SetView("body")
-                elseif Camera.currentView == "body" then
-                    Camera.SetView("legs")
-                elseif Camera.currentView == "legs" then
-                    Camera.SetView("head")
-                end
+        Camera.mouseX = GetControlNormal(0, 239)
+        Camera.mouseY = GetControlNormal(0, 240)
+
+        if IsDisabledControlJustReleased(0, 0) then
+            if Camera.currentView == "head" then
+                Camera.SetView("body")
+            elseif Camera.currentView == "body" then
+                Camera.SetView("legs")
+            elseif Camera.currentView == "legs" then
+                Camera.SetView("head")
             end
+        end
 
-            -- Zoom in
-            if IsDisabledControlJustReleased(0, 241) then
-                Camera.radius = Camera.radius - 0.05
-            end
+        -- Zoom in
+        if IsDisabledControlJustReleased(0, 241) then
+            Camera.radius = Camera.radius - 0.05
+        end
 
-            -- Zoom out
-            if IsDisabledControlJustReleased(0, 242) then
-                Camera.radius = Camera.radius + 0.05
-            end
+        -- Zoom out
+        if IsDisabledControlJustReleased(0, 242) then
+            Camera.radius = Camera.radius + 0.05
+        end
 
-            if Camera.entity ~= nil then
-                Camera.position = Camera.CalculatePosition()
-                SetCamCoord(Camera.entity, Camera.position.x, Camera.position.y, Camera.position.z)
-            end
+        if Camera.entity ~= nil then
+            Camera.position = Camera.CalculatePosition()
+            SetCamCoord(Camera.entity, Camera.position.x, Camera.position.y, Camera.position.z)
         end
 
         Citizen.Wait(0)
     end
-end)
+end
 
 function PlayIdleAnimation()
     local animDict = "anim@heists@heist_corona@team_idles@female_a"

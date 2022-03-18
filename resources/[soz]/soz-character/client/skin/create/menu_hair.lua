@@ -1,6 +1,6 @@
 local function CreateMaleHairItems(hairMenu, playerId, skin)
     -- Cheveux
-    hairMenu:AddTitle({ label = "Cheveux" })
+    hairMenu:AddTitle({label = "Cheveux"})
     CreateSliderList(hairMenu, "Cheveux", skin.Hair.HairType, Labels.HairMale, function(value)
         skin.Hair.HairType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -11,7 +11,7 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
     end)
 
     -- Sourcils
-    hairMenu:AddTitle({ label = "Sourcils" })
+    hairMenu:AddTitle({label = "Sourcils"})
     CreateSliderList(hairMenu, "Sourcils", skin.Hair.EyebrowType, Labels.Eyebrow, function(value)
         skin.Hair.EyebrowType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -26,7 +26,7 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
     end)
 
     -- Barbe
-    hairMenu:AddTitle({ label = "Barbe" })
+    hairMenu:AddTitle({label = "Barbe"})
     CreateSliderList(hairMenu, "Barbe", skin.Hair.BeardType, Labels.BeardMale, function(value)
         skin.Hair.BeardType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -37,7 +37,7 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
     end)
 
     -- Poils
-    hairMenu:AddTitle({ label = "Poils" })
+    hairMenu:AddTitle({label = "Poils"})
     CreateSliderList(hairMenu, "Poils", skin.Hair.ChestHairType, Labels.ChestHair, function(value)
         skin.Hair.ChestHairType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -50,7 +50,7 @@ end
 
 local function CreateFemaleHairItems(hairMenu, playerId, skin)
     -- Cheveux
-    hairMenu:AddTitle({ label = "Cheveux" })
+    hairMenu:AddTitle({label = "Cheveux"})
     CreateSliderList(hairMenu, "Cheveux", skin.Hair.HairType, Labels.HairFemale, function(value)
         skin.Hair.HairType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -61,7 +61,7 @@ local function CreateFemaleHairItems(hairMenu, playerId, skin)
     end)
 
     -- Sourcils
-    hairMenu:AddTitle({ label = "Sourcils" })
+    hairMenu:AddTitle({label = "Sourcils"})
     CreateSliderList(hairMenu, "Sourcils", skin.Hair.EyebrowType, Labels.Eyebrow, function(value)
         skin.Hair.EyebrowType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -76,7 +76,7 @@ local function CreateFemaleHairItems(hairMenu, playerId, skin)
     end)
 
     -- Poils
-    hairMenu:AddTitle({ label = "Poils" })
+    hairMenu:AddTitle({label = "Poils"})
     CreateSliderList(hairMenu, "Poils", skin.Hair.ChestHairType, Labels.ChestHair, function(value)
         skin.Hair.ChestHairType = value
         ApplyPlayerBodySkin(playerId, skin)
