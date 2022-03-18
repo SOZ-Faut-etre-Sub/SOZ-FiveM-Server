@@ -1,8 +1,8 @@
 const IDENTITY = {
-    nationality: "Nationalité",
     lastName: "Nom",
     firstName: "Prénom(s)",
     gender: "Sexe",
+    job: "Profession",
     address: "Domicile - Adresse",
     phone: "Numéro de téléphone"
 };
