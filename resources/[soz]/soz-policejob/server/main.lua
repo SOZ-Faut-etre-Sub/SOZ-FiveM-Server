@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 --- Cuff
 RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
@@ -158,6 +159,30 @@ RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, 
                 return
             end
         end
+    end
+end)
+
+RegisterNetEvent("police:server:buy", function(weaponID)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not Config.WeaponShop[player.PlayerData.job.id] then
+        return
+    end
+
+    local weapon = Config.WeaponShop[player.PlayerData.job.id][weaponID]
+
+    if player.Functions.RemoveMoney("money", weapon.price) then
+        weapon.metadata.serie = tostring(string.upper(player.PlayerData.job.id) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
+                                             QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+
+        exports["soz-inventory"]:AddItem(player.PlayerData.source, weapon.name, weapon.amount, weapon.metadata, nil, function(success, reason)
+            if success then
+                TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                                   ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(weapon.amount, QBCore.Shared.Items[weapon.name].label, weapon.price))
+            end
+        end)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
     end
 end)
 

@@ -19,6 +19,63 @@ Config.Locations = {
     },
 }
 
+Config.WeaponShop = {
+    ["lspd"] = {
+        [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
+        [2] = {name = "weapon_flashlight", metadata = {}, price = 50, amount = 1},
+        [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
+        [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
+        [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
+        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
+        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [12] = {
+            name = "weapon_pistol_mk2",
+            metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
+            price = 200,
+            amount = 1,
+        },
+        [13] = {
+            name = "weapon_pumpshotgun",
+            metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
+            price = 300,
+            amount = 1,
+        },
+        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+    },
+    ["lscs"] = {
+        [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
+        [2] = {name = "weapon_flashlight", metadata = {}, price = 50, amount = 1},
+        [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
+        [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
+        [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
+        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
+        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [12] = {
+            name = "weapon_revolver_mk2",
+            metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
+            price = 200,
+            amount = 1,
+        },
+        [13] = {
+            name = "weapon_pumpshotgun",
+            metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
+            price = 300,
+            amount = 1,
+        },
+        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+    },
+}
+
 --- Licenses
 Config.Licenses = {
     ["car"] = {label = "Permis voiture"},
