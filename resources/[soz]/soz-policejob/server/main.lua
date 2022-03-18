@@ -13,7 +13,7 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
             TriggerClientEvent("police:client:HandCuffAnimation", Player.PlayerData.source)
             TriggerClientEvent("police:client:GetCuffed", Target.PlayerData.source, Player.PlayerData.source, isSoftcuff)
         else
-            TriggerClientEvent(Player.PlayerData.source, "~r~Vous n'avez pas de menotte")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas de menotte")
         end
     end
 end)
@@ -32,7 +32,7 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             Target.Functions.SetMetaData("ishandcuffed", false)
             TriggerClientEvent("police:client:GetUnCuffed", Target.PlayerData.source)
         else
-            TriggerClientEvent(Player.PlayerData.source, "~r~Vous n'avez pas de clé de menotte")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas de clé de menotte")
         end
     end
 end)
@@ -68,7 +68,6 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     if player and target and player ~= target then
         for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
             if player.PlayerData.job.id == allowedJob then
-                print(playerState.isEscorting, playerState.escorting == target.PlayerData.source, targetState.isEscorted)
                 if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
                     Player(player.PlayerData.source).state:set("isEscorting", false, true)
                     Player(player.PlayerData.source).state:set("escorting", nil, true)
@@ -78,6 +77,40 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
 
                     return
                 end
+            end
+        end
+    end
+end)
+
+RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, point)
+    local player = QBCore.Functions.GetPlayer(source)
+    local target = QBCore.Functions.GetPlayer(targetId)
+
+    if player and target and player ~= target then
+        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+            if player.PlayerData.job.id == allowedJob then
+                local licenses = target.PlayerData.metadata["licences"]
+
+                if licenses[licenseType] >= point then
+                    licenses[licenseType] = licenses[licenseType] - point
+
+                    if licenses[licenseType] >= 1 then
+                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous avez retiré ~b~" .. point .. " point" ..
+                                               (point > 1 and "s" or "") .. "~s~ sur le permis de ~b~" .. target.Functions.GetName())
+                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                                           "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retiré de votre permis !")
+                    else
+                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                                           "Vous avez retiré le permis de ~b~" .. target.Functions.GetName())
+                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source, "Votre permis vous a été retiré !")
+                    end
+
+                    target.Functions.SetMetaData("licences", licenses)
+                else
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Il n'y a pas assez de point sur le permis")
+                end
+
+                return
             end
         end
     end
