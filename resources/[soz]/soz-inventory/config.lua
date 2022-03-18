@@ -16,7 +16,8 @@ Config.StorageMaxInvSlots = 10
 Config.Storages = {}
 
 Config.BinLocation = {
-    vector4(14.38, -1117.13, 27.88, 159.51),
-    vector4(419.23, -990.35, 28.33, 92.92),
-    vector4(289.33, -1369.08, 30.93, 231.78),
+    vector4(642.94, 11.42, 81.79, 252.99), -- LSPD
+    vector4(-445.04, 6022.39, 30.49, 323.87), -- LSCS
+    vector4(289.33, -1369.08, 30.93, 231.78), -- LSMC
+    vector4(14.38, -1117.13, 27.88, 159.51), -- Ammu-NAtion
 }
