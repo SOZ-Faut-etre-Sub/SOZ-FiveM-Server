@@ -21,7 +21,7 @@ Camera.Activate = function(delay)
     if delay then
         Citizen.Wait(delay)
     end
-	
+
 	Citizen.Wait(1000)
 
     if not DoesCamExist(Camera.entity) then
@@ -69,7 +69,7 @@ Camera.SetView = function(view)
         Camera.radiusMax    = 2.0
         Camera.angleYMin    = 0.0
         Camera.angleYMax    = 35.0
-    elseif view == 'legs' then 
+    elseif view == 'legs' then
         boneIndex = 46078
         Camera.radiusMin    = 1.1
         Camera.radiusMax    = 1.25
@@ -130,7 +130,7 @@ Camera.CalculatePosition = function(adjustedAngle)
     end
 
     local radiusMax = Camera.CalculateMaxRadius()
-    
+
     local offsetX = ((Cos(Camera.angleX) * Cos(Camera.angleY)) + (Cos(Camera.angleY) * Cos(Camera.angleX))) / 2 * radiusMax
     local offsetY = ((Sin(Camera.angleX) * Cos(Camera.angleY)) + (Cos(Camera.angleY) * Sin(Camera.angleX))) / 2 * radiusMax
     local offsetZ = ((Sin(Camera.angleY))) * radiusMax
@@ -140,7 +140,7 @@ Camera.CalculatePosition = function(adjustedAngle)
     return vector3(pedCoords.x + offsetX, pedCoords.y + offsetY, pedCoords.z + offsetZ)
 end
 
-Citizen.CreateThread(function() 
+Citizen.CreateThread(function()
     while true do
         if Camera.active or isInterfaceOpening or (not isPlayerReady) then
             DisableFirstPersonCamThisFrame()

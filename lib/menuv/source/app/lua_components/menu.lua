@@ -703,6 +703,11 @@ function CreateMenu(info)
                 end
             end
 
+            --- Add Clear values of slider
+            function item:ClearValues()
+                self.Values = {}
+            end
+
             local values = U:Ensure(info.Values or info.values, {})
 
             if (#values > 0) then

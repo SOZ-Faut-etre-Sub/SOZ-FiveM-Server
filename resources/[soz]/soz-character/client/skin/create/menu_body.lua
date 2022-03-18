@@ -1,8 +1,5 @@
-function CreateBodyMenu(createCharacterMenu, playerId, skin)
-    local bodyMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Physique"})
-
+local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     -- Peau
-
     bodyMenu:AddTitle({ label = "Peau" })
 
     CreateSliderList(bodyMenu, "Rides", skin.FaceTrait.Ageing, Labels.Blemish, function(value)
@@ -13,7 +10,7 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
         skin.FaceTrait.Blemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateSliderList(bodyMenu, "Rougeurs", skin.FaceTrait.Ageing, Labels.Complexion, function(value)
+    CreateSliderList(bodyMenu, "Rougeurs", skin.FaceTrait.Complexion, Labels.Complexion, function(value)
         skin.FaceTrait.Complexion = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -133,6 +130,20 @@ function CreateBodyMenu(createCharacterMenu, playerId, skin)
     CreateSliderList(bodyMenu, "Extra taches sur le corps", skin.FaceTrait.AddBodyBlemish, Labels.AddBodyBlemishes, function(value)
         skin.FaceTrait.AddBodyBlemish = value
         ApplyPlayerBodySkin(playerId, skin)
+    end)
+
+    return bodyMenu
+end
+
+function CreateBodyMenu(createCharacterMenu, playerId, skin)
+    local bodyMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Physique"})
+
+    bodyMenu:On("open", function()
+        CreateBodyMenuItems(bodyMenu, playerId, skin)
+    end)
+
+    bodyMenu:On("close", function()
+        bodyMenu:ClearItems()
     end)
 
     return bodyMenu

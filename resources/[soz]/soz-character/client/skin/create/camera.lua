@@ -9,8 +9,8 @@ Camera.updateZoom = false
 Camera.radius = 1.25
 Camera.angleX = 30.0
 Camera.angleY = 0.0
-Camera.mouseX = 0
-Camera.mouseY = 0
+Camera.mouseX = 0.5
+Camera.mouseY = 0.5
 
 Camera.radiusMin = 1.0
 Camera.radiusMax = 2.25
@@ -117,11 +117,9 @@ Camera.CalculateMaxRadius = function()
     return result
 end
 
-Camera.CalculatePosition = function(adjustedAngle)
-    if adjustedAngle then
-        Camera.angleX = Camera.angleX - Camera.mouseX * 0.1
-        Camera.angleY = Camera.angleY + Camera.mouseY * 0.1
-    end
+Camera.CalculatePosition = function()
+    Camera.angleX = (Camera.mouseX * 360) - 180 + 60;
+    Camera.angleY = (Camera.mouseY * 360) - 180;
 
     if Camera.angleY > Camera.angleYMax then
         Camera.angleY = Camera.angleYMax
@@ -142,7 +140,7 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        if Camera.active or isInterfaceOpening or (not isPlayerReady) then
+        if Camera.active then
             DisableFirstPersonCamThisFrame()
 
             DisableControlAction(2, 30, true)
@@ -154,6 +152,7 @@ Citizen.CreateThread(function()
 
             DisableControlAction(0, 25, true)
             DisableControlAction(0, 24, true)
+            DisableControlAction(0, 0, true)
             DisableControlAction(0, 1, true)
             DisableControlAction(0, 2, true)
             DisableControlAction(0, 106, true)
@@ -173,17 +172,32 @@ Citizen.CreateThread(function()
 
             DisableControlAction(27, 75, true)
 
-            if isModelLoaded and isPlayerReady then
-                if Camera.updateRot then
-                    SetCamCoord(Camera.entity, Camera.position.x, Camera.position.y, Camera.position.z)
-                    Camera.position = Camera.CalculatePosition(true)
-                    Camera.updateRot = false
+            Camera.mouseX = GetControlNormal(0, 239)
+            Camera.mouseY = GetControlNormal(0, 240)
+
+            if IsDisabledControlJustReleased(0, 0) then
+                if Camera.currentView == "head" then
+                    Camera.SetView("body")
+                elseif Camera.currentView == "body" then
+                    Camera.SetView("legs")
+                elseif Camera.currentView == "legs" then
+                    Camera.SetView("head")
                 end
-                if Camera.updateZoom then
-                    local pos = Camera.CalculatePosition(false)
-                    SetCamCoord(Camera.entity, pos.x, pos.y, pos.z)
-                    Camera.updateZoom = false
-                end
+            end
+
+            -- Zoom in
+            if IsDisabledControlJustReleased(0, 241) then
+                Camera.radius = Camera.radius - 0.05
+            end
+
+            -- Zoom out
+            if IsDisabledControlJustReleased(0, 242) then
+                Camera.radius = Camera.radius + 0.05
+            end
+
+            if Camera.entity ~= nil then
+                Camera.position = Camera.CalculatePosition()
+                SetCamCoord(Camera.entity, Camera.position.x, Camera.position.y, Camera.position.z)
             end
         end
 
