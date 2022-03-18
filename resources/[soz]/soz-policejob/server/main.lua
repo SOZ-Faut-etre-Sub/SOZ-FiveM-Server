@@ -37,6 +37,7 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
     end
 end)
 
+--- Escort
 RegisterNetEvent("police:server:EscortPlayer", function(playerId)
     local player = QBCore.Functions.GetPlayer(source)
     local target = QBCore.Functions.GetPlayer(playerId)
@@ -82,6 +83,22 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     end
 end)
 
+--- Licenses
+QBCore.Functions.CreateCallback("police:server:getLicenses", function(source, cb, targetId)
+    local player = QBCore.Functions.GetPlayer(source)
+    local target = QBCore.Functions.GetPlayer(targetId)
+
+    if player and target and player ~= target then
+        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+            if player.PlayerData.job.id == allowedJob then
+                cb(target.PlayerData.metadata["licences"])
+
+                return
+            end
+        end
+    end
+end)
+
 RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, point)
     local player = QBCore.Functions.GetPlayer(source)
     local target = QBCore.Functions.GetPlayer(targetId)
@@ -108,6 +125,34 @@ RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, po
                     target.Functions.SetMetaData("licences", licenses)
                 else
                     TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Il n'y a pas assez de point sur le permis")
+                end
+
+                return
+            end
+        end
+    end
+end)
+
+RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, point)
+    local player = QBCore.Functions.GetPlayer(source)
+    local target = QBCore.Functions.GetPlayer(targetId)
+
+    if player and target and player ~= target then
+        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+            if player.PlayerData.job.id == allowedJob then
+                local licenses = target.PlayerData.metadata["licences"]
+
+                if licenses[licenseType] then
+                    licenses[licenseType] = false
+
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                                       "Vous avez retiré le permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ de ~b~" .. target.Functions.GetName())
+                    TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                                       "Votre permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ vous a été retiré !")
+
+                    target.Functions.SetMetaData("licences", licenses)
+                else
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Ce permis est déjà invalide")
                 end
 
                 return

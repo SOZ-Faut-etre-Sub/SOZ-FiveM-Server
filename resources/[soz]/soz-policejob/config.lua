@@ -24,6 +24,12 @@ Config.Licenses = {
     ["car"] = {label = "Permis voiture"},
     ["truck"] = {label = "Permis poids lourd"},
     ["motorcycle"] = {label = "Permis moto"},
+    ["heli"] = {label = "Permis d'aviation"},
+    ["boat"] = {label = "Permis maritime"},
+    ["weapon"] = {label = "Permis port d'arme"},
+    ["hunting"] = {label = "Permis de chase"},
+    ["fishing"] = {label = "Permis de pêche"},
+    ["rescuer"] = {label = "Secouriste"},
 }
 
 Config.RadarAllowedVehicle = {
