@@ -15,7 +15,7 @@ Config.Peds = {
         modelHash = "u_f_y_princess",
         x = -815.99,
         y = -1357.3,
-        z =  5.15,
+        z = 5.15,
         rotation = 309.49,
         networkSync = true,
     },
