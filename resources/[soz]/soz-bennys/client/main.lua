@@ -97,6 +97,7 @@ RegisterNetEvent("soz-bennys:client:fixEverything", function()
     end
 end)
 
+
 function GetVehicleStatusList(plate)
     local retval = nil
     if VehicleStatus[plate] ~= nil then
@@ -489,4 +490,104 @@ RegisterNetEvent("soz-bennys:client:SetAttachedVehicle", function(veh)
     else
         Config.AttachedVehicle = nil
     end
+end)
+
+
+
+local function repairall(entity)
+    local plate = QBCore.Functions.GetPlate(entity)
+    SetVehicleBodyHealth(entity, 1000.0)
+    TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", 1000.0)
+    TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", 1000.0)
+    SetVehicleFixed(entity)
+    SetVehicleEngineHealth(entity, 1000.0)
+
+
+
+    local lockpickTime = (1000 * level)
+    if part == "body" then
+        lockpickTime = lockpickTime / 10
+    end
+    ScrapAnim(lockpickTime)
+    QBCore.Functions.Progressbar("repair_advanced", "Repair Vehicle", lockpickTime, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = "mp_car_bomb",
+        anim = "car_bomb_mechanic",
+        flags = 16,
+    }, {}, {}, function() -- Done
+        openingDoor = false
+        ClearPedTasks(PlayerPedId())
+        if part == "body" then
+            local enhealth = GetVehicleEngineHealth(veh)
+            SetVehicleBodyHealth(veh, GetVehicleBodyHealth(veh) + level)
+            SetVehicleFixed(veh)
+            SetVehicleEngineHealth(veh, enhealth)
+            TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
+            TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], needAmount)
+        elseif part ~= "engine" then
+            TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
+            TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], level)
+        end
+    end, function() -- Cancel
+        openingDoor = false
+        ClearPedTasks(PlayerPedId())
+        exports["soz-hud"]:DrawNotification("~r~Process Canceled")
+    end)
+end
+
+
+
+CreateThread(function()
+    exports["qb-target"]:AddGlobalVehicle({
+        options = {
+            {
+                type = "client",
+                icon = "fas fa-car-crash",
+                event = "soz-bennys:client:manualrepair",
+                label = "Réparer le véhicule",
+                targeticon = "fas fa-wrench",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    repairall(entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    QBCore.Functions.GetPlayerData(function(PlayerData)
+                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
+                            return false
+                        end
+                    end)
+                    return true
+                end,
+            },
+            {
+                type = "client",
+                icon = "fas fa-car-crash",
+                event = "qb-carwash:client:washCar",
+                label = "Laver le véhicule",
+                targeticon = "fas fa-wrench",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    --TriggerEvent("soz-bennys:client:manualwash", entity)
+                    TriggerEvent("qb-carwash:client:washCar",entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    QBCore.Functions.GetPlayerData(function(PlayerData)
+                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
+                            return false
+                        end
+                    end)
+                    return true
+                end,
+            },
+        },
+        distance = 2.5,
+    })
 end)
