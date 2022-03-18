@@ -15,7 +15,7 @@ local function OpenListMenu(menu)
             description = "Emprunter le " .. v .. "",
             select = function()
                 menu:Close()
-                TriggerEvent("soz-mechanicjob:client:SpawnListVehicle", k)
+                TriggerEvent("soz-bennys:client:SpawnListVehicle", k)
             end,
         })
     end
