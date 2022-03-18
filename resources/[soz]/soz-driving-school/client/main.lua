@@ -41,12 +41,12 @@ Citizen.CreateThread(function()
             invincible = true,
             blockevents = true,
             scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {options = options, distance = 1.5},
+            target = {options = options, distance = 2.5},
         },
     })
 
     -- BoxZone
-    local zone = BoxZone:Create(vector3(sData.x, sData.y, sData.z), 3.0, 3.0, {
+    local zone = BoxZone:Create(vector3(sData.x, sData.y, sData.z), 4.0, 4.0, {
         name = "drivingschool",
         heading = sData.rotation,
     })
