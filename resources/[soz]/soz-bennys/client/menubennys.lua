@@ -707,7 +707,7 @@ local function OpenPart(menu, v, k)
         label = "Réparer " .. partName .. " 🔧",
         select = function()
             menu:Close()
-            TriggerEvent("soz-mechanicjob:client:RepairPart", part)
+            TriggerEvent("soz-bennys:client:CallRepairPart", part)
         end,
     })
     menu:On("close", function()
@@ -867,7 +867,7 @@ local function OpenMenu(menu)
         label = "Libérer le véhicule",
         description = "Détacher le véhicule de la plateforme",
         select = function()
-            TriggerEvent("soz-mechanicjob:client:UnattachVehicle")
+            TriggerEvent("soz-bennys:client:UnattachVehicle")
             exports["soz-hud"]:DrawNotification("Véhicule libéré")
             FreezeEntityPosition(veh, false)
             menu:Close()
