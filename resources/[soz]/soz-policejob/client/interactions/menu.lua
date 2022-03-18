@@ -182,54 +182,106 @@ end
 
 PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
     local player = NetworkGetPlayerIndexFromPed(targetPlayer)
+    local playerLicenses = QBCore.Functions.TriggerRpc("police:server:getLicenses", GetPlayerServerId(player))
 
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
-        --- @type Menu
         local removePointMenu = MenuV:InheritMenu(menu, {subtitle = "Retirer des points"})
-        local sliderPoints = {}
+        local removeLicenseMenu = MenuV:InheritMenu(menu, {subtitle = "Retirer un permis"})
 
-        for i = 1, 12 do
-            sliderPoints[i] = {label = i .. " point" .. (i > 1 and "s" or ""), value = i}
-        end
+        for license, value in pairs(playerLicenses) do
+            if type(value) == "number" and value > 1 then
+                local sliderPoints = {}
+                for i = 1, value do
+                    sliderPoints[i] = {label = i .. " point" .. (i > 1 and "s" or ""), value = i}
+                end
 
-        for _, license in ipairs({"car", "truck", "motorcycle"}) do
-            removePointMenu:AddSlider({
-                label = Config.Licenses[license].label,
-                value = license,
-                values = sliderPoints,
-                select = function(btn)
-                    local ped = PlayerPedId()
-                    QBCore.Functions.Progressbar("job:police:license", "Retrais de points en cours...", 5000, false, true,
-                                                 {
-                        disableMovement = false,
-                        disableCarMovement = true,
-                        disableMouse = false,
-                        disableCombat = true,
-                    }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
-                        model = "prop_notepad_01",
-                        bone = 18905,
-                        coords = {x = 0.1, y = 0.02, z = 0.05},
-                        rotation = {x = 10.0, y = 0.0, z = 0.0},
-                    }, {
-                        model = "prop_pencil_01",
-                        bone = 58866,
-                        coords = {x = 0.11, y = -0.02, z = 0.001},
-                        rotation = {x = -120.0, y = 0.0, z = 0.0},
-                    }, function() -- Done
-                        if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
-                            TriggerServerEvent("police:server:RemovePoint", GetPlayerServerId(player), license, btn.Value)
-                        else
-                            exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
-                        end
-                    end)
+                removePointMenu:AddSlider({
+                    label = Config.Licenses[license].label,
+                    value = license,
+                    values = sliderPoints,
+                    select = function(item)
+                        local ped = PlayerPedId()
+                        QBCore.Functions.Progressbar("job:police:license", "Retrais de points en cours...", 5000, false, true,
+                                                     {
+                            disableMovement = false,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
+                            model = "prop_notepad_01",
+                            bone = 18905,
+                            coords = {x = 0.1, y = 0.02, z = 0.05},
+                            rotation = {x = 10.0, y = 0.0, z = 0.0},
+                        }, {
+                            model = "prop_pencil_01",
+                            bone = 58866,
+                            coords = {x = 0.11, y = -0.02, z = 0.001},
+                            rotation = {x = -120.0, y = 0.0, z = 0.0},
+                        }, function() -- Done
+                            if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
+                                TriggerServerEvent("police:server:RemovePoint", GetPlayerServerId(player), license, item.Value)
+                            else
+                                exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+                            end
+                        end)
 
-                    removePointMenu:Close()
-                    menu:Close()
-                end,
-            })
+                        removePointMenu:Close()
+                        menu:Close()
+                    end,
+                })
+            elseif type(value) == "number" and value == 0 then
+                removePointMenu:AddButton({
+                    label = Config.Licenses[license].label,
+                    rightLabel = "Invalide",
+                    value = nil,
+                    disabled = true,
+                })
+            elseif type(value) == "boolean" and value then
+                removeLicenseMenu:AddConfirm({
+                    label = Config.Licenses[license].label,
+                    value = license,
+                    confirm = function(item)
+                        local ped = PlayerPedId()
+                        QBCore.Functions.Progressbar("job:police:license", "Retrais de points en cours...", 5000, false, true,
+                                                     {
+                            disableMovement = false,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
+                            model = "prop_notepad_01",
+                            bone = 18905,
+                            coords = {x = 0.1, y = 0.02, z = 0.05},
+                            rotation = {x = 10.0, y = 0.0, z = 0.0},
+                        }, {
+                            model = "prop_pencil_01",
+                            bone = 58866,
+                            coords = {x = 0.11, y = -0.02, z = 0.001},
+                            rotation = {x = -120.0, y = 0.0, z = 0.0},
+                        }, function() -- Done
+                            if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
+                                TriggerServerEvent("police:server:RemoveLicense", GetPlayerServerId(player), license, item.Value)
+                            else
+                                exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+                            end
+                        end)
+
+                        removeLicenseMenu:Close()
+                        menu:Close()
+                    end,
+                })
+            elseif type(value) == "boolean" and not value then
+                removeLicenseMenu:AddButton({
+                    label = Config.Licenses[license].label,
+                    rightLabel = "Invalide",
+                    value = nil,
+                    disabled = true,
+                })
+            end
         end
 
         menu:AddButton({label = "Retirer des points sur un permis", value = removePointMenu})
+        menu:AddButton({label = "Retirer complètement un permis", value = removeLicenseMenu})
     end)
 end
 
