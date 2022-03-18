@@ -23,8 +23,8 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
         firstName = "Lorem",
         lastName = charinfo.lastname,
         licences = licences,
-        nationality = charinfo.nationality,
         gender = gender,
+        job = Player.PlayerData.job.name or "-",
         address = "-",
         phone = charinfo.phone,
     })
