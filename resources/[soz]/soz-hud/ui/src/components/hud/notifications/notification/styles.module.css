@@ -25,10 +25,6 @@
     margin: 0;
 }
 
-.notification p {
-    text-transform: lowercase;
-}
-
 .notification p::first-letter {
     text-transform: uppercase;
 }

@@ -7,16 +7,16 @@ Config.BlipScale = 0.8
 -- Blip coords are the same as Config.Peds.secretary (x, y)
 
 -- Coords where to teleport player to, at the end of exam
-Config.PlayerDefaultLocation = vector4(-817.49, -1345.06, 4.15, 231.08)
+Config.PlayerDefaultLocation = vector4(-806.57, -1344.53, 5.50, 150.0)
 
 Config.Peds = {
     ["instructor"] = {modelHash = "cs_manuel", x = 0.0, y = 0.0, z = 0.0, rotation = 0.0, networkSync = true},
     ["secretary"] = {
         modelHash = "u_f_y_princess",
-        x = -815.36,
-        y = -1346.72,
+        x = -815.99,
+        y = -1357.3,
         z = 5.15,
-        rotation = 49.8,
+        rotation = 309.49,
         networkSync = true,
     },
 }
