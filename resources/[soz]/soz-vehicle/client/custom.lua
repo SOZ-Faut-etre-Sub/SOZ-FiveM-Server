@@ -184,7 +184,7 @@ local function OpenMenu(menu)
         label = "Libérer le véhicule",
         description = "Détacher le véhicule de la plateforme",
         select = function()
-            TriggerEvent("soz-mechanicjob:client:UnattachVehicle")
+            TriggerEvent("soz-custom:client:UnattachVehicle")
             exports["soz-hud"]:DrawNotification("Véhicule libéré")
             menu:Close()
             SetVehicleDoorsLocked(veh, 1)
@@ -217,11 +217,11 @@ local function UnattachVehicle()
 end
 
 -- Events
-RegisterNetEvent("soz-mechanicjob:client:UnattachVehicle", function()
+RegisterNetEvent("soz-custom:client:UnattachVehicle", function()
     UnattachVehicle()
 end)
 
-RegisterNetEvent("qb-vehicletuning:client:SetAttachedVehicle", function(veh)
+RegisterNetEvent("soz-custom:client:SetAttachedVehicle", function(veh)
     if veh ~= false then
         Config.AttachedVehicle = veh
     else
