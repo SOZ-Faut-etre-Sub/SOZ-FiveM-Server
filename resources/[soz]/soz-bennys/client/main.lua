@@ -447,15 +447,15 @@ local function RepairPart(part)
 
 end
 
-RegisterNetEvent("soz-mechanicjob:client:UnattachVehicle", function()
+RegisterNetEvent("soz-bennys:client:UnattachVehicle", function()
     UnattachVehicle()
 end)
 
-RegisterNetEvent("soz-mechanicjob:client:SpawnListVehicle", function(vehicleSpawnName)
+RegisterNetEvent("soz-bennys:client:SpawnListVehicle", function(vehicleSpawnName)
     SpawnListVehicle(vehicleSpawnName)
 end)
 
-RegisterNetEvent("soz-mechanicjob:client:RepairPart", function(part)
+RegisterNetEvent("soz-bennys:client:CallRepairPart", function(part)
     RepairPart(part)
 end)
 
