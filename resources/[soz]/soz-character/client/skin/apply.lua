@@ -26,7 +26,7 @@ local function ApplyPlayerModel(playerId, model)
 end
 
 local function ApplyPedHair(ped, hair)
-    SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, hair.HairVariation, 0);
+    SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
     SetPedHairColor(ped, hair.HairColor, 0);
     SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Eyebrows, 1, hair.EyebrowColor, 0);

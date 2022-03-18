@@ -117,8 +117,8 @@ Camera.CalculateMaxRadius = function()
 end
 
 Camera.CalculatePosition = function()
-    Camera.angleX = (Camera.mouseX * 360) - 180 + 60;
-    Camera.angleY = (Camera.mouseY * 360) - 180;
+    Camera.angleX = 180 - (Camera.mouseX * 360) + 60;
+    Camera.angleY = 180 - (Camera.mouseY * 360);
 
     if Camera.angleY > Camera.angleYMax then
         Camera.angleY = Camera.angleYMax

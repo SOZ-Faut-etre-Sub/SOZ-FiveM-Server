@@ -3,7 +3,6 @@ function GetDefaultBodySkin()
         Model = {Hash = GetHashKey("mp_m_freemode_01"), Father = 0, Mother = 23, ShapeMix = 0.5, SkinMix = 0.5},
         Hair = {
             HairType = 0,
-            HairVariation = 0,
             HairColor = 0,
             EyebrowType = -1,
             EyebrowColor = 0,
