@@ -112,7 +112,8 @@
       .menuv.{{theme}} .menuv-title {
         display: flex;
         align-items: center;
-        padding: 0 1rem;
+        text-align: center;
+        white-space: nowrap;
       }
 
       .menuv.{{theme}} .menuv-title:before, .menuv.{{theme}} .menuv-title:after {

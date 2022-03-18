@@ -1,6 +1,4 @@
-function CreateMakeupMenu(createCharacterMenu, playerId, skin)
-    local makeupMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Maquillage"})
-
+function CreateMakeupMenuItems(makeupMenu, playerId, skin)
     -- Rouge à lèvres
     makeupMenu:AddTitle({ label = "Maquillage" })
     CreateSliderList(makeupMenu, "Type", skin.Makeup.FullMakeupType, Labels.Makeup, function(value)
@@ -10,7 +8,7 @@ function CreateMakeupMenu(createCharacterMenu, playerId, skin)
     makeupMenu:AddCheckbox({
         label = "Utiliser couleur par défaut",
         value = skin.Makeup.FullMakeupDefaultColor,
-    }):On("change", function(menu, value)
+    }):On("change", function(_, value)
         skin.Makeup.FullMakeupDefaultColor = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -43,6 +41,20 @@ function CreateMakeupMenu(createCharacterMenu, playerId, skin)
     CreateColorSliderList(makeupMenu, "Couleur des cheveux", skin.Makeup.LipstickColor, Colors.Makeup, function(value)
         skin.Makeup.LipstickColor = value
         ApplyPlayerBodySkin(playerId, skin)
+    end)
+
+    return makeupMenu
+end
+
+function CreateMakeupMenu(createCharacterMenu, playerId, skin)
+    local makeupMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Maquillage"})
+
+    makeupMenu:On("open", function()
+        CreateMakeupMenuItems(makeupMenu, playerId, skin)
+    end)
+
+    makeupMenu:On("close", function()
+        makeupMenu:ClearItems()
     end)
 
     return makeupMenu

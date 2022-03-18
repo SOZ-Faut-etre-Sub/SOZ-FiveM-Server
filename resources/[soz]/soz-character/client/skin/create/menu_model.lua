@@ -1,4 +1,3 @@
-
 local function CreateGenderSlider(menu, playerId, skin)
     local genderOptions = {
         {label = "Homme", value = GetHashKey("mp_m_freemode_01")},
@@ -121,9 +120,7 @@ local function CreateMotherSlider(menu, heritage, playerId, skin)
     return fatherSlider
 end
 
-function CreateModelMenu(createCharacterMenu, playerId, skin)
-    local modelMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Identité"})
-
+local function CreateModelMenuItems(modelMenu, playerId, skin)
     CreateGenderSlider(modelMenu, playerId, skin)
 
     local heritage = modelMenu:AddHeritage({portraitMale = "male_0", portraitFemale = "female_0"})
@@ -137,6 +134,7 @@ function CreateModelMenu(createCharacterMenu, playerId, skin)
         maxLabel = "Mère",
         min = 0,
         max = 100,
+        interval = 5,
     }):On("change", function(_, value)
         skin.Model.ShapeMix = value / 100
         ApplyPlayerBodySkin(playerId, skin)
@@ -149,9 +147,24 @@ function CreateModelMenu(createCharacterMenu, playerId, skin)
         maxLabel = "Mère",
         min = 0,
         max = 100,
+        interval = 5,
     }):On("change", function(_, value)
         skin.Model.SkinMix = value / 100
         ApplyPlayerBodySkin(playerId, skin)
+    end)
+
+    return modelMenu
+end
+
+function CreateModelMenu(createCharacterMenu, playerId, skin)
+    local modelMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Identité"})
+
+    modelMenu:On("open", function()
+        CreateModelMenuItems(modelMenu, playerId, skin)
+    end)
+
+    modelMenu:On("close", function()
+        modelMenu:ClearItems()
     end)
 
     return modelMenu

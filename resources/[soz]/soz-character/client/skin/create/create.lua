@@ -1,6 +1,7 @@
 local createCharacterMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "create-character")
 
 local function OpenCreateCharacterMenu(skin)
+    local p = promise.new()
     createCharacterMenu:ClearItems()
 
     local playerId = PlayerId()
@@ -18,16 +19,26 @@ local function OpenCreateCharacterMenu(skin)
 
     createCharacterMenu:Open()
     createCharacterMenu:On("close", function()
-        print("close")
+        p:resolve(skin)
     end)
+
+    return Citizen.Await(p)
 end
 
 function CreateCharacter()
     local skin = GetDefaultBodySkin()
+    local confirm = false
     ApplyPlayerBodySkin(PlayerId(), skin)
-    Camera.Activate()
 
-    OpenCreateCharacterMenu(skin);
+    while not confirm do
+        Camera.Activate()
+        skin = OpenCreateCharacterMenu(skin);
+        Camera.Deactivate()
 
-    -- Camera.Deactivate()
+        local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32)
+
+        if confirmWord == "OUI" then
+            confirm = true
+        end
+    end
 end

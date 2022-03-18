@@ -27,6 +27,8 @@ function CreateSliderList(menu, label, value, options, cb)
 
         cb(option.value)
     end)
+
+    return slider
 end
 
 function CreateColorSliderList(menu, label, value, options, cb)
