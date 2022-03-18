@@ -17,6 +17,7 @@ Config.Locations = {
             coords = vector3(-447.66, 6013.5, 31.72),
         },
     },
+    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70), ["lscs"] = vector3(-450.88, 6011.26, 30.73)},
 }
 
 Config.WeaponShop = {

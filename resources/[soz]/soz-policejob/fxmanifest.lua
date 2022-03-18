@@ -26,4 +26,5 @@ server_scripts {
     "server/radar.lua",
     "server/vehicle.lua",
     "server/spike.lua",
+    "server/moneycheck.lua",
 }
