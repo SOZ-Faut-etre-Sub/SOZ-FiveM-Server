@@ -1,11 +1,5 @@
 function CreateRangeSizeItem(menu, label, value, cb)
-    menu:AddRange({
-        label = label,
-        value = value * 100,
-        min = -100,
-        max = 100,
-        interval = 10,
-    }):On("change", function(_, value)
+    menu:AddRange({label = label, value = value * 100, min = -100, max = 100, interval = 10}):On("change", function(_, value)
         cb(value / 100)
     end)
 end

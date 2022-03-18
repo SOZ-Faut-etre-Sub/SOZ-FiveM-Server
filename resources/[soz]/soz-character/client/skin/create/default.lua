@@ -55,13 +55,9 @@ function GetDefaultBodySkin()
 end
 
 function GetMaleDefaultCloth()
-    return {
-
-    }
+    return {}
 end
 
 function GetFemaleDefaultCloth()
-    return {
-
-    }
+    return {}
 end

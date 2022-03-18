@@ -1,14 +1,11 @@
 function CreateMakeupMenuItems(makeupMenu, playerId, skin)
     -- Rouge à lèvres
-    makeupMenu:AddTitle({ label = "Maquillage" })
+    makeupMenu:AddTitle({label = "Maquillage"})
     CreateSliderList(makeupMenu, "Type", skin.Makeup.FullMakeupType, Labels.Makeup, function(value)
         skin.Makeup.FullMakeupType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    makeupMenu:AddCheckbox({
-        label = "Utiliser couleur par défaut",
-        value = skin.Makeup.FullMakeupDefaultColor,
-    }):On("change", function(_, value)
+    makeupMenu:AddCheckbox({label = "Utiliser couleur par défaut", value = skin.Makeup.FullMakeupDefaultColor}):On("change", function(_, value)
         skin.Makeup.FullMakeupDefaultColor = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -22,7 +19,7 @@ function CreateMakeupMenuItems(makeupMenu, playerId, skin)
     end)
 
     -- Rouge à lèvres
-    makeupMenu:AddTitle({ label = "Blush" })
+    makeupMenu:AddTitle({label = "Blush"})
     CreateSliderList(makeupMenu, "Type", skin.Makeup.BlushType, Labels.Blush, function(value)
         skin.Makeup.BlushType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -33,7 +30,7 @@ function CreateMakeupMenuItems(makeupMenu, playerId, skin)
     end)
 
     -- Rouge à lèvres
-    makeupMenu:AddTitle({ label = "Rouge à lèvres" })
+    makeupMenu:AddTitle({label = "Rouge à lèvres"})
     CreateSliderList(makeupMenu, "Cheveux", skin.Makeup.LipstickType, Labels.Lipstick, function(value)
         skin.Makeup.LipstickType = value
         ApplyPlayerBodySkin(playerId, skin)
