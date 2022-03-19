@@ -1,6 +1,5 @@
 fx_version "cerulean"
 games {"gta5"}
-lua54 "yes"
 
 shared_scripts {"config.lua", "@qb-core/shared/locale.lua", "locales/fr.lua"}
 
