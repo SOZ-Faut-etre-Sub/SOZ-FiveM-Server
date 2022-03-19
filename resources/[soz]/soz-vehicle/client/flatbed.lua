@@ -4,7 +4,7 @@ local LastStatus = false
 local LastAttach = false
 local Busy = false
 
-function GetVehicleInfo(VehicleHash)
+local function GetVehicleInfo(VehicleHash)
     for Index, CurrentFlatbed in pairs(Config.Flatbeds) do
         if VehicleHash == GetHashKey(CurrentFlatbed.Hash) then
             return CurrentFlatbed
@@ -12,13 +12,7 @@ function GetVehicleInfo(VehicleHash)
     end
 end
 
-function Notify(Text)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(Text)
-    DrawNotification(0, 1)
-end
-
-function GetVehicles()
+local function GetVehicles()
     local AllVehicles = {}
     local CurrentHandle, CurrentVehicle = FindFirstVehicle()
     local IsNext = true
@@ -33,7 +27,7 @@ function GetVehicles()
     return AllVehicles
 end
 
-function IsAllowed(Vehicle)
+local function IsAllowed(Vehicle)
     local VehicleClass = GetVehicleClass(Vehicle)
 
     for Index, CurrentClass in pairs(Config.Blacklist) do
@@ -45,7 +39,7 @@ function IsAllowed(Vehicle)
     return true
 end
 
-function GetNearestVehicle(CheckCoords, CheckRadius)
+local function GetNearestVehicle(CheckCoords, CheckRadius)
     local ClosestVehicle = nil
     local ClosestDistance = math.huge
 
