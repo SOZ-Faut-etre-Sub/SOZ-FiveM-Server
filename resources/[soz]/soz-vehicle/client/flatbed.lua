@@ -333,11 +333,9 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    QBCore.Functions.GetPlayerData(function(PlayerData)
-                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
-                            return false
-                        end
-                    end)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
                     return true
                 end,
             },
@@ -357,11 +355,9 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    QBCore.Functions.GetPlayerData(function(PlayerData)
-                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
-                            return false
-                        end
-                    end)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
                     return true
                 end,
             },
@@ -382,11 +378,9 @@ CreateThread(function()
                     if GetEntityModel(entity) == GetHashKey("flatbed3") then
                         return false
                     end
-                    QBCore.Functions.GetPlayerData(function(PlayerData)
-                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
-                            return false
-                        end
-                    end)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
                         (#(GetEntityCoords(GetVehiclePedIsIn(PlayerPedId(), true)) - GetEntityCoords(PlayerPedId())) >= 20) then
                         return false
@@ -398,3 +392,7 @@ CreateThread(function()
         distance = 2.5,
     })
 end)
+
+
+
+

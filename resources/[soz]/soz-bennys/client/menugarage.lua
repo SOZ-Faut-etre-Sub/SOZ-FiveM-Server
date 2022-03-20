@@ -40,12 +40,14 @@ Vehiclespawn = BoxZone:Create(vector3(-163.47, -1301.73, 31.3), 20, 18, {
 
 Vehiclespawn:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty then
+        if OnDuty == false and PlayerJob.id == "bennys" then
             insidespawn = true
         end
     else
-        insidespawn = false
-        VehicleList:Close()
+        if OnDuty == false and PlayerJob.id == "bennys" then
+            insidespawn = false
+            VehicleList:Close()
+        end
     end
 end)
 
