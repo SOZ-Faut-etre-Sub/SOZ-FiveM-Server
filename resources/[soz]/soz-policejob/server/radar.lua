@@ -35,13 +35,11 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
         local radarMessage = ("Plaque: ~b~%s~s~~n~"):format(vehiclePlate)
         radarMessage = radarMessage .. ("Vitesse: ~r~%s km/h~s~ (~g~%s km/h~s~)~n~"):format(QBCore.Shared.Round(vehicleSpeed, 1), radar.speed)
 
-        for _, allowedVehicle in ipairs(Config.RadarAllowedVehicle) do
-            if GetHashKey(allowedVehicle) == vehicleModel then
-                TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
-                                   radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED")
+        if Config.RadarAllowedVehicle[vehicleModel] then
+            TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
+                               radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED")
 
-                return
-            end
+            return
         end
 
         MySQL.Async.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {vehiclePlate}, function(playerVehicle)
