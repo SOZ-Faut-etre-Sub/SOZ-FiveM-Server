@@ -1,7 +1,6 @@
 -----------------------
 -------- ZONES --------
 -----------------------
-
 Zonesprives = {
     ["motelgarage"] = BoxZone:Create(vector3(280.87, -337.05, 44.92), 40, 30, {
         name = "motelgarage_z",
@@ -931,7 +930,7 @@ end
 for indexentreprise, entreprise in pairs(Zonesentreprise) do
     entreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
-            --RAJOUTER IF JOB = JOB DANS CONFIG.LUA DU GARAGE
+            -- RAJOUTER IF JOB = JOB DANS CONFIG.LUA DU GARAGE
             exports["qb-target"]:AddTargetModel(218085040, {
                 options = {
                     {
