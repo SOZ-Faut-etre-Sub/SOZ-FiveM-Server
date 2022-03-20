@@ -1,7 +1,7 @@
 local Elevators = {
     ["stonk:0"] = {
         name = "Elevator0",
-        verbose = "Sous-sol",
+        label = "Sous-sol",
         buttons = vector2(11.99, -668.57),
         heading = 6.3,
         z = {min = 33.48, max = 34.05},
@@ -11,7 +11,7 @@ local Elevators = {
     },
     ["stonk:1L"] = { -- Level 1, Left-side (facing elevators from outside)
         name = "Elevator1L",
-        verbose = "Coffre",
+        label = "Coffre",
         buttons = vector2(15.79, -689.22),
         heading = 24.38,
         z = {min = 40.6, max = 41.1},
@@ -21,7 +21,7 @@ local Elevators = {
     },
     ["stonk:1R"] = { -- Level 1, Right-side (facing elevators from outside)
         name = "Elevator1R",
-        verbose = "Coffre",
+        label = "Coffre",
         buttons = vector2(13.05, -690.47),
         heading = 24.38,
         z = {min = 40.6, max = 41.1},
@@ -31,7 +31,7 @@ local Elevators = {
     },
     ["stonk:2L"] = { -- Level 2, Left-side (facing elevators from outside)
         name = "Elevator2L",
-        verbose = "Niveau principal",
+        label = "Niveau principal",
         buttons = vector2(15.75, -689.18),
         heading = 24.38,
         z = {min = 45.9, max = 46.4},
@@ -41,7 +41,7 @@ local Elevators = {
     },
     ["stonk:2R"] = { -- Level 2, Right-side (facing elevators from outside)
         name = "Elevator2R",
-        verbose = "Niveau principal",
+        label = "Niveau principal",
         buttons = vector2(13.09, -690.53),
         heading = 24.38,
         z = {min = 45.9, max = 46.4},
@@ -60,8 +60,6 @@ local function CreateTargetOptions(elevatorData)
     }
 
     local options = {}
-    local counter = 0
-
     for _, dir in pairs(directions) do
         local destinations = elevatorData[dir.field]
         if destinations then
@@ -72,13 +70,12 @@ local function CreateTargetOptions(elevatorData)
             for _, dest in ipairs(destinations) do
                 local destination = Elevators[dest]
                 if destination then
-                    counter = counter + 1
-                    options[counter] = {
+                    table.insert(options, {
                         icon = dir.icon,
-                        label = string.format(dir.label, destination.verbose),
+                        label = string.format(dir.label, destination.label),
                         event = elevatorData.event or "soz-core:client:elevator",
                         destination = dest,
-                    }
+                    })
                 end
             end
         end
