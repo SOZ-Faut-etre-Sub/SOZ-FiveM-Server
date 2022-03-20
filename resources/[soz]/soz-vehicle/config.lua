@@ -313,9 +313,19 @@ Garages = {
         showBlip = false,
         blipName = "Police",
         blipNumber = 357,
-        type = "job", -- public, job, gang, depot
+        type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
         job = "police",
+    },
+    ["bennys"] = {
+        label = "Bennys",
+        blipcoord = vector3(-163.47, -1301.73, 31.3),
+        showBlip = false,
+        blipName = "Bennys",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "bennys",
     },
     --[[
     ["intairport"] = {
