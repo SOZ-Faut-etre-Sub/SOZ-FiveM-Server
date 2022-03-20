@@ -1,3 +1,7 @@
+-----------------------
+-------- ZONES --------
+-----------------------
+
 Zonesprives = {
     ["motelgarage"] = BoxZone:Create(vector3(280.87, -337.05, 44.92), 40, 30, {
         name = "motelgarage_z",
@@ -108,6 +112,20 @@ Zonesfourriere = {
         maxZ = 32.24,
     }),
 }
+
+Zonesentreprise = {
+    ["bennys"] = BoxZone:Create(vector3(-163.47, -1301.73, 31.3), 20, 18, {
+        name = "bennys_z",
+        heading = 90,
+        debugPoly = true,
+        minZ = 30.3,
+        maxZ = 34.3,
+    }),
+}
+
+------------------------
+-------- PLACES --------
+------------------------
 
 PlacesPrives = {
     ["pillboxgarage1"] = BoxZone:Create(vector3(209.89, -791.11, 30.88), 6, 3, {
@@ -802,6 +820,21 @@ PlacesFourriere = {
     }),
 }
 
+PlacesEntreprise = {
+    ["bennys1"] = BoxZone:Create(vector3(-163.52, -1299.59, 31.22), 12, 4, {
+        name = "bennys1",
+        heading = 90,
+        minZ = 30.22,
+        maxZ = 34.22,
+    }),
+    ["bennys2"] = BoxZone:Create(vector3(-163.44, -1305.2, 31.3), 12, 4, {
+        name = "bennys2",
+        heading = 90,
+        minZ = 30.3,
+        maxZ = 34.3,
+    }),
+}
+
 for indexpriv, prive in pairs(Zonesprives) do
     prive:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
@@ -894,3 +927,46 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
         end
     end)
 end
+
+for indexentreprise, entreprise in pairs(Zonesentreprise) do
+    entreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+        if isPointInside then
+            exports["qb-target"]:AddTargetModel(218085040, {
+                options = {
+                    {
+                        type = "client",
+                        event = "qb-garage:client:Menu",
+                        icon = "fas fa-receipt",
+                        label = "Accéder au parking entreprise",
+                        targeticon = "fas fa-wrench",
+                        action = function(entity)
+                            if IsPedAPlayer(entity) then
+                                return false
+                            end
+                            for indexgarage, garage in pairs(Garages) do
+                                if indexgarage == indexentreprise then
+                                    TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
+                                end
+                            end
+                        end,
+                        canInteract = function(entity, distance, data)
+                            if IsPedAPlayer(entity) then
+                                return false
+                            end
+                            for indexgarage, garage in pairs(Garages) do
+                                if indexgarage == indexentreprise and (garage.job ~= PlayerJob.id or OnDuty == false) then
+                                    return false
+                                end
+                            end
+                            return true
+                        end,
+                    },
+                },
+                distance = 2.5,
+            })
+        else
+            exports["qb-target"]:RemoveTargetModel(115679102, "Accéder au parking entreprise")
+        end
+    end)
+end
+

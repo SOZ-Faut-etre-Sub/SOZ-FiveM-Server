@@ -38,7 +38,7 @@ Washmecha = BoxZone:Create(vector3(-198.92, -1324.4, 30.89), 8, 6, {
 
 Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty then
+        if OnDuty == false and PlayerJob.id == "bennys" then
             if IsPedInAnyVehicle(PlayerPedId()) then
                 local veh = GetVehiclePedIsIn(PlayerPedId())
                 if not IsThisModelABicycle(GetEntityModel(veh)) then
@@ -49,8 +49,10 @@ Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
             end
         end
     else
-        insidewash = false
-        VehiculeWash:Close()
+        if OnDuty == false and PlayerJob.id == "bennys" then
+            insidewash = false
+            VehiculeWash:Close()
+        end
     end
 end)
 
