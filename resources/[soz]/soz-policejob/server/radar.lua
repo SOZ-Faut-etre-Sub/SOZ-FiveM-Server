@@ -72,13 +72,11 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
 
                     Player.Functions.SetMetaData("licences", licences)
                 end
-                TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
-                                   "CHAR_BLOCKED")
             else
                 TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
-                TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
-                                   radarMessage .. "~r~Véhicule volé~s~", "CHAR_BLOCKED")
             end
+            TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
+                               "CHAR_BLOCKED")
 
             for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
                 if Police.PlayerData.job.id == radar.station then
