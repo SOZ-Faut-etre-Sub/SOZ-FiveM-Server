@@ -1,14 +1,11 @@
 -- used when muted
 local disableUpdates = false
-local isListenerEnabled = false
 local plyCoords = GetEntityCoords(PlayerPedId())
 
 function orig_addProximityCheck(ply)
     local tgtPed = GetPlayerPed(ply)
-    local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
-    local distance = voiceModeData[1]
 
-    return #(plyCoords - GetEntityCoords(tgtPed)) < distance
+    return #(plyCoords - GetEntityCoords(tgtPed)) < Config.VoiceModes[CurrentPlayer.VoiceMode]
 end
 
 function addNearbyPlayers()
@@ -41,9 +38,9 @@ function addNearbyPlayers()
 end
 
 function setSpectatorMode(enabled)
-    isListenerEnabled = enabled
+    CurrentPlayer.IsListenerEnabled = enabled
     local players = GetActivePlayers()
-    if isListenerEnabled then
+    if CurrentPlayer.IsListenerEnabled then
         for i = 1, #players do
             local ply = players[i]
             local serverId = GetPlayerServerId(ply)
@@ -74,9 +71,9 @@ Citizen.CreateThread(function()
 
         addNearbyPlayers()
         local isSpectating = NetworkIsInSpectatorMode()
-        if isSpectating and not isListenerEnabled then
+        if isSpectating and not CurrentPlayer.IsListenerEnabled then
             setSpectatorMode(true)
-        elseif not isSpectating and isListenerEnabled then
+        elseif not isSpectating and CurrentPlayer.IsListenerEnabled then
             setSpectatorMode(false)
         end
 
