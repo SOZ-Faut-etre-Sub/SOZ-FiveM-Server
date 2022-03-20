@@ -66,6 +66,14 @@
     width: 4.5vw;
     composes: action_style;
 }
+.action_mix {
+    position: absolute;
+    bottom: 2vh;
+    left: 17.45vw;
+    height: 2.2vh;
+    width: 2.6vw;
+    composes: action_style;
+}
 
 .action_volume_up {
     position: absolute;

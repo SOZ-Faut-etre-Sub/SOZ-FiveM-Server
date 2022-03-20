@@ -52,8 +52,8 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
         }
     }, [currentFrequency, setPrimaryFrequency, setSecondaryFrequency])
     const handleFrequencyChange = useCallback(() => {
-        const frequency = (currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency) * 10
-        if (frequency >= 1000 && frequency <= 9999) {
+        const frequency = (currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency) * 100
+        if (frequency >= 10000 && frequency <= 99999) {
             fetchAPI(`/${props.type}/change_frequency`, {
                 [currentFrequency]: frequency
             }, () => {})
@@ -64,7 +64,7 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
     * Events handlers
     */
     const onMessageReceived = useCallback((event: MessageEvent) => {
-        const {type, action, frequency, volume, isPrimary, isEnabled} = event.data as TalkMessageData;
+        const {type, action, frequency, volume, ear, isPrimary, isEnabled} = event.data as TalkMessageData;
 
         if (type === props.type) {
             if (action === 'open') {
@@ -78,9 +78,9 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
             } else if (action === 'frequency_change') {
                 if (frequency) {
                     if (isPrimary) {
-                        setPrimaryFrequency(s => ({...s, ...{frequency: frequency/10}}))
+                        setPrimaryFrequency(s => ({...s, ...{frequency: frequency/100}}))
                     } else {
-                        setSecondaryFrequency(s => ({...s, ...{frequency: frequency/10}}))
+                        setSecondaryFrequency(s => ({...s, ...{frequency: frequency/100}}))
                     }
                 }
             } else if (action === 'volume_change') {
@@ -89,6 +89,14 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
                         setPrimaryFrequency(s => ({...s, ...{volume}}))
                     } else {
                         setSecondaryFrequency(s => ({...s, ...{volume}}))
+                    }
+                }
+            } else if (action === 'ear_change') {
+                if (ear) {
+                    if (isPrimary) {
+                        setPrimaryFrequency(s => ({...s, ...{ear}}))
+                    } else {
+                        setSecondaryFrequency(s => ({...s, ...{ear}}))
                     }
                 }
             }
