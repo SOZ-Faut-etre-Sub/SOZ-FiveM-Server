@@ -16,6 +16,7 @@ client_scripts {
     "client/animations.lua",
     "client/interactions/*.lua",
     "client/stations/*.lua",
+    "client/sirens.lua",
     "client/radar.lua",
 }
 
