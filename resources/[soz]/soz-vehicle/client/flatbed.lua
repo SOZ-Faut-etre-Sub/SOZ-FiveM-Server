@@ -392,7 +392,3 @@ CreateThread(function()
         distance = 2.5,
     })
 end)
-
-
-
-
