@@ -36,3 +36,11 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
         end
     end
 end)
+
+AddEventHandler("entityCreating", function(handle)
+    local entityModel = GetEntityModel(handle)
+
+    if Config.RadarAllowedVehicle[entityModel] then
+        Entity(handle).state:set("isSirenMuted", false, true)
+    end
+end)
