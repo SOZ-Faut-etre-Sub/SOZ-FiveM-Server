@@ -935,7 +935,7 @@ Vehiclemecha2 = BoxZone:Create(vector3(-222.23, -1329.66, 30.89), 7, 4, {
 
 Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             exports["qb-target"]:AddTargetModel(-2094907124, {
                 options = {
                     {
@@ -956,7 +956,7 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
             })
         end
     else
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             exports["qb-target"]:RemoveTargetModel(-2094907124, "Service")
         end
     end
@@ -995,7 +995,7 @@ local insidemecha = false
 
 Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             if Config.AttachedVehicle == nil then
                 if IsPedInAnyVehicle(PlayerPedId()) then
                     local veh = GetVehiclePedIsIn(PlayerPedId())
@@ -1008,7 +1008,7 @@ Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
             end
         end
     else
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             insidemecha = false
             VehiculeOptions:Close()
             Config.AttachedVehicle = nil
@@ -1018,7 +1018,7 @@ end)
 
 Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             if Config.AttachedVehicle == nil then
                 if IsPedInAnyVehicle(PlayerPedId()) then
                     local veh = GetVehiclePedIsIn(PlayerPedId())
@@ -1031,7 +1031,7 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
             end
         end
     else
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             insidemecha = false
             VehiculeOptions:Close()
             Config.AttachedVehicle = nil
