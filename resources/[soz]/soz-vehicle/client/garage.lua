@@ -1,7 +1,8 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
-local PlayerData = {}
-local PlayerGang = {}
-local PlayerJob = {}
+PlayerData = {}
+PlayerGang = {}
+PlayerJob = {}
+OnDuty = false
 local OutsideVehicles = {}
 
 local ParkingPublicList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car")
@@ -12,6 +13,9 @@ local VehiculeParkingPrive = MenuV:InheritMenu(ParkingPriveList, {Title = nil})
 
 local ParkingFourriereList = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car")
 local VehiculeParkingFourriere = MenuV:InheritMenu(ParkingFourriereList, {Title = nil})
+
+local ParkingEntrepriseList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingentreprise:vehicle:car")
+local VehiculeParkingEntreprise = MenuV:InheritMenu(ParkingEntrepriseList, {Title = nil})
 
 local function CheckPlayers(vehicle, garage)
     for i = -1, 5, 1 do
@@ -163,6 +167,53 @@ local function SortirMenu(type, garage, indexgarage)
                 end
             end
         end, indexgarage, type, garage.vehicle)
+    elseif type == "entreprise" then
+        VehiculeParkingEntreprise:ClearItems()
+        MenuV:OpenMenu(VehiculeParkingEntreprise)
+
+        VehiculeParkingEntreprise:AddButton({
+            icon = "◀",
+            label = "Retour au menu",
+            value = ParkingEntrepriseList,
+            select = function()
+                VehiculeParkingEntreprise:Close()
+            end,
+        })
+        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
+            if result == nil then
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
+            else
+                for k, v in pairs(result) do
+                    local enginePercent = round(v.engine / 10, 0)
+                    local bodyPercent = round(v.body / 10, 0)
+                    local currentFuel = v.fuel
+                    local vname = QBCore.Shared.Vehicles[v.vehicle].name
+                    local timediff = time - v.parkingtime
+                    local price = math.floor(timediff / 3600)
+
+                    if v.state == 0 then
+                        v.state = Lang:t("status.out")
+                    elseif v.state == 1 then
+                        v.state = Lang:t("status.garaged")
+                    elseif v.state == 2 then
+                        v.state = Lang:t("status.impound")
+                    end
+                    VehiculeParkingEntreprise:AddButton({
+                        label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate, value3 = price}),
+                        description = Lang:t("menu.text.garage", {
+                            value = v.state,
+                            value2 = currentFuel,
+                            value3 = enginePercent,
+                            value4 = bodyPercent,
+                        }),
+                        select = function()
+                            VehiculeParkingEntreprise:Close()
+                            TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage, price)
+                        end,
+                    })
+                end
+            end
+        end, indexgarage, type, garage.vehicle)
     end
 end
 
@@ -239,6 +290,23 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                     end
                 end
             end
+        elseif type == "entreprise" then
+            for indexentreprise, entreprisepar in pairs(PlacesEntreprise) do
+                if indexentreprise:sub(1, -2) == indexgarage then
+                    local vehicles2 = GetGamePool("CVehicle")
+                    local inside = false
+                    for _, vehicle2 in ipairs(vehicles2) do
+                        if entreprisepar:isPointInside(GetEntityCoords(vehicle2)) then
+                            inside = true
+                        end
+                    end
+                    if inside == false then
+                        placedispo = placedispo + 1
+                        location = entreprisepar:getBoundingBoxCenter()
+                        heading = entreprisepar:getHeading()
+                    end
+                end
+            end
         end
         local newlocation = vec4(location.x, location.y, location.z, heading)
         if placedispo == 0 then
@@ -276,6 +344,10 @@ local function enterVehicle(veh, indexgarage, type, garage)
         if Zonespublic[indexgarage]:isPointInside(vehicleCoords) then
             insideParking = true
         end
+    elseif type == "entreprise" then
+        if Zonesentreprise[indexgarage]:isPointInside(vehicleCoords) then
+            insideParking = true
+        end
     end
     if insideParking then
         QBCore.Functions.TriggerCallback("qb-garage:server:checkOwnership", function(owned)
@@ -310,13 +382,18 @@ RegisterNetEvent("QBCore:Client:OnGangUpdate", function(gang)
     PlayerGang = gang
 end)
 
-RegisterNetEvent("QBCore:Client:OnJobUpdate", function(job)
-    PlayerJob = job
+RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
+    PlayerJob = JobInfo
+    OnDuty = PlayerJob.onduty
+end)
+
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    OnDuty = duty
 end)
 
 CreateThread(function()
     for _, garage in pairs(Garages) do
-        if garage.showBlip then
+        if garage.showBlip and garage.type ~= "entreprise" then
             local Garage = AddBlipForCoord(garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z)
             SetBlipSprite(Garage, garage.blipNumber)
             SetBlipDisplay(Garage, 4)
@@ -395,6 +472,25 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             ParkingFourriereList:Close()
             SortirMenu(type, garage, indexgarage)
         end)
+    elseif type == "entreprise" then
+        local button = menu:AddButton({label = "Ranger véhicule"})
+        button:On("select", function()
+            local curVeh = GetPlayersLastVehicle()
+            local vehClass = GetVehicleClass(curVeh)
+            if garage.vehicle == "car" or not garage.vehicle then
+                if vehClass ~= 14 and vehClass ~= 15 and vehClass ~= 16 then
+                    ParkingEntrepriseList:Close()
+                    enterVehicle(curVeh, indexgarage, type)
+                else
+                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
+                end
+            end
+        end)
+        local button2 = menu:AddButton({label = "Sortir véhicule"})
+        button2:On("select", function()
+            ParkingEntrepriseList:Close()
+            SortirMenu(type, garage, indexgarage)
+        end)
     end
 end
 
@@ -407,8 +503,7 @@ local function GenerateMenu(type, garage, indexgarage)
             ParkingPanel(ParkingPublicList, type, garage, indexgarage)
             ParkingPublicList:Open()
         end
-    end
-    if type == "private" then
+    elseif type == "private" then
         if ParkingPriveList.IsOpen then
             ParkingPriveList:Close()
         else
@@ -416,14 +511,21 @@ local function GenerateMenu(type, garage, indexgarage)
             ParkingPanel(ParkingPriveList, type, garage, indexgarage)
             ParkingPriveList:Open()
         end
-    end
-    if type == "depot" then
+    elseif type == "depot" then
         if ParkingFourriereList.IsOpen then
             ParkingFourriereList:Close()
         else
             ParkingFourriereList:ClearItems()
             ParkingPanel(ParkingFourriereList, type, garage, indexgarage)
             ParkingFourriereList:Open()
+        end
+    elseif type == "entreprise" then
+        if ParkingEntrepriseList.IsOpen then
+            ParkingEntrepriseList:Close()
+        else
+            ParkingEntrepriseList:ClearItems()
+            ParkingPanel(ParkingEntrepriseList, type, garage, indexgarage)
+            ParkingEntrepriseList:Open()
         end
     end
 end

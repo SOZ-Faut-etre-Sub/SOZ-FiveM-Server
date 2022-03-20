@@ -559,11 +559,9 @@ CreateThread(function()
                     Repairall(entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    QBCore.Functions.GetPlayerData(function(PlayerData)
-                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
-                            return false
-                        end
-                    end)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
                     return true
                 end,
             },
@@ -580,11 +578,9 @@ CreateThread(function()
                     CleanVehicle(entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    QBCore.Functions.GetPlayerData(function(PlayerData)
-                        if PlayerData.job.onduty == false or PlayerData.job.id ~= "bennys" then
-                            return false
-                        end
-                    end)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
                     return true
                 end,
             },
