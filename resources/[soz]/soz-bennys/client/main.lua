@@ -1,7 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 VehicleStatus = {}
 OnDuty = false
-local PlayerJob = {}
+PlayerJob = {}
 local effectTimer = 0
 
 OriginalCategory = nil
