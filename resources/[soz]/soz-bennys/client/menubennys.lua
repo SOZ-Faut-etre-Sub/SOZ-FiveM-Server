@@ -861,7 +861,6 @@ end
 local function OpenMenu(menu)
     local veh = GetVehiclePedIsIn(PlayerPedId(), false)
     FreezeEntityPosition(veh, true)
-    SetEntityHeading(veh, 90.0)
     menu:AddButton({
         icon = "◀",
         label = "Libérer le véhicule",
