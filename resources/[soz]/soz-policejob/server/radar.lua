@@ -33,7 +33,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
         end
 
         local radarMessage = ("Plaque: ~b~%s~s~~n~"):format(vehiclePlate)
-        radarMessage = radarMessage .. ("Vitesse: ~r~%s km/h~s~ (~g~%s km/h~s~)~n~"):format(QBCore.Shared.Round(vehicleSpeed, 1), radar.speed)
+        radarMessage = radarMessage .. ("Vitesse: ~r~%s km/h~s~ (~g~%s km/h~s~)~n~"):format(QBCore.Shared.Round(vehicleSpeed), radar.speed)
 
         if Config.RadarAllowedVehicle[vehicleModel] then
             TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
@@ -72,19 +72,17 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
 
                     Player.Functions.SetMetaData("licences", licences)
                 end
-                TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
-                                   "CHAR_BLOCKED")
             else
                 TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
-                TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
-                                   radarMessage .. "~r~Véhicule volé~s~", "CHAR_BLOCKED")
             end
+            TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
+                               "CHAR_BLOCKED")
 
             for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
                 if Police.PlayerData.job.id == radar.station then
                     TriggerClientEvent("hud:client:DrawAdvancedNotification", Police.PlayerData.source, RadarMessage.Title, RadarMessage.FlashPolice,
                                        string.format("Plaque: ~b~%s~s~ ~n~Rue: ~b~%s~s~ ~n~Vitesse: ~r~%s km/h~s~", vehiclePlate, streetName,
-                                                     QBCore.Shared.Round(vehicleSpeed, 1)), "CHAR_BLOCKED")
+                                                     QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED")
                 end
             end
         end)
