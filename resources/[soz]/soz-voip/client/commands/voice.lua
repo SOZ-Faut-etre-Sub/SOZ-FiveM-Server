@@ -22,3 +22,16 @@ RegisterCommand("voip-voice_down", function()
     end
 end, false)
 RegisterKeyMapping("voip-voice_down", "Parler moins fort", "keyboard", "F5")
+
+RegisterCommand("voip-voice_mute", function()
+    if LocalPlayer.state.muted then
+        setProximityState(CurrentPlayer.VoiceMode, false)
+        LocalPlayer.state:set("muted", false, true)
+        TriggerServerEvent("voip:server:muteMe", false)
+    else
+        LocalPlayer.state:set("muted", true, true)
+        TriggerServerEvent("voip:server:muteMe", true)
+        TriggerEvent("hud:client:UpdateVoiceMode", -1)
+    end
+end, false)
+RegisterKeyMapping("voip-voice_mute", "Ne plus parler", "keyboard", "F7")
