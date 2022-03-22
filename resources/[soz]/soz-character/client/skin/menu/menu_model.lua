@@ -1,4 +1,4 @@
-local function CreateGenderSlider(menu, playerId, skin)
+local function CreateGenderSlider(menu, playerId, skin, clothConfig)
     local genderOptions = {
         {label = "Homme", value = GetHashKey("mp_m_freemode_01")},
         {label = "Femme", value = GetHashKey("mp_f_freemode_01")},
@@ -14,7 +14,17 @@ local function CreateGenderSlider(menu, playerId, skin)
     genderSlider:On("change", function(_, valueIndex)
         local option = genderOptions[valueIndex]
         skin.Model.Hash = option.value
+
+        if option.value == GetHashKey("mp_f_freemode_01") then
+            clothConfig.BaseClothSet = GetFemaleDefaultBaseClothSet()
+            clothConfig.NakedClothSet = GetFemaleDefaultNakedClothSet()
+        else
+            clothConfig.BaseClothSet = GetMaleDefaultBaseClothSet()
+            clothConfig.NakedClothSet = GetMaleDefaultNakedClothSet()
+        end
+
         ApplyPlayerBodySkin(playerId, skin)
+        ApplyPlayerClothConfig(playerId, clothConfig)
     end)
 
     return genderSlider
@@ -120,8 +130,8 @@ local function CreateMotherSlider(menu, heritage, playerId, skin)
     return fatherSlider
 end
 
-local function CreateModelMenuItems(modelMenu, playerId, skin)
-    CreateGenderSlider(modelMenu, playerId, skin)
+local function CreateModelMenuItems(modelMenu, playerId, skin, clothConfig)
+    CreateGenderSlider(modelMenu, playerId, skin, clothConfig)
 
     local heritage = modelMenu:AddHeritage({portraitMale = "male_0", portraitFemale = "female_0"})
     CreateFatherSlider(modelMenu, heritage, playerId, skin)
@@ -156,11 +166,11 @@ local function CreateModelMenuItems(modelMenu, playerId, skin)
     return modelMenu
 end
 
-function CreateModelMenu(createCharacterMenu, playerId, skin)
+function CreateModelMenu(createCharacterMenu, playerId, skin, clothConfig)
     local modelMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Identité"})
 
     modelMenu:On("open", function()
-        CreateModelMenuItems(modelMenu, playerId, skin)
+        CreateModelMenuItems(modelMenu, playerId, skin, clothConfig)
     end)
 
     modelMenu:On("close", function()

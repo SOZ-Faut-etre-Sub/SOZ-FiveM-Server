@@ -21,7 +21,6 @@ local function ApplyPlayerModel(playerId, model)
 
     local ped = GetPlayerPed(playerId)
 
-    SetPedDefaultComponentVariation(ped)
     SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, model.ShapeMix, model.SkinMix, 0, false);
 end
 
@@ -80,6 +79,48 @@ local function ApplyPedMakeup(ped, makeup)
     end
 end
 
+local function Clone(obj)
+    if type(obj) ~= "table" then
+        return obj
+    end
+
+    local res = {}
+
+    for k, v in pairs(obj) do
+        res[Clone(k)] = Clone(v)
+    end
+
+    return res
+end
+
+local function MergeCloth(base, override)
+    local newCloth = Clone(base)
+
+    for componentId, component in pairs(override.Components) do
+        newCloth.Components[componentId] = Clone(component)
+    end
+
+    for propId, prop in pairs(clothSkin.Props) do
+        newCloth.Props[propId] = Clone(prop)
+    end
+
+    return newCloth
+end
+
+local function ApplyPedClothSet(ped, clothSet)
+    for componentId, component in pairs(clothSet.Components) do
+        SetPedComponentVariation(ped, componentId, component.Drawable, component.Texture or 0, component.Palette or 0);
+    end
+
+    for propId, prop in pairs(clothSet.Props) do
+        if nil == prop or prop.Clear then
+            ClearPedProp(ped, propId);
+        else
+            SetPedComponentVariation(ped, propId, prop.Drawable, prop.Texture or 0, prop.Palette or 0);
+        end
+    end
+end
+
 function ApplyPlayerBodySkin(playerId, bodySkin)
     ApplyPlayerModel(playerId, bodySkin.Model)
 
@@ -89,4 +130,33 @@ function ApplyPlayerBodySkin(playerId, bodySkin)
     ApplyPedHair(ped, bodySkin.Hair)
     ApplyPedFaceTrait(ped, bodySkin.FaceTrait)
     ApplyPedMakeup(ped, bodySkin.Makeup)
+end
+
+function ApplyPlayerClothConfig(playerId, clothConfig)
+    local ped = GetPlayerPed(playerId)
+    local clothSet = Clone(clothConfig.BaseClothSet)
+
+    if clothConfig.JobClothSet ~= nil then
+        clothSet = MergeCloth(clothSet, clothConfig.JobClothSet)
+    end
+
+    if clothConfig.TemporaryClothSet ~= nil then
+        clothSet = MergeCloth(clothSet, clothConfig.TemporaryClothSet)
+    end
+
+    if clothConfig.Config.NakedClothSet then
+        clothSet = MergeCloth(clothSet, clothConfig.NakedClothSet)
+    end
+
+    -- @TODO Handle mask / glasses / helmet / etc ...
+
+    SetPedDefaultComponentVariation(ped)
+    ApplyPedClothSet(ped, clothSet)
+end
+
+function ApplyPlayerClothSet(playerId, clothSet)
+    local ped = GetPlayerPed(playerId)
+
+    SetPedDefaultComponentVariation(ped)
+    ApplyPedClothSet(ped, clothSet)
 end
