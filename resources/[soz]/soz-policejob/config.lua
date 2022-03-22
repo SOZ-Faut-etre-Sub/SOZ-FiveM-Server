@@ -19,7 +19,16 @@ Config.Locations = {
     },
 }
 
-Config.RadarAllowedVehicle = {"ambulance", "police", "police2", "police3", "policeb", "pbus", "sheriff", "sheriff2"}
+Config.RadarAllowedVehicle = {
+    [GetHashKey("ambulance")] = true,
+    [GetHashKey("police")] = true,
+    [GetHashKey("police2")] = true,
+    [GetHashKey("police3")] = true,
+    [GetHashKey("policeb")] = true,
+    [GetHashKey("pbus")] = true,
+    [GetHashKey("sheriff")] = true,
+    [GetHashKey("sheriff2")] = true,
+}
 
 Config.Radars = {
     [1] = {
