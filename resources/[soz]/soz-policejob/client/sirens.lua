@@ -7,7 +7,7 @@ AddStateBagChangeHandler("isSirenMuted", nil, function(bagName, key, value, _, _
     end
 end)
 
-RegisterKeyMapping("togglesirens", "Sirène - activer les code 2", "keyboard", "2")
+RegisterKeyMapping("togglesirens", "Sirène - passer du code 3 au code 2", "keyboard", "UP")
 RegisterCommand("togglesirens", function()
     local ped = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(ped, false)
