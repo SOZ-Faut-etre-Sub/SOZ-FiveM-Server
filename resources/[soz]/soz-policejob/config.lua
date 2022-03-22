@@ -17,6 +17,77 @@ Config.Locations = {
             coords = vector3(-447.66, 6013.5, 31.72),
         },
     },
+    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70), ["lscs"] = vector3(-450.88, 6011.26, 30.73)},
+}
+
+Config.WeaponShop = {
+    ["lspd"] = {
+        [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
+        [2] = {name = "weapon_flashlight", metadata = {}, price = 50, amount = 1},
+        [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
+        [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
+        [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
+        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
+        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [12] = {
+            name = "weapon_pistol_mk2",
+            metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
+            price = 200,
+            amount = 1,
+        },
+        [13] = {
+            name = "weapon_pumpshotgun",
+            metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
+            price = 300,
+            amount = 1,
+        },
+        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+    },
+    ["lscs"] = {
+        [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
+        [2] = {name = "weapon_flashlight", metadata = {}, price = 50, amount = 1},
+        [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
+        [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
+        [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
+        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
+        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [12] = {
+            name = "weapon_revolver_mk2",
+            metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
+            price = 200,
+            amount = 1,
+        },
+        [13] = {
+            name = "weapon_pumpshotgun",
+            metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
+            price = 300,
+            amount = 1,
+        },
+        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+    },
+}
+
+--- Licenses
+Config.Licenses = {
+    ["car"] = {label = "Permis voiture"},
+    ["truck"] = {label = "Permis poids lourd"},
+    ["motorcycle"] = {label = "Permis moto"},
+    ["heli"] = {label = "Permis d'aviation"},
+    ["boat"] = {label = "Permis maritime"},
+    ["weapon"] = {label = "Permis port d'arme"},
+    ["hunting"] = {label = "Permis de chase"},
+    ["fishing"] = {label = "Permis de pêche"},
+    ["rescuer"] = {label = "Secouriste"},
 }
 
 Config.RadarAllowedVehicle = {
@@ -29,6 +100,50 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("sheriff")] = true,
     [GetHashKey("sheriff2")] = true,
 }
+--- Fines
+Config.Fines = {
+    [1] = {label = "Sans catégorie", items = {{label = "TIG", price = 0}}},
+    [2] = {
+        label = "Catégorie 1",
+        items = {
+            {label = "Conduite sans permis", price = 3000},
+            {label = "Insulte / Outrage standard", price = 4000},
+            {label = "Insulte / Outrage majorée", price = 8000},
+            {label = "Rappel à la loi minorée", price = 250},
+            {label = "Rappel à la loi standard", price = 500},
+            {label = "Rappel à la loi majorée", price = 750},
+        },
+    },
+    [3] = {
+        label = "Catégorie 2",
+        items = {
+            {label = "Dégradation de bien public", price = 4000},
+            {label = "Braquage de commerce minorée", price = 1000},
+            {label = "Braquage de commerce standard", price = 2500},
+            {label = "Braquage de commerce majorée", price = 5000},
+            {label = "Port d'arme sans permis", price = 3000},
+            {label = "Vol de véhicule minorée", price = 1500},
+            {label = "Vol de véhicule standard", price = 4500},
+            {label = "Vol de véhicule majorée", price = 10000},
+        },
+    },
+    [4] = {
+        label = "Catégorie 3",
+        items = {
+            {label = "Agression à main armée standard", price = 30000},
+            {label = "Agression à main armée majorée", price = 40000},
+            {label = "Braquage de Fleeca minorée", price = 10000},
+            {label = "Braquage de Fleeca standard", price = 20000},
+            {label = "Braquage de Fleeca majorée", price = 30000},
+            {label = "Tentative de corruption", price = 15000},
+            {label = "Vol à main armée", price = 15000},
+        },
+    },
+    [5] = {label = "Catégorie 4", items = {{label = "Corruption", price = 50000}}},
+}
+
+--- Radars config
+Config.RadarAllowedVehicle = {"ambulance", "police", "police2", "police3", "policeb", "pbus", "sheriff", "sheriff2"}
 
 Config.Radars = {
     [1] = {

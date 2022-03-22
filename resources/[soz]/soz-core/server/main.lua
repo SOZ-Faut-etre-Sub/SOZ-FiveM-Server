@@ -27,3 +27,9 @@ QBCore.Functions.CreateCallback("smallresources:server:GetCurrentPlayers", funct
     end
     cb(TotalPlayers)
 end)
+
+AddEventHandler("chatMessage", function(playerId, playerName, message)
+    if string.sub(message, 1, string.len("/")) ~= "/" then
+        CancelEvent()
+    end
+end)
