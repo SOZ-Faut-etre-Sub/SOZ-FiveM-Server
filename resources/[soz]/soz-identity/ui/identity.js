@@ -18,9 +18,11 @@ function displayMugshot(mugshot) {
 
 function displayIdentityData(playerData) {
     const identityElement = document.querySelector("#right-col-identity");
+    const pictureElement = document.querySelector("#left-col-identity");
 
     // Reset any existing content
     identityElement.innerHTML = null;
+    pictureElement.innerHTML = null;
 
     Object.entries(IDENTITY).forEach(([key, label]) => {
         const value = playerData[key];
