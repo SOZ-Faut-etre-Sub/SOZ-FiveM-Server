@@ -10,20 +10,20 @@ SetAudioSubmixEffectParamFloat(phoneEffectId, 1, GetHashKey("freq_low"), 300.0)
 SetAudioSubmixEffectParamFloat(phoneEffectId, 1, GetHashKey("freq_hi"), 6000.0)
 AddAudioSubmixOutput(phoneEffectId, 1)
 
-function ApplySubmixEffect(moduleType, player)
-    if moduleType == "primaryRadio" then
+function ApplySubmixEffect(module, player, extra)
+    if module == "radio-sr" or module == "radio-lr" then
         MumbleSetSubmixForServerId(player, radioEffectId)
-        SetAudioSubmixOutputVolumes(radioEffectId, 0, CurrentPlayer.Ear["primaryRadio"] <= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0,
-                                    CurrentPlayer.Ear["primaryRadio"] >= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0,
-                                    CurrentPlayer.Ear["primaryRadio"] <= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0,
-                                    CurrentPlayer.Ear["primaryRadio"] >= 1 and CurrentPlayer.Volume["primaryRadio"] or 0.0, 1.0, 1.0)
-    elseif moduleType == "secondaryRadio" then
-        MumbleSetSubmixForServerId(player, radioEffectId)
-        SetAudioSubmixOutputVolumes(radioEffectId, 0, CurrentPlayer.Ear["secondaryRadio"] <= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0,
-                                    CurrentPlayer.Ear["secondaryRadio"] >= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0,
-                                    CurrentPlayer.Ear["secondaryRadio"] <= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0,
-                                    CurrentPlayer.Ear["secondaryRadio"] >= 1 and CurrentPlayer.Volume["secondaryRadio"] or 0.0, 1.0, 1.0)
-    elseif moduleType == "phone" then
+
+        if extra == "primary" or extra == "secondary" then
+            local earState = LocalPlayer.state[module][extra .. "ChannelEar"]
+            local volumeState = LocalPlayer.state[module][extra .. "ChannelVolume"] / 100
+
+            print(module, extra, earState, volumeState)
+
+            SetAudioSubmixOutputVolumes(radioEffectId, 0, earState <= 1 and volumeState or 0.0, earState >= 1 and volumeState or 0.0,
+                                        earState <= 1 and volumeState or 0.0, earState >= 1 and volumeState or 0.0, 1.0, 1.0)
+        end
+    elseif module == "call" then
         MumbleSetSubmixForServerId(player, phoneEffectId)
     end
 end
@@ -31,9 +31,3 @@ end
 function RemoveSubmixEffect(player)
     MumbleSetSubmixForServerId(player, -1)
 end
-
-exports("setVoiceEar", function(_type, ear)
-    if CurrentPlayer.Ear[_type] then
-        CurrentPlayer.Ear[_type] = ear
-    end
-end)
