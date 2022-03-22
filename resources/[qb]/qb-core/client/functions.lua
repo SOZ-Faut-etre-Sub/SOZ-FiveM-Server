@@ -150,7 +150,7 @@ function QBCore.Functions.TriggerCallback(name, cb, ...)
 end
 
 function QBCore.Functions.TriggerRpc(name, ...)
-    local eventResponseId = UuidV4()
+    local eventResponseId = QBCore.Shared.UuidV4()
     local p = promise.new()
 
     local event = RegisterNetEvent(eventResponseId, function(result)

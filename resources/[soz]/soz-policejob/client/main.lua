@@ -6,8 +6,6 @@ PoliceJob = {}
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
-
-    PoliceJob.Functions.Menu.GenerateKeyMapping(PlayerData.job.id)
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
@@ -16,8 +14,6 @@ end)
 
 RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
     PlayerData.job = JobInfo
-
-    PoliceJob.Functions.Menu.GenerateKeyMapping(PlayerData.job.id)
 end)
 
 --- Events

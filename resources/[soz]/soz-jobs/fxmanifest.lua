@@ -19,6 +19,7 @@ client_script {
     "client/pole.lua",
     "client/metal.lua",
     "client/religion.lua",
+    "client/menu.lua",
     "client/utils/*.lua",
 }
 

@@ -1,4 +1,6 @@
-math.randomseed(os.time())
+QBShared = QBShared or {}
+
+math.randomseed(GetGameTimer())
 math.random()
 
 local function num2bs(num)
@@ -38,7 +40,7 @@ local function padbits(num,bits)
     return num
 end
 --
-function UuidV4()
+QBShared.UuidV4 = function()
     local _rnd = math.random
     local _fmt = string.format
 
