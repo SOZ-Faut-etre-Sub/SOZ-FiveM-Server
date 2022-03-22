@@ -1,15 +1,17 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 
-QBCore.Functions.CreateCallback("admin:server:isAllowed", function(source, cb)
-    local isAllowed = false
-
+CheckIsAdminMenuIsAvailable = function(source)
     for _, role in ipairs(Config.AllowedRole) do
         if QBCore.Functions.HasPermission(source, role) then
-            isAllowed = true
+            return true
         end
     end
 
-    cb(isAllowed)
+    return false
+end
+
+QBCore.Functions.CreateCallback("admin:server:isAllowed", function(source, cb)
+    cb(CheckIsAdminMenuIsAvailable(source))
 end)
 
 QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
@@ -55,13 +57,12 @@ end)
 
 RegisterNetEvent("admin:server:freeze", function(player)
     local target = GetPlayerPed(player.id)
-    if not frozen then
-        frozen = true
-        FreezeEntityPosition(target, true)
-    else
-        frozen = false
-        FreezeEntityPosition(target, false)
-    end
+    FreezeEntityPosition(target, true)
+end)
+
+RegisterNetEvent("admin:server:unfreeze", function(player)
+    local target = GetPlayerPed(player.id)
+    FreezeEntityPosition(target, false)
 end)
 
 RegisterNetEvent("admin:server:intovehicle", function(player)
