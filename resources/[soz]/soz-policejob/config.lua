@@ -33,7 +33,7 @@ Config.RadarAllowedVehicle = {
 Config.Radars = {
     [1] = {
         props = vector4(-54.77, 6338.8, 30.33, 155.46),
-        zone = vector3(-60.35, 6321.91, 30.3),
+        zone = vector3(-60.35, 6321.91, 31.3),
         station = "lscs",
         isOnline = true,
         zoneRadius = 9,
@@ -41,7 +41,7 @@ Config.Radars = {
     },
     [2] = {
         props = vector4(2365.11, 5763.63, 44.94, 236.35),
-        zone = vector3(2386.17, 5745.69, 44.73),
+        zone = vector3(2386.17, 5745.69, 45.73),
         station = "lscs",
         isOnline = true,
         zoneRadius = 10,
@@ -49,7 +49,7 @@ Config.Radars = {
     },
     [3] = {
         props = vector4(-2831.09, 2176.07, 30.84, 320.84),
-        zone = vector3(-2813.6, 2202.67, 27.91),
+        zone = vector3(-2813.6, 2202.67, 28.91),
         station = "lscs",
         isOnline = true,
         zoneRadius = 15,
@@ -57,7 +57,7 @@ Config.Radars = {
     },
     [4] = {
         props = vector4(2149.54, 3761.94, 31.89, 320.54),
-        zone = vector3(2161.77, 3778.34, 32.36),
+        zone = vector3(2161.77, 3778.34, 33.36),
         station = "lscs",
         isOnline = true,
         zoneRadius = 8,
@@ -65,7 +65,7 @@ Config.Radars = {
     },
     [5] = {
         props = vector4(710.03, 2707.9, 39.23, 116.24),
-        zone = vector3(695.75, 2700.52, 39.5),
+        zone = vector3(695.75, 2700.52, 40.5),
         station = "lscs",
         isOnline = true,
         zoneRadius = 8,
@@ -73,7 +73,7 @@ Config.Radars = {
     },
     [6] = {
         props = vector4(2234.08, 4744.3, 38.66, 111.03),
-        zone = vector3(2221.52, 4739.29, 39.14),
+        zone = vector3(2221.52, 4739.29, 40.14),
         station = "lscs",
         isOnline = true,
         zoneRadius = 8,
@@ -81,7 +81,7 @@ Config.Radars = {
     },
     [7] = {
         props = vector4(1131.91, 1890.94, 64.72, 42.22),
-        zone = vector3(1118.43, 1909.73, 62.44),
+        zone = vector3(1118.43, 1909.73, 63.44),
         station = "lscs",
         isOnline = true,
         zoneRadius = 8,
@@ -89,7 +89,7 @@ Config.Radars = {
     },
     [8] = {
         props = vector4(-1434.12, 1930.06, 72.43, 202.18),
-        zone = vector3(-1425.47, 1905.34, 73.05),
+        zone = vector3(-1425.47, 1905.34, 74.05),
         station = "lscs",
         isOnline = true,
         zoneRadius = 10,
@@ -97,7 +97,7 @@ Config.Radars = {
     },
     [9] = {
         props = vector4(2767.39, 4601.74, 44.2, 29.84),
-        zone = vector3(2751.96, 4625.0, 43.89),
+        zone = vector3(2751.96, 4625.0, 44.89),
         station = "lscs",
         isOnline = true,
         zoneRadius = 10,
@@ -105,7 +105,7 @@ Config.Radars = {
     },
     [10] = {
         props = vector4(-797.55, 2231.07, 86.17, 356.3),
-        zone = vector3(-798.91, 2252.27, 83.23),
+        zone = vector3(-798.91, 2252.27, 84.23),
         station = "lscs",
         isOnline = true,
         zoneRadius = 8,
@@ -113,7 +113,7 @@ Config.Radars = {
     },
     [11] = {
         props = vector4(-2467.23, -219.14, 16.65, 220.11),
-        zone = vector3(-2447.98, -238.33, 15.61),
+        zone = vector3(-2447.98, -238.33, 16.61),
         station = "lspd",
         isOnline = true,
         zoneRadius = 8,
@@ -121,7 +121,7 @@ Config.Radars = {
     },
     [12] = {
         props = vector4(-1919.08, 692.07, 125.73, 166.88),
-        zone = vector3(-1922.6, 671.7, 124.62),
+        zone = vector3(-1922.6, 671.7, 125.62),
         station = "lspd",
         isOnline = true,
         zoneRadius = 12,
@@ -129,7 +129,7 @@ Config.Radars = {
     },
     [13] = {
         props = vector4(-1650.11, -600.63, 32.63, 259.89),
-        zone = vector3(-1622.3, -606.86, 31.67),
+        zone = vector3(-1622.3, -606.86, 32.67),
         station = "lspd",
         isOnline = true,
         zoneRadius = 12,
@@ -137,7 +137,7 @@ Config.Radars = {
     },
     [14] = {
         props = vector4(-11.96, -441.02, 39.34, 7.71),
-        zone = vector3(-17.41, -405.88, 38.68),
+        zone = vector3(-17.41, -405.88, 39.68),
         station = "lspd",
         isOnline = true,
         zoneRadius = 14,
@@ -145,7 +145,7 @@ Config.Radars = {
     },
     [15] = {
         props = vector4(-163.0, 109.87, 69.42, 215.3),
-        zone = vector3(-148.8, 90.02, 69.77),
+        zone = vector3(-148.8, 90.02, 70.77),
         station = "lspd",
         isOnline = true,
         zoneRadius = 8,
@@ -153,7 +153,7 @@ Config.Radars = {
     },
     [16] = {
         props = vector4(736.53, -1725.36, 28.38, 221.79),
-        zone = vector3(762.64, -1740.99, 28.52),
+        zone = vector3(762.64, -1740.99, 29.52),
         station = "lspd",
         isOnline = true,
         zoneRadius = 12,
@@ -161,7 +161,7 @@ Config.Radars = {
     },
     [17] = {
         props = vector4(-943.88, -1818.97, 18.8, 330.71),
-        zone = vector3(-933.51, -1797.83, 18.84),
+        zone = vector3(-933.51, -1797.83, 19.84),
         station = "lspd",
         isOnline = true,
         zoneRadius = 8,
@@ -169,7 +169,7 @@ Config.Radars = {
     },
     [18] = {
         props = vector4(-699.19, -824.05, 22.75, 225.37),
-        zone = vector3(-681.3, -837.16, 23.14),
+        zone = vector3(-681.3, -837.16, 24.14),
         station = "lspd",
         isOnline = true,
         zoneRadius = 12,
@@ -177,7 +177,7 @@ Config.Radars = {
     },
     [19] = {
         props = vector4(844.38, 141.1, 71.3, 301.84),
-        zone = vector3(868.5, 154.6, 72.41),
+        zone = vector3(868.5, 154.6, 73.41),
         station = "lspd",
         isOnline = true,
         zoneRadius = 12,
@@ -185,7 +185,7 @@ Config.Radars = {
     },
     [20] = {
         props = vector4(-1001.81, 102.48, 51.33, 59.55),
-        zone = vector3(-1014.42, 114.04, 51.91),
+        zone = vector3(-1014.42, 114.04, 52.91),
         station = "lspd",
         isOnline = true,
         zoneRadius = 8,
