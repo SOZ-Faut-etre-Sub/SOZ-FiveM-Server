@@ -111,6 +111,11 @@ RegisterNetEvent("talk:radio:use", function()
     toggleRadio(not radioOpen)
 end)
 
+RegisterCommand("radio_toggle", function()
+    toggleRadio(not radioOpen)
+end, false)
+RegisterKeyMapping("radio_toggle", "Sortir la radio", "keyboard", "N")
+
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
     leaveRadio()
 end)
