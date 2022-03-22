@@ -50,8 +50,6 @@ body, html {
 }
 #left-col-identity img {
     opacity: 0.95;
-    width: 120px;
-    height: 120px;
     background-color: black;
 }
 #right-col-identity {
@@ -102,6 +100,10 @@ body, html {
     .bg-img {
         width: 500px;
     }
+    #left-col-identity img {
+        width: 150px;
+        height: 150px;
+    }
 }
 @media all and (min-width: 1921px) and (max-width: 4095px) {
     body {
@@ -110,6 +112,10 @@ body, html {
     .bg-img {
         width: 600px;
     }
+    #left-col-identity img {
+        width: 180px;
+        height: 180px;
+    }
 }
 @media all and (min-width: 4096px){
     body {
@@ -117,5 +123,9 @@ body, html {
     }
     .bg-img {
         width: 1000px;
+    }
+    #left-col-identity img {
+        width: 300px;
+        height: 300px;
     }
 }
