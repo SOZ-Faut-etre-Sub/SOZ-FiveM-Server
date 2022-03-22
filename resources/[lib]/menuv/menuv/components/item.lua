@@ -185,6 +185,11 @@ function CreateMenuItem(info)
         ---@return Menu|nil
         GetParentMenu = function(t)
             return t.__menu or nil
+        end,
+        ---@param t Item
+        ---@param value any
+        SetValue = function(t, value)
+            t.Value = value
         end
     }
 

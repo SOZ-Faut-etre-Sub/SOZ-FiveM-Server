@@ -53,10 +53,108 @@ function GetDefaultBodySkin()
     }
 end
 
-function GetMaleDefaultCloth()
-    return {}
+function GetDefaultClothConfig(baseClothSet, nakedClothSet)
+    return {
+        BaseClothSet = baseClothSet,
+        NakedClothSet = nakedClothSet, -- Override everything if naked config is true
+        JobClothSet = nil, -- Job related clothing, override base cloth
+        TemporaryClothSet = nil, -- Temporary clothing (by using an item), override job cloth, only one can be set
+        Config = {Naked = false, ShowMask = false, HideGlasses = false, ShowHelmet = false},
+    }
 end
 
-function GetFemaleDefaultCloth()
-    return {}
+function GetMaleDefaultBaseClothSet()
+    return {
+        Components = {
+            [ComponentType.Mask] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Arms] = {Drawable = 15, Texture = 0, Palette = 0},
+            [ComponentType.Pants] = {Drawable = 64, Texture = 0, Palette = 0},
+            [ComponentType.Bag] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Shoes] = {Drawable = 75, Texture = 18, Palette = 0},
+            [ComponentType.Chain] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Top] = {Drawable = 15, Texture = 0, Palette = 0},
+            [ComponentType.Bulletproof] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Decals] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Torso] = {Drawable = 260, Texture = 2, Palette = 0},
+        },
+        Props = {
+            [PropType.Head] = nil,
+            [PropType.Glasses] = nil,
+            [PropType.Ear] = nil,
+            [PropType.LeftHand] = nil,
+            [PropType.RightHand] = nil,
+        },
+    }
+end
+
+function GetFemaleDefaultBaseClothSet()
+    return {
+        Components = {
+            [ComponentType.Mask] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Arms] = {Drawable = 15, Texture = 0, Palette = 0},
+            [ComponentType.Pants] = {Drawable = 66, Texture = 0, Palette = 0},
+            [ComponentType.Bag] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Shoes] = {Drawable = 35, Texture = 0, Palette = 0},
+            [ComponentType.Chain] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Top] = {Drawable = 2, Texture = 0, Palette = 0},
+            [ComponentType.Bulletproof] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Decals] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Torso] = {Drawable = 18, Texture = 0, Palette = 0},
+        },
+        Props = {
+            [PropType.Head] = nil,
+            [PropType.Glasses] = nil,
+            [PropType.Ear] = nil,
+            [PropType.LeftHand] = nil,
+            [PropType.RightHand] = nil,
+        },
+    }
+end
+
+function GetMaleDefaultNakedClothSet()
+    return {
+        Components = {
+            [ComponentType.Mask] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Arms] = {Drawable = 15, Texture = 0, Palette = 0},
+            [ComponentType.Pants] = {Drawable = 61, Texture = 0, Palette = 0},
+            [ComponentType.Bag] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Shoes] = {Drawable = 34, Texture = 0, Palette = 0},
+            [ComponentType.Chain] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Top] = {Drawable = 15, Texture = 0, Palette = 0},
+            [ComponentType.Bulletproof] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Decals] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Torso] = {Drawable = 15, Texture = 0, Palette = 0},
+        },
+        Props = {
+            [PropType.Head] = nil,
+            [PropType.Glasses] = nil,
+            [PropType.Ear] = nil,
+            [PropType.LeftHand] = nil,
+            [PropType.RightHand] = nil,
+        },
+    }
+end
+
+function GetFemaleDefaultNakedClothSet()
+    return {
+        Components = {
+            [ComponentType.Mask] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Arms] = {Drawable = 15, Texture = 0, Palette = 0},
+            [ComponentType.Pants] = {Drawable = 19, Texture = 0, Palette = 0},
+            [ComponentType.Bag] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Shoes] = {Drawable = 35, Texture = 0, Palette = 0},
+            [ComponentType.Chain] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Top] = {Drawable = 2, Texture = 0, Palette = 0},
+            [ComponentType.Bulletproof] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Decals] = {Drawable = 0, Texture = 0, Palette = 0},
+            [ComponentType.Torso] = {Drawable = 18, Texture = 0, Palette = 0},
+        },
+        Props = {
+            [PropType.Head] = nil,
+            [PropType.Glasses] = nil,
+            [PropType.Ear] = nil,
+            [PropType.LeftHand] = nil,
+            [PropType.RightHand] = nil,
+        },
+    }
 end

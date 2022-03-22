@@ -4,8 +4,10 @@ function CreatePlayer(shutdownLoadingScreen)
         exports["soz-loadscreen"]:Shutdown()
     end
 
-    SpawnPlayer("spawn1")
-    CreateCharacter()
+    local SpawnId = "spawn1"
+
+    SpawnPlayer(SpawnId)
+    CreateCharacter(SpawnId)
 
     ---- Camera effect
     -- ClearScreen()
@@ -49,7 +51,7 @@ function SpawnPlayer(SpawnId)
         tmpCharacter.gender = 1
     end
 
-    NewCharacterCreate()
+    NewCharacterCreate(SpawnId)
 end
 
 -- function LegacyCuiCreate()
@@ -57,7 +59,7 @@ end
 --    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
 -- end
 
-function NewCharacterCreate()
+function NewCharacterCreate(SpawnId)
     local playerPed = PlayerPedId()
     SetEntityVisible(playerPed, true)
 
@@ -75,7 +77,7 @@ function NewCharacterCreate()
     -- print("yolo")
 
     -- Camera.Deactivate()
-    CreateCharacter()
+    CreateCharacter(SpawnId)
 
 end
 

@@ -690,6 +690,11 @@ function CreateMenuItem(info)
         ---@return Menu|nil
         GetParentMenu = function(t)
             return t.__menu or nil
+        end,
+        ---@param t Item
+        ---@param value any
+        SetValue = function(t, value)
+            t.Value = value
         end
     }
 
@@ -1454,6 +1459,7 @@ function CreateMenu(info)
             ---@field public Validate fun(t: Item, k: string, v:any)
             ---@field public NewIndex fun(t: Item, k: string, v: any)
             ---@field public GetValue fun(t: Item):any
+            ---@field public SetValue fun(t: Item, value: any)
             ---@field public AddValue fun(t: Item, info: table)
             ---@field public AddValues fun(t: Item)
             local item = CreateMenuItem(info)
@@ -1665,6 +1671,7 @@ function CreateMenu(info)
             ---@field public Validate fun(t: Item, k: string, v:any)
             ---@field public NewIndex fun(t: Item, k: string, v: any)
             ---@field public GetValue fun(t: Item):any
+            ---@field public SetValue fun(t: Item, value: any)
             ---@field public SetMinValue fun(t: any)
             ---@field public SetMaxValue fun(t: any)
             local item = CreateMenuItem(info)
@@ -1759,6 +1766,7 @@ function CreateMenu(info)
             ---@field public Validate fun(t: Item, k: string, v:any)
             ---@field public NewIndex fun(t: Item, k: string, v: any)
             ---@field public GetValue fun(t: Item):any
+            ---@field public SetValue fun(t: Item, value: any)
             ---@field public Confirm fun(t: Item)
             ---@field public Deny fun(t: Item)
             local item = CreateMenuItem(info)
