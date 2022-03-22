@@ -25,6 +25,21 @@ local function RedAlertEntity(menu, societyNumber)
     })
 end
 
+local function PropsEntity(menu)
+    menu:AddSlider({
+        icon = "🚧",
+        label = "Poser un objet",
+        value = nil,
+        values = {
+            {label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}},
+            {label = "Barrière", value = {item = "police_barrier", props = "prop_barrier_work05"}},
+        },
+        select = function(_, value)
+            TriggerServerEvent("job:server:placeProps", value.item, value.props)
+        end,
+    })
+end
+
 --- @param menu Menu
 local function BadgeEntity(menu)
     menu:AddButton({
@@ -131,6 +146,7 @@ end
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
         RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+        PropsEntity(menu)
 
         if PlayerData.job.onduty then
             BadgeEntity(menu)
