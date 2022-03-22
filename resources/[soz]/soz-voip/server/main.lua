@@ -1,67 +1,55 @@
+--- Variable registration
+voiceStateBackend = {}
 voiceModule = {}
 
-voiceData = {}
-radioData = {}
-callData = {}
-
---- Function
-function defaultVoiceDataTable()
-    return {call = 0, primaryRadio = 0, secondaryRadio = 0}
-end
-
-local function setupPlayerStateBag(source)
+--- Player management
+AddEventHandler("playerJoining", function()
     local player = Player(source).state
     if not player.voipInit then
         player:set("proximity", {}, true)
+        player:set("muted", false, true)
         player:set("voiceIntent", "speech", true)
-        player:set("useLongRangeRadio", false, true)
 
-        player:set("phone", Config.DefaultVolume["phone"], true)
-        player:set("primaryRadio", Config.DefaultVolume["primaryRadio"], true)
-        player:set("secondaryRadio", Config.DefaultVolume["secondaryRadio"], true)
+        player:set("call", {channel = 0, volume = Config.DefaultVolume["call"]}, true)
 
-        player:set("callChannel", 0, true)
-        player:set("primaryRadioChannel", 0, true)
-        player:set("secondaryRadioChannel", 0, true)
+        player:set("radio-sr", {
+            primaryChannel = 0,
+            primaryChannelVolume = Config.DefaultVolume["radio"],
+            primaryChannelEar = Config.RadioEar.Both,
+            secondaryChannel = 0,
+            secondaryChannelVolume = Config.DefaultVolume["radio"],
+            secondaryChannelEar = Config.RadioEar.Both,
+        }, true)
+
+        player:set("radio-lr", {
+            primaryChannel = 0,
+            primaryChannelVolume = Config.DefaultVolume["radio"],
+            primaryChannelEar = Config.RadioEar.Both,
+            secondaryChannel = 0,
+            secondaryChannelVolume = Config.DefaultVolume["radio"],
+            secondaryChannelEar = Config.RadioEar.Both,
+        }, true)
 
         player:set("voipInit", true, false)
     end
-end
-
-local function handleNewPlayer(source)
-    if not voiceData[source] then
-        setupPlayerStateBag(source)
-        voiceData[source] = defaultVoiceDataTable()
-    end
-end
-
---- Events
-AddEventHandler("playerJoining", function()
-    handleNewPlayer(source)
 end)
 
 AddEventHandler("playerDropped", function()
-    if voiceData[source] then
-        local player = voiceData[source]
+    local playerState = Player(source).state
 
-        for module, _ in pairs(voiceModule) do
-            if player[module] ~= 0 then
-                voiceModule[module]:removePlayer(source, player[module], true)
-                if module == "radio" then --- Drop primary and secondary channel for radio
-                    voiceModule[module]:removePlayer(source, player[module], false)
-                end
-            end
+    if playerState.call.channel ~= 0 then
+        voiceModule["call"]:removePlayer(source, playerState.call.channel, true)
+    end
+
+    for _, radio in ipairs({"radio-sr", "radio-lr"}) do
+        if playerState[radio].primaryChannel ~= 0 or playerState[radio].secondaryChannel ~= 0 then
+            voiceModule[radio]:removePlayer(source, playerState[radio].primaryChannel, true)
+            voiceModule[radio]:removePlayer(source, playerState[radio].secondaryChannel, false)
         end
-
-        voiceData[source] = nil
     end
 end)
 
-RegisterNetEvent("voip:setPlayerTalking", function(module, talking, extra)
-    voiceModule[module]:setTalking(source, talking, extra)
-end)
-
 --- Exports
-exports("isValidPlayer", function(source)
-    return voiceData[source]
+exports("addRadioChannelCheck", function(channel, cb)
+    voiceStateBackend["radio"]:addChannelCheck(channel, cb)
 end)
