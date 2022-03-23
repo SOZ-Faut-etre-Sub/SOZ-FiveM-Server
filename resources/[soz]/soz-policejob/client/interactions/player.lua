@@ -25,7 +25,7 @@ CreateThread(function()
             },
             {
                 label = "Menotter",
-                icon = "fas fa-key",
+                icon = "mdi mdi-handcuffs",
                 event = "police:client:CuffPlayer",
                 item = "handcuffs",
                 canInteract = function(entity)
