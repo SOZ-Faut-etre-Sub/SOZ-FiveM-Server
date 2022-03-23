@@ -206,8 +206,3 @@ SozJobCore.metal = {
     {x = -474.31, y = -1680.6, z = 19.03, sx = 2.2, sy = 3.0, heading = 337, minZ = 17.63, maxZ = 19.63},
     {x = -475.62, y = -1729.28, z = 18.69, sx = 2.4, sy = 4.4, heading = 14, minZ = 17.49, maxZ = 19.49},
 }
-
-SozJobCore.CashTransfer = {
-    Cooldown = 60000, -- in ms
-    CollectionDuration = 2000, -- in ms
-}
