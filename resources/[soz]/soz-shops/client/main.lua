@@ -70,3 +70,6 @@ for _, shop in pairs(ShopLocation) do
         end)
     end
 end
+exports("GetCurrentShop", function ()
+    return currentShop
+end)
