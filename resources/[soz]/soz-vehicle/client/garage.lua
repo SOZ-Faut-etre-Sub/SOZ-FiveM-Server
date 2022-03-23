@@ -179,41 +179,22 @@ local function SortirMenu(type, garage, indexgarage)
                 VehiculeParkingEntreprise:Close()
             end,
         })
-        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
+        QBCore.Functions.TriggerCallback("qb-garage:server:storageentreprise", function(result)
             if result == nil then
                 exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
             else
                 for k, v in pairs(result) do
-                    local enginePercent = round(v.engine / 10, 0)
-                    local bodyPercent = round(v.body / 10, 0)
-                    local currentFuel = v.fuel
-                    local vname = QBCore.Shared.Vehicles[v.vehicle].name
-                    local timediff = time - v.parkingtime
-                    local price = math.floor(timediff / 3600)
-
-                    if v.state == 0 then
-                        v.state = Lang:t("status.out")
-                    elseif v.state == 1 then
-                        v.state = Lang:t("status.garaged")
-                    elseif v.state == 2 then
-                        v.state = Lang:t("status.impound")
-                    end
+                    local vname = Config.GarageVehicles[v.vehicle]
                     VehiculeParkingEntreprise:AddButton({
-                        label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate, value3 = price}),
-                        description = Lang:t("menu.text.garage", {
-                            value = v.state,
-                            value2 = currentFuel,
-                            value3 = enginePercent,
-                            value4 = bodyPercent,
-                        }),
+                        label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.stock}),
                         select = function()
                             VehiculeParkingEntreprise:Close()
-                            TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage, price)
+                            TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
                         end,
                     })
                 end
             end
-        end, indexgarage, type, garage.vehicle)
+        end, PlayerJob.id)
     end
 end
 
@@ -232,9 +213,10 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
         spawn = true
     end
     if spawn then
-        local enginePercent = round(vehicle.engine / 10, 1)
-        local bodyPercent = round(vehicle.body / 10, 1)
-        local currentFuel = vehicle.fuel
+        local currentFuel
+        if type ~= "entreprise" then
+            currentFuel = vehicle.fuel
+        end
         local location
         local heading
         local placedispo = 0
@@ -312,24 +294,40 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
         if placedispo == 0 then
             exports["soz-hud"]:DrawNotification("Déjà une voiture sur un des parking", "primary", 4500)
         else
-            QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                QBCore.Functions.TriggerCallback("qb-garage:server:GetVehicleProperties", function(properties)
-                    if vehicle.plate then
-                        OutsideVehicles[vehicle.plate] = veh
-                        TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
-                    end
-                    QBCore.Functions.SetVehicleProperties(veh, properties)
-                    SetVehicleNumberPlateText(veh, vehicle.plate)
-                    SetFuel(veh, currentFuel + 0.0)
-                    SetEntityAsMissionEntity(veh, true, true)
-                    TriggerServerEvent("qb-garage:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
-                    TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-                    SetVehicleEngineOn(veh, true, true)
-                end, vehicle.plate)
-            end, newlocation, true)
-            exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
+            if type == "entreprise" then
+                TriggerServerEvent("soz-garage:server:addvehicleentreprise", vehicle, newlocation)
+            else
+                QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+                    QBCore.Functions.TriggerCallback("qb-garage:server:GetVehicleProperties", function(properties)
+                        if vehicle.plate then
+                            OutsideVehicles[vehicle.plate] = veh
+                            TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
+                        end
+                        QBCore.Functions.SetVehicleProperties(veh, properties)
+                        SetVehicleNumberPlateText(veh, vehicle.plate)
+                        SetFuel(veh, currentFuel + 0.0)
+                        SetEntityAsMissionEntity(veh, true, true)
+                        TriggerServerEvent("qb-garage:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
+                        TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
+                        SetVehicleEngineOn(veh, true, true)
+                    end, vehicle.plate)
+                end, newlocation, true)
+                exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
+            end
         end
     end
+end)
+
+RegisterNetEvent("soz-concess:client:addvehicleentreprise", function(vehicle, newlocation, plate)
+    QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+        SetVehicleNumberPlateText(veh, plate)
+        SetFuel(veh, 100)
+        SetVehicleLivery(veh,1)
+        SetEntityAsMissionEntity(veh, true, true)
+        TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
+        TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
+    end, newlocation, true)
 end)
 
 local function enterVehicle(veh, indexgarage, type, garage)
@@ -350,23 +348,35 @@ local function enterVehicle(veh, indexgarage, type, garage)
         end
     end
     if insideParking then
-        QBCore.Functions.TriggerCallback("qb-garage:server:checkOwnership", function(owned)
-            if owned then
-                local bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
-                local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
-                local totalFuel = GetVehicleFuelLevel(veh)
-                local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
-                CheckPlayers(veh, garage)
-                TriggerServerEvent("qb-garage:server:updateVehicle", 1, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
-                if plate then
-                    OutsideVehicles[plate] = nil
-                    TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
+        if type == "entreprise" then
+            QBCore.Functions.TriggerCallback("qb-garage:server:checkOwnership", function(owned)
+                if owned then
+                    CheckPlayers(veh, garage)
+                    TriggerServerEvent("soz-garage:server:delvehicleentreprise", plate)
+                    exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
+                else
+                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
                 end
-                exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
-            else
-                exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
-            end
-        end, plate, type, indexgarage, PlayerGang.name)
+            end, plate, type, indexgarage, PlayerGang.name)
+        else
+            QBCore.Functions.TriggerCallback("qb-garage:server:checkOwnership", function(owned)
+                if owned then
+                    local bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
+                    local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
+                    local totalFuel = GetVehicleFuelLevel(veh)
+                    local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
+                    CheckPlayers(veh, garage)
+                    TriggerServerEvent("qb-garage:server:updateVehicle", 1, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
+                    if plate then
+                        OutsideVehicles[plate] = nil
+                        TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
+                    end
+                    exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
+                else
+                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
+                end
+            end, plate, type, indexgarage, PlayerGang.name)
+        end
     else
         exports["soz-hud"]:DrawNotification(Lang:t("error.not_in_parking"), "error", 3500)
     end
