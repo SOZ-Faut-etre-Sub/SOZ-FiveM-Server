@@ -16,9 +16,6 @@ Config.ErrorMessage = {
     ["no_account_money"] = "~r~Le compte ne possède pas assez d'argent !",
 }
 
--- TODO: move this to policejob
-Config.MoneyChecker = vector3(587.51, 13.24, 75.70)
-
 Config.SafeStorages = {
     ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(629.6, -24.31, 89.51)},
     ["safe_lscs"] = {label = "Coffre LSCS", owner = "lscs", position = vector3(-433.32, 6001.71, 30.75)},

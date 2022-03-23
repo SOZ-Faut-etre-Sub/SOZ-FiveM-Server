@@ -14,5 +14,5 @@ local function OpenAdminMenu()
     end
 end
 
-RegisterKeyMapping("admin", "", "keyboard", "F7")
+RegisterKeyMapping("admin", "", "keyboard", "F9")
 RegisterCommand("admin", OpenAdminMenu, false)

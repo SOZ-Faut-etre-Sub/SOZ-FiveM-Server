@@ -1,11 +1,6 @@
 local mutedPlayers = {}
 local disableSubmixReset = {}
 
---- TODO REWORK THIS
-radioData = {}
-callData = {}
---- TODO REWORK THIS
-
 --- toggles the targeted player muted
 --- @param source number the player to mute
 local function toggleMutePlayer(source)
@@ -18,31 +13,6 @@ local function toggleMutePlayer(source)
     end
 end
 exports("toggleMutePlayer", toggleMutePlayer)
-
---- setVolume
---- @param volume number
---- @param volumeType string
-function setVolume(volume, volumeType)
-    volume = tonumber(volume / 100)
-
-    if volumeType then
-        if CurrentPlayer.Volume[volumeType] then
-            LocalPlayer.state:set(volumeType, volume, true)
-            CurrentPlayer.Volume[volumeType] = volume
-        else
-            error(("setVolume got a invalid volume type %s"):format(volumeType))
-        end
-    else
-        error("setVolume got missing volume type")
-    end
-end
-
-exports("getVolume", function(_type)
-    return CurrentPlayer.Volume[_type]
-end)
-exports("setVolume", function(_type, vol)
-    setVolume(vol, _type)
-end)
 
 --- function playerTargets
 --- Adds players voices to the local players listen channels allowing
@@ -72,15 +42,15 @@ end
 --- @param plySource number the players server id to override the volume for
 --- @param enabled boolean if the players voice is getting activated or deactivated
 --- @param moduleType string the volume & submix to use for the voice.
-function toggleVoice(plySource, enabled, moduleType)
+function toggleVoice(plySource, enabled, moduleType, extra)
     if mutedPlayers[plySource] then
         return
     end
     if enabled then
-        MumbleSetVolumeOverrideByServerId(plySource, enabled and CurrentPlayer.Volume[moduleType])
+        MumbleSetVolumeOverrideByServerId(plySource, enabled and 1.0)
         if moduleType then
             disableSubmixReset[plySource] = true
-            ApplySubmixEffect(moduleType, plySource)
+            ApplySubmixEffect(moduleType, plySource, extra)
         else
             RemoveSubmixEffect(plySource)
         end
@@ -95,18 +65,8 @@ function toggleVoice(plySource, enabled, moduleType)
     end
 end
 
---- function playMicClicks
---- plays the mic click if the player has them enabled.
---- @param clickType boolean whether to play the 'on' or 'off' click.
-function playMicClicks(clickType, isPrimary)
-    if CurrentPlayer.MicClicks ~= true then
-        return
-    end
-    local volume = 0.5
+function playMicClicks(module, enabled, isPrimary)
+    local volume = LocalPlayer.state[module][isPrimary and "primaryChannelVolume" or "secondaryChannelVolume"] / 100
 
-    if isPrimary ~= nil then
-        volume = isPrimary and CurrentPlayer.Volume["primaryRadio"] or CurrentPlayer.Volume["secondaryRadio"]
-    end
-
-    TriggerEvent("InteractSound_CL:PlayOnOne", clickType and "voip/mic_click_on" or "voip/mic_click_off", volume)
+    TriggerEvent("InteractSound_CL:PlayOnOne", enabled and module .. "/mic_click_on" or module .. "/mic_click_off", volume)
 end

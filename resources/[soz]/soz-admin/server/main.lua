@@ -23,6 +23,7 @@ QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
             name = ped.PlayerData.charinfo.firstname .. " " .. ped.PlayerData.charinfo.lastname .. " | (" .. GetPlayerName(v) .. ")",
             id = v,
             coords = GetEntityCoords(targetped),
+            heading = GetEntityHeading(targetped),
             cid = ped.PlayerData.charinfo.firstname .. " " .. ped.PlayerData.charinfo.lastname,
             citizenid = ped.PlayerData.citizenid,
             sources = GetPlayerPed(ped.PlayerData.source),

@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb, account)
     local Player = QBCore.Functions.GetPlayer(source)

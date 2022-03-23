@@ -2,7 +2,7 @@ import { Delay } from '../utils/fivem';
 
 let prop = 0;
 let propCreated = false;
-const phoneModel = 'prop_amb_phone';
+const phoneModel = 'soz_prop_phone';
 
 /* * * * * * * * * * * * *
  *
