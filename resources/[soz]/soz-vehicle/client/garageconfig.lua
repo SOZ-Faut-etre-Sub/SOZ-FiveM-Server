@@ -116,7 +116,6 @@ Zonesentreprise = {
     ["bennys"] = BoxZone:Create(vector3(-163.47, -1301.73, 31.3), 20, 18, {
         name = "bennys_z",
         heading = 90,
-        debugPoly = true,
         minZ = 30.3,
         maxZ = 34.3,
     }),
