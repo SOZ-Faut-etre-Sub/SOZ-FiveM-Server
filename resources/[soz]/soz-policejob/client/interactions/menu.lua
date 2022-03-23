@@ -151,12 +151,13 @@ end
 
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
-        RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
-        PropsEntity(menu)
-
         if PlayerData.job.onduty then
+            RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+            PropsEntity(menu)
             BadgeEntity(menu)
             RadarEntity(menu, job)
+        else
+            menu:AddButton({label = "Tu n'es pas en service !", disabled = true})
         end
     end)
 end
