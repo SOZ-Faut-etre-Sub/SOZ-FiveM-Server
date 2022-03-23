@@ -6,13 +6,13 @@ CreateThread(function()
                 label = "Amendes",
                 icon = "fas fa-file-invoice-dollar",
                 event = "police:client:InvoicePlayer",
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Gérer les permis",
                 icon = "far fa-id-badge",
                 event = "police:client:LicensePlayer",
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Fouiller",
@@ -21,7 +21,7 @@ CreateThread(function()
                 canInteract = function(entity)
                     return IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3)
                 end,
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Menotter",
@@ -31,7 +31,7 @@ CreateThread(function()
                 canInteract = function(entity)
                     return not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Démenotter",
@@ -41,7 +41,7 @@ CreateThread(function()
                 canInteract = function(entity)
                     return IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Escorter",
@@ -49,10 +49,9 @@ CreateThread(function()
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
-                    return Player(GetPlayerServerId(player)).state.isEscorted ~= true and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and
-                               not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
+                    return Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Relâcher",
@@ -60,10 +59,9 @@ CreateThread(function()
                 event = "police:client:RequestDeEscortPlayer",
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
-                    return Player(GetPlayerServerId(player)).state.isEscorted == true and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and
-                               not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
+                    return Player(GetPlayerServerId(player)).state.isEscorted == true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["lscs"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0},
             },
         },
         distance = 1.5,
