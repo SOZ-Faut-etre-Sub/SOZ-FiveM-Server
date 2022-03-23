@@ -1,7 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 VehicleStatus = {}
 OnDuty = false
-local PlayerJob = {}
+PlayerJob = {}
 local effectTimer = 0
 
 OriginalCategory = nil
@@ -446,15 +446,15 @@ local function RepairPart(part)
 
 end
 
-RegisterNetEvent("soz-mechanicjob:client:UnattachVehicle", function()
+RegisterNetEvent("soz-bennys:client:UnattachVehicle", function()
     UnattachVehicle()
 end)
 
-RegisterNetEvent("soz-mechanicjob:client:SpawnListVehicle", function(vehicleSpawnName)
+RegisterNetEvent("soz-bennys:client:SpawnListVehicle", function(vehicleSpawnName)
     SpawnListVehicle(vehicleSpawnName)
 end)
 
-RegisterNetEvent("soz-mechanicjob:client:RepairPart", function(part)
+RegisterNetEvent("soz-bennys:client:CallRepairPart", function(part)
     RepairPart(part)
 end)
 
@@ -489,4 +489,102 @@ RegisterNetEvent("soz-bennys:client:SetAttachedVehicle", function(veh)
     else
         Config.AttachedVehicle = nil
     end
+end)
+
+local function Repairall(entity)
+    local engineHealth = GetVehicleEngineHealth(entity)
+    local bodyHealth = GetVehicleBodyHealth(entity)
+    if engineHealth > bodyHealth then
+        engineHealth = bodyHealth
+    end
+    local repairTime = (1000 - engineHealth) * 100
+
+    ScrapAnim(repairTime)
+    QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
+        ClearPedTasks(PlayerPedId())
+        local plate = QBCore.Functions.GetPlate(entity)
+        SetVehicleBodyHealth(entity, 1000.0)
+        SetVehicleFixed(entity)
+        SetVehicleEngineHealth(entity, 1000.0)
+        TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", 1000.0)
+        TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", 1000.0)
+    end, function() -- Cancel
+        ClearPedTasks(PlayerPedId())
+        exports["soz-hud"]:DrawNotification("~r~Réparation annulée")
+    end)
+end
+
+local function CleanVehicle(entity)
+    local ped = PlayerPedId()
+    TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
+    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000, 20000), false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
+        SetVehicleDirtLevel(entity, 0.1)
+        SetVehicleUndriveable(entity, false)
+        WashDecalsFromVehicle(entity, 1.0)
+        ClearAllPedProps(ped)
+        ClearPedTasks(ped)
+    end, function() -- Cancel
+        exports["soz-hud"]:DrawNotification("Nettoyage échoué")
+        ClearAllPedProps(ped)
+        ClearPedTasks(ped)
+    end)
+end
+
+CreateThread(function()
+    exports["qb-target"]:AddGlobalVehicle({
+        options = {
+            {
+                type = "client",
+                icon = "fas fa-car-crash",
+                event = "soz-bennys:client:manualrepair",
+                label = "Réparer le véhicule",
+                targeticon = "fas fa-wrench",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    Repairall(entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return true
+                end,
+            },
+            {
+                type = "client",
+                icon = "fas fa-car-crash",
+                event = "qb-carwash:client:washCar",
+                label = "Laver le véhicule",
+                targeticon = "fas fa-wrench",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    CleanVehicle(entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return true
+                end,
+            },
+        },
+        distance = 2.5,
+    })
 end)
