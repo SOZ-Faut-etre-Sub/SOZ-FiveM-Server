@@ -266,10 +266,21 @@ RegisterNetEvent("soz-garage:server:addvehicleentreprise", function(vehicle, new
     local job = pData.PlayerData.job.id
     local plate = job .. tostring(math.random(10, 99))
     if vehicle.stock > 0 then
-        MySQL.Async.insert(
-            "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            {pData.PlayerData.license, cid, vehicle.vehicle, GetHashKey(vehicle.vehicle), "{}", plate, 0, os.time()})
-        MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock - 1 WHERE job = ? AND vehicle = ?", {job,vehicle.vehicle})
+        MySQL.Async.insert("INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                           {
+            pData.PlayerData.license,
+            cid,
+            vehicle.vehicle,
+            GetHashKey(vehicle.vehicle),
+            "{}",
+            plate,
+            0,
+            os.time()
+        })
+        MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock - 1 WHERE job = ? AND vehicle = ?", {
+            job,
+            vehicle.vehicle
+        })
         TriggerClientEvent("soz-concess:client:addvehicleentreprise", src, vehicle, newlocation, plate)
     else
         TriggerClientEvent("hud:client:DrawNotification", src, "~r~Plus de stock")
@@ -281,12 +292,17 @@ RegisterNetEvent("soz-garage:server:delvehicleentreprise", function(plate)
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
     local job = pData.PlayerData.job.id
-    local result = MySQL.Sync.fetchAll("SELECT vehicle FROM player_vehicles WHERE citizenid = ? AND plate = ?", {cid,plate})
+    local result = MySQL.Sync.fetchAll("SELECT vehicle FROM player_vehicles WHERE citizenid = ? AND plate = ?", {
+        cid,
+        plate
+    })
     if result[1] then
-        MySQL.Async.execute(
-            "DELETE FROM player_vehicles WHERE license = ? AND citizenid = ? AND vehicle = ?",
-            {pData.PlayerData.license, cid, result[1].vehicle})
-        MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock + 1 WHERE job = ? AND vehicle = ?", {job,result[1].vehicle})
+        MySQL.Async.execute("DELETE FROM player_vehicles WHERE license = ? AND citizenid = ? AND vehicle = ?",
+                            {pData.PlayerData.license, cid, result[1].vehicle})
+        MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock + 1 WHERE job = ? AND vehicle = ?", {
+            job,
+            result[1].vehicle
+        })
     end
 
 end)

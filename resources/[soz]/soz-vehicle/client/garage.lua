@@ -323,7 +323,7 @@ RegisterNetEvent("soz-concess:client:addvehicleentreprise", function(vehicle, ne
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         SetVehicleNumberPlateText(veh, plate)
         SetFuel(veh, 100)
-        SetVehicleLivery(veh,1)
+        SetVehicleLivery(veh, 1) -- C'EST POUR LE LIVERY FLATBED DONC POUR LES AUTRES JOB A FAIRE UNE CONDITION SI JOB DIFERENT DE BENNYS ALORS PAS METTRE CETTE LIGNE
         SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
