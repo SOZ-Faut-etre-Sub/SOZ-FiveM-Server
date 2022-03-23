@@ -5,6 +5,10 @@ StonkConfig = {
     BagItem = "goldbar"
 }
 
+StonkConfig.Resale = {
+    TargetEntities = {-2018598162, -735318549},
+}
+
 StonkConfig.Blip = {
     Name = "Stonk Depository",
     Icon = 605,
