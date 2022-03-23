@@ -275,11 +275,11 @@ RegisterNetEvent("soz-garage:server:addvehicleentreprise", function(vehicle, new
             "{}",
             plate,
             0,
-            os.time()
+            os.time(),
         })
         MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock - 1 WHERE job = ? AND vehicle = ?", {
             job,
-            vehicle.vehicle
+            vehicle.vehicle,
         })
         TriggerClientEvent("soz-concess:client:addvehicleentreprise", src, vehicle, newlocation, plate)
     else
@@ -294,14 +294,14 @@ RegisterNetEvent("soz-garage:server:delvehicleentreprise", function(plate)
     local job = pData.PlayerData.job.id
     local result = MySQL.Sync.fetchAll("SELECT vehicle FROM player_vehicles WHERE citizenid = ? AND plate = ?", {
         cid,
-        plate
+        plate,
     })
     if result[1] then
         MySQL.Async.execute("DELETE FROM player_vehicles WHERE license = ? AND citizenid = ? AND vehicle = ?",
                             {pData.PlayerData.license, cid, result[1].vehicle})
         MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock + 1 WHERE job = ? AND vehicle = ?", {
             job,
-            result[1].vehicle
+            result[1].vehicle,
         })
     end
 
