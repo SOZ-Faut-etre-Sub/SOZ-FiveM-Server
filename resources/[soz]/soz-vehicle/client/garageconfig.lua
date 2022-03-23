@@ -126,785 +126,896 @@ Zonesentreprise = {
 ------------------------
 
 PlacesPrives = {
-    ["pillboxgarage1"] = BoxZone:Create(vector3(209.89, -791.11, 30.88), 6, 3, {
+    ["pillboxgarage1"] = BoxZone:Create(vector3(209.89, -791.11, 30.88), 6, 3,
+                                        {
         name = "pillboxgarage1",
         heading = 250,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage2"] = BoxZone:Create(vector3(215.52, -776.01, 30.8), 6, 3, {
+    ["pillboxgarage2"] = BoxZone:Create(vector3(215.52, -776.01, 30.8), 6, 3,
+                                        {
         name = "pillboxgarage2",
         heading = 250,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage3"] = BoxZone:Create(vector3(222.04, -786.87, 30.81), 6, 3, {
+    ["pillboxgarage3"] = BoxZone:Create(vector3(222.04, -786.87, 30.81), 6, 3,
+                                        {
         name = "pillboxgarage3",
         heading = 250,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage4"] = BoxZone:Create(vector3(217.25, -799.32, 30.84), 6, 3, {
+    ["pillboxgarage4"] = BoxZone:Create(vector3(217.25, -799.32, 30.84), 6, 3,
+                                        {
         name = "pillboxgarage4",
         heading = 70,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage5"] = BoxZone:Create(vector3(232.82, -773.78, 30.67), 6, 3, {
+    ["pillboxgarage5"] = BoxZone:Create(vector3(232.82, -773.78, 30.67), 6, 3,
+                                        {
         name = "pillboxgarage5",
         heading = 70,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage6"] = BoxZone:Create(vector3(241.46, -782.54, 30.68), 6, 3, {
+    ["pillboxgarage6"] = BoxZone:Create(vector3(241.46, -782.54, 30.68), 6, 3,
+                                        {
         name = "pillboxgarage6",
         heading = 70,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage7"] = BoxZone:Create(vector3(237.55, -810.04, 30.22), 6, 3, {
+    ["pillboxgarage7"] = BoxZone:Create(vector3(237.55, -810.04, 30.22), 6, 3,
+                                        {
         name = "pillboxgarage7",
         heading = 70,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["pillboxgarage8"] = BoxZone:Create(vector3(234.97, -800.2, 30.61), 6, 3, {
+    ["pillboxgarage8"] = BoxZone:Create(vector3(234.97, -800.2, 30.61), 6, 3,
+                                        {
         name = "pillboxgarage8",
         heading = 250,
         minZ = 29.00,
         maxZ = 33.00,
-        data = { indexGarage = "pillboxgarage", },
+        data = {indexGarage = "pillboxgarage"},
     }),
-    ["shambles1"] = BoxZone:Create(vector3(1002.62, -2319.83, 30.51), 6, 3, {
+    ["shambles1"] = BoxZone:Create(vector3(1002.62, -2319.83, 30.51), 6, 3,
+                                   {
         name = "shambles1",
         heading = 265,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles2"] = BoxZone:Create(vector3(1000.92, -2332.31, 30.51), 6, 3, {
+    ["shambles2"] = BoxZone:Create(vector3(1000.92, -2332.31, 30.51), 6, 3,
+                                   {
         name = "shambles2",
         heading = 265,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles3"] = BoxZone:Create(vector3(1000.07, -2350.93, 30.51), 5.8, 3, {
+    ["shambles3"] = BoxZone:Create(vector3(1000.07, -2350.93, 30.51), 5.8, 3,
+                                   {
         name = "shambles3",
         heading = 85,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles4"] = BoxZone:Create(vector3(1027.69, -2322.57, 30.51), 6, 3, {
+    ["shambles4"] = BoxZone:Create(vector3(1027.69, -2322.57, 30.51), 6, 3,
+                                   {
         name = "shambles4",
         heading = 265,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles5"] = BoxZone:Create(vector3(1025.61, -2347.78, 30.51), 6, 3, {
+    ["shambles5"] = BoxZone:Create(vector3(1025.61, -2347.78, 30.51), 6, 3,
+                                   {
         name = "shambles5",
         heading = 85,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles6"] = BoxZone:Create(vector3(1026.17, -2336.52, 30.51), 6, 3, {
+    ["shambles6"] = BoxZone:Create(vector3(1026.17, -2336.52, 30.51), 6, 3,
+                                   {
         name = "shambles6",
         heading = 85,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles7"] = BoxZone:Create(vector3(1003.86, -2305.89, 30.51), 6, 3, {
+    ["shambles7"] = BoxZone:Create(vector3(1003.86, -2305.89, 30.51), 6, 3,
+                                   {
         name = "shambles7",
         heading = 265,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["shambles8"] = BoxZone:Create(vector3(1028.36, -2312.23, 30.51), 6, 3, {
+    ["shambles8"] = BoxZone:Create(vector3(1028.36, -2312.23, 30.51), 6, 3,
+                                   {
         name = "shambles8",
         heading = 265,
         minZ = 29.51,
         maxZ = 33.51,
-        data = { indexGarage = "shambles", },
+        data = {indexGarage = "shambles"},
     }),
-    ["marinadrive1"] = BoxZone:Create(vector3(951.33, 3622.81, 32.44), 6, 4, {
+    ["marinadrive1"] = BoxZone:Create(vector3(951.33, 3622.81, 32.44), 6, 4,
+                                      {
         name = "marinadrive1",
         heading = 90,
         minZ = 31.44,
         maxZ = 35.44,
-        data = { indexGarage = "marinadrive", },
+        data = {indexGarage = "marinadrive"},
     }),
-    ["marinadrive2"] = BoxZone:Create(vector3(951.31, 3619.1, 32.54), 6, 4, {
+    ["marinadrive2"] = BoxZone:Create(vector3(951.31, 3619.1, 32.54), 6, 4,
+                                      {
         name = "marinadrive2",
         heading = 90,
         minZ = 31.5,
         maxZ = 35.5,
-        data = { indexGarage = "marinadrive", },
+        data = {indexGarage = "marinadrive"},
     }),
-    ["marinadrive3"] = BoxZone:Create(vector3(951.56, 3615.45, 32.6), 6, 4, {
+    ["marinadrive3"] = BoxZone:Create(vector3(951.56, 3615.45, 32.6), 6, 4,
+                                      {
         name = "marinadrive3",
         heading = 90,
         minZ = 31.6,
         maxZ = 35.6,
-        data = { indexGarage = "marinadrive", },
+        data = {indexGarage = "marinadrive"},
     }),
-    ["themotorhotel1"] = BoxZone:Create(vector3(1135.32, 2647.61, 38.0), 6, 4, {
+    ["themotorhotel1"] = BoxZone:Create(vector3(1135.32, 2647.61, 38.0), 6, 4,
+                                        {
         name = "themotorhotel1",
         heading = 0,
         minZ = 37.00,
         maxZ = 41.00,
-        data = { indexGarage = "themotorhotel", },
+        data = {indexGarage = "themotorhotel"},
     }),
-    ["themotorhotel2"] = BoxZone:Create(vector3(1127.67, 2647.67, 38.0), 6, 4, {
+    ["themotorhotel2"] = BoxZone:Create(vector3(1127.67, 2647.67, 38.0), 6, 4,
+                                        {
         name = "themotorhotel2",
         heading = 0,
         minZ = 37.00,
         maxZ = 41.00,
-        data = { indexGarage = "themotorhotel", },
+        data = {indexGarage = "themotorhotel"},
     }),
-    ["themotorhotel3"] = BoxZone:Create(vector3(1120.49, 2647.63, 38.0), 6, 4, {
+    ["themotorhotel3"] = BoxZone:Create(vector3(1120.49, 2647.63, 38.0), 6, 4,
+                                        {
         name = "themotorhotel3",
         heading = 0,
         minZ = 37.00,
         maxZ = 41.00,
-        data = { indexGarage = "themotorhotel", },
+        data = {indexGarage = "themotorhotel"},
     }),
-    ["themotorhotel4"] = BoxZone:Create(vector3(1112.09, 2654.12, 38.0), 6, 4, {
+    ["themotorhotel4"] = BoxZone:Create(vector3(1112.09, 2654.12, 38.0), 6, 4,
+                                        {
         name = "themotorhotel4",
         heading = 90,
         minZ = 37.00,
         maxZ = 41.00,
-        data = { indexGarage = "themotorhotel", },
+        data = {indexGarage = "themotorhotel"},
     }),
-    ["themotorhotel5"] = BoxZone:Create(vector3(1105.58, 2663.18, 38.17), 6, 4, {
+    ["themotorhotel5"] = BoxZone:Create(vector3(1105.58, 2663.18, 38.17), 6, 4,
+                                        {
         name = "themotorhotel5",
         heading = 0,
         minZ = 37.00,
         maxZ = 41.00,
-        data = { indexGarage = "themotorhotel", },
+        data = {indexGarage = "themotorhotel"},
     }),
-    ["themotorhotel6"] = BoxZone:Create(vector3(1098.11, 2663.28, 38.06), 6, 4, {
+    ["themotorhotel6"] = BoxZone:Create(vector3(1098.11, 2663.28, 38.06), 6, 4,
+                                        {
         name = "themotorhotel6",
         heading = 0,
         minZ = 37.00,
         maxZ = 41.00,
-        data = { indexGarage = "themotorhotel", },
+        data = {indexGarage = "themotorhotel"},
     }),
-    ["beachp1"] = BoxZone:Create(vector3(-1177.07, -1491.71, 4.38), 6, 3, {
+    ["beachp1"] = BoxZone:Create(vector3(-1177.07, -1491.71, 4.38), 6, 3,
+                                 {
         name = "beachp1",
         heading = 305,
         minZ = 3.50,
         maxZ = 7.50,
-        data = { indexGarage = "beachp", },
+        data = {indexGarage = "beachp"},
     }),
-    ["beachp2"] = BoxZone:Create(vector3(-1196.37, -1497.11, 4.38), 5.8, 3, {
+    ["beachp2"] = BoxZone:Create(vector3(-1196.37, -1497.11, 4.38), 5.8, 3,
+                                 {
         name = "beachp2",
         heading = 305,
         minZ = 3.50,
         maxZ = 7.50,
-        data = { indexGarage = "beachp", },
+        data = {indexGarage = "beachp"},
     }),
-    ["beachp3"] = BoxZone:Create(vector3(-1191.87, -1470.34, 4.38), 6, 3, {
+    ["beachp3"] = BoxZone:Create(vector3(-1191.87, -1470.34, 4.38), 6, 3,
+                                 {
         name = "beachp3",
         heading = 305,
         minZ = 3.50,
         maxZ = 7.50,
-        data = { indexGarage = "beachp", },
+        data = {indexGarage = "beachp"},
     }),
-    ["beachp4"] = BoxZone:Create(vector3(-1182.27, -1483.97, 4.38), 6, 3, {
+    ["beachp4"] = BoxZone:Create(vector3(-1182.27, -1483.97, 4.38), 6, 3,
+                                 {
         name = "beachp4",
         heading = 305,
         minZ = 3.50,
         maxZ = 7.50,
-        data = { indexGarage = "beachp", },
+        data = {indexGarage = "beachp"},
     }),
-    ["beachp5"] = BoxZone:Create(vector3(-1184.78, -1492.95, 4.38), 6, 3, {
+    ["beachp5"] = BoxZone:Create(vector3(-1184.78, -1492.95, 4.38), 6, 3,
+                                 {
         name = "beachp5",
         heading = 305,
         minZ = 3.50,
         maxZ = 7.50,
-        data = { indexGarage = "beachp", },
+        data = {indexGarage = "beachp"},
     }),
-    ["beachp6"] = BoxZone:Create(vector3(-1192.01, -1482.64, 4.38), 6, 3, {
+    ["beachp6"] = BoxZone:Create(vector3(-1192.01, -1482.64, 4.38), 6, 3,
+                                 {
         name = "beachp6",
         heading = 305,
         minZ = 3.50,
         maxZ = 7.50,
-        data = { indexGarage = "beachp", },
+        data = {indexGarage = "beachp"},
     }),
-    ["lagunapi1"] = BoxZone:Create(vector3(382.73, 292.21, 103.09), 6, 4, {
+    ["lagunapi1"] = BoxZone:Create(vector3(382.73, 292.21, 103.09), 6, 4,
+                                   {
         name = "lagunapi1",
         heading = 345,
         minZ = 102.09,
         maxZ = 106.09,
-        data = { indexGarage = "lagunapi", },
+        data = {indexGarage = "lagunapi"},
     }),
-    ["lagunapi2"] = BoxZone:Create(vector3(391.74, 280.71, 103.0), 6, 4, {
+    ["lagunapi2"] = BoxZone:Create(vector3(391.74, 280.71, 103.0), 6, 4,
+                                   {
         name = "lagunapi2",
         heading = 70,
         minZ = 102.0,
         maxZ = 106.0,
-        data = { indexGarage = "lagunapi", },
+        data = {indexGarage = "lagunapi"},
     }),
-    ["lagunapi3"] = BoxZone:Create(vector3(374.87, 283.68, 103.19), 6, 4, {
+    ["lagunapi3"] = BoxZone:Create(vector3(374.87, 283.68, 103.19), 6, 4,
+                                   {
         name = "lagunapi3",
         heading = 340,
         minZ = 102.00,
         maxZ = 106.00,
-        data = { indexGarage = "lagunapi", },
+        data = {indexGarage = "lagunapi"},
     }),
-    ["lagunapi4"] = BoxZone:Create(vector3(375.86, 274.4, 103.06), 6, 4, {
+    ["lagunapi4"] = BoxZone:Create(vector3(375.86, 274.4, 103.06), 6, 4,
+                                   {
         name = "lagunapi4",
         heading = 340,
         minZ = 102.00,
         maxZ = 106.00,
-        data = { indexGarage = "lagunapi", },
+        data = {indexGarage = "lagunapi"},
     }),
-    ["lagunapi5"] = BoxZone:Create(vector3(363.89, 270.1, 103.19), 6, 4, {
+    ["lagunapi5"] = BoxZone:Create(vector3(363.89, 270.1, 103.19), 6, 4,
+                                   {
         name = "lagunapi5",
         heading = 340,
         minZ = 102.00,
         maxZ = 106.00,
-        data = { indexGarage = "lagunapi", },
+        data = {indexGarage = "lagunapi"},
     }),
-    ["lagunapi6"] = BoxZone:Create(vector3(358.75, 286.18, 103.37), 6, 4, {
+    ["lagunapi6"] = BoxZone:Create(vector3(358.75, 286.18, 103.37), 6, 4,
+                                   {
         name = "lagunapi6",
         heading = 70,
         minZ = 102.00,
         maxZ = 106.00,
-        data = { indexGarage = "lagunapi", },
+        data = {indexGarage = "lagunapi"},
     }),
-    ["diamondp1"] = BoxZone:Create(vector3(872.32, 9.04, 78.76), 6, 4, {
+    ["diamondp1"] = BoxZone:Create(vector3(872.32, 9.04, 78.76), 6, 4,
+                                   {
         name = "diamondp1",
         heading = 330,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp2"] = BoxZone:Create(vector3(878.32, 5.4, 78.76), 6, 4, {
+    ["diamondp2"] = BoxZone:Create(vector3(878.32, 5.4, 78.76), 6, 4,
+                                   {
         name = "diamondp2",
         heading = 330,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp3"] = BoxZone:Create(vector3(879.48, -21.8, 78.76), 6, 4, {
+    ["diamondp3"] = BoxZone:Create(vector3(879.48, -21.8, 78.76), 6, 4,
+                                   {
         name = "diamondp3",
         heading = 60,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp4"] = BoxZone:Create(vector3(862.64, -23.5, 78.76), 6, 4, {
+    ["diamondp4"] = BoxZone:Create(vector3(862.64, -23.5, 78.76), 6, 4,
+                                   {
         name = "diamondp4",
         heading = 60,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp5"] = BoxZone:Create(vector3(884.68, -53.54, 78.76), 6, 4, {
+    ["diamondp5"] = BoxZone:Create(vector3(884.68, -53.54, 78.76), 6, 4,
+                                   {
         name = "diamondp5",
         heading = 60,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp6"] = BoxZone:Create(vector3(906.19, -34.53, 78.76), 6, 4, {
+    ["diamondp6"] = BoxZone:Create(vector3(906.19, -34.53, 78.76), 6, 4,
+                                   {
         name = "diamondp6",
         heading = 55,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp7"] = BoxZone:Create(vector3(882.4, -31.85, 78.76), 6, 4, {
+    ["diamondp7"] = BoxZone:Create(vector3(882.4, -31.85, 78.76), 6, 4,
+                                   {
         name = "diamondp7",
         heading = 60,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["diamondp8"] = BoxZone:Create(vector3(852.19, -25.13, 78.76), 6, 4, {
+    ["diamondp8"] = BoxZone:Create(vector3(852.19, -25.13, 78.76), 6, 4,
+                                   {
         name = "diamondp8",
         heading = 60,
         minZ = 77.76,
         maxZ = 81.76,
-        data = { indexGarage = "diamondp", },
+        data = {indexGarage = "diamondp"},
     }),
-    ["stadiump1"] = BoxZone:Create(vector3(-93.46, -2009.54, 18.02), 6, 4, {
+    ["stadiump1"] = BoxZone:Create(vector3(-93.46, -2009.54, 18.02), 6, 4,
+                                   {
         name = "stadiump1",
         heading = 355,
         minZ = 17.02,
         maxZ = 21.02,
-        data = { indexGarage = "stadiump", },
+        data = {indexGarage = "stadiump"},
     }),
-    ["stadiump2"] = BoxZone:Create(vector3(-97.17, -1986.03, 18.02), 6, 4, {
+    ["stadiump2"] = BoxZone:Create(vector3(-97.17, -1986.03, 18.02), 6, 4,
+                                   {
         name = "stadiump2",
         heading = 355,
         minZ = 17.02,
         maxZ = 21.02,
-        data = { indexGarage = "stadiump", },
+        data = {indexGarage = "stadiump"},
     }),
-    ["stadiump3"] = BoxZone:Create(vector3(-77.06, -2028.21, 18.02), 6, 4, {
+    ["stadiump3"] = BoxZone:Create(vector3(-77.06, -2028.21, 18.02), 6, 4,
+                                   {
         name = "stadiump3",
         heading = 350,
         minZ = 17.02,
         maxZ = 21.02,
-        data = { indexGarage = "stadiump", },
+        data = {indexGarage = "stadiump"},
     }),
-    ["stadiump4"] = BoxZone:Create(vector3(-67.19, -2008.96, 18.02), 6, 4, {
+    ["stadiump4"] = BoxZone:Create(vector3(-67.19, -2008.96, 18.02), 6, 4,
+                                   {
         name = "stadiump4",
         heading = 20,
         minZ = 17.02,
         maxZ = 21.02,
-        data = { indexGarage = "stadiump", },
+        data = {indexGarage = "stadiump"},
     }),
-    ["stadiump5"] = BoxZone:Create(vector3(-50.57, -2001.02, 18.02), 6, 4, {
+    ["stadiump5"] = BoxZone:Create(vector3(-50.57, -2001.02, 18.02), 6, 4,
+                                   {
         name = "stadiump5",
         heading = 290,
         minZ = 17.02,
         maxZ = 21.02,
-        data = { indexGarage = "stadiump", },
+        data = {indexGarage = "stadiump"},
     }),
-    ["stadiump6"] = BoxZone:Create(vector3(-88.86, -2003.37, 18.02), 6, 4, {
+    ["stadiump6"] = BoxZone:Create(vector3(-88.86, -2003.37, 18.02), 6, 4,
+                                   {
         name = "stadiump6",
         heading = 355,
         minZ = 17.02,
         maxZ = 21.02,
-        data = { indexGarage = "stadiump", },
+        data = {indexGarage = "stadiump"},
     }),
-    ["chumashp1"] = BoxZone:Create(vector3(-3164.37, 1067.13, 20.68), 6, 4, {
+    ["chumashp1"] = BoxZone:Create(vector3(-3164.37, 1067.13, 20.68), 6, 4,
+                                   {
         name = "chumashp1",
         heading = 280,
         minZ = 19.67,
         maxZ = 23.67,
-        data = { indexGarage = "chumashp", },
+        data = {indexGarage = "chumashp"},
     }),
-    ["chumashp2"] = BoxZone:Create(vector3(-3139.69, 1078.75, 20.67), 6, 4, {
+    ["chumashp2"] = BoxZone:Create(vector3(-3139.69, 1078.75, 20.67), 6, 4,
+                                   {
         name = "chumashp2",
         heading = 80,
         minZ = 19.67,
         maxZ = 23.67,
-        data = { indexGarage = "chumashp", },
+        data = {indexGarage = "chumashp"},
     }),
-    ["chumashp3"] = BoxZone:Create(vector3(-3152.04, 1092.59, 20.7), 6, 4, {
+    ["chumashp3"] = BoxZone:Create(vector3(-3152.04, 1092.59, 20.7), 6, 4,
+                                   {
         name = "chumashp3",
         heading = 280,
         minZ = 19.7,
         maxZ = 23.7,
-        data = { indexGarage = "chumashp", },
+        data = {indexGarage = "chumashp"},
     }),
-    ["chumashp4"] = BoxZone:Create(vector3(-3137.17, 1094.5, 20.69), 6, 4, {
+    ["chumashp4"] = BoxZone:Create(vector3(-3137.17, 1094.5, 20.69), 6, 4,
+                                   {
         name = "chumashp4",
         heading = 80,
         minZ = 19.69,
         maxZ = 23.69,
-        data = { indexGarage = "chumashp", },
+        data = {indexGarage = "chumashp"},
     }),
-    ["chumashp5"] = BoxZone:Create(vector3(-3141.37, 1117.16, 20.69), 6, 4, {
+    ["chumashp5"] = BoxZone:Create(vector3(-3141.37, 1117.16, 20.69), 6, 4,
+                                   {
         name = "chumashp5",
         heading = 280,
         minZ = 19.69,
         maxZ = 23.69,
-        data = { indexGarage = "chumashp", },
+        data = {indexGarage = "chumashp"},
     }),
-    ["chumashp6"] = BoxZone:Create(vector3(-3158.21, 1081.02, 20.69), 6, 4, {
+    ["chumashp6"] = BoxZone:Create(vector3(-3158.21, 1081.02, 20.69), 6, 4,
+                                   {
         name = "chumashp6",
         heading = 280,
         minZ = 19.67,
         maxZ = 23.67,
-        data = { indexGarage = "chumashp", },
+        data = {indexGarage = "chumashp"},
     }),
-    ["airportprivate1"] = BoxZone:Create(vector3(-989.38, -2706.55, 13.83), 6, 4, {
+    ["airportprivate1"] = BoxZone:Create(vector3(-989.38, -2706.55, 13.83), 6, 4,
+                                         {
         name = "airportprivate1",
         heading = 330,
         minZ = 12.83,
         maxZ = 16.83,
-        data = { indexGarage = "airportprivate", },
+        data = {indexGarage = "airportprivate"},
     }),
-    ["airportprivate2"] = BoxZone:Create(vector3(-960.53, -2709.54, 13.83), 6, 4, {
+    ["airportprivate2"] = BoxZone:Create(vector3(-960.53, -2709.54, 13.83), 6, 4,
+                                         {
         name = "airportprivate2",
         heading = 10,
         minZ = 12.83,
         maxZ = 16.83,
-        data = { indexGarage = "airportprivate", },
+        data = {indexGarage = "airportprivate"},
     }),
-    ["airportprivate3"] = BoxZone:Create(vector3(-976.07, -2691.2, 13.85), 6, 4, {
+    ["airportprivate3"] = BoxZone:Create(vector3(-976.07, -2691.2, 13.85), 6, 4,
+                                         {
         name = "airportprivate3",
         heading = 330,
         minZ = 12.85,
         maxZ = 16.85,
-        data = { indexGarage = "airportprivate", },
+        data = {indexGarage = "airportprivate"},
     }),
-    ["airportprivate4"] = BoxZone:Create(vector3(-970.34, -2694.46, 13.85), 6, 4, {
+    ["airportprivate4"] = BoxZone:Create(vector3(-970.34, -2694.46, 13.85), 6, 4,
+                                         {
         name = "airportprivate4",
         heading = 330,
         minZ = 12.85,
         maxZ = 16.85,
-        data = { indexGarage = "airportprivate", },
+        data = {indexGarage = "airportprivate"},
     }),
-    ["airportprivate5"] = BoxZone:Create(vector3(-961.64, -2699.48, 13.83), 6, 4, {
+    ["airportprivate5"] = BoxZone:Create(vector3(-961.64, -2699.48, 13.83), 6, 4,
+                                         {
         name = "airportprivate5",
         heading = 330,
         minZ = 12.83,
         maxZ = 16.83,
-        data = { indexGarage = "airportprivate", },
+        data = {indexGarage = "airportprivate"},
     }),
-    ["airportprivate6"] = BoxZone:Create(vector3(-976.82, -2710.44, 13.87), 6, 4, {
+    ["airportprivate6"] = BoxZone:Create(vector3(-976.82, -2710.44, 13.87), 6, 4,
+                                         {
         name = "airportprivate6",
         heading = 350,
         minZ = 12.87,
         maxZ = 16.87,
-        data = { indexGarage = "airportprivate", },
+        data = {indexGarage = "airportprivate"},
     }),
-    ["sandyshores1"] = BoxZone:Create(vector3(1542.85, 3780.37, 34.05), 6, 4, {
+    ["sandyshores1"] = BoxZone:Create(vector3(1542.85, 3780.37, 34.05), 6, 4,
+                                      {
         name = "sandyshores1",
         heading = 30,
         minZ = 33.05,
         maxZ = 37.05,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores2"] = BoxZone:Create(vector3(1523.44, 3767.25, 34.05), 6, 4, {
+    ["sandyshores2"] = BoxZone:Create(vector3(1523.44, 3767.25, 34.05), 6, 4,
+                                      {
         name = "sandyshores2",
         heading = 45,
         minZ = 33.05,
         maxZ = 37.05,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores3"] = BoxZone:Create(vector3(1516.91, 3763.2, 34.05), 6, 4, {
+    ["sandyshores3"] = BoxZone:Create(vector3(1516.91, 3763.2, 34.05), 6, 4,
+                                      {
         name = "sandyshores3",
         heading = 15,
         minZ = 33.05,
         maxZ = 37.05,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores4"] = BoxZone:Create(vector3(1497.69, 3760.17, 33.91), 6, 4, {
+    ["sandyshores4"] = BoxZone:Create(vector3(1497.69, 3760.17, 33.91), 6, 4,
+                                      {
         name = "sandyshores4",
         heading = 35,
         minZ = 32.91,
         maxZ = 36.91,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores5"] = BoxZone:Create(vector3(1484.04, 3751.61, 33.77), 6, 4, {
+    ["sandyshores5"] = BoxZone:Create(vector3(1484.04, 3751.61, 33.77), 6, 4,
+                                      {
         name = "sandyshores5",
         heading = 30,
         minZ = 32.77,
         maxZ = 36.77,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores6"] = BoxZone:Create(vector3(1458.49, 3737.92, 33.52), 6, 4, {
+    ["sandyshores6"] = BoxZone:Create(vector3(1458.49, 3737.92, 33.52), 6, 4,
+                                      {
         name = "sandyshores6",
         heading = 30,
         minZ = 32.52,
         maxZ = 36.52,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores7"] = BoxZone:Create(vector3(1446.82, 3732.24, 33.44), 6, 4, {
+    ["sandyshores7"] = BoxZone:Create(vector3(1446.82, 3732.24, 33.44), 6, 4,
+                                      {
         name = "sandyshores7",
         heading = 20,
         minZ = 32.44,
         maxZ = 36.44,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["sandyshores8"] = BoxZone:Create(vector3(1549.85, 3784.22, 34.12), 6, 4, {
+    ["sandyshores8"] = BoxZone:Create(vector3(1549.85, 3784.22, 34.12), 6, 4,
+                                      {
         name = "sandyshores8",
         heading = 30,
         minZ = 33.12,
         maxZ = 37.12,
-        data = { indexGarage = "sandyshores", },
+        data = {indexGarage = "sandyshores"},
     }),
-    ["spanishave1"] = BoxZone:Create(vector3(-1202.06, -729.73, 21.16), 6, 4, {
+    ["spanishave1"] = BoxZone:Create(vector3(-1202.06, -729.73, 21.16), 6, 4,
+                                     {
         name = "spanishave1",
         heading = 310,
         minZ = 20.16,
         maxZ = 24.16,
-        data = { indexGarage = "spanishave", },
+        data = {indexGarage = "spanishave"},
     }),
-    ["spanishave2"] = BoxZone:Create(vector3(-1186.35, -742.68, 20.1), 6, 4, {
+    ["spanishave2"] = BoxZone:Create(vector3(-1186.35, -742.68, 20.1), 6, 4,
+                                     {
         name = "spanishave2",
         heading = 310,
         minZ = 19.1,
         maxZ = 23.1,
-        data = { indexGarage = "spanishave", },
+        data = {indexGarage = "spanishave"},
     }),
-    ["spanishave3"] = BoxZone:Create(vector3(-1141.51, -740.48, 20.11), 6, 4, {
+    ["spanishave3"] = BoxZone:Create(vector3(-1141.51, -740.48, 20.11), 6, 4,
+                                     {
         name = "spanishave3",
         heading = 290,
         minZ = 19.11,
         maxZ = 23.11,
-        data = { indexGarage = "spanishave", },
+        data = {indexGarage = "spanishave"},
     }),
-    ["spanishave4"] = BoxZone:Create(vector3(-1143.48, -748.56, 19.2), 6, 4, {
+    ["spanishave4"] = BoxZone:Create(vector3(-1143.48, -748.56, 19.2), 6, 4,
+                                     {
         name = "spanishave4",
         heading = 290,
         minZ = 18.2,
         maxZ = 22.2,
-        data = { indexGarage = "spanishave", },
+        data = {indexGarage = "spanishave"},
     }),
-    ["spanishave5"] = BoxZone:Create(vector3(-1131.74, -752.44, 19.58), 6, 4, {
+    ["spanishave5"] = BoxZone:Create(vector3(-1131.74, -752.44, 19.58), 6, 4,
+                                     {
         name = "spanishave5",
         heading = 290,
         minZ = 18.58,
         maxZ = 22.58,
-        data = { indexGarage = "spanishave", },
+        data = {indexGarage = "spanishave"},
     }),
-    ["spanishave6"] = BoxZone:Create(vector3(-1131.07, -763.37, 18.57), 6, 4, {
+    ["spanishave6"] = BoxZone:Create(vector3(-1131.07, -763.37, 18.57), 6, 4,
+                                     {
         name = "spanishave6",
         heading = 290,
         minZ = 17.57,
         maxZ = 21.57,
-        data = { indexGarage = "spanishave", },
+        data = {indexGarage = "spanishave"},
     }),
-    ["motelgarage1"] = BoxZone:Create(vector3(298.83, -333.19, 44.92), 6, 4, {
+    ["motelgarage1"] = BoxZone:Create(vector3(298.83, -333.19, 44.92), 6, 4,
+                                      {
         name = "motelgarage1",
         heading = 70,
         minZ = 43.92,
         maxZ = 47.92,
-        data = { indexGarage = "motelgarage", },
+        data = {indexGarage = "motelgarage"},
     }),
-    ["motelgarage2"] = BoxZone:Create(vector3(295.41, -342.99, 44.92), 6, 4, {
+    ["motelgarage2"] = BoxZone:Create(vector3(295.41, -342.99, 44.92), 6, 4,
+                                      {
         name = "motelgarage2",
         heading = 70,
         minZ = 43.92,
         maxZ = 47.92,
-        data = { indexGarage = "motelgarage", },
+        data = {indexGarage = "motelgarage"},
     }),
-    ["motelgarage3"] = BoxZone:Create(vector3(266.27, -332.19, 44.92), 6, 4, {
+    ["motelgarage3"] = BoxZone:Create(vector3(266.27, -332.19, 44.92), 6, 4,
+                                      {
         name = "motelgarage3",
         heading = 70,
         minZ = 43.92,
         maxZ = 47.92,
-        data = { indexGarage = "motelgarage", },
+        data = {indexGarage = "motelgarage"},
     }),
-    ["motelgarage4"] = BoxZone:Create(vector3(269.85, -322.48, 44.92), 6, 4, {
+    ["motelgarage4"] = BoxZone:Create(vector3(269.85, -322.48, 44.92), 6, 4,
+                                      {
         name = "motelgarage4",
         heading = 70,
         minZ = 43.92,
         maxZ = 47.92,
-        data = { indexGarage = "motelgarage", },
+        data = {indexGarage = "motelgarage"},
     }),
-    ["motelgarage5"] = BoxZone:Create(vector3(282.91, -323.71, 44.92), 6, 4, {
+    ["motelgarage5"] = BoxZone:Create(vector3(282.91, -323.71, 44.92), 6, 4,
+                                      {
         name = "motelgarage5",
         heading = 70,
         minZ = 43.92,
         maxZ = 47.92,
-        data = { indexGarage = "motelgarage", },
+        data = {indexGarage = "motelgarage"},
     }),
-    ["motelgarage6"] = BoxZone:Create(vector3(285.78, -335.88, 44.92), 6, 4, {
+    ["motelgarage6"] = BoxZone:Create(vector3(285.78, -335.88, 44.92), 6, 4,
+                                      {
         name = "motelgarage6",
         heading = 70,
         minZ = 43.92,
         maxZ = 47.92,
-        data = { indexGarage = "motelgarage", },
+        data = {indexGarage = "motelgarage"},
     }),
-    ["greatoceanp1"] = BoxZone:Create(vector3(1459.62, 6560.63, 13.42), 6, 4, {
+    ["greatoceanp1"] = BoxZone:Create(vector3(1459.62, 6560.63, 13.42), 6, 4,
+                                      {
         name = "greatoceanp1",
         heading = 275,
         minZ = 11.42,
         maxZ = 16.42,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp2"] = BoxZone:Create(vector3(1458.36, 6571.11, 13.52), 6, 4, {
+    ["greatoceanp2"] = BoxZone:Create(vector3(1458.36, 6571.11, 13.52), 6, 4,
+                                      {
         name = "greatoceanp2",
         heading = 275,
         minZ = 11.52,
         maxZ = 16.52,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp3"] = BoxZone:Create(vector3(1456.24, 6581.96, 12.63), 6, 4, {
+    ["greatoceanp3"] = BoxZone:Create(vector3(1456.24, 6581.96, 12.63), 6, 4,
+                                      {
         name = "greatoceanp3",
         heading = 310,
         minZ = 10.63,
         maxZ = 15.63,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp4"] = BoxZone:Create(vector3(1446.12, 6589.4, 12.73), 6, 4, {
+    ["greatoceanp4"] = BoxZone:Create(vector3(1446.12, 6589.4, 12.73), 6, 4,
+                                      {
         name = "greatoceanp4",
         heading = 350,
         minZ = 10.73,
         maxZ = 15.73,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp5"] = BoxZone:Create(vector3(1382.51, 6587.28, 13.21), 6, 4, {
+    ["greatoceanp5"] = BoxZone:Create(vector3(1382.51, 6587.28, 13.21), 6, 4,
+                                      {
         name = "greatoceanp5",
         heading = 35,
         minZ = 10.21,
         maxZ = 16.21,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp6"] = BoxZone:Create(vector3(1374.48, 6580.13, 13.08), 6, 4, {
+    ["greatoceanp6"] = BoxZone:Create(vector3(1374.48, 6580.13, 13.08), 6, 4,
+                                      {
         name = "greatoceanp6",
         heading = 65,
         minZ = 10.08,
         maxZ = 16.08,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp7"] = BoxZone:Create(vector3(1371.12, 6558.75, 14.47), 6, 4, {
+    ["greatoceanp7"] = BoxZone:Create(vector3(1371.12, 6558.75, 14.47), 6, 4,
+                                      {
         name = "greatoceanp7",
         heading = 275,
         minZ = 11.47,
         maxZ = 17.47,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
-    ["greatoceanp8"] = BoxZone:Create(vector3(1415.42, 6593.6, 13.19), 6, 4, {
+    ["greatoceanp8"] = BoxZone:Create(vector3(1415.42, 6593.6, 13.19), 6, 4,
+                                      {
         name = "greatoceanp8",
         heading = 0,
         minZ = 11.19,
         maxZ = 16.19,
-        data = { indexGarage = "greatoceanp", },
+        data = {indexGarage = "greatoceanp"},
     }),
 }
 
 PlacesPublic = {
-    ["airportpublic1"] = BoxZone:Create(vector3(-604.14, -2220.94, 6.0), 8, 4, {
+    ["airportpublic1"] = BoxZone:Create(vector3(-604.14, -2220.94, 6.0), 8, 4,
+                                        {
         name = "airportpublic1",
         heading = 5,
         minZ = 5.0,
         maxZ = 9.0,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic2"] = BoxZone:Create(vector3(-623.71, -2204.67, 6.0), 8, 4, {
+    ["airportpublic2"] = BoxZone:Create(vector3(-623.71, -2204.67, 6.0), 8, 4,
+                                        {
         name = "airportpublic2",
         heading = 5,
         minZ = 5.0,
         maxZ = 9.0,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic3"] = BoxZone:Create(vector3(-643.02, -2188.49, 5.99), 8, 4, {
+    ["airportpublic3"] = BoxZone:Create(vector3(-643.02, -2188.49, 5.99), 8, 4,
+                                        {
         name = "airportpublic3",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic4"] = BoxZone:Create(vector3(-649.01, -2173.48, 5.99), 8, 4, {
+    ["airportpublic4"] = BoxZone:Create(vector3(-649.01, -2173.48, 5.99), 8, 4,
+                                        {
         name = "airportpublic4",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic5"] = BoxZone:Create(vector3(-595.38, -2201.37, 5.99), 8, 4, {
+    ["airportpublic5"] = BoxZone:Create(vector3(-595.38, -2201.37, 5.99), 8, 4,
+                                        {
         name = "airportpublic5",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic6"] = BoxZone:Create(vector3(-635.07, -2157.95, 5.99), 8, 4, {
+    ["airportpublic6"] = BoxZone:Create(vector3(-635.07, -2157.95, 5.99), 8, 4,
+                                        {
         name = "airportpublic6",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic7"] = BoxZone:Create(vector3(-593.41, -2167.22, 5.99), 8, 4, {
+    ["airportpublic7"] = BoxZone:Create(vector3(-593.41, -2167.22, 5.99), 8, 4,
+                                        {
         name = "airportpublic7",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic8"] = BoxZone:Create(vector3(-560.09, -2166.96, 5.99), 8, 4, {
+    ["airportpublic8"] = BoxZone:Create(vector3(-560.09, -2166.96, 5.99), 8, 4,
+                                        {
         name = "airportpublic8",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic9"] = BoxZone:Create(vector3(-606.81, -2165.66, 5.99), 8, 4, {
+    ["airportpublic9"] = BoxZone:Create(vector3(-606.81, -2165.66, 5.99), 8, 4,
+                                        {
         name = "airportpublic9",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic10"] = BoxZone:Create(vector3(-602.71, -2140.87, 5.99), 8, 4, {
+    ["airportpublic10"] = BoxZone:Create(vector3(-602.71, -2140.87, 5.99), 8, 4,
+                                         {
         name = "airportpublic10",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
-        data = { indexGarage = "airportpublic", },
+        data = {indexGarage = "airportpublic"},
     }),
-    ["haanparking1"] = BoxZone:Create(vector3(78.24, 6398.73, 31.23), 6, 4, {
+    ["haanparking1"] = BoxZone:Create(vector3(78.24, 6398.73, 31.23), 6, 4,
+                                      {
         name = "haanparking1",
         heading = 315,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking2"] = BoxZone:Create(vector3(72.49, 6404.33, 31.23), 6, 4, {
+    ["haanparking2"] = BoxZone:Create(vector3(72.49, 6404.33, 31.23), 6, 4,
+                                      {
         name = "haanparking2",
         heading = 315,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking3"] = BoxZone:Create(vector3(59.16, 6400.94, 31.23), 6, 4, {
+    ["haanparking3"] = BoxZone:Create(vector3(59.16, 6400.94, 31.23), 6, 4,
+                                      {
         name = "haanparking3",
         heading = 35,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking4"] = BoxZone:Create(vector3(66.4, 6379.7, 31.24), 6, 4, {
+    ["haanparking4"] = BoxZone:Create(vector3(66.4, 6379.7, 31.24), 6, 4,
+                                      {
         name = "haanparking4",
         heading = 35,
         minZ = 30.24,
         maxZ = 34.24,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking5"] = BoxZone:Create(vector3(94.84, 6372.93, 31.23), 6, 4, {
+    ["haanparking5"] = BoxZone:Create(vector3(94.84, 6372.93, 31.23), 6, 4,
+                                      {
         name = "haanparking5",
         heading = 15,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking6"] = BoxZone:Create(vector3(48.64, 6362.48, 31.24), 6, 4, {
+    ["haanparking6"] = BoxZone:Create(vector3(48.64, 6362.48, 31.24), 6, 4,
+                                      {
         name = "haanparking6",
         heading = 35,
         minZ = 30.24,
         maxZ = 34.24,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking7"] = BoxZone:Create(vector3(24.84, 6367.01, 31.23), 6, 4, {
+    ["haanparking7"] = BoxZone:Create(vector3(24.84, 6367.01, 31.23), 6, 4,
+                                      {
         name = "haanparking7",
         heading = 35,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking8"] = BoxZone:Create(vector3(27.97, 6331.08, 31.23), 6, 4, {
+    ["haanparking8"] = BoxZone:Create(vector3(27.97, 6331.08, 31.23), 6, 4,
+                                      {
         name = "haanparking8",
         heading = 20,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking9"] = BoxZone:Create(vector3(11.35, 6352.97, 31.23), 6, 4, {
+    ["haanparking9"] = BoxZone:Create(vector3(11.35, 6352.97, 31.23), 6, 4,
+                                      {
         name = "haanparking9",
         heading = 35,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
-    ["haanparking10"] = BoxZone:Create(vector3(42.51, 6385.19, 31.23), 6, 4, {
+    ["haanparking10"] = BoxZone:Create(vector3(42.51, 6385.19, 31.23), 6, 4,
+                                       {
         name = "haanparking10",
         heading = 35,
         minZ = 30.23,
         maxZ = 34.23,
-        data = { indexGarage = "haanparking", },
+        data = {indexGarage = "haanparking"},
     }),
 }
 
