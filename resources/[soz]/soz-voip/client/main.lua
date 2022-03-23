@@ -1,16 +1,13 @@
+--- Variables
+voiceModule = {}
+
 CurrentPlayer = {
     ServerId = GetPlayerServerId(PlayerId()),
     IsListenerEnabled = false,
 
-    MicClicks = true,
-
     VoiceMode = 2,
     VoiceModeUpdateAllowed = true,
     VoiceModeProximityIsOverride = false,
-
-    --- 0: left | 1: both | 2: right
-    Ear = {["primaryRadio"] = 1, ["secondaryRadio"] = 1},
-    Volume = table.deepclone(Config.DefaultVolume),
 
     RadioButtonPressed = false,
 }
@@ -23,15 +20,15 @@ AddEventHandler("onClientResourceStart", function(resource)
 
     TriggerEvent("hud:client:UpdateVoiceMode", CurrentPlayer.VoiceMode - 1)
 
-    if LocalPlayer.state.primaryRadioChannel ~= nil then
-        setRadioChannel(LocalPlayer.state.primaryRadioChannel, true)
+    local state = LocalPlayer.state
+    if state["radio-sr"].primaryChannel ~= 0 then
+        TriggerServerEvent("voip:server:setPlayerInChannel", "radio-sr", state["radio-sr"].primaryChannel, true)
     end
-    if LocalPlayer.state.secondaryRadioChannel ~= nil then
-        setRadioChannel(LocalPlayer.state.secondaryRadioChannel, false)
+    if state["radio-sr"].secondaryChannel ~= 0 then
+        TriggerServerEvent("voip:server:setPlayerInChannel", "radio-sr", state["radio-sr"].secondaryChannel, false)
     end
-
-    if LocalPlayer.state.callChannel ~= nil then
-        setCallChannel(LocalPlayer.state.callChannel)
+    if state.call.channel ~= nil then
+        TriggerServerEvent("voip:server:setPlayerInChannel", "call", state.call.channel, false)
     end
 end)
 
@@ -43,13 +40,9 @@ end)
 
 AddEventHandler("mumbleConnected", function()
     local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
-    LocalPlayer.state:set("proximity", {
-        index = CurrentPlayer.VoiceMode,
-        distance = voiceModeData[1],
-        mode = voiceModeData[2],
-    }, true)
+    LocalPlayer.state:set("proximity", {index = CurrentPlayer.VoiceMode, distance = voiceModeData}, true)
 
-    MumbleSetTalkerProximity(voiceModeData[1] + 0.0)
+    MumbleSetTalkerProximity(voiceModeData)
     MumbleClearVoiceTarget(Config.VoiceTarget)
     MumbleSetVoiceTarget(Config.VoiceTarget)
     MumbleSetVoiceChannel(CurrentPlayer.ServerId)

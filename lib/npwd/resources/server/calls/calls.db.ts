@@ -14,9 +14,8 @@ export class CallsRepo {
     }
 
     async updateCall(call: CallHistoryItem, isAccepted: boolean, end: number): Promise<void> {
-        const endCall = new Date(end).toUTCString()
-        const query = 'UPDATE phone_calls SET is_accepted=?, end=? WHERE identifier = ?';
-        await DbInterface._rawExec(query, [isAccepted, endCall, call.identifier]);
+        const query = 'UPDATE phone_calls SET is_accepted=?, end=current_timestamp() WHERE identifier = ?';
+        await DbInterface._rawExec(query, [isAccepted, call.identifier]);
     }
 
     async fetchCalls(

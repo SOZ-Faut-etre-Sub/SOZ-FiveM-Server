@@ -31,9 +31,12 @@ local function DisplayPlayerBlip()
                 for _, player in pairs(players) do
                     DynamicMapOption.blips[player.citizenid] = "admin:playerblip:" .. player.citizenid
 
-                    QBCore.Functions.CreateBlip(DynamicMapOption.blips[player.citizenid], {
+                    QBCore.Functions.CreateBlip(DynamicMapOption.blips[player.citizenid],
+                                                {
                         coords = player.coords,
+                        heading = player.heading,
                         name = player.name,
+                        showheading = true,
                         sprite = 1,
                     })
                 end

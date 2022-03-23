@@ -52,29 +52,37 @@ local function PayInvoice(citizenid, invoiceID)
     end
 end
 
---- TriggerServerEvent("banking:server:sendInvoice", "Title for invoice", 500)
-RegisterNetEvent("banking:server:sendInvoice", function(label, amount)
+--- TriggerServerEvent("banking:server:sendInvoice", 5, "Title for invoice", 500)
+RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount)
     local Player = QBCore.Functions.GetPlayer(source)
+    local Target = QBCore.Functions.GetPlayer(target)
 
-    if amount ~= nil and tonumber(amount) > 0 then -- @TODO Jobs: rework this
-        local id = MySQL.insert.await("INSERT INTO invoices (citizenid,emitter,emitterName,label,amount) VALUES (?,?,?,?,?) ", {
-            Player.PlayerData.citizenid,
-            "safe_" .. Player.PlayerData.job.name,
-            QBCore.Shared.Jobs[Player.PlayerData.job.name].label,
-            label,
-            tonumber(amount),
-        })
+    if amount ~= nil and tonumber(amount) > 0 then
+        if Player and Target and Player ~= Target then
+            local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
+            if dist > 5 then
+                return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Personne n'est à portée de vous")
+            end
 
-        if PlayersInvoices[Player.PlayerData.citizenid] == nil then
-            PlayersInvoices[Player.PlayerData.citizenid] = {}
+            local id = MySQL.insert.await("INSERT INTO invoices (citizenid,emitter,emitterName,label,amount) VALUES (?,?,?,?,?) ", {
+                Target.PlayerData.citizenid,
+                "safe_" .. Player.PlayerData.job.id,
+                SozJobCore.Jobs[Player.PlayerData.job.id].label,
+                label,
+                tonumber(amount),
+            })
+
+            if PlayersInvoices[Target.PlayerData.citizenid] == nil then
+                PlayersInvoices[Target.PlayerData.citizenid] = {}
+            end
+
+            PlayersInvoices[Target.PlayerData.citizenid][id] = {
+                emitterAccount = Player.PlayerData.job.id,
+                emitterName = SozJobCore.Jobs[Player.PlayerData.job.id].label,
+                title = label,
+                amount = tonumber(amount),
+            }
         end
-
-        PlayersInvoices[Player.PlayerData.citizenid][id] = {
-            emitterAccount = Player.PlayerData.job.id,
-            emitterName = QBCore.Shared.Jobs[Player.PlayerData.job.id].label,
-            title = label,
-            amount = tonumber(amount),
-        }
     end
 end)
 

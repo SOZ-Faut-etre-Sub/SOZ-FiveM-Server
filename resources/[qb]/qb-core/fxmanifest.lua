@@ -14,11 +14,11 @@ shared_scripts {
     'shared/vehicles.lua',
     'shared/gangs.lua',
     'shared/weapons.lua',
+    'shared/uuid.lua',
 }
 
 client_scripts {
     'client/main.lua',
-    'client/uuid.lua',
     'client/functions.lua',
     'client/loops.lua',
     'client/events.lua'
@@ -27,7 +27,6 @@ client_scripts {
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'server/main.lua',
-    'server/uuid.lua',
     'server/functions.lua',
     'server/player.lua',
     'server/events.lua',
