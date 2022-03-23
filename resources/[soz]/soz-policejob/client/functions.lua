@@ -1,5 +1,15 @@
 PoliceJob.Functions = {}
 
+PoliceJob.Functions.IsJobAllowed = function()
+    for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+        if PlayerData.job.id == allowedJob then
+            return true
+        end
+    end
+
+    return false
+end
+
 ---@param job string
 PoliceJob.Functions.GetCloakroomAction = function(job)
     return {

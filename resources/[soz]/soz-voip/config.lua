@@ -1,15 +1,9 @@
 Config = {}
 
-Config.Keys = {["voice_up"] = "F6", ["voice_down"] = "F5"}
-
-Config.DefaultVolume = {["phone"] = 0.6, ["primaryRadio"] = 1.0, ["secondaryRadio"] = 1.0}
-
-Config.VoiceModes = {
-    {3.0, "Chuchoter"}, -- Whisper speech distance in gta distance units
-    {10.0, "Parler"}, -- Normal speech distance in gta distance units
-    {17.0, "Crier"}, -- Shout speech distance in gta distance units
-}
+Config.DefaultVolume = {["call"] = 40, ["radio"] = 100}
 
 Config.VoiceTarget = 1
+Config.VoiceModes = {[1] = 3.0, [2] = 10.0, [3] = 17.0}
 
 Config.ShortRangeRadio = 3000.0
+Config.RadioEar = {Left = 0, Both = 1, Right = 2}

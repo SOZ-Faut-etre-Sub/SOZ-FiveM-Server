@@ -1,18 +1,12 @@
 local Objects = {}
 
---- Items
-QBCore.Functions.CreateUseableItem("cone", function(source, item)
+RegisterNetEvent("job:server:placeProps", function(item, props)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1)
-    TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey("prop_roadcone02a"))
-end)
-
-QBCore.Functions.CreateUseableItem("police_barrier", function(source, item)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1)
-    TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey("prop_barrier_work05"))
+    if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
+        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
+        TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey(props))
+    end
 end)
 
 --- Events

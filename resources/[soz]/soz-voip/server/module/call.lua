@@ -1,80 +1,54 @@
---- @class VoicePhone
-VoicePhone = {}
+--- @class PhoneCall
+local PhoneCall = {}
 
-function VoicePhone.new()
-    return setmetatable({}, {
-        __index = VoicePhone,
-        __tostring = function()
-            return "VoicePhone"
-        end,
-    })
+function PhoneCall.new()
+    return setmetatable({}, {__index = PhoneCall})
 end
 
-function VoicePhone:addPlayer(source, channel)
-    callData[channel] = callData[channel] or {}
-    for player, _ in pairs(callData[channel]) do
+function PhoneCall:addPlayer(source, channel)
+    voiceStateBackend["call"]:addConsumer(source, channel)
+
+    local players = voiceStateBackend["call"]:getConsumers(channel)
+    for player, _ in pairs(players) do
         if player ~= source then
-            TriggerClientEvent("pma-voice:addPlayerToCall", player, source)
+            TriggerClientEvent("voip:client:addConsumer", player, "call", source)
         end
     end
-    callData[channel][source] = false
-    voiceData[source] = voiceData[source] or defaultVoiceDataTable()
-    voiceData[source].call = channel
-    TriggerClientEvent("pma-voice:syncCallData", source, callData[channel])
+
+    TriggerClientEvent("voip:client:syncConsumers", source, "call", players)
 end
 
-function VoicePhone:setPlayer(source, channel)
-    voiceData[source] = voiceData[source] or defaultVoiceDataTable()
-    local isResource = GetInvokingResource()
-    local plyVoice = voiceData[source]
+function PhoneCall:setPlayer(source, channel)
     channel = tonumber(channel)
-    if isResource then
-        TriggerClientEvent("pma-voice:clSetPlayerCall", source, channel)
-    end
+    Player(source).state.call.channel = channel
 
-    Player(source).state.callChannel = channel
-
-    if channel ~= 0 and plyVoice.call == 0 then
+    if channel ~= 0 then
+        self:removePlayer(source, channel)
         self:addPlayer(source, channel)
     elseif channel == 0 then
-        self:removePlayer(source, plyVoice.call)
-    elseif plyVoice.call > 0 then
-        self:removePlayer(source, plyVoice.call)
-        self:addPlayer(source, channel)
+        self:removePlayer(source, channel)
     end
 end
 
-function VoicePhone:removePlayer(source, channel)
-    callData[channel] = callData[channel] or {}
-    for player, _ in pairs(callData[channel]) do
-        TriggerClientEvent("pma-voice:removePlayerFromCall", player, source)
+function PhoneCall:removePlayer(source, channel)
+    voiceStateBackend["call"]:removeConsumer(source, channel)
+
+    for player, _ in pairs(voiceStateBackend["call"]:getConsumers(channel)) do
+        TriggerClientEvent("voip:client:removeConsumer", player, "call", source)
     end
-    callData[channel][source] = nil
-    voiceData[source] = voiceData[source] or defaultVoiceDataTable()
-    voiceData[source].call = 0
 end
 
-function VoicePhone:setTalking(source, talking)
-    voiceData[source] = voiceData[source] or defaultVoiceDataTable()
-    local callTbl = callData[voiceData[source].call]
-    if callTbl then
-        for player, _ in pairs(callTbl) do
+function PhoneCall:setTalking(source, talking)
+    local players = voiceStateBackend["call"]:updateConsumerState(source, Player(source).state.call.channel, talking)
+
+    if players then
+        for player, _ in pairs(players) do
             if player ~= source then
-                TriggerClientEvent("pma-voice:setTalkingOnCall", player, source, talking)
+                TriggerClientEvent("voip:client:updateConsumer", player, "call", source, talking)
             end
         end
     end
 end
 
 --- Exports functions
-setmetatable(VoicePhone, {__index = VoiceModuleShell})
-voiceModule["call"] = VoicePhone.new()
-
---- OLD
-exports("setPlayerCall", function(source, channel)
-    VoicePhone:setPlayer(source, channel)
-end)
-
-RegisterNetEvent("pma-voice:setPlayerCall", function(channel)
-    VoicePhone:setPlayer(source, channel)
-end)
+voiceModule["call"] = PhoneCall.new()
