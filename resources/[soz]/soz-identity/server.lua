@@ -20,7 +20,7 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
     TriggerClientEvent("soz-identity:client:show-ui", target, {
         type = "show",
         scope = scope,
-        firstName = "Lorem",
+        firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         licences = licences,
         gender = gender,
