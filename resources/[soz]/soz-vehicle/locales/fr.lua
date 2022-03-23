@@ -32,7 +32,7 @@ local Translations = {
             depot = "%{value} [ %{value2} ] - Coût: $%{value3}",
             public = "%{value} [ %{value2} ]",
             private = "%{value} [ %{value2} ] - Coût: $%{value3}",
-            entreprise = "%{value} [ %{value2} ]",
+            entreprise = "%{value} - [%{value2} en stock]",
         },
         leave = {
             car = "⬅ Quitter le garage",
