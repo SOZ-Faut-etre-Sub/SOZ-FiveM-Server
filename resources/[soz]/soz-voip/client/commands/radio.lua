@@ -4,20 +4,23 @@ local function fnRadioTalkPush(module, isPrimary)
         return
     end
 
-    if not CurrentPlayer.RadioButtonPressed then
-        local radioChannel = LocalPlayer.state[module][isPrimary and "primaryChannel" or "secondaryChannel"]
+    if CurrentPlayer.RadioButtonPressed or CurrentPlayer.LastRadioButtonPressed + 200 > GetGameTimer() then
+        return
+    end
 
-        if radioChannel > 0 then
-            playerTargets(voiceModule[module]:getConsumers(), MumbleIsPlayerTalking(PlayerId()) and voiceModule["call"]:getConsumers() or {})
-            TriggerServerEvent("voip:server:setPlayerTalking", module, true, isPrimary)
-            CurrentPlayer.RadioButtonPressed = true
-            playMicClicks(module, true, isPrimary)
-            RequestAnimDict("random@arrests")
-            while not HasAnimDictLoaded("random@arrests") do
-                Citizen.Wait(10)
-            end
-            TaskPlayAnim(PlayerPedId(), "random@arrests", "generic_radio_enter", 8.0, 2.0, -1, 50, 2.0, 0, 0, 0)
+    local radioChannel = LocalPlayer.state[module][isPrimary and "primaryChannel" or "secondaryChannel"]
+    CurrentPlayer.LastRadioButtonPressed = GetGameTimer()
+
+    if radioChannel > 0 then
+        playerTargets(voiceModule[module]:getConsumers(), MumbleIsPlayerTalking(PlayerId()) and voiceModule["call"]:getConsumers() or {})
+        TriggerServerEvent("voip:server:setPlayerTalking", module, true, isPrimary)
+        CurrentPlayer.RadioButtonPressed = true
+        playMicClicks(module, true, isPrimary)
+        RequestAnimDict("random@arrests")
+        while not HasAnimDictLoaded("random@arrests") do
+            Citizen.Wait(10)
         end
+        TaskPlayAnim(PlayerPedId(), "random@arrests", "generic_radio_enter", 8.0, 2.0, -1, 50, 2.0, 0, 0, 0)
     end
 end
 
