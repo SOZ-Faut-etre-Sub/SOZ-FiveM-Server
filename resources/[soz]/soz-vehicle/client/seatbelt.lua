@@ -25,12 +25,16 @@ RegisterCommand("toggleseatbelt", function()
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         local class = GetVehicleClass(GetVehiclePedIsUsing(PlayerPedId()))
         if class ~= 8 and class ~= 13 and class ~= 14 then
-            ToggleSeatbelt()
+            if thisFrameVehicleSpeed <= 75 then
+                ToggleSeatbelt()
+            else
+                exports["soz-hud"]:DrawNotification("~r~Vous allez trop vite pour faire ça")
+            end
         end
     end
 end, false)
 
-RegisterKeyMapping("toggleseatbelt", "Toggle Seatbelt", "keyboard", "B")
+RegisterKeyMapping("toggleseatbelt", "Toggle Seatbelt", "keyboard", "K")
 
 -- Events
 
