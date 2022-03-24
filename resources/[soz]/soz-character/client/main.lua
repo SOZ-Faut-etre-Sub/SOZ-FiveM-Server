@@ -477,91 +477,119 @@ ClothMenuLabel = {
 
 Colors = {Hair = {}, Makeup = {}}
 
+function CreateItemsWithTextures(componentType, drawableId, textures)
+    local items = {}
+    for _, texture in pairs(textures) do
+        local item = {
+            Name = texture.Name,
+            ApplyComponents = {[componentType] = {Drawable = drawableId, Texture = texture.Id, Palette = 0}},
+        }
+
+        table.insert(items, item)
+    end
+    return items
+end
+
 CreateClothShopConfigSouth = {
-    Male = {
-        Components = {
-            {
-                ComponentId = ComponentType.Torso,
-                Drawables = {
-                    {
-                        DrawableId = 260,
-                        Name = "Chemise savane",
-                        Textures = {
-                            {TextureId = 2, Name = GetLabelText("CLO_BHM_U_5_2")},
-                            {TextureId = 3, Name = GetLabelText("CLO_BHM_U_5_3")},
-                            {TextureId = 4, Name = GetLabelText("CLO_BHM_U_5_4")},
-                        },
-                    },
+    [GetHashKey("mp_m_freemode_01")] = {
+        {
+            Collections = {
+                {
+                    Name = "Haut",
+                    Items = CreateItemsWithTextures(ComponentType.Torso, 260, {
+                        {Name = GetLabelText("CLO_BHM_U_5_2"), Id = 2},
+                        {Name = GetLabelText("CLO_BHM_U_5_3"), Id = 3},
+                        {Name = GetLabelText("CLO_BHM_U_5_4"), Id = 4},
+                    }),
                 },
             },
-            {
-                ComponentId = ComponentType.Pants,
-                Drawables = {
-                    {
-                        DrawableId = 64,
-                        Name = "Survêtement",
-                        Textures = {
-                            {TextureId = 0, Name = GetLabelText("CLO_EXM_EL_0_0")},
-                            {TextureId = 1, Name = GetLabelText("CLO_EXM_EL_0_1")},
-                            {TextureId = 6, Name = GetLabelText("CLO_EXM_EL_0_6")},
-                            {TextureId = 9, Name = GetLabelText("CLO_EXM_EL_0_9")},
-                        },
-                    },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Jogging",
+                    Items = CreateItemsWithTextures(ComponentType.Pants, 64, {
+                        {Name = GetLabelText("CLO_EXM_EL_0_0"), Id = 0},
+                        {Name = GetLabelText("CLO_EXM_EL_0_1"), Id = 1},
+                        {Name = GetLabelText("CLO_EXM_EL_0_6"), Id = 6},
+                        {Name = GetLabelText("CLO_EXM_EL_0_9"), Id = 9},
+                    }),
                 },
             },
-            {
-                ComponentId = ComponentType.Shoes,
-                Drawables = {
-                    {
-                        DrawableId = 75,
-                        Name = "Running rétro 2020",
-                        Textures = {
-                            {TextureId = 18, Name = GetLabelText("CLO_BHM_F_1_18")},
-                            {TextureId = 19, Name = GetLabelText("CLO_BHM_F_1_19")},
+        },
+        {
+            Collections = {
+                {
+                    Name = "Chaussure",
+                    Items = {
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_18"),
+                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 75, Texture = 18, Palette = 0}},
                         },
-                    },
-                    {
-                        DrawableId = 76,
-                        Name = "Running rétro 2021",
-                        Textures = {{TextureId = 3, Name = GetLabelText("CLO_BHM_F_1_3")}},
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_19"),
+                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 75, Texture = 19, Palette = 0}},
+                        },
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_3"),
+                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 76, Texture = 3, Palette = 0}},
+                        },
                     },
                 },
             },
         },
-        Props = {},
     },
-    Female = {
-        Components = {
-            {
-                ComponentId = ComponentType.Pants,
-                Drawables = {
-                    {
-                        DrawableId = 66,
-                        Name = "Pants_01",
-                        Textures = {
-                            {TextureId = 0, Name = "18"},
-                            {TextureId = 1, Name = "19"},
-                            {TextureId = 6, Name = "19"},
-                            {TextureId = 9, Name = "19"},
+    [GetHashKey("mp_f_freemode_01")] = {
+        {
+            Collections = {
+                {
+                    Name = "Haut",
+                    Items = CreateItemsWithTextures(ComponentType.Torso, 260, {
+                        {Name = GetLabelText("CLO_BHM_U_5_2"), Id = 2},
+                        {Name = GetLabelText("CLO_BHM_U_5_3"), Id = 3},
+                        {Name = GetLabelText("CLO_BHM_U_5_4"), Id = 4},
+                    }),
+                },
+            },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Jogging",
+                    Items = CreateItemsWithTextures(ComponentType.Pants, 66, {
+                        {Name = GetLabelText("CLO_EXM_EL_0_0"), Id = 0},
+                        {Name = GetLabelText("CLO_EXM_EL_0_1"), Id = 1},
+                        {Name = GetLabelText("CLO_EXM_EL_0_6"), Id = 6},
+                        {Name = GetLabelText("CLO_EXM_EL_0_9"), Id = 9},
+                    }),
+                },
+            },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Chaussure",
+                    Items = {
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_18"),
+                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 75, Texture = 18, Palette = 0}},
+                        },
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_19"),
+                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 75, Texture = 19, Palette = 0}},
+                        },
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_3"),
+                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 76, Texture = 3, Palette = 0}},
                         },
                     },
                 },
             },
         },
-        Props = {},
     },
 }
 
-CreateClothShopConfigNorth = {
-    Male = {
-        Components = {},
-        Props = {},
-    },
-    Female = {
-        Components = {},
-        Props = {},
-    },
-}
+CreateClothShopConfigNorth = CreateClothShopConfigSouth
 
 Citizen.CreateThread(function()
     local numHairColors = GetNumHairColors();

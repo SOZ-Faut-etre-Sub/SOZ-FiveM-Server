@@ -25,25 +25,36 @@ local function OpenCreateCharacterMenu(skin, clothConfig, SpawnId)
 
     createCharacterMenu:Open()
     createCharacterMenu:On("close", function()
-        p:resolve(skin)
+        p:resolve({Skin = skin, ClothConfig = clothConfig})
     end)
 
     return Citizen.Await(p)
 end
 
-function CreateCharacter(SpawnId)
-    local skin = GetDefaultBodySkin()
+function CreateAndApplyDefaultCharacter(gender)
+    local skin = GetDefaultBodySkin(gender)
     local baseClothSet = GetMaleDefaultBaseClothSet()
     local nakedClothSet = GetMaleDefaultNakedClothSet()
+
+    if gender == 1 then
+        baseClothSet = GetFemaleDefaultBaseClothSet()
+        nakedClothSet = GetFemaleDefaultNakedClothSet()
+    end
+
     local clothConfig = GetDefaultClothConfig(baseClothSet, nakedClothSet)
 
-    local confirm = false
     ApplyPlayerBodySkin(PlayerId(), skin)
     ApplyPlayerClothConfig(PlayerId(), clothConfig)
 
+    return {Skin = skin, ClothConfig = clothConfig}
+end
+
+function CreateCharacterWizard(spawnId, character)
+    local confirm = false
+
     while not confirm do
         Camera.Activate()
-        skin = OpenCreateCharacterMenu(skin, clothConfig, SpawnId);
+        character = OpenCreateCharacterMenu(character.Skin, character.ClothConfig, spawnId);
         Camera.Deactivate()
 
         local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32)
@@ -52,4 +63,6 @@ function CreateCharacter(SpawnId)
             confirm = true
         end
     end
+
+    return character
 end

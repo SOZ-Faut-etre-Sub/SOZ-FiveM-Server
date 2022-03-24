@@ -93,18 +93,16 @@ local function Clone(obj)
     return res
 end
 
-local function MergeCloth(base, override)
-    local newCloth = Clone(base)
-
+function MergeClothSet(base, override)
     for componentId, component in pairs(override.Components) do
-        newCloth.Components[componentId] = Clone(component)
+        base.Components[tonumber(componentId)] = Clone(component)
     end
 
-    for propId, prop in pairs(clothSkin.Props) do
-        newCloth.Props[propId] = Clone(prop)
+    for propId, prop in pairs(override.Props) do
+        base.Props[tonumber(propId)] = Clone(prop)
     end
 
-    return newCloth
+    return base
 end
 
 local function ApplyPedClothSet(ped, clothSet)
@@ -137,15 +135,15 @@ function ApplyPlayerClothConfig(playerId, clothConfig)
     local clothSet = Clone(clothConfig.BaseClothSet)
 
     if clothConfig.JobClothSet ~= nil then
-        clothSet = MergeCloth(clothSet, clothConfig.JobClothSet)
+        clothSet = MergeClothSet(clothSet, clothConfig.JobClothSet)
     end
 
     if clothConfig.TemporaryClothSet ~= nil then
-        clothSet = MergeCloth(clothSet, clothConfig.TemporaryClothSet)
+        clothSet = MergeClothSet(clothSet, clothConfig.TemporaryClothSet)
     end
 
     if clothConfig.Config.NakedClothSet then
-        clothSet = MergeCloth(clothSet, clothConfig.NakedClothSet)
+        clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
     -- @TODO Handle mask / glasses / helmet / etc ...

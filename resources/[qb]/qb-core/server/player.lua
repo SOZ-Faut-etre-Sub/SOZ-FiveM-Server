@@ -10,18 +10,22 @@ function QBCore.Player.Login(source, citizenid, newData)
     if src then
         if citizenid then
             local license = QBCore.Functions.GetIdentifier(src, 'license')
-            local PlayerData = exports.oxmysql:singleSync('SELECT * FROM players where citizenid = ?', { citizenid })
+            local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
             if PlayerData and license == PlayerData.license then
                 PlayerData.money = json.decode(PlayerData.money)
                 PlayerData.job = json.decode(PlayerData.job)
                 PlayerData.position = json.decode(PlayerData.position)
                 PlayerData.metadata = json.decode(PlayerData.metadata)
                 PlayerData.charinfo = json.decode(PlayerData.charinfo)
+                PlayerData.skin = json.decode(PlayerData.skin)
+                PlayerData.cloth_config = json.decode(PlayerData.cloth_config)
+
                 if PlayerData.gang then
                     PlayerData.gang = json.decode(PlayerData.gang)
                 else
                     PlayerData.gang = {}
                 end
+
                 QBCore.Player.CheckPlayerData(src, PlayerData)
             else
                 DropPlayer(src, 'You Have Been Kicked For Exploitation')
@@ -62,8 +66,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or math.random(11, 99) .. 'Z' .. math.random(1111, 9999) .. 'T' .. math.random(1111, 9999)
     -- Metadata
     PlayerData.metadata = PlayerData.metadata or {}
-    -- Skin
-    PlayerData.metadata['tattoo'] = PlayerData.metadata['tattoo'] or {}
     -- Status
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
@@ -120,6 +122,11 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         SerialNumber = QBCore.Player.CreateSerialNumber(),
         InstalledApps = {},
     }
+
+    -- Skin
+    PlayerData.skin = PlayerData.skin or {}
+    PlayerData.cloth_config = PlayerData.cloth_config or {}
+
     -- Job
     if not PlayerData.job or type(PlayerData.job) ~= 'table' then
         PlayerData.job = {}
@@ -380,7 +387,7 @@ function QBCore.Player.Save(source)
     local pcoords = GetEntityCoords(ped)
     local PlayerData = QBCore.Players[src].PlayerData
     if PlayerData then
-        exports.oxmysql:insert('INSERT INTO players (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, is_default) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :is_default) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, is_default = :is_default', {
+        exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default', {
             citizenid = PlayerData.citizenid,
             cid = tonumber(PlayerData.cid),
             license = PlayerData.license,
@@ -391,6 +398,8 @@ function QBCore.Player.Save(source)
             gang = json.encode(PlayerData.gang),
             position = json.encode(pcoords),
             metadata = json.encode(PlayerData.metadata),
+            skin = json.encode(PlayerData.skin),
+            cloth_config = json.encode(PlayerData.cloth_config),
             is_default = PlayerData.is_default,
         })
 
@@ -404,13 +413,13 @@ end
 -- Delete character
 
 local playertables = { -- Add tables as needed
-    { table = 'players' },
+    { table = 'player' },
     { table = 'apartments' },
     { table = 'bank_accounts' },
     { table = 'crypto_transactions' },
     { table = 'phone_invoices' },
     { table = 'phone_messages' },
-    { table = 'playerskins' },
+    { table = 'player_cloth_set' },
     { table = 'player_boats' },
     { table = 'player_contacts' },
     { table = 'player_houses' },
@@ -422,7 +431,7 @@ local playertables = { -- Add tables as needed
 function QBCore.Player.DeleteCharacter(source, citizenid)
     local src = source
     local license = QBCore.Functions.GetIdentifier(src, 'license')
-    local result = exports.oxmysql:scalarSync('SELECT license FROM players where citizenid = ?', { citizenid })
+    local result = exports.oxmysql:scalarSync('SELECT license FROM player where citizenid = ?', { citizenid })
     if license == result then
         for k, v in pairs(playertables) do
             exports.oxmysql:execute('DELETE FROM ' .. v.table .. ' WHERE citizenid = ?', { citizenid })
@@ -474,7 +483,7 @@ function QBCore.Player.CreateCitizenId()
     local CitizenId = nil
     while not UniqueFound do
         CitizenId = tostring(QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(5)):upper()
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM players WHERE citizenid = ?', { CitizenId })
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM player WHERE citizenid = ?', { CitizenId })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -488,7 +497,7 @@ function QBCore.Player.CreateFingerId()
     while not UniqueFound do
         FingerId = tostring(QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(1) .. QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(4))
         local query = '%' .. FingerId .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `players` WHERE `metadata` LIKE ?', { query })
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `player` WHERE `metadata` LIKE ?', { query })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -502,7 +511,7 @@ function QBCore.Player.CreatePhoneNumber()
     while not UniqueFound do
         PhoneNumber = tostring('555-' .. QBCore.Shared.RandomInt(4))
         local query = '%' .. PhoneNumber .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `players` WHERE `metadata` LIKE ?', { query })
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `player` WHERE `metadata` LIKE ?', { query })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -516,7 +525,7 @@ function QBCore.Player.CreateWalletId()
     while not UniqueFound do
         WalletId = 'QB-' .. math.random(11111111, 99999999)
         local query = '%' .. WalletId .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM players WHERE metadata LIKE ?', { query })
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM player WHERE metadata LIKE ?', { query })
         if result[1].count == 0 then
             UniqueFound = true
         end
@@ -530,7 +539,7 @@ function QBCore.Player.CreateSerialNumber()
     while not UniqueFound do
         SerialNumber = math.random(11111111, 99999999)
         local query = '%' .. SerialNumber .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM players WHERE metadata LIKE ?', { query })
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM player WHERE metadata LIKE ?', { query })
         if result[1].count == 0 then
             UniqueFound = true
         end

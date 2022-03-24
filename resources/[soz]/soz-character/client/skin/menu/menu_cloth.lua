@@ -12,143 +12,106 @@ local function Clone(obj)
     return res
 end
 
-local function CreateComponentItems(clothMenu, playerId, configComponent, clothSet)
-    local drawableOptions = {}
-    local drawableValue = 1
+local function CreateCategoryUniqueCollectionItems(clothMenu, playerId, collection, clothSet)
+    local itemOptions = {}
 
-    for drawableIndex, drawable in ipairs(configComponent.Drawables) do
-        drawableOptions[#drawableOptions + 1] = {value = drawableIndex, label = drawable.Name, drawable = drawable}
-
-        if drawable.DrawableId == clothSet.Components[configComponent.ComponentId].Drawable then
-            drawableValue = #drawableOptions
-        end
+    for itemIndex, item in pairs(collection.Items) do
+        itemOptions[#itemOptions + 1] = {value = itemIndex, label = item.Name, item = item}
     end
 
-    clothMenu:AddTitle({label = configComponent.Name or ClothMenuLabel[configComponent.ComponentId]})
+    local sliderItems = clothMenu:AddSlider({label = collection.Name, value = 0, values = itemOptions})
 
-    local sliderDrawable = clothMenu:AddSlider({label = "Collection", value = drawableValue, values = drawableOptions})
-    local sliderTexture = clothMenu:AddSlider({label = "Variation", value = 0, values = {}})
-    local textureOptions = {}
-    local textureValue = 1
+    sliderItems:On("change", function(_, value)
+        local option = itemOptions[value]
 
-    local UpdateTextureItems = function(drawableIndex)
-        textureOptions = {}
+        MergeClothSet(clothSet, {Components = option.item.ApplyComponents or {}, Props = option.item.ApplyProps or {}})
 
-        for textureIndex, texture in pairs(configComponent.Drawables[drawableIndex].Textures) do
-            textureOptions[#textureOptions + 1] = {value = textureIndex, label = texture.Name, texture = texture}
+        ApplyPlayerClothSet(playerId, clothSet)
+    end)
+end
 
-            if texture.TextureId == clothSet.Components[configComponent.ComponentId].Texture then
-                textureValue = #textureOptions
-            end
-        end
+local function CreateCategoryMultipleCollectionItems(clothMenu, playerId, collections, clothSet)
+    local collectionOptions = {}
+    local itemOptions = {}
 
-        sliderTexture:ClearValues()
-        sliderTexture:AddValues(textureOptions)
-        sliderTexture:SetValue(textureValue)
-
-        return textureOptions
-    end
-
-    UpdateTextureItems(drawableOptions[drawableValue].value)
-
-    sliderDrawable:On("change", function(_, value)
-        local option = drawableOptions[value]
-        local updatedTextureOptions = UpdateTextureItems(option.value)
-        local newTextureValue = 0
-
-        if #textureOptions > 0 then
-            newTextureValue = updatedTextureOptions[1].texture.TextureId
-        end
-
-        clothSet.Components[configComponent.ComponentId] = {
-            Drawable = option.drawable.DrawableId,
-            Texture = newTextureValue,
+    for collectionIndex, collection in pairs(collections) do
+        collectionOptions[#collectionOptions + 1] = {
+            value = collectionIndex,
+            label = collection.Name,
+            collection = collection,
         }
-        ApplyPlayerClothSet(playerId, clothSet)
+    end
+
+    local sliderCollection = clothMenu:AddSlider({label = "Collection", value = 1, values = collectionOptions})
+    local sliderItems = clothMenu:AddSlider({label = "Elements", value = 0, values = {}})
+
+    local UpdateItems = function(collectionIndex)
+        itemOptions = {}
+
+        for itemIndex, item in pairs(collections[collectionIndex].Items) do
+            itemOptions[#itemOptions + 1] = {value = itemIndex, label = item.Name, item = item}
+        end
+
+        sliderItems:ClearValues()
+        sliderItems:AddValues(itemOptions)
+        sliderItems:SetValue(1)
+
+        return itemOptions
+    end
+
+    UpdateItems(collectionOptions[1].value)
+
+    sliderCollection:On("change", function(_, value)
+        local option = collectionOptions[value]
+        local updatedTextureOptions = UpdateItems(option.value)
+
+        if #updatedTextureOptions > 0 then
+            local newItem = updatedTextureOptions[1].item or {}
+
+            MergeClothSet(clothSet, {Components = newItem.ApplyComponents or {}, Props = newItem.ApplyProps or {}})
+
+            ApplyPlayerClothSet(playerId, clothSet)
+        end
     end)
 
-    sliderTexture:On("change", function(_, value)
-        local option = textureOptions[value]
+    sliderItems:On("change", function(_, value)
+        local option = itemOptions[value]
 
-        clothSet.Components[configComponent.ComponentId].Texture = option.texture.TextureId
+        MergeClothSet(clothSet, {Components = option.item.ApplyComponents or {}, Props = option.item.ApplyProps or {}})
+
         ApplyPlayerClothSet(playerId, clothSet)
     end)
 end
 
-local function CreatePropItems(clothMenu, playerId, configProp, clothSet)
-    local drawableOptions = {}
-    local drawableValue = 1
-
-    for drawableIndex, drawable in ipairs(configProp.Drawables) do
-        drawableOptions[#drawableOptions + 1] = {value = drawableIndex, label = drawable.Name, drawable = drawable}
-
-        if drawable.DrawableId == clothSet.Props[configProp.PropId].Drawable then
-            drawableValue = #drawableOptions
-        end
+local function CreateCategoryItems(clothMenu, playerId, category, clothSet)
+    if #category.Collections == 0 then
+        return
     end
 
-    clothMenu:AddTitle({label = ClothMenuLabel[configProp.PropId]})
-
-    local sliderDrawable = clothMenu:AddSlider({label = "Type", value = drawableValue, values = drawableOptions})
-    local sliderTexture = clothMenu:AddSlider({label = "Texture", value = 0, values = {}})
-    local textureOptions = {}
-    local textureValue = 1
-
-    local UpdateTextureItems = function(drawableIndex)
-        textureOptions = {}
-
-        for textureIndex, texture in pairs(configProp.Drawables[drawableIndex].Textures) do
-            textureOptions[#textureOptions + 1] = {value = textureIndex, label = texture.Name, texture = texture}
-
-            if texture.TextureId == clothSet.Props[configProp.PropId].Texture then
-                textureValue = #textureOptions
-            end
-        end
-
-        sliderTexture:ClearValues()
-        sliderTexture:AddValues(textureOptions)
-        sliderTexture:SetValue(textureValue)
-
-        return textureOptions
+    if category.Name ~= nil and category.Name ~= "" then
+        clothMenu:AddTitle({label = category.Name})
     end
 
-    UpdateTextureItems(drawableOptions[drawableValue].value)
+    if #category.Collections == 1 then
+        return CreateCategoryUniqueCollectionItems(clothMenu, playerId, category.Collections[1], clothSet)
+    end
 
-    sliderDrawable:On("change", function(_, value)
-        local option = drawableOptions[value]
-        local updatedTextureOptions = UpdateTextureItems(option.value)
-        local newTextureValue = 0
-
-        if #textureOptions > 0 then
-            newTextureValue = updatedTextureOptions[1].texture.TextureId
-        end
-
-        clothSet.Props[configProp.PropId] = {Drawable = option.drawable.DrawableId, Texture = newTextureValue}
-        ApplyPlayerClothSet(playerId, clothSet)
-    end)
-
-    sliderTexture:On("change", function(_, value)
-        local option = textureOptions[value]
-
-        clothSet.Props[configProp.PropId].Texture = option.texture.TextureId
-        ApplyPlayerClothSet(playerId, clothSet)
-    end)
+    return CreateCategoryMultipleCollectionItems(clothMenu, playerId, category.Collections, clothSet)
 end
 
-local function CreateClothMenuItems(clothMenu, playerId, config, clothConfig, clothSetKey)
-    local configModel = config.Male
+local function CreateClothMenuItems(clothMenu, playerId, shopConfig, clothConfig, clothSetKey)
     local clothSet = Clone(clothConfig[clothSetKey])
+    local modelHash = GetEntityModel(GetPlayerPed(playerId))
+    local configModel = shopConfig[modelHash] or nil
 
-    if GetEntityModel(GetPlayerPed(playerId)) == GetHashKey("mp_f_freemode_01") then
-        configModel = config.Female
+    if configModel == nil then
+        exports["soz-monitor"]:Log("ERROR", "Opening cloth menu with unsupported model hash: " .. modelHash)
+
+        return clothSet
     end
 
-    for _, configComponent in ipairs(configModel.Components) do
-        CreateComponentItems(clothMenu, playerId, configComponent, clothSet)
-    end
-
-    for _, configProp in ipairs(configModel.Props) do
-        CreatePropItems(clothMenu, playerId, configProp, clothSet)
+    for _, category in ipairs(configModel) do
+        CreateCategoryItems(clothMenu, playerId, category, clothSet)
     end
 
     return clothSet
