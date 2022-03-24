@@ -30,10 +30,10 @@ end)
 RegisterNetEvent("qb-vehicletuning:server:SetAttachedVehicle", function(veh)
     if veh ~= false then
         Config.AttachedVehicle = veh
-        TriggerClientEvent("qb-vehicletuning:client:SetAttachedVehicle", -1, veh)
+        TriggerClientEvent("soz-custom:client:SetAttachedVehicle", -1, veh)
     else
         Config.AttachedVehicle = nil
-        TriggerClientEvent("qb-vehicletuning:client:SetAttachedVehicle", -1, false)
+        TriggerClientEvent("soz-custom:client:SetAttachedVehicle", -1, false)
     end
 end)
 
