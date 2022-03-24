@@ -74,6 +74,17 @@
     width: 2.6vw;
     composes: action_style;
 }
+.action_close {
+    position: absolute;
+    bottom: 22vh;
+    left: 39vw;
+    height: .7rem;
+    width: .7rem;
+    color: #fff;
+    background: rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.6);
+    border-radius: .3rem;
+}
 
 .action_volume_up {
     position: absolute;

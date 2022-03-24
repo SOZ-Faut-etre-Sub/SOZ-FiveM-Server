@@ -35,7 +35,7 @@ class _SocietyService {
       resp({ status: 'ok', data: contact });
 
       const players = await PlayerService.getPlayersFromSocietyNumber(reqObj.data.number);
-      players.forEach((player) => {
+      players.filter(p => p.getPhoneNumber() !== identifier).forEach((player) => {
         emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player.source, {
           id: contact,
           conversation_id: reqObj.data.number,
