@@ -3,12 +3,12 @@ CreateThread(function()
     exports["qb-target"]:SpawnPed({
         {
             model = "s_m_y_cop_01",
-            coords = vector4(447.24, -973.32, 30.18, 217.04),
+            coords = vector4(615.94, -14.03, 90.51, 228.97),
             minusOne = true,
             freeze = true,
             invincible = true,
             blockevents = true,
-            scenario = "PROP_HUMAN_SEAT_CHAIR_UPRIGHT",
+            scenario = "WORLD_HUMAN_CLIPBOARD",
             target = {
                 options = {
                     {
@@ -20,7 +20,7 @@ CreateThread(function()
                         end,
                     },
                 },
-                distance = 5.0,
+                distance = 2.0,
             },
         },
     })
