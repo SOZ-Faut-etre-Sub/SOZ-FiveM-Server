@@ -36,51 +36,28 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     SetPlayerInvincible(PlayerId(), true)
 
     -- Login player into server (qbcore)
-    TriggerServerEvent("soz-character:server:LoginPlayer", player)
+    local playerObject = QBCore.Functions.TriggerRpc("soz-character:server:LoginPlayer", player)
 
-    -- Load player skin
-    local playerSkin = QBCore.Functions.TriggerRpc("soz-character:server:GetPlayerSkin", player.citizenid)
-
-    if playerSkin == nil then
-        -- @TODO weird case here should never happen but protective coding prevail
-    end
-
-    local model = tonumber(playerSkin.model)
-    local skin = json.decode(playerSkin.skin)
-
-    -- Load player model
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Wait(0)
-    end
-
-    -- Create player ped
-    local playerData = QBCore.Functions.GetPlayerData();
-
-    -- Attach model to player
-    SetPlayerModel(PlayerId(), model)
-    SetModelAsNoLongerNeeded(model)
+    ApplyPlayerBodySkin(PlayerId(), playerObject.PlayerData.skin)
+    ApplyPlayerClothConfig(PlayerId(), playerObject.PlayerData.cloth_config)
 
     local playerPed = PlayerPedId()
 
     -- Default player state
-    SetEntityCoordsNoOffset(playerPed, playerData.position.x, playerData.position.y, playerData.position.z, false, false, false, true)
-    NetworkResurrectLocalPlayer(playerData.position.x, playerData.position.y, playerData.position.z, 0, true, true, false)
+    SetEntityCoordsNoOffset(playerPed, playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, false, false,
+                            false, true)
+    NetworkResurrectLocalPlayer(playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, 0, true, true, false)
     ClearPedTasksImmediately(playerPed)
-    SetPedComponentVariation(playerPed, 0, 0, 0, 2)
     PlaceObjectOnGroundProperly(playerPed)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
-
-    -- Load player skin
-    TriggerEvent("cui_character:loadClothes", skin, playerPed)
-
-    -- @TODO Make load cloth a rpc call to avoid random wait here
-    Wait(1000)
 
     -- Make player visible
     SetFocusEntity(PlayerPedId())
     FreezeEntityPosition(PlayerPedId(), false)
     SetEntityVisible(PlayerPedId(), true)
+
+    -- Wait 2 seconds for loading
+    Citizen.Wait(2000)
 
     -- Shutdown loading screen
     if shutdownLoadingScreen then

@@ -208,7 +208,7 @@ end
 
 function TattooShop:OnMenuClose(menu, shop)
     self:DeleteCam()
-    TriggerServerEvent("cui_character:requestPlayerData")
+    -- TriggerServerEvent("cui_character:requestPlayerData")
 end
 
 function TattooShop:MenuEntryAction(item)

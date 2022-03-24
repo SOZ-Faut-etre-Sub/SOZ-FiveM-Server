@@ -4,14 +4,15 @@ QBCore.Functions.CreateCallback("soz-character:server:GetUserTempPlayer", functi
     cb(MySQL.single.await("SELECT * FROM player_temp WHERE license = ? LIMIT 1", {license}))
 end)
 
-RegisterNetEvent("soz-character:server:CreatePlayer", function(charinfo)
-    local src = source
-    local player = {charinfo = charinfo}
+QBCore.Functions.CreateCallback("soz-character:server:CreatePlayer", function(source, cb, charinfo, skin, clothConfig)
+    local player = {charinfo = charinfo, skin = skin, cloth_config = clothConfig}
 
-    if QBCore.Player.Login(src, false, player) then
-        exports["soz-monitor"]:Log("INFO", GetPlayerName(src) .. " has succesfully loaded!")
-        QBCore.Commands.Refresh(src)
+    if QBCore.Player.Login(source, false, player) then
+        exports["soz-monitor"]:Log("INFO", GetPlayerName(source) .. " has succesfully loaded!")
+        QBCore.Commands.Refresh(source)
 
-        TriggerClientEvent("soz-character:client:ChoosePlayerSkin", src)
+        cb(true)
+    else
+        cb(false)
     end
 end)

@@ -1,6 +1,12 @@
-function GetDefaultBodySkin()
+function GetDefaultBodySkin(gender)
+    local modelHash = GetHashKey("mp_m_freemode_01")
+
+    if gender == 1 then
+        modelHash = GetHashKey("mp_f_freemode_01")
+    end
+
     return {
-        Model = {Hash = GetHashKey("mp_m_freemode_01"), Father = 0, Mother = 23, ShapeMix = 0.5, SkinMix = 0.5},
+        Model = {Hash = modelHash, Father = 0, Mother = 23, ShapeMix = 0.5, SkinMix = 0.5},
         Hair = {
             HairType = 0,
             HairColor = 0,
