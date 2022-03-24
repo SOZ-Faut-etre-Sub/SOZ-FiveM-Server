@@ -23,5 +23,12 @@ Config.Storages["lspd_boss_storage"] = {
     label = "Coffre Capitaine LSPD",
     type = "boss_storage",
     owner = "lspd",
-    position = vector3(621.67, -25.37, 89.52),
+    position = vector3(625.79, -31.46, 90.51),
+}
+
+Config.Storages["lspd_storage"] = {
+    label = "Coffre LSPD",
+    type = "storage",
+    owner = "lspd",
+    position = vector3(615.55, -13.94, 89.51),
 }
