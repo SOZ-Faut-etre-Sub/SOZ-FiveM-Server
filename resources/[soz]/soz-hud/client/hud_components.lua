@@ -16,6 +16,7 @@ CreateThread(function()
         HideHudComponentThisFrame(22) -- 22 : HUD_WEAPONS
 
         DisableControlAction(1, 37)
+        DisableControlAction(1, 80)
 
         Wait(4)
     end
