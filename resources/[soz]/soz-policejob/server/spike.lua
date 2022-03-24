@@ -2,13 +2,15 @@ local spike_prop = GetHashKey("p_ld_stinger_s")
 local Spikes = {}
 
 --- Usable Items
-QBCore.Functions.CreateUseableItem("spike", function(source, item)
+RegisterNetEvent("police:server:placeSpike", function(item)
     local Player = QBCore.Functions.GetPlayer(source)
 
     for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
         if Player.PlayerData.job.id == allowedJob then
-            exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1)
-            TriggerClientEvent("police:client:RequestAddSpike", Player.PlayerData.source)
+            if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
+                exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
+                TriggerClientEvent("police:client:RequestAddSpike", Player.PlayerData.source)
+            end
 
             return
         end
