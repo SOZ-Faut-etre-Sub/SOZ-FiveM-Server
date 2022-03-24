@@ -8,11 +8,11 @@ end)
 
 --- Register Targets
 CreateThread(function()
-    exports["qb-target"]:AddBoxZone("bcso:duty", vector3(-450.635925, 6012.933594, 31.592176), 0.47, 0.47,
-                                    {name = "bcso:duty", heading = 65.0, minZ = 31.492176, maxZ = 32.1},
+    exports["qb-target"]:AddBoxZone("bcso:duty", vector3(1853.753052, 3688.094727, 35.412041), 0.47, 0.47,
+                                    {name = "bcso:duty", heading = 65.0, minZ = 34.2, maxZ = 34.8},
                                     {options = PoliceJob.Functions.GetDutyAction("bcso"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bcso:cloakroom", vector3(-438.71, 5990.6, 31.72), 4.4, 6.6,
-                                    {name = "bcso:cloakroom", heading = 315, minZ = 30.72, maxZ = 33.72},
+    exports["qb-target"]:AddBoxZone("bcso:cloakroom", vector3(1847.27, 3693.85, 34.27), 8.0, 3.6,
+                                    {name = "bcso:cloakroom", heading = 300, minZ = 33.27, maxZ = 35.27},
                                     {options = PoliceJob.Functions.GetCloakroomAction("bcso"), distance = 2.5})
 end)

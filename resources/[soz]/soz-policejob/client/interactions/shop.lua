@@ -1,29 +1,29 @@
 --- Targets
 CreateThread(function()
-    exports["qb-target"]:SpawnPed({
+    local shopOptions = {
         {
-            model = "s_m_y_cop_01",
-            coords = vector4(615.94, -14.03, 90.51, 228.97),
-            minusOne = true,
-            freeze = true,
-            invincible = true,
-            blockevents = true,
-            scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {
-                options = {
-                    {
-                        label = "Récupérer du matériel LSPD",
-                        icon = "fas fa-briefcase",
-                        event = "police:client:weaponShop",
-                        canInteract = function()
-                            return SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.ManageGrade)
-                        end,
-                    },
-                },
-                distance = 2.0,
-            },
+            label = "Récupérer du matériel",
+            icon = "fas fa-briefcase",
+            event = "police:client:weaponShop",
+            canInteract = function()
+                return SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.ManageGrade)
+            end,
         },
-    })
+    }
+
+    exports["qb-target"]:AddBoxZone("lspd:shop", vector3(620.64, -26.33, 90.51), 4.0, 0.8, {
+        name = "lspd:shop",
+        heading = 340,
+        minZ = 89.5,
+        maxZ = 92.5,
+    }, {options = shopOptions, distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bcso:shop", vector3(1858.9, 3689.47, 38.07), 0.6, 0.6, {
+        name = "bcso:shop",
+        heading = 30,
+        minZ = 37,
+        maxZ = 39,
+    }, {options = shopOptions, distance = 2.5})
 end)
 
 --- Events
