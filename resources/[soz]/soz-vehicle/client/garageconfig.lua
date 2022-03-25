@@ -1025,18 +1025,21 @@ PlacesFourriere = {
         heading = 0,
         minZ = 28.33,
         maxZ = 32.33,
+        data = {indexGarage = "fourriere"},
     }),
     ["fourriere2"] = BoxZone:Create(vector3(497.44, -1336.5, 29.34), 6, 4, {
         name = "fourriere2",
         heading = 0,
         minZ = 28.34,
         maxZ = 32.34,
+        data = {indexGarage = "fourriere"},
     }),
     ["fourriere3"] = BoxZone:Create(vector3(481.31, -1334.2, 29.33), 6, 4, {
         name = "fourriere3",
         heading = 230,
         minZ = 28.33,
         maxZ = 32.33,
+        data = {indexGarage = "fourriere"},
     }),
 }
 
@@ -1046,12 +1049,14 @@ PlacesEntreprise = {
         heading = 90,
         minZ = 30.22,
         maxZ = 34.22,
+        data = {indexGarage = "bennys"},
     }),
     ["bennys2"] = BoxZone:Create(vector3(-163.44, -1305.2, 31.3), 12, 4, {
         name = "bennys2",
         heading = 90,
         minZ = 30.3,
         maxZ = 34.3,
+        data = {indexGarage = "bennys"},
     }),
 }
 
