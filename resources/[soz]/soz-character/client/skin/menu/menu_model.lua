@@ -169,6 +169,10 @@ end
 function CreateModelMenu(createCharacterMenu, playerId, skin, clothConfig)
     local modelMenu = MenuV:InheritMenu(createCharacterMenu, {subtitle = "Identité"})
 
+    -- Add heritage before open, to preload textures
+    modelMenu:AddHeritage({portraitMale = "male_0", portraitFemale = "female_0"})
+    modelMenu:ClearItems()
+
     modelMenu:On("open", function()
         CreateModelMenuItems(modelMenu, playerId, skin, clothConfig)
     end)
