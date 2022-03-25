@@ -18,7 +18,7 @@ Config.ErrorMessage = {
 
 Config.SafeStorages = {
     ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(629.6, -24.31, 89.51)},
-    ["safe_lscs"] = {label = "Coffre LSCS", owner = "lscs", position = vector3(-433.32, 6001.71, 30.75)},
+    ["safe_bcso"] = {label = "Coffre BCSO", owner = "bcso", position = vector3(-433.32, 6001.71, 30.75)},
     ["safe_lsmc"] = {label = "Coffre LSMC", owner = "lsmc", position = vector3(311.64, -1423.72, 32.51)},
 }
 

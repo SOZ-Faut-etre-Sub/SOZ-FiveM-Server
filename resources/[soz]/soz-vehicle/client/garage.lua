@@ -222,8 +222,8 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
         local placedispo = 0
 
         if type == "public" then
-            for indexpublic, publicpar in pairs(PlacesPublic) do
-                if indexpublic:sub(1, -2) == indexgarage then
+            for _, publicpar in pairs(PlacesPublic) do
+                if publicpar.data.indexGarage == indexgarage then
                     local vehicles2 = GetGamePool("CVehicle")
                     local inside = false
                     for _, vehicle2 in ipairs(vehicles2) do
@@ -239,8 +239,8 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 end
             end
         elseif type == "private" then
-            for indexprive, privepar in pairs(PlacesPrives) do
-                if indexprive:sub(1, -2) == indexgarage then
+            for _, privepar in pairs(PlacesPrives) do
+                if privepar.data.indexGarage == indexgarage then
                     local vehicles2 = GetGamePool("CVehicle")
                     local inside = false
                     for _, vehicle2 in ipairs(vehicles2) do
@@ -256,8 +256,8 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 end
             end
         elseif type == "depot" then
-            for indexfourriere, fourrierepar in pairs(PlacesFourriere) do
-                if indexfourriere:sub(1, -2) == indexgarage then
+            for _, fourrierepar in pairs(PlacesFourriere) do
+                if fourrierepar.data.indexGarage == indexgarage then
                     local vehicles2 = GetGamePool("CVehicle")
                     local inside = false
                     for _, vehicle2 in ipairs(vehicles2) do
@@ -273,8 +273,8 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 end
             end
         elseif type == "entreprise" then
-            for indexentreprise, entreprisepar in pairs(PlacesEntreprise) do
-                if indexentreprise:sub(1, -2) == indexgarage then
+            for _, entreprisepar in pairs(PlacesEntreprise) do
+                if entreprisepar.data.indexGarage == indexgarage then
                     local vehicles2 = GetGamePool("CVehicle")
                     local inside = false
                     for _, vehicle2 in ipairs(vehicles2) do

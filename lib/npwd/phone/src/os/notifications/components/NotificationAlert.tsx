@@ -35,6 +35,8 @@ export const NotificationAlert = () => {
                     onClick={(e) => currentAlert?.onClickAlert(e)}
                     icon={currentAlert?.icon || undefined}
                 >
+                    {currentAlert?.content}
+
                     {/*<AlertTitle>*/}
                     {/*  <Box width="282px" whiteSpace="nowrap">*/}
                     {/*    <Box overflow="hidden" component="div" textOverflow="ellipsis">*/}
