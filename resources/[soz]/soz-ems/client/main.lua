@@ -38,6 +38,7 @@ function ResetAll()
     IsDead = false
     DeathTime = 0
     isInHospitalBed = false
+    Rhume = false
     ClearPedTasks()
     TriggerScreenblurFadeOut()
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
