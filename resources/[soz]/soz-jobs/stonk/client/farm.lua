@@ -26,7 +26,7 @@ local function CollectBags(currentShop, nBags)
 end
 
 AddEventHandler("soz-jobs:client:stonk-collect-bag", function()
-    Citizen.CreateThread(function ()
+    Citizen.CreateThread(function()
         local currentShop = exports["soz-shops"]:GetCurrentShop()
 
         local nBags
