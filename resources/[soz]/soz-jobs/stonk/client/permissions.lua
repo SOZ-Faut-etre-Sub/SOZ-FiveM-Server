@@ -3,17 +3,17 @@ local function isOnDuty()
 end
 
 function CanBagsBeCollected(shopId)
-    local hasJobPermission = SozJobCore.Functions.HasPermission(PlayerData.job.id, PlayerData.job.grade, SozJobCore.JobPermission.CashTransfer.CollectBags)
+    local hasJobPermission = SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.CashTransfer.CollectBags)
 
     if hasJobPermission then
         local shop = CollectedShops[shopId]
-        if not shop then 
-            return true
+        if not shop then
+            return isOnDuty()
         end
 
         local remainingBags = shop["remaining-bags"]
         if type(remainingBags) == "number" and remainingBags > 0 then
-            return true
+            return isOnDuty()
         end
 
         local lastCollect = shop["last-collection"]
@@ -28,8 +28,7 @@ end
 exports("CanBagsBeCollected", CanBagsBeCollected)
 
 function CanBagsBeResold()
-    local hasJobPermission = SozJobCore.Functions.HasPermission(PlayerData.job.id, PlayerData.job.grade, SozJobCore.JobPermission.CashTransfer.ResaleBags)
-    print("JOB", PlayerData.job.id, PlayerData.job.grade, hasJobPermission)
+    local hasJobPermission = SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.CashTransfer.ResaleBags)
 
     return isOnDuty() and hasJobPermission
 end
