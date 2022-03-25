@@ -26,11 +26,11 @@ end
 
 local function ApplyPedHair(ped, hair)
     SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
-    SetPedHairColor(ped, hair.HairColor, 0);
+    SetPedHairColor(ped, hair.HairColor, hair.HairSecondaryColor or 0);
     SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Eyebrows, 1, hair.EyebrowColor, 0);
     SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, 1.0);
-    SetPedHeadOverlayColor(ped, HeadOverlayType.FacialHair, 1, hair.BeardColor, 0);
+    SetPedHeadOverlayColor(ped, HeadOverlayType.FacialHair, 1, hair.BeardColor, hair.BeardSecondaryColor or 0);
     SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.ChestHair, 1, hair.ChestHairColor, 0);
 end

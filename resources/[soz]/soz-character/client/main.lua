@@ -544,10 +544,8 @@ CreateClothShopConfigSouth = {
             Collections = {
                 {
                     Name = "Haut",
-                    Items = CreateItemsWithTextures(ComponentType.Torso, 260, {
-                        {Name = GetLabelText("CLO_BHM_U_5_2"), Id = 2},
-                        {Name = GetLabelText("CLO_BHM_U_5_3"), Id = 3},
-                        {Name = GetLabelText("CLO_BHM_U_5_4"), Id = 4},
+                    Items = CreateItemsWithTextures(ComponentType.Torso, 17, {
+                        {Name = GetLabelText("CLO_BHM_U_5_2"), Id = 0},
                     }),
                 },
             },

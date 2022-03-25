@@ -10,10 +10,12 @@ function GetDefaultBodySkin(gender)
         Hair = {
             HairType = 0,
             HairColor = 0,
+            HairSecondaryColor = 0,
             EyebrowType = -1,
             EyebrowColor = 0,
             BeardType = -1,
             BeardColor = 0,
+            BeardSecondaryColor = 0,
             ChestHairType = -1,
             ChestHairColor = 0,
         },
@@ -106,7 +108,7 @@ function GetFemaleDefaultBaseClothSet()
             [ComponentType.Top] = {Drawable = 2, Texture = 0, Palette = 0},
             [ComponentType.Bulletproof] = {Drawable = 0, Texture = 0, Palette = 0},
             [ComponentType.Decals] = {Drawable = 0, Texture = 0, Palette = 0},
-            [ComponentType.Torso] = {Drawable = 18, Texture = 0, Palette = 0},
+            [ComponentType.Torso] = {Drawable = 17, Texture = 0, Palette = 0},
         },
         Props = {
             [PropType.Head] = nil,

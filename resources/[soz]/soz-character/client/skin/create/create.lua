@@ -1,4 +1,4 @@
-local createCharacterMenu = MenuV:CreateMenu(nil, "", "menu_personal", "soz", "create-character")
+local createCharacterMenu = MenuV:CreateMenu(nil, "Création de personnage", "menu_personal", "soz", "create-character")
 
 local function OpenCreateCharacterMenu(skin, clothConfig, SpawnId)
     local p = promise.new()
@@ -57,7 +57,7 @@ function CreateCharacterWizard(spawnId, character)
         character = OpenCreateCharacterMenu(character.Skin, character.ClothConfig, spawnId);
         Camera.Deactivate()
 
-        local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32)
+        local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
 
         if confirmWord:lower() == "oui" then
             confirm = true
