@@ -15,7 +15,6 @@ function GetDefaultBodySkin(gender)
             EyebrowColor = 0,
             BeardType = -1,
             BeardColor = 0,
-            BeardSecondaryColor = 0,
             ChestHairType = -1,
             ChestHairColor = 0,
         },

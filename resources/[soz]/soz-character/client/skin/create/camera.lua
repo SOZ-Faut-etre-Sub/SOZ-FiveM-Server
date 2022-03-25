@@ -138,9 +138,19 @@ Camera.CalculatePosition = function()
 end
 
 function CameraLoop()
+    local playerPed = PlayerPedId()
+
     while true do
         if not Camera.active then
             return
+        end
+
+        local newPlayerPed = PlayerPedId()
+
+        -- When model changes, ped change so we must reactivate idle animation
+        if playerPed ~= newPlayerPed then
+            PlayIdleAnimation()
+            playerPed = newPlayerPed
         end
 
         DisableFirstPersonCamThisFrame()

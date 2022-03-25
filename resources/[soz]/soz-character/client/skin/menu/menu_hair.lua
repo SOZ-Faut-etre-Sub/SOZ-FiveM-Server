@@ -39,10 +39,6 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
         skin.Hair.BeardColor = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateColorSliderList(hairMenu, "Couleur secondaire", skin.Hair.BeardSecondaryColor, Colors.Hair, function(value)
-        skin.Hair.BeardSecondaryColor = value
-        ApplyPlayerBodySkin(playerId, skin)
-    end)
 
     -- Poils
     hairMenu:AddTitle({label = "Poils"})
