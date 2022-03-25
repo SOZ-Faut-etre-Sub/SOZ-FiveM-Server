@@ -161,7 +161,6 @@ end
 function ApplyPlayerClothSet(playerId, clothSet)
     local ped = GetPlayerPed(playerId)
 
-    SetPedDefaultComponentVariation(ped)
     ApplyPedClothSet(ped, clothSet)
 end
 
