@@ -4,6 +4,7 @@ PlayerData = QBCore.Functions.GetPlayerData()
 -- In-memory, player-based save
 CollectedShops = {}
 
+-- BLIP
 Citizen.CreateThread(function()
     QBCore.Functions.CreateBlip("stonk-dep", {
         name = StonkConfig.Blip.Name,

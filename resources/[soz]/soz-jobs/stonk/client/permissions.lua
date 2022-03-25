@@ -6,12 +6,20 @@ function CanBagsBeCollected(shopId)
     local hasJobPermission = SozJobCore.Functions.HasPermission(PlayerData.job.id, PlayerData.job.grade, SozJobCore.JobPermission.CashTransfer.CollectBags)
 
     if hasJobPermission then
-        local lastCollect = CollectedShops[shopId]
+        local shop = CollectedShops[shopId]
+        if not shop then 
+            return true
+        end
+
+        local remainingBags = shop["remaining-bags"]
+        if type(remainingBags) == "number" and remainingBags > 0 then
+            return true
+        end
+
+        local lastCollect = shop["last-collection"]
         if lastCollect then
             local now = exports["soz-jobs"]:GetTimestamp()
-            return lastCollect + StonkConfig.Cooldown < now
-        else
-            return true
+            return lastCollect + StonkConfig.Collection.Cooldown < now
         end
     end
 
