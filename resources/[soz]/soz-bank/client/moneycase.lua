@@ -50,6 +50,9 @@ end)
 
 Citizen.CreateThread(function()
     while true do
+        local playerPed = PlayerPedId()
+        local isPhoneVisible = exports["soz-phone"]:isPhoneVisible()
+
         if hasMoneyCase() then
             DisableControlAction(0, 24, true) -- Attack
             DisableControlAction(0, 257, true) -- Attack 2
@@ -68,13 +71,13 @@ Citizen.CreateThread(function()
             DisableControlAction(0, 143, true) -- Disable melee
         end
 
-        if hasMoneyCase() and IsPedInVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId())) then
+        if hasMoneyCase() and (IsPedInVehicle(playerPed, GetVehiclePedIsIn(playerPed)) or isPhoneVisible) then
             removeCase()
         end
 
-        if hasMoneyCase() and GetVehiclePedIsTryingToEnter(PlayerPedId()) ~= 0 then
+        if hasMoneyCase() and (GetVehiclePedIsTryingToEnter(playerPed) ~= 0 or isPhoneVisible) then
             Wait(500)
-            SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
+            SetCurrentPedWeapon(playerPed, "WEAPON_UNARMED")
         end
 
         Wait(0)

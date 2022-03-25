@@ -108,3 +108,12 @@ Config.CarWash = { -- carwash
     [5] = {["label"] = "Lavage Auto", ["coords"] = vector3(1363.22, 3592.7, 34.92)},
     [6] = {["label"] = "Lavage Auto", ["coords"] = vector3(-699.62, -932.7, 19.01)},
 }
+
+Config.DisableSpawn = {
+    { --- LSPD
+        [1] = vector2(487.64, -12.38),
+        [2] = vector2(531.07, 38.07),
+        [3] = vector2(667.54, 1.78),
+        [4] = vector2(557.58, -66.67),
+    },
+}
