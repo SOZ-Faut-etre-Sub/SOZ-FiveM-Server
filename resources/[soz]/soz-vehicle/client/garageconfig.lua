@@ -1076,7 +1076,7 @@ PlacesEntreprise = {
         data = {indexGarage = "bennys"},
     }),
     ["lspd1"] = BoxZone:Create(vector3(594.66, 3.26, 70.63), 6.8, 4.0,
-                                 {
+                               {
         name = "lspd1",
         heading = 350,
         minZ = 69.63,
@@ -1084,7 +1084,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd2"] = BoxZone:Create(vector3(590.52, 3.89, 70.63), 6.8, 4.0,
-                                 {
+                               {
         name = "lspd2",
         heading = 350,
         minZ = 69.63,
@@ -1092,7 +1092,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd3"] = BoxZone:Create(vector3(592.1, -11.17, 70.63), 6.2, 4.0,
-                                 {
+                               {
         name = "lspd3",
         heading = 350,
         minZ = 69.63,
@@ -1100,7 +1100,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd4"] = BoxZone:Create(vector3(588.03, -10.44, 70.63), 6.2, 4.0,
-                                 {
+                               {
         name = "lspd4",
         heading = 350,
         minZ = 69.63,
@@ -1108,7 +1108,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd5"] = BoxZone:Create(vector3(590.84, -18.21, 70.63), 6.2, 4.0,
-                                 {
+                               {
         name = "lspd5",
         heading = 350,
         minZ = 69.63,
@@ -1116,7 +1116,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd6"] = BoxZone:Create(vector3(586.73, -17.49, 70.63), 6.2, 4.0,
-                                 {
+                               {
         name = "lspd6",
         heading = 350,
         minZ = 69.63,
@@ -1124,7 +1124,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd7"] = BoxZone:Create(vector3(588.97, -31.28, 70.63), 6.2, 4.0,
-                                 {
+                               {
         name = "lspd7",
         heading = 350,
         minZ = 69.63,
@@ -1132,7 +1132,7 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["lspd8"] = BoxZone:Create(vector3(584.88, -30.67, 70.63), 6.2, 4.0,
-                                 {
+                               {
         name = "lspd8",
         heading = 350,
         minZ = 69.63,
@@ -1140,29 +1140,11 @@ PlacesEntreprise = {
         data = {indexGarage = "lspd"},
     }),
     ["bcso1"] = BoxZone:Create(vector3(1847.36, 3672.06, 33.72), 6.2, 3.8,
-                                 {
-        name = "bcso1",
-        heading = 31,
-        minZ = 32.76,
-        maxZ = 35.76,
-        data = {indexGarage = "bcso"},
-    }),
+                               {name = "bcso1", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
     ["bcso2"] = BoxZone:Create(vector3(1850.38, 3673.92, 33.76), 6.2, 3.8,
-                                 {
-        name = "bcso2",
-        heading = 31,
-        minZ = 32.76,
-        maxZ = 35.76,
-        data = {indexGarage = "bcso"},
-    }),
+                               {name = "bcso2", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
     ["bcso3"] = BoxZone:Create(vector3(1853.76, 3675.65, 33.75), 6.2, 3.8,
-                                 {
-        name = "bcso3",
-        heading = 31,
-        minZ = 32.76,
-        maxZ = 35.76,
-        data = {indexGarage = "bcso"},
-    }),
+                               {name = "bcso3", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
 }
 
 for indexpriv, prive in pairs(Zonesprives) do
