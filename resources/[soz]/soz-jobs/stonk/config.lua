@@ -1,10 +1,12 @@
 StonkConfig = {}
 
+StonkConfig.NotifDelay = 2000 -- in ms
+
 StonkConfig.Collection = {
     Cooldown = 60000, -- in ms
     Duration = 2000, -- in ms
     Range = {min = 5, max = 8},
-    BagItem = "goldbar",
+    BagItem = "moneybag",
 }
 
 StonkConfig.Resale = {
