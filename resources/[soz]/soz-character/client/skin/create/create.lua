@@ -1,4 +1,4 @@
-local createCharacterMenu = MenuV:CreateMenu(nil, "Création de personnage", "menu_personal", "soz", "create-character")
+local createCharacterMenu = MenuV:CreateMenu(nil, "", "menu_char_creation", "soz", "create-character")
 
 local function OpenCreateCharacterMenu(skin, clothConfig, SpawnId)
     local p = promise.new()
