@@ -1,16 +1,16 @@
 function CreatePlayer(shutdownLoadingScreen)
-    -- Shutdown Loading Screen
+    ---- Shutdown Loading Screen
     if shutdownLoadingScreen then
         exports["soz-loadscreen"]:Shutdown()
     end
 
     -- Camera effect
+    ClearScreen()
     StartUnzoomSkyCam()
     StopUnzoomSkyCam()
     StartZoomSkyCam()
 
     -- Select spawn on NUI
-    ClearScreen()
     SetNuiFocus(true, true)
     SendNUIMessage({action = "open"})
 end
@@ -20,7 +20,10 @@ RegisterNUICallback("SpawnPlayer", function(data)
     SetNuiFocus(false, false)
     SendNUIMessage({action = "close"})
 
+    local charInfo, character = CharacterPrepare()
+
     SpawnPlayer(data.SpawnId)
+    CharacterCreate(data.SpawnId, charInfo, character)
 end)
 
 function SpawnPlayer(SpawnId)
@@ -32,26 +35,45 @@ function SpawnPlayer(SpawnId)
 
     Citizen.Wait(1000)
     StopZoomSkyCam()
-
-    local tmpCharacter = QBCore.Functions.TriggerCallback("soz-character:server:GetUserTempPlayer")
-
-    if tmpCharacter == nil then
-        tmpCharacter = {}
-    end
-
-    if tmpCharacter.gender == "Homme" then
-        tmpCharacter.gender = 0
-    elseif tmpCharacter.gender == "Femme" then
-        tmpCharacter.gender = 1
-    end
-
-    TriggerServerEvent("soz-character:server:CreatePlayer", tmpCharacter)
-    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
 end
 
-RegisterNetEvent("soz-character:client:ChoosePlayerSkin", function()
-    SetEntityVisible(PlayerPedId(), true)
+function CharacterPrepare()
+    local charInfo = QBCore.Functions.TriggerRpc("soz-character:server:GetUserTempPlayer")
+
+    if charInfo == nil then
+        charInfo = {gender = 0}
+    end
+
+    if charInfo.gender == "Homme" then
+        charInfo.gender = 0
+    elseif charInfo.gender == "Femme" then
+        charInfo.gender = 1
+    end
+
+    local character = CreateAndApplyDefaultCharacter(charInfo.gender)
+
+    return charInfo, character
+end
+
+function CharacterCreate(SpawnId, charInfo, character)
+    local playerPed = PlayerPedId()
+
+    SetEntityVisible(playerPed, true)
     SetNuiFocus(false, false)
-    TriggerEvent("QBCore:Client:OnPlayerLoaded")
-    TriggerEvent("cui_character:open", {"identity", "features", "style", "spawn"}, false)
-end)
+
+    -- Create character with menu (or other interface
+    character = CreateCharacterWizard(SpawnId, character)
+
+    local connected = QBCore.Functions.TriggerRpc("soz-character:server:CreatePlayer", charInfo, character.Skin, character.ClothConfig);
+
+    if connected then
+        SetEntityVisible(PlayerPedId(), true)
+        SetNuiFocus(false, false)
+
+        TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
+        TriggerEvent("QBCore:Client:OnPlayerLoaded")
+
+        ApplyPlayerBodySkin(PlayerId(), character.Skin)
+        ApplyPlayerClothConfig(PlayerId(), character.ClothConfig)
+    end
+end

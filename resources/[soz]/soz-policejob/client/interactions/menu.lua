@@ -15,6 +15,7 @@ local function RedAlertEntity(menu, societyNumber)
             local coords = GetEntityCoords(ped)
             local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
 
+            TriggerEvent("police:client:RedCall")
             TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
                 anonymous = false,
                 number = societyNumber,
@@ -33,9 +34,14 @@ local function PropsEntity(menu)
         values = {
             {label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}},
             {label = "Barrière", value = {item = "police_barrier", props = "prop_barrier_work05"}},
+            {label = "Herse", value = {item = "spike"}},
         },
         select = function(_, value)
-            TriggerServerEvent("job:server:placeProps", value.item, value.props)
+            if value.item == "spike" then
+                TriggerServerEvent("police:server:placeSpike", value.item)
+            else
+                TriggerServerEvent("job:server:placeProps", value.item, value.props)
+            end
         end,
     })
 end
@@ -145,12 +151,13 @@ end
 
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
-        RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
-        PropsEntity(menu)
-
         if PlayerData.job.onduty then
+            RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+            PropsEntity(menu)
             BadgeEntity(menu)
             RadarEntity(menu, job)
+        else
+            menu:AddButton({label = "Tu n'es pas en service !", disabled = true})
         end
     end)
 end

@@ -1,6 +1,6 @@
 Config = {}
 
-Config.AllowedJobInteraction = {"lspd", "lscs"}
+Config.AllowedJobInteraction = {"lspd", "bcso"}
 
 Config.Badge = GetHashKey("prop_fib_badge")
 
@@ -11,13 +11,13 @@ Config.Locations = {
             blip = {sprite = 60, color = 29},
             coords = vector3(632.76, 7.31, 82.63),
         },
-        ["LSCS"] = {
-            label = "Los Santos Country Sheriff",
+        ["BCSO"] = {
+            label = "Blaine Country Sheriff's Office",
             blip = {sprite = 60, color = 21},
-            coords = vector3(-447.66, 6013.5, 31.72),
+            coords = vector3(1856.15, 3681.68, 34.27),
         },
     },
-    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70), ["lscs"] = vector3(-450.88, 6011.26, 30.73)},
+    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70)},
 }
 
 Config.WeaponShop = {
@@ -27,53 +27,51 @@ Config.WeaponShop = {
         [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
         [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
         [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
-        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
-        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
-        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
-        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
-        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
-        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
-        [12] = {
+        [6] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [7] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [11] = {
             name = "weapon_pistol_mk2",
             metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
             price = 200,
             amount = 1,
         },
-        [13] = {
+        [12] = {
             name = "weapon_pumpshotgun",
             metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
             price = 300,
             amount = 1,
         },
-        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
-        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+        [13] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [14] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
     },
-    ["lscs"] = {
+    ["bcso"] = {
         [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
         [2] = {name = "weapon_flashlight", metadata = {}, price = 50, amount = 1},
         [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
         [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
         [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
-        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
-        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
-        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
-        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
-        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
-        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
-        [12] = {
+        [6] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [7] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [11] = {
             name = "weapon_revolver_mk2",
             metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
             price = 200,
             amount = 1,
         },
-        [13] = {
+        [12] = {
             name = "weapon_pumpshotgun",
             metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
             price = 300,
             amount = 1,
         },
-        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
-        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+        [13] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [14] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
     },
 }
 
@@ -149,7 +147,7 @@ Config.Radars = {
     [1] = {
         props = vector4(-54.77, 6338.8, 30.33, 155.46),
         zone = vector3(-60.35, 6321.91, 31.3),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 9,
         speed = 90,
@@ -157,7 +155,7 @@ Config.Radars = {
     [2] = {
         props = vector4(2365.11, 5763.63, 44.94, 236.35),
         zone = vector3(2386.17, 5745.69, 45.73),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 10,
         speed = 120,
@@ -165,7 +163,7 @@ Config.Radars = {
     [3] = {
         props = vector4(-2831.09, 2176.07, 30.84, 320.84),
         zone = vector3(-2813.6, 2202.67, 28.91),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 15,
         speed = 120,
@@ -173,7 +171,7 @@ Config.Radars = {
     [4] = {
         props = vector4(2149.54, 3761.94, 31.89, 320.54),
         zone = vector3(2161.77, 3778.34, 33.36),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 8,
         speed = 90,
@@ -181,7 +179,7 @@ Config.Radars = {
     [5] = {
         props = vector4(710.03, 2707.9, 39.23, 116.24),
         zone = vector3(695.75, 2700.52, 40.5),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 8,
         speed = 90,
@@ -189,7 +187,7 @@ Config.Radars = {
     [6] = {
         props = vector4(2234.08, 4744.3, 38.66, 111.03),
         zone = vector3(2221.52, 4739.29, 40.14),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 8,
         speed = 90,
@@ -197,7 +195,7 @@ Config.Radars = {
     [7] = {
         props = vector4(1131.91, 1890.94, 64.72, 42.22),
         zone = vector3(1118.43, 1909.73, 63.44),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 8,
         speed = 90,
@@ -205,7 +203,7 @@ Config.Radars = {
     [8] = {
         props = vector4(-1434.12, 1930.06, 72.43, 202.18),
         zone = vector3(-1425.47, 1905.34, 74.05),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 10,
         speed = 90,
@@ -213,7 +211,7 @@ Config.Radars = {
     [9] = {
         props = vector4(2767.39, 4601.74, 44.2, 29.84),
         zone = vector3(2751.96, 4625.0, 44.89),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 10,
         speed = 90,
@@ -221,7 +219,7 @@ Config.Radars = {
     [10] = {
         props = vector4(-797.55, 2231.07, 86.17, 356.3),
         zone = vector3(-798.91, 2252.27, 84.23),
-        station = "lscs",
+        station = "bcso",
         isOnline = true,
         zoneRadius = 8,
         speed = 90,

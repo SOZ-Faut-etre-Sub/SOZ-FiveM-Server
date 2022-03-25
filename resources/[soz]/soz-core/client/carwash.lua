@@ -15,9 +15,12 @@ local function DrawText3Ds(x, y, z, text)
     ClearDrawOrigin()
 end
 
-RegisterNetEvent("qb-carwash:client:washCar", function()
+RegisterNetEvent("qb-carwash:client:washCar", function(entity)
     local PlayerPed = PlayerPedId()
     local PedVehicle = GetVehiclePedIsIn(PlayerPed)
+    if PedVehicle == 0 then
+        PedVehicle = entity
+    end
     washingVehicle = true
     QBCore.Functions.Progressbar("search_cabin", "Lavage de véhicule en cours ..", math.random(4000, 8000), false, true,
                                  {
