@@ -15,8 +15,8 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 3,
-        display: 'LSCS',
-        number: '555-LSCS',
-        avatar: 'media/society_icon/lscs.webp',
+        display: 'BCSO',
+        number: '555-BCSO',
+        avatar: 'media/society_icon/bcso.webp',
     },
 ];

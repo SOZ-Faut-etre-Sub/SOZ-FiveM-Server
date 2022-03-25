@@ -7,7 +7,7 @@ SozJobCore.JobType = {
     Religious = "religious",
     Scrapper = "scrapper",
     LSPD = "lspd",
-    LSCS = "lscs",
+    BCSO = "bcso",
     Medic = "medic",
     Taxi = "taxi",
     Food = "food",
@@ -103,8 +103,8 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
         },
     },
-    [SozJobCore.JobType.LSCS] = {
-        label = "LSCS",
+    [SozJobCore.JobType.BCSO] = {
+        label = "BCSO",
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
