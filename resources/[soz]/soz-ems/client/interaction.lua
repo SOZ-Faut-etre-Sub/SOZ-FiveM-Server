@@ -13,7 +13,7 @@ CreateThread(function()
                 action = function(entity)
                     TriggerEvent("animations:client:EmoteCommandStart", {"medic"})
                     QBCore.Functions.Progressbar("Soigner", "Appliquer un bandage..", 10000, false, true,
-                                                  {
+                                                 {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
@@ -39,7 +39,7 @@ CreateThread(function()
                 action = function(entity)
                     TriggerEvent("animations:client:EmoteCommandStart", {"cpr"})
                     QBCore.Functions.Progressbar("réanimer", "Vous réanimez la personne..", 10000, false, true,
-                                                  {
+                                                 {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
@@ -51,7 +51,7 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:revive", ReviveId)
                     end)
                 end,
-                item = "défibrilateur"
+                item = "défibrilateur",
             },
         },
         distance = 1.5,

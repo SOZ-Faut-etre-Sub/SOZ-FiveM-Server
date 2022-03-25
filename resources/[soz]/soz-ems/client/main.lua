@@ -5,6 +5,16 @@ isInHospitalBed = false
 HospitalBedId = nil
 DeathTime = 0
 
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    QBCore.Functions.CreateBlip("LSMC", {
+        name = "LSMC",
+        coords = vector3(356.35, -1416.63, 32.51),
+        sprite = 61,
+        color = 2,
+        scale = 0.8,
+    })
+end)
+
 RegisterNetEvent("soz_ems:client:KillPlayer")
 AddEventHandler("soz_ems:client:KillPlayer", function()
     SetEntityHealth(PlayerPedId(), 0)

@@ -1,19 +1,14 @@
-onDuty = true
+onDuty = false
 
-exports["qb-target"]:AddBoxZone("duty_lsmc", vector3(356.62, -1417.61, 32.51), 0.65, 0.5, {
-    name = "duty_lsmc",
-    heading = 325,
-    minZ = 32.41,
-    maxZ = 32.61,
-    debugPoly = false,
-}, {
+exports["qb-target"]:AddBoxZone("duty_lsmc", vector3(356.62, -1417.61, 32.51), 0.65, 0.5,
+                                {name = "duty_lsmc", heading = 325, minZ = 32.41, maxZ = 32.61, debugPoly = false}, {
     options = {
         {
             type = "client",
             event = "lsmc:duty",
             icon = "fas fa-sign-in-alt",
             label = "Prendre son service",
-            canInteract= function()
+            canInteract = function()
                 return onDuty == false
             end,
             job = "lsmc",
@@ -23,7 +18,7 @@ exports["qb-target"]:AddBoxZone("duty_lsmc", vector3(356.62, -1417.61, 32.51), 0
             event = "lsmc:duty",
             icon = "fas fa-sign-in-alt",
             label = "Finir son service",
-            canInteract= function()
+            canInteract = function()
                 return onDuty == true
             end,
             job = "lsmc",
@@ -35,7 +30,7 @@ exports["qb-target"]:AddBoxZone("duty_lsmc", vector3(356.62, -1417.61, 32.51), 0
 RegisterNetEvent("lsmc:duty")
 AddEventHandler("lsmc:duty", function()
     onDuty = not onDuty
-    if onDuty then 
+    if onDuty then
         exports["soz-hud"]:DrawNotification("Vous avez pris votre service!")
     else
         exports["soz-hud"]:DrawNotification("Vous avez fini votre service!")

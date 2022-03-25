@@ -12,7 +12,7 @@ end
 CreateThread(function()
     while true do
         Wait(10000)
-        Random = math.random(1,100)
+        Random = math.random(1, 100)
         if not IsDead then
             if Random == 1 then
                 Rhume = false
