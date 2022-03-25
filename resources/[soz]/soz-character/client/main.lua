@@ -607,3 +607,17 @@ Citizen.CreateThread(function()
         table.insert(Colors.Makeup, {value = i, label = "MAKEUP_COLOR_" .. i, r = r, g = g, b = b});
     end
 end)
+
+function Clone(obj)
+    if type(obj) ~= "table" then
+        return obj
+    end
+
+    local res = {}
+
+    for k, v in pairs(obj) do
+        res[Clone(k)] = Clone(v)
+    end
+
+    return res
+end

@@ -317,7 +317,30 @@ function QBCore.Player.CreatePlayer(PlayerData)
     self.Functions.SetInventory = function(items, dontUpdateChat)
         self.PlayerData.items = items
         self.Functions.UpdatePlayerData(dontUpdateChat)
-        exports['soz-monitor']:Log('WARN', 'Inventory movement - Set ! items set: ' .. json.encode(items), self.PlayerData)
+
+        exports['soz-monitor']:Log('TRACE', 'Inventory movement - Set ! items set: ' .. json.encode(items), self.PlayerData)
+    end
+
+    self.Functions.SetSkin = function(skin, skipApply)
+        self.PlayerData.skin = skin
+        self.Functions.UpdatePlayerData(true)
+
+        if not skipApply then
+            TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", self.PlayerData.source)
+        end
+
+        exports['soz-monitor']:Log('TRACE', 'Update player skin ' .. json.encode(skin), self.PlayerData)
+    end
+
+    self.Functions.SetClothConfig = function(config, skipApply)
+        self.PlayerData.clothConfig = config
+        self.Functions.UpdatePlayerData(true)
+
+        if not skipApply then
+            TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
+        end
+
+        exports['soz-monitor']:Log('TRACE', 'Update player cloth config ' .. json.encode(skin), self.PlayerData)
     end
 
     self.Functions.GetItemByName = function(item)

@@ -1,17 +1,3 @@
-local function Clone(obj)
-    if type(obj) ~= "table" then
-        return obj
-    end
-
-    local res = {}
-
-    for k, v in pairs(obj) do
-        res[Clone(k)] = Clone(v)
-    end
-
-    return res
-end
-
 local function CreateCategoryUniqueCollectionItems(clothMenu, playerId, collection, clothSet)
     local itemOptions = {}
 

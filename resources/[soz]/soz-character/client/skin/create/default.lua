@@ -56,6 +56,7 @@ function GetDefaultBodySkin(gender)
             FullMakeupPrimaryColor = 0,
             FullMakeupSecondaryColor = 0,
         },
+        Tattoos = {},
     }
 end
 

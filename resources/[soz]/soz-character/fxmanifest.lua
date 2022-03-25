@@ -30,6 +30,8 @@ client_script {
     "client/loading/create.lua",
     "client/loading/logging.lua",
     "client/loading/events.lua",
+
+    "client/skin/sync.lua",
 }
 
 server_script {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/loading.lua", "server/create.lua"}

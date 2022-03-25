@@ -132,7 +132,7 @@ function TattooShop:GenerateMenu(menu, shop, skipIntro)
     end)
 
     menu:On("close", function()
-        self:OnMenuClose(menu, shop)
+        self:OnMenuClose()
     end)
 
     menu:Open()
@@ -143,38 +143,13 @@ end
 --- @param shop string
 function TattooShop:PreGenerateMenu(menu, shop, skipIntro)
     shop = self:GetShopData(shop)
-    local ClotheData = {}
-    local playerData = QBCore.Functions.GetPlayerData()
-
     if skipIntro ~= true and shop.inShopCoords then
         TaskGoStraightToCoord(PlayerPedId(), shop.inShopCoords.x, shop.inShopCoords.y, shop.inShopCoords.z, 1.0, 1000, shop.inShopCoords.w, 0.0)
         Wait(4000)
     end
 
-    if playerData.charinfo.gender == 0 then
-        ClotheData = {
-            ["tshirt_1"] = 15,
-            ["tshirt_2"] = 0,
-            ["arms_1"] = 15,
-            ["arms_2"] = 0,
-            ["torso_1"] = 91,
-            ["torso_2"] = 0,
-            ["pants_1"] = 14,
-            ["pants_2"] = 0,
-        }
-    else
-        ClotheData = {
-            ["tshirt_1"] = 34,
-            ["tshirt_2"] = 0,
-            ["arms_1"] = 15,
-            ["arms_2"] = 0,
-            ["torso_1"] = 101,
-            ["torso_2"] = 1,
-            ["pants_1"] = 16,
-            ["pants_2"] = 0,
-        }
-    end
-    TriggerEvent("skinchanger:loadClothes", nil, ClotheData)
+    -- set naked
+    TriggerEvent("soz-character:Client:SetTemporaryNaked", true)
 
     self:DeleteCam()
     self:CreateCam()
@@ -206,17 +181,26 @@ function TattooShop:PreGenerateMenu(menu, shop, skipIntro)
     end)
 end
 
-function TattooShop:OnMenuClose(menu, shop)
+function TattooShop:OnMenuClose()
     self:DeleteCam()
-    -- TriggerServerEvent("cui_character:requestPlayerData")
+
+    -- Unset naked
+    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+    TriggerEvent("soz-character:Client:ApplyCurrentSkin")
 end
 
 function TattooShop:MenuEntryAction(item)
-    local ped = PlayerPedId()
     local playerData = QBCore.Functions.GetPlayerData()
+    local skin = playerData.skin
 
-    SetPlayerTattoo(playerData.metadata.tattoo)
-    AddPedDecorationFromHashes(ped, GetHashKey(item.Value.collection), GetHashKey(item.Value.overlay))
+    skin.Tattoos = skin.Tattoos or {}
+
+    table.insert(skin.Tattoos, {
+        Collection = GetHashKey(item.Value.collection),
+        Overlay = GetHashKey(item.Value.overlay),
+    })
+
+    TriggerEvent("soz-character:Client:ApplyTemporarySkin", skin)
 end
 
 function TattooShop:CreateCam()

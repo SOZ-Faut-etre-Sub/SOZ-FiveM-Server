@@ -79,6 +79,12 @@ local function ApplyPedMakeup(ped, makeup)
     end
 end
 
+local function ApplyPedTattoos(ped, tattoos)
+    for _, tattoo in pairs(tattoos) do
+        AddPedDecorationFromHashes(ped, tattoo.Collection, tattoo.Overlay)
+    end
+end
+
 local function Clone(obj)
     if type(obj) ~= "table" then
         return obj
@@ -124,14 +130,15 @@ function ApplyPlayerBodySkin(playerId, bodySkin)
 
     -- Get ped id after changing model, as changing the model create a new ped instead of editing the existing one
     local ped = GetPlayerPed(playerId)
+    ClearPedDecorations(ped)
 
     ApplyPedHair(ped, bodySkin.Hair)
     ApplyPedFaceTrait(ped, bodySkin.FaceTrait)
     ApplyPedMakeup(ped, bodySkin.Makeup)
+    ApplyPedTattoos(ped, bodySkin.Tattoos or {})
 end
 
-function ApplyPlayerClothConfig(playerId, clothConfig)
-    local ped = GetPlayerPed(playerId)
+function ClothConfigComputeToClothSet(clothConfig)
     local clothSet = Clone(clothConfig.BaseClothSet)
 
     if clothConfig.JobClothSet ~= nil then
@@ -142,14 +149,13 @@ function ApplyPlayerClothConfig(playerId, clothConfig)
         clothSet = MergeClothSet(clothSet, clothConfig.TemporaryClothSet)
     end
 
-    if clothConfig.Config.NakedClothSet then
+    if clothConfig.Config.Naked then
         clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
     -- @TODO Handle mask / glasses / helmet / etc ...
 
-    SetPedDefaultComponentVariation(ped)
-    ApplyPedClothSet(ped, clothSet)
+    return clothSet
 end
 
 function ApplyPlayerClothSet(playerId, clothSet)
@@ -157,4 +163,10 @@ function ApplyPlayerClothSet(playerId, clothSet)
 
     SetPedDefaultComponentVariation(ped)
     ApplyPedClothSet(ped, clothSet)
+end
+
+function ApplyPlayerClothConfig(playerId, clothConfig)
+    local clothSet = ClothConfigComputeToClothSet(clothConfig)
+
+    ApplyPlayerClothSet(playerId, clothSet)
 end
