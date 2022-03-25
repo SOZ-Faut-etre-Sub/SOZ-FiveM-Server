@@ -25,10 +25,11 @@ Config.Licenses = {
     ["car"] = {
         vehicle = {
             modelHash = "dilettante2",
-            x = -809.18,
-            y = -1319.61,
-            z = 4.49,
-            rotation = 170.42,
+            spawnPoints = {
+                vector4(-809.18, -1319.61, 4.49, 170.42),
+                vector4(-814.58, -1296.18, 4.65, 170.07),
+                vector4(-798.43, -1315.28, 4.65, 351.13),
+            },
             networkSync = true,
         },
         price = 1,
@@ -37,14 +38,30 @@ Config.Licenses = {
         points = 12,
     },
     ["truck"] = {
-        vehicle = {modelHash = "boxville4", x = -828.87, y = -1264.37, z = 4.57, rotation = 139.59, networkSync = true},
+        vehicle = {
+            modelHash = "boxville4",
+            spawnPoints = {
+                vector4(-828.87, -1264.37, 4.57, 139.59),
+                vector4(-853.91, -1257.2, 4.9, 229.32),
+                vector4(-807.63, -1276.53, 4.9, 171.22),
+            },
+            networkSync = true,
+        },
         price = 1,
         icon = "fas fa-truck",
         label = "Passer le permis camion ($%s)",
         points = 12,
     },
     ["motorcycle"] = {
-        vehicle = {modelHash = "faggio", x = -805.25, y = -1336.23, z = 4.62, rotation = 315.04, networkSync = true},
+        vehicle = {
+            modelHash = "faggio",
+            spawnPoints = {
+                vector4(-805.25, -1336.23, 4.62, 315.04),
+                vector4(-780.41, -1341.65, 4.63, 7.65),
+                vector4(-833.34, -1331.21, 4.63, 320.92),
+            },
+            networkSync = true,
+        },
         price = 1,
         icon = "fas fa-motorcycle",
         label = "Passer le permis moto ($%s)",
