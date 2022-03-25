@@ -1,4 +1,4 @@
-local createCharacterMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "create-character")
+local createCharacterMenu = MenuV:CreateMenu(nil, "", "menu_personal", "soz", "create-character")
 
 local function OpenCreateCharacterMenu(skin, clothConfig, SpawnId)
     local p = promise.new()
@@ -59,7 +59,7 @@ function CreateCharacterWizard(spawnId, character)
 
         local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32)
 
-        if confirmWord == "OUI" then
+        if confirmWord:lower() == "oui" then
             confirm = true
         end
     end
