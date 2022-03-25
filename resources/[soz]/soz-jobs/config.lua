@@ -22,9 +22,7 @@ SozJobCore.JobType = {
 SozJobCore.JobPermission = {
     ManageGrade = "manage-grade",
     SocietyPrivateStorage = "society-private-storage",
-    CashTransfer = {
-        CollectBags = "collect-bags"
-    }
+    CashTransfer = {CollectBags = "collect-bags"},
 }
 
 SozJobCore.Jobs = {
