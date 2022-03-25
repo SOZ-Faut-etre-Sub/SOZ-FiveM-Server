@@ -1,3 +1,5 @@
+local shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:shop:menu")
+
 --- Targets
 CreateThread(function()
     local shopOptions = {
@@ -28,21 +30,27 @@ end)
 
 --- Events
 RegisterNetEvent("police:client:weaponShop", function()
-    PoliceJob.Functions.Menu.GenerateMenu(PlayerData.job.id, function(menu)
-        local items = Config.WeaponShop[PlayerData.job.id]
-        if not items then
-            return
-        end
+    if not PoliceJob.Functions.Menu.MenuAccessIsValid(PlayerData.job.id) then
 
-        for weaponID, weapon in ipairs(items) do
-            menu:AddButton({
-                label = weapon.amount .. "x " .. QBCore.Shared.Items[weapon.name].label,
-                rightLabel = "$" .. weapon.price,
-                value = weaponID,
-                select = function(btn)
-                    TriggerServerEvent("police:server:buy", btn.Value)
-                end,
-            })
-        end
-    end)
+        return
+    end
+
+    local items = Config.WeaponShop[PlayerData.job.id]
+    if not items then
+        return
+    end
+
+    shopMenu:ClearItems()
+    for weaponID, weapon in pairs(items) do
+        shopMenu:AddButton({
+            label = weapon.amount .. "x " .. QBCore.Shared.Items[weapon.name].label,
+            rightLabel = "$" .. weapon.price,
+            value = weaponID,
+            select = function(btn)
+                TriggerServerEvent("police:server:buy", btn.Value)
+            end,
+        })
+    end
+
+    shopMenu:Open()
 end)
