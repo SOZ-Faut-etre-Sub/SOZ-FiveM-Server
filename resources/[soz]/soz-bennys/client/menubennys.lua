@@ -707,7 +707,7 @@ local function OpenPart(menu, v, k)
         label = "Réparer " .. partName .. " 🔧",
         select = function()
             menu:Close()
-            TriggerEvent("soz-mechanicjob:client:RepairPart", part)
+            TriggerEvent("soz-bennys:client:CallRepairPart", part)
         end,
     })
     menu:On("close", function()
@@ -861,13 +861,12 @@ end
 local function OpenMenu(menu)
     local veh = GetVehiclePedIsIn(PlayerPedId(), false)
     FreezeEntityPosition(veh, true)
-    SetEntityHeading(veh, 90.0)
     menu:AddButton({
         icon = "◀",
         label = "Libérer le véhicule",
         description = "Détacher le véhicule de la plateforme",
         select = function()
-            TriggerEvent("soz-mechanicjob:client:UnattachVehicle")
+            TriggerEvent("soz-bennys:client:UnattachVehicle")
             exports["soz-hud"]:DrawNotification("Véhicule libéré")
             FreezeEntityPosition(veh, false)
             menu:Close()
@@ -935,51 +934,59 @@ Vehiclemecha2 = BoxZone:Create(vector3(-222.23, -1329.66, 30.89), 7, 4, {
 
 Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        exports["qb-target"]:AddTargetModel(-2094907124, {
-            options = {
-                {
-                    type = "client",
-                    -- event = "QBCore:ToggleDuty",
-                    icon = "fas fa-tshirt",
-                    label = "Se changer",
-                    targeticon = "fas fa-wrench",
-                    action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
-                        -- TriggerServerEvent("QBCore:ToggleDuty")
-                    end,
+        if OnDuty == true and PlayerJob.id == "bennys" then
+            exports["qb-target"]:AddTargetModel(-2094907124, {
+                options = {
+                    {
+                        type = "client",
+                        -- event = "QBCore:ToggleDuty",
+                        icon = "fas fa-tshirt",
+                        label = "Se changer",
+                        targeticon = "fas fa-wrench",
+                        action = function(entity)
+                            if IsPedAPlayer(entity) then
+                                return false
+                            end
+                            -- TriggerServerEvent("QBCore:ToggleDuty")
+                        end,
+                    },
                 },
-            },
-            distance = 2.5,
-        })
+                distance = 2.5,
+            })
+        end
     else
-        exports["qb-target"]:RemoveTargetModel(-2094907124, "Service")
+        if OnDuty == true and PlayerJob.id == "bennys" then
+            exports["qb-target"]:RemoveTargetModel(-2094907124, "Service")
+        end
     end
 end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        exports["qb-target"]:AddTargetModel(829413118, {
-            options = {
-                {
-                    type = "client",
-                    event = "QBCore:ToggleDuty",
-                    icon = "fas fa-sign-in-alt",
-                    label = "Service",
-                    targeticon = "fas fa-wrench",
-                    action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
-                        TriggerServerEvent("QBCore:ToggleDuty")
-                    end,
+        if PlayerJob.id == "bennys" then
+            exports["qb-target"]:AddTargetModel(829413118, {
+                options = {
+                    {
+                        type = "client",
+                        event = "QBCore:ToggleDuty",
+                        icon = "fas fa-sign-in-alt",
+                        label = "Service",
+                        targeticon = "fas fa-wrench",
+                        action = function(entity)
+                            if IsPedAPlayer(entity) then
+                                return false
+                            end
+                            TriggerServerEvent("QBCore:ToggleDuty")
+                        end,
+                    },
                 },
-            },
-            distance = 2.5,
-        })
+                distance = 2.5,
+            })
+        end
     else
-        exports["qb-target"]:RemoveTargetModel(829413118, "Service")
+        if PlayerJob.id == "bennys" then
+            exports["qb-target"]:RemoveTargetModel(829413118, "Service")
+        end
     end
 end)
 
@@ -987,7 +994,7 @@ local insidemecha = false
 
 Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             if Config.AttachedVehicle == nil then
                 if IsPedInAnyVehicle(PlayerPedId()) then
                     local veh = GetVehiclePedIsIn(PlayerPedId())
@@ -1000,15 +1007,17 @@ Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
             end
         end
     else
-        insidemecha = false
-        VehiculeOptions:Close()
-        Config.AttachedVehicle = nil
+        if OnDuty == true and PlayerJob.id == "bennys" then
+            insidemecha = false
+            VehiculeOptions:Close()
+            Config.AttachedVehicle = nil
+        end
     end
 end)
 
 Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             if Config.AttachedVehicle == nil then
                 if IsPedInAnyVehicle(PlayerPedId()) then
                     local veh = GetVehiclePedIsIn(PlayerPedId())
@@ -1021,9 +1030,11 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
             end
         end
     else
-        insidemecha = false
-        VehiculeOptions:Close()
-        Config.AttachedVehicle = nil
+        if OnDuty == true and PlayerJob.id == "bennys" then
+            insidemecha = false
+            VehiculeOptions:Close()
+            Config.AttachedVehicle = nil
+        end
     end
 end)
 

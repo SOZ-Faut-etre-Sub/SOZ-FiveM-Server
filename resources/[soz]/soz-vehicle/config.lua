@@ -1,3 +1,5 @@
+Config = {}
+
 Config = {
     DisableControl = {
         [0] = true, -- compacts
@@ -311,9 +313,19 @@ Garages = {
         showBlip = false,
         blipName = "Police",
         blipNumber = 357,
-        type = "job", -- public, job, gang, depot
+        type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
         job = "police",
+    },
+    ["bennys"] = {
+        label = "Bennys",
+        blipcoord = vector3(-163.47, -1301.73, 31.3),
+        showBlip = false,
+        blipName = "Bennys",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "bennys",
     },
     --[[
     ["intairport"] = {
@@ -456,3 +468,32 @@ Config.vehicleCustomisationPricesCustom = {
     performance = {prices = {0, 3250, 5500, 10450, 15250, 20500}},
     turbo = {price = 15000},
 }
+
+Config.Blacklist = { -- Integers | Blacklist classes from being towed.
+    16, -- Planes
+    21, -- Trains
+}
+
+Config.Flatbeds = {
+    {
+        Hash = "flatbed3", -- String | Hash Of The Vehicle
+        Extras = {
+            [1] = false, -- Integer | Enable/Disable Extra's When Used
+        },
+        Marker = vector3(-1.85, 0.4, -1.2), -- X, Y, Z | Marker Location
+        Attach = vector2(0.0, 1.0), -- X, Y | Attach/Weld Location
+        Radius = 3.0, -- Integer | ClosestVehicle Radius
+        Default = {
+            Pos = vector3(0.0, -3.8, 0.35), -- X, Y(Runs Second), Z(Runs First) | Default Offset Position
+            Rot = vector3(0.0, 0.0, 0.0), -- X, Y, Z | Default Rotation
+        },
+        Active = {
+            Pos = vector3(0.0, -8.20, -0.75), -- X, Y(Runs First), Z(Runs Second) | Lowered Offset Position
+            Rot = vector3(16.0, 0.0, 0.0), -- X, Y, Z | Lowered Rotation
+        },
+    },
+}
+
+Config.BedProp = "inm_flatbed_base" -- String | Hash Of The Bed Prop
+
+Config.GarageVehicles = {["flatbed3"] = "Flatbed", ["minivan"] = "Minivan"}

@@ -21,19 +21,7 @@ QBCore.Commands.Add("giveitem", "Give An Item", {
             if itemData ~= nil then
                 -- check iteminfo
                 local metadata = {}
-                if itemData["name"] == "id_card" then
-                    metadata.citizenid = Player.PlayerData.citizenid
-                    metadata.firstname = Player.PlayerData.charinfo.firstname
-                    metadata.lastname = Player.PlayerData.charinfo.lastname
-                    metadata.birthdate = Player.PlayerData.charinfo.birthdate
-                    metadata.gender = Player.PlayerData.charinfo.gender
-                    metadata.nationality = Player.PlayerData.charinfo.nationality
-                elseif itemData["name"] == "driver_license" then
-                    metadata.firstname = Player.PlayerData.charinfo.firstname
-                    metadata.lastname = Player.PlayerData.charinfo.lastname
-                    metadata.birthdate = Player.PlayerData.charinfo.birthdate
-                    metadata.type = "Class C Driver License"
-                elseif itemData["type"] == "weapon" then
+                if itemData["type"] == "weapon" then
                     amount = 1
                     metadata.serie = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) ..
                                                   QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))

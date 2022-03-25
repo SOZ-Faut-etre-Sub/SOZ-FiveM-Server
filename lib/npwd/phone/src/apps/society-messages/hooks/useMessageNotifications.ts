@@ -21,12 +21,10 @@ export const useMessageNotifications = () => {
         }
     });
 
-    const setNotification = ({message}) => {
-        const id = `${NOTIFICATION_ID}`;
-
+    const setNotification = ({message, external = false}) => {
         const notification = {
             app: 'SOCIETY_MESSAGE',
-            id,
+            NOTIFICATION_ID,
             sound: true,
             title: t('SOCIETY_MESSAGES.NOTIFICATION.TITLE'),
             onClick: () => history.push(`/society-messages`),
@@ -36,7 +34,7 @@ export const useMessageNotifications = () => {
         };
 
         addNotificationAlert(notification, (n) => {
-            removeId(id);
+            removeId(NOTIFICATION_ID);
             addNotification(n);
         });
     };

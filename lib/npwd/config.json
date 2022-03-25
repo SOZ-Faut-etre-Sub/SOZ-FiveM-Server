@@ -10,7 +10,7 @@
   },
   "database": {
     "useIdentifierPrefix": false,
-    "playerTable": "players",
+    "playerTable": "player",
     "identifierColumn": "citizenid",
     "identifierType": "license",
     "profileQueries": true,
@@ -26,8 +26,8 @@
     "returnedDataIndexes": ["data", "link"]
   },
   "debug": {
-    "level": "info",
-    "enabled": false,
+    "level": "debug",
+    "enabled": true,
     "sentryEnabled": false
   }
 }
