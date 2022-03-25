@@ -1,4 +1,4 @@
-Citizen.CreateThread(function ()
+Citizen.CreateThread(function()
     exports["qb-target"]:AddBoxZone("stonk:duty", vector2(-18.74, -707.44), 0.2, 0.5, {
         heading = 200.0,
         minZ = 45.9,
@@ -10,7 +10,7 @@ Citizen.CreateThread(function ()
                 label = "Prise de service",
                 type = "server",
                 event = "QBCore:ToggleDuty",
-                canInteract = function ()
+                canInteract = function()
                     return not PlayerData.job.onduty
                 end,
             },
@@ -19,10 +19,10 @@ Citizen.CreateThread(function ()
                 label = "Fin de service",
                 type = "server",
                 event = "QBCore:ToggleDuty",
-                canInteract = function ()
+                canInteract = function()
                     return PlayerData.job.onduty
                 end,
             },
-        }
+        },
     })
 end)
