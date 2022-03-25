@@ -22,9 +22,6 @@ RegisterNUICallback("SpawnPlayer", function(data)
 
     local charInfo, character = CharacterPrepare()
 
-    print(json.encode(charInfo))
-    print(json.encode(character))
-
     SpawnPlayer(data.SpawnId)
     CharacterCreate(data.SpawnId, charInfo, character)
 end)

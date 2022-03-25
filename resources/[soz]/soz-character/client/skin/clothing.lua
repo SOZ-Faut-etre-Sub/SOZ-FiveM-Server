@@ -36,6 +36,7 @@
 --
 --    return component, drawable, texture, gxt, field5, field7, field8
 -- end
+
 -- local function TestComponent(ped, clothSkin)
 --    local hash = GetHashNameForComponent(ped, ComponentType.Torso, clothSkin.Torso.Type, clothSkin.Torso.Variation)
 --    local numForcedComponent = GetShopPedApparelForcedComponentCount(hash)
