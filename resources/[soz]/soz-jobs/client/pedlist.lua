@@ -12,6 +12,8 @@ local ped_job = {
 
     -- LSPD Armor
     {modelHash = "s_f_y_cop_01", x = 608.67, y = -15.94, z = 76.63, rotation = 347.54, NetworkSync = true},
+    -- BCSO Armor
+    {modelHash = "s_m_y_sheriff_01", x = 1859.92, y = 3690.31, z = 34.27, rotation = 54.28, NetworkSync = true},
 }
 
 Citizen.CreateThread(function()
