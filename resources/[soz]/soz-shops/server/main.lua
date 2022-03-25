@@ -47,7 +47,7 @@ RegisterNetEvent("shops:server:pay", function(shop, product, amount)
 
                 table.insert(skin.Tattoos, {
                     Collection = GetHashKey(product.collection),
-                    Overlay = GetHashKey(product.overlay)
+                    Overlay = GetHashKey(product.overlay),
                 })
 
                 Player.Functions.SetSkin(skin)
