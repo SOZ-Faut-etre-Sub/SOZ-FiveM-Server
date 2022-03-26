@@ -124,26 +124,37 @@ local function OpenSafeStorageMenu(safeStorage, money, black_money)
 end
 
 CreateThread(function()
-    while true do
-        for id, safe in pairs(Config.SafeStorages) do
-            if safe.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == safe.owner) then
-                local dist = #(GetEntityCoords(PlayerPedId()) - safe.position)
+    for id, safe in pairs(Config.SafeStorages) do
+        exports["qb-target"]:AddBoxZone("safe:" .. id, safe.position, safe.size and safe.size.x or 1.0, safe.size and safe.size.y or 1.0, {
+            name = "safe:" .. id,
+            heading = safe.heading or 0.0,
+            minZ = safe.position.z - (safe.offsetDownZ or 1.0),
+            maxZ = safe.position.z + (safe.offsetUpZ or 1.0),
+            debugPoly = safe.debug or false,
+        }, {
+            options = {
+                {
+                    label = "Ouvrir le coffre",
+                    icon = "fas fa-wallet",
+                    event = "banking:client:qTargetOpenSafe",
+                    SafeId = id,
+                    safe = safe,
+                    job = safe.owner,
+                },
+            },
+            distance = 2.5,
+        })
+    end
+end)
 
-                if dist <= 1.5 then
-                    QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. safe.label)
-                    if IsControlJustPressed(1, 51) then
-                        QBCore.Functions.TriggerCallback("banking:server:openSafeStorage", function(isAllowed, money, black_money)
-                            if isAllowed then
-                                OpenSafeStorageMenu(id, money, black_money)
-                            else
-                                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas accès a ce coffre")
-                            end
-                        end, id)
-                    end
-                end
+RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
+    if data.safe.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == data.safe.owner) then
+        QBCore.Functions.TriggerCallback("banking:server:openSafeStorage", function(isAllowed, money, black_money)
+            if isAllowed then
+                OpenSafeStorageMenu(data.SafeId, money, black_money)
+            else
+                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas accès a ce coffre")
             end
-        end
-
-        Wait(2)
+        end, data.SafeId)
     end
 end)
