@@ -53,12 +53,12 @@ end)
 
 CreateThread(function()
     for id, storage in pairs(Config.Storages) do
-        exports["qb-target"]:AddBoxZone("storage:"..id, storage.position, storage.size and storage.size.x or 1.0, storage.size and storage.size.y or 1.0, {
-            name = "storage:"..id,
+        exports["qb-target"]:AddBoxZone("storage:" .. id, storage.position, storage.size and storage.size.x or 1.0, storage.size and storage.size.y or 1.0, {
+            name = "storage:" .. id,
             heading = storage.heading or 0.0,
             minZ = storage.position.z - (storage.offsetDownZ or 1.0),
             maxZ = storage.position.z + (storage.offsetUpZ or 1.0),
-            debugPoly = storage.debug or false
+            debugPoly = storage.debug or false,
         }, {
             options = {
                 {
@@ -67,10 +67,10 @@ CreateThread(function()
                     event = "inventory:client:qTargetOpenInventory",
                     storageID = id,
                     storage = storage,
-                    job = storage.owner
-                }
+                    job = storage.owner,
+                },
             },
-            distance = 2.5
+            distance = 2.5,
         })
     end
 end)
