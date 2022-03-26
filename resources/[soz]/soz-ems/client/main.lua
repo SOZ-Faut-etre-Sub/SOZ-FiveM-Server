@@ -51,6 +51,7 @@ function ResetAll()
     Rhume = false
     ClearPedTasks()
     TriggerScreenblurFadeOut()
+    StopScreenEffect('DeathFailOut')
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
 end
@@ -72,4 +73,9 @@ end)
 
 RegisterNetEvent("soz-ems:client:lit", function(id, isUsed)
     Config.Locations["lit"][id].used = isUsed
+end)
+
+RegisterNetEvent("soz-ems:client:callems")
+AddEventHandler("soz-ems:client:callems", function()
+    print("test")
 end)
