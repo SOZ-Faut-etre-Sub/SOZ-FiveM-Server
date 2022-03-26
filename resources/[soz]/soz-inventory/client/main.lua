@@ -52,30 +52,38 @@ RegisterNUICallback("closeNUI", function(data, cb)
 end)
 
 CreateThread(function()
-    while true do
-        for id, storage in pairs(Config.Storages) do
-            if storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == storage.owner) then
-                local dist = #(GetEntityCoords(PlayerPedId()) - storage.position)
+    for id, storage in pairs(Config.Storages) do
+        exports["qb-target"]:AddBoxZone("storage:" .. id, storage.position, storage.size and storage.size.x or 1.0, storage.size and storage.size.y or 1.0, {
+            name = "storage:" .. id,
+            heading = storage.heading or 0.0,
+            minZ = storage.position.z - (storage.offsetDownZ or 1.0),
+            maxZ = storage.position.z + (storage.offsetUpZ or 1.0),
+            debugPoly = storage.debug or false,
+        }, {
+            options = {
+                {
+                    label = "Ouvrir le stockage",
+                    icon = "fas fa-box-open",
+                    event = "inventory:client:qTargetOpenInventory",
+                    storageID = id,
+                    storage = storage,
+                    job = storage.owner,
+                },
+            },
+            distance = 2.5,
+        })
+    end
+end)
 
-                if dist <= 80.0 then
-                    DrawMarker(27, storage.position.x, storage.position.y, storage.position.z, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.5, 1.5, 1.5, 255, 128, 0, 50,
-                               false, false, 2)
-
-                    if dist <= 2.0 then
-                        if storage.state == nil then
-                            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour accéder à ~b~" .. storage.label)
-                            if IsControlJustPressed(1, 51) then
-                                TriggerServerEvent("inventory:server:openInventory", storage.type, id)
-                            end
-                        else
-                            QBCore.Functions.ShowHelpNotification("~r~Stockage déjà utilisé par ~o~" .. storage.state)
-                        end
-                    end
-                end
-            end
+RegisterNetEvent("inventory:client:qTargetOpenInventory", function(data)
+    if data.storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == data.storage.owner) then
+        if data.storage.state == nil then
+            TriggerServerEvent("inventory:server:openInventory", data.storage.type, data.storageID)
+        else
+            exports["soz-hud"]:DrawNotification("~r~Stockage déjà utilisé par ~o~" .. data.storage.state)
         end
-
-        Wait(2)
+    else
+        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas utiliser ce stockage")
     end
 end)
 
