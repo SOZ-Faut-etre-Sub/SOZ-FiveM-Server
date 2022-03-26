@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { captureException } from '@sentry/react';
 
 interface TopLevelErrorCompProps {
   hasError: boolean;
