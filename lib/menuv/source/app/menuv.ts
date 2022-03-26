@@ -37,11 +37,14 @@ export interface Option {
     label: string;
     description: string;
     value: number;
+    r: number;
+    g: number;
+    b: number;
 }
 
 export interface Item {
     index: number;
-    type: 'button' | 'menu' | 'checkbox' | 'confirm' | 'range' | 'slider' | 'label' | 'unknown';
+    type: 'button' | 'menu' | 'checkbox' | 'confirm' | 'range' | 'slider' | 'label' | 'unknown' | 'heritage' | 'title' | 'color_slider';
     uuid: string;
     icon: string;
     label: string;
@@ -50,9 +53,14 @@ export interface Item {
     value: any;
     prev_value: any;
     values: Option[];
+    minLabel: '';
+    maxLabel: '';
     min: number;
     max: number;
+    interval: number;
     disabled: boolean;
+    portraitMale: string;
+    portraitFemale: string;
 }
 
 export interface Menu {
@@ -315,9 +323,14 @@ export default VUE.extend({
                     this.items[i].description = item.description || this.items[i].description;
                     this.items[i].value = item.value || this.items[i].value;
                     this.items[i].values = item.values || this.items[i].values;
+                    this.items[i].minLabel = item.minLabel || this.items[i].minLabel;
+                    this.items[i].maxLabel = item.maxLabel || this.items[i].maxLabel;
                     this.items[i].min = item.min || this.items[i].min;
                     this.items[i].max = item.max || this.items[i].max;
+                    this.items[i].interval = item.interval || this.items[i].interval;
                     this.items[i].disabled = item.disabled || this.items[i].disabled;
+                    this.items[i].portraitMale = item.portraitMale || this.items[i].portraitMale;
+                    this.items[i].portraitFemale = item.portraitFemale || this.items[i].portraitFemale;
 
                     if ((this.index == i && this.items[i].disabled) || (this.index < 0 && !this.items[i].disabled)) {
                         this.index = this.NEXT_INDEX(this.index);
@@ -403,7 +416,7 @@ export default VUE.extend({
         },
         GET_SLIDER_LABEL({ uuid }: { uuid: string }) {
             for (var i = 0; i < this.items.length; i++) {
-                if (this.items[i].uuid == uuid && this.items[i].type == 'slider') {
+                if (this.items[i].uuid == uuid && (this.items[i].type == 'slider' || this.items[i].type == 'color_slider')) {
                     const currentValue = this.items[i].value as number;
                     const values = this.items[i].values;
 
@@ -414,6 +427,39 @@ export default VUE.extend({
                     }
 
                     return this.FORMAT_TEXT(values[currentValue].label || 'Unknown');
+                }
+            }
+
+            return '';
+        },
+        GET_SLIDER_RGB_OFFSET({ uuid, offset }: { uuid: string, offset: number }) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].uuid == uuid && this.items[i].type == 'color_slider') {
+                    const currentValue = this.items[i].value as number;
+                    const offsetValue = ((currentValue + offset) + this.items[i].values.length) % this.items[i].values.length;
+                    const values = this.items[i].values;
+
+                    if (values.length == 0) { return ''; }
+
+                    return `rgb(${values[offsetValue].r}, ${values[offsetValue].g}, ${values[offsetValue].b})`;
+                }
+            }
+
+            return '';
+        },
+        GET_SLIDER_RGB({ uuid }: { uuid: string }) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].uuid == uuid && this.items[i].type == 'color_slider') {
+                    const currentValue = this.items[i].value as number;
+                    const values = this.items[i].values;
+
+                    if (values.length == 0) { return ''; }
+
+                    if (currentValue < 0 || currentValue >= values.length) {
+                        return `rgb(${values[0].r}, ${values[0].g}, ${values[0].b})`;
+                    }
+
+                    return `rgb(${values[currentValue].r}, ${values[currentValue].g}, ${values[currentValue].b})`;
                 }
             }
 
@@ -560,9 +606,9 @@ export default VUE.extend({
                     let new_range_index = null;
                     let range_value = item.value as number;
 
-                    if ((range_value - 1) <= item.min) { new_range_index = item.min; }
-                    else if ((range_value - 1) >= item.max) { new_range_index = item.max; }
-                    else { new_range_index = (this.items[this.index].value - 1); }
+                    if ((range_value - item.interval) <= item.min) { new_range_index = item.min; }
+                    else if ((range_value - item.interval) >= item.max) { new_range_index = item.max; }
+                    else { new_range_index = (this.items[this.index].value - item.interval); }
 
                     if (new_range_index != this.items[this.index].value) {
                         this.items[this.index].value = new_range_index;
@@ -573,6 +619,7 @@ export default VUE.extend({
                     }
 
                     break;
+                case 'color_slider':
                 case 'slider':
                     let new_slider_index = null;
                     const slider_value = item.value as number;
@@ -616,9 +663,9 @@ export default VUE.extend({
                     let new_range_index = null;
                     let range_value = item.value as number;
 
-                    if ((range_value + 1) <= item.min) { new_range_index = item.min; }
-                    else if ((range_value + 1) >= item.max) { new_range_index = item.max; }
-                    else { new_range_index = (this.items[this.index].value + 1); }
+                    if ((range_value + item.interval) <= item.min) { new_range_index = item.min; }
+                    else if ((range_value + item.interval) >= item.max) { new_range_index = item.max; }
+                    else { new_range_index = (this.items[this.index].value + item.interval); }
 
                     if (new_range_index != this.items[this.index].value) {
                         this.items[this.index].value = new_range_index;
@@ -629,6 +676,7 @@ export default VUE.extend({
                     }
 
                     break;
+                case 'color_slider':
                 case 'slider':
                     let new_slider_index = null;
                     const slider_value = item.value as number;
@@ -681,6 +729,7 @@ export default VUE.extend({
 
                     this.POST(`https://menuv/submit`, { uuid: item.uuid, value: this.items[this.index].value, r: this.resource });
                     break;
+                case 'color_slider':
                 case 'slider':
                     let slider_value = item.value as number;
                     const slider_values = item.values || [];
