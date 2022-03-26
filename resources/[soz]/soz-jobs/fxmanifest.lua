@@ -22,6 +22,7 @@ client_script {
     "client/bell.lua",
     "client/menu.lua",
     "client/utils/*.lua",
+    "client/jobs/*.lua",
 }
 
 server_script {
