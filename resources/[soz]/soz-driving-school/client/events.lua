@@ -7,17 +7,18 @@ AddEventHandler("soz-driving-license:client:start_exam", function(data)
             return
         end
 
-        -- Check if vehicle spawn point free
-        if not IsSpawnPointFree(vData.x, vData.y, vData.z) then
+        -- Get free vehicle spawn point
+        local spawnPoint = GetSpawnPoint(vData.spawnPoints)
+        if not spawnPoint then
             TriggerEvent("hud:client:DrawNotification", "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.")
             return
         end
 
         -- Make player pay
-        TriggerServerEvent("soz-driving-license:server:pay", licenseType)
+        TriggerServerEvent("soz-driving-license:server:pay", licenseType, spawnPoint)
     end)
 end)
 
-RegisterNetEvent("soz-driving-license:client:spawn_vehicle", function(licenseType)
-    SetupDrivingSchoolExam(licenseType)
+RegisterNetEvent("soz-driving-license:client:spawn_vehicle", function(licenseType, spawnPoint)
+    SetupDrivingSchoolExam(licenseType, spawnPoint)
 end)
