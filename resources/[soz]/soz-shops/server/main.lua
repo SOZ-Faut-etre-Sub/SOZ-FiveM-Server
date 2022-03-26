@@ -42,10 +42,15 @@ RegisterNetEvent("shops:server:pay", function(shop, product, amount)
                     end
                 end)
             else
-                local tattooList = Player.PlayerData.metadata["tattoo"] or {}
-                table.insert(tattooList, product)
+                local skin = Player.PlayerData.skin
+                skin.Tattoos = skin.Tattoos or {}
 
-                Player.Functions.SetMetaData("tattoo", tattooList)
+                table.insert(skin.Tattoos, {
+                    Collection = GetHashKey(product.collection),
+                    Overlay = GetHashKey(product.overlay),
+                })
+
+                Player.Functions.SetSkin(skin)
 
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
             end

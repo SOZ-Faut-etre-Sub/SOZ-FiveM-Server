@@ -1,9 +1,6 @@
 local seatbeltOn = false
-local harnessOn = false
-local harnessHp = 20
 local handbrake = 0
 local sleep = 0
-local harnessData = {}
 local SpeedBuffer = {}
 local vehVelocity = {x = 0.0, y = 0.0, z = 0.0}
 local newvehicleBodyHealth = 0
@@ -25,53 +22,16 @@ RegisterCommand("toggleseatbelt", function()
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         local class = GetVehicleClass(GetVehiclePedIsUsing(PlayerPedId()))
         if class ~= 8 and class ~= 13 and class ~= 14 then
-            ToggleSeatbelt()
+            if thisFrameVehicleSpeed <= 75 then
+                ToggleSeatbelt()
+            else
+                exports["soz-hud"]:DrawNotification("~r~Vous allez trop vite pour faire ça")
+            end
         end
     end
 end, false)
 
-RegisterKeyMapping("toggleseatbelt", "Toggle Seatbelt", "keyboard", "B")
-
--- Events
-
-RegisterNetEvent("seatbelt:client:UseHarness", function(ItemData)
-    -- On Item Use (registered server side)
-    local ped = PlayerPedId()
-    local inveh = IsPedInAnyVehicle(ped, false)
-    local class = GetVehicleClass(GetVehiclePedIsUsing(ped))
-    if inveh and class ~= 8 and class ~= 13 and class ~= 14 then
-        if not harnessOn then
-            LocalPlayer.state:set("inv_busy", true, true)
-            QBCore.Functions.Progressbar("harness_equip", "Attaching Race Harness", 5000, false, true,
-                                         {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = true,
-            }, {}, {}, {}, function()
-                LocalPlayer.state:set("inv_busy", false, true)
-                ToggleHarness()
-                TriggerServerEvent("equip:harness", ItemData)
-            end)
-            harnessHp = ItemData.info.uses
-            harnessData = ItemData
-        else
-            LocalPlayer.state:set("inv_busy", true, true)
-            QBCore.Functions.Progressbar("harness_equip", "Removing Race Harness", 5000, false, true,
-                                         {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = true,
-            }, {}, {}, {}, function()
-                LocalPlayer.state:set("inv_busy", false, true)
-                ToggleHarness()
-            end)
-        end
-    else
-        exports["soz-hud"]:DrawNotification("~r~You're not in a car.")
-    end
-end)
+RegisterKeyMapping("toggleseatbelt", "Toggle Seatbelt", "keyboard", "K")
 
 -- Functions
 
@@ -86,25 +46,10 @@ function ToggleSeatbelt()
     TriggerEvent("hud:client:UpdateSeatbelt", seatbeltOn)
 end
 
-function ToggleHarness()
-    if harnessOn then
-        harnessOn = false
-    else
-        harnessOn = true
-        ToggleSeatbelt()
-    end
-end
-
 function ResetHandBrake()
     if handbrake > 0 then
         handbrake = handbrake - 1
     end
-end
-
--- Export
-
-function HasHarness()
-    return harnessOn
 end
 
 -- Main Thread
@@ -114,13 +59,12 @@ CreateThread(function()
         sleep = 1000
         if IsPedInAnyVehicle(PlayerPedId()) then
             sleep = 10
-            if seatbeltOn or harnessOn then
+            if seatbeltOn then
                 DisableControlAction(0, 75, true)
                 DisableControlAction(27, 75, true)
             end
         else
             seatbeltOn = false
-            harnessOn = false
         end
         Wait(sleep)
     end
@@ -159,44 +103,24 @@ CreateThread(function()
                     if frameBodyChange > 18.0 then
                         if not seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if math.random(math.ceil(lastFrameVehiclespeed)) > 60 then
-                                if not harnessOn then
-                                    EjectFromVehicle()
-                                else
-                                    harnessHp = harnessHp - 1
-                                    TriggerServerEvent("seatbelt:DoHarnessDamage", harnessHp, harnessData)
-                                end
+                                EjectFromVehicle()
                             end
-                        elseif (seatbeltOn or harnessOn) and not IsThisModelABike(currentVehicle) then
+                        elseif seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if lastFrameVehiclespeed > 150 then
                                 if math.random(math.ceil(lastFrameVehiclespeed)) > 150 then
-                                    if not harnessOn then
-                                        EjectFromVehicle()
-                                    else
-                                        harnessHp = harnessHp - 1
-                                        TriggerServerEvent("seatbelt:DoHarnessDamage", harnessHp, harnessData)
-                                    end
+                                    EjectFromVehicle()
                                 end
                             end
                         end
                     else
                         if not seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if math.random(math.ceil(lastFrameVehiclespeed)) > 60 then
-                                if not harnessOn then
-                                    EjectFromVehicle()
-                                else
-                                    harnessHp = harnessHp - 1
-                                    TriggerServerEvent("seatbelt:DoHarnessDamage", harnessHp, harnessData)
-                                end
+                                EjectFromVehicle()
                             end
-                        elseif (seatbeltOn or harnessOn) and not IsThisModelABike(currentVehicle) then
+                        elseif seatbeltOn and not IsThisModelABike(currentVehicle) then
                             if lastFrameVehiclespeed > 120 then
                                 if math.random(math.ceil(lastFrameVehiclespeed)) > 200 then
-                                    if not harnessOn then
-                                        EjectFromVehicle()
-                                    else
-                                        harnessHp = harnessHp - 1
-                                        TriggerServerEvent("seatbelt:DoHarnessDamage", harnessHp, harnessData)
-                                    end
+                                    EjectFromVehicle()
                                 end
                             end
                         end

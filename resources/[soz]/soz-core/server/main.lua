@@ -1,9 +1,3 @@
-local VehicleNitrous = {}
-
-QBCore.Functions.CreateCallback("nos:GetNosLoadedVehs", function(source, cb)
-    cb(VehicleNitrous)
-end)
-
 QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     local src = source
     TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)

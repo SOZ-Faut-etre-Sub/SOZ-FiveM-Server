@@ -10,6 +10,7 @@ CurrentPlayer = {
     VoiceModeProximityIsOverride = false,
 
     RadioButtonPressed = false,
+    LastRadioButtonPressed = GetGameTimer(),
 }
 
 ---Events

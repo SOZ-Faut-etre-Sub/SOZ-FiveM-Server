@@ -25,10 +25,14 @@ Config.Licenses = {
     ["car"] = {
         vehicle = {
             modelHash = "dilettante2",
-            x = -809.18,
-            y = -1319.61,
-            z = 4.49,
-            rotation = 170.42,
+            spawnPoints = {
+                vector4(-809.18, -1319.61, 4.49, 170.42),
+                vector4(-814.58, -1296.18, 4.65, 170.07),
+                vector4(-798.43, -1315.28, 4.65, 351.13),
+                vector4(-817.49, -1311.57, 4.49, 350.02),
+                vector4(-808.2, -1297.81, 4.49, 170.29),
+                vector4(-791.33, -1293.64, 4.49, 350.16),
+            },
             networkSync = true,
         },
         price = 1,
@@ -37,14 +41,36 @@ Config.Licenses = {
         points = 12,
     },
     ["truck"] = {
-        vehicle = {modelHash = "boxville4", x = -828.87, y = -1264.37, z = 4.57, rotation = 139.59, networkSync = true},
+        vehicle = {
+            modelHash = "boxville4",
+            spawnPoints = {
+                vector4(-828.87, -1264.37, 4.57, 139.59),
+                vector4(-853.91, -1257.2, 4.9, 229.32),
+                vector4(-807.63, -1276.53, 4.9, 171.22),
+                vector4(-785.54, -1280.2, 4.9, 169.75),
+                vector4(-848.95, -1274.45, 4.9, 300.18),
+                vector4(-737.99, -1303.16, 4.9, 50.94),
+            },
+            networkSync = true,
+        },
         price = 1,
         icon = "fas fa-truck",
         label = "Passer le permis camion ($%s)",
         points = 12,
     },
     ["motorcycle"] = {
-        vehicle = {modelHash = "faggio", x = -805.25, y = -1336.23, z = 4.62, rotation = 315.04, networkSync = true},
+        vehicle = {
+            modelHash = "faggio",
+            spawnPoints = {
+                vector4(-805.25, -1336.23, 4.62, 315.04),
+                vector4(-780.41, -1341.65, 4.63, 7.65),
+                vector4(-833.34, -1331.21, 4.63, 320.92),
+                vector4(-765.9, -1336.77, 4.64, 51.54),
+                vector4(-796.52, -1337.86, 4.63, 19.72),
+                vector4(-763.39, -1304.49, 4.63, 8.31),
+            },
+            networkSync = true,
+        },
         price = 1,
         icon = "fas fa-motorcycle",
         label = "Passer le permis moto ($%s)",

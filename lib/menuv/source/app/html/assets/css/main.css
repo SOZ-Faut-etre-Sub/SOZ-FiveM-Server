@@ -338,8 +338,6 @@ div .hide,
 }
 
 .menuv.default .menuv-items input[type="range"] {
-    display: flex;
-    float: right;
     -webkit-appearance: none;
     max-width: 6.5em;
 }
