@@ -495,7 +495,7 @@ REGISTER_NUI_CALLBACK('submit', function(info, cb)
                 v.Value = Utilities:Ensure(info.value, false)
             elseif (v.__type == 'range') then
                 v.Value = Utilities:Ensure(info.value, v.Min)
-            elseif (v.__type == 'slider') then
+            elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                 v.Value = Utilities:Ensure(info.value, 0) + 1
             end
 
@@ -505,7 +505,7 @@ REGISTER_NUI_CALLBACK('submit', function(info, cb)
                 MenuV.CurrentMenu.Items[k]:Trigger('select')
             elseif (v.__type == 'range') then
                 MenuV.CurrentMenu.Items[k]:Trigger('select', v.Value)
-            elseif (v.__type == 'slider') then
+            elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                 local option = MenuV.CurrentMenu.Items[k].Values[v.Value] or nil
 
                 if (option == nil) then return end
@@ -599,7 +599,7 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
             elseif (v.__type == 'range') then
                 newValue = Utilities:Ensure(info.now, v.Min)
                 oldValue = Utilities:Ensure(info.prev, v.Min)
-            elseif (v.__type == 'slider') then
+            elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                 newValue = Utilities:Ensure(info.now, 0) + 1
                 oldValue = Utilities:Ensure(info.prev, 0) + 1
             end
@@ -614,7 +614,7 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
 
                 if (v.__type == 'range') then
                     MenuV.CurrentMenu.Items[k]:Trigger('select', v.Value)
-                elseif (v.__type == 'slider') then
+                elseif (v.__type == 'slider' or v.__type == 'color_slider') then
                     local option = MenuV.CurrentMenu.Items[k].Values[v.Value] or nil
 
                     if (option == nil) then return end

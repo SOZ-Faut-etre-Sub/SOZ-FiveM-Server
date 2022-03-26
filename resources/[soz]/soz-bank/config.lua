@@ -17,9 +17,9 @@ Config.ErrorMessage = {
 }
 
 Config.SafeStorages = {
-    ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(629.6, -24.31, 89.51)},
-    ["safe_bcso"] = {label = "Coffre BCSO", owner = "bcso", position = vector3(-433.32, 6001.71, 30.75)},
     ["safe_lsmc"] = {label = "Coffre LSMC", owner = "lsmc", position = vector3(311.64, -1423.72, 32.51)},
+    ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(622.45, -30.35, 90.51)},
+    ["safe_bcso"] = {label = "Coffre BCSO", owner = "bcso", position = vector3(1856.62, 3691.32, 38.12)},
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
