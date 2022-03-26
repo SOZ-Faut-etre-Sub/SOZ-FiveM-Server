@@ -32,7 +32,7 @@ local function OnDeath()
             SetEntityInvincible(player, true)
             SetEntityHealth(player, GetEntityMaxHealth(player))
             TriggerScreenblurFadeIn()
-            StartScreenEffect('DeathFailOut', 0, false)
+            StartScreenEffect("DeathFailOut", 0, false)
         end
     end
 end

@@ -51,7 +51,7 @@ function ResetAll()
     Rhume = false
     ClearPedTasks()
     TriggerScreenblurFadeOut()
-    StopScreenEffect('DeathFailOut')
+    StopScreenEffect("DeathFailOut")
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
 end
