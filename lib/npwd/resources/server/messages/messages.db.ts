@@ -47,14 +47,14 @@ export class _MessagesDB {
                           phone_messages_conversations.conversation_id,
                           phone_messages_conversations.user_identifier,
                           phone_messages_conversations.participant_identifier,
-                          JSON_VALUE(players.charinfo,'$.phone') AS phone_number
+                          JSON_VALUE(player.charinfo,'$.phone') AS phone_number
                    FROM (SELECT conversation_id
                          FROM phone_messages_conversations
                          WHERE phone_messages_conversations.participant_identifier = ?) AS t
                             LEFT OUTER JOIN phone_messages_conversations
                                             ON phone_messages_conversations.conversation_id = t.conversation_id
-                            LEFT OUTER JOIN players
-                                            ON  JSON_VALUE(players.charinfo,'$.phone') = phone_messages_conversations.participant_identifier
+                            LEFT OUTER JOIN player
+                                            ON  JSON_VALUE(player.charinfo,'$.phone') = phone_messages_conversations.participant_identifier
 		`;
 
     const [results] = await DbInterface._rawExec(query, [phoneNumber]);
@@ -110,7 +110,7 @@ export class _MessagesDB {
   async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
     const query = `
         SELECT citizenid
-        FROM players
+        FROM player
         WHERE charinfo LIKE ?
         LIMIT 1
 		`;

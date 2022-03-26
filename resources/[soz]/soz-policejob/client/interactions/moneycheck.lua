@@ -5,7 +5,7 @@ Citizen.CreateThread(function()
 
         if LocalPlayer.state.isLoggedIn then
             if PoliceJob.Functions.IsJobAllowed() then
-                if #(Config.Locations["moneychecker"][PlayerData.job.id] - coords) < 1.5 then
+                if Config.Locations["moneychecker"][PlayerData.job.id] and #(Config.Locations["moneychecker"][PlayerData.job.id] - coords) < 1.5 then
                     QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour vérifier l'argent")
 
                     if IsControlJustReleased(0, 51) then

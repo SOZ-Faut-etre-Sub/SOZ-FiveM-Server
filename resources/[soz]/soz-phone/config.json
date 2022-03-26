@@ -10,7 +10,7 @@
   },
   "database": {
     "useIdentifierPrefix": false,
-    "playerTable": "players",
+    "playerTable": "player",
     "identifierColumn": "citizenid",
     "identifierType": "license",
     "profileQueries": true,
