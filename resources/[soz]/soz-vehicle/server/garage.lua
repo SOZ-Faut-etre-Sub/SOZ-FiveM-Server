@@ -83,7 +83,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(sour
         MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
             if result[1] then
                 -- Check if found owner is part of the gang
-                local resultplayer = MySQL.Sync.fetchSingle("SELECT * FROM players WHERE citizenid = ?", {
+                local resultplayer = MySQL.Sync.fetchSingle("SELECT * FROM player WHERE citizenid = ?", {
                     result[1].citizenid,
                 })
                 if resultplayer then

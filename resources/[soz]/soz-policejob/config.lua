@@ -14,10 +14,10 @@ Config.Locations = {
         ["BCSO"] = {
             label = "Blaine Country Sheriff's Office",
             blip = {sprite = 60, color = 21},
-            coords = vector3(-447.66, 6013.5, 31.72),
+            coords = vector3(1856.15, 3681.68, 34.27),
         },
     },
-    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70), ["bcso"] = vector3(-450.88, 6011.26, 30.73)},
+    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70)},
 }
 
 Config.WeaponShop = {
@@ -27,26 +27,25 @@ Config.WeaponShop = {
         [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
         [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
         [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
-        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
-        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
-        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
-        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
-        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
-        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
-        [12] = {
+        [6] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [7] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [11] = {
             name = "weapon_pistol_mk2",
             metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
             price = 200,
             amount = 1,
         },
-        [13] = {
+        [12] = {
             name = "weapon_pumpshotgun",
             metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
             price = 300,
             amount = 1,
         },
-        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
-        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+        [13] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [14] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
     },
     ["bcso"] = {
         [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
@@ -54,26 +53,25 @@ Config.WeaponShop = {
         [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
         [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
         [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
-        [6] = {name = "heavyarmor", metadata = {}, price = 1000, amount = 50},
-        [7] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
-        [8] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
-        [9] = {name = "spike", metadata = {}, price = 50, amount = 10},
-        [10] = {name = "cone", metadata = {}, price = 50, amount = 10},
-        [11] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
-        [12] = {
+        [6] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
+        [7] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
+        [8] = {name = "spike", metadata = {}, price = 50, amount = 10},
+        [9] = {name = "cone", metadata = {}, price = 50, amount = 10},
+        [10] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
+        [11] = {
             name = "weapon_revolver_mk2",
             metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
             price = 200,
             amount = 1,
         },
-        [13] = {
+        [12] = {
             name = "weapon_pumpshotgun",
             metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
             price = 300,
             amount = 1,
         },
-        [14] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
-        [15] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+        [13] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
+        [14] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
     },
 }
 
