@@ -32,6 +32,7 @@ local function OnDeath()
             SetEntityInvincible(player, true)
             SetEntityHealth(player, GetEntityMaxHealth(player))
             TriggerScreenblurFadeIn()
+            StartScreenEffect('DeathFailOut', 0, false)
         end
     end
 end
@@ -40,24 +41,26 @@ function DeathTimer()
     while IsDead do
         Wait(1000)
         DeathTime = DeathTime - 1
-        if DeathTime <= 0 then
-            if IsControlPressed(0, 38) and hold <= 0 and not isInHospitalBed then
-                TriggerEvent("soz-ems:client:respawn")
-                hold = 5
+        if IsControlPressed(0, 38) and hold <= 0 and not isInHospitalBed then
+            TriggerEvent("soz-ems:client:callems")
+            hold = 5
+        end
+        if IsControlPressed(0, 38) then
+            if hold - 1 >= 0 then
+                hold = hold - 1
+            else
+                hold = 0
             end
+        end
+        if IsControlReleased(0, 38) then
+            hold = 5
+        end
+        if DeathTime <= 0 then
             if IsControlPressed(0, 38) and hold <= 0 and isInHospitalBed then
                 TriggerEvent("soz_ems:client:Revive")
                 hold = 5
-            end
-            if IsControlPressed(0, 38) then
-                if hold - 1 >= 0 then
-                    hold = hold - 1
-                else
-                    hold = 0
-                end
-            end
-            if IsControlReleased(0, 38) then
-                hold = 5
+            elseif not isInHospitalBed and IsDead then
+                TriggerEvent("soz-ems:client:respawn")
             end
         end
     end
@@ -112,9 +115,9 @@ CreateThread(function()
 
             if not isInHospitalBed then
                 if DeathTime > 0 then
-                    DrawTxt(0.93, 1.44, 1.0, 1.0, 0.6, "Mort: ~r~" .. math.ceil(DeathTime) .. "~w~ secondes restant", 255, 255, 255, 255)
-                else
-                    DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler l'untité X", 255, 255, 255, 255)
+                    DrawRect(1.0, 1.0, 2.0, 0.25, 0, 0, 0, 255)
+                    DrawRect(1.0, 0.0, 2.0, 0.25, 0, 0, 0, 255)
+                    DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler les services de secours", 255, 255, 255, 255)
                 end
             end
 

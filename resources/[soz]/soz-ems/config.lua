@@ -1,6 +1,6 @@
 Config = {}
 
-Config.DeathTime = 300
+Config.DeathTime = 900
 
 Config.Locations = {
     ["lit"] = {
