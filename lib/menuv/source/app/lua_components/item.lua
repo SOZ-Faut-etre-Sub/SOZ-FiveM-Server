@@ -50,10 +50,16 @@ function CreateMenuItem(info)
         RightLabel = info.RightLabel or info.rightLabel,
         ---@type table[]
         Values = {},
+        ---@type string
+        MinLabel = U:Ensure(info.MinLabel or info.minLabel, ''),
+        ---@type string
+        MaxLabel = U:Ensure(info.MaxLabel or info.maxLabel, ''),
         ---@type number
         Min = U:Ensure(info.Min or info.min, 0),
         ---@type number
         Max = U:Ensure(info.Max or info.max, 0),
+        ---@type number
+        Interval = U:Ensure(info.Interval or info.interval, 1),
         ---@type boolean
         Disabled = U:Ensure(info.Disabled or info.disabled, false),
         ---@type table
@@ -152,7 +158,7 @@ function CreateMenuItem(info)
                 return U:Ensure(t.Value, false)
             end
 
-            if (itemType == 'slider') then
+            if itemType == 'slider' or itemType == 'color_slider' then
                 for _, item in pairs(t.Values) do
                     if (item.Value == t.Value) then
                         return item.Value
@@ -179,6 +185,11 @@ function CreateMenuItem(info)
         ---@return Menu|nil
         GetParentMenu = function(t)
             return t.__menu or nil
+        end,
+        ---@param t Item
+        ---@param value any
+        SetValue = function(t, value)
+            t.Value = value
         end
     }
 
