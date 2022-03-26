@@ -31,9 +31,19 @@ Config.SafeStorages = {
         size = vec2(1.0, 2.5),
         heading = 120.0,
     },
-    ["safe_lsmc"] = {label = "Coffre LSMC", owner = "lsmc", position = vector3(311.04, -1424.3, 32.51)},
-    size = vec2(0.8, 1.95),
-    heading = 320,
+    ["safe_lsmc"] = {
+        label = "Coffre LSMC",
+        owner = "lsmc",
+        position = vector3(311.04, -1424.3, 32.51),
+        size = vec2(0.8, 1.95),
+        heading = 320,
+    },
+    ["safe_news"] = {
+        label = "Coffre Twitch News",
+        owner = "news",
+        position = vector3(-575.83, -937.5, 28.7),
+        size = vec2(1.3, 2.5),
+    },
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
