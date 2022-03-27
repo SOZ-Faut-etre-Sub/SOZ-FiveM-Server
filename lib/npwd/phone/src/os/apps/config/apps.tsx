@@ -27,6 +27,7 @@ import {
 import {SocietyMessagesApp} from "../../../apps/society-messages/components/SocietyMessagesApp";
 import PhotoApp from "../../../apps/photo/components/PhotoApp";
 import {ZutomApp} from "../../../apps/zutom/ZutomApp";
+import {TwitchNewsApp} from "../../../apps/twitch-news/components/TwitchNewsApp";
 
 export interface IAppConfig {
     id: string;
@@ -120,6 +121,15 @@ export const APPS: IAppConfig[] = [
         path: '/society-messages',
         Route: () => (
             <AppRoute id="SOCIETY_MESSAGES" path="/society-messages" component={SocietyMessagesApp} emitOnOpen={false}/>
+        ),
+    },
+    {
+        id: 'TWITCH_NEWS',
+        nameLocale: 'APPS_TWITCH_NEWS',
+        color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
+        path: '/twitch-news',
+        Route: () => (
+            <AppRoute id="TWITCH_NEWS" path="/twitch-news" component={TwitchNewsApp} emitOnOpen={false}/>
         ),
     },
     {

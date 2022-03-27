@@ -46,10 +46,6 @@ export class TopLevelErrorComponent extends React.Component<any, TopLevelErrorCo
     return { hasError: true, errorMsg: error.message };
   }
 
-  componentDidCatch(error: Error, { componentStack }: React.ErrorInfo) {
-    captureException(error, { contexts: { react: { componentStack } } });
-  }
-
   render() {
     if (this.state.hasError) {
       return <ErrorDialogComp isOpen={this.state.hasError} errorMsg={this.state.errorMsg} />;
