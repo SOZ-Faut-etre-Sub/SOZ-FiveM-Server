@@ -32,7 +32,7 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function()
     end
 
     Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, 1, nil)
-    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Vous avez deposez 1 sac d'argent.", false, StonkConfig.NotifDelay)
+    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Vous avez déposé 1 sac d'argent.", false, StonkConfig.NotifDelay)
 
-    -- TODO: Add money to bank account
+    TriggerEvent("banking:server:SafeStorageAddMoney", StonkConfig.SafeStorageName, "money", StonkConfig.Resale.Price)
 end)

@@ -102,7 +102,7 @@ AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
     if not QBCore.Functions.HasItem(StonkConfig.Collection.BagItem) then
         exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas de sacs d'argent sur vous")
         return
+    else
+        ResaleBags()
     end
-
-    ResaleBags()
 end)
