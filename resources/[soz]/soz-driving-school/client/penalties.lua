@@ -174,8 +174,8 @@ end
 ---@param context table Contextual data that is to be used during penalty checking loop
 function StartPenaltyLoop(playerCoords, context)
     if not penaltyLoopIsRunning then
-        local veh = context.license.vehicle
-        local vehicleCoords = vector3(veh.x, veh.y, veh.z)
+        local coords = context.spawnPoint
+        local vehicleCoords = vector3(coords.x, coords.y, coords.z)
         if #(playerCoords - vehicleCoords) > 1.0 then
             PenaltyCheckingLoop(context)
         end

@@ -17,12 +17,24 @@ Config.ErrorMessage = {
 }
 
 Config.SafeStorages = {
-    ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(622.45, -30.35, 90.51)},
-    ["safe_bcso"] = {label = "Coffre BCSO", owner = "bcso", position = vector3(1856.62, 3691.32, 38.12)},
     ["safe_stonk"] = {
         label = "Coffre Stonk Depository",
         owner = "cash-transfer",
         position = vector3(-13.98, -708.35, 45.99),
+    },
+    ["safe_lspd"] = {
+        label = "Coffre LSPD",
+        owner = "lspd",
+        position = vector3(622.21, -30.71, 90.51),
+        size = vec2(1.0, 2.5),
+        heading = 160.0,
+    },
+    ["safe_bcso"] = {
+        label = "Coffre BCSO",
+        owner = "bcso",
+        position = vector3(1855.94, 3690.49, 37.75),
+        size = vec2(1.0, 2.5),
+        heading = 120.0,
     },
 }
 

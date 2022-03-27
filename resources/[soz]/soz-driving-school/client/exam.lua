@@ -10,6 +10,17 @@ function IsSpawnPointFree(x, y, z)
     return not IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)
 end
 
+---Pick first available spawn point
+---@param points table Spawn points declared in config
+function GetSpawnPoint(points)
+    for _, point in ipairs(points) do
+        if IsSpawnPointFree(point.x, point.y, point.z) then
+            return point
+        end
+    end
+    return nil
+end
+
 ---Draw random checkpoints from a list of checkpoints
 ---@param allCheckpoints table
 ---@param count number Number of checkpoints that are to be drawn
@@ -180,7 +191,7 @@ local function startExamLoop(licenseType, context)
     end)
 end
 
-function SetupDrivingSchoolExam(licenseType)
+function SetupDrivingSchoolExam(licenseType, spawnPoint)
     Citizen.CreateThread(function()
         local license = Config.Licenses[licenseType]
         if not license then
@@ -203,7 +214,7 @@ function SetupDrivingSchoolExam(licenseType)
         -- Spawn car
         local vData = license.vehicle
         setupModel(vData.modelHash)
-        local vehicle = CreateVehicle(vData.modelHash, vData.x, vData.y, vData.z, vData.rotation, true, false)
+        local vehicle = CreateVehicle(vData.modelHash, spawnPoint.x, spawnPoint.y, spawnPoint.z, spawnPoint.w, true, false)
 
         SetPedIntoVehicle(playerPed, vehicle, -1)
         SetPedIntoVehicle(instructor, vehicle, 0)
@@ -226,7 +237,7 @@ function SetupDrivingSchoolExam(licenseType)
 
         -- Start exam
         passingExam = true
-        startExamLoop(licenseType, {["vehicle"] = vehicle, ["license"] = license})
+        startExamLoop(licenseType, {["vehicle"] = vehicle, ["license"] = license, ["spawnPoint"] = spawnPoint})
     end)
 end
 

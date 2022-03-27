@@ -2,7 +2,13 @@ local targeting = exports['qb-target']
 local CurrentResourceName = GetCurrentResourceName()
 
 AddEventHandler(CurrentResourceName..':debug', function(data)
-    print('Entity: '..data.entity, 'Model: '..GetEntityModel(data.entity), 'Type: '..GetEntityType(data.entity), 'Coords: '..GetEntityCoords(data.entity))
+    print(
+		'Entity: '..data.entity,
+		'Model: '..GetEntityModel(data.entity),
+		'Type: '..GetEntityType(data.entity),
+		'Coords: '..GetEntityCoords(data.entity),
+		'Heading: '..GetEntityHeading(data.entity)
+	)
     if data.remove then
         targeting:RemoveTargetEntity(data.entity, 'Hello World')
     else
