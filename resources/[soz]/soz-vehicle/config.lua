@@ -307,15 +307,25 @@ Garages = {
         type = "depot", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
     },
-    ["police"] = {
-        label = "Police",
+    ["lspd"] = {
+        label = "LSPD",
         blipcoord = vector3(454.6, -1017.4, 28.4),
         showBlip = false,
-        blipName = "Police",
+        blipName = "LSPD",
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
-        job = "police",
+        job = "lspd",
+    },
+    ["bcso"] = {
+        label = "BCSO",
+        blipcoord = vector3(1855.61, 3677.39, 33.76),
+        showBlip = false,
+        blipName = "BCSO",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "bcso",
     },
     ["bennys"] = {
         label = "Bennys",
