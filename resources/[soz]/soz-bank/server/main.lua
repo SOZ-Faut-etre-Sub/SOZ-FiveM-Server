@@ -111,6 +111,12 @@ RegisterNetEvent("banking:server:TransfertMoney", function(accountSource, accoun
     Account.TransfertMoney(accountSource, accountTarget, amount)
 end)
 
+RegisterNetEvent("banking:server:SafeStorageAddMoney", function(safeStorage, money_type, amount)
+    if money_type == "money" or money_type == "marked_money" then
+        Account.AddMoney(safeStorage, amount, money_type)
+    end
+end)
+
 RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeStorage, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local CurrentMoney = Player.Functions.GetMoney(money_type)
