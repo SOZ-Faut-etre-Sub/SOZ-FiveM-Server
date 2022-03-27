@@ -46,10 +46,10 @@ CreateThread(function()
                             event = "soz-jobs:client:stonk-collect-bag",
                             icon = "fas fa-dollar-sign",
                             label = "Collecter sacs d'argent",
-                            canInteract = function ()
+                            canInteract = function()
                                 return exports["soz-jobs"]:CanBagsBeCollected(currentShop)
-                            end
-                        }
+                            end,
+                        },
                     },
                     distance = 2.5,
                 },
@@ -70,6 +70,6 @@ for _, shop in pairs(ShopLocation) do
         end)
     end
 end
-exports("GetCurrentShop", function ()
+exports("GetCurrentShop", function()
     return currentShop
 end)
