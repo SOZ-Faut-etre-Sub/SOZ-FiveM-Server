@@ -15,7 +15,7 @@ CreateThread(function()
         Random = math.random(1, 100)
         if not IsDead then
             if Random == 1 then
-                Rhume = false
+                Rhume = true
             end
         end
     end
