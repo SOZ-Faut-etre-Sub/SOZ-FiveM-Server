@@ -29,12 +29,9 @@ CreateThread(function()
             {
                 label = "Réanimer",
                 icon = "fas fa-bolt",
-                event = "lsmc:client:revive",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    if onDuty then
-                        return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
-                    end
+                        return onDuty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
                 action = function(entity)
                     TriggerEvent("animations:client:EmoteCommandStart", {"cpr"})

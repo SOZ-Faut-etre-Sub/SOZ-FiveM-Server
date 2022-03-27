@@ -77,5 +77,10 @@ end)
 
 RegisterNetEvent("soz-ems:client:callems")
 AddEventHandler("soz-ems:client:callems", function()
-    print("test")
+    TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+        anonymous = false,
+        number = "555-LSMC",
+        message = ("Besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
+        position = true,
+    })
 end)

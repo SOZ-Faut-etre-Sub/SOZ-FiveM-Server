@@ -7,10 +7,7 @@ end)
 RegisterServerEvent("lsmc:server:remove")
 AddEventHandler("lsmc:server:remove", function(item)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    local totalAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
-    if tonumber(totalAmount) >= 1 then
-        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1, nil)
-    end
+    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1, nil)
 end)
 
 RegisterServerEvent("lsmc:server:revive")
