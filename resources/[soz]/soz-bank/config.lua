@@ -17,7 +17,7 @@ Config.ErrorMessage = {
 }
 
 Config.SafeStorages = {
-    ["safe_stonk"] = {
+    ["safe_cash-transfer"] = {
         label = "Coffre Stonk Depository",
         owner = "cash-transfer",
         position = vector3(-13.98, -708.35, 45.99),
