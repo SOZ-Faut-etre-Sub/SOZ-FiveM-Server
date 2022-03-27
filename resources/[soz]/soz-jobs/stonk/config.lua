@@ -1,7 +1,5 @@
 StonkConfig = {}
 
-StonkConfig.NotifDelay = 2000 -- in ms
-
 StonkConfig.Collection = {
     Cooldown = 60000, -- in ms
     Duration = 3000, -- in ms

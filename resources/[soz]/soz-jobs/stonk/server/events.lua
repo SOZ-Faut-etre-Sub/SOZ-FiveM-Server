@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterNetEvent("soz-jobs:server:stonk-collect-bag", function(shopId)
+RegisterNetEvent("soz-jobs:server:stonk-collect-bag", function()
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -12,8 +12,6 @@ RegisterNetEvent("soz-jobs:server:stonk-collect-bag", function(shopId)
                                string.format("~r~Vous n'avez pas collecté de sacs d'argent. Il y a eu une erreur : `%s`", reason))
             return
         end
-
-        TriggerClientEvent("hud:client:DrawNotification", source, "~g~Vous avez collecté 1 sac d'argent", false, StonkConfig.NotifDelay)
     end)
 end)
 
@@ -24,7 +22,6 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function()
     end
 
     local nItems = exports["soz-inventory"]:GetItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nil, true)
-    print("nItems", tonumber(nItems))
 
     if nItems <= 0 then
         TriggerClientEvent("hud:client:DrawNotification", source, "~r~Vous n'avez pas de sacs d'argent.")
@@ -32,7 +29,6 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function()
     end
 
     Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, 1, nil)
-    TriggerClientEvent("hud:client:DrawNotification", source, "~g~Vous avez déposé 1 sac d'argent.", false, StonkConfig.NotifDelay)
 
     TriggerEvent("banking:server:SafeStorageAddMoney", StonkConfig.SafeStorageName, "money", StonkConfig.Resale.Price)
 end)

@@ -1,13 +1,14 @@
 -- BAG COLLECTION
+local collectedBags = 0
 local function CollectBags(currentShop, nBags)
     if nBags < 1 then
-        Citizen.Wait(StonkConfig.NotifDelay / 2)
-        exports["soz-hud"]:DrawNotification("Vous avez collecté tous les sacs d'argent")
+        Citizen.Wait(500)
+        exports["soz-hud"]:DrawNotification(string.format("Vous avez collecté ~g~%d sacs d'argent", collectedBags))
         CollectedShops[currentShop]["last-collection"] = exports["soz-jobs"]:GetTimestamp()
         return
     end
 
-    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez les sacs d'argent", StonkConfig.Collection.Duration, false, true,
+    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez 1 sac d'argent", StonkConfig.Collection.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = false,
@@ -16,6 +17,7 @@ local function CollectBags(currentShop, nBags)
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
             TriggerServerEvent("soz-jobs:server:stonk-collect-bag", currentShop)
+            collectedBags = collectedBags + 1
             local remaining = nBags - 1
             CollectedShops[currentShop]["remaining-bags"] = remaining
             CollectBags(currentShop, remaining)
@@ -46,6 +48,7 @@ AddEventHandler("soz-jobs:client:stonk-collect-bag", function()
         end
 
         CollectedShops[currentShop]["remaining-bags"] = nBags
+        collectedBags = 0
         CollectBags(currentShop, nBags)
     end)
 end)
@@ -81,8 +84,24 @@ Citizen.CreateThread(function()
     end
 end)
 
+local bagsSold = 0
 local function ResaleBags()
-    QBCore.Functions.Progressbar("stonk-resale-bag", "Vous déposez les sacs d'argent", StonkConfig.Resale.Duration, false, true,
+
+    local function DisplayBagsSold(count)
+        exports["soz-hud"]:DrawNotification(string.format("~g~Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+    end
+
+    if not QBCore.Functions.HasItem(StonkConfig.Collection.BagItem) then
+        if bagsSold > 0 then
+            DisplayBagsSold(bagsSold)
+            return
+        else
+            exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas de sacs d'argent sur vous")
+            return
+        end
+    end
+
+    QBCore.Functions.Progressbar("stonk-resale-bag", "Vous déposez 1 sac d'argent", StonkConfig.Resale.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = false,
@@ -91,18 +110,19 @@ local function ResaleBags()
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
             TriggerServerEvent("soz-jobs:server:stonk-resale-bag")
+            bagsSold = bagsSold + 1
             ResaleBags()
         else
-            exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas déposé les sacs d'argent")
+            if bagsSold > 0 then
+                DisplayBagsSold(bagsSold)
+            else
+                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas déposé les sacs d'argent")
+            end
         end
     end)
 end
 
 AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
-    if not QBCore.Functions.HasItem(StonkConfig.Collection.BagItem) then
-        exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas de sacs d'argent sur vous")
-        return
-    else
-        ResaleBags()
-    end
+    bagsSold = 0
+    ResaleBags()
 end)
