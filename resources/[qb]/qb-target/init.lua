@@ -21,7 +21,7 @@ Config = {}
 Config.MaxDistance = 5.0
 
 -- Enable debug options
-Config.Debug = true
+Config.Debug = false
 
 -- Supported values: true, false
 Config.Standalone = false
