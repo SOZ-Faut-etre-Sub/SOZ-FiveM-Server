@@ -2052,4 +2052,15 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Un document'
     },
+    ['newspaper'] = {
+        ['name'] = 'newspaper',
+        ['label'] = 'Journal',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Peut être utile pour se culturer'
+    },
 }

@@ -16,6 +16,8 @@ Config.ErrorMessage = {
     ["no_account_money"] = "~r~Le compte ne possède pas assez d'argent !",
 }
 
+Config.FarmAccountMoney = {["farm_news"] = {money = 50000, marked_money = 0}}
+
 Config.SafeStorages = {
     ["safe_lspd"] = {
         label = "Coffre LSPD",

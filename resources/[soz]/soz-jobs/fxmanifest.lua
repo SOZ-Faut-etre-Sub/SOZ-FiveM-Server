@@ -4,7 +4,7 @@ lua54 "yes"
 
 description "job entreprise et pole emploie"
 
-shared_script "config.lua"
+shared_scripts {"config.lua", "config/jobs/*.lua"}
 
 client_script {
     "@PolyZone/client.lua",
@@ -32,6 +32,7 @@ server_script {
     "server/functions.lua",
     "server/temporary.lua",
     "server/objects.lua",
+    "server/jobs/*.lua",
 }
 
 dependencies {"qb-target"}
