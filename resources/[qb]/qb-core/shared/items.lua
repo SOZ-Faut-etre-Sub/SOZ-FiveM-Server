@@ -1829,12 +1829,12 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour que les papys puissent taper sur les voitures.'
     },
-    ['défibrilateur'] = { 
-        ['name'] = 'défibrilateur', 
-        ['label'] = 'défibrilateur', 
+    ['medkit'] = { 
+        ['name'] = 'medkit', 
+        ['label'] = 'medkit', 
         ['weight'] = 0, 
         ['type'] = 'item', 
-        ['image'] = 'défibrilateur.png', 
+        ['image'] = 'medkit.png', 
         ['unique'] = false, 
         ['useable'] = true, 
         ['shouldClose'] = true, 
