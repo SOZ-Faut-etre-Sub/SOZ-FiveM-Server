@@ -1723,6 +1723,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Alooo ?'
     },
+    ['megaphone'] = {
+        ['name'] = 'megaphone',
+        ['label'] = 'Mégaphone',
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Peut servir pour parler a une foule... A déjà permis de faire plusieurs exploits mondiaux'
+    },
     ['laptop'] = {
         ['name'] = 'laptop',
         ['label'] = 'Ordinateur portable volé',
