@@ -2,9 +2,15 @@ local plyCoords = GetEntityCoords(PlayerPedId())
 
 function orig_addProximityCheck(ply)
     local tgtPed = GetPlayerPed(ply)
+    local voiceRange = Config.VoiceModes[CurrentPlayer.VoiceMode]
 
-    return #(plyCoords - GetEntityCoords(tgtPed)) <=
-               (LocalPlayer.state.useMegaphone == true and Config.Megaphone.Range or Config.VoiceModes[CurrentPlayer.VoiceMode])
+    if LocalPlayer.state.useMegaphone == true then
+        voiceRange = Config.Megaphone.Range
+    elseif LocalPlayer.state.useMicrophone == true then
+        voiceRange = Config.Microphone.Range
+    end
+
+    return #(plyCoords - GetEntityCoords(tgtPed)) <= voiceRange
 end
 
 function addNearbyPlayers()
