@@ -11,8 +11,8 @@ end
 
 CreateThread(function()
     while true do
-        Wait(10000)
-        Random = math.random(1, 100)
+        Wait(100000)
+        Random = math.random(1, 1000)
         if not IsDead then
             if Random == 1 then
                 Rhume = true
@@ -26,15 +26,14 @@ end)
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
-        Wait(5000)
+        Wait(15000)
         if Rhume then
             loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
             TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
             TriggerScreenblurFadeIn(100)
             Wait(1500)
             TriggerScreenblurFadeOut(100)
-            TriggerEvent("animations:client:EmoteCommandStart", {"point"})
-            TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+            ClearPedTasks(ped)
         end
     end
 end)

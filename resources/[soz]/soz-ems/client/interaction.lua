@@ -48,7 +48,7 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:revive", ReviveId)
                     end)
                 end,
-                item = "défibrilateur",
+                item = "medkit",
             },
         },
         distance = 1.5,
