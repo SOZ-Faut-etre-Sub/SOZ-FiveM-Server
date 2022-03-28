@@ -8,7 +8,7 @@ CreateThread(function()
                 icon = "fas fa-heart",
                 job = {["lsmc"] = 0},
                 canInteract = function()
-                    return onDuty
+                    return PlayerData.job.onduty
                 end,
                 action = function(entity)
                     TriggerEvent("animations:client:EmoteCommandStart", {"medic"})
@@ -31,7 +31,7 @@ CreateThread(function()
                 icon = "fas fa-bolt",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return onDuty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
                 action = function(entity)
                     TriggerEvent("animations:client:EmoteCommandStart", {"cpr"})

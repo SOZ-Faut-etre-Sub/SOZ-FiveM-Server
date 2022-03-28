@@ -11,7 +11,7 @@ Config.Storages["lsmc_stash"] = {
     label = "Stockage des médecins",
     type = "storage",
     owner = "lsmc",
-    position = vector3(315.4, -1408.84, 32.51),
-    size = vec2(5.45, 1),
+    position = vector3(315.73, -1403.04, 32.51),
+    size = vec2(5.0, 0.4),
     heading = 320,
 }

@@ -1,5 +1,7 @@
 Config = {}
 
+Config.AllowedJobInteraction = {"lsmc"}
+
 Config.DeathTime = 900
 
 Config.Locations = {
