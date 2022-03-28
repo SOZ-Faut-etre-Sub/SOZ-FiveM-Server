@@ -29,22 +29,22 @@ function LicensesEntry(menu)
         })
 
         slider:On("select", function(_, value)
-            local target
             if value == "see" then
-                target = QBCore.Functions.GetPlayerData().source
+                TriggerEvent(data.event, QBCore.Functions.GetPlayerData().source)
 
             elseif value == "show" then
-                local closestPlayer, distance = QBCore.Functions.GetClosestPlayer()
-                if closestPlayer ~= -1 and distance < 2.0 then
-                    target = GetPlayerServerId(closestPlayer)
+                local coords = GetEntityCoords(PlayerPedId())
+                local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 4.0)
+
+                if type(closePlayers) == "table" and #closePlayers > 0 then
+                    for _, player in ipairs(closePlayers) do
+                        TriggerEvent(data.event, GetPlayerServerId(player))
+                    end
                 else
                     exports["soz-hud"]:DrawNotification("~r~Il n'y a personne à proximité", false, 3000)
                     return
                 end
             end
-
-            -- Request data to server and display NUI
-            TriggerEvent(data.event, target)
         end)
     end
 
