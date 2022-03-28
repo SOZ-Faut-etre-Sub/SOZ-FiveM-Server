@@ -1,6 +1,7 @@
 Config = {}
 
 Config.Megaphone = {Range = 32.0}
+Config.Microphone = {Range = 32.0}
 Config.Radio = {min = 10000, max = 99999}
 
 Config.AllowedRadioInVehicle = {

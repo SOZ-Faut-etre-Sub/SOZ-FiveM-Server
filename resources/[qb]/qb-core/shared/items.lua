@@ -1734,6 +1734,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Peut servir pour parler a une foule... A déjà permis de faire plusieurs exploits mondiaux'
     },
+    ['microphone'] = {
+        ['name'] = 'microphone',
+        ['label'] = 'Microphone',
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Poupipou, il est l\'heure de CHANTER !'
+    },
     ['laptop'] = {
         ['name'] = 'laptop',
         ['label'] = 'Ordinateur portable volé',

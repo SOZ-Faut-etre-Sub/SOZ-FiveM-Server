@@ -9,6 +9,10 @@ QBCore.Functions.CreateUseableItem("megaphone", function(source, item)
     TriggerClientEvent("talk:megaphone:use", source)
 end)
 
+QBCore.Functions.CreateUseableItem("microphone", function(source, item)
+    TriggerClientEvent("talk:microphone:use", source)
+end)
+
 RegisterNetEvent("talk:cibi:sync", function(vehicle, key, value)
     local vehNet = NetworkGetEntityFromNetworkId(vehicle)
     local entityModel = GetEntityModel(vehNet)
