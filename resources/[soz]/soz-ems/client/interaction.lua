@@ -4,6 +4,12 @@ CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
+                label = "Facture",
+                icon = "fas fa-file-invoice-dollar",
+                event = "lsmc:client:InvoicePlayer",
+                job = {["lsmc"] = 0},
+            },
+            {
                 label = "Soigner",
                 icon = "fas fa-heart",
                 job = {["lsmc"] = 0},
@@ -53,4 +59,8 @@ CreateThread(function()
         },
         distance = 1.5,
     })
+end)
+
+RegisterNetEvent("lsmc:client:InvoicePlayer", function(data)
+    EmsJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
 end)

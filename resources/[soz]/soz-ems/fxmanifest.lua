@@ -6,6 +6,6 @@ description "job ems"
 
 shared_script "config.lua"
 
-client_script {"client/*.lua"}
+client_script {"client/*.lua", "@menuv/menuv.lua"}
 
 server_script {"server/*.lua"}

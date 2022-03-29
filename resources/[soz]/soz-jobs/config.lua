@@ -109,6 +109,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.LSMC] = {
         label = "LSMC",
         grades = {},
+        menuCallback = "lsmc:client:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Taxi] = {
