@@ -26,6 +26,8 @@ class _TwitchNewsService {
                 message: reqObj.data.message,
                 createdAt: new Date().getTime()
             });
+
+            emitNet('hud:client:DrawNewsBanner', -1, reqObj.data.type, reqObj.data.message);
         } catch (e) {
             twitchNewsLogger.error(`Error in handleAddSociety, ${e.message}`);
             resp({status: 'error', errorMsg: 'DB_ERROR'});
