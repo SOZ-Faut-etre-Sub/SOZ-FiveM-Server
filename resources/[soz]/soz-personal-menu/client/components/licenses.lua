@@ -1,44 +1,52 @@
-function LicensesEntry(menu)
-    local identitySubmenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de l'identité"})
+local isShowingAround = false
 
-    menu:AddButton({
-        label = "Mon identité",
-        value = identitySubmenu,
-        description = "Voir/Montrer vos papiers d'identité",
-    })
+local function UpdateLicenseMenu(identitySubmenu, showingAround)
+    isShowingAround = showingAround
+    identitySubmenu:Close()
+    identitySubmenu:ClearItems()
+    GenerateLicenseMenu(identitySubmenu, isShowingAround)
+    identitySubmenu:Open()
+end
 
+function GenerateLicenseMenu(identitySubmenu, showingAround)
     local sliders = {
         {
             label = "Ma carte d'identité",
-            description = "Voir/Montrer vos papiers d'identité",
             event = "soz-identity:client:request-identity-data",
         },
         {
             label = "Mes permis",
-            description = "Voir/Montrer vos permis",
             event = "soz-identity:client:request-licenses-data",
         },
     }
+
+    local description = nil
+    local hideLabel = "Masquer les papiers"
+    if showingAround then
+        description = "Vous montrez vos papiers aux personnes alentours"
+        hideLabel = "Arrêter de montrer vos papiers"
+    end
 
     -- SLIDERS (identity + licenses)
     for _, data in ipairs(sliders) do
         local slider = identitySubmenu:AddSlider({
             label = data.label,
-            discription = data.description,
+            description = description,
             values = {{label = "Voir", value = "see"}, {label = "Montrer", value = "show"}},
         })
 
         slider:On("select", function(_, value)
             if value == "see" then
-                TriggerEvent(data.event, QBCore.Functions.GetPlayerData().source)
+                TriggerEvent(data.event, QBCore.Functions.GetPlayerData().source, value)
 
             elseif value == "show" then
                 local coords = GetEntityCoords(PlayerPedId())
                 local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 4.0)
 
                 if type(closePlayers) == "table" and #closePlayers > 0 then
+                    UpdateLicenseMenu(identitySubmenu, true)
                     for _, player in ipairs(closePlayers) do
-                        TriggerEvent(data.event, GetPlayerServerId(player))
+                        TriggerEvent(data.event, GetPlayerServerId(player), value)
                     end
                 else
                     exports["soz-hud"]:DrawNotification("~r~Il n'y a personne à proximité", false, 3000)
@@ -50,12 +58,27 @@ function LicensesEntry(menu)
 
     --- HIDE BUTTON
     local hideButton = identitySubmenu:AddButton({
-        label = "Masquer les papiers",
+        label = hideLabel,
+        description = description,
         value = "hide",
-        description = "Masquer carte d'identité ou permis",
     })
 
     hideButton:On("select", function()
         TriggerEvent("soz-identity:client:hide")
+        if showingAround then
+            UpdateLicenseMenu(identitySubmenu, false)
+        end
     end)
+end
+
+function LicensesEntry(menu)
+    local identitySubmenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de l'identité"})
+
+    menu:AddButton({
+        label = "Mon identité",
+        value = identitySubmenu,
+        description = "Voir/Montrer vos papiers d'identité",
+    })
+
+    GenerateLicenseMenu(identitySubmenu, isShowingAround)
 end
