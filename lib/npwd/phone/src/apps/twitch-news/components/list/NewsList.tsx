@@ -42,10 +42,10 @@ const NewsList = (): any => {
     return (
         <ul className={`mt-5 p-2`}>
             {societyMessages.map((message) => (
-                <li className={`w-full my-3 rounded shadow border-l-4 ${newsColor(message.type)} ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
+                <li className={`w-full my-3 rounded shadow border-l-4 ${newsColor(message.type)} ${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-white'}`}>
                     <div className={`relative p-3 flex items-center space-x-3`}>
                         <div className="flex-1 min-w-0">
-                            <h2 className="text-center">{prefixMessage(message.type)}</h2>
+                            <h2 className={`text-center ${theme === 'dark' ? 'text-gray-100' : 'text-gray-700'}`}>{prefixMessage(message.type)}</h2>
                             {message.image && <div className="bg-center bg-cover h-48 w-full rounded-lg shadow my-2" style={{backgroundImage: `url(${message.image})`}}/>}
                             <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-700'}`}>
                                 {message.message}
