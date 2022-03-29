@@ -46,6 +46,14 @@ Config.SafeStorages = {
         position = vector3(-575.83, -937.5, 28.7),
         size = vec2(1.3, 2.5),
     },
+    ["safe_garbage"] = {
+        label = "Coffre Rogers",
+        owner = "garbage",
+        position = vector3(-623.89, -1616.37, 33.01),
+        size = vec2(0.2, 1.8),
+        heading = 354,
+        offsetUpZ = 1.5,
+    },
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
