@@ -8,7 +8,7 @@ SozJobCore.JobType = {
     Scrapper = "scrapper",
     LSPD = "lspd",
     BCSO = "bcso",
-    Medic = "medic",
+    LSMC = "lsmc",
     Taxi = "taxi",
     Food = "food",
     News = "news",
@@ -106,8 +106,8 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
         },
     },
-    [SozJobCore.JobType.Medic] = {
-        label = "Médécin",
+    [SozJobCore.JobType.LSMC] = {
+        label = "LSMC",
         grades = {},
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
