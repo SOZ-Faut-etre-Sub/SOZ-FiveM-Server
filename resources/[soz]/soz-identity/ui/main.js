@@ -19,33 +19,39 @@ async function HideUI(...elements) {
 
 let timeout
 function SetTimeout() {
-    if (timeout) clearTimeout(timeout)
-    timeout = setTimeout(() => {
-        setVisible(false);
-    }, 4000);
+    // if (timeout) clearTimeout(timeout)
+    // timeout = setTimeout(() => {
+    //     setVisible(false);
+    // }, 4000);
 }
 
+let visible = false
 async function setVisible(value) {
     const identityElement = document.querySelector("#identity");
     const licensesElement = document.querySelector("#licenses");
 
-    if (value && !timeout) {
-        // Display document when nothing on screen
-        SetTimeout();
+    // if (value && !timeout) {
+    //     // Display document when nothing on screen
+    //     SetTimeout();
 
-    } else if (value && timeout) {
-        // Display document while one is already being displayed
-        await HideUI(identityElement, licensesElement);
-        SetTimeout();
+    // } else if (value && timeout) {
+    //     // Display document while one is already being displayed
+    //     await HideUI(identityElement, licensesElement);
+    //     SetTimeout();
 
-    } else if (!value && timeout) {
-        // Hide any document
-        clearTimeout(timeout);
+    // } else if (!value && timeout) {
+    //     // Hide any document
+    //     clearTimeout(timeout);
+    //     await HideUI(identityElement, licensesElement);
+    // }
+    if (visible) {
+        visible = false
         await HideUI(identityElement, licensesElement);
     }
 
     // Display identity or licences
     const fadeIn = async (el) => {
+        visible = true
         el.style.display = "flex";
         el.style.opacity = 0;
         await Delay(10);
@@ -61,7 +67,7 @@ window.addEventListener("message", (event) => {
     const scope = event.data.scope
     const type = event.data.type
 
-    if (scope === "identity" && type === "show") {
+    if (scope === "identity" && type === "display") {
         displayIdentityData(event.data);
         setVisible(event.data.scope);
     }
@@ -70,7 +76,7 @@ window.addEventListener("message", (event) => {
         displayMugshot(event.data.mugshot);
     }
     
-    if (scope === "licenses" && type === "show") {
+    if (scope === "licenses" && type === "display") {
         displayLicensesData(event.data.licences);
         displayPlayerName(
             event.data.firstName,
