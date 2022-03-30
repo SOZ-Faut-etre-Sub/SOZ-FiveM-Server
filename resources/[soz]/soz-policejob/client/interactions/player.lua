@@ -51,7 +51,7 @@ CreateThread(function()
                     local player, _ = QBCore.Functions.GetClosestPlayer()
                     return Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
             },
             {
                 label = "Relâcher",
@@ -61,7 +61,7 @@ CreateThread(function()
                     local player, _ = QBCore.Functions.GetClosestPlayer()
                     return Player(GetPlayerServerId(player)).state.isEscorted == true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
             },
         },
         distance = 1.5,

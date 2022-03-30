@@ -64,7 +64,7 @@ end, false)
 
 RegisterKeyMapping("unsit", "", "keyboard", "x")
 
-local sitchair = {1580642483, -1278649385, -109356459, -1633198649, -377849416, 1037469683, 603897027}
+local sitchair = {1580642483, -1278649385, -109356459, -1633198649, -377849416, 1037469683, 603897027, 49088219}
 
 exports["qb-target"]:AddTargetModel(sitchair, {
     options = {{event = "soz:client:sit", icon = "fas fa-coffee", label = "s'asseoir", height = 0.6}},
