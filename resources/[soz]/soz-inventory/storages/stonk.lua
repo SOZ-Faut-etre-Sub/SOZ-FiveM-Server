@@ -11,14 +11,18 @@ Config.Storages["stonk_storage"] = {
     label = "Stockage Stonk Depository",
     type = "storage",
     owner = "cash-transfer",
-    position = vector3(-21.99, -701.70, 44.99),
+    position = vector3(-6.17, -706.95, 40.72),
+    size = vector2(1.0, 3.0),
+    heading = 235.7,
 }
 
 Config.Storages["stonk_boss_storage"] = {
     label = "Coffre patron",
     type = "boss_storage",
     owner = "cash-transfer",
-    position = vector3(-19.14, -701.48, 45.00),
+    position = vector3(-3.38, -703.02, 40.7),
+    size = vector2(1.0, 3.0),
+    heading = 235.7,
 }
 
 Config.Storages["stonk_armory"] = {

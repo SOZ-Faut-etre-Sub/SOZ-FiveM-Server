@@ -20,7 +20,9 @@ Config.SafeStorages = {
     ["safe_cash-transfer"] = {
         label = "Coffre Stonk Depository",
         owner = "cash-transfer",
-        position = vector3(-13.98, -708.35, 45.99),
+        position = vector3(-33.94, -715.14, 40.62),
+        size = vector2(1.0, 3.0),
+        heading = 113.9,
     },
     ["safe_lspd"] = {
         label = "Coffre LSPD",
