@@ -1,4 +1,5 @@
 local isShowingAround = false
+local showingTo = {}
 
 local function UpdateLicenseMenu(identitySubmenu, showingAround)
     isShowingAround = showingAround
@@ -43,9 +44,11 @@ function GenerateLicenseMenu(identitySubmenu, showingAround)
                 local coords = GetEntityCoords(PlayerPedId())
                 local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 4.0)
 
-                if type(closePlayers) == "table" and #closePlayers > 0 then
+                if type(closePlayers) == "table" and #closePlayers > 1 then
                     UpdateLicenseMenu(identitySubmenu, true)
                     for _, player in ipairs(closePlayers) do
+                        local pid = GetPlayerServerId(player)
+                        table.insert(showingTo, pid)
                         TriggerEvent(data.event, GetPlayerServerId(player), value)
                     end
                 else
@@ -66,7 +69,9 @@ function GenerateLicenseMenu(identitySubmenu, showingAround)
     hideButton:On("select", function()
         TriggerEvent("soz-identity:client:hide")
         if showingAround then
+            TriggerServerEvent("soz-identity:server:hide-around", showingTo)
             UpdateLicenseMenu(identitySubmenu, false)
+            showingTo = {}
         end
     end)
 end

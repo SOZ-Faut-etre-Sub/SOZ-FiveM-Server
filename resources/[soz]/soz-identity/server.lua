@@ -28,5 +28,14 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope, act
         job = Player.PlayerData.job.name or "-",
         address = "-",
         phone = charinfo.phone,
+        source = source,
     })
+end)
+
+RegisterNetEvent("soz-identity:server:hide-around", function(players)
+    if type(players) == "table" and #players > 0 then
+        for _, player in ipairs(players) do 
+            TriggerClientEvent("soz-identity:client:hide", player, source)
+        end
+    end
 end)
