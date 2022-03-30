@@ -28,8 +28,8 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
 end)
 
 -- HIDE ALL
-AddEventHandler("soz-identity:client:hide", function()
-    SendNUIMessage({type = "hide"})
+RegisterNetEvent("soz-identity:client:hide", function(src)
+    SendNUIMessage({type = "hide", source = src})
 end)
 
 function TriggerGiveAnimation(action)
