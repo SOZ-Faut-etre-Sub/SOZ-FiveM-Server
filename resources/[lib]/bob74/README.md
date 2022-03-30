@@ -1,4 +1,4 @@
-# Fix holes and customize the map (Updated to Diamond Casino DLC)
+# Fix holes and customize the map (Updated to Tuners DLC)
 
 The purpose of this script is to fix the holes in the map by loading zones that aren’t loaded by default. I’ve added quite a lot of places to load, based on [Mikeeh’s script](https://forum.fivem.net/t/release-load-unloaded-ipls/5911). If you just want to fix the holes in the map, then use this resource as provided.
 
@@ -24,29 +24,23 @@ This resource has been completely rewritten from scratch since v2.0. You can cus
 - [Misc. Album](https://imgur.com/a/cs9Ip4d)
 - [IPL Fix Album](https://imgur.com/a/1Sfl4)
 
-## What's Missing
->Finance & Felony:
-> - Warehouses
->
-> Gunrunning:
-> - Mobile Operation Center
->
-> Doomsday Heist:
-> - Facility: emblem, screens
-> - Avenger interior
-> - Silo interior
-> - Base interior
->
-> After Hours:
-> - Basement
-> - Terrorbyte
-
 ## Changelog
 
 <details><summary>Click to view</summary>
 (DD/MM/YYYY)
 
 ---
+12/02/2022 - 2.0.13
+- Added Contract IPLs: Garage, Studio, Offices, Music Roof, Billboards
+
+10/02/2022 - 2.0.12
+- Fix FIB roof
+
+07/02/2022 - 2.0.11
+- Added Tuners IPLs: Garage, Meth Lab, Meetup
+
+18/01/2022 - 2.0.10b
+- Change water in yachts to be non-networked.
 
 01/08/2021 - 2.0.10a
 - Improved performance
