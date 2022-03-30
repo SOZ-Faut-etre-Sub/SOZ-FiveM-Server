@@ -10,7 +10,7 @@ export class _TwitchNewsDB {
   }
 
   async getNews(): Promise<TwitchNewsMessage[]> {
-    const query = `SELECT * FROM phone_twitch_news WHERE createdAt > date_sub(now(), interval 2 day)`;
+    const query = `SELECT *, unix_timestamp(createdAt)*1000 as createdAt FROM phone_twitch_news WHERE createdAt > date_sub(now(), interval 2 day)`;
     const [result] = await DbInterface._rawExec(query, []);
     return <TwitchNewsMessage[]>result;
   }
