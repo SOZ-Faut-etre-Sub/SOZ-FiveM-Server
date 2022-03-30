@@ -1675,29 +1675,39 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour que les papys puissent taper sur les voitures.'
     },
-    ['medkit'] = { 
-        ['name'] = 'medkit', 
-        ['label'] = 'medkit', 
-        ['weight'] = 0, 
-        ['type'] = 'item', 
-        ['image'] = 'medkit.png', 
-        ['unique'] = false, 
-        ['useable'] = true, 
-        ['shouldClose'] = true, 
-        ['combinable'] = nil, 
-        ['description'] = 'Des fois sa marche pour réanimer' 
+    ['medkit'] = {
+        ['name'] = 'medkit',
+        ['label'] = 'medkit',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'medkit.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Des fois sa marche pour réanimer'
     },
-    ['mouchoir'] = { 
-        ['name'] = 'mouchoir', 
-        ['label'] = 'mouchoir', 
-        ['weight'] = 0, 
-        ['type'] = 'item', 
-        ['image'] = 'mouchoir.png', 
-        ['unique'] = false, 
-        ['useable'] = true, 
-        ['shouldClose'] = true, 
-        ['combinable'] = nil, 
-        ['description'] = 'Utile en cas de rhume' 
+    ['mouchoir'] = {
+        ['name'] = 'mouchoir',
+        ['label'] = 'mouchoir',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'mouchoir.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Utile en cas de rhume'
+    },
+
+    ['garbagebag'] = {
+        ['name'] = 'garbagebag',
+        ['label'] = 'Sac poubelle',
+        ['weight'] = 1000,
+        ['type'] = 'weapon',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Pour jeter tout type d\'ordures.'
     },
 
     -- Communication
