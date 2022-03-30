@@ -37,10 +37,7 @@ function TriggerGiveAnimation(action)
         Citizen.CreateThread(function()
             local animDict = "mp_common"
             QBCore.Functions.RequestAnimDict(animDict)
-            TaskPlayAnim(
-                PlayerPedId(), animDict, "givetake2_a",
-                8.0, 8.0, -1, 0, 0, true, false, true
-            )
+            TaskPlayAnim(PlayerPedId(), animDict, "givetake2_a", 8.0, 8.0, -1, 0, 0, true, false, true)
         end)
     end
 end

@@ -34,7 +34,7 @@ end)
 
 RegisterNetEvent("soz-identity:server:hide-around", function(players)
     if type(players) == "table" and #players > 0 then
-        for _, player in ipairs(players) do 
+        for _, player in ipairs(players) do
             TriggerClientEvent("soz-identity:client:hide", player, source)
         end
     end
