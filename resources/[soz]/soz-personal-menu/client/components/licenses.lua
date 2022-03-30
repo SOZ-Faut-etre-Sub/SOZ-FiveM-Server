@@ -11,14 +11,8 @@ end
 
 function GenerateLicenseMenu(identitySubmenu, showingAround)
     local sliders = {
-        {
-            label = "Ma carte d'identité",
-            event = "soz-identity:client:request-identity-data",
-        },
-        {
-            label = "Mes permis",
-            event = "soz-identity:client:request-licenses-data",
-        },
+        {label = "Ma carte d'identité", event = "soz-identity:client:request-identity-data"},
+        {label = "Mes permis", event = "soz-identity:client:request-licenses-data"},
     }
 
     local description = nil
@@ -60,11 +54,7 @@ function GenerateLicenseMenu(identitySubmenu, showingAround)
     end
 
     --- HIDE BUTTON
-    local hideButton = identitySubmenu:AddButton({
-        label = hideLabel,
-        description = description,
-        value = "hide",
-    })
+    local hideButton = identitySubmenu:AddButton({label = hideLabel, description = description, value = "hide"})
 
     hideButton:On("select", function()
         TriggerEvent("soz-identity:client:hide")
