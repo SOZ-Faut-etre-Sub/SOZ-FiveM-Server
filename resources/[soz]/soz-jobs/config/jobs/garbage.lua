@@ -1,5 +1,7 @@
 GarbageConfig = {}
 
+GarbageConfig.SellPrice = 30
+
 GarbageConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
