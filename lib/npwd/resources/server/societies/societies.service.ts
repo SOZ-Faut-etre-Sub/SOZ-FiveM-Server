@@ -81,13 +81,6 @@ class _SocietyService {
     try {
       const contact = await this.contactsDB.getMessages(identifier);
 
-      contact.map((message) => {
-        // @ts-ignore
-        message.createdAt = Math.floor(message.createdAt.getTime() / 1000)
-        // @ts-ignore
-        message.updatedAt = Math.floor(message.updatedAt.getTime() / 1000)
-      })
-
       resp({ status: 'ok', data: contact });
     } catch (e) {
       societiesLogger.error(`Error in handleAddSociety, ${e.message}`);
