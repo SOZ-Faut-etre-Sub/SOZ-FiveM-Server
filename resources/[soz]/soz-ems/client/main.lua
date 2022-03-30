@@ -5,6 +5,16 @@ isInHospitalBed = false
 HospitalBedId = nil
 DeathTime = 0
 
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    QBCore.Functions.CreateBlip("LSMC", {
+        name = "LSMC",
+        coords = vector3(356.35, -1416.63, 32.51),
+        sprite = 61,
+        color = 2,
+        scale = 0.8,
+    })
+end)
+
 RegisterNetEvent("soz_ems:client:KillPlayer")
 AddEventHandler("soz_ems:client:KillPlayer", function()
     SetEntityHealth(PlayerPedId(), 0)
@@ -38,8 +48,10 @@ function ResetAll()
     IsDead = false
     DeathTime = 0
     isInHospitalBed = false
+    Rhume = false
     ClearPedTasks()
     TriggerScreenblurFadeOut()
+    StopScreenEffect("DeathFailOut")
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
 end
@@ -61,4 +73,14 @@ end)
 
 RegisterNetEvent("soz-ems:client:lit", function(id, isUsed)
     Config.Locations["lit"][id].used = isUsed
+end)
+
+RegisterNetEvent("soz-ems:client:callems")
+AddEventHandler("soz-ems:client:callems", function()
+    TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+        anonymous = false,
+        number = "555-LSMC",
+        message = ("Besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
+        position = true,
+    })
 end)
