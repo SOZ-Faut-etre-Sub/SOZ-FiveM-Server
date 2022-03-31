@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { captureException } from '@sentry/react';
 
 interface TopLevelErrorCompProps {
   hasError: boolean;
@@ -44,6 +45,10 @@ export class TopLevelErrorComponent extends React.Component<any, TopLevelErrorCo
 
   static getDerivedStateFromError(error: Error) {
     return { hasError: true, errorMsg: error.message };
+  }
+
+  componentDidCatch(error: Error, { componentStack }: React.ErrorInfo) {
+    captureException(error, { contexts: { react: { componentStack } } });
   }
 
   render() {

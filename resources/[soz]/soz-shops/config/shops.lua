@@ -88,22 +88,6 @@ Config.Locations["247supermarket9"] = {
     pedModel = shopConfig["247"].pedModel,
     type = shopConfig["247"].type,
 }
-Config.Locations["247supermarket10"] = {
-    label = shopConfig["247"].label,
-    coords = vector4(-2539.29, 2313.75, 33.41, 94.82),
-    products = Config.Products["normal"],
-    blip = shopConfig["247"].blip,
-    pedModel = shopConfig["247"].pedModel,
-    type = shopConfig["247"].type,
-}
-Config.Locations["247supermarket11"] = {
-    label = shopConfig["247"].label,
-    coords = vector4(160.43, 6641.72, 31.71, 222.18),
-    products = Config.Products["normal"],
-    blip = shopConfig["247"].blip,
-    pedModel = shopConfig["247"].pedModel,
-    type = shopConfig["247"].type,
-}
 
 -- LTD GasolineLocations
 Config.Locations["ltdgasoline"] = {
@@ -146,22 +130,6 @@ Config.Locations["ltdgasoline5"] = {
     pedModel = shopConfig["ltd"].pedModel,
     type = shopConfig["ltd"].type,
 }
-Config.Locations["ltdgasoline6"] = {
-    label = shopConfig["ltd"].label,
-    coords = vector4(-1421.6, -270.53, 46.3, 51.58),
-    products = Config.Products["normal"],
-    blip = shopConfig["ltd"].blip,
-    pedModel = shopConfig["ltd"].pedModel,
-    type = shopConfig["ltd"].type,
-}
-Config.Locations["ltdgasoline7"] = {
-    label = shopConfig["ltd"].label,
-    coords = vector4(-2070.26, -333.33, 13.32, 357.19),
-    products = Config.Products["normal"],
-    blip = shopConfig["ltd"].blip,
-    pedModel = shopConfig["ltd"].pedModel,
-    type = shopConfig["ltd"].type,
-}
 
 -- Rob's LiquorLocations
 Config.Locations["robsliquor"] = {
@@ -199,15 +167,6 @@ Config.Locations["robsliquor4"] = {
 Config.Locations["robsliquor5"] = {
     label = shopConfig["liquor"].label,
     coords = vector4(1134.15, -982.51, 46.42, 281.3),
-    products = Config.Products["normal"],
-    blip = shopConfig["liquor"].blip,
-    pedModel = shopConfig["liquor"].pedModel,
-    type = shopConfig["liquor"].type,
-}
-
-Config.Locations["robsliquor6"] = {
-    label = shopConfig["liquor"].label,
-    coords = vector4(-162.81, 6323.02, 31.59, 322.62),
     products = Config.Products["normal"],
     blip = shopConfig["liquor"].blip,
     pedModel = shopConfig["liquor"].pedModel,

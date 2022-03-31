@@ -1,22 +1,19 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-
 --
 -- NUI related events
 --
 -- ID CARD
-AddEventHandler("soz-identity:client:request-identity-data", function(target, action)
-    TriggerGiveAnimation(action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "identity", action)
+AddEventHandler("soz-identity:client:request-identity-data", function(target)
+    TriggerServerEvent("soz-identity:server:request-data", target, "identity")
 end)
 
 -- LICENSES
-AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
-    TriggerGiveAnimation(action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action)
+AddEventHandler("soz-identity:client:request-licenses-data", function(target)
+    TriggerServerEvent("soz-identity:server:request-data", target, "licenses")
 end)
 
 -- COMMON
-RegisterNetEvent("soz-identity:client:display-ui", function(data)
+RegisterNetEvent("soz-identity:client:show-ui", function(data)
+
     if (data.scope == "identity") then
         Citizen.CreateThread(function()
             -- Send mugshot asynchronously as it can take a few seconds to generate
@@ -28,16 +25,6 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
 end)
 
 -- HIDE ALL
-RegisterNetEvent("soz-identity:client:hide", function(src)
-    SendNUIMessage({type = "hide", source = src})
+AddEventHandler("soz-identity:client:hide", function()
+    SendNUIMessage({type = "hide"})
 end)
-
-function TriggerGiveAnimation(action)
-    if action == "show" then
-        Citizen.CreateThread(function()
-            local animDict = "mp_common"
-            QBCore.Functions.RequestAnimDict(animDict)
-            TaskPlayAnim(PlayerPedId(), animDict, "givetake2_a", 8.0, 8.0, -1, 0, 0, true, false, true)
-        end)
-    end
-end

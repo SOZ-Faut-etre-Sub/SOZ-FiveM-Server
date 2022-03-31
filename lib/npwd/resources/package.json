@@ -8,7 +8,7 @@
   "repository": "https://github.com/project-error/new-phone-who-dis",
   "scripts": {
     "build": "webpack --mode production",
-    "build:release": "cross-env webpack --mode production",
+    "build:release": "cross-env IS_SENTRY=true webpack --mode production",
     "watch": "webpack --mode development --watch",
     "test": "jest",
     "lint": "eslint . --ext .ts"
@@ -31,6 +31,10 @@
     "@babel/preset-typescript": "^7.16.0",
     "@citizenfx/client": "^2.0.4170-1",
     "@citizenfx/server": "^2.0.4167-1",
+    "@sentry/integrations": "^6.15.0",
+    "@sentry/node": "^6.15.0",
+    "@sentry/tracing": "^6.15.0",
+    "@sentry/webpack-plugin": "^1.18.3",
     "@types/jest": "^26.0.14",
     "@types/md5": "^2.2.1",
     "@types/node": "^14.17.34",

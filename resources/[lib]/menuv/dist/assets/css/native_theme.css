@@ -228,10 +228,8 @@ div .hide,
 }
 
 .menuv.native .menuv-items .item-icon {
-    display: flex;
-    justify-content: center;
-    width: 1.5em;
-    max-width: 1.5em;
+    width: 2.5em;
+    max-width: 2.5em;
     margin-right: 5px;
 }
 
@@ -266,6 +264,8 @@ div .hide,
     margin-right: 5px;
     border-right: 1px solid white;
     padding-right: 5px;
+    float: left;
+    width: 2em;
     text-align: center;
 }
 

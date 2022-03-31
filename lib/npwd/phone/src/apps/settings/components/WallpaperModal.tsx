@@ -26,7 +26,7 @@ const WallpaperModal: React.FC = () => {
     const [config] = usePhoneConfig();
 
     const isImageAndUrl = (url) => {
-        return /^(http(s?):)([\/|.|\w|\s|-]).*/g.test(url);
+        return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
     };
 
     const handleSettingChange = (key: string | number, value: unknown) => {
@@ -110,7 +110,7 @@ const WallpaperModal: React.FC = () => {
                 >
                     <TextField
                         value={value}
-                        onChange={(e) => setValue(e.currentTarget.value)}
+                        onChange={(e) => !isImageAndUrl(value) && setValue(e.currentTarget.value)}
                         placeholder={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_PLACEHOLDER')}
                     />
                 </DialogForm>

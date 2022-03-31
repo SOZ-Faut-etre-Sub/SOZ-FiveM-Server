@@ -233,6 +233,7 @@ class CallsService {
     // player who is calling (transmitter)
     resp({ status: 'ok' });
 
+    // We should be fine once here but sentry was acting up idk
     await this.callsDB.updateCall(currentCall, currentCall?.is_accepted, endCallTimeUnix);
     // Clear from memory
     this.callMap.delete(transmitterNumber);
