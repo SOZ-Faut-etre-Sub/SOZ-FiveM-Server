@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
+RegisterNetEvent("soz-identity:server:request-data", function(target, scope, action)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -17,9 +17,10 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
         gender = "Féminin"
     end
 
-    TriggerClientEvent("soz-identity:client:show-ui", target, {
-        type = "show",
+    TriggerClientEvent("soz-identity:client:display-ui", target, {
+        type = "display",
         scope = scope,
+        action = action,
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         licences = licences,
@@ -27,5 +28,14 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope)
         job = Player.PlayerData.job.name or "-",
         address = "-",
         phone = charinfo.phone,
+        source = source,
     })
+end)
+
+RegisterNetEvent("soz-identity:server:hide-around", function(players)
+    if type(players) == "table" and #players > 0 then
+        for _, player in ipairs(players) do
+            TriggerClientEvent("soz-identity:client:hide", player, source)
+        end
+    end
 end)

@@ -1,6 +1,6 @@
 import {FunctionalComponent} from "preact";
 import style from "./style.module.css"
-import {fuelGauge} from "../../types/vehicle";
+import {fuelGauge} from "../../../types/vehicle";
 
 const FuelGauge: FunctionalComponent<fuelGauge> = ({value}) => {
     const gaugeColor = () => {
