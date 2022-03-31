@@ -1769,12 +1769,12 @@ QBShared.Items = {
     },
 
     -- Medication
-    ['firstaid'] = {
-        ['name'] = 'firstaid',
-        ['label'] = 'Premiers soins',
+    ['trousse_de_secours'] = {
+        ['name'] = 'trousse_de_secours',
+        ['label'] = 'trousse de secours',
         ['weight'] = 2500,
         ['type'] = 'item',
-        ['image'] = 'firstaid.png',
+        ['image'] = 'Trousse de soin.png',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
@@ -1805,9 +1805,21 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Kits de traumatologie contenant du matériel essentiel pour sauver des vies, contrôler les hémorragies et traiter les principales blessures.'
     },
-    ['painkillers'] = {
-        ['name'] = 'painkillers',
-        ['label'] = 'Anti-douleurs',
+    ['antidouleur'] = {
+        ['name'] = 'antidouleur',
+        ['label'] = 'Antidouleurs',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'painkillers.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Quand la douleur est trop forte, une petite pillule et c\'est reparti !'
+    },
+    ['antibiotique'] = {
+        ['name'] = 'antibiotique',
+        ['label'] = 'Antibiotiques',
         ['weight'] = 0,
         ['type'] = 'item',
         ['image'] = 'painkillers.png',
@@ -1829,12 +1841,24 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour que les papys puissent taper sur les voitures.'
     },
-    ['medkit'] = { 
-        ['name'] = 'medkit', 
-        ['label'] = 'medkit', 
+    ['poche_de_sang'] = { 
+        ['name'] = 'poche_de_sang', 
+        ['label'] = 'Poche de sang', 
         ['weight'] = 0, 
         ['type'] = 'item', 
-        ['image'] = 'medkit.png', 
+        ['image'] = 'Pochedesang.png', 
+        ['unique'] = false, 
+        ['useable'] = true, 
+        ['shouldClose'] = true, 
+        ['combinable'] = nil, 
+        ['description'] = 'Des fois sa marche pour réanimer' 
+    },
+    ['poche_vide'] = { 
+        ['name'] = 'poche_vide', 
+        ['label'] = 'Poche vide', 
+        ['weight'] = 0, 
+        ['type'] = 'item', 
+        ['image'] = 'Pochevide.png', 
         ['unique'] = false, 
         ['useable'] = true, 
         ['shouldClose'] = true, 
@@ -1843,15 +1867,39 @@ QBShared.Items = {
     },
     ['mouchoir'] = { 
         ['name'] = 'mouchoir', 
-        ['label'] = 'mouchoir', 
+        ['label'] = 'Mouchoir', 
         ['weight'] = 0, 
         ['type'] = 'item', 
-        ['image'] = 'mouchoir.png', 
+        ['image'] = 'Mouchoir.png', 
         ['unique'] = false, 
         ['useable'] = true, 
         ['shouldClose'] = true, 
         ['combinable'] = nil, 
         ['description'] = 'Utile en cas de rhume' 
+    },
+    ['pommade'] = { 
+        ['name'] = 'pommade', 
+        ['label'] = 'Pommade', 
+        ['weight'] = 0, 
+        ['type'] = 'item', 
+        ['image'] = 'Pommade.png', 
+        ['unique'] = false, 
+        ['useable'] = true, 
+        ['shouldClose'] = true, 
+        ['combinable'] = nil, 
+        ['description'] = 'Utile en cas de rhume' 
+    },
+    ['défibrillateur'] = { 
+        ['name'] = 'défibrillateur', 
+        ['label'] = 'Défibrillateur', 
+        ['weight'] = 0, 
+        ['type'] = 'item', 
+        ['image'] = 'Défibrillateur.png', 
+        ['unique'] = false, 
+        ['useable'] = true, 
+        ['shouldClose'] = true, 
+        ['combinable'] = nil, 
+        ['description'] = 'Utile pour réanimer' 
     },
 
     -- Communication

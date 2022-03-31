@@ -44,6 +44,16 @@ AddEventHandler("soz_ems:client:Revive", function()
     exports["soz-hud"]:DrawNotification("Vous êtes guéri!")
 end)
 
+RegisterNetEvent("lsmc:client:GiveBlood")
+AddEventHandler("lsmc:client:GiveBlood", function()
+    local player = PlayerPedId()
+
+    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] - 20)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["thirst"] - 20)
+     
+    exports["soz-hud"]:DrawNotification("Vous avez donnez votre sang!")
+end)
+
 function ResetAll()
     IsDead = false
     DeathTime = 0

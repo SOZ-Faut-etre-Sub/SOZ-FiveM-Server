@@ -1,4 +1,8 @@
 Rhume = false
+Grippe = false
+Dos = false
+Rougeur = false
+Intoxication = false
 
 local function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
@@ -11,11 +15,24 @@ end
 
 CreateThread(function()
     while true do
-        Wait(100000)
+        Wait(10000)
         Random = math.random(1, 1000)
         if not IsDead then
             if Random == 1 then
+                TriggerServerEvent("lsmc:server:SetMaladie", "rhume", true)
                 Rhume = true
+            end
+            if Random == 10 then
+                TriggerServerEvent("lsmc:server:SetMaladie", "grippe", true)
+                Grippe = true
+            end
+            if Random == 20 then
+                TriggerServerEvent("lsmc:server:SetMaladie", "rougeur", true)
+                Rougeur = true
+            end
+            if Random == 30 then
+                TriggerServerEvent("lsmc:server:SetMaladie", "intoxication", true)
+                Intoxication = true
             end
         end
     end
@@ -35,6 +52,18 @@ CreateThread(function()
             TriggerScreenblurFadeOut(100)
             ClearPedTasks(ped)
         end
+        if Grippe then
+            
+        end
+        if Dos then
+
+        end
+        if Rougeur then
+
+        end
+        if Intoxication then
+
+        end
     end
 end)
 
@@ -43,5 +72,6 @@ end)
 RegisterNetEvent("lsmc:client:mouchoir")
 AddEventHandler("lsmc:client:mouchoir", function()
     Rhume = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
     TriggerServerEvent("lsmc:server:remove", "mouchoir")
 end)

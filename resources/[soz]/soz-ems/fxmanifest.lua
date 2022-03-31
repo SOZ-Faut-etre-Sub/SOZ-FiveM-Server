@@ -6,6 +6,6 @@ description "job ems"
 
 shared_script "config.lua"
 
-client_script {"client/*.lua", "@menuv/menuv.lua"}
+client_script {"@menuv/menuv.lua", "@PolyZone/client.lua", "@PolyZone/BoxZone.lua", "client/*.lua"}
 
-server_script {"server/*.lua"}
+server_script {"server/*.lua", "@oxmysql/lib/MySQL.lua"}
