@@ -30,10 +30,6 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.1.1",
-    "@sentry/integrations": "^6.15.0",
-    "@sentry/react": "^5.29.2",
-    "@sentry/tracing": "^5.29.2",
-    "@sentry/webpack-plugin": "^1.18.3",
     "@types/enzyme": "^3.10.10",
     "@types/howler": "^2.2.4",
     "@types/jest": "^27.0.3",
@@ -57,7 +53,7 @@
     "i18n:missing": "node --experimental-json-modules i18n.missingKeys.js",
     "start": "cross-env PUBLIC_URL=/ craco start",
     "watch": "cross-env REACT_APP_IN_GAME=1 BROWSER=none craco start",
-    "build:release": "cross-env SENTRY_RELEASE=true craco build",
+    "build:release": "cross-env craco build",
     "build": "craco build",
     "test": "craco test --watchAll=false --testMatch **/src/**/*.test.{ts,js,tsx}"
   },

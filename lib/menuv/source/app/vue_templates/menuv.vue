@@ -155,7 +155,8 @@
     <ul class="menuv-items" ref="items">
       <li class="menuv-item media" v-for="item in items" :key="item.uuid" :class="[{'active': (index + 1) == item.index, 'hasIcon': ENSURE(item.icon, 'none') != 'none', 'disabled': item.disabled }, (`menuv-${item.type}`)]" :index="(item.index - 1)">
         <div class="media-left item-icon" v-if="ENSURE(item.icon, 'none') != 'none'">
-          <span class="menuv-icon">{{ENSURE(item.icon, 'none')}}</span>
+          <img v-if="item.icon.startsWith('http')" class="menuv-icon" :src="ENSURE(item.icon, 'none')" alt="" />
+          <span v-else class="menuv-icon">{{ENSURE(item.icon, 'none')}}</span>
         </div>
         <div class="menuv-title" v-if="item.type == 'title'" v-html="FORMAT_TEXT(item.label)"></div>
         <div class="menuv-heritage-content" v-if="item.type == 'heritage'">
