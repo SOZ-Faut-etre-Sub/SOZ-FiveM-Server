@@ -144,6 +144,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.CashTransfer] = {
         label = "Transport de fond",
         grades = {},
+        menuCallback = "stonk:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.CashTransfer.CollectBags] = {label = "Collecte sacs d'argent"},
