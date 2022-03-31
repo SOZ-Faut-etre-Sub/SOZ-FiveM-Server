@@ -18,7 +18,6 @@ client_scripts {
     "client/compass.lua",
     "client/streetname.lua",
     "client/minimap.lua",
-    "client/news.lua",
 }
 
 dependency "qb-core"

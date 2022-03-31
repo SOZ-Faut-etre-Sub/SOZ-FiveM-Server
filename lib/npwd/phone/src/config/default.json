@@ -152,5 +152,6 @@
     "printDebugLogs": false,
     "logLevel": 1,
     "shouldShowAtomDebug": false
-  }
+  },
+  "SentryErrorMetrics": false
 }

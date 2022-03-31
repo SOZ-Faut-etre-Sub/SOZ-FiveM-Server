@@ -92,10 +92,3 @@ RegisterNetEvent("inventory:client:updateStorageState", function(name, state)
         Config.Storages[name].state = state
     end
 end)
-
-CreateThread(function()
-    RequestStreamedTextureDict("soz-items", false)
-    while not HasStreamedTextureDictLoaded("soz-items") do
-        Wait(100)
-    end
-end)

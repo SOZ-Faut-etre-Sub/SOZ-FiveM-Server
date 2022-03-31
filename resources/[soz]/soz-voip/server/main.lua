@@ -6,6 +6,7 @@ voiceModule = {}
 AddEventHandler("playerJoining", function()
     local player = Player(source).state
     if not player.voipInit then
+        player:set("proximity", {}, true)
         player:set("muted", false, true)
         player:set("voiceIntent", "speech", true)
 

@@ -1,45 +1,33 @@
 -- Tattoo PolyZone Locations
 ShopLocation["tattoo"] = {
-    [1] = BoxZone:Create(vector3(322.9, 180.81, 103.59), 8.2, 5.2,
-                         {
+    [1] = BoxZone:Create(vector3(322.9, 180.81, 103.59), 8.2, 5.2, {
         name = "tattooshop",
         heading = 70,
-        minZ = 101.59,
-        maxZ = 105.59,
         debugPoly = LocationDebugPoly,
     }),
-    [2] = BoxZone:Create(vector3(1863.71, 3748.13, 33.03), 4.8, 7.6,
-                         {
+    [2] = BoxZone:Create(vector3(1863.71, 3748.13, 33.03), 4.8, 7.6, {
         name = "tattooshop2",
         heading = 300,
-        minZ = 31.03,
-        maxZ = 35.03,
         debugPoly = LocationDebugPoly,
     }),
-    [3] = BoxZone:Create(vector3(-293.32, 6199.73, 31.49), 4.8, 7.6,
-                         {
+    [3] = BoxZone:Create(vector3(-293.32, 6199.73, 31.49), 4.8, 7.6, {
         name = "tattooshop3",
         heading = 315,
-        minZ = 30.49,
-        maxZ = 33.49,
         debugPoly = LocationDebugPoly,
     }),
-    [4] = BoxZone:Create(vector3(-1154.01, -1426.42, 4.95), 8.2, 5.2,
-                         {name = "tattooshop4", heading = 125, minZ = 3.95, maxZ = 6.95, debugPoly = LocationDebugPoly}),
-    [5] = BoxZone:Create(vector3(1322.87, -1652.86, 52.28), 8.2, 5.2,
-                         {
+    [4] = BoxZone:Create(vector3(-1154.01, -1426.42, 4.95), 8.2, 5.2, {
+        name = "tattooshop4",
+        heading = 125,
+        debugPoly = LocationDebugPoly,
+    }),
+    [5] = BoxZone:Create(vector3(1322.87, -1652.86, 52.28), 8.2, 5.2, {
         name = "tattooshop5",
         heading = 309,
-        minZ = 51.28,
-        maxZ = 54.28,
         debugPoly = LocationDebugPoly,
     }),
-    [6] = BoxZone:Create(vector3(-3170.22, 1076.11, 20.83), 8.2, 5.2,
-                         {
+    [6] = BoxZone:Create(vector3(-3170.22, 1076.11, 20.83), 8.2, 5.2, {
         name = "tattooshop6",
         heading = 335,
-        minZ = 19.83,
-        maxZ = 22.83,
         debugPoly = LocationDebugPoly,
     }),
 }

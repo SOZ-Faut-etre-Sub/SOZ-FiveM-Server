@@ -41,6 +41,7 @@ end)
 
 AddEventHandler("mumbleConnected", function()
     local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
+    LocalPlayer.state:set("proximity", {index = CurrentPlayer.VoiceMode, distance = voiceModeData}, true)
 
     MumbleSetTalkerProximity(voiceModeData)
     MumbleClearVoiceTarget(Config.VoiceTarget)

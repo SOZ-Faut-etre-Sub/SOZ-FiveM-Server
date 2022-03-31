@@ -20,7 +20,9 @@ files {
     'menuv.lua',
     'menuv/components/*.lua',
     'dist/*.html',
-    'dist/assets/**/*',
+    'dist/assets/css/*.css',
+    'dist/assets/js/*.js',
+    'dist/assets/fonts/*.woff',
     'languages/*.json'
 }
 

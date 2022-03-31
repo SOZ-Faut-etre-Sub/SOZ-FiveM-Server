@@ -1,6 +1,7 @@
 interface Debug {
   level: 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly';
   enabled: boolean;
+  sentryEnabled: true;
 }
 
 interface General {

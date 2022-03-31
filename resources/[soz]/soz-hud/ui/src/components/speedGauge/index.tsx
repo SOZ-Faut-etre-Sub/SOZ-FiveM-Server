@@ -1,6 +1,6 @@
 import {FunctionalComponent} from "preact";
 import style from "./style.module.css"
-import {speedGauge} from "../../../types/vehicle";
+import {speedGauge} from "../../types/vehicle";
 
 const SpeedGauge: FunctionalComponent<speedGauge> = ({value}) => {
     const speed = value > 200 ? 200 : value

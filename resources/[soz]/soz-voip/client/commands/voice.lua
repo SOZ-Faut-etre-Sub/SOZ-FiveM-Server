@@ -6,7 +6,7 @@ RegisterCommand("voip-voice_up", function()
 
     if CurrentPlayer.VoiceMode + 1 <= #Config.VoiceModes then
         CurrentPlayer.VoiceMode = CurrentPlayer.VoiceMode + 1
-        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode])
+        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode], false)
     end
 end, false)
 RegisterKeyMapping("voip-voice_up", "Parler plus fort", "keyboard", "F6")
@@ -18,14 +18,14 @@ RegisterCommand("voip-voice_down", function()
 
     if CurrentPlayer.VoiceMode - 1 > 0 then
         CurrentPlayer.VoiceMode = CurrentPlayer.VoiceMode - 1
-        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode])
+        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode], false)
     end
 end, false)
 RegisterKeyMapping("voip-voice_down", "Parler moins fort", "keyboard", "F5")
 
 RegisterCommand("voip-voice_mute", function()
     if LocalPlayer.state.muted then
-        setProximityState(CurrentPlayer.VoiceMode)
+        setProximityState(CurrentPlayer.VoiceMode, false)
         LocalPlayer.state:set("muted", false, true)
         TriggerServerEvent("voip:server:muteMe", false)
     else

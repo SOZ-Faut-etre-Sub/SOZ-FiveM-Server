@@ -8,7 +8,6 @@ import PlayerProvider from "../context/player";
 import GameProvider from "../context/game";
 import Minimap from "./hud/minimap";
 import Notifications from "./hud/notifications";
-import NewsBanner from "./newsBanner";
 
 
 const App = () => {
@@ -31,7 +30,6 @@ const App = () => {
                     <VehicleDataProvider>
                         <main style={{transition: "opacity .5s", opacity: displayHUD ? 1.0 : 0.0}}>
                             <Notifications />
-                            <NewsBanner />
                             <Minimap />
                             <VoiceIndicator />
                             <PlayerNeeds />
