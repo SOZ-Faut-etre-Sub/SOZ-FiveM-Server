@@ -1,5 +1,4 @@
 -- maladie
-
 Rhume = false
 Grippe = false
 Dos = false
@@ -34,8 +33,6 @@ RegisterNetEvent("lsmc:client:SetMaladie", function(maladie, val)
         Rein = val
     end
 end)
-
-
 
 local function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
@@ -92,7 +89,7 @@ CreateThread(function()
         elseif Rougeur then
         elseif Intoxication then
             EnableContolAction(0, 21, false)
-        -- organe
+            -- organe
         elseif Rein then
             TriggerServerEvent("QBCore:Server:Rein")
         elseif Poumon then

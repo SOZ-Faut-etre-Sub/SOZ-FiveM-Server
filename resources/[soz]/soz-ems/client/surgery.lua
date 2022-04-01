@@ -10,11 +10,11 @@ local InsideSurgery = false
 Citizen.CreateThread(function()
     while true do
         local plyPed = PlayerPedId()
-	    local coord = GetEntityCoords(plyPed)
-	    InsideSurgery = surgery:isPointInside(coord)
-	    Citizen.Wait(2500)
+        local coord = GetEntityCoords(plyPed)
+        InsideSurgery = surgery:isPointInside(coord)
+        Citizen.Wait(2500)
     end
-end)    
+end)
 
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
