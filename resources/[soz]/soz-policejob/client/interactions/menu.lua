@@ -116,7 +116,8 @@ end
 --- @param menu Menu
 local function WantedEntity(menu, job)
     menu:AddButton({
-        label = "Personne recherché",
+        icon = "👮",
+        label = "Personnes recherchées",
         value = nil,
         select = function()
             menu:ClearItems()
@@ -125,7 +126,7 @@ local function WantedEntity(menu, job)
                 label = "Ajouter une personne à la liste",
                 value = nil,
                 select = function()
-                    local name = exports["soz-hud"]:Input("Nom de la personne recherché :", 125)
+                    local name = exports["soz-hud"]:Input("Nom de la personne recherchée :", 125)
                     if name == nil or name == "" then
                         exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un nom")
                         return
