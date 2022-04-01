@@ -183,17 +183,14 @@ QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(sou
     if player then
         for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
             if player.PlayerData.job.id == allowedJob then
-                cb(MySQL.execute.await("UPDATE `phone_twitch_news` SET type = @type WHERE id = @id", {
-                    ["@id"] = id,
-                    ["@type"] = player.PlayerData.job.id .. ":end",
-                }).changedRows >= 1)
+                cb(MySQL.execute.await("UPDATE `phone_twitch_news` SET type = @type WHERE id = @id",
+                                       {["@id"] = id, ["@type"] = player.PlayerData.job.id .. ":end"}).changedRows >= 1)
 
                 return
             end
         end
     end
 end)
-
 
 --- Other
 RegisterNetEvent("police:server:buy", function(weaponID)
