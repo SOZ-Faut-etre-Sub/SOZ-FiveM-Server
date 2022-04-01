@@ -3,3 +3,4 @@ cache
 [local]/*
 ![local]/.gitkeep
 imgui.ini
+/db

@@ -91,6 +91,8 @@ function QBCore.Functions.CreateBlip(id, data)
     if data.display then SetBlipDisplay(blip, data.display) end
     if data.playername then SetBlipNameToPlayerName(blip, data.playername) end
     if data.showcone then SetBlipShowCone(blip, data.showcone) end
+    if data.heading then SetBlipRotation(blip, math.ceil(data.heading)) end
+    if data.showheading then ShowHeadingIndicatorOnBlip(blip, data.showheading) end
     if data.secondarycolor then SetBlipSecondaryColour(blip, data.secondarycolor) end
     if data.friend then SetBlipFriend(blip, data.friend) end
     if data.mission then SetBlipAsMissionCreatorBlip(blip, data.mission) end
@@ -150,7 +152,7 @@ function QBCore.Functions.TriggerCallback(name, cb, ...)
 end
 
 function QBCore.Functions.TriggerRpc(name, ...)
-    local eventResponseId = UuidV4()
+    local eventResponseId = QBCore.Shared.UuidV4()
     local p = promise.new()
 
     local event = RegisterNetEvent(eventResponseId, function(result)

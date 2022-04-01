@@ -41,7 +41,6 @@ Base scripts for QB-Core Framework :building_construction:
 - Weapon recoil (specific to each weapon)
 - Tackle
 - Calm AI (adjusting npc/gang npc aggresiveness)
-- Race Harness
 - /id to see the id
 - Adjusting npc/vehicle/parked vehicle spawn rates
 - Infinite ammo for fire extinguisher and petrol can

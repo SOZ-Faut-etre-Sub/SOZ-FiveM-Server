@@ -1,0 +1,66 @@
+local microphoneInUse, microphoneProp = false, nil
+
+--- Functions
+local function toggleMicrophoneAnimation(pState)
+    QBCore.Functions.RequestAnimDict("anim@random@shop_clothes@watches")
+    if pState then
+        TaskPlayAnim(PlayerPedId(), "anim@random@shop_clothes@watches", "base", 2.0, 3.0, -1, 49, 0, 0, 0, 0)
+        microphoneProp = CreateObject(GetHashKey("prop_microphone_02"), 1.0, 1.0, 1.0, 1, 1, 0)
+        AttachEntityToEntity(microphoneProp, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 60309), 0.10, 0.0, 0.012, 20.0, 110.0, 70.0, 1, 0, 0, 0, 2, 1)
+    else
+        StopAnimTask(PlayerPedId(), "anim@random@shop_clothes@watches", "base", 1.0)
+        ClearPedTasks(PlayerPedId())
+        if microphoneProp ~= nil then
+            DeleteObject(microphoneProp)
+            microphoneProp = nil
+        end
+    end
+end
+
+local function useMicrophone()
+    LocalPlayer.state:set("useMicrophone", true, true)
+    exports["soz-voip"]:overrideProximityRange(Config.Microphone.Range, true)
+    exports["soz-voip"]:setVoiceIntent("music")
+end
+
+local function resetMicrophone()
+    LocalPlayer.state:set("useMicrophone", false, true)
+    exports["soz-voip"]:clearProximityOverride()
+    exports["soz-voip"]:setVoiceIntent("speech")
+end
+
+local function toggleMicrophone(toggle)
+    microphoneInUse = toggle
+
+    if microphoneInUse then
+        useMicrophone()
+    else
+        resetMicrophone()
+    end
+
+    toggleMicrophoneAnimation(microphoneInUse)
+end
+
+--- Events
+RegisterNetEvent("talk:microphone:use", function()
+    local player = PlayerPedId()
+    if DoesEntityExist(player) and not IsEntityDead(player) and not IsPauseMenuActive() then
+        toggleMicrophone(not microphoneInUse)
+    end
+end)
+
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
+    local haveItem = false
+
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == "microphone" then
+            haveItem = true
+            break
+        end
+    end
+
+    if not haveItem then
+        resetMicrophone()
+    end
+end)
+

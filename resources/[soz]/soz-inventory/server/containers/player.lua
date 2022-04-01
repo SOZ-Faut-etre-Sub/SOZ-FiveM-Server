@@ -15,7 +15,7 @@ end
 --- @param citizenid any
 --- @return table
 function PlayerInventory:load(_, citizenid)
-    local result = exports.oxmysql:scalar_async("SELECT inventory FROM players WHERE citizenid = ?", {citizenid})
+    local result = exports.oxmysql:scalar_async("SELECT inventory FROM player WHERE citizenid = ?", {citizenid})
     return result and json.decode(result) or {}
 end
 
@@ -26,7 +26,7 @@ end
 --- @return boolean
 function PlayerInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async("UPDATE players SET inventory = ? WHERE citizenid = ?", {inventory, owner})
+    exports.oxmysql:update_async("UPDATE player SET inventory = ? WHERE citizenid = ?", {inventory, owner})
     return true
 end
 

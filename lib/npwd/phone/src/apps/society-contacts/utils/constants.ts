@@ -9,14 +9,20 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 2,
-        display: 'LSMS',
-        number: '555-LSMS',
+        display: 'LSMC',
+        number: '555-LSMC',
         avatar: 'media/society_icon/lsms.webp',
     },
     {
         id: 3,
-        display: 'LSCS',
-        number: '555-LSCS',
-        avatar: 'media/society_icon/lscs.webp',
+        display: 'BCSO',
+        number: '555-BCSO',
+        avatar: 'media/society_icon/bcso.webp',
+    },
+    {
+        id: 4,
+        display: 'Rogers',
+        number: '555-ROGERS',
+        avatar: 'media/society_icon/rogers.webp',
     },
 ];

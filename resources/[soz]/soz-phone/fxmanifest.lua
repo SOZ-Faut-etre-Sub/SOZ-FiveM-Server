@@ -9,4 +9,4 @@ ui_page "html/index.html"
 
 files {"config.json", "html/index.html", "html/**/*"}
 
-dependency {"screenshot-basic"}
+dependency {"screenshot-basic", "soz-props-phone"}

@@ -1,9 +1,3 @@
-local VehicleNitrous = {}
-
-QBCore.Functions.CreateCallback("nos:GetNosLoadedVehs", function(source, cb)
-    cb(VehicleNitrous)
-end)
-
 QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     local src = source
     TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)
@@ -26,4 +20,32 @@ QBCore.Functions.CreateCallback("smallresources:server:GetCurrentPlayers", funct
         TotalPlayers = TotalPlayers + 1
     end
     cb(TotalPlayers)
+end)
+
+AddEventHandler("chatMessage", function(playerId, playerName, message)
+    if string.sub(message, 1, string.len("/")) ~= "/" then
+        CancelEvent()
+    end
+end)
+
+--- Admin
+RegisterNetEvent("core:server:zoneIntrusion", function(zone)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local endpoint = GetConvar("discord_webhook_zone", nil)
+
+    if endpoint then
+        PerformHttpRequest(endpoint, nil, "POST", json.encode({
+            username = "SOZ reporter",
+            embeds = {
+                ["title"] = "**Intrusion dans une zone interdite**",
+                ["color"] = 16586776,
+                ["fields"] = {
+                    {["name"] = "Joueur", ["value"] = Player.Functions.GetName(), ["inline"] = true},
+                    {["name"] = "Zone", ["value"] = zone, ["inline"] = true},
+                },
+            },
+        }), {["Content-Type"] = "application/json"})
+    else
+        print(("[SOZ REPORTER] Intrusion de %s dans la zone: %s"):format(Player.Functions.GetName(), zone))
+    end
 end)

@@ -50,6 +50,7 @@ type SocietyNumber = {
 
 export const SocietyNumberList: SocietyNumber = {
   lspd: '555-LSPD',
-  medic: '555-LSMS',
-  lscs: '555-LSCS',
+  lsmc: '555-LSMC',
+  bcso: '555-BCSO',
+  garbage: '555-ROGERS',
 }

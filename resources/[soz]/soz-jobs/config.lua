@@ -7,8 +7,8 @@ SozJobCore.JobType = {
     Religious = "religious",
     Scrapper = "scrapper",
     LSPD = "lspd",
-    LSCS = "lscs",
-    Medic = "medic",
+    BCSO = "bcso",
+    LSMC = "lsmc",
     Taxi = "taxi",
     Food = "food",
     News = "news",
@@ -91,22 +91,25 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.LSPD] = {
         label = "LSPD",
         grades = {},
+        menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
         },
     },
-    [SozJobCore.JobType.LSCS] = {
-        label = "LSCS",
+    [SozJobCore.JobType.BCSO] = {
+        label = "BCSO",
         grades = {},
+        menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
         },
     },
-    [SozJobCore.JobType.Medic] = {
-        label = "Médécin",
+    [SozJobCore.JobType.LSMC] = {
+        label = "LSMC",
         grades = {},
+        menuCallback = "lsmc:client:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Taxi] = {
@@ -122,11 +125,13 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.News] = {
         label = "Twitch News",
         grades = {},
+        menuCallback = "jobs:client:news:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Garbage] = {
         label = "Eboueur",
         grades = {},
+        menuCallback = "jobs:client:garbage:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Oil] = {

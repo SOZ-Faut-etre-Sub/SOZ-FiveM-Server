@@ -1,8 +1,5 @@
 local radioOpen, radioEnabled, radioProp = false, false, nil
 
-local primaryRadio = {frequency = 0.0, volume = 100}
-local secondaryRadio = {frequency = 0.0, volume = 100}
-
 --- Functions
 local function toggleRadioAnimation(pState)
     QBCore.Functions.RequestAnimDict("cellphone@")
@@ -21,21 +18,9 @@ local function toggleRadioAnimation(pState)
     end
 end
 
-local function connectToRadio(channel, isPrimary)
-    if tonumber(channel) ~= nil and tonumber(channel) >= 1000 and tonumber(channel) <= 9999 then
-        exports["soz-voip"]:setRadioChannel(channel, isPrimary)
-    end
-end
-
 local function leaveRadio()
-    if primaryRadio.frequency ~= 0 or secondaryRadio.frequency ~= 0 then
-        primaryRadio.frequency = 0
-        secondaryRadio.frequency = 0
-        exports["soz-voip"]:setRadioChannel(0, true)
-        exports["soz-voip"]:setRadioChannel(0, false)
-
-        clickSound()
-    end
+    exports["soz-voip"]:setRadioChannel("radio-sr", 0, true)
+    exports["soz-voip"]:setRadioChannel("radio-sr", 0, false)
 end
 
 local function toggleRadio(toggle)
@@ -67,51 +52,72 @@ RegisterNUICallback("radio/enable", function(data, cb)
     if not radioEnabled then
         leaveRadio()
     end
-    clickSound()
+    SoundProvider.toggle()
     cb("ok")
 end)
 
 RegisterNUICallback("radio/change_frequency", function(data, cb)
-    if data.primary and tonumber(data.primary) >= 1000 and tonumber(data.primary) <= 9999 then
-        primaryRadio.frequency = data.primary
-        connectToRadio(primaryRadio.frequency, true)
+    local state = LocalPlayer.state["radio-sr"]
+    if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
+        exports["soz-voip"]:setRadioChannel("radio-sr", data.primary, true)
+        SoundProvider.default(state.primaryChannelVolume)
+        cb("ok")
+        return
     end
-    if data.secondary and tonumber(data.secondary) >= 1000 and tonumber(data.secondary) <= 9999 then
-        secondaryRadio.frequency = data.secondary
-        connectToRadio(secondaryRadio.frequency, false)
+    if data.secondary and tonumber(data.secondary) >= Config.Radio.min and tonumber(data.secondary) <= Config.Radio.max then
+        exports["soz-voip"]:setRadioChannel("radio-sr", data.secondary, false)
+        SoundProvider.default(state.secondaryChannelVolume)
+        cb("ok")
+        return
     end
-    clickSound()
-    cb("ok")
+    cb("nok")
 end)
 
 RegisterNUICallback("radio/change_ear", function(data, cb)
+    local state = LocalPlayer.state["radio-sr"]
     if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
-        exports["soz-voip"]:setVoiceEar("primaryRadio", tonumber(data.primary))
+        exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), true)
+        SoundProvider.default(state.primaryChannelVolume)
+        cb("ok")
+        return
     end
     if data.secondary and tonumber(data.secondary) >= 0 and tonumber(data.secondary) <= 2 then
-        exports["soz-voip"]:setVoiceEar("secondaryRadio", tonumber(data.primary))
+        exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), false)
+        SoundProvider.default(state.secondaryChannelVolume)
+        cb("ok")
+        return
     end
-    clickSound()
-    cb("ok")
+    cb("nok")
 end)
 
 RegisterNUICallback("radio/change_volume", function(data, cb)
     if data.primary then
-        primaryRadio.volume = data.primary
-        exports["soz-voip"]:setVolume("primaryRadio", primaryRadio.volume)
+        exports["soz-voip"]:setVolume("radio-sr", data.primary, true)
+        SoundProvider.default(data.primary)
+        cb("ok")
+        return
     end
     if data.secondary then
-        secondaryRadio.volume = data.secondary
-        exports["soz-voip"]:setVolume("secondaryRadio", secondaryRadio.volume)
+        exports["soz-voip"]:setVolume("radio-sr", data.secondary, false)
+        SoundProvider.default(data.secondary)
+        cb("ok")
+        return
     end
-    clickSound()
-    cb("ok")
+    cb("nok")
 end)
 
 --- Events
 RegisterNetEvent("talk:radio:use", function()
     toggleRadio(not radioOpen)
 end)
+
+RegisterCommand("radio_toggle", function()
+    local player = PlayerPedId()
+    if DoesEntityExist(player) and not IsEntityDead(player) and not IsPauseMenuActive() then
+        toggleRadio(not radioOpen)
+    end
+end, false)
+RegisterKeyMapping("radio_toggle", "Sortir la radio", "keyboard", "N")
 
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
     leaveRadio()
@@ -132,16 +138,3 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 end)
 
---- Exports
-exports("ReconnectToRadio", function()
-    if primaryRadio.frequency ~= 0.0 then
-        connectToRadio(primaryRadio.frequency, true)
-    end
-    if secondaryRadio.frequency ~= 0.0 then
-        connectToRadio(secondaryRadio.frequency, false)
-    end
-end)
-
-exports("IsRadioOn", function()
-    return primaryRadio.frequency ~= 0.0 and secondaryRadio.frequency ~= 0.0
-end)

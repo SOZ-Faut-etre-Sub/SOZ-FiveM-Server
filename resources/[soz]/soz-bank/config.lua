@@ -16,12 +16,44 @@ Config.ErrorMessage = {
     ["no_account_money"] = "~r~Le compte ne possède pas assez d'argent !",
 }
 
--- TODO: move this to policejob
-Config.MoneyChecker = vector3(587.51, 13.24, 75.70)
+Config.FarmAccountMoney = {["farm_news"] = {money = 50000, marked_money = 0}}
 
 Config.SafeStorages = {
-    ["safe_lspd"] = {label = "Coffre LSPD", owner = "lspd", position = vector3(629.6, -24.31, 89.51)},
-    ["safe_lscs"] = {label = "Coffre LSCS", owner = "lscs", position = vector3(-433.32, 6001.71, 30.75)},
+    ["safe_lspd"] = {
+        label = "Coffre LSPD",
+        owner = "lspd",
+        position = vector3(622.21, -30.71, 90.51),
+        size = vec2(1.0, 2.5),
+        heading = 160.0,
+    },
+    ["safe_bcso"] = {
+        label = "Coffre BCSO",
+        owner = "bcso",
+        position = vector3(1855.94, 3690.49, 37.75),
+        size = vec2(1.0, 2.5),
+        heading = 120.0,
+    },
+    ["safe_lsmc"] = {
+        label = "Coffre LSMC",
+        owner = "lsmc",
+        position = vector3(311.04, -1424.3, 32.51),
+        size = vec2(0.8, 1.95),
+        heading = 320,
+    },
+    ["safe_news"] = {
+        label = "Coffre Twitch News",
+        owner = "news",
+        position = vector3(-575.83, -937.5, 28.7),
+        size = vec2(1.3, 2.5),
+    },
+    ["safe_garbage"] = {
+        label = "Coffre Rogers",
+        owner = "garbage",
+        position = vector3(-623.89, -1616.37, 33.01),
+        size = vec2(0.2, 1.8),
+        heading = 354,
+        offsetUpZ = 1.5,
+    },
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}

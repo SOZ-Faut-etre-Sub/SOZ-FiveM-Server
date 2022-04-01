@@ -27,7 +27,7 @@ const Screen: FunctionalComponent<RadioScreen> = ({
 }) => {
     const handleFrequencyChange = useCallback((e: any) => { // TODO find better type
         let frequencyValue = currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency
-        if (/^[0-9]{3}\.[0-9]$/.test(e.target.value)) {
+        if (/^[0-9]{3}\.[0-9]{2}$/.test(e.target.value)) {
             frequencyValue = parseFloat(e.target.value)
         }
         if (currentFrequency === 'primary') {
@@ -56,8 +56,8 @@ const Screen: FunctionalComponent<RadioScreen> = ({
                         <span>{currentFrequency === 'primary' ? 'F1' : 'F2'}</span>
                         <input
                             type="text"
-                            maxLength={5}
-                            value={(currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency).toFixed(1)}
+                            maxLength={6}
+                            value={(currentFrequency === 'primary' ? primaryFrequency.frequency : secondaryFrequency.frequency).toFixed(2)}
                             onChange={handleFrequencyChange}
                         />
                     </div>

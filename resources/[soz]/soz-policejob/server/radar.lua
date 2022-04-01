@@ -38,53 +38,51 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
         if Config.RadarAllowedVehicle[vehicleModel] then
             TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
                                radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED")
-
             return
         end
 
-        MySQL.Async.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {vehiclePlate}, function(playerVehicle)
-            radarMessage = radarMessage .. ("Amende: ~r~%s$~s~~n~"):format(fine)
+        radarMessage = radarMessage .. ("Amende: ~r~%s$~s~~n~"):format(fine)
 
-            if playerVehicle then
-                TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
+        if vehicleSpeed - radar.speed >= 40 then
+            local licences = Player.PlayerData.metadata["licences"]
+            local licenceType = "car"
 
-                if vehicleSpeed - radar.speed >= 40 then
-                    local licences = Player.PlayerData.metadata["licences"]
-                    local licenceType = "car"
+            if vehicleType == "bike" then
+                licenceType = "motorcycle"
+            elseif vehicleType == "truck" then
+                licenceType = "trailer"
+            end
 
-                    if vehicleType == "bike" then
-                        licenceType = "motorcycle"
-                    elseif vehicleType == "truck" then
-                        licenceType = "trailer"
-                    end
+            if licences[licenceType] >= 1 then
+                licences[licenceType] = licences[licenceType] - 1
 
-                    if licences[licenceType] >= 1 then
-                        licences[licenceType] = licences[licenceType] - 1
-
-                        if licences[licenceType] >= 1 then
-                            radarMessage = radarMessage .. "Point: ~r~-1 Point(s)~s~~n~"
-                        else
-                            radarMessage = radarMessage .. "~r~Retrait du permis~s~~n~"
-                        end
-                    else
-                        radarMessage = radarMessage .. "~r~Aucun permis~s~~n~"
-                    end
-
-                    Player.Functions.SetMetaData("licences", licences)
+                if licences[licenceType] >= 1 then
+                    radarMessage = radarMessage .. "Point: ~r~-1 Point(s)~s~~n~"
+                else
+                    radarMessage = radarMessage .. "~r~Retrait du permis~s~~n~"
                 end
             else
-                TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
+                radarMessage = radarMessage .. "~r~Aucun permis~s~~n~"
             end
-            TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
-                               "CHAR_BLOCKED")
 
-            for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
-                if Police.PlayerData.job.id == radar.station then
-                    TriggerClientEvent("hud:client:DrawAdvancedNotification", Police.PlayerData.source, RadarMessage.Title, RadarMessage.FlashPolice,
-                                       string.format("Plaque: ~b~%s~s~ ~n~Rue: ~b~%s~s~ ~n~Vitesse: ~r~%s km/h~s~", vehiclePlate, streetName,
-                                                     QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED")
+            Player.Functions.SetMetaData("licences", licences)
+        end
+
+        TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
+        TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
+                           "CHAR_BLOCKED")
+
+        for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
+            if Police.PlayerData.job.id == radar.station then
+                local currentVehicle = GetVehiclePedIsIn(GetPlayerPed(Police.PlayerData.source), false)
+                if currentVehicle == 0 or not Config.RadarAllowedVehicle[GetEntityModel(currentVehicle)] then
+                    return
                 end
+
+                TriggerClientEvent("hud:client:DrawAdvancedNotification", Police.PlayerData.source, RadarMessage.Title, RadarMessage.FlashPolice,
+                                   string.format("Plaque: ~b~%s~s~ ~n~Rue: ~b~%s~s~ ~n~Vitesse: ~r~%s km/h~s~", vehiclePlate, streetName,
+                                                 QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED")
             end
-        end)
+        end
     end
 end)

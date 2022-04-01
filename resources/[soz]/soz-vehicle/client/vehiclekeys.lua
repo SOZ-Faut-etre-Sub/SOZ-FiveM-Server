@@ -28,6 +28,11 @@ local function LockVehicle()
     if IsPedInAnyVehicle(ped) then
         veh = GetVehiclePedIsIn(ped)
     end
+    if GetEntitySpeed(veh) * 3.6 > 75 then
+        exports["soz-hud"]:DrawNotification("~r~Vous allez trop vite pour faire ça")
+        return
+    end
+
     if veh ~= nil and #(pos - vehpos) < 7.5 then
         QBCore.Functions.TriggerCallback("vehiclekeys:server:CheckHasKey", function(result)
             if result then

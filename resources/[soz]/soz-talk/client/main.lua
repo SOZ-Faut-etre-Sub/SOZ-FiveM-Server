@@ -23,9 +23,15 @@ RegisterNetEvent("talk:action:disable", function()
 
 end)
 
-function clickSound()
-    TriggerEvent("InteractSound_CL:PlayOnOne", "click", 0.3)
-end
+--- Functions
+SoundProvider = {
+    ["toggle"] = function()
+        TriggerEvent("InteractSound_CL:PlayOnOne", "radio/toggle", 0.2)
+    end,
+    ["default"] = function(volume)
+        TriggerEvent("InteractSound_CL:PlayOnOne", "click", (volume / 100) / 2)
+    end,
+}
 
 --- Loops
 CreateThread(function()

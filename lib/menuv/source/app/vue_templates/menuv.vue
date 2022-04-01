@@ -75,6 +75,78 @@
       .menuv.{{theme}} .menuv-items .menuv-desc {
         border-left: 0.375em solid rgb({{color.r}},{{color.g}},{{color.b}});
       }
+
+      .menuv.{{theme}} .menuv-items .menuv-item.menuv-heritage {
+        position: relative;
+        width: 100%;
+        height: 7vw;
+        background: url("https://nui-img/pause_menu_pages_char_mom_dad/mumdadbg") no-repeat;
+        background-size: 100%;
+      }
+
+      .menuv.{{theme}} .menuv-range {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+      }
+      .menuv.{{theme}} .menuv-heritage .menuv-heritage-content {
+        width: 100%;
+        height: 100%;
+      }
+
+      .menuv.{{theme}} .menuv-heritage .menuv-heritage-mother {
+        width: auto;
+        height: 98%;
+        position: absolute;
+        left: 7%;
+      }
+
+      .menuv.{{theme}} .menuv-heritage .menuv-heritage-father {
+        width: auto;
+        height: 98%;
+        position: absolute;
+        left: 43%;
+      }
+
+      .menuv.{{theme}} .menuv-title {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .menuv.{{theme}} .menuv-title:before, .menuv.{{theme}} .menuv-title:after {
+        content: '';
+        flex: 0 1 100%;
+        border-bottom: 2px slide {{TEXT_COLOR(color.r, color.g, color.b)}};
+        margin: 0 1rem;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider-item {
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        display: block;
+        box-sizing: content-box;
+        opacity: 0.7;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider i, .menuv.{{theme}} .menuv-color-slider svg {
+        margin: 0 !important;
+      }
+
+      .menuv.{{theme}} .menuv-color-slider-selected {
+        border: 2px solid white;
+        opacity: 1;
+      }
     </v-style>
     <header class="menuv-header">
       <strong v-html="FORMAT_TEXT(title)"></strong>
@@ -83,12 +155,22 @@
     <ul class="menuv-items" ref="items">
       <li class="menuv-item media" v-for="item in items" :key="item.uuid" :class="[{'active': (index + 1) == item.index, 'hasIcon': ENSURE(item.icon, 'none') != 'none', 'disabled': item.disabled }, (`menuv-${item.type}`)]" :index="(item.index - 1)">
         <div class="media-left item-icon" v-if="ENSURE(item.icon, 'none') != 'none'">
-          <span class="menuv-icon">{{ENSURE(item.icon, 'none')}}</span>
+          <img v-if="item.icon.startsWith('http')" class="menuv-icon" :src="ENSURE(item.icon, 'none')" alt="" />
+          <span v-else class="menuv-icon">{{ENSURE(item.icon, 'none')}}</span>
         </div>
-        <div class="media-content flex-left item-title" v-html="FORMAT_TEXT(item.label)"></div>
-        <div class="media-right">
+        <div class="menuv-title" v-if="item.type == 'title'" v-html="FORMAT_TEXT(item.label)"></div>
+        <div class="menuv-heritage-content" v-if="item.type == 'heritage'">
+          <img class="menuv-heritage-mother" :src="`https://nui-img/char_creator_portraits/${item.portraitFemale}`" alt="mother" />
+          <img class="menuv-heritage-father" :src="`https://nui-img/char_creator_portraits/${item.portraitMale}`" alt="father" />
+        </div>
+        <div class="media-content flex-left item-title" v-if="item.type != 'heritage' && item.type != 'title'" v-html="FORMAT_TEXT(item.label)"></div>
+        <div class="media-right" v-if="item.type != 'heritage' && item.type != 'title'">
           <i v-if="item.type == 'checkbox'" :class="{'fas fa-check': item.value, 'far fa-square': !item.value}"></i>
-          <input type="range" :min="item.min" :max="item.max" :value="(item.value)" v-if="item.type == 'range'">
+          <div class="menuv-range" v-if="item.type == 'range'">
+              <span class="min-range-label" v-html="FORMAT_TEXT(item.minLabel)"></span>
+              <input type="range" :min="item.min" :max="item.max" :value="(item.value)">
+              <span class="max-range-label" v-html="FORMAT_TEXT(item.maxLabel)"></span>
+          </div>
           <span class="menuv-options" v-if="item.type == 'confirm'">
             <span class="menuv-btn" :class="{'active': item.value}">YES</span>
             <span class="menuv-btn" :class="{'active': !item.value}">NO</span>
@@ -102,6 +184,15 @@
             <span v-html="GET_SLIDER_LABEL({ uuid: item.uuid })"></span>
             <i class="fas fa-chevron-right"></i>
           </span>
+          <div class="menuv-color-slider" v-if="item.type == 'color_slider'">
+            <i class="fas fa-chevron-left"></i>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: -2 })};`"></span>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: -1 })};`"></span>
+            <span class="menuv-color-slider-item menuv-color-slider-selected" :style="`background-color: ${GET_SLIDER_RGB({ uuid: item.uuid })};`"></span>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: 1 })};`"></span>
+            <span class="menuv-color-slider-item" :style="`background-color: ${GET_SLIDER_RGB_OFFSET({ uuid: item.uuid, offset: 2 })};`"></span>
+            <i class="fas fa-chevron-right"></i>
+          </div>
         </div>
       </li>
     </ul>

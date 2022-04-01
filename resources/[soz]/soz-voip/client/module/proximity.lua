@@ -1,21 +1,19 @@
--- used when muted
-local disableUpdates = false
-local isListenerEnabled = false
 local plyCoords = GetEntityCoords(PlayerPedId())
 
 function orig_addProximityCheck(ply)
     local tgtPed = GetPlayerPed(ply)
-    local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
-    local distance = voiceModeData[1]
+    local voiceRange = Config.VoiceModes[CurrentPlayer.VoiceMode]
 
-    return #(plyCoords - GetEntityCoords(tgtPed)) < distance
+    if LocalPlayer.state.useMegaphone == true then
+        voiceRange = Config.Megaphone.Range
+    elseif LocalPlayer.state.useMicrophone == true then
+        voiceRange = Config.Microphone.Range
+    end
+
+    return #(plyCoords - GetEntityCoords(tgtPed)) <= voiceRange
 end
 
 function addNearbyPlayers()
-    if disableUpdates then
-        return
-    end
-    -- update here so we don't have to update every call of addProximityCheck
     plyCoords = GetEntityCoords(PlayerPedId())
 
     MumbleClearVoiceTargetChannels(Config.VoiceTarget)
@@ -29,11 +27,11 @@ function addNearbyPlayers()
         end
 
         if orig_addProximityCheck(ply) then
-            if isTarget then
-                goto skip_loop
-            end
-
             MumbleAddVoiceTargetChannel(Config.VoiceTarget, serverId)
+        end
+
+        if Player(serverId).state.useMegaphone == true then
+            ApplySubmixEffect("megaphone", serverId)
         end
 
         ::skip_loop::
@@ -41,9 +39,9 @@ function addNearbyPlayers()
 end
 
 function setSpectatorMode(enabled)
-    isListenerEnabled = enabled
+    CurrentPlayer.IsListenerEnabled = enabled
     local players = GetActivePlayers()
-    if isListenerEnabled then
+    if CurrentPlayer.IsListenerEnabled then
         for i = 1, #players do
             local ply = players[i]
             local serverId = GetPlayerServerId(ply)
@@ -74,9 +72,9 @@ Citizen.CreateThread(function()
 
         addNearbyPlayers()
         local isSpectating = NetworkIsInSpectatorMode()
-        if isSpectating and not isListenerEnabled then
+        if isSpectating and not CurrentPlayer.IsListenerEnabled then
             setSpectatorMode(true)
-        elseif not isSpectating and isListenerEnabled then
+        elseif not isSpectating and CurrentPlayer.IsListenerEnabled then
             setSpectatorMode(false)
         end
 
