@@ -22,12 +22,6 @@ AddEventHandler("lsmc:server:revive", function(id)
     TriggerClientEvent("soz_ems:client:revive", Player.PlayerData.source)
 end)
 
-RegisterServerEvent("lsmc:server:RemoveOrgane")
-AddEventHandler("lsmc:server:RemoveOrgane", function(id, data)
-    local Player = QBCore.Functions.GetPlayer(tonumber(id))
-    TriggerClientEvent("lsmc:client:RemoveOrgane", Player.PlayerData.source, data.organe)
-end)
-
 RegisterServerEvent("lsmc:server:GiveBlood")
 AddEventHandler("lsmc:server:GiveBlood", function(id)
     local Player = QBCore.Functions.GetPlayer(tonumber(id))
