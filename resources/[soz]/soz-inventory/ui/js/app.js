@@ -75,7 +75,6 @@ SOZinventory.setupContainer = function (container, inventory){
   container.dataset.inventoryId = inventory.id
 
   let headerImage = inventory.type
-  if (inventory.type === 'boss_storage') headerImage = 'default'
   if (inventory.type === 'stash') headerImage = 'storage'
 
   container.parentNode.querySelector('header').style.background = `url("/ui/img/${headerImage}.jpg") no-repeat`
