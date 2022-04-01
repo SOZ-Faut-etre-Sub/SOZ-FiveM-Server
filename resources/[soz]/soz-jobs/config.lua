@@ -129,11 +129,13 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.News] = {
         label = "Twitch News",
         grades = {},
+        menuCallback = "jobs:client:news:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Garbage] = {
         label = "Eboueur",
         grades = {},
+        menuCallback = "jobs:client:garbage:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Oil] = {

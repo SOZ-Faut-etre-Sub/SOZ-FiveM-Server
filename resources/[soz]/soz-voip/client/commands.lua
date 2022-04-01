@@ -1,12 +1,10 @@
 --- Proximity voice update
-function setProximityState(proximityRange, isCustom)
+function setProximityState(proximityRange)
     MumbleSetTalkerProximity(proximityRange + 0.0)
-    LocalPlayer.state:set("proximity", {index = CurrentPlayer.VoiceMode, distance = proximityRange}, true)
-    TriggerEvent("hud:client:UpdateVoiceMode", isCustom and #Config.VoiceModes or CurrentPlayer.VoiceMode - 1)
 end
 
 exports("overrideProximityRange", function(range, disableCycle)
-    setProximityState(range, true)
+    setProximityState(range)
     if disableCycle then
         CurrentPlayer.VoiceModeUpdateAllowed = false
         CurrentPlayer.VoiceModeProximityIsOverride = true
@@ -14,8 +12,7 @@ exports("overrideProximityRange", function(range, disableCycle)
 end)
 
 exports("clearProximityOverride", function()
-    local voiceModeData = Config.VoiceModes[CurrentPlayer.VoiceMode]
-    setProximityState(voiceModeData[1], false)
+    setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode])
     if CurrentPlayer.VoiceModeProximityIsOverride then
         CurrentPlayer.VoiceModeUpdateAllowed = true
         CurrentPlayer.VoiceModeProximityIsOverride = false

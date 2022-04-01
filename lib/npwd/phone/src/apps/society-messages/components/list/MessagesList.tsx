@@ -11,6 +11,8 @@ import {Button} from '@ui/components/Button';
 import {Menu, Transition} from "@headlessui/react";
 import {BookmarkIcon, LocationMarkerIcon, PhoneIcon} from "@heroicons/react/solid";
 import {ThemeContext} from "../../../../styles/themeProvider";
+require('dayjs/locale/fr')
+dayjs.locale('fr')
 
 const MessagesList = (): any => {
     const societyMessages = useMessagesValue();

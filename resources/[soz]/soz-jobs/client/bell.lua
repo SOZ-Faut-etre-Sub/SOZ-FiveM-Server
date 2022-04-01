@@ -28,6 +28,12 @@ CreateThread(function()
         minZ = 34.0,
         maxZ = 34.5,
     }, {options = callSociety("555-BCSO"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:garbage", vector3(-616.73, -1621.55, 33.01), 0.25, 0.35,
+                                    {name = "bell:garbage", heading = 355, minZ = 33.0, maxZ = 33.1}, {
+        options = callSociety("555-ROGERS"),
+        distance = 2.5,
+    })
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)
