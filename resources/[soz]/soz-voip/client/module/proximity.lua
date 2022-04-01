@@ -1,18 +1,19 @@
--- used when muted
-local disableUpdates = false
 local plyCoords = GetEntityCoords(PlayerPedId())
 
 function orig_addProximityCheck(ply)
     local tgtPed = GetPlayerPed(ply)
+    local voiceRange = Config.VoiceModes[CurrentPlayer.VoiceMode]
 
-    return #(plyCoords - GetEntityCoords(tgtPed)) < Config.VoiceModes[CurrentPlayer.VoiceMode]
+    if LocalPlayer.state.useMegaphone == true then
+        voiceRange = Config.Megaphone.Range
+    elseif LocalPlayer.state.useMicrophone == true then
+        voiceRange = Config.Microphone.Range
+    end
+
+    return #(plyCoords - GetEntityCoords(tgtPed)) <= voiceRange
 end
 
 function addNearbyPlayers()
-    if disableUpdates then
-        return
-    end
-    -- update here so we don't have to update every call of addProximityCheck
     plyCoords = GetEntityCoords(PlayerPedId())
 
     MumbleClearVoiceTargetChannels(Config.VoiceTarget)
@@ -26,11 +27,11 @@ function addNearbyPlayers()
         end
 
         if orig_addProximityCheck(ply) then
-            if isTarget then
-                goto skip_loop
-            end
-
             MumbleAddVoiceTargetChannel(Config.VoiceTarget, serverId)
+        end
+
+        if Player(serverId).state.useMegaphone == true then
+            ApplySubmixEffect("megaphone", serverId)
         end
 
         ::skip_loop::

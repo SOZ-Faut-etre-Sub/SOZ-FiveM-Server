@@ -112,7 +112,10 @@ RegisterNetEvent("talk:radio:use", function()
 end)
 
 RegisterCommand("radio_toggle", function()
-    toggleRadio(not radioOpen)
+    local player = PlayerPedId()
+    if DoesEntityExist(player) and not IsEntityDead(player) and not IsPauseMenuActive() then
+        toggleRadio(not radioOpen)
+    end
 end, false)
 RegisterKeyMapping("radio_toggle", "Sortir la radio", "keyboard", "N")
 

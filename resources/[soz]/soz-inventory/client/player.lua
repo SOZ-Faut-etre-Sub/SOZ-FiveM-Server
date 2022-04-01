@@ -71,6 +71,7 @@ local function ItemsMenu(items)
         end)
 
         inventoryMenu:AddButton({
+            icon = "https://nui-img/soz-items/" .. item.name,
             label = item.label,
             rightLabel = item.amount,
             value = itemMenu,
