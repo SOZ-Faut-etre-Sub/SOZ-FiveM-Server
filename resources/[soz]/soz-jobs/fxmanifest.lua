@@ -4,7 +4,7 @@ lua54 "yes"
 
 description "job entreprise et pole emploie"
 
-shared_script {"config.lua", "stonk/config.lua"}
+shared_script {"config.lua", "config/jobs/*.lua"}
 
 client_script {
     "@PolyZone/client.lua",
@@ -13,7 +13,6 @@ client_script {
     "client/*.lua",
     "client/utils/*.lua",
     "client/utils/*.js",
-    "stonk/client/*.lua",
 }
 
 server_script {"@oxmysql/lib/MySQL.lua", "server/*.lua", "stonk/server/*.lua"}
