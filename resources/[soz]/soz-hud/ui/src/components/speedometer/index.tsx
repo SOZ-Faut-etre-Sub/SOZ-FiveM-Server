@@ -1,8 +1,8 @@
 import {ComponentProps, FunctionalComponent} from "preact";
 import style from "./style.module.css"
-import LightIndicator from "../lightIndicator";
-import FuelGauge from "../fuelGauge";
-import SpeedGauge from "../speedGauge";
+import LightIndicator from "./lightIndicator";
+import FuelGauge from "./fuelGauge";
+import SpeedGauge from "./speedGauge";
 import {useCallback, useContext, useEffect} from "preact/hooks";
 import {VehicleDataContext} from "../../context/vehicle";
 import SeatbeltIcon from "../../assets/vehicle/seatbelt";

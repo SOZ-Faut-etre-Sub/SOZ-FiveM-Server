@@ -53,6 +53,10 @@ MySQL.ready(function()
             Account.Create(k, v.label, "safestorages", v.owner)
         end
     end)
+
+    for account, money in pairs(Config.FarmAccountMoney) do
+        Account.Create(account, account, "farm", account, money.money, money.marked_money)
+    end
 end)
 
 --- Management
