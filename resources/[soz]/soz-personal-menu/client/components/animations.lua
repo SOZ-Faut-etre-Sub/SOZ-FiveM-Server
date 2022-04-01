@@ -1,18 +1,33 @@
 local animationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Animations"})
-local animationCatalog = {}
+local allAnimationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Animations"})
+local personalAnimationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Animations"})
 
---- @param menu Menu
+local animationCatalogMenu = {}
+local favoriteAnimationRegister, favoriteAnimationKey = false, 1
+
+local PlayEmote = function(animation)
+    local ped = PlayerPedId()
+    if not IsPedSittingInAnyVehicle(ped) then
+        if animation[1] ~= "0" then
+            QBCore.Functions.RequestAnimDict(animation[1])
+            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, animation[3] or false, animation[3] or false, animation[3] or false)
+        else
+            TaskStartScenarioInPlace(ped, animation[2], 0, true)
+        end
+    end
+end
+
 GenerateAnimationList = function(menu, category, content)
     if type(category) ~= "number" then
         local categoryID = menu.UUID .. category
 
-        if animationCatalog[categoryID] == nil then
-            animationCatalog[categoryID] = MenuV:InheritMenu(menu, {subtitle = category})
-            menu:AddButton({icon = "📋", label = category, value = animationCatalog[categoryID]})
+        if animationCatalogMenu[categoryID] == nil then
+            animationCatalogMenu[categoryID] = MenuV:InheritMenu(menu, {subtitle = category})
+            menu:AddButton({icon = "📋", label = category, value = animationCatalogMenu[categoryID]})
         end
 
         for cat, cont in pairs(content) do
-            GenerateAnimationList(animationCatalog[categoryID], cat, cont)
+            GenerateAnimationList(animationCatalogMenu[categoryID], cat, cont)
         end
 
         return
@@ -24,17 +39,15 @@ GenerateAnimationList = function(menu, category, content)
         rightLabel = content[3] or nil,
         -- content[4],
         select = function()
-            local ped = PlayerPedId()
-            local animation = content[5]
+            if favoriteAnimationRegister then
+                SetResourceKvp("soz/animation/" .. favoriteAnimationKey, json.encode(content[5]))
+                favoriteAnimationRegister = false
 
-            if animation[1] ~= "0" then
-                QBCore.Functions.RequestAnimDict(animation[1])
-                TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, animation[3] or false, animation[3] or false,
-                             animation[3] or false)
+                personalAnimationMenu:Close()
+                animationMenu:Close()
             else
-                TaskStartScenarioInPlace(ped, animation[2], 0, true)
+                PlayEmote(content[5])
             end
-
         end,
     })
 
@@ -46,7 +59,31 @@ function AnimationsEntry()
 end
 
 CreateThread(function()
+    animationMenu:AddButton({label = "Toutes les animations", value = allAnimationMenu})
+    animationMenu:AddButton({label = "Mes animations personnelles", value = personalAnimationMenu})
+
+    for shortcut = 1, 10 do
+        personalAnimationMenu:AddButton({
+            label = "Animation personnelles " .. shortcut,
+            value = animationMenu,
+            select = function()
+                favoriteAnimationRegister = true
+                favoriteAnimationKey = shortcut
+            end,
+        })
+
+        RegisterKeyMapping("animation_shortcut_" .. shortcut, "Lancer l'animation personnalisée " .. shortcut, "keyboard", "")
+        RegisterCommand("animation_shortcut_" .. shortcut, function(source, args, rawCommand)
+            if IsPedOnFoot(PlayerPedId()) then
+                local kvpValue = GetResourceKvpString("soz/animation/" .. shortcut)
+                if kvpValue then
+                    PlayEmote(json.decode(kvpValue))
+                end
+            end
+        end, true)
+    end
+
     for category, content in pairs(Config.AnimationsList) do
-        GenerateAnimationList(animationMenu, category, content)
+        GenerateAnimationList(allAnimationMenu, category, content)
     end
 end)
