@@ -1,8 +1,8 @@
 import {FunctionalComponent} from "preact";
 import style from "./style.module.css"
-import {lightState} from "../../types/vehicle";
-import LowBeamIcon from "../../assets/vehicle/lowBeam";
-import HighBeamIcon from "../../assets/vehicle/highBeam";
+import {lightState} from "../../../types/vehicle";
+import LowBeamIcon from "../../../assets/vehicle/lowBeam";
+import HighBeamIcon from "../../../assets/vehicle/highBeam";
 
 const LightIndicator: FunctionalComponent<lightState> = ({state}) => {
     return (

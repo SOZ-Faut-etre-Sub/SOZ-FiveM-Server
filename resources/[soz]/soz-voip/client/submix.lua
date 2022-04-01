@@ -18,13 +18,13 @@ function ApplySubmixEffect(module, player, extra)
             local earState = LocalPlayer.state[module][extra .. "ChannelEar"]
             local volumeState = LocalPlayer.state[module][extra .. "ChannelVolume"] / 100
 
-            print(module, extra, earState, volumeState)
-
             SetAudioSubmixOutputVolumes(radioEffectId, 0, earState <= 1 and volumeState or 0.0, earState >= 1 and volumeState or 0.0,
                                         earState <= 1 and volumeState or 0.0, earState >= 1 and volumeState or 0.0, 1.0, 1.0)
         end
     elseif module == "call" then
         MumbleSetSubmixForServerId(player, phoneEffectId)
+    elseif module == "megaphone" then
+        MumbleSetSubmixForServerId(player, radioEffectId)
     end
 end
 

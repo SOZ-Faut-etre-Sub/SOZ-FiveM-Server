@@ -347,6 +347,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "cash-transfer",
     },
+    ["garbage"] = {
+        label = "Rogers",
+        blipcoord = vector3(-595.41, -1587.31, 26.75),
+        showBlip = false,
+        blipName = "Rogers",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "garbage",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",

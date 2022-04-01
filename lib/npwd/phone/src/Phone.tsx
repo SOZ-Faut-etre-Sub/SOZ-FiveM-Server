@@ -33,6 +33,7 @@ import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useCall } from '@os/call/hooks/useCall';
 import {useSocietyMessagesService} from "./apps/society-messages/hooks/useMessageService";
+import {useTwitchNewsService} from "./apps/twitch-news/hooks/useMessageService";
 
 function Phone() {
   const { t, i18n } = useTranslation();
@@ -70,6 +71,7 @@ function Phone() {
   useNoteListener();
   /*usePhotoService();*/
   useSocietyMessagesService();
+  useTwitchNewsService();
   useCallService();
   useDialService();
 
