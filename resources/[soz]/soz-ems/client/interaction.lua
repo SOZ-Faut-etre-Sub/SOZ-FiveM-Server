@@ -60,6 +60,29 @@ CreateThread(function()
                 item = "poche_de_sang",
             },
             {
+                label = "Réanimer",
+                icon = "fas fa-bolt",
+                canInteract = function(entity)
+                    return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                end,
+                action = function(entity)
+                    TriggerEvent("animations:client:EmoteCommandStart", {"cpr"})
+                    QBCore.Functions.Progressbar("réanimer", "Vous réanimez la personne..", 10000, false, true,
+                                                 {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {}, {}, {}, function()
+                        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+                        TriggerServerEvent("lsmc:server:remove", "poche_de_sang")
+                        ReviveId = GetPlayerServerId(entity)
+                        TriggerServerEvent("lsmc:server:revive", ReviveId)
+                    end)
+                end,
+                item = "défibrillateur",
+            },
+            {
                 label = "Prise de sang",
                 icon = "fas fa-bolt",
                 job = {["lsmc"] = 0},
@@ -79,7 +102,31 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:remove", "poche_vide")
                         TriggerServerEvent("lsmc:server:add", "poche_de_sang")
                         PlayerId = GetPlayerServerId(entity)
-                        TriggerServerEvent("lsmc:server:GiveBlood")
+                        TriggerServerEvent("lsmc:server:GiveBlood", PlayerId)
+                    end)
+                end,
+                item = "poche_vide",
+            },
+            {
+                label = "Soigner la grippe",
+                icon = "fas fa-bolt",
+                job = {["lsmc"] = 0},
+                canInteract = function(entity)
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                end,
+                action = function(entity)
+                    TriggerEvent("animations:client:EmoteCommandStart", {"medic"})
+                    QBCore.Functions.Progressbar("antipyrétique", "Vous administrer des antipyrétiques...", 10000, false, true,
+                                                 {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {}, {}, {}, function()
+                        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+                        TriggerServerEvent("lsmc:server:remove", "antipyrétique")
+                        PlayerId = GetPlayerServerId(entity)
+                        TriggerServerEvent("lsmc:server:SetOrgane", PlayerId, "grippe", false)
                     end)
                 end,
                 item = "poche_vide",

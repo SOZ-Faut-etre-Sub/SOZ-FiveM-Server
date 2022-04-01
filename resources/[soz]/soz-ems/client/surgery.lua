@@ -36,7 +36,8 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        SetEntityHealth(entity, GetEntityHealth(entity) + 25)
+                        local id = GetPlayerServerId(entity)
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Poumon", true)
                     end)
                 end,
             },
@@ -57,8 +58,10 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        SetEntityHealth(entity, GetEntityHealth(entity) + 25)
+                        local id = GetPlayerServerId(entity)
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Rein", true)
                     end)
+                end,
             },
             {
                 label = "Enlever le Foie",
@@ -77,8 +80,10 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        SetEntityHealth(entity, GetEntityHealth(entity) + 25)
+                        local id = GetPlayerServerId(entity)
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Foie", true)
                     end)
+                end,
             },
         },
         distance = 2.5,

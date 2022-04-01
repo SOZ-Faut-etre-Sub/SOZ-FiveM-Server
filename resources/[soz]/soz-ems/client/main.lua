@@ -50,7 +50,7 @@ AddEventHandler("lsmc:client:GiveBlood", function()
 
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] - 20)
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["thirst"] - 20)
-     
+
     exports["soz-hud"]:DrawNotification("Vous avez donnez votre sang!")
 end)
 
@@ -93,4 +93,10 @@ AddEventHandler("soz-ems:client:callems", function()
         message = ("Besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
         position = true,
     })
+end)
+
+RegisterNetEvent("lsmc:client:ifaks")
+AddEventHandler("lsmc:client:ifaks", function()
+    local player = PlayerPedId() 
+    SetEntityHealth(player, GetEntityHealth(player) + 25)
 end)

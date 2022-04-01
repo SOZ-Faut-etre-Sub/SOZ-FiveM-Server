@@ -1817,6 +1817,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Quand la douleur est trop forte, une petite pillule et c\'est reparti !'
     },
+    ['antipyrétique'] = {
+        ['name'] = 'antipyrétique',
+        ['label'] = 'antipyrétiques',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'antipyrétique.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Quand on a la grippe, une petite pillule et c\'est reparti !'
+    },
     ['antibiotique'] = {
         ['name'] = 'antibiotique',
         ['label'] = 'Antibiotiques',
