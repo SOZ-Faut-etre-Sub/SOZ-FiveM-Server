@@ -10,7 +10,8 @@ local PlayEmote = function(animation)
     if not IsPedSittingInAnyVehicle(ped) then
         if animation[1] ~= "0" then
             QBCore.Functions.RequestAnimDict(animation[1])
-            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, animation[3] or false, animation[3] or false, animation[3] or false)
+            local canMove = animation[4] or false
+            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
         else
             TaskStartScenarioInPlace(ped, animation[2], 0, true)
         end
