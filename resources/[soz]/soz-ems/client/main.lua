@@ -97,6 +97,6 @@ end)
 
 RegisterNetEvent("lsmc:client:ifaks")
 AddEventHandler("lsmc:client:ifaks", function()
-    local player = PlayerPedId() 
+    local player = PlayerPedId()
     SetEntityHealth(player, GetEntityHealth(player) + 25)
 end)
