@@ -25,10 +25,10 @@ const Banner: FunctionalComponent<ComponentProps<any>> = ({ news, onDelete }: {n
     return (
         <div class={`${styles.news} ${styles[news.type]} ${isClosing ? styles.slideOut : styles.slideIn}`}>
             <h3 class={styles.header}>
-                {news.type === 'lspd' || news.type === 'bcso' ? 'Avis de recherche' : news.type}
+                {/(lspd|bcso)/.test(news.type) ? 'Avis de recherche' : news.type}
             </h3>
             <div class={styles.content}>
-                {news.type === 'lspd' || news.type === 'bcso' ? (
+                {/(lspd|bcso)/.test(news.type) ? (
                     <p class={styles.text}>
                         Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
 
