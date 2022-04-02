@@ -1,8 +1,5 @@
 -- Event Handler
 
-local HungerRate = 4.2
-local ThirstRate = 3.8
-
 AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
@@ -137,20 +134,20 @@ end)
 
 -- Player
 
-RegisterNetEvent('QBCore:Server:Foie', function()
-    HungerRate = 8.4
-end)
-
-RegisterNetEvent('QBCore:Server:Rein', function()
-    ThirstRate = 7.6
-end)
-
 RegisterNetEvent('QBCore:UpdatePlayer', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if Player then
-        local newHunger = Player.PlayerData.metadata['hunger'] - HungerRate
-        local newThirst = Player.PlayerData.metadata['thirst'] - ThristRate
+        if Player.PlayerData.Metadata['foie'] then
+            local newHunger = Player.PlayerData.metadata['hunger'] - 8.4
+        else
+            local newHunger = Player.PlayerData.metadata['hunger'] - QBCore.Config.Player.HungerRate
+        end
+        if Player.PlayerData.Metadata['rein'] then
+            local newThirst = Player.PlayerData.metadata['thirst'] - 7.6
+        else
+            local newThirst = Player.PlayerData.metadata['thirst'] - QBCore.Config.Player.ThirstRate
+        end
         if newHunger <= 0 then
             newHunger = 0
         end
