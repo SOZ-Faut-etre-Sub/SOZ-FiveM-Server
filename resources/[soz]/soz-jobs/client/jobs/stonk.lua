@@ -1,6 +1,3 @@
-QBCore = exports["qb-core"]:GetCoreObject()
-PlayerData = QBCore.Functions.GetPlayerData()
-
 StonkJob = {}
 StonkJob.Functions = {}
 StonkJob.Functions.Menu = {}
