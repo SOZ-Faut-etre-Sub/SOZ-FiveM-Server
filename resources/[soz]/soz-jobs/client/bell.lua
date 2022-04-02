@@ -34,6 +34,13 @@ CreateThread(function()
         options = callSociety("555-ROGERS"),
         distance = 2.5,
     })
+
+    exports["qb-target"]:AddBoxZone("bell:news", vector3(-586.9, -933.61, 23.82), 0.25, 0.35, {
+        name = "bell:news",
+        heading = 33,
+        minZ = 24.0,
+        maxZ = 24.10,
+    }, {options = callSociety("555-NEWS"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)
