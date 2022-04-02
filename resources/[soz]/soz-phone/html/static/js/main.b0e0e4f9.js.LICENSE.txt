@@ -5,6 +5,12 @@ object-assign
 */
 
 /*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+
+/*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
  *  
  *  howler.js v2.2.3

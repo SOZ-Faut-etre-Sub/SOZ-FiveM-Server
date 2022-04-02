@@ -21,6 +21,12 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 4,
+        display: 'Twitch News',
+        number: '555-NEWS',
+        avatar: 'media/society_icon/news.webp',
+    },
+    {
+        id: 5,
         display: 'Rogers',
         number: '555-ROGERS',
         avatar: 'media/society_icon/rogers.webp',
