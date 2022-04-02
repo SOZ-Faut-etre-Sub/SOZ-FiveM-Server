@@ -1,4 +1,4 @@
-local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:options")
+local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_job_bennys", "soz", "mechanic:vehicle:options")
 local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
 local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
 local NoDamage = MenuV:InheritMenu(Status, "Aucun dommage")
@@ -44,13 +44,12 @@ local function OpenChooseWheelMenu(menu, k, v)
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
-                ApplyWheel(v.category, n.id, v.id)
-                -- ApplyWheel(categoryID, wheelID, wheelType)
+                ApplyWheel(v.wheelID, n.id, v.id)
             end,
         })
     end
     local eventwheelon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewWheel(v.category, currentItem.Value, v.id)
+        PreviewWheel(v.wheelID, currentItem.Value, v.id)
     end)
     menu:On("close", function()
         menu:RemoveOnEvent("switch", eventwheelon)

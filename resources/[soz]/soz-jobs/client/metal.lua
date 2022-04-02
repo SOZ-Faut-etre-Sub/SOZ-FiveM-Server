@@ -73,16 +73,14 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
 
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
     QBCore.Functions.Progressbar("adsl_fix", "Récolte du metal..", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function()
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-        TriggerEvent("animations:client:EmoteCommandStart", {"pickup"})
+    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+        TaskPlayAnim(PlayerPedId(), "random@domestic", "pickup_low", 8.0, -8.0, -1, 49, 0, 0, 0, 0)
         amount = math.random(5, 15)
         TriggerServerEvent("job:get:metal", amount)
         exports["qb-target"]:RemoveZone("adsl_zone")

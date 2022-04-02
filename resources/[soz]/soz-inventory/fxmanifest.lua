@@ -31,4 +31,4 @@ ui_page "ui/index.html"
 
 files {"ui/index.html", "ui/img/*", "ui/css/style.css", "ui/js/inventory_item.js", "ui/js/app.js"}
 
-dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "soz-monitor", "dpemotes", "menuv", "qb-target"}
+dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "soz-monitor", "menuv", "qb-target"}

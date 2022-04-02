@@ -201,12 +201,11 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
         local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
         if not BedInfo.Attached then
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
-
             if DoesEntityExist(entity) and entity ~= lastveh then
                 AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false,
                                      false, nil, true)
 
-                TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(entity), "Attached", NetworkGetNetworkIdFromEntity(entity))
+                TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", NetworkGetNetworkIdFromEntity(entity))
             end
         end
         LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
@@ -293,11 +292,9 @@ end
 
 local function TpFlatbed(entity, lastveh)
     if not Busy then
-        if LastStatus then
-            Busy = true
-            if not LastAttach then
-                TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity)
-            end
+        Busy = true
+        if not LastAttach then
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity)
         end
     end
 end
@@ -382,13 +379,13 @@ CreateThread(function()
                         return false
                     end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
-                        (#(GetEntityCoords(GetVehiclePedIsIn(PlayerPedId(), true)) - GetEntityCoords(PlayerPedId())) >= 20) then
+                        (#(GetEntityCoords(GetVehiclePedIsIn(PlayerPedId(), true)) - GetEntityCoords(PlayerPedId())) >= 50) then
                         return false
                     end
                     return true
                 end,
             },
         },
-        distance = 2.5,
+        distance = 3,
     })
 end)

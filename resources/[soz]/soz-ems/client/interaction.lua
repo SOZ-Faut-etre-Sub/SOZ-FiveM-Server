@@ -17,15 +17,13 @@ CreateThread(function()
                     return PlayerData.job.onduty
                 end,
                 action = function(entity)
-                    TriggerEvent("animations:client:EmoteCommandStart", {"medic"})
                     QBCore.Functions.Progressbar("Soigner", "Appliquer un bandage..", 10000, false, true,
                                                  {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
                         disableCombat = true,
-                    }, {}, {}, {}, function()
-                        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+                    }, {task = "CODE_HUMAN_MEDIC_TEND_TO_DEAD"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "firstaid")
                         SetEntityHealth(entity, GetEntityHealth(entity) + 25)
                     end)
@@ -40,15 +38,13 @@ CreateThread(function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
                 action = function(entity)
-                    TriggerEvent("animations:client:EmoteCommandStart", {"cpr"})
                     QBCore.Functions.Progressbar("réanimer", "Vous réanimez la personne..", 10000, false, true,
                                                  {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
                         disableCombat = true,
-                    }, {}, {}, {}, function()
-                        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+                    }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "défibrilateur")
                         ReviveId = GetPlayerServerId(entity)
                         TriggerServerEvent("lsmc:server:revive", ReviveId)

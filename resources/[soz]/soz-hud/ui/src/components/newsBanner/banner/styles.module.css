@@ -4,10 +4,21 @@
     overflow: hidden;
     margin-bottom: .3rem;
     transition: all 0.3s ease-out;
-    border-radius: .4rem;
     font-size: 0.95rem;
     color: #fff;
-    background: rgba(0,0,0,.8);
+    background: url("../../../assets/twitch-news/default.png") no-repeat;
+    background-size: contain;
+    min-height: 20vh;
+}
+
+.news.lspd {
+    background: url("../../../assets/twitch-news/lspd.png") no-repeat;
+    background-size: contain;
+}
+
+.news.bcso {
+    background: url("../../../assets/twitch-news/bcso.png") no-repeat;
+    background-size: contain;
 }
 
 .news * {
@@ -43,33 +54,44 @@
 }
 
 .header {
-    background: rgba(0,0,0,.2);
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 2rem;
     text-transform: uppercase;
-    padding: .5rem .8rem;
+    font-size: 4rem;
+    height: 5vh;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 13.6vh;
+    overflow: hidden;
 }
 
 .text {
-    padding: .5rem .8rem;
+    grid-column: 2 / span 3;
+    font-size: 1.8rem;
+    padding: 1rem;
 }
 
-/* News color */
-.news.annonce {
-    background: rgba(139,92,246,.8);
+@media (max-width: 2560px) {
+    .header {
+        font-size: 3rem;
+    }
+    .text {
+        font-size: 1.2rem;
+        padding: .7rem;
+    }
 }
 
-.news.breaking-news {
-    background: rgba(239,68,68,.8);
-}
-
-.news.publicité {
-    background: rgba(236,72,153,.8);
-}
-
-.news.fait-divers {
-    background: rgba(249,115,22,.8);
-}
-
-.news.info-traffic {
-    background: rgba(59,130,246,.8);
+@media (max-width: 1920px) {
+    .header {
+        font-size: 2rem;
+    }
+    .text {
+        font-size: .95rem;
+        padding: .5rem;
+    }
 }

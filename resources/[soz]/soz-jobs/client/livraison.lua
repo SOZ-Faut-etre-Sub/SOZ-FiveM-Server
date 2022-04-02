@@ -65,15 +65,13 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
 
 RegisterNetEvent("jobs:livraison:fix")
 AddEventHandler("jobs:livraison:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
     QBCore.Functions.Progressbar("livraison_fix", "Livraison de fougère..", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function()
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+    }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
         exports["qb-target"]:RemoveZone("livraison_zone")
         destroyblip(job_blip)
         DrawInteractionMarker(ObjectifCoord, false)

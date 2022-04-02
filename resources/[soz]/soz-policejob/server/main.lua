@@ -162,6 +162,37 @@ RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, 
     end
 end)
 
+--- Wanted
+QBCore.Functions.CreateCallback("police:server:GetWantedPlayers", function(source, cb)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if player then
+        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+            if player.PlayerData.job.id == allowedJob then
+                cb(MySQL.query.await("SELECT * FROM `phone_twitch_news` WHERE type = ?", {player.PlayerData.job.id}) or {})
+
+                return
+            end
+        end
+    end
+end)
+
+QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(source, cb, id)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if player then
+        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+            if player.PlayerData.job.id == allowedJob then
+                cb(MySQL.execute.await("UPDATE `phone_twitch_news` SET type = @type WHERE id = @id",
+                                       {["@id"] = id, ["@type"] = player.PlayerData.job.id .. ":end"}).changedRows >= 1)
+
+                return
+            end
+        end
+    end
+end)
+
+--- Other
 RegisterNetEvent("police:server:buy", function(weaponID)
     local player = QBCore.Functions.GetPlayer(source)
 
