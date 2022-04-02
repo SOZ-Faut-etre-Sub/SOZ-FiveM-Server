@@ -1,15 +1,15 @@
 StonkConfig = {}
 
 StonkConfig.Collection = {
-    Cooldown = 60000, -- in ms
-    Duration = 3000, -- in ms
+    Cooldown = 900000, -- in ms
+    Duration = 5000, -- in ms
     Range = {min = 5, max = 8},
     BagItem = "moneybag",
 }
 
 StonkConfig.Resale = {
     TargetEntities = {-2018598162, -735318549},
-    Duration = 3000, -- in ms
+    Duration = 5000, -- in ms
     Price = 100,
 }
 
