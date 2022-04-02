@@ -1,1 +1,0 @@
-exports("GetTimestamp", () => Date.now());
