@@ -33,7 +33,7 @@ Washmecha = BoxZone:Create(vector3(-198.29, -1324.47, 30.89), 8, 6, {
     name = "Washmecha_z",
     heading = 270,
     minZ = 29.89,
-    maxZ = 33.89
+    maxZ = 33.89,
   })
 
 Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
