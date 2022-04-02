@@ -137,7 +137,7 @@ StonkJob.Permissions.CanBagsBeCollected = function(shopId)
 
         local lastCollect = shop["last-collection"]
         if lastCollect then
-            local now = exports["soz-jobs"]:GetTimestamp()
+            local now = GetGameTimer()
             return lastCollect + StonkConfig.Collection.Cooldown < now
         end
     end
@@ -162,7 +162,7 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
     if nBags < 1 then
         Citizen.Wait(500)
         exports["soz-hud"]:DrawNotification(string.format("Vous avez collecté ~g~%d sacs d'argent", collectedBags))
-        StonkJob.CollectedShops[currentShop]["last-collection"] = exports["soz-jobs"]:GetTimestamp()
+        StonkJob.CollectedShops[currentShop]["last-collection"] = GetGameTimer()
         return
     end
 
