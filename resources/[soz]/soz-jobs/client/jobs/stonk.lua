@@ -50,6 +50,34 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    -- CLOAKROOM
+    exports["qb-target"]:AddBoxZone("stonk:cloakroomL", vector2(-24.1, -708.6), 0.8, 8.0, {
+        heading = 295.0,
+        minZ = 45.0,
+        maxZ = 47.2,
+    }, {
+        options = {
+            targeticon = "fas fa-box",
+            icon = "fas fa-tshirt",
+            event = "jobs:client:stonk:OpenCloakroomMenu",
+            label = "Se changer",
+            job = "cash-transfer",
+        },
+    })
+    exports["qb-target"]:AddBoxZone("stonk:cloakroomR", vector2(-20.75, -706.325), 0.8, 8.0, {
+        heading = 295.0,
+        minZ = 45.0,
+        maxZ = 47.2,
+    }, {
+        options = {
+            targeticon = "fas fa-box",
+            icon = "fas fa-tshirt",
+            event = "jobs:client:stonk:OpenCloakroomMenu",
+            label = "Se changer",
+            job = "cash-transfer",
+        },
+    })
 end)
 
 ---
@@ -66,6 +94,12 @@ local function PropsEntity(menu)
         },
         select = function(_, value)
             TriggerServerEvent("job:server:placeProps", value.item, value.props)
+        end,
+    })
+    menu:AddButton({
+        label = "Vestiaire",
+        select = function()
+            TriggerEvent("jobs:client:stonk:OpenCloakroomMenu")
         end,
     })
 end
@@ -113,6 +147,30 @@ StonkJob.Functions.Menu.MenuAccessIsValid = function(job)
     end
     return false
 end
+
+RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function()
+    --- @type Menu
+    local menu = StonkJob.Menus["cash-transfer"].menu
+    menu:ClearItems()
+
+    menu:AddButton({
+        label = "Tenue civile",
+        value = nil,
+        select = function()
+            TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+        end,
+    })
+
+    menu:AddButton({
+        label = "Tenue de travail",
+        value = nil,
+        select = function()
+            TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", StonkConfig.Cloakroom[PlayerData.skin.Model.Hash])
+        end,
+    })
+
+    menu:Open()
+end)
 
 ---
 --- PERMISSIONS
