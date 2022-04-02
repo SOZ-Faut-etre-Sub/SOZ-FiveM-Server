@@ -65,15 +65,13 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
 
 RegisterNetEvent("jobs:adsl:fix")
 AddEventHandler("jobs:adsl:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
     QBCore.Functions.Progressbar("adsl_fix", "Répare l'adsl..", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function()
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+    }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
         exports["qb-target"]:RemoveZone("adsl_zone")
         destroyblip(job_blip)
         DrawInteractionMarker(ObjectifCoord, false)
