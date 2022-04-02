@@ -1761,6 +1761,16 @@ QBShared.Items = {
         ['description'] = 'Utile pour réanimer' 
     },
 
+    ['garbagebag'] = {
+        ['name'] = 'garbagebag',
+        ['label'] = 'Sac poubelle',
+        ['weight'] = 1000,
+        ['type'] = 'weapon',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = 'Pour jeter tout type d\'ordures.'
+    },
+
     -- Communication
     ['phone'] = {
         ['name'] = 'phone',

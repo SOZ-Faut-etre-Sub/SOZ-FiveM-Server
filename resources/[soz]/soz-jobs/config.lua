@@ -131,6 +131,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Garbage] = {
         label = "Eboueur",
         grades = {},
+        menuCallback = "jobs:client:garbage:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Oil] = {

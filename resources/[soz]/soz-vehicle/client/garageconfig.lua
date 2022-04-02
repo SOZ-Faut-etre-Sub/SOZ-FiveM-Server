@@ -137,6 +137,12 @@ Zonesentreprise = {
         minZ = 24.29,
         maxZ = 27.29,
     }),
+    ["garbage"] = BoxZone:Create(vector3(-589.0, -1589.66, 26.75), 14.4, 15.4, {
+        name = "garbage:garage:car",
+        heading = 355,
+        minZ = 25.75,
+        maxZ = 29.75,
+    }),
 }
 
 ------------------------
@@ -1155,6 +1161,22 @@ PlacesEntreprise = {
                                {name = "news1", heading = 0, minZ = 24.29, maxZ = 27.29, data = {indexGarage = "news"}}),
     ["news2"] = BoxZone:Create(vector3(-543.81, -881.39, 25.24), 8.2, 4.0,
                                {name = "news2", heading = 0, minZ = 24.29, maxZ = 27.29, data = {indexGarage = "news"}}),
+    ["garbage1"] = BoxZone:Create(vector3(-585.46, -1589.43, 26.75), 12.0, 5.0,
+                                  {
+        name = "garbage1",
+        heading = 355,
+        minZ = 25.75,
+        maxZ = 29.75,
+        data = {indexGarage = "garbage"},
+    }),
+    ["garbage2"] = BoxZone:Create(vector3(-592.9, -1588.81, 26.75), 12, 5,
+                                  {
+        name = "garbage2",
+        heading = 355,
+        minZ = 25.75,
+        maxZ = 29.75,
+        data = {indexGarage = "garbage"},
+    }),
 }
 
 for indexpriv, prive in pairs(Zonesprives) do

@@ -19,4 +19,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-BCSO',
         avatar: 'media/society_icon/bcso.webp',
     },
+    {
+        id: 4,
+        display: 'Rogers',
+        number: '555-ROGERS',
+        avatar: 'media/society_icon/rogers.webp',
+    },
 ];

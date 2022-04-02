@@ -52,4 +52,5 @@ export const SocietyNumberList: SocietyNumber = {
   lspd: '555-LSPD',
   lsmc: '555-LSMC',
   bcso: '555-BCSO',
+  garbage: '555-ROGERS',
 }
