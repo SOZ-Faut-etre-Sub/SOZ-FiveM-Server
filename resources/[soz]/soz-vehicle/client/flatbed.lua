@@ -184,7 +184,7 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
                 DetachEntity(AttachedVehicle, true, true)
                 TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached", nil)
             end
-            
+
             LastAttach = nil
         end
     else
