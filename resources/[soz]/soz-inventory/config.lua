@@ -14,10 +14,3 @@ Config.ErrorMessage = {
 Config.StorageMaxWeight = 250000
 Config.StorageMaxInvSlots = 10
 Config.Storages = {}
-
-Config.BinLocation = {
-    vector4(642.94, 11.42, 81.79, 252.99), -- LSPD
-    vector4(-445.04, 6022.39, 30.49, 323.87), -- BCSO
-    vector4(289.33, -1369.08, 30.93, 231.78), -- LSMC
-    vector4(14.38, -1117.13, 27.88, 159.51), -- Ammu-NAtion
-}
