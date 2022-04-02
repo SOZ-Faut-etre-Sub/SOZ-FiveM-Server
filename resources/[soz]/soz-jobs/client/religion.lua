@@ -64,17 +64,14 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
 
 RegisterNetEvent("jobs:religion:fix")
 AddEventHandler("jobs:religion:fix", function(ped)
-    TriggerEvent("animations:client:EmoteCommandStart", {"namaste"})
     FreezeEntityPosition(ped, true)
-    TaskPlayAnim(ped, nil, "namaste", 8.0, 8.0, 10000, 0, 0, 0, 0, 0)
     QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function()
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+    }, {animDict = "timetable@amanda@ig_4", anim = "ig_4_base"}, {}, {}, function()
         exports["qb-target"]:RemoveZone("religion_zone")
         destroyblip(job_blip)
         payout_counter = payout_counter + 1

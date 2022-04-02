@@ -427,15 +427,13 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
     QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function() -- Done
         TriggerEvent("soz-bennys:client:RepaireeePart", part)
         SetTimeout(250, function()
             OpenPartsMenu(Status)
