@@ -33,6 +33,8 @@ local function OnDeath()
             SetEntityHealth(player, GetEntityMaxHealth(player))
             TriggerScreenblurFadeIn()
             StartScreenEffect("DeathFailOut", 0, false)
+            local ReasonMort = exports["soz-hud"]:Input("Reason du coma:", 200)
+            TriggerServerEvent("lsmc:server:SetMort", ReasonMort)
         end
     end
 end
@@ -143,4 +145,8 @@ CreateThread(function()
         end
         Wait(sleep)
     end
+end)
+
+RegisterNetEvent("lsmc:client:ShowReasonMort", function(ReasonMort)
+    exports["soz-hud"]:DrawAdvancedNotification("LSMC", "Reason du coma", ReasonMort)
 end)

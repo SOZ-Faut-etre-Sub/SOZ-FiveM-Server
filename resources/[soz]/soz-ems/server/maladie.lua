@@ -36,3 +36,16 @@ AddEventHandler("lsmc:server:SetOrgane", function(id, organe, val)
     Player.Functions.SetMetaData(organe, val)
     TriggerClientEvent("lsmc:client:SetMaladie", id, organe, val)
 end)
+
+RegisterServerEvent("lsmc:server:SetMort")
+AddEventHandler("lsmc:server:SetMort", function(ReasonMort)
+    local Player = QBCore.Functions.GetPlayer(source)
+    Player.Functions.SetMetaData("mort", ReasonMort)
+end)
+
+RegisterServerEvent("lsmc:server:GetMort")
+AddEventHandler("lsmc:server:GetMort", function(id)
+    local Player = QBCore.Functions.GetPlayer(id)
+    local ReasonMort = Player.PlayerData.metadata["foie"]
+    TriggerClientEvent("lsmc:client:ShowReasonMort", ReasonMort)
+end)
