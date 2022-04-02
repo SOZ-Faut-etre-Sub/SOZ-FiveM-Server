@@ -113,6 +113,48 @@ local function RadarEntity(menu, job)
     end)
 end
 
+--- @param menu Menu
+local function WantedEntity(menu, job)
+    menu:AddButton({
+        icon = "👮",
+        label = "Personnes recherchées",
+        value = nil,
+        select = function()
+            menu:ClearItems()
+
+            menu:AddButton({
+                label = "Ajouter une personne à la liste",
+                value = nil,
+                select = function()
+                    local name = exports["soz-hud"]:Input("Nom de la personne recherchée :", 125)
+                    if name == nil or name == "" then
+                        exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un nom")
+                        return
+                    end
+
+                    TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
+                                       {type = job, message = name})
+                end,
+            })
+
+            local wantedPlayers = QBCore.Functions.TriggerRpc("police:server:GetWantedPlayers")
+            for _, wantedPlayer in pairs(wantedPlayers) do
+                menu:AddConfirm({
+                    label = wantedPlayer.message,
+                    value = wantedPlayer.id,
+                    confirm = function()
+                        local deletion = QBCore.Functions.TriggerRpc("police:server:DeleteWantedPlayer", wantedPlayer.id)
+                        if deletion then
+                            exports["soz-hud"]:DrawNotification("Vous avez retiré ~b~" .. wantedPlayer.message .. " ~s~de la liste des personnes recherchées")
+                        end
+                    end,
+                })
+            end
+
+        end,
+    })
+end
+
 --- Functions
 PoliceJob.Functions.Menu.MenuAccessIsValid = function(job)
     if not PoliceJob.Menus[job] then
@@ -155,6 +197,7 @@ PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
             RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
             PropsEntity(menu)
             BadgeEntity(menu)
+            WantedEntity(menu, job)
             RadarEntity(menu, job)
         else
             menu:AddButton({label = "Tu n'es pas en service !", disabled = true})
