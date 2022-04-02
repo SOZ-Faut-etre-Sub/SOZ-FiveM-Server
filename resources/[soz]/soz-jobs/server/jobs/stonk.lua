@@ -30,5 +30,5 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function()
 
     Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, 1, nil)
 
-    TriggerEvent("banking:server:SafeStorageAddMoney", StonkConfig.SafeStorageName, "money", StonkConfig.Resale.Price)
+    TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.Price)
 end)
