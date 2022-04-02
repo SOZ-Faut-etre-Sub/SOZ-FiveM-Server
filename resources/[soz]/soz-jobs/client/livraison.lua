@@ -78,7 +78,6 @@ AddEventHandler("jobs:livraison:fix", function()
         DrawDistance = 0
         payout_counter = payout_counter + 1
         JobCounter = JobCounter + 1
-        ClearGpsMultiRoute()
         if JobCounter >= 4 then
             OnJob = false
             TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
@@ -159,10 +158,7 @@ AddEventHandler("jobs:livraison:start", function()
     end
     local coords = random_coord()
     createblip("livraison", "Livraison", 761, coords)
-    ClearGpsMultiRoute()
-    StartGpsMultiRoute(6, true, true)
-    AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
-    SetGpsMultiRouteRender(true)
+    SetNewWaypoint(coords.x, coords.y)
     exports["qb-target"]:AddBoxZone("livraison_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
         name = "livraison_zone",
