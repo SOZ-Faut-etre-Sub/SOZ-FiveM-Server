@@ -46,7 +46,8 @@ AddEventHandler("soz:client:sit", function(data)
     local angle = heading * (2 * math.pi) / 360
     SetEntityHeading(player, heading)
     SetPedCoordsKeepVehicle(player, (coords.x - (0.5 * math.sin(angle))), (coords.y + (0.5 * math.cos(angle))), coords.z - data.height)
-    TriggerEvent("animations:client:EmoteCommandStart", {"sitchair"})
+
+    TaskStartScenarioInPlace(player, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", 0, true)
 end)
 
 function getEntity(player)
