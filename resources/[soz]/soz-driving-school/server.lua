@@ -14,7 +14,7 @@ RegisterNetEvent("soz-driving-license:server:pay", function(licenseType, spawnPo
     if Player.Functions.RemoveMoney("money", lData.price) then
         TriggerClientEvent("soz-driving-license:client:spawn_vehicle", Player.PlayerData.source, licenseType, spawnPoint)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 

@@ -28,12 +28,10 @@ AddEventHandler('chatMessage', function(source, n, message)
                 table.remove(args, 1)
                 if isGod or hasPerm or isPrincipal then
                     if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
-                        TriggerClientEvent('hud:client:DrawNotification', src, '~r~All arguments must be filled out!')
+                        TriggerClientEvent('hud:client:DrawNotification', src, 'Il vous manque des paramètres !', "error")
                     else
                         QBCore.Commands.List[command].callback(src, args)
                     end
-                else
-                    TriggerClientEvent('hud:client:DrawNotification', src, '~r~No Access To This Command')
                 end
             end
         end
@@ -172,10 +170,10 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
     local Player = QBCore.Functions.GetPlayer(src)
     if Player.PlayerData.job.onduty then
         Player.Functions.SetJobDuty(false)
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
     else
         Player.Functions.SetJobDuty(true)
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en service')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en service', "info")
     end
     TriggerClientEvent('QBCore:Client:SetDuty', src, Player.PlayerData.job.onduty)
 end)
@@ -209,12 +207,10 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
             if (QBCore.Commands.List[command].permission == Player.PlayerData.job.id) or isGod or hasPerm or isPrincipal then
                 if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
-                    TriggerClientEvent('hud:client:DrawNotification', src, '~r~All arguments must be filled out!')
+                    TriggerClientEvent('hud:client:DrawNotification', src, 'Il vous manque des paramètres !', "error")
                 else
                     QBCore.Commands.List[command].callback(src, args)
                 end
-            else
-                TriggerClientEvent('hud:client:DrawNotification', src, "~r~Vous n'avez pas acces à cette command")
             end
         end
     end

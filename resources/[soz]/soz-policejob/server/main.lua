@@ -14,7 +14,7 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
             TriggerClientEvent("police:client:HandCuffAnimation", Player.PlayerData.source)
             TriggerClientEvent("police:client:GetCuffed", Target.PlayerData.source, Player.PlayerData.source, isSoftcuff)
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas de menotte")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de ~r~menotte", "error")
         end
     end
 end)
@@ -33,7 +33,7 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             Target.Functions.SetMetaData("ishandcuffed", false)
             TriggerClientEvent("police:client:GetUnCuffed", Target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas de clé de menotte")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de ~r~clé de menotte", "error")
         end
     end
 end)
@@ -114,18 +114,17 @@ RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, po
 
                     if licenses[licenseType] >= 1 then
                         TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous avez retiré ~b~" .. point .. " point" ..
-                                               (point > 1 and "s" or "") .. "~s~ sur le permis de ~b~" .. target.Functions.GetName())
+                                               (point > 1 and "s" or "") .. "~s~ sur le permis")
                         TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
-                                           "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retiré de votre permis !")
+                                           "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retiré de votre permis !", "info")
                     else
-                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                           "Vous avez retiré le permis de ~b~" .. target.Functions.GetName())
-                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source, "Votre permis vous a été retiré !")
+                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous avez retiré le permis")
+                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source, "Votre permis vous a été retiré !", "info")
                     end
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Il n'y a pas assez de point sur le permis")
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Il n'y a pas assez de point sur le permis", "error")
                 end
 
                 return
@@ -147,13 +146,13 @@ RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, 
                     licenses[licenseType] = false
 
                     TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                       "Vous avez retiré le permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ de ~b~" .. target.Functions.GetName())
+                                       "Vous avez retiré le permis: ~b~" .. Config.Licenses[licenseType].label)
                     TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
-                                       "Votre permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ vous a été retiré !")
+                                       "Votre permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ vous a été retiré !", "info")
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Ce permis est déjà invalide")
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Ce permis est déjà invalide", "error")
                 end
 
                 return
@@ -213,7 +212,7 @@ RegisterNetEvent("police:server:buy", function(weaponID)
             end
         end)
     else
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 
