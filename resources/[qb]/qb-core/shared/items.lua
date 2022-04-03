@@ -1622,7 +1622,7 @@ QBShared.Items = {
     -- Medication
     ['firstaid'] = {
         ['name'] = 'firstaid',
-        ['label'] = 'trousse de secours',
+        ['label'] = 'Trousse de secours',
         ['weight'] = 2500,
         ['type'] = 'item',
         ['image'] = 'Trousse de soin.png',
@@ -1656,7 +1656,7 @@ QBShared.Items = {
     },
     ['painkiller'] = {
         ['name'] = 'painkiller',
-        ['label'] = 'antidouleur',
+        ['label'] = 'Anti-douleurs',
         ['weight'] = 0,
         ['type'] = 'item',
         ['unique'] = false,
@@ -1667,7 +1667,7 @@ QBShared.Items = {
     },
     ['antipyretic'] = {
         ['name'] = 'antipyretic',
-        ['label'] = 'antipyrétiques',
+        ['label'] = 'Antipyrétiques',
         ['weight'] = 0,
         ['type'] = 'item',
         ['image'] = 'antipyretic.png',
@@ -1726,7 +1726,7 @@ QBShared.Items = {
     },
     ['tissue'] = { 
         ['name'] = 'tissue', 
-        ['label'] = 'Mouchoir', 
+        ['label'] = 'Mouchoirs', 
         ['weight'] = 0, 
         ['type'] = 'item', 
         ['image'] = 'Mouchoir.png', 
