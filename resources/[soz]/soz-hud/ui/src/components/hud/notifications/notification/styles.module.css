@@ -18,7 +18,20 @@
     left: 0;
     width: 4px;
     height: 100%;
-    background: #38bb13;
+    background: #33be1c;
+}
+
+/* Notification type */
+.notification.error::before {
+    background: #f63939;
+}
+
+.notification.warning::before {
+    background: #dc6c27;
+}
+
+.notification.info::before {
+    background: #2d93dc;
 }
 
 .notification * {
