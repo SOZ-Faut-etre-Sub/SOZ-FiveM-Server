@@ -122,7 +122,7 @@ RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeSt
                 Account.AddMoney(safeStorage, amount, money_type)
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)
@@ -138,7 +138,7 @@ RegisterNetEvent("baking:server:SafeStorageWithdraw", function(money_type, safeS
                 Account.RemoveMoney(safeStorage, amount, money_type)
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)

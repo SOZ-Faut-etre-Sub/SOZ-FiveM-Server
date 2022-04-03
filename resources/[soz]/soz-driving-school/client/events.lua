@@ -10,7 +10,7 @@ AddEventHandler("soz-driving-license:client:start_exam", function(data)
         -- Get free vehicle spawn point
         local spawnPoint = GetSpawnPoint(vData.spawnPoints)
         if not spawnPoint then
-            TriggerEvent("hud:client:DrawNotification", "~r~Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.")
+            TriggerEvent("hud:client:DrawNotification", "Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.", "error")
             return
         end
 

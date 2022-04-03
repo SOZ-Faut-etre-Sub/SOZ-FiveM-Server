@@ -283,7 +283,7 @@ RegisterNetEvent("soz-garage:server:addvehicleentreprise", function(vehicle, new
         })
         TriggerClientEvent("soz-concess:client:addvehicleentreprise", src, vehicle, newlocation, plate)
     else
-        TriggerClientEvent("hud:client:DrawNotification", src, "~r~Plus de stock")
+        TriggerClientEvent("hud:client:DrawNotification", src, "Plus de stock", "error")
     end
 end)
 

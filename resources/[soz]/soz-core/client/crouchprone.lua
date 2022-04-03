@@ -1,7 +1,7 @@
 local stage = 0
 local movingForward = false
 CreateThread(function()
-    while true do
+    while false do -- disabled for the moment
         Wait(1)
         local ped = PlayerPedId()
         if not IsPedSittingInAnyVehicle(ped) and not IsPedFalling(ped) and not IsPedSwimming(ped) and not IsPedSwimmingUnderWater(ped) then
