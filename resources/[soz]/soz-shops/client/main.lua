@@ -42,6 +42,14 @@ CreateThread(function()
                                 return currentShop ~= nil and Config.Locations[currentShop].type == "tattoo"
                             end,
                         },
+                        {
+                            event = "soz-jobs:client:stonk-collect-bag",
+                            icon = "fas fa-dollar-sign",
+                            label = "Collecter sacs d'argent",
+                            canInteract = function()
+                                return exports["soz-jobs"]:CanBagsBeCollected(currentShop)
+                            end,
+                        },
                     },
                     distance = 2.5,
                 },
@@ -62,3 +70,6 @@ for _, shop in pairs(ShopLocation) do
         end)
     end
 end
+exports("GetCurrentShop", function()
+    return currentShop
+end)
