@@ -55,11 +55,13 @@ Citizen.CreateThread(function()
         maxZ = 47.2,
     }, {
         options = {
-            targeticon = "fas fa-box",
-            icon = "fas fa-tshirt",
-            event = "jobs:client:stonk:OpenCloakroomMenu",
-            label = "Se changer",
-            job = "cash-transfer",
+            {
+                targeticon = "fas fa-box",
+                icon = "fas fa-tshirt",
+                event = "jobs:client:stonk:OpenCloakroomMenu",
+                label = "Se changer",
+                job = "cash-transfer",
+            },
         },
     })
     exports["qb-target"]:AddBoxZone("stonk:cloakroomR", vector2(-20.75, -706.325), 0.8, 8.0, {
@@ -68,11 +70,13 @@ Citizen.CreateThread(function()
         maxZ = 47.2,
     }, {
         options = {
-            targeticon = "fas fa-box",
-            icon = "fas fa-tshirt",
-            event = "jobs:client:stonk:OpenCloakroomMenu",
-            label = "Se changer",
-            job = "cash-transfer",
+            {
+                targeticon = "fas fa-box",
+                icon = "fas fa-tshirt",
+                event = "jobs:client:stonk:OpenCloakroomMenu",
+                label = "Se changer",
+                job = "cash-transfer",
+            },
         },
     })
 end)
@@ -91,12 +95,6 @@ local function PropsEntity(menu)
         },
         select = function(_, value)
             TriggerServerEvent("job:server:placeProps", value.item, value.props)
-        end,
-    })
-    menu:AddButton({
-        label = "Vestiaire",
-        select = function()
-            TriggerEvent("jobs:client:stonk:OpenCloakroomMenu")
         end,
     })
 end
