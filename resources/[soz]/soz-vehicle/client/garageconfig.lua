@@ -149,6 +149,12 @@ Zonesentreprise = {
         minZ = 25.75,
         maxZ = 29.75,
     }),
+    ["food"] = BoxZone:Create(vector3(-1919.75, 2050.64, 140.64), 9, 9, {
+        name = "food:garage:car",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+    }),
 }
 
 ------------------------
@@ -1206,6 +1212,30 @@ PlacesEntreprise = {
         minZ = 25.75,
         maxZ = 29.75,
         data = {indexGarage = "garbage"},
+    }),
+    ["food1"] = BoxZone:Create(vector3(-1920.27, 2048.6, 140.64), 8, 4,
+                                  {
+        name = "food1",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+        data = {indexGarage = "food"},
+    }),
+    ["food2"] = BoxZone:Create(vector3(-1919.23, 2052.68, 140.64), 8, 4,
+                                  {
+        name = "food2",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+        data = {indexGarage = "food"},
+    }),
+    ["food3"] = BoxZone:Create(vector3(-1923.05, 2036.34, 140.64), 8, 4,
+                                  {
+        name = "food3",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+        data = {indexGarage = "food"},
     }),
 }
 
