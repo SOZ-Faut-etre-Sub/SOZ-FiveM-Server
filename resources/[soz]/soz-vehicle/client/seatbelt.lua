@@ -25,7 +25,7 @@ RegisterCommand("toggleseatbelt", function()
             if thisFrameVehicleSpeed <= 75 then
                 ToggleSeatbelt()
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous allez trop vite pour faire ça")
+                exports["soz-hud"]:DrawNotification("Vous allez trop vite pour faire ça", "error")
             end
         end
     end

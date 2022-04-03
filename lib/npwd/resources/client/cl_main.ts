@@ -123,7 +123,7 @@ async function togglePhone(): Promise<void> {
   if (config.PhoneAsItem.enabled) {
     const canAccess = await checkExportCanOpen();
     if (!canAccess) {
-      exps['soz-hud'].DrawNotification("~r~Vous n'avez pas de télephone")
+      exps['soz-hud'].DrawNotification("Vous n'avez pas de téléphone", "error")
       return
     }
   }

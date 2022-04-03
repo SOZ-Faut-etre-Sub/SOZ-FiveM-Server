@@ -37,7 +37,7 @@ RegisterNUICallback("transfertItem", function(data, cb)
         QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
             cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
             if not success then
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
         end, data.source, data.target, data.item.name, amount, data.item.slot)
     else
@@ -80,10 +80,10 @@ RegisterNetEvent("inventory:client:qTargetOpenInventory", function(data)
         if data.storage.state == nil then
             TriggerServerEvent("inventory:server:openInventory", data.storage.type, data.storageID)
         else
-            exports["soz-hud"]:DrawNotification("~r~Stockage déjà utilisé par ~o~" .. data.storage.state)
+            exports["soz-hud"]:DrawNotification("Stockage déjà utilisé", "warning")
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas utiliser ce stockage")
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser ce stockage", "error")
     end
 end)
 

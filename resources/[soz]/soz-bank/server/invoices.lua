@@ -61,7 +61,7 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount)
         if Player and Target and Player ~= Target then
             local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
             if dist > 5 then
-                return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Personne n'est à portée de vous")
+                return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
             end
 
             local id = MySQL.insert.await("INSERT INTO invoices (citizenid,emitter,emitterName,label,amount) VALUES (?,?,?,?,?) ", {
@@ -97,14 +97,14 @@ RegisterNetEvent("banking:server:payInvoice", function(invoiceID)
             if invoice.amount <= CurrentMoney then
                 PayInvoice(Player.PlayerData.citizenid, invoiceID)
 
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~g~Vous avez payé votre facture")
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez payé votre facture")
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas de facture a payer")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas de facture a payer")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
     end
 end)

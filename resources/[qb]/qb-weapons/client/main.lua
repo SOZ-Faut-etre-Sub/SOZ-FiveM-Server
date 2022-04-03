@@ -92,19 +92,16 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
                         TaskReloadWeapon(ped)
                         TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + amount)
                         TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
-                        exports["soz-hud"]:DrawNotification("Reloaded")
                     end
-                end, function()
-                    exports["soz-hud"]:DrawNotification("~r~Canceled")
                 end)
             else
-                exports["soz-hud"]:DrawNotification("~r~Max Ammo Capacity")
+                exports["soz-hud"]:DrawNotification("Capacité maximum du chargeur atteint", "error")
             end
         else
-            exports["soz-hud"]:DrawNotification("~r~You have no weapon.")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas d'arme", "error")
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~You have no weapon.")
+        exports["soz-hud"]:DrawNotification("Vous n'avez pas d'arme", "error")
     end
 end)
 
@@ -187,7 +184,7 @@ CreateThread(function()
                     else
                         if weapon ~= -1569615261 then
                             TriggerEvent('inventory:client:CheckWeapon', QBCore.Shared.Weapons[weapon]["name"])
-                            exports["soz-hud"]:DrawNotification("~r~This weapon is broken and can not be used.")
+                            exports["soz-hud"]:DrawNotification("Cette arme n'est plus utilisable", "error")
                             MultiplierAmount = 0
                         end
                     end
