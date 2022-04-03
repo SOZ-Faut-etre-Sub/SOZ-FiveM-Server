@@ -337,6 +337,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "bennys",
     },
+    ["stonk"] = {
+        label = "Stonk Depository",
+        blipcoord = vector3(-8.17, -671.17, 31.94),
+        showBlip = false,
+        blipName = "Stonk Depository",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "cash-transfer",
+    },
     ["garbage"] = {
         label = "Rogers",
         blipcoord = vector3(-595.41, -1587.31, 26.75),

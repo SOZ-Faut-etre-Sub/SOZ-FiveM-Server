@@ -16,9 +16,19 @@ Config.ErrorMessage = {
     ["no_account_money"] = "~r~Le compte ne possède pas assez d'argent !",
 }
 
-Config.FarmAccountMoney = {["farm_news"] = {money = 50000, marked_money = 0}}
+Config.FarmAccountMoney = {
+    ["farm_news"] = {money = 50000, marked_money = 0},
+    ["farm_stonk"] = {money = 50000, marked_money = 0},
+}
 
 Config.SafeStorages = {
+    ["safe_cash-transfer"] = {
+        label = "Coffre Stonk Depository",
+        owner = "cash-transfer",
+        position = vector3(-33.94, -715.14, 40.62),
+        size = vector2(1.0, 3.0),
+        heading = 113.9,
+    },
     ["safe_lspd"] = {
         label = "Coffre LSPD",
         owner = "lspd",
