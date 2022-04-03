@@ -124,6 +124,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Food] = {
         label = "Food & Drink",
         grades = {},
+        menuCallback = "jobs:client:food:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.News] = {

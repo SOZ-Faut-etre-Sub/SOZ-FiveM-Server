@@ -1,3 +1,7 @@
+FoodJob = {}
+FoodJob.Functions = {}
+FoodJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_food", "soz", "food:menu")
+
 Citizen.CreateThread(function()
     -- BLIP
     QBCore.Functions.CreateBlip("food", {
@@ -48,8 +52,38 @@ Citizen.CreateThread(function()
                 icon = "fas fa-tshirt",
                 event = "jobs:client:food:OpenCloakroomMenu",
                 label = "Se changer",
-                job = "cash-transfer",
+                job = "food",
             },
         },
     })
+end)
+
+---
+--- MENU
+---
+RegisterNetEvent("jobs:client:food:OpenSocietyMenu", function()
+    FoodJob.Menu:ClearItems()
+    FoodJob.Menu:Open()
+end)
+
+RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
+    FoodJob.Menu:ClearItems()
+
+    FoodJob.Menu:AddButton({
+        label = "Tenue civile",
+        value = nil,
+        select = function()
+            TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+        end,
+    })
+
+    FoodJob.Menu:AddButton({
+        label = "Tenue de travail",
+        value = nil,
+        select = function()
+            TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", FoodConfig.Cloakroom[PlayerData.skin.Model.Hash])
+        end,
+    })
+
+    FoodJob.Menu:Open()
 end)
