@@ -29,11 +29,11 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        TriggerServerEvent("lsmc:server:remove", "trousse_de_secours")
+                        TriggerServerEvent("lsmc:server:remove", "firstaid")
                         SetEntityHealth(entity, GetEntityHealth(entity) + 25)
                     end)
                 end,
-                item = "trousse_de_secours",
+                item = "firstaid",
             },
             {
                 label = "Réanimer",
@@ -52,12 +52,12 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        TriggerServerEvent("lsmc:server:remove", "poche_de_sang")
+                        TriggerServerEvent("lsmc:server:remove", "bloodbag")
                         ReviveId = GetPlayerServerId(entity)
                         TriggerServerEvent("lsmc:server:revive", ReviveId)
                     end)
                 end,
-                item = "poche_de_sang",
+                item = "bloodbag",
             },
             {
                 label = "Réanimer",
@@ -75,12 +75,12 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        TriggerServerEvent("lsmc:server:remove", "poche_de_sang")
+                        TriggerServerEvent("lsmc:server:remove", "bloodbag")
                         ReviveId = GetPlayerServerId(entity)
                         TriggerServerEvent("lsmc:server:revive", ReviveId)
                     end)
                 end,
-                item = "défibrillateur",
+                item = "defibrillator",
             },
             {
                 label = "Prise de sang",
@@ -99,13 +99,13 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        TriggerServerEvent("lsmc:server:remove", "poche_vide")
-                        TriggerServerEvent("lsmc:server:add", "poche_de_sang")
+                        TriggerServerEvent("lsmc:server:remove", "empty_bloodbag")
+                        TriggerServerEvent("lsmc:server:add", "bloodbag")
                         PlayerId = GetPlayerServerId(entity)
                         TriggerServerEvent("lsmc:server:GiveBlood", PlayerId)
                     end)
                 end,
-                item = "poche_vide",
+                item = "empty_bloodbag",
             },
             {
                 label = "Soigner la grippe",
@@ -124,12 +124,12 @@ CreateThread(function()
                         disableCombat = true,
                     }, {}, {}, {}, function()
                         TriggerEvent("animations:client:EmoteCommandStart", {"c"})
-                        TriggerServerEvent("lsmc:server:remove", "antipyrétique")
+                        TriggerServerEvent("lsmc:server:remove", "antipyretic")
                         PlayerId = GetPlayerServerId(entity)
                         TriggerServerEvent("lsmc:server:SetOrgane", PlayerId, "grippe", false)
                     end)
                 end,
-                item = "poche_vide",
+                item = "empty_bloodbag",
             },
         },
         distance = 2.5,

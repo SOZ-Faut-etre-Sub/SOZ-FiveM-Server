@@ -1620,8 +1620,8 @@ QBShared.Items = {
     },
 
     -- Medication
-    ['trousse_de_secours'] = {
-        ['name'] = 'trousse_de_secours',
+    ['firstaid'] = {
+        ['name'] = 'firstaid',
         ['label'] = 'trousse de secours',
         ['weight'] = 2500,
         ['type'] = 'item',
@@ -1654,9 +1654,9 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Kits de traumatologie contenant du matériel essentiel pour sauver des vies, contrôler les hémorragies et traiter les principales blessures.'
     },
-    ['antidouleur'] = {
-        ['name'] = 'antidouleur',
-        ['label'] = 'Antidouleurs',
+    ['painkiller'] = {
+        ['name'] = 'painkiller',
+        ['label'] = 'antidouleur',
         ['weight'] = 0,
         ['type'] = 'item',
         ['unique'] = false,
@@ -1665,24 +1665,24 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Quand la douleur est trop forte, une petite pillule et c\'est reparti !'
     },
-    ['antipyrétique'] = {
-        ['name'] = 'antipyrétique',
+    ['antipyretic'] = {
+        ['name'] = 'antipyretic',
         ['label'] = 'antipyrétiques',
         ['weight'] = 0,
         ['type'] = 'item',
-        ['image'] = 'antipyrétique.png',
+        ['image'] = 'antipyretic.png',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Quand on a la grippe, une petite pillule et c\'est reparti !'
     },
-    ['antibiotique'] = {
-        ['name'] = 'antibiotique',
+    ['antibiotic'] = {
+        ['name'] = 'antibiotic',
         ['label'] = 'Antibiotiques',
         ['weight'] = 0,
         ['type'] = 'item',
-        ['image'] = 'painkillers.png',
+        ['image'] = 'antibiotic.png',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
@@ -1700,8 +1700,8 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour que les papys puissent taper sur les voitures.'
     },
-    ['poche_de_sang'] = { 
-        ['name'] = 'poche_de_sang', 
+    ['bloodbag'] = { 
+        ['name'] = 'bloodbag', 
         ['label'] = 'Poche de sang', 
         ['weight'] = 0, 
         ['type'] = 'item', 
@@ -1712,8 +1712,8 @@ QBShared.Items = {
         ['combinable'] = nil, 
         ['description'] = 'Des fois sa marche pour réanimer' 
     },
-    ['poche_vide'] = { 
-        ['name'] = 'poche_vide', 
+    ['empty_bloodbag'] = { 
+        ['name'] = 'empty_bloodbag', 
         ['label'] = 'Poche vide', 
         ['weight'] = 0, 
         ['type'] = 'item', 
@@ -1724,8 +1724,8 @@ QBShared.Items = {
         ['combinable'] = nil, 
         ['description'] = 'Des fois sa marche pour réanimer' 
     },
-    ['mouchoir'] = { 
-        ['name'] = 'mouchoir', 
+    ['tissue'] = { 
+        ['name'] = 'tissue', 
         ['label'] = 'Mouchoir', 
         ['weight'] = 0, 
         ['type'] = 'item', 
@@ -1748,8 +1748,8 @@ QBShared.Items = {
         ['combinable'] = nil, 
         ['description'] = 'Utile en cas de rhume' 
     },
-    ['défibrillateur'] = { 
-        ['name'] = 'défibrillateur', 
+    ['defibrillator'] = { 
+        ['name'] = 'defibrillator', 
         ['label'] = 'Défibrillateur', 
         ['weight'] = 0, 
         ['type'] = 'item', 
