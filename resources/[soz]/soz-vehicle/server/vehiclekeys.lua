@@ -53,10 +53,10 @@ RegisterNetEvent("vehiclekeys:server:GiveVehicleKeys", function(plate, target)
             TriggerClientEvent("hud:client:DrawNotification", src, "Vous avez donné les clés !")
             TriggerClientEvent("hud:client:DrawNotification", target, "Vous avez reçu les clés !")
         else
-            TriggerClientEvent("hud:client:DrawNotification", source, "~r~La personne dort")
+            TriggerClientEvent("hud:client:DrawNotification", source, "La personne dort", "error")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, "~r~Vous ne possédez pas ce véhicule")
+        TriggerClientEvent("hud:client:DrawNotification", source, "Vous ne possédez pas ce véhicule", "error")
     end
 end)
 

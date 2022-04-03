@@ -80,15 +80,15 @@ RegisterNetEvent("soz-custom:server:buyupgrade", function(id, n, price)
     local money = pData.PlayerData.money["money"]
     if money > price then
         if n == 1 then
-            TriggerClientEvent("hud:client:DrawNotification", src, "~g~Le turbo a été installé!")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Le turbo a été installé!")
             TriggerClientEvent("soz-custom:client:applymod", src, id, 1)
         else
-            TriggerClientEvent("hud:client:DrawNotification", src, "~g~Le " .. n.name .. " a été installé!")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Le " .. n.name .. " a été installé!")
             TriggerClientEvent("soz-custom:client:applymod", src, id, n.id)
         end
         pData.Functions.RemoveMoney("money", price, "upgrade-bought-in-lscustom")
 
     else
-        TriggerClientEvent("hud:client:DrawNotification", src, "~r~Pas assez d'argent")
+        TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
     end
 end)

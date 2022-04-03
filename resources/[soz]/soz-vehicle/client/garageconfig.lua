@@ -119,6 +119,12 @@ Zonesentreprise = {
         minZ = 30.3,
         maxZ = 34.3,
     }),
+    ["stonk"] = BoxZone:Create(vector3(-8.17, -671.17, 31.94), 30, 15, {
+        name = "stonk_z",
+        heading = 95,
+        minZ = 30.94,
+        maxZ = 34.94,
+    }),
     ["lspd"] = BoxZone:Create(vector3(576.68, -11.22, 70.63), 42.4, 42.4, {
         name = "lspd:garage:car",
         heading = 350,
@@ -1086,6 +1092,30 @@ PlacesEntreprise = {
         minZ = 30.3,
         maxZ = 34.3,
         data = {indexGarage = "bennys"},
+    }),
+    ["stonk1"] = BoxZone:Create(vector3(-4.85, -670.38, 31.94), 12, 6,
+                                {
+        name = "stonk1",
+        heading = 186.13,
+        minZ = 30.94,
+        maxZ = 34.94,
+        data = {indexGarage = "stonk"},
+    }),
+    ["stonk2"] = BoxZone:Create(vector3(3.07, -670.67, 31.94), 12, 6,
+                                {
+        name = "stonk2",
+        heading = 186.13,
+        minZ = 30.94,
+        maxZ = 34.94,
+        data = {indexGarage = "stonk"},
+    }),
+    ["stonk3"] = BoxZone:Create(vector3(-19.4, -671.67, 31.94), 12, 6,
+                                {
+        name = "stonk3",
+        heading = 184.81,
+        minZ = 30.94,
+        maxZ = 34.94,
+        data = {indexGarage = "stonk"},
     }),
     ["lspd1"] = BoxZone:Create(vector3(594.66, 3.26, 70.63), 6.8, 4.0,
                                {
