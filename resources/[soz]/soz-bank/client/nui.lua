@@ -42,7 +42,7 @@ RegisterNUICallback("createOffshoreAccount", function(data, cb)
         if success then
             exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Création de compte", "Vous avez crée un nouveau compte", "CHAR_BANK_MAZE")
         else
-            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
         end
         openBankScreen(data.account)
     end, data.account)
@@ -56,7 +56,7 @@ RegisterNUICallback("doDeposit", function(data, cb)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.account)
         end, "player", data.account, amount)
@@ -71,7 +71,7 @@ RegisterNUICallback("doOffshoreDeposit", function(data, cb)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.account)
         end, data.account, amount)
@@ -86,7 +86,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.account)
         end, data.account, "player", amount)
@@ -102,7 +102,7 @@ RegisterNUICallback("doTransfer", function(data, cb)
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$", "Vous avez transférer de l'argent sur un compte",
                                                             "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason])
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.accountSource)
         end, data.accountSource, data.accountTarget, amount)

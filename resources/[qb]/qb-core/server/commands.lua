@@ -50,7 +50,7 @@ QBCore.Commands.Add('tp', 'TP To Player or Coords (Admin Only)', { { name = 'id/
             local coords = GetEntityCoords(target)
             TriggerClientEvent('QBCore:Command:TeleportToPlayer', src, coords)
         else
-            TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+            TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
         end
     else
         if args[1] and args[2] and args[3] then
@@ -60,10 +60,10 @@ QBCore.Commands.Add('tp', 'TP To Player or Coords (Admin Only)', { { name = 'id/
             if (x ~= 0) and (y ~= 0) and (z ~= 0) then
                 TriggerClientEvent('QBCore:Command:TeleportToCoords', src, x, y, z)
             else
-                TriggerClientEvent('hud:client:DrawNotification', src, '~r~Incorrect Format')
+                TriggerClientEvent('hud:client:DrawNotification', src, 'Format non valide', "error")
             end
         else
-            TriggerClientEvent('hud:client:DrawNotification', src, '~r~Not every argument has been entered (x, y, z)')
+            TriggerClientEvent('hud:client:DrawNotification', src, 'Format non valide', "error")
         end
     end
 end, 'admin')
@@ -89,7 +89,7 @@ QBCore.Commands.Add('addpermission', 'Give Player Permissions (God Only)', { { n
     if Player then
         QBCore.Functions.AddPermission(Player.PlayerData.source, permission)
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'god')
 
@@ -99,7 +99,7 @@ QBCore.Commands.Add('removepermission', 'Remove Players Permissions (God Only)',
     if Player then
         QBCore.Functions.RemovePermission(Player.PlayerData.source)
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'god')
 
@@ -123,7 +123,7 @@ QBCore.Commands.Add('givemoney', 'Give A Player Money (Admin Only)', { { name = 
     if Player then
         Player.Functions.AddMoney(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 
@@ -133,7 +133,7 @@ QBCore.Commands.Add('setmoney', 'Set Players Money Amount (Admin Only)', { { nam
     if Player then
         Player.Functions.SetMoney(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 
@@ -151,7 +151,7 @@ QBCore.Commands.Add('setjob', 'Set A Players Job (Admin Only)', { { name = 'id',
     if Player then
         Player.Functions.SetJob(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 
@@ -169,7 +169,7 @@ QBCore.Commands.Add('setgang', 'Set A Players Gang (Admin Only)', { { name = 'id
     if Player then
         Player.Functions.SetGang(tostring(args[2]), tonumber(args[3]))
     else
-        TriggerClientEvent('hud:client:DrawNotification', src, '~r~Player Not Online')
+        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
 

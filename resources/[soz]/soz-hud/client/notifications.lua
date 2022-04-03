@@ -16,14 +16,14 @@ end
 
 --- DrawNotification Display basic notification
 --- @param message string Notification message
---- @param flash boolean Notification flash on the screen
+--- @param style string Notification style (success, info, error)
 --- @param delay number Set Notification display time
-local function DrawNotification(message, flash, delay)
-    SendNUIMessage({action = "draw_basic_notification", message = message, flash = flash, delay = delay})
+local function DrawNotification(message, style, delay)
+    SendNUIMessage({action = "draw_basic_notification", message = message, style = style, delay = delay})
 end
 
-RegisterNetEvent("hud:client:DrawNotification", function(msg, flash, delay)
-    DrawNotification(msg, flash, delay)
+RegisterNetEvent("hud:client:DrawNotification", function(msg, style, delay)
+    DrawNotification(msg, style, delay)
 end)
 
 exports("DrawNotification", DrawNotification)
@@ -33,9 +33,9 @@ exports("DrawNotification", DrawNotification)
 --- @param title string Notification title
 --- @param subtitle string Notification subtitle
 --- @param image string Notification image (https://wiki.gtanet.work/index.php?title=Notification_Pictures)
---- @param flash boolean Notification flash on the screen
+--- @param style string Notification style (success, info, error)
 --- @param delay number Set Notification display time
-local function DrawAdvancedNotification(title, subtitle, message, image, flash, delay)
+local function DrawAdvancedNotification(title, subtitle, message, image, style, delay)
     RequestStreamedTexture(image, function()
         SendNUIMessage({
             action = "draw_advanced_notification",
@@ -43,14 +43,14 @@ local function DrawAdvancedNotification(title, subtitle, message, image, flash, 
             subtitle = subtitle,
             message = message,
             image = image,
-            flash = flash,
+            style = style,
             delay = delay,
         })
     end)
 end
 
-RegisterNetEvent("hud:client:DrawAdvancedNotification", function(title, subtitle, message, image, flash, delay)
-    DrawAdvancedNotification(title, subtitle, message, image, flash, delay)
+RegisterNetEvent("hud:client:DrawAdvancedNotification", function(title, subtitle, message, image, style, delay)
+    DrawAdvancedNotification(title, subtitle, message, image, style, delay)
 end)
 
 exports("DrawAdvancedNotification", DrawAdvancedNotification)

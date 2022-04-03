@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
                                 end)
                             end, GetPlayerServerId(player))
                         else
-                            exports["soz-hud"]:DrawNotification("~r~Aucun joueur à proximité")
+                            exports["soz-hud"]:DrawNotification("Aucun joueur à proximité", "error")
                         end
                     end
                 end

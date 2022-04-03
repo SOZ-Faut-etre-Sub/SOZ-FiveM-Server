@@ -54,7 +54,7 @@ local function SortirMenu(type, garage, indexgarage)
 
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
             if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
             else
                 for k, v in pairs(result) do
                     local enginePercent = round(v.engine / 10, 0)
@@ -98,7 +98,7 @@ local function SortirMenu(type, garage, indexgarage)
         })
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
             if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
             else
                 for k, v in pairs(result) do
                     local enginePercent = round(v.engine / 10, 0)
@@ -137,7 +137,7 @@ local function SortirMenu(type, garage, indexgarage)
 
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
             if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
             else
                 for k, v in pairs(result) do
                     local enginePercent = round(v.engine / 10, 0)
@@ -181,7 +181,7 @@ local function SortirMenu(type, garage, indexgarage)
         })
         QBCore.Functions.TriggerCallback("qb-garage:server:storageentreprise", function(result)
             if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
             else
                 for k, v in pairs(result) do
                     local vname = Config.GarageVehicles[v.vehicle]
@@ -206,7 +206,7 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
         if not VehExists then
             spawn = true
         else
-            exports["soz-hud"]:DrawNotification(Lang:t("error.not_impound"))
+            exports["soz-hud"]:DrawNotification(Lang:t("error.not_impound"), "error")
             spawn = false
         end
     else

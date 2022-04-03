@@ -2,7 +2,7 @@ export type BasicNotification = {
     id: string
     message: string
     delay?: number
-    flash?: boolean
+    style?: string
 }
 export type AdvancedNotification = BasicNotification & {
     title: string

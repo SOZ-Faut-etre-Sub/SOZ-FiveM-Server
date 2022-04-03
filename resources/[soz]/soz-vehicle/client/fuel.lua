@@ -106,7 +106,7 @@ AddEventHandler("fuel:refuelFromPump", function(pumpObject, ped, vehicle)
                     RemoveAnimDict("timetable@gardener@filling_can")
                     isFueling = false
                 end, function()
-                    exports["soz-hud"]:DrawNotification("~r~Echec")
+                    exports["soz-hud"]:DrawNotification("Echec", "error")
                     isFueling = false
                 end)
                 while isFueling do
@@ -116,15 +116,15 @@ AddEventHandler("fuel:refuelFromPump", function(pumpObject, ped, vehicle)
                     Wait(0)
                 end
             else
-                TriggerEvent("hud:client:DrawNotification", "~r~Vous avez mis trop d'argent")
+                TriggerEvent("hud:client:DrawNotification", "Vous avez mis trop d'argent", "error")
                 isFueling = false
             end
         else
-            TriggerEvent("hud:client:DrawNotification", "~r~Pas assez d'argent")
+            TriggerEvent("hud:client:DrawNotification", "Pas assez d'argent", "error")
             isFueling = false
         end
     else
-        TriggerEvent("hud:client:DrawNotification", "~r~Vous n'avez rien mis")
+        TriggerEvent("hud:client:DrawNotification", "Vous n'avez rien mis", "error")
         isFueling = false
     end
 end)
@@ -359,7 +359,7 @@ for int = 1, 28 do
                                             if GetVehicleFuelLevel(vehicle) < 95 then
                                                 return true
                                             else
-                                                TriggerEvent("hud:client:DrawNotification", "~r~Le réservoir est plein")
+                                                TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
                                                 Citizen.Wait(5000)
                                                 return false
                                             end

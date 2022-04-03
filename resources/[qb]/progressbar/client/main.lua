@@ -100,10 +100,10 @@ function Process(action, start, tick, finish)
                 end
             end)
         else
-            TriggerEvent("hud:client:DrawNotification", "~r~Une action est déjà en cours !")
+            TriggerEvent("hud:client:DrawNotification", "Une action est déjà en cours !", "error")
         end
     else
-        TriggerEvent("hud:client:DrawNotification", "~r~Vous ne pouvez réaliser cette action !")
+        TriggerEvent("hud:client:DrawNotification", "Vous ne pouvez réaliser cette action !", "error")
     end
 end
 

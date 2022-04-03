@@ -37,7 +37,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
 
         if Config.RadarAllowedVehicle[vehicleModel] then
             TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
-                               radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED")
+                               radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED", "info")
             return
         end
 
@@ -70,7 +70,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
 
         TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
         TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
-                           "CHAR_BLOCKED")
+                           "CHAR_BLOCKED", "info")
 
         for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
             if Police.PlayerData.job.id == radar.station then
@@ -81,7 +81,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
 
                 TriggerClientEvent("hud:client:DrawAdvancedNotification", Police.PlayerData.source, RadarMessage.Title, RadarMessage.FlashPolice,
                                    string.format("Plaque: ~b~%s~s~ ~n~Rue: ~b~%s~s~ ~n~Vitesse: ~r~%s km/h~s~", vehiclePlate, streetName,
-                                                 QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED")
+                                                 QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED", "info")
             end
         end
     end
