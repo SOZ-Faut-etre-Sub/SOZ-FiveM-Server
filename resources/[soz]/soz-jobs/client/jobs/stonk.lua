@@ -233,7 +233,7 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
             StonkJob.CollectedShops[currentShop]["remaining-bags"] = remaining
             StonkJob.Functions.CollectBags(currentShop, remaining)
         else
-            exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas collecté les sacs d'argent")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
     end)
 end
@@ -307,7 +307,7 @@ StonkJob.Functions.ResaleBags = function()
             DisplayBagsSold(bagsSold)
             return
         else
-            exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas de sacs d'argent sur vous")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas de sacs d'argent sur vous", "error")
             return
         end
     end
@@ -327,7 +327,7 @@ StonkJob.Functions.ResaleBags = function()
             if bagsSold > 0 then
                 DisplayBagsSold(bagsSold)
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas déposé les sacs d'argent")
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
             end
         end
     end)

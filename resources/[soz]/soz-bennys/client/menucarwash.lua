@@ -44,7 +44,7 @@ Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                 if not IsThisModelABicycle(GetEntityModel(veh)) then
                     insidewash = true
                 else
-                    exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                    exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                 end
             end
         end

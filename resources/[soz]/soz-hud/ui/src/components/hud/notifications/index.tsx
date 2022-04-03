@@ -11,12 +11,12 @@ const Notifications: FunctionalComponent = () => {
     const {minimap} = useContext(GameContext)
     const [notifications, setNotifications] = useState<(BasicNotification|AdvancedNotification)[]>([]);
 
-    const createBasicNotification = useCallback((message: string, flash?: boolean, delay?: number) => {
-        setNotifications(n => [{id: uuidv4(), message, delay}, ...n])
+    const createBasicNotification = useCallback((message: string, style?: string, delay?: number) => {
+        setNotifications(n => [{id: uuidv4(), message, delay, style}, ...n])
     }, [setNotifications])
 
-    const createAdvancedNotification = useCallback((title: string, subtitle: string, message: string, image: string) => {
-        setNotifications(n => [{id: uuidv4(), title, subtitle, message, image}, ...n])
+    const createAdvancedNotification = useCallback((title: string, subtitle: string, message: string, image: string, style?: string) => {
+        setNotifications(n => [{id: uuidv4(), title, subtitle, message, image, style}, ...n])
     }, [setNotifications])
 
     const deleteNotification = useCallback((id: string) => {
@@ -25,9 +25,9 @@ const Notifications: FunctionalComponent = () => {
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'draw_basic_notification') {
-            createBasicNotification(event.data.message, event.data.flash, event.data.delay)
+            createBasicNotification(event.data.message, event.data.style, event.data.delay)
         } else if (event.data.action === 'draw_advanced_notification') {
-            createAdvancedNotification(event.data.title, event.data.subtitle, event.data.message, event.data.image)
+            createAdvancedNotification(event.data.title, event.data.subtitle, event.data.message, event.data.image, event.data.style)
         }
     }, [createBasicNotification])
 

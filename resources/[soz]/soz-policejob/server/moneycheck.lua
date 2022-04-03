@@ -2,7 +2,7 @@ QBCore.Functions.CreateCallback("police:getOtherPlayerData", function(source, cb
     local Target = QBCore.Functions.GetPlayer(target)
 
     if Target then
-        TriggerClientEvent("hud:client:DrawNotification", target, "Vous êtes en train d'être fouillé par le LSPD")
+        TriggerClientEvent("hud:client:DrawNotification", target, "Vous êtes en train d'être fouillé par le LSPD", "info")
 
         local data = {
             name = Target.Functions.GetName(),
@@ -27,11 +27,11 @@ RegisterNetEvent("police:confiscateMoney", function(target)
                 })
 
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                   string.format("Vous avez confisqué ~g~%s$~s~ d'argent sale à ~y~%s~s~", markedAmount, Target.Functions.GetName()))
+                                   string.format("Vous avez confisqué ~g~%s$~s~ d'argent sale", markedAmount))
                 TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source,
-                                   string.format("~r~%s$~s~ d'argent sale ont été confisqués par ~y~%s~s~", markedAmount, Player.Functions.GetName()))
+                                   string.format("~r~%s$~s~ d'argent sale ont été confisqués", markedAmount))
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Problème de confiscation")
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Problème de confiscation", "error")
             end
 
             return

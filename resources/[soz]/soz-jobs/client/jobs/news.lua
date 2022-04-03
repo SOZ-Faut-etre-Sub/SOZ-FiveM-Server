@@ -55,7 +55,7 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
 
     QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
 
-    exports["soz-hud"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS")
+    exports["soz-hud"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
 end)
 
 RegisterNetEvent("jobs:client:news:newspaperSold", function()
@@ -82,13 +82,13 @@ RegisterNetEvent("jobs:client:news:InvoicePlayer", function(data)
 
     local title = exports["soz-hud"]:Input("Titre", 200)
     if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un title")
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
         return
     end
 
     local amount = exports["soz-hud"]:Input("Montant", 10)
     if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-        exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un montant")
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
         return
     end
 
@@ -111,7 +111,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         select = function(_, value)
             local message = exports["soz-hud"]:Input("Message de la communication", 512)
             if message == nil or message == "" then
-                exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un message")
+                exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
 

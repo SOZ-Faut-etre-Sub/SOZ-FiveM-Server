@@ -34,7 +34,6 @@ RegisterNetEvent("qb-carwash:client:washCar", function(entity)
         WashDecalsFromVehicle(PedVehicle, 1.0)
         washingVehicle = false
     end, function() -- Cancel
-        exports["soz-hud"]:DrawNotification("~r~Lavage annulé ..")
         washingVehicle = false
     end)
 end)
@@ -61,7 +60,7 @@ CreateThread(function()
                                     if dirtLevel > Config.DirtLevel then
                                         TriggerServerEvent("qb-carwash:server:washCar")
                                     else
-                                        exports["soz-hud"]:DrawNotification("~r~Le véhicule n'est pas sale")
+                                        exports["soz-hud"]:DrawNotification("Le véhicule n'est pas sale", "info")
                                     end
                                 end
                             else

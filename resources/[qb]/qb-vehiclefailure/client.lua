@@ -64,7 +64,7 @@ local function CleanVehicle(vehicle)
         ClearAllPedProps(ped)
         ClearPedTasks(ped)
     end, function() -- Cancel
-        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"), "error")
         ClearAllPedProps(ped)
         ClearPedTasks(ped)
     end)
@@ -112,7 +112,7 @@ local function RepairVehicleFull(vehicle)
         TriggerServerEvent("qb-vehiclefailure:removeItem", "advancedrepairkit")
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"), "error")
         if (IsBackEngine(GetEntityModel(vehicle))) then
             SetVehicleDoorShut(vehicle, 5, false)
         else
@@ -154,7 +154,7 @@ local function RepairVehicle(vehicle)
         TriggerServerEvent("qb-vehiclefailure:removeItem", "repairkit")
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.failed_notification"), "error")
         if (IsBackEngine(GetEntityModel(vehicle))) then
             SetVehicleDoorShut(vehicle, 5, false)
         else
@@ -226,16 +226,16 @@ RegisterNetEvent("qb-vehiclefailure:client:RepairVehicle", function()
             end
         else
             if #(pos - vehpos) > 4.9 then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.out_range_veh"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.out_range_veh"), "error")
             else
-                exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh"), "error")
             end
         end
     else
         if vehicle == nil or vehicle == 0 then
-            exports["soz-hud"]:DrawNotification(Lang:t("error.not_near_veh"))
+            exports["soz-hud"]:DrawNotification(Lang:t("error.not_near_veh"), "error")
         else
-            exports["soz-hud"]:DrawNotification(Lang:t("error.healthy_veh"))
+            exports["soz-hud"]:DrawNotification(Lang:t("error.healthy_veh"), "error")
         end
     end
 end)
@@ -276,13 +276,13 @@ RegisterNetEvent("qb-vehiclefailure:client:RepairVehicleFull", function()
             end
         else
             if #(pos - vehpos) > 4.9 then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.out_range_veh"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.out_range_veh"), "error")
             else
-                exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh"), "error")
             end
         end
     else
-        exports["soz-hud"]:DrawNotification(Lang:t("error.not_near_veh"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.not_near_veh"), "error")
     end
 end)
 
@@ -301,16 +301,16 @@ RegisterNetEvent("iens:repaira", function()
         SetVehicleEngineOn(vehicle, true, false)
         return
     else
-        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"), "error")
     end
 end)
 
 RegisterNetEvent("iens:besked", function()
-    exports["soz-hud"]:DrawNotification(Lang:t("error.roadside_avail"))
+    exports["soz-hud"]:DrawNotification(Lang:t("error.roadside_avail"), "error")
 end)
 
 RegisterNetEvent("iens:notAllowed", function()
-    exports["soz-hud"]:DrawNotification(Lang:t("error.no_permission"))
+    exports["soz-hud"]:DrawNotification(Lang:t("error.no_permission"), "error")
 end)
 
 RegisterNetEvent("iens:repair", function()
@@ -330,11 +330,11 @@ RegisterNetEvent("iens:repair", function()
                 SetVehicleEngineOn(vehicle, true, false)
                 SetVehicleOilLevel(vehicle, (GetVehicleOilLevel(vehicle) / 3) - 0.5)
             else
-                exports["soz-hud"]:DrawNotification(Lang:t("error.veh_damaged"))
+                exports["soz-hud"]:DrawNotification(Lang:t("error.veh_damaged"), "error")
             end
         end
     else
-        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"))
+        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"), "error")
     end
 end)
 
