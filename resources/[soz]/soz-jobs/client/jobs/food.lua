@@ -13,7 +13,6 @@ Citizen.CreateThread(function()
         heading = 70.25,
         minZ = 140.0,
         maxZ = 142.5,
-        debugPoly = true,
     }, {
         options = {
             {
@@ -42,7 +41,6 @@ Citizen.CreateThread(function()
         heading = 340.76,
         minZ = 140.0,
         maxZ = 142.5,
-        debugPoly = true,
     }, {
         options = {
             {
