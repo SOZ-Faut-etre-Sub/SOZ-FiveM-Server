@@ -1722,7 +1722,7 @@ QBShared.Items = {
         ['useable'] = true, 
         ['shouldClose'] = true, 
         ['combinable'] = nil, 
-        ['description'] = 'Des fois sa marche pour réanimer' 
+        ['description'] = 'Utile pour faire une prise de sang' 
     },
     ['tissue'] = { 
         ['name'] = 'tissue', 
@@ -1746,7 +1746,7 @@ QBShared.Items = {
         ['useable'] = true, 
         ['shouldClose'] = true, 
         ['combinable'] = nil, 
-        ['description'] = 'Utile en cas de rhume' 
+        ['description'] = 'Utile en cas de rougeur' 
     },
     ['defibrillator'] = { 
         ['name'] = 'defibrillator', 
