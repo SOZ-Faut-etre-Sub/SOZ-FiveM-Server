@@ -113,8 +113,8 @@ RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, po
                     licenses[licenseType] = licenses[licenseType] - point
 
                     if licenses[licenseType] >= 1 then
-                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous avez retiré ~b~" .. point .. " point" ..
-                                               (point > 1 and "s" or "") .. "~s~ sur le permis")
+                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                                           "Vous avez retiré ~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ sur le permis")
                         TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
                                            "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retiré de votre permis !", "info")
                     else
