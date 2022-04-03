@@ -1,8 +1,9 @@
-import {ComponentProps, createRef, FunctionalComponent} from "preact";
+import {ComponentProps, FunctionalComponent} from "preact";
 import {useEffect, useState} from "preact/hooks";
 import style from './styles.module.css'
 import {formatText} from "../../../../utils/string";
 import {AdvancedNotification, BasicNotification} from "../../../../types/notification";
+import cn from "classnames";
 
 const Notification: FunctionalComponent<ComponentProps<any>> = ({ notification, onDelete }: {notification: BasicNotification|AdvancedNotification, onDelete: any}) => {
     const [isClosing, setIsClosing] = useState(false);
@@ -28,7 +29,12 @@ const Notification: FunctionalComponent<ComponentProps<any>> = ({ notification, 
     }
 
     return (
-        <div class={`${style.notification} ${isClosing ? style.slideOut : style.slideIn}`}>
+        <div class={cn(style.notification, {
+            // @ts-ignore
+            [style[notification.style]]: notification.style !== undefined && style[notification.style] !== undefined,
+            [style.slideOut]: isClosing,
+            [style.slideIn]: !isClosing
+        })}>
             {isAdvancedNotification(notification) && (
                 <div class={style.header}>
                     <img src={notification.image.startsWith("http") ? notification.image : `https://nui-img/${notification.image}/${notification.image}`}/>
