@@ -285,7 +285,7 @@ function TerminateExam(isSuccess, licenseType)
     if isSuccess then
         TriggerServerEvent("soz-driving-license:server:update_license", licenseType)
         exports["soz-hud"]:DrawAdvancedNotification(Config.BlipName, "Réussite", "Félicitations ! Vous venez d'obtenir votre permis", "CHAR_BLANK_ENTRY",
-                                                    false, Config.NotificationDelay)
+                                                    nil, Config.NotificationDelay)
     end
 end
 

@@ -50,9 +50,9 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
             TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
             pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
         else
-            TriggerClientEvent("hud:client:DrawNotification", src, "~r~Pas assez d'argent")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", src, "~r~Plus de stock")
+        TriggerClientEvent("hud:client:DrawNotification", src, "Plus de stock", "error")
     end
 end)

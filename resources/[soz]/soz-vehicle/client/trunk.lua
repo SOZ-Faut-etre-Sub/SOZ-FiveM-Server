@@ -11,7 +11,7 @@ local function OpenTrunk()
             local plate = QBCore.Functions.GetPlate(vehicle)
             TriggerServerEvent("inventory:server:openInventory", "trunk", plate)
         else
-            exports["soz-hud"]:DrawNotification("~r~Véhicule verrouillé")
+            exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
         end
     end
 end

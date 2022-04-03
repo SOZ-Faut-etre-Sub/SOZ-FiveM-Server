@@ -23,7 +23,7 @@ RegisterNetEvent("shops:server:pay", function(shop, product, amount)
         local price = item.price * amount
 
         if Config.Locations[shop].type ~= "tattoo" and item.amount < amount then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Ce magasin n'a pas assez de stock")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
             return
         end
 
@@ -55,7 +55,7 @@ RegisterNetEvent("shops:server:pay", function(shop, product, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous n'avez pas assez d'argent")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)

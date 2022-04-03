@@ -1000,7 +1000,7 @@ Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
                     if not IsThisModelABicycle(GetEntityModel(veh)) then
                         insidemecha = true
                     else
-                        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                     end
                 end
             end
@@ -1023,7 +1023,7 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
                     if not IsThisModelABicycle(GetEntityModel(veh)) then
                         insidemecha = true
                     else
-                        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                     end
                 end
             end

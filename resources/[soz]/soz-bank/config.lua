@@ -8,12 +8,12 @@ Config.OffShoreMaxWashAmount = math.random(50000, 150000)
 Config.DefaultAccountMoney = {["player"] = 5000, ["business"] = 100000}
 
 Config.ErrorMessage = {
-    ["unknown"] = "~r~Erreur de la banque !",
-    ["action_forbidden"] = "~r~Vous n'avez pas de droit de faire cette action !",
-    ["invalid_account"] = "~r~Le compte n'existe pas !",
-    ["already_exist"] = "~r~Le compte existe déjà !",
-    ["transfert_failed"] = "~r~Le transfer a subis une erreur !",
-    ["no_account_money"] = "~r~Le compte ne possède pas assez d'argent !",
+    ["unknown"] = "Erreur de la banque !",
+    ["action_forbidden"] = "Vous n'avez pas de droit de faire cette action !",
+    ["invalid_account"] = "Le compte n'existe pas !",
+    ["already_exist"] = "Le compte existe déjà !",
+    ["transfert_failed"] = "Le transfer a subis une erreur !",
+    ["no_account_money"] = "Le compte ne possède pas assez d'argent !",
 }
 
 Config.FarmAccountMoney = {

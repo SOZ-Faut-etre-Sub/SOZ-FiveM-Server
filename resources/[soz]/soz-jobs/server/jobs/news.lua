@@ -17,7 +17,7 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
     local playerNewspaper = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "newspaper", nil, true)
 
     if playerNewspaper < 1 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ~r~n'avez plus~w~ de journaux")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ~r~n'avez plus~w~ de journaux", "error")
 
         return
     end
