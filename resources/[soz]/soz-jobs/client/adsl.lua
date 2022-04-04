@@ -65,22 +65,19 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
 
 RegisterNetEvent("jobs:adsl:fix")
 AddEventHandler("jobs:adsl:fix", function()
-    TriggerEvent("animations:client:EmoteCommandStart", {"weld"})
     QBCore.Functions.Progressbar("adsl_fix", "Répare l'adsl..", 30000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function()
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+    }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
         exports["qb-target"]:RemoveZone("adsl_zone")
         destroyblip(job_blip)
         DrawInteractionMarker(ObjectifCoord, false)
         DrawDistance = 0
         payout_counter = payout_counter + 1
         JobCounter = JobCounter + 1
-        ClearGpsMultiRoute()
         if JobCounter >= 4 then
             OnJob = false
             TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
@@ -161,10 +158,7 @@ AddEventHandler("jobs:adsl:start", function()
     end
     local coords = random_coord()
     createblip("ADSL", "Réparer l'adsl", 761, coords)
-    ClearGpsMultiRoute()
-    StartGpsMultiRoute(6, true, true)
-    AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
-    SetGpsMultiRouteRender(true)
+    SetNewWaypoint(coords.x, coords.y)
     exports["qb-target"]:AddBoxZone("adsl_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
         name = "adsl_zone",

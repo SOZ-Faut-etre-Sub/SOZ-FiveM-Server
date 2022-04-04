@@ -83,10 +83,10 @@ RegisterNetEvent("admin:server:intovehicle", function(player)
             SetPedIntoVehicle(admin, vehicule, seat)
             TriggerClientEvent("hud:client:DrawNotification", src, "Monté dans le véhicule")
         else
-            TriggerClientEvent("hud:client:DrawNotification", src, "~r~Le véhicule n'a pas de siège libre!")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Le véhicule n'a pas de siège libre!", "error")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", src, "~r~Le joueur n'est pas dans un véhicule!")
+        TriggerClientEvent("hud:client:DrawNotification", src, "Le joueur n'est pas dans un véhicule!", "error")
     end
 end)
 

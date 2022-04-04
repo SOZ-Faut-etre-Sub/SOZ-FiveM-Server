@@ -46,7 +46,7 @@ function GenerateLicenseMenu(identitySubmenu, showingAround)
                         TriggerEvent(data.event, GetPlayerServerId(player), value)
                     end
                 else
-                    exports["soz-hud"]:DrawNotification("~r~Il n'y a personne à proximité", false, 3000)
+                    exports["soz-hud"]:DrawNotification("Il n'y a personne à proximité", "error", 3000)
                     return
                 end
             end

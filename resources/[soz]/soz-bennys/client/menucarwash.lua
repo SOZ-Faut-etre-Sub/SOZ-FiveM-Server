@@ -1,4 +1,4 @@
-local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_shop_vehicle_car", "soz", "mechanic:vehicle:wash")
+local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_job_bennys", "soz", "mechanic:vehicle:wash")
 local insidewash = false
 
 local function WashMenu(menu)
@@ -29,7 +29,7 @@ local function GenerateWashMenu()
     end
 end
 
-Washmecha = BoxZone:Create(vector3(-198.92, -1324.4, 30.89), 8, 6, {
+Washmecha = BoxZone:Create(vector3(-198.29, -1324.47, 30.89), 8, 6, {
     name = "Washmecha_z",
     heading = 270,
     minZ = 29.89,
@@ -38,18 +38,18 @@ Washmecha = BoxZone:Create(vector3(-198.92, -1324.4, 30.89), 8, 6, {
 
 Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             if IsPedInAnyVehicle(PlayerPedId()) then
                 local veh = GetVehiclePedIsIn(PlayerPedId())
                 if not IsThisModelABicycle(GetEntityModel(veh)) then
                     insidewash = true
                 else
-                    exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                    exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                 end
             end
         end
     else
-        if OnDuty == false and PlayerJob.id == "bennys" then
+        if OnDuty == true and PlayerJob.id == "bennys" then
             insidewash = false
             VehiculeWash:Close()
         end

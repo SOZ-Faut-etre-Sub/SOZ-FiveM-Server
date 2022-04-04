@@ -1,3 +1,4 @@
+local haveItem = false
 local radioOpen, radioEnabled, radioProp = false, false, nil
 
 --- Functions
@@ -113,7 +114,7 @@ end)
 
 RegisterCommand("radio_toggle", function()
     local player = PlayerPedId()
-    if DoesEntityExist(player) and not IsEntityDead(player) and not IsPauseMenuActive() then
+    if haveItem and DoesEntityExist(player) and not IsEntityDead(player) and not IsPauseMenuActive() then
         toggleRadio(not radioOpen)
     end
 end, false)
@@ -124,7 +125,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
-    local haveItem = false
+    haveItem = false
 
     for _, item in pairs(PlayerData.items or {}) do
         if item.name == "radio" then

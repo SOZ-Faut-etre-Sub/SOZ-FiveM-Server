@@ -90,10 +90,10 @@ RegisterNetEvent("soz-bennys:client:fixEverything", function()
             local plate = QBCore.Functions.GetPlate(veh)
             TriggerServerEvent("soz-bennys:server:fixEverything", plate)
         else
-            exports["soz-hud"]:DrawNotification("~r~You Are Not The Driver Or On A Bicycle")
+            exports["soz-hud"]:DrawNotification("You Are Not The Driver Or On A Bicycle", "error")
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~You Are Not In A Vehicle")
+        exports["soz-hud"]:DrawNotification("You Are Not In A Vehicle", "error")
     end
 end)
 
@@ -298,19 +298,19 @@ RegisterNetEvent("soz-bennys:client:getVehicleStatus", function(plate, status)
                     if VehicleStatus[plate] ~= nil then
                         SendStatusMessage(VehicleStatus[plate])
                     else
-                        exports["soz-hud"]:DrawNotification("~r~Etat inconnu")
+                        exports["soz-hud"]:DrawNotification("Etat inconnu", "error")
                     end
                 else
-                    exports["soz-hud"]:DrawNotification("~r~Véhicule invalide")
+                    exports["soz-hud"]:DrawNotification("Véhicule invalide", "error")
                 end
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous n'êtes pas assez proche du véhicule")
+                exports["soz-hud"]:DrawNotification("Vous n'êtes pas assez proche du véhicule", "error")
             end
         else
-            exports["soz-hud"]:DrawNotification("~r~Vous devez d'abord être dans un véhicule")
+            exports["soz-hud"]:DrawNotification("Vous devez d'abord être dans un véhicule", "error")
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~Vous devez être à l'extérieur du véhicule")
+        exports["soz-hud"]:DrawNotification("Vous devez être à l'extérieur du véhicule", "error")
     end
 end)
 
@@ -352,22 +352,22 @@ RegisterNetEvent("soz-bennys:client:repairPart", function(part, level, needAmoun
                         end, function() -- Cancel
                             openingDoor = false
                             ClearPedTasks(PlayerPedId())
-                            exports["soz-hud"]:DrawNotification("~r~Process Canceled")
+                            exports["soz-hud"]:DrawNotification("Process Canceled", "error")
                         end)
                     else
-                        exports["soz-hud"]:DrawNotification("~r~Not A Valid Part")
+                        exports["soz-hud"]:DrawNotification("Not A Valid Part", "error")
                     end
                 else
-                    exports["soz-hud"]:DrawNotification("~r~Not A Valid Vehicle")
+                    exports["soz-hud"]:DrawNotification("Not A Valid Vehicle", "error")
                 end
             else
-                exports["soz-hud"]:DrawNotification("~r~You Are Not Close Enough To The Vehicle")
+                exports["soz-hud"]:DrawNotification("You Are Not Close Enough To The Vehicle", "error")
             end
         else
-            exports["soz-hud"]:DrawNotification("~r~You Must Be In The Vehicle First")
+            exports["soz-hud"]:DrawNotification("You Must Be In The Vehicle First", "error")
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~Youre Not In a Vehicle")
+        exports["soz-hud"]:DrawNotification("Youre Not In a Vehicle", "error")
     end
 end)
 
@@ -427,21 +427,17 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    TriggerEvent("animations:client:EmoteCommandStart", {"mechanic"})
     QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerEvent("animations:client:EmoteCommandStart", {"c"})
+    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function() -- Done
         TriggerEvent("soz-bennys:client:RepaireeePart", part)
         SetTimeout(250, function()
             OpenPartsMenu(Status)
         end)
-    end, function()
-        exports["soz-hud"]:DrawNotification("~r~Réparation annulée")
     end)
 
 end
@@ -516,7 +512,6 @@ local function Repairall(entity)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", 1000.0)
     end, function() -- Cancel
         ClearPedTasks(PlayerPedId())
-        exports["soz-hud"]:DrawNotification("~r~Réparation annulée")
     end)
 end
 

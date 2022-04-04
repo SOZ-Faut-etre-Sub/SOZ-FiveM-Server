@@ -29,7 +29,7 @@ local function LockVehicle()
         veh = GetVehiclePedIsIn(ped)
     end
     if GetEntitySpeed(veh) * 3.6 > 75 then
-        exports["soz-hud"]:DrawNotification("~r~Vous allez trop vite pour faire ça")
+        exports["soz-hud"]:DrawNotification("Vous allez trop vite pour faire ça", "error")
         return
     end
 
@@ -72,7 +72,7 @@ local function LockVehicle()
                     end
                 end
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas les clés..")
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas les clés..", "error")
             end
         end, plate)
     end
@@ -161,7 +161,7 @@ local function lockpickFinish(success)
     else
         PoliceCall()
         TriggerServerEvent("hud:server:GainStress", math.random(1, 4))
-        exports["soz-hud"]:DrawNotification("~r~Quelqu'un a appelé la police!")
+        exports["soz-hud"]:DrawNotification("Quelqu'un a appelé la police!", "error")
     end
     if usingAdvanced then
         if chance <= Config.RemoveLockpickAdvanced then

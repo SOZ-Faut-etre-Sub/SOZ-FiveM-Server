@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
 
                     if afkWord ~= nil and string.lower(word) == string.lower(afkWord) then
                         try, time = 1, Config.secondsUntilKick
-                        exports["soz-hud"]:DrawNotification("~g~Vous n'êtes plus AFK")
+                        exports["soz-hud"]:DrawNotification("Vous n'êtes plus AFK")
 
                         if exports["soz-phone"]:isPhoneVisible() then
                             exports["soz-phone"]:setPhoneFocus(true)
@@ -47,7 +47,7 @@ Citizen.CreateThread(function()
 
                         break
                     else
-                        exports["soz-hud"]:DrawNotification("~r~Mot invalide !")
+                        exports["soz-hud"]:DrawNotification("Mot invalide !", "error")
                         try = try + 1
                     end
                 end
