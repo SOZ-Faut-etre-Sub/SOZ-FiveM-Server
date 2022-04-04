@@ -90,7 +90,6 @@ CreateThread(function()
                         disableCarMovement = true,
                         disableMouse = false,
                         disableCombat = true,
-                    }, {}, {}, {}, function()
                     }, {task = "CODE_HUMAN_MEDIC_TEND_TO_DEAD"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "empty_bloodbag")
                         TriggerServerEvent("lsmc:server:add", "bloodbag")
