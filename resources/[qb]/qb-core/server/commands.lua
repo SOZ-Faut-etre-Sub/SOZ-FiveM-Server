@@ -44,6 +44,9 @@ end
 
 QBCore.Commands.Add('tp', 'TP To Player or Coords (Admin Only)', { { name = 'id/x', help = 'ID of player or X position' }, { name = 'y', help = 'Y position' }, { name = 'z', help = 'Z position' } }, false, function(source, args)
     local src = source
+    for i, v in ipairs(args) do
+        args[i] = v:gsub(",", "")
+    end
     if args[1] and not args[2] and not args[3] then
         local target = GetPlayerPed(tonumber(args[1]))
         if target ~= 0 then
