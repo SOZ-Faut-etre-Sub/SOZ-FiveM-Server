@@ -8,22 +8,11 @@ client_scripts {
     "@menuv/menuv.lua",
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
-
-    "client/location/main.lua",
-    "client/location/ammunation.lua",
-    "client/location/robsliquor.lua",
-    "client/location/ltdgasoline.lua",
-    "client/location/247supermarket.lua",
-    "client/location/tattoo.lua",
-
+    "client/location/*.lua",
     "client/main.lua",
-    "client/tattoo.lua",
-
-    "client/shops/base.lua",
-    "client/shops/tattoo.lua",
-
-    "client/events.lua",
+    "client/shops/*.lua",
+    "client/shops.lua",
 }
 server_scripts {"server/main.lua"}
 
-dependencies {"qb-core", "PolyZone", "qb-target", "soz-hud", "menuv"}
+dependencies {"qb-core", "PolyZone", "qb-target", "soz-hud", "menuv", "soz-character"}
