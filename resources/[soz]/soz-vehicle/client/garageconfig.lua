@@ -119,6 +119,12 @@ Zonesentreprise = {
         minZ = 30.3,
         maxZ = 34.3,
     }),
+    ["stonk"] = BoxZone:Create(vector3(-8.17, -671.17, 31.94), 30, 15, {
+        name = "stonk_z",
+        heading = 95,
+        minZ = 30.94,
+        maxZ = 34.94,
+    }),
     ["lspd"] = BoxZone:Create(vector3(576.68, -11.22, 70.63), 42.4, 42.4, {
         name = "lspd:garage:car",
         heading = 350,
@@ -142,6 +148,12 @@ Zonesentreprise = {
         heading = 355,
         minZ = 25.75,
         maxZ = 29.75,
+    }),
+    ["food"] = BoxZone:Create(vector3(-1919.75, 2050.64, 140.64), 9, 9, {
+        name = "food:garage:car",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
     }),
 }
 
@@ -1087,6 +1099,30 @@ PlacesEntreprise = {
         maxZ = 34.3,
         data = {indexGarage = "bennys"},
     }),
+    ["stonk1"] = BoxZone:Create(vector3(-4.85, -670.38, 31.94), 12, 6,
+                                {
+        name = "stonk1",
+        heading = 186.13,
+        minZ = 30.94,
+        maxZ = 34.94,
+        data = {indexGarage = "stonk"},
+    }),
+    ["stonk2"] = BoxZone:Create(vector3(3.07, -670.67, 31.94), 12, 6,
+                                {
+        name = "stonk2",
+        heading = 186.13,
+        minZ = 30.94,
+        maxZ = 34.94,
+        data = {indexGarage = "stonk"},
+    }),
+    ["stonk3"] = BoxZone:Create(vector3(-19.4, -671.67, 31.94), 12, 6,
+                                {
+        name = "stonk3",
+        heading = 184.81,
+        minZ = 30.94,
+        maxZ = 34.94,
+        data = {indexGarage = "stonk"},
+    }),
     ["lspd1"] = BoxZone:Create(vector3(594.66, 3.26, 70.63), 6.8, 4.0,
                                {
         name = "lspd1",
@@ -1176,6 +1212,30 @@ PlacesEntreprise = {
         minZ = 25.75,
         maxZ = 29.75,
         data = {indexGarage = "garbage"},
+    }),
+    ["food1"] = BoxZone:Create(vector3(-1920.27, 2048.6, 140.64), 8, 4,
+                               {
+        name = "food1",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+        data = {indexGarage = "food"},
+    }),
+    ["food2"] = BoxZone:Create(vector3(-1919.23, 2052.68, 140.64), 8, 4,
+                               {
+        name = "food2",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+        data = {indexGarage = "food"},
+    }),
+    ["food3"] = BoxZone:Create(vector3(-1923.05, 2036.34, 140.64), 8, 4,
+                               {
+        name = "food3",
+        heading = 257.89,
+        minZ = 139.64,
+        maxZ = 143.64,
+        data = {indexGarage = "food"},
     }),
 }
 

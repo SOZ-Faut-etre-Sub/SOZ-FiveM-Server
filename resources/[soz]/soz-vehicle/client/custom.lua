@@ -244,10 +244,10 @@ RegisterNetEvent("vehiclemod:client:setPartLevel", function(part, level)
                 TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
             end
         else
-            exports["soz-hud"]:DrawNotification("~r~You Are Not The Driver Or On A Bicycle")
+            exports["soz-hud"]:DrawNotification("You Are Not The Driver Or On A Bicycle", "error")
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~You Are Not The Driver Or On A Bicycle")
+        exports["soz-hud"]:DrawNotification("You Are Not The Driver Or On A Bicycle", "error")
     end
 end)
 
@@ -308,7 +308,7 @@ for int = 1, 5 do
                     if not IsThisModelABicycle(GetEntityModel(veh)) then
                         insidecustom = true
                     else
-                        exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas mette de vélos")
+                        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                     end
                 end
             end

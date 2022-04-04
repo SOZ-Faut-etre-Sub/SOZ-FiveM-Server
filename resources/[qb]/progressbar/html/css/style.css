@@ -48,8 +48,11 @@ body {
     animation-duration: 2s;
     animation-name: slide-in;
     transition-timing-function: ease-in-out;
-    text-transform: capitalize;
     text-shadow: -1px -1px 0 rgba(0,0,0,.5), 1px -1px 0 rgba(0,0,0,.5), -1px 1px 0 rgba(0,0,0,.5), 1px 1px 0 rgba(0,0,0,.5);
+}
+
+.progress-labels div::first-letter {
+    text-transform: uppercase;
 }
 
 .progress-bar-container {

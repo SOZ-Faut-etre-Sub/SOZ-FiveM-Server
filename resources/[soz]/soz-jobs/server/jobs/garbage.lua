@@ -7,7 +7,7 @@ RegisterNetEvent("jobs:server:garbage:processBags", function()
     local playerGarbageBagAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "garbagebag", nil, true)
 
     if playerGarbageBagAmount < 1 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il vous manque ~r~un sac poubelle")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il vous manque ~r~un sac poubelle", "error")
 
         return
     end

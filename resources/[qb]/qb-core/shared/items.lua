@@ -2049,9 +2049,10 @@ QBShared.Items = {
     ['moneybag'] = {
         ['name'] = 'moneybag',
         ['label'] = 'Sac d\'argent',
-        ['weight'] = 0,
+        ['weight'] = 5000,
         ['type'] = 'item',
-        ['unique'] = true,
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
@@ -2133,5 +2134,84 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Peut être utile pour se culturer'
+    },
+
+    --- News items
+    ['n_fix_greenscreen'] = {
+        ['name'] = 'n_fix_greenscreen',
+        ['label'] = 'Kit d\'installation fond vert',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['n_fix_camera'] = {
+        ['name'] = 'n_fix_camera',
+        ['label'] = 'Kit d\'installation camera fixe',
+        ['weight'] = 7000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['n_fix_light'] = {
+        ['name'] = 'n_fix_light',
+        ['label'] = 'Kit d\'installation lumière fixe',
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['n_fix_mic'] = {
+        ['name'] = 'n_fix_mic',
+        ['label'] = 'Kit d\'installation micro fixe',
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['n_camera'] = {
+        ['name'] = 'n_camera',
+        ['label'] = 'Caméra épaule',
+        ['weight'] = 3000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['n_mic'] = {
+        ['name'] = 'n_mic',
+        ['label'] = 'Micro main',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['n_bmic'] = {
+        ['name'] = 'n_bmic',
+        ['label'] = 'Micro perche',
+        ['weight'] = 1500,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
     },
 }

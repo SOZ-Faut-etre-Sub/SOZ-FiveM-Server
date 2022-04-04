@@ -89,15 +89,15 @@ RegisterNetEvent("police:client:SearchPlayer", function()
                     StopAnimTask(ped, "random@shop_robbery", "robbery_action_b", 1.0)
                     TriggerServerEvent("inventory:server:openInventory", "player", playerId)
                 else
-                    exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+                    exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                 end
             end, function() -- Cancel
                 StopAnimTask(ped, "random@shop_robbery", "robbery_action_b", 1.0)
-                exports["soz-hud"]:DrawNotification("~r~Fouille annulée")
+                exports["soz-hud"]:DrawNotification("Fouille annulée", "error")
             end)
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
     end
 end)
 
@@ -109,10 +109,10 @@ RegisterNetEvent("police:client:CuffPlayer", function()
             if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(PlayerPedId()) then
                 TriggerServerEvent("police:server:CuffPlayer", GetPlayerServerId(player), false)
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas menotter une personne dans un véhicule")
+                exports["soz-hud"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
             end
         else
-            exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
         end
     else
         Wait(2000)
@@ -126,10 +126,10 @@ RegisterNetEvent("police:client:UnCuffPlayer", function()
             if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(PlayerPedId()) then
                 TriggerServerEvent("police:server:UnCuffPlayer", GetPlayerServerId(player))
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous ne pouvez pas menotter une personne dans un véhicule")
+                exports["soz-hud"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
             end
         else
-            exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
         end
     else
         Wait(2000)
@@ -170,7 +170,7 @@ RegisterNetEvent("police:client:RequestEscortPlayer", function()
             TriggerServerEvent("police:server:EscortPlayer", GetPlayerServerId(player))
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
     end
 end)
 
@@ -182,7 +182,7 @@ RegisterNetEvent("police:client:RequestDeEscortPlayer", function()
             TriggerServerEvent("police:server:DeEscortPlayer", GetPlayerServerId(player))
         end
     else
-        exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
     end
 end)
 

@@ -17,7 +17,7 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
     local playerNewspaper = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "newspaper", nil, true)
 
     if playerNewspaper < 1 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ~r~n'avez plus~w~ de journaux")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ~r~n'avez plus~w~ de journaux", "error")
 
         return
     end
@@ -37,4 +37,16 @@ RegisterNetEvent("jobs:server:news:newspaperFarm", function()
 
     exports["soz-inventory"]:AddItem(Player.PlayerData.source, "newspaper", newspaperAmount)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
+end)
+
+RegisterNetEvent("jobs:server:news:UseMobileItem", function(item, event)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if Player.PlayerData.job.id ~= SozJobCore.JobType.News then
+        return
+    end
+
+    if (exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) or 0) >= 1 then
+        TriggerClientEvent(event, Player.PlayerData.source)
+    end
 end)

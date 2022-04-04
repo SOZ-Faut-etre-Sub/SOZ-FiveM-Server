@@ -19,6 +19,7 @@ importers:
       '@welldone-software/why-did-you-render': ^6.2.3
       '@wojtekmaj/enzyme-adapter-react-17': ^0.6.5
       autoprefixer: ^10.4.2
+      classnames: ^2.3.1
       craco-alias: ^3.0.1
       cross-env: ^7.0.3
       dayjs: ^1.10.7
@@ -48,6 +49,7 @@ importers:
       '@citizenfx/three': 0.100.0
       '@headlessui/react': 1.5.0_react-dom@17.0.2+react@17.0.2
       '@heroicons/react': 1.0.5_react@17.0.2
+      classnames: 2.3.1
       dayjs: 1.10.7
       dompurify: 2.3.6
       emoji-mart: 3.0.1_react@17.0.2
@@ -4335,6 +4337,10 @@ packages:
       isobject: 3.0.1
       static-extend: 0.1.2
     dev: true
+
+  /classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
+    dev: false
 
   /clean-css/5.2.4:
     resolution: {integrity: sha512-nKseG8wCzEuji/4yrgM/5cthL9oTDc5UOQyFMvW/Q53oP6gLH690o1NbuTh6Y18nujr7BxlsFuS7gXLnLzKJGg==}

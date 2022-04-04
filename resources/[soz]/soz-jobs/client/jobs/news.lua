@@ -55,7 +55,7 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
 
     QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
 
-    exports["soz-hud"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS")
+    exports["soz-hud"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
 end)
 
 RegisterNetEvent("jobs:client:news:newspaperSold", function()
@@ -82,13 +82,13 @@ RegisterNetEvent("jobs:client:news:InvoicePlayer", function(data)
 
     local title = exports["soz-hud"]:Input("Titre", 200)
     if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un title")
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
         return
     end
 
     local amount = exports["soz-hud"]:Input("Montant", 10)
     if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-        exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un montant")
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
         return
     end
 
@@ -111,12 +111,39 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         select = function(_, value)
             local message = exports["soz-hud"]:Input("Message de la communication", 512)
             if message == nil or message == "" then
-                exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un message")
+                exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
 
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
                                {type = value, message = message})
+        end,
+    })
+
+    societyMenu:AddSlider({
+        label = "Poser un objet",
+        value = nil,
+        values = {
+            {label = "Fond vert", value = {item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01"}},
+            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02"}},
+            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01"}},
+            {label = "Micro sur pied", value = {item = "n_fix_mic", props = "v_ilev_fos_mic"}},
+        },
+        select = function(_, value)
+            TriggerServerEvent("job:server:placeProps", value.item, value.props)
+        end,
+    })
+
+    societyMenu:AddSlider({
+        label = "Utiliser un objet mobile",
+        value = nil,
+        values = {
+            {label = "Caméra", value = {item = "n_camera", event = "Cam:ToggleCam"}},
+            {label = "Micro main", value = {item = "n_mic", event = "Mic:ToggleMic"}},
+            {label = "Micro sur une perche", value = {item = "n_bmic", event = "Mic:ToggleBMic"}},
+        },
+        select = function(_, value)
+            TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)
         end,
     })
 
@@ -129,6 +156,5 @@ CreateThread(function()
         name = "Twitch News",
         coords = vector3(-589.86, -930.61, 23.82),
         sprite = 590,
-        color = 1,
     })
 end)

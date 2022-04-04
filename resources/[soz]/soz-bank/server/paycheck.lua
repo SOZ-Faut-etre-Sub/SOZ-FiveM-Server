@@ -1,6 +1,6 @@
 function NotifyPaycheck(playerID)
     TriggerClientEvent("hud:client:DrawAdvancedNotification", playerID, "Maze Banque", "Mouvement bancaire",
-                       "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE", 9)
+                       "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE")
 end
 
 function PaycheckLoop()

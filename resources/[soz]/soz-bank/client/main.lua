@@ -1,6 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
-local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_job_lspd", "soz", "safe-storage")
+local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_inv_safe", "soz", "safe-storage")
 local isInsideBankZone = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
@@ -153,7 +153,7 @@ RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
             if isAllowed then
                 OpenSafeStorageMenu(data.SafeId, money, black_money)
             else
-                exports["soz-hud"]:DrawNotification("~r~Vous n'avez pas accès a ce coffre")
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a ce coffre", "error")
             end
         end, data.SafeId)
     end

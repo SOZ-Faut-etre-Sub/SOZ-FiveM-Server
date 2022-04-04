@@ -23,9 +23,24 @@ const Banner: FunctionalComponent<ComponentProps<any>> = ({ news, onDelete }: {n
     }, []);
 
     return (
-        <div className={`${styles.news} ${styles[news.type]} ${isClosing ? styles.slideOut : styles.slideIn}`}>
-            <h3 className={styles.header}>{news.type}</h3>
-            <p className={styles.text}>{news.message}</p>
+        <div class={`${styles.news} ${styles[news.type]} ${isClosing ? styles.slideOut : styles.slideIn}`}>
+            <h3 class={styles.header}>
+                {/(lspd|bcso)/.test(news.type) ? 'Avis de recherche' : news.type}
+            </h3>
+            <div class={styles.content}>
+                {/(lspd|bcso)/.test(news.type) ? (
+                    <p class={styles.text}>
+                        Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
+
+                        <p style={{padding: '1rem 0'}}/>
+
+                        Si vous avez des informations sur cette personne,
+                        veuillez les communiquer au <strong style={{textTransform: 'uppercase'}}>555-{news.type}</strong>.
+                    </p>
+                ) : (
+                    <p class={styles.text}>{news.message}</p>
+                )}
+            </div>
         </div>
     );
 }

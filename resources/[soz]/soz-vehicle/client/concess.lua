@@ -86,7 +86,6 @@ local function ChooseCarModelsMenu(vehicule)
     })
     VehiculeChoose:On("close", function()
         VehiculeChoose:Close()
-        VehiculeChoose:ClearItems()
     end)
 end
 
@@ -108,7 +107,6 @@ local function OpenCarModelsMenu(category)
     VehiculeModel:On("close", function()
         VehiculeModel:RemoveOnEvent("switch", eventmodelswitch)
         VehiculeModel:Close()
-        VehiculeModel:ClearItems()
     end)
     QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(vehiclestorage)
         for k, voiture in pairs(vehicules) do

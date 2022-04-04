@@ -19,7 +19,11 @@ SozJobCore.JobType = {
     Debug = "debug",
 }
 
-SozJobCore.JobPermission = {ManageGrade = "manage-grade", SocietyPrivateStorage = "society-private-storage"}
+SozJobCore.JobPermission = {
+    ManageGrade = "manage-grade",
+    SocietyPrivateStorage = "society-private-storage",
+    CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags"},
+}
 
 SozJobCore.Jobs = {
     [SozJobCore.JobType.Unemployed] = {label = "Chomeur", grades = {}, permissions = {}},
@@ -120,6 +124,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Food] = {
         label = "Food & Drink",
         grades = {},
+        menuCallback = "jobs:client:food:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.News] = {
@@ -142,7 +147,12 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.CashTransfer] = {
         label = "Transport de fond",
         grades = {},
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        menuCallback = "stonk:client:OpenSocietyMenu",
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.CashTransfer.CollectBags] = {label = "Collecte sacs d'argent"},
+            [SozJobCore.JobPermission.CashTransfer.ResaleBags] = {label = "Déposer sacs d'argent"},
+        },
     },
     [SozJobCore.JobType.Bennys] = {
         label = "Méchanicien",

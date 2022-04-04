@@ -20,7 +20,7 @@ local function MoneyMenu()
                 inventoryMenu:Close()
             end
         else
-            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous")
+            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
         end
     end
 
@@ -66,7 +66,7 @@ local function ItemsMenu(items)
                     inventoryMenu:Close()
                 end
             else
-                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous")
+                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
             end
         end)
 

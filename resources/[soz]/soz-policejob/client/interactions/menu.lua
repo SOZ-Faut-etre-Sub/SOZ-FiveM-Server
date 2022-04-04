@@ -113,6 +113,48 @@ local function RadarEntity(menu, job)
     end)
 end
 
+--- @param menu Menu
+local function WantedEntity(menu, job)
+    menu:AddButton({
+        icon = "👮",
+        label = "Personnes recherchées",
+        value = nil,
+        select = function()
+            menu:ClearItems()
+
+            menu:AddButton({
+                label = "Ajouter une personne à la liste",
+                value = nil,
+                select = function()
+                    local name = exports["soz-hud"]:Input("Nom de la personne recherchée :", 125)
+                    if name == nil or name == "" then
+                        exports["soz-hud"]:DrawNotification("Vous devez spécifier un nom", "error")
+                        return
+                    end
+
+                    TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
+                                       {type = job, message = name})
+                end,
+            })
+
+            local wantedPlayers = QBCore.Functions.TriggerRpc("police:server:GetWantedPlayers")
+            for _, wantedPlayer in pairs(wantedPlayers) do
+                menu:AddConfirm({
+                    label = wantedPlayer.message,
+                    value = wantedPlayer.id,
+                    confirm = function()
+                        local deletion = QBCore.Functions.TriggerRpc("police:server:DeleteWantedPlayer", wantedPlayer.id)
+                        if deletion then
+                            exports["soz-hud"]:DrawNotification("Vous avez retiré ~b~" .. wantedPlayer.message .. " ~s~de la liste des personnes recherchées")
+                        end
+                    end,
+                })
+            end
+
+        end,
+    })
+end
+
 --- Functions
 PoliceJob.Functions.Menu.MenuAccessIsValid = function(job)
     if not PoliceJob.Menus[job] then
@@ -155,6 +197,7 @@ PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
             RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
             PropsEntity(menu)
             BadgeEntity(menu)
+            WantedEntity(menu, job)
             RadarEntity(menu, job)
         else
             menu:AddButton({label = "Tu n'es pas en service !", disabled = true})
@@ -172,13 +215,13 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
             select = function()
                 local title = exports["soz-hud"]:Input("Titre", 200)
                 if title == nil or title == "" then
-                    exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un title")
+                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
                     return
                 end
 
                 local amount = exports["soz-hud"]:Input("Montant", 10)
                 if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-                    exports["soz-hud"]:DrawNotification("~r~Vous devez spécifier un montant")
+                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
                     return
                 end
 
@@ -244,7 +287,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
                             if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
                                 TriggerServerEvent("police:server:RemovePoint", GetPlayerServerId(player), license, item.Value)
                             else
-                                exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+                                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                             end
                         end)
 
@@ -285,7 +328,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
                             if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
                                 TriggerServerEvent("police:server:RemoveLicense", GetPlayerServerId(player), license, item.Value)
                             else
-                                exports["soz-hud"]:DrawNotification("~r~Personne n'est à portée de vous")
+                                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                             end
                         end)
 

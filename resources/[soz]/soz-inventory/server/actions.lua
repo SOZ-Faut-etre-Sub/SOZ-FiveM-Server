@@ -1,3 +1,7 @@
+local giveAnimation = function(src)
+    TaskPlayAnim(GetPlayerPed(src), "mp_common", "givetake1_a", 8.0, -8.0, -1, 49, 0, true, true, true)
+end
+
 QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function(source, cb, type, id)
     local ply = Player(source)
     local Player = QBCore.Functions.GetPlayer(source)
@@ -5,7 +9,7 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
     if not ply.state.inv_busy then
         cb(Inventory(Player.PlayerData.source))
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Inventaire en cours d'utilisation")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Inventaire en cours d'utilisation", "warning")
         cb(nil)
     end
 end)
@@ -40,7 +44,7 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
         return
     end
     if dist > 2 then
-        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous")
+        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
     end
 
     if amount <= item.amount then
@@ -53,15 +57,15 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
                 TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
 
-                TriggerClientEvent("SyncPlayEmoteSource", Player.PlayerData.source, "give2")
-                TriggerClientEvent("SyncPlayEmoteSource", Target.PlayerData.source, "give2")
+                giveAnimation(Player.PlayerData.source)
+                giveAnimation(Target.PlayerData.source)
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous ne pouvez pas donner cet objet !")
-                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "~r~Vous ne pouvez pas recevoir d'objet !")
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas donner cet objet !", "error")
+                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
             end
         end)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous ne possédez pas le nombre d'items requis pour le transfert")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne possédez pas le nombre d'items requis pour le transfert", "error")
     end
 end)
 
@@ -78,7 +82,7 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         return
     end
     if dist > 2 then
-        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous")
+        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
     end
 
     local moneyAmount = Player.Functions.GetMoney("money")
@@ -112,9 +116,9 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
         TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
 
-        TriggerClientEvent("SyncPlayEmoteSource", Player.PlayerData.source, "give2")
-        TriggerClientEvent("SyncPlayEmoteSource", Target.PlayerData.source, "give2")
+        giveAnimation(Player.PlayerData.source)
+        giveAnimation(Target.PlayerData.source)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Vous ne possédez pas l'argent requis pour le transfert")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne possédez pas l'argent requis pour le transfert", "error")
     end
 end)
