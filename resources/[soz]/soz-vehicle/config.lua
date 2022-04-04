@@ -357,6 +357,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "garbage",
     },
+    ["food"] = {
+        label = "Château Marius",
+        blipcoord = vector3(-1921.7, 2046.63, 140.73),
+        showBlip = false,
+        blipName = "Château Marius",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "food",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",
