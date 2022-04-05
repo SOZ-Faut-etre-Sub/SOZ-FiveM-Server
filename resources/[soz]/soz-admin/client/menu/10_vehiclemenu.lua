@@ -65,7 +65,7 @@ vehicleMenu:AddButton({
     select = function()
         local plyPed = PlayerPedId()
         local plyVeh = GetVehiclePedIsIn(plyPed, false)
-        local amelioration = {11,12,13,15,16,18}
+        local amelioration = {11, 12, 13, 15, 16, 18}
 
         for _, v in pairs(amelioration) do
             local validMods, amountValidMods = CheckMods(v)
