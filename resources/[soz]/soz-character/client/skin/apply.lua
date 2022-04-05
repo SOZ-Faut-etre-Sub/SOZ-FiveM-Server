@@ -85,6 +85,14 @@ local function ApplyPedTattoos(ped, tattoos)
     end
 end
 
+local function ApplyPedProps(ped, skin)
+    for overlay, category in pairs(PropType) do
+        if skin[overlay] then
+            SetPedPropIndex(ped, category, skin[overlay].Drawable, skin[overlay].Texture, 2)
+        end
+    end
+end
+
 local function Clone(obj)
     if type(obj) ~= "table" then
         return obj
@@ -136,6 +144,7 @@ function ApplyPlayerBodySkin(playerId, bodySkin)
     ApplyPedFaceTrait(ped, bodySkin.FaceTrait)
     ApplyPedMakeup(ped, bodySkin.Makeup)
     ApplyPedTattoos(ped, bodySkin.Tattoos or {})
+    ApplyPedProps(ped, bodySkin)
 end
 
 function ClothConfigComputeToClothSet(clothConfig)
