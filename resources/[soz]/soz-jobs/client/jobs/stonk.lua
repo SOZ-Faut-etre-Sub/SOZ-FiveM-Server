@@ -178,17 +178,7 @@ StonkJob.Permissions.CanBagsBeCollected = function(shopId)
     local hasJobPermission = SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.CashTransfer.CollectBags)
 
     if hasJobPermission then
-        local shop = StonkJob.CollectedShops[shopId]
-        if not shop then
-            return isOnDuty()
-        end
-
-        local remainingBags = shop["remaining-bags"]
-        if type(remainingBags) == "number" and remainingBags > 0 then
-            return isOnDuty()
-        end
-
-        local lastCollect = shop["last-collection"]
+        local lastCollect = StonkJob.CollectedShops[shopId]
         if lastCollect then
             local now = GetGameTimer()
             return lastCollect + StonkConfig.Collection.Cooldown < now
@@ -210,16 +200,9 @@ exports("CanBagsBeResold", StonkJob.Permissions.CanBagsBeResold)
 --- FARM
 ---
 -- BAG COLLECTION
-local collectedBags = 0
 StonkJob.Functions.CollectBags = function(currentShop, nBags)
-    if nBags < 1 then
-        Citizen.Wait(500)
-        exports["soz-hud"]:DrawNotification(string.format("Vous avez collecté ~g~%d sacs d'argent", collectedBags))
-        StonkJob.CollectedShops[currentShop]["last-collection"] = GetGameTimer()
-        return
-    end
-
-    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez 1 sac d'argent", StonkConfig.Collection.Duration, false, true,
+    local duration = StonkConfig.Collection.Duration * nBags
+    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez des sacs d'argent", duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = false,
@@ -227,11 +210,9 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            TriggerServerEvent("soz-jobs:server:stonk-collect-bag", currentShop)
-            collectedBags = collectedBags + 1
-            local remaining = nBags - 1
-            StonkJob.CollectedShops[currentShop]["remaining-bags"] = remaining
-            StonkJob.Functions.CollectBags(currentShop, remaining)
+            TriggerServerEvent("soz-jobs:server:stonk-collect-bag", nBags)
+            exports["soz-hud"]:DrawNotification(string.format("Vous avez collecté ~g~%d sacs d'argent", nBags))
+            StonkJob.CollectedShops[currentShop] = GetGameTimer()
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
@@ -241,25 +222,8 @@ end
 AddEventHandler("soz-jobs:client:stonk-collect-bag", function()
     Citizen.CreateThread(function()
         local currentShop = exports["soz-shops"]:GetCurrentShop()
-
-        local nBags
-
-        local shop = StonkJob.CollectedShops[currentShop]
-        if shop then
-            if type(shop["remaining-bags"]) == "number" and shop["remaining-bags"] > 0 then
-                nBags = shop["remaining-bags"]
-            end
-        else
-            StonkJob.CollectedShops[currentShop] = {}
-        end
-
-        if not nBags then
-            local range = StonkConfig.Collection.Range
-            nBags = math.random(range.min, range.max)
-        end
-
-        StonkJob.CollectedShops[currentShop]["remaining-bags"] = nBags
-        collectedBags = 0
+        local range = StonkConfig.Collection.Range
+        local nBags = math.random(range.min, range.max)
         StonkJob.Functions.CollectBags(currentShop, nBags)
     end)
 end)
@@ -299,7 +263,7 @@ local bagsSold = 0
 StonkJob.Functions.ResaleBags = function()
 
     local function DisplayBagsSold(count)
-        exports["soz-hud"]:DrawNotification(string.format("~g~Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+        exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
     end
 
     if not QBCore.Functions.HasItem(StonkConfig.Collection.BagItem) then
