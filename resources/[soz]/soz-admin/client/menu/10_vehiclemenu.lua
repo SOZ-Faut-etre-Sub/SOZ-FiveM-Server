@@ -63,21 +63,28 @@ vehicleMenu:AddButton({
     label = "Full upgrade le véhicule",
     value = nil,
     select = function()
-        local amelioration = {11, 12, 13, 15, 16, 18}
+        local plyPed = PlayerPedId()
+        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local amelioration = {11,12,13,15,16,18}
+
         for _, v in pairs(amelioration) do
             local validMods, amountValidMods = CheckMods(v)
             if amountValidMods > 0 or v == 18 then
                 if v == 18 then
-                    ToggleVehicleMod(GetVehiclePedIsIn(PlayerPedId(), false), 18, 1)
+                    ToggleVehicleMod(plyVeh, 18, 1)
                 else
                     local mod
                     for _, n in pairs(validMods) do
                         mod = n
                     end
-                    SetVehicleMod(GetVehiclePedIsIn(PlayerPedId(), false), v, mod.id)
+                    SetVehicleMod(plyVeh, v, mod.id)
                 end
             end
         end
+
+        SetVehicleColours(plyVeh, 12, 12)
+        SetVehicleExtraColours(plyVeh, 12, 12)
+        SetVehicleWindowTint(plyVeh, 1)
     end,
 })
 
