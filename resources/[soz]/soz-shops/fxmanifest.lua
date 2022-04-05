@@ -8,6 +8,8 @@ client_scripts {
     "@menuv/menuv.lua",
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
+    "@soz-character/client/skin/menu/menu.lua",
+
     "client/location/*.lua",
     "client/main.lua",
     "client/shops/*.lua",

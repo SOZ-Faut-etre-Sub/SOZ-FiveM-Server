@@ -11,7 +11,8 @@ CreateThread(function()
     for id, shop in pairs(ShopContext) do
         for shopId, location in pairs(Config.Locations[id]) do
             if not QBCore.Functions.GetBlip("shops_" .. id .. "_" .. shopId) then
-                QBCore.Functions.CreateBlip("shops_" .. id .. "_" .. shopId, {
+                QBCore.Functions.CreateBlip("shops_" .. id .. "_" .. shopId,
+                                            {
                     name = shop.label,
                     coords = location,
                     sprite = shop.blip.sprite,
