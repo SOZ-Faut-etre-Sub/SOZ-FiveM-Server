@@ -16,7 +16,7 @@ RegisterNetEvent("soz-jobs:server:stonk-collect-bag", function(nBags)
     end)
 end)
 
-RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function()
+RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function(nBags)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -24,12 +24,12 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function()
 
     local nItems = exports["soz-inventory"]:GetItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nil, true)
 
-    if nItems <= 0 then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas de sacs d'argent.", "error")
+    if nItems < nBags then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas suffisamment de sacs d'argent.", "error")
         return
     end
 
-    Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, 1, nil)
+    Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, nBags, nil)
 
     TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.Price)
 end)
