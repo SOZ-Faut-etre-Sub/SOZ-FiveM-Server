@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-shared_scripts {"config/*.lua", "config/*.json"}
+shared_scripts {"config/*.lua", "config/datasource/*.json"}
 
 client_scripts {
     "@menuv/menuv.lua",
