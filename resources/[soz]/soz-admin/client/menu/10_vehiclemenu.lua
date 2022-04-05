@@ -63,7 +63,7 @@ vehicleMenu:AddButton({
     label = "Full upgrade le véhicule",
     value = nil,
     select = function()
-        local amelioration = {11,12,13,15,16,18}
+        local amelioration = {11, 12, 13, 15, 16, 18}
         for _, v in pairs(amelioration) do
             local validMods, amountValidMods = CheckMods(v)
             if amountValidMods > 0 or v == 18 then
