@@ -79,11 +79,6 @@ local function EnableNUI(options)
 	end
 end
 
-local function EnablePreShow(options)
-	SendNUIMessage({response = "validTarget", data = options})
-end
-
-
 exports('EnableNUI', EnableNUI)
 
 local function LeftTarget()
@@ -137,8 +132,7 @@ local function CheckEntity(hit, datatable, entity, distance)
 		end
 		if nuiData[1] then
 			success = true
-			SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
-			EnablePreShow(nuiData)
+			SendNUIMessage({response = "foundTarget", data = nuiData})
 			DrawOutlineEntity(entity, true)
 			while targetActive and success do
 				local _, _, dist, entity2, _ = RaycastCamera(hit, GetEntityCoords(playerPed))
@@ -269,8 +263,7 @@ local function EnableTarget()
 								end
 								if nuiData[1] then
 									success = true
-									SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
-									EnablePreShow(nuiData)
+									SendNUIMessage({response = "foundTarget", data = nuiData})
 									DrawOutlineEntity(entity, true)
 									while targetActive and success do
 										local _, _, dist, entity2, _ = RaycastCamera(hit, GetEntityCoords(playerPed))
@@ -355,8 +348,7 @@ local function EnableTarget()
 							TriggerEvent(CurrentResourceName..':client:enterPolyZone', sendData[slot])
 							TriggerServerEvent(CurrentResourceName..':server:enterPolyZone', sendData[slot])
 							success = true
-							SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
-							EnablePreShow(nuiData)
+							SendNUIMessage({response = "foundTarget", data = nuiData})
 							DrawOutlineEntity(entity, true)
 							while targetActive and success do
 								_, coords, distance, _, _ = RaycastCamera(hit, GetEntityCoords(playerPed))

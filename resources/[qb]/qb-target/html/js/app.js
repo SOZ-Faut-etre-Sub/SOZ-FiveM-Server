@@ -88,12 +88,20 @@ const Targeting = Vue.createApp({
         },
 
         FoundTarget(item) {
-            if (item.data) {
-                this.CurrentIcon = item.data;
-            } else {
-                this.CurrentIcon = this.StandardEyeIcon;
-            }
             this.TargetEyeStyleObject.color = this.SuccessColor;
+            this.TargetHTML = "";
+            let TargetLabel = this.TargetHTML;
+            const FoundColor = this.SuccessColor;
+            const ResetColor = this.StandardColor;
+            const AlsoChangeTextIconColor = this.ChangeTextIconColor;
+            item.data.forEach(function(item, index) {
+                if (AlsoChangeTextIconColor) {
+                    TargetLabel += "<div id='target-" + index + "' style='margin-bottom: .5vh;'><span id='target-icon-" + index + "' style='color: " + ResetColor + "'><i class='" + item.icon + "'></i></span>&nbsp" + item.label + "</div>";
+                } else {
+                    TargetLabel += "<div id='target-" + index + "' style='margin-bottom: .5vh;'><span id='target-icon-" + index + "' style='color: " + FoundColor + "'><i class='" + item.icon + "'></i></span>&nbsp" + item.label + "</div>";
+                };
+            });
+            this.TargetHTML = TargetLabel;
         },
 
         ValidTarget(item) {
