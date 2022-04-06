@@ -125,12 +125,12 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         value = nil,
         values = {
             {label = "Fond vert", value = {item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01"}},
-            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02"}},
-            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01"}},
+            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02", rotation = 180.0}},
+            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01", rotation = 180.0}},
             {label = "Micro sur pied", value = {item = "n_fix_mic", props = "v_ilev_fos_mic"}},
         },
         select = function(_, value)
-            TriggerServerEvent("job:server:placeProps", value.item, value.props)
+            TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
         end,
     })
 

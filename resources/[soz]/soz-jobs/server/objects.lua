@@ -1,11 +1,11 @@
 local Objects = {}
 
-RegisterNetEvent("job:server:placeProps", function(item, props)
+RegisterNetEvent("job:server:placeProps", function(item, props, rotation)
     local Player = QBCore.Functions.GetPlayer(source)
 
     if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
         exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
-        TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey(props))
+        TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey(props), rotation)
     end
 end)
 
