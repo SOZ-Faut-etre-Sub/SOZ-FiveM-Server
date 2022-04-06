@@ -7,5 +7,5 @@ RegisterNetEvent("voip:server:setPlayerTalking", function(module, talking, extra
 end)
 
 RegisterNetEvent("voip:server:muteMe", function(mute)
-    MumbleSetPlayerMuted(source, mute)
+    TriggerClientEvent("voip:client:mutePlayer", -1, source, mute)
 end)

@@ -1,6 +1,7 @@
 --- Proximity voice update
 function setProximityState(proximityRange)
     MumbleSetTalkerProximity(proximityRange + 0.0)
+    TriggerEvent("hud:client:UpdateVoiceMode", CurrentPlayer.VoiceMode - 1)
 end
 
 exports("overrideProximityRange", function(range, disableCycle)
