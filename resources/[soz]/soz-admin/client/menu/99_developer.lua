@@ -1,6 +1,6 @@
 local developerMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Menu pour les développeurs"})
 
-local DeveloperOption = {ShowCoords = false, NoClip = false}
+local DeveloperOption = {ShowCoords = false, NoClip = false, ActivateDisease = false}
 
 --- Functions
 local function ToggleShowCoordinates()
@@ -56,6 +56,15 @@ developerMenu:AddCheckbox({
     change = function()
         DeveloperOption.ShowCoords = not DeveloperOption.ShowCoords
         ToggleShowCoordinates()
+    end,
+})
+
+developerMenu:AddCheckbox({
+    label = "Désactiver les maladies",
+    value = DeveloperOption.ActivateDisease,
+    change = function()
+        TriggerEvent("lsmc:maladie:ActivateDisease", DeveloperOption.ActivateDisease)
+        DeveloperOption.ActivateDisease = not DeveloperOption.ActivateDisease
     end,
 })
 
