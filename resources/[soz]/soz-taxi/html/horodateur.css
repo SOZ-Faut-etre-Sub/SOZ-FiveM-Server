@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+:root {
+    --meter-size-width: 45vh;
+    --meter-size-height: 22.3vh;
+}
+
+.container {
+    height: 100vh;
+}
+
+#horodateur {
+    position: absolute;
+    bottom: 5vh;
+    right: 5vh;
+    width: var(--meter-size-width);
+    height: var(--meter-size-height);
+}
+
+.horodateur {
+    position: absolute;
+    bottom: 5vh;
+    right: 5vh;
+    width: var(--meter-size-width);
+    height: var(--meter-size-height);
+}
+
+#total-price {
+    color: rgb(64, 160, 64);
+    font-family: 'Lato';
+    font-weight: bold;
+    letter-spacing: 0.1vh;
+    font-size: 4.1vh;
+    top: 4vh;
+    right: 8vh;
+    float: right;
+    position: absolute;
+}
+
+#total-price-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-family: 'Lato';
+    font-weight: lighter;
+    font-size: 1.1vh;
+    letter-spacing: 0.1vh;
+    top: 9vh;
+    right: 8vh;
+    float: right;
+    position: absolute;
+}
+
+#total-distance {
+    color: rgb(255, 153, 57);
+    font-family: 'Lato';
+    font-weight: bold;
+    letter-spacing: 0.1vh;
+    font-size: 4.1vh;
+    top: 11.5vh;
+    right: 8vh;
+    float: right;
+    position: absolute;
+}
+
+#total-distance-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-family: 'Lato';
+    font-weight: lighter;
+    font-size: 1.1vh;
+    letter-spacing: 0.1vh;
+    top: 16.5vh;
+    right: 8vh;
+    float: right;
+    position: absolute;
+}
+
+#total-price-per-100m {
+    color: rgb(56, 143, 243);
+    font-family: 'Lato';
+    font-weight: bold;
+    letter-spacing: 0.1vh;
+    font-size: 4.1vh;
+    top: 11.5vh;
+    right: 25vh;
+    float: right;
+    position: absolute;
+}
+
+#total-price-per-100m-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-family: 'Lato';
+    font-weight: lighter;
+    font-size: 1.1vh;
+    letter-spacing: 0.1vh;
+    top: 16.5vh;
+    right: 25vh;
+    float: right;
+    position: absolute;
+}
+
+.toggle-meter-btn {
+    position: absolute;
+    height: 6vh;
+    width: 6.7vh;
+    background: rgba(46, 46, 46, 0.534);
+    top: 4.15vh;
+    left: 3.8vh;
+    border-radius: 0.8vh;
+    transition: background 0.1s linear;
+}
+
+.toggle-meter-btn > p {
+    text-align: center;
+    line-height: 5.8vh;
+    font-size: 1.2vh;
+    color: rgb(231, 30, 37);
+    letter-spacing: 0.1vh;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.toggle-meter-btn:hover {
+    background: rgba(66, 66, 66, 0.657);
+}
