@@ -72,9 +72,18 @@
 }
 
 .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     grid-column: 2 / span 3;
     font-size: 1.8rem;
     padding: 1rem;
+}
+
+.reporter {
+    text-align: right;
+    padding-right: 1rem;
+    font-size: 1.2rem;
 }
 
 @media (max-width: 2560px) {
@@ -85,6 +94,9 @@
         font-size: 1.2rem;
         padding: .7rem;
     }
+    .reporter {
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 1920px) {
@@ -94,5 +106,8 @@
     .text {
         font-size: .95rem;
         padding: .5rem;
+    }
+    .reporter {
+        font-size: 0.7rem;
     }
 }
