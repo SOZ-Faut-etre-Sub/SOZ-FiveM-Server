@@ -1,4 +1,4 @@
-local removalObject = {"prop_roadcone02a", "prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01"}
+local removalObject = {"prop_roadcone02a"}
 
 --- Targets
 CreateThread(function()
@@ -39,7 +39,11 @@ RegisterNetEvent("job:client:RemoveObject", function(data)
         disableCombat = true,
     }, {animDict = "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", anim = "plant_floor", flags = 16}, {}, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
-        TriggerServerEvent("job:server:RemoveObject", ObjToNet(data.entity))
+        if data.collect then
+            TriggerServerEvent("job:server:CollectObject", ObjToNet(data.entity))
+        else
+            TriggerServerEvent("job:server:RemoveObject", ObjToNet(data.entity))
+        end
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
     end)

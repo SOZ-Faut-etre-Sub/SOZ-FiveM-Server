@@ -1,4 +1,5 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu")
+local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic"}
 
 --- Targets
 CreateThread(function()
@@ -12,6 +13,13 @@ CreateThread(function()
             },
         },
         distance = 1.5,
+    })
+
+    exports["qb-target"]:AddTargetModel(removalObject, {
+        options = {
+            {label = "Récupérer l'objet", icon = "fas fa-times", event = "job:client:RemoveObject", collect = true},
+        },
+        distance = 2.5,
     })
 
     exports["qb-target"]:AddBoxZone("jobs:news:farm", vector3(-564.09, -917.33, 33.34), 1, 1, {
