@@ -25,9 +25,9 @@ RegisterKeyMapping("voip-voice_down", "Parler moins fort", "keyboard", "F5")
 
 RegisterCommand("voip-voice_mute", function()
     if LocalPlayer.state.muted then
-        setProximityState(CurrentPlayer.VoiceMode)
         LocalPlayer.state:set("muted", false, true)
         TriggerServerEvent("voip:server:muteMe", false)
+        setProximityState(Config.VoiceModes[CurrentPlayer.VoiceMode])
     else
         LocalPlayer.state:set("muted", true, true)
         TriggerServerEvent("voip:server:muteMe", true)
