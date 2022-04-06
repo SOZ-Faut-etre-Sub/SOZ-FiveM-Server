@@ -210,9 +210,11 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            TriggerServerEvent("soz-jobs:server:stonk-collect-bag", nBags)
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez collecté ~g~%d sacs d'argent", nBags))
-            StonkJob.CollectedShops[currentShop] = GetGameTimer()
+            QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-collect-bag", function(success)
+                if success then
+                    StonkJob.CollectedShops[currentShop] = GetGameTimer()
+                end
+            end, nBags)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
