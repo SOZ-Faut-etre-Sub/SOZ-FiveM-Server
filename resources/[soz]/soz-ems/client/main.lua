@@ -58,7 +58,13 @@ function ResetAll()
     IsDead = false
     DeathTime = 0
     isInHospitalBed = false
+
     Rhume = false
+    Grippe = false
+    Dos = false
+    Rougeur = false
+    Intoxication = false
+
     ClearPedTasks()
     TriggerScreenblurFadeOut()
     StopScreenEffect("DeathFailOut")
