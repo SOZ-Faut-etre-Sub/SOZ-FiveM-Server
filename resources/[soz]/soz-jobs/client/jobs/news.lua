@@ -116,7 +116,11 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             end
 
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
-                               {type = value, message = message})
+                               {
+                type = value,
+                message = message,
+                reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+            })
         end,
     })
 
