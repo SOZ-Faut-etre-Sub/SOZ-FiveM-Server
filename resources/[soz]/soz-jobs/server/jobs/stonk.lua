@@ -1,19 +1,32 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+local function AddItem(source, count)
+    local receivedItems = false
+    exports["soz-inventory"]:AddItem(source, StonkConfig.Collection.BagItem, count, nil, nil, function(success, reason)
+        if not success then
+            if reason == "invalid_weight" then
+                if count > 1 then
+                    receivedItems = AddItem(source, count - 1)
+                else
+                    TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
+                end
+            else
+                TriggerClientEvent("hud:client:DrawNotification", source,
+                                   string.format("Vous n'avez pas collecté de sacs d'argent. Il y a eu une erreur : `%s`", reason), "error")
+            end
+        else
+            TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez collecté ~g~%d sacs d'argent", count))
+            receivedItems = true
+        end
+    end)
+    return receivedItems
+end
 
-RegisterNetEvent("soz-jobs:server:stonk-collect-bag", function(nBags)
+QBCore.Functions.CreateCallback("soz-jobs:server:stonk-collect-bag", function(source, cb, nBags)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
     end
-
-    -- TODO CHECK IVENTORY SPACE
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nBags, nil, nil, function(success, reason)
-        if not success then
-            TriggerClientEvent("hud:client:DrawNotification", source,
-                               string.format("Vous n'avez pas collecté de sacs d'argent. Il y a eu une erreur : `%s`", reason), "error")
-            return
-        end
-    end)
+    local success = AddItem(Player.PlayerData.source, nBags)
+    cb(success)
 end)
 
 RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function(nBags)
