@@ -10,10 +10,10 @@ CreateThread(function()
 end)
 
 --- Add Object
-RegisterNetEvent("job:client:AddObject", function(objectHash)
+RegisterNetEvent("job:client:AddObject", function(objectHash, rotation)
     local ped = PlayerPedId()
     local coords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 1.0, 0.0)
-    local heading = GetEntityHeading(ped)
+    local heading = GetEntityHeading(ped) + (rotation or 0.0)
 
     QBCore.Functions.Progressbar("spawn_object", "Disposition en cours", 2500, false, true,
                                  {
