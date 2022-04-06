@@ -1,3 +1,5 @@
+Activated = true
+
 -- maladie
 Rhume = false
 Grippe = false
@@ -14,6 +16,20 @@ Rein = false
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     TriggerServerEvent("lsmc:server:GetMaladie")
     TriggerServerEvent("lsmc:server:GetOrgane")
+end)
+
+RegisterNetEvent("lsmc:maladie:ActivateDisease", function(val)
+    Activated = val
+    if val == false then
+        Rhume = false
+        Grippe = false
+        Dos = false
+        Rougeur = false
+        Intoxication = false
+
+        ClearPedTasks()
+        TriggerScreenblurFadeOut()
+    end
 end)
 
 RegisterNetEvent("lsmc:client:SetMaladie", function(maladie, val)
@@ -47,7 +63,7 @@ CreateThread(function()
     while true do
         Wait(10000)
         Random = math.random(1, 1000)
-        if not IsDead then
+        if not IsDead and Activated then
             -- maladie
             if Random == 1 then
                 TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", true)
