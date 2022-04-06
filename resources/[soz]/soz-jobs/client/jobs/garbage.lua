@@ -16,14 +16,15 @@ CreateThread(function()
         distance = 2.5,
     })
 
-    exports["qb-target"]:AddBoxZone("garbage:process", vector3(-583.05, -1610.89, 27.01), 5.8, 26.6,
-                                    {name = "garbage:process", heading = 355, minZ = 26.01, maxZ = 30.01}, {
+    exports["qb-target"]:AddBoxZone("garbage:process", vector3(-601.26, -1602.99, 30.41), 2.2, 3.4,
+                                    {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
         options = {
             {
                 label = "Recycler le contenu du sac",
                 event = "jobs:client:garbage:processBags",
                 targeticon = "fas fa-recycle",
                 icon = "fas fa-recycle",
+                item = "garbagebag",
                 job = "garbage",
             },
         },
@@ -127,4 +128,14 @@ RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
     })
 
     societyMenu:Open()
+end)
+
+--- Threads
+CreateThread(function()
+    QBCore.Functions.CreateBlip("jobs:news", {
+        name = "Rogers",
+        coords = vector3(-621.98, -1640.79, 25.97),
+        sprite = 318,
+        color = 21,
+    })
 end)
