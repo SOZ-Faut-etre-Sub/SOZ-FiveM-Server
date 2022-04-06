@@ -32,42 +32,55 @@ CreateThread(function()
     })
 end)
 
+--- Functions
+local attachBag = function()
+    if garbageBagProp == nil then
+        local player = PlayerPedId()
+        garbageBagProp = CreateObject(GetHashKey("prop_cs_rub_binbag_01"), GetEntityCoords(player), true)
+        AttachEntityToEntity(garbageBagProp, player, GetPedBoneIndex(player, 57005), 0.12, 0.0, -0.05, 220.0, 120.0, 0.0, true, true, false, true, 1,
+            true)
+    end
+end
+
+local detachBag = function()
+    if garbageBagProp ~= nil then
+        DetachEntity(garbageBagProp, true, false)
+        DeleteObject(garbageBagProp)
+        garbageBagProp = nil
+    end
+end
+
 --- Events
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(playerData)
     for _, item in pairs(playerData.items or {}) do
         if item.name == "garbagebag" then
-            local player = PlayerPedId()
-            if garbageBagProp == nil then
-                garbageBagProp = CreateObject(GetHashKey("prop_cs_rub_binbag_01"), GetEntityCoords(player), true)
-                AttachEntityToEntity(garbageBagProp, player, GetPedBoneIndex(player, 57005), 0.12, 0.0, -0.05, 220.0, 120.0, 0.0, true, true, false, true, 1,
-                                     true)
-            end
+            attachBag()
 
             CreateThread(function()
                 local ped = PlayerPedId()
                 haveGarbageBag = true
 
                 while haveGarbageBag do
-                    if not IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_walk_garbage_man", 3) then
-                        ClearPedTasksImmediately(ped)
+                    if not IsPedInAnyVehicle(ped, true) and not IsEntityPlayingAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 3) then
                         QBCore.Functions.RequestAnimDict("missfbi4prepp1")
-                        TaskPlayAnim(ped, "missfbi4prepp1", "_bag_walk_garbage_man", 6.0, -6.0, -1, 49, 0, 0, 0, 0)
+                        TaskPlayAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 6.0, -6.0, -1, 49, 0, 0, 0, 0)
+                        attachBag()
+                    elseif IsPedInAnyVehicle(ped, true) and IsEntityPlayingAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 3) then
+                        StopAnimTask(ped, "missfbi4prepp1", "_idle_garbage_man", 1.0)
+                        detachBag()
                     end
+
                     Wait(200)
                 end
 
-                ClearPedTasksImmediately(ped)
+                StopAnimTask(ped, "missfbi4prepp1", "_idle_garbage_man", 1.0)
             end)
 
             return
         end
     end
 
-    if garbageBagProp ~= nil then
-        DetachEntity(garbageBagProp, true, false)
-        DeleteObject(garbageBagProp)
-        garbageBagProp = nil
-    end
+    detachBag()
 
     haveGarbageBag = false
 end)
