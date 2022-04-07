@@ -45,7 +45,7 @@ end
 
 CreateThread(function()
     while true do
-        Wait(10000)
+        Wait(1000000)
         Random = math.random(1, 1000)
         if not IsDead then
             -- maladie
