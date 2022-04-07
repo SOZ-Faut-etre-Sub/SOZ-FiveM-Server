@@ -64,3 +64,8 @@ RegisterNetEvent("jobs:utils:bmic:set", function(value)
     BMicConfig.enabled = value
     bmicOperator()
 end)
+
+AddEventHandler("ems:client:onDeath", function()
+    BMicConfig.enabled = false
+    deleteBmicObject()
+end)

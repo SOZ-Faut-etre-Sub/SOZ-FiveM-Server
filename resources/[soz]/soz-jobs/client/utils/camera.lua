@@ -91,6 +91,10 @@ end
 
 --- Camera
 local spawnCameraObject = function()
+    if CameraConfig.object ~= nil then
+        return
+    end
+
     QBCore.Functions.RequestModel(CameraConfig.prop)
     local player = PlayerPedId()
     local plyCoords = GetOffsetFromEntityInWorldCoords(player, 0.0, 0.0, -5.0)
@@ -101,6 +105,10 @@ local spawnCameraObject = function()
 end
 
 local deleteCameraObject = function()
+    if CameraConfig.object == nil then
+        return
+    end
+
     StopAnimTask(PlayerPedId(), CameraConfig.animDict, CameraConfig.anim, 1.0)
     DetachEntity(CameraConfig.object, 1, 1)
     DeleteEntity(CameraConfig.object)
@@ -186,4 +194,9 @@ end)
 RegisterNetEvent("jobs:utils:camera:set", function(value)
     CameraConfig.enabled = value
     cameraOperator()
+end)
+
+AddEventHandler("ems:client:onDeath", function()
+    CameraConfig.enabled = false
+    deleteCameraObject()
 end)
