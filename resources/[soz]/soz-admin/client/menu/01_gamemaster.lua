@@ -79,7 +79,6 @@ gameMasterMenu:AddCheckbox({
     end,
 })
 
-
 gameMasterMenu:AddButton({
     label = "Se libérer des menottes",
     value = nil,
