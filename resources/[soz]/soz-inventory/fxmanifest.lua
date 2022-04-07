@@ -11,6 +11,7 @@ server_scripts {
     "server/main.lua",
 
     "server/containers/base.lua",
+    "server/containers/ammo.lua",
     "server/containers/armory.lua",
     "server/containers/bin.lua",
     "server/containers/boss_storage.lua",
