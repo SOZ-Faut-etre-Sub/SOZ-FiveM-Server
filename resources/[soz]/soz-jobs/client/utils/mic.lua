@@ -66,3 +66,8 @@ RegisterNetEvent("jobs:utils:mic:set", function(value)
     MicConfig.enabled = value
     micOperator()
 end)
+
+AddEventHandler("ems:client:onDeath", function()
+    MicConfig.enabled = false
+    deleteMicObject()
+end)
