@@ -11,7 +11,7 @@ local ped_job = {
     {modelHash = "cs_barry", x = 236.53, y = -409.22, z = 47.92, rotation = 341.95, NetworkSync = true},
     -- pnj taxi (véhicule de service)
     {modelHash = "cs_floyd", x = 890.69, y = -149.87, z = 76.89, rotation = 237.85, NetworkSync = true},
-    
+
     -- LSPD Armor
     {modelHash = "s_f_y_cop_01", x = 608.67, y = -15.94, z = 76.63, rotation = 347.54, NetworkSync = true},
     -- BCSO Armor

@@ -6,7 +6,6 @@ CreateThread(function()
     TaxiJob.Menus["taxi"] = {menu = MenuV:CreateMenu(nil, "Le transport !", "menu_job_trucker", "soz", "taxi:menu")}
 end)
 
-
 TaxiJob.Functions.Menu.GenerateMenu = function(job, cb)
     if not TaxiJob.Functions.Menu.MenuAccessIsValid(job) then
         return
