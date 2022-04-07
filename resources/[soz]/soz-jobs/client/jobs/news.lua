@@ -1,4 +1,5 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu")
+local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic"}
 
 --- Targets
 CreateThread(function()
@@ -12,6 +13,13 @@ CreateThread(function()
             },
         },
         distance = 1.5,
+    })
+
+    exports["qb-target"]:AddTargetModel(removalObject, {
+        options = {
+            {label = "Récupérer l'objet", icon = "fas fa-times", event = "job:client:RemoveObject", collect = true},
+        },
+        distance = 2.5,
     })
 
     exports["qb-target"]:AddBoxZone("jobs:news:farm", vector3(-564.09, -917.33, 33.34), 1, 1, {
@@ -116,7 +124,11 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             end
 
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
-                               {type = value, message = message})
+                               {
+                type = value,
+                message = message,
+                reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+            })
         end,
     })
 
@@ -125,12 +137,12 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         value = nil,
         values = {
             {label = "Fond vert", value = {item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01"}},
-            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02"}},
-            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01"}},
+            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02", rotation = 180.0}},
+            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01", rotation = 180.0}},
             {label = "Micro sur pied", value = {item = "n_fix_mic", props = "v_ilev_fos_mic"}},
         },
         select = function(_, value)
-            TriggerServerEvent("job:server:placeProps", value.item, value.props)
+            TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
         end,
     })
 
@@ -138,9 +150,9 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         label = "Utiliser un objet mobile",
         value = nil,
         values = {
-            {label = "Caméra", value = {item = "n_camera", event = "Cam:ToggleCam"}},
-            {label = "Micro main", value = {item = "n_mic", event = "Mic:ToggleMic"}},
-            {label = "Micro sur une perche", value = {item = "n_bmic", event = "Mic:ToggleBMic"}},
+            {label = "Caméra", value = {item = "n_camera", event = "jobs:utils:camera:toggle"}},
+            {label = "Micro main", value = {item = "n_mic", event = "jobs:utils:mic:toggle"}},
+            {label = "Micro sur une perche", value = {item = "n_bmic", event = "jobs:utils:bmic:toggle"}},
         },
         select = function(_, value)
             TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)

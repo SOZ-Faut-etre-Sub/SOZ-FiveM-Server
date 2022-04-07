@@ -18,6 +18,7 @@ export const useMessageActions = (): MessageActionProps => {
                 {
                     id: messageDto.id,
                     type: messageDto.type,
+                    reporter: messageDto.reporter,
                     image: messageDto.image,
                     message: messageDto.message,
                     createdAt: messageDto.createdAt,

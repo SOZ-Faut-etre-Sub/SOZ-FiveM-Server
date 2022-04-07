@@ -62,7 +62,8 @@ const NewsList = (): any => {
                                 )}
 
                             </p>
-                            <p className="flex justify-end text-xs text-gray-400">
+                            <p className="flex justify-between text-xs text-gray-400">
+                                <span>{message.reporter}</span>
                                 <span>{dayjs().to(message.createdAt)}</span>
                             </p>
                         </div>

@@ -74,7 +74,7 @@ CreateThread(function()
         -- maladie
         if Rhume then
             loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
-            TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+            TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
             TriggerScreenblurFadeIn(100)
             Wait(1500)
             TriggerScreenblurFadeOut(100)
