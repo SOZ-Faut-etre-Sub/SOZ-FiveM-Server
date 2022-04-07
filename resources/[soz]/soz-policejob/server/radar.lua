@@ -26,11 +26,10 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
     local fine = QBCore.Shared.Round((vehicleSpeed - radar.speed) * 1.5)
 
     if vehicleSpeed - 5 > radar.speed then
-        TriggerClientEvent("police:client:radar:flashed", Player.PlayerData.source)
-
         if GetPedInVehicleSeat(vehicle, -1) ~= GetPlayerPed(Player.PlayerData.source) then
             return
         end
+        TriggerClientEvent("police:client:radar:flashed", Player.PlayerData.source)
 
         local radarMessage = ("Plaque: ~b~%s~s~~n~"):format(vehiclePlate)
         radarMessage = radarMessage .. ("Vitesse: ~r~%s km/h~s~ (~g~%s km/h~s~)~n~"):format(QBCore.Shared.Round(vehicleSpeed), radar.speed)
