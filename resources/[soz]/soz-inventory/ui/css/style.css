@@ -83,6 +83,7 @@ body {
 
 /** Inventory Item **/
 .inv-item {
+  display: flex;
   font-weight: 300;
   color: white;
   padding: .8rem 2rem;
@@ -96,6 +97,12 @@ body {
 
 .inv-item:hover {
   background: rgba(255, 255, 255, .25);
+}
+
+.inv-item .icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: .5rem;
 }
 
 .inv-item:hover .tooltip {

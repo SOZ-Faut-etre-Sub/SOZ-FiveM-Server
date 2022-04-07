@@ -2,7 +2,7 @@ class InventoryItem extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
         <div class="inv-item">
-            <div class="icon"></div>
+            <img class="icon" src="https://nui-img/soz-items/${this.dataset.name}" alt="" />
             <div class="label">${this.dataset.amount} ${this.dataset.label}</div>
             <span class="tooltip">${this.dataset.description}</span>
         </div>
