@@ -150,9 +150,9 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         label = "Utiliser un objet mobile",
         value = nil,
         values = {
-            {label = "Caméra", value = {item = "n_camera", event = "Cam:ToggleCam"}},
-            {label = "Micro main", value = {item = "n_mic", event = "Mic:ToggleMic"}},
-            {label = "Micro sur une perche", value = {item = "n_bmic", event = "Mic:ToggleBMic"}},
+            {label = "Caméra", value = {item = "n_camera", event = "jobs:utils:camera:toggle"}},
+            {label = "Micro main", value = {item = "n_mic", event = "jobs:utils:mic:toggle"}},
+            {label = "Micro sur une perche", value = {item = "n_bmic", event = "jobs:utils:bmic:toggle"}},
         },
         select = function(_, value)
             TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)
