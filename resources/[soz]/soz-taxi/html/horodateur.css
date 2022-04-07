@@ -3,6 +3,7 @@
 :root {
     --meter-size-width: 45vh;
     --meter-size-height: 22.3vh;
+    overflow: hidden;
 }
 
 .container {

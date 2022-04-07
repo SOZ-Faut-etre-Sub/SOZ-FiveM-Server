@@ -39,7 +39,7 @@ exports["qb-target"]:AddBoxZone("duty_taxi", vector3(903.47, -157.88, 74.17), 1.
             canInteract = function()
                 return not PlayerData.job.onduty
             end,
-            job = "taxi",
+            job = {["taxi"] = 0},
         },
         {
             type = "client",
@@ -49,7 +49,7 @@ exports["qb-target"]:AddBoxZone("duty_taxi", vector3(903.47, -157.88, 74.17), 1.
             canInteract = function()
                 return PlayerData.job.onduty
             end,
-            job = "taxi",
+            job = {["taxi"] = 0},
         },
     },
     distance = 2.5,
@@ -71,8 +71,29 @@ exports["qb-target"]:AddBoxZone("taxi:cloakroom", vector3(889.1, -178.53, 74.7),
             canInteract = function()
                 return PlayerData.job.onduty
             end,
-            job = "taxi",
+            job = {["taxi"] = 0},
         },
     },
     distance = 2.5,
 })
+
+CreateThread(function()
+    exports["qb-target"]:AddGlobalPlayer({
+        options = {
+            {
+                label = "Facture",
+                icon = "fas fa-file-invoice-dollar",
+                event = "taxi:client:InvoicePlayer",
+                job = {["taxi"] = 0},
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+            },
+        },
+        distance = 2.5,
+    })
+end)
+
+RegisterNetEvent("taxi:client:InvoicePlayer", function(data)
+    TaxiJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
+end)
