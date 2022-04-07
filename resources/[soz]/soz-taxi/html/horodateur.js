@@ -1,14 +1,6 @@
 var meterStarted = false;
 var meterPlate = null;
 
-$(document).on('keydown', function() {
-    switch(event.keyCode) {
-        case 27:
-            $.post('https://qb-taxijob/hideMouse');
-            break;
-    }
-});
-
 $(document).ready(function(){
 
     $('.container').hide();
@@ -18,7 +10,7 @@ $(document).ready(function(){
 
         if (eventData.action == "openMeter") {
             if (eventData.toggle) {
-                openMeter(eventData.meterData)
+                openMeter(eventData.HorodateurData)
                 meterPlate = eventData.plate;
             } else {
                 closeMeter()
@@ -31,7 +23,7 @@ $(document).ready(function(){
         }
 
         if (eventData.action == "updateMeter") {
-            updateMeter(eventData.meterData)
+            updateMeter(eventData.HorodateurData)
         }
 
         if (eventData.action == "resetMeter") {
@@ -40,25 +32,25 @@ $(document).ready(function(){
     });
 });
 
-function updateMeter(meterData) {
-    $("#total-price").html("$ "+ (meterData.currentFare).toFixed(2))
-    $("#total-distance").html((meterData.distanceTraveled / 200).toFixed(1) + " M")
+function updateMeter(HorodateurData) {
+    $("#total-price").html("$ "+ (HorodateurData.TarifActuelle).toFixed(2))
+    $("#total-distance").html((HorodateurData.Distance / 1000).toFixed(1) + " Km")
 }
 
 function resetMeter() {
     $("#total-price").html("$ 0.00")
-    $("#total-distance").html("0.0 M")
+    $("#total-distance").html("0.0 Km")
 }
 
 function meterToggle() {
     if (!meterStarted) {
-        $.post('https://qb-taxijob/enableMeter', JSON.stringify({
+        $.post('https://soz-taxi/enableMeter', JSON.stringify({
             enabled: true,
         }));
         toggleMeter(true)
         meterStarted = true;
     } else {
-        $.post('https://qb-taxijob/enableMeter', JSON.stringify({
+        $.post('https://soz-taxi/enableMeter', JSON.stringify({
             enabled: false,
         }));
         toggleMeter(false)
@@ -76,9 +68,9 @@ function toggleMeter(enabled) {
     }
 }
 
-function openMeter(meterData) {
+function openMeter(HorodateurData) {
     $('.container').fadeIn(150);
-    $('#total-price-per-100m').html("$ " + (meterData.defaultPrice).toFixed(2))
+    $('#total-price-per-100m').html("$ " + (HorodateurData.defaultPrice).toFixed(2))
 }
 
 function closeMeter() {

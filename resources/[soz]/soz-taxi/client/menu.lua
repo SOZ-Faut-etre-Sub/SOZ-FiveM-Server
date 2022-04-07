@@ -3,7 +3,7 @@ TaxiJob.Functions.Menu = {}
 TaxiJob.Menus = {}
 
 CreateThread(function()
-    TaxiJob.Menus["taxi"] = {menu = MenuV:CreateMenu(nil, "Le transport !", "menu_job_taxi", "soz", "taxi:menu")}
+    TaxiJob.Menus["taxi"] = {menu = MenuV:CreateMenu(nil, "Le transport !", "menu_job_trucker", "soz", "taxi:menu")}
 end)
 
 
@@ -33,10 +33,24 @@ TaxiJob.Functions.Menu.GenerateJobMenu = function(job)
     TaxiJob.Functions.Menu.GenerateMenu(job, function(menu)
         if PlayerData.job.onduty then
             menu:AddButton({
-                label = "Horodateur",
+                label = "Afficher Horodateur",
                 value = nil,
                 select = function()
-                    TriggerServerEvent("taxi:client:toggleHorodateur")
+                    TriggerEvent("taxi:client:toggleHorodateur")
+                end,
+            })
+            menu:AddButton({
+                label = "Activer Horodateur",
+                value = nil,
+                select = function()
+                    TriggerEvent("taxi:client:enableHorodateur")
+                end,
+            })
+            menu:AddButton({
+                label = "Prendre une mission",
+                value = nil,
+                select = function()
+                    TriggerEvent("taxi:client:DoTaxiNpc")
                 end,
             })
         else
@@ -69,20 +83,16 @@ TaxiJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
             end,
         })
 
-        for _, finesCategory in ipairs(Config.Fines) do
-            local category = MenuV:InheritMenu(menu, {Subtitle = finesCategory.label})
-            menu:AddButton({label = finesCategory.label, value = category})
+        menu:AddButton({
+            label = "Factures Horodateur",
+            value = nil,
+            select = function()
+                title = "Facture automatique de l'horodateur"
+                amount = HorodateurData.TarifActuelle
+                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
+            end,
+        })
 
-            for _, fine in ipairs(finesCategory.items) do
-                category:AddButton({
-                    label = fine.label,
-                    rightLabel = "$" .. fine.price,
-                    select = function()
-                        TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fine.price)
-                    end,
-                })
-            end
-        end
     end)
 end
 

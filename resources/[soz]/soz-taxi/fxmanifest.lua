@@ -13,7 +13,7 @@ files {
     'html/horodateur.css',
     'html/horodateur.html',
     'html/horodateur.js',
-    'html/Brouznouf_Z7_.png'
+    'html/Brouznouf_Z7_.png',
 }
 
 dependencies {"qb-core", "menuv", "qb-target", "PolyZone"}
