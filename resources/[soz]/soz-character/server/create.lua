@@ -16,3 +16,9 @@ QBCore.Functions.CreateCallback("soz-character:server:CreatePlayer", function(so
         cb(false)
     end
 end)
+
+RegisterServerEvent("soz-character:server:SetGodmode")
+AddEventHandler("soz-character:server:SetGodmode", function(source, val)
+    local Player = QBCore.Functions.GetPlayer(source)
+    Player.Functions.SetMetaData("godmode", val)
+end)
