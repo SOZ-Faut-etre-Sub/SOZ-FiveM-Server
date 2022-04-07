@@ -292,35 +292,40 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
         if item then
             if inv then
                 metadata, amount = metadata or {}, amount
-                local existing = false
 
-                if slot then
-                    local slotItem = inv.items[slot]
-                    if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
-                        existing = nil
-                    end
-                end
+                if Inventory.CanCarryItem(inv, item, amount, metadata) then
+                    local existing = false
 
-                if existing == false then
-                    local items, toSlot = inv.items, nil
-                    for i = 1, inv.slots do
-                        local slotItem = items[i]
-                        if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
-                            toSlot, existing = i, true
-                            break
-                        elseif not toSlot and slotItem == nil then
-                            toSlot = i
+                    if slot then
+                        local slotItem = inv.items[slot]
+                        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+                            existing = nil
                         end
                     end
-                    slot = toSlot
+
+                    if existing == false then
+                        local items, toSlot = inv.items, nil
+                        for i = 1, inv.slots do
+                            local slotItem = items[i]
+                            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+                                toSlot, existing = i, true
+                                break
+                            elseif not toSlot and slotItem == nil then
+                                toSlot = i
+                            end
+                        end
+                        slot = toSlot
+                    end
+
+                    Inventory.SetSlot(inv, item, amount, metadata, slot)
+                    inv.weight = inv.weight + item.weight * amount
+                    success = true
+
+                    inv.changed = true
+                    _G.Container[inv.type]:sync(inv.id, inv.items)
+                else
+                    success, reason = false, "invalid_weight"
                 end
-
-                Inventory.SetSlot(inv, item, amount, metadata, slot)
-                inv.weight = inv.weight + item.weight * amount
-                success = true
-
-                inv.changed = true
-                _G.Container[inv.type]:sync(inv.id, inv.items)
             else
                 success, reason = false, "invalid_inventory"
             end
