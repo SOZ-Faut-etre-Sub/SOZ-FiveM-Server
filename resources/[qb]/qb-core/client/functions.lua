@@ -132,6 +132,17 @@ function QBCore.Functions.GetBlip(id)
     return blip
 end
 
+function QBCore.Functions.RequestModel(model)
+    if type(model) == 'string' then
+        model = GetHashKey(model)
+    end
+
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        Wait(4)
+    end
+end
+
 function QBCore.Functions.RequestAnimDict(animDict)
 	if not HasAnimDictLoaded(animDict) then
 		RequestAnimDict(animDict)
