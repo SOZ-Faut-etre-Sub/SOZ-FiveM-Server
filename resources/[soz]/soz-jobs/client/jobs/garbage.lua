@@ -16,14 +16,15 @@ CreateThread(function()
         distance = 2.5,
     })
 
-    exports["qb-target"]:AddBoxZone("garbage:process", vector3(-583.05, -1610.89, 27.01), 5.8, 26.6,
-                                    {name = "garbage:process", heading = 355, minZ = 26.01, maxZ = 30.01}, {
+    exports["qb-target"]:AddBoxZone("garbage:process", vector3(-601.26, -1602.99, 30.41), 2.2, 3.4,
+                                    {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
         options = {
             {
                 label = "Recycler le contenu du sac",
                 event = "jobs:client:garbage:processBags",
                 targeticon = "fas fa-recycle",
                 icon = "fas fa-recycle",
+                item = "garbagebag",
                 job = "garbage",
             },
         },
@@ -31,46 +32,28 @@ CreateThread(function()
     })
 end)
 
---- Events
-RegisterNetEvent("QBCore:Player:SetPlayerData", function(playerData)
-    for _, item in pairs(playerData.items or {}) do
-        if item.name == "garbagebag" then
-            local player = PlayerPedId()
-            if garbageBagProp == nil then
-                garbageBagProp = CreateObject(GetHashKey("prop_cs_rub_binbag_01"), GetEntityCoords(player), true)
-                AttachEntityToEntity(garbageBagProp, player, GetPedBoneIndex(player, 57005), 0.12, 0.0, -0.05, 220.0, 120.0, 0.0, true, true, false, true, 1,
-                                     true)
-            end
+--- Functions
+local function isPlayingGarbageAnim(ped)
+    return IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_pickup_garbage_man", 3) or IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_throw_garbage_man", 3)
+end
 
-            CreateThread(function()
-                local ped = PlayerPedId()
-                haveGarbageBag = true
-
-                while haveGarbageBag do
-                    if not IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_walk_garbage_man", 3) then
-                        ClearPedTasksImmediately(ped)
-                        QBCore.Functions.RequestAnimDict("missfbi4prepp1")
-                        TaskPlayAnim(ped, "missfbi4prepp1", "_bag_walk_garbage_man", 6.0, -6.0, -1, 49, 0, 0, 0, 0)
-                    end
-                    Wait(200)
-                end
-
-                ClearPedTasksImmediately(ped)
-            end)
-
-            return
-        end
+local attachBag = function()
+    if garbageBagProp == nil then
+        local player = PlayerPedId()
+        garbageBagProp = CreateObject(GetHashKey("prop_cs_rub_binbag_01"), GetEntityCoords(player), true)
+        AttachEntityToEntity(garbageBagProp, player, GetPedBoneIndex(player, 57005), 0.12, 0.0, -0.05, 220.0, 120.0, 0.0, true, true, false, true, 1, true)
     end
+end
 
+local detachBag = function()
     if garbageBagProp ~= nil then
         DetachEntity(garbageBagProp, true, false)
         DeleteObject(garbageBagProp)
         garbageBagProp = nil
     end
+end
 
-    haveGarbageBag = false
-end)
-
+--- Events
 RegisterNetEvent("jobs:client:garbage:processBags", function()
     QBCore.Functions.Progressbar("Recyclage du sac", "Recyclage du sac en cours...", math.random(4000, 8000), false, true,
                                  {
@@ -78,7 +61,7 @@ RegisterNetEvent("jobs:client:garbage:processBags", function()
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function() -- Done
+    }, {animDict = "missfbi4prepp1", anim = "_bag_throw_garbage_man", flags = 49}, {}, {}, function() -- Done
         TriggerServerEvent("jobs:server:garbage:processBags")
     end)
 end)
@@ -127,4 +110,45 @@ RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
     })
 
     societyMenu:Open()
+end)
+
+--- Threads
+CreateThread(function()
+    QBCore.Functions.CreateBlip("jobs:news", {
+        name = "Rogers",
+        coords = vector3(-621.98, -1640.79, 25.97),
+        sprite = 318,
+        color = 21,
+    })
+
+    while true do
+        local ped = PlayerPedId()
+
+        for _, item in pairs(PlayerData.items or {}) do
+            if item.name == "garbagebag" then
+                haveGarbageBag = true
+
+                if not IsPedInAnyVehicle(ped, true) and not isPlayingGarbageAnim(ped) and not IsEntityPlayingAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 3) then
+                    QBCore.Functions.RequestAnimDict("missfbi4prepp1")
+                    TaskPlayAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 6.0, -6.0, -1, 49, 0, 0, 0, 0)
+                    attachBag()
+                elseif (IsPedInAnyVehicle(ped, true) or isPlayingGarbageAnim(ped)) and IsEntityPlayingAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 3) then
+                    StopAnimTask(ped, "missfbi4prepp1", "_idle_garbage_man", 1.0)
+                    detachBag()
+                end
+
+                goto continue
+            end
+        end
+
+        if IsEntityPlayingAnim(ped, "missfbi4prepp1", "_idle_garbage_man", 3) then
+            StopAnimTask(ped, "missfbi4prepp1", "_idle_garbage_man", 1.0)
+        end
+        detachBag()
+        haveGarbageBag = false
+
+        ::continue::
+
+        Wait(1000)
+    end
 end)
