@@ -1,4 +1,4 @@
-Activated = true
+QBCore = exports["qb-core"]:GetCoreObject()
 
 -- maladie
 Rhume = false
@@ -18,18 +18,15 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     TriggerServerEvent("lsmc:server:GetOrgane")
 end)
 
-RegisterNetEvent("lsmc:maladie:ActivateDisease", function(val)
-    Activated = val
-    if val == false then
-        Rhume = false
-        Grippe = false
-        Dos = false
-        Rougeur = false
-        Intoxication = false
+RegisterNetEvent("lsmc:maladie:ClearDisease", function(val)
+    Rhume = false
+    Grippe = false
+    Dos = false
+    Rougeur = false
+    Intoxication = false
 
-        ClearPedTasks()
-        TriggerScreenblurFadeOut()
-    end
+    ClearPedTasks()
+    TriggerScreenblurFadeOut()
 end)
 
 RegisterNetEvent("lsmc:client:SetMaladie", function(maladie, val)
@@ -61,9 +58,10 @@ end
 
 CreateThread(function()
     while true do
+        local Player = QBCore.Functions.GetPlayerData()
         Wait(1000000)
         Random = math.random(1, 1000)
-        if not IsDead and Activated then
+        if not IsDead and not Player.metadata.godmode then
             -- maladie
             if Random == 1 then
                 TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", true)

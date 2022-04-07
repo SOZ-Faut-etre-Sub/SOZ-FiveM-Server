@@ -70,6 +70,16 @@ gameMasterMenu:AddCheckbox({
     end,
 })
 
+gameMasterMenu:AddCheckbox({
+    label = "God mode",
+    value = nil,
+    change = function(_, checked)
+        TriggerServerEvent("admin:gamemaster:godmode", checked)
+        TriggerEvent("lsmc:maladie:ClearDisease")
+    end,
+})
+
+
 gameMasterMenu:AddButton({
     label = "Se libérer des menottes",
     value = nil,

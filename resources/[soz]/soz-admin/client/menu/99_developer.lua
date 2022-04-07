@@ -59,15 +59,6 @@ developerMenu:AddCheckbox({
     end,
 })
 
-developerMenu:AddCheckbox({
-    label = "Désactiver les maladies",
-    value = DeveloperOption.ActivateDisease,
-    change = function()
-        TriggerEvent("lsmc:maladie:ActivateDisease", DeveloperOption.ActivateDisease)
-        DeveloperOption.ActivateDisease = not DeveloperOption.ActivateDisease
-    end,
-})
-
 developerMenu:AddSlider({
     label = "Copier les coords",
     value = "coords",
