@@ -37,15 +37,15 @@ function SynchroniseJob()
     TriggerClientEvent("soz-jobs:Client:OnJobSync", -1, SozJobCore.Jobs)
 end
 
-function CheckPlayerJobPermission(player, permission)
+function CheckPlayerJobPermission(player, targetJobId, permission)
     if not player then
         return false
     end
 
-    return CheckJobPermission(player.job.id, player.job.grade, permission)
+    return CheckJobPermission(targetJobId, player.job.id, player.job.grade, permission)
 end
 
-function GetJobDefaultGrade(jobId)
+function GetJobDefaultGrade(targetJobId, jobId)
     local gradeId
     local job = SozJobCore.Jobs[jobId]
 
@@ -64,7 +64,11 @@ function GetJobDefaultGrade(jobId)
     return gradeId
 end
 
-function CheckJobPermission(jobId, gradeId, permission)
+function CheckJobPermission(targetJobId, jobId, gradeId, permission)
+    if targetJobId ~= jobId then
+        return false
+    end
+
     if not SozJobCore.Jobs[jobId] then
         return false
     end
