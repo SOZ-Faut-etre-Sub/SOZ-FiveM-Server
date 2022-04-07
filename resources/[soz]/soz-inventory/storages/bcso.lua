@@ -47,3 +47,13 @@ Config.Storages["bcso_storage"] = {
     heading = 28.0,
     offsetUpZ = 1.5,
 }
+
+Config.Storages["bcso_ammo"] = {
+    label = "Munition BCSO",
+    type = "ammo",
+    owner = "bcso",
+    position = vector3(1858.19, 3699.86, 30.27),
+    size = vec2(2.8, 0.4),
+    heading = 30.0,
+    offsetUpZ = 2.0,
+}

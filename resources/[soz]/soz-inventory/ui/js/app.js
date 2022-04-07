@@ -76,6 +76,7 @@ SOZinventory.setupContainer = function (container, inventory){
 
   let headerImage = inventory.type
   if (inventory.type === 'stash') headerImage = 'storage'
+  if (inventory.type === 'ammo') headerImage = 'armory'
 
   container.parentNode.querySelector('header').style.background = `url("/ui/img/${headerImage}.jpg") no-repeat`
   container.parentNode.querySelector('header').style.backgroundSize = "cover"
