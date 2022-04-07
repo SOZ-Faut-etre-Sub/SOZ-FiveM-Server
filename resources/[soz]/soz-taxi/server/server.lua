@@ -1,6 +1,6 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterNetEvent('taxi:server:NpcPay', function(Payment)
+RegisterNetEvent("taxi:server:NpcPay", function(Payment)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     Player.Functions.AddMoney("money", Payment)

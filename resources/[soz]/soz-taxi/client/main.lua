@@ -60,8 +60,12 @@ AddEventHandler("taxi:duty", function()
     TriggerServerEvent("QBCore:ToggleDuty")
 end)
 
-exports["qb-target"]:AddBoxZone("taxi:cloakroom", vector3(889.1, -178.53, 74.7), 0.4, 6.8,
-                                {name = "taxi:cloakroom", heading = 330, minZ = 73.75, maxZ = 75.75}, {
+exports["qb-target"]:AddBoxZone("taxi:cloakroom", vector3(889.1, -178.53, 74.7), 0.4, 6.8, {
+    name = "taxi:cloakroom",
+    heading = 330,
+    minZ = 73.75,
+    maxZ = 75.75,
+}, {
     options = {
         {
             type = "client",
