@@ -60,7 +60,7 @@ function CreateCharacterWizard(spawnId, character)
         local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
 
         if confirmWord:lower() == "oui" then
-            confirm = true    
+            confirm = true
             TriggerServerEvent("soz-character:server:SetGodmode", false)
         end
     end
