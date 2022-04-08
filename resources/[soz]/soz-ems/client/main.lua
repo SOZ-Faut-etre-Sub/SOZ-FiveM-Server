@@ -29,6 +29,7 @@ AddEventHandler("soz_ems:client:Revive", function()
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         IsDead = false
         SetEntityInvincible(player, false)
+        IsEntityStatic(player, false)
     end
 
     if isInHospitalBed == true then
@@ -58,7 +59,13 @@ function ResetAll()
     IsDead = false
     DeathTime = 0
     isInHospitalBed = false
+
     Rhume = false
+    Grippe = false
+    Dos = false
+    Rougeur = false
+    Intoxication = false
+
     ClearPedTasks()
     TriggerScreenblurFadeOut()
     StopScreenEffect("DeathFailOut")

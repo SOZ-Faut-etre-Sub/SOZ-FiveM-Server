@@ -60,7 +60,7 @@ CreateThread(function()
                     TriggerServerEvent("job:recruit", targetSource)
                 end,
                 canInteract = function(entity)
-                    if not SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.ManageGrade) then
+                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
                         return false
                     end
 
@@ -77,7 +77,7 @@ CreateThread(function()
                     TriggerServerEvent("job:fire", targetSource)
                 end,
                 canInteract = function(entity)
-                    if not SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.ManageGrade) then
+                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
                         return false
                     end
 
@@ -95,7 +95,7 @@ CreateThread(function()
                     BuildPromoteMenu(targetSource)
                 end,
                 canInteract = function(entity)
-                    if not SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.ManageGrade) then
+                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
                         print("no permission")
                         return false
                     end

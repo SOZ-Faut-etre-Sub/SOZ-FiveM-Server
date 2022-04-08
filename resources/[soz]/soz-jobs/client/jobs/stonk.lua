@@ -175,7 +175,8 @@ local function isOnDuty()
 end
 
 StonkJob.Permissions.CanBagsBeCollected = function(shopId)
-    local hasJobPermission = SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.CashTransfer.CollectBags)
+    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.CollectBags)
+    print("HJP", hasJobPermission)
 
     if hasJobPermission then
         local shop = StonkJob.CollectedShops[shopId]
@@ -200,7 +201,7 @@ end
 exports("CanBagsBeCollected", StonkJob.Permissions.CanBagsBeCollected)
 
 StonkJob.Permissions.CanBagsBeResold = function()
-    local hasJobPermission = SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.CashTransfer.ResaleBags)
+    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.ResaleBags)
 
     return isOnDuty() and hasJobPermission
 end
