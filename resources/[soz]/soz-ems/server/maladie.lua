@@ -41,6 +41,7 @@ RegisterServerEvent("lsmc:server:SetMort")
 AddEventHandler("lsmc:server:SetMort", function(ReasonMort)
     local Player = QBCore.Functions.GetPlayer(source)
     Player.Functions.SetMetaData("mort", ReasonMort)
+    Player.Functions.SetMetaData("isdead", true)
 end)
 
 RegisterServerEvent("lsmc:server:GetMort")
