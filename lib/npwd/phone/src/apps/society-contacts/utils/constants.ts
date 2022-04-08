@@ -27,8 +27,8 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 5,
-        display: 'Rogers',
-        number: '555-ROGERS',
-        avatar: 'media/society_icon/rogers.webp',
+        display: 'BlueBird',
+        number: '555-BLUEBIRD',
+        avatar: 'media/society_icon/bluebird.webp',
     },
 ];
