@@ -122,7 +122,7 @@ CreateThread(function()
 				if permission then
 					local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
-					return SozJobCore.Functions.HasPermission(permission)
+					return SozJobCore.Functions.HasPermission(job, permission)
 				end
 
 				return true
