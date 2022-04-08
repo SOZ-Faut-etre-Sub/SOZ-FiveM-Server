@@ -59,8 +59,7 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
             owner = owner,
             items = type(items) == "table" and items,
             changed = false,
-            open = false,
-            user = nil,
+            users = {},
             time = os.time(),
         }
 
@@ -467,6 +466,17 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
 
                             _G.Container[invSource.type]:sync(invSource.id, invSource.items)
                             _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
+
+                            if invSource.type ~= "player" and #invSource.users > 1 then
+                                for player, _ in pairs(invSource.users) do
+                                    TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invSource)
+                                end
+                            end
+                            if invTarget.type ~= "player" and #invTarget.users > 1 then
+                                for player, _ in pairs(invTarget.users) do
+                                    TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invTarget)
+                                end
+                            end
                         else
                             success, reason = false, "inventory_full"
                         end
