@@ -22,12 +22,13 @@ class _TwitchNewsService {
             emitNet(TwitchNewsEvents.CREATE_NEWS_BROADCAST, -1, {
                 id: news,
                 type: reqObj.data.type,
+                reporter: reqObj.data.reporter,
                 image: reqObj.data.image,
                 message: reqObj.data.message,
                 createdAt: new Date().getTime()
             });
 
-            emitNet('hud:client:DrawNewsBanner', -1, reqObj.data.type, reqObj.data.message);
+            emitNet('hud:client:DrawNewsBanner', -1, reqObj.data.type, reqObj.data.message, reqObj.data.reporter);
         } catch (e) {
             twitchNewsLogger.error(`Error in handleAddSociety, ${e.message}`);
             resp({status: 'error', errorMsg: 'DB_ERROR'});

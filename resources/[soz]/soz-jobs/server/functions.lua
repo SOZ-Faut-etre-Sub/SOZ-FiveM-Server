@@ -1,5 +1,5 @@
 SozJobCore.Functions = {}
 
-SozJobCore.Functions.HasPermission = function(jobID, jobGrade, permission)
-    return CheckJobPermission(jobID, jobGrade, permission)
+SozJobCore.Functions.HasPermission = function(targetJobId, jobID, jobGrade, permission)
+    return CheckJobPermission(targetJobId, jobID, jobGrade, permission)
 end

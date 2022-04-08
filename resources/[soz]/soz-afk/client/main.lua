@@ -1,10 +1,13 @@
+QBCore = exports["qb-core"]:GetCoreObject()
+
 local prevPos = vector3(0, 0, 0)
 local time = Config.secondsUntilKick
 local try = 1
 
 Citizen.CreateThread(function()
     while true do
-        if LocalPlayer.state.isLoggedIn then
+        local Player = QBCore.Functions.GetPlayerData()
+        if LocalPlayer.state.isLoggedIn and not Player.metadata.godmode then
             local currentPos = GetEntityCoords(GetPlayerPed(-1), true)
 
             if currentPos == prevPos then

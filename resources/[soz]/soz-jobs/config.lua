@@ -119,6 +119,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Taxi] = {
         label = "Taxi",
         grades = {},
+        menuCallback = "taxi:client:OpenSocietyMenu",
         permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
     },
     [SozJobCore.JobType.Food] = {

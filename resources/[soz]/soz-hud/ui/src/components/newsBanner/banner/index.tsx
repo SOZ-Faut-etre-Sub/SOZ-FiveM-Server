@@ -30,15 +30,22 @@ const Banner: FunctionalComponent<ComponentProps<any>> = ({ news, onDelete }: {n
             <div class={styles.content}>
                 {/(lspd|bcso)/.test(news.type) ? (
                     <p class={styles.text}>
-                        Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
+                        <p>
+                            Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
+                        </p>
 
-                        <p style={{padding: '1rem 0'}}/>
-
-                        Si vous avez des informations sur cette personne,
-                        veuillez les communiquer au <strong style={{textTransform: 'uppercase'}}>555-{news.type}</strong>.
+                        <p>
+                            Si vous avez des informations sur cette personne,
+                            veuillez les communiquer au <strong style={{textTransform: 'uppercase'}}>555-{news.type}</strong>.
+                        </p>
                     </p>
                 ) : (
-                    <p class={styles.text}>{news.message}</p>
+                    <div class={styles.text}>
+                        <p>{news.message}</p>
+                        <p class={styles.reporter}>
+                            Reporter: <strong>{news.reporter}</strong>
+                        </p>
+                    </div>
                 )}
             </div>
         </div>

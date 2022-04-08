@@ -203,6 +203,8 @@ function Inventory.CanCarryItem(inv, item, amount, metadata)
         end
     end
 end
+RegisterNetEvent("inventory:server:CanCarryItem", Inventory.CanCarryItem)
+exports("CanCarryItem", Inventory.CanCarryItem)
 
 --- Items management
 function Inventory.FilterItems(inv, invType)
