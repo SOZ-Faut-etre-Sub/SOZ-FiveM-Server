@@ -30,9 +30,13 @@ local function OnDeath()
             end
 
             SetEntityInvincible(player, true)
+            IsEntityStatic(player, true)
             SetEntityHealth(player, GetEntityMaxHealth(player))
             TriggerScreenblurFadeIn()
             StartScreenEffect("DeathFailOut", 0, false)
+
+            TriggerEvent("ems:client:onDeath")
+
             local ReasonMort = exports["soz-hud"]:Input("Reason du coma:", 200)
             TriggerServerEvent("lsmc:server:SetMort", ReasonMort)
         end

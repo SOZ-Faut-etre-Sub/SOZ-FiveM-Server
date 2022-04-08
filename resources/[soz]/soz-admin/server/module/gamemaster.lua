@@ -19,3 +19,12 @@ RegisterNetEvent("admin:gamemaster:unCuff", function(moneyType, amount)
         player.Functions.SetMetaData("ishandcuffed", false)
     end
 end)
+
+RegisterNetEvent("admin:gamemaster:godmode", function(val)
+    if not CheckIsAdminMenuIsAvailable(source) then
+        return
+    end
+
+    local player = QBCore.Functions.GetPlayer(source)
+    player.Functions.SetMetaData("godmode", val)
+end)
