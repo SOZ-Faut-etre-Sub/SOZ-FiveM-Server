@@ -7,6 +7,10 @@ local function OpenSocietyMenu()
         return
     end
 
+    if PlayerData.metadata["isdead"] then
+        return
+    end
+
     TriggerEvent(SozJobCore.Jobs[PlayerData.job.id].menuCallback)
 end
 
