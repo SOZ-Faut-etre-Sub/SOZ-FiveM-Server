@@ -202,6 +202,10 @@ exports("CanBagsBeResold", StonkJob.Permissions.CanBagsBeResold)
 ---
 -- BAG COLLECTION
 StonkJob.Functions.CollectBags = function(currentShop, nBags)
+    local animDict = "anim@mp_radio@garage@low"
+    QBCore.Functions.RequestAnimDict(animDict)
+    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
+
     local duration = StonkConfig.Collection.Duration * nBags
     QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez des sacs d'argent", duration, false, true,
                                  {
@@ -219,6 +223,7 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
+        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
@@ -279,6 +284,10 @@ StonkJob.Functions.ResaleBags = function()
         count = StonkConfig.Resale.Quantity
     end
 
+    local animDict = "anim@mp_radio@garage@low"
+    QBCore.Functions.RequestAnimDict(animDict)
+    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
+
     QBCore.Functions.Progressbar("stonk-resale-bag", string.format("Vous déposez %d sacs d'argent", count), StonkConfig.Resale.Duration * count, false, true,
                                  {
         disableMovement = true,
@@ -296,6 +305,7 @@ StonkJob.Functions.ResaleBags = function()
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
         end
+        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
