@@ -63,7 +63,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
                     )}
                     {isPosition(message.message) && (
                         <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
-                            <LocationMarkerIcon className="h-5 w-5 mr-2"/>Position
+                            <LocationMarkerIcon className="h-5 w-5 mr-2"/> Destination
                         </span>
                     )}
                     {!isImage(message.message) && !isPosition(message.message) && (
