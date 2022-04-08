@@ -1,3 +1,5 @@
+QBCore = exports["qb-core"]:GetCoreObject()
+
 -- maladie
 Rhume = false
 Grippe = false
@@ -14,6 +16,17 @@ Rein = false
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     TriggerServerEvent("lsmc:server:GetMaladie")
     TriggerServerEvent("lsmc:server:GetOrgane")
+end)
+
+RegisterNetEvent("lsmc:maladie:ClearDisease", function(val)
+    Rhume = false
+    Grippe = false
+    Dos = false
+    Rougeur = false
+    Intoxication = false
+
+    ClearPedTasks()
+    TriggerScreenblurFadeOut()
 end)
 
 RegisterNetEvent("lsmc:client:SetMaladie", function(maladie, val)
@@ -45,9 +58,10 @@ end
 
 CreateThread(function()
     while true do
-        Wait(10000)
+        local Player = QBCore.Functions.GetPlayerData()
+        Wait(1000000)
         Random = math.random(1, 1000)
-        if not IsDead then
+        if not IsDead and not Player.metadata.godmode then
             -- maladie
             if Random == 1 then
                 TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", true)
@@ -74,7 +88,7 @@ CreateThread(function()
         -- maladie
         if Rhume then
             loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
-            TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+            TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
             TriggerScreenblurFadeIn(100)
             Wait(1500)
             TriggerScreenblurFadeOut(100)

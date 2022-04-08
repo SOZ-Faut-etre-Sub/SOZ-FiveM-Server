@@ -13,6 +13,10 @@ function CreatePlayer(shutdownLoadingScreen)
     -- Select spawn on NUI
     SetNuiFocus(true, true)
     SendNUIMessage({action = "open"})
+
+    -- set God mode
+
+    TriggerServerEvent("soz-character:server:SetGodmode", true)
 end
 
 RegisterNUICallback("SpawnPlayer", function(data)

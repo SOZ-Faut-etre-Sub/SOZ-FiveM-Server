@@ -64,6 +64,14 @@ Config.SafeStorages = {
         heading = 354,
         offsetUpZ = 1.5,
     },
+    ["safe_taxi"] = {
+        label = "Coffre Carl'jr",
+        owner = "taxi",
+        position = vector3(907.77, -149.83, 74.17),
+        size = vec2(0.4, 1.4),
+        heading = 328,
+        offsetUpZ = 2.2,
+    },
 }
 
 Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}

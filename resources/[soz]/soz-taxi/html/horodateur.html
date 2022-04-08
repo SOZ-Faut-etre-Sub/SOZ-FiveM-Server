@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./reset.css">
+        <link rel="stylesheet" href="horodateur.css">
+        <title>Taxi horodateur</title>
+    </head>
+    <body>
+        <div class="container">
+            <img src="./Brouznouf_Z7_.png" alt="horodateur" id="horodateur">
+            <div class="horodateur">
+
+                <span id="total-price">$ 0.00</span>
+                <span id="total-price-label">Prix Total $</span>
+
+                <span id="total-distance">0.0 Km</span>
+                <span id="total-distance-label">Distance Total</span>
+
+                <span id="total-price-per-100m"></span>
+                <span id="total-price-per-100m-label">Prix  p/ 100m</span>
+
+                <div class="toggle-meter-btn">
+                    <p>Stopped</p>
+                </div>
+            </div>
+        </div>
+        <script src="./horodateur.js"></script>
+    </body>
+</html>
