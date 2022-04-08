@@ -42,19 +42,15 @@ function SpawnPlayer(SpawnId)
 end
 
 function CharacterPrepare()
-    local charInfo = QBCore.Functions.TriggerRpc("soz-character:server:GetUserTempPlayer")
+    local account = QBCore.Functions.TriggerRpc("soz-character:server:GetUserAccount")
+    local charInfo = {}
 
-    if charInfo == nil then
-        charInfo = {gender = 0}
+    if account ~= nil then
+        charInfo.firstname = account.name
+        charInfo.lastname = account.lastName
     end
 
-    if charInfo.gender == "Homme" then
-        charInfo.gender = 0
-    elseif charInfo.gender == "Femme" then
-        charInfo.gender = 1
-    end
-
-    local character = CreateAndApplyDefaultCharacter(charInfo.gender)
+    local character = CreateAndApplyDefaultCharacter(0)
 
     return charInfo, character
 end
