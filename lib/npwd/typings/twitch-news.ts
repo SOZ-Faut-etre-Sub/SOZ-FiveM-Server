@@ -1,6 +1,7 @@
 export interface TwitchNewsMessage {
   id?: number;
   type: 'annonce' | 'breaking-news' | 'publicité' | 'fait-divers' | 'info-traffic' | 'lspd' | 'lspd:end' | 'bcso' | 'bcso:end';
+  reporter?: string;
   image?: string;
   message: string;
   createdAt?: string;

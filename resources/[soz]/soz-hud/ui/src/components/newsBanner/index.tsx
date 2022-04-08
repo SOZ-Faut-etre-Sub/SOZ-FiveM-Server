@@ -14,7 +14,7 @@ const NewsBanner: FunctionalComponent = () => {
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'draw_news_banner') {
-            setNews(n => [{id: uuidv4(), type: event.data.type, image: event.data.image, message: event.data.message}, ...n])
+            setNews(n => [{id: uuidv4(), type: event.data.type, image: event.data.image, message: event.data.message, reporter: event.data.reporter}, ...n])
         }
     }, [setNews])
 

@@ -9,6 +9,18 @@ QBCore.Functions.CreateUseableItem("newspaper", function(source, item)
     TriggerClientEvent("jobs:client:news:SellNewspaper", source)
 end)
 
+QBCore.Functions.CreateUseableItem("n_camera", function(source, item)
+    TriggerClientEvent("jobs:utils:camera:toggle", source)
+end)
+
+QBCore.Functions.CreateUseableItem("n_mic", function(source, item)
+    TriggerClientEvent("jobs:utils:mic:toggle", source)
+end)
+
+QBCore.Functions.CreateUseableItem("n_bmic", function(source, item)
+    TriggerClientEvent("jobs:utils:bmic:toggle", source)
+end)
+
 --- Events
 RegisterNetEvent("jobs:server:news:newspaperSold", function()
     local Player = QBCore.Functions.GetPlayer(source)
