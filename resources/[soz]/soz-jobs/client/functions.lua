@@ -1,10 +1,14 @@
 SozJobCore.Functions = {}
 
-SozJobCore.Functions.HasPermission = function(permission)
-    return CheckJobPermission(PlayerData.job.id, PlayerData.job.grade, permission)
+SozJobCore.Functions.HasPermission = function(targetJobId, permission)
+    return CheckJobPermission(targetJobId, PlayerData.job.id, PlayerData.job.grade, permission)
 end
 
-function CheckJobPermission(jobId, gradeId, permission)
+function CheckJobPermission(targetJobId, jobId, gradeId, permission)
+    if targetJobId ~= jobId then
+        return false
+    end
+
     if not SozJobCore.Jobs[jobId] then
         return false
     end
