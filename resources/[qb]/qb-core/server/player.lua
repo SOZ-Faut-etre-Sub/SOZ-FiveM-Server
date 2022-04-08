@@ -9,8 +9,9 @@ function QBCore.Player.Login(source, citizenid, newData)
     local src = source
     if src then
         if citizenid then
-            local license = QBCore.Functions.GetIdentifier(src, 'license')
+            local license = QBCore.Functions.GetDiscordIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
+
             if PlayerData and license == PlayerData.license then
                 PlayerData.money = json.decode(PlayerData.money)
                 PlayerData.job = json.decode(PlayerData.job)
@@ -47,7 +48,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.source = src
     PlayerData.is_default = PlayerData.is_default or 1
     PlayerData.citizenid = PlayerData.citizenid or QBCore.Player.CreateCitizenId()
-    PlayerData.license = PlayerData.license or QBCore.Functions.GetIdentifier(src, 'license')
+    PlayerData.license = PlayerData.license or QBCore.Functions.GetDiscordIdentifier(src)
     PlayerData.name = GetPlayerName(src)
     PlayerData.cid = PlayerData.cid or 1
     PlayerData.money = PlayerData.money or {}
@@ -454,7 +455,7 @@ local playertables = { -- Add tables as needed
 
 function QBCore.Player.DeleteCharacter(source, citizenid)
     local src = source
-    local license = QBCore.Functions.GetIdentifier(src, 'license')
+    local license = QBCore.Functions.GetDiscordIdentifier(src)
     local result = exports.oxmysql:scalarSync('SELECT license FROM player where citizenid = ?', { citizenid })
     if license == result then
         for k, v in pairs(playertables) do
