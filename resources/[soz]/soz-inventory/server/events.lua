@@ -24,10 +24,8 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         end
     end
 
-    if targetInv.open == false and Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
-        TriggerClientEvent("inventory:client:updateStorageState", -1, targetInv.id, Player.Functions.GetName())
-        targetInv.open = true
-        targetInv.user = Player.PlayerData.source
+    if Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
+        targetInv.users[Player.PlayerData.source] = true
 
         TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
                            Inventory.FilterItems(targetInv, sourceInv.type))
@@ -48,9 +46,7 @@ end)
 RegisterServerEvent("inventory:server:closeInventory", function(invID)
     local targetInv = Inventory(invID)
 
-    if targetInv.open == true and targetInv.user == source then
-        targetInv.open = false
-        targetInv.user = nil
-        TriggerClientEvent("inventory:client:updateStorageState", -1, targetInv.id, nil)
+    if targetInv and targetInv.users[source] then
+        targetInv.users[source] = nil
     end
 end)
