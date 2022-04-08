@@ -1,6 +1,6 @@
 local developerMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Menu pour les développeurs"})
 
-local DeveloperOption = {ShowCoords = false, NoClip = false}
+local DeveloperOption = {ShowCoords = false, NoClip = false, ActivateDisease = false}
 
 --- Functions
 local function ToggleShowCoordinates()
