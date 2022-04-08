@@ -176,7 +176,6 @@ end
 
 StonkJob.Permissions.CanBagsBeCollected = function(shopId)
     local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.CollectBags)
-    print("HJP", hasJobPermission)
 
     if hasJobPermission then
         local lastCollect = StonkJob.CollectedShops[shopId]
