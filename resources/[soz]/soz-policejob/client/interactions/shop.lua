@@ -8,7 +8,8 @@ CreateThread(function()
             icon = "fas fa-briefcase",
             event = "police:client:weaponShop",
             canInteract = function()
-                return SozJobCore.Functions.HasPermission(SozJobCore.JobPermission.ManageGrade)
+                return SozJobCore.Functions.HasPermission("lspd", SozJobCore.JobPermission.ManageGrade) or
+                           SozJobCore.Functions.HasPermission("bcso", SozJobCore.JobPermission.ManageGrade)
             end,
         },
     }
