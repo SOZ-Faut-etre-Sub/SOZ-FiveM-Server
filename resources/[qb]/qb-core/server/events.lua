@@ -48,38 +48,34 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
 
     Wait(0)
 
-    local allowAnonymous = GetConvar("soz_allow_anonymous_login", "false") == "true"
-    local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
-
-    if not discord and not allowAnonymous then
+    if not discord then
         exports["soz-monitor"]:Log("ERROR", name .. ": error finding discord id for this user.", {
             event = "playerConnecting"
         })
 
-        if not allowAnonymous then
-            deferrals.done('Impossible de recupérer votre identifiant discord, ce dernier doit être lancé avant fivem et sans droit administrateur.')
-        end
+        deferrals.done('Impossible de recupérer votre identifiant discord, ce dernier doit être lancé avant fivem et sans droit administrateur.')
     end
 
-    if discord then
-        local status, result = pcall(function()
-            return MySQL.single.await("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'DISCORD' AND ai.identityId = ? LIMIT 1", {discord})
-        end)
+    local allowAnonymous = GetConvar("soz_allow_anonymous_login", "false") == "true"
+    local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
-        if not status or not result then
-            exports["soz-monitor"]:Log("ERROR", name .. ": cannot find account for this user: '" .. json.encode(result) .. "'", {
-                discord = discord,
-                event = "playerConnecting"
-            })
+    local status, result = pcall(function()
+        return MySQL.single.await("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'DISCORD' AND ai.identityId = ? LIMIT 1", {discord})
+    end)
 
-            if not allowAnonymous then
-                deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant discord : ' .. discord)
-            end
+    if not status or not result then
+        exports["soz-monitor"]:Log("ERROR", name .. ": cannot find account for this user: '" .. json.encode(result) .. "'", {
+            discord = discord,
+            event = "playerConnecting"
+        })
 
-            QBCore.Functions.SetPermission(discord, defaultAnonymousRole)
-        else
-            QBCore.Functions.SetPermission(discord, result.role or 'user')
+        if not allowAnonymous then
+            deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant discord : ' .. discord)
         end
+
+        QBCore.Functions.SetPermission(discord, defaultAnonymousRole)
+    else
+        QBCore.Functions.SetPermission(discord, result.role or 'user')
     end
 
     deferrals.done()
