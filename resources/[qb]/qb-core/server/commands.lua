@@ -25,7 +25,7 @@ function QBCore.Commands.Refresh(source)
     local suggestions = {}
     if Player then
         for command, info in pairs(QBCore.Commands.List) do
-            local isGod = QBCore.Functions.HasPermission(src, 'god')
+            local isGod = QBCore.Functions.HasPermission(src, 'admin')
             local hasPerm = QBCore.Functions.HasPermission(src, QBCore.Commands.List[command].permission)
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
             if isGod or hasPerm or isPrincipal then
@@ -80,28 +80,6 @@ QBCore.Commands.Add('togglepvp', 'Toggle PVP on the server (Admin Only)', {}, fa
     QBConfig.Server.pvp = not pvp_state
     TriggerClientEvent('QBCore:Client:PvpHasToggled', -1, QBConfig.Server.pvp)
 end, 'admin')
--- Permissions
-
-QBCore.Commands.Add('addpermission', 'Give Player Permissions (God Only)', { { name = 'id', help = 'ID of player' }, { name = 'permission', help = 'Permission level' } }, true, function(source, args)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
-    local permission = tostring(args[2]):lower()
-    if Player then
-        QBCore.Functions.AddPermission(Player.PlayerData.source, permission)
-    else
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
-    end
-end, 'god')
-
-QBCore.Commands.Add('removepermission', 'Remove Players Permissions (God Only)', { { name = 'id', help = 'ID of player' } }, true, function(source, args)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
-    if Player then
-        QBCore.Functions.RemovePermission(Player.PlayerData.source)
-    else
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
-    end
-end, 'god')
 
 -- Vehicle
 
