@@ -11,6 +11,7 @@ server_scripts {
     "server/main.lua",
 
     "server/containers/base.lua",
+    "server/containers/ammo.lua",
     "server/containers/armory.lua",
     "server/containers/bin.lua",
     "server/containers/boss_storage.lua",
@@ -27,8 +28,7 @@ server_scripts {
     "server/props.lua",
 }
 
-ui_page "ui/index.html"
-
-files {"ui/index.html", "ui/img/*", "ui/css/style.css", "ui/js/inventory_item.js", "ui/js/app.js"}
+ui_page("html/index.html")
+files {"html/index.html", "html/assets/*"}
 
 dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "soz-monitor", "menuv", "qb-target"}

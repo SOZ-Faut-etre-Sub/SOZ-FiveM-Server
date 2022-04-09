@@ -29,7 +29,7 @@ QBCore.Commands.Add("giveitem", "Give An Item", {
 
                 Inventory.AddItem(Player.PlayerData.source, itemData["name"], amount, metadata, false, function(success, reason)
                     if success then
-                        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez donné ~o~%s ~b~%s", amount, itemData["name"]))
+                        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez donné ~o~%s ~b~%s", amount, itemData["label"]))
                     else
                         TriggerClientEvent("hud:client:DrawNotification", source, "L'objet ne peut pas être donné: " .. reason, "error")
                     end

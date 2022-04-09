@@ -29,7 +29,16 @@ Config.Storages["stonk_armory"] = {
     label = "Armurerie Stonk Depository",
     type = "armory",
     owner = "cash-transfer",
-    position = vector3(-17.72, -715.79, 46.02),
-    size = vector2(2.75, 3.75),
-    heading = 204.63,
+    position = vector3(-17.64, -716.12, 46.02),
+    size = vector2(2.2, 3.8),
+    heading = 25.0,
+}
+
+Config.Storages["stonk_ammo"] = {
+    label = "Munition Stonk Depository",
+    type = "ammo",
+    owner = "cash-transfer",
+    position = vector3(-16.0, -714.38, 46.02),
+    size = vector2(2.0, 0.6),
+    heading = 25.0,
 }
