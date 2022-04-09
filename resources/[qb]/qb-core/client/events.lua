@@ -31,17 +31,21 @@ RegisterNetEvent('QBCore:Command:TeleportToCoords', function(x, y, z)
 end)
 
 RegisterNetEvent('QBCore:Command:GoToMarker', function()
-    local ped = PlayerPedId()
-    local blip = GetFirstBlipInfoId(8)
-    if DoesBlipExist(blip) then
-        local blipCoords = GetBlipCoords(blip)
-        for height = 1, 1000 do
-            SetPedCoordsKeepVehicle(ped, blipCoords.x, blipCoords.y, height + 0.0)
-            local foundGround, zPos = GetGroundZFor_3dCoord(blipCoords.x, blipCoords.y, height + 0.0)
-            if foundGround then
-                SetPedCoordsKeepVehicle(ped, blipCoords.x, blipCoords.y, height + 0.0)
+    local player = PlayerPedId()
+    local WaypointHandle = GetFirstBlipInfoId(8)
+
+    if DoesBlipExist(WaypointHandle) then
+        local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
+
+        SetPedCoordsKeepVehicle(player, waypointCoords.x, waypointCoords.y, waypointCoords.z)
+        for height = waypointCoords.z, 1000 do
+            local found, z = GetGroundZFor_3dCoord_2(waypointCoords.x, waypointCoords.y, height + 0.0)
+
+            if found then
+                SetPedCoordsKeepVehicle(player, waypointCoords.x, waypointCoords.y, z)
                 break
             end
+
             Wait(0)
         end
     end
