@@ -44,38 +44,38 @@ end)
 local function OnPlayerConnecting(name, setKickReason, deferrals)
     -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
     deferrals.defer()
-    local discord = QBCore.Functions.GetDiscordIdentifier(source)
+    local steam = QBCore.Functions.GetSozIdentifier(source)
 
     Wait(0)
 
-    if not discord then
-        exports["soz-monitor"]:Log("ERROR", name .. ": error finding discord id for this user.", {
+    if not steam then
+        exports["soz-monitor"]:Log("ERROR", name .. ": error finding steam id for this user.", {
             event = "playerConnecting"
         })
 
-        deferrals.done('Impossible de recupérer votre identifiant discord, ce dernier doit être lancé avant fivem et sans droit administrateur.')
+        deferrals.done('Impossible de recupérer votre identifiant steam, verifier que le client est bien lancé.')
     end
 
     local allowAnonymous = GetConvar("soz_allow_anonymous_login", "false") == "true"
     local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
     local status, result = pcall(function()
-        return MySQL.single.await("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'DISCORD' AND ai.identityId = ? LIMIT 1", {discord})
+        return MySQL.single.await("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam})
     end)
 
     if not status or not result then
         exports["soz-monitor"]:Log("ERROR", name .. ": cannot find account for this user: '" .. json.encode(result) .. "'", {
-            discord = discord,
+            steam = steam,
             event = "playerConnecting"
         })
 
         if not allowAnonymous then
-            deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant discord : ' .. discord)
+            deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. steam)
         end
 
-        QBCore.Functions.SetPermission(discord, defaultAnonymousRole)
+        QBCore.Functions.SetPermission(steam, defaultAnonymousRole)
     else
-        QBCore.Functions.SetPermission(discord, result.role or 'user')
+        QBCore.Functions.SetPermission(steam, result.role or 'user')
     end
 
     deferrals.done()

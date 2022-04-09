@@ -22,14 +22,18 @@ function QBCore.Functions.GetIdentifier(source, idtype)
     return nil
 end
 
-function QBCore.Functions.GetDiscordIdentifier(source)
-    local discordId = QBCore.Functions.GetIdentifier(source, 'discord')
+function QBCore.Functions.GetSozIdentifier(source)
+    local steamId = QBCore.Functions.GetIdentifier(source, 'steam')
 
-    if not discordId then
+    print(json.encode(GetPlayerIdentifiers(source)))
+
+    if not steamId then
         return nil
     end
 
-    return string.sub(discordId, string.len("discord:") + 1)
+    local steamHex = string.sub(steamId, string.len("steam:") + 1)
+
+    return tostring(tonumber(steamHex, 16))
 end
 
 function QBCore.Functions.GetSource(identifier)
@@ -131,7 +135,7 @@ end
 --- Will set the provided player id / source into the provided bucket id
 function QBCore.Functions.SetPlayerBucket(player_source --[[int]],bucket --[[int]])
     if player_source and bucket then
-        local plicense = QBCore.Functions.GetDiscordIdentifier(player_source)
+        local plicense = QBCore.Functions.GetSozIdentifier(player_source)
         SetPlayerRoutingBucket(player_source, bucket)
         _G.Player_Buckets[plicense] = {player_id = player_source, player_bucket = bucket}
         return true
@@ -275,7 +279,7 @@ end
 
 function QBCore.Functions.HasPermission(source, permission)
     local src = source
-    local license = QBCore.Functions.GetDiscordIdentifier(src)
+    local license = QBCore.Functions.GetSozIdentifier(src)
     local permission = tostring(permission:lower())
 
     if permission == 'user' then
@@ -295,7 +299,7 @@ end
 
 function QBCore.Functions.GetPermission(source)
     local src = source
-    local license = QBCore.Functions.GetDiscordIdentifier(src)
+    local license = QBCore.Functions.GetSozIdentifier(src)
     if license then
         if QBCore.Config.Server.PermissionList[license] then
             if QBCore.Config.Server.PermissionList[license].license == license then
@@ -310,7 +314,7 @@ end
 
 function QBCore.Functions.IsOptin(source)
     local src = source
-    local license = QBCore.Functions.GetDiscordIdentifier(src)
+    local license = QBCore.Functions.GetSozIdentifier(src)
     if QBCore.Functions.HasPermission(src, 'admin') then
         return QBCore.Config.Server.PermissionList[license].optin
     end
@@ -318,7 +322,7 @@ end
 
 function QBCore.Functions.ToggleOptin(source)
     local src = source
-    local license = QBCore.Functions.GetDiscordIdentifier(src)
+    local license = QBCore.Functions.GetSozIdentifier(src)
     if QBCore.Functions.HasPermission(src, 'admin') then
         QBCore.Config.Server.PermissionList[license].optin = not QBCore.Config.Server.PermissionList[license].optin
     end
