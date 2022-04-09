@@ -22,6 +22,16 @@ function QBCore.Functions.GetIdentifier(source, idtype)
     return nil
 end
 
+function QBCore.Functions.GetDiscordIdentifier(source)
+    local discordId = QBCore.Functions.GetIdentifier(source, 'discord')
+
+    if not discordId then
+        return nil
+    end
+
+    return string.sub(discordId, string.len("discord:") + 1)
+end
+
 function QBCore.Functions.GetSource(identifier)
     for src, player in pairs(QBCore.Players) do
         local idens = GetPlayerIdentifiers(src)
@@ -121,7 +131,7 @@ end
 --- Will set the provided player id / source into the provided bucket id
 function QBCore.Functions.SetPlayerBucket(player_source --[[int]],bucket --[[int]])
     if player_source and bucket then
-        local plicense = QBCore.Functions.GetIdentifier(player_source, 'license')
+        local plicense = QBCore.Functions.GetDiscordIdentifier(player_source)
         SetPlayerRoutingBucket(player_source, bucket)
         _G.Player_Buckets[plicense] = {player_id = player_source, player_bucket = bucket}
         return true
@@ -252,85 +262,40 @@ function QBCore.Functions.Kick(source, reason, setKickReason, deferrals)
     end)
 end
 
--- Check if player is whitelisted (not used anywhere)
-
-function QBCore.Functions.IsWhitelisted(source)
-    local src = source
-    local plicense = QBCore.Functions.GetIdentifier(src, 'license')
-    local identifiers = GetPlayerIdentifiers(src)
-    if QBCore.Config.Server.whitelist then
-        local result = exports.oxmysql:executeSync('SELECT * FROM whitelist WHERE license = ?', { plicense })
-        if result[1] then
-            for _, id in pairs(identifiers) do
-                if result[1].license == id then
-                    return true
-                end
-            end
-        end
-    else
-        return true
-    end
-    return false
-end
-
 -- Setting & Removing Permissions
 
-function QBCore.Functions.AddPermission(source, permission)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local plicense = Player.PlayerData.license
-    if Player then
-        QBCore.Config.Server.PermissionList[plicense] = {
-            license = plicense,
-            permission = permission:lower(),
-        }
-        exports.oxmysql:execute('DELETE FROM permissions WHERE license = ?', { plicense })
-
-        exports.oxmysql:insert('INSERT INTO permissions (name, license, permission) VALUES (?, ?, ?)', {
-            GetPlayerName(src),
-            plicense,
-            permission:lower()
-        })
-
-        Player.Functions.UpdatePlayerData()
-        TriggerClientEvent('QBCore:Client:OnPermissionUpdate', src, permission)
-    end
-end
-
-function QBCore.Functions.RemovePermission(source)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local license = Player.PlayerData.license
-    if Player then
-        QBCore.Config.Server.PermissionList[license] = nil
-        exports.oxmysql:execute('DELETE FROM permissions WHERE license = ?', { license })
-        Player.Functions.UpdatePlayerData()
-    end
+function QBCore.Functions.SetPermission(license, permission)
+    QBCore.Config.Server.PermissionList[license] = {
+        license = license,
+        permission = permission:lower(),
+    }
 end
 
 -- Checking for Permission Level
 
 function QBCore.Functions.HasPermission(source, permission)
     local src = source
-    local license = QBCore.Functions.GetIdentifier(src, 'license')
+    local license = QBCore.Functions.GetDiscordIdentifier(src)
     local permission = tostring(permission:lower())
+
     if permission == 'user' then
         return true
-    else
-        if QBCore.Config.Server.PermissionList[license] then
-            if QBCore.Config.Server.PermissionList[license].license == license then
-                if QBCore.Config.Server.PermissionList[license].permission == permission or QBCore.Config.Server.PermissionList[license].permission == 'god' then
-                    return true
-                end
+    end
+
+    if QBCore.Config.Server.PermissionList[license] then
+        if QBCore.Config.Server.PermissionList[license].license == license then
+            if QBCore.Config.Server.PermissionList[license].permission == permission or QBCore.Config.Server.PermissionList[license].permission == 'admin' then
+                return true
             end
         end
     end
+
     return false
 end
 
 function QBCore.Functions.GetPermission(source)
     local src = source
-    local license = QBCore.Functions.GetIdentifier(src, 'license')
+    local license = QBCore.Functions.GetDiscordIdentifier(src)
     if license then
         if QBCore.Config.Server.PermissionList[license] then
             if QBCore.Config.Server.PermissionList[license].license == license then
@@ -345,7 +310,7 @@ end
 
 function QBCore.Functions.IsOptin(source)
     local src = source
-    local license = QBCore.Functions.GetIdentifier(src, 'license')
+    local license = QBCore.Functions.GetDiscordIdentifier(src)
     if QBCore.Functions.HasPermission(src, 'admin') then
         return QBCore.Config.Server.PermissionList[license].optin
     end
@@ -353,46 +318,8 @@ end
 
 function QBCore.Functions.ToggleOptin(source)
     local src = source
-    local license = QBCore.Functions.GetIdentifier(src, 'license')
+    local license = QBCore.Functions.GetDiscordIdentifier(src)
     if QBCore.Functions.HasPermission(src, 'admin') then
         QBCore.Config.Server.PermissionList[license].optin = not QBCore.Config.Server.PermissionList[license].optin
     end
-end
-
--- Check if player is banned
-
-function QBCore.Functions.IsPlayerBanned(source)
-    local src = source
-    local retval = false
-    local message = ''
-    local plicense = QBCore.Functions.GetIdentifier(src, 'license')
-    local result = exports.oxmysql:executeSync('SELECT * FROM bans WHERE license = ?', { plicense })
-    if result[1] then
-        if os.time() < result[1].expire then
-            retval = true
-            local timeTable = os.date('*t', tonumber(result.expire))
-            message = 'You have been banned from the server:\n' .. result[1].reason .. '\nYour ban expires ' .. timeTable.day .. '/' .. timeTable.month .. '/' .. timeTable.year .. ' ' .. timeTable.hour .. ':' .. timeTable.min .. '\n'
-        else
-            exports.oxmysql:execute('DELETE FROM bans WHERE id = ?', { result[1].id })
-        end
-    end
-    return retval, message
-end
-
--- Check for duplicate license
-
-function QBCore.Functions.IsLicenseInUse(license)
-    local players = GetPlayers()
-    for _, player in pairs(players) do
-        local identifiers = GetPlayerIdentifiers(player)
-        for _, id in pairs(identifiers) do
-            if string.find(id, 'license') then
-                local playerLicense = id
-                if playerLicense == license then
-                    return true
-                end
-            end
-        end
-    end
-    return false
 end
