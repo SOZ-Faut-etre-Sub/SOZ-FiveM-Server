@@ -20,6 +20,7 @@ RegisterServerEvent("lsmc:server:revive")
 AddEventHandler("lsmc:server:revive", function(id)
     local Player = QBCore.Functions.GetPlayer(tonumber(id))
     TriggerClientEvent("soz_ems:client:revive", Player.PlayerData.source)
+    Player.Functions.SetMetaData("isdead", false)
 end)
 
 RegisterServerEvent("lsmc:server:GiveBlood")

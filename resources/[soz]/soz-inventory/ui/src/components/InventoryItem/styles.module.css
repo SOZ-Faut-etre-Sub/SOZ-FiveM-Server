@@ -1,0 +1,36 @@
+.item {
+    display: flex;
+    font-weight: 300;
+    color: white;
+    padding: .4rem 1em;
+    margin-bottom: .2rem;
+    border-radius: .3rem;
+    cursor: grab;
+    background: rgba(255, 255, 255, .10);
+}
+
+.item:hover {
+    background: rgba(255, 255, 255, .25);
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: .5rem;
+    margin-top: .2rem;
+}
+
+.inv-item:hover .tooltip {
+    visibility: visible;
+}
+
+.tooltip {
+    position: absolute;
+    visibility: hidden;
+    background: rgba(0, 0, 0, .6);
+    color: #fff;
+    padding: .5rem .8rem;
+    margin: .5rem 0 0 .5rem;
+    border-radius: 6px;
+    max-width: 18vw;
+}

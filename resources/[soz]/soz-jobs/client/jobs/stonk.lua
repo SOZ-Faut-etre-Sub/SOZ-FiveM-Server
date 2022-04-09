@@ -176,20 +176,9 @@ end
 
 StonkJob.Permissions.CanBagsBeCollected = function(shopId)
     local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.CollectBags)
-    print("HJP", hasJobPermission)
 
     if hasJobPermission then
-        local shop = StonkJob.CollectedShops[shopId]
-        if not shop then
-            return isOnDuty()
-        end
-
-        local remainingBags = shop["remaining-bags"]
-        if type(remainingBags) == "number" and remainingBags > 0 then
-            return isOnDuty()
-        end
-
-        local lastCollect = shop["last-collection"]
+        local lastCollect = StonkJob.CollectedShops[shopId]
         if lastCollect then
             local now = GetGameTimer()
             return lastCollect + StonkConfig.Collection.Cooldown < now
@@ -211,16 +200,13 @@ exports("CanBagsBeResold", StonkJob.Permissions.CanBagsBeResold)
 --- FARM
 ---
 -- BAG COLLECTION
-local collectedBags = 0
 StonkJob.Functions.CollectBags = function(currentShop, nBags)
-    if nBags < 1 then
-        Citizen.Wait(500)
-        exports["soz-hud"]:DrawNotification(string.format("Vous avez collecté ~g~%d sacs d'argent", collectedBags))
-        StonkJob.CollectedShops[currentShop]["last-collection"] = GetGameTimer()
-        return
-    end
+    local animDict = "anim@mp_radio@garage@low"
+    QBCore.Functions.RequestAnimDict(animDict)
+    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
 
-    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez 1 sac d'argent", StonkConfig.Collection.Duration, false, true,
+    local duration = StonkConfig.Collection.Duration * nBags
+    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez des sacs d'argent", duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = false,
@@ -228,44 +214,36 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            TriggerServerEvent("soz-jobs:server:stonk-collect-bag", currentShop)
-            collectedBags = collectedBags + 1
-            local remaining = nBags - 1
-            StonkJob.CollectedShops[currentShop]["remaining-bags"] = remaining
-            StonkJob.Functions.CollectBags(currentShop, remaining)
+            QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-collect-bag", function(success)
+                if success then
+                    StonkJob.CollectedShops[currentShop] = GetGameTimer()
+                end
+            end, nBags)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
+        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
 AddEventHandler("soz-jobs:client:stonk-collect-bag", function()
     Citizen.CreateThread(function()
         local currentShop = exports["soz-shops"]:GetCurrentShop()
-
-        local nBags
-
-        local shop = StonkJob.CollectedShops[currentShop]
-        if shop then
-            if type(shop["remaining-bags"]) == "number" and shop["remaining-bags"] > 0 then
-                nBags = shop["remaining-bags"]
-            end
-        else
-            StonkJob.CollectedShops[currentShop] = {}
-        end
-
-        if not nBags then
-            local range = StonkConfig.Collection.Range
-            nBags = math.random(range.min, range.max)
-        end
-
-        StonkJob.CollectedShops[currentShop]["remaining-bags"] = nBags
-        collectedBags = 0
+        local range = StonkConfig.Collection.Range
+        local nBags = math.random(range.min, range.max)
         StonkJob.Functions.CollectBags(currentShop, nBags)
     end)
 end)
 
 -- BAG RESALE
+StonkJob.Functions.GetItemCountFromInventory = function()
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == StonkConfig.Collection.BagItem then
+            return item.amount
+        end
+    end
+end
+
 local playerInsideZone = false
 Citizen.CreateThread(function()
     local ResaleZone = BoxZone:Create(vector3(-20.78, -709.35, 39.73), 224.0, 14.5, {
@@ -296,24 +274,20 @@ Citizen.CreateThread(function()
     end
 end)
 
-local bagsSold = 0
 StonkJob.Functions.ResaleBags = function()
-
-    local function DisplayBagsSold(count)
-        exports["soz-hud"]:DrawNotification(string.format("~g~Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+    local count = StonkJob.Functions.GetItemCountFromInventory()
+    if not count or count < 1 then
+        exports["soz-hud"]:DrawNotification("Vous n'avez pas de sacs d'argent sur vous", "error")
+        return
+    elseif count >= StonkConfig.Resale.Quantity then
+        count = StonkConfig.Resale.Quantity
     end
 
-    if not QBCore.Functions.HasItem(StonkConfig.Collection.BagItem) then
-        if bagsSold > 0 then
-            DisplayBagsSold(bagsSold)
-            return
-        else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas de sacs d'argent sur vous", "error")
-            return
-        end
-    end
+    local animDict = "anim@mp_radio@garage@low"
+    QBCore.Functions.RequestAnimDict(animDict)
+    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
 
-    QBCore.Functions.Progressbar("stonk-resale-bag", "Vous déposez 1 sac d'argent", StonkConfig.Resale.Duration, false, true,
+    QBCore.Functions.Progressbar("stonk-resale-bag", string.format("Vous déposez %d sacs d'argent", count), StonkConfig.Resale.Duration * count, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = false,
@@ -321,20 +295,21 @@ StonkJob.Functions.ResaleBags = function()
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            TriggerServerEvent("soz-jobs:server:stonk-resale-bag")
-            bagsSold = bagsSold + 1
-            StonkJob.Functions.ResaleBags()
+            Citizen.CreateThread(function()
+                TriggerServerEvent("soz-jobs:server:stonk-resale-bag", count)
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+                Citizen.Wait(1000)
+                StonkJob.Functions.ResaleBags()
+            end)
         else
-            if bagsSold > 0 then
-                DisplayBagsSold(bagsSold)
-            else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
-            end
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
         end
+        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
 AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
-    bagsSold = 0
-    StonkJob.Functions.ResaleBags()
+    Citizen.CreateThread(function()
+        StonkJob.Functions.ResaleBags()
+    end)
 end)

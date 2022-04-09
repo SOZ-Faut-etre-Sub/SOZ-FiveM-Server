@@ -9,6 +9,7 @@ StonkConfig.Collection = {
 
 StonkConfig.Resale = {
     TargetEntities = {-2018598162, -735318549},
+    Quantity = 5,
     Duration = 5000, -- in ms
     Price = 100,
 }

@@ -29,9 +29,14 @@ RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
 end)
 
 RegisterNUICallback("transfertItem", function(data, cb)
-    SetNuiFocus(false, false)
-    local amount = exports["soz-hud"]:Input("Quantité", 5, data.item.amount)
-    SetNuiFocus(true, true)
+    data.item = json.decode(data.item)
+    local amount = data.item.amount
+
+    if amount > 1 then
+        SetNuiFocus(false, false)
+        amount = exports["soz-hud"]:Input("Quantité", 5, data.item.amount)
+        SetNuiFocus(true, true)
+    end
 
     if amount and tonumber(amount) then
         QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
@@ -81,20 +86,14 @@ end)
 
 RegisterNetEvent("inventory:client:qTargetOpenInventory", function(data)
     if data.storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == data.storage.owner) then
-        if data.storage.state == nil then
-            TriggerServerEvent("inventory:server:openInventory", data.storage.type, data.storageID)
-        else
-            exports["soz-hud"]:DrawNotification("Stockage déjà utilisé", "warning")
-        end
+        TriggerServerEvent("inventory:server:openInventory", data.storage.type, data.storageID)
     else
         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser ce stockage", "error")
     end
 end)
 
-RegisterNetEvent("inventory:client:updateStorageState", function(name, state)
-    if Config.Storages[name] then
-        Config.Storages[name].state = state
-    end
+RegisterNetEvent("inventory:client:updateTargetStoragesState", function(targetInventory)
+    SendNUIMessage({action = "updateInventory", targetInventory = targetInventory})
 end)
 
 CreateThread(function()
