@@ -6,3 +6,9 @@ FoodConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {Components = {}, Props = {}},
     [GetHashKey("mp_f_freemode_01")] = {Components = {}, Props = {}},
 }
+
+FoodConfig.Collect = {
+    Duration = 15000, -- in ms
+    Range = {min = 1, max = 3},
+    Items = {"grape"},
+}

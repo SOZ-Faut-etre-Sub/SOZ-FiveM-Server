@@ -87,3 +87,59 @@ RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
 
     FoodJob.Menu:Open()
 end)
+
+---
+--- FARM
+---
+exports["qb-target"]:AddBoxZone("food:farm", vector2(-1862.81, 2096.53), 1.0, 1.0, {
+    heading = 25.0,
+    minZ = 138.0,
+    maxZ = 140.0,
+    debugPoly = true,
+}, {
+    options = {
+        {
+            icon = "fas fa-wheat",
+            label = "Collecter des ingrédients",
+            event = "soz-jobs:client:food-collect-ingredients",
+            canInteract = function()
+                return true
+            end,
+        },
+    },
+})
+
+AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
+    Citizen.CreateThread(function()
+        local range = FoodConfig.Collect.Range
+        local count = math.random(range.min, range.max)
+        FoodJob.Functions.CollectIngredients(count)
+    end)
+end)
+
+FoodJob.Functions.CollectIngredients = function(count)
+    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous collectez des ingrédients", FoodConfig.Collect.Duration, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = false,
+    }, {}, {}, {}, function(wasCancelled)
+        if not wasCancelled then
+            QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items)
+                if next(items) then
+                    local messages = {}
+                    for itemId, n in pairs(items) do
+                        local item = QBCore.Shared.Items[itemId]
+                        table.insert(messages, string.format("%d %s", n, item.label))
+                    end
+                    local joined = table.concat(messages, ", ")
+                    exports["soz-hud"]:DrawNotification(string.format("Vous avez collectez ~g~%s", joined))
+                    TriggerEvent("soz-jobs:client:food-collect-ingredients")
+                end
+            end, count)
+        else
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté d'ingrédients", "error")
+        end
+    end)
+end
