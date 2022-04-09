@@ -4,9 +4,11 @@ import {ClUtils, config} from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
 import {SettingsEvents} from "../../typings/settings";
+import {Delay} from "../utils/fivem";
 
 // All main globals that are set and used across files
 global.isPhoneOpen = false;
+global.isPhoneDrowned = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
 
@@ -174,25 +176,18 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(
   },
 );
 
-// setTick(async () => {
-//   while (config.SwimDestroy) {
-//     await Delay(config.RunRate * 1000);
-//     if (IsPedSwimming(PlayerPedId())) {
-//       let chance = Math.floor(Math.random() * 100 + 1);
-//       if (chance <= config.DestoryChance) {
-//         countPhone((countPhone: boolean) => {
-//           if (countPhone) {
-//             ESX.ShowNotification("Your phone is ruined from the water!");
-//             destroyedPhone = true;
-//           }
-//         });
-//       }
-//       if (destroyedPhone) {
-//         await Delay(config.DestroyPhoneReCheck * 60000);
-//       }
-//     }
-//   }
-// });
+setTick(async () => {
+  const isSwimming = IsPedSwimming(PlayerPedId());
+  if (isSwimming) {
+    global.isPhoneDisabled = true;
+    global.isPhoneDrowned = true;
+    if (global.isPhoneOpen) await hidePhone();
+  } else if (!isSwimming && global.isPhoneDrowned) {
+    global.isPhoneDisabled = false;
+    global.isPhoneDrowned = false;
+  }
+  await Delay(1000);
+});
 
 // Will update the phone's time even while its open
 // setInterval(() => {

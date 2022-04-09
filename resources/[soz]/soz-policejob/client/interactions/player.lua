@@ -144,11 +144,13 @@ RegisterNetEvent("police:client:GetCuffed", function(playerId, isSoftcuff)
     end
 
     PoliceJob.Animations.GetCuffed(playerId)
+    exports["soz-phone"]:setPhoneDisabled(true)
 end)
 
 RegisterNetEvent("police:client:GetUnCuffed", function()
     ClearPedTasksImmediately(PlayerPedId())
     TriggerServerEvent("InteractSound_SV:PlayOnSource", "Uncuff", 0.2)
+    exports["soz-phone"]:setPhoneDisabled(false)
 end)
 
 --- Invoices

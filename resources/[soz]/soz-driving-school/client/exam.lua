@@ -57,6 +57,7 @@ local function getNextCheckpoint(tbl, pop)
     return cp
 end
 
+local CurrentBlip
 ---Display checkpoint, waypoint and message to player
 ---@param checkpoint table Checkpoint to be displayed
 ---@param nextCheckpoint table Following checkpoint
@@ -77,18 +78,13 @@ local function DisplayCheckpoint(checkpoint, nextCheckpoint)
     SetCheckpointCylinderHeight(cpId, cpSize, cpSize, cpSize)
 
     -- Add GPS waypoint
-    SetNewWaypoint(checkpoint.x, checkpoint.y)
+    RemoveBlip(CurrentBlip)
+    CurrentBlip = AddBlipForCoord(checkpoint.x, checkpoint.y, checkpoint.z)
+    SetBlipColour(CurrentBlip, Config.BlipColor)
+    SetBlipRoute(CurrentBlip, true)
+    SetBlipRouteColour(CurrentBlip, Config.BlipColor)
 
     return cpId
-end
-
----Force waypoint to be displayed on minimap.
----Prevent the game from removing waypoint when player is nearby.
-local function ForceWaypointDisplay(x, y)
-    if not IsWaypointActive() then
-        SetNewWaypoint(x, y)
-        SetMinimapBlockWaypoint(true)
-    end
 end
 
 ---Run thread responsible for driving exam
@@ -147,8 +143,7 @@ local function startExamLoop(licenseType, context)
             -- Player distance to current checkpoint
             local dist = #(vector3(checkpoint.x, checkpoint.y, checkpoint.z) - playerCoords)
 
-            -- Force Waypoint display
-            ForceWaypointDisplay(checkpoint.x, checkpoint.y)
+            -- Force Radar display
             DisplayRadar(true)
 
             -- On checkpoint entered
@@ -277,8 +272,7 @@ function TerminateExam(isSuccess, licenseType)
 
     HandleVehicleAndPed(isSuccess, instructorEntity, vehicleEntity)
     CleanUpPenaltySystem()
-    DeleteWaypoint()
-    SetMinimapBlockWaypoint(false)
+    RemoveBlip(CurrentBlip)
     passingExam = false
     DisplayRadar(false)
 

@@ -45,3 +45,13 @@ Config.Storages["lspd_storage"] = {
     heading = 160,
     offsetUpZ = 2.5,
 }
+
+Config.Storages["lspd_ammo"] = {
+    label = "Munition LSPD",
+    type = "ammo",
+    owner = "lspd",
+    position = vector3(608.31, -6.02, 76.63),
+    size = vec2(0.6, 2.8),
+    heading = 350,
+    offsetUpZ = 2.0,
+}
