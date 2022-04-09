@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
 end)
 
 ---
---- MENU
+--- MENUS
 ---
 RegisterNetEvent("jobs:client:food:OpenSocietyMenu", function()
     FoodJob.Menu:ClearItems()
@@ -84,6 +84,46 @@ RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
             TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", FoodConfig.Cloakroom[PlayerData.skin.Model.Hash])
         end,
     })
+
+    FoodJob.Menu:Open()
+end)
+
+local function GenerateSubmenu(parent, recipes)
+    local submenu = MenuV:InheritMenu(parent)
+
+    for itemId, recipe in pairs(recipes) do
+        local item = QBCore.Shared.Items[itemId]
+        submenu:AddButton({
+            icon = recipe.icon,
+            label = item.label,
+            value = itemId,
+            select = function()
+                TriggerEvent("soz-jobs:client:food-craft", itemId)
+                submenu:Close()
+                parent:Close()
+            end,
+        })
+    end
+
+    return submenu
+end
+
+RegisterNetEvent("jobs:client:food:OpenCraftingMenu", function()
+    FoodJob.Menu:ClearItems()
+
+    local recipesByCat = {}
+    for itemId, recipe in pairs(FoodConfig.Recipes) do
+        if recipesByCat[recipe.category] == nil then
+            recipesByCat[recipe.category] = {[itemId] = recipe}
+        else
+            recipesByCat[recipe.category][itemId] = recipe
+        end
+    end
+    for catId, recipes in pairs(recipesByCat) do
+        local category = FoodConfig.Categories[catId]
+        local submenu = GenerateSubmenu(FoodJob.Menu, recipes)
+        FoodJob.Menu:AddButton({icon = category.icon, label = category.label, value = submenu})
+    end
 
     FoodJob.Menu:Open()
 end)
@@ -143,3 +183,14 @@ FoodJob.Functions.CollectIngredients = function(count)
         end
     end)
 end
+
+exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.5, 2069.21), 1.0, 2.0, {
+    heading = 250.0,
+    minZ = 141.0,
+    maxZ = 140.0,
+    debugPoly = true,
+}, {options = {{icon = "fas fa-box", label = "Cuisiner", event = "jobs:client:food:OpenCraftingMenu"}}})
+
+AddEventHandler("soz-jobs:client:food-craft", function(itemId)
+    print("CRAFTING", itemId)
+end)
