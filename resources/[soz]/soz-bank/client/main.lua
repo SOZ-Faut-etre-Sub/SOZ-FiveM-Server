@@ -32,11 +32,15 @@ CreateThread(function()
                 scenario = "WORLD_HUMAN_CLIPBOARD",
                 target = {
                     options = {
-                        {event = "banking:openBankScreen", icon = "fas fa-money-check", label = "Accéder au compte"},
                         {
+                            label = "Compte Personnel",
+                            icon = "c:bank/compte_personal.png",
+                            event = "banking:openBankScreen",
+                        },
+                        {
+                            label = "Compte Société",
+                            icon = "c:bank/compte_societe.png",
                             event = "banking:openSocietyBankScreen",
-                            icon = "fas fa-money-check",
-                            label = "Accéder au compte Société",
                             canInteract = function(entity, distance, data)
                                 return PlayerData.job.isboss and isInsideBankZone
                             end,
@@ -49,7 +53,7 @@ CreateThread(function()
     end
 
     exports["qb-target"]:AddTargetModel(Config.ATMModels, {
-        options = {{event = "banking:openATMScreen", icon = "fas fa-money-check", label = "Accéder au compte"}},
+        options = {{event = "banking:openATMScreen", icon = "c:bank/compte_personal.png", label = "Compte Personnel"}},
         distance = 1.0,
     })
 end)
@@ -134,8 +138,8 @@ CreateThread(function()
         }, {
             options = {
                 {
-                    label = "Ouvrir le coffre",
-                    icon = "fas fa-wallet",
+                    label = "Ouvrir",
+                    icon = "c:bank/compte_safe.png",
                     event = "banking:client:qTargetOpenSafe",
                     SafeId = id,
                     safe = safe,
