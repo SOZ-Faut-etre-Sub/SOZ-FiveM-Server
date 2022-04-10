@@ -91,10 +91,10 @@ end)
 local function GenerateSubmenu(parent, recipes)
     local submenu = MenuV:InheritMenu(parent)
 
-    for itemId, recipe in pairs(recipes) do
+    for itemId, _ in pairs(recipes) do
         local item = QBCore.Shared.Items[itemId]
         submenu:AddButton({
-            icon = recipe.icon,
+            icon = "https://nui-img/soz-items/" .. item.name,
             label = item.label,
             value = itemId,
             select = function()
