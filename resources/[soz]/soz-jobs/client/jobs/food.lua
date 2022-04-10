@@ -98,7 +98,7 @@ local function GenerateSubmenu(parent, recipes)
             label = item.label,
             value = itemId,
             select = function()
-                TriggerEvent("soz-jobs:client:food-craft", itemId)
+                TriggerEvent("soz-jobs:client:food-craft-item", itemId)
                 submenu:Close()
                 parent:Close()
             end,
@@ -191,6 +191,44 @@ exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.5, 2069.21), 1.0, 2.
     debugPoly = true,
 }, {options = {{icon = "fas fa-box", label = "Cuisiner", event = "jobs:client:food:OpenCraftingMenu"}}})
 
-AddEventHandler("soz-jobs:client:food-craft", function(itemId)
-    print("CRAFTING", itemId)
+FoodJob.Functions.CraftItem = function(itemId, item)
+    Citizen.CreateThread(function()
+        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Duration, false, true,
+                                     {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = false,
+        }, {}, {}, {}, function(wasCancelled)
+            if not wasCancelled then
+                QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
+                    if success then
+                        exports["soz-hud"]:DrawNotification(string.format("Vous avez préparer ~g~1 %s", item.label))
+                        Citizen.Wait(1000)
+                        FoodJob.Functions.CraftItem(itemId, item)
+                    else
+                        if reason == nil then
+                            return
+                        elseif reason == "invalid_ingredient" then
+                            exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients...", "error")
+                        else
+                            exports["soz-hud"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason),
+                                                                "error")
+                        end
+                    end
+                end, itemId)
+            else
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas terminé votre préparation", "error")
+            end
+        end)
+    end)
+end
+
+AddEventHandler("soz-jobs:client:food-craft-item", function(itemId)
+    local item = QBCore.Shared.Items[itemId]
+    if item == nil then
+        return item
+    end
+
+    FoodJob.Functions.CraftItem(itemId, item)
 end)
