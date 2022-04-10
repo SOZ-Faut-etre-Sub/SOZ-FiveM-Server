@@ -55,8 +55,8 @@ local Elevators = {
 ---@param elevatorData table Current elevator data
 local function CreateTargetOptions(elevatorData)
     local directions = {
-        ["up"] = {field = "upTo", label = "Monter vers %s", icon = "fas fa-arrow-up"},
-        ["down"] = {field = "downTo", label = "Descendre vers %s", icon = "fas fa-arrow-down"},
+        ["up"] = {field = "upTo", label = "Monter %s", icon = "c:elevators/monter.png"},
+        ["down"] = {field = "downTo", label = "Descendre %s", icon = "c:elevators/descendre.png"},
     }
 
     local options = {}
