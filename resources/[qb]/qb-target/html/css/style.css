@@ -1,58 +1,99 @@
+:root {
+  --item-color: 163
+}
+
 body {
   overflow: hidden;
 }
 
-#target-eye {
+#app {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  top: calc(50% - 130px);
+  left: calc(50% - 130px);
+}
+
+#target-pointer {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  font-size: 3vh;
-  text-shadow: 0.1vh 0.1vh 0.1vh #000000;
+  font-size: 2vh;
+  text-shadow: 0.1vh 0.1vh 0.1vh rgba(0, 0, 0, .2);
+  z-index: 10;
 }
 
-#target-label-wrapper {
+#target-wrapper {
   position: absolute;
+  top: calc(50% - 1.5rem);
+  left: calc(50% - 1.5rem);
+  z-index: 1;
+}
+
+/* Items */
+.target-item {
+  position: absolute;
+  background: linear-gradient(45deg, hsla(var(--item-color), 88%, 20%, .8) 0%, hsla(var(--item-color), 88%, 35%, .8) 100%);
+  color: #fff;
+  border-radius: 50%;
+  padding: 15px;
+  width: 2.9rem;
+  height: 2.9rem;
+  font-size: 1.5rem;
   display: flex;
-  align-content: center;
   justify-content: center;
-  flex-direction: row;
-  left: 52vw;
-  width: fit-content;
-  height: 100%;
-  top: 43vh;
-}
-
-#target-label {
-  list-style: none;
-  font-size: 1.3vh;
-  font-weight: bold;
-  font-family: sans-serif;
-  color: white;
-  user-select: none;
-  white-space: nowrap;
-  text-shadow: 0.1vh 0.1vh 0.1vh #000000;
-}
-
-#target-label > div:hover {
-  transform: translateX(8%);
-  transition: all 0.8s ease-in-out;
-}
-
-#target-label > div {
-  background: linear-gradient(to right, rgba(0, 0, 0, .5) 40%, rgba(0, 0, 0, 0) 100%);
-
-  border-bottom-style: solid;
-  border-width: .1rem;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .7) 30%, rgba(0, 0, 0, 0) 100%);
-
-  border-top-left-radius: .3rem;
-  border-bottom-left-radius: .3rem;
-  padding: .5rem 1rem;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 0 10px hsla(var(--item-color), 89%, 15%, 0.6), inset 0 0 10px hsla(var(--item-color), 88%, 20%, 0.6);
   cursor: pointer;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  will-change: left, top, opacity, background;
 }
 
-#target-label > div i {
-  padding-right: .5rem;
+.target-item:hover {
+  background: linear-gradient(45deg, hsla(var(--item-color), 88%, 20%, .9) 0%, hsla(var(--item-color), 88%, 35%, .9) 100%);
+}
+
+.target-item .icon img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Item jobs */
+.target-item.lspd {
+  --item-color: 209;
+}
+.target-item.bcso {
+  --item-color: 141;
+}
+.target-item.lsmc {
+  --item-color: 130;
+}
+
+.target-item .tooltip {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  font-size: 14px;
+  background: rgba(0, 0, 0, .4);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  text-align: center;
+  opacity: 0;
+  z-index: 10;
+}
+
+.target-item:hover .tooltip {
+  top: -2.5rem;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
