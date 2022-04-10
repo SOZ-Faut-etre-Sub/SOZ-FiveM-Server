@@ -71,8 +71,8 @@ CreateThread(function()
         }, {
             options = {
                 {
-                    label = "Ouvrir le stockage",
-                    icon = "fas fa-box-open",
+                    label = "Ouvrir",
+                    icon = "c:inventory/ouvrir_le_stockage.png",
                     event = "inventory:client:qTargetOpenInventory",
                     storageID = id,
                     storage = storage,
