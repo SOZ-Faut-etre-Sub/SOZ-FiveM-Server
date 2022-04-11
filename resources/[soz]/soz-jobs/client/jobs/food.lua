@@ -131,23 +131,35 @@ end)
 ---
 --- FARM
 ---
-exports["qb-target"]:AddBoxZone("food:farm", vector2(-1862.81, 2096.53), 1.0, 1.0, {
-    heading = 25.0,
-    minZ = 138.0,
-    maxZ = 140.0,
-    debugPoly = true,
-}, {
-    options = {
-        {
-            icon = "fas fa-wheat",
-            label = "Collecter des ingrédients",
-            event = "soz-jobs:client:food-collect-ingredients",
-            canInteract = function()
-                return true
-            end,
+Citizen.CreateThread(function()
+    exports["qb-target"]:AddBoxZone("food:farm", vector2(-1862.81, 2096.53), 1.0, 1.0, {
+        heading = 25.0,
+        minZ = 138.0,
+        maxZ = 140.0,
+        debugPoly = true,
+    }, {
+        options = {
+            {
+                icon = "c:food/collecter.png",
+                label = "Collecter",
+                event = "soz-jobs:client:food-collect-ingredients",
+                canInteract = function()
+                    return true
+                end,
+            },
         },
-    },
-})
+    })
+
+    local coords = vector4(-1882.67, 2069.31, 141.01, 245.89)
+    CreateObjectNoOffset(GetHashKey("prop_copper_pan"), coords.x, coords.y, coords.z, false, false, false)
+    exports["qb-target"]:AddBoxZone("food:craft", vector2(coords.x, coords.y), 0.75, 0.75, {
+        heading = 250.0, minZ = 141.0, maxZ = 141.5
+    }, {
+        options = {
+            {icon = "c:food/cuisiner.png", label = "Cuisiner", event = "jobs:client:food:OpenCraftingMenu"},
+        }
+    })
+end)
 
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
     Citizen.CreateThread(function()
@@ -183,13 +195,6 @@ FoodJob.Functions.CollectIngredients = function(count)
         end
     end)
 end
-
-exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.5, 2069.21), 1.0, 2.0, {
-    heading = 250.0,
-    minZ = 141.0,
-    maxZ = 140.0,
-    debugPoly = true,
-}, {options = {{icon = "fas fa-box", label = "Cuisiner", event = "jobs:client:food:OpenCraftingMenu"}}})
 
 FoodJob.Functions.CraftItem = function(itemId, item)
     Citizen.CreateThread(function()
