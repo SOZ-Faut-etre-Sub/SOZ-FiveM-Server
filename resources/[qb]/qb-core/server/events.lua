@@ -40,7 +40,7 @@ end)
 
 -- Player Connecting
 
-local function GetUserAccount(steamId)
+local function GetUserAccount(steam)
     local p = promise.new()
     local resolved = false
 
@@ -81,7 +81,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
     local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
     local status, result = pcall(function()
-        GetUserAccount(steam)
+        return GetUserAccount(steam)
     end)
 
     if not status or not result then
