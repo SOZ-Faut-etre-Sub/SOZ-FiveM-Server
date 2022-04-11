@@ -25,8 +25,6 @@ end
 function QBCore.Functions.GetSozIdentifier(source)
     local steamId = QBCore.Functions.GetIdentifier(source, 'steam')
 
-    print(json.encode(GetPlayerIdentifiers(source)))
-
     if not steamId then
         return nil
     end
