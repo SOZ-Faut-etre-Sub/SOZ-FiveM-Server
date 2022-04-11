@@ -21,6 +21,7 @@ files {
 	'data/*.lua',
 	'html/*.html',
 	'html/css/*.css',
+	'html/img/**/*.png',
 	'html/js/*.js'
 }
 

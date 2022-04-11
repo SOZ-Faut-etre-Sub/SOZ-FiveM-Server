@@ -543,9 +543,9 @@ CreateThread(function()
         options = {
             {
                 type = "client",
-                icon = "fas fa-car-crash",
+                icon = "c:mechanic/reparer.png",
                 event = "soz-bennys:client:manualrepair",
-                label = "Réparer le véhicule",
+                label = "Réparer",
                 targeticon = "fas fa-wrench",
                 action = function(entity)
                     if IsPedAPlayer(entity) then
@@ -562,9 +562,9 @@ CreateThread(function()
             },
             {
                 type = "client",
-                icon = "fas fa-car-crash",
+                icon = "c:mechanic/nettoyer.png",
                 event = "qb-carwash:client:washCar",
-                label = "Laver le véhicule",
+                label = "Laver",
                 targeticon = "fas fa-wrench",
                 action = function(entity)
                     if IsPedAPlayer(entity) then

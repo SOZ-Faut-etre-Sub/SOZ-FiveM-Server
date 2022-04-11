@@ -22,7 +22,7 @@ AddEventHandler('chatMessage', function(source, n, message)
         if QBCore.Commands.List[command] then
             local Player = QBCore.Functions.GetPlayer(src)
             if Player then
-                local isGod = QBCore.Functions.HasPermission(src, 'god')
+                local isGod = QBCore.Functions.HasPermission(src, 'admin')
                 local hasPerm = QBCore.Functions.HasPermission(src, QBCore.Commands.List[command].permission)
                 local isPrincipal = IsPlayerAceAllowed(src, 'command')
                 table.remove(args, 1)
@@ -40,54 +40,66 @@ end)
 
 -- Player Connecting
 
+local function GetUserAccount(steamId)
+    local p = promise.new()
+    local resolved = false
+
+    MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
+        if resolved then
+            return
+        end
+
+        p:resolve(result)
+        resolved = true
+    end)
+
+    Citizen.SetTimeout(1000, function()
+        resolved = true
+
+        p:reject('timeout check last mysql error')
+    end)
+
+    return Citizen.Await(p)
+end
 
 local function OnPlayerConnecting(name, setKickReason, deferrals)
     -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
     deferrals.defer()
-    Wait(0)
-    deferrals.done()
+    local steam = QBCore.Functions.GetSozIdentifier(source)
 
---     local player = source
---     local license
---     local identifiers = GetPlayerIdentifiers(player)
---     deferrals.defer()
---
---     -- mandatory wait!
---     Wait(0)
---
---     deferrals.update(string.format('Hello %s. Validating Your Rockstar License', name))
---
---     for _, v in pairs(identifiers) do
---         if string.find(v, 'license') then
---             license = v
---             break
---         end
---     end
---
---     -- mandatory wait!
---     Wait(2500)
---
---     deferrals.update(string.format('Hello %s. We are checking if you are banned.', name))
---
--- --     local isBanned, Reason = QBCore.Functions.IsPlayerBanned(player)
--- --     local isLicenseAlreadyInUse = QBCore.Functions.IsLicenseInUse(license)
---
---     Wait(2500)
---
---     deferrals.update(string.format('Welcome %s to {Server Name}.', name))
---
---     if not license then
---         deferrals.done('No Valid Rockstar License Found')
---     elseif isBanned then
---         deferrals.done(Reason)
---     elseif isLicenseAlreadyInUse then
---         deferrals.done('Duplicate Rockstar License Found')
---     else
---         deferrals.done()
---         Wait(1000)
---         TriggerEvent('connectqueue:playerConnect', name, setKickReason, deferrals)
---     end
---     --Add any additional defferals you may need!
+    Wait(0)
+
+    if not steam then
+        exports["soz-monitor"]:Log("ERROR", name .. ": error finding steam id for this user.", {
+            event = "playerConnecting"
+        })
+
+        deferrals.done('Impossible de recupérer votre identifiant steam, verifier que le client est bien lancé.')
+    end
+
+    local allowAnonymous = GetConvar("soz_allow_anonymous_login", "false") == "true"
+    local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
+
+    local status, result = pcall(function()
+        GetUserAccount(steam)
+    end)
+
+    if not status or not result then
+        exports["soz-monitor"]:Log("ERROR", name .. ": cannot find account for this user: '" .. json.encode(result) .. "'", {
+            steam = steam,
+            event = "playerConnecting"
+        })
+
+        if not allowAnonymous then
+            deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. steam)
+        end
+
+        QBCore.Functions.SetPermission(steam, defaultAnonymousRole)
+    else
+        QBCore.Functions.SetPermission(steam, result.role or 'user')
+    end
+
+    deferrals.done()
 end
 
 AddEventHandler('playerConnecting', OnPlayerConnecting)
@@ -96,7 +108,7 @@ AddEventHandler('playerConnecting', OnPlayerConnecting)
 
 RegisterNetEvent('QBCore:server:CloseServer', function(reason)
     local src = source
-    if QBCore.Functions.HasPermission(src, 'admin') or QBCore.Functions.HasPermission(src, 'god') then
+    if QBCore.Functions.HasPermission(src, 'admin') then
         local reason = reason or 'No reason specified'
         QBCore.Config.Server.closed = true
         QBCore.Config.Server.closedReason = reason
@@ -107,7 +119,7 @@ end)
 
 RegisterNetEvent('QBCore:server:OpenServer', function()
     local src = source
-    if QBCore.Functions.HasPermission(src, 'admin') or QBCore.Functions.HasPermission(src, 'god') then
+    if QBCore.Functions.HasPermission(src, 'admin') then
         QBCore.Config.Server.closed = false
     else
         QBCore.Functions.Kick(src, 'You don\'t have permissions for this..', nil, nil)
@@ -208,7 +220,7 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
     if QBCore.Commands.List[command] then
         local Player = QBCore.Functions.GetPlayer(src)
         if Player then
-            local isGod = QBCore.Functions.HasPermission(src, 'god')
+            local isGod = QBCore.Functions.HasPermission(src, 'admin')
             local hasPerm = QBCore.Functions.HasPermission(src, QBCore.Commands.List[command].permission)
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
             if (QBCore.Commands.List[command].permission == Player.PlayerData.job.id) or isGod or hasPerm or isPrincipal then
