@@ -6,6 +6,10 @@ Config.Locations = {}
 if IsDuplicityVersion() then
     Config.CharacterComponentList = {}
     Config.CharacterComponentColors = {}
+
+    function GetLabelText(label)
+        return label
+    end
 else
     Config.CharacterComponentList = exports["soz-character"]:GetLabels()
     Config.CharacterComponentColors = exports["soz-character"]:GetColors()

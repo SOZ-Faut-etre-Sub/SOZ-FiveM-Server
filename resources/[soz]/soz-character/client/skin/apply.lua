@@ -108,11 +108,11 @@ local function Clone(obj)
 end
 
 function MergeClothSet(base, override)
-    for componentId, component in pairs(override.Components) do
+    for componentId, component in pairs(override.Components or {}) do
         base.Components[tonumber(componentId)] = Clone(component)
     end
 
-    for propId, prop in pairs(override.Props) do
+    for propId, prop in pairs(override.Props or {}) do
         base.Props[tonumber(propId)] = Clone(prop)
     end
 
