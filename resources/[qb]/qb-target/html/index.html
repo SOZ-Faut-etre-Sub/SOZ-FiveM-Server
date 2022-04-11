@@ -28,11 +28,9 @@
 </head>
 
 <body>
-    <div id="target-wrapper">
-        <q-icon id="target-eye" :name="CurrentIcon" v-show="Show" :style="TargetEyeStyleObject"></q-icon>
-        <div id="target-label-wrapper">
-            <div id="target-label" v-html="TargetHTML"></div>
-        </div>
+    <div id="app">
+        <q-icon id="target-pointer" :name="CurrentIcon" v-show="Show" :style="TargetEyeStyleObject"></q-icon>
+        <div id="target-wrapper" v-html="TargetHTML"></div>
     </div>
 </body>
 

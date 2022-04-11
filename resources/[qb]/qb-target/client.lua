@@ -125,7 +125,8 @@ local function CheckEntity(hit, datatable, entity, distance)
 				sendData[slot].entity = entity
 				nuiData[slot] = {
 					icon = data.icon,
-					label = data.label
+					label = data.label,
+					color = data.color,
 				}
 				sendDistance[data.distance] = true
 			else sendDistance[data.distance] = false end
@@ -256,7 +257,8 @@ local function EnableTarget()
 										sendData[slot].entity = entity
 										nuiData[slot] = {
 											icon = data.icon,
-											label = data.label
+											label = data.label,
+											color = data.color,
 										}
 										sendDistance[data.distance] = true
 									else sendDistance[data.distance] = false end
@@ -340,7 +342,8 @@ local function EnableTarget()
 								sendData[slot].entity = entity
 								nuiData[slot] = {
 									icon = data.icon,
-									label = data.label
+									label = data.label,
+									color = data.color,
 								}
 							end
 						end
