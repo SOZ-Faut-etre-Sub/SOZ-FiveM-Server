@@ -12,6 +12,8 @@ local function getItemPrice(product, productID, Player)
         end
     elseif product == "barber" or product == "jewelry" then
         return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].price
+    elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
+        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Price
     else
         return Config.Products[product][productID].price
     end
@@ -29,7 +31,8 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
         local item = Config.Products[product][productID]
         local price = getItemPrice(product, productID, Player) * amount
 
-        if product ~= "tattoo" and product ~= "barber" and product ~= "jewelry" and item.amount < amount then
+        if product ~= "tattoo" and product ~= "barber" and product ~= "jewelry" and product ~= "ponsonbys" and product ~= "suburban" and product ~= "binco" and
+            item.amount < amount then
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
             return
         end
@@ -67,6 +70,20 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
 
                 Player.Functions.SetSkin(skin)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
+            elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
+                local clothConfig = Player.PlayerData.cloth_config
+                local clothItem =
+                    Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Items[productID.item]
+
+                for componentId, component in pairs(clothItem.Components or {}) do
+                    clothConfig["BaseClothSet"].Components[tonumber(componentId)] = {}
+                    clothConfig["BaseClothSet"].Components[tonumber(componentId)].Drawable = tonumber(component.Drawable)
+                    clothConfig["BaseClothSet"].Components[tonumber(componentId)].Texture = tonumber(component.Texture)
+                    clothConfig["BaseClothSet"].Components[tonumber(componentId)].Palette = tonumber(component.Palette)
+                end
+
+                Player.Functions.SetClothConfig(clothConfig, true)
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté de tenue pour ~g~$%s"):format(price))
             else
                 exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
                     if success then

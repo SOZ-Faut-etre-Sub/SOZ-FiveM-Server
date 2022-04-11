@@ -335,7 +335,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.SetClothConfig = function(config, skipApply)
-        self.PlayerData.clothConfig = config
+        self.PlayerData.cloth_config = config
         self.Functions.UpdatePlayerData(true)
 
         if not skipApply then
