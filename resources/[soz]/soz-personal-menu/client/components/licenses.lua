@@ -1,18 +1,19 @@
+local selectedCheckbox = nil
 local isShowingAround = false
 local showingTo = {}
 
-local function UpdateLicenseMenu(identitySubmenu, showingAround)
-    isShowingAround = showingAround
+local function UpdateLicenseMenu(identitySubmenu, checkbox, showingAround)
     identitySubmenu:Close()
     identitySubmenu:ClearItems()
-    GenerateLicenseMenu(identitySubmenu, isShowingAround)
+    GenerateLicenseMenu(identitySubmenu, checkbox, showingAround)
     identitySubmenu:Open()
 end
 
-function GenerateLicenseMenu(identitySubmenu, showingAround)
-    local sliders = {
-        {label = "Ma carte d'identité", event = "soz-identity:client:request-identity-data"},
-        {label = "Mes permis", event = "soz-identity:client:request-licenses-data"},
+function GenerateLicenseMenu(identitySubmenu, selectedCheckbox, showingAround)
+    local actions = {["see"] = "Voir", ["show"] = "Montrer"}
+    local checkboxes = {
+        ["identity"] = {label = "carte d'identité", event = "soz-identity:client:request-identity-data"},
+        ["licenses"] = {label = "permis", event = "soz-identity:client:request-licenses-data"},
     }
 
     local description = nil
@@ -22,48 +23,71 @@ function GenerateLicenseMenu(identitySubmenu, showingAround)
         hideLabel = "Arrêter de montrer vos papiers"
     end
 
-    -- SLIDERS (identity + licenses)
-    for _, data in ipairs(sliders) do
-        local slider = identitySubmenu:AddSlider({
-            label = data.label,
-            description = description,
-            values = {{label = "Voir", value = "see"}, {label = "Montrer", value = "show"}},
-        })
+    for scope, checkbox in pairs(checkboxes) do
+        for action, actionLabel in pairs(actions) do
+            local box = identitySubmenu:AddCheckbox({
+                label = string.format("%s %s", actionLabel, checkbox.label),
+                description = description,
+                value = scope == selectedCheckbox and action == "show",
+            })
 
-        slider:On("select", function(_, value)
-            if value == "see" then
-                TriggerEvent(data.event, QBCore.Functions.GetPlayerData().source, value)
+            box:On("change", function(_, checked)
+                -- SEE & SHOW
+                if checked then
+                    selectedCheckbox = scope
 
-            elseif value == "show" then
-                local coords = GetEntityCoords(PlayerPedId())
-                local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 4.0)
+                    if action == "see" then
+                        TriggerEvent(checkbox.event, QBCore.Functions.GetPlayerData().source, action)
 
-                if type(closePlayers) == "table" and #closePlayers > 1 then
-                    UpdateLicenseMenu(identitySubmenu, true)
-                    for _, player in ipairs(closePlayers) do
-                        local pid = GetPlayerServerId(player)
-                        table.insert(showingTo, pid)
-                        TriggerEvent(data.event, GetPlayerServerId(player), value)
+                    elseif action == "show" then
+                        local coords = GetEntityCoords(PlayerPedId())
+                        local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 4.0)
+
+                        if type(closePlayers) == "table" and #closePlayers > 1 then
+                            UpdateLicenseMenu(identitySubmenu, selectedCheckbox, true)
+                            for _, player in ipairs(closePlayers) do
+                                local pid = GetPlayerServerId(player)
+                                table.insert(showingTo, pid)
+                                TriggerEvent(checkbox.event, GetPlayerServerId(player), action)
+                            end
+
+                        else
+                            exports["soz-hud"]:DrawNotification("Il n'y a personne à proximité", "error", 3000)
+                            selectedCheckbox = nil
+                            UpdateLicenseMenu(identitySubmenu, selectedCheckbox, isShowingAround)
+                            return
+                        end
                     end
+
+                    -- HIDE
                 else
-                    exports["soz-hud"]:DrawNotification("Il n'y a personne à proximité", "error", 3000)
-                    return
+                    HideUI(identitySubmenu)
                 end
-            end
-        end)
+
+            end)
+        end
     end
 
     --- HIDE BUTTON
-    local hideButton = identitySubmenu:AddButton({label = hideLabel, description = description, value = "hide"})
+    identitySubmenu:AddButton({
+        label = hideLabel,
+        description = description,
+        value = "hide",
+        select = function()
+            HideUI(identitySubmenu)
+        end,
+    })
+end
 
-    hideButton:On("select", function()
-        TriggerEvent("soz-identity:client:hide")
-        if showingAround then
-            TriggerServerEvent("soz-identity:server:hide-around", showingTo)
-            UpdateLicenseMenu(identitySubmenu, false)
-            showingTo = {}
-        end
-    end)
+function HideUI(identitySubmenu)
+    TriggerEvent("soz-identity:client:hide")
+    selectedCheckbox = nil
+    if showingAround then
+        TriggerServerEvent("soz-identity:server:hide-around", showingTo)
+        isShowingAround = false
+        showingTo = {}
+    end
+    UpdateLicenseMenu(identitySubmenu, selectedCheckbox, isShowingAround)
 end
 
 function LicensesEntry(menu)
