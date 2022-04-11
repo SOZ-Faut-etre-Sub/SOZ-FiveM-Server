@@ -1,7 +1,7 @@
 local stonkAction = {
     event = "soz-jobs:client:stonk-collect-bag",
-    icon = "fas fa-dollar-sign",
-    label = "Collecter sacs d'argent",
+    icon = "c:stonk/collecter.png",
+    label = "Collecter",
     canInteract = function()
         return exports["soz-jobs"]:CanBagsBeCollected(currentShop)
     end,
