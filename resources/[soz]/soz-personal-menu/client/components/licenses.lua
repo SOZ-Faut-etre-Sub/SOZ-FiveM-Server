@@ -41,7 +41,7 @@ function GenerateLicenseMenu(identitySubmenu, selectedCheckbox, showingAround)
 
                     elseif action == "show" then
                         local coords = GetEntityCoords(PlayerPedId())
-                        local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 4.0)
+                        local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 3.0)
 
                         if type(closePlayers) == "table" and #closePlayers > 1 then
                             UpdateLicenseMenu(identitySubmenu, selectedCheckbox, true)
