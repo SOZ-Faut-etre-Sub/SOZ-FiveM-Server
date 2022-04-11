@@ -42,8 +42,8 @@ Config.Licenses = {
             networkSync = true,
         },
         price = 1,
-        icon = "fas fa-car",
-        label = "Passer le permis voiture ($%s)",
+        icon = "c:driving-school/voiture.png",
+        label = "Permis voiture ($%s)",
         points = 12,
     },
     ["truck"] = {
@@ -66,8 +66,8 @@ Config.Licenses = {
             networkSync = true,
         },
         price = 1,
-        icon = "fas fa-truck",
-        label = "Passer le permis camion ($%s)",
+        icon = "c:driving-school/camion.png",
+        label = "Permis camion ($%s)",
         points = 12,
     },
     ["motorcycle"] = {
@@ -90,8 +90,8 @@ Config.Licenses = {
             networkSync = true,
         },
         price = 1,
-        icon = "fas fa-motorcycle",
-        label = "Passer le permis moto ($%s)",
+        icon = "c:driving-school/moto.png",
+        label = "Permis moto ($%s)",
         points = 12,
     },
 }
