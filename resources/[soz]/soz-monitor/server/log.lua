@@ -4,7 +4,7 @@ local log_handler_stdout = "true"
 local log_handler_loki = ""
 local log_buffer_loki = {}
 
-Citizen.CreateThread(function ()
+Citizen.CreateThread(function()
     while true do
         log_format = GetConvar("log_format", "text")
         log_level = GetConvar("log_level", "INFO"):upper()
@@ -16,9 +16,9 @@ Citizen.CreateThread(function ()
         if #log_buffer_loki > 0 then
             PerformHttpRequest(log_handler_loki, function(status, text, headers)
                 if status ~= 204 then
-                    print("[SOZ-Monitor] Loki log handler: " .. status .. ", " ..json.encode(headers) .. ", ".. json.encode(text))
+                    print("[SOZ-Monitor] Loki log handler: " .. status .. ", " .. json.encode(headers) .. ", " .. json.encode(text))
                 end
-            end, "POST", json.encode({ streams = log_buffer_loki }), { ["Content-Type"] = "application/json" })
+            end, "POST", json.encode({streams = log_buffer_loki}), {["Content-Type"] = "application/json"})
 
             log_buffer_loki = {}
         end
@@ -65,7 +65,7 @@ local function flattenTable(prefix, data)
     end
 
     if type(data) ~= "table" then
-        return { prefix = data }
+        return {prefix = data}
     end
 
     local values = {}
@@ -96,14 +96,12 @@ local function formatLogLoki(level, message, extraData)
     local messageJson = flattenTable("", extraData or {})
     messageJson.message = message
 
-    logPayload.values = {
-        { timestamp, json.encode(messageJson) }
-    }
+    logPayload.values = {{timestamp, json.encode(messageJson)}}
 
     logPayload.stream = {}
     logPayload.stream.level = level:upper()
     logPayload.stream.emitter = GetInvokingResource() or "soz-monitor"
-    logPayload.stream.agent = 'fivem'
+    logPayload.stream.agent = "fivem"
 
     if extraData.player then
         logPayload.stream.steam = extraData.player.license or nil
