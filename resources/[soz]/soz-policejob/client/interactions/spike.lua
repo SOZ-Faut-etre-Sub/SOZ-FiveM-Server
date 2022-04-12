@@ -6,8 +6,8 @@ CreateThread(function()
     exports["qb-target"]:AddTargetModel({spikeModel}, {
         options = {
             {
-                label = "Supprimer la herse",
-                icon = "fas fa-times",
+                label = "Démonter",
+                icon = "c:jobs/demonter.png",
                 event = "police:client:RequestRemoveSpike",
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -17,8 +17,8 @@ CreateThread(function()
     exports["qb-target"]:AddTargetModel({"prop_barrier_work05"}, {
         options = {
             {
-                label = "Supprimer la barrière",
-                icon = "fas fa-times",
+                label = "Démonter",
+                icon = "c:jobs/demonter.png",
                 event = "job:client:RemoveObject",
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
