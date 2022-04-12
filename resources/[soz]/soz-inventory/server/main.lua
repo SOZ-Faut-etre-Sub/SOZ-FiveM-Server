@@ -629,3 +629,24 @@ end)
 
 _G.Inventory = Inventory
 _G.Container = {}
+
+local function GetMetrics()
+    local metrics = {}
+
+    for _, inv in pairs(Inventories) do
+        table.insert(metrics, {
+            id = inv.id,
+            label = inv.label,
+            type = inv.type,
+            slots = inv.slots,
+            weight = inv.weight,
+            maxWeight = inv.maxWeight,
+            owner = inv.owner,
+            items = inv.items or {},
+        })
+    end
+
+    return metrics
+end
+
+exports("GetMetrics", GetMetrics)
