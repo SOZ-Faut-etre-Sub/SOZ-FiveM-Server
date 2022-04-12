@@ -26,6 +26,7 @@ Citizen.CreateThread(function()
     end
 
     AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "soz_minimap", "radarmasksm")
+    AddReplaceTexture("minimap", "blips_texturesheet_ng", "soz_minimap", "blips_texturesheet_ng")
     AddReplaceTexture("minimap", "blips_texturesheet_ng_2", "soz_minimap", "blips_texturesheet_ng_2")
 
     SendNUIMessage({event = "hud_minimap_pos", data = getMapPosition()})

@@ -10,8 +10,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         name = "LSMC",
         coords = vector3(356.35, -1416.63, 32.51),
         sprite = 61,
-        color = 2,
-        scale = 0.8,
+        scale = 1.0,
     })
 end)
 
