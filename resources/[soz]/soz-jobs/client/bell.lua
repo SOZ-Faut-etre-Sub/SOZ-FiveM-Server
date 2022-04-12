@@ -4,8 +4,8 @@ CreateThread(function()
     local function callSociety(number)
         return {
             {
-                label = "Appeler une personne de la société",
-                icon = "fas fa-phone-alt",
+                label = "Biper",
+                icon = "c:jobs/biper.png",
                 event = "jobs:client:callSociety",
                 canInteract = function()
                     return lastSocietyCall + 15000 < GetGameTimer()

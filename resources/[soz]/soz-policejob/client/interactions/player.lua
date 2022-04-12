@@ -3,20 +3,20 @@ CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
-                label = "Amendes",
-                icon = "fas fa-file-invoice-dollar",
+                label = "Amender",
+                icon = "c:police/amender.png",
                 event = "police:client:InvoicePlayer",
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
-                label = "Gérer les permis",
-                icon = "far fa-id-badge",
+                label = "Permis",
+                icon = "c:police/permis.png",
                 event = "police:client:LicensePlayer",
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Fouiller",
-                icon = "fas fa-shopping-bag",
+                icon = "c:police/fouiller.png",
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
                     return IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3)
@@ -25,7 +25,7 @@ CreateThread(function()
             },
             {
                 label = "Menotter",
-                icon = "mdi mdi-handcuffs",
+                icon = "c:police/menotter.png",
                 event = "police:client:CuffPlayer",
                 item = "handcuffs",
                 canInteract = function(entity)
@@ -35,7 +35,7 @@ CreateThread(function()
             },
             {
                 label = "Démenotter",
-                icon = "fas fa-key",
+                icon = "c:police/demenotter.png",
                 event = "police:client:UnCuffPlayer",
                 item = "handcuffs_key",
                 canInteract = function(entity)
@@ -45,21 +45,11 @@ CreateThread(function()
             },
             {
                 label = "Escorter",
-                icon = "fas fa-handshake",
+                icon = "c:police/escorter.png",
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
                     return Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
-            },
-            {
-                label = "Relâcher",
-                icon = "fas fa-handshake-slash",
-                event = "police:client:RequestDeEscortPlayer",
-                canInteract = function(entity)
-                    local player, _ = QBCore.Functions.GetClosestPlayer()
-                    return Player(GetPlayerServerId(player)).state.isEscorted == true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
             },
@@ -176,15 +166,22 @@ RegisterNetEvent("police:client:RequestEscortPlayer", function()
     end
 end)
 
-RegisterNetEvent("police:client:RequestDeEscortPlayer", function()
-    local player, distance = QBCore.Functions.GetClosestPlayer()
-    if player ~= -1 and distance < 2.5 then
-        if not LocalPlayer.state.isEscorted and LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and
-            not PlayerData.metadata["inlaststand"] then
-            TriggerServerEvent("police:server:DeEscortPlayer", GetPlayerServerId(player))
+RegisterNetEvent("police:client:SetEscorting", function()
+    while LocalPlayer.state.isEscorting do
+        if IsControlJustReleased(0, 51) then
+            local player, distance = QBCore.Functions.GetClosestPlayer()
+            if player ~= -1 and distance < 2.5 then
+                if not LocalPlayer.state.isEscorted and LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
+                    not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
+                    TriggerServerEvent("police:server:DeEscortPlayer", GetPlayerServerId(player))
+                else
+                    exports["soz-hud"]:DrawNotification("Vous ne pouvez pas arrêter une personne dans un véhicule", "error")
+                end
+            else
+                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+            end
         end
-    else
-        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+        Wait(1)
     end
 end)
 

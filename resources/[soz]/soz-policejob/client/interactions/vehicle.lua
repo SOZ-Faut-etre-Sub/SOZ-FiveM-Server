@@ -4,13 +4,15 @@ CreateThread(function()
         options = {
             {
                 label = "Immatriculation",
-                icon = "fas fa-id-card",
+                color = "lspd",
+                icon = "c:police/immatriculation.png",
                 event = "police:client:getVehicleOwner",
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Fouiller",
-                icon = "fas fa-truck-loading",
+                color = "lspd",
+                icon = "c:police/fouiller_vehicle.png",
                 event = "police:client:SearchVehicle",
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },

@@ -5,19 +5,14 @@ local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_li
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
-            {
-                label = "Facture",
-                icon = "fas fa-file-invoice-dollar",
-                event = "jobs:client:news:InvoicePlayer",
-                job = "news",
-            },
+            {label = "Facturer", icon = "c:jobs/facture.png", event = "jobs:client:news:InvoicePlayer", job = "news"},
         },
         distance = 1.5,
     })
 
     exports["qb-target"]:AddTargetModel(removalObject, {
         options = {
-            {label = "Récupérer l'objet", icon = "fas fa-times", event = "job:client:RemoveObject", collect = true},
+            {label = "Récupérer", icon = "c:jobs/recuperer.png", event = "job:client:RemoveObject", collect = true},
         },
         distance = 2.5,
     })
@@ -28,12 +23,7 @@ CreateThread(function()
         maxZ = 33.5,
     }, {
         options = {
-            {
-                label = "Imprimer des journaux",
-                icon = "fas fa-print",
-                event = "jobs:client:news:farmNewspaper",
-                job = "news",
-            },
+            {label = "Imprimer", icon = "c:news/imprimer.png", event = "jobs:client:news:farmNewspaper", job = "news"},
         },
         distance = 2.5,
     })
@@ -51,12 +41,7 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
         maxZ = delivery.z + 1.5,
     }, {
         options = {
-            {
-                label = "Livrer des journaux",
-                icon = "fas fa-newspaper",
-                event = "jobs:client:news:newspaperSold",
-                job = "news",
-            },
+            {label = "Livrer", icon = "c:news/livrer.png", event = "jobs:client:news:newspaperSold", job = "news"},
         },
         distance = 2.5,
     })
