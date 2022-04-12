@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        exports['soz-monitor']:Log('INFO', 'Player left !', Player)
+        exports['soz-monitor']:Log('INFO', 'Player left !', { player = Player.PlayerData })
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
