@@ -6,14 +6,10 @@ Config.Badge = GetHashKey("prop_fib_badge")
 
 Config.Locations = {
     ["stations"] = {
-        ["LSPD"] = {
-            label = "Los Santos Police Department",
-            blip = {sprite = 60, color = 29},
-            coords = vector3(632.76, 7.31, 82.63),
-        },
+        ["LSPD"] = {label = "Los Santos Police Department", blip = {sprite = 60}, coords = vector3(632.76, 7.31, 82.63)},
         ["BCSO"] = {
             label = "Blaine Country Sheriff's Office",
-            blip = {sprite = 60, color = 21},
+            blip = {sprite = 137},
             coords = vector3(1856.15, 3681.68, 34.27),
         },
     },

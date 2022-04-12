@@ -619,3 +619,12 @@ function Clone(obj)
 
     return res
 end
+
+--- Exports
+exports("GetLabels", function()
+    return Labels
+end)
+
+exports("GetColors", function()
+    return Colors
+end)
