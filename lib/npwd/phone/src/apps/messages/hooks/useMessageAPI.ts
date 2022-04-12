@@ -84,11 +84,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                 );
 
                 if (doesConversationExist) {
-                    history.push('/messages');
-                    return addAlert({
-                        message: t('MESSAGES.FEEDBACK.MESSAGE_CONVERSATION_DUPLICATE'),
-                        type: 'error',
-                    });
+                    history.push('/messages/conversations/' + resp.data.conversation_id);
                 }
 
                 const display = getDisplayByNumber(resp.data.phoneNumber);
