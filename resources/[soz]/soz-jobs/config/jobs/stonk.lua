@@ -14,7 +14,7 @@ StonkConfig.Resale = {
     Price = 100,
 }
 
-StonkConfig.Blip = {Name = "Stonk Depository", Icon = 605, Color = 24, Coords = vector2(6.25, -709.11), Scale = 0.8}
+StonkConfig.Blip = {Name = "Stonk Depository", Icon = 605, Coords = vector2(6.25, -709.11), Scale = 1.0}
 
 StonkConfig.Accounts = {FarmAccount = "farm_stonk", SafeStorage = "safe_cash-transfer"}
 

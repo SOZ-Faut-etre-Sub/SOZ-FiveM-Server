@@ -11,8 +11,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         name = "Taxi Carl'jr",
         coords = vector3(903.59, -158.47, 75.21),
         sprite = 198,
-        color = 5,
-        scale = 0.8,
+        scale = 1.0,
     })
 end)
 

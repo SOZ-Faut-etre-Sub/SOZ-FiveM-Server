@@ -116,7 +116,7 @@ CreateThread(function()
         name = "Rogers",
         coords = vector3(-621.98, -1640.79, 25.97),
         sprite = 318,
-        color = 21,
+        scale = 1.0,
     })
 
     while true do
