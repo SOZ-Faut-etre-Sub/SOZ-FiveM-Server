@@ -2,12 +2,9 @@ import React, {useContext, useState} from 'react';
 import {Message, MessageEvents} from '@typings/messages';
 import {PictureReveal} from '@ui/components/PictureReveal';
 import {useMyPhoneNumber} from '@os/simcard/hooks/useMyPhoneNumber';
-import MessageBubbleMenu from './MessageBubbleMenu';
-import {useSetSelectedMessage} from '../../hooks/state';
 import {fetchNui} from "@utils/fetchNui";
 import {ServerPromiseResp} from "@typings/common";
 import {LocationMarkerIcon} from "@heroicons/react/solid";
-import {DotsVerticalIcon} from "@heroicons/react/outline";
 import {ThemeContext} from "../../../../styles/themeProvider";
 
 
@@ -24,15 +21,8 @@ interface MessageBubbleProps {
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
-    const [menuOpen, setMenuOpen] = useState(false);
     const {theme} = useContext(ThemeContext);
-
-    const setSelectedMessage = useSetSelectedMessage();
     const myNumber = useMyPhoneNumber();
-    const openMenu = () => {
-        setMenuOpen(true);
-        setSelectedMessage(message);
-    };
     const setWaypoint = () => {
         let position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
@@ -70,11 +60,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({message}) => {
                         <>{message.message}</>
                     )}
                 </div>
-                {isMine &&
-                    <DotsVerticalIcon className="h-5 w-5 cursor-pointer" onClick={openMenu}/>
-                }
             </div>
-            <MessageBubbleMenu open={menuOpen} handleClose={() => setMenuOpen(false)}/>
         </div>
     );
 };
