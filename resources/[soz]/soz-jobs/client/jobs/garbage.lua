@@ -6,10 +6,9 @@ CreateThread(function()
                                     {name = "garbage:cloakroom", heading = 355, minZ = 32.01, maxZ = 35.01}, {
         options = {
             {
-                targeticon = "fas fa-box",
-                icon = "fas fa-tshirt",
+                label = "S'habiller",
+                icon = "c:jobs/habiller.png",
                 event = "jobs:client:garbage:OpenCloakroomMenu",
-                label = "Se changer",
                 job = "garbage",
             },
         },
@@ -20,10 +19,9 @@ CreateThread(function()
                                     {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
         options = {
             {
-                label = "Recycler le contenu du sac",
+                label = "Recycler",
+                icon = "c:bluebird/recycler.png",
                 event = "jobs:client:garbage:processBags",
-                targeticon = "fas fa-recycle",
-                icon = "fas fa-recycle",
                 item = "garbagebag",
                 job = "garbage",
             },
