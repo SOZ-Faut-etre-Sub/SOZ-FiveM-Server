@@ -1,0 +1,542 @@
+[
+    {
+        "0": {
+            "0": {
+                "GXT": "CLO_HST_E_0_0",
+                "Localized": "Gray Earpiece"
+            }
+        },
+        "1": {
+            "0": {
+                "GXT": "CLO_HST_E_1_0",
+                "Localized": "Red Earpiece"
+            }
+        },
+        "2": {
+            "0": {
+                "GXT": "CLO_HST_E_2_0",
+                "Localized": "LCD Earpiece"
+            }
+        },
+        "3": {
+            "0": {
+                "GXT": "CLO_LXM_E_0_0",
+                "Localized": "Gold Angled Hoop (L)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_0_1",
+                "Localized": "Black Angled Hoop (L)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_0_2",
+                "Localized": "Platinum Angled Hoop (L)"
+            }
+        },
+        "4": {
+            "0": {
+                "GXT": "CLO_LXM_E_1_0",
+                "Localized": "Gold Angled Hoop (R)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_1_1",
+                "Localized": "Black Angled Hoop (R)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_1_2",
+                "Localized": "Platinum Angled Hoop (R)"
+            }
+        },
+        "5": {
+            "0": {
+                "GXT": "CLO_LXM_E_2_0",
+                "Localized": "Gold Angled Hoops"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_2_1",
+                "Localized": "Black Angled Hoops"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_2_2",
+                "Localized": "Platinum Angled Hoops"
+            }
+        },
+        "6": {
+            "0": {
+                "GXT": "CLO_LXM_E_3_0",
+                "Localized": "Gold Circle Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_3_1",
+                "Localized": "Platinum Circle Stud (L)"
+            }
+        },
+        "7": {
+            "0": {
+                "GXT": "CLO_LXM_E_4_0",
+                "Localized": "Gold Circle Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_4_1",
+                "Localized": "Platinum Circle Stud (R)"
+            }
+        },
+        "8": {
+            "0": {
+                "GXT": "CLO_LXM_E_5_0",
+                "Localized": "Gold Circle Studs"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_5_1",
+                "Localized": "Platinum Circle Studs"
+            }
+        },
+        "9": {
+            "0": {
+                "GXT": "CLO_LXM_E_6_0",
+                "Localized": "Gold Diamond Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_6_1",
+                "Localized": "Black Diamond Stud (L)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_6_2",
+                "Localized": "Platinum Diamond Stud (L)"
+            }
+        },
+        "10": {
+            "0": {
+                "GXT": "CLO_LXM_E_7_0",
+                "Localized": "Gold Diamond Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_7_1",
+                "Localized": "Black Diamond Stud (R)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_7_2",
+                "Localized": "Platinum Diamond Stud (R)"
+            }
+        },
+        "11": {
+            "0": {
+                "GXT": "CLO_LXM_E_8_0",
+                "Localized": "Gold Diamond Studs"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_8_1",
+                "Localized": "Black Diamond Studs"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_8_2",
+                "Localized": "Platinum Diamond Studs"
+            }
+        },
+        "12": {
+            "0": {
+                "GXT": "CLO_LXM_E_9_0",
+                "Localized": "Gold Pillow Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_9_1",
+                "Localized": "Black Pillow Stud (L)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_9_2",
+                "Localized": "Platinum Pillow Stud (L)"
+            }
+        },
+        "13": {
+            "0": {
+                "GXT": "CLO_LXM_E_10_0",
+                "Localized": "Gold Pillow Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_10_1",
+                "Localized": "Black Pillow Stud (R)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_10_2",
+                "Localized": "Platinum Pillow Stud (R)"
+            }
+        },
+        "14": {
+            "0": {
+                "GXT": "CLO_LXM_E_11_0",
+                "Localized": "Gold Pillow Studs"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_11_1",
+                "Localized": "Black Pillow Studs"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_11_2",
+                "Localized": "Platinum Pillow Studs"
+            }
+        },
+        "15": {
+            "0": {
+                "GXT": "CLO_LXM_E_12_0",
+                "Localized": "Gold Gem Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_12_1",
+                "Localized": "Black Gem Stud (L)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_12_2",
+                "Localized": "Platinum Gem Stud (L)"
+            }
+        },
+        "16": {
+            "0": {
+                "GXT": "CLO_LXM_E_13_0",
+                "Localized": "Gold Gem Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_13_1",
+                "Localized": "Black Gem Stud (R)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_13_2",
+                "Localized": "Platinum Gem Stud (R)"
+            }
+        },
+        "17": {
+            "0": {
+                "GXT": "CLO_LXM_E_14_0",
+                "Localized": "Gold Gem Studs"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_14_1",
+                "Localized": "Black Gem Studs"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_14_2",
+                "Localized": "Platinum Gem Studs"
+            }
+        },
+        "18": {
+            "0": {
+                "GXT": "CLO_LXM_E_24_0",
+                "Localized": "Gold Illusion Square Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_24_1",
+                "Localized": "Gold Grid Square Stud (L)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_24_2",
+                "Localized": "Gold Noir Square Stud (L)"
+            },
+            "3": {
+                "GXT": "CLO_LXM_E_24_3",
+                "Localized": "Platinum Grid Square Stud (L)"
+            },
+            "4": {
+                "GXT": "CLO_LXM_E_24_4",
+                "Localized": "Platinum Noir Square Stud (L)"
+            }
+        },
+        "19": {
+            "0": {
+                "GXT": "CLO_LXM_E_25_0",
+                "Localized": "Gold Illusion Square Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_25_1",
+                "Localized": "Gold Grid Square Stud (R)"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_25_2",
+                "Localized": "Gold Noir Square Stud (R)"
+            },
+            "3": {
+                "GXT": "CLO_LXM_E_25_3",
+                "Localized": "Platinum Grid Square Stud (R)"
+            },
+            "4": {
+                "GXT": "CLO_LXM_E_25_4",
+                "Localized": "Platinum Noir Square Stud (R)"
+            }
+        },
+        "20": {
+            "0": {
+                "GXT": "CLO_LXM_E_26_0",
+                "Localized": "Gold Illusion Square Studs"
+            },
+            "1": {
+                "GXT": "CLO_LXM_E_26_1",
+                "Localized": "Gold Grid Square Studs"
+            },
+            "2": {
+                "GXT": "CLO_LXM_E_26_2",
+                "Localized": "Gold Noir Square Studs"
+            },
+            "3": {
+                "GXT": "CLO_LXM_E_26_3",
+                "Localized": "Platinum Grid Square Studs"
+            },
+            "4": {
+                "GXT": "CLO_LXM_E_26_4",
+                "Localized": "Platinum Noir Square Studs"
+            }
+        },
+        "21": {
+            "0": {
+                "GXT": "CLO_L2M_E_15_0",
+                "Localized": "Gold SN Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_15_1",
+                "Localized": "Platinum SN Stud (L)"
+            }
+        },
+        "22": {
+            "0": {
+                "GXT": "CLO_L2M_E_16_0",
+                "Localized": "Gold SN Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_16_1",
+                "Localized": "Platinum SN Stud (R)"
+            }
+        },
+        "23": {
+            "0": {
+                "GXT": "CLO_L2M_E_17_0",
+                "Localized": "Gold SN Studs"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_17_1",
+                "Localized": "Platinum SN Studs"
+            }
+        },
+        "24": {
+            "0": {
+                "GXT": "CLO_L2M_E_18_0",
+                "Localized": "Silver Skull Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_18_1",
+                "Localized": "Gold Skull Stud (L)"
+            },
+            "2": {
+                "GXT": "CLO_L2M_E_18_2",
+                "Localized": "Black Skull Stud (L)"
+            },
+            "3": {
+                "GXT": "CLO_L2M_E_18_3",
+                "Localized": "Platinum Skull Stud (L)"
+            }
+        },
+        "25": {
+            "0": {
+                "GXT": "CLO_L2M_E_19_0",
+                "Localized": "Silver Skull Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_19_1",
+                "Localized": "Gold Skull Stud (R)"
+            },
+            "2": {
+                "GXT": "CLO_L2M_E_19_2",
+                "Localized": "Black Skull Stud (R)"
+            },
+            "3": {
+                "GXT": "CLO_L2M_E_19_3",
+                "Localized": "Platinum Skull Stud (R)"
+            }
+        },
+        "26": {
+            "0": {
+                "GXT": "CLO_L2M_E_20_0",
+                "Localized": "Silver Skull Studs"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_20_1",
+                "Localized": "Gold Skull Studs"
+            },
+            "2": {
+                "GXT": "CLO_L2M_E_20_2",
+                "Localized": "Black Skull Studs"
+            },
+            "3": {
+                "GXT": "CLO_L2M_E_20_3",
+                "Localized": "Platinum Skull Studs"
+            }
+        },
+        "27": {
+            "0": {
+                "GXT": "CLO_L2M_E_21_0",
+                "Localized": "Platinum Spike Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_21_1",
+                "Localized": "Gold Spike Stud (L)"
+            }
+        },
+        "28": {
+            "0": {
+                "GXT": "CLO_L2M_E_22_0",
+                "Localized": "Platinum Spike Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_22_1",
+                "Localized": "Gold Spike Stud (R)"
+            }
+        },
+        "29": {
+            "0": {
+                "GXT": "CLO_L2M_E_23_0",
+                "Localized": "Platinum Spike Studs"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_23_1",
+                "Localized": "Gold Spike Studs"
+            }
+        },
+        "30": {
+            "0": {
+                "GXT": "CLO_L2M_E_27_0",
+                "Localized": "Gold Onyx Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_27_1",
+                "Localized": "Black Onyx Stud (L)"
+            },
+            "2": {
+                "GXT": "CLO_L2M_E_27_2",
+                "Localized": "Platinum Onyx Stud (L)"
+            }
+        },
+        "31": {
+            "0": {
+                "GXT": "CLO_L2M_E_28_0",
+                "Localized": "Gold Onyx Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_28_1",
+                "Localized": "Black Onyx Stud (R)"
+            },
+            "2": {
+                "GXT": "CLO_L2M_E_28_2",
+                "Localized": "Platinum Onyx Stud (R)"
+            }
+        },
+        "32": {
+            "0": {
+                "GXT": "CLO_L2M_E_29_0",
+                "Localized": "Gold Onyx Studs"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_29_1",
+                "Localized": "Black Onyx Studs"
+            },
+            "2": {
+                "GXT": "CLO_L2M_E_29_2",
+                "Localized": "Platinum Onyx Studs"
+            }
+        },
+        "33": {
+            "0": {
+                "GXT": "NO_LABEL",
+                "Localized": "NULL"
+            }
+        },
+        "34": {
+            "0": {
+                "GXT": "CLO_L2M_E_30_0",
+                "Localized": "Platinum SN Bullion Stud (L)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_30_1",
+                "Localized": "Gold SN Bullion Stud (L)"
+            }
+        },
+        "35": {
+            "0": {
+                "GXT": "CLO_L2M_E_31_0",
+                "Localized": "Platinum SN Bullion Stud (R)"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_31_1",
+                "Localized": "Gold SN Bullion Stud (R)"
+            }
+        },
+        "36": {
+            "0": {
+                "GXT": "CLO_L2M_E_32_0",
+                "Localized": "Platinum SN Bullion Studs"
+            },
+            "1": {
+                "GXT": "CLO_L2M_E_32_1",
+                "Localized": "Gold SN Bullion Studs"
+            }
+        },
+        "37": {
+            "0": {
+                "GXT": "CLO_VWM_PE_0_0",
+                "Localized": "Gold Fame or Shame Mics"
+            },
+            "1": {
+                "GXT": "CLO_VWM_PE_0_1",
+                "Localized": "Silver Fame or Shame Mics"
+            }
+        },
+        "38": {
+            "0": {
+                "GXT": "CLO_VWM_PE_1_0",
+                "Localized": "Clubs Earrings"
+            },
+            "1": {
+                "GXT": "CLO_VWM_PE_1_1",
+                "Localized": "Diamonds Earrings"
+            },
+            "2": {
+                "GXT": "CLO_VWM_PE_1_2",
+                "Localized": "Hearts Earrings"
+            },
+            "3": {
+                "GXT": "CLO_VWM_PE_1_3",
+                "Localized": "Spades Earrings"
+            }
+        },
+        "39": {
+            "0": {
+                "GXT": "CLO_VWM_PE_2_0",
+                "Localized": "White Dice Earrings"
+            },
+            "1": {
+                "GXT": "CLO_VWM_PE_2_1",
+                "Localized": "Red Dice Earrings"
+            },
+            "2": {
+                "GXT": "CLO_VWM_PE_2_2",
+                "Localized": "Tan Dice Earrings"
+            },
+            "3": {
+                "GXT": "CLO_VWM_PE_2_3",
+                "Localized": "Gray Dice Earrings"
+            }
+        },
+        "40": {
+            "0": {
+                "GXT": "CLO_VWM_PE_3_0",
+                "Localized": "Black Chips Earrings"
+            },
+            "1": {
+                "GXT": "CLO_VWM_PE_3_1",
+                "Localized": "Yellow Chips Earrings"
+            },
+            "2": {
+                "GXT": "CLO_VWM_PE_3_2",
+                "Localized": "Red Chips Earrings"
+            },
+            "3": {
+                "GXT": "CLO_VWM_PE_3_3",
+                "Localized": "Pink Chips Earrings"
+            }
+        }
+    }
+]

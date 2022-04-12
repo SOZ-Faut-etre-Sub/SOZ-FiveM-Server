@@ -85,6 +85,14 @@ local function ApplyPedTattoos(ped, tattoos)
     end
 end
 
+local function ApplyPedProps(ped, skin)
+    for overlay, category in pairs(PropType) do
+        if skin[overlay] then
+            SetPedPropIndex(ped, category, skin[overlay].Drawable, skin[overlay].Texture, 2)
+        end
+    end
+end
+
 local function Clone(obj)
     if type(obj) ~= "table" then
         return obj
@@ -100,11 +108,11 @@ local function Clone(obj)
 end
 
 function MergeClothSet(base, override)
-    for componentId, component in pairs(override.Components) do
+    for componentId, component in pairs(override.Components or {}) do
         base.Components[tonumber(componentId)] = Clone(component)
     end
 
-    for propId, prop in pairs(override.Props) do
+    for propId, prop in pairs(override.Props or {}) do
         base.Props[tonumber(propId)] = Clone(prop)
     end
 
@@ -136,6 +144,7 @@ function ApplyPlayerBodySkin(playerId, bodySkin)
     ApplyPedFaceTrait(ped, bodySkin.FaceTrait)
     ApplyPedMakeup(ped, bodySkin.Makeup)
     ApplyPedTattoos(ped, bodySkin.Tattoos or {})
+    ApplyPedProps(ped, bodySkin)
 end
 
 function ClothConfigComputeToClothSet(clothConfig)
