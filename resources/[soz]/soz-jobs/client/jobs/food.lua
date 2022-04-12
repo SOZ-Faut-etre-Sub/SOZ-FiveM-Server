@@ -131,11 +131,10 @@ end)
 --- FARM
 ---
 Citizen.CreateThread(function()
-    exports["qb-target"]:AddBoxZone("food:farm", vector2(-1862.81, 2096.53), 1.0, 1.0, {
+    exports["qb-target"]:AddBoxZone("food:farm", vector2(-1860.0, 2098.38), 2.0, 8.0, {
         heading = 25.0,
-        minZ = 138.0,
+        minZ = 137.0,
         maxZ = 140.0,
-        debugPoly = true,
     }, {
         options = {
             {
