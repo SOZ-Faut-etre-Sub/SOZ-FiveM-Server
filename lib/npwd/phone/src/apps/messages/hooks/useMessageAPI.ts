@@ -18,7 +18,6 @@ import {MockConversationServerResp} from '../utils/constants';
 
 type UseMessageAPIProps = {
     sendMessage: ({conversationId, message}: PreDBMessage) => void;
-    deleteMessage: (message: Message) => void;
     addConversation: (targetNumber: string) => void;
     deleteConversation: (conversationIds: string[]) => void;
     fetchMessages: (conversationId: string, page: number) => void;
@@ -56,22 +55,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
             });
         },
         [updateLocalMessages, t, addAlert],
-    );
-
-    const deleteMessage = useCallback(
-        (message: Message) => {
-            fetchNui<ServerPromiseResp<any>>(MessageEvents.DELETE_MESSAGE, message).then((resp) => {
-                if (resp.status !== 'ok') {
-                    return addAlert({
-                        message: t('MESSAGES.FEEDBACK.DELETE_MESSAGE_FAILED'),
-                        type: 'error',
-                    });
-                }
-
-                deleteLocalMessage(message.id);
-            });
-        },
-        [deleteLocalMessage, addAlert, t],
     );
 
     const addConversation = useCallback(
@@ -179,7 +162,6 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
     return {
         sendMessage,
-        deleteMessage,
         deleteConversation,
         addConversation,
         fetchMessages,

@@ -182,18 +182,6 @@ class _MessagesService {
       });
     }
   }
-
-  async handleDeleteMessage(reqObj: PromiseRequest<Message>, resp: PromiseEventResp<void>) {
-    try {
-      await this.messagesDB.deleteMessage(reqObj.data);
-      resp({ status: 'ok' });
-    } catch (e) {
-      resp({ status: 'error', errorMsg: 'DB_ERROR' });
-      messagesLogger.error(`Failed to delete message, ${e.message}`, {
-        source: reqObj.source,
-      });
-    }
-  }
 }
 
 const MessagesService = new _MessagesService();
