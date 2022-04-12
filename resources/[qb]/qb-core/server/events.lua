@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        exports['soz-monitor']:Log('INFO', 'Player left !', Player)
+        exports['soz-monitor']:Log('INFO', 'Player left !', { player = Player.PlayerData })
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
@@ -40,7 +40,7 @@ end)
 
 -- Player Connecting
 
-local function GetUserAccount(steamId)
+local function GetUserAccount(steam)
     local p = promise.new()
     local resolved = false
 
@@ -81,7 +81,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
     local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
     local status, result = pcall(function()
-        GetUserAccount(steam)
+        return GetUserAccount(steam)
     end)
 
     if not status or not result then

@@ -25,12 +25,11 @@ end)
 CreateThread(function()
     for id, station in pairs(Config.Locations["stations"]) do
         if not QBCore.Functions.GetBlip("police_" .. id) then
-            QBCore.Functions.CreateBlip("police_" .. id,
-                                        {
+            QBCore.Functions.CreateBlip("police_" .. id, {
                 name = station.label,
                 coords = station.coords,
                 sprite = station.blip.sprite,
-                color = station.blip.color,
+                scale = 1.0,
             })
         end
     end

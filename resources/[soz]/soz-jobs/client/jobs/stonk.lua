@@ -11,7 +11,6 @@ Citizen.CreateThread(function()
         name = StonkConfig.Blip.Name,
         coords = StonkConfig.Blip.Coords,
         sprite = StonkConfig.Blip.Icon,
-        color = StonkConfig.Blip.Color,
         scale = StonkConfig.Blip.Scale,
     })
 
