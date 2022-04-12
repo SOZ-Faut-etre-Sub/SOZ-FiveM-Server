@@ -81,7 +81,7 @@ const Conversation: React.FC<IProps> = ({activeMessageGroup, messages}) => {
                             width: '100%',
                         }}
                     >
-                        <div className="flex flex-col h-[675px] overflow-y-auto">
+                        <div id="scrollableDiv" className="flex flex-col-reverse h-[675px] overflow-auto">
                             <InfiniteScroll
                                 next={handleNextPage}
                                 scrollableTarget="scrollableDiv"
