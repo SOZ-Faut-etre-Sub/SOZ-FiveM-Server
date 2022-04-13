@@ -45,6 +45,14 @@ CreateThread(function()
                                 return PlayerData.job.isboss and isInsideBankZone
                             end,
                         },
+                        {
+                            label = "Vendre",
+                            icon = "c:stonk/vendre.png",
+                            event = "soz-jobs:client:stonk-resale-bag",
+                            canInteract = function()
+                                return isInsideBankZone and exports["soz-jobs"]:CanBagsBeResold()
+                            end,
+                        },
                     },
                     distance = 2.5,
                 },
