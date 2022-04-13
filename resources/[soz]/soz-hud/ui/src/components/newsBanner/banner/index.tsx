@@ -1,9 +1,8 @@
-import {ComponentProps, FunctionalComponent} from "preact";
 import {News} from "../../../types/news";
-import {useEffect, useState} from "preact/hooks";
+import {FunctionComponent, PropsWithChildren, useEffect, useState} from "react";
 import styles from "./styles.module.css";
 
-const Banner: FunctionalComponent<ComponentProps<any>> = ({ news, onDelete }: {news: News, onDelete: any}) => {
+const Banner: FunctionComponent<PropsWithChildren<any>> = ({ news, onDelete }: {news: News, onDelete: any}) => {
     const [isClosing, setIsClosing] = useState(false);
 
     useEffect(() => {
@@ -23,13 +22,13 @@ const Banner: FunctionalComponent<ComponentProps<any>> = ({ news, onDelete }: {n
     }, []);
 
     return (
-        <div class={`${styles.news} ${styles[news.type]} ${isClosing ? styles.slideOut : styles.slideIn}`}>
-            <h3 class={styles.header}>
+        <div className={`${styles.news} ${styles[news.type]} ${isClosing ? styles.slideOut : styles.slideIn}`}>
+            <h3 className={styles.header}>
                 {/(lspd|bcso)/.test(news.type) ? 'Avis de recherche' : news.type}
             </h3>
-            <div class={styles.content}>
+            <div className={styles.content}>
                 {/(lspd|bcso)/.test(news.type) ? (
-                    <p class={styles.text}>
+                    <p className={styles.text}>
                         <p>
                             Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
                         </p>
@@ -40,9 +39,9 @@ const Banner: FunctionalComponent<ComponentProps<any>> = ({ news, onDelete }: {n
                         </p>
                     </p>
                 ) : (
-                    <div class={styles.text}>
+                    <div className={styles.text}>
                         <p>{news.message}</p>
-                        <p class={styles.reporter}>
+                        <p className={styles.reporter}>
                             Reporter: <strong>{news.reporter}</strong>
                         </p>
                     </div>

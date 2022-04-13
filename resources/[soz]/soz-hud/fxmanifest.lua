@@ -11,14 +11,12 @@ shared_script "config.lua"
 client_scripts {
     "client/utils/*.lua",
     "client/main.lua",
+    "client/modules/*.lua",
     "client/no_reticule.lua",
     "client/hud_components.lua",
-    "client/notifications.lua",
-    "client/input.lua",
     "client/compass.lua",
     "client/streetname.lua",
     "client/minimap.lua",
-    "client/news.lua",
 }
 
 dependency "qb-core"

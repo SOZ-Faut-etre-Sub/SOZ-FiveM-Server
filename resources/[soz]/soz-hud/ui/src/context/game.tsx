@@ -1,5 +1,4 @@
-import {createContext, FunctionalComponent} from "preact";
-import {useCallback, useMemo, useState} from "preact/hooks";
+import {createContext, useCallback, useMemo, useState, FunctionComponent, PropsWithChildren} from "react";
 import {Minimap} from "../types/game";
 
 export const GameContext = createContext({
@@ -7,7 +6,7 @@ export const GameContext = createContext({
     updateMinimap: (m: Minimap) => {}
 })
 
-const GameProvider: FunctionalComponent = ({children}) => {
+const GameProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) => {
     const [minimap, setMinimap] = useState<Minimap>({
         X: 0.08091666683321,
         Y: 0.88549252311906,
