@@ -254,7 +254,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log(amount > 100000 and 'FATAL' or 'WARN', 'Bank movement - Add ! ' .. amount .. '$ (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], self.PlayerData)
+            exports['soz-monitor']:Log(amount > 100000 and 'FATAL' or 'WARN', 'Bank movement - Add ! ' .. amount .. '$ (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, false)
             return true
         end
@@ -278,7 +278,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log(amount > 100000 and 'FATAL' or 'WARN', 'Bank movement - Remove ! ' .. amount .. '$ (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], self.PlayerData)
+            exports['soz-monitor']:Log(amount > 100000 and 'FATAL' or 'WARN', 'Bank movement - Remove ! ' .. amount .. '$ (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, true)
             if moneytype == 'bank' then
                 TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
@@ -298,7 +298,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log('WARN', 'Bank movement - Set ! ' .. amount .. '$ (' .. moneytype .. ') set, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], self.PlayerData)
+            exports['soz-monitor']:Log('WARN', 'Bank movement - Set ! ' .. amount .. '$ (' .. moneytype .. ') set, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
             return true
         end
         return false
@@ -320,7 +320,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         self.PlayerData.items = items
         self.Functions.UpdatePlayerData(dontUpdateChat)
 
-        exports['soz-monitor']:Log('TRACE', 'Inventory movement - Set ! items set: ' .. json.encode(items), self.PlayerData)
+        exports['soz-monitor']:Log('TRACE', 'Inventory movement - Set ! items set: ' .. json.encode(items), { player = self.PlayerData })
     end
 
     self.Functions.SetSkin = function(skin, skipApply)
@@ -331,18 +331,18 @@ function QBCore.Player.CreatePlayer(PlayerData)
             TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", self.PlayerData.source)
         end
 
-        exports['soz-monitor']:Log('TRACE', 'Update player skin ' .. json.encode(skin), self.PlayerData)
+        exports['soz-monitor']:Log('TRACE', 'Update player skin ' .. json.encode(skin), { player = self.PlayerData })
     end
 
     self.Functions.SetClothConfig = function(config, skipApply)
-        self.PlayerData.clothConfig = config
+        self.PlayerData.cloth_config = config
         self.Functions.UpdatePlayerData(true)
 
         if not skipApply then
             TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
         end
 
-        exports['soz-monitor']:Log('TRACE', 'Update player cloth config ' .. json.encode(skin), self.PlayerData)
+        exports['soz-monitor']:Log('TRACE', 'Update player cloth config ' .. json.encode(skin), { player = self.PlayerData })
     end
 
     self.Functions.GetItemByName = function(item)
@@ -429,9 +429,9 @@ function QBCore.Player.Save(source)
         })
 
         exports['soz-inventory']:CreatePlayerInventory(PlayerData)
-        exports['soz-monitor']:Log('INFO', 'Save player !', PlayerData)
+        exports['soz-monitor']:Log('INFO', 'Save player !', { player = PlayerData })
     else
-        exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', PlayerData)
+        exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })
     end
 end
 
@@ -461,10 +461,10 @@ function QBCore.Player.DeleteCharacter(source, citizenid)
         for k, v in pairs(playertables) do
             exports.oxmysql:execute('DELETE FROM ' .. v.table .. ' WHERE citizenid = ?', { citizenid })
         end
-        exports['soz-monitor']:Log('WARN', 'Character Deleted ! deleted' .. citizenid, license)
+        exports['soz-monitor']:Log('WARN', 'Character Deleted ! deleted' .. citizenid, { steam = license })
     else
         DropPlayer(src, 'You Have Been Kicked For Exploitation')
-        exports['soz-monitor']:Log('WARN', 'Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit', license)
+        exports['soz-monitor']:Log('WARN', 'Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit', { steam = license })
     end
 end
 

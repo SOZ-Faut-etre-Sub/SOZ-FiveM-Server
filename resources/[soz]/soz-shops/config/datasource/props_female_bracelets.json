@@ -1,0 +1,156 @@
+[
+    {
+        "0": {
+            "0": {
+                "GXT": "CLO_L2F_RW_0_0",
+                "Localized": "Gold Snake Cuff"
+            }
+        },
+        "1": {
+            "0": {
+                "GXT": "CLO_L2F_RW_1_0",
+                "Localized": "Gold Diamond Cuff"
+            }
+        },
+        "2": {
+            "0": {
+                "GXT": "CLO_L2F_RW_2_0",
+                "Localized": "Gold Plain Cuff"
+            }
+        },
+        "3": {
+            "0": {
+                "GXT": "CLO_L2F_RW_3_0",
+                "Localized": "Gold Le Chien Cuff"
+            }
+        },
+        "4": {
+            "0": {
+                "GXT": "CLO_L2F_RW_4_0",
+                "Localized": "Gold Detail Cuff"
+            }
+        },
+        "5": {
+            "0": {
+                "GXT": "CLO_L2F_RW_5_0",
+                "Localized": "Gold Swirl Cuff"
+            }
+        },
+        "6": {
+            "0": {
+                "GXT": "CLO_L2F_RW_6_0",
+                "Localized": "Gold Textured Cuff"
+            }
+        },
+        "7": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_0_0",
+                "Localized": "Light Wrist Chain (R)"
+            }
+        },
+        "8": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_1_0",
+                "Localized": "Chunky Wrist Chain (R)"
+            }
+        },
+        "9": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_2_0",
+                "Localized": "Square Wrist Chain (R)"
+            }
+        },
+        "10": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_3_0",
+                "Localized": "Skull Wrist Chain (R)"
+            }
+        },
+        "11": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_4_0",
+                "Localized": "Tread Wrist Chain (R)"
+            }
+        },
+        "12": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_5_0",
+                "Localized": "Gear Wrist Chains (R)"
+            }
+        },
+        "13": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_6_0",
+                "Localized": "Spiked Gauntlet (R)"
+            }
+        },
+        "14": {
+            "0": {
+                "GXT": "CLO_BIF_PRW_7_0",
+                "Localized": "Black Gauntlet (R)"
+            },
+            "1": {
+                "GXT": "CLO_BIF_PRW_7_1",
+                "Localized": "Chocolate Gauntlet (R)"
+            },
+            "2": {
+                "GXT": "CLO_BIF_PRW_7_2",
+                "Localized": "Tan Gauntlet (R)"
+            },
+            "3": {
+                "GXT": "CLO_BIF_PRW_7_3",
+                "Localized": "Ox Blood Gauntlet (R)"
+            }
+        },
+        "15": {
+            "0": {
+                "GXT": "CLO_H4F_PRW_0_0",
+                "Localized": "Blue Bangles (R)"
+            },
+            "1": {
+                "GXT": "CLO_H4F_PRW_0_1",
+                "Localized": "Red Bangles (R)"
+            },
+            "2": {
+                "GXT": "CLO_H4F_PRW_0_2",
+                "Localized": "Pink Bangles (R)"
+            },
+            "3": {
+                "GXT": "CLO_H4F_PRW_0_3",
+                "Localized": "Yellow Bangles (R)"
+            },
+            "4": {
+                "GXT": "CLO_H4F_PRW_0_4",
+                "Localized": "Orange Bangles (R)"
+            },
+            "5": {
+                "GXT": "CLO_H4F_PRW_0_5",
+                "Localized": "Green Bangles (R)"
+            },
+            "6": {
+                "GXT": "CLO_H4F_PRW_0_6",
+                "Localized": "Red & Blue Bangles (R)"
+            },
+            "7": {
+                "GXT": "CLO_H4F_PRW_0_7",
+                "Localized": "Yellow & Orange Bangles (R)"
+            },
+            "8": {
+                "GXT": "CLO_H4F_PRW_0_8",
+                "Localized": "Green & Pink Bangles (R)"
+            },
+            "9": {
+                "GXT": "CLO_H4F_PRW_0_9",
+                "Localized": "Rainbow Bangles (R)"
+            },
+            "10": {
+                "GXT": "CLO_H4F_PRW_010",
+                "Localized": "Sunset Bangles (R)"
+            },
+            "11": {
+                "GXT": "CLO_H4F_PRW_011",
+                "Localized": "Tropical Bangles (R)"
+            }
+        }
+    }
+]

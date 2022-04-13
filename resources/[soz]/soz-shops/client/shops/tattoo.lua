@@ -3,13 +3,14 @@ TattooShop = {}
 local confirmMenu, confirmItem, confirmValue = nil, nil, {}
 local cam, camVariationList, camVariationId, camVariationCoord = nil, {}, 1, nil
 
-function TattooShop.new()
-    return setmetatable({}, {
-        __index = TattooShop,
-        __tostring = function()
-            return "TattooShop"
-        end,
-    })
+function TattooShop:new(...)
+    local shop = setmetatable(ShopShell:new(...), {__index = TattooShop})
+    setmetatable(TattooShop, {__index = ShopShell})
+    return shop
+end
+
+function TattooShop:getShopProducts()
+    return Config.Products["tattoo"]
 end
 
 function TattooShop:SetupScaleform(scaleformType)
@@ -49,30 +50,17 @@ function TattooShop:SetupScaleform(scaleformType)
     return scaleform
 end
 
---- SetBanner
---- @param menu Menu
---- @param shop string
-function TattooShop:SetBanner(menu, shop)
-    menu.Texture = "menu_shop_tattoo"
-end
+function TattooShop:GenerateMenu(skipIntro)
+    shopMenu.Texture = "menu_shop_tattoo"
+    shopMenu:ClearItems()
+    shopMenu:SetSubtitle(self.label)
 
---- DisplayMenu
---- @param menu Menu
---- @param shop string
-function TattooShop:GenerateMenu(menu, shop, skipIntro)
     local gender = QBCore.Functions.GetPlayerData().charinfo.gender
-    if self:GetShopData(shop) == nil then
-        return
-    end
 
-    menu:ClearItems()
-    menu:SetSubtitle(self:GetShopData(shop).label)
-    self:SetBanner(menu, shop)
-
-    self:PreGenerateMenu(menu, shop, skipIntro)
+    self:PreGenerateMenu(skipIntro)
 
     if MenuV:IsNamespaceAvailable("shop:tattoo:confirm") then
-        confirmMenu = MenuV:CreateMenu(nil, nil, "menu_shop_tattoo", "soz", "shop:tattoo:confirm")
+        confirmMenu = MenuV:InheritMenu(shopMenu, nil, "shop:tattoo:confirm")
     end
 
     confirmMenu:ClearItems()
@@ -80,7 +68,7 @@ function TattooShop:GenerateMenu(menu, shop, skipIntro)
 
     for categoryId, category in pairs(Config.TattooCategories) do
         if MenuV:IsNamespaceAvailable("tattoo:cat:" .. categoryId) then
-            Config.TattooCategories[categoryId].menu = MenuV:InheritMenu(menu, {Subtitle = category.label}, "tattoo:cat:" .. categoryId)
+            Config.TattooCategories[categoryId].menu = MenuV:InheritMenu(shopMenu, {Subtitle = category.label}, "tattoo:cat:" .. categoryId)
         end
 
         Config.TattooCategories[categoryId].menu:ClearItems()
@@ -102,10 +90,10 @@ function TattooShop:GenerateMenu(menu, shop, skipIntro)
             self:UpdateCam()
         end)
 
-        menu:AddButton({label = category.label, value = Config.TattooCategories[categoryId].menu})
+        shopMenu:AddButton({label = category.label, value = Config.TattooCategories[categoryId].menu})
     end
 
-    for _, tattoo in pairs(self:GetShopData(shop).products) do
+    for _, tattoo in pairs(self:getShopProducts()) do
         local overlayField = gender == 0 and "HashNameMale" or "HashNameFemale"
 
         if tattoo[overlayField] ~= "" then
@@ -124,27 +112,24 @@ function TattooShop:GenerateMenu(menu, shop, skipIntro)
     end
 
     confirmItem:On("confirm", function()
-        TriggerServerEvent("shops:server:pay", shop, confirmValue, 1)
+        TriggerServerEvent("shops:server:pay", "tattoo", confirmValue, 1)
 
         MenuV:CloseAll(function()
-            self:GenerateMenu(menu, shop, true)
+            self:GenerateMenu(true)
         end)
     end)
 
-    menu:On("close", function()
+    shopMenu:On("close", function()
         self:OnMenuClose()
     end)
 
-    menu:Open()
+    shopMenu:Open()
 end
 
---- PreGenerateMenu
---- @param menu Menu
---- @param shop string
-function TattooShop:PreGenerateMenu(menu, shop, skipIntro)
-    shop = self:GetShopData(shop)
-    if skipIntro ~= true and shop.inShopCoords then
-        TaskGoStraightToCoord(PlayerPedId(), shop.inShopCoords.x, shop.inShopCoords.y, shop.inShopCoords.z, 1.0, 1000, shop.inShopCoords.w, 0.0)
+function TattooShop:PreGenerateMenu(skipIntro)
+    if skipIntro ~= true and Config.TattooLocationsInShop[currentShop] then
+        TaskGoStraightToCoord(PlayerPedId(), Config.TattooLocationsInShop[currentShop].x, Config.TattooLocationsInShop[currentShop].y,
+                              Config.TattooLocationsInShop[currentShop].z, 1.0, 1000, Config.TattooLocationsInShop[currentShop].w, 0.0)
         Wait(4000)
     end
 
@@ -156,7 +141,7 @@ function TattooShop:PreGenerateMenu(menu, shop, skipIntro)
 
     CreateThread(function()
         local sc = self:SetupScaleform("instructional_buttons")
-        while menu.IsOpen do
+        while shopMenu.IsOpen do
             DisableControlAction(0, 32, true) -- W
             DisableControlAction(0, 34, true) -- A
             DisableControlAction(0, 31, true) -- S
@@ -230,5 +215,4 @@ function TattooShop:DeleteCam()
 end
 
 --- Exports functions
-setmetatable(TattooShop, {__index = ShopShell})
-ShopContext["tattoo"] = TattooShop.new()
+ShopContext["tattoo"] = TattooShop:new("Tatoueur", "tattoo", {sprite = 75, color = 1}, "u_m_y_tattoo_01")
