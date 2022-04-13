@@ -11,7 +11,6 @@ Citizen.CreateThread(function()
         name = StonkConfig.Blip.Name,
         coords = StonkConfig.Blip.Coords,
         sprite = StonkConfig.Blip.Icon,
-        color = StonkConfig.Blip.Color,
         scale = StonkConfig.Blip.Scale,
     })
 
@@ -262,8 +261,8 @@ Citizen.CreateThread(function()
             options = {
                 {
                     event = "soz-jobs:client:stonk-resale-bag",
-                    icon = "fas fa-dollar-sign",
-                    label = "Déposer des sacs d'argent",
+                    icon = "c:stonk/vendre.png",
+                    label = "Vendre",
                     canInteract = function()
                         return playerInsideZone and StonkJob.Permissions.CanBagsBeResold()
                     end,

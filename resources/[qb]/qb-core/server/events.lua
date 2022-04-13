@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        exports['soz-monitor']:Log('INFO', 'Player left !', Player)
+        exports['soz-monitor']:Log('INFO', 'Player left !', { player = Player.PlayerData })
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
@@ -40,6 +40,27 @@ end)
 
 -- Player Connecting
 
+local function GetUserAccount(steam)
+    local p = promise.new()
+    local resolved = false
+
+    MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
+        if resolved then
+            return
+        end
+
+        p:resolve(result)
+        resolved = true
+    end)
+
+    Citizen.SetTimeout(1000, function()
+        resolved = true
+
+        p:reject('timeout check last mysql error')
+    end)
+
+    return Citizen.Await(p)
+end
 
 local function OnPlayerConnecting(name, setKickReason, deferrals)
     -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
@@ -60,7 +81,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
     local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
     local status, result = pcall(function()
-        return MySQL.single.await("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam})
+        return GetUserAccount(steam)
     end)
 
     if not status or not result then
