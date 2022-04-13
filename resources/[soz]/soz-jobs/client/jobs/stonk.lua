@@ -243,28 +243,6 @@ StonkJob.Functions.GetItemCountFromInventory = function()
     end
 end
 
-Citizen.CreateThread(function()
-    local obj = CreateObjectNoOffset(GetHashKey("prop_trailer_monitor_01"), 264.27, 213.55, 101.6, false, false, false)
-    SetEntityRotation(obj, 0.0, 0.0, 250.0, 0, false)
-
-    exports["qb-target"]:AddBoxZone("stonk:resale-pacific", vector2(264.27, 213.55), 1.0, 1.0, {
-        heading = 250.0,
-        minZ = 101.0,
-        maxZ = 102.5,
-    }, {
-        options = {
-            {
-                icon = "c:stonk/vendre.png",
-                label = "Vendre",
-                event = "soz-jobs:client:stonk-resale-bag",
-                canInteract = function()
-                    return playerInsideZone and StonkJob.Permissions.CanBagsBeResold()
-                end,
-            },
-        },
-    })
-end)
-
 StonkJob.Functions.ResaleBags = function()
     local count = StonkJob.Functions.GetItemCountFromInventory()
     if not count or count < 1 then
@@ -274,9 +252,9 @@ StonkJob.Functions.ResaleBags = function()
         count = StonkConfig.Resale.Quantity
     end
 
-    local animDict = "missheist_jewel@hacking"
+    local animDict = "anim@mp_radio@garage@low"
     QBCore.Functions.RequestAnimDict(animDict)
-    TaskPlayAnim(PlayerPedId(), animDict, "hack_loop", 8.0, 8.0, -1, 1, 1, true, false, true)
+    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
 
     QBCore.Functions.Progressbar("stonk-resale-bag", string.format("Vous déposez %d sacs d'argent", count), StonkConfig.Resale.Duration * count, false, true,
                                  {
