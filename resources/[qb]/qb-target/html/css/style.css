@@ -40,17 +40,16 @@ body {
   padding: 15px;
   width: 2.9rem;
   height: 2.9rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   box-shadow: 0 0 10px hsla(var(--item-color), 89%, 15%, 0.6), inset 0 0 10px hsla(var(--item-color), 88%, 20%, 0.6);
   cursor: pointer;
-  left: 0;
-  top: 0;
+  transform: scale(0) translateY(0) translateX(0);
   opacity: 0;
-  transition: all 0.3s ease-in-out;
+  transition: all 175ms linear;
   will-change: left, top, opacity, background;
 }
 
@@ -59,8 +58,8 @@ body {
 }
 
 .target-item .icon img {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
 /* Item jobs */
