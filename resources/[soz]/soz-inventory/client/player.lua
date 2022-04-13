@@ -147,7 +147,7 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
                 end
             end
             currentWeapon = weaponName
-        end, CurrentWeaponData)
+        end, weaponData)
     end
 end)
 
