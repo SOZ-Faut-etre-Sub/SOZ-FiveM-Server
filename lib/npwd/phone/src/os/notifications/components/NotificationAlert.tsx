@@ -6,6 +6,9 @@ import { Transition } from '@headlessui/react';
 export const NotificationAlert = () => {
     const {currentAlert} = useNotifications();
 
+    // TODO: improve notification hook
+    const isPosition = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(currentAlert?.content.toString())
+
     return (
         <Transition
             appear={true}
@@ -35,7 +38,7 @@ export const NotificationAlert = () => {
                     onClick={(e) => currentAlert?.onClickAlert(e)}
                     icon={currentAlert?.icon || undefined}
                 >
-                    {currentAlert?.content}
+                    {isPosition ? 'Destination' : currentAlert?.content}
 
                     {/*<AlertTitle>*/}
                     {/*  <Box width="282px" whiteSpace="nowrap">*/}

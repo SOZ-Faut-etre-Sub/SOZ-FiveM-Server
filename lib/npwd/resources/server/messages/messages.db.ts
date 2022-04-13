@@ -169,15 +169,6 @@ export class _MessagesDB {
     await DbInterface._rawExec(query, [conversationId, sourcePhoneNumber]);
   }
 
-  async deleteMessage(message: Message) {
-    const query = `DELETE
-                   FROM phone_messages
-                   WHERE id = ?
-                     AND conversation_id = ?`;
-
-    await DbInterface._rawExec(query, [message.id, message.conversation_id]);
-  }
-
   async doesConversationExist(
     conversationId: string,
     identifier: string,

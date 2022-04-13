@@ -8,7 +8,6 @@ import { sendMessageEvent } from '../utils/messages';
 import {RegisterNuiCB, RegisterNuiProxy} from './cl_utils';
 
 RegisterNuiProxy(MessageEvents.FETCH_MESSAGE_CONVERSATIONS);
-RegisterNuiProxy(MessageEvents.DELETE_MESSAGE);
 RegisterNuiProxy(MessageEvents.FETCH_MESSAGES);
 RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.DELETE_CONVERSATION);

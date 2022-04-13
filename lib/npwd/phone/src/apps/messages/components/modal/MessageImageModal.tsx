@@ -72,6 +72,7 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
                             onClick={() => {
                                 fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_POSITION, {}).then((resp) => {
                                     sendMessage({conversationId: messageGroupId, message: `vec2(${resp.data.x},${resp.data.y})`})
+                                    onClose()
                                 })
                             }}
                         >
@@ -85,6 +86,7 @@ export const MessageImageModal = ({isOpen, messageGroupId, onClose, image}: IPro
                                 fetchNui<ServerPromiseResp<any>>(MessageEvents.GET_DESTINATION, {}).then((resp) => {
                                     if (resp.data.x !== 0 && resp.data.y !== 0) {
                                         sendMessage({conversationId: messageGroupId, message: `vec2(${resp.data.x},${resp.data.y})`})
+                                        onClose()
                                     } else {
                                         addAlert({
                                             message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
