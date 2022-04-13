@@ -1,14 +1,13 @@
-import {ComponentProps, FunctionalComponent} from "preact";
 import style from "./style.module.css"
 import LightIndicator from "./lightIndicator";
 import FuelGauge from "./fuelGauge";
 import SpeedGauge from "./speedGauge";
-import {useCallback, useContext, useEffect} from "preact/hooks";
+import {FunctionComponent, useCallback, useContext, useEffect} from "react";
 import {VehicleDataContext} from "../../context/vehicle";
 import SeatbeltIcon from "../../assets/vehicle/seatbelt";
 import {PlayerContext} from "../../context/player";
 
-const SpeedoMeter: FunctionalComponent<ComponentProps<any>> = () => {
+const SpeedoMeter: FunctionComponent<any> = () => {
     const {inVehicle, updateInVehicle} = useContext(PlayerContext)
     const {speed, fuel, seatbelt, lightState, updateSpeed, updateFuel, updateSeatbelt, updateLightState} = useContext(VehicleDataContext)
 
@@ -39,11 +38,11 @@ const SpeedoMeter: FunctionalComponent<ComponentProps<any>> = () => {
     }, []);
 
     return (
-        <div class={style.speedometer} style={{transition: "opacity .5s", opacity: inVehicle ? 1.0 : 0.0}} >
-            <div class={`${style.seatbelt} ${seatbelt ? style.belt : style.nobelt}`}>
-                <SeatbeltIcon class={style.icon}/>
+        <div className={style.speedometer} style={{transition: "opacity .5s", opacity: inVehicle ? 1.0 : 0.0}} >
+            <div className={`${style.seatbelt} ${seatbelt ? style.belt : style.nobelt}`}>
+                <SeatbeltIcon className={style.icon}/>
             </div>
-            <div class={style.gauge}>
+            <div className={style.gauge}>
                 <SpeedGauge value={speed} />
                 <FuelGauge value={fuel} />
             </div>

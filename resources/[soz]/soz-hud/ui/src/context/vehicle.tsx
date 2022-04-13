@@ -1,5 +1,4 @@
-import {createContext, FunctionalComponent} from "preact";
-import {useCallback, useMemo, useState} from "preact/hooks";
+import {createContext, useCallback, useMemo, useState, FunctionComponent, PropsWithChildren} from "react";
 
 export const VehicleDataContext = createContext({
     speed: 0,
@@ -12,7 +11,7 @@ export const VehicleDataContext = createContext({
     updateLightState: (l: number) => {}
 })
 
-const VehicleDataProvider: FunctionalComponent = ({children}) => {
+const VehicleDataProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) => {
     const [speed, setSpeed] = useState<number>(0)
     const [fuel, setFuel] = useState<number>(0)
     const [seatbelt, setSeatbelt] = useState<boolean>(false)
