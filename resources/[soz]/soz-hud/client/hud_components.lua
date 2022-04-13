@@ -2,7 +2,6 @@ CreateThread(function()
     -- https://docs.fivem.net/natives/?_0x6806C51AD12B83B8
     while true do
         HideHudComponentThisFrame(1) -- 1 : WANTED_STARS
-        HideHudComponentThisFrame(2) -- 2 : WEAPON_ICON
         HideHudComponentThisFrame(3) -- 3 : CASH
         HideHudComponentThisFrame(4) -- 4 : MP_CASH
         HideHudComponentThisFrame(7) -- 7 : AREA_NAME
