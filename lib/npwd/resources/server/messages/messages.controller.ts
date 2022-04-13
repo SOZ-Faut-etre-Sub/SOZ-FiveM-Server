@@ -66,15 +66,6 @@ onNetPromise<{ conversationsId: string[] }, void>(
   },
 );
 
-onNetPromise<Message, void>(MessageEvents.DELETE_MESSAGE, async (reqObj, resp) => {
-  MessagesService.handleDeleteMessage(reqObj, resp).catch((e) => {
-    messagesLogger.error(
-      `Error occurred while deleting message (${reqObj.source}), Error: ${e.message}`,
-    );
-    resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
-  });
-});
-
 onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
   const src = getSource();
   MessagesService.handleSetMessageRead(src, groupId).catch((e) =>
