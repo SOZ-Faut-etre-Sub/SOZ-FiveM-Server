@@ -1,5 +1,5 @@
 table.insert(migrations, {
-    name = "Create table and add house for soz-housing",
+    name = "add-soz-housing",
     queries = {
         [[
             CREATE TABLE IF NOT EXISTS `player_house` (
@@ -82,6 +82,4 @@ table.insert(migrations, {
                 ('soz_villa_06', NULL, 180000, 'vector4(-859.86, 691.29, 152.86, 182.31)');
         ]],
     },
-});
-
 });
