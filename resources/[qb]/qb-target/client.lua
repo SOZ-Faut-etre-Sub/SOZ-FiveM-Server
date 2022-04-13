@@ -639,7 +639,7 @@ local function AddGlobalPlayer(parameters)
 	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
 	for k, v in pairs(options) do
 		if not v.distance or v.distance > distance then v.distance = distance end
-		Players[v.label] = v
+		Players[#Players+1] = v
 	end
 end
 
@@ -660,10 +660,18 @@ exports("RemoveGlobalType", RemoveGlobalType)
 local function RemoveGlobalPlayer(labels)
 	if type(labels) == 'table' then
 		for k, v in pairs(labels) do
-			Players[v] = nil
+			for id, player in pairs(Players) do
+				if player.label == v then
+					Players[id] = nil
+				end
+			end
 		end
 	elseif type(labels) == 'string' then
-		Players[labels] = nil
+		for k, v in pairs(Players) do
+			if v.label == labels then
+				Players[k] = nil
+			end
+		end
 	end
 end
 

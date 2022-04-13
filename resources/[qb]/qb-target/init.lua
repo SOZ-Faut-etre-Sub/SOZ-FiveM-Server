@@ -102,6 +102,7 @@ local function CitizenCheck() return true end
 CreateThread(function()
 	if not Config.Standalone then
 		local QBCore = exports['qb-core']:GetCoreObject()
+		local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 		local PlayerData = QBCore.Functions.GetPlayerData()
 
 		ItemCount = function(item)
@@ -115,13 +116,11 @@ CreateThread(function()
 
 		JobCheck = function(job, permission)
 			if type(job) == 'table' then
-				if PlayerData.job.grade >= job[PlayerData.job.id] then
+				if job[PlayerData.job.id] and PlayerData.job.grade >= job[PlayerData.job.id] then
 					return true
 				end
-			elseif job == 'all' or job == PlayerData.job.id then
+			elseif type(job) == 'string' and job == PlayerData.job.id then
 				if permission then
-					local SozJobCore = exports["soz-jobs"]:GetCoreObject()
-
 					return SozJobCore.Functions.HasPermission(job, permission)
 				end
 
