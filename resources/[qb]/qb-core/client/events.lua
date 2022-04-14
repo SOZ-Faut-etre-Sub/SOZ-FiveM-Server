@@ -8,6 +8,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
         SetCanAttackFriendly(PlayerPedId(), true, false)
         NetworkSetFriendlyFireOption(true)
     end
+    SetPlayerHealthRechargeMultiplier(PlayerId(), 0)
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
