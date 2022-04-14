@@ -398,7 +398,6 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     QBCore.Players[self.PlayerData.source] = self
-    QBCore.Player.Save(self.PlayerData.source)
 
     -- At this point we are safe to emit new instance to third party resource for load handling
     TriggerEvent('QBCore:Server:PlayerLoaded', self)
@@ -574,3 +573,14 @@ function QBCore.Player.CreateSerialNumber()
     end
     return SerialNumber
 end
+
+--- Loop
+CreateThread(function()
+    while true do
+        for _, player in pairs(QBCore.Functions.GetQBPlayers()) do
+            player.Functions.Save()
+        end
+
+        Wait(5 * 60 * 1000)
+    end
+end)
