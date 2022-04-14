@@ -1,8 +1,12 @@
 const generateItem = function(index, item) {
-  let iconHTML = `<i class="${item.icon}" data-id="${index}"></i>`
+  let iconHTML = '';
 
-  if (item.icon.startsWith('c:')) {
+  if (item.icon === undefined) {
+    iconHTML = `<i class="fas fa-question" data-id="${index}"></i>`
+  } else if (item.icon.startsWith('c:')) {
     iconHTML = `<img src="/html/img/${item.icon.substring(2)}" data-id="${index}" alt="" />`
+  } else {
+    iconHTML = `<i class="${item.icon}" data-id="${index}"></i>`
   }
 
   return `
