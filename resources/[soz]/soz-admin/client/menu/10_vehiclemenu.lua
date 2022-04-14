@@ -60,7 +60,7 @@ vehicleMenu:AddButton({
 })
 
 vehicleMenu:AddButton({
-    label = "Full upgrade le véhicule",
+    label = "Configuration FBI",
     value = nil,
     select = function()
         local plyPed = PlayerPedId()
