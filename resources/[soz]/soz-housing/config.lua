@@ -53,17 +53,21 @@ Config.PolyZone = {
 
     {name = "south_house_mid_01", x = 340.85, y = -832.95, z = 29.29, sx = 0.4, sy = 0.8, heading = 1, minZ = 28.29, maxZ = 30.49},
     {name = "south_house_mid_02", x = -1053.52, y = -999.89, z = 6.41, sx = 1.2, sy = 0.6, heading = 31, minZ = 5.41, maxZ = 7.61},
-    {name ="south_house_mid_03", x = -1066.38, y = -1055.94, z = 6.41, sx = 1.2, sy = 1.0, heading = 30, minZ = 5.41, maxZ = 7.61},
-    {name ="south_house_mid_04", x = -1112.94, y = -1196.44, z = 6.68, sx = 1, sy = 1.2, heading = 30, minZ = 5.53, maxZ = 7.93},
-    {name ="south_house_mid_05", x = -1064.39, y = -1133.77, z = 2.16, sx = 1.25, sy = 0.6, heading = 30, minZ = 1.16, maxZ = 3.36},
-    {name ="south_house_mid_06", x = 8.92, y = -242.71, z = 51.86, sx = 0.6, sy = 1.2, heading = 340, minZ = 50.91, maxZ = 53.11},
-    {name ="south_house_mid_07", x = 248.62, y = -341.23, z = 44.45, sx = 0.8, sy = 3.4, heading = 340, minZ = 43.45, maxZ = 46.05},
-    {name ="south_house_mid_08", x = 368.48, y = -876.19, z = 29.29, sx = 0.8, sy = 1.4, heading = 2, minZ = 28.29, maxZ = 30.89},
+    {name = "south_house_mid_03", x = -1066.38, y = -1055.94, z = 6.41, sx = 1.2, sy = 1.0, heading = 30, minZ = 5.41, maxZ = 7.61},
+    {name = "south_house_mid_04", x = -1112.94, y = -1196.44, z = 6.68, sx = 1, sy = 1.2, heading = 30, minZ = 5.53, maxZ = 7.93},
+    {name = "south_house_mid_05", x = -1064.39, y = -1133.77, z = 2.16, sx = 1.25, sy = 0.6, heading = 30, minZ = 1.16, maxZ = 3.36},
+    {name = "south_house_mid_06", x = 8.92, y = -242.71, z = 51.86, sx = 0.6, sy = 1.2, heading = 340, minZ = 50.91, maxZ = 53.11},
+    {name = "south_house_mid_07", x = 248.62, y = -341.23, z = 44.45, sx = 0.8, sy = 3.4, heading = 340, minZ = 43.45, maxZ = 46.05},
+    {name = "south_house_mid_08", x = 368.48, y = -876.19, z = 29.29, sx = 0.8, sy = 1.4, heading = 2, minZ = 28.29, maxZ = 30.89},
     
-    {name ="soz_villa_01", x = -1146.35, y = 544.95, z = 102.08, sx = 1.0, sy = 1.25, heading = 10, minZ = 101.28, maxZ = 103.68},
-    {name ="soz_villa_02", x = -1336.52, y = 606.18, z = 134.38, sx = 1.2, sy = 0.8, heading = 0, minZ = 133.38, maxZ = 135.58},
-    {name ="soz_villa_03", x = -908.69, y = 692.95, z = 151.4, sx = 1, sy = 1.1, heading = 0, minZ = 150.4, maxZ = 152.8},
-    {name ="soz_villa_04", x = -1196.05, y = 692.86, z = 147.41, sx = 1.0, sy = 2.45, heading = 60, minZ = 146.41, maxZ = 149.01},
-    {name ="soz_villa_05", x = -1117.56, y = 761.0, z = 164.29, sx = 0.6, sy = 1.1, heading = 24, minZ = 163.29, maxZ = 165.49},
-    {name ="soz_villa_06", x = -852.95, y = 694.56, z = 148.78, sx = 0.6, sy = 1.2, heading = 4, minZ = 148.03, maxZ = 150.43},
+    {name = "soz_villa_01", x = -1146.35, y = 544.95, z = 102.08, sx = 1.0, sy = 1.25, heading = 10, minZ = 101.28, maxZ = 103.68},
+    {name = "soz_villa_02", x = -1336.52, y = 606.18, z = 134.38, sx = 1.2, sy = 0.8, heading = 0, minZ = 133.38, maxZ = 135.58},
+    {name = "soz_villa_03", x = -908.69, y = 692.95, z = 151.4, sx = 1, sy = 1.1, heading = 0, minZ = 150.4, maxZ = 152.8},
+    {name = "soz_villa_04", x = -1196.05, y = 692.86, z = 147.41, sx = 1.0, sy = 2.45, heading = 60, minZ = 146.41, maxZ = 149.01},
+    {name = "soz_villa_05", x = -1117.56, y = 761.0, z = 164.29, sx = 0.6, sy = 1.1, heading = 24, minZ = 163.29, maxZ = 165.49},
+    {name = "soz_villa_06", x = -852.95, y = 694.56, z = 148.78, sx = 0.6, sy = 1.2, heading = 4, minZ = 148.03, maxZ = 150.43},
+}
+
+Config.exit = {
+    {name = "exit", x = 365.66, y = 2981.27, z = 35.53, sx = 2.4, sy = 1.2,  heading = 30, minZ = 34.53, maxZ = 36.93},
 }
