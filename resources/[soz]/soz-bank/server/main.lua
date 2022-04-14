@@ -153,3 +153,10 @@ QBCore.Functions.CreateCallback("banking:server:openSafeStorage", function(sourc
         cb(false)
     end
 end)
+
+RegisterNetEvent("banking:server:updatePhoneBalance", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    local account = Account(Player.PlayerData.charinfo.account)
+
+    TriggerClientEvent("phone:client:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), account.money)
+end)
