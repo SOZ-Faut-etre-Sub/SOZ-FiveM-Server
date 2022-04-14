@@ -1,9 +1,11 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
+Housing = {}
+
 local isOwned = false
 local isOwner = false
+local coords = {}
 local LastLocation = nil
-HouseData = nil
 
 Citizen.CreateThread(function()
     for item, zone in pairs(Config.PolyZone) do
@@ -24,7 +26,7 @@ Citizen.CreateThread(function()
                         return not isOwned
                     end,
                     action = function()
-                        TriggerServerEvent("soz-housing:server:Data", zone.name)
+                        TriggerServerEvent("soz-housing:server:ShowAcheter", zone.name)
                     end,
                 },                
                 {
@@ -48,7 +50,7 @@ Citizen.CreateThread(function()
                     icon = "c:housing/garage.png",
                     event = "soz-housing:client:garage",
                     canInteract = function()
-                        return isOwner
+                        return isOwner and not isTrailer(zone.name)
                     end,
                 },
                 {
@@ -57,6 +59,9 @@ Citizen.CreateThread(function()
                     event = "soz-housing:client:garage",
                     canInteract = function()
                         return isOwner
+                    end,
+                    action = function()
+                        TriggerServerEvent("soz-housing:server:ShowVendre", zone.name)
                     end,
                 },
             },
@@ -77,34 +82,43 @@ Citizen.CreateThread(function()
     end
 end)
 
-function dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
+function isTrailer(name)
+    if string.find(name, 'trailer') == nil then
+        return false
+    else
+        return true
+    end
 end
 
-
-RegisterNetEvent("soz-housing:client:setOwner")
-AddEventHandler("soz-housing:client:setOwner", function(owner)
-    isOwner = owner
-end)
-
-RegisterNetEvent("soz-housing:client:setOwned")
-AddEventHandler("soz-housing:client:setOwned", function(owned)
-    isOwned = owned
-end)
+function dump(o)
+    if type(o) == 'table' then
+       local s = '{ '
+       for k,v in pairs(o) do
+          if type(k) ~= 'number' then k = '"'..k..'"' end
+          s = s .. '['..k..'] = ' .. dump(v) .. ','
+       end
+       return s .. '} '
+    else
+       return tostring(o)
+    end
+ end
+ 
 
 RegisterNetEvent("soz-housing:client:setData")
-AddEventHandler("soz-housing:client:setData", function(Data)
-    HouseData = Data
-    print(dump(Data))
+AddEventHandler("soz-housing:client:setData", function(owner, owned, coord)
+    isOwner = owner
+    isOwned = owned
+    coords = coord
+end)
+
+RegisterNetEvent("soz-housing:client:Acheter")
+AddEventHandler("soz-housing:client:Acheter", function(Data)
+    Housing.Functions.Menu.BuyHousing(Data)
+end)
+
+RegisterNetEvent("soz-housing:client:Vendre")
+AddEventHandler("soz-housing:client:Vendre", function(Data)
+    Housing.Functions.Menu.SellHousing(Data)
 end)
 
 RegisterNetEvent("soz-housing:client:visiter")
@@ -114,6 +128,10 @@ end)
 RegisterNetEvent("soz-housing:client:rentrer")
 AddEventHandler("soz-housing:client:rentrer", function()
     player = PlayerPedId()
+    LastLocation = GetEntityCoords(player)
+    print(dump(coords))
+    print(LastLocation.x)
+    SetPedCoordsKeepVehicle(player, coords[1].coordx, coords[1].coordy, coords[1].coordz, coords[1].coordw)
 end)
 
 RegisterNetEvent("soz-housing:client:garage")
