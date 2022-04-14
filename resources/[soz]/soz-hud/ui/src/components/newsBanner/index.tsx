@@ -1,11 +1,10 @@
-import {FunctionalComponent} from "preact";
-import {useCallback, useEffect, useState} from "preact/hooks";
+import React, {useCallback, useEffect, useState} from "react";
 import styles from "./styles.module.css";
 import {News} from "../../types/news";
 import {uuidv4} from "../../utils/uuid";
 import Banner from "./banner";
 
-const NewsBanner: FunctionalComponent = () => {
+const NewsBanner = () => {
     const [news, setNews] = useState<News[]>([]);
 
     const deleteNews = useCallback((id: string) => {
@@ -25,7 +24,7 @@ const NewsBanner: FunctionalComponent = () => {
     }, []);
 
     return (
-        <div class={styles.container}>
+        <div className={styles.container}>
             {news.map(n => (
                 <Banner key={n.id} news={n} onDelete={() => deleteNews(n.id)} />
             ))}

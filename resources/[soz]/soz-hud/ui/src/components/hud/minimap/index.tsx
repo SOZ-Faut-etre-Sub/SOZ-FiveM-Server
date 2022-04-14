@@ -1,10 +1,9 @@
-import {FunctionalComponent} from "preact";
-import {useCallback, useContext, useEffect} from "preact/hooks";
+import {useCallback, useContext, useEffect} from "react";
 import {GameContext} from "../../../context/game";
 import PlayerStat from "../../player/stats";
 import {PlayerContext} from "../../../context/player";
 
-const Minimap: FunctionalComponent = () => {
+const Minimap= () => {
     const {minimap, updateMinimap} = useContext(GameContext)
     const {inVehicle, health, armor} = useContext(PlayerContext)
 
