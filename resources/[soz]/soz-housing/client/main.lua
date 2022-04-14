@@ -1,5 +1,9 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
+local isOwned = false
+local isOwner = false
+local LastLocation = nil
+
 Citizen.CreateThread(function()
     for item, zone in pairs(Config.PolyZone) do
         exports["qb-target"]:AddBoxZone(zone.name, vector3(zone.x, zone.y, zone.z), zone.sx, zone.sy, {
@@ -11,24 +15,42 @@ Citizen.CreateThread(function()
         }, {
             options = {
                 {
-                    label = "Acheter une habitation",
-                    icon = "fas fa-door-closed",
+                    label = "Acheter",
+                    icon = "c:housing/acheter.png",
                     event = "soz-housing:client:acheter",
+                    canInteract = function()
+                        TriggerServerEvent("soz-housing:server:isOwned", zone.name)
+                        return isOwned
+                    end,
                 },                
                 {
-                    label = "Visiter une habitation",
-                    icon = "fas fa-door-closed",
+                    label = "Visiter",
+                    icon = "c:housing/visiter.png",
                     event = "soz-housing:client:visiter",
                 },                
                 {
-                    label = "Rentrer dans une habitation",
-                    icon = "fas fa-door-closed",
+                    label = "Rentrer",
+                    icon = "c:housing/entrer.png",
                     event = "soz-housing:client:rentrer",
+                    canInteract = function()
+                        return isOwner
+                    end,
                 },                
                 {
-                    label = "Ouvrir son Garage",
-                    icon = "fas fa-garage",
+                    label = "Garage",
+                    icon = "c:housing/garage.png",
                     event = "soz-housing:client:garage",
+                    canInteract = function()
+                        return isOwner
+                    end,
+                },
+                {
+                    label = "Vendre",
+                    icon = "c:housing/vendre.png",
+                    event = "soz-housing:client:garage",
+                    canInteract = function()
+                        return isOwner
+                    end,
                 },
             },
             distance = 2.5,
@@ -48,6 +70,16 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent("soz-housing:client:setOwner")
+AddEventHandler("soz-housing:client:setOwner", function(owner)
+    isOwner = owner
+end)
+
+RegisterNetEvent("soz-housing:client:setOwned")
+AddEventHandler("soz-housing:client:setOwned", function(owned)
+    isOwned = owned
+end)
+
 RegisterNetEvent("soz-housing:client:acheter")
 AddEventHandler("soz-housing:client:acheter", function()
     print("test")
@@ -55,13 +87,11 @@ end)
 
 RegisterNetEvent("soz-housing:client:visiter")
 AddEventHandler("soz-housing:client:visiter", function()
-    print("test")
 end)
 
 RegisterNetEvent("soz-housing:client:rentrer")
 AddEventHandler("soz-housing:client:rentrer", function()
     player = PlayerPedId()
-    SetPedCoordsKeepVehicle(player, )
 end)
 
 RegisterNetEvent("soz-housing:client:garage")
