@@ -142,3 +142,12 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         PlayWalking(walk)
     end
 end)
+
+RegisterNetEvent("soz_ems:client:Revive", function()
+    Wait(1000)
+    local walk = PlayerData.metadata.walk
+
+    if walk then
+        PlayWalking(walk)
+    end
+end)
