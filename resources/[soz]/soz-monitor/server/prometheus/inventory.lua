@@ -67,60 +67,39 @@ local function BuildInventoryMetrics(inventoryMetrics, name, description, type, 
 end
 
 function GetInventoryMetrics()
-    local inventoryMetrics = exports['soz-inventory']:GetMetrics()
-    local metricsString = BuildInventoryMetrics(
-        inventoryMetrics,
-        "soz_inventory_slots",
-        "Inventory slots",
-        "gauge",
-        function(inventoryMetric)
-            return inventoryMetric.slots
-        end
-    )
+    local inventoryMetrics = exports["soz-inventory"]:GetMetrics()
+    local metricsString = BuildInventoryMetrics(inventoryMetrics, "soz_inventory_slots", "Inventory slots", "gauge", function(inventoryMetric)
+        return inventoryMetric.slots
+    end)
 
-    metricsString = metricsString .. BuildInventoryMetrics(
-        inventoryMetrics,
-        "soz_inventory_total_item_count",
-        "Total number of items in inventory",
-        "gauge",
-        function(inventoryMetric)
+    metricsString = metricsString ..
+                        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_total_item_count", "Total number of items in inventory", "gauge",
+                                              function(inventoryMetric)
             return #inventoryMetric.items
+        end)
+
+    metricsString = metricsString .. BuildInventoryMetrics(inventoryMetrics, "soz_inventory_weight", "Inventory weight", "gauge", function(inventoryMetric)
+        if inventoryMetric.type ~= "player" then
+            return inventoryMetric.weight
         end
-    )
 
-    metricsString = metricsString .. BuildInventoryMetrics(
-        inventoryMetrics,
-        "soz_inventory_weight",
-        "Inventory weight",
-        "gauge",
-        function(inventoryMetric)
-            if inventoryMetric.type ~= "player" then
-                return inventoryMetric.weight
+        local weight = 0
+
+        for _, item in ipairs(inventoryMetric.items) do
+            local itemDef = QBCore.Shared.Items[item.name]
+
+            if itemDef then
+                weight = weight + (itemDef.weight * item.amount)
             end
-
-            local weight = 0
-
-            for _, item in ipairs(inventoryMetric.items) do
-                local itemDef = QBCore.Shared.Items[item.name]
-
-                if itemDef then
-                    weight = weight + (itemDef.weight * item.amount)
-                end
-            end
-
-            return weight
         end
-    )
 
-    metricsString = metricsString .. BuildInventoryMetrics(
-        inventoryMetrics,
-        "soz_inventory_max_weight",
-        "Max inventory weight",
-        "gauge",
-        function(inventoryMetric)
+        return weight
+    end)
+
+    metricsString = metricsString ..
+                        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_max_weight", "Max inventory weight", "gauge", function(inventoryMetric)
             return inventoryMetric.maxWeight
-        end
-    )
+        end)
 
     metricsString = metricsString .. [[
 

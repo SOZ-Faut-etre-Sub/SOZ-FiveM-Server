@@ -1,6 +1,6 @@
 -- Get all metrics about money
 function GetBankMetrics()
-    local bankMetrics = exports['soz-bank']:GetMetrics()
+    local bankMetrics = exports["soz-bank"]:GetMetrics()
     local metricsString = [[
 # HELP soz_bank_account_money Amount of money in a bank account
 # TYPE soz_bank_account_money gauge

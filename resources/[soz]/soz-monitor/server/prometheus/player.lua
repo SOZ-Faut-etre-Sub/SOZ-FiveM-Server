@@ -79,71 +79,33 @@ function GetPlayerMetrics()
     local labels = {}
 
     for id, player in pairs(playerList) do
-        labels[id] = string.format(
-            'id="%s",name="%s %s",license="%s",job="%s",grade="%s",status="%s"',
-            player.citizenid,
-            player.charinfo.firstname,
-            player.charinfo.lastname,
-            player.license,
-            player.job.id,
-            player.job.gradeId or 0,
-            player.connection_status
-        )
+        labels[id] = string.format("id=\"%s\",name=\"%s %s\",license=\"%s\",job=\"%s\",grade=\"%s\",status=\"%s\"", player.citizenid, player.charinfo.firstname,
+                                   player.charinfo.lastname, player.license, player.job.id, player.job.gradeId or 0, player.connection_status)
     end
 
-    metricsString = metricsString .. CreateMetrics(
-        "soz_player_connected",
-        "gauge",
-        "Is player connected",
-        labels,
-        function(player)
-            if player.connection_status == "connected" then
-                return 1
-            end
-
-            return 0
+    metricsString = metricsString .. CreateMetrics("soz_player_connected", "gauge", "Is player connected", labels, function(player)
+        if player.connection_status == "connected" then
+            return 1
         end
-    )
 
-    metricsString = metricsString .. CreateMetrics(
-        "soz_player_health",
-        "gauge",
-        "Health of a player",
-        labels,
-        function()
-            return 100
-        end
-    )
+        return 0
+    end)
 
-    metricsString = metricsString .. CreateMetrics(
-        "soz_player_armor",
-        "gauge",
-        "Armor of a player",
-        labels,
-        function(player)
-            return player.metadata.armor
-        end
-    )
+    metricsString = metricsString .. CreateMetrics("soz_player_health", "gauge", "Health of a player", labels, function()
+        return 100
+    end)
 
-    metricsString = metricsString .. CreateMetrics(
-        "soz_player_hunger",
-        "gauge",
-        "Hunger of a player",
-        labels,
-        function(player)
-            return player.metadata.hunger
-        end
-    )
+    metricsString = metricsString .. CreateMetrics("soz_player_armor", "gauge", "Armor of a player", labels, function(player)
+        return player.metadata.armor
+    end)
 
-    metricsString = metricsString .. CreateMetrics(
-        "soz_player_thirst",
-        "gauge",
-        "Thirst of a player",
-        labels,
-        function(player)
-            return player.metadata.thirst
-        end
-    )
+    metricsString = metricsString .. CreateMetrics("soz_player_hunger", "gauge", "Hunger of a player", labels, function(player)
+        return player.metadata.hunger
+    end)
+
+    metricsString = metricsString .. CreateMetrics("soz_player_thirst", "gauge", "Thirst of a player", labels, function(player)
+        return player.metadata.thirst
+    end)
 
     return metricsString
 end
