@@ -32,7 +32,6 @@ export const BankApp = () => {
                         {/*<Route path="/bank/account" exact component={BankAccount} />*/}
                     </Switch>
                 </AppContent>
-                {/*<NavigationBar />*/}
             </AppWrapper>
         </Transition>
     );
