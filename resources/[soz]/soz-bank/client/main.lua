@@ -18,14 +18,14 @@ bankSociety:onPlayerInOut(function(isPointInside, point)
 end)
 
 CreateThread(function()
-    for id, bank in pairs(Config.BankPedLocations) do
-        if not QBCore.Functions.GetBlip("bank_" .. id) then
-            QBCore.Functions.CreateBlip("bank_" .. id, {name = "Banque", coords = bank, sprite = 108, color = 2})
+    for bank, coords in pairs(Config.BankPedLocations) do
+        if not QBCore.Functions.GetBlip("bank_" .. bank) then
+            QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
         end
         exports["qb-target"]:SpawnPed({
             {
                 model = "ig_bankman",
-                coords = bank,
+                coords = coords,
                 minusOne = true,
                 freeze = true,
                 invincible = true,
@@ -58,6 +58,8 @@ CreateThread(function()
                             label = "Remplir",
                             icon = "c:stonk/remplir.png",
                             event = "soz-jobs:client:stonk-fill-in",
+                            bank = bank,
+                            coords = coords,
                             canInteract = function()
                                 return isInsideBankZone and exports["soz-jobs"]:CanFillIn()
                             end,

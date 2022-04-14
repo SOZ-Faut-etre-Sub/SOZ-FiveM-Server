@@ -287,6 +287,8 @@ AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
 end)
 
 -- FILL IN
-AddEventHandler("soz-jobs:client:stonk-fill-in", function()
+AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
+    local bank = data.bank
+    local coords = data.coords
     -- TODO
 end)
