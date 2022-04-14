@@ -88,3 +88,8 @@ Config.BankPedLocations = {
     ["bank6"] = vector4(1175.01, 2708.3, 38.09, 176.68),
     ["bank7"] = vector4(-112.26, 6471.04, 31.63, 132.8),
 }
+
+Config.BankAtmDefault = {
+    ["pacific"] = {maxMoney = 600000},
+    ["bank"] = {maxMoney = 100000},
+}
