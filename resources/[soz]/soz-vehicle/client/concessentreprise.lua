@@ -2,17 +2,17 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 
 PlacesConcessEntreprise = {
     ["entreprise1"] = BoxZone:Create(vector3(827.31, -3210.51, 5.9), 8, 6, {
-    name="entreprise1",
-    heading=180,
-    minZ=4.9,
-    maxZ=8.9
-  }),
-  ["entreprise2"] = BoxZone:Create(vector3(834.94, -3210.88, 5.9), 8, 6, {
-    name="entreprise2",
-    heading=180,
-    minZ=4.9,
-    maxZ=8.9
-  })
+        name = "entreprise1",
+        heading = 180,
+        minZ = 4.9,
+        maxZ = 8.9,
+    }),
+    ["entreprise2"] = BoxZone:Create(vector3(834.94, -3210.88, 5.9), 8, 6, {
+        name = "entreprise2",
+        heading = 180,
+        minZ = 4.9,
+        maxZ = 8.9,
+    }),
 }
 
 local VehiculeModel = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car", "soz", "concessentre:vehicle:car")

@@ -26,7 +26,17 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
     if money > tonumber(vehicle.price) then
         MySQL.Async.insert(
             "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            {pData.PlayerData.license, cid, vehicle.vehicle, GetHashKey(vehicle.vehicle), "{}", plate, 0, vehicle.job, os.time()})
+            {
+                pData.PlayerData.license,
+                cid,
+                vehicle.vehicle,
+                GetHashKey(vehicle.vehicle),
+                "{}",
+                plate,
+                0,
+                vehicle.job,
+                os.time(),
+            })
         TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat!")
         TriggerClientEvent("soz-concessentreprise:client:buyShowroomVehicle", src, vehicle.vehicle, plate, newlocation)
         pData.Functions.RemoveMoney("money", vehicle.price, "vehicle-bought-in-showroom")

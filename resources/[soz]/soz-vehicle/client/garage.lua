@@ -379,23 +379,23 @@ local function enterVehicle(veh, indexgarage, type, garage)
         end
     end
     if insideParking then
-            QBCore.Functions.TriggerCallback("qb-garage:server:checkOwnership", function(owned)
-                if owned then
-                    local bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
-                    local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
-                    local totalFuel = GetVehicleFuelLevel(veh)
-                    local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
-                    CheckPlayers(veh, garage)
-                    TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
-                    if plate then
-                        OutsideVehicles[plate] = nil
-                        TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
-                    end
-                    exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
-                else
-                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
+        QBCore.Functions.TriggerCallback("qb-garage:server:checkOwnership", function(owned)
+            if owned then
+                local bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
+                local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
+                local totalFuel = GetVehicleFuelLevel(veh)
+                local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
+                CheckPlayers(veh, garage)
+                TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
+                if plate then
+                    OutsideVehicles[plate] = nil
+                    TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
                 end
-            end, plate, type, indexgarage, PlayerGang.name)
+                exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
+            else
+                exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
+            end
+        end, plate, type, indexgarage, PlayerGang.name)
     else
         exports["soz-hud"]:DrawNotification(Lang:t("error.not_in_parking"), "error", 3500)
     end
