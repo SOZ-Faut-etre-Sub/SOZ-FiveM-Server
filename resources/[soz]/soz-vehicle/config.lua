@@ -309,7 +309,7 @@ Garages = {
     },
     ["lspd"] = {
         label = "LSPD",
-        blipcoord = vector3(454.6, -1017.4, 28.4),
+        blipcoord = vector4(457.93, -1025.09, 27.42, 270.0),
         showBlip = false,
         blipName = "LSPD",
         blipNumber = 357,
@@ -319,7 +319,7 @@ Garages = {
     },
     ["bcso"] = {
         label = "BCSO",
-        blipcoord = vector3(1855.61, 3677.39, 33.76),
+        blipcoord = vector4(1820.87, 3681.48, 33.28, 210.0),
         showBlip = false,
         blipName = "BCSO",
         blipNumber = 357,
@@ -329,7 +329,7 @@ Garages = {
     },
     ["bennys"] = {
         label = "Bennys",
-        blipcoord = vector3(-163.47, -1301.73, 31.3),
+        blipcoord = vector4(-172.5, -1295.65, 30.13, 0.0),
         showBlip = false,
         blipName = "Bennys",
         blipNumber = 357,
@@ -339,7 +339,7 @@ Garages = {
     },
     ["stonk"] = {
         label = "Stonk Depository",
-        blipcoord = vector3(-8.17, -671.17, 31.94),
+        blipcoord = vector4(-6.51, -662.66, 32.48, 185.00),
         showBlip = false,
         blipName = "Stonk Depository",
         blipNumber = 357,
@@ -349,7 +349,7 @@ Garages = {
     },
     ["garbage"] = {
         label = "Rogers",
-        blipcoord = vector3(-595.41, -1587.31, 26.75),
+        blipcoord = vector4(-605.56, -1592.35, 25.75, 260.0),
         showBlip = false,
         blipName = "Rogers",
         blipNumber = 357,
@@ -359,7 +359,7 @@ Garages = {
     },
     ["food"] = {
         label = "Château Marius",
-        blipcoord = vector3(-1921.7, 2046.63, 140.73),
+        blipcoord = vector4(-1923.05, 2060.66, 139.83, 77.0),
         showBlip = false,
         blipName = "Château Marius",
         blipNumber = 357,

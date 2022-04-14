@@ -1335,8 +1335,7 @@ end
 for indexentreprise, entreprise in pairs(Zonesentreprise) do
     entreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
-            -- RAJOUTER IF JOB = JOB DANS CONFIG.LUA DU GARAGE
-            exports["qb-target"]:AddTargetModel(218085040, {
+            exports["qb-target"]:AddTargetModel(GetHashKey("soz_prop_paystation"), {
                 options = {
                     {
                         type = "client",

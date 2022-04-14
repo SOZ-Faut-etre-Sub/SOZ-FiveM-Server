@@ -32,7 +32,7 @@ local Translations = {
             depot = "%{value} [ %{value2} ] - Coût: $%{value3}",
             public = "%{value} [ %{value2} ]",
             private = "%{value} [ %{value2} ] - Coût: $%{value3}",
-            entreprise = "%{value} - [%{value2} en stock]",
+            entreprise = "%{value} [ %{value2} ]",
         },
         leave = {
             car = "⬅ Quitter le garage",
@@ -46,7 +46,7 @@ local Translations = {
             garage = "État: %{value}<br>Réservoir: %{value2} | Moteur: %{value3} | Carrosserie: %{value4}",
         },
     },
-    status = {out = "Dehors", garaged = "Garé dans un parking", impound = "En Fourrière"},
+    status = {out = "Dehors", garaged = "Garé dans un parking", garagedentre = "Garé dans un parking entreprise", impound = "En Fourrière"},
     info = {
         car_e = "~g~E~w~ - Garage",
         sea_e = "~g~E~w~ - Hangarà bateaux",
