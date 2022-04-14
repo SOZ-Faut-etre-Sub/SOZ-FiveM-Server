@@ -23,16 +23,26 @@ local authLogin = GetConvar("prometheus_login", "admin")
 local authPassword = GetConvar("prometheus_password", "admin")
 local authorizationHeader = "Basic " .. base64encode(authLogin .. ":" .. authPassword)
 
+local metrics = ""
+
+Citizen.CreateThread(function()
+    Citizen.Wait(1000)
+
+    while true do
+        local newMetrics = ""
+        newMetrics = newMetrics .. GetBankMetrics()
+        newMetrics = newMetrics .. GetPlayerMetrics()
+        newMetrics = newMetrics .. GetInventoryMetrics()
+
+        metrics = newMetrics
+
+        Citizen.Wait(3000)
+    end
+end)
+
 SetHttpHandler(function(req, res)
     if req.path == "/metrics" and req.headers["Authorization"] == authorizationHeader then
-        -- @TODO
-        local activePlayers = math.random(1, 10)
-
-        res.send(string.format([[
-# HELP soz_active_player_count Number of current players in the server
-# TYPE soz_active_player_count gauge
-soz_active_player_count %d
-]], activePlayers))
+        res.send(metrics)
 
         return;
     end
