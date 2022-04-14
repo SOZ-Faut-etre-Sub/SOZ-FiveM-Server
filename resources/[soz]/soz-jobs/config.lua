@@ -23,7 +23,7 @@ SozJobCore.JobPermission = {
     ManageGrade = "manage-grade",
     SocietyPrivateStorage = "society-private-storage",
     SocietyBankAccount = "society-bank-account",
-    CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags"},
+    CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
 }
 
 SozJobCore.Jobs = {
@@ -175,6 +175,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.CashTransfer.CollectBags] = {label = "Collecte sacs d'argent"},
             [SozJobCore.JobPermission.CashTransfer.ResaleBags] = {label = "Déposer sacs d'argent"},
+            [SozJobCore.JobPermission.CashTransfer.FillIn] = {label = "Remplir banque / ATM"},
         },
     },
     [SozJobCore.JobType.Bennys] = {
