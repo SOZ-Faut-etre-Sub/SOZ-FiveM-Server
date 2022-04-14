@@ -5,7 +5,8 @@ Housing = {}
 local isOwned = false
 local isOwner = false
 local coords = {}
-local LastLocation = nil
+LastLocation = nil
+IsInside = false
 
 Citizen.CreateThread(function()
     for item, zone in pairs(Config.PolyZone) do
@@ -129,8 +130,7 @@ RegisterNetEvent("soz-housing:client:rentrer")
 AddEventHandler("soz-housing:client:rentrer", function()
     player = PlayerPedId()
     LastLocation = GetEntityCoords(player)
-    print(dump(coords))
-    print(LastLocation.x)
+    IsInside = true
     SetPedCoordsKeepVehicle(player, coords[1].coordx, coords[1].coordy, coords[1].coordz, coords[1].coordw)
 end)
 
