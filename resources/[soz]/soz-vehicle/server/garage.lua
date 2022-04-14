@@ -140,11 +140,13 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
         parkingtime = os.time()
     end
     if type ~= "entreprise" then
-        MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
-                        {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
+        MySQL.Async.execute(
+            "UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
+            {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
     else
-        MySQL.Async.execute("UPDATE player_vehicles SET license = NULL, citizenid = NULL, state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
-                        {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
+        MySQL.Async.execute(
+            "UPDATE player_vehicles SET license = NULL, citizenid = NULL, state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
+            {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
     end
 end)
 
@@ -157,7 +159,6 @@ RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, g
     })
 end)
 
-
 RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
@@ -168,7 +169,6 @@ RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
         plate,
     })
 end)
-
 
 RegisterNetEvent("qb-garages:server:UpdateOutsideVehicles", function(Vehicles)
     local src = source

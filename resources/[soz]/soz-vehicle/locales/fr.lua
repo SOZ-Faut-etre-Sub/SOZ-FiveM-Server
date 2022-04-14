@@ -46,7 +46,12 @@ local Translations = {
             garage = "État: %{value}<br>Réservoir: %{value2} | Moteur: %{value3} | Carrosserie: %{value4}",
         },
     },
-    status = {out = "Dehors", garaged = "Garé dans un parking", garagedentre = "Garé dans un parking entreprise", impound = "En Fourrière"},
+    status = {
+        out = "Dehors",
+        garaged = "Garé dans un parking",
+        garagedentre = "Garé dans un parking entreprise",
+        impound = "En Fourrière"
+    },
     info = {
         car_e = "~g~E~w~ - Garage",
         sea_e = "~g~E~w~ - Hangarà bateaux",
