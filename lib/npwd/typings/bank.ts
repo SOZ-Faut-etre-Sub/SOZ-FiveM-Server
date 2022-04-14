@@ -1,16 +1,12 @@
 export interface IBankCredentials {
   name: string;
+  account: string;
   balance: number;
 }
 
 export interface ITransactions {
   source: number;
   type: string;
-  amount: number;
-}
-
-export interface QBBankRemove {
-  source: number;
   amount: number;
 }
 

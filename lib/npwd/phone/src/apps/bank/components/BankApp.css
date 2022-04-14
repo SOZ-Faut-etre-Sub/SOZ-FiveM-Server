@@ -1,35 +1,8 @@
-#account-section,
-#transaction-section {
+@font-face {
+    font-family: "Kredit-Black";
+    src: url(../assets/kredit-back.ttf);
 }
 
-#transaction-section .MuiTablePagination-root {
-    font-size: 15px;
-}
-
-#transaction-section .MuiTablePagination-caption {
-    font-size: 15px;
-}
-
-#transaction-section .MuiTablePagination-actions {
-    font-size: 50px;
-}
-
-#bank-app .Mui-selected {
-    color: #388cf8 !important;
-}
-
-#bank-app .MuiSnackbar-root {
-    position: absolute;
-}
-
-#bank-title {
-    font-size: 50px;
-}
-
-.card-name {
-    font-size: 20px;
-}
-
-#actionButton a {
-    color: #fff;
+.card-text {
+    font-family: "Kredit-Black", serif;
 }
