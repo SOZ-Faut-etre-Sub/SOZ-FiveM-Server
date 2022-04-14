@@ -10,7 +10,7 @@ QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source
         else
             if string.find(account, "%d%d%u%d%d%d%d%u%d%d%d%d") then
                 account = Account(account)
-            elseif Player.PlayerData.job.isboss then
+            elseif SozJobCore.Functions.HasPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount) then
                 account = Account(account)
             else
                 cb(nil)
@@ -40,7 +40,7 @@ QBCore.Functions.CreateCallback("banking:server:createOffshoreAccount", function
     local Player = QBCore.Functions.GetPlayer(source)
     local offshore = Account("offshore_" .. account)
 
-    if Player.PlayerData.job.isboss then
+    if SozJobCore.Functions.HasPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount) then
         if offshore == nil then
             Account.Create("offshore_" .. account, "Compte offshore " .. account, "offshore", "offshore_" .. account)
             cb(true)
@@ -59,7 +59,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertOffshoreMoney", functio
     local CurrentMoney = Player.Functions.GetMoney("marked_money")
     amount = tonumber(amount)
 
-    if Player.PlayerData.job.isboss then
+    if SozJobCore.Functions.HasPermission(accountTarget, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount) then
         if amount <= CurrentMoney then
             if Player.Functions.RemoveMoney("marked_money", amount) then
                 Account.AddMoney("offshore_" .. accountTarget, amount, "marked_money")
