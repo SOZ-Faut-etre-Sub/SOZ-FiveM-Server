@@ -387,23 +387,8 @@ for int = 1, 28 do
 end
 
 CreateThread(function()
-    local currentGasBlip = 0
-    while true do
-        local coords = GetEntityCoords(PlayerPedId())
-        local closest = 1000
-        local closestCoords
-        for _, gasStationCoords in pairs(Config.GasStations) do
-            local dstcheck = #(coords - gasStationCoords)
-            if dstcheck < closest then
-                closest = dstcheck
-                closestCoords = gasStationCoords
-            end
-        end
-        if DoesBlipExist(currentGasBlip) then
-            RemoveBlip(currentGasBlip)
-        end
-        currentGasBlip = CreateBlip(closestCoords)
-        Wait(10000)
+    for _, gasStationCoords in pairs(Config.GasStations) do
+        CreateBlip(gasStationCoords)
     end
 end)
 
@@ -432,6 +417,7 @@ function CreateBlip(coords)
     SetBlipScale(blip, 0.8)
     SetBlipColour(blip, 4)
     SetBlipDisplay(blip, 4)
+    SetBlipAlpha(blip, 100)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentString("Station essence")
