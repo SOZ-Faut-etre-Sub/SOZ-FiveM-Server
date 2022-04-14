@@ -398,6 +398,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     QBCore.Players[self.PlayerData.source] = self
+    exports['soz-inventory']:CreatePlayerInventory(self.PlayerData)
 
     -- At this point we are safe to emit new instance to third party resource for load handling
     TriggerEvent('QBCore:Server:PlayerLoaded', self)
@@ -430,7 +431,6 @@ function QBCore.Player.Save(source)
             is_default = PlayerData.is_default,
         })
 
-        exports['soz-inventory']:CreatePlayerInventory(PlayerData)
         exports['soz-monitor']:Log('INFO', 'Save player !', { player = PlayerData })
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })
