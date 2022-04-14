@@ -65,7 +65,7 @@ function GetJobDefaultGrade(targetJobId, jobId)
 end
 
 function CheckJobPermission(targetJobId, jobId, gradeId, permission)
-    if targetJobId ~= jobId or targetJobId ~= "all" then
+    if targetJobId ~= jobId then
         return false
     end
 
