@@ -66,7 +66,7 @@ local function CreateMetrics(name, type, description, labels, getValue)
         end
 
         metricsString = metricsString .. string.format([[
-%s{%s} %f
+%s{%s} %s
 ]], name, labels[id], getValue(player))
     end
 
@@ -91,8 +91,8 @@ function GetPlayerMetrics()
         return 0
     end)
 
-    metricsString = metricsString .. CreateMetrics("soz_player_health", "gauge", "Health of a player", labels, function()
-        return 100
+    metricsString = metricsString .. CreateMetrics("soz_player_health", "gauge", "Health of a player", labels, function(player)
+        return player.metadata.health or 200
     end)
 
     metricsString = metricsString .. CreateMetrics("soz_player_armor", "gauge", "Armor of a player", labels, function(player)
