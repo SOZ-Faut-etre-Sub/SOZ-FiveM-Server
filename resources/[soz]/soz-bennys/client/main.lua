@@ -263,21 +263,6 @@ function ApplyEffects(vehicle)
                     SetVehicleHandbrake(vehicle, false)
                 end
             end
-
-            if VehicleStatus[plate]["fuel"] <= 80 and (chance >= 81 and chance <= 100) then
-                local fuel = exports["soz-vehicle"]:GetFuel(vehicle)
-                if VehicleStatus[plate]["fuel"] <= 80 and VehicleStatus[plate]["fuel"] >= 60 then
-                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 2.0)
-                elseif VehicleStatus[plate]["fuel"] <= 59 and VehicleStatus[plate]["fuel"] >= 40 then
-                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 4.0)
-                elseif VehicleStatus[plate]["fuel"] <= 39 and VehicleStatus[plate]["fuel"] >= 20 then
-                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 6.0)
-                elseif VehicleStatus[plate]["fuel"] <= 19 and VehicleStatus[plate]["fuel"] >= 6 then
-                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 8.0)
-                else
-                    exports["soz-vehicle"]:SetFuel(vehicle, fuel - 10.0)
-                end
-            end
         end
     end
 end
