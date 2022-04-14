@@ -69,6 +69,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata = PlayerData.metadata or {}
     -- Status
     PlayerData.metadata['walk'] = PlayerData.metadata['walk'] or nil
+    PlayerData.metadata['health'] = PlayerData.metadata['health'] or 200
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['stress'] = PlayerData.metadata['stress'] or 0
@@ -412,6 +413,8 @@ function QBCore.Player.Save(source)
     local pcoords = GetEntityCoords(ped)
     local PlayerData = QBCore.Players[src].PlayerData
     if PlayerData then
+        PlayerData.metadata["health"] = GetEntityHealth(ped)
+
         exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default', {
             citizenid = PlayerData.citizenid,
             cid = tonumber(PlayerData.cid),
