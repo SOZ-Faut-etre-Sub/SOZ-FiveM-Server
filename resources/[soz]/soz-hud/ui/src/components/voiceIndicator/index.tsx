@@ -1,7 +1,7 @@
 import style from "./style.module.css"
-import {lazy, Suspense} from "preact/compat";
+import {lazy, Suspense} from "react";
 import FallbackIcon from "../../assets/fallback";
-import {useCallback, useContext, useEffect} from "preact/hooks";
+import {useCallback, useContext, useEffect} from "react";
 import {VoiceModeContext} from "../../context/voice";
 
 
@@ -26,12 +26,12 @@ function VoiceIndicator() {
     }, []);
 
     return (
-        <div class={style.voiceInfo}>
-            <Suspense fallback={<FallbackIcon class={style.icon}/>}>
-                {voiceMode === -1 && <MuteIcon class={style.icon} />}
-                {voiceMode === 0 && <WhisperIcon class={style.icon} />}
-                {voiceMode === 1 && <NormalIcon class={style.icon} />}
-                {voiceMode === 2 && <ShoutingIcon class={style.icon} />}
+        <div className={style.voiceInfo}>
+            <Suspense fallback={<FallbackIcon className={style.icon}/>}>
+                {voiceMode === -1 && <MuteIcon className={style.icon} />}
+                {voiceMode === 0 && <WhisperIcon className={style.icon} />}
+                {voiceMode === 1 && <NormalIcon className={style.icon} />}
+                {voiceMode === 2 && <ShoutingIcon className={style.icon} />}
             </Suspense>
         </div>
     )

@@ -1,8 +1,8 @@
-import {FunctionalComponent} from "preact";
 import style from "./style.module.css"
 import {fuelGauge} from "../../../types/vehicle";
+import {FunctionComponent} from "react";
 
-const FuelGauge: FunctionalComponent<fuelGauge> = ({value}) => {
+const FuelGauge: FunctionComponent<fuelGauge> = ({value}) => {
     const gaugeColor = () => {
         if (value <= 25) {
             return '#0e2e04'
@@ -14,7 +14,7 @@ const FuelGauge: FunctionalComponent<fuelGauge> = ({value}) => {
     }
 
     return (
-        <svg class={style.fuel} width="50" height="50">
+        <svg className={style.fuel} width="50" height="50">
             <path
                 d="M8.43982 33C4.50943 29.7974 2 24.9236 2 19.4648C2 9.81925 9.83502 2 19.5 2C29.165 2 37 9.81925 37 19.4648C37 24.9236 34.4906 29.7974 30.5602 33"
                 fill="none"

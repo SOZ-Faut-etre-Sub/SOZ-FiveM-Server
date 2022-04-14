@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "preact/hooks";
+import {useCallback, useEffect, useState, forwardRef} from "react";
 import PlayerNeeds from "./playerNeeds";
 import SpeedoMeter from "./speedometer";
 import VoiceIndicator from "./voiceIndicator";
@@ -9,6 +9,7 @@ import GameProvider from "../context/game";
 import Minimap from "./hud/minimap";
 import Notifications from "./hud/notifications";
 import NewsBanner from "./newsBanner";
+import Input from "./hud/input";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
                 <VoiceModeProvider>
                     <VehicleDataProvider>
                         <main style={{transition: "opacity .5s", opacity: displayHUD ? 1.0 : 0.0}}>
+                            <Input />
                             <Notifications />
                             <NewsBanner />
                             <Minimap />

@@ -1,14 +1,10 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
+        "target": "es6",
         "useDefineForClassFields": true,
-        "lib": [
-            "DOM",
-            "DOM.Iterable",
-            "ESNext"
-        ],
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "allowJs": false,
-        "skipLibCheck": true,
+        "skipLibCheck": false,
         "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
         "strict": true,
@@ -18,24 +14,12 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
-        "jsx": "preserve",
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment",
+        "jsx": "react-jsx",
         "paths": {
-            "@components/*": [
-                "./src/components/*"
-            ],
-            "@assets/*": [
-                "./src/assets/*"
-            ]
+            "@components/*": ["./src/components/*"],
+            "@assets/*": ["./src/assets/*"]
         }
     },
-    "include": [
-        "src"
-    ],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        }
-    ]
+    "include": ["src"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }
