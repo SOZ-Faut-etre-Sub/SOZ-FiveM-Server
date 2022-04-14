@@ -3,6 +3,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 local isOwned = false
 local isOwner = false
 local LastLocation = nil
+HouseData = nil
 
 Citizen.CreateThread(function()
     for item, zone in pairs(Config.PolyZone) do
@@ -17,16 +18,22 @@ Citizen.CreateThread(function()
                 {
                     label = "Acheter",
                     icon = "c:housing/acheter.png",
-                    event = "soz-housing:client:acheter",
                     canInteract = function()
                         TriggerServerEvent("soz-housing:server:isOwned", zone.name)
-                        return isOwned
+                        Wait(100)
+                        return not isOwned
+                    end,
+                    action = function()
+                        TriggerServerEvent("soz-housing:server:Data", zone.name)
                     end,
                 },                
                 {
                     label = "Visiter",
                     icon = "c:housing/visiter.png",
                     event = "soz-housing:client:visiter",
+                    canInteract = function()
+                        return not isOwner
+                    end,
                 },                
                 {
                     label = "Rentrer",
@@ -65,10 +72,24 @@ Citizen.CreateThread(function()
             coords = vector3(zone.x, zone.y, zone.z),
             sprite = 350,
             color = 5,
-            scale = 0.8,
+            scale = 0.5,
         })
     end
 end)
+
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 
 RegisterNetEvent("soz-housing:client:setOwner")
 AddEventHandler("soz-housing:client:setOwner", function(owner)
@@ -80,9 +101,10 @@ AddEventHandler("soz-housing:client:setOwned", function(owned)
     isOwned = owned
 end)
 
-RegisterNetEvent("soz-housing:client:acheter")
-AddEventHandler("soz-housing:client:acheter", function()
-    print("test")
+RegisterNetEvent("soz-housing:client:setData")
+AddEventHandler("soz-housing:client:setData", function(Data)
+    HouseData = Data
+    print(dump(Data))
 end)
 
 RegisterNetEvent("soz-housing:client:visiter")
