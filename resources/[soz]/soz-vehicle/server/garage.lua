@@ -1,5 +1,16 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local OutsideVehicles = {}
+local garage_props = GetHashKey("soz_prop_paystation")
+
+CreateThread(function()
+    for _, garage in pairs(Garages) do
+        if garage.type == "entreprise" then
+            local prop = CreateObjectNoOffset(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, true, true, false)
+            SetEntityHeading(prop, garage.blipcoord.w)
+            FreezeEntityPosition(prop, true)
+        end
+    end
+end)
 
 QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(source, cb, garage, type, category)
     local src = source
@@ -128,8 +139,13 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
     if type == "private" then
         parkingtime = os.time()
     end
-    MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
+    if type ~= "entreprise" then
+        MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
                         {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
+    else
+        MySQL.Async.execute("UPDATE player_vehicles SET license = NULL, citizenid = NULL, state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
+                        {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
+    end
 end)
 
 RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, garage)
@@ -140,6 +156,19 @@ RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, g
         plate,
     })
 end)
+
+
+RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
+    local src = source
+    local pData = QBCore.Functions.GetPlayer(src)
+    local cid = pData.PlayerData.citizenid
+    MySQL.Async.execute("UPDATE player_vehicles SET license = ?, citizenid = ? WHERE plate = ?", {
+        pData.PlayerData.license,
+        cid,
+        plate,
+    })
+end)
+
 
 RegisterNetEvent("qb-garages:server:UpdateOutsideVehicles", function(Vehicles)
     local src = source
@@ -199,6 +228,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleOwner", function(s
     end)
 end)
 
+-- POUR HOUSE
 QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerVehicles", function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
     local Vehicles = {}
@@ -249,60 +279,14 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerVehicles", function(s
     end)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:storageentreprise", function(source, cb, job)
+QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerEntreprise", function(source, cb)
     local src = source
-    local storage = {}
-    local result = MySQL.Sync.fetchAll("SELECT * FROM storage_entreprise WHERE job = ?", {job})
-    if result then
-        storage = result
-    end
-    cb(storage)
-end)
-
-RegisterNetEvent("soz-garage:server:addvehicleentreprise", function(vehicle, newlocation)
-    local src = source
-    local pData = QBCore.Functions.GetPlayer(src)
-    local cid = pData.PlayerData.citizenid
-    local job = pData.PlayerData.job.id
-    local plate = job .. tostring(math.random(10, 99))
-    if vehicle.stock > 0 then
-        MySQL.Async.insert("INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                           {
-            pData.PlayerData.license,
-            cid,
-            vehicle.vehicle,
-            GetHashKey(vehicle.vehicle),
-            "{}",
-            plate,
-            0,
-            os.time(),
-        })
-        MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock - 1 WHERE job = ? AND vehicle = ?", {
-            job,
-            vehicle.vehicle,
-        })
-        TriggerClientEvent("soz-concess:client:addvehicleentreprise", src, vehicle, newlocation, plate)
-    else
-        TriggerClientEvent("hud:client:DrawNotification", src, "Plus de stock", "error")
-    end
-end)
-
-RegisterNetEvent("soz-garage:server:delvehicleentreprise", function(plate)
-    local src = source
-    local pData = QBCore.Functions.GetPlayer(src)
-    local cid = pData.PlayerData.citizenid
-    local job = pData.PlayerData.job.id
-    local result = MySQL.Sync.fetchAll("SELECT vehicle FROM player_vehicles WHERE citizenid = ? AND plate = ?", {
-        cid,
-        plate,
-    })
-    if result[1] then
-        MySQL.Async.execute("DELETE FROM player_vehicles WHERE license = ? AND citizenid = ? AND vehicle = ?",
-                            {pData.PlayerData.license, cid, result[1].vehicle})
-        MySQL.Async.execute("UPDATE storage_entreprise SET stock = stock + 1 WHERE job = ? AND vehicle = ?", {
-            job,
-            result[1].vehicle,
-        })
-    end
-
+    local Player = QBCore.Functions.GetPlayer(src)
+    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE job = ?", {Player.PlayerData.job.id}, function(result)
+        if result[1] then
+            cb(result)
+        else
+            cb(nil)
+        end
+    end)
 end)
