@@ -111,7 +111,7 @@ exports["qb-target"]:SpawnPed({
             {
                 type = "client",
                 event = "soz-concessentreprise:client:Menu",
-                icon = "fas fa-car",
+                icon = "c:concess/lister.png",
                 label = "Demander la liste des véhicules",
                 targeticon = "fas fa-clipboard-list",
                 action = function(entity)
