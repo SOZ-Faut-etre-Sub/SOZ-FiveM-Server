@@ -15,17 +15,20 @@ end
 --- @return table
 function BankAtmAccount:load(id, owner)
     local created = false
+    local defaultMoney = 0
     local result = MySQL.Sync.fetchScalar("SELECT money FROM bank_accounts WHERE account_type = 'bank-atm' AND businessid = ?", {
         owner,
     })
     if result == nil then
+        local ownerType = GetOwnerType(owner)
+        defaultMoney = GetDefaultMoney(ownerType) or 0
         MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'bank-atm', ?)", {
             owner,
-            0,
+            defaultMoney,
         })
         created = true
     end
-    return result or 0, created -- TODO Add default
+    return result or defaultMoney, created
 end
 
 --- save
@@ -39,6 +42,22 @@ function BankAtmAccount:save(id, owner, amount, marked_money)
         owner,
     })
     return true
+end
+
+--- Get owner type based on businessid, eg. "bank_pacific1" => "pacific"
+--- @param businessid string
+--- @return string
+function GetOwnerType(businessid)
+    return string.match(string.match(businessid, "%a+%d"), "%a+")
+end
+
+--- Get default money amout for specified type of account (bank/ATM)
+---@param bankType string
+---@return number
+function GetDefaultMoney(bankType)
+    if Config.BankAtmDefault[bankType] ~= nil then
+        return Config.BankAtmDefault[bankType].maxMoney
+    end
 end
 
 --- Exports functions
