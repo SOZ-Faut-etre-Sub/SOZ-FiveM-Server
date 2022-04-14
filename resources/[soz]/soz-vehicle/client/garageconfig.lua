@@ -1247,7 +1247,7 @@ for indexpriv, prive in pairs(Zonesprives) do
                     {
                         type = "client",
                         event = "qb-garage:client:Menu",
-                        icon = "fas fa-receipt",
+                        icon = "c:garage/ParkingPrive.png",
                         label = "Accéder au parking privé",
                         targeticon = "fas fa-parking",
                         action = function(entity)
@@ -1278,7 +1278,7 @@ for indexpublic, public in pairs(Zonespublic) do
                     {
                         type = "client",
                         event = "qb-garage:client:Menu",
-                        icon = "fas fa-receipt",
+                        icon = "c:garage/ParkingPublic.png",
                         label = "Accéder au parking public",
                         targeticon = "fas fa-parking",
                         action = function(entity)
@@ -1309,7 +1309,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                     {
                         type = "client",
                         event = "qb-garage:client:Menu",
-                        icon = "fas fa-receipt",
+                        icon = "c:garage/Fourriere.png",
                         label = "Accéder à la fourrière",
                         targeticon = "fas fa-car-crash",
                         action = function(entity)
@@ -1340,7 +1340,7 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                     {
                         type = "client",
                         event = "qb-garage:client:Menu",
-                        icon = "fas fa-receipt",
+                        icon = "c:garage/GarageEntreprise.png",
                         label = "Accéder au parking entreprise",
                         targeticon = "fas fa-wrench",
                         action = function(entity)
