@@ -195,6 +195,12 @@ StonkJob.Permissions.CanBagsBeResold = function()
 end
 exports("CanBagsBeResold", StonkJob.Permissions.CanBagsBeResold)
 
+StonkJob.Permissions.CanFillIn = function()
+    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.FillIn)
+    return isOnDuty() and hasJobPermission
+end
+exports("CanFillIn", StonkJob.Permissions.CanFillIn)
+
 ---
 --- FARM
 ---
@@ -278,4 +284,9 @@ AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
     Citizen.CreateThread(function()
         StonkJob.Functions.ResaleBags()
     end)
+end)
+
+-- FILL IN
+AddEventHandler("soz-jobs:client:stonk-fill-in", function()
+    -- TODO
 end)

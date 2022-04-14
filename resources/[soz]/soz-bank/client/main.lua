@@ -54,6 +54,14 @@ CreateThread(function()
                                 return isInsideBankZone and exports["soz-jobs"]:CanBagsBeResold()
                             end,
                         },
+                        {
+                            label = "Remplir",
+                            icon = "c:stonk/remplir.png",
+                            event = "soz-jobs:client:stonk-fill-in",
+                            canInteract = function()
+                                return isInsideBankZone and exports["soz-jobs"]:CanFillIn()
+                            end,
+                        },
                     },
                     distance = 2.5,
                 },
