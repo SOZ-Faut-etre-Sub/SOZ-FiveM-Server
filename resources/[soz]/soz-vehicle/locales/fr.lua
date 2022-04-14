@@ -50,7 +50,7 @@ local Translations = {
         out = "Dehors",
         garaged = "Garé dans un parking",
         garagedentre = "Garé dans un parking entreprise",
-        impound = "En Fourrière"
+        impound = "En Fourrière",
     },
     info = {
         car_e = "~g~E~w~ - Garage",
