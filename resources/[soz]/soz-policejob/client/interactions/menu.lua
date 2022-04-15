@@ -134,7 +134,7 @@ local function WantedEntity(menu, job)
 
                     TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
                                        {type = job, message = name})
-                   menu:Close()
+                    menu:Close()
                 end,
             })
 
