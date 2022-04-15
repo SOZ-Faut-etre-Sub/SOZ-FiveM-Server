@@ -4,28 +4,7 @@ local haveGarbageBag, garbageBagProp = false, nil
 CreateThread(function()
     exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
                                     {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30}, {
-        options = {
-            {
-                type = "server",
-                event = "QBCore:ToggleDuty",
-                icon = "fas fa-sign-in-alt",
-                label = "Prise de service",
-                canInteract = function()
-                    return not PlayerData.job.onduty
-                end,
-                job = job,
-            },
-            {
-                type = "server",
-                event = "QBCore:ToggleDuty",
-                icon = "fas fa-sign-out-alt",
-                label = "Fin de service",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = job,
-            },
-        },
+        options = SozJobCore.Functions.GetDutyActions(),
         distance = 2.5,
     })
 
