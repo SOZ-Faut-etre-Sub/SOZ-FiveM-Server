@@ -35,7 +35,7 @@ end)
 
 --- Events
 RegisterNetEvent("police:client:getVehicleOwner", function(data)
-    QBCore.Functions.Progressbar("police:vehicle:check", "Vérification de la plaque en cours...", 5000, false, true,
+    QBCore.Functions.Progressbar("police:vehicle:check", "Vérification de la plaque en cours...", 8000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -60,7 +60,7 @@ RegisterNetEvent("police:client:getVehicleOwner", function(data)
 end)
 
 RegisterNetEvent("police:client:SearchVehicle", function(data)
-    QBCore.Functions.Progressbar("police:vehicle:check", "Vérification du coffre en cours...", 5000, false, true,
+    QBCore.Functions.Progressbar("police:vehicle:check", "Vérification du coffre en cours...", 8000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
