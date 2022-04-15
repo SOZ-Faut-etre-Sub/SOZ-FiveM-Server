@@ -319,7 +319,7 @@ Garages = {
     },
     ["bcso"] = {
         label = "BCSO",
-        blipcoord = vector4(1820.87, 3681.48, 33.28, 210.0),
+        blipcoord = vector4(1854.63, 3679.58, 32.83, 29.91),
         showBlip = false,
         blipName = "BCSO",
         blipNumber = 357,
