@@ -32,7 +32,7 @@ local function PropsEntity(menu)
         label = "Poser un objet",
         value = nil,
         values = {
-            {label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}},
+            {label = "Cone de circulation", value = {item = "cone", props = "prop_air_conelight", offset = -0.15}},
             {label = "Barrière", value = {item = "police_barrier", props = "prop_barrier_work05"}},
             {label = "Herse", value = {item = "spike"}},
         },
@@ -40,7 +40,7 @@ local function PropsEntity(menu)
             if value.item == "spike" then
                 TriggerServerEvent("police:server:placeSpike", value.item)
             else
-                TriggerServerEvent("job:server:placeProps", value.item, value.props)
+                TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation, value.offset)
             end
         end,
     })

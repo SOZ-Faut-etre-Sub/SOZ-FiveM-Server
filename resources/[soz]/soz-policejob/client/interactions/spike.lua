@@ -14,7 +14,7 @@ CreateThread(function()
         },
         distance = 2.5,
     })
-    exports["qb-target"]:AddTargetModel({"prop_barrier_work05"}, {
+    exports["qb-target"]:AddTargetModel({"prop_barrier_work05", "prop_air_conelight"}, {
         options = {
             {
                 label = "Démonter",
