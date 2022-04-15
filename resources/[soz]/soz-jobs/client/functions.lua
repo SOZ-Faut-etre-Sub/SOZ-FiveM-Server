@@ -4,7 +4,7 @@ SozJobCore.Functions.HasPermission = function(targetJobId, permission)
     return CheckJobPermission(targetJobId, PlayerData.job.id, PlayerData.job.grade, permission)
 end
 
-SozJobCore.Functions.GetDutyActions = function()
+SozJobCore.Functions.GetDutyActions = function(job)
     return {
         {
             type = "server",
@@ -26,7 +26,7 @@ SozJobCore.Functions.GetDutyActions = function()
             end,
             job = job,
         },
-   }
+    }
 end
 
 function CheckJobPermission(targetJobId, jobId, gradeId, permission)

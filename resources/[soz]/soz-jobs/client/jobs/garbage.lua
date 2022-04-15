@@ -3,10 +3,8 @@ local haveGarbageBag, garbageBagProp = false, nil
 
 CreateThread(function()
     exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
-                                    {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30}, {
-        options = SozJobCore.Functions.GetDutyActions(),
-        distance = 2.5,
-    })
+                                    {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30},
+                                    {options = SozJobCore.Functions.GetDutyActions("garbage"), distance = 2.5})
 
     exports["qb-target"]:AddBoxZone("garbage:cloakroom", vector3(-596.23, -1616.31, 33.01), 0.8, 10.8,
                                     {name = "garbage:cloakroom", heading = 355, minZ = 32.01, maxZ = 35.01}, {
