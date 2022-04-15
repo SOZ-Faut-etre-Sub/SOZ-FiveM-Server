@@ -11,7 +11,8 @@ IsInside = false
 
 Citizen.CreateThread(function()
     for item, zone in pairs(Config.PolyZone) do
-        exports["qb-target"]:AddBoxZone(zone.name, vector3(zone.x, zone.y, zone.z), zone.sx, zone.sy, {
+        exports["qb-target"]:AddBoxZone(zone.name, vector3(zone.x, zone.y, zone.z), zone.sx, zone.sy,
+                                        {
             name = zone.name,
             heading = zone.heading,
             minZ = zone.minZ,
@@ -34,7 +35,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent("soz-housing:server:BuildingShowAcheter", zone.name)
                         end
                     end,
-                },                
+                },
                 {
                     label = "Visiter",
                     icon = "c:housing/visiter.png",
@@ -46,7 +47,7 @@ Citizen.CreateThread(function()
                             return not isOwned
                         end
                     end,
-                },                
+                },
                 {
                     label = "Rentrer",
                     icon = "c:housing/entrer.png",
@@ -61,7 +62,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent("soz-housing:server:BuildingShowRentrer", zone.name)
                         end
                     end,
-                },                
+                },
                 {
                     label = "Garage",
                     icon = "c:housing/garage.png",
@@ -104,7 +105,7 @@ Citizen.CreateThread(function()
 end)
 
 function isTrailer(name)
-    if string.find(name, 'trailer') == nil then
+    if string.find(name, "trailer") == nil then
         return false
     else
         return true
