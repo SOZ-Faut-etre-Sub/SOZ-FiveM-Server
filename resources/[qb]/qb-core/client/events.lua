@@ -90,6 +90,14 @@ end)
 
 -- Other stuff
 
+RegisterNetEvent('QBCore:Client:SetDuty', function()
+    local ped = PlayerPedId()
+    local lib = "missheistdockssetup1clipboard@base"
+
+    QBCore.Functions.RequestAnimDict(lib)
+    TaskPlayAnim(ped, lib, "base", 8.0, -8.0, 4000, 49, 0, 1, 1, 1)
+end)
+
 RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
     QBCore.PlayerData = val
 end)
