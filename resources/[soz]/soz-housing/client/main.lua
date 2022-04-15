@@ -95,7 +95,7 @@ end)
 Citizen.CreateThread(function()
     for item, zone in pairs(Config.PolyZone) do
         QBCore.Functions.CreateBlip(zone.name, {
-            name = zone.name,
+            name = "Habitation",
             coords = vector3(zone.x, zone.y, zone.z),
             sprite = 350,
             color = 5,

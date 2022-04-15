@@ -69,3 +69,14 @@ Housing.Functions.Menu.ShowRentrer = function(Data)
         end
     end)
 end
+
+Housing.Functions.Menu.zkea = function()
+    Housing.Functions.Menu.GenerateMenu(function(menu)
+        menu:AddButton({
+            label = "Carte des habitations",
+            select = function()
+                TriggerServerEvent("shops:server:pay", "house_map", nil, 1)
+            end,
+        })
+    end)
+end
