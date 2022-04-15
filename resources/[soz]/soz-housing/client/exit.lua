@@ -17,7 +17,7 @@ Citizen.CreateThread(function()
                     action = function()
                         TriggerEvent("soz-housing:client:Exit")
                     end,
-                },                
+                },
             },
             distance = 2.5,
         })
