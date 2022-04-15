@@ -2214,4 +2214,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = ''
     },
+
+    -- zkea
+
+    ['house_map'] = {
+        ['name'] = 'house_map',
+        ['label'] = 'Carte des habitations',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
 }
