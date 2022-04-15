@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '@os/notifications/notifications.constants';
 import { phoneState } from './state';
@@ -8,7 +7,6 @@ import { phoneState } from './state';
 export const usePhoneVisibility = () => {
   const [visibility, setVisibility] = useRecoilState(phoneState.visibility);
   const { currentAlert } = useNotifications();
-  const [{ zoom }] = useSettings();
 
   const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
@@ -36,15 +34,8 @@ export const usePhoneVisibility = () => {
     }
   }, [currentAlert, visibility, setVisibility]);
 
-  const bottom = useMemo(() => {
-    if (!visibility) {
-      return `${-728 * zoom.value}px`;
-    }
-    return '0px';
-  }, [visibility, zoom]);
-
   return {
-    bottom,
-    visibility: notifVisibility || visibility,
+    visibility: visibility,
+    notifVisibility: notifVisibility,
   };
 };
