@@ -134,18 +134,21 @@ local function WantedEntity(menu, job)
 
                     TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
                                        {type = job, message = name})
+                   menu:Close()
                 end,
             })
 
             local wantedPlayers = QBCore.Functions.TriggerRpc("police:server:GetWantedPlayers")
             for _, wantedPlayer in pairs(wantedPlayers) do
-                menu:AddConfirm({
+                menu:AddButton({
                     label = wantedPlayer.message,
+                    description = "Retirer la personne de la liste",
                     value = wantedPlayer.id,
-                    confirm = function()
+                    select = function()
                         local deletion = QBCore.Functions.TriggerRpc("police:server:DeleteWantedPlayer", wantedPlayer.id)
                         if deletion then
                             exports["soz-hud"]:DrawNotification("Vous avez retiré ~b~" .. wantedPlayer.message .. " ~s~de la liste des personnes recherchées")
+                            menu:Close()
                         end
                     end,
                 })
