@@ -348,10 +348,10 @@ Garages = {
         job = "cash-transfer",
     },
     ["garbage"] = {
-        label = "Rogers",
-        blipcoord = vector4(-605.56, -1592.35, 25.75, 260.0),
+        label = "Blue Bird",
+        blipcoord = vector4(-581.97, -1584.41, 25.75, 323.46),
         showBlip = false,
-        blipName = "Rogers",
+        blipName = "Blue Bird",
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
