@@ -56,7 +56,7 @@ table.insert(migrations, {
                 ('soz_appartements_06', 'peaceful_street', 38000, -282.0, -722.95, 95.31, 51.66),
                 ('soz_appartements_07', NULL, 38000, -779.9, -770.87, 72.68, 178.04),
                 ('soz_appartements_08', 'san_andreas', 38000, -1012.87, -757.62, 45.45, 176.25),
-                ('soz_appartements_09', 'san_andres', 38000, -1013.12, -757.44, 36.32, 178.17),
+                ('soz_appartements_09', 'san_andreas', 38000, -1013.12, -757.44, 36.32, 178.17),
                 ('soz_appartements_10', NULL, 38000, 301.23, 113.4, 133.99, 248.25),
                 ('soz_appartements_11', 'elign', 38000, 108.78, -879.46, 122.26, 251.89),
                 ('soz_appartements_12', 'elign', 38000, 109.78, -865.98, 106.32, 68.81),

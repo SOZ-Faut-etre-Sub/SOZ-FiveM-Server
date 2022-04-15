@@ -10,8 +10,8 @@ RegisterNetEvent("soz-housing:server:isOwned")
 AddEventHandler("soz-housing:server:isOwned", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
     local HouseOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
-    local Coords = MySQL.query.await("SELECT `coordx`, `coordy`, `coordz`, `coordw` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
     if tablelenght(HouseOwner) == 1 then
+        local Coords = MySQL.query.await("SELECT `coordx`, `coordy`, `coordz`, `coordw` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
         for _, v in pairs(HouseOwner) do
             if v.owner ~= nil then
                 if v.owner == Player.PlayerData.citizenid then
@@ -21,6 +21,35 @@ AddEventHandler("soz-housing:server:isOwned", function(name)
                 end
             else
                 TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, false)
+            end
+        end
+    else
+        local BuildingOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `building` = @id", {["@id"] = name})
+        local isOwned = false
+        local isOwner = false
+        local count = 0
+        for _, v in pairs(BuildingOwner) do
+            if v.owner ~= nil then
+                count = count + 1
+            end
+            if v.owner == Player.PlayerData.citizenid then
+                isOwner = true
+            end
+        end
+        if count == tablelenght(BuildingOwner) then 
+            isOwned = true
+        end
+        if isOwner then
+            if isOwned then
+                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, true, true, nil)
+            else
+                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, false, true, nil)
+            end
+        else
+            if isOwned then
+                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, true, true, nil)
+            else
+                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, false, true, nil)
             end
         end
     end
@@ -33,11 +62,32 @@ AddEventHandler("soz-housing:server:ShowAcheter", function(name)
     TriggerClientEvent("soz-housing:client:Acheter", Player.PlayerData.source, HouseData)
 end)
 
+RegisterNetEvent("soz-housing:server:BuildingShowAcheter")
+AddEventHandler("soz-housing:server:BuildingShowAcheter", function(name)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` IS null", {["@id"] = name})
+    TriggerClientEvent("soz-housing:client:Acheter", Player.PlayerData.source, HouseData)
+end)
+
 RegisterNetEvent("soz-housing:server:ShowVendre")
 AddEventHandler("soz-housing:server:ShowVendre", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
     local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
     TriggerClientEvent("soz-housing:client:Vendre", Player.PlayerData.source, HouseData)
+end)
+
+RegisterNetEvent("soz-housing:server:BuildingShowVendre")
+AddEventHandler("soz-housing:server:BuildingShowVendre", function(name)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid", {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
+    TriggerClientEvent("soz-housing:client:Vendre", Player.PlayerData.source, HouseData)
+end)
+
+RegisterNetEvent("soz-housing:server:BuildingShowRentrer")
+AddEventHandler("soz-housing:server:BuildingShowRentrer", function(name)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid", {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
+    TriggerClientEvent("soz-housing:client:Rentrer", Player.PlayerData.source, HouseData)
 end)
 
 RegisterNetEvent("soz-housing:server:buy")
