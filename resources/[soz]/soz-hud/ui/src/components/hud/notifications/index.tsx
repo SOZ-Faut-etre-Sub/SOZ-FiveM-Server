@@ -1,5 +1,4 @@
-import {FunctionalComponent} from "preact";
-import {useCallback, useContext, useEffect, useState} from "preact/hooks";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {GameContext} from "../../../context/game";
 import style from './styles.module.css'
 import Notification from "./notification";
@@ -7,7 +6,7 @@ import {uuidv4} from "../../../utils/uuid";
 import {AdvancedNotification, BasicNotification} from "../../../types/notification";
 
 
-const Notifications: FunctionalComponent = () => {
+const Notifications = () => {
     const {minimap} = useContext(GameContext)
     const [notifications, setNotifications] = useState<(BasicNotification|AdvancedNotification)[]>([]);
 
@@ -38,7 +37,7 @@ const Notifications: FunctionalComponent = () => {
     }, []);
 
     return (
-        <div class={style.container} style={{
+        <div className={style.container} style={{
             top: `calc((100vh * ${minimap.topY}) - calc((100vh * ${minimap.height}) * 4) - .5rem )`,
             left: `calc(100vw * ${minimap.leftX})`,
             height: `calc((100vh * ${minimap.height}) * 4)`,

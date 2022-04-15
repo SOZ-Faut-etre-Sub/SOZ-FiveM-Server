@@ -1,13 +1,13 @@
-import {FunctionalComponent} from "preact";
+import {FunctionComponent} from 'react';
 import style from "./style.module.css"
 import {speedGauge} from "../../../types/vehicle";
 
-const SpeedGauge: FunctionalComponent<speedGauge> = ({value}) => {
+const SpeedGauge: FunctionComponent<speedGauge> = ({value}) => {
     const speed = value > 200 ? 200 : value
 
     return (
         <>
-            <svg class={style.gauge} width="100" height="100">
+            <svg className={style.gauge} width="100" height="100">
                 <path
                     d="M92 47.0775C92 22.1819 71.8528 2 47 2C22.1472 2 2 22.1819 2 47.0775C2 61.1597 8.44627 73.7337 18.5441 82"
                     fill="none"
@@ -30,8 +30,8 @@ const SpeedGauge: FunctionalComponent<speedGauge> = ({value}) => {
                     </linearGradient>
                 </defs>
             </svg>
-            <div class={style.display}>
-                <span class={style.speed}>{value}</span>
+            <div className={style.display}>
+                <span className={style.speed}>{value}</span>
                 <span>km/h</span>
             </div>
         </>

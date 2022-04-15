@@ -22,6 +22,7 @@ SozJobCore.JobType = {
 SozJobCore.JobPermission = {
     ManageGrade = "manage-grade",
     SocietyPrivateStorage = "society-private-storage",
+    SocietyBankAccount = "society-bank-account",
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags"},
 }
 
@@ -98,6 +99,7 @@ SozJobCore.Jobs = {
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
         },
     },
@@ -107,6 +109,7 @@ SozJobCore.Jobs = {
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
         },
     },
@@ -114,36 +117,54 @@ SozJobCore.Jobs = {
         label = "LSMC",
         grades = {},
         menuCallback = "lsmc:client:OpenSocietyMenu",
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.Taxi] = {
         label = "Taxi",
         grades = {},
         menuCallback = "taxi:client:OpenSocietyMenu",
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.Food] = {
         label = "Food & Drink",
         grades = {},
         menuCallback = "jobs:client:food:OpenSocietyMenu",
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.News] = {
         label = "Twitch News",
         grades = {},
         menuCallback = "jobs:client:news:OpenSocietyMenu",
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.Garbage] = {
         label = "Eboueur",
         grades = {},
         menuCallback = "jobs:client:garbage:OpenSocietyMenu",
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.Oil] = {
         label = "Pompiste",
         grades = {},
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.CashTransfer] = {
         label = "Transport de fond",
@@ -151,6 +172,7 @@ SozJobCore.Jobs = {
         menuCallback = "stonk:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.CashTransfer.CollectBags] = {label = "Collecte sacs d'argent"},
             [SozJobCore.JobPermission.CashTransfer.ResaleBags] = {label = "Déposer sacs d'argent"},
         },
@@ -158,12 +180,18 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Bennys] = {
         label = "Méchanicien",
         grades = {},
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
     [SozJobCore.JobType.Debug] = {
         label = "Debug job",
         grades = {},
-        permissions = {[SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"}},
+        permissions = {
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+        },
     },
 }
 

@@ -14,6 +14,7 @@ export const NotificationBar = () => {
 
     const home = useRouteMatch('/');
     const camera = useRouteMatch('/camera');
+    const call = useRouteMatch('/call');
     const {theme} = useContext(ThemeContext);
     const time = usePhoneTime();
 
@@ -26,6 +27,8 @@ export const NotificationBar = () => {
     const color = () => {
         if (home && home.isExact) {
             return 'text-white'
+        } else if (call && call.isExact) {
+            return 'text-white bg-white bg-opacity-30'
         } else if (camera && camera.isExact) {
             return 'bg-black text-white'
         } else {

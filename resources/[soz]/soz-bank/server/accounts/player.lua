@@ -40,7 +40,7 @@ function PlayerAccount:save(id, owner, amount, marked_money)
 
     MySQL.update.await("UPDATE bank_accounts SET money = ? WHERE accountid = ? AND citizenid = ?", {amount, id, owner})
     if Player then
-        TriggerClientEvent("phone:client:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), amount)
+        TriggerClientEvent("phone:client:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), id, amount)
     end
     return true
 end

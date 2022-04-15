@@ -1,8 +1,12 @@
 const generateItem = function(index, item) {
-  let iconHTML = `<i class="${item.icon}" data-id="${index}"></i>`
+  let iconHTML = '';
 
-  if (item.icon.startsWith('c:')) {
+  if (item.icon === undefined) {
+    iconHTML = `<i class="fas fa-question" data-id="${index}"></i>`
+  } else if (item.icon.startsWith('c:')) {
     iconHTML = `<img src="/html/img/${item.icon.substring(2)}" data-id="${index}" alt="" />`
+  } else {
+    iconHTML = `<i class="${item.icon}" data-id="${index}"></i>`
   }
 
   return `
@@ -15,7 +19,7 @@ const generateItem = function(index, item) {
 
 const removeTargetItems = function (targets) {
   targets.forEach(function (element) {
-    element.style.transform = `translateY(0) translateX(0)`
+    element.style.transform = `scale(0) translateY(0) translateX(0)`
     element.style.transitionDelay = '0s'
     element.style.opacity = '0'
   });
@@ -112,7 +116,7 @@ const Targeting = Vue.createApp({
         this.TargetHTML = "";
         this.Show = true;
         this.TargetEyeStyleObject.color = this.StandardColor;
-      }, targets.length > 0 ? 500 : 0);
+      }, targets.length > 0 ? 200 : 0);
     },
 
     CloseTarget() {
@@ -124,7 +128,7 @@ const Targeting = Vue.createApp({
         this.TargetEyeStyleObject.color = this.StandardColor;
         this.Show = false;
         this.CurrentIcon = this.StandardEyeIcon;
-      }, targets.length > 0 ? 500 : 0);
+      }, targets.length > 0 ? 200 : 0);
     },
 
     FoundTarget(items) {
@@ -146,15 +150,13 @@ const Targeting = Vue.createApp({
             const element = document.querySelector(`div.target-item[data-id="${index}"]`);
             if (element === null) return;
 
-            // element.style.top = `calc(120px * ${top})`
-            // element.style.left = `calc(120px * ${left})`
-            element.style.transform = `translateY(calc(120px * ${top})) translateX(calc(120px * ${left}))`
-            element.style.transitionDelay = `${index * .05}s`
+            element.style.transform = `scale(1) translateY(calc(120px * ${top})) translateX(calc(120px * ${left}))`
+            element.style.transitionDelay = `${index * .015}s`
             element.style.opacity = '1'
           }, 200)
         });
         this.TargetHTML = TargetLabel;
-      }, targets.length > 0 ? 500 : 0);
+      }, targets.length > 0 ? 200 : 0);
     },
 
     ValidTarget(items) {
@@ -174,7 +176,7 @@ const Targeting = Vue.createApp({
         this.TargetHTML = "";
         this.CurrentIcon = this.StandardEyeIcon;
         this.TargetEyeStyleObject.color = this.StandardColor;
-      }, targets.length > 0 ? 500 : 0);
+      }, targets.length > 0 ? 200 : 0);
     }
   }
 });

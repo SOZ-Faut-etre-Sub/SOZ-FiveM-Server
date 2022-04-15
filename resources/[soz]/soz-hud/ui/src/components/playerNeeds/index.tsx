@@ -1,10 +1,9 @@
-import {FunctionalComponent} from "preact";
 import style from './style.module.css'
-import {useCallback, useContext, useEffect} from "preact/hooks";
+import {useCallback, useContext, useEffect} from "react";
 import {PlayerContext} from "../../context/player";
 import PlayerStat from "../player/stats";
 
-const PlayerNeeds: FunctionalComponent = () => {
+const PlayerNeeds= () => {
     const {hunger, thirst, updateHealth, updateArmor, updateHunger, updateThirst} = useContext(PlayerContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
@@ -23,7 +22,7 @@ const PlayerNeeds: FunctionalComponent = () => {
     }, []);
 
     return (
-        <ul class={style.statues}>
+        <ul className={style.statues}>
             <PlayerStat
                 type="weed"
                 value={0}

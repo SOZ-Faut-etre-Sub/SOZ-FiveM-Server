@@ -145,8 +145,6 @@
         "MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
         "MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
         "FETCHED_MESSAGES_FAILED": "Impossible de retrouver les messages",
-        "DELETE_MESSAGE": "Supprimer",
-        "DELETE_MESSAGE_FAILED": "Impossible de supprimer le message",
         "DELETE_CONVERSATION_FAILED": "Impossible de supprimer la conversation"
       },
       "SEARCH_PLACEHOLDER": "Rechercher...",
@@ -217,7 +215,7 @@
     "APPS_CONTACTS": "Contacts",
     "APPS_MESSAGES": "Messages",
     "APPS_SETTINGS": "Paramètres",
-    "APPS_BANK": "Maze Banque",
+    "APPS_BANK": "Fleeca Banque",
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "Example app",
     "APPS_MARKETPLACE": "Marketplace",

@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_inv_safe", "soz", "safe-storage")
 local isInsideBankZone = false
@@ -42,7 +43,15 @@ CreateThread(function()
                             icon = "c:bank/compte_societe.png",
                             event = "banking:openSocietyBankScreen",
                             canInteract = function(entity, distance, data)
-                                return PlayerData.job.isboss and isInsideBankZone
+                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and isInsideBankZone
+                            end,
+                        },
+                        {
+                            label = "Vendre",
+                            icon = "c:stonk/vendre.png",
+                            event = "soz-jobs:client:stonk-resale-bag",
+                            canInteract = function()
+                                return isInsideBankZone and exports["soz-jobs"]:CanBagsBeResold()
                             end,
                         },
                     },

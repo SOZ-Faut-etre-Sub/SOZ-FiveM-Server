@@ -51,6 +51,9 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     PlaceObjectOnGroundProperly(playerPed)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
 
+    SetPedMaxHealth(playerPed, 200)
+    SetEntityHealth(playerPed, playerObject.PlayerData.metadata["health"])
+
     -- Make player visible
     SetFocusEntity(PlayerPedId())
     FreezeEntityPosition(PlayerPedId(), false)

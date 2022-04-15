@@ -31,7 +31,7 @@ CreateThread(function()
 
     exports["qb-target"]:AddBoxZone("bell:garbage", vector3(-616.73, -1621.55, 33.01), 0.25, 0.35,
                                     {name = "bell:garbage", heading = 355, minZ = 33.0, maxZ = 33.1}, {
-        options = callSociety("555-ROGERS"),
+        options = callSociety("555-BLUEBIRD"),
         distance = 2.5,
     })
 
