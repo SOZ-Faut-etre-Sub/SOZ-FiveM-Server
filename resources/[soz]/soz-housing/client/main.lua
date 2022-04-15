@@ -17,7 +17,7 @@ Citizen.CreateThread(function()
             heading = zone.heading,
             minZ = zone.minZ,
             maxZ = zone.maxZ,
-            debugPoly = true,
+            debugPoly = false,
         }, {
             options = {
                 {
