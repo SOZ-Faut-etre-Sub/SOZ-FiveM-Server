@@ -10,7 +10,7 @@ CreateThread(function()
 end)
 
 --- Add Object
-RegisterNetEvent("job:client:AddObject", function(objectHash, rotation)
+RegisterNetEvent("job:client:AddObject", function(objectHash, rotation, offset)
     local ped = PlayerPedId()
     local coords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 1.0, 0.0)
     local heading = GetEntityHeading(ped) + (rotation or 0.0)
@@ -22,10 +22,7 @@ RegisterNetEvent("job:client:AddObject", function(objectHash, rotation)
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
-        TriggerServerEvent("job:server:AddObject", objectHash, QBCore.Functions.GetProperGroundCoord(objectHash, coords, heading))
-    end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        TriggerServerEvent("job:server:AddObject", objectHash, QBCore.Functions.GetProperGroundCoord(objectHash, coords, heading, offset))
     end)
 end)
 
