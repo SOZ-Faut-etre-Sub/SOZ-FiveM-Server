@@ -367,6 +367,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "food",
     },
+    ["news"] = {
+        label = "Twitch News",
+        blipcoord = vector4(-539.4, -877.38, 24.24, 353.76),
+        showBlip = false,
+        blipName = "Twitch News",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "news",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",
