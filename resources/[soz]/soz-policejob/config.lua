@@ -13,7 +13,6 @@ Config.Locations = {
             coords = vector3(1856.15, 3681.68, 34.27),
         },
     },
-    ["moneychecker"] = {["lspd"] = vector3(587.51, 13.24, 75.70)},
 }
 
 Config.Cloakroom = {
