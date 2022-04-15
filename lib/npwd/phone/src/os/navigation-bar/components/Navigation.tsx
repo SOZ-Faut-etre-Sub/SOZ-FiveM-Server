@@ -8,11 +8,12 @@ export const Navigation = () => {
     const history = useHistory();
     const home = useRouteMatch('/');
     const camera = useRouteMatch('/camera');
+    const call = useRouteMatch('/call');
     const {setBarUncollapsed} = useNotifications();
     const {theme} = useContext(ThemeContext);
 
     const color = () => {
-        if ((camera && camera.isExact) || (home && home.isExact)) {
+        if ((camera && camera.isExact) || (home && home.isExact) || (call && call.isExact)) {
             return 'bg-gray-200'
         } else {
             return theme === 'dark' ? 'bg-gray-200' : 'bg-black'

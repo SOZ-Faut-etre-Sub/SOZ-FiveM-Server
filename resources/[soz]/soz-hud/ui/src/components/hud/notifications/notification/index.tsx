@@ -1,11 +1,10 @@
-import {ComponentProps, FunctionalComponent} from "preact";
-import {useEffect, useState} from "preact/hooks";
+import {FunctionComponent, PropsWithChildren, useEffect, useState} from "react";
 import style from './styles.module.css'
 import {formatText} from "../../../../utils/string";
 import {AdvancedNotification, BasicNotification} from "../../../../types/notification";
 import cn from "classnames";
 
-const Notification: FunctionalComponent<ComponentProps<any>> = ({ notification, onDelete }: {notification: BasicNotification|AdvancedNotification, onDelete: any}) => {
+const Notification: FunctionComponent<{notification: BasicNotification|AdvancedNotification, onDelete: any}> = ({ notification, onDelete }) => {
     const [isClosing, setIsClosing] = useState(false);
 
     useEffect(() => {
@@ -29,22 +28,22 @@ const Notification: FunctionalComponent<ComponentProps<any>> = ({ notification, 
     }
 
     return (
-        <div class={cn(style.notification, {
+        <div className={cn(style.notification, {
             // @ts-ignore
             [style[notification.style]]: notification.style !== undefined && style[notification.style] !== undefined,
             [style.slideOut]: isClosing,
             [style.slideIn]: !isClosing
         })}>
             {isAdvancedNotification(notification) && (
-                <div class={style.header}>
+                <div className={style.header}>
                     <img src={notification.image.startsWith("http") ? notification.image : `https://nui-img/${notification.image}/${notification.image}`}/>
-                    <div class={style.header_text}>
+                    <div className={style.header_text}>
                         <p dangerouslySetInnerHTML={{__html: formatText(notification.title)}} />
                         <p dangerouslySetInnerHTML={{__html: formatText(notification.subtitle)}} />
                     </div>
                 </div>
             )}
-            <p class={style.text} dangerouslySetInnerHTML={{__html: formatText(notification.message)}} />
+            <p className={style.text} dangerouslySetInnerHTML={{__html: formatText(notification.message)}} />
         </div>
     )
 }

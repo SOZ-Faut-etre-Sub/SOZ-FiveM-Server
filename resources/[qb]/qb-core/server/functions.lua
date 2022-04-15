@@ -23,6 +23,10 @@ function QBCore.Functions.GetIdentifier(source, idtype)
 end
 
 function QBCore.Functions.GetSozIdentifier(source)
+    if GetConvar("soz_disable_steam_credential", "false") == "true" then
+        return QBCore.Functions.GetIdentifier(source, 'license')
+    end
+
     local steamId = QBCore.Functions.GetIdentifier(source, 'steam')
 
     if not steamId then

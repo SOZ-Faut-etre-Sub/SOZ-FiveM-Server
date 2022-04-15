@@ -243,36 +243,6 @@ StonkJob.Functions.GetItemCountFromInventory = function()
     end
 end
 
-local playerInsideZone = false
-Citizen.CreateThread(function()
-    local ResaleZone = BoxZone:Create(vector3(-20.78, -709.35, 39.73), 224.0, 14.5, {
-        name = "stonk_resale",
-        heading = 25.0,
-        minZ = 39.8,
-        maxZ = 43.8,
-    })
-
-    ResaleZone:onPlayerInOut(function(isInside)
-        playerInsideZone = isInside
-    end)
-
-    for _, modelHash in ipairs(StonkConfig.Resale.TargetEntities) do
-        exports["qb-target"]:AddTargetModel(modelHash, {
-            options = {
-                {
-                    event = "soz-jobs:client:stonk-resale-bag",
-                    icon = "c:stonk/vendre.png",
-                    label = "Vendre",
-                    canInteract = function()
-                        return playerInsideZone and StonkJob.Permissions.CanBagsBeResold()
-                    end,
-                },
-            },
-            distance = 2.5,
-        })
-    end
-end)
-
 StonkJob.Functions.ResaleBags = function()
     local count = StonkJob.Functions.GetItemCountFromInventory()
     if not count or count < 1 then
@@ -294,12 +264,9 @@ StonkJob.Functions.ResaleBags = function()
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            Citizen.CreateThread(function()
-                TriggerServerEvent("soz-jobs:server:stonk-resale-bag", count)
-                exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
-                Citizen.Wait(1000)
-                StonkJob.Functions.ResaleBags()
-            end)
+            TriggerServerEvent("soz-jobs:server:stonk-resale-bag", count)
+            exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+            StonkJob.Functions.ResaleBags()
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
         end

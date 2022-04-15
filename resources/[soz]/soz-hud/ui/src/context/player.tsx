@@ -1,5 +1,4 @@
-import {createContext, FunctionalComponent} from "preact";
-import {useCallback, useMemo, useState} from "preact/hooks";
+import {createContext, useCallback, useMemo, useState, FunctionComponent, PropsWithChildren} from "react";
 
 export const PlayerContext = createContext({
     inVehicle: false,
@@ -14,7 +13,7 @@ export const PlayerContext = createContext({
     updateThirst: (v: number) => {},
 })
 
-const PlayerProvider: FunctionalComponent = ({children}) => {
+const PlayerProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) => {
     const [inVehicle, setInVehicle] = useState<boolean>(false)
     const [health, setHealth] = useState<number>(200)
     const [armor, setArmor] = useState<number>(0)

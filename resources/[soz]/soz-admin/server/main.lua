@@ -95,5 +95,5 @@ RegisterNetEvent("admin:server:kill", function(player)
 end)
 
 RegisterNetEvent("admin:server:revive", function(player)
-    TriggerClientEvent("soz_ems:client:Revive", player.id)
+    TriggerEvent("lsmc:server:revive", player.id)
 end)

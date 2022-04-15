@@ -84,9 +84,6 @@ local function ChooseCarModelsMenu(vehicule)
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", voiture["model"])
         end,
     })
-    VehiculeChoose:On("close", function()
-        VehiculeChoose:Close()
-    end)
 end
 
 local function OpenCarModelsMenu(category)
@@ -103,10 +100,6 @@ local function OpenCarModelsMenu(category)
     local eventmodelswitch = VehiculeModel:On("switch", function(item, currentItem, prevItem)
         clean()
         CarModels(currentItem.Value)
-    end)
-    VehiculeModel:On("close", function()
-        VehiculeModel:RemoveOnEvent("switch", eventmodelswitch)
-        VehiculeModel:Close()
     end)
     QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(vehiclestorage)
         for k, voiture in pairs(vehicules) do
@@ -162,6 +155,9 @@ local function OpenCarModelsMenu(category)
             end
 
         end
+    end)
+    VehiculeModel:On("close", function()
+        VehiculeModel:RemoveOnEvent("switch", eventmodelswitch)
     end)
 end
 
@@ -223,7 +219,7 @@ exports["qb-target"]:SpawnPed({
             {
                 type = "client",
                 event = "soz-concess:client:Menu",
-                icon = "fas fa-car",
+                icon = "c:concess/lister.png",
                 label = "Demander la liste des véhicules",
                 targeticon = "fas fa-clipboard-list",
                 action = function(entity)

@@ -10,19 +10,6 @@ local function GeneratePlate()
     end
 end
 
-QBCore.Functions.CreateCallback("soz-concess:server:getVehicles", function(source, cb)
-    local src = source
-    local player = QBCore.Functions.GetPlayer(src)
-    if player then
-        local vehicles = MySQL.Sync.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ?", {
-            player.PlayerData.citizenid,
-        })
-        if vehicles[1] then
-            cb(vehicles)
-        end
-    end
-end)
-
 QBCore.Functions.CreateCallback("soz-concess:server:getstock", function(source, cb)
     local vehiclestock = MySQL.Sync.fetchAll("SELECT * FROM concess_storage")
     if vehiclestock[1] then

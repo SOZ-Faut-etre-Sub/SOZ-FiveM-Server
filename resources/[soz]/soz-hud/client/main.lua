@@ -142,9 +142,13 @@ end
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     ForceCloseTextInputBox() -- Ensure last input is closed
     setHudDisplay(true)
-    QBCore.Functions.GetPlayerData(function(PlayerData)
-        HudPlayerStatus.hunger = PlayerData.metadata["hunger"]
-        HudPlayerStatus.thirst = PlayerData.metadata["thirst"]
+    QBCore.Functions.GetPlayerData(function(data)
+        setPlayerData({
+            health = data.metadata["health"],
+            hunger = data.metadata["hunger"],
+            thirst = data.metadata["thirst"],
+            armor = data.metadata["armor"],
+        })
     end)
 end)
 
