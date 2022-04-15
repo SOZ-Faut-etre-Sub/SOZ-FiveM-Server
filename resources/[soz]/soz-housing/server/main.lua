@@ -2,7 +2,9 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 function tablelenght(table)
     local count = 0
-    for _ in pairs(table) do count = count + 1 end
+    for _ in pairs(table) do
+        count = count + 1
+    end
     return count
 end
 
@@ -11,7 +13,9 @@ AddEventHandler("soz-housing:server:isOwned", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
     local HouseOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
     if tablelenght(HouseOwner) == 1 then
-        local Coords = MySQL.query.await("SELECT `coordx`, `coordy`, `coordz`, `coordw` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
+        local Coords = MySQL.query.await("SELECT `coordx`, `coordy`, `coordz`, `coordw` FROM `player_house` WHERE `identifier` = @id", {
+            ["@id"] = name,
+        })
         for _, v in pairs(HouseOwner) do
             if v.owner ~= nil then
                 if v.owner == Player.PlayerData.citizenid then
@@ -24,7 +28,9 @@ AddEventHandler("soz-housing:server:isOwned", function(name)
             end
         end
     else
-        local BuildingOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `building` = @id", {["@id"] = name})
+        local BuildingOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `building` = @id", {
+            ["@id"] = name,
+        })
         local isOwned = false
         local isOwner = false
         local count = 0
@@ -36,7 +42,7 @@ AddEventHandler("soz-housing:server:isOwned", function(name)
                 isOwner = true
             end
         end
-        if count == tablelenght(BuildingOwner) then 
+        if count == tablelenght(BuildingOwner) then
             isOwned = true
         end
         if isOwner then
@@ -65,7 +71,9 @@ end)
 RegisterNetEvent("soz-housing:server:BuildingShowAcheter")
 AddEventHandler("soz-housing:server:BuildingShowAcheter", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` IS null", {["@id"] = name})
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` IS null", {
+        ["@id"] = name,
+    })
     TriggerClientEvent("soz-housing:client:Acheter", Player.PlayerData.source, HouseData)
 end)
 
@@ -79,21 +87,24 @@ end)
 RegisterNetEvent("soz-housing:server:BuildingShowVendre")
 AddEventHandler("soz-housing:server:BuildingShowVendre", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid", {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid",
+                                        {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
     TriggerClientEvent("soz-housing:client:Vendre", Player.PlayerData.source, HouseData)
 end)
 
 RegisterNetEvent("soz-housing:server:BuildingShowRentrer")
 AddEventHandler("soz-housing:server:BuildingShowRentrer", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid", {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid",
+                                        {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
     TriggerClientEvent("soz-housing:client:Rentrer", Player.PlayerData.source, HouseData)
 end)
 
 RegisterNetEvent("soz-housing:server:buy")
 AddEventHandler("soz-housing:server:buy", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
-    local BuyOrder = MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id", {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
+    local BuyOrder = MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id",
+                                        {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
     TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, name, price)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation")
 end)

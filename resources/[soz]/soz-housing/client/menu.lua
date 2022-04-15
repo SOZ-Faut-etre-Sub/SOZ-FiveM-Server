@@ -3,7 +3,9 @@ Housing.Functions.Menu = {}
 Housing.Menus = {}
 
 CreateThread(function()
-    Housing.Menus["housing"] = {menu = MenuV:CreateMenu(nil, "Les habitations !", "menu_habitation", "soz", "housing:menu")}
+    Housing.Menus["housing"] = {
+        menu = MenuV:CreateMenu(nil, "Les habitations !", "menu_habitation", "soz", "housing:menu"),
+    }
 end)
 
 Housing.Functions.Menu.GenerateMenu = function(cb)
