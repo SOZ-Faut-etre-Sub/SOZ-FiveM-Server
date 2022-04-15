@@ -53,3 +53,17 @@ Housing.Functions.Menu.SellHousing = function(Data)
         end
     end)
 end
+
+Housing.Functions.Menu.ShowRentrer = function(Data)
+    Housing.Functions.Menu.GenerateMenu(function(menu)
+        for id, house in pairs(Data) do
+            menu:AddButton({
+                label = house.identifier,
+                select = function()
+                    TriggerEvent("soz-housing:client:BuildingRentrer", house.coordx, house.coordy, house.coordz, house.coordw)
+                    menu:Close()
+                end,
+            })
+        end
+    end)
+end
