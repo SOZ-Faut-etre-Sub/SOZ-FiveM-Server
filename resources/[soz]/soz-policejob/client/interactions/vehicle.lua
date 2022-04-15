@@ -7,6 +7,9 @@ CreateThread(function()
                 color = "lspd",
                 icon = "c:police/immatriculation.png",
                 event = "police:client:getVehicleOwner",
+                canInteract = function(player)
+                    return PlayerData.job.onduty
+                end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
@@ -14,6 +17,9 @@ CreateThread(function()
                 color = "lspd",
                 icon = "c:police/fouiller_vehicle.png",
                 event = "police:client:SearchVehicle",
+                canInteract = function(player)
+                    return PlayerData.job.onduty
+                end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             -- {
