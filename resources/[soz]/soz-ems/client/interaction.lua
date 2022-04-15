@@ -14,7 +14,7 @@ CreateThread(function()
             },
             {
                 label = "Soigner",
-                icon = "fas fa-heart",
+                icon = "c:ems/heal.png",
                 job = {["lsmc"] = 0},
                 canInteract = function()
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
@@ -35,7 +35,7 @@ CreateThread(function()
             },
             {
                 label = "Réanimer",
-                icon = "fas fa-bolt",
+                icon = "c:ems/revive.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
@@ -57,7 +57,7 @@ CreateThread(function()
             },
             {
                 label = "Réanimer",
-                icon = "fas fa-bolt",
+                icon = "c:ems/revive.png",
                 canInteract = function(entity)
                     return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
@@ -78,7 +78,7 @@ CreateThread(function()
             },
             {
                 label = "Prise de sang",
-                icon = "fas fa-bolt",
+                icon = "c:ems/take_blood.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
@@ -99,7 +99,7 @@ CreateThread(function()
                 end,
                 item = "empty_bloodbag",
             },
-            {
+            --[[{
                 label = "Soigner la grippe",
                 icon = "fas fa-bolt",
                 job = {["lsmc"] = 0},
@@ -120,7 +120,7 @@ CreateThread(function()
                     end)
                 end,
                 item = "empty_bloodbag",
-            },
+            },]]--
         },
         distance = 2.5,
     })

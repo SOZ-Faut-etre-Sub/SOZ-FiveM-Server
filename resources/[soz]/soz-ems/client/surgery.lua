@@ -21,7 +21,7 @@ CreateThread(function()
         options = {
             {
                 label = "Enlever un Poumon",
-                icon = "fas fa-file-invoice-dollar",
+                icon = "c:ems/remove_poumon.png",
                 job = {["lsmc"] = 0},
                 canInteract = function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery
@@ -43,7 +43,7 @@ CreateThread(function()
             },
             {
                 label = "Enlever un Rein",
-                icon = "fas fa-file-invoice-dollar",
+                icon = "c:ems/remove_rein.png",
                 job = {["lsmc"] = 0},
                 canInteract = function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery
@@ -65,7 +65,7 @@ CreateThread(function()
             },
             {
                 label = "Enlever le Foie",
-                icon = "fas fa-file-invoice-dollar",
+                icon = "c:ems/remove_foie.png",
                 job = {["lsmc"] = 0},
                 canInteract = function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery
