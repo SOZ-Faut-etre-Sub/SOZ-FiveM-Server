@@ -316,10 +316,9 @@ CreateThread(function()
         options = {
             {
                 type = "client",
-                icon = "fas fa-car-crash",
+                icon = "c:mechanic/Activer.png",
                 event = "soz-flatbed:client:callaction",
-                label = "Activer la rampe",
-                targeticon = "fas fa-truck-loading",
+                label = "Descendre",
                 action = function(entity)
                     if IsPedAPlayer(entity) then
                         return false
@@ -333,15 +332,35 @@ CreateThread(function()
                     if OnDuty == false or PlayerJob.id ~= "bennys" then
                         return false
                     end
-                    return true
+                    return not LastStatus
                 end,
             },
             {
                 type = "client",
-                icon = "fas fa-key",
+                icon = "c:mechanic/Desactiver.png",
+                event = "soz-flatbed:client:callaction",
+                label = "Relever",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    TriggerEvent("soz-flatbed:client:callaction", entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
+                        return false
+                    end
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return LastStatus
+                end,
+            },
+            {
+                type = "client",
+                icon = "c:mechanic/Attacher.png",
                 event = "soz-flatbed:client:callchaines",
-                label = "Chaînes du véhicule",
-                targeticon = "fas fa-truck-loading",
+                label = "Attacher",
                 action = function(entity)
                     if IsPedAPlayer(entity) then
                         return false
@@ -355,15 +374,35 @@ CreateThread(function()
                     if OnDuty == false or PlayerJob.id ~= "bennys" then
                         return false
                     end
-                    return true
+                    return not LastAttach
                 end,
             },
             {
                 type = "client",
-                icon = "fas fa-car-crash",
+                icon = "c:mechanic/Detacher.png",
+                event = "soz-flatbed:client:callchaines",
+                label = "Détacher",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    TriggerEvent("soz-flatbed:client:callchaines", entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
+                        return false
+                    end
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return LastAttach
+                end,
+            },
+            {
+                type = "client",
+                icon = "c:mechanic/Mettre.png",
                 event = "soz-flatbed:client:calltp",
-                label = "Mettre sur la rampe",
-                targeticon = "fas fa-dolly",
+                label = "Remorquer",
                 action = function(entity)
                     if IsPedAPlayer(entity) then
                         return false
