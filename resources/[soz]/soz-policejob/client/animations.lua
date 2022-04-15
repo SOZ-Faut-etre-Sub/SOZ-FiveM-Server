@@ -25,10 +25,10 @@ end)
 
 RegisterNetEvent("police:client:RedCall", function()
     local ped = PlayerPedId()
-    local lib = "oddjobs@hunter"
+    local lib = "oddjobs@assassinate@guard"
 
     QBCore.Functions.RequestAnimDict(lib)
-    TaskPlayAnim(ped, lib, "idle_a_call", 8.0, -8.0, 1500, 48, 0, 0, 0, 0)
+    TaskPlayAnim(ped, lib, "unarmed_earpiece_a", 8.0, -8.0, 6000, 48, 0, 1, 1, 1)
 end)
 
 PoliceJob.Animations.GetCuffed = function(playerId)
