@@ -31,7 +31,7 @@ end)
 
 --- Remove Object
 RegisterNetEvent("job:client:RemoveObject", function(data)
-    QBCore.Functions.Progressbar("remove_object", "Récupération en cours", 2500, false, true,
+    QBCore.Functions.Progressbar("remove_object", data.collect and "Récupération en cours" or "Démontage en cours", 2500, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
