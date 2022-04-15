@@ -4,7 +4,7 @@ local removalObject = {"prop_roadcone02a"}
 CreateThread(function()
     exports["qb-target"]:AddTargetModel(removalObject,
                                         {
-        options = {{label = "Supprimer l'objet", icon = "fas fa-times", event = "job:client:RemoveObject"}},
+        options = {{label = "Démonter", icon = "c:jobs/demonter.png", event = "job:client:RemoveObject"}},
         distance = 2.5,
     })
 end)
