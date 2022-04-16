@@ -105,3 +105,48 @@ EmsJob.Functions.Menu.MenuAccessIsValid = function(job)
     end
     return false
 end
+
+EmsJob.Functions.Menu.MenuOrgane = function(id)
+    menu:AddButton({
+        label = "Greffer un rein",
+        select = function()
+            QBCore.Functions.Progressbar("greffer", "Vous greffer un rein...", 60000, false, true,
+                                            {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+            TriggerServerEvent("lsmc:server:SetOrgane", id, "rein", true)
+            end)
+        end,
+    })
+    menu:AddButton({
+        label = "Greffer un poumon",
+        select = function()
+            QBCore.Functions.Progressbar("greffer", "Vous greffer un poumon...", 60000, false, true,
+                                            {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+            TriggerServerEvent("lsmc:server:SetOrgane", id, "poumon", true)
+            end)
+        end,
+    })
+    menu:AddButton({
+        label = "Greffer un foie",
+        select = function()
+            QBCore.Functions.Progressbar("greffer", "Vous greffer un foie...", 60000, false, true,
+                                            {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+            TriggerServerEvent("lsmc:server:SetOrgane", id, "foie", true)
+            end)
+        end,
+    })
+end
