@@ -34,7 +34,7 @@ CreateThread(function()
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                        local id = GetPlayerServerId(entity)
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                         TriggerServerEvent("lsmc:server:SetOrgane", id, "Poumon", true)
                     end)
                 end,
@@ -54,7 +54,7 @@ CreateThread(function()
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                        local id = GetPlayerServerId(entity)
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                         TriggerServerEvent("lsmc:server:SetOrgane", id, "Rein", true)
                     end)
                 end,
@@ -74,7 +74,7 @@ CreateThread(function()
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                        local id = GetPlayerServerId(entity)
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                         TriggerServerEvent("lsmc:server:SetOrgane", id, "Foie", true)
                     end)
                 end,
@@ -87,16 +87,8 @@ CreateThread(function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery
                 end,
                 action = function(entity)
-                    QBCore.Functions.Progressbar("greffer", "Vous greffer un " .. Greff .. "...", 10000, false, true,
-                                                 {
-                        disableMovement = true,
-                        disableCarMovement = true,
-                        disableMouse = false,
-                        disableCombat = true,
-                    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                        local id = GetPlayerServerId(entity)
-                        TriggerServerEvent("lsmc:server:SetOrgane", id, Greff, true)
-                    end)
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                        EmsJob.Functions.Menu.MenuOrgane(id)
                 end,
             },
         },
