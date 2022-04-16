@@ -30,8 +30,8 @@ const App = () => {
             <PlayerProvider>
                 <VoiceModeProvider>
                     <VehicleDataProvider>
+                        <Input />
                         <main style={{transition: "opacity .5s", opacity: displayHUD ? 1.0 : 0.0}}>
-                            <Input />
                             <Notifications />
                             <NewsBanner />
                             <Minimap />
