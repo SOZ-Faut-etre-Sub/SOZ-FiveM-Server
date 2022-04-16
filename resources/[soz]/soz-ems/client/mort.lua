@@ -126,7 +126,8 @@ CreateThread(function()
                     DrawRect(1.0, 1.0, 2.0, 0.25, 0, 0, 0, 255)
                     DrawRect(1.0, 0.0, 2.0, 0.25, 0, 0, 0, 255)
                     if not Callems then
-                        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler les services de secours", 255, 255, 255, 255)
+                        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler les services de secours", 255, 255, 255,
+                                255)
                     else
                         DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "Attendez que les services de secours viennent à vous", 255, 255, 255, 255)
                     end
