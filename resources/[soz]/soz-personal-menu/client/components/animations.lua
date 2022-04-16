@@ -29,6 +29,15 @@ local PlayWalking = function(animation)
     RemoveAnimSet(animation)
 end
 
+local forceApplyWalkStyle = function()
+    Wait(1000)
+    local walk = PlayerData.metadata.walk
+
+    if walk then
+        PlayWalking(walk)
+    end
+end
+
 GenerateAnimationList = function(menu, category, content)
     if type(category) ~= "number" then
         local categoryID = menu.UUID .. category
@@ -144,10 +153,9 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 end)
 
 RegisterNetEvent("soz_ems:client:Revive", function()
-    Wait(1000)
-    local walk = PlayerData.metadata.walk
+    forceApplyWalkStyle()
+end)
 
-    if walk then
-        PlayWalking(walk)
-    end
+RegisterNetEvent("personal:client:ApplyWalkStyle", function()
+    forceApplyWalkStyle()
 end)
