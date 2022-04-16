@@ -319,7 +319,7 @@ Garages = {
     },
     ["bcso"] = {
         label = "BCSO",
-        blipcoord = vector4(1820.87, 3681.48, 33.28, 210.0),
+        blipcoord = vector4(1854.63, 3679.58, 32.83, 29.91),
         showBlip = false,
         blipName = "BCSO",
         blipNumber = 357,
@@ -348,10 +348,10 @@ Garages = {
         job = "cash-transfer",
     },
     ["garbage"] = {
-        label = "Rogers",
-        blipcoord = vector4(-605.56, -1592.35, 25.75, 260.0),
+        label = "Blue Bird",
+        blipcoord = vector4(-581.97, -1584.41, 25.75, 323.46),
         showBlip = false,
-        blipName = "Rogers",
+        blipName = "Blue Bird",
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
@@ -366,6 +366,16 @@ Garages = {
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
         job = "food",
+    },
+    ["news"] = {
+        label = "Twitch News",
+        blipcoord = vector4(-539.4, -877.38, 24.24, 353.76),
+        showBlip = false,
+        blipName = "Twitch News",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "news",
     },
     --[[
     ["intairport"] = {
