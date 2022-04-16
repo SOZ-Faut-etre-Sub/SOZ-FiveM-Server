@@ -96,9 +96,9 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
                             end,
                             action = function()
                                 if not isBuilding then
-                                    TriggerServerEvent("soz-housing:server:ShowVendre", zone.identifier)
+                                    TriggerServerEvent("soz-housing:server:ShowVendre", name)
                                 else
-                                    TriggerServerEvent("soz-housing:server:BuildingShowVendre", zone.identifier)
+                                    TriggerServerEvent("soz-housing:server:BuildingShowVendre", name)
                                 end
                             end,
                         },
@@ -162,25 +162,44 @@ end)
 
 RegisterNetEvent("soz-housing:client:rentrer")
 AddEventHandler("soz-housing:client:rentrer", function()
-    player = PlayerPedId()
-    LastLocation = GetEntityCoords(player)
+    LastLocation = GetEntityCoords(PlayerPedId)
     IsInside = true
-    print(dump(coords))
     for item, Coord in pairs(coords) do
         local point = json.decode(Coord.teleport)
-        SetPedCoordsKeepVehicle(player, point.x, point.y, point.z, point.w)
+        QBCore.Functions.Progressbar("house_enter", "Ouvre la porte", 5000, false, true,
+                                     {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
+            StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+            SetPedCoordsKeepVehicle(PlayerPedId(), point.x, point.y, point.z, point.w)
+        end, function() -- Cancel
+            StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        end)
     end
 end)
 
 RegisterNetEvent("soz-housing:client:BuildingRentrer")
 AddEventHandler("soz-housing:client:BuildingRentrer", function(point)
-    player = PlayerPedId()
-    LastLocation = GetEntityCoords(player)
+    LastLocation = GetEntityCoords(PlayerPedId())
     IsInside = true
-    SetPedCoordsKeepVehicle(player, point.x, point.y, point.z, point.w)
+    QBCore.Functions.Progressbar("Building_enter", "Tape le code", 5000, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        SetPedCoordsKeepVehicle(PlayerPedId(), point.x, point.y, point.z, point.w)
+    end, function() -- Cancel
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+    end)
 end)
 
 RegisterNetEvent("soz-housing:client:garage")
 AddEventHandler("soz-housing:client:garage", function()
-    print("test")
+    print("en attente des garages de dark")
 end)
