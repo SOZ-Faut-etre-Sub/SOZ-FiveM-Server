@@ -3,8 +3,7 @@ AddEventHandler("soz-housing:client:SetExit", function(GlobalZone)
     Citizen.CreateThread(function()
         for item, zone in pairs(GlobalZone) do
             local exit = json.decode(zone.exit_zone)
-            exports["qb-target"]:AddBoxZone(zone.identifier .. "_exit", vector3(exit["x"], exit["y"], exit["z"]), exit["sx"], exit["sy"],
-                                            {
+            exports["qb-target"]:AddBoxZone(zone.identifier .. "_exit", vector3(exit["x"], exit["y"], exit["z"]), exit["sx"], exit["sy"], {
                 name = zone.identifier .. "_exit",
                 heading = exit["heading"],
                 minZ = exit["minZ"],
