@@ -52,23 +52,37 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         cb(false, "invalid_player")
+        return
     end
 
     local itemCount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nil, true)
     if itemCount < 1 then
         cb(false, "invalid_quantity")
+        return
     end
 
     local p = promise.new()
-    QBCore.Functions.TriggerCallback("banking:server:needRefill", source, function(result)
-        p:resolve(result)
+    QBCore.Functions.TriggerCallback("banking:server:needRefill", source, function(needRefill, currentAmount, missingAmount, accountId)
+        p:resolve({
+            needRefill = needRefill,
+            currentAmount = currentAmount,
+            missingAmount = missingAmount,
+            accountId = accountId,
+        })
     end, data)
-    local needRefill = Citizen.Await(p)
-    if not needRefill then
+    local result = Citizen.Await(p)
+    if not result.needRefill then
         cb(false, "invalid_money")
+        return
     end
 
-    -- TODO
-    --  - RemoveItem
-    --  - TransferMoney
+    Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, 1)
+
+    local amount = StonkConfig.FillIn.Amount
+    if amount > result.missingAmount then
+        amount = result.missingAmount
+    end
+    TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, result.accountId, amount)
+
+    cb(true)
 end)
