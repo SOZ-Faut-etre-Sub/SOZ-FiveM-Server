@@ -44,11 +44,17 @@ function BankAtmAccount:save(id, owner, amount, marked_money)
     return true
 end
 
---- Get owner type based on businessid, eg. "bank_pacific1" => "pacific"
+--- Get owner type based on businessid,
+---   eg. "bank_pacific1" => "pacific"
+---       "atm_big_123456" => "big"
 --- @param businessid string
 --- @return string
 function GetOwnerType(businessid)
-    return string.match(string.match(businessid, "%a+%d"), "%a+")
+    if string.match(businessid, "bank_%w+") then
+        return string.match(string.match(businessid, "%a+%d"), "%a+")
+    elseif string.match(businessid, "atm_%w+") then
+        return string.match(string.match(businessid, "_%w+_"), "%w+")
+    end
 end
 
 --- Get default money amout for specified type of account (bank/ATM)
