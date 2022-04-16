@@ -1,8 +1,9 @@
 import {News} from "../../../types/news";
 import {FunctionComponent, PropsWithChildren, useEffect, useState} from "react";
+import cn from "classnames";
 import styles from "./styles.module.css";
 
-const Banner: FunctionComponent<PropsWithChildren<any>> = ({ news, onDelete }: {news: News, onDelete: any}) => {
+const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDelete }: {index: number, news: News, onDelete: any}) => {
     const [isClosing, setIsClosing] = useState(false);
 
     useEffect(() => {
@@ -22,7 +23,13 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ news, onDelete }: {
     }, []);
 
     return (
-        <div className={`${styles.news} ${styles[news.type]} ${isClosing ? styles.slideOut : styles.slideIn}`}>
+        <div className={cn(styles.news, styles[news.type], {
+            [styles.slideOut]: isClosing,
+            [styles.slideIn]: !isClosing,
+        })} style={{
+            transform: `translateX(${index*0.5}rem) translateY(-${index*0.5}rem)`,
+            opacity: `calc(1.0 - ${index*0.3})`,
+        }}>
             <h3 className={styles.header}>
                 {/(lspd|bcso)/.test(news.type) ? 'Avis de recherche' : news.type}
             </h3>
