@@ -4,6 +4,7 @@ IsDead = false
 isInHospitalBed = false
 HospitalBedId = nil
 DeathTime = 0
+Callems = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     QBCore.Functions.CreateBlip("LSMC", {
@@ -58,6 +59,7 @@ function ResetAll()
     IsDead = false
     DeathTime = 0
     isInHospitalBed = false
+    Callems = false
 
     Rhume = false
     Grippe = false
