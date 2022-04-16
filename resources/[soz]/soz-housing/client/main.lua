@@ -75,7 +75,6 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
                                 if not isBuilding then
                                     TriggerEvent("soz-housing:client:rentrer")
                                 else
-                                    print('merde le isbuilding est casser')
                                     TriggerServerEvent("soz-housing:server:BuildingShowRentrer", name)
                                 end
                             end,
