@@ -45,14 +45,14 @@ QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, 
 end)
 
 QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb, data)
-    local maxMoney, accountMoney
+    local maxMoney, account
     if data.bank ~= nil then -- BANK
         local bankType = string.match(string.match(data.bank, "%a+%d"), "%a+")
-        maxMoney = Config.BankAtmDefault[bankType].maxMoney or 0
-        accountMoney = getBankAccount(data.bank) or 0
+        maxMoney = Config.BankAtmDefault[bankType].maxMoney
+        account = getBankAccount(data.bank)
     else -- ATM
-        maxMoney = Config.BankAtmDefault[data.atmType].maxMoney or 0
-        accountMoney = getAtmAccount(data.atmType, data.coords) or 0
+        maxMoney = Config.BankAtmDefault[data.atmType].maxMoney
+        account = getAtmAccount(data.atmType, data.coords)
     end
-    cb(accountMoney.money < maxMoney)
+    cb(account.money < maxMoney, account.money, maxMoney - account.money, account.id)
 end)

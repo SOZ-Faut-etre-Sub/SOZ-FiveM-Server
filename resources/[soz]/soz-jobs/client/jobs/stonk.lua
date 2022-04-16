@@ -288,7 +288,7 @@ end)
 
 -- FILL IN
 AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
-    QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", 3000, false, true,
+    QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", StonkConfig.FillIn.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -304,10 +304,22 @@ AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
             payload["atmType"] = data.atmType
         end
         QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-fill-in", function(success, reason)
-            -- TODO
+            if not success then
+                local messages = {
+                    ["invalid_quantity"] = "Vous n'avez pas de sacs d'argent sur vous",
+                    ["invalid_money"] = "Ce compte est déjà plein",
+                }
+                local message = messages[reason]
+                if messages[reason] == nil then
+                    message = string.format("Il y a eu une erreur: %s", reason)
+                end
+                exports["soz-hud"]:DrawNotification(message, "error")
+            else
+                exports["soz-hud"]:DrawNotification("Remplissage OK")
+            end
         end, payload)
 
     end, function()
-        -- TODO ON CANCEL
+        exports["soz-hud"]:DrawNotification("Vous avez interrompu le remplissage", "warning")
     end)
 end)
