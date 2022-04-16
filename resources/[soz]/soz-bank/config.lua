@@ -97,4 +97,6 @@ Config.BankPedLocations = {
 Config.BankAtmDefault = {
     ["pacific"] = {maxMoney = 600000},
     ["bank"] = {maxMoney = 100000},
+    ["big"] = {maxMoney = 20000},
+    ["small"] = {maxMoney = 5000},
 }
