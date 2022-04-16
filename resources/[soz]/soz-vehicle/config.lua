@@ -309,7 +309,7 @@ Garages = {
     },
     ["lspd"] = {
         label = "LSPD",
-        blipcoord = vector4(457.93, -1025.09, 27.42, 270.0),
+        blipcoord = vector4(598.88, 5.57, 69.61, 341.51),
         showBlip = false,
         blipName = "LSPD",
         blipNumber = 357,

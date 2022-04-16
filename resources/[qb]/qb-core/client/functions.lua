@@ -18,7 +18,7 @@ function QBCore.Functions.GetCoords(entity)
     return vector4(coords.x, coords.y, coords.z, heading)
 end
 
-function QBCore.Functions.GetProperGroundCoord(obj, position, heading)
+function QBCore.Functions.GetProperGroundCoord(obj, position, heading, offset)
     --- Generate ghost spike
     local object = CreateObject(obj, position.x, position.y, position.z, false)
     SetEntityVisible(object, false)
@@ -29,7 +29,7 @@ function QBCore.Functions.GetProperGroundCoord(obj, position, heading)
     position = GetEntityCoords(object)
     DeleteObject(object)
 
-    return vector4(position.x, position.y, position.z, heading)
+    return vector4(position.x, position.y, position.z + (offset or 0.0), heading)
 end
 
 function QBCore.Functions.HasItem(item)

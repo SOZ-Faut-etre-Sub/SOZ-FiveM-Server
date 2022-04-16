@@ -32,7 +32,7 @@ local function PropsEntity(menu)
         label = "Poser un objet",
         value = nil,
         values = {
-            {label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}},
+            {label = "Cone de circulation", value = {item = "cone", props = "prop_air_conelight", offset = -0.15}},
             {label = "Barrière", value = {item = "police_barrier", props = "prop_barrier_work05"}},
             {label = "Herse", value = {item = "spike"}},
         },
@@ -40,7 +40,7 @@ local function PropsEntity(menu)
             if value.item == "spike" then
                 TriggerServerEvent("police:server:placeSpike", value.item)
             else
-                TriggerServerEvent("job:server:placeProps", value.item, value.props)
+                TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation, value.offset)
             end
         end,
     })
@@ -134,18 +134,21 @@ local function WantedEntity(menu, job)
 
                     TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
                                        {type = job, message = name})
+                    menu:Close()
                 end,
             })
 
             local wantedPlayers = QBCore.Functions.TriggerRpc("police:server:GetWantedPlayers")
             for _, wantedPlayer in pairs(wantedPlayers) do
-                menu:AddConfirm({
+                menu:AddButton({
                     label = wantedPlayer.message,
+                    description = "Retirer la personne de la liste",
                     value = wantedPlayer.id,
-                    confirm = function()
+                    select = function()
                         local deletion = QBCore.Functions.TriggerRpc("police:server:DeleteWantedPlayer", wantedPlayer.id)
                         if deletion then
                             exports["soz-hud"]:DrawNotification("Vous avez retiré ~b~" .. wantedPlayer.message .. " ~s~de la liste des personnes recherchées")
+                            menu:Close()
                         end
                     end,
                 })

@@ -14,7 +14,7 @@ CreateThread(function()
         },
         distance = 2.5,
     })
-    exports["qb-target"]:AddTargetModel({"prop_barrier_work05"}, {
+    exports["qb-target"]:AddTargetModel({"prop_barrier_work05", "prop_air_conelight"}, {
         options = {
             {
                 label = "Démonter",
@@ -30,8 +30,8 @@ end)
 --- Events
 RegisterNetEvent("police:client:RequestAddSpike", function()
     local ped = PlayerPedId()
-    local entityCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 2.0, 0.0)
-    local entityHeading = GetEntityHeading(ped)
+    local entityCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.5, 0.0)
+    local entityHeading = GetEntityHeading(ped) + 90.0
 
     QBCore.Functions.Progressbar("spawn_object", "Lancement de la herse en cours", 2500, false, true,
                                  {
