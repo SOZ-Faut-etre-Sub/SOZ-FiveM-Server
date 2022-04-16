@@ -50,6 +50,7 @@ CreateThread(function()
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "défibrilateur")
                         ReviveId = GetPlayerServerId(entity)
+                        print(ReviveId)
                         TriggerServerEvent("lsmc:server:revive", ReviveId)
                     end)
                 end,

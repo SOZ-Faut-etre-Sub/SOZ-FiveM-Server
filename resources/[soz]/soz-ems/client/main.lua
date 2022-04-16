@@ -29,6 +29,7 @@ AddEventHandler("soz_ems:client:Revive", function()
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         IsDead = false
         SetEntityInvincible(player, false)
+        SetBlockingOfNonTemporaryEvents(player, false)
         IsEntityStatic(player, false)
     end
 
