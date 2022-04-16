@@ -13,36 +13,42 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     TriggerServerEvent("soz-housing:server:SetZone")
 end)
 
+TriggerServerEvent("soz-housing:server:SetZone")
 
 RegisterNetEvent("soz-housing:client:SetEntry")
 AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
-    print("merde")
     Citizen.CreateThread(function()
         for item, zone in pairs(GlobalZone) do
-            if item.entry_zone ~= nil then
+            local name = nil
+            if zone.building == nil then
+                name = zone.identifier
+            else
+                name = zone.building
+            end
+            if zone.entry_zone ~= nil then
                 local entry = json.decode(zone.entry_zone)
-                exports["qb-target"]:AddBoxZone(zone.identifier, vector3(entry["x"], entry["y"], entry["z"]), entry["sx"], entry["sy"],
+                exports["qb-target"]:AddBoxZone(name, vector3(entry["x"], entry["y"], entry["z"]), entry["sx"], entry["sy"],
                                                 {
-                    name = zone.identifier,
+                    name = name,
                     heading = entry["heading"],
                     minZ = entry["minZ"],
                     maxZ = entry["maxZ"],
-                    debugPoly = true,
+                    debugPoly = false,
                 }, {
                     options = {
                         {
                             label = "Acheter",
                             icon = "c:housing/acheter.png",
                             canInteract = function()
-                                TriggerServerEvent("soz-housing:server:isOwned", zone.identifier)
+                                TriggerServerEvent("soz-housing:server:isOwned", name)
                                 Wait(100)
                                 return not isOwned
                             end,
                             action = function()
                                 if not isBuilding then
-                                    TriggerServerEvent("soz-housing:server:ShowAcheter", zone.identifier)
+                                    TriggerServerEvent("soz-housing:server:ShowAcheter", name)
                                 else
-                                    TriggerServerEvent("soz-housing:server:BuildingShowAcheter", zone.identifier)
+                                    TriggerServerEvent("soz-housing:server:BuildingShowAcheter", name)
                                 end
                             end,
                         },
@@ -67,9 +73,10 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
                             end,
                             action = function()
                                 if not isBuilding then
-                                    TriggerClientEvent("soz-housing:client:rentrer")
+                                    TriggerEvent("soz-housing:client:rentrer")
                                 else
-                                    TriggerServerEvent("soz-housing:server:BuildingShowRentrer", zone.identifier)
+                                    print('merde le isbuilding est casser')
+                                    TriggerServerEvent("soz-housing:server:BuildingShowRentrer", name)
                                 end
                             end,
                         },
@@ -78,7 +85,7 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
                             icon = "c:housing/garage.png",
                             event = "soz-housing:client:garage",
                             canInteract = function()
-                                return isOwner and not isTrailer(zone.identifier)
+                                return isOwner and not isTrailer(name)
                             end,
                         },
                         {
@@ -105,7 +112,7 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
 end)
 
 RegisterNetEvent("soz-housing:client:SetBlip")
-AddEventHandler("soz-housing:client:SetBlip", function(owner, owned, building, coord)
+AddEventHandler("soz-housing:client:SetBlip", function(GlobalZone)
     Citizen.CreateThread(function()
         for item, zone in pairs(Config.PolyZone) do
             QBCore.Functions.CreateBlip(zone.identifier, {
@@ -159,15 +166,19 @@ AddEventHandler("soz-housing:client:rentrer", function()
     player = PlayerPedId()
     LastLocation = GetEntityCoords(player)
     IsInside = true
-    SetPedCoordsKeepVehicle(player, coords[1].coordx, coords[1].coordy, coords[1].coordz, coords[1].coordw)
+    print(dump(coords))
+    for item, Coord in pairs(coords) do
+        local point = json.decode(Coord.teleport)
+        SetPedCoordsKeepVehicle(player, point.x, point.y, point.z, point.w)
+    end
 end)
 
 RegisterNetEvent("soz-housing:client:BuildingRentrer")
-AddEventHandler("soz-housing:client:BuildingRentrer", function(coordx, coordy, coordz, coordw)
+AddEventHandler("soz-housing:client:BuildingRentrer", function(point)
     player = PlayerPedId()
     LastLocation = GetEntityCoords(player)
     IsInside = true
-    SetPedCoordsKeepVehicle(player, coordx, coordy, coordz, coordw)
+    SetPedCoordsKeepVehicle(player, point.x, point.y, point.z, point.w)
 end)
 
 RegisterNetEvent("soz-housing:client:garage")

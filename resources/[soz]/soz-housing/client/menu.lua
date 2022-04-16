@@ -59,10 +59,11 @@ end
 Housing.Functions.Menu.ShowRentrer = function(Data)
     Housing.Functions.Menu.GenerateMenu(function(menu)
         for id, house in pairs(Data) do
+            local point = json.decode(house.teleport)
             menu:AddButton({
                 label = house.identifier,
                 select = function()
-                    TriggerEvent("soz-housing:client:BuildingRentrer", house.coordx, house.coordy, house.coordz, house.coordw)
+                    TriggerEvent("soz-housing:client:BuildingRentrer", point)
                     menu:Close()
                 end,
             })
