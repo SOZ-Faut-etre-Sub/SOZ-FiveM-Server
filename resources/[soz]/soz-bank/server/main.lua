@@ -10,7 +10,8 @@ QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source
         else
             if string.find(account, "%d%d%u%d%d%d%d%u%d%d%d%d") then
                 account = Account(account)
-            elseif SozJobCore.Functions.HasPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount) then
+            elseif SozJobCore.Functions.HasPermission(account, Player.PlayerData.job.id, Player.PlayerData.job.grade,
+                                                      SozJobCore.JobPermission.SocietyBankAccount) then
                 account = Account(account)
             else
                 cb(nil)

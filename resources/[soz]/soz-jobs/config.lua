@@ -118,8 +118,8 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "lsmc:client:OpenSocietyMenu",
         permissions = {
-        [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
-        [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
         },
     },
     [SozJobCore.JobType.Taxi] = {
