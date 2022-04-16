@@ -288,7 +288,26 @@ end)
 
 -- FILL IN
 AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
-    local bank = data.bank
-    local coords = data.coords
-    -- TODO
+    QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", 3000, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
+
+        local payload = {}
+        if data.bank ~= nil then
+            payload["bank"] = data.bank
+        else
+            payload["coords"] = GetEntityCoords(data.entity)
+            payload["atmType"] = data.atmType
+        end
+        QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-fill-in", function(success, reason)
+            -- TODO
+        end, payload)
+
+    end, function()
+        -- TODO ON CANCEL
+    end)
 end)

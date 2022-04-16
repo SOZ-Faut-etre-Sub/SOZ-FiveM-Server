@@ -18,22 +18,41 @@ end
 local function GetAtmAccountName(atmType, atmCoordsHash)
     return string.format("atm_%s_%s", atmType, atmCoordsHash)
 end
+exports("GetAtmAccountName", GetAtmAccountName)
 
 function GetBankAccountName(bank)
     return string.format("bank_%s", bank)
 end
+exports("GetBankAccountName", GetBankAccountName)
 
-QBCore.Functions.CreateCallback("banking:server:getAtmMoney", function(source, cb, atmType, coords)
+local function getAtmAccount(atmType, coords)
     local coordsHash = GetAtmHashByCoords(coords)
     local accountName = GetAtmAccountName(atmType, coordsHash)
-    local account = GetOrCreateAccount(accountName)
-    -- TODO
+    return GetOrCreateAccount(accountName)
+end
+QBCore.Functions.CreateCallback("banking:server:getAtmMoney", function(source, cb, atmType, coords)
+    local account, _ = getAtmAccount(atmType, coords)
     cb(account.money)
 end)
 
-QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, cb, bank)
+local function getBankAccount(bank)
     local accountName = GetBankAccountName(bank)
-    local account = GetOrCreateAccount(accountName)
-    -- TODO
+    return GetOrCreateAccount(accountName)
+end
+QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, cb, bank)
+    local account, _ = getBankAccount(bank)
     cb(account.money)
+end)
+
+QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb, data)
+    local maxMoney, accountMoney
+    if data.bank ~= nil then -- BANK
+        local bankType = string.match(string.match(data.bank, "%a+%d"), "%a+")
+        maxMoney = Config.BankAtmDefault[bankType].maxMoney or 0
+        accountMoney = getBankAccount(data.bank) or 0
+    else -- ATM
+        maxMoney = Config.BankAtmDefault[data.atmType].maxMoney or 0
+        accountMoney = getAtmAccount(data.atmType, data.coords) or 0
+    end
+    cb(accountMoney.money < maxMoney)
 end)

@@ -46,3 +46,29 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function(nBags)
 
     TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.Price)
 end)
+
+-- FILL IN
+QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source, cb, data)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then
+        cb(false, "invalid_player")
+    end
+
+    local itemCount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nil, true)
+    if itemCount < 1 then
+        cb(false, "invalid_quantity")
+    end
+
+    local p = promise.new()
+    QBCore.Functions.TriggerCallback("banking:server:needRefill", source, function(result)
+        p:resolve(result)
+    end, data)
+    local needRefill = Citizen.Await(p)
+    if not needRefill then
+        cb(false, "invalid_money")
+    end
+
+    -- TODO
+    --  - RemoveItem
+    --  - TransferMoney
+end)
