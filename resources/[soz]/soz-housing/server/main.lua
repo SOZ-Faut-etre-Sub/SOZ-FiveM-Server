@@ -8,23 +8,31 @@ function tablelenght(table)
     return count
 end
 
+RegisterNetEvent("soz-housing:server:SetZone")
+AddEventHandler("soz-housing:server:SetZone", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    local GlobalZone = MySQL.query.await("SELECT * FROM `player_house`")
+    TriggerClientEvent("soz-housing:client:SetEntry", Player.PlayerData.source, GlobalZone)
+    TriggerClientEvent("soz-housing:client:SetExit", Player.PlayerData.source, GlobalZone)
+end)
+
 RegisterNetEvent("soz-housing:server:isOwned")
 AddEventHandler("soz-housing:server:isOwned", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
     local HouseOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
     if tablelenght(HouseOwner) == 1 then
-        local Coords = MySQL.query.await("SELECT `coordx`, `coordy`, `coordz`, `coordw` FROM `player_house` WHERE `identifier` = @id", {
+        local Coords = MySQL.query.await("SELECT `teleport` FROM `player_house` WHERE `identifier` = @id", {
             ["@id"] = name,
         })
         for _, v in pairs(HouseOwner) do
             if v.owner ~= nil then
                 if v.owner == Player.PlayerData.citizenid then
-                    TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, true, Coords)
+                    TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, true, false, Coords)
                 else
-                    TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, true, Coords)
+                    TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, true, false, Coords)
                 end
             else
-                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, false)
+                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, false, false)
             end
         end
     else
