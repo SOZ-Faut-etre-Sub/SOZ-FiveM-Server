@@ -153,7 +153,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             health = data.metadata["health"],
             hunger = data.metadata["hunger"],
             thirst = data.metadata["thirst"],
-            alcool = data.metadata["alcool"],
+            alcool = data.metadata["alcohol"],
             drug = data.metadata["drug"],
             armor = data.metadata["armor"],
         })
