@@ -6,12 +6,18 @@ CreateThread(function()
                 label = "Amender",
                 icon = "c:police/amender.png",
                 event = "police:client:InvoicePlayer",
+                canInteract = function(player)
+                    return PlayerData.job.onduty
+                end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Permis",
                 icon = "c:police/permis.png",
                 event = "police:client:LicensePlayer",
+                canInteract = function(player)
+                    return PlayerData.job.onduty
+                end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
@@ -19,7 +25,8 @@ CreateThread(function()
                 icon = "c:police/fouiller.png",
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
-                    return IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3)
+                    return PlayerData.job.onduty and
+                               (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -29,7 +36,8 @@ CreateThread(function()
                 event = "police:client:CuffPlayer",
                 item = "handcuffs",
                 canInteract = function(entity)
-                    return not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
+                               not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -39,7 +47,8 @@ CreateThread(function()
                 event = "police:client:UnCuffPlayer",
                 item = "handcuffs_key",
                 canInteract = function(entity)
-                    return IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
+                               not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -49,7 +58,8 @@ CreateThread(function()
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
-                    return Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and not IsPedInAnyVehicle(PlayerPedId())
+                    return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
+                               not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
             },

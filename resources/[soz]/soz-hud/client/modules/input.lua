@@ -15,6 +15,11 @@ RegisterNUICallback("input/close", function(data, cb)
 end)
 
 exports("Input", function(title, maxChar, content)
+    Wait(150)
+    if properties then
+        return
+    end
+
     properties = promise.new()
 
     SetNuiFocus(true, true)

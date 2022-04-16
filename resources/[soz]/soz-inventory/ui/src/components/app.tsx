@@ -38,6 +38,9 @@ const App = () => {
                 target: event.to.dataset.inventory,
                 item: event.item.dataset.item,
             })
+        }).then(res => res.json()).then(transfert => {
+            setPlayerInventoryItems(transfert.sourceInventory.items.map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
+            setTargetInventoryItems(transfert.targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
         });
     }, []);
 
@@ -53,7 +56,12 @@ const App = () => {
 
             setDisplay(true);
         } else if (event.data.action === "updateInventory") {
-            setTargetInventoryItems(event.data.targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
+            if (event.data.playerInventory !== undefined){
+                setPlayerInventoryItems(event.data.playerInventory.items.map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
+            }
+            if (event.data.targetInventory !== undefined) {
+                setTargetInventoryItems(event.data.targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
+            }
         }
     }, [setDisplay, setPlayerInventory, setTargetInventory, setPlayerInventoryItems, setTargetInventoryItems]);
 

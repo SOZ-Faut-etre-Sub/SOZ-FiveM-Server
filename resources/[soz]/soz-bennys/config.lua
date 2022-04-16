@@ -4,8 +4,6 @@ Config.AttachedVehicle = nil
 
 Config.Locations = {["exit"] = vector3(-211.91, -1323.98, 30.89), ["vehicle"] = vector4(-162.15, -1302.58, 31.32, 85.0)}
 
-Config.Vehicles = {["flatbed"] = "Flatbed", ["towtruck"] = "Towtruck", ["minivan"] = "Minivan"}
-
 Config.MaxStatusValues = {
     ["engine"] = 1000.0,
     ["body"] = 1000.0,

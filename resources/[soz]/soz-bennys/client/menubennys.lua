@@ -629,8 +629,6 @@ local function OpenExtrasMenu(menu)
                         ApplyExtra(i)
                     end,
                 })
-            else
-                menu:AddButton({label = "N/A"})
             end
         end
     end
@@ -653,12 +651,12 @@ local function OpenPlateIndexMenu(menu)
     local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
     local tempPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
     local plateTypes = {
-        "Blue on White #1",
-        "Yellow on Black",
-        "Yellow on Blue",
-        "Blue on White #2",
-        "Blue on White #3",
-        "North Yankton",
+        "Bleu sur Blanc #1",
+        "Jaune sur Noir",
+        "Jaune sur Bleu",
+        "Bleu sur Blanc #2",
+        "Bleu sur Blanc #3",
+        "Yankton Nord",
     }
     if GetVehicleClass(plyVeh) ~= 18 then
         for i = 0, #plateTypes - 1 do
@@ -969,13 +967,30 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         type = "client",
                         event = "QBCore:ToggleDuty",
                         icon = "fas fa-sign-in-alt",
-                        label = "Service",
-                        targeticon = "fas fa-wrench",
+                        label = "Prendre son service",
                         action = function(entity)
                             if IsPedAPlayer(entity) then
                                 return false
                             end
                             TriggerServerEvent("QBCore:ToggleDuty")
+                        end,
+                        canInteract = function()
+                            return not PlayerData.job.onduty
+                        end,
+                    },
+                    {
+                        type = "client",
+                        event = "QBCore:ToggleDuty",
+                        icon = "fas fa-sign-in-alt",
+                        label = "Finir son service",
+                        action = function(entity)
+                            if IsPedAPlayer(entity) then
+                                return false
+                            end
+                            TriggerServerEvent("QBCore:ToggleDuty")
+                        end,
+                        canInteract = function()
+                            return PlayerData.job.onduty
                         end,
                     },
                 },

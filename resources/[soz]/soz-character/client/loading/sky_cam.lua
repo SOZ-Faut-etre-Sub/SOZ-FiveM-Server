@@ -59,5 +59,4 @@ function ClearScreen()
     HideHudAndRadarThisFrame()
     ClearCloudHat()
     ClearOverrideWeather()
-    StartAudioScene("MP_LEADERBOARD_SCENE")
 end

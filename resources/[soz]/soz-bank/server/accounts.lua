@@ -184,7 +184,7 @@ RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]] 
         account = Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
     end
 
-    TriggerClientEvent("phone:client:bank:updateBalance", player.PlayerData.source, player.Functions.GetName(), account.money)
+    TriggerClientEvent("phone:client:bank:updateBalance", player.PlayerData.source, player.Functions.GetName(), account.id, account.money)
 end)
 
 --- Loops
@@ -220,3 +220,22 @@ AddEventHandler("onResourceStop", function(resource)
 end)
 
 _G.AccountType = {}
+
+local function GetMetrics()
+    local metrics = {}
+
+    for _, acc in pairs(Accounts) do
+        table.insert(metrics, {
+            id = acc.id,
+            label = acc.label,
+            type = acc.type,
+            owner = acc.owner,
+            money = acc.money,
+            marked_money = acc.marked_money,
+        })
+    end
+
+    return metrics
+end
+
+exports("GetMetrics", GetMetrics)

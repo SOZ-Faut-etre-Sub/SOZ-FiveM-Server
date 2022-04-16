@@ -25,8 +25,8 @@ const NewsBanner = () => {
 
     return (
         <div className={styles.container}>
-            {news.map(n => (
-                <Banner key={n.id} news={n} onDelete={() => deleteNews(n.id)} />
+            {news.map((n, i) => (
+                <Banner key={n.id} index={news.length - 1 - i} news={n} onDelete={() => deleteNews(n.id)} />
             ))}
         </div>
     )
