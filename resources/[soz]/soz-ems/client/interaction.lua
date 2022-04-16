@@ -28,7 +28,7 @@ CreateThread(function()
                 icon = "fas fa-file-invoice-dollar",
                 event = "lsmc:client:InvoicePlayer",
                 job = {["lsmc"] = 0},
-                canInteract = function()
+                canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
             },
@@ -36,8 +36,8 @@ CreateThread(function()
                 label = "Soigner",
                 icon = "c:ems/heal.png",
                 job = {["lsmc"] = 0},
-                canInteract = function()
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                canInteract = function(entity)
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Appliquer un bandage..", 10000, false, true,
@@ -58,19 +58,20 @@ CreateThread(function()
                 icon = "c:ems/revive.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
                 action = function(entity)
-                    QBCore.Functions.Progressbar("réanimer", "Vous réanimez la personne..", 10000, false, true,
+                    QBCore.Functions.Progressbar("Revive", "Vous réanimez la personne..", 10000, false, true,
                                                  {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
-                        TriggerServerEvent("lsmc:server:remove", "défibrilateur")
+                        TriggerServerEvent("lsmc:server:remove", "bloodbag")
                         local player = GetClosestPlayer()
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(player))
+                        TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(player))
                     end)
                 end,
                 item = "bloodbag",
@@ -82,16 +83,16 @@ CreateThread(function()
                     return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
                 action = function(entity)
-                    QBCore.Functions.Progressbar("réanimer", "Vous réanimez la personne..", 10000, false, true,
+                    QBCore.Functions.Progressbar("Revive", "Vous réanimez la personne..", 10000, false, true,
                                                  {
                         disableMovement = true,
                         disableCarMovement = true,
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
-                        TriggerServerEvent("lsmc:server:remove", "bloodbag")
-                        ReviveId = GetPlayerServerId(entity)
-                        TriggerServerEvent("lsmc:server:revive", ReviveId)
+                        TriggerServerEvent("lsmc:server:remove", "defibrillator")
+                        local player = GetClosestPlayer()
+                        TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(player))
                     end)
                 end,
                 item = "defibrillator",
@@ -101,10 +102,10 @@ CreateThread(function()
                 icon = "c:ems/take_blood.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
                 action = function(entity)
-                    QBCore.Functions.Progressbar("réanimer", "Vous faites une prise de sang...", 10000, false, true,
+                    QBCore.Functions.Progressbar("Take_Blood", "Vous faites une prise de sang...", 10000, false, true,
                                                  {
                         disableMovement = true,
                         disableCarMovement = true,

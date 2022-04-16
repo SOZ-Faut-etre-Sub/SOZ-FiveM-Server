@@ -157,6 +157,7 @@ CreateThread(function()
     end
 end)
 
-RegisterNetEvent("lsmc:client:ShowReasonMort", function(ReasonMort)
-    exports["soz-hud"]:DrawAdvancedNotification("LSMC", "Reason du coma", ReasonMort)
+RegisterNetEvent("lsmc:client:ShowReasonMort", function(TargetPlayer)
+    local death = TargetPlayer.PlayerData.metadata["mort"]
+    exports["soz-hud"]:DrawAdvancedNotification("LSMC", "Reason du coma", death)
 end)
