@@ -61,7 +61,20 @@ CreateThread(function()
                             bank = bank,
                             coords = coords,
                             canInteract = function()
-                                return isInsideBankZone and exports["soz-jobs"]:CanFillIn()
+                                local hasJobPermission = exports["soz-jobs"]:CanFillIn() and isInsideBankZone
+                                if not hasJobPermission then
+                                    return false
+                                end
+
+                                local p = promise.new()
+                                QBCore.Functions.TriggerCallback("banking:server:getBankMoney", function(money)
+                                    local bankType = string.match(string.match(bank, "%a+%d"), "%a+")
+                                    if money < Config.BankAtmDefault[bankType].maxMoney then
+                                        p:resolve(true)
+                                    end
+                                    p:resolve(false)
+                                end, bank)
+                                return Citizen.Await(p)
                             end,
                         },
                     },
@@ -79,6 +92,27 @@ CreateThread(function()
                     icon = "c:bank/compte_personal.png",
                     label = "Compte Personnel",
                     atmType = atmType,
+                },
+                {
+                    label = "Remplir",
+                    icon = "c:stonk/remplir.png",
+                    event = "soz-jobs:client:stonk-fill-in",
+                    atmType = atmType,
+                    canInteract = function(entity)
+                        local hasJobPermission = exports["soz-jobs"]:CanFillIn()
+                        if not hasJobPermission then
+                            return false
+                        end
+
+                        local p = promise.new()
+                        QBCore.Functions.TriggerCallback("banking:server:getAtmMoney", function(money)
+                            if money < Config.BankAtmDefault[atmType].maxMoney then
+                                p:resolve(true)
+                            end
+                            p:resolve(false)
+                        end, atmType, GetEntityCoords(entity))
+                        return Citizen.Await(p)
+                    end,
                 },
             },
             distance = 1.0,
