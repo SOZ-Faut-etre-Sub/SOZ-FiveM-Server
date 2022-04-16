@@ -1,5 +1,25 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
+local function GetClosestPlayer()
+    local closestPlayers = QBCore.Functions.GetPlayersFromCoords()
+    local closestDistance = -1
+    local closestPlayer = -1
+    local coords = GetEntityCoords(PlayerPedId())
+
+    for i=1, #closestPlayers, 1 do
+        if closestPlayers[i] ~= PlayerId() then
+            local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
+            local distance = #(pos - coords)
+
+            if closestDistance == -1 or closestDistance > distance then
+                closestPlayer = closestPlayers[i]
+                closestDistance = distance
+            end
+        end
+	end
+	return closestPlayer
+end
+
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
@@ -49,9 +69,8 @@ CreateThread(function()
                         disableCombat = true,
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "défibrilateur")
-                        ReviveId = GetPlayerServerId(entity)
-                        print(ReviveId)
-                        TriggerServerEvent("lsmc:server:revive", ReviveId)
+                        local player = GetClosestPlayer()
+                        TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(player))
                     end)
                 end,
                 item = "bloodbag",
