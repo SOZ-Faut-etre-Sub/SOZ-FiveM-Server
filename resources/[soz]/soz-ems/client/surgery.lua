@@ -87,8 +87,8 @@ CreateThread(function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery
                 end,
                 action = function(entity)
-                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                        EmsJob.Functions.Menu.MenuOrgane(id)
+                    local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    EmsJob.Functions.Menu.MenuOrgane(id)
                 end,
             },
         },
