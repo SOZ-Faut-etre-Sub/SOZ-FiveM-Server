@@ -48,6 +48,7 @@ function DeathTimer()
         Wait(1000)
         DeathTime = DeathTime - 1
         if IsControlPressed(0, 38) and hold <= 0 and not isInHospitalBed then
+            Callems = true
             TriggerEvent("soz-ems:client:callems")
             hold = 5
         end
@@ -105,7 +106,7 @@ CreateThread(function()
     while true do
         sleep = 1000
         if IsDead then
-            sleep = 5
+            sleep = 0
             local ped = PlayerPedId()
             DisableAllControlActions(0)
             EnableControlAction(0, 1, true)
@@ -123,7 +124,11 @@ CreateThread(function()
                 if DeathTime > 0 then
                     DrawRect(1.0, 1.0, 2.0, 0.25, 0, 0, 0, 255)
                     DrawRect(1.0, 0.0, 2.0, 0.25, 0, 0, 0, 255)
-                    DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler les services de secours", 255, 255, 255, 255)
+                    if not Callems then
+                        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour appeler les services de secours", 255, 255, 255, 255)
+                    else
+                        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "Attendez que les services de secours viennent à vous", 255, 255, 255, 255)
+                    end
                 end
             end
 
