@@ -111,10 +111,14 @@ end)
 RegisterNetEvent("soz-housing:server:buy")
 AddEventHandler("soz-housing:server:buy", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
-    local BuyOrder = MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id",
-                                        {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
-    TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, name, price)
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation")
+    local succes, reason = TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, name, price)
+    if succes then
+        local BuyOrder = MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id",
+                                            {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation")
+    else
+        exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+    end
 end)
 
 RegisterNetEvent("soz-housing:server:sell")
