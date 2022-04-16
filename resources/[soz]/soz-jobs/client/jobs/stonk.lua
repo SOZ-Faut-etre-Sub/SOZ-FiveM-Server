@@ -287,7 +287,7 @@ AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
 end)
 
 -- FILL IN
-AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
+StonkJob.Functions.FillIn = function(data)
     QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", StonkConfig.FillIn.Duration, false, true,
                                  {
         disableMovement = true,
@@ -295,7 +295,6 @@ AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
-
         local payload = {}
         if data.bank ~= nil then
             payload["bank"] = data.bank
@@ -316,10 +315,15 @@ AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
                 exports["soz-hud"]:DrawNotification(message, "error")
             else
                 exports["soz-hud"]:DrawNotification("Remplissage OK")
+                StonkJob.Functions.FillIn(data)
             end
         end, payload)
 
     end, function()
         exports["soz-hud"]:DrawNotification("Vous avez interrompu le remplissage", "warning")
     end)
+end
+
+AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
+    StonkJob.Functions.FillIn(data)
 end)
