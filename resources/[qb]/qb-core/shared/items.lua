@@ -1760,6 +1760,42 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Utile pour réanimer'
     },
+    ['poumon'] = {
+        ['name'] = 'poumon',
+        ['label'] = 'Poumon',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'poumon.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'C\'est gluant'
+    },
+    ['foie'] = {
+        ['name'] = 'foie',
+        ['label'] = 'Foie',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'foie.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'C\'est gluant'
+    },
+    ['rein'] = {
+        ['name'] = 'rein',
+        ['label'] = 'Rein',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['image'] = 'rein.png',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'C\'est gluant'
+    },
 
     ['garbagebag'] = {
         ['name'] = 'garbagebag',
