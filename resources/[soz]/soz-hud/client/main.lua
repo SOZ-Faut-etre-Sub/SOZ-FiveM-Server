@@ -14,7 +14,7 @@ local HudPlayerStatus = {
     --- @type number
     thirst = 100,
     --- @type number
-    alcool = 0,
+    alcohol = 0,
     --- @type number
     drug = 0,
 }
@@ -95,7 +95,7 @@ local function setPlayerData(data)
             armor = data.armor,
             hunger = data.hunger,
             thirst = data.thirst,
-            alcool = data.alcool,
+            alcohol = data.alcohol,
             drug = data.drug,
         })
     end
@@ -153,7 +153,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             health = data.metadata["health"],
             hunger = data.metadata["hunger"],
             thirst = data.metadata["thirst"],
-            alcool = data.metadata["alcohol"],
+            alcohol = data.metadata["alcohol"],
             drug = data.metadata["drug"],
             armor = data.metadata["armor"],
         })
@@ -173,8 +173,8 @@ RegisterNetEvent("hud:client:UpdateVoiceMode", function(mode)
 end)
 
 --- Keep same name as qb-hud
-RegisterNetEvent("hud:client:UpdateNeeds", function(newHunger, newThirst, newAlcool, newDrug)
-    setPlayerData({hunger = newHunger, thirst = newThirst, alcool = newAlcool, drug = newDrug})
+RegisterNetEvent("hud:client:UpdateNeeds", function(newHunger, newThirst, newAlcohol, newDrug)
+    setPlayerData({hunger = newHunger, thirst = newThirst, alcohol = newAlcohol, drug = newDrug})
 end)
 
 RegisterNetEvent("hud:client:UpdateSeatbelt", function(newState)
