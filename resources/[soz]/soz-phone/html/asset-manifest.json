@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/html/static/css/main.64b005a9.css",
-    "main.js": "/html/static/js/main.a5ff5bfe.js",
-    "static/js/406.2610cc84.chunk.js": "/html/static/js/406.2610cc84.chunk.js",
+    "main.css": "/html/static/css/main.73e8a5e4.css",
+    "main.js": "/html/static/js/main.e682ad5c.js",
+    "static/js/406.3dff4462.chunk.js": "/html/static/js/406.3dff4462.chunk.js",
     "static/js/228.5cc0c13b.chunk.js": "/html/static/js/228.5cc0c13b.chunk.js",
     "static/js/542.b49707f0.chunk.js": "/html/static/js/542.b49707f0.chunk.js",
     "static/js/61.f9a10d1e.chunk.js": "/html/static/js/61.f9a10d1e.chunk.js",
@@ -19,10 +19,12 @@
     "static/js/575.1b447610.chunk.js": "/html/static/js/575.1b447610.chunk.js",
     "static/js/870.9d276c90.chunk.js": "/html/static/js/870.9d276c90.chunk.js",
     "static/media/SF-Pro.ttf": "/html/static/media/SF-Pro.b9d2a6a34a7b2959d26f.ttf",
+    "static/media/carte_de_credit_soz.png": "/html/static/media/carte_de_credit_soz.1b317b6ffdd8807caf27.png",
+    "static/media/kredit-back.ttf": "/html/static/media/kredit-back.6ef236058cc7664806d9.ttf",
     "index.html": "/html/index.html"
   },
   "entrypoints": [
-    "static/css/main.64b005a9.css",
-    "static/js/main.a5ff5bfe.js"
+    "static/css/main.73e8a5e4.css",
+    "static/js/main.e682ad5c.js"
   ]
 }

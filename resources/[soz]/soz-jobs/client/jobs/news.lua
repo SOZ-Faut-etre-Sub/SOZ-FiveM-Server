@@ -10,6 +10,10 @@ CreateThread(function()
         distance = 1.5,
     })
 
+    exports["qb-target"]:AddBoxZone("news:duty", vector3(-587.75, -934.67, 23.82), 0.4, 0.8,
+                                    {name = "news:cloakroom", heading = 32, minZ = 23.72, maxZ = 24.32},
+                                    {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
+
     exports["qb-target"]:AddTargetModel(removalObject, {
         options = {
             {label = "Récupérer", icon = "c:jobs/recuperer.png", event = "job:client:RemoveObject", collect = true},

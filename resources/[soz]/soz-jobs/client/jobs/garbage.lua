@@ -2,6 +2,10 @@ local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_garbage", "soz", "garbag
 local haveGarbageBag, garbageBagProp = false, nil
 
 CreateThread(function()
+    exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
+                                    {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30},
+                                    {options = SozJobCore.Functions.GetDutyActions("garbage"), distance = 2.5})
+
     exports["qb-target"]:AddBoxZone("garbage:cloakroom", vector3(-596.23, -1616.31, 33.01), 0.8, 10.8,
                                     {name = "garbage:cloakroom", heading = 355, minZ = 32.01, maxZ = 35.01}, {
         options = {
@@ -67,25 +71,37 @@ end)
 RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
     societyMenu:ClearItems()
 
-    societyMenu:AddCheckbox({
-        label = "Afficher les points de collecte",
-        change = function(_, checked)
-            for binId, bin in pairs(GarbageConfig.BinLocation) do
-                if not QBCore.Functions.GetBlip("garbage_bin_" .. binId) then
-                    QBCore.Functions.CreateBlip("garbage_bin_" .. binId, {
-                        name = "Point de collecte",
-                        coords = bin,
-                        sprite = 365,
-                        color = 21,
-                    })
+    if PlayerData.job.onduty then
+        societyMenu:AddCheckbox({
+            label = "Afficher les points de collecte",
+            change = function(_, checked)
+                for binId, bin in pairs(GarbageConfig.BinLocation) do
+                    if not QBCore.Functions.GetBlip("garbage_bin_" .. binId) then
+                        QBCore.Functions.CreateBlip("garbage_bin_" .. binId, {
+                            name = "Point de collecte",
+                            coords = bin,
+                            sprite = 365,
+                            color = 21,
+                        })
+                    end
+
+                    QBCore.Functions.HideBlip("garbage_bin_" .. binId, not checked)
                 end
+            end,
+        })
+    else
+        societyMenu:AddButton({label = "Tu n'es pas en service !", disabled = true})
+    end
 
-                QBCore.Functions.HideBlip("garbage_bin_" .. binId, not checked)
-            end
-        end,
-    })
-
-    societyMenu:Open()
+    if societyMenu.IsOpen then
+        MenuV:CloseAll(function()
+            societyMenu:Close()
+        end)
+    else
+        MenuV:CloseAll(function()
+            societyMenu:Open()
+        end)
+    end
 end)
 
 RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
