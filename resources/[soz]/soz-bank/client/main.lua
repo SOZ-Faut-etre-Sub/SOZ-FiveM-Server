@@ -71,10 +71,14 @@ CreateThread(function()
         })
     end
 
-    exports["qb-target"]:AddTargetModel(Config.ATMModels, {
-        options = {{event = "banking:openATMScreen", icon = "c:bank/compte_personal.png", label = "Compte Personnel"}},
-        distance = 1.0,
-    })
+    for model, atmType in pairs(Config.ATMModels) do
+        exports["qb-target"]:AddTargetModel(model, {
+            options = {
+                {event = "banking:openATMScreen", icon = "c:bank/compte_personal.png", label = "Compte Personnel", atmType = atmType},
+            },
+            distance = 1.0,
+        })
+    end
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)
