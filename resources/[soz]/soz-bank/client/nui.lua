@@ -24,7 +24,7 @@ RegisterNetEvent("banking:openBankScreen", function()
 end)
 
 RegisterNetEvent("banking:openATMScreen", function(data)
-    QBCore.Functions.TriggerCallback("banking:server:getBankAtmAccount", function()
+    QBCore.Functions.TriggerCallback("banking:server:getAtmMoney", function()
         -- TODO
         openBankScreen(nil, true)
     end, data.atmType, GetEntityCoords(data.entity))
