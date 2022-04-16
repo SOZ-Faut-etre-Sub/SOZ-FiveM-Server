@@ -7,7 +7,7 @@ local function GetAtmHashByCoords(coords)
 end
 
 local function GetAtmAccountName(atmType, atmCoordsHash)
-   return string.format("atm_%s_%s", atmType, atmCoordsHash)
+    return string.format("atm_%s_%s", atmType, atmCoordsHash)
 end
 
 QBCore.Functions.CreateCallback("banking:server:getBankAtmAccount", function(source, cb, atmType, coords)

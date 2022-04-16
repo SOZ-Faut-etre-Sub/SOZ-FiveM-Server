@@ -74,7 +74,12 @@ CreateThread(function()
     for model, atmType in pairs(Config.ATMModels) do
         exports["qb-target"]:AddTargetModel(model, {
             options = {
-                {event = "banking:openATMScreen", icon = "c:bank/compte_personal.png", label = "Compte Personnel", atmType = atmType},
+                {
+                    event = "banking:openATMScreen",
+                    icon = "c:bank/compte_personal.png",
+                    label = "Compte Personnel",
+                    atmType = atmType,
+                },
             },
             distance = 1.0,
         })
