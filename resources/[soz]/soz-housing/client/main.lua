@@ -173,10 +173,8 @@ AddEventHandler("soz-housing:client:rentrer", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
-            StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
             SetPedCoordsKeepVehicle(PlayerPedId(), point.x, point.y, point.z, point.w)
         end, function() -- Cancel
-            StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         end)
     end
 end)
@@ -192,10 +190,8 @@ AddEventHandler("soz-housing:client:BuildingRentrer", function(point)
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         SetPedCoordsKeepVehicle(PlayerPedId(), point.x, point.y, point.z, point.w)
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
     end)
 end)
 

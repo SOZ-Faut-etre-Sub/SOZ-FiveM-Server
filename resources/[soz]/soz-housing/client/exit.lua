@@ -37,10 +37,8 @@ AddEventHandler("soz-housing:client:Exit", function()
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         SetPedCoordsKeepVehicle(PlayerPedId(), LastLocation)
     end, function() -- Cancel
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
     end)
     IsInside = false
 end)
