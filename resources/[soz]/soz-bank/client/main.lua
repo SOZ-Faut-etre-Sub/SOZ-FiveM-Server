@@ -59,7 +59,6 @@ CreateThread(function()
                             icon = "c:stonk/remplir.png",
                             event = "soz-jobs:client:stonk-fill-in",
                             bank = bank,
-                            coords = coords,
                             canInteract = function()
                                 local hasJobPermission = exports["soz-jobs"]:CanFillIn() and isInsideBankZone
                                 if not hasJobPermission then
