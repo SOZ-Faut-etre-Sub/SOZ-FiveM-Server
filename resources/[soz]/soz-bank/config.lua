@@ -74,7 +74,12 @@ Config.SafeStorages = {
     },
 }
 
-Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
+Config.ATMModels = {
+    ["prop_atm_01"] = "small",
+    ["prop_atm_02"] = "big",
+    ["prop_atm_03"] = "big",
+    ["prop_fleeca_atm"] = "big",
+}
 
 Config.BankPedLocations = {
     ["pacific1"] = vector4(243.63, 226.24, 106.29, 158.33),
