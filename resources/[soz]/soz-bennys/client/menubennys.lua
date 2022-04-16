@@ -967,13 +967,30 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         type = "client",
                         event = "QBCore:ToggleDuty",
                         icon = "fas fa-sign-in-alt",
-                        label = "Service",
-                        targeticon = "fas fa-wrench",
+                        label = "Prendre son service",
                         action = function(entity)
                             if IsPedAPlayer(entity) then
                                 return false
                             end
                             TriggerServerEvent("QBCore:ToggleDuty")
+                        end,
+                        canInteract = function()
+                            return not PlayerData.job.onduty
+                        end,
+                    },
+                    {
+                        type = "client",
+                        event = "QBCore:ToggleDuty",
+                        icon = "fas fa-sign-in-alt",
+                        label = "Finir son service",
+                        action = function(entity)
+                            if IsPedAPlayer(entity) then
+                                return false
+                            end
+                            TriggerServerEvent("QBCore:ToggleDuty")
+                        end,
+                        canInteract = function()
+                            return PlayerData.job.onduty
                         end,
                     },
                 },
