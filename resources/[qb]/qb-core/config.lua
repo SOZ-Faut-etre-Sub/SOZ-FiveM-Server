@@ -14,6 +14,8 @@ QBConfig.Player.MaxWeight = 80000 -- Max weight a player can carry (currently 12
 QBConfig.Player.MaxInvSlots = 30 -- Max inventory slots for a player
 QBConfig.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
 QBConfig.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
+QBConfig.Player.AlcoholRate = 3.8 -- Rate at which thirst goes down.
+QBConfig.Player.DrugRate = 2.0 -- Rate at which thirst goes down.
 QBConfig.Player.Bloodtypes = {
     "A+",
     "A-",
