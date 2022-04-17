@@ -1,5 +1,5 @@
 -- Ammu-Nation PolyZone Locations
-ShopLocation["ammunation"] = {
+Locations["ammunation"] = {
     [1] = BoxZone:Create(vector3(-662.83, -938.21, 21.83), 11.8, 7.8,
                          {name = "ammunation", heading = 0, minZ = 20.83, maxZ = 23.83, debugPoly = LocationDebugPoly}),
     [2] = BoxZone:Create(vector3(810.91, -2154.39, 29.62), 11.8, 7.8,
