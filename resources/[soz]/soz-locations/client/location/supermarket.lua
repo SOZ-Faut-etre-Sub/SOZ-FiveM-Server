@@ -1,5 +1,5 @@
 -- 24/7 PolyZone Locations
-ShopLocation["247supermarket"] = {
+Locations["247supermarket"] = {
     [1] = BoxZone:Create(vector3(29.16, -1345.45, 29.5), 7.2, 11.0,
                          {name = "247supermarket", heading = 0, minZ = 28.5, maxZ = 31.5, debugPoly = LocationDebugPoly}),
     [2] = BoxZone:Create(vector3(-3042.15, 588.45, 7.91), 7.2, 11.0,

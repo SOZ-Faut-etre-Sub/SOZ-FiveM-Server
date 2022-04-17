@@ -1,5 +1,5 @@
 -- Robs Liquor PolyZone Locations
-ShopLocation["robsliquor"] = {
+Locations["robsliquor"] = {
     [1] = BoxZone:Create(vector3(-1223.87, -906.37, 12.33), 8.4, 7.2,
                          {name = "robsliquor", heading = 34, minZ = 11.33, maxZ = 14.33, debugPoly = LocationDebugPoly}),
     [2] = BoxZone:Create(vector3(-1487.55, -380.17, 40.16), 8.4, 7.2,
