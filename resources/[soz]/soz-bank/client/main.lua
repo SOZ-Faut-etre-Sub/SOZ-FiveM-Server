@@ -65,15 +65,12 @@ CreateThread(function()
                                     return false
                                 end
 
-                                local p = promise.new()
-                                QBCore.Functions.TriggerCallback("banking:server:getBankMoney", function(money)
-                                    local bankType = string.match(string.match(bank, "%a+%d"), "%a+")
-                                    if money < Config.BankAtmDefault[bankType].maxMoney then
-                                        p:resolve(true)
-                                    end
-                                    p:resolve(false)
-                                end, bank)
-                                return Citizen.Await(p)
+                                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", bank)
+                                local bankType = string.match(string.match(bank, "%a+%d"), "%a+")
+                                if currentMoney < Config.BankAtmDefault[bankType].maxMoney then
+                                    return true
+                                end
+                                return false
                             end,
                         },
                     },
@@ -103,14 +100,11 @@ CreateThread(function()
                             return false
                         end
 
-                        local p = promise.new()
-                        QBCore.Functions.TriggerCallback("banking:server:getAtmMoney", function(money)
-                            if money < Config.BankAtmDefault[atmType].maxMoney then
-                                p:resolve(true)
-                            end
-                            p:resolve(false)
-                        end, atmType, GetEntityCoords(entity))
-                        return Citizen.Await(p)
+                        local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
+                        if currentMoney < Config.BankAtmDefault[atmType].maxMoney then
+                            return true
+                        end
+                        return false
                     end,
                 },
             },

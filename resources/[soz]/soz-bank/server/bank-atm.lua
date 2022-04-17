@@ -83,5 +83,10 @@ QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb
         maxMoney = Config.BankAtmDefault[data.atmType].maxMoney
         account = GetAtmAccount(data.atmType, data.coords)
     end
-    cb(account.money < maxMoney, account.money, maxMoney - account.money, account.id)
+    cb({
+        needRefill = account.money < maxMoney,
+        currentAmount = account.money,
+        missingAmount = maxMoney - account.money,
+        accountId = account.id
+    })
 end)

@@ -219,11 +219,10 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-collect-bag", function(success)
-                if success then
-                    StonkJob.CollectedShops[currentShop] = GetGameTimer()
-                end
-            end, nBags)
+            local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-collect-bag", nBags)
+            if success then
+                StonkJob.CollectedShops[currentShop] = GetGameTimer()
+            end
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
@@ -302,23 +301,22 @@ StonkJob.Functions.FillIn = function(data)
             payload["coords"] = GetEntityCoords(data.entity)
             payload["atmType"] = data.atmType
         end
-        QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-fill-in", function(success, reason)
-            if not success then
-                local messages = {
-                    ["invalid_quantity"] = "Vous n'avez pas de sacs d'argent sur vous",
-                    ["invalid_money"] = "Ce compte est déjà plein",
-                }
-                local message = messages[reason]
-                if messages[reason] == nil then
-                    message = string.format("Il y a eu une erreur: %s", reason)
-                end
-                exports["soz-hud"]:DrawNotification(message, "error")
-            else
-                exports["soz-hud"]:DrawNotification("Remplissage OK")
-                StonkJob.Functions.FillIn(data)
-            end
-        end, payload)
 
+        local success, reason = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-fill-in", payload)
+        if not success then
+            local messages = {
+                ["invalid_quantity"] = "Vous n'avez pas de sacs d'argent sur vous",
+                ["invalid_money"] = "Ce compte est déjà plein",
+            }
+            local message = messages[reason]
+            if messages[reason] == nil then
+                message = string.format("Il y a eu une erreur: %s", reason)
+            end
+            exports["soz-hud"]:DrawNotification(message, "error")
+        else
+            exports["soz-hud"]:DrawNotification("Remplissage OK")
+            StonkJob.Functions.FillIn(data)
+        end
     end, function()
         exports["soz-hud"]:DrawNotification("Vous avez interrompu le remplissage", "warning")
     end)
