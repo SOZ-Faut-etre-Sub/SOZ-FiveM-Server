@@ -216,6 +216,39 @@ Config.Cloakroom = {
     },
 }
 
+Config.PrisonerClothes = {
+    [GetHashKey("mp_m_freemode_01")] = {
+        Components = {
+            [1] = {Drawable = 0, Texture = 0, Palette = 0},
+            [3] = {Drawable = 0, Texture = 0, Palette = 0},
+            [4] = {Drawable = 3, Texture = 7, Palette = 0},
+            [5] = {Drawable = 0, Texture = 0, Palette = 0},
+            [6] = {Drawable = 12, Texture = 12, Palette = 0},
+            [7] = {Drawable = 0, Texture = 0, Palette = 0},
+            [8] = {Drawable = 15, Texture = 0, Palette = 0},
+            [9] = {Drawable = 0, Texture = 0, Palette = 0},
+            [10] = {Drawable = 0, Texture = 0, Palette = 0},
+            [11] = {Drawable = 146, Texture = 0, Palette = 0},
+        },
+        Props = {},
+    },
+    [GetHashKey("mp_f_freemode_01")] = {
+        Components = {
+            [1] = {Drawable = 0, Texture = 0, Palette = 0},
+            [3] = {Drawable = 2, Texture = 0, Palette = 0},
+            [4] = {Drawable = 3, Texture = 15, Palette = 0},
+            [5] = {Drawable = 0, Texture = 0, Palette = 0},
+            [6] = {Drawable = 66, Texture = 5, Palette = 0},
+            [7] = {Drawable = 0, Texture = 0, Palette = 0},
+            [8] = {Drawable = 3, Texture = 0, Palette = 0},
+            [9] = {Drawable = 0, Texture = 0, Palette = 0},
+            [10] = {Drawable = 0, Texture = 0, Palette = 0},
+            [11] = {Drawable = 38, Texture = 3, Palette = 0},
+        },
+        Props = {},
+    },
+}
+
 Config.WeaponShop = {
     ["lspd"] = {
         [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
