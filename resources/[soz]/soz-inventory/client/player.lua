@@ -5,7 +5,11 @@ local function MoneyMenu()
     local moneyMenu = MenuV:InheritMenu(inventoryMenu, {Subtitle = "Argent"})
     local playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"]
 
-    inventoryMenu:AddButton({label = "Votre argent", rightLabel = playerMoney .. "$", value = moneyMenu})
+    inventoryMenu:AddButton({
+        label = "Votre argent",
+        rightLabel = QBCore.Shared.GroupDigits(playerMoney) .. "$",
+        value = moneyMenu,
+    })
 
     local function giveMoney(button)
         local player, distance = QBCore.Functions.GetClosestPlayer()
