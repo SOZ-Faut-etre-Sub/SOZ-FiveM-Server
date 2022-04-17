@@ -16,9 +16,9 @@ Config.ErrorMessage = {
     ["no_account_money"] = "Le compte ne possède pas assez d'argent !",
     ["invalid_liquidity"] = "Liquidité insuffisante à ce terminal",
     ["max_widthdrawal_limit"] = "Vous ne pouvez pas retirer plus de ~b~$%s~s~ depuis ce terminal",
-    ["limit"] = "Limite de retait atteinte : max. ~b~$%s~s~ par tranche de %s minutes. ",
-    ["withdrawal_limit"] = "~b~$%s~s~ restant.",
-    ["time_limit"] = "~b~%s minutes~s~ restantes.",
+    ["limit"] = "Limite de retait atteinte : max. ~b~$%i~s~ par tranche de %i minutes. ",
+    ["withdrawal_limit"] = "~b~$%i~s~ retirables.",
+    ["time_limit"] = "~b~%i minutes~s~ restantes.",
 }
 
 Config.FarmAccountMoney = {
@@ -108,16 +108,16 @@ Config.BankAtmDefault = {
     ["bank"] = {
         maxMoney = 100000,
         maxWithdrawal = 10000,
-        limit = 10000, -- in ms
+        limit = 600000, -- in ms
     },
     ["big"] = {
         maxMoney = 20000,
         maxWithdrawal = 1000,
-        limit = 10000, -- in ms
+        limit = 600000, -- in ms
     },
     ["small"] = {
         maxMoney = 5000,
         maxWithdrawal = 500,
-        limit = 10000, -- in ms
+        limit = 600000, -- in ms
     },
 }

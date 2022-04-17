@@ -87,6 +87,6 @@ QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb
         needRefill = account.money < maxMoney,
         currentAmount = account.money,
         missingAmount = maxMoney - account.money,
-        accountId = account.id
+        accountId = account.id,
     })
 end)

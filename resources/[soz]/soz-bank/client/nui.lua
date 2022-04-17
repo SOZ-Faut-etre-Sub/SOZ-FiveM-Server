@@ -95,32 +95,24 @@ RegisterNUICallback("doWithdraw", function(data, cb)
     local terminalType = QBCore.Functions.TriggerRpc("banking:server:GetTerminalType", data.bankAtmAccount)
     local terminalConfig = Config.BankAtmDefault[terminalType]
     if amount > terminalConfig.maxWithdrawal then
-        exports["soz-hud"]:DrawNotification(
-            string.format(Config.ErrorMessage["max_widthdrawal_limit"], terminalConfig.maxWithdrawal),
-            "error"
-        )
+        exports["soz-hud"]:DrawNotification(string.format(Config.ErrorMessage["max_widthdrawal_limit"], terminalConfig.maxWithdrawal), "error")
         return
     end
 
     local lastUse = UsedBankAtm[data.bankAtmAccount]
     if lastUse ~= nil then
-        local limit = string.format(Config.ErrorMessage["limit"], terminalConfig.maxWithdrawal, terminalConfig.limit / 1000)
-        if lastUse.lastUsed + terminalConfig.limit < GetGameTimer() then
-            if amount > terminalConfig.maxWithdrawal - lastUse.amountWithdrawn then
-                exports["soz-hud"]:DrawNotification(
-                    limit .. string.format(Config.ErrorMessage["withdrawal_limit"], terminalConfig.maxWithdrawal - lastUse.amountWithdrawn),
-                    "error"
-                )
+        local amountAvailableForWithdraw = terminalConfig.maxWithdrawal - lastUse.amountWithdrawn
+        local remainingTime = terminalConfig.limit + lastUse.lastUsed - GetGameTimer()
+
+        local limit = string.format(Config.ErrorMessage["limit"], terminalConfig.maxWithdrawal, terminalConfig.limit / 60000)
+        if remainingTime > 0 then
+            if amountAvailableForWithdraw == 0 then
+                exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["time_limit"], math.ceil(remainingTime / 60000)), "error")
+                return
+            elseif amount > amountAvailableForWithdraw then
+                exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["withdrawal_limit"], amountAvailableForWithdraw), "error")
                 return
             end
-        else
-            local remainingTime = GetGameTimer() - lastUse.lastUsed + terminalConfig.limit
-            remainingTime = math.ceil(remainingTime / 60000)
-            exports["soz-hud"]:DrawNotification(
-                limit .. string.format(Config.ErrorMessage["time_limit"], remainingTime),
-                "error"
-            )
-            return
         end
     end
 
@@ -145,10 +137,11 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
                 TriggerServerEvent("banking:server:RemoveLiquidity", data.bankAtmAccount, amount)
-                UsedBankAtm[data.bankAtmAccount] = {
-                    lastUsed = GetGameTimer(),
-                    amountWithdrawn = (lastUse.amountWithdrawn or 0) + newAmount,
-                }
+                local newAmount = amount
+                if lastUse and lastUse.amountWithdrawn then
+                    newAmount = amount + lastUse.amountWithdrawn
+                end
+                UsedBankAtm[data.bankAtmAccount] = {lastUsed = GetGameTimer(), amountWithdrawn = newAmount}
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
