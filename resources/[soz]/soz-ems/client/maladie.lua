@@ -59,7 +59,7 @@ end
 CreateThread(function()
     while true do
         local Player = QBCore.Functions.GetPlayerData()
-        Wait(1000000)
+        Wait(1000 * 60 * 15)
         Random = math.random(1, 1000)
         if not IsDead and not Player.metadata.godmode then
             -- maladie
