@@ -15,6 +15,10 @@ Config.ErrorMessage = {
     ["transfert_failed"] = "Le transfer a subis une erreur !",
     ["no_account_money"] = "Le compte ne possède pas assez d'argent !",
     ["invalid_liquidity"] = "Liquidité insuffisante à ce terminal",
+    ["max_widthdrawal_limit"] = "Vous ne pouvez pas retirer plus de ~b~$%s~s~ depuis ce terminal",
+    ["limit"] = "Limite de retait atteinte : max. ~b~$%s~s~ par tranche de %s minutes. ",
+    ["withdrawal_limit"] = "~b~$%s~s~ restant.",
+    ["time_limit"] = "~b~%s minutes~s~ restantes.",
 }
 
 Config.FarmAccountMoney = {
@@ -96,8 +100,24 @@ Config.BankPedLocations = {
 }
 
 Config.BankAtmDefault = {
-    ["pacific"] = {maxMoney = 600000},
-    ["bank"] = {maxMoney = 100000},
-    ["big"] = {maxMoney = 20000},
-    ["small"] = {maxMoney = 5000},
+    ["pacific"] = {
+        maxMoney = 600000,
+        maxWithdrawal = 100000,
+        limit = 10000, -- in ms
+    },
+    ["bank"] = {
+        maxMoney = 100000,
+        maxWithdrawal = 10000,
+        limit = 10000, -- in ms
+    },
+    ["big"] = {
+        maxMoney = 20000,
+        maxWithdrawal = 1000,
+        limit = 10000, -- in ms
+    },
+    ["small"] = {
+        maxMoney = 5000,
+        maxWithdrawal = 500,
+        limit = 10000, -- in ms
+    },
 }

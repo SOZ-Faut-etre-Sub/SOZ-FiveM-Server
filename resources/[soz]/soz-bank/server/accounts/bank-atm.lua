@@ -20,7 +20,7 @@ function BankAtmAccount:load(id, owner)
         owner,
     })
     if result == nil then
-        local ownerType = GetOwnerType(owner)
+        local ownerType = GetTerminalType(owner)
         defaultMoney = GetDefaultMoney(ownerType) or 0
         MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'bank-atm', ?)", {
             owner,
@@ -49,13 +49,16 @@ end
 ---       "atm_big_123456" => "big"
 --- @param businessid string
 --- @return string
-function GetOwnerType(businessid)
+function GetTerminalType(businessid)
     if string.match(businessid, "bank_%w+") then
         return string.match(string.match(businessid, "%a+%d"), "%a+")
     elseif string.match(businessid, "atm_%w+") then
         return string.match(string.match(businessid, "_%w+_"), "%w+")
     end
 end
+QBCore.Functions.CreateCallback("banking:server:GetTerminalType", function(source, cb, accountId)
+    return cb(GetTerminalType(accountId))
+end)
 
 --- Get default money amout for specified type of account (bank/ATM)
 ---@param bankType string
