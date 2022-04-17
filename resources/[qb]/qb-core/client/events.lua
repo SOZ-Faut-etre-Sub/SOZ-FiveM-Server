@@ -9,6 +9,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
         NetworkSetFriendlyFireOption(true)
     end
     SetPlayerHealthRechargeMultiplier(PlayerId(), 0)
+    DisableIdleCamera(true)
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
