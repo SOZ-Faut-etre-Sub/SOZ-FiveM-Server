@@ -8,13 +8,18 @@ local function playAnimation()
     end
 end
 
-local function openBankScreen(account, isATM)
+local function openBankScreen(account, isATM, bankAtmAccountId)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
             playAnimation()
 
             SetNuiFocus(true, true)
-            SendNUIMessage({status = "openbank", information = banking, isATM = isATM})
+            SendNUIMessage({
+                status = "openbank",
+                information = banking,
+                isATM = isATM,
+                bankAtmAccount = bankAtmAccountId,
+            })
         end
     end, account)
 end
@@ -24,9 +29,8 @@ RegisterNetEvent("banking:openBankScreen", function()
 end)
 
 RegisterNetEvent("banking:openATMScreen", function(data)
-    QBCore.Functions.TriggerCallback("banking:server:getAtmMoney", function()
-        -- TODO
-        openBankScreen(nil, true)
+    QBCore.Functions.TriggerCallback("banking:server:getAtmAccount", function(accountId)
+        openBankScreen(nil, true, accountId)
     end, data.atmType, GetEntityCoords(data.entity))
 end)
 
@@ -84,10 +88,27 @@ end)
 RegisterNUICallback("doWithdraw", function(data, cb)
     local amount = tonumber(data.amount)
 
+    local p = promise.new()
+    QBCore.Functions.TriggerCallback("banking:server:hasEnoughLiquidity", function(result, reason)
+        if not result then
+            if reason == "invalid_liquidity" then
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            else
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage["unknown"], "error")
+            end
+        end
+        return p:resolve(result)
+    end, data.bankAtmAccount, amount)
+    local hasEnoughLiquidity = Citizen.Await(p)
+    if not hasEnoughLiquidity then
+        return
+    end
+
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertMoney", function(success, reason)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
+                TriggerServerEvent("banking:server:RemoveLiquidity", data.bankAtmAccount, amount)
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end

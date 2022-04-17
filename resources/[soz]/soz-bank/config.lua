@@ -14,6 +14,7 @@ Config.ErrorMessage = {
     ["already_exist"] = "Le compte existe déjà !",
     ["transfert_failed"] = "Le transfer a subis une erreur !",
     ["no_account_money"] = "Le compte ne possède pas assez d'argent !",
+    ["invalid_liquidity"] = "Liquidité insuffisante à ce terminal",
 }
 
 Config.FarmAccountMoney = {
