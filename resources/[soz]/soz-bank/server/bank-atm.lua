@@ -25,13 +25,19 @@ function GetBankAccountName(bank)
 end
 exports("GetBankAccountName", GetBankAccountName)
 
-local function getAtmAccount(atmType, coords)
+local function GetAtmAccount(atmType, coords)
     local coordsHash = GetAtmHashByCoords(coords)
     local accountName = GetAtmAccountName(atmType, coordsHash)
     return GetOrCreateAccount(accountName)
 end
+
+QBCore.Functions.CreateCallback("banking:server:getAtmAccount", function(source, cb, atmType, coords)
+    local account = GetAtmAccount(atmType, coords)
+    cb(account.id)
+end)
+
 QBCore.Functions.CreateCallback("banking:server:getAtmMoney", function(source, cb, atmType, coords)
-    local account, _ = getAtmAccount(atmType, coords)
+    local account, _ = GetAtmAccount(atmType, coords)
     cb(account.money)
 end)
 
@@ -44,6 +50,29 @@ QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, 
     cb(account.money)
 end)
 
+QBCore.Functions.CreateCallback("banking:server:hasEnoughLiquidity", function(source, cb, accountId, amount)
+    local account = Account(accountId)
+    if account == nil then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Compte invalide", "error")
+        return
+    end
+
+    if account.money >= amount then
+        cb(true)
+    else
+        cb(false, "invalid_liquidity")
+    end
+end)
+
+RegisterNetEvent("banking:server:RemoveLiquidity", function(accountId, amount)
+    local account = Account(accountId)
+    if account == nil then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Compte invalide", "error")
+        return
+    end
+    Account.RemoveMoney(accountId, amount, "money")
+end)
+
 QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb, data)
     local maxMoney, account
     if data.bank ~= nil then -- BANK
@@ -52,7 +81,7 @@ QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb
         account = getBankAccount(data.bank)
     else -- ATM
         maxMoney = Config.BankAtmDefault[data.atmType].maxMoney
-        account = getAtmAccount(data.atmType, data.coords)
+        account = GetAtmAccount(data.atmType, data.coords)
     end
     cb(account.money < maxMoney, account.money, maxMoney - account.money, account.id)
 end)
