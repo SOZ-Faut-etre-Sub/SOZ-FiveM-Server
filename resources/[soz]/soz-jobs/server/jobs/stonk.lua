@@ -61,16 +61,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
         return
     end
 
-    local p = promise.new()
-    QBCore.Functions.TriggerCallback("banking:server:needRefill", source, function(needRefill, currentAmount, missingAmount, accountId)
-        p:resolve({
-            needRefill = needRefill,
-            currentAmount = currentAmount,
-            missingAmount = missingAmount,
-            accountId = accountId,
-        })
-    end, data)
-    local result = Citizen.Await(p)
+    local result = QBCore.Functions.TriggerRpc("banking:server:needRefill", source, data)
     if not result.needRefill then
         cb(false, "invalid_money")
         return
