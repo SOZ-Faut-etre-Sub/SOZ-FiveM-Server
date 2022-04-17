@@ -1,5 +1,5 @@
 -- Barber PolyZone Locations
-ShopLocation["barber"] = {
+Locations["barber"] = {
     [1] = BoxZone:Create(vector3(-813.78, -184.24, 37.57), 7.4, 9.2, {
         name = "barber",
         heading = 30,

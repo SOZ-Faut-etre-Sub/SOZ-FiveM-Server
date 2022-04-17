@@ -1,5 +1,5 @@
 -- LTD Gasoline PolyZone Locations
-ShopLocation["ltdgasoline"] = {
+Locations["ltdgasoline"] = {
     [1] = BoxZone:Create(vector3(-50.3, -1753.56, 29.42), 7.6, 13.6,
                          {
         name = "ltdgasoline",

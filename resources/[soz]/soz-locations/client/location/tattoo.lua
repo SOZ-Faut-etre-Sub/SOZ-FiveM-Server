@@ -1,5 +1,5 @@
 -- Tattoo PolyZone Locations
-ShopLocation["tattoo"] = {
+Locations["tattoo"] = {
     [1] = BoxZone:Create(vector3(322.9, 180.81, 103.59), 8.2, 5.2,
                          {
         name = "tattooshop",
