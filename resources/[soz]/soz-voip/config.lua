@@ -1,6 +1,6 @@
 Config = {}
 
-Config.DefaultVolume = {["call"] = 40, ["radio"] = 100}
+Config.DefaultVolume = {["call"] = 60, ["radio"] = 100}
 
 Config.VoiceTarget = 1
 Config.VoiceModes = {[1] = 1.5, [2] = 5.0, [3] = 10.0}
