@@ -30,7 +30,7 @@ Config.Standalone = false
 Config.EnableOutline = false
 
 -- Enable default options (Toggling vehicle doors)
-Config.EnableDefaultOptions = true
+Config.EnableDefaultOptions = false
 
 -- Disable the target eye whilst being in a vehicle
 Config.DisableInVehicle = false
