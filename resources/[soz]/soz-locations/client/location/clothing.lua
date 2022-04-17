@@ -1,5 +1,5 @@
 -- Clothing PolyZone Locations
-ShopLocation["ponsonbys"] = {
+Locations["ponsonbys"] = {
     [1] = BoxZone:Create(vector3(-708.9, -151.96, 37.42), 20.0, 16.8,
                          {name = "ponsonbys1", heading = 30, minZ = 36.42, maxZ = 39.42, debugPoly = LocationDebugPoly}),
     [2] = BoxZone:Create(vector3(-164.72, -302.74, 39.73), 20.0, 16.8,
@@ -8,7 +8,7 @@ ShopLocation["ponsonbys"] = {
                          {name = "ponsonbys3", heading = 137, minZ = 48.81, maxZ = 51.81, debugPoly = LocationDebugPoly}),
 }
 
-ShopLocation["suburban"] = {
+Locations["suburban"] = {
     [1] = BoxZone:Create(vector3(123.08, -223.55, 54.56), 25.0, 10.8,
                          {name = "suburban1", heading = 340, minZ = 53.56, maxZ = 56.56, debugPoly = LocationDebugPoly}),
     [2] = BoxZone:Create(vector3(617.17, 2763.63, 42.09), 25.0, 10.8,
@@ -19,7 +19,7 @@ ShopLocation["suburban"] = {
                          {name = "suburban4", heading = 336, minZ = 19.86, maxZ = 22.86, debugPoly = LocationDebugPoly}),
 }
 
-ShopLocation["binco"] = {
+Locations["binco"] = {
     [1] = BoxZone:Create(vector3(425.26, -805.36, 29.49), 14.6, 13.2, {
         name = "binco1",
         heading = 0,
