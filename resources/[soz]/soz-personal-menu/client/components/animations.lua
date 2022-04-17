@@ -148,6 +148,14 @@ CreateThread(function()
     end
 
     --- Animation menu
+    allAnimationMenu:AddButton({
+        icon = "🛑",
+        label = "Arrêter l'animation",
+        value = nil,
+        select = function()
+            ClearPedTasks(PlayerPedId())
+        end,
+    })
     for category, content in pairs(Config.AnimationsList) do
         GenerateAnimationList(allAnimationMenu, category, content)
     end
