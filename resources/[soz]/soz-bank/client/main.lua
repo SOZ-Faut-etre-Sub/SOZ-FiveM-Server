@@ -2,7 +2,12 @@ QBCore = exports["qb-core"]:GetCoreObject()
 SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_inv_safe", "soz", "safe-storage")
-local isInsideBankZone = false
+local isInsideEntrepriseBankZone = false
+
+local currentBank = {}
+exports("GetCurrentBank", function()
+    return currentBank
+end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -12,9 +17,21 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
 
+AddEventHandler("locations:zone:enter", function(bankType, bankName)
+    if Config.BankPedLocations[bankName] ~= nil then
+        currentBank = {bank = bankName, type = string.match(bankName, "%a+")}
+    end
+end)
+
+AddEventHandler("locations:zone:exit", function(bankType, bankName)
+    if Config.BankPedLocations[bankName] ~= nil then
+        currentBank = {}
+    end
+end)
+
 local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 2.4, {name = "bank_society", heading = 340})
 bankSociety:onPlayerInOut(function(isPointInside, point)
-    isInsideBankZone = isPointInside
+    isInsideEntrepriseBankZone = isPointInside
 end)
 
 CreateThread(function()
@@ -43,7 +60,8 @@ CreateThread(function()
                             icon = "c:bank/compte_societe.png",
                             event = "banking:openSocietyBankScreen",
                             canInteract = function(entity, distance, data)
-                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and isInsideBankZone
+                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
+                                           isInsideEntrepriseBankZone
                             end,
                         },
                         {
@@ -51,26 +69,27 @@ CreateThread(function()
                             icon = "c:stonk/vendre.png",
                             event = "soz-jobs:client:stonk-resale-bag",
                             canInteract = function()
-                                return isInsideBankZone and exports["soz-jobs"]:CanBagsBeResold()
+                                return isInsideEntrepriseBankZone and exports["soz-jobs"]:CanBagsBeResold()
                             end,
                         },
                         {
                             label = "Remplir",
                             icon = "c:stonk/remplir.png",
                             event = "soz-jobs:client:stonk-fill-in",
-                            bank = bank,
+                            isBank = true,
                             canInteract = function()
-                                local hasJobPermission = exports["soz-jobs"]:CanFillIn() and isInsideBankZone
+                                local hasJobPermission = exports["soz-jobs"]:CanFillIn()
                                 if not hasJobPermission then
                                     return false
                                 end
 
-                                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", bank)
-                                local bankType = string.match(string.match(bank, "%a+%d"), "%a+")
-                                if currentMoney < Config.BankAtmDefault[bankType].maxMoney then
-                                    return true
+                                if currentBank.bank and currentBank.type then
+                                    local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
+                                    if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
+                                        return true
+                                    end
+                                    return false
                                 end
-                                return false
                             end,
                         },
                     },

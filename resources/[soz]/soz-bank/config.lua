@@ -18,7 +18,7 @@ Config.ErrorMessage = {
     ["max_widthdrawal_limit"] = "Vous ne pouvez pas retirer plus de ~b~$%s~s~ depuis ce terminal",
     ["limit"] = "Limite de retait atteinte : max. ~b~$%i~s~ par tranche de %i minutes. ",
     ["withdrawal_limit"] = "~b~$%i~s~ retirables.",
-    ["time_limit"] = "~b~%i minutes~s~ restantes.",
+    ["time_limit"] = "Revenez dans ~b~%i minutes~s~.",
 }
 
 Config.FarmAccountMoney = {
@@ -90,13 +90,13 @@ Config.BankPedLocations = {
     ["pacific1"] = vector4(243.63, 226.24, 106.29, 158.33),
     ["pacific2"] = vector4(247.04, 224.99, 106.29, 157.44),
     ["pacific3"] = vector4(252.19, 223.16, 106.29, 160.18),
-    ["bank1"] = vector4(149.42, -1042.15, 29.37, 340.3),
-    ["bank2"] = vector4(313.79, -280.53, 54.16, 341.82),
-    ["bank3"] = vector4(-351.3, -51.3, 49.04, 342.4),
-    ["bank4"] = vector4(-1211.96, -331.94, 37.78, 23.77),
-    ["bank5"] = vector4(-2961.13, 482.98, 15.7, 85.95),
-    ["bank6"] = vector4(1175.01, 2708.3, 38.09, 176.68),
-    ["bank7"] = vector4(-112.26, 6471.04, 31.63, 132.8),
+    ["fleeca1"] = vector4(149.42, -1042.15, 29.37, 340.3),
+    ["fleeca2"] = vector4(313.79, -280.53, 54.16, 341.82),
+    ["fleeca3"] = vector4(-351.3, -51.3, 49.04, 342.4),
+    ["fleeca4"] = vector4(-1211.96, -331.94, 37.78, 23.77),
+    ["fleeca5"] = vector4(-2961.13, 482.98, 15.7, 85.95),
+    ["fleeca6"] = vector4(1175.01, 2708.3, 38.09, 176.68),
+    ["fleeca7"] = vector4(-112.26, 6471.04, 31.63, 132.8),
 }
 
 Config.BankAtmDefault = {
@@ -105,7 +105,7 @@ Config.BankAtmDefault = {
         maxWithdrawal = 100000,
         limit = 10000, -- in ms
     },
-    ["bank"] = {
+    ["fleeca"] = {
         maxMoney = 100000,
         maxWithdrawal = 10000,
         limit = 600000, -- in ms

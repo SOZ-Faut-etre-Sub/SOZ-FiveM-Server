@@ -45,6 +45,12 @@ local function getBankAccount(bank)
     local accountName = GetBankAccountName(bank)
     return GetOrCreateAccount(accountName)
 end
+
+QBCore.Functions.CreateCallback("banking:server:getBankAccount", function(source, cb, bank)
+    local account, _ = getBankAccount(bank)
+    cb(account.id)
+end)
+
 QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, cb, bank)
     local account, _ = getBankAccount(bank)
     cb(account.money)
