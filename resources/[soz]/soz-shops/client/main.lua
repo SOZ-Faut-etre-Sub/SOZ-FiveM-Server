@@ -14,6 +14,7 @@ local ShopLocations = {
     ["ltdgasoline"] = true,
     ["robsliquor"] = true,
     ["tattoo"] = true,
+    ["zkea"] = true,
 }
 
 AddEventHandler("locations:zone:enter", function(brand, shop)
