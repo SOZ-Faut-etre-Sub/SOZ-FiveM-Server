@@ -295,8 +295,9 @@ StonkJob.Functions.FillIn = function(data)
         disableCombat = true,
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
         local payload = {}
-        if data.bank ~= nil then
-            payload["bank"] = data.bank
+        if data.isBank then
+            local currentBank = exports["soz-bank"]:GetCurrentBank()
+            payload["bank"] = currentBank.bank
         else
             payload["coords"] = GetEntityCoords(data.entity)
             payload["atmType"] = data.atmType

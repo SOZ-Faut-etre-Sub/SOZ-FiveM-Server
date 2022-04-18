@@ -29,13 +29,14 @@ local function openBankScreen(account, isATM, bankAtmAccountId)
 end
 
 RegisterNetEvent("banking:openBankScreen", function()
-    openBankScreen()
+    local currentBank = exports["soz-bank"]:GetCurrentBank()
+    local accountId = QBCore.Functions.TriggerRpc("banking:server:getBankAccount", currentBank.bank)
+    openBankScreen(nil, false, accountId)
 end)
 
 RegisterNetEvent("banking:openATMScreen", function(data)
-    QBCore.Functions.TriggerCallback("banking:server:getAtmAccount", function(accountId)
-        openBankScreen(nil, true, accountId)
-    end, data.atmType, GetEntityCoords(data.entity))
+    local accountId = QBCore.Functions.TriggerRpc("banking:server:getAtmAccount", data.atmType, GetEntityCoords(data.entity))
+    openBankScreen(nil, true, accountId)
 end)
 
 RegisterNetEvent("banking:openSocietyBankScreen", function()
