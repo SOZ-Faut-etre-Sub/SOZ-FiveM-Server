@@ -29,7 +29,7 @@ SoundProvider = {
         TriggerEvent("InteractSound_CL:PlayOnOne", "radio/toggle", 0.2)
     end,
     ["default"] = function(volume)
-        TriggerEvent("InteractSound_CL:PlayOnOne", "click", (volume / 100) / 2)
+        TriggerEvent("InteractSound_CL:PlayOnOne", "click", (volume / 100) / 4)
     end,
 }
 
