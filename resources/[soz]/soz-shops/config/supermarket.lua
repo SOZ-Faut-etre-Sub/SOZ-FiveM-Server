@@ -9,6 +9,12 @@ Config.Products["supermarket"] = {
     [8] = {name = "phone", price = 150, amount = 50},
 }
 
+Config.Products["247supermarket"] = Config.Products["supermarket"]
+Config.Products["ltdgasoline"] = Config.Products["supermarket"]
+Config.Products["robsliquor"] = Config.Products["supermarket"]
+
+Config.Products["zkea"] = {[1] = {name = "house_map", price = 15, amount = 50}}
+
 Config.Locations["247supermarket"] = {
     vector4(24.14, -1347.22, 29.5, 273.39),
     vector4(-3038.86, 584.36, 7.91, 22.65),
@@ -41,3 +47,5 @@ Config.Locations["robsliquor"] = {
     vector4(1134.15, -982.51, 46.42, 281.3),
     vector4(-162.81, 6323.02, 31.59, 322.62),
 }
+
+Config.Locations["zkea"] = {vector4(2748.29, 3472.55, 55.68, 254.93)}
