@@ -225,7 +225,12 @@ FoodJob.Functions.CollectIngredients = function(field)
                     end
                     local joined = table.concat(messages, ", ")
                     exports["soz-hud"]:DrawNotification(string.format("Vous avez collectez ~g~%s", joined))
-                    TriggerEvent("soz-jobs:client:food-collect-ingredients")
+
+                    if currentFieldHealth == 0 then
+                        exports["soz-hud"]:DrawNotification("Le champ est épuisé...", "warning")
+                    else
+                        TriggerEvent("soz-jobs:client:food-collect-ingredients")
+                    end
                 end
             end, field)
         else
