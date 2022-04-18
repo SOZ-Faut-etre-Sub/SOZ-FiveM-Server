@@ -1250,9 +1250,42 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour toutes les petites soifs !'
     },
-    ['grape'] = {
-        ['name'] = 'grape',
-        ['label'] = 'Raisin',
+    ['grape1'] = {
+        ['name'] = 'grape1',
+        ['label'] = 'Grappe de Cardinal',
+        ['weight'] = 100,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Mmmmh miam du raisin.'
+    },
+    ['grape2'] = {
+        ['name'] = 'grape2',
+        ['label'] = 'Grappe de Muscat',
+        ['weight'] = 100,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Mmmmh miam du raisin.'
+    },
+    ['grape3'] = {
+        ['name'] = 'grape3',
+        ['label'] = 'Grappe de Centennia',
+        ['weight'] = 100,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Mmmmh miam du raisin.'
+    },
+    ['grape4'] = {
+        ['name'] = 'grape4',
+        ['label'] = 'Grappe de Chasselas',
         ['weight'] = 100,
         ['type'] = 'drink',
         ['unique'] = false,

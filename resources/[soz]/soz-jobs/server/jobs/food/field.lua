@@ -43,7 +43,7 @@ Field.Harvest = function(self)
         quantity = self.quantity
     end
     self.quantity = self.quantity - quantity
-    return quantity, self:GetHealth()
+    return quantity, self.item, self:GetHealth()
 end
 
 Field.GetHealth = function(self)
@@ -77,7 +77,7 @@ Citizen.CreateThread(function()
     while true do
         for _, field in pairs(Fields) do
             local amount = math.ceil(delay / field.refillDelay)
-            print(field:Refill(amount))
+            field:Refill(amount)
         end
         Citizen.Wait(delay)
     end
