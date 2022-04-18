@@ -11,7 +11,8 @@ AddEventHandler("playerConnecting", function(name, setKickReason, deferrals)
     deferrals.done()
 end)
 
-RegisterCommand("reboot", function(source, args, rawCommand)
+--- Functions
+local reboot = function()
     print("[soz-reboot] Le serveur passe en mode reboot !")
     Config.Server.Closed = true
 
@@ -28,4 +29,27 @@ RegisterCommand("reboot", function(source, args, rawCommand)
 
     print("[soz-reboot] Extinction du serveur...")
     ExecuteCommand("quit")
-end, true)
+end
+
+local thunder = function()
+    exports["soz-weather"]:setWeatherUpdate(false)
+
+    GlobalState.weather = "clearing"
+    Wait(5 * 60 * 1000)
+    GlobalState.weather = "rain"
+    Wait(5 * 60 * 1000)
+    GlobalState.weather = "thunder"
+    Wait(2 * 60 * 1000)
+    GlobalState.blackout = true
+    Wait(2 * 60 * 1000)
+    TriggerClientEvent("InteractSound_CL:PlayOnOne", -1, "system/reboot", 0.2)
+    Wait(30 * 1000)
+    TriggerClientEvent("InteractSound_CL:PlayOnOne", -1, "system/reboot", 0.2)
+
+    reboot()
+end
+
+--- Commands
+RegisterCommand("reboot", reboot, true)
+
+RegisterCommand("thunder", thunder, true)

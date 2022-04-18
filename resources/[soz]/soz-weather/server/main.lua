@@ -7,8 +7,10 @@ GlobalState.time = GlobalState.time or {02, 00, 00}
 
 --- In memory time
 local currentHour, currentMinute, currentSecond = 02, 00, 00
--- How many seconds in real time to do 24h in GTA
+--- How many seconds in real time to do 24h in GTA
 local incrementSeconds = (3600 * 24) / (60 * 48)
+--- Option to disable weather updates
+local weatherUpdate = true
 
 function AdvanceTime()
     currentSecond = currentSecond + incrementSeconds
@@ -104,6 +106,11 @@ QBCore.Commands.Add("blackout", "Mettre la ville dans le noir", {{name = "status
     end
 end, "admin")
 
+--- Exports
+exports("setWeatherUpdate", function(state)
+    weatherUpdate = state
+end)
+
 --- Threads
 CreateThread(function()
     while true do
@@ -120,6 +127,8 @@ CreateThread(function()
         -- Change weather in 10 to 15 minutes
         Wait(math.random(10 * 60 * 1000, 15 * 60 * 1000))
 
-        GlobalState.weather = GetNextWeather(GlobalState.weather, Forecast)
+        if weatherUpdate then
+            GlobalState.weather = GetNextWeather(GlobalState.weather, Forecast)
+        end
     end
 end)
