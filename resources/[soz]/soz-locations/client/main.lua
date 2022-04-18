@@ -1,0 +1,2 @@
+LocationDebugPoly = false
+Locations = {}

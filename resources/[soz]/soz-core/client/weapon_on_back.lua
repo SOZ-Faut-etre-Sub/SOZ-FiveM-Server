@@ -67,6 +67,10 @@ local function AttachWeapon(weaponHash, weaponName)
     local bone = GetPedBoneIndex(PlayerPedId(), 24816)
     local weaponConfig = settingsWeaponOnBack[weaponHash]
 
+    if weaponToAttach[weaponName].handle ~= nil or weaponToAttach[weaponName].toRemove == true then
+        return
+    end
+
     RequestModel(GetHashKey(weaponConfig.model))
     while not HasModelLoaded(GetHashKey(weaponConfig.model)) do
         Wait(100)
@@ -79,7 +83,7 @@ end
 
 local function CleanWeaponsOnBack()
     for _, weapon in pairs(weaponToAttach) do
-        if weapon.handle then
+        if weapon.toRemove == true and weapon.handle then
             DeleteObject(weapon.handle)
             weapon.handle = nil
         end
@@ -87,7 +91,11 @@ local function CleanWeaponsOnBack()
 end
 
 local function UpdateWeaponsToAttach(items)
-    CleanWeaponsOnBack()
+    for _, weapon in pairs(weaponToAttach) do
+        if weapon.handle then
+            DeleteObject(weapon.handle)
+        end
+    end
     weaponToAttach = {}
 
     for _, item in pairs(items or {}) do
@@ -110,21 +118,18 @@ CreateThread(function()
         local player = PlayerPedId()
 
         if LocalPlayer.state.isLoggedIn then
-            CleanWeaponsOnBack()
-
-            if IsPedInAnyVehicle(player, false) then
-                goto skip
-            end
 
             for weaponName, weapon in pairs(weaponToAttach) do
-                if GetSelectedPedWeapon(player) == weapon.hash then
-                    goto skip
+                if IsPedInAnyVehicle(player, false) or GetSelectedPedWeapon(player) == weapon.hash then
+                    weaponToAttach[weaponName].toRemove = true
+                else
+                    weaponToAttach[weaponName].toRemove = false
                 end
 
                 AttachWeapon(weapon.hash, weaponName)
             end
 
-            ::skip::
+            CleanWeaponsOnBack()
         end
 
         Wait(500)

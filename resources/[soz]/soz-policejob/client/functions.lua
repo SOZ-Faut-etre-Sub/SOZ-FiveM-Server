@@ -31,6 +31,18 @@ PoliceJob.Functions.GetCloakroomAction = function(job)
 end
 
 ---@param job string
+PoliceJob.Functions.GetCloakroomPrisonerAction = function()
+    return {
+        {
+            targeticon = "fas fa-box",
+            icon = "fas fa-tshirt",
+            event = "police:client:SetPrisonerClothes",
+            label = "Se changer",
+        },
+    }
+end
+
+---@param job string
 PoliceJob.Functions.GetDutyAction = function(job)
     return {
         {
