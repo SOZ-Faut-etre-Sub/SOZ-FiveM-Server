@@ -22,25 +22,25 @@ FoodConfig.Fields = {
         prodRange = {min = 300, max = 500},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
-        item = "grape1"
+        item = "grape1",
     },
     ["muscat"] = {
         prodRange = {min = 400, max = 600},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
-        item = "grape2"
+        item = "grape2",
     },
     ["centennial"] = {
         prodRange = {min = 400, max = 600},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
-        item = "grape3"
+        item = "grape3",
     },
     ["chasselas"] = {
         prodRange = {min = 400, max = 600},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
-        item = "grape4"
+        item = "grape4",
     },
 }
 FoodConfig.RefillLoopDelay = 60000 -- in ms
@@ -181,7 +181,7 @@ FoodConfig.Zones = {
         vector3(-1952.49, 1839.34, 180.56),
         vector3(-1946.66, 1822.47, 172.59),
         vector3(-1838.28, 1900.16, 145.2),
-    }
+    },
 }
 
 FoodConfig.Recipes = {
