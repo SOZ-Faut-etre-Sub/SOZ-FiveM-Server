@@ -91,6 +91,11 @@ QBCore.Commands.Add('car', 'Spawn Vehicle (Admin Only)', { { name = 'model', hel
     TriggerClientEvent('QBCore:Command:SpawnVehicle', src, args[1])
 end, 'admin')
 
+QBCore.Commands.Add('var', 'Vehicle variation (Admin Only)', { { name = 'id', help = 'vehicle livery' } }, true, function(source, args)
+    local src = source
+    TriggerClientEvent('QBCore:Command:VehicleVariation', src, args[1])
+end, 'admin')
+
 QBCore.Commands.Add('dv', 'Delete Vehicle (Admin Only)', {}, false, function(source)
     local src = source
     TriggerClientEvent('QBCore:Command:DeleteVehicle', src)

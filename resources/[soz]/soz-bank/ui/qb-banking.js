@@ -4,6 +4,8 @@ const Config = {
 
 const playerAccountReg = /^[0-9]{2}Z[0-9]{4}T[0-9]{4}$/
 
+let bankAtmAccount
+
 window.addEventListener("message", function (event) {
     if(event.data.status === "openbank") {
         $("#currentStatement").DataTable().destroy();
@@ -51,11 +53,16 @@ window.addEventListener("message", function (event) {
             $("#bankingTransfer-tab").css({"display":"block"});
         }
 
+        if (event.data.bankAtmAccount) {
+            bankAtmAccount = event.data.bankAtmAccount;
+        }
+
     } else if (event.data.status === "closebank") {
         $("#currentStatement").DataTable().destroy();
         $("#successRow").css({"display":"none"});
         $("#successMessage").html('');
         $("#bankingContainer").css({"display":"none"});
+        bankAtmAccount = null;
     } else if (event.data.status === "transferError") {
         if(event.data.error !== undefined) {
             $("#transferError").css({"display":"block"});
@@ -146,12 +153,23 @@ $(function() {
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
+                bankAtmAccount,
             }));
             $('#withdrawAmount').val('')
         } else {
             // Error doing withdraw
             $("#withdrawError").css({"display":"block"});
             $("#withdrawErrorMsg").html('There was an error processing your withdraw, either the amount has not been entered, or is not a positive number');
+        }
+    });
+
+    $("[data-action=withdraw]").click(function() {
+        var amount = $(this).attr('data-amount');
+        if(amount > 0) {
+            $.post('https://soz-bank/doWithdraw', JSON.stringify({
+                account: $("#accountNumber").text(),
+                amount: parseInt(amount),
+            }));
         }
     });
 
@@ -170,6 +188,16 @@ $(function() {
             // Error doing withdraw
             $("#depositError").css({"display":"block"});
             $("#depositErrorMsg").html('There was an error processing your deposit, either the amount has not been entered, or is not a positive number');
+        }
+    });
+
+    $("[data-action=deposit]").click(function() {
+        var amount = $(this).attr('data-amount');
+        if(amount > 0) {
+            $.post('https://soz-bank/doDeposit', JSON.stringify({
+                account: $("#accountNumber").text(),
+                amount: parseInt(amount),
+            }));
         }
     });
 

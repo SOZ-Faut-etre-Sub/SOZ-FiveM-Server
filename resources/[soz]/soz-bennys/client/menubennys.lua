@@ -975,7 +975,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                             TriggerServerEvent("QBCore:ToggleDuty")
                         end,
                         canInteract = function()
-                            return not PlayerData.job.onduty
+                            return not PlayerJob.onduty
                         end,
                     },
                     {
@@ -990,7 +990,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                             TriggerServerEvent("QBCore:ToggleDuty")
                         end,
                         canInteract = function()
-                            return PlayerData.job.onduty
+                            return PlayerJob.onduty
                         end,
                     },
                 },

@@ -10,23 +10,34 @@ Config.RemoveWeaponDropsTimer = 25
 Config.DefaultPrice = 20 -- carwash
 Config.DirtLevel = 0.1 -- carwash dirt level
 
-ConsumeablesEat = {
+ConsumablesEat = {
     ["sandwich"] = math.random(35, 54),
     ["tosti"] = math.random(40, 50),
     ["twerks_candy"] = math.random(35, 54),
     ["snikkel_candy"] = math.random(40, 50),
 }
 
-ConsumeablesDrink = {
+ConsumablesDrink = {
     ["water_bottle"] = math.random(35, 54),
     ["kurkakola"] = math.random(35, 54),
     ["coffee"] = math.random(40, 50),
+    ["whiskey"] = math.random(5, 10),
+    ["beer"] = math.random(5, 10),
+    ["vodka"] = math.random(5, 10),
 }
 
-ConsumeablesAlcohol = {
+ConsumablesAlcohol = {
     ["whiskey"] = math.random(20, 30),
     ["beer"] = math.random(30, 40),
     ["vodka"] = math.random(20, 40),
+}
+
+ConsumablesDrug = {
+    ["joint"] = math.random(20, 30),
+    ["crack_baggy"] = math.random(30, 50),
+    ["cokebaggy"] = math.random(30, 50),
+    ["xtcbaggy"] = math.random(30, 50),
+    ["meth"] = math.random(30, 50),
 }
 
 Config.BlacklistedScenarios = {

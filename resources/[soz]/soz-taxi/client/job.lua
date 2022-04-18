@@ -101,9 +101,9 @@ RegisterCommand("Horodateur-Taxi-active", function()
     TriggerEvent("taxi:client:enableHorodateur")
 end)
 
-RegisterKeyMapping("Horodateur-Taxi", "Horodateur Taxi", "keyboard", "y")
+RegisterKeyMapping("Horodateur-Taxi", "Horodateur Taxi", "keyboard", "OEM_7")
 
-RegisterKeyMapping("Horodateur-Taxi-active", "activer Horodateur Taxi", "keyboard", "u")
+RegisterKeyMapping("Horodateur-Taxi-active", "activer Horodateur Taxi", "keyboard", "OEM_5")
 
 -- boucle 
 
@@ -128,7 +128,6 @@ end)
 -- mission pnj
 
 local function GetDeliveryLocation()
-    print("take delivery location")
     NpcData.CurrentDeliver = math.random(1, #Config.NPCLocations.DeliverLocations)
     if NpcData.LastDeliver ~= nil then
         while NpcData.LastDeliver ~= NpcData.CurrentDeliver do

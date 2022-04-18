@@ -4,6 +4,7 @@ IsDead = false
 isInHospitalBed = false
 HospitalBedId = nil
 DeathTime = 0
+Callems = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     QBCore.Functions.CreateBlip("LSMC", {
@@ -28,6 +29,7 @@ AddEventHandler("soz_ems:client:Revive", function()
         NetworkResurrectLocalPlayer(playerPos, true, true, false)
         IsDead = false
         SetEntityInvincible(player, false)
+        SetBlockingOfNonTemporaryEvents(player, false)
         IsEntityStatic(player, false)
     end
 
@@ -58,6 +60,7 @@ function ResetAll()
     IsDead = false
     DeathTime = 0
     isInHospitalBed = false
+    Callems = false
 
     Rhume = false
     Grippe = false

@@ -419,6 +419,7 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
             _G.Container[inv.type]:sync(inv.id, inv.items)
         end
     end
+    return inv.changed
 end
 RegisterNetEvent("inventory:server:RemoveItem", Inventory.RemoveItem)
 exports("RemoveItem", Inventory.RemoveItem)

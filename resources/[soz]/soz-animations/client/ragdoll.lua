@@ -12,7 +12,7 @@ end)
 CreateThread(function()
     while true do
         Wait(0)
-        if IsControlJustPressed(2, 303) and IsPedOnFoot(PlayerPedId()) then
+        if IsControlJustPressed(2, 20) and IsPedOnFoot(PlayerPedId()) then
             if isInRagdoll then
                 isInRagdoll = false
             else
