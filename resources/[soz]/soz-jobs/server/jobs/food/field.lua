@@ -58,7 +58,7 @@ Field.Refill = function(self, count)
     return self.quantity
 end
 
-QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (source, cb, fieldName)
+QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function(source, cb, fieldName)
     local field = Fields[fieldName]
     if field ~= nil then
         cb(field:GetHealth())
