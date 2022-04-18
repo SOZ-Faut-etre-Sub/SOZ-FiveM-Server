@@ -27,7 +27,6 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
     end
 
     local quantity, newHealth = field:Harvest()
-    print("QUANT", quantity, newHealth)
 
     local items = {}
     for i = 1, quantity, 1 do
