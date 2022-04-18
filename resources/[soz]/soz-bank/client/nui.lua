@@ -1,5 +1,9 @@
 local lib, anim = "anim@mp_atm@enter", "enter"
 
+-- In-memory table storing last use of any bank or ATM
+-- This is used to limit chained money withdrawals (withdrawal only)
+local UsedBankAtm = {}
+
 local function playAnimation()
     if not IsNuiFocused() then
         QBCore.Functions.RequestAnimDict(lib)
@@ -8,23 +12,31 @@ local function playAnimation()
     end
 end
 
-local function openBankScreen(account, isATM)
+local function openBankScreen(account, isATM, bankAtmAccountId)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
             playAnimation()
 
             SetNuiFocus(true, true)
-            SendNUIMessage({status = "openbank", information = banking, isATM = isATM})
+            SendNUIMessage({
+                status = "openbank",
+                information = banking,
+                isATM = isATM,
+                bankAtmAccount = bankAtmAccountId,
+            })
         end
     end, account)
 end
 
 RegisterNetEvent("banking:openBankScreen", function()
-    openBankScreen()
+    local currentBank = exports["soz-bank"]:GetCurrentBank()
+    local accountId = QBCore.Functions.TriggerRpc("banking:server:getBankAccount", currentBank.bank)
+    openBankScreen(nil, false, accountId)
 end)
 
-RegisterNetEvent("banking:openATMScreen", function()
-    openBankScreen(nil, true)
+RegisterNetEvent("banking:openATMScreen", function(data)
+    local accountId = QBCore.Functions.TriggerRpc("banking:server:getAtmAccount", data.atmType, GetEntityCoords(data.entity))
+    openBankScreen(nil, true, accountId)
 end)
 
 RegisterNetEvent("banking:openSocietyBankScreen", function()
@@ -81,10 +93,56 @@ end)
 RegisterNUICallback("doWithdraw", function(data, cb)
     local amount = tonumber(data.amount)
 
+    local terminalType = QBCore.Functions.TriggerRpc("banking:server:GetTerminalType", data.bankAtmAccount)
+    local terminalConfig = Config.BankAtmDefault[terminalType]
+    if amount > terminalConfig.maxWithdrawal then
+        exports["soz-hud"]:DrawNotification(string.format(Config.ErrorMessage["max_widthdrawal_limit"], terminalConfig.maxWithdrawal), "error")
+        return
+    end
+
+    local lastUse = UsedBankAtm[data.bankAtmAccount]
+    if lastUse ~= nil then
+        local amountAvailableForWithdraw = terminalConfig.maxWithdrawal - lastUse.amountWithdrawn
+        local remainingTime = terminalConfig.limit + lastUse.lastUsed - GetGameTimer()
+
+        local limit = string.format(Config.ErrorMessage["limit"], terminalConfig.maxWithdrawal, terminalConfig.limit / 60000)
+        if remainingTime > 0 then
+            if amountAvailableForWithdraw == 0 then
+                exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["time_limit"], math.ceil(remainingTime / 60000)), "error")
+                return
+            elseif amount > amountAvailableForWithdraw then
+                exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["withdrawal_limit"], amountAvailableForWithdraw), "error")
+                return
+            end
+        end
+    end
+
+    local p = promise.new()
+    QBCore.Functions.TriggerCallback("banking:server:hasEnoughLiquidity", function(result, reason)
+        if not result then
+            if reason == "invalid_liquidity" then
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            else
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage["unknown"], "error")
+            end
+        end
+        return p:resolve(result)
+    end, data.bankAtmAccount, amount)
+    local hasEnoughLiquidity = Citizen.Await(p)
+    if not hasEnoughLiquidity then
+        return
+    end
+
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertMoney", function(success, reason)
             if success then
                 exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
+                TriggerServerEvent("banking:server:RemoveLiquidity", data.bankAtmAccount, amount)
+                local newAmount = amount
+                if lastUse and lastUse.amountWithdrawn then
+                    newAmount = amount + lastUse.amountWithdrawn
+                end
+                UsedBankAtm[data.bankAtmAccount] = {lastUsed = GetGameTimer(), amountWithdrawn = newAmount}
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end

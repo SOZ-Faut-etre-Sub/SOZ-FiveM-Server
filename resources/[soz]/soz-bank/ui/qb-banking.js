@@ -4,6 +4,8 @@ const Config = {
 
 const playerAccountReg = /^[0-9]{2}Z[0-9]{4}T[0-9]{4}$/
 
+let bankAtmAccount
+
 window.addEventListener("message", function (event) {
     if(event.data.status === "openbank") {
         $("#currentStatement").DataTable().destroy();
@@ -51,11 +53,16 @@ window.addEventListener("message", function (event) {
             $("#bankingTransfer-tab").css({"display":"block"});
         }
 
+        if (event.data.bankAtmAccount) {
+            bankAtmAccount = event.data.bankAtmAccount;
+        }
+
     } else if (event.data.status === "closebank") {
         $("#currentStatement").DataTable().destroy();
         $("#successRow").css({"display":"none"});
         $("#successMessage").html('');
         $("#bankingContainer").css({"display":"none"});
+        bankAtmAccount = null;
     } else if (event.data.status === "transferError") {
         if(event.data.error !== undefined) {
             $("#transferError").css({"display":"block"});
@@ -146,6 +153,7 @@ $(function() {
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
+                bankAtmAccount,
             }));
             $('#withdrawAmount').val('')
         } else {

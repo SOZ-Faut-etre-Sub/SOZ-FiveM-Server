@@ -22,6 +22,7 @@ server_scripts {
     "server/invoices.lua",
     "server/paycheck.lua",
     "server/washmoney.lua",
+    "server/bank-atm.lua",
 
     "server/accounts/base.lua",
     "server/accounts/player.lua",
@@ -29,6 +30,7 @@ server_scripts {
     "server/accounts/farm.lua",
     "server/accounts/offshore.lua",
     "server/accounts/safestorages.lua",
+    "server/accounts/bank-atm.lua",
 
     "server/police.lua",
 }

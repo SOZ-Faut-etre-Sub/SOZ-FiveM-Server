@@ -205,6 +205,12 @@ StonkJob.Permissions.CanBagsBeResold = function()
 end
 exports("CanBagsBeResold", StonkJob.Permissions.CanBagsBeResold)
 
+StonkJob.Permissions.CanFillIn = function()
+    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.FillIn)
+    return isOnDuty() and hasJobPermission
+end
+exports("CanFillIn", StonkJob.Permissions.CanFillIn)
+
 ---
 --- FARM
 ---
@@ -223,11 +229,10 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            QBCore.Functions.TriggerCallback("soz-jobs:server:stonk-collect-bag", function(success)
-                if success then
-                    StonkJob.CollectedShops[currentShop] = GetGameTimer()
-                end
-            end, nBags)
+            local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-collect-bag", nBags)
+            if success then
+                StonkJob.CollectedShops[currentShop] = GetGameTimer()
+            end
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
@@ -288,4 +293,46 @@ AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
     Citizen.CreateThread(function()
         StonkJob.Functions.ResaleBags()
     end)
+end)
+
+-- FILL IN
+StonkJob.Functions.FillIn = function(data)
+    QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", StonkConfig.FillIn.Duration, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
+        local payload = {}
+        if data.isBank then
+            local currentBank = exports["soz-bank"]:GetCurrentBank()
+            payload["bank"] = currentBank.bank
+        else
+            payload["coords"] = GetEntityCoords(data.entity)
+            payload["atmType"] = data.atmType
+        end
+
+        local success, reason = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-fill-in", payload)
+        if not success then
+            local messages = {
+                ["invalid_quantity"] = "Vous n'avez pas de sacs d'argent sur vous",
+                ["invalid_money"] = "Ce compte est déjà plein",
+            }
+            local message = messages[reason]
+            if messages[reason] == nil then
+                message = string.format("Il y a eu une erreur: %s", reason)
+            end
+            exports["soz-hud"]:DrawNotification(message, "error")
+        else
+            exports["soz-hud"]:DrawNotification("Remplissage OK")
+            StonkJob.Functions.FillIn(data)
+        end
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez interrompu le remplissage", "warning")
+    end)
+end
+
+AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
+    StonkJob.Functions.FillIn(data)
 end)
