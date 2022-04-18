@@ -2,6 +2,8 @@ FoodJob = {}
 FoodJob.Functions = {}
 FoodJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_food", "soz", "food:menu")
 
+local currentField
+
 Citizen.CreateThread(function()
     -- BLIP
     QBCore.Functions.CreateBlip("food", {
@@ -58,7 +60,17 @@ Citizen.CreateThread(function()
 
     -- ZONES
     for zoneName, points in pairs(FoodConfig.Zones) do
-        exports["qb-target"]:AddPolyZone(zoneName, points, {debugPoly = true}, {label = "Test", event = ""})
+        local zone = PolyZone:Create(points, {
+            name = zoneName,
+            debugPoly = true,
+        })
+        zone:onPlayerInOut(function(isInsideZone)
+            if isInsideZone then
+                currentField = zone.name
+            else
+                currentField = nil
+            end
+        end)
     end
 end)
 
@@ -248,3 +260,7 @@ AddEventHandler("soz-jobs:client:food-craft-item", function(itemId)
 
     FoodJob.Functions.CraftItem(itemId, item)
 end)
+
+function DisplayFarmState(state)
+    return "🍇🍇🍇➖" or "🍇➖➖➖"
+end
