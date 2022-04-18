@@ -8,7 +8,7 @@ local function AddItem(source, item)
                 TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
             else
                 TriggerClientEvent("hud:client:DrawNotification", source,
-                                   string.format("Vous n'avez pas collecté d'ingrédients'. Il y a eu une erreur : `%s`", reason), "error")
+                                   string.format("Vous n'avez pas récolté d'ingrédients'. Il y a eu une erreur : `%s`", reason), "error")
             end
         end
     end)
@@ -26,12 +26,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
         TriggerClientEvent("hud:client:DrawNotification", source, "Il y a eu une erreur: invalid_field", "error")
     end
 
-    local quantity, newHealth = field:Harvest()
+    local quantity, item, newHealth = field:Harvest()
 
     local items = {}
     for i = 1, quantity, 1 do
-        local itemIdx = math.random(#FoodConfig.Collect.Items)
-        table.insert(items, FoodConfig.Collect.Items[itemIdx])
+        table.insert(items, item)
     end
 
     local collectedItems = {}

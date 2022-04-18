@@ -8,9 +8,8 @@ FoodConfig.Cloakroom = {
 }
 
 FoodConfig.Collect = {
-    Duration = 15000, -- in ms
+    Duration = 10000, -- in ms
     Range = {min = 1, max = 3},
-    Items = {"grape"},
 }
 
 FoodConfig.Categories = {
@@ -20,24 +19,28 @@ FoodConfig.Categories = {
 
 FoodConfig.Fields = {
     ["cardinal"] = {
-        prodRange = {min = 750, max = 1250},
+        prodRange = {min = 300, max = 500},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
+        item = "grape1"
     },
     ["muscat"] = {
-        prodRange = {min = 50, max = 100},
+        prodRange = {min = 400, max = 600},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
+        item = "grape2"
     },
     ["centennial"] = {
-        prodRange = {min = 750, max = 1250},
+        prodRange = {min = 400, max = 600},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
+        item = "grape3"
     },
     ["chasselas"] = {
-        prodRange = {min = 750, max = 1250},
+        prodRange = {min = 400, max = 600},
         harvestRange = {min = 1, max = 3},
         refillDelay = 60000, -- in ms
+        item = "grape4"
     },
 }
 FoodConfig.RefillLoopDelay = 60000 -- in ms

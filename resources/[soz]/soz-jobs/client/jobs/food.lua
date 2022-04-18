@@ -207,7 +207,7 @@ AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
 end)
 
 FoodJob.Functions.CollectIngredients = function(field)
-    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous collectez des ingrédients", FoodConfig.Collect.Duration, false, true,
+    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -224,7 +224,7 @@ FoodJob.Functions.CollectIngredients = function(field)
                         table.insert(messages, string.format("%d %s", n, item.label))
                     end
                     local joined = table.concat(messages, ", ")
-                    exports["soz-hud"]:DrawNotification(string.format("Vous avez collectez ~g~%s", joined))
+                    exports["soz-hud"]:DrawNotification(string.format("Vous avez récolté ~g~%s", joined))
 
                     if currentFieldHealth == 0 then
                         exports["soz-hud"]:DrawNotification("Le champ est épuisé...", "warning")
@@ -234,7 +234,7 @@ FoodJob.Functions.CollectIngredients = function(field)
                 end
             end, field)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté d'ingrédients", "error")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas recolté d'ingrédients", "error")
         end
     end, function()
         DisplayHelpText()
