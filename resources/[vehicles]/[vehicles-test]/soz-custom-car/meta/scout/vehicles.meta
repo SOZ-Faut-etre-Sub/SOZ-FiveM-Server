@@ -6,7 +6,7 @@
     <Item>
       <modelName>nkscout</modelName>
       <txdName>nkscout</txdName>
-      <handlingId>NKSCOUT</handlingId>
+      <handlingId>XLS2</handlingId>
       <gameName>nkscout</gameName>
       <vehicleMakeName>nkscout</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
@@ -46,7 +46,7 @@
           <Offset x="0.136000" y="0.136000" z="0.445000" />
           <SeatIndex value="3" />
         </Item>
-	    </FirstPersonMobilePhoneSeatIKOffset> 
+	    </FirstPersonMobilePhoneSeatIKOffset>
       <PovCameraOffset x="0.000000" y="-0.165000" z="0.645000" />
       <PovCameraVerticalAdjustmentForRollCage value="0.000000" />
       <PovPassengerCameraOffset x="0.000000" y="0.000000" z="0.000000" />
@@ -73,11 +73,11 @@
       <steerWheelMult value="1.000000" />
       <HDTextureDist value="5.000000" />
       <lodDistances content="float_array">
-        15.000000	
-        25.000000	
-        70.000000	
-        140.000000	
-        350.000000	
+        15.000000
+        25.000000
+        70.000000
+        140.000000
+        350.000000
         350.000000
       </lodDistances>
       <minSeatHeight value="0.887" />
@@ -105,7 +105,7 @@
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
       <needsRopeTexture value="false" />
-      <requiredExtras />
+      <requiredExtras>EXTRA_1</requiredExtras>
       <rewards />
       <cinematicPartCamera>
         <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>

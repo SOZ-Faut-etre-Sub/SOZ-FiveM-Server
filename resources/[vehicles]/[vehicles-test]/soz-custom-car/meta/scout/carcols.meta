@@ -6,6 +6,7 @@
 			<id value="997" />
 			<kitType>MKT_SPECIAL</kitType>
 			<visibleMods>
+
 				<!-- CallSign 0 Left -->
 				<Item>
 					<modelName>nkscout_sign_a0</modelName>
@@ -687,22 +688,22 @@
 					<disableBonnetCamera value="false" />
 					<allowBonnetSlide value="true" />
 				</Item>
-				<!-- Sheriff Livery -->
-				<Item>
-					<modelName>nkscout_livery1</modelName>
-					<modShopLabel>NKS_LIVERY1</modShopLabel>
-					<linkedModels />
-					<turnOffBones />
-					<type>VMT_LIVERY_MOD</type>
-					<bone>chassis</bone>
-					<collisionBone>chassis</collisionBone>
-					<cameraPos>VMCP_DEFAULT</cameraPos>
-					<audioApply value="1.000000" />
-					<weight value="20" />
-					<turnOffExtra value="false" />
-					<disableBonnetCamera value="false" />
-					<allowBonnetSlide value="true" />
-				</Item>
+                <!-- Sheriff Livery -->
+                <Item>
+                    <modelName>nkscout_livery1</modelName>
+                    <modShopLabel>NKS_LIVERY1</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_LIVERY_MOD</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
 			</visibleMods>
 			<linkMods>
 				<Item>
