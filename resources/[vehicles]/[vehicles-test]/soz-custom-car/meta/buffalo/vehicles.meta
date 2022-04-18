@@ -6,7 +6,7 @@
     <Item>
       <modelName>polbuffaloc2</modelName>
       <txdName>polbuffaloc2</txdName>
-      <handlingId>BUFFALO</handlingId>
+      <handlingId>POLBUFFALOC2</handlingId>
       <gameName>POLBUFFALOC2</gameName>
       <vehicleMakeName>BRAVADO</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
@@ -15,7 +15,7 @@
       <animConvRoofName>null</animConvRoofName>
       <animConvRoofWindowsAffected />
       <ptfxAssetName />
-      <audioNameHash />
+      <audioNameHash>police2</audioNameHash>
       <layout>LAYOUT_STANDARD_BUFFALO4</layout>
       <coverBoundOffsets>BUFFALO4_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
@@ -46,7 +46,7 @@
             <Offset x="0.136000" y="0.156000" z="0.455000" />
             <SeatIndex value="3" />
         </Item>
-      </FirstPersonMobilePhoneSeatIKOffset> 
+      </FirstPersonMobilePhoneSeatIKOffset>
       <PovCameraOffset x="0.000000" y="-0.145000" z="0.680000" />
       <PovCameraVerticalAdjustmentForRollCage value="-0.025000" />
       <PovPassengerCameraOffset x="0.000000" y="-0.005000" z="-0.050000" />
