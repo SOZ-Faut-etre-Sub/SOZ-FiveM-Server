@@ -33,11 +33,7 @@ end
 --- @return boolean
 function StashInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ? AND owner = ?", {
-        inventory,
-        id,
-        owner,
-    })
+    exports.oxmysql:update("UPDATE storages SET inventory = ? WHERE name = ? AND owner = ?", {inventory, id, owner})
     return true
 end
 
