@@ -26,8 +26,8 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
         TriggerClientEvent("hud:client:DrawNotification", source, "Il y a eu une erreur: invalid_field", "error")
     end
 
-    local quantity, remaining = field:Harvest()
-    print("QUANT", quantity, remaining)
+    local quantity, newHealth = field:Harvest()
+    print("QUANT", quantity, newHealth)
 
     local items = {}
     for i = 1, quantity, 1 do
@@ -44,12 +44,12 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
                 collectedItems[item] = collectedItems[item] + 1
             end
         else
-            cb(collectedItems)
+            cb(collectedItems, newHealth)
             return
         end
     end
 
-    cb(collectedItems)
+    cb(collectedItems, newHealth)
 end)
 
 QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, cb, itemId)

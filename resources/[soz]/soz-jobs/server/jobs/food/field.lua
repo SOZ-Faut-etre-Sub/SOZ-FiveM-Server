@@ -9,7 +9,7 @@ function Field:new(name)
                 return Fields[name]
             end
             return nil
-        end
+        end,
     })
     self:loadConfig(name)
 
@@ -36,9 +36,17 @@ Field.Harvest = function(self)
         quantity = self.quantity
     end
     self.quantity = self.quantity - quantity
-    return quantity, self.quantity
+    return quantity, self:GetHealth()
 end
 
 Field.GetHealth = function(self)
     return math.ceil(self.quantity * #FoodConfig.FieldHealthStates / self.maxQuantity)
 end
+
+QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (source, cb, fieldName)
+    local field = Fields[fieldName]
+    if field ~= nil then
+        cb(field:GetHealth())
+    end
+    cb(nil)
+end)
