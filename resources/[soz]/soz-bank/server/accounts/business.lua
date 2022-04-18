@@ -34,7 +34,7 @@ end
 --- @param amount number
 --- @return boolean
 function BusinessAccount:save(id, owner, amount, marked_money)
-    MySQL.update.await("UPDATE bank_accounts SET money = ? WHERE account_type = 'business' AND businessid = ?", {
+    exports.oxmysql:update("UPDATE bank_accounts SET money = ? WHERE account_type = 'business' AND businessid = ?", {
         amount,
         owner,
     })
