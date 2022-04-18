@@ -155,6 +155,16 @@ $(function() {
         }
     });
 
+    $("[data-action=withdraw]").click(function() {
+        var amount = $(this).attr('data-amount');
+        if(amount > 0) {
+            $.post('https://soz-bank/doWithdraw', JSON.stringify({
+                account: $("#accountNumber").text(),
+                amount: parseInt(amount),
+            }));
+        }
+    });
+
     $("#initiateDeposit").click(function() {
         var amount = $('#depositAmount').val();
 
@@ -170,6 +180,16 @@ $(function() {
             // Error doing withdraw
             $("#depositError").css({"display":"block"});
             $("#depositErrorMsg").html('There was an error processing your deposit, either the amount has not been entered, or is not a positive number');
+        }
+    });
+
+    $("[data-action=deposit]").click(function() {
+        var amount = $(this).attr('data-amount');
+        if(amount > 0) {
+            $.post('https://soz-bank/doDeposit', JSON.stringify({
+                account: $("#accountNumber").text(),
+                amount: parseInt(amount),
+            }));
         }
     });
 
