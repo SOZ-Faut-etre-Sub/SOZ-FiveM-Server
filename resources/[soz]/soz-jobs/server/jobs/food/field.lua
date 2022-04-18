@@ -60,7 +60,6 @@ end
 
 QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (source, cb, fieldName)
     local field = Fields[fieldName]
-    print('##', fieldName, field)
     if field ~= nil then
         cb(field:GetHealth())
     end
