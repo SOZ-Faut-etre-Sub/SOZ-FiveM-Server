@@ -18,6 +18,33 @@ FoodConfig.Categories = {
     ["softdrink"] = {icon = "🥤", label = "Boissons non alcolisées"},
 }
 
+FoodConfig.Fields = {
+    ["cardinal"] = {
+        prodRange = {min = 750, max = 1250},
+        harvestRange = {min = 1, max = 3},
+    },
+    ["muscat"] = {
+        prodRange = {min = 50, max = 100},
+        harvestRange = {min = 1, max = 3},
+    },
+    ["centennial"] = {
+        prodRange = {min = 750, max = 1250},
+        harvestRange = {min = 1, max = 3},
+    },
+    ["chasselas"] = {
+        prodRange = {min = 750, max = 1250},
+        harvestRange = {min = 1, max = 3},
+    },
+}
+
+FoodConfig.FieldHealthStates = {
+    [0] = "➖➖➖➖",
+    [1] = "🍇➖➖➖",
+    [2] = "🍇🍇➖➖",
+    [3] = "🍇🍇🍇➖",
+    [4] = "🍇🍇🍇🍇",
+}
+
 FoodConfig.Zones = {
     ["cardinal"] = {
         vector3(-1870.79, 2092.71, 139.9),
