@@ -4,7 +4,7 @@ import {PlayerContext} from "../../context/player";
 import PlayerStat from "../player/stats";
 
 const PlayerNeeds= () => {
-    const {hunger, thirst, updateHealth, updateArmor, updateHunger, updateThirst} = useContext(PlayerContext)
+    const {hunger, thirst, alcohol, drug, updateHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug} = useContext(PlayerContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'update_needs') {
@@ -12,6 +12,8 @@ const PlayerNeeds= () => {
             if (event.data.armor !== undefined) updateArmor(event.data.armor)
             if (event.data.hunger !== undefined) updateHunger(event.data.hunger)
             if (event.data.thirst !== undefined) updateThirst(event.data.thirst)
+            if (event.data.alcohol !== undefined) updateAlcohol(event.data.alcohol)
+            if (event.data.drug !== undefined) updateDrug(event.data.drug)
         }
     }, [])
 
@@ -24,14 +26,14 @@ const PlayerNeeds= () => {
     return (
         <ul className={style.statues}>
             <PlayerStat
-                type="weed"
-                value={0}
+                type="drug"
+                value={drug}
                 backgroundPrimary="rgba(79, 228, 30, 0.4)"
                 backgroundSecondary="linear-gradient(to top, rgba(37, 228, 30, 0.6) 31%, rgba(97, 243, 91, 0.6) 100%)"
             />
             <PlayerStat
-                type="drunk"
-                value={0}
+                type="alcohol"
+                value={alcohol}
                 backgroundPrimary="rgba(228, 30, 53, 0.4)"
                 backgroundSecondary="linear-gradient(to top, rgba(228, 30, 47, 0.6) 31%, rgba(241, 78, 92, 0.6) 100%)"
             />

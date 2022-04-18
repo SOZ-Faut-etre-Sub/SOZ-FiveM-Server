@@ -1,0 +1,27 @@
+-- Ammu-Nation PolyZone Locations
+Locations["ammunation"] = {
+    [1] = BoxZone:Create(vector3(-662.83, -938.21, 21.83), 11.8, 7.8,
+                         {name = "ammunation", heading = 0, minZ = 20.83, maxZ = 23.83, debugPoly = LocationDebugPoly}),
+    [2] = BoxZone:Create(vector3(810.91, -2154.39, 29.62), 11.8, 7.8,
+                         {name = "ammunation2", heading = 0, minZ = 28.62, maxZ = 31.62, debugPoly = LocationDebugPoly}),
+    [3] = BoxZone:Create(vector3(1695.25, 3757.32, 34.71), 11.8, 7.8,
+                         {name = "ammunation3", heading = 47, minZ = 33.71, maxZ = 36.71, debugPoly = LocationDebugPoly}),
+    [4] = BoxZone:Create(vector3(-328.73, 6081.27, 31.45), 11.8, 7.8,
+                         {name = "ammunation4", heading = 45, minZ = 30.45, maxZ = 33.45, debugPoly = LocationDebugPoly}),
+    [5] = BoxZone:Create(vector3(249.64, -48.41, 69.94), 11.8, 7.8,
+                         {name = "ammunation5", heading = 70, minZ = 68.94, maxZ = 71.94, debugPoly = LocationDebugPoly}),
+    [6] = BoxZone:Create(vector3(20.39, -1109.65, 29.8), 11.8, 7.8,
+                         {name = "ammunation6", heading = 340, minZ = 28.8, maxZ = 31.8, debugPoly = LocationDebugPoly}),
+    [7] = BoxZone:Create(vector3(2568.59, 297.27, 108.73), 11.8, 7.8,
+                         {
+        name = "ammunation7",
+        heading = 0,
+        minZ = 107.73,
+        maxZ = 110.73,
+        debugPoly = LocationDebugPoly,
+    }),
+    [8] = BoxZone:Create(vector3(-1116.34, 2695.86, 18.55), 11.8, 7.8,
+                         {name = "ammunation8", heading = 42, minZ = 17.55, maxZ = 20.55, debugPoly = LocationDebugPoly}),
+    [9] = BoxZone:Create(vector3(843.13, -1030.66, 28.19), 11.8, 7.8,
+                         {name = "ammunation9", heading = 0, minZ = 27.19, maxZ = 30.19, debugPoly = LocationDebugPoly}),
+}

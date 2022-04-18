@@ -1,5 +1,5 @@
 local giveAnimation = function(src)
-    TaskPlayAnim(GetPlayerPed(src), "mp_common", "givetake1_a", 8.0, -8.0, -1, 49, 0, true, true, true)
+    TriggerClientEvent("animation:client:give", src)
 end
 
 QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function(source, cb, type, id)

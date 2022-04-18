@@ -55,6 +55,14 @@ gameMasterMenu:AddButton({
 })
 
 gameMasterMenu:AddCheckbox({
+    label = "Mallette d'argent",
+    value = true,
+    change = function(_, checked)
+        LocalPlayer.state.adminDisableMoneyCase = not checked
+    end,
+})
+
+gameMasterMenu:AddCheckbox({
     label = "Invisible",
     value = nil,
     change = function(_, checked)

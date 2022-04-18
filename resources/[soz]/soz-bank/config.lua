@@ -14,11 +14,16 @@ Config.ErrorMessage = {
     ["already_exist"] = "Le compte existe déjà !",
     ["transfert_failed"] = "Le transfer a subis une erreur !",
     ["no_account_money"] = "Le compte ne possède pas assez d'argent !",
+    ["invalid_liquidity"] = "Liquidité insuffisante à ce terminal",
+    ["max_widthdrawal_limit"] = "Vous ne pouvez pas retirer plus de ~b~$%s~s~ depuis ce terminal",
+    ["limit"] = "Limite de retait atteinte : max. ~b~$%i~s~ par tranche de %i minutes. ",
+    ["withdrawal_limit"] = "~b~$%i~s~ retirables.",
+    ["time_limit"] = "Revenez dans ~b~%i minutes~s~.",
 }
 
 Config.FarmAccountMoney = {
     ["farm_news"] = {money = 50000, marked_money = 0},
-    ["farm_stonk"] = {money = 50000, marked_money = 0},
+    ["farm_stonk"] = {money = 2000000, marked_money = 0},
 }
 
 Config.SafeStorages = {
@@ -74,17 +79,45 @@ Config.SafeStorages = {
     },
 }
 
-Config.ATMModels = {"prop_atm_01", "prop_atm_02", "prop_atm_03", "prop_fleeca_atm"}
+Config.ATMModels = {
+    ["prop_atm_01"] = "small",
+    ["prop_atm_02"] = "big",
+    ["prop_atm_03"] = "big",
+    ["prop_fleeca_atm"] = "big",
+}
 
 Config.BankPedLocations = {
-    vector4(149.42, -1042.15, 29.37, 340.3),
-    vector4(313.79, -280.53, 54.16, 341.82),
-    vector4(-351.3, -51.3, 49.04, 342.4),
-    vector4(-1211.96, -331.94, 37.78, 23.77),
-    vector4(-2961.13, 482.98, 15.7, 85.95),
-    vector4(1175.01, 2708.3, 38.09, 176.68),
-    vector4(-112.26, 6471.04, 31.63, 132.8),
-    vector4(243.63, 226.24, 106.29, 158.33),
-    vector4(247.04, 224.99, 106.29, 157.44),
-    vector4(252.19, 223.16, 106.29, 160.18),
+    ["pacific1"] = vector4(243.63, 226.24, 106.29, 158.33),
+    ["pacific2"] = vector4(247.04, 224.99, 106.29, 157.44),
+    ["pacific3"] = vector4(252.19, 223.16, 106.29, 160.18),
+    ["fleeca1"] = vector4(149.42, -1042.15, 29.37, 340.3),
+    ["fleeca2"] = vector4(313.79, -280.53, 54.16, 341.82),
+    ["fleeca3"] = vector4(-351.3, -51.3, 49.04, 342.4),
+    ["fleeca4"] = vector4(-1211.96, -331.94, 37.78, 23.77),
+    ["fleeca5"] = vector4(-2961.13, 482.98, 15.7, 85.95),
+    ["fleeca6"] = vector4(1175.01, 2708.3, 38.09, 176.68),
+    ["fleeca7"] = vector4(-112.26, 6471.04, 31.63, 132.8),
+}
+
+Config.BankAtmDefault = {
+    ["pacific"] = {
+        maxMoney = 600000,
+        maxWithdrawal = 100000,
+        limit = 10000, -- in ms
+    },
+    ["fleeca"] = {
+        maxMoney = 100000,
+        maxWithdrawal = 10000,
+        limit = 600000, -- in ms
+    },
+    ["big"] = {
+        maxMoney = 20000,
+        maxWithdrawal = 1000,
+        limit = 600000, -- in ms
+    },
+    ["small"] = {
+        maxMoney = 5000,
+        maxWithdrawal = 500,
+        limit = 600000, -- in ms
+    },
 }
