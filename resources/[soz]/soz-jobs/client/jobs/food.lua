@@ -3,6 +3,7 @@ FoodJob.Functions = {}
 FoodJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_food", "soz", "food:menu")
 
 local currentField
+local currentFieldHealth
 local helpTextDisplayed = false
 
 Citizen.CreateThread(function()
@@ -66,8 +67,13 @@ Citizen.CreateThread(function()
             if isInsideZone then
                 currentField = zone.name
                 DisplayHelpText()
+                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
+                    currentFieldHealth = health
+                    DisplayFieldHealth()
+                end, zone.name)
             else
                 currentField = nil
+                currentFieldHealth = nil
             end
         end)
     end
@@ -173,6 +179,26 @@ function DisplayHelpText()
     end)
 end
 
+function DisplayFieldHealth()
+    Citizen.CreateThread(function()
+        while currentFieldHealth ~= nil do
+            SetTextFont(4)
+            SetTextProportional(0)
+            SetTextScale(0.5, 0.5)
+            SetTextColour(255, 255, 255, 200)
+            SetTextEdge(2, 0, 0, 0, 255)
+            SetTextOutline()
+            SetTextDropShadow(0, 0, 0, 0, 255)
+            SetTextDropShadow()
+            SetTextEntry("STRING")
+            AddTextComponentString(FoodConfig.FieldHealthStates[currentFieldHealth])
+            local x, y, width, height = 0.96, 1.44, 1.0, 1.0
+            DrawText(x - width / 2, y - height / 2)
+            Citizen.Wait(0)
+        end
+    end)
+end
+
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
     Citizen.CreateThread(function()
         local field = currentField
@@ -189,7 +215,8 @@ FoodJob.Functions.CollectIngredients = function(field)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items)
+            QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items, newHealth)
+                currentFieldHealth = newHealth
                 if next(items) then
                     local messages = {}
                     for itemId, n in pairs(items) do
