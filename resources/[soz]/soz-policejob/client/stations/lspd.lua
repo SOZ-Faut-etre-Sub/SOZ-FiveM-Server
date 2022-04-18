@@ -19,4 +19,8 @@ CreateThread(function()
     exports["qb-target"]:AddBoxZone("lspd:cloakroom:woman", vector3(624.58, -5.48, 76.63), 6.8, 6.4,
                                     {name = "lspd:cloakroom:woman", heading = 350, minZ = 75.62, maxZ = 78.62},
                                     {options = PoliceJob.Functions.GetCloakroomAction("lspd"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("lspd:prisonerCloakroom", vector3(580.91, -29.72, 76.63), 0.6, 9.0,
+                                    {name = "lspd:prisonerCloakroom", heading = 350, minZ = 75.63, maxZ = 78.63},
+                                    {options = PoliceJob.Functions.GetCloakroomPrisonerAction(), distance = 2.5})
 end)

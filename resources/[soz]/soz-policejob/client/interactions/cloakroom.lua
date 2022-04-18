@@ -19,3 +19,16 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
         end
     end)
 end)
+
+RegisterNetEvent("police:client:SetPrisonerClothes", function()
+    local playerPed = PlayerPedId()
+    local playerPedModel = GetEntityModel(playerPed)
+
+    if not LocalPlayer.state.havePrisonerClothes then
+        TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", Config.PrisonerClothes[playerPedModel])
+        LocalPlayer.state:set("havePrisonerClothes", true, true)
+    else
+        TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+        LocalPlayer.state:set("havePrisonerClothes", false, true)
+    end
+end)
