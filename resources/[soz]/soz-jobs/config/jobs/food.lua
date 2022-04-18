@@ -19,11 +19,28 @@ FoodConfig.Categories = {
 }
 
 FoodConfig.Fields = {
-    ["cardinal"] = {prodRange = {min = 750, max = 1250}, harvestRange = {min = 1, max = 3}},
-    ["muscat"] = {prodRange = {min = 50, max = 100}, harvestRange = {min = 1, max = 3}},
-    ["centennial"] = {prodRange = {min = 750, max = 1250}, harvestRange = {min = 1, max = 3}},
-    ["chasselas"] = {prodRange = {min = 750, max = 1250}, harvestRange = {min = 1, max = 3}},
+    ["cardinal"] = {
+        prodRange = {min = 750, max = 1250},
+        harvestRange = {min = 1, max = 3},
+        refillDelay = 60000, -- in ms
+    },
+    ["muscat"] = {
+        prodRange = {min = 50, max = 100},
+        harvestRange = {min = 1, max = 3},
+        refillDelay = 60000, -- in ms
+    },
+    ["centennial"] = {
+        prodRange = {min = 750, max = 1250},
+        harvestRange = {min = 1, max = 3},
+        refillDelay = 60000, -- in ms
+    },
+    ["chasselas"] = {
+        prodRange = {min = 750, max = 1250},
+        harvestRange = {min = 1, max = 3},
+        refillDelay = 60000, -- in ms
+    },
 }
+FoodConfig.RefillLoopDelay = 60000 -- in ms
 
 FoodConfig.FieldHealthStates = {
     [0] = "✖️✖️✖️✖️",
