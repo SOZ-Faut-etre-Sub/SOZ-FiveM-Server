@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CVehicleModelInfoVariation>
+  <variationData>
+    <Item>
+      <modelName>ambulance_smur</modelName>
+      <colors>
+		<Item>
+          <indices content="char_array">
+            134
+            134
+            0
+            156
+          </indices>
+          <liveries />
+        </Item>
+      </colors>
+      <kits>
+        <Item>hash_0D21AC6D</Item>
+      </kits>
+      <windowsWithExposedEdges />
+      <plateProbabilities>
+        <Probabilities>
+          <Item>
+            <Name>hash_69E137FC</Name>
+            <Value value="100" />
+          </Item>
+        </Probabilities>
+      </plateProbabilities>
+      <lightSettings value="22" />
+      <sirenSettings value="4" />
+    </Item>
+  </variationData>
+</CVehicleModelInfoVariation>
