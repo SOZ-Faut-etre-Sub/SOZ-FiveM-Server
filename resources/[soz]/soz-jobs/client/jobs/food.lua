@@ -55,6 +55,11 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    -- ZONES
+    for zoneName, points in pairs(FoodConfig.Zones) do
+        exports["qb-target"]:AddPolyZone(zoneName, points, {debugPoly = true}, {label = "Test", event = ""})
+    end
 end)
 
 ---
