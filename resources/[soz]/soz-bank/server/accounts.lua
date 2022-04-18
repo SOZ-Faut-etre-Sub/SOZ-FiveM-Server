@@ -21,6 +21,7 @@ MySQL.ready(function()
 
     local EnterpriseAccountNotLoaded = table.clone(SozJobCore.Jobs)
     local EnterpriseSafeNotLoaded = table.clone(Config.SafeStorages)
+    local BankAtmNotLoaded = table.clone(Config.BankPedLocations)
 
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
@@ -37,6 +38,8 @@ MySQL.ready(function()
                     EnterpriseSafeNotLoaded[v.businessid] = nil
                 elseif v.account_type == "offshore" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
+                elseif v.account_type == "bank-atm" then
+                    Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 end
             end
         end
@@ -51,6 +54,13 @@ MySQL.ready(function()
         -- Create account present in configuration if not exist in database
         for k, v in pairs(EnterpriseSafeNotLoaded) do
             Account.Create(k, v.label, "safestorages", v.owner)
+        end
+
+        -- Create account present in configuration if not exist in database
+        for k, _ in pairs(BankAtmNotLoaded) do
+            if k ~= "pacific2" and k ~= "pacific3" then
+                Account.Create(k, k, "bank-atm", "bank_" .. k)
+            end
         end
     end)
 

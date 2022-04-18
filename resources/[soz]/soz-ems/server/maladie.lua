@@ -46,7 +46,6 @@ end)
 
 RegisterServerEvent("lsmc:server:GetMort")
 AddEventHandler("lsmc:server:GetMort", function(id)
-    local Player = QBCore.Functions.GetPlayer(id)
-    local ReasonMort = Player.PlayerData.metadata["foie"]
-    TriggerClientEvent("lsmc:client:ShowReasonMort", ReasonMort)
+    local TargetPlayer = QBCore.Functions.GetPlayer(id)
+    TriggerClientEvent("hud:client:DrawNotification", TargetPlayer.PlayerData.source, TargetPlayer.PlayerData.metadata["mort"])
 end)

@@ -2,7 +2,12 @@ QBCore = exports["qb-core"]:GetCoreObject()
 SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 local safeStorageMenu = MenuV:CreateMenu(nil, "", "menu_inv_safe", "soz", "safe-storage")
-local isInsideBankZone = false
+local isInsideEntrepriseBankZone = false
+
+local currentBank = {}
+exports("GetCurrentBank", function()
+    return currentBank
+end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -12,20 +17,32 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
 
+AddEventHandler("locations:zone:enter", function(bankType, bankName)
+    if Config.BankPedLocations[bankName] ~= nil then
+        currentBank = {bank = bankName, type = string.match(bankName, "%a+")}
+    end
+end)
+
+AddEventHandler("locations:zone:exit", function(bankType, bankName)
+    if Config.BankPedLocations[bankName] ~= nil then
+        currentBank = {}
+    end
+end)
+
 local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 2.4, {name = "bank_society", heading = 340})
 bankSociety:onPlayerInOut(function(isPointInside, point)
-    isInsideBankZone = isPointInside
+    isInsideEntrepriseBankZone = isPointInside
 end)
 
 CreateThread(function()
-    for id, bank in pairs(Config.BankPedLocations) do
-        if not QBCore.Functions.GetBlip("bank_" .. id) then
-            QBCore.Functions.CreateBlip("bank_" .. id, {name = "Banque", coords = bank, sprite = 108, color = 2})
+    for bank, coords in pairs(Config.BankPedLocations) do
+        if not QBCore.Functions.GetBlip("bank_" .. bank) then
+            QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
         end
         exports["qb-target"]:SpawnPed({
             {
                 model = "ig_bankman",
-                coords = bank,
+                coords = coords,
                 minusOne = true,
                 freeze = true,
                 invincible = true,
@@ -43,7 +60,8 @@ CreateThread(function()
                             icon = "c:bank/compte_societe.png",
                             event = "banking:openSocietyBankScreen",
                             canInteract = function(entity, distance, data)
-                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and isInsideBankZone
+                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
+                                           isInsideEntrepriseBankZone
                             end,
                         },
                         {
@@ -51,7 +69,27 @@ CreateThread(function()
                             icon = "c:stonk/vendre.png",
                             event = "soz-jobs:client:stonk-resale-bag",
                             canInteract = function()
-                                return isInsideBankZone and exports["soz-jobs"]:CanBagsBeResold()
+                                return isInsideEntrepriseBankZone and exports["soz-jobs"]:CanBagsBeResold()
+                            end,
+                        },
+                        {
+                            label = "Remplir",
+                            icon = "c:stonk/remplir.png",
+                            event = "soz-jobs:client:stonk-fill-in",
+                            isBank = true,
+                            canInteract = function()
+                                local hasJobPermission = exports["soz-jobs"]:CanFillIn()
+                                if not hasJobPermission then
+                                    return false
+                                end
+
+                                if currentBank.bank and currentBank.type then
+                                    local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
+                                    if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
+                                        return true
+                                    end
+                                    return false
+                                end
                             end,
                         },
                     },
@@ -61,10 +99,37 @@ CreateThread(function()
         })
     end
 
-    exports["qb-target"]:AddTargetModel(Config.ATMModels, {
-        options = {{event = "banking:openATMScreen", icon = "c:bank/compte_personal.png", label = "Compte Personnel"}},
-        distance = 1.0,
-    })
+    for model, atmType in pairs(Config.ATMModels) do
+        exports["qb-target"]:AddTargetModel(model, {
+            options = {
+                {
+                    event = "banking:openATMScreen",
+                    icon = "c:bank/compte_personal.png",
+                    label = "Compte Personnel",
+                    atmType = atmType,
+                },
+                {
+                    label = "Remplir",
+                    icon = "c:stonk/remplir.png",
+                    event = "soz-jobs:client:stonk-fill-in",
+                    atmType = atmType,
+                    canInteract = function(entity)
+                        local hasJobPermission = exports["soz-jobs"]:CanFillIn()
+                        if not hasJobPermission then
+                            return false
+                        end
+
+                        local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
+                        if currentMoney < Config.BankAtmDefault[atmType].maxMoney then
+                            return true
+                        end
+                        return false
+                    end,
+                },
+            },
+            distance = 1.0,
+        })
+    end
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)

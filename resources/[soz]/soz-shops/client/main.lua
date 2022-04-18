@@ -2,20 +2,35 @@ QBCore = exports["qb-core"]:GetCoreObject()
 shopMenu = MenuV:CreateMenu(nil, "", "menu_shop_supermarket", "soz", "shops")
 ShopContext, currentShop, currentShopBrand = {}, nil, nil
 
-for brand, shop in pairs(ShopLocation) do
-    for _, zone in pairs(shop) do
-        zone:onPlayerInOut(function(isInside)
-            if isInside then
-                currentShop = zone.name
-                currentShopBrand = brand
-            else
-                currentShop = nil
-                currentShopBrand = nil
-                shopMenu:Close()
-            end
-        end)
+local ShopLocations = {
+    ["ammunation"] = true,
+    ["supermarket"] = true,
+    ["barber"] = true,
+    ["ponsonbys"] = true,
+    ["suburban"] = true,
+    ["binco"] = true,
+    ["jewelry"] = true,
+    ["247supermarket"] = true,
+    ["ltdgasoline"] = true,
+    ["robsliquor"] = true,
+    ["tattoo"] = true,
+    ["zkea"] = true,
+}
+
+AddEventHandler("locations:zone:enter", function(brand, shop)
+    if ShopLocations[brand] then
+        currentShop = shop
+        currentShopBrand = brand
     end
-end
+end)
+
+AddEventHandler("locations:zone:exit", function(brand, shop)
+    if ShopLocations[brand] then
+        currentShop = nil
+        currentShopBrand = nil
+        shopMenu:Close()
+    end
+end)
 
 exports("GetCurrentShop", function()
     return currentShop

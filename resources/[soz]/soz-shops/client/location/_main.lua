@@ -1,2 +1,0 @@
-LocationDebugPoly = false
-ShopLocation = {}

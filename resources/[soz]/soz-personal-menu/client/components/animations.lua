@@ -12,9 +12,18 @@ local PlayEmote = function(animation)
         if animation[1] ~= "0" then
             QBCore.Functions.RequestAnimDict(animation[1])
             local canMove = animation[4] or false
-            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
+            if IsEntityPlayingAnim(ped, animation[1], animation[2], 3) then
+                StopAnimTask(ped, animation[1], animation[2], 1.0)
+            else
+                TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
+            end
         else
-            TaskStartScenarioInPlace(ped, animation[2], 0, true)
+            if IsPedUsingScenario(ped, animation[2]) then
+                ClearPedTasks(ped)
+            else
+                TaskStartScenarioInPlace(ped, animation[2], 0, true)
+            end
+
         end
     end
 end
@@ -27,6 +36,15 @@ local PlayWalking = function(animation)
 
     SetPedMovementClipset(PlayerPedId(), animation, 0.2)
     RemoveAnimSet(animation)
+end
+
+local forceApplyWalkStyle = function()
+    Wait(1000)
+    local walk = PlayerData.metadata.walk
+
+    if walk then
+        PlayWalking(walk)
+    end
 end
 
 GenerateAnimationList = function(menu, category, content)
@@ -130,6 +148,14 @@ CreateThread(function()
     end
 
     --- Animation menu
+    allAnimationMenu:AddButton({
+        icon = "🛑",
+        label = "Arrêter l'animation",
+        value = nil,
+        select = function()
+            ClearPedTasks(PlayerPedId())
+        end,
+    })
     for category, content in pairs(Config.AnimationsList) do
         GenerateAnimationList(allAnimationMenu, category, content)
     end
@@ -144,10 +170,9 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 end)
 
 RegisterNetEvent("soz_ems:client:Revive", function()
-    Wait(1000)
-    local walk = PlayerData.metadata.walk
+    forceApplyWalkStyle()
+end)
 
-    if walk then
-        PlayWalking(walk)
-    end
+RegisterNetEvent("personal:client:ApplyWalkStyle", function()
+    forceApplyWalkStyle()
 end)

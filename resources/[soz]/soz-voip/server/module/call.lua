@@ -31,10 +31,12 @@ function PhoneCall:setPlayer(source, channel)
 end
 
 function PhoneCall:removePlayer(source, channel)
-    voiceStateBackend["call"]:removeConsumer(source, channel)
-
     for player, _ in pairs(voiceStateBackend["call"]:getConsumers(channel)) do
+        TriggerClientEvent("voip:client:removeConsumer", source, "call", player)
         TriggerClientEvent("voip:client:removeConsumer", player, "call", source)
+    end
+    for player, _ in pairs(voiceStateBackend["call"]:getConsumers(channel)) do
+        voiceStateBackend["call"]:removeConsumer(player, channel)
     end
 end
 

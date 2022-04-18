@@ -626,3 +626,22 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
         end
     end
 end)
+
+CreateThread(function()
+    while true do
+        if MenuV.CurrentMenu ~= nil then
+            DisableAllControlActions(0)
+
+            EnableControlAction(0, 1, true) -- INPUT_LOOK_LR
+            EnableControlAction(0, 2, true) -- INPUT_LOOK_UD
+            EnableControlAction(0, 30, true) -- INPUT_MOVE_LR
+            EnableControlAction(0, 31, true) -- INPUT_MOVE_UD
+            EnableControlAction(0, 189, true) -- INPUT_FRONTEND_LEFT
+            EnableControlAction(0, 190, true) -- INPUT_FRONTEND_RIGHT
+            EnableControlAction(0, 191, true) -- INPUT_FRONTEND_RDOWN
+            EnableControlAction(0, 194, true) -- INPUT_FRONTEND_RRIGHT
+        end
+
+        Wait(0)
+    end
+end)

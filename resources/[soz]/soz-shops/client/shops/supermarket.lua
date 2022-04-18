@@ -8,7 +8,7 @@ function SupermarketShop:new(...)
 end
 
 function SupermarketShop:getShopProducts()
-    return Config.Products["supermarket"]
+    return Config.Products[self.brand]
 end
 
 function SupermarketShop:GenerateMenu()
@@ -26,7 +26,7 @@ function SupermarketShop:GenerateMenu()
                     local amount = exports["soz-hud"]:Input("Quantité", 4, "1")
 
                     if amount and tonumber(amount) > 0 then
-                        TriggerServerEvent("shops:server:pay", "supermarket", val.Value, tonumber(amount))
+                        TriggerServerEvent("shops:server:pay", self.brand, val.Value, tonumber(amount))
 
                         shopMenu:Close()
                         self:GenerateMenu()
@@ -44,3 +44,4 @@ end
 ShopContext["247supermarket"] = SupermarketShop:new("Superette", "247supermarket", {sprite = 52, color = 2}, "ig_ashley")
 ShopContext["ltdgasoline"] = SupermarketShop:new("Superette", "ltdgasoline", {sprite = 52, color = 2}, "s_m_m_autoshop_02")
 ShopContext["robsliquor"] = SupermarketShop:new("Superette", "robsliquor", {sprite = 52, color = 2}, "a_m_m_genfat_02")
+ShopContext["zkea"] = SupermarketShop:new("Zkea", "zkea", {sprite = 123, color = 69}, "ig_brad")

@@ -32,7 +32,7 @@ Citizen.CreateThread(function()
     while true do
         if LocalPlayer.state.isLoggedIn then
             if GetCurrentMoney() >= Config.MoneyCaseTrigger then
-                if not hasMoneyCase() then
+                if not hasMoneyCase() and not LocalPlayer.state.adminDisableMoneyCase then
                     addCase()
                 end
             else
@@ -78,6 +78,10 @@ Citizen.CreateThread(function()
         if hasMoneyCase() and (GetVehiclePedIsTryingToEnter(playerPed) ~= 0 or isPhoneVisible) then
             Wait(500)
             SetCurrentPedWeapon(playerPed, "WEAPON_UNARMED")
+        end
+
+        if hasMoneyCase() and LocalPlayer.state.adminDisableMoneyCase then
+            removeCase()
         end
 
         Wait(0)
