@@ -1,7 +1,7 @@
 Fields = {}
 Field = {}
 
-function Field:new(name, options)
+function Field:new(name)
     local self = setmetatable({}, {
         __index = Field,
         __call = function(self, name)
@@ -11,9 +11,12 @@ function Field:new(name, options)
             return nil
         end,
     })
-    self:loadConfig(options)
 
     self.name = name
+    self.type = self:_parseFieldType(self.name)
+
+    self:loadConfig(self.type)
+
     self.maxQuantity = math.random(self.prodRange.min, self.prodRange.max)
     self.quantity = self.maxQuantity
 
@@ -21,10 +24,17 @@ function Field:new(name, options)
     return Fields[self.name]
 end
 
-Field.loadConfig = function(self, options)
-    for k, v in pairs(options) do
+Field.loadConfig = function(self, type)
+    if FoodConfig.Fields[type] == nil then
+        error(string.format("Invalid field type '%s'", type))
+    end
+    for k, v in pairs(FoodConfig.Fields[type]) do
         self[k] = v
     end
+end
+
+Field._parseFieldType = function(self, name)
+    return string.match(name, "%a+")
 end
 
 Field.Harvest = function(self)
@@ -42,6 +52,7 @@ end
 
 QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (source, cb, fieldName)
     local field = Fields[fieldName]
+    print('##', fieldName, field)
     if field ~= nil then
         cb(field:GetHealth())
     end
@@ -49,6 +60,6 @@ QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (so
 end)
 
 -- Create Field objects
-for fieldName, options in pairs(FoodConfig.Fields) do
-    Field:new(fieldName, options)
+for fieldName, _ in pairs(FoodConfig.Zones) do
+    Field:new(fieldName)
 end
