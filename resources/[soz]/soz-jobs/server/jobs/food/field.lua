@@ -50,6 +50,14 @@ Field.GetHealth = function(self)
     return math.ceil(self.quantity * #FoodConfig.FieldHealthStates / self.maxQuantity)
 end
 
+Field.Refill = function(self, count)
+    self.quantity = self.quantity + (count or 1)
+    if self.quantity > self.maxQuantity then
+        self.quantity = self.maxQuantity
+    end
+    return self.quantity
+end
+
 QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (source, cb, fieldName)
     local field = Fields[fieldName]
     print('##', fieldName, field)
@@ -63,3 +71,15 @@ end)
 for fieldName, _ in pairs(FoodConfig.Zones) do
     Field:new(fieldName)
 end
+
+-- Refill loop
+Citizen.CreateThread(function()
+    local delay = FoodConfig.RefillLoopDelay
+    while true do
+        for _, field in pairs(Fields) do
+            local amount = math.ceil(delay / field.refillDelay)
+            print(field:Refill(amount))
+        end
+        Citizen.Wait(delay)
+    end
+end)
