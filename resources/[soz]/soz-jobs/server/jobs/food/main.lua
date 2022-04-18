@@ -15,14 +15,22 @@ local function AddItem(source, item)
     return receivedItem
 end
 
-QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", function(source, cb, count)
+QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", function(source, cb, fieldName)
     local Player = QBCore.Functions.GetPlayer(source)
     if Player == nil then
         return
     end
 
+    local field = Fields[fieldName]
+    if field == nil then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Il y a eu une erreur: invalid_field", "error")
+    end
+
+    local quantity, remaining = field:Harvest()
+    print("QUANT", quantity, remaining)
+
     local items = {}
-    for i = 1, count, 1 do
+    for i = 1, quantity, 1 do
         local itemIdx = math.random(#FoodConfig.Collect.Items)
         table.insert(items, FoodConfig.Collect.Items[itemIdx])
     end
