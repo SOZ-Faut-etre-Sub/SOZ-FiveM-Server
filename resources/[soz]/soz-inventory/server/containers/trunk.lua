@@ -33,7 +33,7 @@ end
 --- @return boolean
 function TrunkInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
+    exports.oxmysql:update("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
 end
 

@@ -48,7 +48,7 @@ end
 --- @param money number
 --- @return boolean
 function OffShoreAccount:save(id, owner, money, marked_money)
-    MySQL.update.await("UPDATE bank_accounts SET money = ?, marked_money = ? WHERE account_type = 'offshore' AND businessid = ?", {
+    exports.oxmysql:update("UPDATE bank_accounts SET money = ?, marked_money = ? WHERE account_type = 'offshore' AND businessid = ?", {
         money,
         marked_money,
         id,
