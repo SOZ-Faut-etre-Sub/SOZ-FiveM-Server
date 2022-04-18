@@ -49,11 +49,8 @@ end
 --- @param money number
 --- @return boolean
 function SafeStorageAccount:save(id, owner, money, marked_money)
-    MySQL.update.await("UPDATE bank_accounts SET money = ?, marked_money = ? WHERE account_type = 'safestorages' AND businessid = ?", {
-        money,
-        marked_money,
-        id,
-    })
+    exports.oxmysql:update("UPDATE bank_accounts SET money = ?, marked_money = ? WHERE account_type = 'safestorages' AND businessid = ?",
+                           {money, marked_money, id})
     return true
 end
 

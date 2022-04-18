@@ -614,19 +614,13 @@ end
 saveInventories(true)
 
 -- Events
-AddEventHandler("txAdmin:events:scheduledRestart", function(event)
-    if event.secondsRemaining == 60 then
-        SetTimeout(50000, function()
-            saveInventories()
-        end)
-    end
-end)
-
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         saveInventories()
     end
 end)
+
+exports("saveInventories", saveInventories)
 
 _G.Inventory = Inventory
 _G.Container = {}
