@@ -4,7 +4,12 @@ RegisterNetEvent("taxi:client:OpenCloakroomMenu", function()
             label = "Tenue civile",
             value = nil,
             select = function()
-                TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+                QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+                    disableMovement = true,
+                    disableCombat = true,
+                }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+                    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+                end)
             end,
         })
 
@@ -13,7 +18,16 @@ RegisterNetEvent("taxi:client:OpenCloakroomMenu", function()
                 label = name,
                 value = nil,
                 select = function()
-                    TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", skin)
+                    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+                        disableMovement = true,
+                        disableCombat = true,
+                    }, {
+                        animDict = "anim@mp_yacht@shower@male@",
+                        anim = "male_shower_towel_dry_to_get_dressed",
+                        flags = 16,
+                    }, {}, {}, function() -- Done
+                        TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", skin)
+                    end)
                 end,
             })
         end
