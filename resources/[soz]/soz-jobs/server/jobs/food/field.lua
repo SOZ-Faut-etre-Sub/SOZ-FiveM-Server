@@ -1,7 +1,7 @@
 Fields = {}
 Field = {}
 
-function Field:new(name)
+function Field:new(name, options)
     local self = setmetatable({}, {
         __index = Field,
         __call = function(self, name)
@@ -11,7 +11,7 @@ function Field:new(name)
             return nil
         end,
     })
-    self:loadConfig(name)
+    self:loadConfig(options)
 
     self.name = name
     self.maxQuantity = math.random(self.prodRange.min, self.prodRange.max)
@@ -21,11 +21,8 @@ function Field:new(name)
     return Fields[self.name]
 end
 
-Field.loadConfig = function(self, name)
-    if next(FoodConfig.Fields[name]) == nil then
-        error("Invalid Field name")
-    end
-    for k, v in pairs(FoodConfig.Fields[name]) do
+Field.loadConfig = function(self, options)
+    for k, v in pairs(options) do
         self[k] = v
     end
 end
@@ -50,3 +47,8 @@ QBCore.Functions.CreateCallback("soz-jobs:server:get-field-health", function (so
     end
     cb(nil)
 end)
+
+-- Create Field objects
+for fieldName, options in pairs(FoodConfig.Fields) do
+    Field:new(fieldName, options)
+end
