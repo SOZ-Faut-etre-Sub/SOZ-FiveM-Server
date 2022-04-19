@@ -1,6 +1,7 @@
 FoodJob = {}
 FoodJob.Functions = {}
 FoodJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_food", "soz", "food:menu")
+FoodJob.Zones = {}
 
 local currentField
 local currentFieldHealth
@@ -18,7 +19,7 @@ local function SpawnFieldZones()
             end
         end
 
-        local zone = PolyZone:Create(points, { name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0, debugPoly = true })
+        local zone = PolyZone:Create(points, {name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0})
         zone:onPlayerInOut(function(isInsideZone)
             if isInsideZone then
                 currentField = zone.name
@@ -32,6 +33,13 @@ local function SpawnFieldZones()
                 currentFieldHealth = nil
             end
         end)
+        table.insert(FoodJob.Zones, zone)
+    end
+end
+
+local function DespawnFieldZones()
+    for _, zone in ipairs(FoodJob.Zones) do
+        zone:destroy()
     end
 end
 
@@ -86,11 +94,13 @@ Citizen.CreateThread(function()
             },
         },
     })
-        end)
+end)
 
 AddEventHandler("jobs:client:food-toggle-duty", function()
     if not PlayerData.job.onduty then
         SpawnFieldZones()
+    else
+        DespawnFieldZones()
     end
     TriggerServerEvent("QBCore:ToggleDuty")
 end)
