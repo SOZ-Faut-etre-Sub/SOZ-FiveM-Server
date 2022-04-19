@@ -24,6 +24,7 @@ SozJobCore.JobPermission = {
     SocietyPrivateStorage = "society-private-storage",
     SocietyBankAccount = "society-bank-account",
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
+    Food = {Harvest = "harvest", Craft = "craft"},
 }
 
 SozJobCore.Jobs = {
@@ -138,6 +139,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.Food.Harvest] = {label = "Récolter des ingrédients"},
+            [SozJobCore.JobPermission.Food.Craft] = {label = "Cuisiner"},
         },
     },
     [SozJobCore.JobType.News] = {
