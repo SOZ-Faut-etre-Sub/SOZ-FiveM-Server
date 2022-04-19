@@ -1,11 +1,13 @@
 local houseMenu = MenuV:InheritMenu(MapperMenu, {subtitle = "Menu pour les habitations"})
 CurrentHousingMenu = MenuV:InheritMenu(houseMenu)
+CurrentHousingItemMenu = MenuV:InheritMenu(houseMenu)
 CurrentBuildingMenu = MenuV:InheritMenu(houseMenu, {subtitle = "Menu des batiments"})
 ChangeCurrentHousingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "Modification de l'habitations"})
 ChangeCurrentBuildingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "Modification du batiment"})
 
 
 CurrentHousingData = {}
+CurrentZoneData = {}
 
 houseMenu:AddButton({
     label = "Modifier une habitation",

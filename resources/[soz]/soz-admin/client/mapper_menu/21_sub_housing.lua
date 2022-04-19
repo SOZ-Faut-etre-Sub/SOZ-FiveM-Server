@@ -1,54 +1,85 @@
+CurrentHousingItemMenu:On("open", function(menu)
+    menu:ClearItems()
+
+    if CurrentZoneData ~= nil then
+        menu:AddButton({
+            label = "Afficher la zone",
+            value = nil,
+            select = function()
+                print(CurrentZoneData)
+                zone = json.decode(CurrentZoneData)
+                DisplayZone(zone)
+            end,
+        })
+
+        menu:AddButton({
+            label = "Changer la zone",
+            value = nil,
+            select = function()
+                print("ch")
+            end,
+        })
+    else
+        menu:AddButton({
+            label = "Ajouter la zone",
+            value = nil,
+            select = function()
+                TriggerEvent("admin:polyzone:pzcreate", "box", "custom_housing" ,{"box", "custom_housing"})
+            end,
+        })
+    end
+end)
 
 ChangeCurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
 
     if CurrentHousingData.building == nil then
         menu:AddButton({
-            label = "zone d'entrée",
-            value = nil,
+            label = "Zone d'entrée",
+            value = CurrentHousingItemMenu,
             select = function()
-                print("test")
+                CurrentZoneData = CurrentHousingData.entry_zone
             end,
         })
     end
 
     menu:AddButton({
-        label = "zone de sortie",
-        value = nil,
+        label = "Zone de sortie",
+        value = CurrentHousingItemMenu,
         select = function()
-            print("test")
+            CurrentZoneData = CurrentHousingData.exit_zone
         end,
     })
 
     menu:AddButton({
-        label = "Frigo",
-        value = nil,
+        label = "Zone du frigo",
+        value = CurrentHousingItemMenu,
         select = function()
-            print("test")
+            CurrentZoneData = CurrentHousingData.fridge_position
         end,
     })
 
     menu:AddButton({
-        label = "Coffre d'argent",
-        value = nil,
+        label = "Zone du coffre d'argent",
+        value = CurrentHousingItemMenu,
         select = function()
-            print("test")
+            CurrentZoneData = CurrentHousingData.money_position
         end,
     })
 
     menu:AddButton({
-        label = "Coffre d'item",
-        value = nil,
+        label = "Zone du Coffre d'item",
+        value = CurrentHousingItemMenu,
         select = function()
-            print("test")
+            CurrentZoneData = CurrentHousingData.stash_position
         end,
     })
 
     menu:AddButton({
-        label = "vestiare",
-        value = nil,
+        label = "Zone du vestiare",
+        value = CurrentHousingItemMenu,
         select = function()
-            print("test")
+            CurrentZoneData = CurrentHousingData.closet_position
         end,
     })
 end)
