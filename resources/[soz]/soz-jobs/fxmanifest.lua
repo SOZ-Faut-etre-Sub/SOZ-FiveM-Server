@@ -22,7 +22,7 @@ server_script {
     "server/functions.lua",
     "server/temporary.lua",
     "server/objects.lua",
-    "server/jobs/*.lua",
+    "server/jobs/**/*.lua",
 }
 
 dependencies {"qb-target"}
