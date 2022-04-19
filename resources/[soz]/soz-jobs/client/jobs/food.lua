@@ -6,6 +6,25 @@ local currentField
 local currentFieldHealth
 local helpTextDisplayed = false
 
+local function SpawnFieldZones()
+    for zoneName, points in pairs(FoodConfig.Zones) do
+        local zone = PolyZone:Create(points, { name = zoneName})
+        zone:onPlayerInOut(function(isInsideZone)
+            if isInsideZone then
+                currentField = zone.name
+                DisplayHelpText()
+                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
+                    currentFieldHealth = health
+                    DisplayFieldHealth()
+                end, zone.name)
+            else
+                currentField = nil
+                currentFieldHealth = nil
+            end
+        end)
+    end
+end
+
 Citizen.CreateThread(function()
     -- BLIP
     QBCore.Functions.CreateBlip("food", {
@@ -25,8 +44,7 @@ Citizen.CreateThread(function()
             {
                 icon = "fas fa-sign-in-alt",
                 label = "Prise de service",
-                type = "server",
-                event = "QBCore:ToggleDuty",
+                event = "jobs:client:food-toggle-duty",
                 canInteract = function()
                     return not PlayerData.job.onduty
                 end,
@@ -34,8 +52,7 @@ Citizen.CreateThread(function()
             {
                 icon = "fas fa-sign-out-alt",
                 label = "Fin de service",
-                type = "server",
-                event = "QBCore:ToggleDuty",
+                event = "jobs:client:food-toggle-duty",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -59,24 +76,13 @@ Citizen.CreateThread(function()
             },
         },
     })
-
-    -- ZONES
-    for zoneName, points in pairs(FoodConfig.Zones) do
-        local zone = PolyZone:Create(points, {name = zoneName })
-        zone:onPlayerInOut(function(isInsideZone)
-            if isInsideZone then
-                currentField = zone.name
-                DisplayHelpText()
-                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
-                    currentFieldHealth = health
-                    DisplayFieldHealth()
-                end, zone.name)
-            else
-                currentField = nil
-                currentFieldHealth = nil
-            end
         end)
+
+AddEventHandler("jobs:client:food-toggle-duty", function()
+    if not PlayerData.job.onduty then
+        SpawnFieldZones()
     end
+    TriggerServerEvent("QBCore:ToggleDuty")
 end)
 
 ---
