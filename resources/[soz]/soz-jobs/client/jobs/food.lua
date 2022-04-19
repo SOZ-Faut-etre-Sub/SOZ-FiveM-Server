@@ -172,7 +172,7 @@ end
 
 RegisterNetEvent("jobs:client:food:OpenCraftingMenu", function()
     local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Craft)
-    if not hasPermission or PlayerData.job.onduty then
+    if not hasPermission or not PlayerData.job.onduty then
         return
     end
 
