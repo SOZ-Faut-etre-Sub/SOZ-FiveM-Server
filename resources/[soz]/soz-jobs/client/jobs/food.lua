@@ -2,6 +2,10 @@ FoodJob = {}
 FoodJob.Functions = {}
 FoodJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_food", "soz", "food:menu")
 
+local currentField
+local currentFieldHealth
+local helpTextDisplayed = false
+
 Citizen.CreateThread(function()
     -- BLIP
     QBCore.Functions.CreateBlip("food", {
@@ -55,6 +59,24 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    -- ZONES
+    for zoneName, points in pairs(FoodConfig.Zones) do
+        local zone = PolyZone:Create(points, {name = zoneName, debugPoly = true})
+        zone:onPlayerInOut(function(isInsideZone)
+            if isInsideZone then
+                currentField = zone.name
+                DisplayHelpText()
+                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
+                    currentFieldHealth = health
+                    DisplayFieldHealth()
+                end, zone.name)
+            else
+                currentField = nil
+                currentFieldHealth = nil
+            end
+        end)
+    end
 end)
 
 ---
@@ -140,43 +162,52 @@ end)
 ---
 --- FARM
 ---
-Citizen.CreateThread(function()
-    exports["qb-target"]:AddBoxZone("food:farm", vector2(-1860.0, 2098.38), 2.0, 8.0, {
-        heading = 25.0,
-        minZ = 137.0,
-        maxZ = 140.0,
-    }, {
-        options = {
-            {
-                icon = "c:food/collecter.png",
-                label = "Collecter",
-                event = "soz-jobs:client:food-collect-ingredients",
-                canInteract = function()
-                    return true
-                end,
-            },
-        },
-    })
+function DisplayHelpText()
+    helpTextDisplayed = true
+    Citizen.CreateThread(function()
+        while currentField ~= nil and helpTextDisplayed do
+            AddTextEntry("START_RESALE", "Appuyez sur ~INPUT_CONTEXT~ pour débuter la récolte")
+            DisplayHelpTextThisFrame("START_RESALE", false)
 
-    local coords = vector4(-1882.67, 2069.31, 141.01, 245.89)
-    CreateObjectNoOffset(GetHashKey("prop_copper_pan"), coords.x, coords.y, coords.z, false, false, false)
-    exports["qb-target"]:AddBoxZone("food:craft", vector2(coords.x, coords.y), 0.75, 0.75, {
-        heading = 250.0,
-        minZ = 141.0,
-        maxZ = 141.5,
-    }, {options = {{icon = "c:food/cuisiner.png", label = "Cuisiner", event = "jobs:client:food:OpenCraftingMenu"}}})
-end)
+            if IsControlJustReleased(0, 51) then
+                helpTextDisplayed = false
+                TriggerEvent("soz-jobs:client:food-collect-ingredients")
+            end
+
+            Citizen.Wait(0)
+        end
+    end)
+end
+
+function DisplayFieldHealth()
+    Citizen.CreateThread(function()
+        while currentFieldHealth ~= nil do
+            SetTextFont(4)
+            SetTextProportional(0)
+            SetTextScale(0.5, 0.5)
+            SetTextColour(255, 255, 255, 200)
+            SetTextEdge(2, 0, 0, 0, 255)
+            SetTextOutline()
+            SetTextDropShadow(0, 0, 0, 0, 255)
+            SetTextDropShadow()
+            SetTextEntry("STRING")
+            AddTextComponentString(FoodConfig.FieldHealthStates[currentFieldHealth])
+            local x, y, width, height = 0.96, 1.44, 1.0, 1.0
+            DrawText(x - width / 2, y - height / 2)
+            Citizen.Wait(0)
+        end
+    end)
+end
 
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
     Citizen.CreateThread(function()
-        local range = FoodConfig.Collect.Range
-        local count = math.random(range.min, range.max)
-        FoodJob.Functions.CollectIngredients(count)
+        local field = currentField
+        FoodJob.Functions.CollectIngredients(field)
     end)
 end)
 
-FoodJob.Functions.CollectIngredients = function(count)
-    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous collectez des ingrédients", FoodConfig.Collect.Duration, false, true,
+FoodJob.Functions.CollectIngredients = function(field)
+    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -184,7 +215,8 @@ FoodJob.Functions.CollectIngredients = function(count)
         disableCombat = false,
     }, {}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items)
+            QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items, newHealth)
+                currentFieldHealth = newHealth
                 if next(items) then
                     local messages = {}
                     for itemId, n in pairs(items) do
@@ -192,13 +224,20 @@ FoodJob.Functions.CollectIngredients = function(count)
                         table.insert(messages, string.format("%d %s", n, item.label))
                     end
                     local joined = table.concat(messages, ", ")
-                    exports["soz-hud"]:DrawNotification(string.format("Vous avez collectez ~g~%s", joined))
-                    TriggerEvent("soz-jobs:client:food-collect-ingredients")
+                    exports["soz-hud"]:DrawNotification(string.format("Vous avez récolté ~g~%s", joined))
+
+                    if currentFieldHealth == 0 then
+                        exports["soz-hud"]:DrawNotification("Le champ est épuisé...", "warning")
+                    else
+                        TriggerEvent("soz-jobs:client:food-collect-ingredients")
+                    end
                 end
-            end, count)
+            end, field)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté d'ingrédients", "error")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas recolté d'ingrédients", "error")
         end
+    end, function()
+        DisplayHelpText()
     end)
 end
 
