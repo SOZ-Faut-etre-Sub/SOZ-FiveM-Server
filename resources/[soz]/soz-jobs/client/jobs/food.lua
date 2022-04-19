@@ -249,7 +249,10 @@ FoodJob.Functions.CollectIngredients = function(field)
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = false,
-        }, {animDict = "anim@amb@business@weed@weed_inspecting_lo_med_hi@", anim = "weed_stand_checkingleaves_kneeling_01_inspector"}, {}, {}, function(wasCancelled)
+    }, {
+        animDict = "anim@amb@business@weed@weed_inspecting_lo_med_hi@",
+        anim = "weed_stand_checkingleaves_kneeling_01_inspector",
+    }, {}, {}, function(wasCancelled)
         if not wasCancelled then
             QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items, newHealth)
                 currentFieldHealth = newHealth
@@ -285,7 +288,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
             disableCarMovement = true,
             disableMouse = false,
             disableCombat = false,
-            }, {}, {}, {}, function(wasCancelled)
+        }, {}, {}, {}, function(wasCancelled)
             if not wasCancelled then
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
                     if success then
