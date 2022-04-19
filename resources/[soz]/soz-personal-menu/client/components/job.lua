@@ -6,7 +6,7 @@ function JobEntry(menu)
         return
     end
 
-    if not SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.ManageGrade) then
+    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
