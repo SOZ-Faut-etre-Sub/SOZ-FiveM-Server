@@ -22,6 +22,11 @@ local function SpawnFieldZones()
         local zone = PolyZone:Create(points, {name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0})
         zone:onPlayerInOut(function(isInsideZone)
             if isInsideZone then
+                local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
+                if not hasPermission or not PlayerData.job.onduty then
+                    return
+                end
+
                 currentField = zone.name
                 DisplayHelpText()
                 QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
@@ -166,6 +171,11 @@ local function GenerateSubmenu(parent, recipes)
 end
 
 RegisterNetEvent("jobs:client:food:OpenCraftingMenu", function()
+    local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Craft)
+    if not hasPermission or PlayerData.job.onduty then
+        return
+    end
+
     FoodJob.Menu:ClearItems()
 
     local recipesByCat = {}
