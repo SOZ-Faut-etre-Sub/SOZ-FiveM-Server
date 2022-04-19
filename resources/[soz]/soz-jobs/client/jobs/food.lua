@@ -1,10 +1,52 @@
 FoodJob = {}
 FoodJob.Functions = {}
 FoodJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_food", "soz", "food:menu")
+FoodJob.Zones = {}
 
 local currentField
 local currentFieldHealth
 local helpTextDisplayed = false
+
+local function SpawnFieldZones()
+    for zoneName, points in pairs(FoodConfig.Zones) do
+        local minZ, maxZ
+        for i = 1, #points, 1 do
+            if minZ == nil or points[i].z < minZ then
+                minZ = points[i].z
+            end
+            if maxZ == nil or points[i].z > maxZ then
+                maxZ = points[i].z
+            end
+        end
+
+        local zone = PolyZone:Create(points, {name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0})
+        zone:onPlayerInOut(function(isInsideZone)
+            if isInsideZone then
+                local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
+                if not hasPermission or not PlayerData.job.onduty then
+                    return
+                end
+
+                currentField = zone.name
+                DisplayHelpText()
+                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
+                    currentFieldHealth = health
+                    DisplayFieldHealth()
+                end, zone.name)
+            else
+                currentField = nil
+                currentFieldHealth = nil
+            end
+        end)
+        table.insert(FoodJob.Zones, zone)
+    end
+end
+
+local function DespawnFieldZones()
+    for _, zone in ipairs(FoodJob.Zones) do
+        zone:destroy()
+    end
+end
 
 Citizen.CreateThread(function()
     -- BLIP
@@ -25,8 +67,7 @@ Citizen.CreateThread(function()
             {
                 icon = "fas fa-sign-in-alt",
                 label = "Prise de service",
-                type = "server",
-                event = "QBCore:ToggleDuty",
+                event = "jobs:client:food-toggle-duty",
                 canInteract = function()
                     return not PlayerData.job.onduty
                 end,
@@ -34,8 +75,7 @@ Citizen.CreateThread(function()
             {
                 icon = "fas fa-sign-out-alt",
                 label = "Fin de service",
-                type = "server",
-                event = "QBCore:ToggleDuty",
+                event = "jobs:client:food-toggle-duty",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -59,24 +99,15 @@ Citizen.CreateThread(function()
             },
         },
     })
+end)
 
-    -- ZONES
-    for zoneName, points in pairs(FoodConfig.Zones) do
-        local zone = PolyZone:Create(points, {name = zoneName, debugPoly = true})
-        zone:onPlayerInOut(function(isInsideZone)
-            if isInsideZone then
-                currentField = zone.name
-                DisplayHelpText()
-                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
-                    currentFieldHealth = health
-                    DisplayFieldHealth()
-                end, zone.name)
-            else
-                currentField = nil
-                currentFieldHealth = nil
-            end
-        end)
+AddEventHandler("jobs:client:food-toggle-duty", function()
+    if not PlayerData.job.onduty then
+        SpawnFieldZones()
+    else
+        DespawnFieldZones()
     end
+    TriggerServerEvent("QBCore:ToggleDuty")
 end)
 
 ---
@@ -140,6 +171,11 @@ local function GenerateSubmenu(parent, recipes)
 end
 
 RegisterNetEvent("jobs:client:food:OpenCraftingMenu", function()
+    local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Craft)
+    if not hasPermission or not PlayerData.job.onduty then
+        return
+    end
+
     FoodJob.Menu:ClearItems()
 
     local recipesByCat = {}
@@ -213,7 +249,10 @@ FoodJob.Functions.CollectIngredients = function(field)
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = false,
-    }, {}, {}, {}, function(wasCancelled)
+    }, {
+        animDict = "anim@amb@business@weed@weed_inspecting_lo_med_hi@",
+        anim = "weed_stand_checkingleaves_kneeling_01_inspector",
+    }, {}, {}, function(wasCancelled)
         if not wasCancelled then
             QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-ingredients", function(items, newHealth)
                 currentFieldHealth = newHealth
