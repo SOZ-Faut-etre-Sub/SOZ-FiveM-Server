@@ -8,7 +8,17 @@ local helpTextDisplayed = false
 
 local function SpawnFieldZones()
     for zoneName, points in pairs(FoodConfig.Zones) do
-        local zone = PolyZone:Create(points, { name = zoneName})
+        local minZ, maxZ
+        for i = 1, #points, 1 do
+            if minZ == nil or points[i].z < minZ then
+                minZ = points[i].z
+            end
+            if maxZ == nil or points[i].z > maxZ then
+                maxZ = points[i].z
+            end
+        end
+
+        local zone = PolyZone:Create(points, { name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0, debugPoly = true })
         zone:onPlayerInOut(function(isInsideZone)
             if isInsideZone then
                 currentField = zone.name
