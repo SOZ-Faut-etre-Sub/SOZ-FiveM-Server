@@ -162,7 +162,7 @@ end)
 
 RegisterNetEvent("soz-housing:client:rentrer")
 AddEventHandler("soz-housing:client:rentrer", function()
-    LastLocation = GetEntityCoords(PlayerPedId)
+    LastLocation = GetEntityCoords(PlayerPedId())
     IsInside = true
     for item, Coord in pairs(coords) do
         local point = json.decode(Coord.teleport)

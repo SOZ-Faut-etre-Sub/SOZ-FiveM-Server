@@ -5,7 +5,8 @@ ChangeCurrentBuildingMenu:On("open", function(menu)
         label = "Afficher la Zone d'entrer",
         value = nil,
         select = function()
-            print("test")
+            zone = json.decode(CurrentHousingData.entry_zone)
+            DisplayZone(zone)
         end,
     })
 
