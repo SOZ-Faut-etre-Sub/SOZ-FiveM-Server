@@ -62,7 +62,7 @@ Citizen.CreateThread(function()
 
     -- ZONES
     for zoneName, points in pairs(FoodConfig.Zones) do
-        local zone = PolyZone:Create(points, {name = zoneName, debugPoly = true})
+        local zone = PolyZone:Create(points, {name = zoneName })
         zone:onPlayerInOut(function(isInsideZone)
             if isInsideZone then
                 currentField = zone.name
