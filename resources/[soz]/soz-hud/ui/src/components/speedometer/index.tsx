@@ -1,15 +1,13 @@
-import style from "./style.module.css"
-import LightIndicator from "./lightIndicator";
-import FuelGauge from "./fuelGauge";
-import SpeedGauge from "./speedGauge";
 import {FunctionComponent, useCallback, useContext, useEffect} from "react";
+import style from "./style.module.css"
 import {VehicleDataContext} from "../../context/vehicle";
-import SeatbeltIcon from "../../assets/vehicle/seatbelt";
 import {PlayerContext} from "../../context/player";
+import {LightIndicator, LockIndicator, MotorIndicator, SeatbeltIndicator} from "./Indicators";
+import {FuelGauge, SpeedGauge} from "./Gauges";
 
 const SpeedoMeter: FunctionComponent<any> = () => {
     const {inVehicle, updateInVehicle} = useContext(PlayerContext)
-    const {speed, fuel, seatbelt, lightState, updateSpeed, updateFuel, updateSeatbelt, updateLightState} = useContext(VehicleDataContext)
+    const {speed, fuel, engine, lock, seatbelt, lightState, updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState} = useContext(VehicleDataContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'speedometer') {
@@ -18,6 +16,8 @@ const SpeedoMeter: FunctionComponent<any> = () => {
         } else if (event.data.action === 'update_vehicle') {
             if (event.data.speed !== undefined) updateSpeed(event.data.speed)
             if (event.data.fuel !== undefined) updateFuel(event.data.fuel)
+            if (event.data.engine !== undefined) updateEngine(event.data.engine)
+            if (event.data.lock !== undefined) updateLock(event.data.lock)
             if (event.data.haveSeatbelt !== undefined) updateSeatbelt(event.data.haveSeatbelt)
             if (event.data.haveLight !== undefined) {
                 let lightState = 0
@@ -39,14 +39,18 @@ const SpeedoMeter: FunctionComponent<any> = () => {
 
     return (
         <div className={style.speedometer} style={{transition: "opacity .5s", opacity: inVehicle ? 1.0 : 0.0}} >
-            <div className={`${style.seatbelt} ${seatbelt ? style.belt : style.nobelt}`}>
-                <SeatbeltIcon className={style.icon}/>
+            <div className={style.leftContainer}>
+                <SeatbeltIndicator state={seatbelt} />
+                <LockIndicator state={lock} />
             </div>
-            <div className={style.gauge}>
-                <SpeedGauge value={speed} />
+            <div className={style.centerContainer}>
+                <SpeedGauge speed={speed} />
                 <FuelGauge value={fuel} />
+                <MotorIndicator state={engine} />
             </div>
-            <LightIndicator state={lightState} />
+            <div className={style.rightContainer}>
+                <LightIndicator state={lightState} />
+            </div>
         </div>
     )
 }
