@@ -7,15 +7,15 @@
       <colors>
 		<Item>
           <indices content="char_array">
-            0 
-            111 
+            0
+            111
             0
             0
             93
-            134		
+            134
           </indices>
           <liveries />
-        </Item>  		  
+        </Item>
       </colors>
       <kits>
         <Item>0_default_modkit</Item>
@@ -30,7 +30,7 @@
         </Probabilities>
       </plateProbabilities>
       <lightSettings value="1"/>
-      <sirenSettings value="199"/>
+      <sirenSettings value="1"/>
     </Item>
   </variationData>
 </CVehicleModelInfoVariation>
