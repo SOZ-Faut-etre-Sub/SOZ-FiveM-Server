@@ -103,7 +103,6 @@ QBCore.Functions.CreateUseableItem("lockpick", function(source, item)
 end)
 
 --- Soz
-QBCore.Functions.CreateUseableItem("cardboard", function(source)
-    TriggerClientEvent("consumables:client:UseCardBoard", source, false)
-    TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
+QBCore.Functions.CreateUseableItem("cardbord", function(source)
+    TriggerClientEvent("consumables:client:UseCardBoard", source)
 end)

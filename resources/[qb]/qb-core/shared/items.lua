@@ -1916,6 +1916,15 @@ QBShared.Items = {
         ['useable'] = false,
         ['description'] = 'Pour jeter tout type d\'ordures.'
     },
+    ['cardbord'] = {
+        ['name'] = 'cardbord',
+        ['label'] = 'Mon carton',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['description'] = 'Une jolie maison !'
+    },
 
     -- Communication
     ['phone'] = {
