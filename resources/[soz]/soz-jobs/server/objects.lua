@@ -5,6 +5,7 @@ local CollectObjects = {
     [GetHashKey("v_ilev_fos_mic")] = "n_fix_mic",
 }
 local Objects = {}
+local ObjectWithoutFreeze = {[GetHashKey("prop_cardbordbox_03a")] = true}
 
 RegisterNetEvent("job:server:placeProps", function(item, props, rotation, offset)
     local Player = QBCore.Functions.GetPlayer(source)
@@ -19,7 +20,9 @@ end)
 RegisterNetEvent("job:server:AddObject", function(object, position)
     local obj = CreateObjectNoOffset(object, position.x, position.y, position.z, true, true, false)
     SetEntityHeading(obj, position.w or 0)
-    FreezeEntityPosition(obj, true)
+    if ObjectWithoutFreeze[object] ~= true then
+        FreezeEntityPosition(obj, true)
+    end
 
     Objects[NetworkGetNetworkIdFromEntity(obj)] = position
 end)

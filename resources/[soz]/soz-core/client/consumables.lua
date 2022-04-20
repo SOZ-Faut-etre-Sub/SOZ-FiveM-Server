@@ -99,3 +99,7 @@ RegisterNetEvent("consumables:client:DrugsBag", function(itemName)
         TriggerServerEvent("QBCore:Server:SetMetaData", "drug", QBCore.Functions.GetPlayerData().metadata["drug"] + ConsumablesDrug[itemName])
     end)
 end)
+
+RegisterNetEvent("consumables:client:UseCardBoard", function()
+    TriggerServerEvent("job:server:placeProps", "cardbord", "prop_cardbordbox_03a", 90)
+end)
