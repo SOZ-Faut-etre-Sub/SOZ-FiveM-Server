@@ -51,9 +51,6 @@ local function LockVehicle()
                         SetVehicleLights(veh, 1)
                         Wait(200)
                         SetVehicleLights(veh, 0)
-                        exports["soz-hud"]:DrawNotification("Véhicule verrouillé !")
-                    else
-                        exports["soz-hud"]:DrawNotification("Problème avec la serrure !")
                     end
                 else
                     Wait(750)
@@ -66,9 +63,6 @@ local function LockVehicle()
                         SetVehicleLights(veh, 1)
                         Wait(200)
                         SetVehicleLights(veh, 0)
-                        exports["soz-hud"]:DrawNotification("Véhicule déverrouillé !")
-                    else
-                        exports["soz-hud"]:DrawNotification("Problème avec la serrure !")
                     end
                 end
             else
