@@ -2,7 +2,7 @@ const Config = {
     closeKeys: [69, 27]
 }
 
-const playerAccountReg = /^[0-9]{2}Z[0-9]{4}T[0-9]{4}$/
+const playerAccountReg = /^[0-9]{3}Z[0-9]{4}T[0-9]{3}$/
 
 let bankAtmAccount
 
