@@ -59,7 +59,12 @@ export const BankHome = () => {
             {credentials ? (
                 <div>
                     <div className="m-auto pt-1 pb-3 flex flex-col w-5/6">
-                        <h2 className="text-3xl text-emerald-500">${credentials.balance}</h2>
+                        <h2 className={cn("text-3xl", {
+                            "text-red-500": credentials.balance <= 0,
+                            "text-emerald-500": credentials.balance > 0,
+                        })}>
+                            {credentials.balance.toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}
+                        </h2>
                         <h5 className="text-xs uppercase font-light">Solde actuel</h5>
                     </div>
                     <BankCard name={credentials.name} account={credentials.account}/>
