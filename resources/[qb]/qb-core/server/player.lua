@@ -64,7 +64,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.charinfo.backstory = PlayerData.charinfo.backstory or 'placeholder backstory'
     PlayerData.charinfo.nationality = PlayerData.charinfo.nationality or 'USA'
     PlayerData.charinfo.phone = PlayerData.charinfo.phone or QBCore.Player.CreatePhoneNumber()
-    PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or math.random(11, 99) .. 'Z' .. math.random(1111, 9999) .. 'T' .. math.random(1111, 9999)
+    PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or math.random(111, 999) .. 'Z' .. math.random(1111, 9999) .. 'T' .. math.random(111, 999)
     -- Metadata
     PlayerData.metadata = PlayerData.metadata or {}
     -- Status
