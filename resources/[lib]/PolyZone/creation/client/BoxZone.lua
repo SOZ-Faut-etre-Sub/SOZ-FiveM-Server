@@ -110,13 +110,15 @@ function boxFinish()
     {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ})
 end
 
-RegisterNetEvent("polyzone:custom:endzone")
-AddEventHandler("polyzone:custom:endzone", function(id, zonetype)
-  TriggerServerEvent("polyzone:server:housing", {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}, id, zonetype)
+local function EndZone()
+  TempZone = {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}
   lastCreatedZoneType = createdZoneType
   lastCreatedZone = createdZone
 
   drawZone = false
   createdZone = nil
   createdZoneType = nil
+  return TempZone
 end)
+
+exports('EndPolyZone', EndZone)
