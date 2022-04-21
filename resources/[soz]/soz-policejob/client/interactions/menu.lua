@@ -228,7 +228,30 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
                     return
                 end
 
-                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
+                local ped = PlayerPedId()
+                QBCore.Functions.Progressbar("job:police:fines", "Rédaction de l'amende", 5000, false, true,
+                                             {
+                    disableMovement = false,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
+                    model = "prop_notepad_01",
+                    bone = 18905,
+                    coords = {x = 0.1, y = 0.02, z = 0.05},
+                    rotation = {x = 10.0, y = 0.0, z = 0.0},
+                }, {
+                    model = "prop_pencil_01",
+                    bone = 58866,
+                    coords = {x = 0.11, y = -0.02, z = 0.001},
+                    rotation = {x = -120.0, y = 0.0, z = 0.0},
+                }, function() -- Done
+                    if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
+                        TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
+                    else
+                        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                    end
+                end)
             end,
         })
 
@@ -241,7 +264,30 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
                     label = fine.label,
                     rightLabel = "$" .. fine.price,
                     select = function()
-                        TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fine.price)
+                        local ped = PlayerPedId()
+                        QBCore.Functions.Progressbar("job:police:fines", "Rédaction de l'amende", 5000, false, true,
+                                                     {
+                            disableMovement = false,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
+                            model = "prop_notepad_01",
+                            bone = 18905,
+                            coords = {x = 0.1, y = 0.02, z = 0.05},
+                            rotation = {x = 10.0, y = 0.0, z = 0.0},
+                        }, {
+                            model = "prop_pencil_01",
+                            bone = 58866,
+                            coords = {x = 0.11, y = -0.02, z = 0.001},
+                            rotation = {x = -120.0, y = 0.0, z = 0.0},
+                        }, function() -- Done
+                            if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
+                                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fine.price)
+                            else
+                                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                            end
+                        end)
                     end,
                 })
             end
