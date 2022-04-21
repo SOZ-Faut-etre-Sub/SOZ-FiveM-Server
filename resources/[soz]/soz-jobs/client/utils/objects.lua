@@ -1,4 +1,4 @@
-local removalObject = {"prop_roadcone02a"}
+local removalObject = {"prop_roadcone02a", "prop_cardbordbox_03a"}
 
 --- Targets
 CreateThread(function()

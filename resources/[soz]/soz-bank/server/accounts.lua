@@ -205,19 +205,13 @@ end
 saveAccounts(true)
 
 -- Events
-AddEventHandler("txAdmin:events:scheduledRestart", function(event)
-    if event.secondsRemaining == 60 then
-        SetTimeout(50000, function()
-            saveAccounts()
-        end)
-    end
-end)
-
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         saveAccounts()
     end
 end)
+
+exports("saveAccounts", saveAccounts)
 
 _G.AccountType = {}
 

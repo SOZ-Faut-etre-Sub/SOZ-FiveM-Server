@@ -1,13 +1,5 @@
-# GTA Server
+![SOZ BANNER v2](https://user-images.githubusercontent.com/104008465/164230939-d34fdc98-92e1-4d18-8cb4-2ec6f2ea6468.png)
 
-This directory contains all module and default configuration for the GTA RP Server on FiveM
-
-## Configuration
-
-Copy the `env.cfg-dist` file to `env.cfg` and replace any value necessary.
-
-## Running the server
-
-By default this repository provides a docker-compose file to run this server, if you wish to run it without docker, you
-need to install last server artifact from FiveM and run it using the [Traditional installation steps](https://docs.fivem.net/docs/server-manual/setting-up-a-server/#traditional-installation-steps)
-way.
+<p align="center">
+Developed especially for the ZeratoR community.
+</p>

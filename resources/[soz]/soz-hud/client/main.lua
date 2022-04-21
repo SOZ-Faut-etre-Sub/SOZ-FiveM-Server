@@ -26,6 +26,10 @@ local HudVehicleStatus = {
     speed = 0,
     --- @type number
     fuel = 100,
+    --- @type number
+    engine = 1000,
+    --- @type number
+    lock = 4,
     --- @type boolean
     haveLight = false,
     --- @type boolean
@@ -120,6 +124,8 @@ local function setVehicleData(data)
             action = "update_vehicle",
             speed = HudVehicleStatus.speed,
             fuel = HudVehicleStatus.fuel,
+            engine = HudVehicleStatus.engine,
+            lock = HudVehicleStatus.lock,
             haveSeatbelt = HudVehicleStatus.haveSeatbelt,
             haveLight = HudVehicleStatus.haveLight,
             lightsOn = HudVehicleStatus.lightsOn,
@@ -216,6 +222,8 @@ CreateThread(function()
                 setVehicleData({
                     speed = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
                     fuel = GetVehicleFuelLevel(vehicle),
+                    engine = GetVehicleEngineHealth(vehicle),
+                    lock = GetVehicleDoorLockStatus(vehicle),
                     haveLight = haveLight,
                     lightsOn = lightsOn,
                     highBeamsOn = highBeamsOn,

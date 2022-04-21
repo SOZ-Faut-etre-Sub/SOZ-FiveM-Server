@@ -1250,9 +1250,9 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour toutes les petites soifs !'
     },
-    ['grape'] = {
-        ['name'] = 'grape',
-        ['label'] = 'Raisin',
+    ['grape1'] = {
+        ['name'] = 'grape1',
+        ['label'] = 'Grappe de Cardinal',
         ['weight'] = 100,
         ['type'] = 'drink',
         ['unique'] = false,
@@ -1261,9 +1261,42 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Mmmmh miam du raisin.'
     },
-    ['wine'] = {
+    ['grape2'] = {
+        ['name'] = 'grape2',
+        ['label'] = 'Grappe de Muscat',
+        ['weight'] = 100,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Mmmmh miam du raisin.'
+    },
+    ['grape3'] = {
+        ['name'] = 'grape3',
+        ['label'] = 'Grappe de Centennia',
+        ['weight'] = 100,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Mmmmh miam du raisin.'
+    },
+    ['grape4'] = {
+        ['name'] = 'grape4',
+        ['label'] = 'Grappe de Chasselas',
+        ['weight'] = 100,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Mmmmh miam du raisin.'
+    },
+    ['wine1'] = {
         ['name'] = 'wine',
-        ['label'] = 'Vin',
+        ['label'] = 'LaMano Blanc',
         ['weight'] = 300,
         ['type'] = 'drink',
         ['unique'] = false,
@@ -1272,9 +1305,86 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
     },
-    ['grapejuice'] = {
+    ['wine2'] = {
+        ['name'] = 'wine',
+        ['label'] = 'Cuve Saint-Monnay',
+        ['weight'] = 300,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
+    },
+    ['wine3'] = {
+        ['name'] = 'wine',
+        ['label'] = 'Mandatorien',
+        ['weight'] = 300,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
+    },
+    ['wine4'] = {
+        ['name'] = 'wine',
+        ['label'] = 'IndySpensable',
+        ['weight'] = 300,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
+    },
+    ['grapejuice1'] = {
         ['name'] = 'grapejuice',
-        ['label'] = 'Jus de raisin',
+        ['label'] = 'Naples Gius',
+        ['weight'] = 200,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
+    },
+    ['grapejuice2'] = {
+        ['name'] = 'grapejuice',
+        ['label'] = 'JusKano',
+        ['weight'] = 200,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
+    },
+    ['grapejuice3'] = {
+        ['name'] = 'grapejuice',
+        ['label'] = 'TropiCaMaK',
+        ['weight'] = 200,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
+    },
+    ['grapejuice4'] = {
+        ['name'] = 'grapejuice',
+        ['label'] = 'FruitForSub',
+        ['weight'] = 200,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
+    },
+    ['grapejuice5'] = {
+        ['name'] = 'grapejuice',
+        ['label'] = 'OasClick',
         ['weight'] = 200,
         ['type'] = 'drink',
         ['unique'] = false,
@@ -1805,6 +1915,15 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['description'] = 'Pour jeter tout type d\'ordures.'
+    },
+    ['cardbord'] = {
+        ['name'] = 'cardbord',
+        ['label'] = 'Mon carton',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['description'] = 'Une jolie maison !'
     },
 
     -- Communication
