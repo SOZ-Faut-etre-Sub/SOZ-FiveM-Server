@@ -13,8 +13,10 @@ FoodConfig.Collect = {
 }
 
 FoodConfig.Categories = {
-    ["alcohol"] = {icon = "🍾", label = "Boissons alcolisées"},
-    ["softdrink"] = {icon = "🥤", label = "Boissons non alcolisées"},
+    ["wine"] = {icon = "https://nui-img/soz-items/wine", label = "Vins"},
+    ["grapejuice"] = {icon = "https://nui-img/soz-items/grapejuice", label = "Jus"},
+    ["cheese"] = {icon = "🧀", label = "Fromages"},
+    ["sausage"] = {icon = "🐖", label = "Saucissons"},
 }
 
 FoodConfig.Fields = {
@@ -186,18 +188,17 @@ FoodConfig.Zones = {
 
 FoodConfig.Recipes = {
     -- ALCOHOL
-    ["wine1"] = {category = "alcohol", icon = "🍷", ingredients = {["grape1"] = 3}},
-    ["wine2"] = {category = "alcohol", icon = "🍷", ingredients = {["grape2"] = 3}},
-    ["wine3"] = {category = "alcohol", icon = "🍷", ingredients = {["grape3"] = 3}},
-    ["wine4"] = {category = "alcohol", icon = "🍷", ingredients = {["grape4"] = 3}},
+    ["wine1"] = {category = "wine", ingredients = {["grape1"] = 3}},
+    ["wine2"] = {category = "wine", ingredients = {["grape2"] = 3}},
+    ["wine3"] = {category = "wine", ingredients = {["grape3"] = 3}},
+    ["wine4"] = {category = "wine", ingredients = {["grape4"] = 3}},
     -- SOFT DRINKS
-    ["grapejuice1"] = {category = "softdrink", icon = "🧃", ingredients = {["grape1"] = 2}},
-    ["grapejuice2"] = {category = "softdrink", icon = "🧃", ingredients = {["grape2"] = 2}},
-    ["grapejuice3"] = {category = "softdrink", icon = "🧃", ingredients = {["grape3"] = 2}},
+    ["grapejuice1"] = {category = "grapejuice", ingredients = {["grape1"] = 2}},
+    ["grapejuice2"] = {category = "grapejuice", ingredients = {["grape2"] = 2}},
+    ["grapejuice3"] = {category = "grapejuice", ingredients = {["grape3"] = 2}},
     ["grapejuice4"] = {
-        category = "softdrink",
-        icon = "🧃",
+        category = "grapejuice",
         ingredients = {["grape1"] = 1, ["grape2"] = 1, ["grape3"] = 1, ["grape4"] = 1},
     },
-    ["grapejuice5"] = {category = "softdrink", icon = "🧃", ingredients = {["grape4"] = 2}},
+    ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 2}},
 }
