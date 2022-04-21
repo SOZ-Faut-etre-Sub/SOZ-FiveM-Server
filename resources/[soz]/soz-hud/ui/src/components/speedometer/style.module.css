@@ -1,62 +1,164 @@
 .speedometer {
     position: absolute;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 30vw;
     bottom: 1.2vh;
     left: 35vw;
+    width: 30vw;
+    display: flex;
+    justify-content: center;
     transition: opacity .5s;
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .7))
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, .7))
 }
 
-.seatbelt {
+.speedometer * {
+    transition: all .3s;
+}
+
+.leftContainer {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    color: rgba(255, 255, 255, .3);
-    animation-duration: 2s;
+    align-items: flex-end;
+    padding-bottom: 1.25rem;
 }
 
-.belt {
-    animation-name: belt;
+.centerContainer {
+    display: flex;
+    justify-content: center;
+    margin-right: -20px; /* remove fuel container size */
 }
-.nobelt {
-    animation-name: nobelt;
+
+.rightContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-bottom: .85rem;
+}
+
+/* Shared */
+.hidden {
+    animation: validate-and-hide 3s forwards !important;
 }
 
 .icon {
-    width: 30px;
-    height: 30px;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
-.gauge {
-    display: flex;
-    justify-content: center;
-    margin-right: -40px;
-}
 
-@keyframes belt {
-    from {
-        color: rgba(255, 255, 255, .3);
+@keyframes validate-and-hide {
+    0% {
+        color: #f63939;
+        opacity: 1;
     }
-    50% {
+    25% {
         color: #2ecc71;
     }
-
-    to {
-        color: rgba(255, 255, 255, .3);
+    75% {
+        color: #2ecc71;
+    }
+    100% {
+        opacity: 0;
     }
 }
 
-@keyframes nobelt {
-    from {
+/* Colors */
+.green {
+    color: #2ecc71;
+}
+.red {
+    color: #f63939;
+}
+.orange {
+    color: #dc6c27;
+}
+.blue {
+    color: #0984e3;
+}
+
+/*
+ * Gauges
+ */
+
+/* Speed */
+.speedDisplay {
+    font-family: "Prompt", sans-serif;
+    font-weight: 600;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    text-align: center;
+    top: 1.5rem;
+    margin-right: 40px;
+    width: 100px;
+    color: rgba(255, 255, 255, .8);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.speedText {
+    color: white;
+    font-size: 1.8rem;
+    margin: -.3rem 10px -.3rem 0;
+}
+
+/* Fuel */
+.fuelGauge {
+    position: relative;
+    right: 10px;
+    top: 6px;
+}
+
+.fuelSvg {
+    display: flex;
+}
+
+.fuelSvg path {
+    transition: all .3s;
+}
+
+.fuelIcon {
+    position: relative;
+    top: 5px;
+    left: 10px;
+}
+
+
+/*
+ * Indicators
+ */
+
+/* Lights */
+.lights {
+    color: rgba(255, 255, 255, .3);
+    min-width: 18px;
+}
+
+/* Motor */
+.motor {
+    position: relative;
+    top: 75px;
+    right: 5.3rem;
+}
+
+/* Seatbelt */
+.seatbelt {
+    color: rgba(255, 255, 255, .3);
+}
+
+.nobelt {
+    animation-name: no-belt-animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes no-belt-animation {
+    0% {
         color: rgba(255, 255, 255, .3);
     }
     50% {
-        color: rgb(255,2,69);
+        color: #f63939;
     }
-
-    to {
+    100% {
         color: rgba(255, 255, 255, .3);
     }
 }

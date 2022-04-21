@@ -38,10 +38,10 @@ RegisterKeyMapping("toggleseatbelt", "Toggle Seatbelt", "keyboard", "K")
 function ToggleSeatbelt()
     if seatbeltOn then
         seatbeltOn = false
-        TriggerServerEvent("InteractSound_SV:PlayOnSource", "carunbuckle", 0.25)
+        TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
     else
         seatbeltOn = true
-        TriggerServerEvent("InteractSound_SV:PlayOnSource", "carbuckle", 0.25)
+        TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
     end
     TriggerEvent("hud:client:UpdateSeatbelt", seatbeltOn)
 end

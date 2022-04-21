@@ -39,8 +39,16 @@ const App = () => {
                 item: event.item.dataset.item,
             })
         }).then(res => res.json()).then(transfert => {
-            setPlayerInventoryItems(transfert.sourceInventory.items.map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
-            setTargetInventoryItems(transfert.targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
+            let sourceInventory = transfert.sourceInventory
+            let targetInventory = transfert.targetInventory
+
+            if (transfert.targetInventory.type === 'player') {
+                sourceInventory = transfert.targetInventory
+                targetInventory = transfert.sourceInventory
+            }
+
+            setPlayerInventoryItems(sourceInventory.items.map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
+            setTargetInventoryItems(targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
         });
     }, []);
 

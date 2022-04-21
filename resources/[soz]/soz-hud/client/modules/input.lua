@@ -15,14 +15,16 @@ RegisterNUICallback("input/close", function(data, cb)
 end)
 
 exports("Input", function(title, maxChar, content)
+    SetNuiFocus(true, true)
     Wait(150)
+
     if properties then
+        SetNuiFocus(false, false)
         return
     end
 
     properties = promise.new()
 
-    SetNuiFocus(true, true)
     SendNUIMessage({action = "draw_input", title = title, maxChar = maxChar, content = content})
 
     return Citizen.Await(properties)

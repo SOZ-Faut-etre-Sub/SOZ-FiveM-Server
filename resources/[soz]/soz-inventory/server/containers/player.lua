@@ -26,7 +26,7 @@ end
 --- @return boolean
 function PlayerInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
-    exports.oxmysql:update_async("UPDATE player SET inventory = ? WHERE citizenid = ?", {inventory, owner})
+    exports.oxmysql:update("UPDATE player SET inventory = ? WHERE citizenid = ?", {inventory, owner})
     return true
 end
 

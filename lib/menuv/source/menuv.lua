@@ -636,6 +636,13 @@ CreateThread(function()
             EnableControlAction(0, 2, true) -- INPUT_LOOK_UD
             EnableControlAction(0, 30, true) -- INPUT_MOVE_LR
             EnableControlAction(0, 31, true) -- INPUT_MOVE_UD
+            EnableControlAction(0, 59, true) -- INPUT_VEH_MOVE_LR
+            EnableControlAction(0, 71, true) -- INPUT_VEH_ACCELERATE
+            EnableControlAction(0, 72, true) -- INPUT_VEH_BRAKE
+            EnableControlAction(0, 74, true) -- INPUT_VEH_HEADLIGHT
+            EnableControlAction(0, 75, true) -- INPUT_VEH_EXIT
+            EnableControlAction(0, 76, true) -- INPUT_VEH_HANDBRAKE
+            EnableControlAction(0, 86, true) -- INPUT_VEH_HORN
             EnableControlAction(0, 189, true) -- INPUT_FRONTEND_LEFT
             EnableControlAction(0, 190, true) -- INPUT_FRONTEND_RIGHT
             EnableControlAction(0, 191, true) -- INPUT_FRONTEND_RDOWN

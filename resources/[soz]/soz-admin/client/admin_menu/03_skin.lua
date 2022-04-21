@@ -1,7 +1,8 @@
 local skinMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Chien, Chat, Président, ..."})
 local skinComponentMenu = MenuV:InheritMenu(skinMenu)
 
-local PlayerComponent = {}
+local PlayerComponent, PlayerComponentVariation = {}, {}
+local PlayerProp, PlayerPropVariation = {}, {}
 
 --- Functions
 local function LoadPlayerModel(skin)
@@ -19,7 +20,9 @@ local function SetModel(skin)
     if IsModelInCdimage(model) and IsModelValid(model) then
         LoadPlayerModel(model)
         SetPlayerModel(PlayerId(), model)
-        SetPedRandomComponentVariation(ped, true)
+
+        SetPedDefaultComponentVariation(PlayerPedId())
+
         SetModelAsNoLongerNeeded(model)
     end
 
@@ -37,8 +40,38 @@ end
 local function ApplyPedComponent()
     local ped = PlayerPedId()
 
-    for i = 0, 11 do
-        SetPedComponentVariation(ped, i, PlayerComponent[i], 0, 2)
+    for component, value in pairs(PlayerComponent) do
+        SetPedComponentVariation(ped, component, value, PlayerComponentVariation[component] or 0, 2)
+    end
+
+    for prop, value in pairs(PlayerProp) do
+        SetPedPropIndex(ped, prop, value, PlayerPropVariation[prop] or 0, 2)
+    end
+end
+
+local function GenerateDrawableList(menu, ped, i)
+    PlayerComponent[i] = GetPedDrawableVariation(ped, i)
+    PlayerComponentVariation[i] = GetPedTextureVariation(ped, i)
+
+    if GetNumberOfPedDrawableVariations(ped, i) > 0 then
+        menu:AddSlider({
+            label = Config.ComponentName[i],
+            value = PlayerComponent[i] + 1,
+            values = CreateRange(0, GetNumberOfPedDrawableVariations(ped, i) - 1),
+            change = function(_, value)
+                PlayerComponent[i] = value - 1
+                ApplyPedComponent()
+            end,
+        })
+        menu:AddSlider({
+            label = Config.ComponentName[i] .. " variation",
+            value = 0,
+            values = CreateRange(0, 20),
+            change = function(_, value)
+                PlayerComponentVariation[i] = value - 1
+                ApplyPedComponent()
+            end,
+        })
     end
 end
 
@@ -59,10 +92,12 @@ skinMenu:AddSlider({
     label = "Liste d'apparence prédéfini",
     value = "model",
     values = {
-        {label = "Chat", value = "a_c_cat_01"},
         {label = "Chien", value = "a_c_shepherd"},
+        {label = "Chat", value = "a_c_cat_01"},
         {label = "Civil Femme", value = "u_f_y_mistress"},
         {label = "Civil Homme", value = "a_m_y_latino_01"},
+        {label = "Joueur Femme", value = "mp_f_freemode_01"},
+        {label = "Joueur Homme", value = "mp_m_freemode_01"},
     },
     select = function(_, model)
         SetModel(model)
@@ -75,21 +110,60 @@ skinComponentMenu:On("open", function(menu)
     local ped = PlayerPedId()
     menu:ClearItems()
 
-    for i = 0, 11 do
-        PlayerComponent[i] = GetPedDrawableVariation(ped, i)
+    menu:AddTitle({label = "Éléments du personnage"})
+    for _, i in pairs({3, 4, 6, 8, 11}) do
+        GenerateDrawableList(menu, ped, i)
+    end
 
-        if GetNumberOfPedDrawableVariations(ped, i) > 0 then
+    menu:AddTitle({label = "Accessoires du personnage"})
+    for _, i in pairs({0, 1, 2, 6, 7}) do
+        PlayerProp[i] = GetPedPropIndex(ped, i)
+        PlayerPropVariation[i] = GetPedPropTextureIndex(ped, i)
+
+        if GetNumberOfPedPropDrawableVariations(ped, i) > 0 then
             menu:AddSlider({
-                label = Config.ComponentName[i],
-                value = PlayerComponent[i],
-                values = CreateRange(0, GetNumberOfPedDrawableVariations(ped, i) - 1),
+                label = Config.PropName[i],
+                value = PlayerProp[i] + 1,
+                values = CreateRange(0, GetNumberOfPedPropDrawableVariations(ped, i) - 1),
                 change = function(_, value)
-                    PlayerComponent[i] = value - 1
+                    PlayerProp[i] = value - 1
+                    ApplyPedComponent()
+                end,
+            })
+            menu:AddSlider({
+                label = Config.PropName[i] .. " variation",
+                value = 0,
+                values = CreateRange(0, 20),
+                change = function(_, value)
+                    PlayerPropVariation[i] = value - 1
                     ApplyPedComponent()
                 end,
             })
         end
     end
+
+    menu:AddTitle({label = "Autres"})
+    for _, i in pairs({0, 1, 2, 5, 7, 9, 10}) do
+        GenerateDrawableList(menu, ped, i)
+    end
+
+    menu:AddTitle({label = "Actions"})
+    menu:AddButton({
+        label = "Copier la tenue dans le presse papier",
+        value = nil,
+        select = function()
+            local skin = {Components = {}, Props = {}}
+
+            for i, v in pairs(PlayerComponent) do
+                skin.Components[i] = {Drawable = v, Texture = PlayerComponentVariation[i] or 0, Palette = 0}
+            end
+            for i, v in pairs(PlayerProp) do
+                skin.Props[i] = {Drawable = v, Texture = PlayerPropVariation[i] or 0, Palette = 0}
+            end
+
+            SendNUIMessage({string = json.encode(skin)})
+        end,
+    })
 end)
 
 --- Add to main menu
