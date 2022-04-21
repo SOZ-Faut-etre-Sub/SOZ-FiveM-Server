@@ -21,7 +21,6 @@ local function SpawnFieldZones()
 
         local zone = PolyZone:Create(points, {name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0})
         zone:onPlayerInOut(function(isInsideZone)
-            print('COUCOU', isInsideZone)
             if isInsideZone then
                 local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
                 if not hasPermission or not PlayerData.job.onduty then
