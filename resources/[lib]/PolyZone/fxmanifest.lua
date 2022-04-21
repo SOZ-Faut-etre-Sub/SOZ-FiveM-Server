@@ -15,6 +15,7 @@ client_scripts {
 }
 
 server_scripts {
+  "@oxmysql/lib/MySQL.lua",
   'creation/server/*.lua',
   'server.lua'
 }

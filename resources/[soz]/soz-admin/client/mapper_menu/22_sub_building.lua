@@ -12,9 +12,10 @@ ChangeCurrentBuildingMenu:On("open", function(menu)
 
     menu:AddButton({
         label = "Changer la Zone d'entrer",
-        value = nil,
+        value = EndHousingMenu,
         select = function()
-            print("test")
+            zone_type = "entry_zone"
+            TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
         end,
     })
 end)
@@ -23,7 +24,6 @@ CurrentBuildingMenu:On("open", function(menu)
     menu:ClearItems()
 
     QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
-        print("test")
         for item, habitation in pairs(building) do
             menu:AddButton({
                 label = habitation.building,

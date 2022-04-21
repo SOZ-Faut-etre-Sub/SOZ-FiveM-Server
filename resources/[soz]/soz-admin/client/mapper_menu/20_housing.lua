@@ -4,26 +4,33 @@ CurrentHousingItemMenu = MenuV:InheritMenu(houseMenu)
 CurrentBuildingMenu = MenuV:InheritMenu(houseMenu, {subtitle = "Menu des batiments"})
 ChangeCurrentHousingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "Modification de l'habitations"})
 ChangeCurrentBuildingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "Modification du batiment"})
-
+EndHousingMenu = MenuV:InheritMenu(houseMenu)
 
 CurrentHousingData = {}
 CurrentZoneData = {}
+zone_type = nil
 
-houseMenu:AddButton({
-    label = "Modifier une habitation",
-    value = CurrentHousingMenu,
-})
+EndHousingMenu:On("open", function(menu)
+    menu:ClearItems()
 
-houseMenu:AddButton({
-    label = "Modifier un batiment",
-    value = CurrentBuildingMenu,
-})
+    menu:AddButton({
+        label = "Valider la zone",
+        value = nil,
+        select = function()
+            TriggerEvent("polyzone:custom:endzone", CurrentHousingData.identifier, zone_type)
+        end,
+    })
+end)
+
+houseMenu:AddButton({label = "Modifier une habitation", value = CurrentHousingMenu})
+
+houseMenu:AddButton({label = "Modifier un batiment", value = CurrentBuildingMenu})
 
 houseMenu:AddButton({
     label = "Ajouter une habitation",
     value = nil,
     select = function()
-        print("add")
+        print("tbd")
     end,
 })
 

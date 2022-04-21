@@ -10,7 +10,7 @@ local function _calculatePoints(center, length, width)
     local halfLength, halfWidth = length / 2, width / 2
     local min = vector2(-halfWidth, -halfLength)
     local max = vector2(halfWidth, halfLength)
-  
+
     -- Box vertices
     p1 = center.xy + vector2(min.x, min.y)
     p3 = center.xy + vector2(max.x, max.y)
