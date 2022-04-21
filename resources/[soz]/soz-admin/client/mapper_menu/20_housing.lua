@@ -17,7 +17,7 @@ EndHousingMenu:On("open", function(menu)
         label = "Valider la zone",
         value = nil,
         select = function()
-            local TempZone = exports['PolyZone']:EndPolyZone
+            local TempZone = exports['PolyZone']:EndPolyZone()
             TriggerServerEvent("soz-admin:server:housing", TempZone, CurrentHousingData.identifier, zone_type)
         end,
     })

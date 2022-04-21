@@ -119,6 +119,6 @@ local function EndZone()
   createdZone = nil
   createdZoneType = nil
   return TempZone
-end)
+end
 
 exports('EndPolyZone', EndZone)
