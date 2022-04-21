@@ -56,8 +56,10 @@ end)
 
 RegisterNUICallback("closeNUI", function(data, cb)
     SetNuiFocus(false, false)
-    TriggerServerEvent("inventory:server:closeInventory", data.target)
     cb(true)
+    if data.target then
+        TriggerServerEvent("inventory:server:closeInventory", data.target)
+    end
 end)
 
 CreateThread(function()
