@@ -1274,7 +1274,7 @@ QBShared.Items = {
     },
     ['grape3'] = {
         ['name'] = 'grape',
-        ['label'] = 'Grappe de Centennia',
+        ['label'] = 'Grappe de Centennial',
         ['weight'] = 100,
         ['type'] = 'drink',
         ['unique'] = false,
@@ -1296,7 +1296,7 @@ QBShared.Items = {
     },
     ['wine1'] = {
         ['name'] = 'wine',
-        ['label'] = 'LaMano Blanc',
+        ['label'] = 'Mandatorien',
         ['weight'] = 300,
         ['type'] = 'drink',
         ['unique'] = false,
@@ -1318,7 +1318,7 @@ QBShared.Items = {
     },
     ['wine3'] = {
         ['name'] = 'wine',
-        ['label'] = 'Mandatorien',
+        ['label'] = 'LaMano Blanc',
         ['weight'] = 300,
         ['type'] = 'drink',
         ['unique'] = false,
