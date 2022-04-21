@@ -10,6 +10,11 @@ QBCore.Functions.CreateCallback("soz-admin:housing:server:GetBuilding", function
     cb(Building)
 end)
 
+function round(num, numDecimalPlaces)
+    local mult = 10^(numDecimalPlaces or 0)
+    return math.floor(num * mult + 0.5) / mult
+  end
+
 RegisterNetEvent("soz-admin:server:housing", function(zone, id, zonetype)
     local endzone = '{"x": ' .. round(zone.center.x, 2)
     endzone = endzone .. ', "y": '
