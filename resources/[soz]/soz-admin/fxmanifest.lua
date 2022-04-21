@@ -6,7 +6,6 @@ shared_script "config.lua"
 
 client_scripts {
     "@menuv/menuv.lua",
-    "@PolyZone/client.lua",
     "client/main.lua",
     "client/noclip.lua",
     "client/admin_menu/*.lua",
