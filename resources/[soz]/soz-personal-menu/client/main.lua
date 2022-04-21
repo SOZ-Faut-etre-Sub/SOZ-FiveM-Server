@@ -11,6 +11,10 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
 end)
 
 local function GenerateMenu()
+    if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] then
+        return
+    end
+
     personalMenu:ClearItems()
     personalMenu:SetSubtitle(string.format("%s %s", PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
 
