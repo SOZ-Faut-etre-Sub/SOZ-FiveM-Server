@@ -1251,7 +1251,7 @@ QBShared.Items = {
         ['description'] = 'Pour toutes les petites soifs !'
     },
     ['grape1'] = {
-        ['name'] = 'grape1',
+        ['name'] = 'grape',
         ['label'] = 'Grappe de Cardinal',
         ['weight'] = 100,
         ['type'] = 'drink',
@@ -1262,7 +1262,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['grape2'] = {
-        ['name'] = 'grape2',
+        ['name'] = 'grape',
         ['label'] = 'Grappe de Muscat',
         ['weight'] = 100,
         ['type'] = 'drink',
@@ -1273,7 +1273,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['grape3'] = {
-        ['name'] = 'grape3',
+        ['name'] = 'grape',
         ['label'] = 'Grappe de Centennia',
         ['weight'] = 100,
         ['type'] = 'drink',
@@ -1284,7 +1284,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['grape4'] = {
-        ['name'] = 'grape4',
+        ['name'] = 'grape',
         ['label'] = 'Grappe de Chasselas',
         ['weight'] = 100,
         ['type'] = 'drink',
