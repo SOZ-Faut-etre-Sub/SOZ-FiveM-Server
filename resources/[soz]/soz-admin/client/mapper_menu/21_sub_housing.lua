@@ -14,17 +14,17 @@ CurrentHousingItemMenu:On("open", function(menu)
 
         menu:AddButton({
             label = "Changer la zone",
-            value = nil,
+            value = EndHousingMenu,
             select = function()
-                print("ch")
+                TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
             end,
         })
     else
         menu:AddButton({
             label = "Ajouter la zone",
-            value = nil,
+            value = EndHousingMenu,
             select = function()
-                TriggerEvent("admin:polyzone:pzcreate", "box", "custom_housing" ,{"box", "custom_housing"})
+                TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
             end,
         })
     end
@@ -38,6 +38,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
             label = "Zone d'entrée",
             value = CurrentHousingItemMenu,
             select = function()
+                zone_type = "entry_zone"
                 CurrentZoneData = CurrentHousingData.entry_zone
             end,
         })
@@ -47,6 +48,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         label = "Zone de sortie",
         value = CurrentHousingItemMenu,
         select = function()
+            zone_type = "exit_zone"
             CurrentZoneData = CurrentHousingData.exit_zone
         end,
     })
@@ -55,6 +57,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         label = "Zone du frigo",
         value = CurrentHousingItemMenu,
         select = function()
+            zone_type = "fridge_position"
             CurrentZoneData = CurrentHousingData.fridge_position
         end,
     })
@@ -63,6 +66,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         label = "Zone du coffre d'argent",
         value = CurrentHousingItemMenu,
         select = function()
+            zone_type = "money_position"
             CurrentZoneData = CurrentHousingData.money_position
         end,
     })
@@ -71,6 +75,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         label = "Zone du Coffre d'item",
         value = CurrentHousingItemMenu,
         select = function()
+            zone_type = "stash_position"
             CurrentZoneData = CurrentHousingData.stash_position
         end,
     })
@@ -79,6 +84,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         label = "Zone du vestiare",
         value = CurrentHousingItemMenu,
         select = function()
+            zone_type = "closet_position"
             CurrentZoneData = CurrentHousingData.closet_position
         end,
     })
