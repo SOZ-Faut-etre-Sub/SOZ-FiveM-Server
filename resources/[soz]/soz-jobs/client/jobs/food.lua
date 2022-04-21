@@ -150,19 +150,51 @@ RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
     FoodJob.Menu:Open()
 end)
 
-local function GenerateSubmenu(parent, recipes)
+local function GenerateIngredientList(parent, ingredients)
     local submenu = MenuV:InheritMenu(parent)
 
-    for itemId, _ in pairs(recipes) do
+    for itemId, count in pairs(ingredients) do
         local item = QBCore.Shared.Items[itemId]
+        submenu:AddButton({label = item.label, rightLabel = count})
+    end
+
+    return submenu
+end
+
+local function GenerateSubmenu(parent, recipes, isIngredientMenu)
+    local subtitle = nil
+    if isIngredientMenu then
+        subtitle = "Liste des ingrédients"
+    end
+
+    local submenu = MenuV:InheritMenu(parent, {subtitle = subtitle})
+
+    if not isIngredientMenu then
+        submenu:AddButton({
+            icon = "👨‍🍳",
+            label = "Liste des ingrédients",
+            value = GenerateSubmenu(submenu, recipes, true),
+        })
+    end
+
+    for itemId, recipe in pairs(recipes) do
+        local item = QBCore.Shared.Items[itemId]
+
+        local value = itemId
+        if isIngredientMenu then
+            value = GenerateIngredientList(submenu, recipe.ingredients)
+        end
+
         submenu:AddButton({
             icon = "https://nui-img/soz-items/" .. item.name,
             label = item.label,
-            value = itemId,
+            value = value,
             select = function()
-                TriggerEvent("soz-jobs:client:food-craft-item", itemId)
-                submenu:Close()
-                parent:Close()
+                if not isIngredientMenu then
+                    TriggerEvent("soz-jobs:client:food-craft-item", itemId)
+                    submenu:Close()
+                    parent:Close()
+                end
             end,
         })
     end
