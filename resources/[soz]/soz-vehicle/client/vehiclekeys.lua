@@ -43,7 +43,7 @@ local function LockVehicle()
                 if vehLockStatus == 1 then
                     Wait(750)
                     ClearPedTasks(ped)
-                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "vehicle/lock", 0.2)
+                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "vehicle/lock", 0.1)
                     SetVehicleDoorsLocked(veh, 2)
                     if (GetVehicleDoorLockStatus(veh) == 2) then
                         SetVehicleLights(veh, 2)
@@ -55,7 +55,7 @@ local function LockVehicle()
                 else
                     Wait(750)
                     ClearPedTasks(ped)
-                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "vehicle/unlock", 0.2)
+                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "vehicle/unlock", 0.1)
                     SetVehicleDoorsLocked(veh, 1)
                     if (GetVehicleDoorLockStatus(veh) == 1) then
                         SetVehicleLights(veh, 2)
