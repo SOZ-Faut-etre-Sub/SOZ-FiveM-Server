@@ -12,7 +12,7 @@ RegisterCommand("inventory", function()
             SendNUIMessage({
                 action = "openPlayerInventory",
                 playerInventory = inventory,
-                playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"]
+                playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"],
             })
             SetNuiFocus(true, true)
         end
