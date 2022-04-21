@@ -46,16 +46,14 @@ RegisterNetEvent("police:server:EscortPlayer", function(playerId)
     if player and target and player ~= target then
         for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
             if player.PlayerData.job.id == allowedJob then
-                if target.PlayerData.metadata["ishandcuffed"] or target.PlayerData.metadata["isdead"] or target.PlayerData.metadata["inlaststand"] then
-                    Player(player.PlayerData.source).state:set("isEscorting", true, true)
-                    Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
-                    Player(target.PlayerData.source).state:set("isEscorted", true, true)
+                Player(player.PlayerData.source).state:set("isEscorting", true, true)
+                Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
+                Player(target.PlayerData.source).state:set("isEscorted", true, true)
 
-                    TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source)
-                    TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source)
+                TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source)
+                TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source)
 
-                    return
-                end
+                return
             end
         end
     end
