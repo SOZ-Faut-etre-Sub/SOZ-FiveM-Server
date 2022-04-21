@@ -20,6 +20,10 @@ playersMenu:On("open", function(menu)
     end)
 end)
 
+playersMenu:On("close", function(menu)
+    menu:ClearItems()
+end)
+
 playerMenu:AddButton({
     label = "Observer le joueur",
     value = nil,
