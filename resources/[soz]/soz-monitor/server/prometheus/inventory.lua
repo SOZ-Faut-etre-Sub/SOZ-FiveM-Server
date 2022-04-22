@@ -118,12 +118,16 @@ soz_inventory_item_count{id="%s",type="%s",label="%s",owner="%s",item_type="%s",
     end
 
     for id, inventoryPlayer in pairs(playerInventoryList) do
-        for _, item in pairs(inventoryPlayer.items) do
-            local itemDef = QBCore.Shared.Items[item.name]
+        local itemsTtype = type(inventoryPlayer.items)
 
-            metricsString = metricsString .. string.format([[
-soz_inventory_item_count{id="%s",type="player",label="%s",owner="%s",item_type="%s",item_name="%s",item_label="%s"} %d
-]], id, inventoryPlayer.name, id, item.type, item.name, itemDef.label, item.amount)
+        if itemsTtype == "table" then
+            for _, item in pairs(inventoryPlayer.items) do
+                local itemDef = QBCore.Shared.Items[item.name]
+
+                metricsString = metricsString .. string.format([[
+    soz_inventory_item_count{id="%s",type="player",label="%s",owner="%s",item_type="%s",item_name="%s",item_label="%s"} %d
+    ]], id, inventoryPlayer.name, id, item.type, item.name, itemDef.label, item.amount)
+            end
         end
     end
 
