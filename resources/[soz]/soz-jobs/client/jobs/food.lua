@@ -365,6 +365,27 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
     end)
 end)
 
+AddEventHandler("jobs:client:food-process-milk", function()
+    QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, { animDict = "anim@mp_radio@garage@low", anim = "action_a" }, {}, {}, function(success, count)
+        if success then
+            exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bouteilles de lait~s~", count))
+            Citizen.Wait(1000)
+            TriggerEvent("jobs:client:food-process-milk")
+        end
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la transformation de bidons de lait", "error")
+    end)
+
+    QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success)
+        -- TODO
+    end)
+end)
+
 FoodJob.Functions.CraftItem = function(itemId, item)
     Citizen.CreateThread(function()
         QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Duration, false, true,
