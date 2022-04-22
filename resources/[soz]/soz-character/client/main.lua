@@ -544,21 +544,214 @@ CreateClothShopConfigSouth = {
             Collections = {
                 {
                     Name = "Haut",
-                    Items = CreateItemsWithTextures(ComponentType.Torso, 17, {
-                        {Name = GetLabelText("CLO_BHM_U_5_2"), Id = 0},
-                    }),
+                    Items = {
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_0"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 0, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_1"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 1, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_2"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 2, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_3"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 3, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_4"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 4, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_5"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 5, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_6"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 6, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_7"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 7, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_8"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 8, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_9"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 9, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_10"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 10, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_11"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 11, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_12"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 12, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_13"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 13, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_14"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 14, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_15"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 15, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_16"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 16, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_17"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 17, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_BHM_F_1_18"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 18, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_19"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 19, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_20"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 20, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_21"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 21, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_22"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 22, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_23"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 23, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_24"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 24, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_H4F_U_2_25"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 14, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 372, Texture = 25, Palette = 0},
+                            },
+                        },
+                    },
                 },
             },
         },
         {
             Collections = {
                 {
-                    Name = "Jogging",
-                    Items = CreateItemsWithTextures(ComponentType.Pants, 66, {
-                        {Name = GetLabelText("CLO_EXM_EL_0_0"), Id = 0},
-                        {Name = GetLabelText("CLO_EXM_EL_0_1"), Id = 1},
-                        {Name = GetLabelText("CLO_EXM_EL_0_6"), Id = 6},
-                        {Name = GetLabelText("CLO_EXM_EL_0_9"), Id = 9},
+                    Name = "Pantalon",
+                    Items = CreateItemsWithTextures(ComponentType.Pants, 4, {
+                        {Name = GetLabelText("L_FMF_4_0"), Id = 0},
+                        {Name = GetLabelText("L_FMF_4_1"), Id = 1},
+                        {Name = GetLabelText("L_FMF_4_2"), Id = 2},
+                        {Name = GetLabelText("L_FMF_4_3"), Id = 3},
+                        {Name = GetLabelText("L_FMF_4_4"), Id = 4},
+                        {Name = GetLabelText("L_FMF_4_5"), Id = 5},
+                        {Name = GetLabelText("L_FMF_4_6"), Id = 6},
+                        {Name = GetLabelText("L_FMF_4_7"), Id = 7},
+                        {Name = GetLabelText("L_FMF_4_8"), Id = 8},
+                        {Name = GetLabelText("L_FMF_4_9"), Id = 9},
+                        {Name = GetLabelText("L_FMF_4_10"), Id = 10},
+                        {Name = GetLabelText("L_FMF_4_11"), Id = 11},
+                        {Name = GetLabelText("L_FMF_4_12"), Id = 12},
+                        {Name = GetLabelText("L_FMF_4_13"), Id = 13},
+                        {Name = GetLabelText("L_FMF_4_14"), Id = 14},
+                        {Name = GetLabelText("L_FMF_4_15"), Id = 15},
                     }),
                 },
             },
@@ -567,20 +760,24 @@ CreateClothShopConfigSouth = {
             Collections = {
                 {
                     Name = "Chaussure",
-                    Items = {
-                        {
-                            Name = GetLabelText("CLO_BHM_F_1_18"),
-                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 75, Texture = 18, Palette = 0}},
-                        },
-                        {
-                            Name = GetLabelText("CLO_BHM_F_1_19"),
-                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 75, Texture = 19, Palette = 0}},
-                        },
-                        {
-                            Name = GetLabelText("CLO_BHM_F_1_3"),
-                            ApplyComponents = {[ComponentType.Shoes] = {Drawable = 76, Texture = 3, Palette = 0}},
-                        },
-                    },
+                    Items = CreateItemsWithTextures(ComponentType.Shoes, 1, {
+                        {Name = GetLabelText("F_FMF_1_0"), Id = 0},
+                        {Name = GetLabelText("F_FMF_1_1"), Id = 1},
+                        {Name = GetLabelText("F_FMF_1_2"), Id = 2},
+                        {Name = GetLabelText("F_FMF_1_3"), Id = 3},
+                        {Name = GetLabelText("F_FMF_1_4"), Id = 4},
+                        {Name = GetLabelText("F_FMF_1_5"), Id = 5},
+                        {Name = GetLabelText("F_FMF_1_6"), Id = 6},
+                        {Name = GetLabelText("F_FMF_1_7"), Id = 7},
+                        {Name = GetLabelText("F_FMF_1_8"), Id = 8},
+                        {Name = GetLabelText("F_FMF_1_9"), Id = 9},
+                        {Name = GetLabelText("F_FMF_1_10"), Id = 10},
+                        {Name = GetLabelText("F_FMF_1_11"), Id = 11},
+                        {Name = GetLabelText("F_FMF_1_12"), Id = 12},
+                        {Name = GetLabelText("F_FMF_1_13"), Id = 13},
+                        {Name = GetLabelText("F_FMF_1_14"), Id = 14},
+                        {Name = GetLabelText("F_FMF_1_15"), Id = 15},
+                    }),
                 },
             },
         },

@@ -104,7 +104,7 @@ function GetFemaleDefaultBaseClothSet()
             [ComponentType.Bag] = {Drawable = 0, Texture = 0, Palette = 0},
             [ComponentType.Shoes] = {Drawable = 35, Texture = 0, Palette = 0},
             [ComponentType.Chain] = {Drawable = 0, Texture = 0, Palette = 0},
-            [ComponentType.Top] = {Drawable = 2, Texture = 0, Palette = 0},
+            [ComponentType.Top] = {Drawable = 0, Texture = 0, Palette = 0},
             [ComponentType.Bulletproof] = {Drawable = 0, Texture = 0, Palette = 0},
             [ComponentType.Decals] = {Drawable = 0, Texture = 0, Palette = 0},
             [ComponentType.Torso] = {Drawable = 17, Texture = 0, Palette = 0},
