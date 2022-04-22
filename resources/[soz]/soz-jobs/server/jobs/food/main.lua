@@ -93,3 +93,30 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
         end
     end)
 end)
+
+--- Hunting
+RegisterNetEvent("jobs:server:food:hunting", function(huntId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    local rewardSuccess = false
+
+    for item, reward in pairs(FoodConfig.HuntingReward) do
+        local amount = math.random(reward.min, reward.max)
+
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
+            if success then
+                rewardSuccess = true
+            end
+        end)
+    end
+
+    if rewardSuccess then
+        DeleteEntity(NetworkGetEntityFromNetworkId(huntId))
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~terminé~s~ de dépecer.")
+    else
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vos poches sont pleines...", "error")
+    end
+end)
