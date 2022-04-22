@@ -43,7 +43,7 @@ local function LockVehicle()
                 if vehLockStatus == 1 then
                     Wait(750)
                     ClearPedTasks(ped)
-                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "lock", 0.3)
+                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "vehicle/lock", 0.2)
                     SetVehicleDoorsLocked(veh, 2)
                     if (GetVehicleDoorLockStatus(veh) == 2) then
                         SetVehicleLights(veh, 2)
@@ -51,14 +51,11 @@ local function LockVehicle()
                         SetVehicleLights(veh, 1)
                         Wait(200)
                         SetVehicleLights(veh, 0)
-                        exports["soz-hud"]:DrawNotification("Véhicule verrouillé !")
-                    else
-                        exports["soz-hud"]:DrawNotification("Problème avec la serrure !")
                     end
                 else
                     Wait(750)
                     ClearPedTasks(ped)
-                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "unlock", 0.3)
+                    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "vehicle/unlock", 0.2)
                     SetVehicleDoorsLocked(veh, 1)
                     if (GetVehicleDoorLockStatus(veh) == 1) then
                         SetVehicleLights(veh, 2)
@@ -66,9 +63,6 @@ local function LockVehicle()
                         SetVehicleLights(veh, 1)
                         Wait(200)
                         SetVehicleLights(veh, 0)
-                        exports["soz-hud"]:DrawNotification("Véhicule déverrouillé !")
-                    else
-                        exports["soz-hud"]:DrawNotification("Problème avec la serrure !")
                     end
                 end
             else

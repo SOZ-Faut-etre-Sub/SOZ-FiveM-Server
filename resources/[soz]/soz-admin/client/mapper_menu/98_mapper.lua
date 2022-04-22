@@ -1,4 +1,4 @@
-local mapperMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Menu pour les mappeurs"})
+local mapperMenu = MenuV:InheritMenu(MapperMenu, {subtitle = "Menu pour les mappeurs"})
 
 local MapperOption = {ShowInterior = false}
 
@@ -43,4 +43,4 @@ mapperMenu:AddCheckbox({
 })
 
 --- Add to main menu
-AdminMenu:AddButton({icon = "🚧", label = "Outils pour mappeur", value = mapperMenu})
+MapperMenu:AddButton({icon = "🚧", label = "Outils pour mappeur", value = mapperMenu})

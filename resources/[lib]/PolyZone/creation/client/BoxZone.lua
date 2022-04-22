@@ -109,3 +109,16 @@ function boxFinish()
   TriggerServerEvent("polyzone:printBox",
     {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ})
 end
+
+local function EndZone()
+  TempZone = {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}
+  lastCreatedZoneType = createdZoneType
+  lastCreatedZone = createdZone
+
+  drawZone = false
+  createdZone = nil
+  createdZoneType = nil
+  return TempZone
+end
+
+exports('EndPolyZone', EndZone)

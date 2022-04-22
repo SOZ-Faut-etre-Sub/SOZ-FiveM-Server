@@ -1393,6 +1393,94 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
     },
+    ['tripe'] = {
+        ['name'] = 'tripe',
+        ['label'] = 'Tripe',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['peau'] = {
+        ['name'] = 'peau',
+        ['label'] = 'Peau',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['os'] = {
+        ['name'] = 'os',
+        ['label'] = 'Os',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['viscere'] = {
+        ['name'] = 'viscere',
+        ['label'] = 'Viscère',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['viande'] = {
+        ['name'] = 'viande',
+        ['label'] = 'Viande',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['langue'] = {
+        ['name'] = 'langue',
+        ['label'] = 'Langue',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['abat'] = {
+        ['name'] = 'abat',
+        ['label'] = 'Abat',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['rognon'] = {
+        ['name'] = 'rognon',
+        ['label'] = 'Rognon',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
 
     -- Drugs
     ['joint'] = {
