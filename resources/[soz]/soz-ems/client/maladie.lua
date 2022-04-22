@@ -58,7 +58,7 @@ CreateThread(function()
     while true do
         Wait(1000 * 60 * 15)
         if LocalPlayer.state.isLoggedIn then
-            Random = math.random(1, 200)
+            Random = math.random(1, 1000)
             if not IsDead and not PlayerData.metadata.godmode then
                 -- maladie
                 if Random == 1 then
