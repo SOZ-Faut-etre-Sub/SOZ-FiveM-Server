@@ -105,29 +105,13 @@ Citizen.CreateThread(function()
         heading = 133.3,
         minZ = 45.5,
         maxZ = 49.5,
-    }, {
-        options = {
-            {
-                icon = "c:food/collecter.png",
-                event = "jobs:client:food-harvest-milk",
-                label = "Récupérer"
-            }
-        }
-    })
+    }, {options = {{icon = "c:food/collecter.png", event = "jobs:client:food-harvest-milk", label = "Récupérer"}}})
 
     exports["qb-target"]:AddBoxZone("food:milk-process", vector2(-1929.02, 2059.16), 0.5, 1.5, {
         heading = 166.6,
         minZ = 140.0,
         maxZ = 142.5,
-    }, {
-        options = {
-            {
-                icon = "c:food/echanger.png",
-                event = "jobs:client:food-process-milk",
-                label = "Echanger"
-            }
-        }
-    })
+    }, {options = {{icon = "c:food/echanger.png", event = "jobs:client:food-process-milk", label = "Echanger"}}})
 end)
 
 AddEventHandler("jobs:client:food-toggle-duty", function()
@@ -352,7 +336,7 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, { animDict = "anim@mp_radio@garage@low", anim = "action_a" }, {}, {}, function()
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
         QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count)
             if success then
                 exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bidons de lait~s~", count))
@@ -366,12 +350,13 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
 end)
 
 AddEventHandler("jobs:client:food-process-milk", function()
-    QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true, {
+    QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true,
+                                 {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, { animDict = "anim@mp_radio@garage@low", anim = "action_a" }, {}, {}, function(success, count)
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(success, count)
         if success then
             exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bouteilles de lait~s~", count))
             Citizen.Wait(1000)
