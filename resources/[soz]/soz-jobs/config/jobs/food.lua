@@ -14,7 +14,7 @@ FoodConfig.Collect = {
         Duration = 10000, -- in ms
         Reward = {min = 1, max = 4},
         Item = "milkbucket",
-    }
+    },
 }
 
 FoodConfig.Process = {
@@ -250,9 +250,24 @@ FoodConfig.Recipes = {
     ["cheese8"] = {category = "cheese", ingredients = {["milk"] = 2}},
     ["cheese9"] = {category = "cheese", ingredients = {["milk"] = 2}},
     -- SAUSAGES
-    ["sausage1"] = {category = "sausage", ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1}},
-    ["sausage2"] = {category = "sausage", ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1}},
-    ["sausage3"] = {category = "sausage", ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1}},
-    ["sausage4"] = {category = "sausage", ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1}},
-    ["sausage5"] = {category = "sausage", ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1}},
+    ["sausage1"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage2"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage3"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage4"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage5"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
 }
