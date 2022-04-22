@@ -1503,6 +1503,105 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = ''
     },
+    ['cheese1'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'Poveridou',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese2'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'Caprice du tchat',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese3'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'Zaroilles',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese4'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'MoMan-Tum',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese5'] = {
+        ['name'] = 'cheese',
+        ['label'] = "P'tit Dashque",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese6'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'Tchat qui rit',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese7'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'Cutmembert',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese8'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'CHEHdar',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cheese9'] = {
+        ['name'] = 'cheese',
+        ['label'] = 'GorgonZera',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
 
     -- Drugs
     ['joint'] = {
