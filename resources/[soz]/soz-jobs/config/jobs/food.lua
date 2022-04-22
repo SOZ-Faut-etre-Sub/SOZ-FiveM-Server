@@ -184,6 +184,33 @@ FoodConfig.Zones = {
     },
 }
 
+FoodConfig.HuntingWeapon = GetHashKey("weapon_machete")
+FoodConfig.AnimalAllowedToHunt = {
+    [GetHashKey("a_c_boar")] = true,
+    [GetHashKey("a_c_chickenhawk")] = true,
+    [GetHashKey("a_c_cormorant")] = true,
+    [GetHashKey("a_c_cow")] = true,
+    [GetHashKey("a_c_coyote")] = true,
+    [GetHashKey("a_c_crow")] = true,
+    [GetHashKey("a_c_deer")] = true,
+    [GetHashKey("a_c_hen")] = true,
+    [GetHashKey("a_c_mtlion")] = true,
+    [GetHashKey("a_c_pig")] = true,
+    [GetHashKey("a_c_pigeon")] = true,
+    [GetHashKey("a_c_rabbit_01")] = true,
+    [GetHashKey("a_c_seagull")] = true,
+}
+FoodConfig.HuntingReward = {
+    ["tripe"] = {min = 1, max = 2},
+    ["peau"] = {min = 0, max = 1},
+    ["os"] = {min = 1, max = 3},
+    ["viscere"] = {min = 0, max = 1},
+    ["viande"] = {min = 1, max = 3},
+    ["langue"] = {min = 0, max = 1},
+    ["abat"] = {min = 1, max = 3},
+    ["rognon"] = {min = 1, max = 3},
+}
+
 FoodConfig.Recipes = {
     -- ALCOHOL
     ["wine1"] = {category = "alcohol", icon = "🍷", ingredients = {["grape1"] = 3}},
