@@ -28,7 +28,7 @@ Config.FarmAccountMoney = {
 
 Config.SafeStorages = {
     ["safe_cash-transfer"] = {
-        label = "Coffre Stonk Depository",
+        label = "Coffre STONK Depository",
         owner = "cash-transfer",
         position = vector3(-33.94, -715.14, 40.62),
         size = vector2(1.0, 3.0),
@@ -62,7 +62,7 @@ Config.SafeStorages = {
         size = vec2(1.3, 2.5),
     },
     ["safe_garbage"] = {
-        label = "Coffre Rogers",
+        label = "Coffre BlueBird",
         owner = "garbage",
         position = vector3(-623.89, -1616.37, 33.01),
         size = vec2(0.2, 1.8),

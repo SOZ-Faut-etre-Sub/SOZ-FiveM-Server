@@ -1,5 +1,5 @@
 Config.Storages["stonk_fridge"] = {
-    label = "Frigo Stonk Depository",
+    label = "Frigo STONK Depository",
     type = "fridge",
     owner = "cash-transfer",
     position = vector3(-10.0, -700.62, 46.25),
@@ -8,7 +8,7 @@ Config.Storages["stonk_fridge"] = {
 }
 
 Config.Storages["stonk_storage"] = {
-    label = "Stockage Stonk Depository",
+    label = "Stockage STONK Depository",
     type = "storage",
     owner = "cash-transfer",
     position = vector3(-6.17, -706.95, 40.72),
@@ -26,7 +26,7 @@ Config.Storages["stonk_boss_storage"] = {
 }
 
 Config.Storages["stonk_armory"] = {
-    label = "Armurerie Stonk Depository",
+    label = "Armurerie STONK Depository",
     type = "armory",
     owner = "cash-transfer",
     position = vector3(-17.64, -716.12, 46.02),
@@ -35,7 +35,7 @@ Config.Storages["stonk_armory"] = {
 }
 
 Config.Storages["stonk_ammo"] = {
-    label = "Munition Stonk Depository",
+    label = "Munition STONK Depository",
     type = "ammo",
     owner = "cash-transfer",
     position = vector3(-16.0, -714.38, 46.02),
