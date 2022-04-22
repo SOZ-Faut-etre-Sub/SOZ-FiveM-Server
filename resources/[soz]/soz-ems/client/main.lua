@@ -8,7 +8,7 @@ Callems = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     QBCore.Functions.CreateBlip("LSMC", {
-        name = "LSMC",
+        name = "Los Santos Medical Center",
         coords = vector3(356.35, -1416.63, 32.51),
         sprite = 61,
         scale = 1.0,
