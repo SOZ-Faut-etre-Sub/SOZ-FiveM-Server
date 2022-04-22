@@ -2676,6 +2676,8 @@ CreateThread(function()
             EnableControlAction(0, 190, true) -- INPUT_FRONTEND_RIGHT
             EnableControlAction(0, 191, true) -- INPUT_FRONTEND_RDOWN
             EnableControlAction(0, 194, true) -- INPUT_FRONTEND_RRIGHT
+            EnableControlAction(0, 239, true) -- INPUT_CURSOR_X
+            EnableControlAction(0, 240, true) -- INPUT_CURSOR_Y
         end
 
         Wait(0)
