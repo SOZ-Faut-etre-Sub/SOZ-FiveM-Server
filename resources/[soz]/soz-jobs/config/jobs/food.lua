@@ -17,6 +17,12 @@ FoodConfig.Collect = {
     }
 }
 
+FoodConfig.Process = {
+    Duration = 10000, -- in ms
+    Item = "milk",
+    Count = 4,
+}
+
 FoodConfig.Categories = {
     ["wine"] = {icon = "https://nui-img/soz-items/wine", label = "Vins"},
     ["grapejuice"] = {icon = "https://nui-img/soz-items/grapejuice", label = "Jus"},
