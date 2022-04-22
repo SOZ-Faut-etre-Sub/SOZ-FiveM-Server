@@ -99,6 +99,35 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    -- MILK
+    exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
+        heading = 133.3,
+        minZ = 45.5,
+        maxZ = 49.5,
+    }, {
+        options = {
+            {
+                icon = "c:food/collecter.png",
+                event = "jobs:clien:food-process-milk",
+                label = "Récupérer"
+            }
+        }
+    })
+
+    exports["qb-target"]:AddBoxZone("food:milk-process", vector2(-1929.02, 2059.16), 0.5, 1.5, {
+        heading = 166.6,
+        minZ = 140.0,
+        maxZ = 142.5,
+    }, {
+        options = {
+            {
+                icon = "c:food/echanger.png",
+                event = "jobs:clien:food-process-milk",
+                label = "Echanger"
+            }
+        }
+    })
 end)
 
 AddEventHandler("jobs:client:food-toggle-duty", function()
