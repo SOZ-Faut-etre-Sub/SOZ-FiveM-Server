@@ -1481,6 +1481,61 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = ''
     },
+    ['sausage1'] = {
+        ['name'] = 'sausage',
+        ['label'] = 'Sans-Pareil',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['sausage2'] = {
+        ['name'] = 'sausage',
+        ['label'] = 'Solong',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['sausage3'] = {
+        ['name'] = 'sausage',
+        ['label'] = 'Lasbounou',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['sausage4'] = {
+        ['name'] = 'sausage',
+        ['label'] = 'Soziflard',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['sausage5'] = {
+        ['name'] = 'sausage',
+        ['label'] = 'Saucifion ',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
     ['milkbucket'] = {
         ['name'] = 'milkbucket',
         ['label'] = 'Bidon de lait',
