@@ -225,12 +225,12 @@ FoodConfig.HuntingReward = {
 }
 
 FoodConfig.Recipes = {
-    -- ALCOHOL
+    -- WINES
     ["wine1"] = {category = "wine", ingredients = {["grape1"] = 3}},
     ["wine2"] = {category = "wine", ingredients = {["grape2"] = 3}},
     ["wine3"] = {category = "wine", ingredients = {["grape3"] = 3}},
     ["wine4"] = {category = "wine", ingredients = {["grape4"] = 3}},
-    -- SOFT DRINKS
+    -- JUICES
     ["grapejuice1"] = {category = "grapejuice", ingredients = {["grape1"] = 2}},
     ["grapejuice2"] = {category = "grapejuice", ingredients = {["grape2"] = 2}},
     ["grapejuice3"] = {category = "grapejuice", ingredients = {["grape3"] = 2}},
@@ -239,4 +239,14 @@ FoodConfig.Recipes = {
         ingredients = {["grape1"] = 1, ["grape2"] = 1, ["grape3"] = 1, ["grape4"] = 1},
     },
     ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 2}},
+    -- CHEESES
+    ["cheese1"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese2"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese3"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese4"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese5"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese6"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese7"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese8"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese9"] = {category = "cheese", ingredients = {["milk"] = 2}},
 }
