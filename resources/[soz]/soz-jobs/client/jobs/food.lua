@@ -109,7 +109,7 @@ Citizen.CreateThread(function()
         options = {
             {
                 icon = "c:food/collecter.png",
-                event = "jobs:clien:food-process-milk",
+                event = "jobs:client:food-harvest-milk",
                 label = "Récupérer"
             }
         }
@@ -123,7 +123,7 @@ Citizen.CreateThread(function()
         options = {
             {
                 icon = "c:food/echanger.png",
-                event = "jobs:clien:food-process-milk",
+                event = "jobs:client:food-process-milk",
                 label = "Echanger"
             }
         }
@@ -345,6 +345,26 @@ FoodJob.Functions.CollectIngredients = function(field)
     end)
 end
 
+AddEventHandler("jobs:client:food-harvest-milk", function()
+    QBCore.Functions.Progressbar("food-harvest-milk", "Vous récupérer des bidons de lait", FoodConfig.Collect.Milk.Duration, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, { animDict = "anim@mp_radio@garage@low", anim = "action_a" }, {}, {}, function()
+        QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count)
+            if success then
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bidons de lait~s~", count))
+                Citizen.Wait(1000)
+                TriggerEvent("jobs:client:food-harvest-milk")
+            end
+        end)
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la collecte de bidons de lait", "error")
+    end)
+end)
+
 FoodJob.Functions.CraftItem = function(itemId, item)
     Citizen.CreateThread(function()
         QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Duration, false, true,
@@ -352,7 +372,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
-            disableCombat = false,
+            disableCombat = true,
         }, {}, {}, {}, function(wasCancelled)
             if not wasCancelled then
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)

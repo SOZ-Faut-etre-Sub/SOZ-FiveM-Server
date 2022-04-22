@@ -1481,6 +1481,28 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = ''
     },
+    ['milkbucket'] = {
+        ['name'] = 'milkbucket',
+        ['label'] = 'Bidon de lait',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['milk'] = {
+        ['name'] = 'milkbucket',
+        ['label'] = 'Bouteille de lait',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
 
     -- Drugs
     ['joint'] = {

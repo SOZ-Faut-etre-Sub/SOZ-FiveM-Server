@@ -1,6 +1,11 @@
-local function AddItem(source, item)
+local function AddItem(source, item, itemCount)
+    local count = 1
+    if itemCount then
+        count = itemCount
+    end
+
     local receivedItem = false
-    exports["soz-inventory"]:AddItem(source, item, 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, item, count, nil, nil, function(success, reason)
         if success then
             receivedItem = true
         else
@@ -48,6 +53,22 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
     end
 
     cb(collectedItems, newHealth)
+end)
+
+QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-milk", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    local reward = FoodConfig.Collect.Milk.Reward
+    local count = math.random(reward.min, reward.max)
+
+    if AddItem(Player.PlayerData.source, FoodConfig.Collect.Milk.Item, count) then
+        cb(true, count)
+    else
+        cb(false)
+    end
 end)
 
 QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, cb, itemId)

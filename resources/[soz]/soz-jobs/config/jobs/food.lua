@@ -10,6 +10,11 @@ FoodConfig.Cloakroom = {
 FoodConfig.Collect = {
     Duration = 10000, -- in ms
     Range = {min = 1, max = 3},
+    Milk = {
+        Duration = 10000, -- in ms
+        Reward = {min = 1, max = 4},
+        Item = "milkbucket",
+    }
 }
 
 FoodConfig.Categories = {
