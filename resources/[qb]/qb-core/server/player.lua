@@ -431,8 +431,6 @@ function QBCore.Player.Save(source)
             cloth_config = json.encode(PlayerData.cloth_config),
             is_default = PlayerData.is_default,
         })
-
-        exports['soz-monitor']:Log('INFO', 'Save player !', { player = PlayerData })
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })
     end
