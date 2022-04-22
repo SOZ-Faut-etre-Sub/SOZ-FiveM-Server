@@ -321,3 +321,52 @@ AddEventHandler("soz-jobs:client:food-craft-item", function(itemId)
 
     FoodJob.Functions.CraftItem(itemId, item)
 end)
+
+---
+--- Hunting
+---
+for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
+    exports["qb-target"]:AddTargetModel(animal, {
+        options = {
+            {
+                label = "Dépecer",
+                icon = "c:food/depecer.png",
+                event = "jobs:client:food:hunting",
+                canInteract = function(entity)
+                    return not IsPedAPlayer(entity) and IsEntityDead(entity)
+                end,
+            },
+        },
+        distance = 2.5,
+    })
+end
+
+RegisterNetEvent("jobs:client:food:hunting", function(data)
+    if not DoesEntityExist(data.entity) or not IsEntityDead(data.entity) then
+        return
+    end
+
+    local ped = PlayerPedId()
+    local hasKnife = GetSelectedPedWeapon(ped) == FoodConfig.HuntingWeapon
+
+    if not hasKnife then
+        SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
+    end
+    TaskTurnPedToFaceEntity(ped, data.entity, 500)
+
+    QBCore.Functions.RequestAnimDict("amb@medic@standing@kneel@base")
+    QBCore.Functions.RequestAnimDict("anim@gangops@facility@servers@bodysearch@")
+    TaskPlayAnim(ped, "amb@medic@standing@kneel@base", "base", 8.0, -8.0, -1, 1, 0, false, false, false)
+    TaskPlayAnim(ped, "anim@gangops@facility@servers@bodysearch@", "player_search", 8.0, -8.0, -1, 48, 0, false, false, false)
+
+    QBCore.Functions.Progressbar("hunting-cutup", "Dépeçage en cours...", 5000, false, false, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        if hasKnife then
+            TriggerServerEvent("jobs:server:food:hunting", NetworkGetNetworkIdFromEntity(data.entity))
+        else
+            exports["soz-hud"]:DrawNotification("L'animal ne respire plus...", "info")
+        end
+    end)
+end)
