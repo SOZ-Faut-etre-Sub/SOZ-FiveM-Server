@@ -218,8 +218,8 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
         TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
         TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
 
-        while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustPressed(1, 51) and
-            GetPedInVehicleSeat(entity, -1) == 0 and GetEntityHealth(gasentity) > 0 do
+        while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustPressed(1, 51) and GetPedInVehicleSeat(entity, -1) ==
+            0 and GetEntityHealth(gasentity) > 0 do
             currentFuelAdd = currentFuelAdd + 0.02
             newFuel = currentFuel + currentFuelAdd
 
@@ -262,14 +262,15 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
     end
 end)
 
-Citizen.CreateThread(function ()
+Citizen.CreateThread(function()
     local stations = QBCore.Functions.TriggerRpc("soz-fuel:server:getStations")
 
     for _, station in pairs(stations) do
         local position = vector3(station.position.x, station.position.y, station.position.z)
         CreateBlip(position)
 
-        local zone = BoxZone:Create(vector3(station.zone.position.x, station.zone.position.y, station.zone.position.z), station.zone.length, station.zone.width, station.zone.options)
+        local zone = BoxZone:Create(vector3(station.zone.position.x, station.zone.position.y, station.zone.position.z), station.zone.length, station.zone.width,
+                                    station.zone.options)
 
         zone:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
             if isPointInside then
