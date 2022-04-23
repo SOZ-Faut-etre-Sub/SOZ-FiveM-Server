@@ -182,8 +182,9 @@ SozJobCore.Jobs = {
         },
     },
     [SozJobCore.JobType.Bennys] = {
-        label = "Méchanicien",
+        label = "Bennys",
         grades = {},
+        menuCallback = "bennys:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},

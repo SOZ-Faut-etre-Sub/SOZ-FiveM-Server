@@ -29,9 +29,9 @@ OriginalPlateIndex = nil
 CreateThread(function()
     local c = Config.Locations["exit"]
     local Blip = AddBlipForCoord(c.x, c.y, c.z)
-    SetBlipSprite(Blip, 446)
+    SetBlipSprite(Blip, 227)
     SetBlipDisplay(Blip, 4)
-    SetBlipScale(Blip, 0.8)
+    SetBlipScale(Blip, 1.2)
     SetBlipColour(Blip, 46)
     SetBlipAsShortRange(Blip, true)
     SetBlipAlpha(Blip, 0.7)

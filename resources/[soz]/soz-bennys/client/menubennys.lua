@@ -931,26 +931,22 @@ Vehiclemecha2 = BoxZone:Create(vector3(-222.23, -1329.66, 30.89), 7, 4, {
 
 Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if OnDuty == true and PlayerJob.id == "bennys" then
             exports["qb-target"]:AddTargetModel(-2094907124, {
                 options = {
                     {
                         type = "client",
-                        -- event = "QBCore:ToggleDuty",
+                        event = "soz-bennys:client:OpenCloakroomMenu",
                         icon = "fas fa-tshirt",
                         label = "Se changer",
                         targeticon = "fas fa-wrench",
-                        action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
-                            -- TriggerServerEvent("QBCore:ToggleDuty")
+                        canInteract = function()
+                            return PlayerData.job.onduty
                         end,
+                        job = "bennys",
                     },
                 },
                 distance = 2.5,
             })
-        end
     else
         if OnDuty == true and PlayerJob.id == "bennys" then
             exports["qb-target"]:RemoveTargetModel(-2094907124, "Service")
@@ -960,7 +956,6 @@ end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        if PlayerJob.id == "bennys" then
             exports["qb-target"]:AddTargetModel(829413118, {
                 options = {
                     {
@@ -977,6 +972,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         canInteract = function()
                             return not PlayerJob.onduty
                         end,
+                        job = "bennys",
                     },
                     {
                         type = "client",
@@ -992,11 +988,11 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         canInteract = function()
                             return PlayerJob.onduty
                         end,
+                        job = "bennys",
                     },
                 },
                 distance = 2.5,
             })
-        end
     else
         if PlayerJob.id == "bennys" then
             exports["qb-target"]:RemoveTargetModel(829413118, "Service")
