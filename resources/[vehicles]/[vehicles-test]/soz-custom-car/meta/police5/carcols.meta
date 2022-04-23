@@ -2,13 +2,13 @@
 <CVehicleModelInfoVarGlobal>
     <Kits>
         <Item>
-            <kitName>999_polbuffaloc2_modkit</kitName>
+            <kitName>999_police5_modkit</kitName>
             <id value="999" />
             <kitType>MKT_SPECIAL</kitType>
             <visibleMods>
         <!-- CallSign 0 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a0</modelName>
+                    <modelName>police5_callsign_a0</modelName>
                     <modShopLabel>BFL_A0</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -24,7 +24,7 @@
                 </Item>
                 <!-- CallSign 1 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a1</modelName>
+                    <modelName>police5_callsign_a1</modelName>
                     <modShopLabel>BFL_A1</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -40,7 +40,7 @@
                 </Item>
                 <!-- CallSign 2 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a2</modelName>
+                    <modelName>police5_callsign_a2</modelName>
                     <modShopLabel>BFL_A2</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -56,7 +56,7 @@
                 </Item>
                 <!-- CallSign 3 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a3</modelName>
+                    <modelName>police5_callsign_a3</modelName>
                     <modShopLabel>BFL_A3</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -72,7 +72,7 @@
                 </Item>
                 <!-- CallSign 4 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a4</modelName>
+                    <modelName>police5_callsign_a4</modelName>
                     <modShopLabel>BFL_A4</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -88,7 +88,7 @@
                 </Item>
                 <!-- CallSign 5 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a5</modelName>
+                    <modelName>police5_callsign_a5</modelName>
                     <modShopLabel>BFL_A5</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -104,7 +104,7 @@
                 </Item>
                 <!-- CallSign 6 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a6</modelName>
+                    <modelName>police5_callsign_a6</modelName>
                     <modShopLabel>BFL_A6</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -120,7 +120,7 @@
                 </Item>
                 <!-- CallSign 7 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a7</modelName>
+                    <modelName>police5_callsign_a7</modelName>
                     <modShopLabel>BFL_A7</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -136,7 +136,7 @@
                 </Item>
                 <!-- CallSign 8 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a8</modelName>
+                    <modelName>police5_callsign_a8</modelName>
                     <modShopLabel>BFL_A8</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -152,7 +152,7 @@
                 </Item>
                 <!-- CallSign 9 Left -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_a9</modelName>
+                    <modelName>police5_callsign_a9</modelName>
                     <modShopLabel>BFL_A9</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -168,7 +168,7 @@
                 </Item>
                 <!-- CallSign 0 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c0</modelName>
+                    <modelName>police5_callsign_c0</modelName>
                     <modShopLabel>BFL_C0</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -184,7 +184,7 @@
                 </Item>
                 <!-- CallSign 1 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c1</modelName>
+                    <modelName>police5_callsign_c1</modelName>
                     <modShopLabel>BFL_C1</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -200,7 +200,7 @@
                 </Item>
                 <!-- CallSign 2 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c2</modelName>
+                    <modelName>police5_callsign_c2</modelName>
                     <modShopLabel>BFL_C2</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -216,7 +216,7 @@
                 </Item>
                 <!-- CallSign 3 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c3</modelName>
+                    <modelName>police5_callsign_c3</modelName>
                     <modShopLabel>BFL_C3</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -232,7 +232,7 @@
                 </Item>
                 <!-- CallSign 4 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c4</modelName>
+                    <modelName>police5_callsign_c4</modelName>
                     <modShopLabel>BFL_C4</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -248,7 +248,7 @@
                 </Item>
                 <!-- CallSign 5 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c5</modelName>
+                    <modelName>police5_callsign_c5</modelName>
                     <modShopLabel>BFL_C5</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -264,7 +264,7 @@
                 </Item>
                 <!-- CallSign 6 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c6</modelName>
+                    <modelName>police5_callsign_c6</modelName>
                     <modShopLabel>BFL_C6</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -280,7 +280,7 @@
                 </Item>
                 <!-- CallSign 7 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c7</modelName>
+                    <modelName>police5_callsign_c7</modelName>
                     <modShopLabel>BFL_C7</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -296,7 +296,7 @@
                 </Item>
                 <!-- CallSign 8 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c8</modelName>
+                    <modelName>police5_callsign_c8</modelName>
                     <modShopLabel>BFL_C8</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -312,7 +312,7 @@
                 </Item>
                 <!-- CallSign 9 Right -->
                 <Item>
-                    <modelName>polbuffaloc2_callsign_c9</modelName>
+                    <modelName>police5_callsign_c9</modelName>
                     <modShopLabel>BFL_C9</modShopLabel>
                     <linkedModels />
                     <turnOffBones />

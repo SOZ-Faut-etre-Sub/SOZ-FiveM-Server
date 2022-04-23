@@ -3,7 +3,7 @@
 <CVehicleModelInfoVariation>
   <variationData>
     <Item>
-      <modelName>polbuffaloc2</modelName>
+      <modelName>police5</modelName>
       <colors>
 		<Item>
           <indices content="char_array">
@@ -18,7 +18,7 @@
         </Item>
       </colors>
       <kits>
-        <Item>999_polbuffaloc2_modkit</Item>
+        <Item>999_police5_modkit</Item>
       </kits>
       <windowsWithExposedEdges />
       <plateProbabilities>
