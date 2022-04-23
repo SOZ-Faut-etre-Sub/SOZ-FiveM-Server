@@ -411,7 +411,7 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true,
+    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(10000), false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -478,7 +478,7 @@ local function Repairall(entity)
     if engineHealth > bodyHealth then
         engineHealth = bodyHealth
     end
-    local repairTime = (1000 - engineHealth) * 100
+    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 10
 
     ScrapAnim(repairTime)
     QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
@@ -503,7 +503,7 @@ end
 local function CleanVehicle(entity)
     local ped = PlayerPedId()
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
-    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000, 20000), false, true,
+    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000), false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
