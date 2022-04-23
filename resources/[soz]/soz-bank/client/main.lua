@@ -130,6 +130,13 @@ CreateThread(function()
             distance = 1.0,
         })
     end
+
+    local atmCoords = QBCore.Functions.TriggerRpc("banking:server:getAtmCoords")
+    for atmAccount, coords in pairs(atmCoords) do
+        if not QBCore.Functions.GetBlip("atm_" .. atmAccount) then
+            QBCore.Functions.CreateBlip("atm_" .. atmAccount, {name = "ATM", coords = coords, sprite = 431, color = 60, alpha = 150})
+        end
+    end
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)

@@ -16,6 +16,8 @@ setmetatable(Account, {
     end,
 })
 
+AtmCoords = {}
+
 MySQL.ready(function()
     local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
@@ -40,6 +42,10 @@ MySQL.ready(function()
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 elseif v.account_type == "bank-atm" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money, v.coords)
+                    if string.match(v.businessid, "atm_%a+") then
+                        local coords = json.decode(v.coords)
+                        AtmCoords[v.businessid] = vector2(coords.x, coords.y)
+                    end
                 end
             end
         end
