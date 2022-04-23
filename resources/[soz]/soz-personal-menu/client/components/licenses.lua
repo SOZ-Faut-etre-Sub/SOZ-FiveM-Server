@@ -94,7 +94,7 @@ function HideUI(identitySubmenu)
     UpdateLicenseMenu(identitySubmenu, selectedCheckbox, isShowingAround)
 end
 
-function LicensesEntry(menu)
+function IdentityEntry(menu)
     local identitySubmenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de l'identité"})
 
     menu:AddButton({
