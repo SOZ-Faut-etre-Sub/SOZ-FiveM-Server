@@ -5,13 +5,11 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 --
 -- ID CARD
 AddEventHandler("soz-identity:client:request-identity-data", function(target, action)
-    TriggerGiveAnimation(action)
     TriggerServerEvent("soz-identity:server:request-data", target, "identity", action)
 end)
 
 -- LICENSES
 AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
-    TriggerGiveAnimation(action)
     TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action)
 end)
 
@@ -32,12 +30,10 @@ RegisterNetEvent("soz-identity:client:hide", function(src)
     SendNUIMessage({type = "hide", source = src})
 end)
 
-function TriggerGiveAnimation(action)
-    if action == "show" then
-        Citizen.CreateThread(function()
-            local animDict = "mp_common"
-            QBCore.Functions.RequestAnimDict(animDict)
-            TaskPlayAnim(PlayerPedId(), animDict, "givetake2_a", 8.0, 8.0, -1, 0, 0, true, false, true)
-        end)
-    end
-end
+AddEventHandler("soz-identity:client:give-animation", function()
+    Citizen.CreateThread(function()
+        local animDict = "mp_common"
+        QBCore.Functions.RequestAnimDict(animDict)
+        TaskPlayAnim(PlayerPedId(), animDict, "givetake2_a", 8.0, 8.0, -1, 0, 0, true, false, true)
+    end)
+end)

@@ -46,9 +46,13 @@ function GenerateLicenseMenu(identitySubmenu, selectedCheckbox, showingAround)
                         if type(closePlayers) == "table" and #closePlayers > 1 then
                             UpdateLicenseMenu(identitySubmenu, selectedCheckbox, true)
                             for _, player in ipairs(closePlayers) do
-                                local pid = GetPlayerServerId(player)
-                                table.insert(showingTo, pid)
-                                TriggerEvent(checkbox.event, GetPlayerServerId(player), action)
+                                if player ~= PlayerId() then
+                                    local pid = GetPlayerServerId(player)
+                                    table.insert(showingTo, pid)
+                                    TriggerEvent(checkbox.event, GetPlayerServerId(player), action)
+                                else
+                                    TriggerEvent("soz-identity:client:give-animation")
+                                end
                             end
 
                         else
