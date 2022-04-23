@@ -2,13 +2,13 @@
 <CVehicleModelInfoVarGlobal>
 	<Kits>
 		<Item>
-			<kitName>997_nkscout_modkit</kitName>
+			<kitName>997_police6_modkit</kitName>
 			<id value="997" />
 			<kitType>MKT_SPECIAL</kitType>
 			<visibleMods>
 				<!-- CallSign 0 Left -->
 				<Item>
-					<modelName>nkscout_sign_a0</modelName>
+					<modelName>police6_sign_a0</modelName>
 					<modShopLabel>NKS_A0</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -24,7 +24,7 @@
 				</Item>
 				<!-- CallSign 1 Left -->
 				<Item>
-					<modelName>nkscout_sign_a1</modelName>
+					<modelName>police6_sign_a1</modelName>
 					<modShopLabel>NKS_A1</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -40,7 +40,7 @@
 				</Item>
 				<!-- CallSign 2 Left -->
 				<Item>
-					<modelName>nkscout_sign_a2</modelName>
+					<modelName>police6_sign_a2</modelName>
 					<modShopLabel>NKS_A2</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -56,7 +56,7 @@
 				</Item>
 				<!-- CallSign 3 Left -->
 				<Item>
-					<modelName>nkscout_sign_a3</modelName>
+					<modelName>police6_sign_a3</modelName>
 					<modShopLabel>NKS_A3</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -72,7 +72,7 @@
 				</Item>
 				<!-- CallSign 4 Left -->
 				<Item>
-					<modelName>nkscout_sign_a4</modelName>
+					<modelName>police6_sign_a4</modelName>
 					<modShopLabel>NKS_A4</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -88,7 +88,7 @@
 				</Item>
 				<!-- CallSign 5 Left -->
 				<Item>
-					<modelName>nkscout_sign_a5</modelName>
+					<modelName>police6_sign_a5</modelName>
 					<modShopLabel>NKS_A5</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -104,7 +104,7 @@
 				</Item>
 				<!-- CallSign 6 Left -->
 				<Item>
-					<modelName>nkscout_sign_a6</modelName>
+					<modelName>police6_sign_a6</modelName>
 					<modShopLabel>NKS_A6</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -120,7 +120,7 @@
 				</Item>
 				<!-- CallSign 7 Left -->
 				<Item>
-					<modelName>nkscout_sign_a7</modelName>
+					<modelName>police6_sign_a7</modelName>
 					<modShopLabel>NKS_A7</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -136,7 +136,7 @@
 				</Item>
 				<!-- CallSign 8 Left -->
 				<Item>
-					<modelName>nkscout_sign_a8</modelName>
+					<modelName>police6_sign_a8</modelName>
 					<modShopLabel>NKS_A8</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -152,7 +152,7 @@
 				</Item>
 				<!-- CallSign 9 Left -->
 				<Item>
-					<modelName>nkscout_sign_a9</modelName>
+					<modelName>police6_sign_a9</modelName>
 					<modShopLabel>NKS_A9</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -168,7 +168,7 @@
 				</Item>
 				<!-- CallSign 0 Center -->
 				<Item>
-					<modelName>nkscout_sign_b0</modelName>
+					<modelName>police6_sign_b0</modelName>
 					<modShopLabel>NKS_B0</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -184,7 +184,7 @@
 				</Item>
 				<!-- CallSign 1 Center -->
 				<Item>
-					<modelName>nkscout_sign_b1</modelName>
+					<modelName>police6_sign_b1</modelName>
 					<modShopLabel>NKS_B1</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -200,7 +200,7 @@
 				</Item>
 				<!-- CallSign 2 Center -->
 				<Item>
-					<modelName>nkscout_sign_b2</modelName>
+					<modelName>police6_sign_b2</modelName>
 					<modShopLabel>NKS_B2</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -216,7 +216,7 @@
 				</Item>
 				<!-- CallSign 3 Center -->
 				<Item>
-					<modelName>nkscout_sign_b3</modelName>
+					<modelName>police6_sign_b3</modelName>
 					<modShopLabel>NKS_B3</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -232,7 +232,7 @@
 				</Item>
 				<!-- CallSign 4 Center -->
 				<Item>
-					<modelName>nkscout_sign_b4</modelName>
+					<modelName>police6_sign_b4</modelName>
 					<modShopLabel>NKS_B4</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -248,7 +248,7 @@
 				</Item>
 				<!-- CallSign 5 Center -->
 				<Item>
-					<modelName>nkscout_sign_b5</modelName>
+					<modelName>police6_sign_b5</modelName>
 					<modShopLabel>NKS_B5</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -264,7 +264,7 @@
 				</Item>
 				<!-- CallSign 6 Center -->
 				<Item>
-					<modelName>nkscout_sign_b6</modelName>
+					<modelName>police6_sign_b6</modelName>
 					<modShopLabel>NKS_B6</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -280,7 +280,7 @@
 				</Item>
 				<!-- CallSign 7 Center -->
 				<Item>
-					<modelName>nkscout_sign_b7</modelName>
+					<modelName>police6_sign_b7</modelName>
 					<modShopLabel>NKS_B7</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -296,7 +296,7 @@
 				</Item>
 				<!-- CallSign 8 Center -->
 				<Item>
-					<modelName>nkscout_sign_b8</modelName>
+					<modelName>police6_sign_b8</modelName>
 					<modShopLabel>NKS_B8</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -312,7 +312,7 @@
 				</Item>
 				<!-- CallSign 9 Center -->
 				<Item>
-					<modelName>nkscout_sign_b9</modelName>
+					<modelName>police6_sign_b9</modelName>
 					<modShopLabel>NKS_B9</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -328,7 +328,7 @@
 				</Item>
 				<!-- CallSign 0 Right -->
 				<Item>
-					<modelName>nkscout_sign_c0</modelName>
+					<modelName>police6_sign_c0</modelName>
 					<modShopLabel>NKS_C0</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -344,7 +344,7 @@
 				</Item>
 				<!-- CallSign 1 Right -->
 				<Item>
-					<modelName>nkscout_sign_c1</modelName>
+					<modelName>police6_sign_c1</modelName>
 					<modShopLabel>NKS_C1</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -360,7 +360,7 @@
 				</Item>
 				<!-- CallSign 2 Right -->
 				<Item>
-					<modelName>nkscout_sign_c2</modelName>
+					<modelName>police6_sign_c2</modelName>
 					<modShopLabel>NKS_C2</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -376,7 +376,7 @@
 				</Item>
 				<!-- CallSign 3 Right -->
 				<Item>
-					<modelName>nkscout_sign_c3</modelName>
+					<modelName>police6_sign_c3</modelName>
 					<modShopLabel>NKS_C3</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -392,7 +392,7 @@
 				</Item>
 				<!-- CallSign 4 Right -->
 				<Item>
-					<modelName>nkscout_sign_c4</modelName>
+					<modelName>police6_sign_c4</modelName>
 					<modShopLabel>NKS_C4</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -408,7 +408,7 @@
 				</Item>
 				<!-- CallSign 5 Right -->
 				<Item>
-					<modelName>nkscout_sign_c5</modelName>
+					<modelName>police6_sign_c5</modelName>
 					<modShopLabel>NKS_C5</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -424,7 +424,7 @@
 				</Item>
 				<!-- CallSign 6 Right -->
 				<Item>
-					<modelName>nkscout_sign_c6</modelName>
+					<modelName>police6_sign_c6</modelName>
 					<modShopLabel>NKS_C6</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -440,7 +440,7 @@
 				</Item>
 				<!-- CallSign 7 Right -->
 				<Item>
-					<modelName>nkscout_sign_c7</modelName>
+					<modelName>police6_sign_c7</modelName>
 					<modShopLabel>NKS_C7</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -456,7 +456,7 @@
 				</Item>
 				<!-- CallSign 8 Right -->
 				<Item>
-					<modelName>nkscout_sign_c8</modelName>
+					<modelName>police6_sign_c8</modelName>
 					<modShopLabel>NKS_C8</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -472,7 +472,7 @@
 				</Item>
 				<!-- CallSign 9 Right -->
 				<Item>
-					<modelName>nkscout_sign_c9</modelName>
+					<modelName>police6_sign_c9</modelName>
 					<modShopLabel>NKS_C9</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -488,7 +488,7 @@
 				</Item>
 				<!-- Ram 1 -->
 				<Item>
-					<modelName>nkscout_ram_1</modelName>
+					<modelName>police6_ram_1</modelName>
 					<modShopLabel>NKS_RAM_1</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -504,10 +504,10 @@
 				</Item>
 				<!-- Ram 1 with hook -->
 				<Item>
-					<modelName>nkscout_ramhook</modelName>
+					<modelName>police6_ramhook</modelName>
 					<modShopLabel>NKS_RAMHOOK</modShopLabel>
 					<linkedModels>
-						<Item>nkscout_ram_1</Item>
+						<Item>police6_ram_1</Item>
 					</linkedModels>
 					<turnOffBones />
 					<type>VMT_BUMPER_F</type>
@@ -522,7 +522,7 @@
 				</Item>
 				<!-- Ram 1A -->
 				<Item>
-					<modelName>nkscout_ram_1a</modelName>
+					<modelName>police6_ram_1a</modelName>
 					<modShopLabel>NKS_RAM_1A</modShopLabel>
 					<linkedModels></linkedModels>
 					<turnOffBones />
@@ -538,7 +538,7 @@
 				</Item>
 				<!-- Ram 2 -->
 				<Item>
-					<modelName>nkscout_ram_2</modelName>
+					<modelName>police6_ram_2</modelName>
 					<modShopLabel>NKS_RAM_2</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -554,7 +554,7 @@
 				</Item>
 				<!-- Antenna FRONT 1A -->
 				<Item>
-					<modelName>nkantennas_front_1a</modelName>
+					<modelName>police6_front_1a</modelName>
 					<modShopLabel>NKA_ANT_F1A</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -570,10 +570,10 @@
 				</Item>
 				<!-- Antenna FRONT 1A + 1B -->
 				<Item>
-					<modelName>nkantennas_front_1a</modelName>
+					<modelName>police6_front_1a</modelName>
 					<modShopLabel>NKA_ANT_F1A</modShopLabel>
 					<linkedModels>
-						<Item>nkantennas_front_1b</Item>
+						<Item>police6_front_1b</Item>
 					</linkedModels>
 					<turnOffBones />
 					<type>VMT_CHASSIS3</type>
@@ -586,9 +586,9 @@
 					<disableBonnetCamera value="false" />
 					<allowBonnetSlide value="true" />
 				</Item>
-				<!-- nkantennas_section_1 -->
+				<!-- police6_section_1 -->
 				<Item>
-					<modelName>nkantennas_section_1</modelName>
+					<modelName>police6_section_1</modelName>
 					<modShopLabel>NKA_ANT_SEC1</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -602,13 +602,13 @@
 					<disableBonnetCamera value="false" />
 					<allowBonnetSlide value="true" />
 				</Item>
-				<!-- nkantennas_section_1 -->
+				<!-- police6_section_1 -->
 				<Item>
-					<modelName>nkantennas_section_2a</modelName>
+					<modelName>police6_section_2a</modelName>
 					<modShopLabel>NKA_ANT_SEC2A</modShopLabel>
 					<linkedModels>
-						<Item>nkantennas_section_2b</Item>
-						<Item>nkantennas_section_2c</Item>
+						<Item>police6_section_2b</Item>
+						<Item>police6_section_2c</Item>
 					</linkedModels>
 					<turnOffBones />
 					<type>VMT_CHASSIS4</type>
@@ -623,7 +623,7 @@
 				</Item>
 				<!-- Roof Grip -->
 				<Item>
-					<modelName>nkscout_grip</modelName>
+					<modelName>police6_grip</modelName>
 					<modShopLabel>NKS_GRIP</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -639,7 +639,7 @@
 				</Item>
 				<!-- Front bodyshell -->
 				<Item>
-					<modelName>nkscout_bumperf</modelName>
+					<modelName>police6_bumperf</modelName>
 					<modShopLabel>NKS_BMF</modShopLabel>
 					<linkedModels />
 					<turnOffBones>
@@ -657,7 +657,7 @@
 				</Item>
 				<!-- Front bodyshell -->
 				<Item>
-					<modelName>nkscout_hook</modelName>
+					<modelName>police6_hook</modelName>
 					<modShopLabel>NKS_HOOK</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -673,7 +673,7 @@
 				</Item>
 				<!-- Plate 1 -->
 				<Item>
-					<modelName>nkscout_plate_1</modelName>
+					<modelName>police6_plate_1</modelName>
 					<modShopLabel>NKS_PLATE_1</modShopLabel>
 					<linkedModels />
 					<turnOffBones />
@@ -689,7 +689,7 @@
 				</Item>
                 <!-- Sheriff Livery -->
                 <Item>
-                    <modelName>nkscout_livery1</modelName>
+                    <modelName>police6_livery1</modelName>
                     <modShopLabel>NKS_LIVERY1</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
@@ -706,22 +706,22 @@
 			</visibleMods>
 			<linkMods>
 				<Item>
-					<modelName>nkscout_ram_1</modelName>
+					<modelName>police6_ram_1</modelName>
 					<bone>bumper_f</bone>
 					<turnOffExtra value="false" />
 				</Item>
 				<Item>
-					<modelName>nkantennas_front_1b</modelName>
+					<modelName>police6_front_1b</modelName>
 					<bone>chassis</bone>
 					<turnOffExtra value="false" />
 				</Item>
 				<Item>
-					<modelName>nkantennas_section_2c</modelName>
+					<modelName>police6_section_2c</modelName>
 					<bone>bobble_head</bone>
 					<turnOffExtra value="false" />
 				</Item>
 				<Item>
-					<modelName>nkantennas_section_2b</modelName>
+					<modelName>police6_section_2b</modelName>
 					<bone>miscwobble_1</bone>
 					<turnOffExtra value="false" />
 				</Item>
@@ -875,7 +875,7 @@
 		<!-- NKSCOUT -->
 		<Item>
 			<id value="1232"/>
-			<name>nkscout</name>
+			<name>police6</name>
 			<timeMultiplier value="1.00000000"/>
 			<lightFalloffMax value="10.00000000"/>
 			<lightFalloffExponent value="10.00000000"/>

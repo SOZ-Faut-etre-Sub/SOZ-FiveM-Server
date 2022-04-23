@@ -3,7 +3,7 @@
 <CVehicleModelInfoVariation>
   <variationData>
     <Item>
-      <modelName>nkscout</modelName>
+      <modelName>police6</modelName>
       <colors>
         <Item>
           <indices content="char_array">
@@ -29,7 +29,7 @@
         </Item>
       </colors>
       <kits>
-        <Item>997_nkscout_modkit</Item>
+        <Item>997_police6_modkit</Item>
       </kits>
       <windowsWithExposedEdges/>
       <plateProbabilities>

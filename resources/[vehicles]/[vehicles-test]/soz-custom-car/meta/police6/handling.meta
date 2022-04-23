@@ -4,7 +4,7 @@
 	<HandlingData>
 		<!-- NK Sheriff Scout -->
 	    <Item type="CHandlingData">
-			<handlingName>NKSCOUT</handlingName>
+			<handlingName>POLICE6</handlingName>
 			<fMass value="2450.000000" />
 			<fInitialDragCoeff value="4.000000" />
 			<fPercentSubmerged value="85.000000" />
