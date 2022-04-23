@@ -36,8 +36,19 @@ end)
 
 CreateThread(function()
     for bank, coords in pairs(Config.BankPedLocations) do
+        QBCore.Functions.RemoveBlip("bank_" .. bank)
         if not QBCore.Functions.GetBlip("bank_" .. bank) then
-            QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
+            if bank == "pacific1" then
+                QBCore.Functions.CreateBlip("bank_" .. bank, {
+                    name = "Pacific Bank",
+                    coords = coords,
+                    sprite = 108,
+                    color = 28,
+                    scale = 1.0,
+                })
+            elseif string.match(bank, "fleeca%d+") then
+                QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
+            end
         end
         exports["qb-target"]:SpawnPed({
             {
