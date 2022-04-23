@@ -20,10 +20,12 @@ exports("setRadioChannel", function(module, channel, isPrimary)
 end)
 
 exports("setCallChannel", function(callId)
-    local state = LocalPlayer.state.call
+    if callId ~= 0 then
+        local state = LocalPlayer.state.call
 
-    state.channel = callId
-    LocalPlayer.state:set("call", state, true)
+        state.channel = callId
+        LocalPlayer.state:set("call", state, true)
+    end
 
     TriggerServerEvent("voip:server:setPlayerInChannel", "call", callId)
     voiceModule["call"]:createCallThread()
