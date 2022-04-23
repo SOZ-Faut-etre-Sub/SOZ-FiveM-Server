@@ -4,10 +4,10 @@
   <residentAnims />
   <InitDatas>
     <Item>
-      <modelName>polbuffaloc2</modelName>
-      <txdName>polbuffaloc2</txdName>
-      <handlingId>POLBUFFALOC2</handlingId>
-      <gameName>POLBUFFALOC2</gameName>
+      <modelName>police5</modelName>
+      <txdName>police5</txdName>
+      <handlingId>POLICE5</handlingId>
+      <gameName>police5</gameName>
       <vehicleMakeName>BRAVADO</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
@@ -132,7 +132,7 @@
     </Item>
     <Item>
       <parent>vehicles_poltax_interior</parent>
-      <child>polbuffaloc2</child>
+      <child>police5</child>
     </Item>
   </txdRelationships>
 </CVehicleModelInfo__InitDataList>
