@@ -1,5 +1,5 @@
 Config.Storages["garbage_storage"] = {
-    label = "Coffre Rogers",
+    label = "Coffre BlueBird",
     type = "storage",
     owner = "garbage",
     position = vector3(-619.88, -1617.2, 33.01),
@@ -9,7 +9,7 @@ Config.Storages["garbage_storage"] = {
 }
 
 Config.Storages["garbage_fridge"] = {
-    label = "Frigo Rogers",
+    label = "Frigo BlueBird",
     type = "fridge",
     owner = "garbage",
     position = vector3(-594.91, -1620.31, 33.01),
@@ -19,7 +19,7 @@ Config.Storages["garbage_fridge"] = {
 }
 
 Config.Storages["garbage_boss_storage"] = {
-    label = "Coffre dirigeant Rogers",
+    label = "Coffre dirigeant BlueBird",
     type = "boss_storage",
     owner = "garbage",
     position = vector3(-615.57, -1624.62, 33.01),

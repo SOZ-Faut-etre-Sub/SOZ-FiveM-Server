@@ -177,22 +177,27 @@ RegisterNetEvent("police:client:RequestEscortPlayer", function()
 end)
 
 RegisterNetEvent("police:client:SetEscorting", function()
-    while LocalPlayer.state.isEscorting do
-        if IsControlJustReleased(0, 51) then
-            local player, distance = QBCore.Functions.GetClosestPlayer()
-            if player ~= -1 and distance < 2.5 then
-                if not LocalPlayer.state.isEscorted and LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
-                    not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
-                    TriggerServerEvent("police:server:DeEscortPlayer", GetPlayerServerId(player))
+    CreateThread(function()
+        Wait(1000)
+
+        while LocalPlayer.state.isEscorting do
+            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour lâcher")
+            if IsControlJustReleased(0, 51) then
+                local player, distance = QBCore.Functions.GetClosestPlayer()
+                if player ~= -1 and distance < 2.5 then
+                    if not LocalPlayer.state.isEscorted and LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
+                        not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
+                        TriggerServerEvent("police:server:DeEscortPlayer", GetPlayerServerId(player))
+                    else
+                        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas arrêter une personne dans un véhicule", "error")
+                    end
                 else
-                    exports["soz-hud"]:DrawNotification("Vous ne pouvez pas arrêter une personne dans un véhicule", "error")
+                    exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                 end
-            else
-                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
             end
+            Wait(1)
         end
-        Wait(1)
-    end
+    end)
 end)
 
 RegisterNetEvent("police:client:GetEscorted", function(playerId)

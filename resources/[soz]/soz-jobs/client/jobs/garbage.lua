@@ -138,8 +138,8 @@ end)
 
 --- Threads
 CreateThread(function()
-    QBCore.Functions.CreateBlip("jobs:news", {
-        name = "Rogers",
+    QBCore.Functions.CreateBlip("jobs:garbage", {
+        name = "BlueBird",
         coords = vector3(-621.98, -1640.79, 25.97),
         sprite = 318,
         scale = 1.0,
