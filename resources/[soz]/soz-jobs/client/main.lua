@@ -96,17 +96,11 @@ CreateThread(function()
                 end,
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
-                        print("no permission")
                         return false
                     end
 
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
-                    print(targetJob.id == PlayerData.job.id)
-                    print(targetJob.id)
-
-                    print(json.encode(targetJob))
-                    print(PlayerData.job.id)
 
                     return targetJob.id == PlayerData.job.id
                 end,

@@ -166,5 +166,9 @@ skinComponentMenu:On("open", function(menu)
     })
 end)
 
+skinComponentMenu:On("close", function(menu)
+    menu:ClearItems()
+end)
+
 --- Add to main menu
 AdminMenu:AddButton({icon = "🐕", label = "Modification du style du joueur", value = skinMenu})
