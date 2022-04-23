@@ -131,11 +131,21 @@ CreateThread(function()
         })
     end
 
-    local atmCoords = QBCore.Functions.TriggerRpc("banking:server:getAtmCoords")
+    TriggerEvent("banking:client:displayAtmBlips")
+end)
+
+RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
+    local atmCoords = newAtmCoords
+    if atmCoords == nil then
+        atmCoords = QBCore.Functions.TriggerRpc("banking:server:getAtmCoords")
+    end
+
     for atmAccount, coords in pairs(atmCoords) do
-        if not QBCore.Functions.GetBlip("atm_" .. atmAccount) then
-            QBCore.Functions.CreateBlip("atm_" .. atmAccount, {name = "ATM", coords = coords, sprite = 431, color = 60, alpha = 150})
+        local blipId = "atm_" .. atmAccount
+        if QBCore.Functions.GetBlip(blipId) then
+            QBCore.Functions.RemoveBlip(blipId)
         end
+        QBCore.Functions.CreateBlip(blipId, {name = "ATM", coords = coords, sprite = 431, color = 60, alpha = 100})
     end
 end)
 
