@@ -88,6 +88,7 @@ function QBCore.Functions.CreateBlip(id, data)
     if data.sprite then SetBlipSprite(blip, data.sprite) end
     if data.range then SetBlipAsShortRange(blip, data.range) else SetBlipAsShortRange(blip, true) end
     if data.color then SetBlipColour(blip, data.color) end
+    if data.alpha then SetBlipAlpha(blip, data.alpha or 255) end
     if data.display then SetBlipDisplay(blip, data.display) end
     if data.playername then SetBlipNameToPlayerName(blip, data.playername) end
     if data.showcone then SetBlipShowCone(blip, data.showcone) end
