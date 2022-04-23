@@ -2,6 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 VehicleStatus = {}
 OnDuty = false
 PlayerJob = {}
+PlayerData = {}
 local effectTimer = 0
 
 OriginalCategory = nil
@@ -438,10 +439,11 @@ RegisterNetEvent("soz-bennys:client:CallRepairPart", function(part)
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    QBCore.Functions.GetPlayerData(function(PlayerData)
+    QBCore.Functions.GetPlayerData(function(data)
+        PlayerData = data
         PlayerJob = PlayerData.job
-        if PlayerData.job.onduty then
-            if PlayerData.job.id == "bennys" then
+        if data.job.onduty then
+            if data.job.id == "bennys" then
                 TriggerServerEvent("QBCore:ToggleDuty")
             end
         end
