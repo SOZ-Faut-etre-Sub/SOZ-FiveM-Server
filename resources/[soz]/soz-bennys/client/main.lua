@@ -419,9 +419,6 @@ local function RepairPart(part)
         disableCombat = true,
     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function() -- Done
         TriggerEvent("soz-bennys:client:RepaireeePart", part)
-        SetTimeout(250, function()
-            OpenPartsMenu(Status)
-        end)
     end)
 
 end
@@ -478,7 +475,7 @@ local function Repairall(entity)
     if engineHealth > bodyHealth then
         engineHealth = bodyHealth
     end
-    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 10
+    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 20
 
     ScrapAnim(repairTime)
     QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
