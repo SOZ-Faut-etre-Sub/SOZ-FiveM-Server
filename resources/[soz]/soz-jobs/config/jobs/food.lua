@@ -10,11 +10,24 @@ FoodConfig.Cloakroom = {
 FoodConfig.Collect = {
     Duration = 10000, -- in ms
     Range = {min = 1, max = 3},
+    Milk = {
+        Duration = 10000, -- in ms
+        Reward = {min = 1, max = 4},
+        Item = "milkbucket",
+    },
+}
+
+FoodConfig.Process = {
+    Duration = 10000, -- in ms
+    Item = "milk",
+    Count = 4,
 }
 
 FoodConfig.Categories = {
-    ["alcohol"] = {icon = "🍾", label = "Boissons alcolisées"},
-    ["softdrink"] = {icon = "🥤", label = "Boissons non alcolisées"},
+    ["wine"] = {icon = "https://nui-img/soz-items/wine", label = "Vins"},
+    ["grapejuice"] = {icon = "https://nui-img/soz-items/grapejuice", label = "Jus"},
+    ["cheese"] = {icon = "🧀", label = "Fromages"},
+    ["sausage"] = {icon = "🐖", label = "Saucissons"},
 }
 
 FoodConfig.Fields = {
@@ -212,19 +225,49 @@ FoodConfig.HuntingReward = {
 }
 
 FoodConfig.Recipes = {
-    -- ALCOHOL
-    ["wine1"] = {category = "alcohol", icon = "🍷", ingredients = {["grape1"] = 3}},
-    ["wine2"] = {category = "alcohol", icon = "🍷", ingredients = {["grape2"] = 3}},
-    ["wine3"] = {category = "alcohol", icon = "🍷", ingredients = {["grape3"] = 3}},
-    ["wine4"] = {category = "alcohol", icon = "🍷", ingredients = {["grape4"] = 3}},
-    -- SOFT DRINKS
-    ["grapejuice1"] = {category = "softdrink", icon = "🧃", ingredients = {["grape1"] = 2}},
-    ["grapejuice2"] = {category = "softdrink", icon = "🧃", ingredients = {["grape2"] = 2}},
-    ["grapejuice3"] = {category = "softdrink", icon = "🧃", ingredients = {["grape3"] = 2}},
+    -- WINES
+    ["wine1"] = {category = "wine", ingredients = {["grape1"] = 3}},
+    ["wine2"] = {category = "wine", ingredients = {["grape2"] = 3}},
+    ["wine3"] = {category = "wine", ingredients = {["grape3"] = 3}},
+    ["wine4"] = {category = "wine", ingredients = {["grape4"] = 3}},
+    -- JUICES
+    ["grapejuice1"] = {category = "grapejuice", ingredients = {["grape1"] = 2}},
+    ["grapejuice2"] = {category = "grapejuice", ingredients = {["grape2"] = 2}},
+    ["grapejuice3"] = {category = "grapejuice", ingredients = {["grape3"] = 2}},
     ["grapejuice4"] = {
-        category = "softdrink",
-        icon = "🧃",
+        category = "grapejuice",
         ingredients = {["grape1"] = 1, ["grape2"] = 1, ["grape3"] = 1, ["grape4"] = 1},
     },
-    ["grapejuice5"] = {category = "softdrink", icon = "🧃", ingredients = {["grape4"] = 2}},
+    ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 2}},
+    -- CHEESES
+    ["cheese1"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese2"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese3"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese4"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese5"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese6"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese7"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese8"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese9"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    -- SAUSAGES
+    ["sausage1"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage2"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage3"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage4"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
+    ["sausage5"] = {
+        category = "sausage",
+        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+    },
 }

@@ -99,6 +99,19 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    -- MILK
+    exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
+        heading = 133.3,
+        minZ = 45.5,
+        maxZ = 49.5,
+    }, {options = {{icon = "c:food/collecter.png", event = "jobs:client:food-harvest-milk", label = "Récupérer"}}})
+
+    exports["qb-target"]:AddBoxZone("food:milk-process", vector2(-1929.02, 2059.16), 0.5, 1.5, {
+        heading = 166.6,
+        minZ = 140.0,
+        maxZ = 142.5,
+    }, {options = {{icon = "c:food/echanger.png", event = "jobs:client:food-process-milk", label = "Echanger"}}})
 end)
 
 AddEventHandler("jobs:client:food-toggle-duty", function()
@@ -150,19 +163,51 @@ RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
     FoodJob.Menu:Open()
 end)
 
-local function GenerateSubmenu(parent, recipes)
+local function GenerateIngredientList(parent, ingredients)
     local submenu = MenuV:InheritMenu(parent)
 
-    for itemId, _ in pairs(recipes) do
+    for itemId, count in pairs(ingredients) do
         local item = QBCore.Shared.Items[itemId]
+        submenu:AddButton({label = item.label, rightLabel = count})
+    end
+
+    return submenu
+end
+
+local function GenerateSubmenu(parent, recipes, isIngredientMenu)
+    local subtitle = nil
+    if isIngredientMenu then
+        subtitle = "Liste des ingrédients"
+    end
+
+    local submenu = MenuV:InheritMenu(parent, {subtitle = subtitle})
+
+    if not isIngredientMenu then
+        submenu:AddButton({
+            icon = "👨‍🍳",
+            label = "Liste des ingrédients",
+            value = GenerateSubmenu(submenu, recipes, true),
+        })
+    end
+
+    for itemId, recipe in pairs(recipes) do
+        local item = QBCore.Shared.Items[itemId]
+
+        local value = itemId
+        if isIngredientMenu then
+            value = GenerateIngredientList(submenu, recipe.ingredients)
+        end
+
         submenu:AddButton({
             icon = "https://nui-img/soz-items/" .. item.name,
             label = item.label,
-            value = itemId,
+            value = value,
             select = function()
-                TriggerEvent("soz-jobs:client:food-craft-item", itemId)
-                submenu:Close()
-                parent:Close()
+                if not isIngredientMenu then
+                    TriggerEvent("soz-jobs:client:food-craft-item", itemId)
+                    submenu:Close()
+                    parent:Close()
+                end
             end,
         })
     end
@@ -243,6 +288,10 @@ AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
 end)
 
 FoodJob.Functions.CollectIngredients = function(field)
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
+        return
+    end
+
     QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Duration, false, true,
                                  {
         disableMovement = true,
@@ -280,6 +329,48 @@ FoodJob.Functions.CollectIngredients = function(field)
     end)
 end
 
+AddEventHandler("jobs:client:food-harvest-milk", function()
+    QBCore.Functions.Progressbar("food-harvest-milk", "Vous récupérer des bidons de lait", FoodConfig.Collect.Milk.Duration, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
+        QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count)
+            if success then
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bidons de lait~s~", count))
+                Citizen.Wait(1000)
+                TriggerEvent("jobs:client:food-harvest-milk")
+            end
+        end)
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la collecte de bidons de lait", "error")
+    end)
+end)
+
+AddEventHandler("jobs:client:food-process-milk", function()
+    QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(success, count)
+        if success then
+            exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bouteilles de lait~s~", count))
+            Citizen.Wait(1000)
+            TriggerEvent("jobs:client:food-process-milk")
+        end
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la transformation de bidons de lait", "error")
+    end)
+
+    QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success)
+        -- TODO
+    end)
+end)
+
 FoodJob.Functions.CraftItem = function(itemId, item)
     Citizen.CreateThread(function()
         QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Duration, false, true,
@@ -287,7 +378,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
-            disableCombat = false,
+            disableCombat = true,
         }, {}, {}, {}, function(wasCancelled)
             if not wasCancelled then
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
