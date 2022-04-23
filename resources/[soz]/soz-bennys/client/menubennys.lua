@@ -17,6 +17,10 @@ local NeonsMenu = MenuV:InheritMenu(VehiculeCustom, "Néons")
 local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Etat des Néons")
 local NeonColoursMenu = MenuV:InheritMenu(NeonsMenu, "Couleur des Néons")
 
+local XenonsMenu = MenuV:InheritMenu(VehiculeCustom, "Xénons")
+local XenonsHeadlightsMenu = MenuV:InheritMenu(XenonsMenu, "Phares des Xénons")
+local XenonsColoursMenu = MenuV:InheritMenu(XenonsMenu, "Couleur des Xénons")
+
 local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Roues")
 local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fumée de roue")
 local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Activer ou désactiver les roues personnalisées")
@@ -386,6 +390,107 @@ local function OpenNeonsMenu(menu)
     })
 end
 
+local function OpenXenonsColoursMenu(menu)
+    menu:ClearItems()
+    MenuV:OpenMenu(menu)
+    menu:AddButton({
+        icon = "◀",
+        label = "Menu Xénon",
+        select = function()
+            menu:Close()
+        end,
+    })
+    local currentXenonColour = GetCurrentXenonColour()
+    for k, v in ipairs(Config.vehicleXenonOptions.xenonColours) do
+        if currentXenonColour == v.id then
+            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
+        else
+            menu:AddButton({
+                label = v.name,
+                value = v.id,
+                description = "Améliorer 🔧",
+                select = function()
+                    menu:Close()
+                    ApplyXenonColour(v.id)
+                end,
+            })
+        end
+    end
+    local eventxenoncolon = menu:On("switch", function(item, currentItem, prevItem)
+        PreviewXenonColour(currentItem.Value)
+    end)
+    menu:On("close", function()
+        menu:RemoveOnEvent("switch", eventxenoncolon)
+        menu:Close()
+        menu:ClearItems()
+        RestoreOriginalXenonColour()
+    end)
+end
+
+local function OpenXenonsHeadlightsMenu(menu)
+    menu:ClearItems()
+    MenuV:OpenMenu(menu)
+    menu:AddButton({
+        icon = "◀",
+        label = "Menu Xénon",
+        select = function()
+            menu:Close()
+        end,
+    })
+    local currentXenonState = GetCurrentXenonState()
+    if currentXenonState == 0 then
+        menu:AddButton({label = "Désactiver Xénons", rightLabel = "~g~Installé"})
+        menu:AddButton({
+            label = "Activer Xénons",
+            description = "Améliorer 🔧",
+            select = function()
+                menu:Close()
+                ApplyXenonLights(22, 1)
+            end,
+        })
+    else
+        menu:AddButton({
+            label = "Désactiver Xenons - $0",
+            description = "Améliorer 🔧",
+            select = function()
+                menu:Close()
+                ApplyXenonLights(22, 0)
+            end,
+        })
+        menu:AddButton({label = "Activer Xénons", rightLabel = "~g~Installé"})
+    end
+    menu:On("close", function()
+        menu:Close()
+        menu:ClearItems()
+    end)
+end
+
+local function OpenXenonsMenu(menu)
+    menu:ClearItems()
+    MenuV:OpenMenu(menu)
+    menu:AddButton({
+        icon = "◀",
+        label = "Retour",
+        select = function()
+            menu:Close()
+        end,
+    })
+    menu:AddButton({
+        label = "Phares",
+        description = "",
+        select = function()
+            OpenXenonsHeadlightsMenu(XenonsHeadlightsMenu)
+        end,
+    })
+    menu:AddButton({
+        label = "Couleurs de Xénon",
+        description = "",
+        select = function()
+            OpenXenonsColoursMenu(XenonsColoursMenu)
+        end,
+    })
+end
+
 local function OpenWindowTintMenu(menu)
     menu:ClearItems()
     MenuV:OpenMenu(menu)
@@ -546,9 +651,9 @@ local function OpenPlateIndexMenu(menu)
     local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
     local tempPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
     local plateTypes = {
+        "Bleu sur Blanc #1",
         "Jaune sur Noir",
         "Jaune sur Bleu",
-        "Bleu sur Blanc #1",
         "Bleu sur Blanc #2",
         "Bleu sur Blanc #3",
         "Yankton Nord",
@@ -711,6 +816,12 @@ local function OpenCustom(menu)
             end,
         })
     end
+    menu:AddButton({
+        label = "Xénons",
+        select = function()
+            OpenXenonsMenu(XenonsMenu)
+        end,
+    })
     menu:AddButton({
         label = "Roues",
         select = function()
