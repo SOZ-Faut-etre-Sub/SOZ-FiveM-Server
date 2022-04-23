@@ -24,7 +24,7 @@ local function OverrideConnected()
         local playerData = player.PlayerData
         playerInventoryList[playerData.citizenid] = {
             name = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname,
-            items = playerData.inventory,
+            items = playerData.items,
             type = "player",
             slots = 30,
             maxWeight = 80000,
@@ -118,8 +118,6 @@ soz_inventory_item_count{id="%s",type="%s",label="%s",owner="%s",item_type="%s",
     end
 
     for id, inventoryPlayer in pairs(playerInventoryList) do
-        local itemsTtype = type(inventoryPlayer.items)
-
         if itemsTtype == "table" then
             for _, item in pairs(inventoryPlayer.items) do
                 local itemDef = QBCore.Shared.Items[item.name]
