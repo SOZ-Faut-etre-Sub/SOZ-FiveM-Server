@@ -156,7 +156,7 @@ end)
 
 CreateThread(function()
     local DealerEnter = AddBlipForCoord(vector3(858.72, -3204.44, 5.99))
-    SetBlipSprite(DealerEnter, 326)
+    SetBlipSprite(DealerEnter, 821)
     SetBlipDisplay(DealerEnter, 4)
     SetBlipScale(DealerEnter, 0.8)
     SetBlipAsShortRange(DealerEnter, true)
