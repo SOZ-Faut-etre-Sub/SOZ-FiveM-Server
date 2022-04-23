@@ -89,7 +89,8 @@ CreateThread(function()
                 icon = "c:ems/greffer.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and not Operation
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and
+                               not Operation
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Greffer un " .. MissingOrgane, 10000, false, true,
