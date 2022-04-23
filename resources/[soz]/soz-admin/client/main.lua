@@ -7,11 +7,15 @@ local function OpenAdminMenu()
     if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= AdminMenu.UUID then
         QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed)
             if isAllowed then
-                AdminMenu:Open()
+                MenuV:CloseAll(function()
+                    AdminMenu:Open()
+                end)
             end
         end)
     else
-        AdminMenu:Close()
+        MenuV:CloseAll(function()
+            AdminMenu:Close()
+        end)
     end
 end
 
@@ -19,11 +23,15 @@ local function OpenMapperMenu()
     if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= MapperMenu.UUID then
         QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed)
             if isAllowed then
-                MapperMenu:Open()
+                MenuV:CloseAll(function()
+                    MapperMenu:Open()
+                end)
             end
         end)
     else
-        MapperMenu:Close()
+        MenuV:CloseAll(function()
+            MapperMenu:Close()
+        end)
     end
 end
 
