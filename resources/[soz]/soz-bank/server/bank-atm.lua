@@ -33,7 +33,7 @@ end
 
 QBCore.Functions.CreateCallback("banking:server:getAtmAccount", function(source, cb, atmType, coords)
     local account = GetAtmAccount(atmType, coords)
-    cb(account.id)
+    cb(account.owner)
 end)
 
 QBCore.Functions.CreateCallback("banking:server:getAtmMoney", function(source, cb, atmType, coords)
