@@ -524,7 +524,7 @@
 				<Item>
 					<modelName>police6_ram_1a</modelName>
 					<modShopLabel>NKS_RAM_1A</modShopLabel>
-					<linkedModels></linkedModels>
+					<linkedModels />
 					<turnOffBones />
 					<type>VMT_BUMPER_F</type>
 					<bone>bumper_f</bone>
@@ -870,7 +870,7 @@
 			</statMods>
 		</Item>
 	</Kits>
-	<Lights></Lights>
+	<Lights />
 	<Sirens>
 		<!-- NKSCOUT -->
 		<Item>
