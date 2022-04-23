@@ -32,7 +32,12 @@ local function GetAtmAccount(atmType, coords)
 end
 
 QBCore.Functions.CreateCallback("banking:server:getAtmAccount", function(source, cb, atmType, coords)
-    local account = GetAtmAccount(atmType, coords)
+    local account, created = GetAtmAccount(atmType, coords)
+    if created then
+        for _, playerId in pairs(GetPlayers()) do
+            TriggerClientEvent("banking:client:displayAtmBlips", playerId, {[account.owner] = coords})
+        end
+    end
     cb(account.owner)
 end)
 
