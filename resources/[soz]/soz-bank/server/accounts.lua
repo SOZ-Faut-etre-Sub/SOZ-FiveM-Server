@@ -39,7 +39,7 @@ MySQL.ready(function()
                 elseif v.account_type == "offshore" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 elseif v.account_type == "bank-atm" then
-                    Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
+                    Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money, v.coords)
                 end
             end
         end
@@ -70,7 +70,7 @@ MySQL.ready(function()
 end)
 
 --- Management
-function Account.Create(id, label, accountType, owner, money, marked_money)
+function Account.Create(id, label, accountType, owner, money, marked_money, coords)
     if _G.AccountType[accountType] == nil then
         print("Account type not valid !")
         return
@@ -83,12 +83,13 @@ function Account.Create(id, label, accountType, owner, money, marked_money)
         owner = owner,
         money = money,
         marked_money = marked_money or 0,
+        coords = coords,
         changed = false,
         time = os.time(),
     }
 
     if not self.money then
-        self.money, self.changed = _G.AccountType[self.type]:load(self.id, self.owner)
+        self.money, self.changed = _G.AccountType[self.type]:load(self.id, self.owner, self.coords)
     end
 
     if self.type == "safestorages" then
