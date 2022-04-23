@@ -106,18 +106,6 @@ function PreviewNeonColour(r, g, b)
     SetVehicleNeonLightsColour(plyVeh, r, g, b)
 end
 
-function PreviewXenonColour(colour)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
-
-    if OriginalXenonColour == nil then
-        OriginalXenonColour = GetVehicleHeadlightsColour(plyVeh)
-    end
-
-    SetVehicleLights(plyVeh, 2)
-    SetVehicleHeadlightsColour(plyVeh, colour)
-end
-
 function PreviewOldLivery(liv)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)

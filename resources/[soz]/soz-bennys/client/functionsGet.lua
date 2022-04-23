@@ -84,13 +84,6 @@ function GetCurrentXenonState()
     end
 end
 
-function GetCurrentXenonColour()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
-
-    return GetVehicleHeadlightsColour(plyVeh)
-end
-
 function GetCurrentExtraState(extra)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)

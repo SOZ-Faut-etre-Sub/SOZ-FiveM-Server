@@ -90,18 +90,6 @@ function RestoreOriginalNeonColours()
     end
 end
 
-function RestoreOriginalXenonColour()
-    if OriginalXenonColour ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
-
-        SetVehicleHeadlightsColour(plyVeh, OriginalXenonColour)
-        SetVehicleLights(plyVeh, 0)
-
-        OriginalXenonColour = nil
-    end
-end
-
 function RestoreOldLivery()
     if OriginalOldLivery ~= nil then
         local plyPed = PlayerPedId()

@@ -23,7 +23,6 @@ OriginalNeonLightSide = nil
 OriginalNeonColourR = nil
 OriginalNeonColourG = nil
 OriginalNeonColourB = nil
-OriginalXenonColour = nil
 OriginalOldLivery = nil
 OriginalPlateIndex = nil
 

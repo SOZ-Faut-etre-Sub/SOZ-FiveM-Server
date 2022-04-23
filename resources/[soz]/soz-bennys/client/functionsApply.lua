@@ -118,15 +118,6 @@ function ApplyXenonLights(category, state)
     ToggleVehicleMod(plyVeh, category, state)
 end
 
-function ApplyXenonColour(colour)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
-
-    OriginalXenonColour = colour
-
-    SetVehicleHeadlightsColour(plyVeh, colour)
-end
-
 function ApplyOldLivery(liv)
     local plyPed = PlayerPedId()
     local plyVeh = GetVehiclePedIsIn(plyPed, false)
