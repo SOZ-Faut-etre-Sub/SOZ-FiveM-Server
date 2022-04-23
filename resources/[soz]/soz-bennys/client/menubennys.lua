@@ -939,8 +939,11 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
                     icon = "fas fa-tshirt",
                     label = "Se changer",
                     targeticon = "fas fa-wrench",
+                    action = function()
+                        TriggerEvent("soz-bennys:client:OpenCloakroomMenu")
+                    end,
                     canInteract = function()
-                        return PlayerData.job.onduty
+                        return OnDuty
                     end,
                     job = "bennys",
                 },
@@ -956,7 +959,7 @@ end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        exports["qb-target"]:AddTargetModel(829413118, {
+        exports["qb-target"]:AddTargetModel(-1883980157, {
             options = {
                 {
                     type = "client",
@@ -970,7 +973,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
-                        return not PlayerJob.onduty
+                        return not OnDuty
                     end,
                     job = "bennys",
                 },
@@ -986,7 +989,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
-                        return PlayerJob.onduty
+                        return OnDuty
                     end,
                     job = "bennys",
                 },
@@ -995,7 +998,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
         })
     else
         if PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(829413118, "Service")
+            exports["qb-target"]:RemoveTargetModel(-1883980157, "Service")
         end
     end
 end)
