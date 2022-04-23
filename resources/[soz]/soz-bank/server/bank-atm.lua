@@ -1,7 +1,7 @@
 local function GetOrCreateAccount(accountName, coords)
     local account, created = Account(accountName), false
     if account == nil then
-        account = Account.Create("bank-atm", "bank-atm", "bank-atm", accountName, nil, nil, coords)
+        account = Account.Create(accountName, "bank-atm", "bank-atm", accountName, nil, nil, coords)
         created = true
     end
     return account, created
