@@ -1,3 +1,4 @@
+/* Item */
 .item {
     display: flex;
     font-weight: 300;
@@ -5,7 +6,6 @@
     padding: .4rem 1em;
     margin-bottom: .2rem;
     border-radius: .3rem;
-    cursor: grab;
     background: rgba(255, 255, 255, .10);
 }
 
@@ -24,6 +24,12 @@
     visibility: visible;
 }
 
+.label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .tooltip {
     position: absolute;
     visibility: hidden;
@@ -33,4 +39,48 @@
     margin: .5rem 0 0 .5rem;
     border-radius: 6px;
     max-width: 18vw;
+}
+
+/* Sortable Container */
+.content {
+    background: rgba(0, 0, 0, .6);
+    min-height: 200px;
+    padding: .5rem .5rem 10vh .5rem;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.content > * + * {
+    margin-top: 0.25rem;
+}
+
+/* Context Menu */
+.contextMenu {
+    position: absolute;
+    height: auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.optionsList {
+    background: rgba(0, 0, 0, .8);
+    padding: .5rem;
+    min-width: 10rem;
+    border-radius: .3rem;
+    box-shadow: 0 0 .3rem rgba(0, 0, 0, .6);
+}
+
+.optionListItem {
+    padding: .5rem;
+    border-radius: .3rem;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.optionListItem:hover {
+    background: rgba(255, 255, 255, .15);
 }

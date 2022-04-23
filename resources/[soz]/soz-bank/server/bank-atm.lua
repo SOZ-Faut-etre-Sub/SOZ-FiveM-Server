@@ -1,7 +1,7 @@
-local function GetOrCreateAccount(accountName)
+local function GetOrCreateAccount(accountName, coords)
     local account, created = Account(accountName), false
     if account == nil then
-        account = Account.Create("bank-atm", "bank-atm", "bank-atm", accountName)
+        account = Account.Create(accountName, "bank-atm", "bank-atm", accountName, nil, nil, coords)
         created = true
     end
     return account, created
@@ -28,12 +28,17 @@ exports("GetBankAccountName", GetBankAccountName)
 local function GetAtmAccount(atmType, coords)
     local coordsHash = GetAtmHashByCoords(coords)
     local accountName = GetAtmAccountName(atmType, coordsHash)
-    return GetOrCreateAccount(accountName)
+    return GetOrCreateAccount(accountName, coords)
 end
 
 QBCore.Functions.CreateCallback("banking:server:getAtmAccount", function(source, cb, atmType, coords)
-    local account = GetAtmAccount(atmType, coords)
-    cb(account.id)
+    local account, created = GetAtmAccount(atmType, coords)
+    if created then
+        for _, playerId in pairs(GetPlayers()) do
+            TriggerClientEvent("banking:client:displayAtmBlips", playerId, {[account.owner] = coords})
+        end
+    end
+    cb(account.owner)
 end)
 
 QBCore.Functions.CreateCallback("banking:server:getAtmMoney", function(source, cb, atmType, coords)
@@ -54,6 +59,10 @@ end)
 QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, cb, bank)
     local account, _ = getBankAccount(bank)
     cb(account.money)
+end)
+
+QBCore.Functions.CreateCallback("banking:server:getAtmCoords", function(source, cb)
+    cb(AtmCoords)
 end)
 
 QBCore.Functions.CreateCallback("banking:server:hasEnoughLiquidity", function(source, cb, accountId, amount)

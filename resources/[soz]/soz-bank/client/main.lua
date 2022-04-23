@@ -36,8 +36,19 @@ end)
 
 CreateThread(function()
     for bank, coords in pairs(Config.BankPedLocations) do
+        QBCore.Functions.RemoveBlip("bank_" .. bank)
         if not QBCore.Functions.GetBlip("bank_" .. bank) then
-            QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
+            if bank == "pacific1" then
+                QBCore.Functions.CreateBlip("bank_" .. bank, {
+                    name = "Pacific Bank",
+                    coords = coords,
+                    sprite = 108,
+                    color = 28,
+                    scale = 1.0,
+                })
+            elseif string.match(bank, "fleeca%d+") then
+                QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
+            end
         end
         exports["qb-target"]:SpawnPed({
             {
@@ -129,6 +140,23 @@ CreateThread(function()
             },
             distance = 1.0,
         })
+    end
+
+    TriggerEvent("banking:client:displayAtmBlips")
+end)
+
+RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
+    local atmCoords = newAtmCoords
+    if atmCoords == nil then
+        atmCoords = QBCore.Functions.TriggerRpc("banking:server:getAtmCoords")
+    end
+
+    for atmAccount, coords in pairs(atmCoords) do
+        local blipId = "atm_" .. atmAccount
+        if QBCore.Functions.GetBlip(blipId) then
+            QBCore.Functions.RemoveBlip(blipId)
+        end
+        QBCore.Functions.CreateBlip(blipId, {name = "ATM", coords = coords, sprite = 431, color = 60, alpha = 100})
     end
 end)
 

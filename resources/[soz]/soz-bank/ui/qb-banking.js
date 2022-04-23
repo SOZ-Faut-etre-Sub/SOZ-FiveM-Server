@@ -169,6 +169,7 @@ $(function() {
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
+                bankAtmAccount,
             }));
         }
     });

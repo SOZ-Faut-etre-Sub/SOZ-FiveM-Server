@@ -44,7 +44,8 @@ end
 --- Events
 RegisterNetEvent("talk:microphone:use", function()
     local player = PlayerPedId()
-    if DoesEntityExist(player) and not IsEntityDead(player) and not IsPauseMenuActive() then
+    if DoesEntityExist(player) and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] and
+        not IsPauseMenuActive() then
         toggleMicrophone(not microphoneInUse)
     end
 end)

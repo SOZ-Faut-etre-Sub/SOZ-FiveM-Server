@@ -121,5 +121,9 @@ vehicleCategories:On("open", function(menu)
     end
 end)
 
+vehicleCategories:On("close", function(menu)
+    menu:ClearItems()
+end)
+
 --- Add to main menu
 AdminMenu:AddButton({icon = "🚗", label = "Gestion du véhicule", value = vehicleMenu})
