@@ -411,7 +411,7 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(10000), false, true,
+    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -500,7 +500,7 @@ end
 local function CleanVehicle(entity)
     local ped = PlayerPedId()
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
-    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000), false, true,
+    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
