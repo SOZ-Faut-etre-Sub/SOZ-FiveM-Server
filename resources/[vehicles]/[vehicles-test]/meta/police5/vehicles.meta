@@ -6,9 +6,9 @@
     <Item>
       <modelName>police5</modelName>
       <txdName>police5</txdName>
-      <handlingId>POLICE5</handlingId>
+      <handlingId>BUFFALO</handlingId>
       <gameName>police5</gameName>
-      <vehicleMakeName>BRAVADO</vehicleMakeName>
+      <vehicleMakeName>BUFFALO</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
       <animConvRoofDictName>null</animConvRoofDictName>
@@ -16,8 +16,8 @@
       <animConvRoofWindowsAffected />
       <ptfxAssetName />
       <audioNameHash>police2</audioNameHash>
-      <layout>LAYOUT_STANDARD_BUFFALO4</layout>
-      <coverBoundOffsets>BUFFALO4_COVER_OFFSET_INFO</coverBoundOffsets>
+      <layout>LAYOUT_STANDARD_BUFFALO</layout>
+      <coverBoundOffsets>BUFFALO_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
       <scenarioLayout />
       <cameraName>DEFAULT_FOLLOW_VEHICLE_CAMERA</cameraName>
@@ -118,10 +118,10 @@
       <buoyancySphereSizeScale value="1.000000" />
       <pOverrideRagdollThreshold type="NULL" />
       <firstPersonDrivebyData>
-        <Item>STANDARD_BUFFALO4_FRONT_LEFT</Item>
-        <Item>STANDARD_BUFFALO4_FRONT_RIGHT</Item>
-        <Item>STANDARD_BUFFALO4_REAR_LEFT</Item>
-        <Item>STANDARD_BUFFALO4_REAR_RIGHT</Item>
+        <Item>STANDARD_BUFFALO_FRONT_LEFT</Item>
+        <Item>STANDARD_BUFFALO_FRONT_RIGHT</Item>
+        <Item>STANDARD_BUFFALO_REAR_LEFT</Item>
+        <Item>STANDARD_BUFFALO_REAR_RIGHT</Item>
       </firstPersonDrivebyData>
     </Item>
   </InitDatas>
