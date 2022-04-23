@@ -106,7 +106,7 @@ function DisableAction()
 end
 
 RegisterNetEvent("fuel:client:GetFuelPomp")
-AddEventHandler("fuel:client:GetFuelPomp", function(int, gas, ped, gasentity, vehicle)
+AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, vehicle)
     TaskTurnPedToFaceEntity(ped, gasentity, 500)
     Wait(500)
     QBCore.Functions.RequestAnimDict("anim@mp_atm@enter")
@@ -153,7 +153,7 @@ AddEventHandler("fuel:client:GetFuelPomp", function(int, gas, ped, gasentity, ve
                     end
                     local ped = PlayerPedId()
                     local vehicle = GetPlayersLastVehicle()
-                    TriggerEvent("fuel:client:PumpToCar", int, gasentity, ped, entity)
+                    TriggerEvent("fuel:client:PumpToCar", id, gasentity, ped, entity)
                 end,
                 canInteract = function(entity)
                     if IsPedAPlayer(entity) then
@@ -199,108 +199,114 @@ function DisplayText(newFuel, cout)
 end
 
 RegisterNetEvent("fuel:client:PumpToCar")
-AddEventHandler("fuel:client:PumpToCar", function(int, gasentity, ped, entity)
-    QBCore.Functions.TriggerCallback("soz-fuel:server:getfuelstock", function(fuelstock)
-        local stockstation
-        for _, station in pairs(fuelstock) do
-            if station.station == int then
-                stockstation = station.stock
-            end
-        end
-        if stockstation > 100 then
-            isFueling = true
-            TriggerServerEvent("soz-fuel:server:setTempFuel", int)
-            local currentFuel = GetVehicleFuelLevel(entity)
-            local currentFuelAdd = 0
-            local newFuel = currentFuel
-            local fueldiff = 0
-            local cout = 0
-            local max = 99.8
-
-            TaskTurnPedToFaceEntity(ped, entity, 1000)
-            QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
-            TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
-            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
-
-            while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustPressed(1, 51) and
-                GetPedInVehicleSeat(entity, -1) == 0 and GetEntityHealth(gasentity) > 0 do
-                currentFuelAdd = currentFuelAdd + 0.02
-                newFuel = currentFuel + currentFuelAdd
-
-                fueldiff = currentFuelAdd / 100
-                cout = math.ceil(fueldiff * Config.RefillCost)
-
-                DisplayText(newFuel, cout)
-                SetVehicleUndriveable(entity, true)
-                SetVehicleEngineOn(entity, false, false, false)
-                DisableAction()
-                Wait(0)
-            end
-            -- voir pk le son continue quand on fait pas E et ne joue pas celui ci-dessous, mais s'arrête quand on fait E et joue celui ci-dessous
-            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
-            ClearPedTasks(ped)
-            RemoveAnimDict("timetable@gardener@filling_can")
-            if GetPedInVehicleSeat(entity, -1) == 0 then
-                if stockstation > currentFuelAdd then
-                    if QBCore.Functions.GetPlayerData().money["money"] > cout then
-                        QBCore.Functions.ShowHelpNotification("Terminé. Prix final : ~g~" .. cout .. " $")
-                    else
-                        QBCore.Functions.ShowHelpNotification("Vous ne pouvez pas payer plus. Le prix final est de: ~g~" .. cout .. " $")
-                    end
-                else
-                    QBCore.Functions.ShowHelpNotification("Il n'y a plus d'autre stock dans la station. Le prix final est de: ~g~" .. cout .. " $")
-                end
-                SetFuel(entity, math.floor(newFuel))
-                TriggerServerEvent("soz-fuel:server:setFinalFuel", int, (100 - math.floor(currentFuelAdd)))
-            else
-                QBCore.Functions.ShowHelpNotification("~r~Il ne peut y avoir de conducteur pendant le remplissage du véhicule.")
-            end
-            isFueling = false
-            SetVehicleUndriveable(entity, false)
-            SetVehicleEngineOn(entity, true, false, false)
-            ClearAnimation()
-            TriggerServerEvent("fuel:pay", tonumber(math.ceil(cout)), GetPlayerServerId(PlayerId()))
-        else
-            QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
-            ClearAnimation()
-        end
-    end)
+AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
     exports["qb-target"]:RemoveTargetModel(entity, "Remplir")
+    local stockstation = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", id)
+
+    if stockstation > 100 then
+        isFueling = true
+        TriggerServerEvent("soz-fuel:server:setTempFuel", id)
+        local currentFuel = GetVehicleFuelLevel(entity)
+        local currentFuelAdd = 0
+        local newFuel = currentFuel
+        local fueldiff = 0
+        local cout = 0
+        local max = 99.8
+
+        TaskTurnPedToFaceEntity(ped, entity, 1000)
+        QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
+        TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
+        TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
+
+        while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustPressed(1, 51) and GetPedInVehicleSeat(entity, -1) ==
+            0 and GetEntityHealth(gasentity) > 0 do
+            currentFuelAdd = currentFuelAdd + 0.02
+            newFuel = currentFuel + currentFuelAdd
+
+            fueldiff = currentFuelAdd / 100
+            cout = math.ceil(fueldiff * Config.RefillCost)
+
+            DisplayText(newFuel, cout)
+            SetVehicleUndriveable(entity, true)
+            SetVehicleEngineOn(entity, false, false, false)
+            DisableAction()
+            Wait(0)
+        end
+        -- voir pk le son continue quand on fait pas E et ne joue pas celui ci-dessous, mais s'arrête quand on fait E et joue celui ci-dessous
+        TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
+        ClearPedTasks(ped)
+        RemoveAnimDict("timetable@gardener@filling_can")
+        if GetPedInVehicleSeat(entity, -1) == 0 then
+            if stockstation > currentFuelAdd then
+                if QBCore.Functions.GetPlayerData().money["money"] > cout then
+                    QBCore.Functions.ShowHelpNotification("Terminé. Prix final : ~g~" .. cout .. " $")
+                else
+                    QBCore.Functions.ShowHelpNotification("Vous ne pouvez pas payer plus. Le prix final est de: ~g~" .. cout .. " $")
+                end
+            else
+                QBCore.Functions.ShowHelpNotification("Il n'y a plus d'autre stock dans la station. Le prix final est de: ~g~" .. cout .. " $")
+            end
+            SetFuel(entity, math.floor(newFuel))
+            TriggerServerEvent("soz-fuel:server:setFinalFuel", id, (100 - math.floor(currentFuelAdd)))
+        else
+            QBCore.Functions.ShowHelpNotification("~r~Il ne peut y avoir de conducteur pendant le remplissage du véhicule.")
+        end
+        isFueling = false
+        SetVehicleUndriveable(entity, false)
+        SetVehicleEngineOn(entity, true, false, false)
+        ClearAnimation()
+        TriggerServerEvent("fuel:pay", tonumber(math.ceil(cout)), GetPlayerServerId(PlayerId()))
+    else
+        QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
+        ClearAnimation()
+    end
 end)
 
-for int, gas in pairs(GasStations) do
-    gas.zone:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-        if isPointInside then
-            exports["qb-target"]:AddTargetModel(gas.model, {
-                options = {
-                    {
-                        type = "client",
-                        icon = "c:fuel/pistolet.png",
-                        label = "Pistolet",
-                        action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
-                            local ped = PlayerPedId()
-                            local vehicle = GetPlayersLastVehicle()
-                            TriggerEvent("fuel:client:GetFuelPomp", int, gas, ped, entity, vehicle)
-                        end,
-                        canInteract = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
-                            local ped = PlayerPedId()
-                            if not isFueling then
-                                if not IsPedInAnyVehicle(ped) then
-                                    local vehicle = GetPlayersLastVehicle()
-                                    local vehicleCoords = GetEntityCoords(vehicle)
-                                    if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 2.5 then
-                                        if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
-                                            if GetVehicleFuelLevel(vehicle) < 95 then
-                                                return true
+Citizen.CreateThread(function()
+    local stations = QBCore.Functions.TriggerRpc("soz-fuel:server:getStations")
+
+    for _, station in pairs(stations) do
+        local position = vector3(station.position.x, station.position.y, station.position.z)
+        CreateBlip(position)
+
+        local zone = BoxZone:Create(vector3(station.zone.position.x, station.zone.position.y, station.zone.position.z), station.zone.length, station.zone.width,
+                                    station.zone.options)
+
+        zone:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+            if isPointInside then
+                exports["qb-target"]:AddTargetModel(station.model, {
+                    options = {
+                        {
+                            type = "client",
+                            icon = "c:fuel/pistolet.png",
+                            label = "Pistolet",
+                            action = function(entity)
+                                if IsPedAPlayer(entity) then
+                                    return false
+                                end
+                                local ped = PlayerPedId()
+                                local vehicle = GetPlayersLastVehicle()
+                                TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle)
+                            end,
+                            canInteract = function(entity)
+                                if IsPedAPlayer(entity) then
+                                    return false
+                                end
+                                local ped = PlayerPedId()
+                                if not isFueling then
+                                    if not IsPedInAnyVehicle(ped) then
+                                        local vehicle = GetPlayersLastVehicle()
+                                        local vehicleCoords = GetEntityCoords(vehicle)
+                                        if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 2.5 then
+                                            if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
+                                                if GetVehicleFuelLevel(vehicle) < 95 then
+                                                    return true
+                                                else
+                                                    TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
+                                                    Citizen.Wait(5000)
+                                                    return false
+                                                end
                                             else
-                                                TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
-                                                Citizen.Wait(5000)
                                                 return false
                                             end
                                         else
@@ -312,23 +318,15 @@ for int, gas in pairs(GasStations) do
                                 else
                                     return false
                                 end
-                            else
-                                return false
-                            end
-                        end,
+                            end,
+                        },
                     },
-                },
-                distance = 3.0,
-            })
-        else
-            exports["qb-target"]:RemoveTargetModel(gas.model, "Pistolet")
-        end
-    end)
-end
-
-CreateThread(function()
-    for _, gasStationCoords in pairs(GasStations) do
-        CreateBlip(gasStationCoords.coord)
+                    distance = 3.0,
+                })
+            else
+                exports["qb-target"]:RemoveTargetModel(station.model, "Pistolet")
+            end
+        end)
     end
 end)
 
