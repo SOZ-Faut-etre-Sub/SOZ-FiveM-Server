@@ -40,25 +40,6 @@ Config.vehicleWindowTintOptions = {
     {name = "Fumé léger", id = 3},
 }
 
-Config.vehicleXenonOptions = {
-    xenonColours = {
-        {name = "Stock", id = 255},
-        {name = "Blanc", id = 0},
-        {name = "Bleu", id = 1},
-        {name = "Bleu électrique", id = 2},
-        {name = "Vert menthe", id = 3},
-        {name = "Citron vert", id = 4},
-        {name = "Jaune", id = 5},
-        {name = "Douche dorée", id = 6},
-        {name = "Orange", id = 7},
-        {name = "Rouge", id = 8},
-        {name = "Rose poney", id = 9},
-        {name = "Rose chaud", id = 10},
-        {name = "Violet", id = 11},
-        {name = "Noir léger", id = 12},
-    },
-}
-
 Config.vehicleWheelOptions = {
     {category = "Roues personalisées", id = -1, wheelID = 23},
     {category = "Fumée de roues", id = 20, wheelID = 23},
