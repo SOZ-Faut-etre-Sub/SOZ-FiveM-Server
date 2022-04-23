@@ -24,7 +24,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
     local money = pData.PlayerData.money["money"]
     local vehiclePrice = QBCore.Shared.Vehicles[vehicle]["price"]
     local plate = GeneratePlate()
-    local depotprice  = math.ceil(vehiclePrice / 100)
+    local depotprice = math.ceil(vehiclePrice / 100)
     if depotprice < 100 then
         depotprice = 100
     end
