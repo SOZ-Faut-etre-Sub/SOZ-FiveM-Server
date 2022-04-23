@@ -57,9 +57,9 @@ MySQL.ready(function()
         end
 
         -- Create account present in configuration if not exist in database
-        for k, _ in pairs(BankAtmNotLoaded) do
+        for k, coords in pairs(BankAtmNotLoaded) do
             if k ~= "pacific2" and k ~= "pacific3" then
-                Account.Create(k, k, "bank-atm", "bank_" .. k)
+                Account.Create(k, k, "bank-atm", "bank_" .. k, nil, nil, coords)
             end
         end
     end)
