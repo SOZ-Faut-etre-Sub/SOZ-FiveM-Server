@@ -22,11 +22,8 @@ function BankAtmAccount:load(id, owner, coords)
     if result == nil then
         local ownerType = GetTerminalType(owner)
         defaultMoney = GetDefaultMoney(ownerType) or 0
-        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money, coords) VALUES (?, 'bank-atm', ?, ?)", {
-            owner,
-            defaultMoney,
-            json.encode({x = coords.x, y = coords.y})
-        })
+        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money, coords) VALUES (?, 'bank-atm', ?, ?)",
+                           {owner, defaultMoney, json.encode({x = coords.x, y = coords.y})})
         created = true
     end
     return result or defaultMoney, created
