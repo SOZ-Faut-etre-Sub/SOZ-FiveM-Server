@@ -5,7 +5,7 @@ table.insert(migrations, {
             DELETE FROM bank_accounts WHERE account_type = 'bank-atm';
         ]],
         [[
-            ALTER TABLE bank_accounts ADD coords text NULL;
+            ALTER TABLE bank_accounts ADD IF NOT EXISTS coords text NULL;
         ]],
     },
 });
