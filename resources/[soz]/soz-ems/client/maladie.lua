@@ -106,7 +106,7 @@ CreateThread(function()
         elseif Rein then
             TriggerServerEvent("QBCore:Server:Rein")
         elseif Poumon then
-            EnableContolAction(0, 21, false)
+            SetPlayerSprint(ped, false)
         elseif Foie then
             TriggerServerEvent("QBCore:Server:Foie")
         end
