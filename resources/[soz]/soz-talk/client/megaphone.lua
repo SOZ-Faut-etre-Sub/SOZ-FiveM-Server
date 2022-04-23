@@ -59,6 +59,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 
     if not haveItem then
+        toggleMegaphoneAnimation(false)
         resetMegaphone()
     end
 end)
