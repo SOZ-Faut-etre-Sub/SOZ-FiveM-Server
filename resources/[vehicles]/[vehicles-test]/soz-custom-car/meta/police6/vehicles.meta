@@ -4,11 +4,11 @@
   <residentAnims />
   <InitDatas>
     <Item>
-      <modelName>nkscout</modelName>
-      <txdName>nkscout</txdName>
+      <modelName>police6</modelName>
+      <txdName>police6</txdName>
       <handlingId>XLS2</handlingId>
-      <gameName>nkscout</gameName>
-      <vehicleMakeName>nkscout</vehicleMakeName>
+      <gameName>police6</gameName>
+      <vehicleMakeName>police6</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
       <animConvRoofDictName>null</animConvRoofDictName>
@@ -128,7 +128,7 @@
   <txdRelationships>
     <Item>
       <parent>vehicles_cav_interior</parent>
-      <child>nkscout</child>
+      <child>police6</child>
     </Item>
   </txdRelationships>
 </CVehicleModelInfo__InitDataList>
