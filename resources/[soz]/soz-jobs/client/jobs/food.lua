@@ -102,11 +102,11 @@ Citizen.CreateThread(function()
 
     -- CRAFTING
     CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
-    exports["qb-target"]:AddBoxZone("food:craft", -1882.67, 2069.31, 0.75, 0.75, {
+    exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
         heading = 250.0,
         minZ = 141.0,
         maxZ = 141.5,
-    }, {options = {{icon = "c:food/cuisiner.png", label = "Cuisiner", event = "jobs:client:food:OpenCraftingMenu"}}})
+    }, {options = {{icon = "c:food/cuisiner.png", event = "jobs:client:food:OpenCraftingMenu", label = "Cuisiner"}}})
 
     -- MILK
     exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
