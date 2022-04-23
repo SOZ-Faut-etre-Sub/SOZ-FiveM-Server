@@ -40,7 +40,7 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
     local Target = QBCore.Functions.GetPlayer(tonumber(target))
     local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
 
-    if Player == Target then
+    if Player.PlayerData.source == Target.PlayerData.source then
         return
     end
     if dist > 2 then
@@ -78,7 +78,7 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
     local Target = QBCore.Functions.GetPlayer(tonumber(target))
     local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
 
-    if Player == Target then
+    if Player.PlayerData.source == Target.PlayerData.source then
         return
     end
     if dist > 2 then
