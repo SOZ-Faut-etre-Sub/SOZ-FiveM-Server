@@ -13,7 +13,7 @@ end
 --- load
 --- @param owner any
 --- @return table
-function BankAtmAccount:load(id, owner)
+function BankAtmAccount:load(id, owner, coords)
     local created = false
     local defaultMoney = 0
     local result = MySQL.Sync.fetchScalar("SELECT money FROM bank_accounts WHERE account_type = 'bank-atm' AND businessid = ?", {
@@ -22,10 +22,8 @@ function BankAtmAccount:load(id, owner)
     if result == nil then
         local ownerType = GetTerminalType(owner)
         defaultMoney = GetDefaultMoney(ownerType) or 0
-        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money) VALUES (?, 'bank-atm', ?)", {
-            owner,
-            defaultMoney,
-        })
+        MySQL.insert.await("INSERT INTO bank_accounts (businessid, account_type, money, coords) VALUES (?, 'bank-atm', ?, ?)",
+                           {owner, defaultMoney, json.encode({x = coords.x, y = coords.y})})
         created = true
     end
     return result or defaultMoney, created

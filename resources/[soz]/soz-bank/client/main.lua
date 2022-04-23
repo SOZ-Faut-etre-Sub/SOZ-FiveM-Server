@@ -130,6 +130,23 @@ CreateThread(function()
             distance = 1.0,
         })
     end
+
+    TriggerEvent("banking:client:displayAtmBlips")
+end)
+
+RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
+    local atmCoords = newAtmCoords
+    if atmCoords == nil then
+        atmCoords = QBCore.Functions.TriggerRpc("banking:server:getAtmCoords")
+    end
+
+    for atmAccount, coords in pairs(atmCoords) do
+        local blipId = "atm_" .. atmAccount
+        if QBCore.Functions.GetBlip(blipId) then
+            QBCore.Functions.RemoveBlip(blipId)
+        end
+        QBCore.Functions.CreateBlip(blipId, {name = "ATM", coords = coords, sprite = 431, color = 60, alpha = 100})
+    end
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)
