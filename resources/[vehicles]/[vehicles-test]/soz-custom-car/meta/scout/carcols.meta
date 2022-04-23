@@ -6,7 +6,6 @@
 			<id value="997" />
 			<kitType>MKT_SPECIAL</kitType>
 			<visibleMods>
-
 				<!-- CallSign 0 Left -->
 				<Item>
 					<modelName>nkscout_sign_a0</modelName>
