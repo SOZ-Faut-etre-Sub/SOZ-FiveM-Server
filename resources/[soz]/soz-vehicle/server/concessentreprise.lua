@@ -23,7 +23,7 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
     local cid = pData.PlayerData.citizenid
     local money = pData.PlayerData.money["money"]
     local plate = GeneratePlateEntreprise(vehicle.job)
-    local depotprice  = math.ceil(vehicle.price / 100)
+    local depotprice = math.ceil(vehicle.price / 100)
     if depotprice < 100 then
         depotprice = 100
     end
