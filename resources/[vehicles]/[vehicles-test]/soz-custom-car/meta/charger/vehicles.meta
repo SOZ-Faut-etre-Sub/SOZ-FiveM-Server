@@ -4,8 +4,8 @@
   <residentAnims />
   <InitDatas>
     <Item>
-          <modelName>charger</modelName>
-          <txdName>charger</txdName>
+          <modelName>sheriff3</modelName>
+          <txdName>sheriff3</txdName>
           <handlingId>POLICE2</handlingId>
           <gameName>POLICE2</gameName>
           <vehicleMakeName />
@@ -107,11 +107,7 @@
           <bumpersNeedToCollideWithMap value="false" />
           <needsRopeTexture value="false" />
           <requiredExtras />
-          <rewards>
-            <Item>REWARD_WEAPON_PUMPSHOTGUN</Item>
-            <Item>REWARD_AMMO_PUMPSHOTGUN_ENTER_VEHICLE</Item>
-            <Item>REWARD_STAT_WEAPON</Item>
-          </rewards>
+          <rewards />
           <cinematicPartCamera>
             <Item>WHEEL_FRONT_RIGHT_CAMERA</Item>
             <Item>WHEEL_FRONT_LEFT_CAMERA</Item>
@@ -131,7 +127,7 @@
   <txdRelationships>
     <Item>
       <parent>vehicles_cav_interior</parent>
-      <child>charger</child>
+      <child>sheriff3</child>
     </Item>
   </txdRelationships>
 </CVehicleModelInfo__InitDataList>
