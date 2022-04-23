@@ -16,6 +16,8 @@ setmetatable(Account, {
     end,
 })
 
+AtmCoords = {}
+
 MySQL.ready(function()
     local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
@@ -39,7 +41,11 @@ MySQL.ready(function()
                 elseif v.account_type == "offshore" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 elseif v.account_type == "bank-atm" then
-                    Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
+                    Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money, v.coords)
+                    if string.match(v.businessid, "atm_%a+") then
+                        local coords = json.decode(v.coords)
+                        AtmCoords[v.businessid] = vector2(coords.x, coords.y)
+                    end
                 end
             end
         end
@@ -57,9 +63,9 @@ MySQL.ready(function()
         end
 
         -- Create account present in configuration if not exist in database
-        for k, _ in pairs(BankAtmNotLoaded) do
+        for k, coords in pairs(BankAtmNotLoaded) do
             if k ~= "pacific2" and k ~= "pacific3" then
-                Account.Create(k, k, "bank-atm", "bank_" .. k)
+                Account.Create(k, k, "bank-atm", "bank_" .. k, nil, nil, coords)
             end
         end
     end)
@@ -70,7 +76,7 @@ MySQL.ready(function()
 end)
 
 --- Management
-function Account.Create(id, label, accountType, owner, money, marked_money)
+function Account.Create(id, label, accountType, owner, money, marked_money, coords)
     if _G.AccountType[accountType] == nil then
         print("Account type not valid !")
         return
@@ -83,12 +89,13 @@ function Account.Create(id, label, accountType, owner, money, marked_money)
         owner = owner,
         money = money,
         marked_money = marked_money or 0,
+        coords = coords,
         changed = false,
         time = os.time(),
     }
 
     if not self.money then
-        self.money, self.changed = _G.AccountType[self.type]:load(self.id, self.owner)
+        self.money, self.changed = _G.AccountType[self.type]:load(self.id, self.owner, self.coords)
     end
 
     if self.type == "safestorages" then

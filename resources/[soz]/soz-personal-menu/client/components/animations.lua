@@ -8,22 +8,25 @@ local favoriteAnimationRegister, favoriteAnimationKey = false, 1
 
 local PlayEmote = function(animation)
     local ped = PlayerPedId()
-    if not IsPedSittingInAnyVehicle(ped) then
-        if animation[1] ~= "0" then
-            QBCore.Functions.RequestAnimDict(animation[1])
-            local canMove = animation[4] or false
-            if IsEntityPlayingAnim(ped, animation[1], animation[2], 3) then
-                StopAnimTask(ped, animation[1], animation[2], 1.0)
-            else
-                TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
-            end
-        else
-            if IsPedUsingScenario(ped, animation[2]) then
-                ClearPedTasks(ped)
-            else
-                TaskStartScenarioInPlace(ped, animation[2], 0, true)
-            end
 
+    if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
+        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
+        return
+    end
+
+    if animation[1] ~= "0" then
+        QBCore.Functions.RequestAnimDict(animation[1])
+        local canMove = animation[4] or false
+        if IsEntityPlayingAnim(ped, animation[1], animation[2], 3) then
+            StopAnimTask(ped, animation[1], animation[2], 1.0)
+        else
+            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
+        end
+    else
+        if IsPedUsingScenario(ped, animation[2]) then
+            ClearPedTasks(ped)
+        else
+            TaskStartScenarioInPlace(ped, animation[2], 0, true)
         end
     end
 end

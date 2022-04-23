@@ -1,0 +1,38 @@
+.container {
+    position: absolute;
+    top: 1vh;
+    left: 1vw;
+    width: 18vw;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.container_show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.container_hide {
+    transform: translateY(-2vw);
+    opacity: 0;
+}
+
+.banner {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background: url("https://nui-img/soz/menu_inventory") no-repeat;
+    background-size: cover;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    height: 5.9rem;
+    user-select: none;
+}
+
+.banner > span {
+    float: right;
+    margin: .5rem;
+    font-size: .8rem;
+    line-height: 1.2rem;
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}

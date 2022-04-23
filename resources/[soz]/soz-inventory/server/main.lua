@@ -614,6 +614,14 @@ end
 saveInventories(true)
 
 -- Events
+AddEventHandler("onResourceStart", function(resource)
+    if resource == GetCurrentResourceName() then
+        for _, Player in pairs(QBCore.Functions.GetQBPlayers()) do
+            CreatePlayerInventory(Player.PlayerData)
+        end
+    end
+end)
+
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         saveInventories()

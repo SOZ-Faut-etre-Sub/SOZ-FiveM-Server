@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-shared_scripts {"shared/table.lua", "config.lua", "storages/*.lua"}
+shared_scripts {"shared/*.lua", "config.lua", "storages/*.lua"}
 
 client_scripts {"@menuv/menuv.lua", "client/main.lua", "client/player.lua", "client/bin.lua"}
 
@@ -31,4 +31,4 @@ server_scripts {
 ui_page("html/index.html")
 files {"html/index.html", "html/assets/*"}
 
-dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "soz-monitor", "menuv", "qb-target"}
+dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "menuv", "qb-target"}
