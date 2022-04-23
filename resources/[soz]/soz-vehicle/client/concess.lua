@@ -261,9 +261,10 @@ CreateThread(function()
     for k, magasin in pairs(Config.Shops) do
         if magasin.showBlip then
             local Dealer = AddBlipForCoord(Config.Shops[k]["Location"])
-            SetBlipSprite(Dealer, 326)
+            SetBlipSprite(Dealer, 523)
             SetBlipDisplay(Dealer, 4)
             SetBlipScale(Dealer, 0.8)
+            SetBlipColour(Dealer, 26)
             SetBlipAsShortRange(Dealer, true)
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentSubstringPlayerName(Config.Shops[k]["ShopLabel"])
