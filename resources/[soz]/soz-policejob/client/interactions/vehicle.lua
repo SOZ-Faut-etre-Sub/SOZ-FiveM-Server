@@ -22,12 +22,16 @@ CreateThread(function()
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
-            -- {
-            --     label = "Poser une balise GPS",
-            --     icon = "fas fa-map-marked-alt",
-            --     event = "",
-            --     job = {["lspd"] = 0, ["bcso"] = 0},
-            -- },
+            {
+                label = "Ouvrir",
+                color = "lspd",
+                icon = "c:police/forcer.png",
+                event = "police:client:LockPickVehicle",
+                canInteract = function(player)
+                    return PlayerData.job.onduty
+                end,
+                job = {["lspd"] = 0, ["bcso"] = 0},
+            },
         },
         distance = 1.5,
     })
@@ -60,5 +64,21 @@ RegisterNetEvent("police:client:SearchVehicle", function(data)
         local plate = QBCore.Functions.GetPlate(data.entity)
 
         TriggerServerEvent("inventory:server:openInventory", "trunk", plate)
+    end)
+end)
+
+RegisterNetEvent("police:client:LockPickVehicle", function(data)
+    QBCore.Functions.Progressbar("police:vehicle:lockpick", "Déverrouillage du véhicule en cours...", 8000, true, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
+        local plate = QBCore.Functions.GetPlate(data.entity)
+
+        exports["soz-hud"]:DrawNotification("Porte ~g~ouverte~s~ !")
+        exports["soz-vehicle"]:SetLockPicked(plate)
+        SetVehicleDoorsLocked(data.entity, 1)
     end)
 end)
