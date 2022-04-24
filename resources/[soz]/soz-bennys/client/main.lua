@@ -410,7 +410,7 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], 10000, false, true,
+    QBCore.Functions.Progressbar("repair_part", "Réparation de " .. Config.ValuesLabels[part], 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,

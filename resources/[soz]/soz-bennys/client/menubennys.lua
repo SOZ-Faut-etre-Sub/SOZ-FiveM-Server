@@ -894,7 +894,7 @@ end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        exports["qb-target"]:AddTargetModel(-1883980157, {
+        exports["qb-target"]:AddTargetModel(-1830645735, {
             options = {
                 {
                     type = "client",
@@ -933,7 +933,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
         })
     else
         if PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(-1883980157, "Service")
+            exports["qb-target"]:RemoveTargetModel(-1830645735, "Service")
         end
     end
 end)
