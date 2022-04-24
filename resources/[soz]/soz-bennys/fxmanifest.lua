@@ -20,6 +20,7 @@ client_scripts {
     "client/menugarage.lua",
     "client/menuf3.lua",
     "client/menucloakroom.lua",
+    "client/menufacture.lua",
 }
 
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
