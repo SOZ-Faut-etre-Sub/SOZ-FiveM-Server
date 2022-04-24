@@ -519,6 +519,10 @@ local function CleanVehicle(entity)
     end)
 end
 
+local function DepotVehicle(entity)
+
+end
+
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
@@ -560,7 +564,25 @@ CreateThread(function()
                     return true
                 end,
             },
+            {
+                type = "client",
+                icon = "c:mechanic/reparer.png",
+                event = "qb-carwash:client:washCar",
+                label = "Fourrière",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    DepotVehicle(entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return true
+                end,
+            },
         },
-        distance = 2.5,
+        distance = 3.0,
     })
 end)
