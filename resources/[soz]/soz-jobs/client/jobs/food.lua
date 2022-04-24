@@ -48,41 +48,7 @@ local function DespawnFieldZones()
     end
 end
 
-Citizen.CreateThread(function()
-    -- BLIP
-    QBCore.Functions.CreateBlip("food", {
-        name = FoodConfig.Blip.Name,
-        coords = FoodConfig.Blip.Coords,
-        sprite = FoodConfig.Blip.Icon,
-        scale = FoodConfig.Blip.Scale,
-    })
-
-    -- DUTY
-    exports["qb-target"]:AddBoxZone("food:duty", vector2(-1898.66, 2075.36), 0.5, 0.75, {
-        heading = 70.25,
-        minZ = 140.0,
-        maxZ = 142.5,
-    }, {
-        options = {
-            {
-                icon = "fas fa-sign-in-alt",
-                label = "Prise de service",
-                event = "jobs:client:food-toggle-duty",
-                canInteract = function()
-                    return not PlayerData.job.onduty
-                end,
-            },
-            {
-                icon = "fas fa-sign-out-alt",
-                label = "Fin de service",
-                event = "jobs:client:food-toggle-duty",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-            },
-        },
-    })
-
+local function SpawnJobZones()
     -- CLOAKROOM
     exports["qb-target"]:AddBoxZone("food:cloakroom", vector2(-1866.8, 2059.98), 0.5, 1.5, {
         heading = 340.76,
@@ -120,13 +86,64 @@ Citizen.CreateThread(function()
         minZ = 140.0,
         maxZ = 142.5,
     }, {options = {{icon = "c:food/echanger.png", event = "jobs:client:food-process-milk", label = "Echanger"}}})
-end)
+end
 
+local function InitJob()
+    Citizen.CreateThread(function()
+        SpawnJobZones()
+        SpawnFieldZones()
+    end)
+end
+
+local function DestroyJob()
+    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest", "food:milk-process"}
+    for _, name in ipairs(zoneNames) do
+        exports["qb-target"]:RemoveZone(name)
+    end
+    DespawnFieldZones()
+end
+
+-- ON STARTUP
+Citizen.CreateThread(function()
+    -- BLIP
+    QBCore.Functions.CreateBlip("food", {
+        name = FoodConfig.Blip.Name,
+        coords = FoodConfig.Blip.Coords,
+        sprite = FoodConfig.Blip.Icon,
+        scale = FoodConfig.Blip.Scale,
+    })
+
+    -- DUTY
+    exports["qb-target"]:AddBoxZone("food:duty", vector2(-1898.66, 2075.36), 0.5, 0.75, {
+        heading = 70.25,
+        minZ = 140.0,
+        maxZ = 142.5,
+    }, {
+        options = {
+            {
+                icon = "fas fa-sign-in-alt",
+                label = "Prise de service",
+                event = "jobs:client:food-toggle-duty",
+                canInteract = function()
+                    return not PlayerData.job.onduty
+                end,
+            },
+            {
+                icon = "fas fa-sign-out-alt",
+                label = "Fin de service",
+                event = "jobs:client:food-toggle-duty",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+            },
+        },
+    })
+end)
 AddEventHandler("jobs:client:food-toggle-duty", function()
     if not PlayerData.job.onduty then
-        SpawnFieldZones()
+        InitJob()
     else
-        DespawnFieldZones()
+        DestroyJob()
     end
     TriggerServerEvent("QBCore:ToggleDuty")
 end)
