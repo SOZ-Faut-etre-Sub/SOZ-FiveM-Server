@@ -119,7 +119,7 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
                     AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
                 until BedRot.x == VehicleInfo.Active.Rot.x and BedPos.z == VehicleInfo.Active.Pos.z
             end
-
+            exports["soz-hud"]:DrawNotification("Le plateau descend !")
             LastStatus = true
         elseif Action == "raise" then
             if not BedInfo.Status then
@@ -159,7 +159,7 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
                     AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
                 until BedPos.y == VehicleInfo.Default.Pos.y
             end
-
+            exports["soz-hud"]:DrawNotification("Le plateau remonte !")
             LastStatus = false
         elseif Action == "attach" then
             if not BedInfo.Attached then
@@ -175,7 +175,8 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
                                        NetworkGetNetworkIdFromEntity(ClosestVehicle))
                 end
             end
-
+            TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
+            exports["soz-hud"]:DrawNotification("Vous avez attaché le véhicule !")
             LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
         elseif Action == "detach" then
             if BedInfo.Attached then
@@ -186,6 +187,8 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
             end
 
             LastAttach = nil
+            TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
+            exports["soz-hud"]:DrawNotification("Vous avez détaché le véhicule !")
         end
     else
         TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(LastVehicle))
@@ -206,6 +209,7 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
                                      false, nil, true)
 
                 TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", NetworkGetNetworkIdFromEntity(entity))
+                exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
             end
         end
         LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
