@@ -300,7 +300,7 @@ FoodJob.Functions.CollectIngredients = function(field)
         return
     end
 
-    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Duration, false, true,
+    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Grape.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -381,7 +381,7 @@ end)
 
 FoodJob.Functions.CraftItem = function(itemId, item)
     Citizen.CreateThread(function()
-        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Duration, false, true,
+        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Grape.Duration, false, true,
                                      {
             disableMovement = true,
             disableCarMovement = true,
