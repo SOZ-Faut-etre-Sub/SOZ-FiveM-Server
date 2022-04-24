@@ -48,6 +48,62 @@ local function DespawnFieldZones()
     end
 end
 
+local function SpawnJobZones()
+    -- CLOAKROOM
+    exports["qb-target"]:AddBoxZone("food:cloakroom", vector2(-1866.8, 2059.98), 0.5, 1.5, {
+        heading = 340.76,
+        minZ = 140.0,
+        maxZ = 142.5,
+    }, {
+        options = {
+            {
+                targeticon = "fas fa-box",
+                icon = "fas fa-tshirt",
+                event = "jobs:client:food:OpenCloakroomMenu",
+                label = "Se changer",
+                job = "food",
+            },
+        },
+    })
+
+    -- CRAFTING
+    CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
+    exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
+        heading = 250.0,
+        minZ = 141.0,
+        maxZ = 141.5,
+    }, {options = {{icon = "c:food/cuisiner.png", event = "jobs:client:food:OpenCraftingMenu", label = "Cuisiner"}}})
+
+    -- MILK
+    exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
+        heading = 133.3,
+        minZ = 45.5,
+        maxZ = 49.5,
+    }, {options = {{icon = "c:food/collecter.png", event = "jobs:client:food-harvest-milk", label = "Récupérer"}}})
+
+    exports["qb-target"]:AddBoxZone("food:milk-process", vector2(-1929.02, 2059.16), 0.5, 1.5, {
+        heading = 166.6,
+        minZ = 140.0,
+        maxZ = 142.5,
+    }, {options = {{icon = "c:food/echanger.png", event = "jobs:client:food-process-milk", label = "Echanger"}}})
+end
+
+local function InitJob()
+    Citizen.CreateThread(function()
+        SpawnJobZones()
+        SpawnFieldZones()
+    end)
+end
+
+local function DestroyJob()
+    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest", "food:milk-process"}
+    for _, name in ipairs(zoneNames) do
+        exports["qb-target"]:RemoveZone(name)
+    end
+    DespawnFieldZones()
+end
+
+-- ON STARTUP
 Citizen.CreateThread(function()
     -- BLIP
     QBCore.Functions.CreateBlip("food", {
@@ -82,43 +138,12 @@ Citizen.CreateThread(function()
             },
         },
     })
-
-    -- CLOAKROOM
-    exports["qb-target"]:AddBoxZone("food:cloakroom", vector2(-1866.8, 2059.98), 0.5, 1.5, {
-        heading = 340.76,
-        minZ = 140.0,
-        maxZ = 142.5,
-    }, {
-        options = {
-            {
-                targeticon = "fas fa-box",
-                icon = "fas fa-tshirt",
-                event = "jobs:client:food:OpenCloakroomMenu",
-                label = "Se changer",
-                job = "food",
-            },
-        },
-    })
-
-    -- MILK
-    exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
-        heading = 133.3,
-        minZ = 45.5,
-        maxZ = 49.5,
-    }, {options = {{icon = "c:food/collecter.png", event = "jobs:client:food-harvest-milk", label = "Récupérer"}}})
-
-    exports["qb-target"]:AddBoxZone("food:milk-process", vector2(-1929.02, 2059.16), 0.5, 1.5, {
-        heading = 166.6,
-        minZ = 140.0,
-        maxZ = 142.5,
-    }, {options = {{icon = "c:food/echanger.png", event = "jobs:client:food-process-milk", label = "Echanger"}}})
 end)
-
 AddEventHandler("jobs:client:food-toggle-duty", function()
     if not PlayerData.job.onduty then
-        SpawnFieldZones()
+        InitJob()
     else
-        DespawnFieldZones()
+        DestroyJob()
     end
     TriggerServerEvent("QBCore:ToggleDuty")
 end)
@@ -292,7 +317,7 @@ FoodJob.Functions.CollectIngredients = function(field)
         return
     end
 
-    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Duration, false, true,
+    QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Grape.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -356,24 +381,22 @@ AddEventHandler("jobs:client:food-process-milk", function()
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(success, count)
-        if success then
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bouteilles de lait~s~", count))
-            Citizen.Wait(1000)
-            TriggerEvent("jobs:client:food-process-milk")
-        end
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
+        QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success, count)
+            if success then
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez transformé ~b~1 bidon de lait~s~ en ~g~%d briques de lait~s~", count))
+                Citizen.Wait(1000)
+                TriggerEvent("jobs:client:food-process-milk")
+            end
+        end)
     end, function()
         exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la transformation de bidons de lait", "error")
-    end)
-
-    QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success)
-        -- TODO
     end)
 end)
 
 FoodJob.Functions.CraftItem = function(itemId, item)
     Citizen.CreateThread(function()
-        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Duration, false, true,
+        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Grape.Duration, false, true,
                                      {
             disableMovement = true,
             disableCarMovement = true,
