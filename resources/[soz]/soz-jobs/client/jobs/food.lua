@@ -381,18 +381,16 @@ AddEventHandler("jobs:client:food-process-milk", function()
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(success, count)
-        if success then
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bouteilles de lait~s~", count))
-            Citizen.Wait(1000)
-            TriggerEvent("jobs:client:food-process-milk")
-        end
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
+        QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success, count)
+            if success then
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez transformé ~b~1 bidon de lait~s~ en ~g~%d briques de lait~s~", count))
+                Citizen.Wait(1000)
+                TriggerEvent("jobs:client:food-process-milk")
+            end
+        end)
     end, function()
         exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la transformation de bidons de lait", "error")
-    end)
-
-    QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success)
-        -- TODO
     end)
 end)
 

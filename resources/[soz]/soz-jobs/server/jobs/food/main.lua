@@ -81,7 +81,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-process-milk", function(so
     local sourceItem = FoodConfig.Collect.Milk.Item
 
     if exports["soz-inventory"]:GetItem(source, sourceItem, nil, true) > 1 then
-        Player.Functions.RemoveItem(sourceItem, count)
+        Player.Functions.RemoveItem(sourceItem, 1)
         if AddItem(Player.PlayerData.source, FoodConfig.Process.Item, count) then
             cb(true, count)
         else
