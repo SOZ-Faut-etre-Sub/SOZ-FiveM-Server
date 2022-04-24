@@ -170,6 +170,11 @@ local function lockpickFinish(success)
     end
 end
 
+exports("SetLockPicked", function(plate)
+    lockpicked = true
+    lockpickedPlate = plate
+end)
+
 local function LockpickDoor(isAdvanced)
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
