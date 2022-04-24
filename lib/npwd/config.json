@@ -17,16 +17,11 @@
     "phoneNumberColumn": "phone_number"
   },
   "images": {
-    "url": "https://images.soz.zerator.com/",
-    "type": "imgur",
     "imageEncoding": "jpg",
-    "contentType": "multipart/form-data",
-    "authorizationPrefix": "Client-ID",
-    "useAuthorization": true,
-    "returnedDataIndexes": ["data", "link"]
+    "returnedDataIndexes": ["data", "createScreenshot", "url"]
   },
   "debug": {
-    "level": "debug",
-    "enabled": true
+    "level": "info",
+    "enabled": false
   }
 }
