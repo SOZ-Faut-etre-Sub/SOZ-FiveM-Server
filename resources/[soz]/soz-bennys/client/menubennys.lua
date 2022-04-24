@@ -585,12 +585,7 @@ local function OpenPlateIndexMenu(menu)
     })
     local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
     local tempPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
-    local plateTypes = {
-        "Jaune sur Noir",
-        "Jaune sur Bleu",
-        "Bleu sur Blanc #1",
-        "Bleu sur Blanc #2",
-    }
+    local plateTypes = {"Jaune sur Noir", "Jaune sur Bleu", "Bleu sur Blanc #1", "Bleu sur Blanc #2"}
     if GetVehicleClass(plyVeh) ~= 18 then
         for i = 0, #plateTypes - 1 do
             if i ~= 4 then
