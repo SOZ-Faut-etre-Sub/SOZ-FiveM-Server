@@ -33,11 +33,11 @@ function dataURItoBlob(dataURI: string) {
 
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
-  
+
     for (let i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
     }
-  
+
     const blob = new Blob([ab], {type: mimeString});
     return blob;
 }
@@ -187,37 +187,63 @@ class ScreenshotUI {
 
         // actual encoding
         const imageURL = canvas.toDataURL(type, request.quality);
+        const formData = new FormData();
 
-        const getFormData = () => {
-            const formData = new FormData();
+        if (request.targetField === 'GQL') {
+            canvas.toBlob((blob) => {
+                let file = new File([blob], "screenshot.jpg", { type })
+
+                const operations = `{"operationName": "createScreenshot", "variables": {"file":null}, "query":"mutation createScreenshot($file: Upload!) { createScreenshot(file: $file) {url} }"}`
+                formData.append("operations", operations)
+
+                const map = `{"0": ["variables.file"]}`
+                formData.append("map", map)
+                formData.append("0", file)
+
+                fetch(request.targetURL, {
+                    method: 'POST',
+                    headers: request.headers,
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(text => {
+                        if (request.resultURL) {
+                            fetch(request.resultURL, {
+                                method: 'POST',
+                                mode: 'cors',
+                                body: JSON.stringify({
+                                    data: text,
+                                    id: request.correlation
+                                })
+                            });
+                        }
+                    }).catch(e => console.error(e));
+            }, type, request.quality);
+        } else {
             formData.append(request.targetField, dataURItoBlob(imageURL), `screenshot.${request.encoding}`);
 
-            return formData;
-        };
-
-        // upload the image somewhere
-        fetch(request.targetURL, {
-            method: 'POST',
-            mode: 'cors',
-            headers: request.headers,
-            body: (request.targetField) ? getFormData() : JSON.stringify({
-                data: imageURL,
-                id: request.correlation
+            fetch(request.targetURL, {
+                method: 'POST',
+                headers: request.headers,
+                body: (request.targetField) ? formData : JSON.stringify({
+                    data: imageURL,
+                    id: request.correlation
+                })
             })
-        })
-        .then(response => response.text())
-        .then(text => {
-            if (request.resultURL) {
-                fetch(request.resultURL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    body: JSON.stringify({
-                        data: text,
-                        id: request.correlation
-                    })
-                });
-            }
-        });
+                .then(response => response.text())
+                .then(text => {
+                    if (request.resultURL) {
+                        fetch(request.resultURL, {
+                            method: 'POST',
+                            mode: 'cors',
+                            body: JSON.stringify({
+                                data: text,
+                                id: request.correlation
+                            })
+                        });
+                    }
+                }).catch(e => console.error(e));
+        }
     }
 }
 

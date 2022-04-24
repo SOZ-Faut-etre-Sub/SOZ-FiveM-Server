@@ -65,5 +65,5 @@ end
 function playMicClicks(module, enabled, isPrimary)
     local volume = LocalPlayer.state[module][isPrimary and "primaryChannelVolume" or "secondaryChannelVolume"] / 100
 
-    TriggerEvent("InteractSound_CL:PlayOnOne", enabled and module .. "/mic_click_on" or module .. "/mic_click_off", volume / 2)
+    TriggerEvent("InteractSound_CL:PlayOnOne", enabled and module .. "/mic_click_on" or module .. "/mic_click_off", volume / 4)
 end
