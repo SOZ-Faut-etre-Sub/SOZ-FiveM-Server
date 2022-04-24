@@ -64,27 +64,27 @@ cfg = {
 	randomTireBurstInterval = 0, -- Number of minutes (statistically, not precisely) to drive above 22 mph before you get a tire puncture. 0=feature is disabled
 
 	classDamageMultiplier = {
-		[0] = 	0.64,		--	0: Compacts
-				0.64,		--	1: Sedans
-				0.64,		--	2: SUVs
-				0.61,		--	3: Coupes
-				0.64,		--	4: Muscle
-				0.61,		--	5: Sports Classics
-				0.61,		--	6: Sports
-				0.61,		--	7: Super
-				0.18,		--	8: Motorcycles
-				0.45,		--	9: Off-road
-				0.16,		--	10: Industrial
-				0.23,		--	11: Utility
-				0.55,		--	12: Vans
-				0.64,		--	13: Cycles
-				0.26,		--	14: Boats
-				0.45,		--	15: Helicopters
-				0.45,		--	16: Planes
-				0.48,		--	17: Service
-				0.55,		--	18: Emergency
-				0.43,		--	19: Military
-				0.28,		--	20: Commercial
-				0.64		--	21: Trains
+		[0] = 	0.8,		--	0: Compacts
+				0.8,		--	1: Sedans
+				0.8,		--	2: SUVs
+				0.76,		--	3: Coupes
+				0.8,		--	4: Muscle
+				0.76,		--	5: Sports Classics
+				0.76,		--	6: Sports
+				0.76,		--	7: Super
+				0.216,		--	8: Motorcycles
+				0.56,		--	9: Off-road
+				0.20,		--	10: Industrial
+				0.28,		--	11: Utility
+				0.68,		--	12: Vans
+				0.8,		--	13: Cycles
+				0.32,		--	14: Boats
+				0.56,		--	15: Helicopters
+				0.56,		--	16: Planes
+				0.6,		--	17: Service
+				0.68,		--	18: Emergency
+				0.536,		--	19: Military
+				0.344,		--	20: Commercial
+				0.8			--	21: Trains
 	}
 }
