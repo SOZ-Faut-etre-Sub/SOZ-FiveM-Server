@@ -166,7 +166,7 @@ local function GetDeliveryLocation()
                         TriggerServerEvent("taxi:server:NpcPay", HorodateurData.TarifActuelle)
                         meterActive = false
                         SendNUIMessage({action = "resetMeter"})
-                        exports["soz-hud"]:DrawNotification("Vous avez déposer la personne")
+                        exports["soz-hud"]:DrawNotification("Vous avez déposé la personne")
                         if NpcData.DeliveryBlip ~= nil then
                             RemoveBlip(NpcData.DeliveryBlip)
                         end

@@ -569,7 +569,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/reparer.png",
                 event = "qb-carwash:client:washCar",
-                label = "Fourrière",
+                label = "Fourrièrer",
                 action = function(entity)
                     if IsPedAPlayer(entity) then
                         return false
