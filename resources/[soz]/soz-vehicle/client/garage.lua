@@ -176,7 +176,7 @@ local function SortirMenu(type, garage, indexgarage)
                         }),
                         select = function()
                             VehiculeParkingFourriere:Close()
-                            TriggerEvent("qb-garages:client:TakeOutDepot", v, type, garage, indexgarage)
+                            TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
                         end,
                     })
                 end
@@ -437,14 +437,6 @@ CreateThread(function()
             AddTextComponentSubstringPlayerName(garage.blipName)
             EndTextCommandSetBlipName(Garage)
         end
-    end
-end)
-
-RegisterNetEvent("qb-garages:client:TakeOutDepot", function(v, type, garage, indexgarage)
-    if v.depotprice ~= 0 then
-        TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
-    else
-        TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
     end
 end)
 

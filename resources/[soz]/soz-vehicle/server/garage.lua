@@ -151,12 +151,7 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
 end)
 
 RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, garage)
-    MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, depotprice = ? WHERE plate = ?", {
-        state,
-        garage,
-        0,
-        plate,
-    })
+    MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, WHERE plate = ?", {state, garage, plate})
 end)
 
 RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
@@ -180,7 +175,7 @@ end)
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(100)
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, depotprice = 100 WHERE state = 0", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, WHERE state = 0", {})
     end
 end)
 
