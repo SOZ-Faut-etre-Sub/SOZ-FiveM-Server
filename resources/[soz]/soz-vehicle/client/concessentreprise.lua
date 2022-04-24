@@ -15,7 +15,7 @@ PlacesConcessEntreprise = {
     }),
 }
 
-local VehiculeModel = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car", "soz", "concessentre:vehicle:car")
+local VehiculeModel = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car_society", "soz", "concessentre:vehicle:car")
 local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = nil})
 
 local function TakeOutGarage(vehicule)

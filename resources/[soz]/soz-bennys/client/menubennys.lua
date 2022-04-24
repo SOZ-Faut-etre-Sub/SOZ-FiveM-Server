@@ -1,4 +1,4 @@
-local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_job_bennys", "soz", "mechanic:vehicle:options")
+local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_job_depanneur", "soz", "mechanic:vehicle:options")
 local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
 local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
 local NoDamage = MenuV:InheritMenu(Status, "Aucun dommage")
