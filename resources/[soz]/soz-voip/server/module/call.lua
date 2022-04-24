@@ -20,22 +20,21 @@ end
 
 function PhoneCall:setPlayer(source, channel)
     channel = tonumber(channel)
+    local oldChannel = Player(source).state.call.channel
     Player(source).state.call.channel = channel
 
     if channel ~= 0 then
-        self:removePlayer(source, channel)
         self:addPlayer(source, channel)
     elseif channel == 0 then
-        self:removePlayer(source, channel)
+        self:removePlayer(source, oldChannel)
     end
 end
 
 function PhoneCall:removePlayer(source, channel)
-    for player, _ in pairs(voiceStateBackend["call"]:getConsumers(channel)) do
-        TriggerClientEvent("voip:client:removeConsumer", source, "call", player)
-        TriggerClientEvent("voip:client:removeConsumer", player, "call", source)
-    end
-    for player, _ in pairs(voiceStateBackend["call"]:getConsumers(channel)) do
+    local consumers = voiceStateBackend["call"]:getConsumers(channel)
+    for player, _ in pairs(consumers) do
+        TriggerClientEvent("voip:client:removeConsumer", player, "call", channel)
+
         voiceStateBackend["call"]:removeConsumer(player, channel)
     end
 end

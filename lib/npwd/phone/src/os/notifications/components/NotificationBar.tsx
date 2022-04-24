@@ -7,7 +7,8 @@ import {useRouteMatch} from "react-router-dom";
 import {ThemeContext} from "../../../styles/themeProvider";
 import {NotificationItem} from "@os/notifications/components/NotificationItem";
 import { Transition } from '@headlessui/react';
-
+import {useCurrentCall} from "@os/call/hooks/state";
+import cn from 'classnames';
 
 export const NotificationBar = () => {
     const {icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed} = useNotifications();
@@ -15,6 +16,7 @@ export const NotificationBar = () => {
     const home = useRouteMatch('/');
     const camera = useRouteMatch('/camera');
     const call = useRouteMatch('/call');
+    const [currentCall,] = useCurrentCall();
     const {theme} = useContext(ThemeContext);
     const time = usePhoneTime();
 
@@ -28,7 +30,10 @@ export const NotificationBar = () => {
         if (home && home.isExact) {
             return 'text-white'
         } else if (call && call.isExact) {
-            return 'text-white bg-white bg-opacity-30'
+            if (currentCall?.is_accepted) {
+                return 'text-white bg-white bg-opacity-30'
+            }
+            return 'text-white'
         } else if (camera && camera.isExact) {
             return 'bg-black text-white'
         } else {
@@ -38,7 +43,7 @@ export const NotificationBar = () => {
 
     return (
         <>
-            <div className={`${color()} grid grid-cols-3 px-5 py-3 text-sm w-full z-50 cursor-pointer`} onClick={() => {
+            <div className={cn('grid grid-cols-3 px-5 py-3 text-sm w-full z-50 cursor-pointer', color())} onClick={() => {
                 setBarUncollapsed((curr) => !curr);
             }}>
                 <div className="flex justify-center text-center truncate">

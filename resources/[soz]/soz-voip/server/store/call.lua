@@ -38,7 +38,9 @@ function CallStateManager:updateConsumerState(source, channel, state)
         return nil
     end
 
-    CallState[channel][source] = state
+    if CallState[channel][source] ~= nil then
+        CallState[channel][source] = state
+    end
 
     return self:getConsumers(channel)
 end

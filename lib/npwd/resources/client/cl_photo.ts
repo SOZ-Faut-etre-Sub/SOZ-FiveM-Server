@@ -1,12 +1,10 @@
 import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
-import { sendCameraEvent, sendMessage } from '../utils/messages';
-import { PhoneEvents } from '../../typings/phone';
+import { sendCameraEvent } from '../utils/messages';
 import { ClUtils, config } from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
-const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
 const exp = global.exports;
 
 let inCameraMode = false;
@@ -45,13 +43,8 @@ RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async (_, cb) => {
 });
 
 RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
-    if (SCREENSHOT_BASIC_TOKEN !== 'none') {
-        const resp = await handleTakePicture();
-        cb(resp);
-    }
-    console.error(
-        'You may be trying to take a photo, but your token is not setup for upload! See NPWD Docs for more info!',
-    );
+    const resp = await handleTakePicture();
+    cb(resp);
 
     disableMouseControl = true
     SetNuiFocus(true, true)
@@ -110,27 +103,18 @@ const handleCameraExit = async () => {
 
 const takePhoto = () =>
   new Promise((res, rej) => {
-    // Return and log error if screenshot basic token not found
-    if (SCREENSHOT_BASIC_TOKEN === 'none' && config.images.useAuthorization) {
-      return console.error('Screenshot basic token not found. Please set in server.cfg');
-    }
-    exp['screenshot-basic'].requestScreenshotUpload(
-      config.images.url,
-      config.images.type,
+    exp['screenshot-basic'].requestScreenshotUpload(`${GetConvar("soz_api_endpoint", "https://soz.zerator.com")}/graphql`, 'GQL',
       {
         encoding: config.images.imageEncoding,
         headers: {
-          authorization: config.images.useAuthorization
-            ? `${config.images.authorizationPrefix} ${SCREENSHOT_BASIC_TOKEN}`
-            : undefined,
-          'content-type': config.images.contentType,
+          authorization: `Bearer ${LocalPlayer.state.SozJWTToken}`
         },
       },
       async (data: any) => {
         try {
           let parsedData = JSON.parse(data);
           for (const index of config.images.returnedDataIndexes) parsedData = parsedData[index];
-          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, parsedData);
+          const resp = await ClUtils.emitNetPromise(PhotoEvents.UPLOAD_PHOTO, GetConvar("soz_public_endpoint", "https://soz.zerator.com") + parsedData);
           res(resp);
         } catch (e) {
           rej(e.message);
