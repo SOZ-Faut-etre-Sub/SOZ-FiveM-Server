@@ -22,7 +22,7 @@ RegisterNetEvent("qb-carwash:client:washCar", function(entity)
         PedVehicle = entity
     end
     washingVehicle = true
-    QBCore.Functions.Progressbar("search_cabin", "Lavage de véhicule en cours ..", math.random(4000, 8000), false, true,
+    QBCore.Functions.Progressbar("search_cabin", "Lavage de véhicule en cours ..", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,

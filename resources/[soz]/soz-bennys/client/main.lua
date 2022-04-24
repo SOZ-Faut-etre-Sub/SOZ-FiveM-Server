@@ -2,6 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 VehicleStatus = {}
 OnDuty = false
 PlayerJob = {}
+PlayerData = {}
 local effectTimer = 0
 
 OriginalCategory = nil
@@ -22,7 +23,6 @@ OriginalNeonLightSide = nil
 OriginalNeonColourR = nil
 OriginalNeonColourG = nil
 OriginalNeonColourB = nil
-OriginalXenonColour = nil
 OriginalOldLivery = nil
 OriginalPlateIndex = nil
 
@@ -410,7 +410,7 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], math.random(5000, 10000), false, true,
+    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -418,9 +418,6 @@ local function RepairPart(part)
         disableCombat = true,
     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function() -- Done
         TriggerEvent("soz-bennys:client:RepaireeePart", part)
-        SetTimeout(250, function()
-            OpenPartsMenu(Status)
-        end)
     end)
 
 end
@@ -438,10 +435,11 @@ RegisterNetEvent("soz-bennys:client:CallRepairPart", function(part)
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    QBCore.Functions.GetPlayerData(function(PlayerData)
+    QBCore.Functions.GetPlayerData(function(data)
+        PlayerData = data
         PlayerJob = PlayerData.job
-        if PlayerData.job.onduty then
-            if PlayerData.job.id == "bennys" then
+        if data.job.onduty then
+            if data.job.id == "bennys" then
                 TriggerServerEvent("QBCore:ToggleDuty")
             end
         end
@@ -476,7 +474,7 @@ local function Repairall(entity)
     if engineHealth > bodyHealth then
         engineHealth = bodyHealth
     end
-    local repairTime = (1000 - engineHealth) * 100
+    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 20
 
     ScrapAnim(repairTime)
     QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
@@ -501,7 +499,7 @@ end
 local function CleanVehicle(entity)
     local ped = PlayerPedId()
     TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
-    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", math.random(10000, 20000), false, true,
+    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,

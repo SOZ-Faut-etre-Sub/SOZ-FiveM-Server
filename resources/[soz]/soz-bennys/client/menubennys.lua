@@ -17,9 +17,7 @@ local NeonsMenu = MenuV:InheritMenu(VehiculeCustom, "Néons")
 local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Etat des Néons")
 local NeonColoursMenu = MenuV:InheritMenu(NeonsMenu, "Couleur des Néons")
 
-local XenonsMenu = MenuV:InheritMenu(VehiculeCustom, "Xénons")
-local XenonsHeadlightsMenu = MenuV:InheritMenu(XenonsMenu, "Phares des Xénons")
-local XenonsColoursMenu = MenuV:InheritMenu(XenonsMenu, "Couleur des Xénons")
+local XenonsHeadlightsMenu = MenuV:InheritMenu(VehiculeCustom, "Xénons")
 
 local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Roues")
 local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fumée de roue")
@@ -341,7 +339,7 @@ local function OpenNeonStateMenu(menu, v, k)
         })
     else
         menu:AddButton({
-            label = "Désactiver - $0",
+            label = "Désactiver",
             value = 0,
             description = "Améliorer 🔧",
             select = function()
@@ -390,49 +388,12 @@ local function OpenNeonsMenu(menu)
     })
 end
 
-local function OpenXenonsColoursMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Menu Xénon",
-        select = function()
-            menu:Close()
-        end,
-    })
-    local currentXenonColour = GetCurrentXenonColour()
-    for k, v in ipairs(Config.vehicleXenonOptions.xenonColours) do
-        if currentXenonColour == v.id then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
-        else
-            menu:AddButton({
-                label = v.name,
-                value = v.id,
-                description = "Améliorer 🔧",
-                select = function()
-                    menu:Close()
-                    ApplyXenonColour(v.id)
-                end,
-            })
-        end
-    end
-    local eventxenoncolon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewXenonColour(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventxenoncolon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalXenonColour()
-    end)
-end
-
 local function OpenXenonsHeadlightsMenu(menu)
     menu:ClearItems()
     MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
-        label = "Menu Xénon",
+        label = "Retour",
         select = function()
             menu:Close()
         end,
@@ -450,7 +411,7 @@ local function OpenXenonsHeadlightsMenu(menu)
         })
     else
         menu:AddButton({
-            label = "Désactiver Xenons - $0",
+            label = "Désactiver Xenons",
             description = "Améliorer 🔧",
             select = function()
                 menu:Close()
@@ -463,32 +424,6 @@ local function OpenXenonsHeadlightsMenu(menu)
         menu:Close()
         menu:ClearItems()
     end)
-end
-
-local function OpenXenonsMenu(menu)
-    menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    menu:AddButton({
-        icon = "◀",
-        label = "Retour",
-        select = function()
-            menu:Close()
-        end,
-    })
-    menu:AddButton({
-        label = "Phares",
-        description = "",
-        select = function()
-            OpenXenonsHeadlightsMenu(XenonsHeadlightsMenu)
-        end,
-    })
-    menu:AddButton({
-        label = "Couleurs de Xénon",
-        description = "",
-        select = function()
-            OpenXenonsColoursMenu(XenonsColoursMenu)
-        end,
-    })
 end
 
 local function OpenWindowTintMenu(menu)
@@ -819,7 +754,7 @@ local function OpenCustom(menu)
     menu:AddButton({
         label = "Xénons",
         select = function()
-            OpenXenonsMenu(XenonsMenu)
+            OpenXenonsHeadlightsMenu(XenonsHeadlightsMenu)
         end,
     })
     menu:AddButton({
@@ -939,8 +874,11 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
                     icon = "fas fa-tshirt",
                     label = "Se changer",
                     targeticon = "fas fa-wrench",
+                    action = function()
+                        TriggerEvent("soz-bennys:client:OpenCloakroomMenu")
+                    end,
                     canInteract = function()
-                        return PlayerData.job.onduty
+                        return OnDuty
                     end,
                     job = "bennys",
                 },
@@ -956,7 +894,7 @@ end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        exports["qb-target"]:AddTargetModel(829413118, {
+        exports["qb-target"]:AddTargetModel(-1883980157, {
             options = {
                 {
                     type = "client",
@@ -970,7 +908,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
-                        return not PlayerJob.onduty
+                        return not OnDuty
                     end,
                     job = "bennys",
                 },
@@ -986,7 +924,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
-                        return PlayerJob.onduty
+                        return OnDuty
                     end,
                     job = "bennys",
                 },
@@ -995,7 +933,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
         })
     else
         if PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(829413118, "Service")
+            exports["qb-target"]:RemoveTargetModel(-1883980157, "Service")
         end
     end
 end)
