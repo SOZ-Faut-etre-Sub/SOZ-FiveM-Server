@@ -1548,8 +1548,8 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['milk'] = {
-        ['name'] = 'milkbucket',
-        ['label'] = 'Bouteille de lait',
+        ['name'] = 'milk',
+        ['label'] = 'Brique de lait',
         ['weight'] = 1000,
         ['type'] = 'item',
         ['unique'] = false,
