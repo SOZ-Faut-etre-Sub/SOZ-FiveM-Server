@@ -520,7 +520,8 @@ local function CleanVehicle(entity)
 end
 
 local function DepotVehicle(entity)
-
+    local plate = QBCore.Functions.GetPlate(entity)
+    TriggerServerEvent("soz-bennys:server:putInDepot", plate)
 end
 
 CreateThread(function()
