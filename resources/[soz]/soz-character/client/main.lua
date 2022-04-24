@@ -977,7 +977,266 @@ CreateClothShopConfigSouth = {
     },
 }
 
-CreateClothShopConfigNorth = CreateClothShopConfigSouth
+CreateClothShopConfigNorth = {
+    [GetHashKey("mp_m_freemode_01")] = {
+        {
+            Collections = {
+                {
+                    Name = "Haut",
+                    Items = {
+                        {
+                            Name = GetLabelText("U_FMM_5_0"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 0, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_1"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 1, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_2"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 2, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_3"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 3, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_4"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 4, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_5"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 5, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_6"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 6, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_7"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 7, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_8"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 8, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_9"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 9, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_10"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 10, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_11"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 11, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_12"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 12, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_13"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 13, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_14"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 14, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("U_FMM_5_15"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 5, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 5, Texture = 15, Palette = 0},
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Pantalon",
+                    Items = CreateItemsWithTextures(ComponentType.Pants, 103, {
+                        {Name = GetLabelText("CLO_AWM_L_1_0"), Id = 0},
+                        {Name = GetLabelText("CLO_AWM_L_1_1"), Id = 1},
+                        {Name = GetLabelText("CLO_AWM_L_1_2"), Id = 2},
+                        {Name = GetLabelText("CLO_AWM_L_1_3"), Id = 3},
+                        {Name = GetLabelText("CLO_AWM_L_1_4"), Id = 4},
+                        {Name = GetLabelText("CLO_AWM_L_1_5"), Id = 5},
+                        {Name = GetLabelText("CLO_AWM_L_1_6"), Id = 6},
+                        {Name = GetLabelText("CLO_AWM_L_1_7"), Id = 7},
+                        {Name = GetLabelText("CLO_AWM_L_1_8"), Id = 8},
+                        {Name = GetLabelText("CLO_AWM_L_1_9"), Id = 9},
+                        {Name = GetLabelText("CLO_AWM_L_1_10"), Id = 10},
+                        {Name = GetLabelText("CLO_AWM_L_1_11"), Id = 11},
+                        {Name = GetLabelText("CLO_AWM_L_1_12"), Id = 12},
+                        {Name = GetLabelText("CLO_AWM_L_1_13"), Id = 13},
+                    }),
+                },
+            },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Chaussure",
+                    Items = CreateItemsWithTextures(ComponentType.Shoes, 16, {
+                        {Name = GetLabelText("CLO_BBM_F_0_0"), Id = 0},
+                        {Name = GetLabelText("CLO_BBM_F_0_1"), Id = 1},
+                        {Name = GetLabelText("CLO_BBM_F_0_2"), Id = 2},
+                        {Name = GetLabelText("CLO_BBM_F_0_3"), Id = 3},
+                        {Name = GetLabelText("CLO_BBM_F_0_4"), Id = 4},
+                        {Name = GetLabelText("CLO_BBM_F_0_5"), Id = 5},
+                        {Name = GetLabelText("CLO_BBM_F_0_6"), Id = 6},
+                        {Name = GetLabelText("CLO_BBM_F_0_7"), Id = 7},
+                        {Name = GetLabelText("CLO_BBM_F_0_8"), Id = 8},
+                        {Name = GetLabelText("CLO_BBM_F_0_9"), Id = 9},
+                        {Name = GetLabelText("CLO_BBM_F_0_10"), Id = 10},
+                        {Name = GetLabelText("CLO_BBM_F_0_11"), Id = 11},
+                    }),
+                },
+            },
+        },
+    },
+    [GetHashKey("mp_f_freemode_01")] = {
+        {
+            Collections = {
+                {
+                    Name = "Haut",
+                    Items = {
+                        {
+                            Name = GetLabelText("CLO_BIF_U_15_0"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 4, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 169, Texture = 0, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_BIF_U_15_1"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 4, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 169, Texture = 1, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_BIF_U_15_2"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 4, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 169, Texture = 2, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_BIF_U_15_3"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 4, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 169, Texture = 3, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_BIF_U_15_4"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 4, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 169, Texture = 4, Palette = 0},
+                            },
+                        },
+                        {
+                            Name = GetLabelText("CLO_BIF_U_15_5"),
+                            ApplyComponents = {
+                                [ComponentType.Arms] = {Drawable = 4, Texture = 0, Palette = 0},
+                                [ComponentType.Torso] = {Drawable = 169, Texture = 5, Palette = 0},
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Pantalon",
+                    Items = CreateItemsWithTextures(ComponentType.Pants, 137, {
+                        {Name = GetLabelText("CLO_SUF_L_5_0"), Id = 0},
+                        {Name = GetLabelText("CLO_SUF_L_5_1"), Id = 1},
+                        {Name = GetLabelText("CLO_SUF_L_5_2"), Id = 2},
+                        {Name = GetLabelText("CLO_SUF_L_5_3"), Id = 3},
+                        {Name = GetLabelText("CLO_SUF_L_5_4"), Id = 4},
+                        {Name = GetLabelText("CLO_SUF_L_5_5"), Id = 5},
+                        {Name = GetLabelText("CLO_SUF_L_5_6"), Id = 6},
+                        {Name = GetLabelText("CLO_SUF_L_5_7"), Id = 7},
+                        {Name = GetLabelText("CLO_SUF_L_5_8"), Id = 8},
+                        {Name = GetLabelText("CLO_SUF_L_5_9"), Id = 9},
+                        {Name = GetLabelText("CLO_SUF_L_5_10"), Id = 10},
+                        {Name = GetLabelText("CLO_SUF_L_5_11"), Id = 11},
+                        {Name = GetLabelText("CLO_SUF_L_5_12"), Id = 12},
+                        {Name = GetLabelText("CLO_SUF_L_5_13"), Id = 13},
+                        {Name = GetLabelText("CLO_SUF_L_5_14"), Id = 14},
+                        {Name = GetLabelText("CLO_SUF_L_5_15"), Id = 15},
+                    }),
+                },
+            },
+        },
+        {
+            Collections = {
+                {
+                    Name = "Chaussure",
+                    Items = CreateItemsWithTextures(ComponentType.Shoes, 5, {
+                        {Name = GetLabelText("F_FMF_5_0"), Id = 0},
+                        {Name = GetLabelText("F_FMF_5_1"), Id = 1},
+                        {Name = GetLabelText("F_FMF_5_10"), Id = 10},
+                        {Name = GetLabelText("F_FMF_5_13"), Id = 13},
+                    }),
+                },
+            },
+        },
+    },
+}
 
 Citizen.CreateThread(function()
     local numHairColors = GetNumHairColors();
