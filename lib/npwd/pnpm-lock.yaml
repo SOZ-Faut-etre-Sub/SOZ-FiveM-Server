@@ -94,8 +94,8 @@ importers:
       '@babel/core': ^7.16.0
       '@babel/preset-env': ^7.16.4
       '@babel/preset-typescript': ^7.16.0
-      '@citizenfx/client': ^2.0.4170-1
-      '@citizenfx/server': ^2.0.4167-1
+      '@citizenfx/client': ^2.0.5511-1
+      '@citizenfx/server': ^2.0.5511-1
       '@discordjs/collection': ^0.2.4
       '@project-error/pe-utils': ^0.1.6
       '@types/jest': ^26.0.14
@@ -138,8 +138,8 @@ importers:
       '@babel/core': 7.17.5
       '@babel/preset-env': 7.16.11_@babel+core@7.17.5
       '@babel/preset-typescript': 7.16.7_@babel+core@7.17.5
-      '@citizenfx/client': 2.0.4170-1
-      '@citizenfx/server': 2.0.4167-1
+      '@citizenfx/client': 2.0.5511-1
+      '@citizenfx/server': 2.0.5511-1
       '@types/jest': 26.0.24
       '@types/md5': 2.3.2
       '@types/node': 14.18.12
@@ -1433,12 +1433,12 @@ packages:
     resolution: {integrity: sha512-hZ82+Z1CfFFWYqTohDc9K2Cn00NAGQ4Hv34JH9kQpMsA2talHVUXjZOZ78/Dtk0DcGVA2beSYfA8fMm6ZrKmHg==}
     dev: false
 
-  /@citizenfx/client/2.0.4170-1:
-    resolution: {integrity: sha512-5Wj6k/zUmNKCpOsZCbUbTaWYqnSBQJPztvx7ln51DAktTRO2l29mRMfcBZNVQ2L3tJt144w9iTrlmytojuzrdQ==}
+  /@citizenfx/client/2.0.5511-1:
+    resolution: {integrity: sha512-8N0xm6731PgjG/0rd/RYl533xYSgj1Sp5SLmaEjFim1hxPtEPEJWa7YFbNDJ9fje2uBmXNBNstOCxlWyzGLjkw==}
     dev: true
 
-  /@citizenfx/server/2.0.4167-1:
-    resolution: {integrity: sha512-hVusU0cemvfFBXcDS+BRdMWa59hdCTQK51iva1dAC0KPGnhkqs5XC3BAVhCwjDbv2Fx3Vy1Oasz3KU6/RG6EkQ==}
+  /@citizenfx/server/2.0.5511-1:
+    resolution: {integrity: sha512-zE398eEzsES9beZvj2ZEckFDzGrsQIKSZZ/vMXMKLLLdXvSd2YILkQLzNeDCS7+6FSDREBpr+4CzZztIltmCbQ==}
     dev: true
 
   /@citizenfx/three/0.100.0:

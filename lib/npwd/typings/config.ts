@@ -28,12 +28,7 @@ interface DatabaseConfig {
 }
 
 interface ImageConfig {
-  url: string;
-  type: string;
   imageEncoding: 'png' | 'jpg' | 'webp';
-  contentType: string;
-  authorizationPrefix: string;
-  useAuthorization: boolean;
   returnedDataIndexes: Array<any>;
 }
 
