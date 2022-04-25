@@ -56,8 +56,9 @@ function CreateCharacterWizard(spawnId, character)
     DoScreenFadeOut(500)
     Wait(500)
 
-    SetEntityCoords(player, Config.PlayerCustomization.x, Config.PlayerCustomization.y, Config.PlayerCustomization.z, 0, 0, 0, false)
-    SetEntityHeading(player, Config.PlayerCustomization.w)
+    SetEntityCoords(player, Config.Locations[spawnId].PlayerCustomization.x, Config.Locations[spawnId].PlayerCustomization.y,
+                    Config.Locations[spawnId].PlayerCustomization.z, 0, 0, 0, false)
+    SetEntityHeading(player, Config.Locations[spawnId].PlayerCustomization.w)
 
     DoScreenFadeIn(500)
 

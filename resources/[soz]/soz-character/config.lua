@@ -1,10 +1,10 @@
 Config = {}
 
-Config.PlayerCustomization = vector4(402.82, -997.11, -99.0, 181.94)
 Config.PedCoords = vector4(-813.97, 176.22, 76.74, -7.5) -- Create preview ped at these coordinates
 
 Config.Locations = {
     ["spawn1"] = {
+        PlayerCustomization = vector4(-811.82, 175.2, 76.75, 111.82),
         ["Coords"] = {
             ["X"] = -1037.47,
             ["Y"] = -2737.59,
@@ -15,6 +15,7 @@ Config.Locations = {
         },
     },
     ["spawn2"] = {
+        PlayerCustomization = vector4(-103.29, 6193.76, 31.03, 142.94),
         ["Coords"] = {
             ["X"] = -105.82,
             ["Y"] = 6314.55,
