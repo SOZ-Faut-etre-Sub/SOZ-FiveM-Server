@@ -210,19 +210,6 @@ RegisterNetEvent("vehiclekeys:client:SetOwner", function(plate)
     HasVehicleKey = true
 end)
 
--- a changer en prêter les clés
---[[
-RegisterNetEvent("vehiclekeys:client:GiveKeys", function(target)
-    local vehicles = IsPedInAnyVehicle(PlayerPedId())
-    if vehicles then
-        local plate = QBCore.Functions.GetPlate(GetVehiclePedIsIn(PlayerPedId(), true))
-        TriggerServerEvent("vehiclekeys:server:GiveVehicleKeys", plate, target)
-    else
-        QBCore.Functions.Notify("you need to be in a vehicle to give key", "error")
-    end
-end)
---]]
-
 RegisterNetEvent("vehiclekeys:client:ToggleEngine", function(EngineOn)
     local veh = GetVehiclePedIsIn(PlayerPedId(), true)
     if HasVehicleKey then

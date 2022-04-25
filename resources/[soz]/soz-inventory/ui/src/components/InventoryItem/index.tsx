@@ -44,7 +44,7 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
         <div ref={itemRef} className={styles.item} data-item={JSON.stringify(item)}>
             {item && <img className={styles.icon} src={`https://nui-img/soz-items/${item.name}`} alt=""/> }
             <div className={styles.label}>
-                <span>{item ? `${item.amount} ${item.label}` : 'Mon argent'}</span>
+                <span>{item ? `${item.type !== 'key' ? item.amount : ''} ${item.label}` : 'Mon argent'}</span>
                 <span>{money && money.toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
             </div>
             {item && <span className={styles.tooltip}>{item.description}</span> }
