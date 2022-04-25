@@ -15,7 +15,7 @@ function CreatePlayer(shutdownLoadingScreen)
     SendNUIMessage({action = "open"})
 
     -- set God mode
-
+    TriggerServerEvent("soz-character:server:InCharacterMenu", true)
     TriggerServerEvent("soz-character:server:SetGodmode", true)
 end
 
@@ -77,4 +77,6 @@ function CharacterCreate(SpawnId, charInfo, character)
         ApplyPlayerBodySkin(PlayerId(), character.Skin)
         ApplyPlayerClothConfig(PlayerId(), character.ClothConfig)
     end
+
+    DoScreenFadeIn(500)
 end
