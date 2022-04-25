@@ -50,7 +50,16 @@ function CreateAndApplyDefaultCharacter(gender)
 end
 
 function CreateCharacterWizard(spawnId, character)
+    local player = PlayerPedId()
     local confirm = false
+
+    DoScreenFadeOut(500)
+    Wait(500)
+
+    SetEntityCoords(player, Config.PlayerCustomization.x, Config.PlayerCustomization.y, Config.PlayerCustomization.z, 0, 0, 0, false)
+    SetEntityHeading(player, Config.PlayerCustomization.w)
+
+    DoScreenFadeIn(500)
 
     while not confirm do
         Camera.Activate()
@@ -61,9 +70,15 @@ function CreateCharacterWizard(spawnId, character)
 
         if confirmWord:lower() == "oui" then
             confirm = true
+            TriggerServerEvent("soz-character:server:InCharacterMenu", false)
             TriggerServerEvent("soz-character:server:SetGodmode", false)
         end
     end
+
+    DoScreenFadeOut(500)
+    Wait(500)
+
+    SpawnPlayer(spawnId)
 
     return character
 end
