@@ -81,7 +81,7 @@ function CreateCharacterWizard(spawnId, character)
     DoScreenFadeOut(500)
     Wait(500)
 
-    SpawnPlayer(spawnId)
+    SpawnPlayer(spawnId, true)
 
     return character
 end

@@ -30,9 +30,12 @@ RegisterNUICallback("SpawnPlayer", function(data)
     CharacterCreate(data.SpawnId, charInfo, character)
 end)
 
-function SpawnPlayer(SpawnId)
-    SetFocusArea(Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"],
-                 Config.Locations[SpawnId]["Coords"]["Z"] + Config.Locations[SpawnId]["Coords"]["Z-Offset"], 0.0, 0.0, 0.0)
+function SpawnPlayer(SpawnId, skipFocusArea)
+    if skipFocusArea ~= true then
+        SetFocusArea(Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"],
+                     Config.Locations[SpawnId]["Coords"]["Z"] + Config.Locations[SpawnId]["Coords"]["Z-Offset"], 0.0, 0.0, 0.0)
+    end
+
     SetEntityCoords(PlayerPedId(), Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"], Config.Locations[SpawnId]["Coords"]["Z"],
                     0, 0, 0, false)
     SetEntityHeading(PlayerPedId(), Config.Locations[SpawnId]["Coords"]["H"])
