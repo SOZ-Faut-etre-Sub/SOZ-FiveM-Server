@@ -28,7 +28,7 @@ exports("GetCoreObject", function()
     return SozJobCore
 end)
 
-exports("GetJobLabel", function (jobId)
+exports("GetJobLabel", function(jobId)
     return SozJobCore.JobLabel[jobId]
 end)
 
