@@ -50,23 +50,33 @@ RegisterNetEvent("vehiclekeys:server:GiveVehicleKeys", function(plate, target)
     if CheckOwner(plate, Player.PlayerData.citizenid) then
         if QBCore.Functions.GetPlayer(target) ~= nil then
             TriggerClientEvent("vehiclekeys:client:SetOwner", target, plate)
-            TriggerClientEvent("hud:client:DrawNotification", src, "Vous avez donné les clés !")
-            TriggerClientEvent("hud:client:DrawNotification", target, "Vous avez reçu les clés !")
-        else
-            TriggerClientEvent("hud:client:DrawNotification", source, "La personne dort", "error")
+            TriggerClientEvent("hud:client:DrawNotification", src, "Vous avez donné les clés ~b~" .. plate)
+            TriggerClientEvent("hud:client:DrawNotification", target, "Vous avez reçu les clés  ~b~" .. plate)
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous ne possédez pas ce véhicule", "error")
+        TriggerClientEvent("hud:client:DrawNotification", src, "Vous ne possédez pas ce véhicule", "error")
     end
 end)
 
 -- callback
-
 QBCore.Functions.CreateCallback("vehiclekeys:server:CheckOwnership", function(source, cb, plate)
     local check = VehicleList[plate]
     local retval = check ~= nil
 
     cb(retval)
+end)
+
+QBCore.Functions.CreateCallback("vehiclekeys:server:GetPlayerKeys", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local keys = {}
+
+    for plate, vehicleData in pairs(VehicleList) do
+        if vehicleData.owners[Player.PlayerData.citizenid] then
+            table.insert(keys, plate)
+        end
+    end
+
+    cb(keys)
 end)
 
 QBCore.Functions.CreateCallback("vehiclekeys:server:CheckHasKey", function(source, cb, plate)
