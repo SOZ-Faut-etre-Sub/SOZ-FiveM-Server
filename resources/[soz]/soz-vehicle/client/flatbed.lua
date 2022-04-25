@@ -83,6 +83,7 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
         local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
         if Action == "lower" then
             if not BedInfo.Status then
+                exports["soz-hud"]:DrawNotification("Le plateau descend !")
                 local BedPos = VehicleInfo.Default.Pos
                 local BedRot = VehicleInfo.Default.Rot
 
@@ -119,10 +120,10 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
                     AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
                 until BedRot.x == VehicleInfo.Active.Rot.x and BedPos.z == VehicleInfo.Active.Pos.z
             end
-            exports["soz-hud"]:DrawNotification("Le plateau descend !")
             LastStatus = true
         elseif Action == "raise" then
             if not BedInfo.Status then
+                exports["soz-hud"]:DrawNotification("Le plateau remonte !")
                 local BedPos = VehicleInfo.Active.Pos
                 local BedRot = VehicleInfo.Active.Rot
 
@@ -159,7 +160,6 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action)
                     AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
                 until BedPos.y == VehicleInfo.Default.Pos.y
             end
-            exports["soz-hud"]:DrawNotification("Le plateau remonte !")
             LastStatus = false
         elseif Action == "attach" then
             if not BedInfo.Attached then
