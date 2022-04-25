@@ -175,7 +175,7 @@ end)
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(100)
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, WHERE state = 0", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 2 WHERE state = 0", {})
     end
 end)
 

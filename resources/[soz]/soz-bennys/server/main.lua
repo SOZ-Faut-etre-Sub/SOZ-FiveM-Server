@@ -214,3 +214,7 @@ function IsVehicleOwned(plate)
     end
     return retval
 end
+
+RegisterNetEvent("soz-bennys:server:putInDepot", function(plate)
+    MySQL.Async.execute("UPDATE player_vehicles SET state = 2 WHERE plate = ?", {plate})
+end)
