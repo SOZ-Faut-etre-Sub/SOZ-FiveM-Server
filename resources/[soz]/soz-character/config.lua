@@ -15,7 +15,7 @@ Config.Locations = {
         },
     },
     ["spawn2"] = {
-        PlayerCustomization = vector4(-103.29, 6193.76, 31.03, 142.94),
+        PlayerCustomization = vector4(-101.15, 6195.74, 31.03, 136.74),
         ["Coords"] = {
             ["X"] = -105.82,
             ["Y"] = 6314.55,

@@ -54,12 +54,14 @@ function CreateCharacterWizard(spawnId, character)
     local confirm = false
 
     DoScreenFadeOut(500)
+    SetEntityVisible(player, false)
     Wait(500)
 
     SetEntityCoords(player, Config.Locations[spawnId].PlayerCustomization.x, Config.Locations[spawnId].PlayerCustomization.y,
                     Config.Locations[spawnId].PlayerCustomization.z, 0, 0, 0, false)
     SetEntityHeading(player, Config.Locations[spawnId].PlayerCustomization.w)
 
+    SetEntityVisible(player, true)
     DoScreenFadeIn(500)
 
     while not confirm do
