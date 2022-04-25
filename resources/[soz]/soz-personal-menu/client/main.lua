@@ -21,6 +21,7 @@ local function GenerateMenu()
     IdentityEntry(personalMenu)
     AnimationsEntry()
     InvoiceEntry(personalMenu)
+    KeysEntry(personalMenu)
     HudToggleEntry(personalMenu)
     JobEntry(personalMenu)
 

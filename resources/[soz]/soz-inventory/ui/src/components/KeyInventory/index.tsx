@@ -2,32 +2,17 @@ import {useCallback, useEffect, useState} from "react";
 import {InventoryItem, SortableContainer} from "../InventoryItem";
 import {IInventoryEvent, IInventoryItem} from "../../types/inventory";
 import { ReactSortable } from "react-sortablejs";
-import styles from "./styles.module.css";
+import styles from "../PlayerInventory/styles.module.css";
 import cn from "classnames";
 
-const PlayerInventory = () => {
+const KeyInventory = () => {
     const [display, setDisplay] = useState<boolean>(false);
-
-    const [playerMoney, setPlayerMoney] = useState<number>(0);
-    const [playerInventory, setPlayerInventory] = useState<IInventoryEvent>({id: 'source', type: '', weight: 0, maxWeight: 0});
-    const [playerInventoryItems, setPlayerInventoryItems] = useState<IInventoryItem[]>([]);
-
-    const interactAction = useCallback((action: string, item: IInventoryItem) => {
-        fetch(`https://soz-inventory/player/${action}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify(item)
-        }).then(() => {
-            setDisplay(false);
-        });
-    }, [setDisplay]);
+    const [playerInventoryKeys, setPlayerInventoryKeys] = useState<IInventoryItem[]>([]);
 
     const transfertItem = useCallback((event: any) => {
         if (event.item.dataset.item === undefined) return
 
-        fetch(`https://soz-inventory/player/giveItemToTarget`, {
+        fetch(`https://soz-inventory/player/giveKeyToTarget`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -39,16 +24,13 @@ const PlayerInventory = () => {
     }, [setDisplay]);
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
-        if (event.data.action === "openPlayerInventory") {
-            if (event.data.playerInventory === undefined) return
+        if (event.data.action === "openPlayerKeyInventory") {
+            if (event.data.keys === undefined) return
 
-            setPlayerInventory(event.data.playerInventory);
-            setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `player_${item.slot}`})));
-            setPlayerMoney(event.data.playerMoney);
-
+            setPlayerInventoryKeys(event.data.keys.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `key_${item.slot}`})));
             setDisplay(true);
         }
-    }, [setDisplay, setPlayerMoney, setPlayerInventory, setPlayerInventoryItems]);
+    }, [setDisplay, setPlayerInventoryKeys]);
 
     const onKeyDownReceived = useCallback((event: KeyboardEvent) => {
         if (!event.repeat && event.key === 'Escape') {
@@ -74,8 +56,6 @@ const PlayerInventory = () => {
         }
     }, [onMessageReceived, onKeyDownReceived]);
 
-    if (playerInventory === undefined) return null;
-
     return (
         <main className={
             cn(styles.container, {
@@ -83,28 +63,24 @@ const PlayerInventory = () => {
                 [styles.container_hide]: !display,
             })
         }>
-            <header className={styles.banner}>
-                <span>{playerInventory.weight / 1000}/{playerInventory.maxWeight / 1000} Kg </span>
-            </header>
+            <header className={styles.banner} />
 
             {/* @ts-ignore */}
             <ReactSortable
                 forceFallback={true} // FIVEM...
                 tag={SortableContainer}
-                id={playerInventory.id}
-                list={playerInventoryItems}
-                setList={setPlayerInventoryItems}
+                list={playerInventoryKeys}
+                setList={setPlayerInventoryKeys}
                 sort={false}
                 animation={150}
                 onEnd={transfertItem}
             >
-                <InventoryItem key="player_money" money={playerMoney} contextMenu={true} interactAction={interactAction} />
-                {playerInventoryItems.map(item => (
-                    <InventoryItem key={item.id} item={item} contextMenu={true} interactAction={interactAction} />
+                {playerInventoryKeys.map(item => (
+                    <InventoryItem key={item.id} item={item} />
                 ))}
             </ReactSortable>
         </main>
     );
 }
 
-export default PlayerInventory
+export default KeyInventory

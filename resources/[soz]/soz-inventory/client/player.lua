@@ -1,5 +1,4 @@
-local inventoryMenu = MenuV:CreateMenu(nil, "", "menu_inventory", "soz", "inventory")
-local currentWeapon, CurrentWeaponData = nil, {}
+local currentWeapon = nil
 
 RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
 RegisterCommand("inventory", function()
@@ -84,7 +83,7 @@ RegisterNUICallback("player/giveMarkedMoney", function(data, cb)
 end)
 
 RegisterNUICallback("player/giveItemToTarget", function(data, cb)
-    local hit, endCoords, surfaceNormal, entityHit, entityType, direction = ScreenToWorld()
+    local hit, _, _, entityHit, entityType, _ = ScreenToWorld()
     SetNuiFocus(false, false)
 
     if hit == 1 and entityType == 1 then
