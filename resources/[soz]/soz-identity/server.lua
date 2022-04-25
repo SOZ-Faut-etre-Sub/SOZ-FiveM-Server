@@ -12,11 +12,6 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope, act
         return
     end
 
-    local gender = "Masculin"
-    if charinfo.gender > 0 then
-        gender = "Féminin"
-    end
-
     TriggerClientEvent("soz-identity:client:display-ui", target, {
         type = "display",
         scope = scope,
@@ -24,7 +19,6 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope, act
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         licences = licences,
-        gender = gender,
         job = Player.PlayerData.job.name or "-",
         address = "-",
         phone = charinfo.phone,
