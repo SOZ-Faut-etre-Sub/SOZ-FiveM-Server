@@ -55,6 +55,14 @@ gameMasterMenu:AddButton({
 })
 
 gameMasterMenu:AddCheckbox({
+    label = "En service",
+    value = nil,
+    change = function(_, checked)
+        TriggerServerEvent("QBCore:ToggleDuty")
+    end,
+})
+
+gameMasterMenu:AddCheckbox({
     label = "Mallette d'argent",
     value = true,
     change = function(_, checked)
