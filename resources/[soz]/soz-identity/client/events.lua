@@ -1,4 +1,5 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+local PlayerData = QBCore.Functions.GetPlayerData()
 
 --
 -- NUI related events
@@ -29,6 +30,13 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
         data.gender = "Masculin"
     else
         data.gender = "Féminin"
+    end
+
+    local job = PlayerData.job
+    if job ~= nil then
+        data.job = exports["soz-jobs"]:GetJobLabel(job.id)
+    else
+        data.job = "-"
     end
 
     SendNUIMessage(data)

@@ -19,7 +19,6 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope, act
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         licences = licences,
-        job = Player.PlayerData.job.name or "-",
         address = "-",
         phone = charinfo.phone,
         source = source,
