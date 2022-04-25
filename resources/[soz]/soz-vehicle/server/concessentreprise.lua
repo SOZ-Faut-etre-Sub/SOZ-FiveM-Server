@@ -29,7 +29,7 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
     end
     if money > tonumber(vehicle.price) then
         MySQL.Async.insert(
-            "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, depotprice, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, depotprice, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             {
                 pData.PlayerData.license,
                 cid,
