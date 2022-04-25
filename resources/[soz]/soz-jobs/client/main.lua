@@ -28,6 +28,10 @@ exports("GetCoreObject", function()
     return SozJobCore
 end)
 
+exports("GetJobLabel", function(jobId)
+    return SozJobCore.JobLabel[jobId]
+end)
+
 local function BuildPromoteMenu(target)
     PromoteMenu:ClearItems()
     PromoteMenu:SetSubtitle("Promouvoir un joueur")

@@ -19,6 +19,24 @@ SozJobCore.JobType = {
     Debug = "debug",
 }
 
+SozJobCore.JobLabel = {
+    unemployed = "Sans emploi",
+    adsl = "ADSL",
+    delivery = "Fougère Prime",
+    religious = "InfoChat",
+    scrapper = "DeMetal Company",
+    lspd = "LSPD",
+    bcso = "BCSO",
+    lsmc = "LSMC",
+    taxi = "Carl Jr Service",
+    food = "Château Marius",
+    news = "Twitch News",
+    garbage = "BlueBird",
+    oil = "Michel Transport Petrol",
+    ["cash-transfer"] = "STONK Depository",
+    bennys = "Benny's",
+}
+
 SozJobCore.JobPermission = {
     ManageGrade = "manage-grade",
     SocietyPrivateStorage = "society-private-storage",
