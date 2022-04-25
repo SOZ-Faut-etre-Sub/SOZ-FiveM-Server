@@ -410,7 +410,7 @@ local function SpawnListVehicle(model)
 end
 
 local function RepairPart(part)
-    QBCore.Functions.Progressbar("repair_part", "Repairing " .. Config.ValuesLabels[part], 10000, false, true,
+    QBCore.Functions.Progressbar("repair_part", "Réparation de " .. Config.ValuesLabels[part], 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -519,6 +519,11 @@ local function CleanVehicle(entity)
     end)
 end
 
+local function DepotVehicle(entity)
+    local plate = QBCore.Functions.GetPlate(entity)
+    TriggerServerEvent("soz-bennys:server:putInDepot", plate)
+end
+
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
@@ -560,7 +565,25 @@ CreateThread(function()
                     return true
                 end,
             },
+            {
+                type = "client",
+                icon = "c:mechanic/reparer.png",
+                event = "qb-carwash:client:washCar",
+                label = "Fourrièrer",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    DepotVehicle(entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return true
+                end,
+            },
         },
-        distance = 2.5,
+        distance = 3.0,
     })
 end)

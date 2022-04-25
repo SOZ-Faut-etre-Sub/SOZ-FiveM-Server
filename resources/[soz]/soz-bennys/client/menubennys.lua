@@ -1,4 +1,4 @@
-local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_job_bennys", "soz", "mechanic:vehicle:options")
+local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_job_depanneur", "soz", "mechanic:vehicle:options")
 local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
 local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
 local NoDamage = MenuV:InheritMenu(Status, "Aucun dommage")
@@ -585,14 +585,7 @@ local function OpenPlateIndexMenu(menu)
     })
     local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
     local tempPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
-    local plateTypes = {
-        "Bleu sur Blanc #1",
-        "Jaune sur Noir",
-        "Jaune sur Bleu",
-        "Bleu sur Blanc #2",
-        "Bleu sur Blanc #3",
-        "Yankton Nord",
-    }
+    local plateTypes = {"Jaune sur Noir", "Jaune sur Bleu", "Bleu sur Blanc #1", "Bleu sur Blanc #2"}
     if GetVehicleClass(plyVeh) ~= 18 then
         for i = 0, #plateTypes - 1 do
             if i ~= 4 then
@@ -894,7 +887,7 @@ end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
-        exports["qb-target"]:AddTargetModel(-1883980157, {
+        exports["qb-target"]:AddTargetModel(-1830645735, {
             options = {
                 {
                     type = "client",
@@ -933,7 +926,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
         })
     else
         if PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(-1883980157, "Service")
+            exports["qb-target"]:RemoveTargetModel(-1830645735, "Service")
         end
     end
 end)

@@ -1,4 +1,4 @@
-local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_job_bennys", "soz", "mechanic:vehicle:wash")
+local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_job_depanneur", "soz", "mechanic:vehicle:wash")
 local insidewash = false
 
 local function WashMenu(menu)
