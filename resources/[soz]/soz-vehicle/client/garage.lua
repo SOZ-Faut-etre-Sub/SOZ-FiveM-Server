@@ -401,6 +401,20 @@ local function enterVehicle(veh, indexgarage, type, garage)
     end
 end
 
+RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
+    local plate = QBCore.Functions.GetPlate(entity)
+    local bodyDamage = math.ceil(GetVehicleBodyHealth(entity))
+    local engineDamage = math.ceil(GetVehicleEngineHealth(entity))
+    local totalFuel = GetVehicleFuelLevel(entity)
+    CheckPlayers(entity)
+    TriggerServerEvent("qb-garage:server:updateVehicle", 2, totalFuel, engineDamage, bodyDamage, plate, "fourriere", "depot")
+    if plate then
+        OutsideVehicles[plate] = nil
+        TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
+    end
+    exports["soz-hud"]:DrawNotification("Le véhicule a été mis à la fourrière")
+end)
+
 AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
     PlayerGang = PlayerData.gang

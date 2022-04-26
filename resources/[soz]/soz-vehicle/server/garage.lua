@@ -136,7 +136,7 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local parkingtime = 0
-    if type == "private" then
+    if type == "private" or type == "depot" then
         parkingtime = os.time()
     end
     if type ~= "entreprise" then
