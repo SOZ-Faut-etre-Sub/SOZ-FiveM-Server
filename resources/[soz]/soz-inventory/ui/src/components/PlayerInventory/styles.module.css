@@ -4,6 +4,7 @@
     left: 1vw;
     width: 18vw;
     transition: transform 0.3s, opacity 0.3s;
+    max-height: 50vh;
 }
 
 .container_show {
