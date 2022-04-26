@@ -28,16 +28,20 @@ end)
 RegisterNetEvent("soz-jobs:Client:OnJobSync", function(jobs)
     JobOption.JobList = {}
 
-    for _, jobData in pairs(jobs) do
+    for jobID, jobData in pairs(jobs) do
         for _, grade in pairs(jobData.grades) do
             if grade.owner == 1 then
                 table.insert(JobOption.JobList, {
                     label = jobData.label,
-                    value = {label = jobData.label, jobID = grade.jobID, gradeId = grade.id},
+                    value = {label = jobData.label, jobID = jobID, gradeId = grade.id},
                 })
             end
         end
     end
+
+    table.sort(JobOption.JobList, function(a, b)
+        return a.label < b.label
+    end)
 end)
 
 --- Add to main menu
