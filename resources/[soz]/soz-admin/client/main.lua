@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 AdminMenu = MenuV:CreateMenu(nil, "", "menu_admin", "soz", "admin-panel")
 MapperMenu = MenuV:CreateMenu(nil, "", "menu_mapper", "soz", "mapping-panel")
