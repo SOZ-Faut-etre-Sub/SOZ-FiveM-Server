@@ -519,11 +519,6 @@ local function CleanVehicle(entity)
     end)
 end
 
-local function DepotVehicle(entity)
-    local plate = QBCore.Functions.GetPlate(entity)
-    TriggerServerEvent("soz-bennys:server:putInDepot", plate)
-end
-
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
@@ -568,13 +563,13 @@ CreateThread(function()
             {
                 type = "client",
                 icon = "c:mechanic/reparer.png",
-                event = "qb-carwash:client:washCar",
+                event = "qb-garages:client:PutInDepot",
                 label = "Fourrièrer",
                 action = function(entity)
                     if IsPedAPlayer(entity) then
                         return false
                     end
-                    DepotVehicle(entity)
+                    TriggerEvent("qb-garages:client:PutInDepot", entity)
                 end,
                 canInteract = function(entity, distance, data)
                     if OnDuty == false or PlayerJob.id ~= "bennys" then
