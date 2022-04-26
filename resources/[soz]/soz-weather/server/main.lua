@@ -31,9 +31,7 @@ function AdvanceTime()
         end
     end
 
-    if currentMinute % 30 == 0 and currentSecond == 0 then
-        GlobalState.time = {currentHour, currentMinute, currentSecond}
-    end
+    GlobalState.time = {currentHour, currentMinute, currentSecond}
 end
 
 function GetNextWeather(Weather, Forecast)
