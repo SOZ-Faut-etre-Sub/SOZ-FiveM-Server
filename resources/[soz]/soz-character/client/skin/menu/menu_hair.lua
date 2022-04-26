@@ -20,6 +20,10 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
         skin.Hair.EyebrowType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
+    CreateRangeOpacitySliderItem(hairMenu, "Densité", skin.Hair.EyebrowOpacity, function(value)
+        skin.Hair.EyebrowOpacity = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
     CreateColorSliderList(hairMenu, "Couleur", skin.Hair.EyebrowColor, Colors.Hair, function(value)
         skin.Hair.EyebrowColor = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -35,6 +39,10 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
         skin.Hair.BeardType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
+    CreateRangeOpacitySliderItem(hairMenu, "Densité", skin.Hair.BeardOpacity, function(value)
+        skin.Hair.BeardOpacity = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
     CreateColorSliderList(hairMenu, "Couleur", skin.Hair.BeardColor, Colors.Hair, function(value)
         skin.Hair.BeardColor = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -44,6 +52,10 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
     hairMenu:AddTitle({label = "Poils"})
     CreateSliderList(hairMenu, "Poils", skin.Hair.ChestHairType, Labels.ChestHair, function(value)
         skin.Hair.ChestHairType = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeOpacitySliderItem(hairMenu, "Densité", skin.Hair.ChestHairOpacity, function(value)
+        skin.Hair.ChestHairOpacity = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
     CreateColorSliderList(hairMenu, "Couleur des poils", skin.Hair.ChestHairColor, Colors.Hair, function(value)
@@ -70,6 +82,10 @@ local function CreateFemaleHairItems(hairMenu, playerId, skin)
         skin.Hair.EyebrowType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
+    CreateRangeOpacitySliderItem(hairMenu, "Densité", skin.Hair.EyebrowOpacity, function(value)
+        skin.Hair.EyebrowOpacity = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
     CreateColorSliderList(hairMenu, "Couleur des sourcils", skin.Hair.EyebrowColor, Colors.Hair, function(value)
         skin.Hair.EyebrowColor = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -83,6 +99,10 @@ local function CreateFemaleHairItems(hairMenu, playerId, skin)
     hairMenu:AddTitle({label = "Poils"})
     CreateSliderList(hairMenu, "Poils", skin.Hair.ChestHairType, Labels.ChestHair, function(value)
         skin.Hair.ChestHairType = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeOpacitySliderItem(hairMenu, "Densité", skin.Hair.ChestHairOpacity, function(value)
+        skin.Hair.ChestHairOpacity = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
     CreateColorSliderList(hairMenu, "Couleur des poils", skin.Hair.ChestHairColor, Colors.Hair, function(value)

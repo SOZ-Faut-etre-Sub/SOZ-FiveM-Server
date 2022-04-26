@@ -23,7 +23,7 @@ const App = () => {
             <main class={style.app} style={{transition: "opacity .5s", opacity: display ? 1.0 : 0.0}}>
                 <header class={style.header} style={{transition: "transform .5s", transform: display ? 'translateY(0)' : 'translateY(1vh)'}}>
                     <h1>Démarrage</h1>
-                    <h2>ZeraWorld</h2>
+                    <h2>Los Santos</h2>
                 </header>
                 <LocationPreview style={{position: 'relative', transition: "transform .5s", transform: display ? 'translateY(0)' : 'translateY(-1vh)'}} />
                 <LocationPicker />
