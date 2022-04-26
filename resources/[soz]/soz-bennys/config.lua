@@ -110,6 +110,12 @@ Config.vehicleNeonOptions = {
     },
 }
 
+Config.vehicleCustomisationBannedMods = {
+    "Unité de contrôle à distance",
+    "Brouilleur de verr. (missile)",
+    "Mitrailleuses",
+}
+
 Config.vehicleCustomisationMechanic = {
     {category = "Spoiler", id = 0},
     {category = "Pare-choc avant", id = 1},
