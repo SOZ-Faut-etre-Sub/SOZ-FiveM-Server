@@ -132,9 +132,18 @@ function CheckValidMods(category, id, wheelType)
             end
         end
 
-        validMods[i] = {id = (i - 1), name = modName}
+        local isbanned
+        for x, y in pairs(Config.vehicleCustomisationBannedMods) do
+            if Config.vehicleCustomisationBannedMods[x] == modName then
+                isbanned = true
+            end
+        end
 
-        amountValidMods = amountValidMods + 1
+        if not isbanned then
+            validMods[i] = {id = (i - 1), name = modName}
+
+            amountValidMods = amountValidMods + 1
+        end
     end
 
     if modAmount > 0 then
