@@ -9,11 +9,13 @@
 .container_show {
     transform: translateY(0);
     opacity: 1;
+    z-index: 10;
 }
 
 .container_hide {
     transform: translateY(-2vw);
     opacity: 0;
+    z-index: 0;
 }
 
 .banner {
