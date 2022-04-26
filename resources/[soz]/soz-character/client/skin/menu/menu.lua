@@ -4,6 +4,12 @@ function CreateRangeSizeItem(menu, label, value, cb)
     end)
 end
 
+function CreateRangeOpacitySliderItem(menu, label, value, cb)
+    menu:AddRange({label = label, value = value * 100, min = 0, max = 100, interval = 5}):On("change", function(_, value)
+        cb(value / 100)
+    end)
+end
+
 function CreateSliderList(menu, label, value, options, cb)
     local valueIndex = 1
 
