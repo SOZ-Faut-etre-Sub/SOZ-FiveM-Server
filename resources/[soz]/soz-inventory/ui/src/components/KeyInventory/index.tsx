@@ -1,12 +1,15 @@
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {InventoryItem, SortableContainer} from "../InventoryItem";
 import {IInventoryEvent, IInventoryItem} from "../../types/inventory";
 import { ReactSortable } from "react-sortablejs";
 import styles from "../PlayerInventory/styles.module.css";
 import cn from "classnames";
+import {closeNUI} from "../../hooks/nui";
 
 const KeyInventory = () => {
     const [display, setDisplay] = useState<boolean>(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
     const [playerInventoryKeys, setPlayerInventoryKeys] = useState<IInventoryItem[]>([]);
 
     const transfertItem = useCallback((event: any) => {
@@ -19,7 +22,7 @@ const KeyInventory = () => {
             },
             body: event.item.dataset.item
         }).then(() => {
-            setDisplay(false);
+            closeNUI(() => setDisplay(false));
         });
     }, [setDisplay]);
 
@@ -33,31 +36,32 @@ const KeyInventory = () => {
     }, [setDisplay, setPlayerInventoryKeys]);
 
     const onKeyDownReceived = useCallback((event: KeyboardEvent) => {
-        if (!event.repeat && event.key === 'Escape') {
-            fetch(`https://soz-inventory/closeNUI`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: JSON.stringify({})
-            }).then(() => {
-                setDisplay(false);
-            });
+        if (display && !event.repeat && event.key === 'Escape') {
+            closeNUI(() => setDisplay(false));
         }
-    }, [setDisplay])
+    }, [display, setDisplay])
+
+    const onClickReceived = useCallback((event: MouseEvent) => {
+        if (display &&menuRef.current && !menuRef.current.contains(event.target as Node)){
+            event.preventDefault();
+            closeNUI(() => setDisplay(false));
+        }
+    }, [menuRef, display, setDisplay])
 
     useEffect(() => {
+        window.addEventListener('contextmenu', onClickReceived)
         window.addEventListener('message', onMessageReceived)
         window.addEventListener('keydown', onKeyDownReceived)
 
         return () => {
+            window.removeEventListener('contextmenu', onClickReceived)
             window.removeEventListener('message', onMessageReceived)
             window.removeEventListener('keydown', onKeyDownReceived)
         }
     }, [onMessageReceived, onKeyDownReceived]);
 
     return (
-        <main className={
+        <main ref={menuRef} className={
             cn(styles.container, {
                 [styles.container_show]: display,
                 [styles.container_hide]: !display,

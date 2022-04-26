@@ -35,6 +35,8 @@ const ContainerInventory = () => {
                 item: event.item.dataset.item,
             })
         }).then(res => res.json()).then(transfert => {
+            if (transfert.sourceInventory.id == transfert.targetInventory.id) return
+
             let sourceInventory = transfert.sourceInventory
             let targetInventory = transfert.targetInventory
 

@@ -6,6 +6,7 @@ RegisterCommand("inventory", function()
         return
     end
 
+    exports["menuv"]:SendNUIMessage({action = "RESET_MENU"})
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
             SendNUIMessage({
