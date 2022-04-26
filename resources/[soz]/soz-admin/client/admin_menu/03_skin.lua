@@ -65,7 +65,7 @@ local function GenerateDrawableList(menu, ped, i)
         })
         menu:AddSlider({
             label = Config.ComponentName[i] .. " variation",
-            value = 0,
+            value = PlayerComponentVariation[i] + 1,
             values = CreateRange(0, 20),
             change = function(_, value)
                 PlayerComponentVariation[i] = value - 1
@@ -73,6 +73,28 @@ local function GenerateDrawableList(menu, ped, i)
             end,
         })
     end
+end
+
+local function getPlayerSkin()
+    local ped = PlayerPedId()
+    local skin = {Components = {}, Props = {}}
+
+    for i, _ in pairs(PlayerComponent) do
+        skin.Components[i] = {
+            Drawable = tonumber(GetPedDrawableVariation(ped, i)),
+            Texture = tonumber(GetPedTextureVariation(ped, i)),
+            Palette = 0,
+        }
+    end
+    for i, _ in pairs(PlayerProp) do
+        skin.Props[i] = {
+            Drawable = tonumber(GetPedPropIndex(ped, i)),
+            Texture = tonumber(GetPedPropTextureIndex(ped, i)),
+            Palette = 0,
+        }
+    end
+
+    return skin
 end
 
 --- Menu entries
@@ -132,7 +154,7 @@ skinComponentMenu:On("open", function(menu)
             })
             menu:AddSlider({
                 label = Config.PropName[i] .. " variation",
-                value = 0,
+                value = PlayerPropVariation[i] + 1,
                 values = CreateRange(0, 20),
                 change = function(_, value)
                     PlayerPropVariation[i] = value - 1
@@ -152,16 +174,14 @@ skinComponentMenu:On("open", function(menu)
         label = "Copier la tenue dans le presse papier",
         value = nil,
         select = function()
-            local skin = {Components = {}, Props = {}}
-
-            for i, v in pairs(PlayerComponent) do
-                skin.Components[i] = {Drawable = v, Texture = PlayerComponentVariation[i] or 0, Palette = 0}
-            end
-            for i, v in pairs(PlayerProp) do
-                skin.Props[i] = {Drawable = v, Texture = PlayerPropVariation[i] or 0, Palette = 0}
-            end
-
-            SendNUIMessage({string = json.encode(skin)})
+            SendNUIMessage({string = json.encode(getPlayerSkin())})
+        end,
+    })
+    menu:AddButton({
+        label = "Sauvegarder cette tenue",
+        value = nil,
+        select = function()
+            TriggerServerEvent("admin:skin:UpdateClothes", getPlayerSkin())
         end,
     })
 end)

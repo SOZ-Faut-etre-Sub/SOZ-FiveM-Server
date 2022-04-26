@@ -18,4 +18,4 @@ server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/module/*.lu
 ui_page "html/index.html"
 files {"html/index.html", "html/index.js"}
 
-dependencies {"qb-core", "menuv"}
+dependencies {"qb-core", "menuv", "soz-jobs"}
