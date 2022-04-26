@@ -1,4 +1,4 @@
-local jobMenu = MenuV:InheritMenu(AdminMenu, { subtitle = "Pour se construire un avenir"})
+local jobMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Pour se construire un avenir"})
 
 local JobOption = {JobList = {}}
 
@@ -31,7 +31,10 @@ RegisterNetEvent("soz-jobs:Client:OnJobSync", function(jobs)
     for _, jobData in pairs(jobs) do
         for _, grade in pairs(jobData.grades) do
             if grade.owner == 1 then
-                table.insert(JobOption.JobList, {label = jobData.label, value = {label = jobData.label, jobID = grade.jobID, gradeId = grade.id}})
+                table.insert(JobOption.JobList, {
+                    label = jobData.label,
+                    value = {label = jobData.label, jobID = grade.jobID, gradeId = grade.id},
+                })
             end
         end
     end

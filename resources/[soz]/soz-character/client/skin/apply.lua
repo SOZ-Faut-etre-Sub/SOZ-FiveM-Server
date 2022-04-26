@@ -121,7 +121,7 @@ end
 
 local function ApplyPedClothSet(ped, clothSet)
     for componentId, component in pairs(clothSet.Components) do
-        SetPedComponentVariation(ped, componentId, component.Drawable, component.Texture or 0, component.Palette or 0);
+        SetPedComponentVariation(ped, tonumber(componentId), component.Drawable, component.Texture or 0, component.Palette or 0);
     end
 
     for propId, prop in pairs(clothSet.Props) do
