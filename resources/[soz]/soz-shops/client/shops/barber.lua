@@ -97,6 +97,10 @@ function BarberShop:GenerateMenu()
                 playerUpdater.Hair.BeardType = value
                 SetPedHeadOverlay(ped, 1, value, 1.0);
             end)
+            CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Hair.BeardOpacity, function(value)
+                playerUpdater.Hair.BeardOpacity = value
+                SetPedHeadOverlay(ped, 1, playerUpdater.Hair.BeardType, value);
+            end)
             CreateColorSliderList(shopMenu, "Couleur", PlayerData.skin.Hair.BeardColor, Config.CharacterComponentColors.Hair, function(value)
                 playerUpdater.Hair.BeardColor = value
                 SetPedHeadOverlayColor(ped, 1, 1, value, 0);
@@ -105,6 +109,10 @@ function BarberShop:GenerateMenu()
             CreateSliderList(shopMenu, "Type", PlayerData.skin.Makeup.FullMakeupType, content.items, function(value)
                 playerUpdater.Makeup.FullMakeupType = value
                 SetPedHeadOverlay(ped, 4, value, 1.0)
+            end)
+            CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Makeup.FullMakeupOpacity, function(value)
+                playerUpdater.Makeup.FullMakeupOpacity = value
+                SetPedHeadOverlay(ped, 4, playerUpdater.Makeup.FullMakeupType, value)
             end)
             CreateColorSliderList(shopMenu, "Couleur principale", PlayerData.skin.Makeup.FullMakeupPrimaryColor, Config.CharacterComponentColors.Makeup,
                                   function(value)
@@ -121,6 +129,10 @@ function BarberShop:GenerateMenu()
                 playerUpdater.Makeup.BlushType = value
                 SetPedHeadOverlay(ped, 5, value, 1.0)
             end)
+            CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Makeup.BlushOpacity, function(value)
+                playerUpdater.Makeup.BlushOpacity = value
+                SetPedHeadOverlay(ped, 5, playerUpdater.Makeup.BlushType, value)
+            end)
             CreateColorSliderList(shopMenu, "Couleur du blush", PlayerData.skin.Makeup.BlushColor, Config.CharacterComponentColors.Makeup, function(value)
                 playerUpdater.Makeup.BlushColor = value
                 SetPedHeadOverlayColor(ped, 5, 2, value, 0)
@@ -129,6 +141,10 @@ function BarberShop:GenerateMenu()
             CreateSliderList(shopMenu, "Type", PlayerData.skin.Makeup.LipstickType, content.items, function(value)
                 playerUpdater.Makeup.LipstickType = value
                 SetPedHeadOverlay(ped, 8, value, 1.0)
+            end)
+            CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Makeup.LipstickOpacity, function(value)
+                playerUpdater.Makeup.LipstickOpacity = value
+                SetPedHeadOverlay(ped, 8, playerUpdater.Makeup.LipstickType, value)
             end)
             CreateColorSliderList(shopMenu, "Couleur du rouge à lèvre", PlayerData.skin.Makeup.LipstickColor, Config.CharacterComponentColors.Makeup,
                                   function(value)

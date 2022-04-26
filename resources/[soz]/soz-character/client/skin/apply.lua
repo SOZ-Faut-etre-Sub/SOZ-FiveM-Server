@@ -27,11 +27,11 @@ end
 local function ApplyPedHair(ped, hair)
     SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
     SetPedHairColor(ped, hair.HairColor, hair.HairSecondaryColor or 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, hair.EyebrowOpacity or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Eyebrows, 1, hair.EyebrowColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, hair.BeardOpacity or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.FacialHair, 1, hair.BeardColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, hair.ChestHairOpacity or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.ChestHair, 1, hair.ChestHairColor, 0);
 end
 
@@ -66,11 +66,11 @@ local function ApplyPedFaceTrait(ped, faceTrait)
 end
 
 local function ApplyPedMakeup(ped, makeup)
-    SetPedHeadOverlay(ped, HeadOverlayType.Lipstick, makeup.LipstickType, 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Lipstick, makeup.LipstickType, makeup.LipstickOpacity or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Lipstick, 2, makeup.LipstickColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Blush, makeup.BlushType, 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Blush, makeup.BlushType, makeup.BlushOpacity or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Blush, 2, makeup.BlushColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Makeup, makeup.FullMakeupType, 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Makeup, makeup.FullMakeupType, makeup.FullMakeupOpacity or 1.0);
 
     if makeup.FullMakeupDefaultColor then
         SetPedHeadOverlayColor(ped, HeadOverlayType.Makeup, 0, 0, 0);

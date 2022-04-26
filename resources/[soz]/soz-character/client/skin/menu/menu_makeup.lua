@@ -5,6 +5,10 @@ function CreateMakeupMenuItems(makeupMenu, playerId, skin)
         skin.Makeup.FullMakeupType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
+    CreateRangeOpacitySliderItem(makeupMenu, "Densité", skin.Makeup.FullMakeupOpacity, function(value)
+        skin.Makeup.FullMakeupOpacity = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
     makeupMenu:AddCheckbox({label = "Utiliser couleur par défaut", value = skin.Makeup.FullMakeupDefaultColor}):On("change", function(_, value)
         skin.Makeup.FullMakeupDefaultColor = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -24,6 +28,10 @@ function CreateMakeupMenuItems(makeupMenu, playerId, skin)
         skin.Makeup.BlushType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
+    CreateRangeOpacitySliderItem(makeupMenu, "Densité", skin.Makeup.BlushOpacity, function(value)
+        skin.Makeup.BlushOpacity = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
     CreateColorSliderList(makeupMenu, "Couleur du blush", skin.Makeup.BlushColor, Colors.Makeup, function(value)
         skin.Makeup.BlushColor = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -33,6 +41,10 @@ function CreateMakeupMenuItems(makeupMenu, playerId, skin)
     makeupMenu:AddTitle({label = "Rouge à lèvres"})
     CreateSliderList(makeupMenu, "Cheveux", skin.Makeup.LipstickType, Labels.Lipstick, function(value)
         skin.Makeup.LipstickType = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeOpacitySliderItem(makeupMenu, "Densité", skin.Makeup.LipstickOpacity, function(value)
+        skin.Makeup.LipstickOpacity = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
     CreateColorSliderList(makeupMenu, "Couleur des cheveux", skin.Makeup.LipstickColor, Colors.Makeup, function(value)
