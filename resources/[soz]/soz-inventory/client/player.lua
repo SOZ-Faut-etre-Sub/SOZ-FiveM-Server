@@ -105,6 +105,16 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
     cb(true)
 end)
 
+RegisterNetEvent("inventory:client:StoreWeapon", function()
+    local ped = PlayerPedId()
+    if currentWeapon ~= nil then
+        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
+        RemoveAllPedWeapons(ped, true)
+        TriggerEvent("weapons:client:SetCurrentWeapon", nil, true)
+        currentWeapon = nil
+    end
+end)
+
 RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
     local ped = PlayerPedId()
     local weaponName = tostring(weaponData.name)
