@@ -6,7 +6,7 @@ local function drawRct(x, y, width, height, r, g, b, a)
 end
 
 local function CreateThread()
-    TriggerEvent("hud:client:OverrideVisibility", globalHUD)
+    TriggerEvent("hud:client:OverrideVisibility", globalHUD and not cinematicHUD)
     Citizen.CreateThread(function()
         while cinematicHUD or not globalHUD or cinematicCam do
 
