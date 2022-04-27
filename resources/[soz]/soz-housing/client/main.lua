@@ -110,21 +110,6 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
     end)
 end)
 
-RegisterNetEvent("soz-housing:client:SetBlip")
-AddEventHandler("soz-housing:client:SetBlip", function(GlobalZone)
-    Citizen.CreateThread(function()
-        for item, zone in pairs(Config.PolyZone) do
-            QBCore.Functions.CreateBlip(zone.identifier, {
-                name = "Habitation",
-                coords = vector3(zone.x, zone.y, zone.z),
-                sprite = 350,
-                color = 5,
-                scale = 0.5,
-            })
-        end
-    end)
-end)
-
 function isTrailer(name)
     if string.find(name, "trailer") == nil then
         return false
