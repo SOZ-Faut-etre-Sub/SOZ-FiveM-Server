@@ -118,6 +118,7 @@ CreateThread(function()
     animationMenu:AddButton({label = "Mes Animations", value = personalAnimationMenu})
 
     for shortcut = 1, 10 do
+        shortcut = string.format("%02d", shortcut)
         personalAnimationMenu:AddButton({
             label = "Animation personnelles " .. shortcut,
             value = animationMenu,
