@@ -27,15 +27,25 @@ OriginalOldLivery = nil
 OriginalPlateIndex = nil
 
 CreateThread(function()
-    local c = Config.Locations["exit"]
-    local Blip = AddBlipForCoord(c.x, c.y, c.z)
-    SetBlipSprite(Blip, 227)
-    SetBlipDisplay(Blip, 4)
-    SetBlipScale(Blip, 1.0)
-    SetBlipAsShortRange(Blip, true)
+    local coordbennys = Config.Locations["bennys"]
+    local BlipBennys = AddBlipForCoord(coordbennys.x, coordbennys.y, coordbennys.z)
+    SetBlipSprite(BlipBennys, 227)
+    SetBlipDisplay(BlipBennys, 4)
+    SetBlipScale(BlipBennys, 1.0)
+    SetBlipAsShortRange(BlipBennys, true)
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentSubstringPlayerName("Benny's")
-    EndTextCommandSetBlipName(Blip)
+    EndTextCommandSetBlipName(BlipBennys)
+
+    local coordcass = Config.Locations["cass"]
+    local BlipCass = AddBlipForCoord(coordcass.x, coordcass.y, coordcass.z)
+    SetBlipSprite(BlipCass, 653)
+    SetBlipDisplay(BlipCass, 4)
+    SetBlipScale(BlipCass, 0.8)
+    SetBlipAsShortRange(BlipCass, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName("Casse")
+    EndTextCommandSetBlipName(BlipCass)
 end)
 
 local function loadAnimDict(dict)
@@ -535,7 +545,7 @@ CreateThread(function()
                     Repairall(entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or GetVehicleEngineHealth(entity) < 500 or GetVehicleBodyHealth(entity) < 500 then
                         return false
                     end
                     return true
