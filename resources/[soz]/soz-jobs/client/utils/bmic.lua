@@ -1,4 +1,4 @@
-local BMicConfig = {
+BMicConfig = {
     enabled = false,
     prop = "prop_v_bmike_01",
     animDict = "missfra1",
@@ -55,6 +55,10 @@ end
 
 --- Toggle Events
 RegisterNetEvent("jobs:utils:bmic:toggle", function()
+    if CameraConfig.enabled or MicConfig.enabled then
+        return
+    end
+
     BMicConfig.enabled = not BMicConfig.enabled
     bmicOperator()
 end)
