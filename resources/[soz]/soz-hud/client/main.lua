@@ -1,7 +1,7 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
 local HudForcedStateDisplay = true
-PlayerInVehicle, PlayerHaveGPS, PlayerHaveCompass, PlayerHaveHouseMap = false, false, false, false
+PlayerInVehicle, PlayerHaveGPS, PlayerHaveCompass = false, false, false
 HudDisplayed, HudRadar = false, true
 --- @class PlayerData
 local HudPlayerStatus = {
@@ -53,9 +53,6 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
         end
         if item.name == "compass" then
             PlayerHaveCompass = true
-        end
-        if item.name == "house_map" then
-            PlayerHaveHouseMap = true
         end
     end
 end)
@@ -212,8 +209,6 @@ CreateThread(function()
         if LocalPlayer.state.isLoggedIn then
             setHudDisplay(not IsPauseMenuActive())
             setPlayerData({health = GetEntityHealth(player)})
-            TriggerEvent("zkea:client:setmap", PlayerHaveHouseMap)
-
             if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
 

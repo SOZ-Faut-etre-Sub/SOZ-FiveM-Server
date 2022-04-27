@@ -134,3 +134,10 @@ AddEventHandler("soz-housing:server:sell", function(name, price)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, reason)
     end
 end)
+
+RegisterNetEvent("soz-housing:server:GetAvailableHousing")
+AddEventHandler("soz-housing:server:GetAvailableHousing", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    local AvailableHousing = MySQL.query.await("SELECT identifier, entry_zone FROM player_house WHERE owner IS NULL")
+    TriggerClientEvent("soz-housing:client:SetAvailableHousing", Player.PlayerData.source, AvailableHousing)
+end)
