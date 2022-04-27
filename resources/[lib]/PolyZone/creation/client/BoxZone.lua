@@ -82,7 +82,7 @@ function boxStart(name, heading, length, width, minHeight, maxHeight)
   end
   Citizen.CreateThread(function()
     while createdZone do
-      if IsControlJustPressed(0, 20) then -- Z pressed
+      if IsControlJustPressed(0, 137) then -- Caps Lock pressed
         useZ = not useZ
         if useZ then
           createdZone.debugColors.walls = {255, 0, 0}
