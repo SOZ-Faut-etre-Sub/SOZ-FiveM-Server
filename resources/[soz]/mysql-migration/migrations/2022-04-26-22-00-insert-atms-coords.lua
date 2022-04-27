@@ -2,6 +2,9 @@ table.insert(migrations, {
     name = "insert-atms-coords",
     queries = {
         [[
+            DELETE FROM bank_accounts WHERE account_type = 'bank-atm' and businessid like 'atm_%';
+        ]],
+        [[
             INSERT INTO bank_accounts(businessid, money, account_type, coords) VALUES 
             ('atm_big_1378866546', 20000, 'bank-atm', '{"x":-301.6573,"y":-829.5886}'),
             ('atm_big_542704114', 20000, 'bank-atm', '{"x":-303.2257,"y":-829.3121}'),
