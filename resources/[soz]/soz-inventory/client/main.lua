@@ -15,6 +15,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
 end)
 
 RegisterNetEvent("inventory:client:openInventory", function(playerInventory, targetInventory)
+    TriggerEvent("inventory:client:StoreWeapon")
     SendNUIMessage({action = "openInventory", playerInventory = playerInventory, targetInventory = targetInventory})
     SetNuiFocus(true, true)
 end)
