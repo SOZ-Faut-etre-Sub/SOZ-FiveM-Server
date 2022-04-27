@@ -35,7 +35,7 @@ local function SpeedLimiterMenu(vehicle)
         },
     })
     speed:On("select", function(item, value)
-        SetVehicleMaxSpeed(vehicle, value / 3.6 - 0.5)
+        SetVehicleMaxSpeed(vehicle, value / 3.6 - 0.25)
     end)
 end
 
