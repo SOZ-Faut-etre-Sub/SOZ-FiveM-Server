@@ -216,10 +216,6 @@ exports("CanFillIn", StonkJob.Permissions.CanFillIn)
 ---
 -- BAG COLLECTION
 StonkJob.Functions.CollectBags = function(currentShop, nBags)
-    local animDict = "anim@mp_radio@garage@low"
-    QBCore.Functions.RequestAnimDict(animDict)
-    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
-
     local duration = StonkConfig.Collection.Duration * nBags
     QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez des sacs d'argent", duration, false, true,
                                  {
@@ -227,7 +223,7 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         disableCarMovement = false,
         disableMouse = false,
         disableCombat = false,
-    }, {}, {}, {}, function(wasCancelled)
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(wasCancelled)
         if not wasCancelled then
             local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-collect-bag", nBags)
             if success then
@@ -236,7 +232,6 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
         end
-        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
@@ -267,17 +262,13 @@ StonkJob.Functions.ResaleBags = function()
         count = StonkConfig.Resale.Quantity
     end
 
-    local animDict = "anim@mp_radio@garage@low"
-    QBCore.Functions.RequestAnimDict(animDict)
-    TaskPlayAnim(PlayerPedId(), animDict, "action_a", 8.0, 8.0, -1, 1, 1, true, false, true)
-
     QBCore.Functions.Progressbar("stonk-resale-bag", string.format("Vous déposez %d sacs d'argent", count), StonkConfig.Resale.Duration * count, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = false,
         disableMouse = false,
         disableCombat = false,
-    }, {}, {}, {}, function(wasCancelled)
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(wasCancelled)
         if not wasCancelled then
             TriggerServerEvent("soz-jobs:server:stonk-resale-bag", count)
             exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
@@ -285,7 +276,6 @@ StonkJob.Functions.ResaleBags = function()
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
         end
-        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
