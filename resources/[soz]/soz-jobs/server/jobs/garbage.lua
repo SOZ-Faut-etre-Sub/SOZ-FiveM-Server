@@ -10,6 +10,8 @@ RegisterNetEvent("jobs:server:garbage:processBags", function()
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il vous manque ~r~un sac poubelle", "error")
 
         return
+    elseif playerGarbageBagAmount < bagToProcess then
+        bagToProcess = playerGarbageBagAmount
     end
 
     exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "garbagebag", bagToProcess)

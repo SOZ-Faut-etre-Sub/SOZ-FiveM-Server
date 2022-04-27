@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useRef, useCallback, useState, useEffect} from "react";
 import cn from "classnames";
 import styles from "./styles.module.css";
 
@@ -6,6 +6,7 @@ const Input= () => {
     const [title, setTitle] = useState<string|null>(null);
     const [maxChar, setMaxChar] = useState<number>(32);
     const [value, setValue] = useState<string>('');
+    const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'draw_input') {
@@ -13,7 +14,7 @@ const Input= () => {
             if (event.data.maxChar) setMaxChar(event.data.maxChar)
             if (event.data.content) setValue(event.data.content)
         }
-    }, [setTitle, setMaxChar, setValue])
+    }, [inputRef, setTitle, setMaxChar, setValue])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         setValue(event.target.value)
@@ -59,19 +60,29 @@ const Input= () => {
             });
         }
     }
+    const onClickReceived = (event: MouseEvent) => {
+        if (title !== null && inputRef.current) inputRef.current.focus()
+    }
 
     useEffect(() => {
         window.addEventListener('message', onMessageReceived)
         window.addEventListener('keyup', onKeyUpReceived)
+        window.addEventListener('click', onClickReceived)
+        window.addEventListener('contextmenu', onClickReceived)
 
         return () => {
             window.removeEventListener('message', onMessageReceived)
             window.removeEventListener('keyup', onKeyUpReceived)
+            window.removeEventListener('click', onClickReceived)
+            window.removeEventListener('contextmenu', onClickReceived)
         }
-    }, [onMessageReceived, onKeyUpReceived]);
+    }, [inputRef, onMessageReceived, onKeyUpReceived, onClickReceived]);
 
     return (
-        <div className={styles.container}>
+        <div className={cn(styles.container, {
+            [styles.show]: title !== null,
+            [styles.hide]: title === null,
+        })}>
             <form onSubmit={handleSubmit} className={cn(styles.formContainer, {
                 [styles.show]: title !== null,
                 [styles.hide]: title === null,
@@ -80,9 +91,9 @@ const Input= () => {
                     <h2>{title}</h2>
 
                     {maxChar <= 64 ? (
-                        <input type="text" value={value} autoFocus={true} onChange={handleChange} maxLength={maxChar}/>
+                        <input type="text" ref={inputRef} autoFocus={true} value={value} onChange={handleChange} maxLength={maxChar}/>
                     ) : (
-                        <textarea value={value} autoFocus={true} onChange={handleChange} onKeyDown={onEnterPress} maxLength={maxChar} rows={5}/>
+                        <textarea ref={inputRef} autoFocus={true} value={value} onChange={handleChange} onKeyDown={onEnterPress} maxLength={maxChar} rows={5}/>
                     )}
                 </>}
             </form>

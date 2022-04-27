@@ -45,6 +45,10 @@ end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)
     lastSocietyCall = GetGameTimer()
+
+    QBCore.Functions.RequestAnimDict("mp_doorbell")
+    TaskPlayAnim(PlayerPedId(), "mp_doorbell", "ring_bell_a", 8.0, -8.0, 3000, 48, 0, false, false, false)
+
     TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(),
                        {
         anonymous = false,

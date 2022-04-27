@@ -43,12 +43,28 @@
 
 /* Sortable Container */
 .content {
+    overflow-y: auto;
+    overflow-x: hidden;
     background: rgba(0, 0, 0, .6);
-    min-height: 200px;
-    padding: .5rem .5rem 10vh .5rem;
+    padding: .5rem;
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    min-height: 40vh;
+    max-height: 60vh;
+}
+
+.content::-webkit-scrollbar {
+    width: 6px;
+}
+.content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.content::-webkit-scrollbar-thumb {
+    background: #888;
+}
+.content::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .content > * + * {

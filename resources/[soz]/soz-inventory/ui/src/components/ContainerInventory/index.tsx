@@ -45,6 +45,8 @@ const ContainerInventory = () => {
                 targetInventory = transfert.sourceInventory
             }
 
+            setPlayerInventory(sourceInventory);
+            setTargetInventory(targetInventory);
             setPlayerInventoryItems(sourceInventory.items.map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
             setTargetInventoryItems(targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
         });
@@ -63,9 +65,11 @@ const ContainerInventory = () => {
             setDisplay(true);
         } else if (event.data.action === "updateInventory") {
             if (event.data.playerInventory !== undefined){
+                setPlayerInventory(event.data.playerInventory);
                 setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
             }
             if (event.data.targetInventory !== undefined) {
+                setTargetInventory(event.data.targetInventory);
                 setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
             }
         }

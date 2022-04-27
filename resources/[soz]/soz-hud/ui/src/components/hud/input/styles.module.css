@@ -5,6 +5,15 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.container.show {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.container.hide {
+    background-color: transparent;
 }
 
 .formContainer {
@@ -47,10 +56,15 @@
     width: 100%;
     color: #fff;
     background-color: rgba(0, 0, 0, .15);
-    border: 1px solid rgba(61, 186, 37, .7);
+    border: 1px solid rgba(62, 94, 58, 0.7);
     border-radius: .3rem;
     padding: .5rem;
     outline-style: none;
+}
+
+.formContainer input:focus,
+.formContainer textarea:focus {
+    border: 1px solid rgba(61, 186, 37, .7);
 }
 
 .formContainer input:focus {
