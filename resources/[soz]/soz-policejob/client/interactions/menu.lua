@@ -69,6 +69,7 @@ local function BadgeEntity(menu)
                         local vehiclePed = GetPedInVehicleSeat(vehicle, i)
                         if vehiclePed ~= 0 and not IsPedAPlayer(vehiclePed) then
                             TaskLeaveVehicle(vehiclePed, vehicle, 256)
+                            SetBlockingOfNonTemporaryEvents(vehiclePed, true)
                             TaskWanderStandard(vehiclePed, 10.0, 10.0)
 
                             pedFound = pedFound + 1
