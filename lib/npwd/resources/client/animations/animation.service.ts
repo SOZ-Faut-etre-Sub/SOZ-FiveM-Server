@@ -127,7 +127,7 @@ export class AnimationService {
     await this.loadAnimDict(dict);
 
     if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
-      SetCurrentPedWeapon(playerPed, 0xa2719263, true);
+      emit('inventory:client:StoreWeapon');
       TaskPlayAnim(playerPed, dict, anim, 7.0, -1, -1, 50, 0, false, false, false);
     }
   }
@@ -139,7 +139,7 @@ export class AnimationService {
     await this.loadAnimDict(dict);
 
     if (!IsEntityPlayingAnim(playerPed, dict, anim, 3)) {
-      SetCurrentPedWeapon(playerPed, 0xa2719263, true);
+      emit('inventory:client:StoreWeapon');
       TaskPlayAnim(playerPed, dict, anim, 8.0, -1, -1, 50, 0, false, false, false);
     }
   }
