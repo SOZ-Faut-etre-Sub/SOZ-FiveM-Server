@@ -25,7 +25,8 @@ AddEventHandler("soz-housing:client:ShowBlip", function()
         for item, zone in pairs(CurrentHousing) do
             if zone.entry_zone ~= nil then
                 point = json.decode(zone.entry_zone)
-                QBCore.Functions.CreateBlip(zone.identifier, {
+                QBCore.Functions.CreateBlip(zone.identifier,
+                                            {
                     name = "Habitation",
                     coords = vector3(point.x, point.y, point.z),
                     sprite = 350,
