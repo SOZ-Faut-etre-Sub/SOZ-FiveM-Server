@@ -76,7 +76,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertOffshoreMoney", functio
     cb(false, "unknown")
 end)
 
-QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source, cb, accountSource, accountTarget, amount)
+QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source, cb, accountSource, accountTarget, amount, sendNotificationToTarget)
     local Player = QBCore.Functions.GetPlayer(source)
     local CurrentMoney = Player.Functions.GetMoney("money")
     amount = tonumber(amount)
@@ -100,6 +100,15 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
         end
     else
         Account.TransfertMoney(accountSource, accountTarget, amount, function(success, reason)
+            if sendNotificationToTarget then
+                local Target = QBCore.Functions.GetPlayerByBankAccount(accountTarget)
+
+                if Target then
+                    TriggerClientEvent("hud:client:DrawAdvancedNotification", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
+                                       "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE")
+                end
+            end
+
             cb(success, reason)
             return
         end)

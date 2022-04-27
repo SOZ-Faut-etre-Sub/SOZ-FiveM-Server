@@ -79,6 +79,15 @@ function QBCore.Functions.GetPlayerByPhone(number)
     return nil
 end
 
+function QBCore.Functions.GetPlayerByBankAccount(account)
+    for src, _ in pairs(QBCore.Players) do
+        if QBCore.Players[src].PlayerData.charinfo.account == account then
+            return QBCore.Players[src]
+        end
+    end
+    return nil
+end
+
 function QBCore.Functions.GetPlayers()
     local sources = {}
     for k, v in pairs(QBCore.Players) do
