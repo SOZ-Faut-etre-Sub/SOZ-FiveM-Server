@@ -1,4 +1,4 @@
-local MicConfig = {
+MicConfig = {
     enabled = false,
     prop = "p_ing_microphonel_01",
     animDict = "anim@random@shop_clothes@watches",
@@ -57,6 +57,10 @@ end
 
 --- Toggle Events
 RegisterNetEvent("jobs:utils:mic:toggle", function()
+    if CameraConfig.enabled or BMicConfig.enabled then
+        return
+    end
+
     MicConfig.enabled = not MicConfig.enabled
     micOperator()
 end)
