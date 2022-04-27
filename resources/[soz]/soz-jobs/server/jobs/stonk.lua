@@ -75,5 +75,5 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
     end
     TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, result.accountId, amount)
 
-    cb({success = true })
+    cb({success = true})
 end)
