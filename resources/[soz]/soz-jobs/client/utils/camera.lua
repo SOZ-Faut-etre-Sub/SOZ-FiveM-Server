@@ -1,4 +1,4 @@
-local CameraConfig = {
+CameraConfig = {
     enabled = false,
     prop = "prop_v_cam_01",
     animDict = "missfinale_c2mcs_1",
@@ -186,6 +186,10 @@ end
 
 --- Toggle Events
 RegisterNetEvent("jobs:utils:camera:toggle", function()
+    if MicConfig.enabled or BMicConfig.enabled then
+        return
+    end
+
     CameraConfig.enabled = not CameraConfig.enabled
     cameraOperator()
 end)
