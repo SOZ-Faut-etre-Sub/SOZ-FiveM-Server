@@ -303,15 +303,15 @@ StonkJob.Functions.FillIn = function(data)
             payload["atmType"] = data.atmType
         end
 
-        local success, reason = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-fill-in", payload)
-        if not success then
+        local res = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-fill-in", payload)
+        if not res.success then
             local messages = {
                 ["invalid_quantity"] = "Vous n'avez pas de sacs d'argent sur vous",
                 ["invalid_money"] = "Ce compte est déjà plein",
             }
-            local message = messages[reason]
-            if messages[reason] == nil then
-                message = string.format("Il y a eu une erreur: %s", reason)
+            local message = messages[res.reason]
+            if messages[res.reason] == nil then
+                message = string.format("Il y a eu une erreur: %s", res.reason)
             end
             exports["soz-hud"]:DrawNotification(message, "error")
         else

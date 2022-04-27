@@ -51,19 +51,19 @@ end)
 QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source, cb, data)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
-        cb(false, "invalid_player")
+        cb({success = false, reason = "invalid_player"})
         return
     end
 
     local itemCount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nil, true)
     if itemCount < 1 then
-        cb(false, "invalid_quantity")
+        cb({success = false, reason = "invalid_quantity"})
         return
     end
 
     local result = QBCore.Functions.TriggerRpc("banking:server:needRefill", source, data)
     if not result.needRefill then
-        cb(false, "invalid_money")
+        cb({success = false, reason = "invalid_money"})
         return
     end
 
@@ -75,5 +75,5 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
     end
     TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, result.accountId, amount)
 
-    cb(true)
+    cb({success = true})
 end)
