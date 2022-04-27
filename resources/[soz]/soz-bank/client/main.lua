@@ -29,7 +29,12 @@ AddEventHandler("locations:zone:exit", function(bankType, bankName)
     end
 end)
 
-local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 2.4, {name = "bank_society", heading = 340})
+local bankSociety = BoxZone:Create(vector3(246.43, 223.79, 106.29), 2.0, 15.0, {
+    name = "bank_society",
+    heading = 340,
+    minZ = 105.29,
+    maxZ = 108.29,
+})
 bankSociety:onPlayerInOut(function(isPointInside, point)
     isInsideEntrepriseBankZone = isPointInside
 end)
