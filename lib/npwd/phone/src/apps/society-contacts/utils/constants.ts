@@ -31,4 +31,34 @@ export const SocietyContactsState: Society[] = [
         number: '555-BLUEBIRD',
         avatar: 'media/society_icon/bluebird.webp',
     },
+    {
+        id: 6,
+        display: 'Carl Jr Service',
+        number: '555-CARLJR',
+        avatar: 'media/society_icon/taxi.webp',
+    },
+    {
+        id: 7,
+        display: 'Château Marius',
+        number: '555-MARIUS',
+        avatar: 'media/society_icon/food.webp',
+    },
+    {
+        id: 8,
+        display: 'Michel Transport Petrol',
+        number: '555-MTP',
+        avatar: 'media/society_icon/oil.webp',
+    },
+    {
+        id: 9,
+        display: 'STONK Depository',
+        number: '555-STONK',
+        avatar: 'media/society_icon/cash-transfer.webp',
+    },
+    {
+        id: 10,
+        display: 'Benny\'s',
+        number: '555-BENNYS',
+        avatar: 'media/society_icon/bennys.webp',
+    },
 ];
