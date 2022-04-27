@@ -5,42 +5,30 @@
     <Item>
       <modelName>police6</modelName>
       <colors>
-        <Item>
+		<Item>
           <indices content="char_array">
+            111
             0
             0
-            0
-            156
+            93
+            134
           </indices>
-          <liveries>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-            <Item value="false"/>
-          </liveries>
+          <liveries />
         </Item>
       </colors>
       <kits>
-        <Item>997_police6_modkit</Item>
+        <Item>999_police5_modkit</Item>
       </kits>
-      <windowsWithExposedEdges/>
+      <windowsWithExposedEdges />
       <plateProbabilities>
         <Probabilities>
           <Item>
             <Name>Police guv plate</Name>
-            <Value value="100"/>
+            <Value value="100" />
           </Item>
         </Probabilities>
       </plateProbabilities>
-      <lightSettings value="72"/>
+      <lightSettings value="1"/>
       <sirenSettings value="1"/>
     </Item>
   </variationData>
