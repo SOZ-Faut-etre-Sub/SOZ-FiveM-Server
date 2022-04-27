@@ -7,7 +7,7 @@
             <modelName>ambcar</modelName>
             <txdName>ambcar</txdName>
             <handlingId>FBI2</handlingId>
-            <gameName>FBI2</gameName>
+            <gameName>AMBULAN</gameName>
             <vehicleMakeName />
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -15,7 +15,7 @@
             <animConvRoofName>null</animConvRoofName>
             <animConvRoofWindowsAffected />
             <ptfxAssetName>null</ptfxAssetName>
-            <audioNameHash />
+            <audioNameHash>FBI2</audioNameHash>
             <layout>LAYOUT_RANGER</layout>
             <coverBoundOffsets>FBI2_COVER_OFFSET_INFO</coverBoundOffsets>
             <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
@@ -77,7 +77,7 @@
             <frequency value="100" />
             <swankness>SWANKNESS_1</swankness>
             <maxNum value="999" />
-            <flags>FLAG_HAS_LIVERY FLAG_LAW_ENFORCEMENT FLAG_DONT_SPAWN_IN_CARGEN FLAG_IS_OFFROAD_VEHICLE FLAG_HAS_INTERIOR_EXTRAS</flags>
+            <flags>FLAG_HAS_LIVERY FLAG_EMERGENCY_SERVICE FLAG_DONT_SPAWN_IN_CARGEN FLAG_IS_OFFROAD_VEHICLE FLAG_HAS_INTERIOR_EXTRAS</flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_FRONT_AND_BACK_PLATES</plateType>
             <dashboardType>VDT_CAVALCADE</dashboardType>
