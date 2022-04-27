@@ -2,10 +2,11 @@ CurrentHousingItemMenu:On("open", function(menu)
     menu:ClearItems()
 
     if CurrentZoneData ~= nil then
-        menu:AddButton({
+        menu:AddCheckbox({
             label = "Afficher la zone",
-            value = nil,
-            select = function()
+            value = drawZone,
+            change = function()
+                drawZone = not drawZone
                 print(CurrentZoneData)
                 zone = json.decode(CurrentZoneData)
                 DisplayZone(zone)
@@ -32,6 +33,15 @@ end)
 
 ChangeCurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
+
+    menu:AddButton({
+        label = "Se Téléporter dans l'habitation",
+        value = nil,
+        select = function()
+            coord = json.decode(CurrentHousingData.teleport)
+            SetPedCoordsKeepVehicle(PlayerPedId(), coord.x, coord.y, coord.z)
+        end,
+    })
 
     if CurrentHousingData.building == nil then
         menu:AddButton({

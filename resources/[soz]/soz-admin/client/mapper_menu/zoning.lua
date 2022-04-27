@@ -24,8 +24,8 @@ function DisplayZone(zone)
     local maxZ = zone.maxZ or plyPos.z + zDrawDist
 
     _calculatePoints(vector3(zone.x, zone.y, zone.z), zone.sx, zone.sy)
-    while true do
-        DrawBox(p1.x, p1.y, minZ, p3.x, p3.y, maxZ, 93, 173, 226, 50)
+    while drawZone do
+        DrawBox(p1.x, p1.y, minZ, p3.x, p3.y, maxZ, 93, 173, 226, 80)
         Wait(1)
     end
 end
