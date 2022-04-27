@@ -15,7 +15,7 @@ export const ZutomApp: React.FC = () => {
             leaveTo="scale-[0.0] opacity-0"
         >
             <AppWrapper>
-                <iframe is="x-frame-bypass" src='https://zutom.z-lan.fr/daily' style={{width: '100%', height: ' 100%'}} />
+                <iframe is="x-frame-bypass" src='https://sutom.nocle.fr' style={{width: '100%', height: ' 100%'}} />
             </AppWrapper>
         </Transition>
     );

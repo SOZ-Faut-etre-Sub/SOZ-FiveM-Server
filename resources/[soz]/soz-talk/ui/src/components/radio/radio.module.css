@@ -114,3 +114,62 @@
     width: 1.5vw;
     composes: action_style;
 }
+
+@media (min-aspect-ratio: 21/9) {
+    .screen {
+        bottom: 16.7vh;
+        left: 1.5vw;
+        height: 6.8vh;
+        width: 3.6vw;
+    }
+
+    .action_enable {
+        bottom: 26.2vh;
+        left: 1vw;
+        height: 4.2vh;
+        width: 1.5vw;
+    }
+    .action_validate {
+        bottom: 15.2vh;
+        left: 6vw;
+        height: 9.2vh;
+        width: 1vw;
+    }
+    .action_close {
+        bottom: 25vh;
+        left: 6vw;
+    }
+
+    .action_mix {
+        bottom: 13.8vh;
+        left: 2.6vw;
+        height: 2.2vh;
+        width: 1.5vw;
+    }
+
+    .action_freq_primary {
+        bottom: 11.2vh;
+        left: 1.8vw;
+        height: 2.2vh;
+        width: 1.5vw;
+    }
+    .action_freq_secondary {
+        bottom: 11.2vh;
+        left: 3.4vw;
+        height: 2.2vh;
+        width: 1.5vw;
+    }
+
+    .action_volume_up {
+        bottom: 13.5vh;
+        left: 0.9vw;
+        height: 2.2vh;
+        width: 1.5vw;
+    }
+    .action_volume_down {
+        bottom: 13.5vh;
+        left: 4.1vw;
+        height: 2.2vh;
+        width: 1.5vw;
+    }
+}

@@ -1,7 +1,7 @@
 .container {
     position: absolute;
     bottom: 40vh;
-    left: -80vh;
+    left: -80vw;
     transition: left .3s;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .container_hide {
-    left: -80vh;
+    left: -80vw;
 }
 
 .radio {
@@ -119,4 +119,62 @@
     height: 2.2vh;
     width: 2.6vw;
     composes: action_style;
+}
+
+@media (min-aspect-ratio: 21/9) {
+    .radio {
+        width: 30vw;
+    }
+    .screen {
+        bottom: 6.4vh;
+        left: 13vw;
+        height: 13vh;
+        width: 11.3vw;
+    }
+
+    .action_enable {
+        left: 26vw;
+        width: 4vw;
+    }
+    .action_validate {
+        left: 7.8vw;
+        width: 3.5vw;
+    }
+    .action_close {
+        bottom: 21vh;
+        left: 29.5vw;
+    }
+
+    .action_mix {
+        bottom: 2.2vh;
+        left: 13vw;
+        height: 2.2vh;
+        width: 2vw;
+    }
+
+    .action_freq_primary {
+        bottom: 2.2vh;
+        left: 15.3vw;
+        height: 2.2vh;
+        width: 2vw;
+    }
+    .action_freq_secondary {
+        bottom: 2.2vh;
+        left: 17.6vw;
+        height: 2.2vh;
+        width: 2vw;
+    }
+
+    .action_volume_up {
+        bottom: 2.2vh;
+        left: 19.9vw;
+        height: 2.2vh;
+        width: 2vw;
+    }
+    .action_volume_down {
+        bottom: 2.2vh;
+        left: 22.2vw;
+        height: 2.2vh;
+        width: 2vw;
+    }
 }

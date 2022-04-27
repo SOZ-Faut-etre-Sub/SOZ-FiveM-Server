@@ -163,6 +163,6 @@ RegisterNUICallback("doTransfer", function(data, cb)
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.accountSource)
-        end, data.accountSource, data.accountTarget, amount)
+        end, data.accountSource, data.accountTarget, amount, true)
     end
 end)
