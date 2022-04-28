@@ -69,13 +69,13 @@ RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async (_, cb) => {
     disableMouseControl = true;
     inCameraMode = false;
 
-    SetNuiFocus(true, true)
+    SetNuiFocus(global.isPhoneOpen, global.isPhoneOpen)
 
     await handleCameraExit();
 
     emit(PhotoEvents.EXIT_CAMERA);
 
-    emit('npwd:disableControlActions', true);
+    emit('npwd:disableControlActions', global.isPhoneOpen);
     await animationService.closeCamera();
 });
 
