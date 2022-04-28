@@ -61,10 +61,6 @@ QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, 
     cb(account.money)
 end)
 
-QBCore.Functions.CreateCallback("banking:server:getAtmCoords", function(source, cb)
-    cb(AtmCoords)
-end)
-
 QBCore.Functions.CreateCallback("banking:server:hasEnoughLiquidity", function(source, cb, accountId, amount)
     local account = Account(accountId)
     if account == nil then
