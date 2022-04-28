@@ -151,7 +151,13 @@ function CreateAtmBlip(blipId, coords)
     if QBCore.Functions.GetBlip(blipId) then
         QBCore.Functions.RemoveBlip(blipId)
     end
-    QBCore.Functions.CreateBlip(blipId, {name = "ATM", coords = vector2(coords.x, coords.y), sprite = 431, color = 60, alpha = 100})
+    QBCore.Functions.CreateBlip(blipId, {
+        name = "ATM",
+        coords = vector2(coords.x, coords.y),
+        sprite = 431,
+        color = 60,
+        alpha = 100,
+    })
 end
 
 RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
