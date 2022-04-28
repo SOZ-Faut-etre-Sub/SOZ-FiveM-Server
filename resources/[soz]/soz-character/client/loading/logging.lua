@@ -25,6 +25,11 @@ function StartGame()
         -- Load player process
         LogExistingPlayer(player, true)
     end
+
+    local playerPed = PlayerPedId()
+
+    SetPedMaxHealth(playerPed, 200)
+    SetPedSuffersCriticalHits(playerPed, false)
 end
 
 function LogExistingPlayer(player, shutdownLoadingScreen)
@@ -51,7 +56,6 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     PlaceObjectOnGroundProperly(playerPed)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
 
-    SetPedMaxHealth(playerPed, 200)
     SetEntityHealth(playerPed, playerObject.PlayerData.metadata["health"])
 
     -- Make player visible
