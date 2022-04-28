@@ -36,7 +36,6 @@ end)
 
 CreateThread(function()
     for bank, coords in pairs(Config.BankPedLocations) do
-        QBCore.Functions.RemoveBlip("bank_" .. bank)
         if not QBCore.Functions.GetBlip("bank_" .. bank) then
             if bank == "pacific1" then
                 QBCore.Functions.CreateBlip("bank_" .. bank, {
@@ -141,22 +140,23 @@ CreateThread(function()
             distance = 1.0,
         })
     end
-
-    TriggerEvent("banking:client:displayAtmBlips")
+    for _, atmData in ipairs(Config.AtmLocations) do
+        if Config.AtmPacks[atmData.accountId] == nil then
+            CreateAtmBlip(atmData.accountId, atmData.coords)
+        end
+    end
 end)
 
-RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
-    local atmCoords = newAtmCoords
-    if atmCoords == nil then
-        atmCoords = QBCore.Functions.TriggerRpc("banking:server:getAtmCoords")
+function CreateAtmBlip(blipId, coords)
+    if QBCore.Functions.GetBlip(blipId) then
+        QBCore.Functions.RemoveBlip(blipId)
     end
+    QBCore.Functions.CreateBlip(blipId, {name = "ATM", coords = vector2(coords.x, coords.y), sprite = 431, color = 60, alpha = 100})
+end
 
-    for atmAccount, coords in pairs(atmCoords) do
-        local blipId = "atm_" .. atmAccount
-        if QBCore.Functions.GetBlip(blipId) then
-            QBCore.Functions.RemoveBlip(blipId)
-        end
-        QBCore.Functions.CreateBlip(blipId, {name = "ATM", coords = coords, sprite = 431, color = 60, alpha = 100})
+RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
+    for atmAccount, coords in pairs(newAtmCoords) do
+        CreateAtmBlip(atmAccount, coords)
     end
 end)
 
