@@ -77,6 +77,15 @@ Config.SafeStorages = {
         heading = 328,
         offsetUpZ = 2.2,
     },
+    ["safe_oil"] = {
+        label = "Coffre MTP",
+        owner = "oil",
+        position = vector3(-234.58, 6090.64, 31.76),
+        size = vec2(0.8, 1.25),
+        heading = 45,
+        offsetUpZ = 0.4,
+        offsetDownZ = 0.5,
+    },
 }
 
 Config.ATMModels = {
