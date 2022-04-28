@@ -21,7 +21,7 @@ gameMasterMenu:AddSlider({
 })
 
 gameMasterMenu:AddSlider({
-    label = "Se donner de l'argent sale",
+    label = "Se donner de l'argent marqué",
     value = "marked_money",
     values = moneyGiveItem,
     select = function(_, value)

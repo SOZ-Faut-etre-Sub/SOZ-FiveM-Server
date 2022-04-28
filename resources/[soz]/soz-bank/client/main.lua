@@ -215,7 +215,7 @@ local function OpenSafeStorageMenu(safeStorage, money, black_money)
     end)
 
     local markedMoneyMenu = MenuV:InheritMenu(safeStorageMenu, {
-        subtitle = ("Gestion de l'argent sale (%s$)"):format(black_money),
+        subtitle = ("Gestion de l'argent marqué (%s$)"):format(black_money),
     })
     local markedMoneyDeposit = markedMoneyMenu:AddButton({label = "Déposer"})
     local markedMoneyDepositAll = markedMoneyMenu:AddButton({label = "Tout déposer"})
@@ -235,7 +235,11 @@ local function OpenSafeStorageMenu(safeStorage, money, black_money)
     end)
 
     safeStorageMenu:AddButton({label = "Argent", value = moneyMenu, rightLabel = "~g~" .. money .. "$"})
-    safeStorageMenu:AddButton({label = "Argent Sale", value = markedMoneyMenu, rightLabel = "~r~" .. black_money .. "$"})
+    safeStorageMenu:AddButton({
+        label = "Argent Marqué",
+        value = markedMoneyMenu,
+        rightLabel = "~r~" .. black_money .. "$",
+    })
 
     safeStorageMenu:Open()
 end
