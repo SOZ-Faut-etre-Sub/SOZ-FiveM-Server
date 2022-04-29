@@ -22,8 +22,8 @@ Config.Storages["oil_storage"] = {
     label = "Coffre MTP",
     type = "storage",
     owner = "oil",
-    position = vector3(-251.87, 6083.44, 32.26),
-    size = vec2(3.0, 12.4),
+    position = vector3(-286.14, 6052.39, 31.52),
+    size = vec2(17.2, 11.4),
     heading = 45,
     offsetUpZ = 4.5,
 }
