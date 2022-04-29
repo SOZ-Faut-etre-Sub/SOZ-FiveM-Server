@@ -76,7 +76,7 @@ RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
       CallEvents.END_CALL,
       data,
     );
-    if (serverRes.status === 'error') return console.error(serverRes.errorMsg);
+    if (serverRes.status === 'error') console.error(serverRes.errorMsg);
     callService.handleEndCall();
     cb({});
   } catch (e) {
