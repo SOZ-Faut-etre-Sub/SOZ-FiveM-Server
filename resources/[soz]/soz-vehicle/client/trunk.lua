@@ -7,6 +7,11 @@ local function OpenTrunk()
     local vehicle, distance = QBCore.Functions.GetClosestVehicle()
 
     if distance <= 3.0 then
+        if LocalPlayer.state.inv_busy then
+            exports["soz-hud"]:DrawNotification("Inventaire en cours d'utilisation", "warning")
+            return
+        end
+
         if GetVehicleDoorLockStatus(vehicle) == 1 then
             local plate = QBCore.Functions.GetPlate(vehicle)
             TriggerServerEvent("inventory:server:openInventory", "trunk", plate)
