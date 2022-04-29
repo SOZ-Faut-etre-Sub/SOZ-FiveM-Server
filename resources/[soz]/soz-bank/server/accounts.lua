@@ -16,14 +16,13 @@ setmetatable(Account, {
     end,
 })
 
-AtmCoords = {}
-
 MySQL.ready(function()
     local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
     local EnterpriseAccountNotLoaded = table.clone(SozJobCore.Jobs)
     local EnterpriseSafeNotLoaded = table.clone(Config.SafeStorages)
-    local BankAtmNotLoaded = table.clone(Config.BankPedLocations)
+    local BankNotLoaded = table.clone(Config.BankPedLocations)
+    local AtmNotLoaded = table.clone(Config.AtmLocations)
 
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
@@ -42,10 +41,6 @@ MySQL.ready(function()
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 elseif v.account_type == "bank-atm" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money, v.coords)
-                    if string.match(v.businessid, "atm_%a+") then
-                        local coords = json.decode(v.coords)
-                        AtmCoords[v.businessid] = vector2(coords.x, coords.y)
-                    end
                 end
             end
         end
@@ -63,9 +58,17 @@ MySQL.ready(function()
         end
 
         -- Create account present in configuration if not exist in database
-        for k, coords in pairs(BankAtmNotLoaded) do
+        for k, coords in pairs(BankNotLoaded) do
             if k ~= "pacific2" and k ~= "pacific3" then
                 Account.Create(k, k, "bank-atm", "bank_" .. k, nil, nil, coords)
+            end
+        end
+
+        -- ATMs account
+        for _, atmData in ipairs(AtmNotLoaded) do
+            local accId = atmData.accountId
+            if Config.AtmPacks[accId] == nil then
+                Account.Create(accId, accId, "bank-atm", accId, nil, nil, atmData.coords)
             end
         end
     end)

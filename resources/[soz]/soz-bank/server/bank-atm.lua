@@ -28,6 +28,10 @@ exports("GetBankAccountName", GetBankAccountName)
 local function GetAtmAccount(atmType, coords)
     local coordsHash = GetAtmHashByCoords(coords)
     local accountName = GetAtmAccountName(atmType, coordsHash)
+    local pack = Config.AtmPacks[accountName]
+    if pack then
+        return GetOrCreateAccount(pack, coords)
+    end
     return GetOrCreateAccount(accountName, coords)
 end
 
@@ -59,10 +63,6 @@ end)
 QBCore.Functions.CreateCallback("banking:server:getBankMoney", function(source, cb, bank)
     local account, _ = getBankAccount(bank)
     cb(account.money)
-end)
-
-QBCore.Functions.CreateCallback("banking:server:getAtmCoords", function(source, cb)
-    cb(AtmCoords)
 end)
 
 QBCore.Functions.CreateCallback("banking:server:hasEnoughLiquidity", function(source, cb, accountId, amount)
