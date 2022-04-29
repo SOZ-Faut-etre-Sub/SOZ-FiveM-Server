@@ -570,24 +570,6 @@ CreateThread(function()
                     return true
                 end,
             },
-            {
-                type = "client",
-                icon = "c:mechanic/reparer.png",
-                event = "qb-garages:client:PutInDepot",
-                label = "Fourrièrer",
-                action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
-                    TriggerEvent("qb-garages:client:PutInDepot", entity)
-                end,
-                canInteract = function(entity, distance, data)
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
-                        return false
-                    end
-                    return true
-                end,
-            },
         },
         distance = 3.0,
     })
