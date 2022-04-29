@@ -7,7 +7,6 @@ CurrentHousingItemMenu:On("open", function(menu)
             value = drawZone,
             change = function()
                 drawZone = not drawZone
-                print(CurrentZoneData)
                 zone = json.decode(CurrentZoneData)
                 DisplayZone(zone)
             end,
