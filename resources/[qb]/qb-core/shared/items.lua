@@ -1251,7 +1251,7 @@ QBShared.Items = {
         ['description'] = 'Pour toutes les petites soifs !'
     },
     ['grape1'] = {
-        ['name'] = 'grape',
+        ['name'] = 'grape1',
         ['label'] = 'Grappe de Cardinal',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1262,7 +1262,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['grape2'] = {
-        ['name'] = 'grape',
+        ['name'] = 'grape2',
         ['label'] = 'Grappe de Muscat',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1273,7 +1273,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['grape3'] = {
-        ['name'] = 'grape',
+        ['name'] = 'grape3',
         ['label'] = 'Grappe de Centennial',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1284,7 +1284,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['grape4'] = {
-        ['name'] = 'grape',
+        ['name'] = 'grape4',
         ['label'] = 'Grappe de Chasselas',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1295,7 +1295,7 @@ QBShared.Items = {
         ['description'] = 'Mmmmh miam du raisin.'
     },
     ['wine1'] = {
-        ['name'] = 'wine',
+        ['name'] = 'wine1',
         ['label'] = 'Mandatorien',
         ['weight'] = 300,
         ['type'] = 'drink',
@@ -1306,7 +1306,7 @@ QBShared.Items = {
         ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
     },
     ['wine2'] = {
-        ['name'] = 'wine',
+        ['name'] = 'wine2',
         ['label'] = 'Cuve Saint-Monnay',
         ['weight'] = 300,
         ['type'] = 'drink',
@@ -1317,7 +1317,7 @@ QBShared.Items = {
         ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
     },
     ['wine3'] = {
-        ['name'] = 'wine',
+        ['name'] = 'wine3',
         ['label'] = 'LaMano Blanc',
         ['weight'] = 300,
         ['type'] = 'drink',
@@ -1328,7 +1328,7 @@ QBShared.Items = {
         ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
     },
     ['wine4'] = {
-        ['name'] = 'wine',
+        ['name'] = 'wine4',
         ['label'] = 'IndySpensable',
         ['weight'] = 300,
         ['type'] = 'drink',
@@ -1339,7 +1339,7 @@ QBShared.Items = {
         ['description'] = 'Du bon vin à boire lors d\'une belle soirée.'
     },
     ['grapejuice1'] = {
-        ['name'] = 'grapejuice',
+        ['name'] = 'grapejuice1',
         ['label'] = 'Naples Gius',
         ['weight'] = 200,
         ['type'] = 'drink',
@@ -1350,7 +1350,7 @@ QBShared.Items = {
         ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
     },
     ['grapejuice2'] = {
-        ['name'] = 'grapejuice',
+        ['name'] = 'grapejuice2',
         ['label'] = 'JusKano',
         ['weight'] = 200,
         ['type'] = 'drink',
@@ -1361,7 +1361,7 @@ QBShared.Items = {
         ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
     },
     ['grapejuice3'] = {
-        ['name'] = 'grapejuice',
+        ['name'] = 'grapejuice3',
         ['label'] = 'TropiCaMaK',
         ['weight'] = 200,
         ['type'] = 'drink',
@@ -1372,7 +1372,7 @@ QBShared.Items = {
         ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
     },
     ['grapejuice4'] = {
-        ['name'] = 'grapejuice',
+        ['name'] = 'grapejuice4',
         ['label'] = 'FruitForSub',
         ['weight'] = 200,
         ['type'] = 'drink',
@@ -1383,7 +1383,7 @@ QBShared.Items = {
         ['description'] = 'Le jus de raisin est réputé être bon pour la santé.'
     },
     ['grapejuice5'] = {
-        ['name'] = 'grapejuice',
+        ['name'] = 'grapejuice5',
         ['label'] = 'OasClick',
         ['weight'] = 200,
         ['type'] = 'drink',
@@ -1482,7 +1482,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['sausage1'] = {
-        ['name'] = 'sausage',
+        ['name'] = 'sausage1',
         ['label'] = 'Sans-Pareil',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1493,7 +1493,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['sausage2'] = {
-        ['name'] = 'sausage',
+        ['name'] = 'sausage2',
         ['label'] = 'Solong',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1504,7 +1504,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['sausage3'] = {
-        ['name'] = 'sausage',
+        ['name'] = 'sausage3',
         ['label'] = 'Lasbounou',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1515,7 +1515,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['sausage4'] = {
-        ['name'] = 'sausage',
+        ['name'] = 'sausage4',
         ['label'] = 'Soziflard',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1526,7 +1526,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['sausage5'] = {
-        ['name'] = 'sausage',
+        ['name'] = 'sausage5',
         ['label'] = 'Saucifion ',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1559,7 +1559,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese1'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese1',
         ['label'] = 'Poveridou',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1570,7 +1570,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese2'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese2',
         ['label'] = 'Caprice du tchat',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1581,7 +1581,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese3'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese3',
         ['label'] = 'Zaroilles',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1592,7 +1592,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese4'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese4',
         ['label'] = 'MoMan-Tum',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1603,7 +1603,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese5'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese5',
         ['label'] = "P'tit Dashque",
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1614,7 +1614,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese6'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese6',
         ['label'] = 'Tchat qui rit',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1625,7 +1625,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese7'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese7',
         ['label'] = 'Cutmembert',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1636,7 +1636,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese8'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese8',
         ['label'] = 'CHEHdar',
         ['weight'] = 100,
         ['type'] = 'food',
@@ -1647,7 +1647,7 @@ QBShared.Items = {
         ['description'] = ''
     },
     ['cheese9'] = {
-        ['name'] = 'cheese',
+        ['name'] = 'cheese9',
         ['label'] = 'GorgonZera',
         ['weight'] = 100,
         ['type'] = 'food',
