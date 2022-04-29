@@ -16,10 +16,10 @@ CreateThread(function()
         SetDiscordRichPresenceAssetSmall("discord")
 
         -- Here you can add hover text for the "small" icon.
-        SetDiscordRichPresenceAssetSmallText("discord.gg/xxx")
+        SetDiscordRichPresenceAssetSmallText("discord.gg/soz-pas-soz")
 
         QBCore.Functions.TriggerCallback("smallresources:server:GetCurrentPlayers", function(result)
-            SetRichPresence("Joueurs : " .. result .. "/200")
+            SetRichPresence("Joueurs : " .. result .. "/250")
         end)
 
         -- (26-02-2021) New Native:
@@ -30,7 +30,7 @@ CreateThread(function()
             last is the url (this has to start with "fivem://connect/" or "https://") 
         ]] --
 
-        SetDiscordRichPresenceAction(0, "Un jour peut être ?", "https://liquipedia.net/commons/images/6/63/WIP-logo.png")
+        SetDiscordRichPresenceAction(0, "Rejoindre SOZ", "https://discord.gg/soz-pas-soz")
 
         -- It updates every minute just in case.
         Wait(60000)
