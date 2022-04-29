@@ -15,7 +15,7 @@ RegisterNetEvent("qb-carwash:server:washCar", function()
 end)
 
 QBCore.Functions.CreateCallback("smallresources:server:GetCurrentPlayers", function(source, cb)
-    local TotalPlayers = { 0, GetConvarInt('sv_maxclients', 256)}
+    local TotalPlayers = {0, GetConvarInt("sv_maxclients", 256)}
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
         TotalPlayers[1] = TotalPlayers[1] + 1
     end
