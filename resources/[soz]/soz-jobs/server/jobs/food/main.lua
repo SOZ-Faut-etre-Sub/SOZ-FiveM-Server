@@ -101,11 +101,13 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
     local item = QBCore.Shared.Items[itemId]
     if item == nil then
         cb(false, "invalid_item")
+        return
     end
 
     local recipe = FoodConfig.Recipes[itemId]
     if recipe == nil then
         cb(false, "invalid_recipe")
+        return
     end
 
     local ingredients = recipe.ingredients
@@ -113,9 +115,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
         local ingredient = QBCore.Shared.Items[ingId]
         if ingredient == nil then
             cb(false, "invalid_ingredient_item")
+            return
         end
         if exports["soz-inventory"]:GetItem(source, ingId, nil, true) < count then
             cb(false, "invalid_ingredient")
+            return
         end
     end
 
@@ -127,6 +131,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
             end
             TriggerClientEvent("hud:client:DrawNotification", source, message, "error")
             cb(false)
+            return
         else
             for ingId, count in pairs(ingredients) do
                 Player.Functions.RemoveItem(ingId, count)
