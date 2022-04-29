@@ -218,7 +218,8 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
             local AttachedCoords = GetEntityCoords(AttachedVehicle)
             local FlatCoords = GetEntityCoords(lastveh)
             DetachEntity(AttachedVehicle, true, true)
-            SetEntityCoords(AttachedVehicle,FlatCoords.x - ((FlatCoords.x - AttachedCoords.x)*4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y)*4), FlatCoords.z, false, false, false, false)
+            SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
+                            FlatCoords.z, false, false, false, false)
             TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", nil)
             LastAttach = nil
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
