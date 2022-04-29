@@ -29,7 +29,7 @@ exports("GetCoreObject", function()
 end)
 
 exports("GetJobLabel", function(jobId)
-    return SozJobCore.JobLabel[jobId]
+    return SozJobCore.Jobs[jobId].label
 end)
 
 local function BuildPromoteMenu(target)
