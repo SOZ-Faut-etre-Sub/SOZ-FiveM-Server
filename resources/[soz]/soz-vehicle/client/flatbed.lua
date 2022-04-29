@@ -418,7 +418,7 @@ CreateThread(function()
             },
             {
                 type = "client",
-                icon = "c:mechanic/Detacher.png",
+                icon = "c:mechanic/Retirer.png",
                 event = "soz-flatbed:client:calltp",
                 label = "Démorquer",
                 action = function(entity)

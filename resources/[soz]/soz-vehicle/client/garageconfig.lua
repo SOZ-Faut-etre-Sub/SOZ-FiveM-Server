@@ -1306,7 +1306,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                 {
                     type = "client",
                     event = "qb-garages:client:PutInDepot",
-                    icon = "c:mechanic/reparer.png",
+                    icon = "c:mechanic/CarFourrière.png",
                     label = "Fourriérer",
                     action = function(entity)
                         if IsPedAPlayer(entity) then
