@@ -30,7 +30,7 @@ CreateThread(function()
             last is the url (this has to start with "fivem://connect/" or "https://") 
         ]] --
 
-        SetDiscordRichPresenceAction(0, "Rejoindre SOZ", "https://discord.gg/invite/soz-pas-soz")
+        SetDiscordRichPresenceAction(0, "Rejoindre SOZ", "https://discord.com/invite/soz-pas-soz")
 
         -- It updates every minute just in case.
         Wait(60000)
