@@ -1249,7 +1249,6 @@ for indexpriv, prive in pairs(Zonesprives) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/ParkingPrive.png",
                         label = "Accéder au parking privé",
-                        targeticon = "fas fa-parking",
                         action = function(entity)
                             if IsPedAPlayer(entity) then
                                 return false
@@ -1280,7 +1279,6 @@ for indexpublic, public in pairs(Zonespublic) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/ParkingPublic.png",
                         label = "Accéder au parking public",
-                        targeticon = "fas fa-parking",
                         action = function(entity)
                             if IsPedAPlayer(entity) then
                                 return false
@@ -1303,6 +1301,32 @@ end
 
 for indexfourriere, fourriere in pairs(Zonesfourriere) do
     fourriere:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+        exports["qb-target"]:AddGlobalVehicle({
+            options = {
+                {
+                    type = "client",
+                    event = "qb-garages:client:PutInDepot",
+                    icon = "c:mechanic/reparer.png",
+                    label = "Fourriérer",
+                    action = function(entity)
+                        if IsPedAPlayer(entity) then
+                            return false
+                        end
+                        TriggerEvent("qb-garages:client:PutInDepot", entity)
+                    end,
+                    canInteract = function(entity, distance, data)
+                        if GetEntityModel(entity) == GetHashKey("flatbed3") then
+                            return false
+                        end
+                        if OnDuty == false or PlayerJob.id ~= "bennys" then
+                            return false
+                        end
+                        return isPointInside
+                    end,
+                },
+            },
+            distance = 3.0,
+        })
         if isPointInside then
             exports["qb-target"]:AddTargetModel(115679102, {
                 options = {
@@ -1311,7 +1335,6 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/Fourriere.png",
                         label = "Accéder à la fourrière",
-                        targeticon = "fas fa-car-crash",
                         action = function(entity)
                             if IsPedAPlayer(entity) then
                                 return false

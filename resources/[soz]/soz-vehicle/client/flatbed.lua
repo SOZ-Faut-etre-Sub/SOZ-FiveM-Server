@@ -209,10 +209,21 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
                                      false, nil, true)
 
                 TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", NetworkGetNetworkIdFromEntity(entity))
+                TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                 exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
             end
+            LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
+        else
+            local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
+            local AttachedCoords = GetEntityCoords(AttachedVehicle)
+            local FlatCoords = GetEntityCoords(lastveh)
+            DetachEntity(AttachedVehicle, true, true)
+            SetEntityCoords(AttachedVehicle,FlatCoords.x - ((FlatCoords.x - AttachedCoords.x)*4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y)*4), FlatCoords.z, false, false, false, false)
+            TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", nil)
+            LastAttach = nil
+            TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
+            exports["soz-hud"]:DrawNotification("Vous avez enlevé le véhicule du plateau !")
         end
-        LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
     else
         TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
     end
@@ -297,7 +308,9 @@ end
 local function TpFlatbed(entity, lastveh)
     if not Busy then
         Busy = true
-        if not LastAttach then
+        if LastAttach then
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil)
+        else
             TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity)
         end
     end
@@ -391,6 +404,27 @@ CreateThread(function()
                         return false
                     end
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
+                end,
+                canInteract = function(entity, distance, data)
+                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
+                        return false
+                    end
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                        return false
+                    end
+                    return LastAttach
+                end,
+            },
+            {
+                type = "client",
+                icon = "c:mechanic/Detacher.png",
+                event = "soz-flatbed:client:calltp",
+                label = "Démorquer",
+                action = function(entity)
+                    if IsPedAPlayer(entity) then
+                        return false
+                    end
+                    TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
                 canInteract = function(entity, distance, data)
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
