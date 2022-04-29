@@ -28,6 +28,10 @@ exports("GetBankAccountName", GetBankAccountName)
 local function GetAtmAccount(atmType, coords)
     local coordsHash = GetAtmHashByCoords(coords)
     local accountName = GetAtmAccountName(atmType, coordsHash)
+    local pack = Config.AtmPacks[accountName]
+    if pack then
+        return GetOrCreateAccount(pack, coords)
+    end
     return GetOrCreateAccount(accountName, coords)
 end
 
