@@ -2634,8 +2634,20 @@ QBShared.Items = {
         ['description'] = ''
     },
 
-    -- zkea
+    -- mtp
+    ['petroleum'] = {
+        ['name'] = 'petroleum',
+        ['label'] = 'Pétrole brut',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.'
+    },
 
+    -- zkea
     ['house_map'] = {
         ['name'] = 'house_map',
         ['label'] = 'Carte des habitations',
