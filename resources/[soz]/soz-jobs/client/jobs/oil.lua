@@ -19,38 +19,44 @@ CreateThread(function()
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
 
     --- Job interactions
-    exports["qb-target"]:AddTargetModel({"tanker"}, {options = {
-        {
-            event = "jobs:client:fueler:PrepareTankerRefill",
-            icon = "c:fuel/pistolet.png",
-            label = "Connecter le Tanker",
-            canInteract = function()
-                return not LocalPlayer.state.hasTankerPipe
-            end,
-            job = "oil",
+    exports["qb-target"]:AddTargetModel({"tanker"}, {
+        options = {
+            {
+                event = "jobs:client:fueler:PrepareTankerRefill",
+                icon = "c:fuel/pistolet.png",
+                label = "Connecter le Tanker",
+                canInteract = function()
+                    return not LocalPlayer.state.hasTankerPipe
+                end,
+                job = "oil",
+            },
+            {
+                event = "jobs:client:fueler:CancelTankerRefill",
+                icon = "c:fuel/pistolet.png",
+                label = "Déconnecter le Tanker",
+                canInteract = function()
+                    return LocalPlayer.state.hasTankerPipe
+                end,
+                job = "oil",
+            },
         },
-        {
-            event = "jobs:client:fueler:CancelTankerRefill",
-            icon = "c:fuel/pistolet.png",
-            label = "Déconnecter le Tanker",
-            canInteract = function()
-                return LocalPlayer.state.hasTankerPipe
-            end,
-            job = "oil",
-        },
-    }, distance = 4.0})
+        distance = 4.0,
+    })
 
-    exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {options = {
-        {
-            event = "jobs:client:fueler:StartTankerRefill",
-            icon = "c:fuel/remplir.png",
-            label = "Relier le Tanker",
-            canInteract = function()
-                return not PlayerData.job.onduty
-            end,
-            job = "oil",
+    exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {
+        options = {
+            {
+                event = "jobs:client:fueler:StartTankerRefill",
+                icon = "c:fuel/remplir.png",
+                label = "Relier le Tanker",
+                canInteract = function()
+                    return not PlayerData.job.onduty
+                end,
+                job = "oil",
+            },
         },
-    }, distance = 4.0})
+        distance = 4.0,
+    })
 
 end)
 
@@ -79,18 +85,17 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
     local pCoords = GetEntityCoords(playerPed)
 
     LocalPlayer.state.hasTankerPipe = true
+    Tanker.vehicle = VehToNet(vehicle)
     Tanker.hasPipe = true
 
     exports["soz-hud"]:DrawNotification("Vous cherchez à ~r~connecter~s~ le Tanker.", "info")
 
-    QBCore.Functions.RequestAnimDict("missfbi4prepp1")
     TaskTurnPedToFaceEntity(playerPed, vehicle, 500)
     Wait(500)
-    TaskPlayAnim(playerPed, "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
 
     --- Create nozzle prop
     if Tanker.nozzle == nil then
-        Tanker.nozzle = CreateObject(GetHashKey('hei_prop_hei_hose_nozzle'), pCoords.x, pCoords.y, pCoords.z + 1.2, true, true, true);
+        Tanker.nozzle = CreateObject(GetHashKey("hei_prop_hei_hose_nozzle"), pCoords.x, pCoords.y, pCoords.z + 1.2, true, true, true);
         AttachEntityToEntity(Tanker.nozzle, playerPed, GetPedBoneIndex(playerPed, 60309), 0.10, 0.0, 0.012, 210.0, 90.0, 20.0, 1, 0, 0, 0, 2, 1)
     end
 
@@ -103,6 +108,9 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
         AttachRopeToEntity(Tanker.rope, vehicle, ropeCoords, 1)
     end
 
+    QBCore.Functions.RequestAnimDict("missfbi4prepp1")
+    TaskPlayAnim(playerPed, "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
+
     CreateThread(function()
         if Tanker.rope == nil then
             return
@@ -111,7 +119,8 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
         while Tanker.hasPipe do
             local ropeCoords = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -5.9, -1.0)
             local hCoord = GetWorldPositionOfEntityBone(playerPed, GetEntityBoneIndexByName(playerPed, "BONETAG_L_FINGER2"))
-            AttachEntitiesToRope(Tanker.rope, vehicle, playerPed, ropeCoords.x, ropeCoords.y, ropeCoords.z, hCoord.x, hCoord.y, hCoord.z, 100, 1, 1, 0, "BONETAG_L_FINGER2")
+            AttachEntitiesToRope(Tanker.rope, vehicle, playerPed, ropeCoords.x, ropeCoords.y, ropeCoords.z, hCoord.x, hCoord.y, hCoord.z, 100, 1, 1, 0,
+                                 "BONETAG_L_FINGER2")
 
             Wait(10)
         end
@@ -124,10 +133,10 @@ RegisterNetEvent("jobs:client:fueler:CancelTankerRefill", function(data)
 
     local playerPed = PlayerPedId()
 
-    QBCore.Functions.RequestAnimDict("missfbi4prepp1")
-    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
-    Wait(500)
-    TaskPlayAnim(playerPed, "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
+    if data then
+        TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+        Wait(500)
+    end
 
     if Tanker.rope ~= nil then
         DeleteRope(Tanker.rope)
@@ -142,8 +151,38 @@ RegisterNetEvent("jobs:client:fueler:CancelTankerRefill", function(data)
 
         Tanker.nozzle = nil
     end
+
+    QBCore.Functions.RequestAnimDict("missfbi4prepp1")
+    TaskPlayAnim(playerPed, "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
 end)
 
+RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
+    local playerPed = PlayerPedId()
+    local canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker au ~g~Puit de pétrole~s~.", "info")
+
+    while canFillTanker do
+        QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+            TriggerServerEvent("jobs:server:fueler:refillTanker", Tanker.vehicle)
+
+            canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
+        end, function()
+            canFillTanker = false
+        end)
+
+        Wait(30000 + 750) -- Add tempo to wait rpc call
+    end
+
+    TriggerEvent("jobs:client:fueler:CancelTankerRefill")
+    exports["soz-hud"]:DrawNotification("La récolte est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+end)
 
 RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
     societyMenu:ClearItems()
