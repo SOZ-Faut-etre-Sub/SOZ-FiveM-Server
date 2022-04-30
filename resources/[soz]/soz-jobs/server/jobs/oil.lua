@@ -80,9 +80,9 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
     TriggerEvent("soz-fuel:server:getStationStock", function(stock)
         local itemToUse = math.ceil(amount / 10)
 
-        print(stock, amount)
         if stock + amount <= 2000 then
             if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", itemToUse) then
+                TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "oil", amount * FuelerConfig.SellPrice)
                 TriggerEvent("soz-fuel:server:addStationStock", station, amount)
             end
         else

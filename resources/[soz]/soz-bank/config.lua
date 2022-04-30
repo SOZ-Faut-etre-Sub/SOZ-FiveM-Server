@@ -22,8 +22,9 @@ Config.ErrorMessage = {
 }
 
 Config.FarmAccountMoney = {
-    ["farm_news"] = {money = 50000, marked_money = 0},
+    ["farm_news"] = {money = 100000, marked_money = 0},
     ["farm_stonk"] = {money = 2000000, marked_money = 0},
+    ["farm_mtp"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
