@@ -41,6 +41,12 @@ MySQL.ready(function()
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 elseif v.account_type == "bank-atm" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money, v.coords)
+                    if string.match(v.businessid, "bank_%w+") then
+                        local bank = string.match(v.businessid, "%a+%d")
+                        BankNotLoaded[bank] = nil
+                    elseif string.match(v.businessid, "atm_%w+") then
+                        AtmNotLoaded[v.businessid] = nil
+                    end
                 end
             end
         end
@@ -65,7 +71,7 @@ MySQL.ready(function()
         end
 
         -- ATMs account
-        for _, atmData in ipairs(AtmNotLoaded) do
+        for _, atmData in pairs(AtmNotLoaded) do
             local accId = atmData.accountId
             if Config.AtmPacks[accId] == nil then
                 Account.Create(accId, accId, "bank-atm", accId, nil, nil, atmData.coords)

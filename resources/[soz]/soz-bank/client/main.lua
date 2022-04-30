@@ -145,7 +145,7 @@ CreateThread(function()
             distance = 1.0,
         })
     end
-    for _, atmData in ipairs(Config.AtmLocations) do
+    for _, atmData in pairs(Config.AtmLocations) do
         if Config.AtmPacks[atmData.accountId] == nil then
             CreateAtmBlip(atmData.accountId, atmData.coords)
         end
