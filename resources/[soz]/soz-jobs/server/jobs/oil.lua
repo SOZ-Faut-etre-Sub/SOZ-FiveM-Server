@@ -43,6 +43,33 @@ RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
     end
 end)
 
+RegisterNetEvent("jobs:server:fueler:craftEssence", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "petroleum_refined", 1) then
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, "essence", 1, nil, nil, function(success, _)
+            if success then
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~transformé~s~ 10L en carburant")
+            else
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
+            end
+        end)
+    end
+end)
+RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence", 3) then
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, "essence_jerrycan", 1, nil, nil, function(success, _)
+            if success then
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~transformé~s~ 30L en JerryCan")
+            else
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
+            end
+        end)
+    end
+end)
+
 --- Callback
 QBCore.Functions.CreateCallback("jobs:server:fueler:canRefill", function(source, cb, tankerId)
     local tanker = NetworkGetEntityFromNetworkId(tankerId)

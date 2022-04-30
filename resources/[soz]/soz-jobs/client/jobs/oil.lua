@@ -2,6 +2,21 @@ local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_fueler", "soz", "fueler:
 
 local Tanker = {hasPipe = false, vehicle = nil, rope = nil, nozzle = nil}
 
+--- functions
+local function playerHasItem(item, amount)
+    for _, slot in pairs(PlayerData.items) do
+        if slot.name == item then
+            if amount then
+                return amount <= slot.amount
+            else
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 --- Targets
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
@@ -17,6 +32,31 @@ CreateThread(function()
         minZ = 32.1,
         maxZ = 33.4,
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("mtp:fuel_craft", vector3(-251.12, 6081.49, 32.28), 0.95, 2.85,
+                                    {name = "fuel_craft", heading = 45, minZ = 31.28, maxZ = 33.28}, {
+        options = {
+            {
+                event = "jobs:client:fueler:StartCraftEssence",
+                icon = "c:fuel/pistolet.png",
+                label = "Carburant conditionné",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "oil",
+            },
+            {
+                event = "jobs:client:fueler:StartCraftEssenceJerryCan",
+                icon = "c:fuel/pistolet.png",
+                label = "Bidon d’essence",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "oil",
+            },
+        },
+        distance = 2.0,
+    })
 end)
 
 --- Targets Locations
@@ -230,6 +270,66 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
 
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
     exports["soz-hud"]:DrawNotification("La récolte est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+end)
+
+RegisterNetEvent("jobs:client:fueler:StartCraftEssence", function(data)
+    local playerPed = PlayerPedId()
+    local canCraft = playerHasItem("petroleum_refined")
+
+    if not canCraft then
+        return
+    end
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    exports["soz-hud"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
+
+    while canCraft do
+        Wait(500)
+        QBCore.Functions.Progressbar("fill", "Vous transformez...", 2 * 60 * 1000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
+            TriggerServerEvent("jobs:server:fueler:craftEssence")
+
+            canCraft = playerHasItem("petroleum_refined")
+        end, function()
+            canCraft = false
+        end)
+
+        Wait(2 * 60 * 1000)
+    end
+end)
+
+RegisterNetEvent("jobs:client:fueler:StartCraftEssenceJerryCan", function(data)
+    local playerPed = PlayerPedId()
+    local canCraft = playerHasItem("essence", 3)
+
+    if not canCraft then
+        return
+    end
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    exports["soz-hud"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
+
+    while canCraft do
+        Wait(500)
+        QBCore.Functions.Progressbar("fill", "Vous transformez...", 60 * 1000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
+            TriggerServerEvent("jobs:server:fueler:craftEssenceJerryCan")
+
+            canCraft = playerHasItem("essence", 3)
+        end, function()
+            canCraft = false
+        end)
+
+        Wait(60 * 1000)
+    end
 end)
 
 RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
