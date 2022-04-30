@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
                 job = "cash-transfer",
                 canInteract = function()
                     return PlayerData.job.onduty and playerInsideCloakroomZone
-                end
+                end,
             },
         },
     })
@@ -89,7 +89,7 @@ Citizen.CreateThread(function()
                 job = "cash-transfer",
                 canInteract = function()
                     return PlayerData.job.onduty and playerInsideCloakroomZone
-                end
+                end,
             },
         },
     })
