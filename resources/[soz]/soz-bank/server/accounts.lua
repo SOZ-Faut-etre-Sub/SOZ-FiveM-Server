@@ -152,7 +152,11 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
 
     if accSource then
         if accTarget then
-            if money <= accSource.money then
+            if money <= accSource.money or accSource.type == "safestorages" then
+                if accSource.type == "safestorages" and money > accSource.money then
+                    money = accSource.money
+                end
+
                 if Account.RemoveMoney(accSource, money) and Account.AddMoney(accTarget, money) then
                     _G.AccountType[accSource.type]:save(accSource.id, accSource.owner, accSource.money, accSource.marked_money)
                     _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.money, accTarget.marked_money)
