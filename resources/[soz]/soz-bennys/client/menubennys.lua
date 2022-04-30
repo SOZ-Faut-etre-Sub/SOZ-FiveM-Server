@@ -675,6 +675,8 @@ local function OpenPartsMenu(menu)
                 local percentage = math.ceil(VehicleStatus[plate][k])
                 if percentage > 100 then
                     percentage = math.ceil(VehicleStatus[plate][k]) / 10
+                elseif percentage == 100 then
+                    percentage = math.round(percentage)
                 end
                 menu:AddButton({
                     label = v,
@@ -687,6 +689,8 @@ local function OpenPartsMenu(menu)
                 local percentage = math.ceil(Config.MaxStatusValues[k])
                 if percentage > 100 then
                     percentage = math.ceil(Config.MaxStatusValues[k]) / 10
+                elseif percentage == 100 then
+                    percentage = math.round(percentage)
                 end
                 menu:AddButton({
                     label = v,
