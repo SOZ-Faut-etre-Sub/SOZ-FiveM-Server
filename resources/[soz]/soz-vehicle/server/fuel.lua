@@ -1,6 +1,14 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local stations = {}
 
+--- Functions
+local function saveStation(id)
+    MySQL.Async.execute("UPDATE fuel_storage SET stock = :stock WHERE id = :id", {
+        ["id"] = id,
+        ["stock"] = stations[id].stock,
+    })
+end
+
 RegisterNetEvent("fuel:pay", function(price, source)
     local xPlayer = QBCore.Functions.GetPlayer(source)
     local amount = math.floor(price + 0.5)
@@ -13,7 +21,7 @@ MySQL.ready(function()
     local data = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage")
 
     for _, station in pairs(data) do
-        table.insert(stations, {
+        stations[station.id] = {
             id = station.id,
             station = station.station,
             fuel = station.fuel,
@@ -21,28 +29,35 @@ MySQL.ready(function()
             position = json.decode(station.position),
             model = station.model,
             zone = json.decode(station.zone),
-        })
+        }
     end
 end)
 
+--- Callbacks
 QBCore.Functions.CreateCallback("soz-fuel:server:getStations", function(source, cb)
     cb(stations)
 end)
 
 QBCore.Functions.CreateCallback("soz-fuel:server:getfuelstock", function(source, cb, id)
-    local fuelstock = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage WHERE id = @id", {["@id"] = id})
+    cb(stations[id].stock or 0)
+end)
 
-    if #fuelstock > 0 then
-        cb(fuelstock[1].stock)
-    else
-        cb(0)
-    end
+--- Events
+RegisterNetEvent("soz-fuel:server:getStationStock", function(cb, id)
+    cb(stations[id].stock or 0)
+end)
+
+RegisterNetEvent("soz-fuel:server:addStationStock", function(id, amount)
+    stations[id].stock = stations[id].stock + tonumber(amount)
+    saveStation(id)
 end)
 
 RegisterNetEvent("soz-fuel:server:setTempFuel", function(id)
-    MySQL.Async.execute("UPDATE fuel_storage SET stock = stock - 100 WHERE id = ?", {id})
+    stations[id].stock = stations[id].stock - 100
+    saveStation(id)
 end)
 
 RegisterNetEvent("soz-fuel:server:setFinalFuel", function(id, currentFuelAdd)
-    MySQL.Async.execute("UPDATE fuel_storage SET stock = stock + ? WHERE id = ?", {currentFuelAdd, id})
+    stations[id].stock = stations[id].stock + tonumber(currentFuelAdd)
+    saveStation(id)
 end)

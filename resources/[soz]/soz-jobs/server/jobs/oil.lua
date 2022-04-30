@@ -56,6 +56,7 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
         end)
     end
 end)
+
 RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
     local Player = QBCore.Functions.GetPlayer(source)
 
@@ -68,6 +69,27 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
             end
         end)
     end
+end)
+
+RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station, amount)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+    local tankerInv = "trunk_" .. tankerPlate
+
+    TriggerEvent("soz-fuel:server:getStationStock", function(stock)
+        local itemToUse = math.ceil(amount / 10)
+
+        print(stock, amount)
+        if stock + amount <= 2000 then
+            if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", itemToUse) then
+                TriggerEvent("soz-fuel:server:addStationStock", station, amount)
+            end
+        else
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "La station n'a pas ~r~assez~s~ de stockage.", "error")
+        end
+
+    end, station)
 end)
 
 --- Callback

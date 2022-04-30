@@ -1,5 +1,4 @@
 -- Variables
-local QBCore = exports["qb-core"]:GetCoreObject()
 local HasVehicleKey = false
 local AlertSend = false
 local lockpicked = false
