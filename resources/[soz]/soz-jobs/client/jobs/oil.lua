@@ -17,47 +17,57 @@ CreateThread(function()
         minZ = 32.1,
         maxZ = 33.4,
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
+end)
 
-    --- Job interactions
-    exports["qb-target"]:AddTargetModel({"tanker"}, {
-        options = {
-            {
-                event = "jobs:client:fueler:PrepareTankerRefill",
-                icon = "c:fuel/pistolet.png",
-                label = "Connecter le Tanker",
-                canInteract = function()
-                    return not LocalPlayer.state.hasTankerPipe
-                end,
-                job = "oil",
+--- Targets Locations
+AddEventHandler("locations:zone:enter", function(brand, _)
+    if brand == "fueler_petrol_farm" then
+        exports["qb-target"]:AddTargetModel({"tanker"}, {
+            options = {
+                {
+                    event = "jobs:client:fueler:PrepareTankerRefill",
+                    icon = "c:fuel/pistolet.png",
+                    label = "Connecter le Tanker",
+                    canInteract = function()
+                        return not LocalPlayer.state.hasTankerPipe
+                    end,
+                    job = "oil",
+                },
+                {
+                    event = "jobs:client:fueler:CancelTankerRefill",
+                    icon = "c:fuel/pistolet.png",
+                    label = "Déconnecter le Tanker",
+                    canInteract = function()
+                        return LocalPlayer.state.hasTankerPipe
+                    end,
+                    job = "oil",
+                },
             },
-            {
-                event = "jobs:client:fueler:CancelTankerRefill",
-                icon = "c:fuel/pistolet.png",
-                label = "Déconnecter le Tanker",
-                canInteract = function()
-                    return LocalPlayer.state.hasTankerPipe
-                end,
-                job = "oil",
-            },
-        },
-        distance = 4.0,
-    })
+            distance = 4.0,
+        })
 
-    exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {
-        options = {
-            {
-                event = "jobs:client:fueler:StartTankerRefill",
-                icon = "c:fuel/remplir.png",
-                label = "Relier le Tanker",
-                canInteract = function()
-                    return not PlayerData.job.onduty
-                end,
-                job = "oil",
+        exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {
+            options = {
+                {
+                    event = "jobs:client:fueler:StartTankerRefill",
+                    icon = "c:fuel/remplir.png",
+                    label = "Relier le Tanker",
+                    canInteract = function()
+                        return not PlayerData.job.onduty
+                    end,
+                    job = "oil",
+                },
             },
-        },
-        distance = 4.0,
-    })
+            distance = 4.0,
+        })
+    end
+end)
 
+AddEventHandler("locations:zone:exit", function(brand, _)
+    if brand == "fueler_petrol_farm" then
+        exports["qb-target"]:RemoveTargetModel("tanker", {"Connecter le Tanker", "Déconnecter le Tanker"})
+        exports["qb-target"]:RemoveTargetModel("p_oil_pjack_03_s", "Relier le Tanker")
+    end
 end)
 
 --- Events
@@ -166,6 +176,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
     exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker au ~g~Puit de pétrole~s~.", "info")
 
     while canFillTanker do
+        Wait(500)
         QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
             disableMovement = true,
             disableCombat = true,
@@ -177,7 +188,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
             canFillTanker = false
         end)
 
-        Wait(30000 + 750) -- Add tempo to wait rpc call
+        Wait(30000)
     end
 
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
