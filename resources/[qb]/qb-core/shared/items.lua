@@ -2646,6 +2646,28 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.'
     },
+    ['petroleum_refined'] = {
+        ['name'] = 'petroleum_refined',
+        ['label'] = 'Pétrole conditionné',
+        ['weight'] = 1600,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Pétrole brut, conditionné pour le transport ou pour être utilisé comme carburant.'
+    },
+    ['petroleum_residue'] = {
+        ['name'] = 'petroleum_residue',
+        ['label'] = 'Résidus de pétrole lourd conditionnés',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.'
+    },
 
     -- zkea
     ['house_map'] = {

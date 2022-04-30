@@ -176,6 +176,8 @@ function Inventory.CanSwapItem(inv, firstItem, firstItemAmount, testItem, testIt
     end
     return false
 end
+RegisterNetEvent("inventory:server:CanSwapItem", Inventory.CanSwapItem)
+exports("CanSwapItem", Inventory.CanSwapItem)
 
 function Inventory.CanCarryItem(inv, item, amount, metadata)
     if type(item) ~= "table" then

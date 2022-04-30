@@ -7,11 +7,17 @@ Locations["fueler_petrol_farm"] = {
         vector2(533.97302246094, 2839.9375),
         vector2(727.41925048828, 2845.6423339844),
         vector2(665.96124267578, 3053.6645507812),
-        vector2(588.5396118164, 3042.2253417968)
-    }, {
-        name="fueler_farm",
-        minZ = 37.55,
-        maxZ = 55.55,
+        vector2(588.5396118164, 3042.2253417968),
+    }, {name = "fueler_petrol_farm", minZ = 37.55, maxZ = 55.55, debugPoly = LocationDebugPoly}),
+}
+
+Locations["fueler_petrol_refinery"] = {
+    [1] = BoxZone:Create(vector3(2789.93, 1525.87, 24.51), 22.4, 81.6,
+                         {
+        name = "fueler_petrol_refinery",
+        heading = 75,
+        minZ = 23.51,
+        maxZ = 26.51,
         debugPoly = LocationDebugPoly,
     }),
 }
