@@ -2668,6 +2668,28 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.'
     },
+    ['essence'] = {
+        ['name'] = 'essence',
+        ['label'] = 'Carburant conditionné',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+    },
+    ['essence_jerrycan'] = {
+        ['name'] = 'essence_jerrycan',
+        ['label'] = 'Bidon de carburant conditionné',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+    },
 
     -- zkea
     ['house_map'] = {
