@@ -795,6 +795,7 @@ local function OpenMenu(menu)
             exports["soz-hud"]:DrawNotification("Véhicule libéré")
             FreezeEntityPosition(veh, false)
             menu:Close()
+            SetVehicleDoorsLocked(veh, 1)
             saveVehicle()
         end,
     })
@@ -987,6 +988,7 @@ CreateThread(function()
                 local veh = GetVehiclePedIsIn(PlayerPedId())
                 Config.AttachedVehicle = veh
                 TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", veh)
+                SetVehicleDoorsLocked(veh, 4)
                 GenerateOpenMenu()
             end
         end
