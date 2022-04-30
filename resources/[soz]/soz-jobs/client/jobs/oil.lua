@@ -34,6 +34,19 @@ CreateThread(function()
         maxZ = 33.4,
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
 
+    exports["qb-target"]:AddBoxZone("fueler:cloakroom", vector3(-231.78, 6078.43, 32.26), 3.55, 4.0,
+                                    {name = "fueler:cloakroom", heading = 316, minZ = 31.26, maxZ = 33.5}, {
+        options = {
+            {
+                label = "S'habiller",
+                icon = "c:jobs/habiller.png",
+                event = "jobs:client:fueler:OpenCloakroomMenu",
+                job = "oil",
+            },
+        },
+        distance = 2.5,
+    })
+
     exports["qb-target"]:AddBoxZone("mtp:fuel_craft", vector3(-251.12, 6081.49, 32.28), 0.95, 2.85,
                                     {name = "fuel_craft", heading = 45, minZ = 31.28, maxZ = 33.28}, {
         options = {
@@ -155,6 +168,38 @@ AddEventHandler("locations:zone:exit", function(zone, _)
 end)
 
 --- Events
+RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function()
+    societyMenu:ClearItems()
+
+    societyMenu:AddButton({
+        label = "Tenue civile",
+        value = nil,
+        select = function()
+            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+                disableMovement = true,
+                disableCombat = true,
+            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+                TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+            end)
+        end,
+    })
+
+    societyMenu:AddButton({
+        label = "Tenue de travail",
+        value = nil,
+        select = function()
+            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+                disableMovement = true,
+                disableCombat = true,
+            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+                TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", FuelerConfig.Cloakroom[PlayerData.skin.Model.Hash])
+            end)
+        end,
+    })
+
+    societyMenu:Open()
+end)
+
 RegisterNetEvent("jobs:client:fueler:InvoicePlayer", function(data)
     local player = NetworkGetPlayerIndexFromPed(data.entity)
 
