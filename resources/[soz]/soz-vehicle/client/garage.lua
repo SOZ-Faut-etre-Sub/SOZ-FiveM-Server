@@ -437,19 +437,19 @@ end)
 CreateThread(function()
     for _, garage in pairs(Garages) do
         if garage.showBlip and garage.type ~= "entreprise" then
-            local Garage = AddBlipForCoord(garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z)
-            SetBlipSprite(Garage, garage.blipNumber)
-            SetBlipDisplay(Garage, 4)
-            SetBlipScale(Garage, 0.80)
-            SetBlipAsShortRange(Garage, true)
+            local garageBlip = AddBlipForCoord(garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z)
+            SetBlipSprite(garageBlip, garage.blipNumber)
+            SetBlipDisplay(garageBlip, 4)
+            SetBlipScale(garageBlip, 0.80)
+            SetBlipAsShortRange(garageBlip, true)
             if garage.type == "private" then
-                SetBlipColour(Garage, 5)
+                SetBlipColour(garageBlip, 5)
             else
-                SetBlipColour(Garage, 3)
+                SetBlipColour(garageBlip, 3)
             end
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentSubstringPlayerName(garage.blipName)
-            EndTextCommandSetBlipName(Garage)
+            AddTextComponentString(garage.blipName)
+            EndTextCommandSetBlipName(garageBlip)
         end
     end
 end)
