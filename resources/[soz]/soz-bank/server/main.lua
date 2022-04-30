@@ -100,7 +100,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
         end
     else
         Account.TransfertMoney(accountSource, accountTarget, amount, function(success, reason)
-            if sendNotificationToTarget then
+            if success and sendNotificationToTarget then
                 local Target = QBCore.Functions.GetPlayerByBankAccount(accountTarget)
 
                 if Target then
@@ -110,7 +110,6 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
             end
 
             cb(success, reason)
-            return
         end)
     end
 
