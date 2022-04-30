@@ -1,4 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
 local isFueling = false
 local fuelSynced = false
 local ObjectToHand
@@ -268,8 +267,19 @@ Citizen.CreateThread(function()
 
         zone:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
             if isPointInside then
+                TriggerEvent("locations:zone:enter", "fueler_petrol_station", station.id)
+
                 exports["qb-target"]:AddTargetModel(station.model, {
                     options = {
+                        {
+                            label = "Remplir la station",
+                            icon = "c:fuel/pistolet.png",
+                            event = "jobs:client:fueler:StartStationRefill",
+                            canInteract = function()
+                                return LocalPlayer.state.hasTankerPipe and PlayerData.job.onduty
+                            end,
+                            job = "oil",
+                        },
                         {
                             type = "client",
                             icon = "c:fuel/pistolet.png",
@@ -312,6 +322,7 @@ Citizen.CreateThread(function()
                     distance = 3.0,
                 })
             else
+                TriggerEvent("locations:zone:exit", "fueler_petrol_station")
                 exports["qb-target"]:RemoveTargetModel(station.model, "Pistolet")
             end
         end)

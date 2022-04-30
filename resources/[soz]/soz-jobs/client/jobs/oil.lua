@@ -1,6 +1,7 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_fueler", "soz", "fueler:menu")
 
 local Tanker = {hasPipe = false, vehicle = nil, rope = nil, nozzle = nil}
+local MaxFuelInStation, CurrentStation = 2000, nil
 
 --- functions
 local function playerHasItem(item, amount)
@@ -60,8 +61,8 @@ CreateThread(function()
 end)
 
 --- Targets Locations
-AddEventHandler("locations:zone:enter", function(zone, _)
-    if zone == "fueler_petrol_farm" or zone == "fueler_petrol_refinery" then
+AddEventHandler("locations:zone:enter", function(zone, station)
+    if zone == "fueler_petrol_farm" or zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" then
         exports["qb-target"]:AddTargetModel({"tanker"}, {
             options = {
                 {
@@ -131,6 +132,9 @@ AddEventHandler("locations:zone:enter", function(zone, _)
             maxZ = 28.49,
         }, {options = refineryActions, distance = 4.0})
     end
+    if zone == "fueler_petrol_station" then
+        CurrentStation = station
+    end
 end)
 
 AddEventHandler("locations:zone:exit", function(zone, _)
@@ -144,6 +148,9 @@ AddEventHandler("locations:zone:exit", function(zone, _)
         exports["qb-target"]:RemoveZone("refinery1")
         exports["qb-target"]:RemoveZone("refinery2")
         exports["qb-target"]:RemoveZone("refinery3")
+    end
+    if zone == "fueler_petrol_station" then
+        CurrentStation = nil
     end
 end)
 
@@ -234,7 +241,7 @@ RegisterNetEvent("jobs:client:fueler:CancelTankerRefill", function(data)
 
     if Tanker.nozzle ~= nil then
         DetachEntity(Tanker.nozzle, true, false)
-        DeleteObject(Tanker.nozzle)
+        DeleteEntity(Tanker.nozzle)
 
         Tanker.nozzle = nil
     end
@@ -270,6 +277,35 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
 
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
     exports["soz-hud"]:DrawNotification("La récolte est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+end)
+
+RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
+    local playerPed = PlayerPedId()
+    local canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la raffinerie~s~.", "info")
+
+    while canRefiningTanker do
+        Wait(500)
+        QBCore.Functions.Progressbar("fill", "Vous raffinez...", 30000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+            TriggerServerEvent("jobs:server:fueler:refiningTanker", Tanker.vehicle)
+
+            canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
+        end, function()
+            canRefiningTanker = false
+        end)
+
+        Wait(30000)
+    end
+
+    TriggerEvent("jobs:client:fueler:CancelTankerRefill")
+    exports["soz-hud"]:DrawNotification("Le raffinage est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)
 
 RegisterNetEvent("jobs:client:fueler:StartCraftEssence", function(data)
@@ -332,33 +368,35 @@ RegisterNetEvent("jobs:client:fueler:StartCraftEssenceJerryCan", function(data)
     end
 end)
 
-RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
+RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
     local playerPed = PlayerPedId()
-    local canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
+    if CurrentStation == nil then
+        return
+    end
 
     TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
     Wait(500)
 
-    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la raffinerie~s~.", "info")
+    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la station service~s~.", "info")
 
-    while canRefiningTanker do
-        Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous raffinez...", 30000, false, true, {
+    local stationStock = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", CurrentStation)
+    local refillRequest = exports["soz-hud"]:Input("Quantité a ajouter (en Litre) :", 4, MaxFuelInStation - stationStock)
+
+    if refillRequest and tonumber(refillRequest) >= 10 and tonumber(refillRequest) <= (MaxFuelInStation - stationStock) then
+        QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
-            TriggerServerEvent("jobs:server:fueler:refiningTanker", Tanker.vehicle)
-
-            canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
+            TriggerServerEvent("jobs:server:fueler:refillStation", Tanker.vehicle, CurrentStation, tonumber(refillRequest))
+            TriggerEvent("jobs:client:fueler:CancelTankerRefill")
         end, function()
-            canRefiningTanker = false
+            TriggerEvent("jobs:client:fueler:CancelTankerRefill")
         end)
 
-        Wait(30000)
+        exports["soz-hud"]:DrawNotification("La station service a été ~g~remplie~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+    else
+        exports["soz-hud"]:DrawNotification("Valeur de remplissage ~r~incorrecte~s~.", "error")
     end
-
-    TriggerEvent("jobs:client:fueler:CancelTankerRefill")
-    exports["soz-hud"]:DrawNotification("Le raffinage est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)
 
 RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
