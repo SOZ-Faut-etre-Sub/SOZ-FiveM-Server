@@ -280,17 +280,22 @@ StonkJob.Functions.ResaleBags = function()
     QBCore.Functions.Progressbar("stonk-resale-bag", string.format("Vous déposez %d sacs d'argent", count), StonkConfig.Resale.Duration * count, false, true,
                                  {
         disableMovement = true,
-        disableCarMovement = false,
+        disableCarMovement = true,
         disableMouse = false,
-        disableCombat = false,
+        disableCombat = true,
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(wasCancelled)
         if not wasCancelled then
-            TriggerServerEvent("soz-jobs:server:stonk-resale-bag", count)
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
-            StonkJob.Functions.ResaleBags()
+            local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-resale-bag", count)
+            if success then
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+                Citizen.Wait(1000)
+                StonkJob.Functions.ResaleBags()
+            end
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
         end
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la revente de sacs d'argent", "error")
     end)
 end
 

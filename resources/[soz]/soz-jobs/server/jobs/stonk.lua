@@ -29,7 +29,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-collect-bag", function(so
     cb(success)
 end)
 
-RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function(nBags)
+QBCore.Functions.CreateCallback("soz-jobs:server:stonk-resale-bag", function(source, cb, nBags)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -39,12 +39,13 @@ RegisterNetEvent("soz-jobs:server:stonk-resale-bag", function(nBags)
 
     if nItems < nBags then
         TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas suffisamment de sacs d'argent.", "error")
+        cb(false)
         return
     end
 
     Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, nBags, nil)
-
     TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.Price)
+    cb(true)
 end)
 
 -- FILL IN
