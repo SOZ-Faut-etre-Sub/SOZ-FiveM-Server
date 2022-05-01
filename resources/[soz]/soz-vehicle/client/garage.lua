@@ -1,8 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-PlayerData = {}
-PlayerGang = {}
-PlayerJob = {}
-OnDuty = false
 local OutsideVehicles = {}
 
 local ParkingPublicList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car")
@@ -413,25 +408,6 @@ RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
         TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
     end
     exports["soz-hud"]:DrawNotification("Le véhicule a été mis à la fourrière")
-end)
-
-AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
-    PlayerData = QBCore.Functions.GetPlayerData()
-    PlayerGang = PlayerData.gang
-    PlayerJob = PlayerData.job
-end)
-
-RegisterNetEvent("QBCore:Client:OnGangUpdate", function(gang)
-    PlayerGang = gang
-end)
-
-RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
-    PlayerJob = JobInfo
-    OnDuty = PlayerJob.onduty
-end)
-
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    OnDuty = duty
 end)
 
 CreateThread(function()

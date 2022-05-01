@@ -28,7 +28,7 @@ MySQL.ready(function()
                     local st = Config.Storages[v.name]
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner)
                     StorageNotLoaded[v.name] = nil
-                elseif v.type ~= "trunk" and v.type ~= "stash" then
+                elseif v.type ~= "trunk" and v.type ~= "tanker" and v.type ~= "stash" then
                     exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
                 end
             end
@@ -36,7 +36,12 @@ MySQL.ready(function()
 
         -- Create storage present in configuration if not exist in database
         for k, v in pairs(StorageNotLoaded) do
-            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, v.owner)
+            local storageConfig = Config.StorageCapacity["default"]
+            if Config.StorageCapacity[v.type] then
+                storageConfig = Config.StorageCapacity[v.type]
+            end
+
+            Inventory.Create(k, v.label, v.type, storageConfig.slot, storageConfig.weight, v.owner)
         end
     end)
 end)
@@ -53,7 +58,8 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
             id = tostring(id),
             label = label or id,
             type = invType,
-            slots = slots,
+            -- Disable slots limitation for the moment
+            slots = 10000, -- slots,
             weight = 0,
             maxWeight = maxWeight,
             owner = owner,
@@ -176,6 +182,8 @@ function Inventory.CanSwapItem(inv, firstItem, firstItemAmount, testItem, testIt
     end
     return false
 end
+RegisterNetEvent("inventory:server:CanSwapItem", Inventory.CanSwapItem)
+exports("CanSwapItem", Inventory.CanSwapItem)
 
 function Inventory.CanCarryItem(inv, item, amount, metadata)
     if type(item) ~= "table" then
@@ -535,7 +543,8 @@ function Inventory.GetItemSlots(inv, item, metadata)
     inv = Inventory(inv)
     local totalAmount, slots, emptySlots = 0, {}, inv.slots
     for k, v in pairs(inv.items) do
-        emptySlots = emptySlots - 1
+        -- Disable slots limitation for the moment
+        -- emptySlots = emptySlots - 1
         if v.name == item.name then
             if metadata and v.metadata == nil then
                 v.metadata = {}
@@ -582,8 +591,8 @@ end
 
 --- Create Player Storage
 local function CreatePlayerInventory(player --[[PlayerData]] )
-    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
-                            player.citizenid)
+    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.StorageCapacity["player"].slot,
+                            Config.StorageCapacity["player"].weight, player.citizenid)
 end
 
 exports("CreatePlayerInventory", CreatePlayerInventory)

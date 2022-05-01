@@ -1,20 +1,22 @@
-local gates = {GetHashKey("prop_sec_barrier_ld_01a"), GetHashKey("prop_sec_barrier_ld_02a")}
+local gates = {[GetHashKey("prop_sec_barrier_ld_01a")] = true, [GetHashKey("prop_sec_barrier_ld_02a")] = true}
 
 local closestGate = {}
 
 Citizen.CreateThread(function()
     while true do
         local coords = GetEntityCoords(PlayerPedId())
+        local objects = GetGamePool("CObject")
 
-        for _, gate in pairs(gates) do
-            local searchGate = GetClosestObjectOfType(coords.x, coords.y, coords.z, 40.0, gate, false, false, false)
+        for i = 1, #objects, 1 do
+            local objectModel = GetEntityModel(objects[i])
+            local objectCoords = GetEntityCoords(objects[i])
 
-            if searchGate ~= 0 then
-                closestGate[searchGate] = true
+            if gates[objectModel] and #(objectCoords - coords) <= 15.0 then
+                closestGate[objects[i]] = false
             end
         end
 
-        Wait(500)
+        Wait(1000)
     end
 end)
 
@@ -22,37 +24,46 @@ Citizen.CreateThread(function()
     while true do
         local coords = GetEntityCoords(PlayerPedId())
 
-        for gate, _ in pairs(closestGate) do
-            if DoesEntityExist(gate) then
-                local gateRotation = GetEntityRotation(gate, 0)
+        for gate, state in pairs(closestGate) do
+            CreateThread(function()
+                if state then
+                    return
+                end
 
-                if #(GetEntityCoords(gate) - coords) <= 20.0 then
-                    while gateRotation.y >= -89.5 do
-                        SetEntityRotation(gate, gateRotation.x, gateRotation.y - 0.5, gateRotation.z, 0, true)
-                        gateRotation = GetEntityRotation(gate, 0)
+                closestGate[gate] = true
+                if DoesEntityExist(gate) then
+                    local gateRotation = GetEntityRotation(gate, 0)
 
-                        if not DoesEntityExist(gate) then
-                            break
+                    if #(GetEntityCoords(gate) - coords) <= 15.0 then
+                        while gateRotation.y >= -89.5 do
+                            SetEntityRotation(gate, gateRotation.x, gateRotation.y - 1.0, gateRotation.z, 0, true)
+                            gateRotation = GetEntityRotation(gate, 0)
+
+                            if not DoesEntityExist(gate) then
+                                break
+                            end
+
+                            Wait(0)
                         end
+                    else
+                        while gateRotation.y <= -0.5 do
+                            SetEntityRotation(gate, gateRotation.x, gateRotation.y + 1.0, gateRotation.z, 0, true)
+                            gateRotation = GetEntityRotation(gate, 0)
 
-                        Wait(1)
+                            if not DoesEntityExist(gate) then
+                                break
+                            end
+
+                            Wait(0)
+                        end
+                        closestGate[gate] = nil
                     end
                 else
-                    while gateRotation.y <= -0.5 do
-                        SetEntityRotation(gate, gateRotation.x, gateRotation.y + 0.5, gateRotation.z, 0, true)
-                        gateRotation = GetEntityRotation(gate, 0)
-
-                        if not DoesEntityExist(gate) then
-                            break
-                        end
-
-                        Wait(1)
-                    end
                     closestGate[gate] = nil
                 end
-            else
-                closestGate[gate] = nil
-            end
+
+                closestGate[gate] = false
+            end)
         end
 
         Wait(500)

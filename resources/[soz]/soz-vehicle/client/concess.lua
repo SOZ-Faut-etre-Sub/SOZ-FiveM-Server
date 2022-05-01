@@ -1,5 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-
 local VehiculeList = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car", "soz", "shop:vehicle:car")
 local VehiculeModel = MenuV:InheritMenu(VehiculeList, {Title = nil})
 local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = nil})

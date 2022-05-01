@@ -2634,8 +2634,64 @@ QBShared.Items = {
         ['description'] = ''
     },
 
-    -- zkea
+    -- mtp
+    ['petroleum'] = {
+        ['name'] = 'petroleum',
+        ['label'] = 'Pétrole brut',
+        ['weight'] = 5000,
+        ['type'] = 'oil',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.'
+    },
+    ['petroleum_refined'] = {
+        ['name'] = 'petroleum_refined',
+        ['label'] = 'Pétrole conditionné',
+        ['weight'] = 1600,
+        ['type'] = 'oil',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Pétrole brut, conditionné pour le transport ou pour être utilisé comme carburant.'
+    },
+    ['petroleum_residue'] = {
+        ['name'] = 'petroleum_residue',
+        ['label'] = 'Résidus de pétrole lourd conditionnés',
+        ['weight'] = 200,
+        ['type'] = 'oil',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.'
+    },
+    ['essence'] = {
+        ['name'] = 'essence',
+        ['label'] = 'Carburant conditionné',
+        ['weight'] = 1000,
+        ['type'] = 'oil',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+    },
+    ['essence_jerrycan'] = {
+        ['name'] = 'essence_jerrycan',
+        ['label'] = 'Bidon de carburant conditionné',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+    },
 
+    -- zkea
     ['house_map'] = {
         ['name'] = 'house_map',
         ['label'] = 'Carte des habitations',

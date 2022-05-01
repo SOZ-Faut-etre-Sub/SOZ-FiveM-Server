@@ -1,11 +1,11 @@
---- @class FridgeInventory
-FridgeInventory = {}
+--- @class StorageTankInventory
+StorageTankInventory = {}
 
-function FridgeInventory.new()
+function StorageTankInventory.new()
     return setmetatable({}, {
-        __index = FridgeInventory,
+        __index = StorageTankInventory,
         __tostring = function()
-            return "FridgeInventory"
+            return "StorageTankInventory"
         end,
     })
 end
@@ -14,16 +14,16 @@ end
 --- @param id any
 --- @param citizenid any
 --- @return table
-function FridgeInventory:load(id, owner)
+function StorageTankInventory:load(id, owner)
     local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
         exports.oxmysql:execute("INSERT INTO storages(name,type,owner,max_slots,max_weight) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE name=name",
                                 {
             id,
-            "fridge",
+            "storage_tank",
             owner,
-            Config.StorageCapacity["fridge"].slot,
-            Config.StorageCapacity["fridge"].weight,
+            Config.StorageCapacity["storage_tank"].slot,
+            Config.StorageCapacity["storage_tank"].weight,
         })
     end
     return result and json.decode(result) or {}
@@ -34,7 +34,7 @@ end
 --- @param owner any
 --- @param inventory table
 --- @return boolean
-function FridgeInventory:save(id, owner, inventory)
+function StorageTankInventory:save(id, owner, inventory)
     inventory = json.encode(self:CompactInventory(inventory))
     exports.oxmysql:update("UPDATE storages SET inventory = ? WHERE name = ?", {inventory, id})
     return true
@@ -43,8 +43,8 @@ end
 --- AllowedItems
 --- @param item table
 --- @return boolean
-function FridgeInventory:AllowedItems(item)
-    local typeAllowed = {["food"] = true, ["drink"] = true}
+function StorageTankInventory:AllowedItems(item)
+    local typeAllowed = {["oil"] = true}
     return typeAllowed[item.type or ""] or false
 end
 
@@ -52,7 +52,7 @@ end
 --- @param owner string
 --- @param player Player
 --- @return boolean
-function FridgeInventory:AccessAllowed(owner, playerId)
+function StorageTankInventory:AccessAllowed(owner, playerId)
     local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
 
     if Player then
@@ -66,10 +66,10 @@ end
 --- @param id any
 --- @param items table
 --- @return boolean
-function FridgeInventory:sync(id, items)
+function StorageTankInventory:sync(id, items)
     -- Do nothing
 end
 
 --- Exports functions
-setmetatable(FridgeInventory, {__index = InventoryShell})
-_G.Container["fridge"] = FridgeInventory.new()
+setmetatable(StorageTankInventory, {__index = InventoryShell})
+_G.Container["storage_tank"] = StorageTankInventory.new()

@@ -19,24 +19,6 @@ SozJobCore.JobType = {
     Debug = "debug",
 }
 
-SozJobCore.JobLabel = {
-    unemployed = "Sans emploi",
-    adsl = "ADSL",
-    delivery = "Fougère Prime",
-    religious = "InfoChat",
-    scrapper = "DeMetal Company",
-    lspd = "LSPD",
-    bcso = "BCSO",
-    lsmc = "LSMC",
-    taxi = "Carl Jr Service",
-    food = "Château Marius",
-    news = "Twitch News",
-    garbage = "BlueBird",
-    oil = "Michel Transport Petrol",
-    ["cash-transfer"] = "STONK Depository",
-    bennys = "Benny's",
-}
-
 SozJobCore.JobPermission = {
     ManageGrade = "manage-grade",
     SocietyPrivateStorage = "society-private-storage",
@@ -46,7 +28,7 @@ SozJobCore.JobPermission = {
 }
 
 SozJobCore.Jobs = {
-    [SozJobCore.JobType.Unemployed] = {label = "Chômeur", grades = {}, permissions = {}},
+    [SozJobCore.JobType.Unemployed] = {label = "Sans emploi", grades = {}, permissions = {}},
     [SozJobCore.JobType.Adsl] = {
         label = "ADSL",
         temporary = {
@@ -182,6 +164,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Oil] = {
         label = "Michel Transport Petrol",
         grades = {},
+        menuCallback = "jobs:client:fueler:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
