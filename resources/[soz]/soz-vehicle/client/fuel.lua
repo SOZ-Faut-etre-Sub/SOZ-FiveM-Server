@@ -279,7 +279,7 @@ Citizen.CreateThread(function()
 
     for _, station in pairs(stations) do
         local position = vector3(station.position.x, station.position.y, station.position.z)
-        if station.type == 'public' then
+        if station.type == "public" then
             CreateBlip(position)
         end
 
