@@ -53,7 +53,7 @@ const PlayerInventory = () => {
     }, [setDisplay, setPlayerMoney, setPlayerInventory, setPlayerInventoryItems]);
 
     const onKeyDownReceived = useCallback((event: KeyboardEvent) => {
-        if (display && !event.repeat && event.key === 'Escape') {
+        if (display && !event.repeat && (event.key === 'Escape' || event.key === 'F2')) {
             closeNUI(() => setDisplay(false));
         }
     }, [display, setDisplay])
