@@ -279,7 +279,9 @@ Citizen.CreateThread(function()
 
     for _, station in pairs(stations) do
         local position = vector3(station.position.x, station.position.y, station.position.z)
-        CreateBlip(position)
+        if station.type == 'public' then
+            CreateBlip(position)
+        end
 
         local zone = BoxZone:Create(vector3(station.zone.position.x, station.zone.position.y, station.zone.position.z), station.zone.length, station.zone.width,
                                     station.zone.options)
@@ -307,7 +309,7 @@ Citizen.CreateThread(function()
                             canInteract = function()
                                 return station.type == "private"
                             end,
-                            job = station.owner,
+                            job = {[station.owner] = 0, ["oil"] = 0},
                         },
                         {
                             type = "client",
