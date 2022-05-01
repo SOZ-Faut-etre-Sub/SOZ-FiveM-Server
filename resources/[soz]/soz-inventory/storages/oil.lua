@@ -27,3 +27,22 @@ Config.Storages["oil_storage"] = {
     heading = 315,
     offsetUpZ = 1.5,
 }
+
+Config.Storages["oil_tank_1"] = {
+    label = "Cuve MTP",
+    type = "storage_tank",
+    owner = "oil",
+    position = vector3(-283.83, 6054.7, 31.58),
+    size = vec2(17.2, 4.8),
+    heading = 45,
+    offsetUpZ = 3.5,
+}
+Config.Storages["oil_tank_2"] = {
+    label = "Cuve MTP",
+    type = "storage_tank",
+    owner = "oil",
+    position = vector3(-288.51, 6050.11, 31.51),
+    size = vec2(17.2, 4.8),
+    heading = 45,
+    offsetUpZ = 3.5,
+}
