@@ -376,8 +376,12 @@ CreateThread(function()
                 if VehicleStatus[plate] == nil then
                     TriggerServerEvent("soz-bennys:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
                 else
-                    TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", engineHealth)
-                    TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", bodyHealth)
+                    if VehicleStatus[plate]["engine"] ~= GetVehicleEngineHealth(veh) then
+                        TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", engineHealth)
+                    end
+                    if VehicleStatus[plate]["body"] ~= GetVehicleBodyHealth(veh) then
+                        TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", bodyHealth)
+                    end
                     effectTimer = effectTimer + 1
                     if effectTimer >= math.random(10, 15) then
                         ApplyEffects(veh)
