@@ -4,6 +4,17 @@ local VehiculeList = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "men
 local VehiculeModel = MenuV:InheritMenu(VehiculeList, {Title = nil})
 local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = nil})
 
+InsideConcess = false
+
+ZonesConcess = {
+    ["Concess"] = BoxZone:Create(vector3(-55.49, -1096.44, 26.92), 10, 10, {
+        name = "Concess_z",
+        heading = 340,
+        minZ = 25.9,
+        maxZ = 29.9,
+    }),
+}
+
 local vehicles = {}
 for k, voiture in pairs(QBCore.Shared.Vehicles) do
     local category = voiture["category"]
@@ -203,6 +214,16 @@ RegisterNetEvent("soz-concess:client:deletecam", function()
     DisplayRadar(true)
 end)
 
+for indexConcess, Concess in pairs(ZonesConcess) do
+    Concess:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+        if isPointInside then
+            InsideConcess = true
+        else
+            InsideConcess = false
+        end
+    end)
+end
+
 exports["qb-target"]:SpawnPed({
     model = "s_m_m_autoshop_01",
     coords = vector4(-56.61, -1096.58, 25.42, 30.0),
@@ -221,24 +242,16 @@ exports["qb-target"]:SpawnPed({
                 event = "soz-concess:client:Menu",
                 icon = "c:concess/lister.png",
                 label = "Demander la liste des véhicules",
-                targeticon = "fas fa-clipboard-list",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-concess:client:Menu", "")
                 end,
                 canInteract = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
-                    return true
+                    return InsideConcess
                 end,
             },
         },
         distance = 2.5,
     },
-    currentpednumber = 0,
 })
 
 RegisterNetEvent("soz-concess:client:Menu", function()

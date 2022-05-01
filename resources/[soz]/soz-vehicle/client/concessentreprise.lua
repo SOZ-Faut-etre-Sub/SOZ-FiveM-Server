@@ -1,4 +1,14 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+InsideConcessEntreprise = false
+
+ZonesConcessEntreprise = {
+    ["ConcessEntreprise"] = BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
+        name = "ConcessEntreprise_z",
+        heading = 0,
+        minZ = 4.9,
+        maxZ = 8.9,
+    }),
+}
 
 PlacesConcessEntreprise = {
     ["entreprise1"] = BoxZone:Create(vector3(827.31, -3210.51, 5.9), 8, 6, {
@@ -98,6 +108,16 @@ local function GenerateMenuEntreprise()
     end
 end
 
+for indexConcessEntreprise, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
+    ConcessEntreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+        if isPointInside then
+            InsideConcessEntreprise = true
+        else
+            InsideConcessEntreprise = false
+        end
+    end)
+end
+
 exports["qb-target"]:SpawnPed({
     model = "s_f_m_shop_high",
     coords = vector4(858.72, -3204.44, 4.99, 180.00),
@@ -113,30 +133,22 @@ exports["qb-target"]:SpawnPed({
                 event = "soz-concessentreprise:client:Menu",
                 icon = "c:concess/lister.png",
                 label = "Demander la liste des véhicules",
-                targeticon = "fas fa-clipboard-list",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-concessentreprise:client:Menu", "")
                 end,
                 canInteract = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     if ((PlayerJob.grade ~= 14) and (PlayerJob.grade ~= 16) and (PlayerJob.grade ~= 18) and (PlayerJob.grade ~= 20) and (PlayerJob.grade ~= 22) and
                         (PlayerJob.grade ~= 24) and (PlayerJob.grade ~= 26) and (PlayerJob.grade ~= 28) and (PlayerJob.grade ~= 30) and (PlayerJob.grade ~= 31) and
                         (PlayerJob.grade ~= 32) and (PlayerJob.grade ~= 38) and (PlayerJob.grade ~= 39) and (PlayerJob.grade ~= 40) and (PlayerJob.grade ~= 44) and
                         (PlayerJob.grade ~= 45) and (PlayerJob.grade ~= 48)) or OnDuty == false then
                         return false
                     end
-                    return true
+                    return InsideConcessEntreprise
                 end,
             },
         },
         distance = 2.5,
     },
-    currentpednumber = 0,
 })
 
 RegisterNetEvent("soz-concessentreprise:client:Menu", function()
