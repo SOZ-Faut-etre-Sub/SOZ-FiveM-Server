@@ -409,6 +409,26 @@ AddEventHandler("jobs:client:food-process-milk", function()
 end)
 
 FoodJob.Functions.CraftItem = function(itemId, item)
+    local recipe = FoodConfig.Recipes[itemId]
+    if recipe == nil then
+        exports["soz-hud"]:DrawNotification("Recette invalide", "error")
+        return
+    end
+
+    local ingredients = recipe.ingredients
+    for ingId, count in pairs(ingredients) do
+        local ingredient = QBCore.Shared.Items[ingId]
+        if ingredient == nil then
+            exports["soz-hud"]:DrawNotification("Ingérdient invalide", "error")
+            return
+        end
+        local countInInv = FoodJob.Functions.GetItemCountFromInventory(ingId) or 0
+        if countInInv < count then
+            exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients", "error")
+            return
+        end
+    end
+
     Citizen.CreateThread(function()
         QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Grape.Duration, false, true,
                                      {
