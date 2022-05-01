@@ -105,7 +105,7 @@ function DisableAction()
 end
 
 RegisterNetEvent("fuel:client:GetFuelPomp")
-AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, vehicle)
+AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, vehicle, stationType)
     TaskTurnPedToFaceEntity(ped, gasentity, 500)
     Wait(500)
     QBCore.Functions.RequestAnimDict("anim@mp_atm@enter")
@@ -149,7 +149,7 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
                 action = function(entity)
                     local ped = PlayerPedId()
                     local vehicle = GetPlayersLastVehicle()
-                    TriggerEvent("fuel:client:PumpToCar", id, gasentity, ped, entity)
+                    TriggerEvent("fuel:client:PumpToCar", id, gasentity, ped, entity, stationType)
                 end,
                 canInteract = function(entity)
                     local ped = PlayerPedId()
@@ -185,14 +185,19 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
     })
 end)
 
-function DisplayText(newFuel, cout)
+function DisplayText(newFuel, cout, stationType)
+    local text = "~INPUT_CONTEXT~ Arrêter la pompe. Flux: ~g~" .. Round(newFuel, 1) .. "L / 100L"
+    if stationType ~= "private" then
+        text = text .. " ~w~Coût: ~g~" .. cout .. " $"
+    end
+
     BeginTextCommandDisplayHelp("STRING")
-    AddTextComponentSubstringPlayerName("~INPUT_CONTEXT~ Arrêter la pompe. Flux: ~g~" .. Round(newFuel, 1) .. "L / 100L ~w~Coût: ~g~" .. cout .. " $")
+    AddTextComponentSubstringPlayerName(text)
     EndTextCommandDisplayHelp(false, false, false, -1)
 end
 
 RegisterNetEvent("fuel:client:PumpToCar")
-AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
+AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, stationType)
     exports["qb-target"]:RemoveTargetModel(entity, "Remplir")
     local stockstation = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", id)
 
@@ -219,7 +224,7 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
             fueldiff = currentFuelAdd / 100
             cout = math.ceil(fueldiff * Config.RefillCost)
 
-            DisplayText(newFuel, cout)
+            DisplayText(newFuel, cout, stationType)
             SetVehicleUndriveable(entity, true)
             SetVehicleEngineOn(entity, false, false, false)
             DisableAction()
@@ -232,12 +237,24 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
         if GetPedInVehicleSeat(entity, -1) == 0 then
             if stockstation > currentFuelAdd then
                 if QBCore.Functions.GetPlayerData().money["money"] > cout then
-                    QBCore.Functions.ShowHelpNotification("Terminé. Prix final : ~g~" .. cout .. " $")
+                    local text = "Terminé."
+                    if stationType ~= "private" then
+                        text = text .. " Prix final : ~g~" .. cout .. " $"
+                    end
+                    QBCore.Functions.ShowHelpNotification(text)
                 else
-                    QBCore.Functions.ShowHelpNotification("Vous ne pouvez pas payer plus. Le prix final est de: ~g~" .. cout .. " $")
+                    local text = "Vous ne pouvez pas payer plus."
+                    if stationType ~= "private" then
+                        text = text .. " Le prix final est de: ~g~" .. cout .. " $"
+                    end
+                    QBCore.Functions.ShowHelpNotification(text)
                 end
             else
-                QBCore.Functions.ShowHelpNotification("Il n'y a plus d'autre stock dans la station. Le prix final est de: ~g~" .. cout .. " $")
+                local text = "Il n'y a plus d'autre stock dans la station."
+                if stationType ~= "private" then
+                    text = text .. " Le prix final est de: ~g~" .. cout .. " $"
+                end
+                QBCore.Functions.ShowHelpNotification(text)
             end
             SetFuel(entity, math.floor(newFuel))
             TriggerServerEvent("soz-fuel:server:setFinalFuel", id, (100 - math.floor(currentFuelAdd)))
@@ -248,7 +265,9 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity)
         SetVehicleUndriveable(entity, false)
         SetVehicleEngineOn(entity, true, false, false)
         ClearAnimation()
-        TriggerServerEvent("fuel:pay", tonumber(math.ceil(cout)), GetPlayerServerId(PlayerId()))
+        if stationType ~= "private" then
+            TriggerServerEvent("fuel:pay", tonumber(math.ceil(cout)), GetPlayerServerId(PlayerId()))
+        end
     else
         QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
         ClearAnimation()
@@ -281,13 +300,23 @@ Citizen.CreateThread(function()
                             job = "oil",
                         },
                         {
+                            label = "État de la station",
+                            icon = "c:fuel/pistolet.png",
+                            event = "fuel:client:GetFuelLevel",
+                            station = station.id,
+                            canInteract = function()
+                                return station.type == "private"
+                            end,
+                            job = station.owner,
+                        },
+                        {
                             type = "client",
                             icon = "c:fuel/pistolet.png",
                             label = "Pistolet",
                             action = function(entity)
                                 local ped = PlayerPedId()
                                 local vehicle = GetPlayersLastVehicle()
-                                TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle)
+                                TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle, station.type)
                             end,
                             canInteract = function(entity)
                                 local ped = PlayerPedId()
@@ -356,3 +385,18 @@ function CreateBlip(coords)
     EndTextCommandSetBlipName(blip)
     return blip
 end
+
+RegisterNetEvent("fuel:client:GetFuelLevel", function(data)
+    local stationFuelLevel = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", data.station)
+
+    TaskTurnPedToFaceEntity(PlayerPedId(), data.entity, 500)
+    Wait(500)
+
+    QBCore.Functions.Progressbar("inspect", "Vous vérifiez le niveau...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {task = "PROP_HUMAN_PARKING_METER"}, {}, {}, function() -- Done
+        exports["soz-hud"]:DrawNotification(("Status de la cuve : ~b~%dL"):format(stationFuelLevel), "info")
+    end)
+end)
+
