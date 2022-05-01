@@ -475,7 +475,7 @@ Config.vehicleCustomisationCustom = {
     {category = "Amélioration Freins", id = 12},
     {category = "Amélioration Transmission", id = 13},
     {category = "Amélioration Suspension", id = 15},
-    {category = "Amélioration Armure", id = 16},
+    {category = "Amélioration Blindage", id = 16},
     {category = "Amélioration Turbo", id = 18},
 }
 
