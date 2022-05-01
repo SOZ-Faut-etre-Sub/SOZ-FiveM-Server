@@ -104,11 +104,11 @@ Zonespublic = {
 }
 
 Zonesfourriere = {
-    ["fourriere"] = BoxZone:Create(vector3(497.97, -1316.59, 29.24), 10, 15, {
+    ["fourriere"] = BoxZone:Create(vector3(486.15, -1326.13, 29.22), 40, 30, {
         name = "fourriere_z",
-        heading = 305,
-        minZ = 28.24,
-        maxZ = 32.24,
+        heading = 35,
+        minZ = 28.22,
+        maxZ = 32.22,
     }),
 }
 
@@ -1293,32 +1293,12 @@ for indexpublic, public in pairs(Zonespublic) do
     end)
 end
 
+InsideFourriere = false
+
 for indexfourriere, fourriere in pairs(Zonesfourriere) do
     fourriere:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-        exports["qb-target"]:AddGlobalVehicle({
-            options = {
-                {
-                    type = "client",
-                    event = "qb-garages:client:PutInDepot",
-                    icon = "c:mechanic/CarFourrière.png",
-                    label = "Fourriérer",
-                    action = function(entity)
-                        TriggerEvent("qb-garages:client:PutInDepot", entity)
-                    end,
-                    canInteract = function(entity, distance, data)
-                        if GetEntityModel(entity) == GetHashKey("flatbed3") then
-                            return false
-                        end
-                        if OnDuty == false or PlayerJob.id ~= "bennys" then
-                            return false
-                        end
-                        return isPointInside
-                    end,
-                },
-            },
-            distance = 3.0,
-        })
         if isPointInside then
+            InsideFourriere = true
             exports["qb-target"]:AddTargetModel(115679102, {
                 options = {
                     {
@@ -1338,10 +1318,35 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                 distance = 2.5,
             })
         else
+            InsideFourriere = false
             exports["qb-target"]:RemoveTargetModel(115679102, "Accéder à la fourrière")
         end
     end)
 end
+
+exports["qb-target"]:AddGlobalVehicle({
+    options = {
+        {
+            type = "client",
+            event = "qb-garages:client:PutInDepot",
+            icon = "c:mechanic/CarFourrière.png",
+            label = "Fourriérer",
+            action = function(entity)
+                TriggerEvent("qb-garages:client:PutInDepot", entity)
+            end,
+            canInteract = function(entity, distance, data)
+                if GetEntityModel(entity) == GetHashKey("flatbed3") then
+                    return false
+                end
+                if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    return false
+                end
+                return InsideFourriere
+            end,
+        },
+    },
+    distance = 3.0,
+})
 
 for indexentreprise, entreprise in pairs(Zonesentreprise) do
     entreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)

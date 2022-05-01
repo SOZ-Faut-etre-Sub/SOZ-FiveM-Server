@@ -10,8 +10,8 @@ ZonesConcess = {
     ["Concess"] = BoxZone:Create(vector3(-55.49, -1096.44, 26.92), 10, 10, {
         name = "Concess_z",
         heading = 340,
-        minZ = 25.9,
-        maxZ = 29.9,
+        minZ = 25.92,
+        maxZ = 29.92,
     }),
 }
 
