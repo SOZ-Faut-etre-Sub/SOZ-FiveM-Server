@@ -148,17 +148,11 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
                 icon = "c:fuel/remplir.png",
                 label = "Remplir",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     local ped = PlayerPedId()
                     local vehicle = GetPlayersLastVehicle()
                     TriggerEvent("fuel:client:PumpToCar", id, gasentity, ped, entity)
                 end,
                 canInteract = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     local ped = PlayerPedId()
                     if not isFueling then
                         if not IsPedInAnyVehicle(ped) then
@@ -281,17 +275,11 @@ Citizen.CreateThread(function()
                             icon = "c:fuel/pistolet.png",
                             label = "Pistolet",
                             action = function(entity)
-                                if IsPedAPlayer(entity) then
-                                    return false
-                                end
                                 local ped = PlayerPedId()
                                 local vehicle = GetPlayersLastVehicle()
                                 TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle)
                             end,
                             canInteract = function(entity)
-                                if IsPedAPlayer(entity) then
-                                    return false
-                                end
                                 local ped = PlayerPedId()
                                 if not isFueling then
                                     if not IsPedInAnyVehicle(ped) then

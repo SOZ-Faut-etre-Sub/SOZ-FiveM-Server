@@ -1250,9 +1250,6 @@ for indexpriv, prive in pairs(Zonesprives) do
                         icon = "c:garage/ParkingPrive.png",
                         label = "Accéder au parking privé",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexpriv then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1280,9 +1277,6 @@ for indexpublic, public in pairs(Zonespublic) do
                         icon = "c:garage/ParkingPublic.png",
                         label = "Accéder au parking public",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexpublic then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1309,9 +1303,6 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                     icon = "c:mechanic/CarFourrière.png",
                     label = "Fourriérer",
                     action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
                         TriggerEvent("qb-garages:client:PutInDepot", entity)
                     end,
                     canInteract = function(entity, distance, data)
@@ -1336,9 +1327,6 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                         icon = "c:garage/Fourriere.png",
                         label = "Accéder à la fourrière",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexfourriere then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1365,11 +1353,7 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/GarageEntreprise.png",
                         label = "Accéder au parking entreprise",
-                        targeticon = "fas fa-wrench",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexentreprise then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1377,9 +1361,6 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                             end
                         end,
                         canInteract = function(entity, distance, data)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexentreprise and (garage.job ~= PlayerJob.id or OnDuty == false) then
                                     return false

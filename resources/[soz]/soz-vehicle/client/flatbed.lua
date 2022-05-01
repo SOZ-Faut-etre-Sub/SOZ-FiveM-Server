@@ -338,9 +338,6 @@ CreateThread(function()
                 event = "soz-flatbed:client:callaction",
                 label = "Descendre",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
                 canInteract = function(entity, distance, data)
@@ -359,9 +356,6 @@ CreateThread(function()
                 event = "soz-flatbed:client:callaction",
                 label = "Relever",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
                 canInteract = function(entity, distance, data)
@@ -380,9 +374,6 @@ CreateThread(function()
                 event = "soz-flatbed:client:callchaines",
                 label = "Attacher",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
                 canInteract = function(entity, distance, data)
@@ -401,9 +392,6 @@ CreateThread(function()
                 event = "soz-flatbed:client:callchaines",
                 label = "Détacher",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
                 canInteract = function(entity, distance, data)
@@ -422,9 +410,6 @@ CreateThread(function()
                 event = "soz-flatbed:client:calltp",
                 label = "Démorquer",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
                 canInteract = function(entity, distance, data)
@@ -443,9 +428,6 @@ CreateThread(function()
                 event = "soz-flatbed:client:calltp",
                 label = "Remorquer",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     local lastveh = GetVehiclePedIsIn(PlayerPedId(), true)
                     TriggerEvent("soz-flatbed:client:calltp", entity, lastveh)
                 end,

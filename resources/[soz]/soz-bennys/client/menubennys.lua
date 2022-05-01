@@ -871,7 +871,6 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
                     event = "soz-bennys:client:OpenCloakroomMenu",
                     icon = "fas fa-tshirt",
                     label = "Se changer",
-                    targeticon = "fas fa-wrench",
                     action = function()
                         TriggerEvent("soz-bennys:client:OpenCloakroomMenu")
                     end,
@@ -900,9 +899,6 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                     icon = "fas fa-sign-in-alt",
                     label = "Prendre son service",
                     action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
@@ -916,9 +912,6 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                     icon = "fas fa-sign-in-alt",
                     label = "Finir son service",
                     action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
