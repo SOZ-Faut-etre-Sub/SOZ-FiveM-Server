@@ -17,10 +17,13 @@ end
 function ArmoryInventory:load(id, owner)
     local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute("INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name", {
+        exports.oxmysql:execute("INSERT INTO storages(name,type,owner,max_slots,max_weight) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE name=name",
+                                {
             id,
             "armory",
             owner,
+            Config.StorageCapacity["armory"].slot,
+            Config.StorageCapacity["armory"].weight,
         })
     end
     return result and json.decode(result) or {}

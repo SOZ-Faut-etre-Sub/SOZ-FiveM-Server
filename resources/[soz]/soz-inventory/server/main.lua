@@ -36,7 +36,12 @@ MySQL.ready(function()
 
         -- Create storage present in configuration if not exist in database
         for k, v in pairs(StorageNotLoaded) do
-            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, v.owner)
+            local storageConfig = Config.StorageCapacity["default"]
+            if Config.StorageCapacity[v.type] then
+                storageConfig = Config.StorageCapacity[v.type]
+            end
+
+            Inventory.Create(k, v.label, v.type, storageConfig.slot, storageConfig.weight, v.owner)
         end
     end)
 end)
@@ -584,8 +589,8 @@ end
 
 --- Create Player Storage
 local function CreatePlayerInventory(player --[[PlayerData]] )
-    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
-                            player.citizenid)
+    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.StorageCapacity["player"].slot,
+                            Config.StorageCapacity["player"].weight, player.citizenid)
 end
 
 exports("CreatePlayerInventory", CreatePlayerInventory)
