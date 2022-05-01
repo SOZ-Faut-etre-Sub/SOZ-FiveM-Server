@@ -287,8 +287,12 @@ function DisplayHelpText()
 end
 
 function DisplayFieldHealth(newVisibility)
-    if newVisibility then 
-        SendNUIMessage({action = "show", health = FoodConfig.FieldHealthStates[currentFieldHealth], field = string.match(currentField, "%a+") })
+    if newVisibility then
+        SendNUIMessage({
+            action = "show",
+            health = FoodConfig.FieldHealthStates[currentFieldHealth],
+            field = string.match(currentField, "%a+"),
+        })
     else
         SendNUIMessage({action = "hide"})
     end
