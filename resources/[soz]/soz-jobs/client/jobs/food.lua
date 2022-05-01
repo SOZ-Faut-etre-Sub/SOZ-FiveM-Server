@@ -31,11 +31,12 @@ local function SpawnFieldZones()
                 DisplayHelpText()
                 QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
                     currentFieldHealth = health
-                    DisplayFieldHealth()
+                    DisplayFieldHealth(true)
                 end, zone.name)
             else
                 currentField = nil
                 currentFieldHealth = nil
+                DisplayFieldHealth(false)
             end
         end)
         table.insert(FoodJob.Zones, zone)
@@ -285,24 +286,12 @@ function DisplayHelpText()
     end)
 end
 
-function DisplayFieldHealth()
-    Citizen.CreateThread(function()
-        while currentFieldHealth ~= nil do
-            SetTextFont(4)
-            SetTextProportional(0)
-            SetTextScale(0.5, 0.5)
-            SetTextColour(255, 255, 255, 200)
-            SetTextEdge(2, 0, 0, 0, 255)
-            SetTextOutline()
-            SetTextDropShadow(0, 0, 0, 0, 255)
-            SetTextDropShadow()
-            SetTextEntry("STRING")
-            AddTextComponentString(FoodConfig.FieldHealthStates[currentFieldHealth])
-            local x, y, width, height = 0.96, 1.44, 1.0, 1.0
-            DrawText(x - width / 2, y - height / 2)
-            Citizen.Wait(0)
-        end
-    end)
+function DisplayFieldHealth(newVisibility)
+    if newVisibility then 
+        SendNUIMessage({action = "show", health = FoodConfig.FieldHealthStates[currentFieldHealth], field = string.match(currentField, "%a+") })
+    else
+        SendNUIMessage({action = "hide"})
+    end
 end
 
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()

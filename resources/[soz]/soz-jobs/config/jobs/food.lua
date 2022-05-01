@@ -60,11 +60,11 @@ FoodConfig.Fields = {
 FoodConfig.RefillLoopDelay = 60000 -- in ms
 
 FoodConfig.FieldHealthStates = {
-    [0] = "✖️✖️✖️✖️",
-    [1] = "🍇✖️✖️✖️",
-    [2] = "🍇🍇✖️✖️",
-    [3] = "🍇🍇🍇✖️",
-    [4] = "🍇🍇🍇🍇",
+    [0] = "0000",
+    [1] = "1000",
+    [2] = "1100",
+    [3] = "1110",
+    [4] = "1111",
 }
 
 FoodConfig.Zones = {
