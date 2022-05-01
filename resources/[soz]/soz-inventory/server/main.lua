@@ -543,8 +543,7 @@ function Inventory.GetItemSlots(inv, item, metadata)
     inv = Inventory(inv)
     local totalAmount, slots, emptySlots = 0, {}, inv.slots
     for k, v in pairs(inv.items) do
-        -- Disable slots limitation for the moment
-        -- emptySlots = emptySlots - 1
+        emptySlots = emptySlots - 1
         if v.name == item.name then
             if metadata and v.metadata == nil then
                 v.metadata = {}
