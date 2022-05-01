@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- NUI USED FOR soz-jobs/food -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        #icons {
+            position: absolute;
+            bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 2rem;
+        }
+        #icons svg {
+            width: 2rem;
+            height: 2rem;
+            margin: 0 .25rem;
+        }
+    </style>
+</head>
+<body>
+    <section id="wrapper" style="display: none;">
+        <div id="icons"></div>
+    </section>
+
+    <script type="text/javascript">
+        const COLORSETS = {
+            cardinal: ["#553788", "#9266CC", "#AA8DD8", "#744EAA"],
+            muscat: ["#364187", "#767FAB", "#8D96D9", "#4F56AB"],
+            centennial: ["#873672", "#CC66A3", "#D98DB7", "#AB4F95"],
+            chasselas: ["#708736", "#B1CC66", "#C1D98D", "#95AB4F"],
+        };
+
+        function setVisible(newValue) {
+            const el = document.querySelector("#wrapper");
+            el.style.display = newValue ? "block" : "none";
+        }
+
+        function getGrapeIcon(colors) {
+            // Source : https://github.com/twitter/twemoji/blob/master/assets/svg/1f347.svg
+            return `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+                    <path fill="#77B255" d="M9.999 12c-.15 0-.303-.034-.446-.106-4.38-2.19-7.484-7.526-8.501-10.578C.876.792 1.16.226 1.684.051c.525-.176 1.091.109 1.265.632.877 2.632 3.688 7.517 7.499 9.422.494.247.694.848.447 1.342-.176.351-.529.553-.896.553z"/>
+                    <circle fill="${colors[0]}" cx="19" cy="29" r="7"/>
+                    <circle fill="${colors[1]}" cx="10" cy="15" r="7"/>
+                    <circle fill="${colors[2]}" cx="19" cy="12" r="7"/>
+                    <circle fill="${colors[3]}" cx="27" cy="18" r="7"/>
+                    <circle fill="${colors[3]}" cx="9" cy="26" r="7"/>
+                    <circle fill="${colors[1]}" cx="18" cy="21" r="7"/>
+                    <circle fill="${colors[1]}" cx="29" cy="29" r="7"/>
+                </svg>`;
+        }
+
+        function displayHealth(healthString, fieldType = "cardinal") {
+            const el = document.querySelector("#icons");
+
+            const icons = healthString
+                .split("")
+                .map(char => char === "0" ? "✖️" : getGrapeIcon(COLORSETS[fieldType]));
+            
+            el.innerHTML = icons.join("");
+            setVisible(true);
+        }
+
+        function hideHealth() {
+            const el = document.querySelector("#icons");
+            setVisible(false);
+            el.innerHTML = "";
+        }
+
+        // NUI Event
+        window.addEventListener("message", (event) => {
+            console.log('#', event.data.health, event.data.action)
+            const action = event.data.action;
+
+            if (action === "hide") {
+                hideHealth();
+                return;
+            }
+
+            if (action === "show") {
+                displayHealth(event.data.health, event.data.field);
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
