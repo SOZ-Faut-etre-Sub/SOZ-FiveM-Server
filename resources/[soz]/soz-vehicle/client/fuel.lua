@@ -315,9 +315,14 @@ Citizen.CreateThread(function()
                                     if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 2.5 then
                                         if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
                                             if GetVehicleFuelLevel(vehicle) < 95 then
-                                                return true
+                                                if GetEntityHealth(entity) > 0 then
+                                                    return true
+                                                else
+                                                    exports["soz-hud"]:DrawNotification("La pompe est explosée", "error")
+                                                    Citizen.Wait(5000)
+                                                end
                                             else
-                                                TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
+                                                exports["soz-hud"]:DrawNotification("Le réservoir est plein", "error")
                                                 Citizen.Wait(5000)
                                                 return false
                                             end
