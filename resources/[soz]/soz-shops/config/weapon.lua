@@ -1,12 +1,4 @@
-Config.Products["ammunation"] = {
-    [1] = {name = "weapon_bat", type = "weapon", price = 250, amount = 250},
-    [2] = {name = "weapon_knife", type = "weapon", price = 250, amount = 250},
-    [3] = {name = "weapon_wrench", type = "weapon", price = 250, amount = 250, requiredJob = {"bennys"}},
-    [4] = {name = "weapon_hammer", type = "weapon", price = 250, amount = 250, requiredJob = {"bennys"}},
-    [5] = {name = "weapon_stungun", type = "weapon", price = 2500, amount = 10},
-    [6] = {name = "weapon_pistol", type = "weapon", price = 2500, amount = 5},
-    [7] = {name = "pistol_ammo", type = "ammo", price = 250, amount = 250},
-}
+Config.Products["ammunation"] = {[1] = {name = "parachute", type = "item", price = 250, amount = 250}}
 
 Config.Locations["ammunation"] = {
     vector4(-661.61, -933.49, 21.83, 176.46),
