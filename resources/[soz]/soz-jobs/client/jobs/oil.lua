@@ -516,7 +516,54 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
     societyMenu:ClearItems()
 
     if PlayerData.job.onduty then
+        societyMenu:AddCheckbox({
+            label = "Afficher la zone de récolte sur le GPS",
+            change = function(_, value)
+                if not QBCore.Functions.GetBlip("mtp_resell") then
+                    QBCore.Functions.CreateBlip("mtp_resell", {
+                        name = "Point de récolte",
+                        coords = vector3(585.93, 2901.68, 39.72),
+                        sprite = 436,
+                        scale = 1.0,
+                    })
+                end
 
+                QBCore.Functions.HideBlip("mtp_resell", not value)
+            end,
+        })
+
+        societyMenu:AddCheckbox({
+            label = "Afficher la zone de raffinage sur le GPS",
+            change = function(_, value)
+                if not QBCore.Functions.GetBlip("mtp_resell") then
+                    QBCore.Functions.CreateBlip("mtp_resell",
+                                                {
+                        name = "Point de raffinage",
+                        coords = vector3(2793.73, 1524.45, 24.52),
+                        sprite = 436,
+                        scale = 1.0,
+                    })
+                end
+
+                QBCore.Functions.HideBlip("mtp_resell", not value)
+            end,
+        })
+
+        societyMenu:AddCheckbox({
+            label = "Afficher la zone de revente sur le GPS",
+            change = function(_, value)
+                if not QBCore.Functions.GetBlip("mtp_resell") then
+                    QBCore.Functions.CreateBlip("mtp_resell", {
+                        name = "Point de vente",
+                        coords = vector3(263.41, -2979.47, 4.93),
+                        sprite = 436,
+                        scale = 1.0,
+                    })
+                end
+
+                QBCore.Functions.HideBlip("mtp_resell", not value)
+            end,
+        })
     else
         societyMenu:AddButton({label = "Tu n'es pas en service !", disabled = true})
     end
