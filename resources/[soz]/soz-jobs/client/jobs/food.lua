@@ -374,7 +374,21 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
     end)
 end)
 
+FoodJob.Functions.GetItemCountFromInventory = function(itemName)
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == itemName then
+            return item.amount
+        end
+    end
+end
+
 AddEventHandler("jobs:client:food-process-milk", function()
+    local count = FoodJob.Functions.GetItemCountFromInventory(FoodConfig.Collect.Milk.Item)
+    if not count or count < 1 then
+        exports["soz-hud"]:DrawNotification("Vous n'avez pas de bidons de lait sur vous", "error")
+        return
+    end
+
     QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true,
                                  {
         disableMovement = true,
