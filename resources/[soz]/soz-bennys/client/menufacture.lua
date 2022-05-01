@@ -48,9 +48,6 @@ CreateThread(function()
                 event = "soz-bennys:client:OpenInvoiceMenu",
                 job = "bennys",
                 action = function(entity)
-                    if IsPedAPlayer(entity) then
-                        return false
-                    end
                     TriggerEvent("soz-bennys:client:OpenInvoiceMenu", entity)
                 end,
                 canInteract = function(entity)

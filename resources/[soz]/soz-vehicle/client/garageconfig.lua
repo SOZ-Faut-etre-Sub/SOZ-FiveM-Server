@@ -104,11 +104,11 @@ Zonespublic = {
 }
 
 Zonesfourriere = {
-    ["fourriere"] = BoxZone:Create(vector3(497.97, -1316.59, 29.24), 10, 15, {
+    ["fourriere"] = BoxZone:Create(vector3(486.15, -1326.13, 29.22), 40, 30, {
         name = "fourriere_z",
-        heading = 305,
-        minZ = 28.24,
-        maxZ = 32.24,
+        heading = 35,
+        minZ = 28.22,
+        maxZ = 32.22,
     }),
 }
 
@@ -1249,11 +1249,7 @@ for indexpriv, prive in pairs(Zonesprives) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/ParkingPrive.png",
                         label = "Accéder au parking privé",
-                        targeticon = "fas fa-parking",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexpriv then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1280,11 +1276,7 @@ for indexpublic, public in pairs(Zonespublic) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/ParkingPublic.png",
                         label = "Accéder au parking public",
-                        targeticon = "fas fa-parking",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexpublic then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1301,9 +1293,12 @@ for indexpublic, public in pairs(Zonespublic) do
     end)
 end
 
+InsideFourriere = false
+
 for indexfourriere, fourriere in pairs(Zonesfourriere) do
     fourriere:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
+            InsideFourriere = true
             exports["qb-target"]:AddTargetModel(115679102, {
                 options = {
                     {
@@ -1311,11 +1306,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/Fourriere.png",
                         label = "Accéder à la fourrière",
-                        targeticon = "fas fa-car-crash",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexfourriere then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1327,10 +1318,35 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
                 distance = 2.5,
             })
         else
+            InsideFourriere = false
             exports["qb-target"]:RemoveTargetModel(115679102, "Accéder à la fourrière")
         end
     end)
 end
+
+exports["qb-target"]:AddGlobalVehicle({
+    options = {
+        {
+            type = "client",
+            event = "qb-garages:client:PutInDepot",
+            icon = "c:mechanic/CarFourrière.png",
+            label = "Fourriérer",
+            action = function(entity)
+                TriggerEvent("qb-garages:client:PutInDepot", entity)
+            end,
+            canInteract = function(entity, distance, data)
+                if GetEntityModel(entity) == GetHashKey("flatbed3") then
+                    return false
+                end
+                if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    return false
+                end
+                return InsideFourriere
+            end,
+        },
+    },
+    distance = 3.0,
+})
 
 for indexentreprise, entreprise in pairs(Zonesentreprise) do
     entreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
@@ -1342,11 +1358,7 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                         event = "qb-garage:client:Menu",
                         icon = "c:garage/GarageEntreprise.png",
                         label = "Accéder au parking entreprise",
-                        targeticon = "fas fa-wrench",
                         action = function(entity)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexentreprise then
                                     TriggerEvent("qb-garage:client:Menu", garage.type, garage, indexgarage)
@@ -1354,9 +1366,6 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                             end
                         end,
                         canInteract = function(entity, distance, data)
-                            if IsPedAPlayer(entity) then
-                                return false
-                            end
                             for indexgarage, garage in pairs(Garages) do
                                 if indexgarage == indexentreprise and (garage.job ~= PlayerJob.id or OnDuty == false) then
                                     return false

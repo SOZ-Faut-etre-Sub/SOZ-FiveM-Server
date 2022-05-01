@@ -65,7 +65,7 @@ CreateThread(function()
                                 end
                             else
                                 DrawText3Ds(Config.CarWash[k]["coords"]["x"], Config.CarWash[k]["coords"]["y"], Config.CarWash[k]["coords"]["z"],
-                                            "Lavage Auto non disponible ..")
+                                            "Lavage Auto en cours d'utilisation ..")
                             end
                         end
                     end

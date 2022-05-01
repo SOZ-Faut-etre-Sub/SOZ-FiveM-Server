@@ -675,6 +675,8 @@ local function OpenPartsMenu(menu)
                 local percentage = math.ceil(VehicleStatus[plate][k])
                 if percentage > 100 then
                     percentage = math.ceil(VehicleStatus[plate][k]) / 10
+                elseif percentage == 100 then
+                    percentage = math.round(percentage)
                 end
                 menu:AddButton({
                     label = v,
@@ -687,6 +689,8 @@ local function OpenPartsMenu(menu)
                 local percentage = math.ceil(Config.MaxStatusValues[k])
                 if percentage > 100 then
                     percentage = math.ceil(Config.MaxStatusValues[k]) / 10
+                elseif percentage == 100 then
+                    percentage = math.round(percentage)
                 end
                 menu:AddButton({
                     label = v,
@@ -795,6 +799,7 @@ local function OpenMenu(menu)
             exports["soz-hud"]:DrawNotification("Véhicule libéré")
             FreezeEntityPosition(veh, false)
             menu:Close()
+            SetVehicleDoorsLocked(veh, 1)
             saveVehicle()
         end,
     })
@@ -866,7 +871,6 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
                     event = "soz-bennys:client:OpenCloakroomMenu",
                     icon = "fas fa-tshirt",
                     label = "Se changer",
-                    targeticon = "fas fa-wrench",
                     action = function()
                         TriggerEvent("soz-bennys:client:OpenCloakroomMenu")
                     end,
@@ -895,9 +899,6 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                     icon = "fas fa-sign-in-alt",
                     label = "Prendre son service",
                     action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
@@ -911,9 +912,6 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
                     icon = "fas fa-sign-in-alt",
                     label = "Finir son service",
                     action = function(entity)
-                        if IsPedAPlayer(entity) then
-                            return false
-                        end
                         TriggerServerEvent("QBCore:ToggleDuty")
                     end,
                     canInteract = function()
@@ -987,6 +985,7 @@ CreateThread(function()
                 local veh = GetVehiclePedIsIn(PlayerPedId())
                 Config.AttachedVehicle = veh
                 TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", veh)
+                SetVehicleDoorsLocked(veh, 4)
                 GenerateOpenMenu()
             end
         end
