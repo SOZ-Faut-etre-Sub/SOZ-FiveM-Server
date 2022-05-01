@@ -519,8 +519,8 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
         societyMenu:AddCheckbox({
             label = "Afficher la zone de récolte sur le GPS",
             change = function(_, value)
-                if not QBCore.Functions.GetBlip("mtp_resell") then
-                    QBCore.Functions.CreateBlip("mtp_resell", {
+                if not QBCore.Functions.GetBlip("mtp_farm") then
+                    QBCore.Functions.CreateBlip("mtp_farm", {
                         name = "Point de récolte",
                         coords = vector3(585.93, 2901.68, 39.72),
                         sprite = 436,
@@ -535,8 +535,8 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
         societyMenu:AddCheckbox({
             label = "Afficher la zone de raffinage sur le GPS",
             change = function(_, value)
-                if not QBCore.Functions.GetBlip("mtp_resell") then
-                    QBCore.Functions.CreateBlip("mtp_resell",
+                if not QBCore.Functions.GetBlip("mtp_refinery") then
+                    QBCore.Functions.CreateBlip("mtp_refinery",
                                                 {
                         name = "Point de raffinage",
                         coords = vector3(2793.73, 1524.45, 24.52),
