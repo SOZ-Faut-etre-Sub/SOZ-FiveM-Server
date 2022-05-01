@@ -105,7 +105,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
         local amountAvailableForWithdraw = terminalConfig.maxWithdrawal - lastUse.amountWithdrawn
         local remainingTime = terminalConfig.limit + lastUse.lastUsed - GetGameTimer()
 
-        local limit = string.format(Config.ErrorMessage["limit"], terminalConfig.maxWithdrawal, terminalConfig.limit / 60000)
+        local limit = string.format(Config.ErrorMessage["limit"], terminalConfig.maxWithdrawal, math.ceil(terminalConfig.limit / 60000))
         if remainingTime > 0 then
             if amountAvailableForWithdraw == 0 then
                 exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["time_limit"], math.ceil(remainingTime / 60000)), "error")
