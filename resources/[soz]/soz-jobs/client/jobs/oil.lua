@@ -99,7 +99,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     icon = "c:fuel/pistolet.png",
                     label = "Connecter le Tanker",
                     canInteract = function()
-                        return not LocalPlayer.state.hasTankerPipe
+                        return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
                 },
@@ -108,7 +108,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     icon = "c:fuel/pistolet.png",
                     label = "Déconnecter le Tanker",
                     canInteract = function()
-                        return LocalPlayer.state.hasTankerPipe
+                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
                 },
@@ -124,7 +124,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     icon = "c:fuel/remplir.png",
                     label = "Relier le Tanker",
                     canInteract = function()
-                        return LocalPlayer.state.hasTankerPipe
+                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
                 },
@@ -139,7 +139,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                 icon = "c:fuel/remplir.png",
                 label = "Relier le Tanker",
                 canInteract = function()
-                    return LocalPlayer.state.hasTankerPipe
+                    return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                 end,
                 job = "oil",
             },
@@ -173,7 +173,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     icon = "c:fuel/remplir.png",
                     label = "Relier le Tanker",
                     canInteract = function()
-                        return LocalPlayer.state.hasTankerPipe
+                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
                 },
