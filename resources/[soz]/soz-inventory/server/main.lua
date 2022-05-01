@@ -58,7 +58,8 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
             id = tostring(id),
             label = label or id,
             type = invType,
-            slots = slots,
+            -- Disable slots limitation for the moment
+            slots = 10000, -- slots,
             weight = 0,
             maxWeight = maxWeight,
             owner = owner,
@@ -542,7 +543,8 @@ function Inventory.GetItemSlots(inv, item, metadata)
     inv = Inventory(inv)
     local totalAmount, slots, emptySlots = 0, {}, inv.slots
     for k, v in pairs(inv.items) do
-        emptySlots = emptySlots - 1
+        -- Disable slots limitation for the moment
+        -- emptySlots = emptySlots - 1
         if v.name == item.name then
             if metadata and v.metadata == nil then
                 v.metadata = {}
