@@ -114,7 +114,7 @@ end)
 
 RegisterCommand("radio_toggle", function()
     local player = PlayerPedId()
-    if haveItem and DoesEntityExist(player) and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and
+    if haveItem and not IsNuiFocused() and DoesEntityExist(player) and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and
         not PlayerData.metadata["inlaststand"] and not IsPauseMenuActive() then
         toggleRadio(not radioOpen)
     end
