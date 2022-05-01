@@ -25,11 +25,20 @@ MySQL.ready(function()
             id = station.id,
             station = station.station,
             fuel = station.fuel,
+            type = station.type,
+            owner = station.owner,
             stock = station.stock,
             position = json.decode(station.position),
             model = station.model,
             zone = json.decode(station.zone),
         }
+
+        if station.type == "private" then
+            local stationCoord = stations[station.id].position
+            local prop = CreateObjectNoOffset(station.model, stationCoord.x, stationCoord.y, stationCoord.z, true, true, false)
+            SetEntityHeading(prop, stationCoord.w)
+            FreezeEntityPosition(prop, true)
+        end
     end
 end)
 
