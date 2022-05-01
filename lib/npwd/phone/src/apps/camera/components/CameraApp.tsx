@@ -14,6 +14,7 @@ import {usePhotoActions} from "../../photo/hooks/usePhotoActions";
 import {ScreenshotUI} from "../utils/screenshot";
 import {usePhotosValue} from "../../photo/hooks/state";
 import {ColorSwatchIcon, CubeIcon, EmojiHappyIcon, LightningBoltIcon} from "@heroicons/react/solid";
+import {usePhoneVisibility} from "@os/phone/hooks/usePhoneVisibility";
 
 const ui = new ScreenshotUI();
 ui.initialize();
@@ -24,6 +25,7 @@ const CameraApp: React.FC = () => {
     const photos = usePhotosValue();
     const {addAlert} = useSnackbar();
     const { takePhoto } = usePhotoActions();
+    const {visibility} = usePhoneVisibility();
     const [image, setImage] = useState('https://placekitten.com/960/540')
 
     const handleTakePhoto = () => {
@@ -48,12 +50,13 @@ const CameraApp: React.FC = () => {
     }, 1)
 
     useEffect(() => {
+        if (!visibility) history.push('/');
         fetchNui<ServerPromiseResp<void>>(PhotoEvents.ENTER_CAMERA, {})
 
         return () => {
             fetchNui<ServerPromiseResp<void>>(PhotoEvents.EXIT_CAMERA, {})
         }
-    }, [])
+    }, [visibility])
 
     return (
         <Transition
