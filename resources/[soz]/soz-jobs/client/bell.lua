@@ -41,6 +41,13 @@ CreateThread(function()
         minZ = 24.0,
         maxZ = 24.10,
     }, {options = callSociety("555-NEWS"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:food", vector2(-1884.4, 2063.0), 0.5, 0.5, {
+        name = "bell:food",
+        heading = 159.0,
+        minZ = 141.0,
+        maxZ = 141.25,
+    }, {options = callSociety("555-MARIUS"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)
