@@ -38,7 +38,7 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
         end)
     end
 
-    if IsPedMale() then
+    if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
         data.gender = "Masculin"
     else
         data.gender = "Féminin"
