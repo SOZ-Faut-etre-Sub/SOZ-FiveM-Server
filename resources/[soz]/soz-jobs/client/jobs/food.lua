@@ -439,6 +439,11 @@ end)
 ---
 --- Hunting
 ---
+local function PlayerHasKnifeEquiped()
+    local ped = PlayerPedId()
+    return GetSelectedPedWeapon(ped) == FoodConfig.HuntingWeapon
+end
+
 for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
     exports["qb-target"]:AddTargetModel(animal, {
         options = {
@@ -447,7 +452,7 @@ for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
                 icon = "c:food/depecer.png",
                 event = "jobs:client:food:hunting",
                 canInteract = function(entity)
-                    return not IsPedAPlayer(entity) and IsEntityDead(entity)
+                    return not IsPedAPlayer(entity) and IsEntityDead(entity) and PlayerHasKnifeEquiped()
                 end,
             },
         },
@@ -460,8 +465,7 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
         return
     end
 
-    local ped = PlayerPedId()
-    local hasKnife = GetSelectedPedWeapon(ped) == FoodConfig.HuntingWeapon
+    local hasKnife = PlayerHasKnifeEquiped()
 
     if not hasKnife then
         SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
