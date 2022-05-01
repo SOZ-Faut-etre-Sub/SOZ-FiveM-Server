@@ -103,7 +103,7 @@ Config.BankAtmDefault = {
     ["pacific"] = {
         maxMoney = 600000,
         maxWithdrawal = 100000,
-        limit = 10000, -- in ms
+        limit = 600000, -- in ms
     },
     ["fleeca"] = {
         maxMoney = 100000,
