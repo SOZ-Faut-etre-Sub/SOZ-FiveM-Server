@@ -175,7 +175,18 @@ end)
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(100)
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 2 WHERE state = 0", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0", {})
+        MySQL.Async.fetchSingle("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4", {}, function(result)
+            if result[1] then
+                for k, v in pairs(result) do
+                    local jours = os.difftime(os.time(), v.parkingtime) / (24 * 60 * 60) -- seconds in a day
+                    local joursentiers = math.floor(jours)
+                    if (v.state == 2 and joursentiers > 6) or (v.state == 4 and joursentiers > 2) then
+                        MySQL.Async.execute("DELETE FROM player_vehicles WHERE id = ?", {v.id})
+                    end
+                end
+            end
+        end)
     end
 end)
 
