@@ -1,5 +1,4 @@
 local itemToRefill = 11 -- give 11 item for 24 second
-local petroleumToLiter = 10
 
 --- Events
 RegisterNetEvent("jobs:server:fueler:refillTanker", function(tankerId)
@@ -9,8 +8,7 @@ RegisterNetEvent("jobs:server:fueler:refillTanker", function(tankerId)
 
     exports["soz-inventory"]:AddItem("trunk_" .. tankerPlate, "petroleum", itemToRefill, nil, nil, function(success, _)
         if success then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                               ("Vous avez ~g~remplis~s~ %dL de pétrole"):format(itemToRefill * petroleumToLiter))
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~remplis~s~ %dL de pétrole"):format(itemToRefill))
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre remorque ~r~ne peut plus~s~ recevoir de pétrole.", "error")
         end
@@ -34,8 +32,7 @@ RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
         end)
 
         if refinedSuccess then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                               ("Vous avez ~g~raffiné~s~ %dL de pétrole"):format(itemToRefill * petroleumToLiter))
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~raffiné~s~ %dL de pétrole"):format(itemToRefill))
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre remorque ~r~ne peut plus~s~ recevoir de pétrole raffiné.",
                                "error")
