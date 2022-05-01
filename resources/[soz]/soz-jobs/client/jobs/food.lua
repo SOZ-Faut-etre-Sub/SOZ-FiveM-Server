@@ -114,10 +114,10 @@ Citizen.CreateThread(function()
     })
 
     -- DUTY
-    exports["qb-target"]:AddBoxZone("food:duty", vector2(-1898.66, 2075.36), 0.5, 0.75, {
+    exports["qb-target"]:AddBoxZone("food:duty", vector2(-1876.2, 2059.5), 0.6, 0.7, {
         heading = 70.25,
-        minZ = 140.0,
-        maxZ = 142.5,
+        minZ = 140.75,
+        maxZ = 141.5,
     }, {
         options = {
             {
