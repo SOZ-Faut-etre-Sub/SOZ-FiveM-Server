@@ -306,7 +306,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
 
     while canFillTanker do
         Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
+        QBCore.Functions.Progressbar("fill", "Vous remplissez...", 24000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
@@ -317,7 +317,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
             canFillTanker = false
         end)
 
-        Wait(30000)
+        Wait(24000)
     end
 
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
@@ -335,7 +335,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
 
     while canRefiningTanker do
         Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous raffinez...", 30000, false, true, {
+        QBCore.Functions.Progressbar("fill", "Vous raffinez...", 24000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
@@ -346,7 +346,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
             canRefiningTanker = false
         end)
 
-        Wait(30000)
+        Wait(24000)
     end
 
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")

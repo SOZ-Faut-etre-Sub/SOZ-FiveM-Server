@@ -1,4 +1,4 @@
-local itemToRefill = ((4 * 60) / 30) -- 4 minutes / progressbar time
+local itemToRefill = 11 -- give 11 item for 24 second
 local petroleumToLiter = 10
 
 --- Events
