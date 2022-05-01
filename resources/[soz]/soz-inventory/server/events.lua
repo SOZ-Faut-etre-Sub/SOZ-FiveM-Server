@@ -10,7 +10,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         if targetInv == nil then
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
         end
-    elseif storageType == "trunk" then
+    elseif storageType == "trunk" or storageType == "tanker" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then

@@ -20,6 +20,8 @@ server_scripts {
     "server/containers/seizure.lua",
     "server/containers/stash.lua",
     "server/containers/storage.lua",
+    "server/containers/storage_tank.lua",
+    "server/containers/tanker.lua",
     "server/containers/trunk.lua",
 
     "server/command.lua",
