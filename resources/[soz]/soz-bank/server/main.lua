@@ -116,8 +116,12 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
     cb(false, "unknown")
 end)
 
-RegisterNetEvent("banking:server:TransfertMoney", function(accountSource, accountTarget, amount)
-    Account.TransfertMoney(accountSource, accountTarget, amount)
+RegisterNetEvent("banking:server:TransfertMoney", function(accountSource, accountTarget, amount, cb)
+    Account.TransfertMoney(accountSource, accountTarget, amount, function(success, reason)
+        if cb then
+            cb(success, reason)
+        end
+    end)
 end)
 
 RegisterNetEvent("baking:server:SafeStorageDeposit", function(money_type, safeStorage, amount)

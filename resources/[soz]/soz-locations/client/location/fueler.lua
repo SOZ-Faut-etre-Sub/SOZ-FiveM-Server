@@ -21,3 +21,14 @@ Locations["fueler_petrol_refinery"] = {
         debugPoly = LocationDebugPoly,
     }),
 }
+
+Locations["fueler_petrol_resell"] = {
+    [1] = BoxZone:Create(vector3(267.84, -2982.23, 4.93), 40.2, 37.8,
+                         {
+        name = "fueler_petrol_resell",
+        heading = 0,
+        minZ = 2.93,
+        maxZ = 8.93,
+        debugPoly = LocationDebugPoly,
+    }),
+}

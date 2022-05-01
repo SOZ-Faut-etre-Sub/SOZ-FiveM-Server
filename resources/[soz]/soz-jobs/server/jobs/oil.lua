@@ -92,6 +92,19 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
     end, station)
 end)
 
+RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+    local tankerInv = "trunk_" .. tankerPlate
+
+    if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
+        TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "oil", 10 * FuelerConfig.SellPrice)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
+    end
+end)
+
 --- Callback
 QBCore.Functions.CreateCallback("jobs:server:fueler:canRefill", function(source, cb, tankerId)
     local tanker = NetworkGetEntityFromNetworkId(tankerId)
@@ -108,4 +121,11 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:canRefining", function(sourc
     local dstItem, dstItemAmount = "petroleum_refined", 3
 
     cb(exports["soz-inventory"]:CanSwapItem("trunk_" .. tankerPlate, srcItem, srcItemAmount, dstItem, dstItemAmount))
+end)
+
+QBCore.Functions.CreateCallback("jobs:server:fueler:canResell", function(source, cb, tankerId)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+
+    cb(exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "essence", nil, true) >= 10)
 end)
