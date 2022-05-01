@@ -16,15 +16,15 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
         {
             type = "client",
             event = "jobs:livraison:begin",
-            icon = "fas fa-sign-in-alt",
-            label = "Commencer le job de livraison",
+            icon = "c:pole/start.png",
+            label = "Job Livraison",
             job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:livraison:tenue",
-            icon = "fas fa-sign-in-alt",
-            label = "Prendre la tenue",
+            icon = "c:pole/equip.png",
+            label = "S'équiper",
             job = SozJobCore.JobType.Delivery,
             canInteract = function()
                 return JobOutfit == false
@@ -33,8 +33,8 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
         {
             type = "client",
             event = "jobs:livraison:vehicle",
-            icon = "fas fa-sign-in-alt",
-            label = "Sortir la moto",
+            icon = "c:pole/vehicle.png",
+            label = "Dégarer",
             job = SozJobCore.JobType.Delivery,
             canInteract = function()
                 if JobOutfit == true then
@@ -45,8 +45,8 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
         {
             type = "client",
             event = "jobs:livraison:restart",
-            icon = "fas fa-sign-in-alt",
-            label = "Continuer le job de livraison",
+            icon = "c:pole/restart.png",
+            label = "Relancer",
             job = SozJobCore.JobType.Delivery,
             canInteract = function()
                 return OnJob == false
@@ -55,8 +55,8 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
         {
             type = "client",
             event = "jobs:livraison:end",
-            icon = "fas fa-sign-in-alt",
-            label = "Finir le job de livraison",
+            icon = "c:pole/end.png",
+            label = "Terminer",
             job = SozJobCore.JobType.Delivery,
         },
     },
@@ -88,7 +88,7 @@ AddEventHandler("jobs:livraison:fix", function()
 end)
 
 local function SpawnVehicule()
-    local ModelHash = "faggio"
+    local ModelHash = "faggio3"
     local model = GetHashKey(ModelHash)
     if not IsModelInCdimage(model) then
         return
@@ -168,7 +168,7 @@ AddEventHandler("jobs:livraison:start", function()
         debugPoly = false,
     }, {
         options = {
-            {type = "client", event = "jobs:livraison:fix", icon = "fas fa-sign-in-alt", label = "Livrez la fougère"},
+            {type = "client", event = "jobs:livraison:fix", icon = "c:pole/livrer.png", label = "Livrez la fougère"},
         },
         distance = 1.5,
     })
