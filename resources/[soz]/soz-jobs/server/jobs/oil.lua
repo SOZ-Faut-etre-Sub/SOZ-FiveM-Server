@@ -81,6 +81,10 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
             if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", itemToUse) then
                 TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "oil", amount * FuelerConfig.SellPrice)
                 TriggerEvent("soz-fuel:server:addStationStock", station, amount)
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                                   ("Vous avez ~g~ajouté~s~ %dL d'essence dans la station"):format(itemToUse))
+            else
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
             end
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "La station n'a pas ~r~assez~s~ de stockage.", "error")
@@ -119,6 +123,14 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:canRefining", function(sourc
     local dstItem, dstItemAmount = "petroleum_refined", 3
 
     cb(exports["soz-inventory"]:CanSwapItem("trunk_" .. tankerPlate, srcItem, srcItemAmount, dstItem, dstItemAmount))
+end)
+
+QBCore.Functions.CreateCallback("jobs:server:fueler:canStationRefill", function(source, cb, tankerId, amount)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+    local itemToUse = math.ceil(amount / 10)
+
+    cb(exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "essence", nil, true) >= itemToUse)
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:canResell", function(source, cb, tankerId)
