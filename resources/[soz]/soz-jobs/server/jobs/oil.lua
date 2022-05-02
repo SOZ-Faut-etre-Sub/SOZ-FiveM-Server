@@ -97,6 +97,7 @@ RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
 
     if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
         TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "oil", 10 * FuelerConfig.SellPrice)
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
     end
