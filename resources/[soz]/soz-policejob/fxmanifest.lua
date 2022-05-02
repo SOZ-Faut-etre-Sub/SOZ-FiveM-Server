@@ -18,6 +18,7 @@ client_scripts {
     "client/stations/*.lua",
     "client/sirens.lua",
     "client/radar.lua",
+    "client/armors.lua",
 }
 
 server_scripts {
@@ -27,4 +28,5 @@ server_scripts {
     "server/vehicle.lua",
     "server/spike.lua",
     "server/moneycheck.lua",
+    "server/armors.lua",
 }

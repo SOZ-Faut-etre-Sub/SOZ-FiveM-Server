@@ -252,7 +252,7 @@ Config.PrisonerClothes = {
 Config.WeaponShop = {
     ["lspd"] = {
         [1] = {name = "clothes_lspd", metadata = {}, price = 100, amount = 1},
-        [2] = {name = "gilet_lspd", metadata = {}, price = 150, amount = 1},
+        [2] = {name = "armor", metadata = {type = "lspd"}, price = 150, amount = 1},
         [3] = {name = "radio", metadata = {}, price = 80, amount = 1},
         [4] = {name = "handcuffs", metadata = {}, price = 30, amount = 1},
         [5] = {name = "handcuffs_key", metadata = {}, price = 15, amount = 1},
@@ -361,6 +361,34 @@ Config.Fines = {
         },
     },
     [5] = {label = "Catégorie 4", items = {{label = "Corruption", price = 50000}}},
+}
+
+--- Armors
+Config.Armors = {
+    [GetHashKey("mp_m_freemode_01")] = {
+        ["unmark"] = {Drawable = 27, Texture = 0, Palette = 0},
+        ["lspd"] = {Drawable = 27, Texture = 1, Palette = 0},
+        ["fbi"] = {Drawable = 27, Texture = 2, Palette = 0},
+        ["bcso"] = {Drawable = 27, Texture = 3, Palette = 0},
+
+        ["_"] = {Drawable = 27, Texture = 4, Palette = 0},
+        ["_"] = {Drawable = 27, Texture = 5, Palette = 0},
+        ["_"] = {Drawable = 27, Texture = 6, Palette = 0},
+        ["_"] = {Drawable = 27, Texture = 7, Palette = 0},
+        ["_"] = {Drawable = 27, Texture = 8, Palette = 0},
+    },
+    [GetHashKey("mp_f_freemode_01")] = {
+        ["unmark"] = {Drawable = 29, Texture = 0, Palette = 0},
+        ["lspd"] = {Drawable = 29, Texture = 1, Palette = 0},
+        ["fbi"] = {Drawable = 29, Texture = 2, Palette = 0},
+        ["bcso"] = {Drawable = 29, Texture = 3, Palette = 0},
+
+        ["_"] = {Drawable = 29, Texture = 4, Palette = 0},
+        ["_"] = {Drawable = 29, Texture = 5, Palette = 0},
+        ["_"] = {Drawable = 29, Texture = 6, Palette = 0},
+        ["_"] = {Drawable = 29, Texture = 7, Palette = 0},
+        ["_"] = {Drawable = 29, Texture = 8, Palette = 0},
+    },
 }
 
 --- Radars config
