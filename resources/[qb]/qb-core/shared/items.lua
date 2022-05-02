@@ -2349,6 +2349,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Il faut parfois se protéger avant de sortir.'
     },
+    ['clothes_lspd'] = {
+        ['name'] = 'clothes_lspd',
+        ['label'] = 'Tenue LSPD',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
     ['handcuffs'] = {
         ['name'] = 'handcuffs',
         ['label'] = 'Menottes de police',
