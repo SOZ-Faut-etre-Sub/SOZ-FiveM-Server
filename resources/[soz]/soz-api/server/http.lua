@@ -45,12 +45,28 @@ SetHttpHandler(function(req, res)
         return;
     end
 
+    -- Kick a player
     if req.path == "/kick-player" and req.method == "POST" then
         local data = readJson(req);
         DropPlayer(tonumber(data.player), data.reason)
 
         return;
     end
+
+    -- Destroy vehicle
+    if req.path == "/vehicle-destroy" and req.method == "POST" then
+        local data = readJson(req);
+
+        return;
+    end
+
+    -- Put vehicle into pound
+    if req.path == "/vehicle-pound" and req.method == "POST" then
+        local data = readJson(req);
+
+        return;
+    end
+
 
     if req.path == "/phone/message-create" and req.method == "POST" then
         local jsonV = readJson(req)
