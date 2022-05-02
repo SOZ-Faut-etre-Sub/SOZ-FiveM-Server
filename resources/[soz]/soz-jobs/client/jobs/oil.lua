@@ -461,23 +461,27 @@ RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
     TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
     Wait(500)
 
-    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la station service~s~.", "info")
-
     local stationStock = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", CurrentStation)
     local refillRequest = exports["soz-hud"]:Input("Quantité a ajouter (en Litre) :", 4, MaxFuelInStation - stationStock)
 
     if refillRequest and tonumber(refillRequest) >= 10 and tonumber(refillRequest) <= (MaxFuelInStation - stationStock) then
-        QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
-            disableMovement = true,
-            disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
-            TriggerServerEvent("jobs:server:fueler:refillStation", Tanker.vehicle, CurrentStation, tonumber(refillRequest))
-            TriggerEvent("jobs:client:fueler:CancelTankerRefill")
-        end, function()
-            TriggerEvent("jobs:client:fueler:CancelTankerRefill")
-        end)
+        local canStationRefill = QBCore.Functions.TriggerRpc("jobs:server:fueler:canStationRefill", Tanker.vehicle, tonumber(refillRequest))
 
-        exports["soz-hud"]:DrawNotification("La station service a été ~g~remplie~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+        if canStationRefill then
+            exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la station service~s~.", "info")
+            QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
+                disableMovement = true,
+                disableCombat = true,
+            }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+                TriggerServerEvent("jobs:server:fueler:refillStation", Tanker.vehicle, CurrentStation, tonumber(refillRequest))
+                TriggerEvent("jobs:client:fueler:CancelTankerRefill")
+                exports["soz-hud"]:DrawNotification("La station service a été ~g~remplie~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+            end, function()
+                TriggerEvent("jobs:client:fueler:CancelTankerRefill")
+            end)
+        else
+            exports["soz-hud"]:DrawNotification("Le tanker n'a pas ~r~assez~s~ de stock.", "error")
+        end
     else
         exports["soz-hud"]:DrawNotification("Valeur de remplissage ~r~incorrecte~s~.", "error")
     end
