@@ -412,3 +412,32 @@ RegisterNetEvent("fuel:client:GetFuelLevel", function(data)
     end)
 end)
 
+RegisterNetEvent("soz-fuel:client:onJerrycanEssence", function()
+    local ped = PlayerPedId()
+    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local fuel = GetFuel(vehicle)
+
+    if DoesEntityExist(vehicle) and IsPedOnFoot(ped) then
+        if fuel <= 70.0 then
+            TaskTurnPedToFaceEntity(ped, vehicle, 500)
+            Wait(500)
+
+            QBCore.Functions.Progressbar("fuel_jerrycan_essence", "Remplissage du véhicule...", 10000, false, false,
+                                         {
+                disableMouse = false,
+                disableMovement = true,
+                disableCarMovement = true,
+                disableCombat = true,
+            }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
+                TriggerServerEvent("soz-fuel:server:removeJerrycanEssence")
+                SetFuel(vehicle, fuel + 30.0)
+
+                exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un Jerrycan d'Essence")
+            end)
+        else
+            exports["soz-hud"]:DrawNotification("Vous avez ~r~trop d'essence~s~ pour utiliser un jerrycan", "error")
+        end
+    else
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser cet objet dans un véhicule", "error")
+    end
+end)
