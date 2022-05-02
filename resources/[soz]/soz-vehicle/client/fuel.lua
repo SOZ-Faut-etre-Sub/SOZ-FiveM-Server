@@ -290,6 +290,53 @@ Citizen.CreateThread(function()
             if isPointInside then
                 TriggerEvent("locations:zone:enter", "fueler_petrol_station", station.id)
 
+                local StationStateJobLimiter = {["oil"] = 0}
+                if station.type == "private" and PlayerData.job.id == station.owner then
+                    table.insert(StationStateJobLimiter, {[station.owner] = 0})
+                end
+
+                local StationAction = nil
+                if station.type == "public" or (station.type == "private" and PlayerData.job.id == station.owner) then
+                    StationAction = {
+                        type = "client",
+                        icon = "c:fuel/pistolet.png",
+                        label = "Pistolet",
+                        action = function(entity)
+                            local ped = PlayerPedId()
+                            local vehicle = GetPlayersLastVehicle()
+                            TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle, station.type)
+                        end,
+                        canInteract = function(entity)
+                            local ped = PlayerPedId()
+                            if not isFueling then
+                                if not IsPedInAnyVehicle(ped) then
+                                    local vehicle = GetPlayersLastVehicle()
+                                    local vehicleCoords = GetEntityCoords(vehicle)
+                                    if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 2.5 then
+                                        if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
+                                            if GetVehicleFuelLevel(vehicle) < 95 then
+                                                return true
+                                            else
+                                                TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
+                                                Citizen.Wait(5000)
+                                                return false
+                                            end
+                                        else
+                                            return false
+                                        end
+                                    else
+                                        return false
+                                    end
+                                else
+                                    return false
+                                end
+                            else
+                                return false
+                            end
+                        end,
+                    }
+                end
+
                 exports["qb-target"]:AddTargetModel(station.model, {
                     options = {
                         {
@@ -309,46 +356,9 @@ Citizen.CreateThread(function()
                             canInteract = function()
                                 return station.type == "private"
                             end,
-                            job = {[station.owner] = 0, ["oil"] = 0},
+                            job = StationStateJobLimiter,
                         },
-                        {
-                            type = "client",
-                            icon = "c:fuel/pistolet.png",
-                            label = "Pistolet",
-                            action = function(entity)
-                                local ped = PlayerPedId()
-                                local vehicle = GetPlayersLastVehicle()
-                                TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle, station.type)
-                            end,
-                            canInteract = function(entity)
-                                local ped = PlayerPedId()
-                                if not isFueling then
-                                    if not IsPedInAnyVehicle(ped) then
-                                        local vehicle = GetPlayersLastVehicle()
-                                        local vehicleCoords = GetEntityCoords(vehicle)
-                                        if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 2.5 then
-                                            if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
-                                                if GetVehicleFuelLevel(vehicle) < 95 then
-                                                    return true
-                                                else
-                                                    TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
-                                                    Citizen.Wait(5000)
-                                                    return false
-                                                end
-                                            else
-                                                return false
-                                            end
-                                        else
-                                            return false
-                                        end
-                                    else
-                                        return false
-                                    end
-                                else
-                                    return false
-                                end
-                            end,
-                        },
+                        StationAction,
                     },
                     distance = 3.0,
                 })
