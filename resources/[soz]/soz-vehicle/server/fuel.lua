@@ -70,3 +70,13 @@ RegisterNetEvent("soz-fuel:server:setFinalFuel", function(id, currentFuelAdd)
     stations[id].stock = stations[id].stock + tonumber(currentFuelAdd)
     saveStation(id)
 end)
+
+--- Items
+QBCore.Functions.CreateUseableItem("essence_jerrycan", function(source, item)
+    TriggerClientEvent("soz-fuel:client:onJerrycanEssence", source)
+end)
+
+RegisterNetEvent("soz-fuel:server:removeJerrycanEssence", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence_jerrycan", 1)
+end)

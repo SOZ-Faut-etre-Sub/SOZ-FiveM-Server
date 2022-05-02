@@ -366,12 +366,12 @@ RegisterNetEvent("inventory:server:SetMetadata", Inventory.SetMetadata)
 exports("SetMetadata", Inventory.SetMetadata)
 
 function Inventory.RemoveItem(inv, item, amount, metadata, slot)
+    inv = Inventory(inv)
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
     end
     amount = math.floor(amount + 0.5)
     if item and amount > 0 then
-        inv = Inventory(inv)
 
         if metadata ~= nil then
             metadata = type(metadata) == "string" and {type = metadata} or metadata
