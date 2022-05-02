@@ -42,29 +42,41 @@ end)
 
 RegisterNetEvent("jobs:server:fueler:craftEssence", function()
     local Player = QBCore.Functions.GetPlayer(source)
+    local essenceItemAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "petroleum_refined", nil, true)
 
-    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "petroleum_refined", 1) then
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, "essence", 1, nil, nil, function(success, _)
-            if success then
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~transformé~s~ 10L en carburant")
-            else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
-            end
-        end)
+    if exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "petroleum_refined", essenceItemAmount, "essence", essenceItemAmount) then
+        if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "petroleum_refined", essenceItemAmount) then
+            exports["soz-inventory"]:AddItem(Player.PlayerData.source, "essence", essenceItemAmount, nil, nil, function(success, _)
+                if success then
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                                       ("Vous avez ~g~transformé~s~ %dL en carburant"):format(essenceItemAmount))
+                else
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
+                end
+            end)
+        end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~transformer~s~ autant d'essence.", "error")
     end
 end)
 
 RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
     local Player = QBCore.Functions.GetPlayer(source)
+    local essenceItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "essence", nil, true) / 3)
 
-    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence", 3) then
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, "essence_jerrycan", 1, nil, nil, function(success, _)
-            if success then
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~transformé~s~ 30L en JerryCan")
-            else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
-            end
-        end)
+    if exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "essence", essenceItemAmount * 3, "essence_jerrycan", essenceItemAmount) then
+        if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence", essenceItemAmount * 3) then
+            exports["soz-inventory"]:AddItem(Player.PlayerData.source, "essence_jerrycan", essenceItemAmount, nil, nil, function(success, _)
+                if success then
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                                       ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(essenceItemAmount))
+                else
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
+                end
+            end)
+        end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~transformer~s~ autant d'essence.", "error")
     end
 end)
 
@@ -79,7 +91,7 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
 
         if stock + amount <= 2000 then
             if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", itemToUse) then
-                TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "oil", amount * FuelerConfig.SellPrice)
+                TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "safe_oil", amount * FuelerConfig.SellPrice)
                 TriggerEvent("soz-fuel:server:addStationStock", station, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
                                    ("Vous avez ~g~ajouté~s~ %dL d'essence dans la station"):format(itemToUse))
@@ -100,7 +112,7 @@ RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
     local tankerInv = "trunk_" .. tankerPlate
 
     if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
-        TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "oil", 10 * FuelerConfig.SellPrice)
+        TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
