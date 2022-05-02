@@ -379,6 +379,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
             TriggerServerEvent("jobs:server:fueler:refiningTanker", Tanker.vehicle)
+            Wait(1000)
 
             canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
         end, function()
@@ -404,22 +405,15 @@ RegisterNetEvent("jobs:client:fueler:StartCraftEssence", function(data)
     Wait(500)
 
     exports["soz-hud"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
+    QBCore.Functions.Progressbar("fill", "Vous transformez...", 2 * 60 * 1000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
+        TriggerServerEvent("jobs:server:fueler:craftEssence")
+        Wait(1000)
 
-    while canCraft do
-        Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous transformez...", 2 * 60 * 1000, false, true, {
-            disableMovement = true,
-            disableCombat = true,
-        }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
-            TriggerServerEvent("jobs:server:fueler:craftEssence")
-
-            canCraft = playerHasItem("petroleum_refined")
-        end, function()
-            canCraft = false
-        end)
-
-        Wait(2 * 60 * 1000)
-    end
+        canCraft = playerHasItem("petroleum_refined")
+    end)
 end)
 
 RegisterNetEvent("jobs:client:fueler:StartCraftEssenceJerryCan", function(data)
@@ -434,22 +428,12 @@ RegisterNetEvent("jobs:client:fueler:StartCraftEssenceJerryCan", function(data)
     Wait(500)
 
     exports["soz-hud"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
-
-    while canCraft do
-        Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous transformez...", 60 * 1000, false, true, {
-            disableMovement = true,
-            disableCombat = true,
-        }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
-            TriggerServerEvent("jobs:server:fueler:craftEssenceJerryCan")
-
-            canCraft = playerHasItem("essence", 3)
-        end, function()
-            canCraft = false
-        end)
-
-        Wait(60 * 1000)
-    end
+    QBCore.Functions.Progressbar("fill", "Vous transformez...", 60 * 1000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
+        TriggerServerEvent("jobs:server:fueler:craftEssenceJerryCan")
+    end)
 end)
 
 RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
@@ -503,6 +487,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
             TriggerServerEvent("jobs:server:fueler:resellTanker", Tanker.vehicle)
+            Wait(1000)
 
             canResellTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canResell", Tanker.vehicle)
         end, function()
