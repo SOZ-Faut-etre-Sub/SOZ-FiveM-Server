@@ -21,7 +21,6 @@ RegisterNetEvent("police:client:applyDutyClothing", function()
     end)
 end)
 
-
 --- Armors
 RegisterNetEvent("police:client:setupArmor", function(armorType)
     local armour = Config.Armors[PlayerData.skin.Model.Hash][armorType]
