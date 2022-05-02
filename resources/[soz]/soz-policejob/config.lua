@@ -251,30 +251,24 @@ Config.PrisonerClothes = {
 
 Config.WeaponShop = {
     ["lspd"] = {
-        [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
-        [2] = {name = "weapon_flashlight", metadata = {}, price = 50, amount = 1},
-        [3] = {name = "weapon_stungun", metadata = {}, price = 100, amount = 1},
-        [4] = {name = "radio", metadata = {}, price = 300, amount = 50},
-        [5] = {name = "armor", metadata = {}, price = 500, amount = 50},
-        [6] = {name = "handcuffs", metadata = {}, price = 50, amount = 10},
-        [7] = {name = "handcuffs_key", metadata = {}, price = 50, amount = 10},
-        [8] = {name = "spike", metadata = {}, price = 50, amount = 10},
-        [9] = {name = "cone", metadata = {}, price = 50, amount = 10},
-        [10] = {name = "police_barrier", metadata = {}, price = 50, amount = 10},
-        [11] = {
+        [1] = {name = "clothes_lspd", metadata = {}, price = 100, amount = 1},
+        [2] = {name = "gilet_lspd", metadata = {}, price = 150, amount = 1},
+        [3] = {name = "radio", metadata = {}, price = 80, amount = 1},
+        [4] = {name = "handcuffs", metadata = {}, price = 30, amount = 1},
+        [5] = {name = "handcuffs_key", metadata = {}, price = 15, amount = 1},
+        [6] = {name = "cone", metadata = {}, price = 5, amount = 1},
+        [7] = {name = "police_barrier", metadata = {}, price = 5, amount = 1},
+        [8] = {name = "spike", metadata = {}, price = 5, amount = 1},
+        [9] = {name = "weapon_flashlight", metadata = {}, price = 15, amount = 1},
+        [10] = {name = "weapon_nightstick", metadata = {}, price = 25, amount = 1},
+        [11] = {name = "weapon_stungun", metadata = {}, price = 45, amount = 1},
+        [12] = {
             name = "weapon_pistol_mk2",
             metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
-            price = 200,
-            amount = 1,
-        },
-        [12] = {
-            name = "weapon_pumpshotgun",
-            metadata = {attachments = {{component = "COMPONENT_AT_AR_FLSH", label = "Flashlight"}}},
             price = 300,
             amount = 1,
         },
-        [13] = {name = "pistol_ammo", metadata = {}, price = 50, amount = 5},
-        [14] = {name = "shotgun_ammo", metadata = {}, price = 50, amount = 5},
+        [13] = {name = "pistol_ammo", metadata = {}, price = 10, amount = 1},
     },
     ["bcso"] = {
         [1] = {name = "weapon_nightstick", metadata = {}, price = 50, amount = 1},
