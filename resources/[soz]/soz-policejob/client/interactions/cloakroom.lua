@@ -1,6 +1,14 @@
 RegisterNetEvent("police:client:OpenCloakroomMenu", function()
     PoliceJob.Functions.Menu.GenerateMenu(PlayerData.job.id, function(menu)
         menu:AddButton({
+            label = "Tenue de service",
+            value = nil,
+            select = function()
+                TriggerEvent("police:client:applyDutyClothing")
+            end,
+        })
+
+        menu:AddButton({
             label = "Tenue civile",
             value = nil,
             select = function()
