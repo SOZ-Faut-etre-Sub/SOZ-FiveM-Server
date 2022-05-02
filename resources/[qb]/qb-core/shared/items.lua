@@ -2340,7 +2340,7 @@ QBShared.Items = {
     -- Cops Tools
     ['armor'] = {
         ['name'] = 'armor',
-        ['label'] = 'Armure',
+        ['label'] = 'Gilet pare-balles',
         ['weight'] = 5000,
         ['type'] = 'item',
         ['unique'] = false,
