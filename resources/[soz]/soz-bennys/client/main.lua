@@ -488,7 +488,7 @@ CreateThread(function()
                     Repairall(entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if OnDuty == false or PlayerJob.id ~= "bennys" or GetVehicleEngineHealth(entity) < 500 or GetVehicleBodyHealth(entity) < 500 then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
                         return false
                     end
                     return true
