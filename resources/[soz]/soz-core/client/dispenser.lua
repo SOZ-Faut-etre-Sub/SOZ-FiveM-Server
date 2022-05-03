@@ -13,7 +13,7 @@ exports["qb-target"]:AddTargetModel(vending_machine_drink, {
 
 exports["qb-target"]:AddTargetModel(vending_machine_food,
                                     {
-    options = {{event = "soz-core:client:dispenser:Eat", label = "Sandiwch", icon = "c:food/baguette.png"}},
+    options = {{event = "soz-core:client:dispenser:Eat", label = "Sandwich", icon = "c:food/baguette.png"}},
     distance = 1,
 })
 
