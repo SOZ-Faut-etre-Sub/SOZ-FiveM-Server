@@ -9,6 +9,7 @@ Config.StorageCapacity = {
     ["armory"] = {slot = 100, weight = 250000},
     ["boss_storage"] = {slot = 100, weight = 250000},
     ["fridge"] = {slot = 100, weight = 250000},
+    ["organ"] = {slot = 100, weight = 250000},
     ["seizure"] = {slot = 100, weight = 250000},
     ["storage"] = {slot = 100, weight = 250000},
     ["storage_tank"] = {slot = 10, weight = 250000},

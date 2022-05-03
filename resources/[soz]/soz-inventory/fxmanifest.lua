@@ -16,6 +16,7 @@ server_scripts {
     "server/containers/bin.lua",
     "server/containers/boss_storage.lua",
     "server/containers/fridge.lua",
+    "server/containers/organ.lua",
     "server/containers/player.lua",
     "server/containers/seizure.lua",
     "server/containers/stash.lua",
