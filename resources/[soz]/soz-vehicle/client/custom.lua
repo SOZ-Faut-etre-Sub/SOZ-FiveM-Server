@@ -489,7 +489,7 @@ CreateThread(function()
         options = {
             {
                 type = "client",
-                icon = "c:mechanic/nettoyer.png",
+                icon = "c:mechanic/Améliorer.png",
                 label = "Améliorer",
                 action = function(entity)
                     Config.AttachedVehicle = entity
