@@ -21,6 +21,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
             end,
         })
 
+        table.sort(Config.Cloakroom[PlayerData.job.id][PlayerData.skin.Model.Hash])
         for name, skin in pairs(Config.Cloakroom[PlayerData.job.id][PlayerData.skin.Model.Hash]) do
             menu:AddButton({
                 label = name,

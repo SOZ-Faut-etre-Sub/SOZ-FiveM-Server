@@ -1,8 +1,8 @@
 --- Duty clothings
-RegisterNetEvent("police:client:applyDutyClothing", function()
+RegisterNetEvent("police:client:applyDutyClothing", function(clotheType)
     local clothesConfig = {Components = {}, Props = {}}
 
-    for grade, clothes in pairs(Config.DutyOutfit[PlayerData.job.id]) do
+    for grade, clothes in pairs(Config.DutyOutfit[clotheType]) do
         if tonumber(grade) == 0 or tonumber(grade) == tonumber(PlayerData.job.grade) then
             for id, component in pairs(clothes[PlayerData.skin.Model.Hash].Components) do
                 clothesConfig.Components[id] = component
