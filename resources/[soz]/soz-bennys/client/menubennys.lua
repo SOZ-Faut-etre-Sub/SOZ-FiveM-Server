@@ -6,7 +6,7 @@ local PartMenu = MenuV:InheritMenu(Status, "Menu pièces")
 local SpoilersMenu = MenuV:InheritMenu(VehiculeCustom, "Choisir un mod")
 local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Personnalisations autres")
 local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinte Fenêtre")
-local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Livrée de base")
+local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Sticker de base")
 local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Immatriculation")
 
 local ResprayMenu = MenuV:InheritMenu(VehiculeCustom, "Peinture")
@@ -833,13 +833,13 @@ local function OpenCustom(menu)
         end,
     })
     menu:AddButton({
-        label = "Livrée de base",
+        label = "Sticker de base",
         select = function()
             OpenOldLiveryMenu(OldLiveryMenu)
         end,
     })
     menu:AddButton({
-        label = "Immatriculation",
+        label = "Couleur Immatriculation",
         select = function()
             OpenPlateIndexMenu(PlateIndexMenu)
         end,
