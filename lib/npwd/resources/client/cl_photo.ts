@@ -103,7 +103,7 @@ const handleCameraExit = async () => {
 
 const takePhoto = () =>
   new Promise((res, rej) => {
-    exp['screenshot-basic'].requestScreenshotUpload(`${GetConvar("soz_api_endpoint", "https://soz.zerator.com")}/graphql`, 'GQL',
+    exp['screenshot-basic'].requestScreenshotUpload(`${GetConvar("soz_public_api_endpoint", "https://api.soz.zerator.com")}/graphql`, 'GQL',
       {
         encoding: config.images.imageEncoding,
         headers: {
