@@ -506,6 +506,11 @@ end)
 ---
 --- Hunting
 ---
+local function PlayerHasKnifeEquiped()
+    local ped = PlayerPedId()
+    return GetSelectedPedWeapon(ped) == FoodConfig.HuntingWeapon
+end
+
 for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
     exports["qb-target"]:AddTargetModel(animal, {
         options = {
@@ -514,7 +519,7 @@ for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
                 icon = "c:food/depecer.png",
                 event = "jobs:client:food:hunting",
                 canInteract = function(entity)
-                    return not IsPedAPlayer(entity) and IsEntityDead(entity)
+                    return not IsPedAPlayer(entity) and IsEntityDead(entity) and PlayerHasKnifeEquiped()
                 end,
             },
         },
@@ -527,21 +532,32 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
         return
     end
 
+    if HasEntityBeenDamagedByAnyVehicle(data.entity) then
+        exports["soz-hud"]:DrawNotification("L'animal est tout écrabouillé, on ne pourra rien en tirer...", "warning")
+        return
+    end
+
     local ped = PlayerPedId()
-    local hasKnife = GetSelectedPedWeapon(ped) == FoodConfig.HuntingWeapon
+    local hasKnife = PlayerHasKnifeEquiped()
 
     if not hasKnife then
-        SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
+        SetCurrentPedWeapon(ped, "WEAPON_UNARMED")
     end
     TaskTurnPedToFaceEntity(ped, data.entity, 500)
 
-    QBCore.Functions.RequestAnimDict("amb@medic@standing@kneel@base")
-    QBCore.Functions.RequestAnimDict("anim@gangops@facility@servers@bodysearch@")
-    TaskPlayAnim(ped, "amb@medic@standing@kneel@base", "base", 8.0, -8.0, -1, 1, 0, false, false, false)
-    TaskPlayAnim(ped, "anim@gangops@facility@servers@bodysearch@", "player_search", 8.0, -8.0, -1, 48, 0, false, false, false)
+    Citizen.CreateThread(function()
+        QBCore.Functions.RequestAnimDict("amb@medic@standing@kneel@base")
+        QBCore.Functions.RequestAnimDict("anim@gangops@facility@servers@bodysearch@")
+        Citizen.Wait(250)
+        TaskPlayAnim(ped, "amb@medic@standing@kneel@base", "base", 8.0, -8.0, -1, 1, 0, false, false, false)
+        TaskPlayAnim(ped, "anim@gangops@facility@servers@bodysearch@", "player_search", 8.0, -8.0, -1, 48, 0, false, false, false)
+    end)
 
-    QBCore.Functions.Progressbar("hunting-cutup", "Dépeçage en cours...", 5000, false, false, {
+    QBCore.Functions.Progressbar("hunting-cutup", "Dépeçage en cours...", 5000, false, true,
+                                 {
         disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         if hasKnife then
