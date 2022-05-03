@@ -12,10 +12,12 @@ QBCore.Functions.CreateUseableItem("armor", function(source, item)
     end
 end)
 
-QBCore.Functions.CreateUseableItem("clothes_lspd", function(source, item)
+QBCore.Functions.CreateUseableItem("outfit", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1, item.metadata) then
-        TriggerClientEvent("police:client:applyDutyClothing", source)
+        if item.metadata["type"] == "lspd" or item.metadata["type"] == "bcso" then
+            TriggerClientEvent("police:client:applyDutyClothing", source)
+        end
     end
 end)

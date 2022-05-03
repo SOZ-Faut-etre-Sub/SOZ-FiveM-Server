@@ -2349,9 +2349,9 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Il faut parfois se protéger avant de sortir.'
     },
-    ['clothes_lspd'] = {
-        ['name'] = 'clothes_lspd',
-        ['label'] = 'Tenue LSPD',
+    ['outfit'] = {
+        ['name'] = 'outfit',
+        ['label'] = 'Tenue',
         ['weight'] = 1000,
         ['type'] = 'item',
         ['unique'] = false,
