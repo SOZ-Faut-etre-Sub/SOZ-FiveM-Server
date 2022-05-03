@@ -152,11 +152,6 @@ end)
 ---
 --- MENUS
 ---
-RegisterNetEvent("jobs:client:food:OpenSocietyMenu", function()
-    FoodJob.Menu:ClearItems()
-    FoodJob.Menu:Open()
-end)
-
 RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
     FoodJob.Menu:ClearItems()
 
@@ -188,6 +183,18 @@ RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
 
     FoodJob.Menu:Open()
 end)
+
+local function GetRecipesByCat()
+    local recipesByCat = {}
+    for itemId, recipe in pairs(FoodConfig.Recipes) do
+        if recipesByCat[recipe.category] == nil then
+            recipesByCat[recipe.category] = {[itemId] = recipe}
+        else
+            recipesByCat[recipe.category][itemId] = recipe
+        end
+    end
+    return recipesByCat
+end
 
 local function GenerateIngredientList(parent, ingredients)
     local submenu = MenuV:InheritMenu(parent)
@@ -249,19 +256,26 @@ RegisterNetEvent("jobs:client:food:OpenCraftingMenu", function()
 
     FoodJob.Menu:ClearItems()
 
-    local recipesByCat = {}
-    for itemId, recipe in pairs(FoodConfig.Recipes) do
-        if recipesByCat[recipe.category] == nil then
-            recipesByCat[recipe.category] = {[itemId] = recipe}
-        else
-            recipesByCat[recipe.category][itemId] = recipe
-        end
-    end
-    for catId, recipes in pairs(recipesByCat) do
+    for catId, recipes in pairs(GetRecipesByCat()) do
         local category = FoodConfig.Categories[catId]
         local submenu = GenerateSubmenu(FoodJob.Menu, recipes)
         FoodJob.Menu:AddButton({icon = category.icon, label = category.label, value = submenu})
     end
+
+    FoodJob.Menu:Open()
+end)
+
+RegisterNetEvent("jobs:client:food:OpenSocietyMenu", function()
+    FoodJob.Menu:ClearItems()
+
+    -- RECIPES
+    local recipesMenu = MenuV:InheritMenu(FoodJob.Menu)
+    for catId, recipes in pairs(GetRecipesByCat()) do
+        local category = FoodConfig.Categories[catId]
+        local submenu = GenerateSubmenu(recipesMenu, recipes, true)
+        recipesMenu:AddButton({icon = category.icon, label = category.label, value = submenu})
+    end
+    FoodJob.Menu:AddButton({icon = "👨‍🍳", label = "Livre des recettes", value = recipesMenu})
 
     FoodJob.Menu:Open()
 end)
