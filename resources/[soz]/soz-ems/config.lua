@@ -33,6 +33,21 @@ Config.Cloakroom = {
                 },
                 Props = {},
             },
+            ["Tenue incendie"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 96, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 120, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 24, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 151, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 16, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 314, Texture = 0, Palette = 0},
+                },
+                Props = {[0] = {Drawable = 45, Texture = 0, Palette = 0}},
+            },
         },
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue de service"] = {
@@ -49,6 +64,21 @@ Config.Cloakroom = {
                     [11] = {Drawable = 219, Texture = 6, Palette = 0},
                 },
                 Props = {},
+            },
+            ["Tenue incendie"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 111, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 126, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 24, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 187, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 15, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 325, Texture = 0, Palette = 0},
+                },
+                Props = {[0] = {Drawable = 44, Texture = 0, Palette = 0}},
             },
         },
     },
