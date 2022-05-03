@@ -139,6 +139,14 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    -- TARGET
+    exports["qb-target"]:AddGlobalPlayer({
+        options = {
+            {label = "Facturer", icon = "c:jobs/facture.png", event = "jobs:client:food:InvoicePlayer", job = "food"},
+        },
+        distance = 1.5,
+    })
 end)
 AddEventHandler("jobs:client:food-toggle-duty", function()
     if not PlayerData.job.onduty then
@@ -147,6 +155,24 @@ AddEventHandler("jobs:client:food-toggle-duty", function()
         DestroyJob()
     end
     TriggerServerEvent("QBCore:ToggleDuty")
+end)
+
+RegisterNetEvent("jobs:client:food:InvoicePlayer", function(data)
+    local player = NetworkGetPlayerIndexFromPed(data.entity)
+
+    local title = exports["soz-hud"]:Input("Titre", 200)
+    if title == nil or title == "" then
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
+        return
+    end
+
+    local amount = exports["soz-hud"]:Input("Montant", 0)
+    if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
+        return
+    end
+
+    TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
 end)
 
 ---
