@@ -132,7 +132,7 @@ Config.vehicleCustomisationMechanic = {
     {category = "Aile gauche", id = 8},
     {category = "Aile droite", id = 9},
     {category = "Toit", id = 10},
-    {category = "Immatriculation", id = 25},
+    {category = "Style Immatriculation", id = 25},
     {category = "Finitions A", id = 27},
     {category = "Décorations", id = 28},
     {category = "Tableau de bord", id = 29},
@@ -153,7 +153,7 @@ Config.vehicleCustomisationMechanic = {
     {category = "Finitions B", id = 44},
     {category = "Réservoir", id = 45},
     {category = "Fenêtre", id = 46},
-    {category = "Livrée", id = 48},
+    {category = "Sticker", id = 48},
     {
         category = "Klaxon",
         id = 14,
