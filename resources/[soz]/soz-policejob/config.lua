@@ -18,22 +18,7 @@ Config.Locations = {
 Config.Cloakroom = {
     ["lspd"] = {
         [GetHashKey("mp_m_freemode_01")] = {
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 35, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 56, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 190, Texture = 0, Palette = 0},
-                },
-                Props = {},
-            },
-            ["Tenue SWAT"] = {
+            --[[ ["Tenue SWAT"] = {
                 Components = {
                     [1] = {Drawable = 185, Texture = 0, Palette = 0},
                     [3] = {Drawable = 179, Texture = 0, Palette = 0},
@@ -50,13 +35,13 @@ Config.Cloakroom = {
                     [0] = {Drawable = 150, Texture = 0, Palette = 0},
                     [1] = {Drawable = 21, Texture = 0, Palette = 0},
                 },
-            },
+            }, ]]
             ["Tenue de pilote"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 16, Texture = 0, Palette = 0},
                     [4] = {Drawable = 64, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 48, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 67, Texture = 0, Palette = 0},
@@ -64,7 +49,7 @@ Config.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 108, Texture = 0, Palette = 0},
                 },
-                Props = {[0] = {Drawable = 78, Texture = 0, Palette = 0}},
+                Props = {[0] = {Drawable = 78, Texture = 1, Palette = 0}},
             },
             ["Tenue de moto"] = {
                 Components = {
@@ -83,22 +68,7 @@ Config.Cloakroom = {
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 9, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 34, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 33, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 192, Texture = 0, Palette = 0},
-                },
-                Props = {},
-            },
-            ["Tenue SWAT"] = {
+            --[[ ["Tenue SWAT"] = {
                 Components = {
                     [1] = {Drawable = 185, Texture = 0, Palette = 0},
                     [3] = {Drawable = 215, Texture = 0, Palette = 0},
@@ -115,13 +85,13 @@ Config.Cloakroom = {
                     [0] = {Drawable = 149, Texture = 0, Palette = 0},
                     [1] = {Drawable = 22, Texture = 0, Palette = 0},
                 },
-            },
+            }, ]]
             ["Tenue de pilote"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 17, Texture = 0, Palette = 0},
                     [4] = {Drawable = 66, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 48, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 49, Texture = 0, Palette = 0},
@@ -129,7 +99,7 @@ Config.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 99, Texture = 0, Palette = 0},
                 },
-                Props = {[0] = {Drawable = 78, Texture = 0, Palette = 0}},
+                Props = {[0] = {Drawable = 77, Texture = 1, Palette = 0}},
             },
             ["Tenue de moto"] = {
                 Components = {
