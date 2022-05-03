@@ -162,10 +162,8 @@ local function GetDeliveryLocation()
                         SetEntityAsNoLongerNeeded(NpcData.Npc)
                         local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
                         TaskGoStraightToCoord(NpcData.Npc, targetCoords.x, targetCoords.y, targetCoords.z, 1.0, -1, 0.0, 0.0)
-                        SendNUIMessage({action = "toggleMeter"})
                         TriggerServerEvent("taxi:server:NpcPay", HorodateurData.TarifActuelle)
                         meterActive = false
-                        SendNUIMessage({action = "resetMeter"})
                         exports["soz-hud"]:DrawNotification("Vous avez déposé la personne")
                         if NpcData.DeliveryBlip ~= nil then
                             RemoveBlip(NpcData.DeliveryBlip)
@@ -245,8 +243,6 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                                 HorodateurOpen = true
                                 HorodateurActive = true
                                 lastLocation = GetEntityCoords(PlayerPedId())
-                                SendNUIMessage({action = "openMeter", toggle = true, HorodateurData = Config.Horodateur})
-                                SendNUIMessage({action = "toggleMeter"})
                                 ClearPedTasksImmediately(NpcData.Npc)
                                 FreezeEntityPosition(NpcData.Npc, false)
                                 TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
