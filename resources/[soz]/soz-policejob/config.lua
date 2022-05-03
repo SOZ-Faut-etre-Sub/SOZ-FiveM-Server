@@ -301,7 +301,100 @@ Config.DutyOutfit = {
             },
         },
     },
-    ["bcso"] = {[0] = {}},
+    ["bcso"] = {
+        [0] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 22, Texture = 8, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 38, Texture = 1, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 190, Texture = 2, Palette = 0},
+                },
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 9, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 3, Texture = 7, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 51, Texture = 1, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 192, Texture = 2, Palette = 0},
+                },
+                Props = {},
+            },
+        },
+        [43] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 15, Texture = 0, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 14, Texture = 0, Palette = 0}},
+                Props = {},
+            },
+        },
+        [42] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 15, Texture = 1, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 14, Texture = 1, Palette = 0}},
+                Props = {},
+            },
+        },
+        [41] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 15, Texture = 5, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 14, Texture = 5, Palette = 0}},
+                Props = {},
+            },
+        },
+        [40] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 15, Texture = 6, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 14, Texture = 6, Palette = 0}},
+                Props = {},
+            },
+        },
+        [39] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 15, Texture = 7, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 14, Texture = 7, Palette = 0}},
+                Props = {},
+            },
+        },
+        [38] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 15, Texture = 8, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 14, Texture = 8, Palette = 0}},
+                Props = {},
+            },
+        },
+    },
 }
 
 Config.PrisonerClothes = {
