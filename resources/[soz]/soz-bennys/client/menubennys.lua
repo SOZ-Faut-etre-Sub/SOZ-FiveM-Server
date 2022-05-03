@@ -37,7 +37,6 @@ Gvehicle = nil
 Gvehpos = nil
 Gvehjack = nil
 
-
 local function finishAnimation()
     Gdict = "move_crawl"
     local coords2 = GetEntityCoords(Gped)
@@ -867,16 +866,16 @@ local function OpenMenu(menu)
         label = "Libérer le véhicule",
         description = "Détacher le véhicule de la plateforme",
         select = function()
-        if Gready == true then
-            TriggerEvent("soz-bennys:client:UnattachVehicle")
-            Gfinishready = true
-            menu:Close()
-            finishAnimation()
-            saveVehicle()
-            SetVehicleDoorsLocked(veh, 1)
-        else
-            exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
-        end
+            if Gready == true then
+                TriggerEvent("soz-bennys:client:UnattachVehicle")
+                Gfinishready = true
+                menu:Close()
+                finishAnimation()
+                saveVehicle()
+                SetVehicleDoorsLocked(veh, 1)
+            else
+                exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
+            end
         end,
     })
     menu:AddButton({
@@ -914,7 +913,6 @@ local function GenerateOpenMenu()
         VehiculeOptions:Open()
     end
 end
-
 
 local function startAnimation()
     local veh = Config.AttachedVehicle
