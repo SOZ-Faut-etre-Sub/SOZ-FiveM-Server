@@ -2,6 +2,9 @@ Citizen.CreateThread(function()
     --- Vehicles
     AddTextEntryByHash(0x9C32EB57, "Buffalo STX") -- police5
     AddTextEntryByHash(0xB2FF98F0, "Vapid Scout") -- police6
+    AddTextEntryByHash(0xF0DFD0A3, "Dodge Charger") -- sheriff3
+    AddTextEntryByHash(0xD0368F51, "Chevrolet Tahoe") -- sheriff4
+    AddTextEntryByHash(0x8B6605B9, "Moto Sheriff") -- sheriffb
 
     AddTextEntry('0x3AB04817','CallSign - 0')   -- NKS_A0
     AddTextEntry('0x896BE589','CallSign - 1')   -- NKS_A1
