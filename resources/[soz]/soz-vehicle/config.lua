@@ -480,8 +480,12 @@ Config.vehicleCustomisationCustom = {
 }
 
 Config.vehicleCustomisationPricesCustom = {
-    performance = {prices = {0, 3250, 5500, 10450, 15250, 20500}},
-    turbo = {price = 15000},
+    {id = 11, prices = {0, 0.1, 0.15, 0.2, 0.25, 0.3}},
+    {id = 12, prices = {0, 0.08, 0.1, 0.12, 0.14, 0.16}},
+    {id = 13, prices = {0, 0.08, 0.11, 0.14, 0.17, 0.2}},
+    {id = 15, prices = {0, 0.06, 0.09, 0.12, 0.15, 0.18}},
+    {id = 16, prices = {0, 0.25, 0.35, 0.45, 0.55, 0.65}},
+    {id = 18, prices = {0.2}},
 }
 
 Config.Blacklist = { -- Integers | Blacklist classes from being towed.
