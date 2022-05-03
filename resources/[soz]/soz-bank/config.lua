@@ -22,8 +22,9 @@ Config.ErrorMessage = {
 }
 
 Config.FarmAccountMoney = {
-    ["farm_news"] = {money = 50000, marked_money = 0},
+    ["farm_news"] = {money = 100000, marked_money = 0},
     ["farm_stonk"] = {money = 2000000, marked_money = 0},
+    ["farm_mtp"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
@@ -76,6 +77,15 @@ Config.SafeStorages = {
         size = vec2(0.4, 1.4),
         heading = 328,
         offsetUpZ = 2.2,
+    },
+    ["safe_oil"] = {
+        label = "Coffre MTP",
+        owner = "oil",
+        position = vector3(-234.58, 6090.64, 31.76),
+        size = vec2(0.8, 1.25),
+        heading = 45,
+        offsetUpZ = 0.4,
+        offsetDownZ = 0.5,
     },
 }
 

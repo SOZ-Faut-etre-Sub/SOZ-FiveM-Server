@@ -1,61 +1,29 @@
-local gates = {GetHashKey("prop_sec_barrier_ld_01a"), GetHashKey("prop_sec_barrier_ld_02a")}
-
-local closestGate = {}
+local gates = {[GetHashKey("prop_sec_barrier_ld_01a")] = true, [GetHashKey("prop_sec_barrier_ld_02a")] = true}
 
 Citizen.CreateThread(function()
     while true do
         local coords = GetEntityCoords(PlayerPedId())
+        local objects = GetGamePool("CObject")
 
-        for _, gate in pairs(gates) do
-            local searchGate = GetClosestObjectOfType(coords.x, coords.y, coords.z, 40.0, gate, false, false, false)
+        for i = 1, #objects, 1 do
+            local objectModel = GetEntityModel(objects[i])
+            local objectCoords = GetEntityCoords(objects[i])
+            local distance = #(objectCoords - coords)
+            local identifier = "b_" .. objectCoords.x .. objectCoords.y .. objectCoords.z
 
-            if searchGate ~= 0 then
-                closestGate[searchGate] = true
-            end
-        end
-
-        Wait(500)
-    end
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        local coords = GetEntityCoords(PlayerPedId())
-
-        for gate, _ in pairs(closestGate) do
-            if DoesEntityExist(gate) then
-                local gateRotation = GetEntityRotation(gate, 0)
-
-                if #(GetEntityCoords(gate) - coords) <= 20.0 then
-                    while gateRotation.y >= -89.5 do
-                        SetEntityRotation(gate, gateRotation.x, gateRotation.y - 0.5, gateRotation.z, 0, true)
-                        gateRotation = GetEntityRotation(gate, 0)
-
-                        if not DoesEntityExist(gate) then
-                            break
-                        end
-
-                        Wait(1)
-                    end
-                else
-                    while gateRotation.y <= -0.5 do
-                        SetEntityRotation(gate, gateRotation.x, gateRotation.y + 0.5, gateRotation.z, 0, true)
-                        gateRotation = GetEntityRotation(gate, 0)
-
-                        if not DoesEntityExist(gate) then
-                            break
-                        end
-
-                        Wait(1)
-                    end
-                    closestGate[gate] = nil
+            if gates[objectModel] and distance <= 20.0 then
+                if not IsDoorRegisteredWithSystem(identifier) then
+                    AddDoorToSystem(identifier, objectModel, objectCoords.x, objectCoords.y, objectCoords.z, true, true, false);
+                    DoorSystemSetOpenRatio(identifier, 1.0, false, true);
                 end
-            else
-                closestGate[gate] = nil
+                DoorSystemSetAutomaticDistance(identifier, 5.0, false, true)
+            elseif gates[objectModel] and distance >= 40.0 then
+                if IsDoorRegisteredWithSystem(identifier) then
+                    RemoveDoorFromSystem(identifier)
+                end
             end
         end
 
-        Wait(500)
+        Wait(1000)
     end
 end)
-

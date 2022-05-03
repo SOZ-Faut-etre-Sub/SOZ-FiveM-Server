@@ -1,4 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
 local LastVehicle = nil
 local LastStatus = false
 local LastAttach = false

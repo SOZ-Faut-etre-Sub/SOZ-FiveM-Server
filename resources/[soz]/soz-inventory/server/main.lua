@@ -28,7 +28,7 @@ MySQL.ready(function()
                     local st = Config.Storages[v.name]
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner)
                     StorageNotLoaded[v.name] = nil
-                elseif v.type ~= "trunk" and v.type ~= "stash" then
+                elseif v.type ~= "trunk" and v.type ~= "tanker" and v.type ~= "stash" then
                     exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
                 end
             end
@@ -36,7 +36,12 @@ MySQL.ready(function()
 
         -- Create storage present in configuration if not exist in database
         for k, v in pairs(StorageNotLoaded) do
-            Inventory.Create(k, v.label, v.type, Config.StorageMaxInvSlots, Config.StorageMaxWeight, v.owner)
+            local storageConfig = Config.StorageCapacity["default"]
+            if Config.StorageCapacity[v.type] then
+                storageConfig = Config.StorageCapacity[v.type]
+            end
+
+            Inventory.Create(k, v.label, v.type, storageConfig.slot, storageConfig.weight, v.owner)
         end
     end)
 end)
@@ -53,7 +58,8 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
             id = tostring(id),
             label = label or id,
             type = invType,
-            slots = slots,
+            -- Disable slots limitation for the moment
+            slots = 10000, -- slots,
             weight = 0,
             maxWeight = maxWeight,
             owner = owner,
@@ -176,6 +182,8 @@ function Inventory.CanSwapItem(inv, firstItem, firstItemAmount, testItem, testIt
     end
     return false
 end
+RegisterNetEvent("inventory:server:CanSwapItem", Inventory.CanSwapItem)
+exports("CanSwapItem", Inventory.CanSwapItem)
 
 function Inventory.CanCarryItem(inv, item, amount, metadata)
     if type(item) ~= "table" then
@@ -358,12 +366,12 @@ RegisterNetEvent("inventory:server:SetMetadata", Inventory.SetMetadata)
 exports("SetMetadata", Inventory.SetMetadata)
 
 function Inventory.RemoveItem(inv, item, amount, metadata, slot)
+    inv = Inventory(inv)
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
     end
     amount = math.floor(amount + 0.5)
     if item and amount > 0 then
-        inv = Inventory(inv)
 
         if metadata ~= nil then
             metadata = type(metadata) == "string" and {type = metadata} or metadata
@@ -582,8 +590,8 @@ end
 
 --- Create Player Storage
 local function CreatePlayerInventory(player --[[PlayerData]] )
-    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.MaxInvSlots, Config.MaxWeight,
-                            player.citizenid)
+    return Inventory.Create(player.source, player.charinfo.firstname .. " " .. player.charinfo.lastname, "player", Config.StorageCapacity["player"].slot,
+                            Config.StorageCapacity["player"].weight, player.citizenid)
 end
 
 exports("CreatePlayerInventory", CreatePlayerInventory)

@@ -41,7 +41,8 @@ end
 --- @param item table
 --- @return boolean
 function TrunkInventory:AllowedItems(item)
-    return true
+    local typeAllowed = {["weapon"] = true, ["weapon_ammo"] = true, ["item"] = true, ["drug"] = true}
+    return typeAllowed[item.type or ""] or false
 end
 
 --- AccessAllowed

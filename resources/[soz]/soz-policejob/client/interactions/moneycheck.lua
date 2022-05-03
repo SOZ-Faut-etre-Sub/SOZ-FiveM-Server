@@ -31,10 +31,10 @@ RegisterNetEvent("police:client:MoneyChecker", function()
                 disableCombat = true,
             }, {}, {}, {}, function()
                 PoliceJob.Functions.Menu.GenerateMenu(PlayerData.job.id, function(menu)
-                    menu:AddButton({label = "Argent sale", rightLabel = data.marked_money .. "$"})
+                    menu:AddButton({label = "Argent marqué", rightLabel = data.marked_money .. "$"})
 
                     if data.marked_money > 0 then
-                        local take = menu:AddButton({label = "Confisquer l'argent sale"})
+                        local take = menu:AddButton({label = "Confisquer l'argent marqué"})
                         take:On("select", function()
                             QBCore.Functions.Progressbar("jobs_police", "Confiscation...", 6000, false, false,
                                                          {

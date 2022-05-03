@@ -72,7 +72,7 @@ body {
     width: 0;
     height: 1vh;
     transition: width 0.3s;
-    transition-timing-function: ease-out;
+    transition-timing-function: linear;
 }
 
 @keyframes slide-in {

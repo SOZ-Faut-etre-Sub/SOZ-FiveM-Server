@@ -6,6 +6,8 @@
 
 - item
 
+- oil
+
 - food
 - drink
 - drug

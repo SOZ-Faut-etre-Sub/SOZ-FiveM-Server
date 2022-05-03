@@ -27,9 +27,9 @@ RegisterNetEvent("police:confiscateMoney", function(target)
                 })
 
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                   string.format("Vous avez confisqué ~g~%s$~s~ d'argent sale", markedAmount))
+                                   string.format("Vous avez confisqué ~g~%s$~s~ d'argent marqué", markedAmount))
                 TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source,
-                                   string.format("~r~%s$~s~ d'argent sale ont été confisqués", markedAmount))
+                                   string.format("~r~%s$~s~ d'argent marqué ont été confisqués", markedAmount))
             else
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Problème de confiscation", "error")
             end

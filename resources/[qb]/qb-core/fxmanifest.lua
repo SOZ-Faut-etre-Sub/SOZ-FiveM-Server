@@ -15,6 +15,7 @@ shared_scripts {
     'shared/gangs.lua',
     'shared/weapons.lua',
     'shared/uuid.lua',
+    'shared/trunks.lua',
 }
 
 client_scripts {

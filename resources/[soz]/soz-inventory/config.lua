@@ -1,6 +1,18 @@
 Config = {}
-Config.MaxWeight = 80000 -- Max weight a player can carry (currently 120kg, written in grams)
-Config.MaxInvSlots = 30 -- Max inventory slots for a player
+
+Config.StorageCapacity = {
+    ["default"] = {slot = 10, weight = 25000},
+    ["player"] = {slot = 30, weight = 80000},
+    ["bin"] = {slot = 10, weight = 10000},
+    --- society storages
+    ["ammo"] = {slot = 100, weight = 250000},
+    ["armory"] = {slot = 100, weight = 250000},
+    ["boss_storage"] = {slot = 100, weight = 250000},
+    ["fridge"] = {slot = 100, weight = 250000},
+    ["seizure"] = {slot = 100, weight = 250000},
+    ["storage"] = {slot = 100, weight = 250000},
+    ["storage_tank"] = {slot = 10, weight = 250000},
+}
 
 Config.ErrorMessage = {
     ["invalid_item"] = "L'objet a transférer est invalide !",
@@ -11,6 +23,4 @@ Config.ErrorMessage = {
     ["not_allowed_item"] = "L'objet ne peut aller dans ce stockage !",
 }
 
-Config.StorageMaxWeight = 250000
-Config.StorageMaxInvSlots = 10
 Config.Storages = {}

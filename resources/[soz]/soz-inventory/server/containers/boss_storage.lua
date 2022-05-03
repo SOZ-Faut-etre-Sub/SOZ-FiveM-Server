@@ -17,10 +17,13 @@ end
 function BossStorageInventory:load(id, owner)
     local result = exports.oxmysql:scalar_async("SELECT inventory FROM storages WHERE name = ?", {id})
     if result == nil then
-        exports.oxmysql:execute("INSERT INTO storages(name,type,owner) VALUES (?,?,?) ON DUPLICATE KEY UPDATE name=name", {
+        exports.oxmysql:execute("INSERT INTO storages(name,type,owner,max_slots,max_weight) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE name=name",
+                                {
             id,
             "boss_storage",
             owner,
+            Config.StorageCapacity["boss_storage"].slot,
+            Config.StorageCapacity["boss_storage"].weight,
         })
     end
     return result and json.decode(result) or {}
@@ -41,7 +44,8 @@ end
 --- @param item table
 --- @return boolean
 function BossStorageInventory:AllowedItems(item)
-    return true
+    local typeAllowed = {["weapon"] = true, ["weapon_ammo"] = true, ["item"] = true, ["drug"] = true}
+    return typeAllowed[item.type or ""] or false
 end
 
 --- AccessAllowed

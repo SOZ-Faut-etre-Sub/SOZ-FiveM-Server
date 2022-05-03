@@ -1,3 +1,5 @@
+local tankers = {[GetHashKey("tanker")] = true, [GetHashKey("tanker2")] = true}
+
 -- TODO: implement key management
 local function OpenTrunk()
     if IsPedInAnyVehicle(PlayerPedId(), true) then
@@ -14,7 +16,9 @@ local function OpenTrunk()
 
         if GetVehicleDoorLockStatus(vehicle) == 1 then
             local plate = QBCore.Functions.GetPlate(vehicle)
-            TriggerServerEvent("inventory:server:openInventory", "trunk", plate)
+            local model = GetEntityModel(vehicle)
+
+            TriggerServerEvent("inventory:server:openInventory", tankers[model] and "tanker" or "trunk", plate, model)
         else
             exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
         end
