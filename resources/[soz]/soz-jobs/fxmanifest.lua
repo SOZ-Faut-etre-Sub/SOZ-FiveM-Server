@@ -25,4 +25,7 @@ server_script {
     "server/jobs/**/*.lua",
 }
 
+ui_page "client/nui/index.html"
+files {"client/nui/index.html"}
+
 dependencies {"qb-target"}

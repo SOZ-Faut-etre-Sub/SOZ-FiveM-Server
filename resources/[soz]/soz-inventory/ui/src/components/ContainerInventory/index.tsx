@@ -4,6 +4,7 @@ import {IInventoryEvent, IInventoryItem} from "../../types/inventory";
 import { ReactSortable } from "react-sortablejs";
 import styles from "./styles.module.css";
 import cn from "classnames";
+import {closeNUI} from "../../hooks/nui";
 
 const ContainerInventory = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -56,21 +57,38 @@ const ContainerInventory = () => {
         if (event.data.action === "openInventory") {
             if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return
 
-            setPlayerInventory(event.data.playerInventory);
-            setTargetInventory(event.data.targetInventory);
-
-            setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
-            setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
-
-            setDisplay(true);
-        } else if (event.data.action === "updateInventory") {
-            if (event.data.playerInventory !== undefined){
+            try {
                 setPlayerInventory(event.data.playerInventory);
-                setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
-            }
-            if (event.data.targetInventory !== undefined) {
                 setTargetInventory(event.data.targetInventory);
+
+                setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
                 setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
+
+                setDisplay(true);
+            } catch (e: any) {
+                closeNUI(() => {
+                    setDisplay(false);
+                }, {
+                    target: targetInventory.id,
+                })
+            }
+
+        } else if (event.data.action === "updateInventory") {
+            try {
+                if (event.data.playerInventory !== undefined){
+                    setPlayerInventory(event.data.playerInventory);
+                    setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
+                }
+                if (event.data.targetInventory !== undefined) {
+                    setTargetInventory(event.data.targetInventory);
+                    setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
+                }
+            } catch (e: any) {
+                closeNUI(() => {
+                    setDisplay(false);
+                }, {
+                    target: targetInventory.id,
+                })
             }
         }
     }, [setDisplay, setPlayerInventory, setTargetInventory, setPlayerInventoryItems, setTargetInventoryItems]);

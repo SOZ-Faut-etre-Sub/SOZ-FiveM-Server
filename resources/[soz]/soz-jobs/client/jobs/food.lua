@@ -31,11 +31,12 @@ local function SpawnFieldZones()
                 DisplayHelpText()
                 QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
                     currentFieldHealth = health
-                    DisplayFieldHealth()
+                    DisplayFieldHealth(true)
                 end, zone.name)
             else
                 currentField = nil
                 currentFieldHealth = nil
+                DisplayFieldHealth(false)
             end
         end)
         table.insert(FoodJob.Zones, zone)
@@ -285,24 +286,16 @@ function DisplayHelpText()
     end)
 end
 
-function DisplayFieldHealth()
-    Citizen.CreateThread(function()
-        while currentFieldHealth ~= nil do
-            SetTextFont(4)
-            SetTextProportional(0)
-            SetTextScale(0.5, 0.5)
-            SetTextColour(255, 255, 255, 200)
-            SetTextEdge(2, 0, 0, 0, 255)
-            SetTextOutline()
-            SetTextDropShadow(0, 0, 0, 0, 255)
-            SetTextDropShadow()
-            SetTextEntry("STRING")
-            AddTextComponentString(FoodConfig.FieldHealthStates[currentFieldHealth])
-            local x, y, width, height = 0.96, 1.44, 1.0, 1.0
-            DrawText(x - width / 2, y - height / 2)
-            Citizen.Wait(0)
-        end
-    end)
+function DisplayFieldHealth(newVisibility)
+    if newVisibility then
+        SendNUIMessage({
+            action = "show",
+            health = FoodConfig.FieldHealthStates[currentFieldHealth],
+            field = string.match(currentField, "%a+"),
+        })
+    else
+        SendNUIMessage({action = "hide"})
+    end
 end
 
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
@@ -374,7 +367,21 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
     end)
 end)
 
+FoodJob.Functions.GetItemCountFromInventory = function(itemName)
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == itemName then
+            return item.amount
+        end
+    end
+end
+
 AddEventHandler("jobs:client:food-process-milk", function()
+    local count = FoodJob.Functions.GetItemCountFromInventory(FoodConfig.Collect.Milk.Item)
+    if not count or count < 1 then
+        exports["soz-hud"]:DrawNotification("Vous n'avez pas de bidons de lait sur vous", "error")
+        return
+    end
+
     QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true,
                                  {
         disableMovement = true,
@@ -395,6 +402,26 @@ AddEventHandler("jobs:client:food-process-milk", function()
 end)
 
 FoodJob.Functions.CraftItem = function(itemId, item)
+    local recipe = FoodConfig.Recipes[itemId]
+    if recipe == nil then
+        exports["soz-hud"]:DrawNotification("Recette invalide", "error")
+        return
+    end
+
+    local ingredients = recipe.ingredients
+    for ingId, count in pairs(ingredients) do
+        local ingredient = QBCore.Shared.Items[ingId]
+        if ingredient == nil then
+            exports["soz-hud"]:DrawNotification("Ingérdient invalide", "error")
+            return
+        end
+        local countInInv = FoodJob.Functions.GetItemCountFromInventory(ingId) or 0
+        if countInInv < count then
+            exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients", "error")
+            return
+        end
+    end
+
     Citizen.CreateThread(function()
         QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Grape.Duration, false, true,
                                      {

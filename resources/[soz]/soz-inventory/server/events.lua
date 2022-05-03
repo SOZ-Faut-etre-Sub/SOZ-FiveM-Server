@@ -1,26 +1,36 @@
-RegisterServerEvent("inventory:server:openInventory", function(storageType, invID)
+RegisterServerEvent("inventory:server:openInventory", function(storageType, invID, ctx)
     local Player = QBCore.Functions.GetPlayer(source)
 
     local sourceInv = Inventory(source)
     local targetInv = Inventory(invID)
 
+    local storageConfig = Config.StorageCapacity["default"]
+    if Config.StorageCapacity[storageType] then
+        storageConfig = Config.StorageCapacity[storageType]
+    end
+
     if storageType == "bin" then
         targetInv = Inventory("bin_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("bin_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+            targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "trunk" then
+    elseif storageType == "trunk" or storageType == "tanker" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+            local trunkConfig = QBCore.Shared.Trunks["default"]
+            if ctx and QBCore.Shared.Trunks[ctx] then
+                trunkConfig = QBCore.Shared.Trunks[ctx]
+            end
+
+            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, trunkConfig.weight, invID)
         end
     elseif storageType == "stash" then
         targetInv = Inventory("stash_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("stash_" .. invID, invID, storageType, Config.StorageMaxInvSlots, Config.StorageMaxWeight, invID)
+            targetInv = Inventory.Create("stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
     end
 

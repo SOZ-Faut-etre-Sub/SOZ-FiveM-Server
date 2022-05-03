@@ -21,7 +21,7 @@ gameMasterMenu:AddSlider({
 })
 
 gameMasterMenu:AddSlider({
-    label = "Se donner de l'argent sale",
+    label = "Se donner de l'argent marqué",
     value = "marked_money",
     values = moneyGiveItem,
     select = function(_, value)
@@ -75,6 +75,24 @@ gameMasterMenu:AddCheckbox({
     value = nil,
     change = function(_, checked)
         SetPlayerInvincible(PlayerId(), checked)
+    end,
+})
+
+gameMasterMenu:AddButton({
+    label = "Auto-pilote",
+    value = nil,
+    select = function()
+        local player = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(player, false)
+        local WaypointHandle = GetFirstBlipInfoId(8)
+
+        if DoesBlipExist(WaypointHandle) then
+            local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
+
+            TaskVehicleDriveToCoordLongrange(player, vehicle, waypointCoords.x, waypointCoords.y, waypointCoords.z, 60.0, 262539, 20.0)
+        else
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas sélectionné de destination", "error")
+        end
     end,
 })
 

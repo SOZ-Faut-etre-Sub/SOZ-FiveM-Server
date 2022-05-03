@@ -48,6 +48,13 @@ CreateThread(function()
         minZ = 141.0,
         maxZ = 141.25,
     }, {options = callSociety("555-MARIUS"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:mtp", vector3(-245.88, 6072.43, 32.33), 0.25, 0.35, {
+        name = "bell:mtp",
+        heading = 76.0,
+        minZ = 32.5,
+        maxZ = 32.33,
+    }, {options = callSociety("555-MTP"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

@@ -1,4 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
 InsideConcessEntreprise = false
 
 ZonesConcessEntreprise = {
@@ -58,9 +57,10 @@ end
 local function ChooseCarModelsEntreMenu(model)
     VehiculeChoose:ClearItems()
     MenuV:OpenMenu(VehiculeChoose)
+    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(model.vehicle))
     VehiculeChoose:AddButton({
         icon = "◀",
-        label = Config.GarageVehicles[model.vehicle],
+        label = vehicleName,
         value = VehiculeModel,
         description = "Choisir un autre modèle",
         select = function()
@@ -68,7 +68,7 @@ local function ChooseCarModelsEntreMenu(model)
         end,
     })
     VehiculeChoose:AddButton({
-        label = "Acheter " .. Config.GarageVehicles[model.vehicle] .. " 💸 " .. model.price .. "$",
+        label = "Acheter " .. vehicleName .. " 💸 " .. model.price .. "$",
         value = model,
         description = "Confirmer l'achat",
         select = function()
@@ -84,11 +84,12 @@ local function OpenCarModelsEntreMenu(VehiculeModel)
     QBCore.Functions.TriggerCallback("soz-concessentreprise:server:getconcessmodels", function(listconcessmodels)
         for _, model in pairs(listconcessmodels) do
             if model.job == PlayerJob.id then
+                local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(model.vehicle))
                 VehiculeModel:AddButton({
-                    label = Config.GarageVehicles[model.vehicle],
+                    label = vehicleName,
                     value = model,
                     rightLabel = "💸 " .. model.price .. "$",
-                    description = "Acheter  " .. Config.GarageVehicles[model.vehicle],
+                    description = "Acheter  " .. vehicleName,
                     select = function()
                         ChooseCarModelsEntreMenu(model)
                     end,

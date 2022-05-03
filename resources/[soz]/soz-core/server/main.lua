@@ -31,9 +31,9 @@ end)
 --- Admin
 RegisterNetEvent("core:server:zoneIntrusion", function(zone)
     local Player = QBCore.Functions.GetPlayer(source)
-    local endpoint = GetConvar("discord_webhook_zone", nil)
+    local endpoint = GetConvar("discord_webhook_zone", "")
 
-    if endpoint then
+    if endpoint ~= "" then
         PerformHttpRequest(endpoint, nil, "POST", json.encode({
             username = "SOZ reporter",
             embeds = {
