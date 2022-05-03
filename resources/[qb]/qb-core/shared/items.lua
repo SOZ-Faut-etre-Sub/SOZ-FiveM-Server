@@ -2340,7 +2340,7 @@ QBShared.Items = {
     -- Cops Tools
     ['armor'] = {
         ['name'] = 'armor',
-        ['label'] = 'Armure',
+        ['label'] = 'Gilet pare-balles',
         ['weight'] = 5000,
         ['type'] = 'item',
         ['unique'] = false,
@@ -2348,6 +2348,17 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Il faut parfois se protéger avant de sortir.'
+    },
+    ['outfit'] = {
+        ['name'] = 'outfit',
+        ['label'] = 'Tenue',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
     },
     ['handcuffs'] = {
         ['name'] = 'handcuffs',
