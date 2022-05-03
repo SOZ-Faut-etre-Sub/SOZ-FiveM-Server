@@ -18,7 +18,7 @@ exports("Input", function(title, maxChar, content)
     SetNuiFocus(true, true)
     Wait(150)
 
-    if properties then
+    if properties ~= nil then
         SetNuiFocus(false, false)
         return
     end

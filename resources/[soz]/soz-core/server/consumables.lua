@@ -72,10 +72,6 @@ QBCore.Functions.CreateUseableItem("meth", function(source, item)
 end)
 
 --- Tools
-QBCore.Functions.CreateUseableItem("armor", function(source, item)
-    TriggerClientEvent("consumables:client:UseArmor", source)
-end)
-
 QBCore.Functions.CreateUseableItem("binoculars", function(source, item)
     TriggerClientEvent("binoculars:Toggle", source)
 end)
