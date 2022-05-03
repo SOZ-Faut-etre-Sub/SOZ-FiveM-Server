@@ -27,6 +27,7 @@ local REGISTER_COMMAND = assert(RegisterCommand)
 local GET_HASH_KEY = assert(GetHashKey)
 local CreateThread = assert(Citizen.CreateThread)
 local Wait = assert(Citizen.Wait)
+local GetGameTimer = assert(GetGameTimer)
 
 ----------------------- [ MenuV ] -----------------------
 -- GitHub: https://github.com/ThymonA/menuv/
@@ -2071,6 +2072,8 @@ local menuv_table = {
     __type = 'MenuV',
     ---@type Menu|nil
     CurrentMenu = nil,
+    ---@type number
+    LastMenuUpdate = GetGameTimer(),
     ---@type string|nil
     CurrentUpdateUUID = nil,
     ---@type string
@@ -2487,6 +2490,7 @@ REGISTER_NUI_CALLBACK('open', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID == uuid or MenuV.CurrentMenu.UUID == new_uuid) then return end
+    MenuV.LastMenuUpdate = GetGameTimer()
 
     for _, v in pairs(MenuV.ParentMenus) do
         if (v.UUID == uuid) then
@@ -2507,6 +2511,7 @@ REGISTER_NUI_CALLBACK('opened', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= uuid) then return end
+    MenuV.LastMenuUpdate = GetGameTimer()
 
     MenuV.CurrentMenu:Trigger('open')
 end)
@@ -2517,6 +2522,7 @@ REGISTER_NUI_CALLBACK('submit', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil) then return end
+    MenuV.LastMenuUpdate = GetGameTimer()
 
     for k, v in pairs(MenuV.CurrentMenu.Items) do
         if (v.UUID == uuid) then
@@ -2591,6 +2597,7 @@ REGISTER_NUI_CALLBACK('switch', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil) then return end
+    MenuV.LastMenuUpdate = GetGameTimer()
 
     for k, v in pairs(MenuV.CurrentMenu.Items) do
         if (v.UUID == prev_uuid) then
@@ -2617,6 +2624,7 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil) then return end
+    MenuV.LastMenuUpdate = GetGameTimer()
 
     for k, v in pairs(MenuV.CurrentMenu.Items) do
         if (v.UUID == uuid) then
@@ -2663,8 +2671,6 @@ CreateThread(function()
 
             EnableControlAction(0, 1, true) -- INPUT_LOOK_LR
             EnableControlAction(0, 2, true) -- INPUT_LOOK_UD
-            EnableControlAction(0, 19, true) -- INPUT_CHARACTER_WHEEL
-            EnableControlAction(0, 21, true) -- INPUT_SPRINT
             EnableControlAction(0, 30, true) -- INPUT_MOVE_LR
             EnableControlAction(0, 31, true) -- INPUT_MOVE_UD
             EnableControlAction(0, 59, true) -- INPUT_VEH_MOVE_LR
@@ -2674,17 +2680,16 @@ CreateThread(function()
             EnableControlAction(0, 75, true) -- INPUT_VEH_EXIT
             EnableControlAction(0, 76, true) -- INPUT_VEH_HANDBRAKE
             EnableControlAction(0, 86, true) -- INPUT_VEH_HORN
-            EnableControlAction(0, 137, true) -- INPUT_VEH_PUSHBIKE_SPRINT
-            EnableControlAction(0, 172, true) -- INPUT_CELLPHONE_UP
-            EnableControlAction(0, 173, true) -- INPUT_CELLPHONE_DOWN
-            EnableControlAction(0, 174, true) -- INPUT_CELLPHONE_LEFT
-            EnableControlAction(0, 175, true) -- INPUT_CELLPHONE_RIGHT
             EnableControlAction(0, 189, true) -- INPUT_FRONTEND_LEFT
             EnableControlAction(0, 190, true) -- INPUT_FRONTEND_RIGHT
             EnableControlAction(0, 191, true) -- INPUT_FRONTEND_RDOWN
             EnableControlAction(0, 194, true) -- INPUT_FRONTEND_RRIGHT
             EnableControlAction(0, 239, true) -- INPUT_CURSOR_X
             EnableControlAction(0, 240, true) -- INPUT_CURSOR_Y
+        end
+
+        if GetGameTimer() - MenuV.LastMenuUpdate >= 20000 then
+            MenuV:CloseAll()
         end
 
         Wait(0)
