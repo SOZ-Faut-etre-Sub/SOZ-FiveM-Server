@@ -1,6 +1,5 @@
 function ApplyMod(categoryID, modID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     OriginalCategory = categoryID
     OriginalMod = modID
@@ -9,8 +8,7 @@ function ApplyMod(categoryID, modID)
 end
 
 function ApplyExtra(extraID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local isEnabled = IsVehicleExtraTurnedOn(plyVeh, extraID)
     if isEnabled == 1 then
         SetVehicleExtra(plyVeh, tonumber(extraID), 1)
@@ -22,15 +20,13 @@ function ApplyExtra(extraID)
 end
 
 function ApplyWindowTint(windowTintID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     OriginalWindowTint = windowTintID
     SetVehicleWindowTint(plyVeh, windowTintID)
 end
 
 function ApplyColour(paintType, paintCategory, paintID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local vehPrimaryColour, vehSecondaryColour = GetVehicleColours(plyVeh)
     local vehPearlescentColour, vehWheelColour = GetVehicleExtraColours(plyVeh)
 
@@ -64,8 +60,7 @@ function ApplyColour(paintType, paintCategory, paintID)
 end
 
 function ApplyWheel(categoryID, wheelID, wheelType)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local doesHaveCustomWheels = GetVehicleModVariation(plyVeh, 23)
 
     OriginalWheelCategory = categoryID
@@ -81,8 +76,7 @@ function ApplyWheel(categoryID, wheelID, wheelType)
 end
 
 function ApplyCustomWheel(state)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     SetVehicleMod(plyVeh, 23, GetVehicleMod(plyVeh, 23), state)
 
@@ -92,8 +86,7 @@ function ApplyCustomWheel(state)
 end
 
 function ApplyNeon(side, enabled)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     OriginalNeonLightState = enabled
     OriginalNeonLightSide = side
@@ -102,8 +95,7 @@ function ApplyNeon(side, enabled)
 end
 
 function ApplyNeonColour(r, g, b)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     OriginalNeonColourR = r
     OriginalNeonColourG = g
@@ -113,14 +105,12 @@ function ApplyNeonColour(r, g, b)
 end
 
 function ApplyXenonLights(category, state)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     ToggleVehicleMod(plyVeh, category, state)
 end
 
 function ApplyOldLivery(liv)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     OriginalOldLivery = liv
 
@@ -128,8 +118,7 @@ function ApplyOldLivery(liv)
 end
 
 function ApplyPlateIndex(index)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     OriginalPlateIndex = index
 
@@ -137,8 +126,7 @@ function ApplyPlateIndex(index)
 end
 
 function ApplyTyreSmoke(r, g, b)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     ToggleVehicleMod(plyVeh, 20, true)
     SetVehicleTyreSmokeColor(plyVeh, r, g, b)

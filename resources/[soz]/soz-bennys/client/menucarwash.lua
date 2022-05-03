@@ -29,9 +29,9 @@ local function GenerateWashMenu()
     end
 end
 
-Washmecha = BoxZone:Create(vector3(-198.29, -1324.47, 30.89), 8, 6, {
+Washmecha = BoxZone:Create(vector3(-198.28, -1324.56, 30.89), 8, 6, {
     name = "Washmecha_z",
-    heading = 270,
+    heading = 90,
     minZ = 29.89,
     maxZ = 33.89,
 })
