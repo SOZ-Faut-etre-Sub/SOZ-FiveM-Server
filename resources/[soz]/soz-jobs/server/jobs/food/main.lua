@@ -159,11 +159,7 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
                 TriggerEvent("monitor:server:event", "job_cm_food_hunting", {
                     item_id = item,
                     player_source = Player.PlayerData.source,
-                }, {
-                    item_label = item.label,
-                    quantity = amount,
-                    position = position,
-                })
+                }, {item_label = item.label, quantity = amount, position = position})
 
                 rewardSuccess = true
             end

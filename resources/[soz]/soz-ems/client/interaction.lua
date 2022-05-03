@@ -58,7 +58,8 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:remove", "bloodbag")
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                         TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {}, {
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {},
+                                           {
                             target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
                             position = GetEntityCoords(entity),
                         }, true)
@@ -82,7 +83,8 @@ CreateThread(function()
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "defibrillator")
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_defibrillator", {}, {
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_defibrillator", {},
+                                           {
                             target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
                             position = GetEntityCoords(entity),
                         }, true)
@@ -108,7 +110,8 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:remove", "empty_bloodbag")
                         TriggerServerEvent("lsmc:server:add", "bloodbag")
                         TriggerServerEvent("lsmc:server:GiveBlood", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                        TriggerServerEvent("monitor:server:event", "job_lsmc_bloodbag", {}, {
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_bloodbag", {},
+                                           {
                             target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
                             position = GetEntityCoords(entity),
                         }, true)

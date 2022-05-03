@@ -89,9 +89,7 @@ RegisterNetEvent("soz-bennys:client:RepaireeePart", function(part)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, part, Config.MaxStatusValues[part])
     end
 
-    TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle_part", {
-        vehicle_part = part,
-    }, {
+    TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle_part", {vehicle_part = part}, {
         vehicle_plate = plate,
         vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(veh)),
         position = GetEntityCoords(PlayerPedId()),

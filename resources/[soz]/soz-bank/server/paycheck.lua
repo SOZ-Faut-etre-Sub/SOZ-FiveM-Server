@@ -16,9 +16,7 @@ function PaycheckLoop()
                 Account.AddMoney(Player.PlayerData.charinfo.account, payment)
                 NotifyPaycheck(Player.PlayerData.source)
 
-                TriggerEvent("monitor:server:event", "paycheck", {
-                    player_source = Player.PlayerData.source,
-                }, {
+                TriggerEvent("monitor:server:event", "paycheck", {player_source = Player.PlayerData.source}, {
                     amount = tonumber(payment),
                 })
             else
@@ -26,9 +24,7 @@ function PaycheckLoop()
                     if success then
                         NotifyPaycheck(Player.PlayerData.source)
 
-                        TriggerEvent("monitor:server:event", "paycheck", {
-                            player_source = Player.PlayerData.source,
-                        }, {
+                        TriggerEvent("monitor:server:event", "paycheck", {player_source = Player.PlayerData.source}, {
                             amount = tonumber(payment),
                         })
                     else

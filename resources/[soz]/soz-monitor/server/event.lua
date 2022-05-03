@@ -60,7 +60,6 @@ local function formatEventLoki(name, index, content)
     eventPayload.stream.type = "event"
     eventPayload.stream.event = name
 
-
     return eventPayload
 end
 
@@ -109,12 +108,7 @@ Citizen.CreateThread(function()
                 player_name = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname,
                 player_job = playerData.job.id,
                 vehicle_type = vehicle_type,
-            }, {
-                vehicle_plate = plate,
-                x = playerCoords.x,
-                y = playerCoords.y,
-                z = playerCoords.z,
-            })
+            }, {vehicle_plate = plate, x = playerCoords.x, y = playerCoords.y, z = playerCoords.z})
         end
 
         Wait(1000)
