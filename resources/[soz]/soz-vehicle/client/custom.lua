@@ -52,19 +52,13 @@ function CheckValidMods(category, id)
             end
         end
 
-        validMods[i] = {
-            id = (i - 1),
-            name = modName,
-        }
+        validMods[i] = {id = (i - 1), name = modName}
 
         amountValidMods = amountValidMods + 1
     end
 
     if modAmount > 0 then
-        table.insert(validMods, 1, {
-            id = -1,
-            name = "Stock " .. category,
-        })
+        table.insert(validMods, 1, {id = -1, name = "Stock " .. category})
     end
 
     return validMods, amountValidMods
@@ -165,15 +159,14 @@ local function OpenUpgrade(menu, v, k)
                 local price = 0
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if v.id == customprice.id then
-                        price = customprice.prices[tempNum] * QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
+                        price = customprice.prices[tempNum] *
+                                    QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
                     end
                 end
 
                 if Config.maxVehiclePerformanceUpgrades == 0 then
                     if currentMod == n.id then
-                        menu:AddButton({
-                            label = n.name .. " - ~g~Installed",
-                        })
+                        menu:AddButton({label = n.name .. " - ~g~Installed"})
                     else
                         menu:AddButton({
                             label = n.name .. " - $" .. price,
@@ -188,9 +181,7 @@ local function OpenUpgrade(menu, v, k)
                 else
                     if tempNum <= (Config.maxVehiclePerformanceUpgrades + 1) then
                         if currentMod == n.id then
-                            menu:AddButton({
-                                label = n.name .. " - ~g~Installed",
-                            })
+                            menu:AddButton({label = n.name .. " - ~g~Installed"})
                         else
                             menu:AddButton({
                                 label = n.name .. " - $" .. price,
@@ -208,9 +199,7 @@ local function OpenUpgrade(menu, v, k)
         elseif v.id == 18 then
             local currentTurboState = GetCurrentTurboState()
             if currentTurboState == 0 then
-                menu:AddButton({
-                    label = "Disable - ~g~Installed",
-                })
+                menu:AddButton({label = "Disable - ~g~Installed"})
                 menu:AddButton({
                     label = "Enable" .. " - $" .. Config.vehicleCustomisationPricesCustom.turbo.price,
                     description = "Acheter 💸",
@@ -229,9 +218,7 @@ local function OpenUpgrade(menu, v, k)
                         exports["soz-hud"]:DrawNotification("Le turbo a été enlevé!")
                     end,
                 })
-                menu:AddButton({
-                    label = "Enable - Installed",
-                })
+                menu:AddButton({label = "Enable - Installed"})
             end
         end
     end
