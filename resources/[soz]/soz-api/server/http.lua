@@ -67,7 +67,6 @@ SetHttpHandler(function(req, res)
         return;
     end
 
-
     if req.path == "/phone/message-create" and req.method == "POST" then
         local jsonV = readJson(req)
 

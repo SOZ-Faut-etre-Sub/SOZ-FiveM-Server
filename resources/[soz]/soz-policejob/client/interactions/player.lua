@@ -115,10 +115,8 @@ RegisterNetEvent("police:client:CuffPlayer", function()
                 local playerId = GetPlayerServerId(player)
 
                 TriggerServerEvent("police:server:CuffPlayer", playerId, false)
-                TriggerServerEvent("monitor:server:event", "job_police_cuff_player", {}, {
-                    target_source = playerId,
-                    position = GetEntityCoords(GetPlayerPed(player)),
-                }, true)
+                TriggerServerEvent("monitor:server:event", "job_police_cuff_player", {},
+                                   {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
             else
                 exports["soz-hud"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
             end
@@ -138,10 +136,8 @@ RegisterNetEvent("police:client:UnCuffPlayer", function()
                 local playerId = GetPlayerServerId(player)
 
                 TriggerServerEvent("police:server:UnCuffPlayer", playerId)
-                TriggerServerEvent("monitor:server:event", "job_police_uncuff_player", {}, {
-                    target_source = playerId,
-                    position = GetEntityCoords(GetPlayerPed(player)),
-                }, true)
+                TriggerServerEvent("monitor:server:event", "job_police_uncuff_player", {},
+                                   {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
             else
                 exports["soz-hud"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
             end
@@ -189,10 +185,8 @@ RegisterNetEvent("police:client:RequestEscortPlayer", function()
             local playerId = GetPlayerServerId(player)
 
             TriggerServerEvent("police:server:EscortPlayer", playerId)
-            TriggerServerEvent("monitor:server:event", "job_police_escort_player", {}, {
-                target_source = playerId,
-                position = GetEntityCoords(GetPlayerPed(player)),
-            }, true)
+            TriggerServerEvent("monitor:server:event", "job_police_escort_player", {},
+                               {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
         end
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
@@ -213,10 +207,8 @@ RegisterNetEvent("police:client:SetEscorting", function()
                         local playerId = GetPlayerServerId(player)
 
                         TriggerServerEvent("police:server:DeEscortPlayer", playerId)
-                        TriggerServerEvent("monitor:server:event", "job_police_deescort_player", {}, {
-                            target_source = playerId,
-                            position = GetEntityCoords(GetPlayerPed(player)),
-                        }, true)
+                        TriggerServerEvent("monitor:server:event", "job_police_deescort_player", {},
+                                           {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
                     else
                         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas arrêter une personne dans un véhicule", "error")
                     end

@@ -10,9 +10,8 @@ RegisterNetEvent("jobs:server:fueler:refillTanker", function(tankerId)
         if success then
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~remplis~s~ %dL de pétrole"):format(itemToRefill))
 
-            TriggerEvent("monitor:server:event", "job_mtp_fill_oil_tanker", {
-                player_source = Player.PlayerData.source,
-            }, {
+            TriggerEvent("monitor:server:event", "job_mtp_fill_oil_tanker", {player_source = Player.PlayerData.source},
+                         {
                 quantity = tonumber(itemToRefill),
                 position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
             })
@@ -41,9 +40,8 @@ RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
         if refinedSuccess then
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~raffiné~s~ %dL de pétrole"):format(itemToRefill))
 
-            TriggerEvent("monitor:server:event", "job_mtp_refining_oil", {
-                player_source = Player.PlayerData.source,
-            }, {
+            TriggerEvent("monitor:server:event", "job_mtp_refining_oil", {player_source = Player.PlayerData.source},
+                         {
                 quantity = tonumber(itemToRefill),
                 position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
             })
@@ -67,10 +65,7 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
 
                     TriggerEvent("monitor:server:event", "job_mtp_create_gasoline", {
                         player_source = Player.PlayerData.source,
-                    }, {
-                        quantity = essenceItemAmount,
-                        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
-                    })
+                    }, {quantity = 1, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
                 else
                     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
                 end
@@ -93,10 +88,7 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
                                        ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(essenceItemAmount))
                     TriggerEvent("monitor:server:event", "job_mtp_create_jerrycan", {
                         player_source = Player.PlayerData.source,
-                    }, {
-                        quantity = essenceItemAmount,
-                        position = GetEntityCoords(etPlayerPed(Player.PlayerData.source)),
-                    })
+                    }, {quantity = essenceItemAmount, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})
                 else
                     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
                 end
@@ -126,10 +118,7 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
                 TriggerEvent("monitor:server:event", "job_mtp_refill_station", {
                     player_source = Player.PlayerData.source,
                     station = station,
-                }, {
-                    quantity = amount,
-                    position = GetEntityCoords(etPlayerPed(Player.PlayerData.source)),
-                })
+                }, {quantity = amount, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})
             else
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
             end
@@ -149,12 +138,8 @@ RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
     if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
         TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
-        TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {
-            player_source = Player.PlayerData.source,
-        }, {
-            quantity = 10,
-            position = GetEntityCoords(etPlayerPed(Player.PlayerData.source)),
-        })
+        TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
+                     {quantity = 10, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
     end
