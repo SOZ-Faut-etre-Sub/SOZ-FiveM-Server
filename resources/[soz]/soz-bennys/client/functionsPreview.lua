@@ -1,6 +1,5 @@
 function PreviewMod(categoryID, modID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     if OriginalMod == nil and OriginalCategory == nil then
         OriginalCategory = categoryID
@@ -17,8 +16,7 @@ function PreviewMod(categoryID, modID)
 end
 
 function PreviewWindowTint(windowTintID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     if OriginalWindowTint == nil then
         OriginalWindowTint = GetVehicleWindowTint(plyVeh)
@@ -28,8 +26,7 @@ function PreviewWindowTint(windowTintID)
 end
 
 function PreviewColour(paintType, paintCategory, paintID)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     SetVehicleModKit(plyVeh, 0)
     if OriginalDashColour == nil and OriginalInterColour == nil and OriginalPrimaryColour == nil and OriginalSecondaryColour == nil and
         OriginalPearlescentColour == nil and OriginalWheelColour == nil then
@@ -59,8 +56,7 @@ function PreviewColour(paintType, paintCategory, paintID)
 end
 
 function PreviewWheel(categoryID, wheelID, wheelType)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local doesHaveCustomWheels = GetVehicleModVariation(plyVeh, 23)
 
     if OriginalWheelCategory == nil and OriginalWheel == nil and OriginalWheelType == nil and OriginalCustomWheels == nil then
@@ -79,8 +75,7 @@ function PreviewWheel(categoryID, wheelID, wheelType)
 end
 
 function PreviewNeon(side, enabled)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     if OriginalNeonLightState == nil and OriginalNeonLightSide == nil then
         if IsVehicleNeonLightEnabled(plyVeh, side) then
@@ -96,8 +91,7 @@ function PreviewNeon(side, enabled)
 end
 
 function PreviewNeonColour(r, g, b)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     if OriginalNeonColourR == nil and OriginalNeonColourG == nil and OriginalNeonColourB == nil then
         OriginalNeonColourR, OriginalNeonColourG, OriginalNeonColourB = GetVehicleNeonLightsColour(plyVeh)
@@ -107,8 +101,7 @@ function PreviewNeonColour(r, g, b)
 end
 
 function PreviewOldLivery(liv)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     if OriginalOldLivery == nil then
         OriginalOldLivery = GetVehicleLivery(plyVeh)
     end
@@ -117,8 +110,7 @@ function PreviewOldLivery(liv)
 end
 
 function PreviewPlateIndex(index)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     if OriginalPlateIndex == nil then
         OriginalPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
     end
