@@ -28,6 +28,13 @@ CreateThread(function()
                         disableCombat = true,
                     }, {task = "CODE_HUMAN_MEDIC_TEND_TO_DEAD"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "firstaid")
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_heal", {}, {
+                            amount = 25,
+                            before_health = GetEntityHealth(entity),
+                            after_health = GetEntityHealth(entity) + 25,
+                            target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                            position = GetEntityCoords(entity),
+                        }, true)
                         SetEntityHealth(entity, GetEntityHealth(entity) + 25)
                     end)
                 end,
@@ -51,6 +58,10 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:remove", "bloodbag")
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                         TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {}, {
+                            target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                            position = GetEntityCoords(entity),
+                        }, true)
                     end)
                 end,
                 item = "bloodbag",
@@ -71,6 +82,10 @@ CreateThread(function()
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "defibrillator")
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_defibrillator", {}, {
+                            target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                            position = GetEntityCoords(entity),
+                        }, true)
                     end)
                 end,
                 item = "defibrillator",
@@ -93,6 +108,10 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:remove", "empty_bloodbag")
                         TriggerServerEvent("lsmc:server:add", "bloodbag")
                         TriggerServerEvent("lsmc:server:GiveBlood", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                        TriggerServerEvent("monitor:server:event", "job_lsmc_bloodbag", {}, {
+                            target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                            position = GetEntityCoords(entity),
+                        }, true)
                     end)
                 end,
                 item = "empty_bloodbag",

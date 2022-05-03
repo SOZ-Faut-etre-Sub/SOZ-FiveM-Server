@@ -248,7 +248,7 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
                     rotation = {x = -120.0, y = 0.0, z = 0.0},
                 }, function() -- Done
                     if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
-                        TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
+                        TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount, "fine")
                     else
                         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                     end
@@ -302,7 +302,7 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
                             rotation = {x = -120.0, y = 0.0, z = 0.0},
                         }, function() -- Done
                             if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
-                                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fineAmount)
+                                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fineAmount, "fine")
                             else
                                 exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                             end

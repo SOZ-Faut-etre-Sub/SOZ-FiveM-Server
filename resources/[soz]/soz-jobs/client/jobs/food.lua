@@ -365,10 +365,21 @@ FoodJob.Functions.CollectIngredients = function(field)
                 currentFieldHealth = newHealth
                 if next(items) then
                     local messages = {}
+                    local position = GetEntityCoords(PlayerPedId())
+
                     for itemId, n in pairs(items) do
                         local item = QBCore.Shared.Items[itemId]
                         table.insert(messages, string.format("%d %s", n, item.label))
+
+                        TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {
+                            item_id = itemId,
+                        }, {
+                            item_label = item.label,
+                            quantity = tonumber(n),
+                            position = position,
+                        }, true)
                     end
+
                     local joined = table.concat(messages, ", ")
                     exports["soz-hud"]:DrawNotification(string.format("Vous avez récolté ~g~%s", joined))
 
@@ -399,6 +410,15 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
             if success then
                 exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s bidons de lait~s~", count))
                 Citizen.Wait(1000)
+
+                TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {
+                    item_id = FoodConfig.Collect.Milk.Item,
+                }, {
+                    item_label = "Seau de lait",
+                    quantity = tonumber(count),
+                    position = GetEntityCoords(PlayerPedId()),
+                }, true)
+
                 TriggerEvent("jobs:client:food-harvest-milk")
             end
         end)
@@ -434,6 +454,14 @@ AddEventHandler("jobs:client:food-process-milk", function()
                 exports["soz-hud"]:DrawNotification(string.format("Vous avez transformé ~b~1 bidon de lait~s~ en ~g~%d briques de lait~s~", count))
                 Citizen.Wait(1000)
                 TriggerEvent("jobs:client:food-process-milk")
+
+                TriggerServerEvent("monitor:server:event", "job_cm_food_craft", {
+                    item_id = FoodConfig.Process.Item,
+                }, {
+                    item_label = "Brique de lait",
+                    quantity = tonumber(count),
+                    position = GetEntityCoords(PlayerPedId()),
+                }, true)
             end
         end)
     end, function()
@@ -474,6 +502,15 @@ FoodJob.Functions.CraftItem = function(itemId, item)
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
                     if success then
                         exports["soz-hud"]:DrawNotification(string.format("Vous avez préparer ~g~1 %s", item.label))
+
+                        TriggerServerEvent("monitor:server:event", "job_cm_food_craft", {
+                            item_id = itemId,
+                        }, {
+                            item_label = item.label,
+                            quantity = 1,
+                            position = GetEntityCoords(PlayerPedId()),
+                        }, true)
+
                         Citizen.Wait(1000)
                         FoodJob.Functions.CraftItem(itemId, item)
                     else
