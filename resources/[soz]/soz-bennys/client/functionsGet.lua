@@ -1,6 +1,5 @@
 function GetCurrentMod(id)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local mod = GetVehicleMod(plyVeh, id)
     local modName = GetLabelText(GetModTextLabel(plyVeh, id, mod))
 
@@ -8,8 +7,7 @@ function GetCurrentMod(id)
 end
 
 function GetCurrentWheel()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local wheel = GetVehicleMod(plyVeh, 23)
     local wheelName = GetLabelText(GetModTextLabel(plyVeh, 23, wheel))
     local wheelType = GetVehicleWheelType(plyVeh)
@@ -18,8 +16,7 @@ function GetCurrentWheel()
 end
 
 function GetCurrentCustomWheelState()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local state = GetVehicleModVariation(plyVeh, 23)
 
     if state then
@@ -38,23 +35,20 @@ function GetOriginalCustomWheel()
 end
 
 function GetCurrentWindowTint()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
 
     return GetVehicleWindowTint(plyVeh)
 end
 
 function GetCurrentVehicleWheelSmokeColour()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local r, g, b = GetVehicleTyreSmokeColor(plyVeh)
 
     return r, g, b
 end
 
 function GetCurrentNeonState(id)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local isEnabled = IsVehicleNeonLightEnabled(plyVeh, id)
 
     if isEnabled then
@@ -65,16 +59,14 @@ function GetCurrentNeonState(id)
 end
 
 function GetCurrentNeonColour()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local r, g, b = GetVehicleNeonLightsColour(plyVeh)
 
     return r, g, b
 end
 
 function GetCurrentXenonState()
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local isEnabled = IsToggleModOn(plyVeh, 22)
 
     if isEnabled then
@@ -85,14 +77,12 @@ function GetCurrentXenonState()
 end
 
 function GetCurrentExtraState(extra)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     return IsVehicleExtraTurnedOn(plyVeh, extra)
 end
 
 function CheckValidMods(category, id, wheelType)
-    local plyPed = PlayerPedId()
-    local plyVeh = GetVehiclePedIsIn(plyPed, false)
+    local plyVeh = Config.AttachedVehicle
     local tempMod = GetVehicleMod(plyVeh, id)
     local tempWheel = GetVehicleMod(plyVeh, 23)
     local tempWheelType = GetVehicleWheelType(plyVeh)

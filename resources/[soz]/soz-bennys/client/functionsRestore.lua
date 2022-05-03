@@ -1,7 +1,6 @@
 function RestoreOriginalMod()
     if OriginalCategory ~= nil and OriginalMod ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
 
         SetVehicleMod(plyVeh, OriginalCategory, OriginalMod)
         SetVehicleDoorsShut(plyVeh, true)
@@ -13,8 +12,7 @@ end
 
 function RestoreOriginalWindowTint()
     if OriginalWindowTint ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
 
         SetVehicleWindowTint(plyVeh, OriginalWindowTint)
 
@@ -25,8 +23,7 @@ end
 function RestoreOriginalColours()
     if OriginalDashColour ~= nil and OriginalInterColour ~= nil and OriginalPrimaryColour ~= nil and OriginalSecondaryColour ~= nil and
         OriginalPearlescentColour ~= nil and OriginalWheelColour ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
 
         SetVehicleColours(plyVeh, OriginalPrimaryColour, OriginalSecondaryColour)
         SetVehicleExtraColours(plyVeh, OriginalPearlescentColour, OriginalWheelColour)
@@ -44,8 +41,7 @@ end
 
 function RestoreOriginalWheels()
     if OriginalWheelCategory ~= nil and OriginalWheel ~= nil and OriginalWheelType ~= nil and OriginalCustomWheels ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
         local doesHaveCustomWheels = GetVehicleModVariation(plyVeh, 23)
 
         SetVehicleWheelType(plyVeh, OriginalWheelType)
@@ -67,8 +63,7 @@ end
 
 function RestoreOriginalNeonStates()
     if OriginalNeonLightSide ~= nil and OriginalNeonLightState ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
 
         SetVehicleNeonLightEnabled(plyVeh, OriginalNeonLightSide, OriginalNeonLightState)
 
@@ -79,8 +74,7 @@ end
 
 function RestoreOriginalNeonColours()
     if OriginalNeonColourR ~= nil and OriginalNeonColourG ~= nil and OriginalNeonColourB ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
 
         SetVehicleNeonLightsColour(plyVeh, OriginalNeonColourR, OriginalNeonColourG, OriginalNeonColourB)
 
@@ -92,16 +86,14 @@ end
 
 function RestoreOldLivery()
     if OriginalOldLivery ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
         SetVehicleLivery(plyVeh, OriginalOldLivery)
     end
 end
 
 function RestorePlateIndex()
     if OriginalPlateIndex ~= nil then
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
+        local plyVeh = Config.AttachedVehicle
         SetVehicleNumberPlateTextIndex(plyVeh, OriginalPlateIndex)
     end
 end
