@@ -45,18 +45,14 @@ Config.Shops = {
     ["velo"] = {
         ["ShopLabel"] = "Concess Vélos", -- Blip name
         ["showBlip"] = true,
-        ["Categories"] = {
-            ["Cycles"] = "Bicycles",
-        },
+        ["Categories"] = {["Cycles"] = "Bicycles"},
         ["Location"] = vector3(-1222.26, -1494.83, 4.34), -- Blip Location
         ["VehicleSpawn"] = vector4(-1221.96, -1498.45, 4.35, 210.0), -- Spawn location when vehicle is bought
     },
     ["moto"] = {
         ["ShopLabel"] = "Concess Motos", -- Blip name
         ["showBlip"] = true,
-        ["Categories"] = {
-            ["Motorcycles"] = "Motorcycles",
-        },
+        ["Categories"] = {["Motorcycles"] = "Motorcycles"},
         ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
         ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
     },
