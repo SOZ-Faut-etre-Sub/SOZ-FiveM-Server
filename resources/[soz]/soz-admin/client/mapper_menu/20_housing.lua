@@ -44,7 +44,6 @@ SetupBuildingMenu:On("open", function(menu)
     end
 end)
 
-
 SetupHousingMenu:On("open", function(menu)
     menu:ClearItems()
 
@@ -74,7 +73,7 @@ SetupHousingMenu:On("open", function(menu)
             SetupBuildingMenu()
         end,
     })
-    
+
     if coord ~= nil then
         menu:AddButton({
             label = "Créer l'habitation",
@@ -101,7 +100,7 @@ end
 
 local function CreateHousing()
     CreateName = exports["soz-hud"]:Input("Nom de l'habitation:", 50)
-    if string.find(CreateName, ' ') ~= nil then
+    if string.find(CreateName, " ") ~= nil then
         exports["soz-hud"]:DrawNotification("le nom de l'habitation doit être tout attacher")
     else
         if TestDoubleName(CreateName) then

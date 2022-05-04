@@ -79,10 +79,7 @@ RegisterNetEvent("soz-admin:server:housing:create", function(name, tp, building)
             ["@tp"] = coord,
         })
     else
-        MySQL.insert.await("INSERT INTO player_house (identifier, teleport, building) VALUES (@name, @tp, @building)", {
-            ["@name"] = name,
-            ["@tp"] = coord,
-            ["@building"] = building,
-        })
+        MySQL.insert.await("INSERT INTO player_house (identifier, teleport, building) VALUES (@name, @tp, @building)",
+                           {["@name"] = name, ["@tp"] = coord, ["@building"] = building})
     end
 end)
