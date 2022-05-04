@@ -34,6 +34,15 @@ QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
     cb(players)
 end)
 
+RegisterNetEvent("admin:server:addPersistentProp", function(model, event, position)
+    if CheckIsAdminMenuIsAvailable then
+        exports.oxmysql:insert("INSERT INTO persistent_prop (model, event, position) VALUES (:model, :event, :position)",
+                               {["model"] = model, ["event"] = event, ["position"] = json.encode(position)}, function()
+            TriggerEvent("core:server:refreshPersistentProp")
+        end)
+    end
+end)
+
 RegisterNetEvent("admin:server:goto", function(player)
     local src = source
     local admin = GetPlayerPed(src)
