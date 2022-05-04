@@ -15,3 +15,12 @@ Config.Storages["lsmc_stash"] = {
     size = vec2(5.0, 0.4),
     heading = 320,
 }
+
+Config.Storages["lsmc_organ"] = {
+    label = "Stockage des organes",
+    type = "organ",
+    owner = "lsmc",
+    position = vector3(332.11, -1450.53, 32.51),
+    size = vec2(0.6, 7.2),
+    heading = 320,
+}
