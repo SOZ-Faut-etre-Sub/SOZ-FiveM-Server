@@ -34,7 +34,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             type = "client",
             event = "jobs:adsl:vehicle",
             icon = "c:pole/vehicle.png",
-            label = "Dégarer",
+            label = "Sortir",
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 if JobOutfit == true then
