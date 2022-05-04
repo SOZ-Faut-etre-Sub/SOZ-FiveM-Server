@@ -7,14 +7,18 @@ RegisterKeyMapping("hu", "Put your hands up", "KEYBOARD", "X")
 
 RegisterCommand("hu", function()
     local ped = PlayerPedId()
+    local PlayerData = QBCore.Functions.GetPlayerData()
     RequestAnimDict(animDict)
     while not HasAnimDictLoaded(animDict) do
         Wait(100)
     end
     handsup = not handsup
-    if QBCore.Functions.GetPlayerData().metadata["ishandcuffed"] then
+
+    if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
+        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
         return
     end
+
     if handsup then
         TaskPlayAnim(ped, animDict, anim, 8.0, 8.0, -1, 50, 0, false, false, false)
         if IsPedInAnyVehicle(ped, false) then
