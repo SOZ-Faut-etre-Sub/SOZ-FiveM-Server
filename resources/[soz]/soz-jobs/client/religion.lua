@@ -33,7 +33,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             type = "client",
             event = "jobs:religion:vehicle",
             icon = "c:pole/vehicle.png",
-            label = "Dégarer",
+            label = "sortir",
             job = SozJobCore.JobType.Religious,
             canInteract = function()
                 if JobOutfit == true then
