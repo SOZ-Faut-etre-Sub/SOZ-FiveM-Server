@@ -2671,6 +2671,8 @@ CreateThread(function()
 
             EnableControlAction(0, 1, true) -- INPUT_LOOK_LR
             EnableControlAction(0, 2, true) -- INPUT_LOOK_UD
+            EnableControlAction(0, 19, true) -- INPUT_CHARACTER_WHEEL
+            EnableControlAction(0, 21, true) -- INPUT_SPRINT
             EnableControlAction(0, 30, true) -- INPUT_MOVE_LR
             EnableControlAction(0, 31, true) -- INPUT_MOVE_UD
             EnableControlAction(0, 59, true) -- INPUT_VEH_MOVE_LR
@@ -2680,6 +2682,11 @@ CreateThread(function()
             EnableControlAction(0, 75, true) -- INPUT_VEH_EXIT
             EnableControlAction(0, 76, true) -- INPUT_VEH_HANDBRAKE
             EnableControlAction(0, 86, true) -- INPUT_VEH_HORN
+            EnableControlAction(0, 137, true) -- INPUT_VEH_PUSHBIKE_SPRINT
+            EnableControlAction(0, 172, true) -- INPUT_CELLPHONE_UP
+            EnableControlAction(0, 173, true) -- INPUT_CELLPHONE_DOWN
+            EnableControlAction(0, 174, true) -- INPUT_CELLPHONE_LEFT
+            EnableControlAction(0, 175, true) -- INPUT_CELLPHONE_RIGHT
             EnableControlAction(0, 189, true) -- INPUT_FRONTEND_LEFT
             EnableControlAction(0, 190, true) -- INPUT_FRONTEND_RIGHT
             EnableControlAction(0, 191, true) -- INPUT_FRONTEND_RDOWN
