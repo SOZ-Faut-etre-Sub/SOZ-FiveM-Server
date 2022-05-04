@@ -2,6 +2,8 @@ local VeloList = MenuV:CreateMenu(nil, "Veuillez choisir un vélo", "menu_shop_v
 local VeloModel = MenuV:InheritMenu(VeloList, {Title = nil})
 local VeloChoose = MenuV:InheritMenu(VeloModel, {Title = nil})
 
+VeloCategorie = {}
+Globalbicyclestorage = {}
 InsideConcessVelo = false
 
 ZonesConcessVelo = {
@@ -40,7 +42,8 @@ local function ChooseCarModelsMenu(bicycle)
         end,
     })
     VeloChoose:AddButton({
-        label = "Acheter " .. cycle["name"] .. " 💸 " .. cycle["price"] .. "$",
+        label = "Acheter " .. cycle["name"],
+        rightLabel = "💸 " .. cycle["price"] .. "$",
         value = cycle,
         description = "Confirmer l'achat",
         select = function()
@@ -52,101 +55,83 @@ local function ChooseCarModelsMenu(bicycle)
     })
 end
 
-local function OpenCarModelsMenu(category)
-    VeloModel:ClearItems()
-    MenuV:OpenMenu(VeloModel)
+VeloModel:On('open', function(m)
+    m:ClearItems()
     local firstbutton = 0
     local bicycles = {}
-    for _, cyclecat in pairs(category) do
+    for _, cyclecat in pairs(VeloCategorie) do
         table.insert(bicycles, cyclecat)
     end
     table.sort(bicycles, function(bicycleLhs, bicycleRhs)
         return bicycleLhs["price"] < bicycleRhs["price"]
     end)
-    QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(bicyclestorage)
-        for k, cycle in pairs(bicycles) do
-            firstbutton = firstbutton + 1
-            if firstbutton == 1 then
-                VeloModel:AddButton({
-                    icon = "◀",
-                    label = cycle["category"],
-                    rightLabel = "",
-                    value = VeloList,
-                    description = "Choisir une autre catégorie",
-                    select = function()
-                        VeloModel:Close()
-                    end,
-                })
-            end
-            local newlabel = cycle["name"]
-            for _, y in pairs(bicyclestorage) do
-                if cycle.model == y.model then
-                    if y.stock == 0 then
-                        newlabel = "^9" .. cycle["name"]
-                        VeloModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. cycle["price"] .. "$",
-                            value = cycle,
-                            description = "❌ HORS STOCK de " .. cycle["name"],
-                        })
-                    elseif y.stock == 1 then
-                        newlabel = "~o~" .. cycle["name"]
-                        VeloModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. cycle["price"] .. "$",
-                            value = cycle,
-                            description = "⚠ Stock limité de  " .. cycle["name"],
-                            select = function(btn)
-                                local select = btn.Value
-                                ChooseCarModelsMenu(cycle)
-                            end,
-                        })
-                    else
-                        VeloModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. cycle["price"] .. "$",
-                            value = cycle,
-                            description = "Acheter  " .. cycle["name"],
-                            select = function(btn)
-                                local select = btn.Value
-                                ChooseCarModelsMenu(cycle)
-                            end,
-                        })
-
-                    end
+    for k, cycle in pairs(bicycles) do
+        firstbutton = firstbutton + 1
+        if firstbutton == 1 then
+            m:AddButton({
+                icon = "◀",
+                label = cycle["category"],
+                value = VeloList,
+                description = "Choisir une autre catégorie",
+                select = function()
+                    m:Close()
+                end,
+            })
+        end
+        local newlabel = cycle["name"]
+        for _, y in pairs(Globalbicyclestorage) do
+            if cycle.model == y.model then
+                if y.stock == 0 then
+                    newlabel = "^9" .. cycle["name"]
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. cycle["price"] .. "$",
+                        value = cycle,
+                        description = "❌ HORS STOCK de " .. cycle["name"],
+                    })
+                elseif y.stock == 1 then
+                    newlabel = "~o~" .. cycle["name"]
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. cycle["price"] .. "$",
+                        value = cycle,
+                        description = "⚠ Stock limité de  " .. cycle["name"],
+                        select = function(btn)
+                            local select = btn.Value
+                            ChooseCarModelsMenu(cycle)
+                        end,
+                    })
+                else
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. cycle["price"] .. "$",
+                        value = cycle,
+                        description = "Acheter  " .. cycle["name"],
+                        select = function(btn)
+                            local select = btn.Value
+                            ChooseCarModelsMenu(cycle)
+                        end,
+                    })
                 end
             end
-
         end
-    end)
-    VeloModel:On("close", function()
-        VeloModel:RemoveOnEvent("switch", eventmodelswitch)
-    end)
-end
+    end
+end)
 
-local function VeloPanel(menu)
+VeloList:On('open', function(m)
+    m:ClearItems()
     for k, cycle in pairs(bicycles) do
-        menu:AddButton({
+        m:AddButton({
             label = k,
-            value = cycle,
+            value = VeloModel,
             description = "Nom de catégorie",
-            select = function(btn)
-                local select = btn.Value
-                OpenCarModelsMenu(select)
+            select = function()
+                VeloCategorie = cycle
+                Globalbicyclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock")
             end,
         })
     end
-end
-
-local function GenerateVeloMenu()
-    if VeloList.IsOpen then
-        VeloList:Close()
-    else
-        VeloList:ClearItems()
-        VeloPanel(VeloList)
-        VeloList:Open()
-    end
-end
+end)
 
 for indexConcessVelo, ConcessVelo in pairs(ZonesConcessVelo) do
     ConcessVelo:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
@@ -189,7 +174,7 @@ exports["qb-target"]:SpawnPed({
 })
 
 RegisterNetEvent("soz-concessvelo:client:Menu", function()
-    GenerateVeloMenu()
+    VeloList:Open()
 end)
 
 RegisterNetEvent("soz-concessvelo:client:buyShowroomVehicle", function(bicycle, plate)
