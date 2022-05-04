@@ -117,6 +117,18 @@ propsMenu:AddSlider({
 })
 
 propsMenu:AddButton({
+    label = "~r~Annuler~s~ la position de l'objet",
+    value = nil,
+    select = function()
+        if PropOption.prop ~= nil then
+            DeleteEntity(PropOption.prop)
+        end
+
+        PropOption.setupMode = nil
+        PropOption.prop = nil
+    end,
+})
+propsMenu:AddButton({
     label = "~g~Valider~s~ la position de l'objet",
     value = nil,
     select = function()
