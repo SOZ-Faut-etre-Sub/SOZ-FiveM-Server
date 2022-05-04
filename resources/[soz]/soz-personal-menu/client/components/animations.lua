@@ -144,7 +144,7 @@ CreateThread(function()
         label = "Démarche par défaut",
         select = function()
             ResetPedMovementClipset(PlayerPedId())
-            TriggerServerEvent("QBCore:Server:SetMetaData", "walk", nil)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "walk", "")
         end,
     })
     for category, content in pairs(Config.WalkStyle) do
