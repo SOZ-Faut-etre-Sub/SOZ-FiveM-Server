@@ -13,7 +13,7 @@ exports["qb-target"]:AddTargetModel(vending_machine_drink, {
 
 exports["qb-target"]:AddTargetModel(vending_machine_food,
                                     {
-    options = {{event = "soz-core:client:dispenser:Eat", label = "Baguette", icon = "c:food/baguette.png"}},
+    options = {{event = "soz-core:client:dispenser:Eat", label = "Sandwich", icon = "c:food/baguette.png"}},
     distance = 1,
 })
 
@@ -37,9 +37,7 @@ AddEventHandler("soz-core:client:dispenser:Eat", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "mini@sprunk", anim = "plyr_buy_drink_pt1", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-core:server:dispenser:pay", price)
-            TaskPlayAnim(PlayerPedId(), "mp_player_inteat@burger", "mp_player_int_eat_burger_fp", 8.0, -8.0, -1, 0, 0.0, true, true, true)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + 10)
+            TriggerServerEvent("soz-core:server:dispenser:pay", price, "sandwich")
         end)
     end
 end)
@@ -58,9 +56,7 @@ AddEventHandler("soz-core:client:dispenser:Drink", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "mini@sprunk", anim = "plyr_buy_drink_pt1", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-core:server:dispenser:pay", price)
-            TaskPlayAnim(PlayerPedId(), "mp_player_intdrink", "loop_bottle", 8.0, -8.0, -1, 0, 0.0, true, true, true)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + 10)
+            TriggerServerEvent("soz-core:server:dispenser:pay", price, "water_bottle")
         end)
     end
 end)
@@ -79,10 +75,7 @@ AddEventHandler("soz-core:client:dispenser:Cafe", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "mini@sprunk", anim = "plyr_buy_drink_pt1", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-core:server:dispenser:pay", price)
-            TaskPlayAnim(PlayerPedId(), "amb@world_human_drinking@coffee@male@idle_a", "idle_c", 8.0, -8.0, -1, 0, 0.0, true, true, true)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + 5)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + 5)
+            TriggerServerEvent("soz-core:server:dispenser:pay", price, "coffee")
         end)
     end
 end)
