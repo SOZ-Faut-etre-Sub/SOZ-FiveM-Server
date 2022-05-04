@@ -3,8 +3,9 @@ QBCore = exports["qb-core"]:GetCoreObject()
 local HorodateurOpen = False
 local HorodateurActive = False
 local lastLocation = nil
+local TotalDistance = 0
 
-HorodateurData = {Tarif = 6, TarifActuelle = 0, Distance = 0}
+HorodateurData = {Tarif = 1.6, TarifActuelle = 0, Distance = 0}
 
 local NpcData = {
     Active = false,
@@ -42,9 +43,10 @@ local function calculateFareAmount()
         if start then
             current = GetEntityCoords(PlayerPedId())
             distance = #(start - current)
-            HorodateurData["Distance"] = distance
+            TotalDistance = distance + TotalDistance
+            HorodateurData["Distance"] = TotalDistance
 
-            Tarif = (HorodateurData["Distance"] / 1000.00) * HorodateurData["Tarif"]
+            Tarif = (HorodateurData["Distance"] / 100.00) * HorodateurData["Tarif"]
 
             HorodateurData["TarifActuelle"] = math.ceil(Tarif)
 
@@ -76,12 +78,18 @@ RegisterNetEvent("taxi:client:toggleHorodateur", function()
             SendNUIMessage({action = "openMeter", toggle = false})
             HorodateurOpen = false
         end
+    else
+        if HorodateurOpen then
+            SendNUIMessage({action = "openMeter", toggle = false})
+            HorodateurOpen = false
+        end
     end
 end)
 
 RegisterNetEvent("taxi:client:enableHorodateur", function()
     if HorodateurOpen then
         SendNUIMessage({action = "toggleMeter"})
+        TotalDistance = 0
     end
 end)
 
@@ -111,6 +119,7 @@ CreateThread(function()
     while true do
         Wait(2000)
         calculateFareAmount()
+        lastLocation = GetEntityCoords(PlayerPedId())
     end
 end)
 
