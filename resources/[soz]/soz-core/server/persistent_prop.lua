@@ -27,6 +27,10 @@ MySQL.ready(function()
     end
 end)
 
+QBCore.Functions.CreateCallback("core:server:getProps", function(source, cb)
+    cb(persistent_props)
+end)
+
 RegisterNetEvent("core:server:refreshPersistentProp", function()
     local data = MySQL.Sync.fetchAll("SELECT * FROM persistent_prop")
 
