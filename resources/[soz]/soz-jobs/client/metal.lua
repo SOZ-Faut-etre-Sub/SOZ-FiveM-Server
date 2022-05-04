@@ -34,7 +34,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             type = "client",
             event = "jobs:metal:vehicle",
             icon = "c:pole/vehicle.png",
-            label = "Dégarer",
+            label = "Sortir",
             job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 if JobOutfit == true then
