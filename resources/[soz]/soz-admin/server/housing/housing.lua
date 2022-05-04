@@ -67,3 +67,22 @@ RegisterNetEvent("soz-admin:server:housing", function(zone, id, zonetype)
         })
     end
 end)
+
+RegisterNetEvent("soz-admin:server:housing:create", function(name, tp, building)
+    local coord = "{\"x\": " .. round(tp.x, 2)
+    coord = coord .. ", \"y\": "
+    coord = coord .. round(tp.y, 2) .. ", \"z\": "
+    coord = coord .. round(tp.z, 2) .. "}"
+    if building == nil then
+        MySQL.insert.await("INSERT INTO player_house (identifier, teleport) VALUES (@name, @tp)", {
+            ["@name"] = name,
+            ["@tp"] = coord,
+        })
+    else
+        MySQL.insert.await("INSERT INTO player_house (identifier, teleport, building) VALUES (@name, @tp, @building)", {
+            ["@name"] = name,
+            ["@tp"] = coord,
+            ["@building"] = building,
+        })
+    end
+end)
