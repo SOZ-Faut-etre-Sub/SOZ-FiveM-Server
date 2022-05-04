@@ -90,7 +90,7 @@ local function ChooseCarModelsMenu(vehicule)
             VehiculeChoose:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", voiture["model"])
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"])
         end,
     })
 end
@@ -269,17 +269,13 @@ RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plat
 end)
 
 CreateThread(function()
-    for k, magasin in pairs(Config.Shops) do
-        if magasin.showBlip then
-            local Dealer = AddBlipForCoord(Config.Shops[k]["Location"])
-            SetBlipSprite(Dealer, 523)
-            SetBlipDisplay(Dealer, 4)
-            SetBlipScale(Dealer, 0.8)
-            SetBlipColour(Dealer, 46)
-            SetBlipAsShortRange(Dealer, true)
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentSubstringPlayerName(Config.Shops[k]["ShopLabel"])
-            EndTextCommandSetBlipName(Dealer)
-        end
-    end
+    local Dealer = AddBlipForCoord(Config.Shops["pdm"]["Location"])
+    SetBlipSprite(Dealer, 523)
+    SetBlipDisplay(Dealer, 4)
+    SetBlipScale(Dealer, 0.8)
+    SetBlipColour(Dealer, 46)
+    SetBlipAsShortRange(Dealer, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName(Config.Shops["pdm"]["ShopLabel"])
+    EndTextCommandSetBlipName(Dealer)
 end)
