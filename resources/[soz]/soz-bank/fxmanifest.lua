@@ -10,8 +10,8 @@ client_scripts {
     "@menuv/menuv.lua",
     "client/main.lua",
     "client/nui.lua",
+    "client/invoices.lua",
     "client/moneycase.lua",
-    "client/police.lua",
 }
 
 server_scripts {
@@ -31,8 +31,6 @@ server_scripts {
     "server/accounts/offshore.lua",
     "server/accounts/safestorages.lua",
     "server/accounts/bank-atm.lua",
-
-    "server/police.lua",
 }
 
 ui_page "ui/index.html"
