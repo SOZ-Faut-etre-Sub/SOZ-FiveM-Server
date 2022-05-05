@@ -5,7 +5,7 @@ Citizen.CreateThread(function()
     while true do
         event_handler_loki = GetConvar("log_handler_loki", "")
 
-        Wait(10 * 1000)
+        Wait(5 * 1000)
 
         if #event_buffer_loki > 0 then
             PerformHttpRequest(event_handler_loki, function(status, text, headers)
@@ -111,6 +111,6 @@ Citizen.CreateThread(function()
             }, {vehicle_plate = plate, x = playerCoords.x, y = playerCoords.y, z = playerCoords.z})
         end
 
-        Wait(1000)
+        Wait(5000)
     end
 end)
