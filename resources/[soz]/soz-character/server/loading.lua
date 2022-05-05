@@ -10,18 +10,10 @@ QBCore.Functions.CreateCallback("soz-character:server:LoginPlayer", function(sou
         exports["soz-monitor"]:Log("INFO", "Player has successfully loaded !", {player = player.PlayerData})
         QBCore.Commands.Refresh(source)
 
+        TriggerEvent("monitor:server:event", "player_login", {player_source = player.PlayerData.source}, {})
+
         cb(QBCore.Functions.GetPlayer(source))
     else
         cb(nil)
-    end
-end)
-
-RegisterNetEvent("soz-character:server:LoginPlayer", function(player)
-    local src = source
-
-    if QBCore.Player.Login(src, player.citizenid) then
-        exports["soz-monitor"]:Log("INFO", "Player has successfully loaded !", {player = player.PlayerData})
-
-        QBCore.Commands.Refresh(src)
     end
 end)
