@@ -42,13 +42,14 @@ local function PayInvoice(citizenid, invoiceID)
                 if Player.Functions.RemoveMoney("money", invoice.amount) then
                     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
                     Account.AddMoney(invoice.emitterSafe, invoice.amount)
+                    PlayersInvoices[citizenid][invoiceID] = nil
 
                     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture")
-                    TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
-                                       ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+                    if Emitter then
+                        TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
+                                           ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+                    end
                 end
-
-                PlayersInvoices[citizenid][invoiceID] = nil
             end
         end)
     end
@@ -66,12 +67,13 @@ local function RejectInvoice(citizenid, invoiceID)
                             {invoice.citizenid, invoice.id}, function(affectedRows)
             if affectedRows then
                 local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
+                PlayersInvoices[citizenid][invoiceID] = nil
 
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture")
-                TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
-                                   ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
-
-                PlayersInvoices[citizenid][invoiceID] = nil
+                if Emitter then
+                    TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
+                                       ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
+                end
             end
         end)
     end
@@ -121,6 +123,7 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
 
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous venez de recevoir une facture", "info")
+            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id)
         end
     end
 end)
