@@ -24,7 +24,7 @@ local function filterAndReplace(data)
         local Target = QBCore.Functions.GetPlayer(data.target_source)
 
         if Target then
-            data.target_citizenid = Target.PlayerData.citizenid
+            data.target_citizen_id = Target.PlayerData.citizenid
             data.target_name = Target.PlayerData.charinfo.firstname .. " " .. Target.PlayerData.charinfo.lastname
             data.target_job = Target.PlayerData.job.id
             data.target_source = nil
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
             end
 
             handleEvent("player_position", {
-                player_citizenid = playerData.citizenid,
+                player_citizen_id = playerData.citizenid,
                 player_name = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname,
                 player_job = playerData.job.id,
                 vehicle_type = vehicle_type,
