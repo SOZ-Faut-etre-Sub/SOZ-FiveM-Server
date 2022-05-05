@@ -292,7 +292,7 @@ Citizen.CreateThread(function()
 
                 local StationStateJobLimiter = {["oil"] = 0}
                 if station.type == "private" and PlayerData.job.id == station.owner then
-                    table.insert(StationStateJobLimiter, {[station.owner] = 0})
+                    StationStateJobLimiter[station.owner] = 0
                 end
 
                 local StationAction = nil
