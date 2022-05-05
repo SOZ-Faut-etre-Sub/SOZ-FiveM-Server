@@ -155,6 +155,12 @@ Zonesentreprise = {
         minZ = 139.64,
         maxZ = 143.64,
     }),
+    ["mtp"] = BoxZone:Create(vector3(-285.28, 6022.52, 31.49), 24.4, 19.6, {
+        name = "mtp_z",
+        heading = 315,
+        minZ = 29.49,
+        maxZ = 35.49,
+    }),
 }
 
 ------------------------
@@ -1237,6 +1243,10 @@ PlacesEntreprise = {
         maxZ = 143.64,
         data = {indexGarage = "food"},
     }),
+    ["mtp1"] = BoxZone:Create(vector3(-285.17, 6018.65, 31.47), 18.0, 6.6,
+                              {name = "mtp1", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
+    ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6,
+                              {name = "mtp2", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
 }
 
 for indexpriv, prive in pairs(Zonesprives) do
