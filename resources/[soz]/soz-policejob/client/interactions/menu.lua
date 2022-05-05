@@ -256,23 +256,41 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
             end,
         })
 
-        for _, finesCategory in ipairs(Config.Fines) do
+        for _, finesCategory in ipairs(Config.Fines[PlayerData.job.id]) do
             local category = MenuV:InheritMenu(menu, {Subtitle = finesCategory.label})
             menu:AddButton({label = finesCategory.label, value = category})
 
             for _, fine in ipairs(finesCategory.items) do
+                local finePriceLabel
+                if type(fine.price) == "table" then
+                    finePriceLabel = ("$%d - $%d"):format(fine.price.min, fine.price.max)
+                else
+                    finePriceLabel = "$" .. fine.price
+                end
+
                 category:AddButton({
                     label = fine.label,
-                    rightLabel = "$" .. fine.price,
+                    rightLabel = finePriceLabel,
                     select = function()
                         local ped = PlayerPedId()
+                        local fineAmount
+                        if type(fine.price) == "table" then
+                            fineAmount = exports["soz-hud"]:Input(("Montant de l'amende ($%d - $%d)"):format(fine.price.min, fine.price.max), 10)
+                            if fineAmount == nil or tonumber(fineAmount) < fine.price.min or tonumber(fineAmount) > fine.price.max then
+                                exports["soz-hud"]:DrawNotification("Montant de l'amende invalide", "error")
+                                return
+                            end
+                        else
+                            fineAmount = fine.price
+                        end
+
                         QBCore.Functions.Progressbar("job:police:fines", "Rédaction de l'amende", 5000, false, true,
                                                      {
                             disableMovement = false,
                             disableCarMovement = true,
                             disableMouse = false,
                             disableCombat = true,
-                        }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
+                        }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 1}, {
                             model = "prop_notepad_01",
                             bone = 18905,
                             coords = {x = 0.1, y = 0.02, z = 0.05},
@@ -284,7 +302,7 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
                             rotation = {x = -120.0, y = 0.0, z = 0.0},
                         }, function() -- Done
                             if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
-                                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fine.price)
+                                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), fine.label, fineAmount)
                             else
                                 exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
                             end
