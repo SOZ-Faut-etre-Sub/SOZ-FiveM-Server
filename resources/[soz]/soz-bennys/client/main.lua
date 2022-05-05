@@ -88,6 +88,13 @@ RegisterNetEvent("soz-bennys:client:RepaireeePart", function(part)
     else
         TriggerServerEvent("soz-bennys:server:updatePart", plate, part, Config.MaxStatusValues[part])
     end
+
+    TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle_part", {vehicle_part = part}, {
+        vehicle_plate = plate,
+        vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(veh)),
+        position = GetEntityCoords(PlayerPedId()),
+    }, true)
+
     exports["soz-hud"]:DrawNotification("Le " .. Config.ValuesLabels[part] .. " est réparé!")
 end)
 
@@ -279,34 +286,6 @@ RegisterNetEvent("soz-bennys:client:setVehicleStatus", function(plate, status)
     VehicleStatus[plate] = status
 end)
 
-RegisterNetEvent("soz-bennys:client:getVehicleStatus", function(plate, status)
-    if not (IsPedInAnyVehicle(PlayerPedId(), false)) then
-        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
-        if veh ~= nil and veh ~= 0 then
-            local vehpos = GetEntityCoords(veh)
-            local pos = GetEntityCoords(PlayerPedId())
-            if #(pos - vehpos) < 5.0 then
-                if not IsThisModelABicycle(GetEntityModel(veh)) then
-                    local plate = QBCore.Functions.GetPlate(veh)
-                    if VehicleStatus[plate] ~= nil then
-                        SendStatusMessage(VehicleStatus[plate])
-                    else
-                        exports["soz-hud"]:DrawNotification("Etat inconnu", "error")
-                    end
-                else
-                    exports["soz-hud"]:DrawNotification("Véhicule invalide", "error")
-                end
-            else
-                exports["soz-hud"]:DrawNotification("Vous n'êtes pas assez proche du véhicule", "error")
-            end
-        else
-            exports["soz-hud"]:DrawNotification("Vous devez d'abord être dans un véhicule", "error")
-        end
-    else
-        exports["soz-hud"]:DrawNotification("Vous devez être à l'extérieur du véhicule", "error")
-    end
-end)
-
 CreateThread(function()
     while true do
         Wait(1000)
@@ -448,6 +427,12 @@ local function Repairall(entity)
         SetVehicleEngineHealth(entity, 1000.0)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", 1000.0)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", 1000.0)
+
+        TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle", {}, {
+            vehicle_plate = plate,
+            vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
+            position = GetEntityCoords(PlayerPedId()),
+        }, true)
     end, function() -- Cancel
         ClearPedTasks(PlayerPedId())
     end)
@@ -469,6 +454,12 @@ local function CleanVehicle(entity)
         WashDecalsFromVehicle(entity, 1.0)
         ClearAllPedProps(ped)
         ClearPedTasks(ped)
+
+        TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
+            vehicle_plate = QBCore.Functions.GetPlate(entity),
+            vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
+            position = GetEntityCoords(PlayerPedId()),
+        }, true)
     end, function() -- Cancel
         exports["soz-hud"]:DrawNotification("Nettoyage échoué")
         ClearAllPedProps(ped)

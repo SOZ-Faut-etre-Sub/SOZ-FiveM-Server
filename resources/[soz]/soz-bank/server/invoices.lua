@@ -53,7 +53,7 @@ local function PayInvoice(citizenid, invoiceID)
 end
 
 --- TriggerServerEvent("banking:server:sendInvoice", 5, "Title for invoice", 500)
-RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount)
+RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, kind)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(target)
 
@@ -82,6 +82,17 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount)
                 title = label,
                 amount = tonumber(amount),
             }
+
+            TriggerEvent("monitor:server:event", "invoice_emit", {
+                player_source = Player.PlayerData.source,
+                invoice_kind = kind or "invoice",
+            }, {
+                target_source = Target.PlayerData.source,
+                position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+                title = label,
+                id = id,
+                amount = tonumber(amount),
+            })
 
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous venez de recevoir une facture", "info")

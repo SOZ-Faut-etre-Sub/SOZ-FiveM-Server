@@ -107,6 +107,14 @@ function GetPlayerMetrics()
         return player.metadata.thirst
     end)
 
+    metricsString = metricsString .. CreateMetrics("soz_player_onduty", "gauge", "Is player on duty", labels, function(player)
+        if player.connection_status == "connected" then
+            return player.job.onduty
+        end
+
+        return 0
+    end)
+
     return metricsString
 end
 

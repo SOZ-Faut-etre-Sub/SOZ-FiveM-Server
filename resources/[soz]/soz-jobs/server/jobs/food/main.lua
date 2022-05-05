@@ -149,12 +149,18 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
     end
 
     local rewardSuccess = false
+    local position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
 
     for item, reward in pairs(FoodConfig.HuntingReward) do
         local amount = math.random(reward.min, reward.max)
 
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
             if success then
+                TriggerEvent("monitor:server:event", "job_cm_food_hunting", {
+                    item_id = item,
+                    player_source = Player.PlayerData.source,
+                }, {item_label = item.label, quantity = amount, position = position})
+
                 rewardSuccess = true
             end
         end)
