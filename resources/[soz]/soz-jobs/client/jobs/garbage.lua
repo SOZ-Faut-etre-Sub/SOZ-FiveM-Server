@@ -20,17 +20,20 @@ CreateThread(function()
         distance = 2.5,
     })
 
+    local garbageActions = {}
+    for item, _ in pairs(GarbageConfig.RecycleItem) do
+        garbageActions[#garbageActions + 1] = {
+            label = ("Recycler \"%s\""):format(QBCore.Shared.Items[item].label),
+            icon = "c:bluebird/recycler.png",
+            event = "jobs:client:garbage:processBags",
+            item = item,
+            job = "garbage",
+        }
+    end
+
     exports["qb-target"]:AddBoxZone("garbage:process", vector3(-601.26, -1602.99, 30.41), 2.2, 3.4,
                                     {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
-        options = {
-            {
-                label = "Recycler",
-                icon = "c:bluebird/recycler.png",
-                event = "jobs:client:garbage:processBags",
-                item = "garbagebag",
-                job = "garbage",
-            },
-        },
+        options = garbageActions,
         distance = 2.5,
     })
 
@@ -64,15 +67,15 @@ local detachBag = function()
 end
 
 --- Events
-RegisterNetEvent("jobs:client:garbage:processBags", function()
-    QBCore.Functions.Progressbar("Recyclage du sac", "Recyclage du sac en cours...", math.random(4000, 8000), false, true,
+RegisterNetEvent("jobs:client:garbage:processBags", function(data)
+    QBCore.Functions.Progressbar("Recyclage du sac", "Recyclage en cours...", math.random(4000, 8000), false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "missfbi4prepp1", anim = "_bag_throw_garbage_man", flags = 49}, {}, {}, function() -- Done
-        TriggerServerEvent("jobs:server:garbage:processBags")
+        TriggerServerEvent("jobs:server:garbage:processBags", data.item)
     end)
 end)
 
