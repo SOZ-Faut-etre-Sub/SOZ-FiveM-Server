@@ -5,17 +5,21 @@ function InvoiceEntry(menu)
     QBCore.Functions.TriggerCallback("banking:server:getInvoices", function(invoices)
         if invoices then
             for id, invoice in pairs(invoices) do
-                local btn = invoiceMenu:AddConfirm({
+                invoiceMenu:AddConfirm({
                     label = invoice.title,
                     description = ("Payer ~r~%s$~s~ pour ~b~%s"):format(invoice.amount, invoice.emitterName),
                     value = "n",
+                    confirm = function()
+                        TriggerServerEvent("banking:server:payInvoice", id)
+                        invoiceMenu:Close()
+                        menu:Close()
+                    end,
+                    deny = function()
+                        TriggerServerEvent("banking:server:rejectInvoice", id)
+                        invoiceMenu:Close()
+                        menu:Close()
+                    end,
                 })
-
-                btn:On("confirm", function(item)
-                    TriggerServerEvent("banking:server:payInvoice", id)
-                    invoiceMenu:Close()
-                    menu:Close()
-                end)
             end
         end
     end)
