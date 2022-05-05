@@ -10,14 +10,14 @@ local function GeneratePlate()
     end
 end
 
-QBCore.Functions.CreateCallback("soz-concess:server:getstock", function(source, cb)
-    local vehiclestock = MySQL.Sync.fetchAll("SELECT * FROM concess_storage")
+QBCore.Functions.CreateCallback("soz-concess:server:getstock", function(source, cb, RpcCategorie)
+    local vehiclestock = MySQL.Sync.fetchAll("SELECT * FROM concess_storage WHERE category = ?", {RpcCategorie})
     if vehiclestock[1] then
         cb(vehiclestock)
     end
 end)
 
-RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle, concess)
+RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehicle)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
