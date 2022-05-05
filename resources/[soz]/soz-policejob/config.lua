@@ -625,8 +625,6 @@ Config.Armors = {
 }
 
 --- Radars config
-Config.RadarAllowedVehicle = {"ambulance", "police", "police2", "police3", "policeb", "pbus", "sheriff", "sheriff2"}
-
 Config.Radars = {
     [1] = {
         props = vector4(-54.77, 6338.8, 30.33, 155.46),
