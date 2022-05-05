@@ -109,11 +109,11 @@ end
 
 function MergeClothSet(base, override)
     for componentId, component in pairs(override.Components or {}) do
-        base.Components[tonumber(componentId)] = Clone(component)
+        base.Components[tostring(componentId)] = Clone(component)
     end
 
     for propId, prop in pairs(override.Props or {}) do
-        base.Props[tonumber(propId)] = Clone(prop)
+        base.Props[tostring(propId)] = Clone(prop)
     end
 
     return base
