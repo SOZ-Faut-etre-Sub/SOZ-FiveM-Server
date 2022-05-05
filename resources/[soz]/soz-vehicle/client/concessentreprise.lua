@@ -119,6 +119,20 @@ for indexConcessEntreprise, ConcessEntreprise in pairs(ZonesConcessEntreprise) d
     end)
 end
 
+RegisterNetEvent("soz-concessentreprise:checkGrade", function()
+    QBCore.Functions.TriggerCallback("soz-concessentreprise:server:getGrade", function(listejobgrades)
+        for _, job in ipairs(listejobgrades) do
+            if job.id == PlayerJob.grade then
+                if job.owner == 1 then
+                    GenerateMenuEntreprise()
+                else
+                    exports["soz-hud"]:DrawNotification("Vous n'êtes pas patron de votre entreprise", "error")
+                end
+            end
+        end
+    end)
+end)
+
 exports["qb-target"]:SpawnPed({
     model = "s_f_m_shop_high",
     coords = vector4(858.72, -3204.44, 4.99, 180.00),
@@ -131,17 +145,14 @@ exports["qb-target"]:SpawnPed({
         options = {
             {
                 type = "client",
-                event = "soz-concessentreprise:client:Menu",
+                event = "soz-concessentreprise:checkGrade",
                 icon = "c:concess/lister.png",
                 label = "Demander la liste des véhicules",
-                action = function(entity)
-                    TriggerEvent("soz-concessentreprise:client:Menu", "")
+                action = function()
+                    TriggerEvent("soz-concessentreprise:checkGrade")
                 end,
-                canInteract = function(entity)
-                    if ((PlayerJob.grade ~= 14) and (PlayerJob.grade ~= 16) and (PlayerJob.grade ~= 18) and (PlayerJob.grade ~= 20) and (PlayerJob.grade ~= 22) and
-                        (PlayerJob.grade ~= 24) and (PlayerJob.grade ~= 26) and (PlayerJob.grade ~= 28) and (PlayerJob.grade ~= 30) and (PlayerJob.grade ~= 31) and
-                        (PlayerJob.grade ~= 32) and (PlayerJob.grade ~= 38) and (PlayerJob.grade ~= 39) and (PlayerJob.grade ~= 40) and (PlayerJob.grade ~= 44) and
-                        (PlayerJob.grade ~= 45) and (PlayerJob.grade ~= 48)) or OnDuty == false then
+                canInteract = function()
+                    if OnDuty == false then
                         return false
                     end
                     return InsideConcessEntreprise
@@ -151,10 +162,6 @@ exports["qb-target"]:SpawnPed({
         distance = 2.5,
     },
 })
-
-RegisterNetEvent("soz-concessentreprise:client:Menu", function()
-    GenerateMenuEntreprise()
-end)
 
 RegisterNetEvent("soz-concessentreprise:client:buyShowroomVehicle", function(vehicle, plate, newlocation)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
