@@ -1,5 +1,6 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_garbage", "soz", "garbage:menu")
 local haveGarbageBag, garbageBagProp = false, nil
+local binLocation = {}
 
 CreateThread(function()
     exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
@@ -32,6 +33,13 @@ CreateThread(function()
         },
         distance = 2.5,
     })
+
+    local props = QBCore.Functions.TriggerRpc("core:server:getProps")
+    for _, prop in pairs(props) do
+        if prop.model == 1010534896 then
+            binLocation[prop.id] = prop
+        end
+    end
 end)
 
 --- Functions
@@ -75,11 +83,11 @@ RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
         societyMenu:AddCheckbox({
             label = "Afficher les points de collecte",
             change = function(_, checked)
-                for binId, bin in pairs(GarbageConfig.BinLocation) do
+                for binId, bin in pairs(binLocation) do
                     if not QBCore.Functions.GetBlip("garbage_bin_" .. binId) then
                         QBCore.Functions.CreateBlip("garbage_bin_" .. binId, {
                             name = "Point de collecte",
-                            coords = bin,
+                            coords = vec3(bin.position.x, bin.position.y, bin.position.z),
                             sprite = 365,
                             color = 21,
                         })

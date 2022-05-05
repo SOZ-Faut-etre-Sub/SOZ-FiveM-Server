@@ -23,11 +23,3 @@ RegisterNetEvent("jobs:server:garbage:processBags", function()
     end
 end)
 
---- Bin
-CreateThread(function()
-    for _, bin in pairs(GarbageConfig.BinLocation) do
-        local prop = CreateObjectNoOffset(binProps, bin.x, bin.y, bin.z, true, true, false)
-        SetEntityHeading(prop, bin.w + 180)
-        FreezeEntityPosition(prop, true)
-    end
-end)
