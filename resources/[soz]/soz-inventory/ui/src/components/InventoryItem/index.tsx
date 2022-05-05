@@ -45,11 +45,20 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
         }
     }, [contextRef, contextData])
 
+    const getLabel = () => {
+        if (!item) return 'Mon argent'
+
+        const amount = item.type !== 'key' ? item.amount : ''
+        const extraLabel = (item.metadata !== undefined && item.metadata['label'] !== undefined) ? `(${item.metadata['label']})` : ''
+
+        return `${amount} ${item.label} ${extraLabel}`
+    }
+
     return (
         <div ref={itemRef} className={styles.item} data-item={JSON.stringify(item)}>
             {item && <img className={styles.icon} src={`https://nui-img/soz-items/${item.name}`} alt=""/>}
             <div className={styles.label}>
-                <span>{item ? `${item.type !== 'key' ? item.amount : ''} ${item.label}  ${item.metadata['label'] !== undefined ? item.metadata['label'] : ''}` : 'Mon argent'}</span>
+                <span>{getLabel()}</span>
                 <span>{money && money.toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
             </div>
             {item && <span className={styles.tooltip}>{item.description}</span>}
