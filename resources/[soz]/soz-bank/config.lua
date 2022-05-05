@@ -88,6 +88,12 @@ Config.SafeStorages = {
         offsetUpZ = 0.4,
         offsetDownZ = 0.5,
     },
+    ["safe_bennys"] = {
+        label = "Coffre Bennys",
+        owner = "bennys",
+        position = vector3(-204.6, -1333.11, 34.89),
+        size = vec2(1.0, 2.5),
+    },
 }
 
 Config.ATMModels = {
