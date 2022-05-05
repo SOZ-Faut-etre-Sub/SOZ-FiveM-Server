@@ -108,7 +108,7 @@ CreateThread(function()
                             end,
                         },
                     },
-                    distance = 2.5,
+                    distance = 3.0,
                 },
             },
         })

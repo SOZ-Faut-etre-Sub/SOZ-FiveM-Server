@@ -1,3 +1,5 @@
+QBCore = exports["qb-core"]:GetCoreObject()
+
 RegisterNetEvent("animation:client:give", function()
     local ped = PlayerPedId()
     while not HasAnimDictLoaded("mp_common") do

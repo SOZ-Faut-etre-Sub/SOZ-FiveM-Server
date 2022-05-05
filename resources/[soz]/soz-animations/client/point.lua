@@ -26,6 +26,14 @@ stopPointing = function()
 end
 
 RegisterCommand("point", function()
+    local ped = PlayerPedId()
+    local PlayerData = QBCore.Functions.GetPlayerData()
+
+    if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
+        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
+        return
+    end
+
     if not IsPedInAnyVehicle(PlayerPedId(), false) then
         if mp_pointing then
             stopPointing()
@@ -35,7 +43,6 @@ RegisterCommand("point", function()
             mp_pointing = true
         end
         while mp_pointing do
-            local ped = PlayerPedId()
             local camPitch = GetGameplayCamRelativePitch()
             if camPitch < -70.0 then
                 camPitch = -70.0
