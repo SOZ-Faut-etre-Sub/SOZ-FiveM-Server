@@ -307,63 +307,6 @@ RegisterNetEvent("soz-bennys:client:getVehicleStatus", function(plate, status)
     end
 end)
 
-RegisterNetEvent("soz-bennys:client:repairPart", function(part, level, needAmount)
-    if IsPedInAnyVehicle(PlayerPedId(), true) then
-        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
-        if veh ~= nil and veh ~= 0 then
-            local vehpos = GetEntityCoords(veh)
-            local pos = GetEntityCoords(PlayerPedId())
-            if #(pos - vehpos) < 5.0 then
-                if not IsThisModelABicycle(GetEntityModel(veh)) then
-                    local plate = QBCore.Functions.GetPlate(veh)
-                    if VehicleStatus[plate] ~= nil and VehicleStatus[plate][part] ~= nil then
-                        local lockpickTime = (1000 * level)
-                        if part == "body" then
-                            lockpickTime = lockpickTime / 10
-                        end
-                        ScrapAnim(lockpickTime)
-                        QBCore.Functions.Progressbar("repair_advanced", "Repair Vehicle", lockpickTime, false, true,
-                                                     {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
-                            openingDoor = false
-                            ClearPedTasks(PlayerPedId())
-                            if part == "body" then
-                                local enhealth = GetVehicleEngineHealth(veh)
-                                SetVehicleBodyHealth(veh, GetVehicleBodyHealth(veh) + level)
-                                SetVehicleFixed(veh)
-                                SetVehicleEngineHealth(veh, enhealth)
-                                TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleBodyHealth(veh))
-                                TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], needAmount)
-                            elseif part ~= "engine" then
-                                TriggerServerEvent("soz-bennys:server:updatePart", plate, part, GetVehicleStatus(plate, part) + level)
-                                TriggerServerEvent("QBCore:Server:RemoveItem", Config.RepairCost[part], level)
-                            end
-                        end, function() -- Cancel
-                            openingDoor = false
-                            ClearPedTasks(PlayerPedId())
-                            exports["soz-hud"]:DrawNotification("Process Canceled", "error")
-                        end)
-                    else
-                        exports["soz-hud"]:DrawNotification("Not A Valid Part", "error")
-                    end
-                else
-                    exports["soz-hud"]:DrawNotification("Not A Valid Vehicle", "error")
-                end
-            else
-                exports["soz-hud"]:DrawNotification("You Are Not Close Enough To The Vehicle", "error")
-            end
-        else
-            exports["soz-hud"]:DrawNotification("You Must Be In The Vehicle First", "error")
-        end
-    else
-        exports["soz-hud"]:DrawNotification("Youre Not In a Vehicle", "error")
-    end
-end)
-
 CreateThread(function()
     while true do
         Wait(1000)
@@ -376,8 +319,12 @@ CreateThread(function()
                 if VehicleStatus[plate] == nil then
                     TriggerServerEvent("soz-bennys:server:setupVehicleStatus", plate, engineHealth, bodyHealth)
                 else
-                    TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", engineHealth)
-                    TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", bodyHealth)
+                    if VehicleStatus[plate]["engine"] ~= GetVehicleEngineHealth(veh) then
+                        TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", engineHealth)
+                    end
+                    if VehicleStatus[plate]["body"] ~= GetVehicleBodyHealth(veh) then
+                        TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", bodyHealth)
+                    end
                     effectTimer = effectTimer + 1
                     if effectTimer >= math.random(10, 15) then
                         ApplyEffects(veh)
@@ -541,7 +488,7 @@ CreateThread(function()
                     Repairall(entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if OnDuty == false or PlayerJob.id ~= "bennys" or GetVehicleEngineHealth(entity) < 500 or GetVehicleBodyHealth(entity) < 500 then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" then
                         return false
                     end
                     return true

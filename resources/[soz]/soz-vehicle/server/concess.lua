@@ -10,14 +10,14 @@ local function GeneratePlate()
     end
 end
 
-QBCore.Functions.CreateCallback("soz-concess:server:getstock", function(source, cb)
-    local vehiclestock = MySQL.Sync.fetchAll("SELECT * FROM concess_storage")
+QBCore.Functions.CreateCallback("soz-concess:server:getstock", function(source, cb, RpcCategorie)
+    local vehiclestock = MySQL.Sync.fetchAll("SELECT * FROM concess_storage WHERE category = ?", {RpcCategorie})
     if vehiclestock[1] then
         cb(vehiclestock)
     end
 end)
 
-RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
+RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehicle)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
@@ -38,8 +38,14 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(vehicle)
                 {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0, depotprice, os.time()})
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
             TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat!")
-            TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
             pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
+            if concess == "pdm" then
+                TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
+            elseif concess == "velo" then
+                TriggerClientEvent("soz-concessvelo:client:buyShowroomVehicle", src, vehicle, plate)
+            else
+                TriggerClientEvent("soz-concessmoto:client:buyShowroomVehicle", src, vehicle, plate)
+            end
         else
             TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
         end

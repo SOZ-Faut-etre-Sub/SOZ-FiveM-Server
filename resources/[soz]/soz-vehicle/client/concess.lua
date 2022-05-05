@@ -2,9 +2,11 @@ local VehiculeList = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "men
 local VehiculeModel = MenuV:InheritMenu(VehiculeList, {Title = nil})
 local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = nil})
 
+VehicleCategorie = {}
+GlobalVehicle = {}
 InsideConcess = false
 
-ZonesConcess = {
+ZonesConcessVehicule = {
     ["Concess"] = BoxZone:Create(vector3(-55.49, -1096.44, 26.92), 10, 10, {
         name = "Concess_z",
         heading = 340,
@@ -68,12 +70,11 @@ local function CarModels(vehicule)
     end)
 end
 
-local function ChooseCarModelsMenu(vehicule)
+VehiculeChoose:On("open", function(m)
     clean()
-    VehiculeChoose:ClearItems()
-    MenuV:OpenMenu(VehiculeChoose)
-    local voiture = vehicule
-    VehiculeChoose:AddButton({
+    m:ClearItems()
+    local voiture = GlobalVehicle
+    m:AddButton({
         icon = "◀",
         label = voiture["name"],
         value = VehiculeModel,
@@ -82,25 +83,27 @@ local function ChooseCarModelsMenu(vehicule)
             VehiculeChoose:Close()
         end,
     })
-    VehiculeChoose:AddButton({
-        label = "Acheter " .. voiture["name"] .. " 💸 " .. voiture["price"] .. "$",
+    m:AddButton({
+        label = "Acheter " .. voiture["name"],
+        rightLabel = "💸 " .. voiture["price"] .. "$",
         value = voiture,
         description = "Confirmer l'achat",
         select = function()
             VehiculeChoose:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", voiture["model"])
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"])
         end,
     })
-end
+end)
 
-local function OpenCarModelsMenu(category)
-    VehiculeModel:ClearItems()
-    MenuV:OpenMenu(VehiculeModel)
+VehiculeModel:On("open", function(m)
+    local RpcCategorie = VehicleCategorie[1]
+    local RPCVehiclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
+    m:ClearItems()
     local firstbutton = 0
     local vehicules = {}
-    for _, voiture in pairs(category) do
+    for _, voiture in pairs(VehicleCategorie[2]) do
         table.insert(vehicules, voiture)
     end
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
@@ -110,89 +113,75 @@ local function OpenCarModelsMenu(category)
         clean()
         CarModels(currentItem.Value)
     end)
-    QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(vehiclestorage)
-        for k, voiture in pairs(vehicules) do
-            firstbutton = firstbutton + 1
-            if firstbutton == 1 then
-                VehiculeModel:AddButton({
-                    icon = "◀",
-                    label = voiture["category"],
-                    value = VehiculeList,
-                    description = "Choisir une autre catégorie",
-                    select = function()
-                        VehiculeModel:Close()
-                    end,
-                })
-            end
-            local newlabel = voiture["name"]
-            for _, y in pairs(vehiclestorage) do
-                if voiture.model == y.model then
-                    if y.stock == 0 then
-                        newlabel = "^9" .. voiture["name"]
-                        VehiculeModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. voiture["price"] .. "$",
-                            value = voiture,
-                            description = "❌ HORS STOCK de " .. voiture["name"],
-                        })
-                    elseif y.stock == 1 then
-                        newlabel = "~o~" .. voiture["name"]
-                        VehiculeModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. voiture["price"] .. "$",
-                            value = voiture,
-                            description = "⚠ Stock limité de  " .. voiture["name"],
-                            select = function(btn)
-                                local select = btn.Value
-                                ChooseCarModelsMenu(voiture)
-                            end,
-                        })
-                    else
-                        VehiculeModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. voiture["price"] .. "$",
-                            value = voiture,
-                            description = "Acheter  " .. voiture["name"],
-                            select = function(btn)
-                                local select = btn.Value
-                                ChooseCarModelsMenu(voiture)
-                            end,
-                        })
-
-                    end
+    for k, voiture in pairs(vehicules) do
+        firstbutton = firstbutton + 1
+        if firstbutton == 1 then
+            m:AddButton({
+                icon = "◀",
+                label = voiture["category"],
+                value = VehiculeList,
+                description = "Choisir une autre catégorie",
+                select = function()
+                    VehiculeModel:Close()
+                end,
+            })
+        end
+        local newlabel = voiture["name"]
+        for _, y in pairs(RPCVehiclestorage) do
+            if voiture.model == y.model then
+                if y.stock == 0 then
+                    newlabel = "^9" .. voiture["name"]
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. voiture["price"] .. "$",
+                        value = voiture,
+                        description = "❌ HORS STOCK de " .. voiture["name"],
+                    })
+                elseif y.stock == 1 then
+                    newlabel = "~o~" .. voiture["name"]
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. voiture["price"] .. "$",
+                        value = voiture,
+                        description = "⚠ Stock limité de  " .. voiture["name"],
+                        select = function()
+                            GlobalVehicle = voiture
+                            VehiculeChoose:Open()
+                        end,
+                    })
+                else
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. voiture["price"] .. "$",
+                        value = voiture,
+                        description = "Acheter  " .. voiture["name"],
+                        select = function()
+                            GlobalVehicle = voiture
+                            VehiculeChoose:Open()
+                        end,
+                    })
                 end
             end
-
         end
-    end)
+    end
     VehiculeModel:On("close", function()
         VehiculeModel:RemoveOnEvent("switch", eventmodelswitch)
     end)
-end
+end)
 
-local function VehiculePanel(menu)
+VehiculeList:On("open", function(m)
+    m:ClearItems()
     for k, voiture in pairs(vehicles) do
-        menu:AddButton({
+        m:AddButton({
             label = k,
-            value = voiture,
+            value = VehiculeModel,
             description = "Nom de catégorie",
-            select = function(btn)
-                local select = btn.Value
-                OpenCarModelsMenu(select)
+            select = function()
+                VehicleCategorie = {k, voiture}
             end,
         })
     end
-end
-
-local function GenerateMenu()
-    if VehiculeList.IsOpen then
-        VehiculeList:Close()
-    else
-        VehiculeList:ClearItems()
-        VehiculePanel(VehiculeList)
-        VehiculeList:Open()
-    end
-end
+end)
 
 RegisterNetEvent("soz-concess:client:createcam", function()
     local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -53.69, -1094.83, 27.00, 216.5, 0.00, 0.00, 60.00, false, 0)
@@ -212,7 +201,7 @@ RegisterNetEvent("soz-concess:client:deletecam", function()
     DisplayRadar(true)
 end)
 
-for indexConcess, Concess in pairs(ZonesConcess) do
+for indexConcess, Concess in pairs(ZonesConcessVehicule) do
     Concess:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
             InsideConcess = true
@@ -240,10 +229,10 @@ exports["qb-target"]:SpawnPed({
                 event = "soz-concess:client:Menu",
                 icon = "c:concess/lister.png",
                 label = "Demander la liste des véhicules",
-                action = function(entity)
+                action = function()
                     TriggerEvent("soz-concess:client:Menu", "")
                 end,
-                canInteract = function(entity)
+                canInteract = function()
                     return InsideConcess
                 end,
             },
@@ -253,11 +242,12 @@ exports["qb-target"]:SpawnPed({
 })
 
 RegisterNetEvent("soz-concess:client:Menu", function()
-    GenerateMenu()
+    VehiculeList:Open()
 end)
 
 RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plate)
-    local newlocation = vec4(Config.Shops["pdm"]["VehicleSpawn"].x, Config.Shops["pdm"]["VehicleSpawn"].y, Config.Shops["pdm"]["VehicleSpawn"].z, 70)
+    local newlocation = vec4(Config.Shops["pdm"]["VehicleSpawn"].x, Config.Shops["pdm"]["VehicleSpawn"].y, Config.Shops["pdm"]["VehicleSpawn"].z,
+                             Config.Shops["pdm"]["VehicleSpawn"].w)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         SetFuel(veh, 100)
@@ -269,17 +259,13 @@ RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plat
 end)
 
 CreateThread(function()
-    for k, magasin in pairs(Config.Shops) do
-        if magasin.showBlip then
-            local Dealer = AddBlipForCoord(Config.Shops[k]["Location"])
-            SetBlipSprite(Dealer, 523)
-            SetBlipDisplay(Dealer, 4)
-            SetBlipScale(Dealer, 0.8)
-            SetBlipColour(Dealer, 46)
-            SetBlipAsShortRange(Dealer, true)
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentSubstringPlayerName(Config.Shops[k]["ShopLabel"])
-            EndTextCommandSetBlipName(Dealer)
-        end
-    end
+    local Dealer = AddBlipForCoord(Config.Shops["pdm"]["Location"])
+    SetBlipSprite(Dealer, 523)
+    SetBlipDisplay(Dealer, 4)
+    SetBlipScale(Dealer, 0.8)
+    SetBlipColour(Dealer, 46)
+    SetBlipAsShortRange(Dealer, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName(Config.Shops["pdm"]["ShopLabel"])
+    EndTextCommandSetBlipName(Dealer)
 end)

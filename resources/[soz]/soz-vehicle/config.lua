@@ -27,21 +27,7 @@ Config = {
 
 Config.Shops = {
     ["pdm"] = {
-        ["Zone"] = {
-            ["Shape"] = { -- polygon that surrounds the shop
-                vector2(-56.727394104004, -1086.2325439453),
-                vector2(-60.612808227539, -1096.7795410156),
-                vector2(-58.26834487915, -1100.572265625),
-                vector2(-35.927803039551, -1109.0034179688),
-                vector2(-34.427627563477, -1108.5111083984),
-                vector2(-32.02657699585, -1101.5877685547),
-                vector2(-33.342102050781, -1101.0377197266),
-                vector2(-31.292987823486, -1095.3717041016),
-            },
-            ["minZ"] = 25.0, -- min height of the shop zone
-            ["maxZ"] = 28.0, -- max height of the shop zone
-        },
-        ["ShopLabel"] = "Concessionnaire", -- Blip name
+        ["ShopLabel"] = "Concess Véhicules", -- Blip name
         ["showBlip"] = true,
         ["Categories"] = {
             ["Sportsclassics"] = "Sports Classics",
@@ -51,12 +37,24 @@ Config.Shops = {
             ["Off-road"] = "Off-road",
             ["Muscle"] = "Muscle",
             ["Compacts"] = "Compacts",
-            ["Motorcycles"] = "Motorcycles",
             ["Vans"] = "Vans",
-            ["Cycles"] = "Bicycles",
         },
         ["Location"] = vector3(-45.67, -1098.34, 26.42), -- Blip Location
-        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 0), -- Spawn location when vehicle is bought
+        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 70.0), -- Spawn location when vehicle is bought
+    },
+    ["velo"] = {
+        ["ShopLabel"] = "Concess Vélos", -- Blip name
+        ["showBlip"] = true,
+        ["Categories"] = {["Cycles"] = "Bicycles"},
+        ["Location"] = vector3(-1222.26, -1494.83, 4.34), -- Blip Location
+        ["VehicleSpawn"] = vector4(-1221.96, -1498.45, 4.35, 210.0), -- Spawn location when vehicle is bought
+    },
+    ["moto"] = {
+        ["ShopLabel"] = "Concess Motos", -- Blip name
+        ["showBlip"] = true,
+        ["Categories"] = {["Motorcycles"] = "Motorcycles"},
+        ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
+        ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
     },
 }
 
@@ -437,7 +435,6 @@ Config.PoliceAlertChance = 0.5 -- Chance of alerting police during the day
 Config.PoliceNightAlertChance = 0.25 -- Chance of alerting police at night (times:01-06)
 
 -- LS CUSTOM
-
 Config.AttachedVehicle = nil
 
 Config.maxVehiclePerformanceUpgrades = 0 -- 0 pour pas de limite d'upgrade
@@ -475,13 +472,17 @@ Config.vehicleCustomisationCustom = {
     {category = "Amélioration Freins", id = 12},
     {category = "Amélioration Transmission", id = 13},
     {category = "Amélioration Suspension", id = 15},
-    {category = "Amélioration Armure", id = 16},
+    {category = "Amélioration Blindage", id = 16},
     {category = "Amélioration Turbo", id = 18},
 }
 
 Config.vehicleCustomisationPricesCustom = {
-    performance = {prices = {0, 3250, 5500, 10450, 15250, 20500}},
-    turbo = {price = 15000},
+    {id = 11, prices = {0, 0.1, 0.15, 0.2, 0.25, 0.3}},
+    {id = 12, prices = {0, 0.08, 0.1, 0.12, 0.14, 0.16}},
+    {id = 13, prices = {0, 0.08, 0.11, 0.14, 0.17, 0.2}},
+    {id = 15, prices = {0, 0.06, 0.09, 0.12, 0.15, 0.18}},
+    {id = 16, prices = {0, 0.25, 0.35, 0.45, 0.55, 0.65}},
+    {id = 18, prices = {0.2}},
 }
 
 Config.Blacklist = { -- Integers | Blacklist classes from being towed.
