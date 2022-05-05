@@ -10,7 +10,6 @@ SetupBuildingMenu = MenuV:InheritMenu(houseMenu)
 CreateBuildingMenu = MenuV:InheritMenu(houseMenu)
 EndBuildingMenu = MenuV:InheritMenu(houseMenu)
 
-
 CurrentHousingData = {}
 CurrentZoneData = {}
 zone_type = nil
