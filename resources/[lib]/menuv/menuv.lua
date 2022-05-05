@@ -2296,6 +2296,8 @@ function MenuV:OpenMenu(menu, cb, reopen)
         end
     end)
 
+    MenuV.LastMenuUpdate = GetGameTimer()
+
     SEND_NUI_MESSAGE({
         action = 'OPEN_MENU',
         menu = menu:ToTable(),
