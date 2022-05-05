@@ -4,7 +4,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
             label = "Tenue de service",
             value = nil,
             select = function()
-                TriggerEvent("police:client:applyDutyClothing")
+                TriggerEvent("police:client:applyDutyClothing", PlayerData.job.id)
             end,
         })
 
