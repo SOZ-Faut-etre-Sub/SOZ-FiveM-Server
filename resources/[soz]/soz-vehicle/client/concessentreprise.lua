@@ -1,4 +1,5 @@
 InsideConcessEntreprise = false
+ModelVariable = {}
 
 ZonesConcessEntreprise = {
     ["ConcessEntreprise"] = BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
@@ -54,60 +55,48 @@ local function TakeOutGarage(vehicule)
     end
 end
 
-local function ChooseCarModelsEntreMenu(model)
-    VehiculeChoose:ClearItems()
-    MenuV:OpenMenu(VehiculeChoose)
-    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(model.vehicle))
-    VehiculeChoose:AddButton({
+VehiculeChoose:On("open", function(m)
+    m:ClearItems()
+    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(ModelVariable.vehicle))
+    m:AddButton({
         icon = "◀",
-        label = vehicleName,
+        label = "Retour",
         value = VehiculeModel,
         description = "Choisir un autre modèle",
         select = function()
             VehiculeChoose:Close()
         end,
     })
-    VehiculeChoose:AddButton({
-        label = "Acheter " .. vehicleName .. " 💸 " .. model.price .. "$",
-        value = model,
+    m:AddButton({
+        label = "Acheter " .. vehicleName,
+        rightLabel = "💸 " .. ModelVariable.price .. "$",
         description = "Confirmer l'achat",
         select = function()
             VehiculeChoose:Close()
             VehiculeModel:Close()
-            TakeOutGarage(model)
+            TakeOutGarage(ModelVariable)
         end,
     })
-end
+end)
 
-local function OpenCarModelsEntreMenu(VehiculeModel)
-    VehiculeModel:ClearItems()
-    QBCore.Functions.TriggerCallback("soz-concessentreprise:server:getconcessmodels", function(listconcessmodels)
-        for _, model in pairs(listconcessmodels) do
-            if model.job == PlayerJob.id then
-                local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(model.vehicle))
-                VehiculeModel:AddButton({
-                    label = vehicleName,
-                    value = model,
-                    rightLabel = "💸 " .. model.price .. "$",
-                    description = "Acheter  " .. vehicleName,
-                    select = function()
-                        ChooseCarModelsEntreMenu(model)
-                    end,
-                })
-            end
+VehiculeModel:On("open", function(m)
+    local listconcessmodels = QBCore.Functions.TriggerRpc("soz-concessentreprise:server:getconcessmodels")
+    m:ClearItems()
+    for _, model in pairs(listconcessmodels) do
+        if model.job == PlayerJob.id then
+            local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(model.vehicle))
+            m:AddButton({
+                label = vehicleName,
+                rightLabel = "💸 " .. model.price .. "$",
+                value = VehiculeChoose,
+                description = "Acheter  " .. vehicleName,
+                select = function()
+                    ModelVariable = model
+                end,
+            })
         end
-    end)
-end
-
-local function GenerateMenuEntreprise()
-    if VehiculeModel.IsOpen then
-        VehiculeModel:Close()
-    else
-        VehiculeModel:ClearItems()
-        OpenCarModelsEntreMenu(VehiculeModel)
-        VehiculeModel:Open()
     end
-end
+end)
 
 for indexConcessEntreprise, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
     ConcessEntreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
@@ -124,7 +113,7 @@ RegisterNetEvent("soz-concessentreprise:checkGrade", function()
         for _, job in ipairs(listejobgrades) do
             if job.id == PlayerJob.grade then
                 if job.owner == 1 then
-                    GenerateMenuEntreprise()
+                    VehiculeModel:Open()
                 else
                     exports["soz-hud"]:DrawNotification("Vous n'êtes pas patron de votre entreprise", "error")
                 end
