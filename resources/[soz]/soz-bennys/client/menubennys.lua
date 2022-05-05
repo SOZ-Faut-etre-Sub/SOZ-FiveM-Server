@@ -6,7 +6,7 @@ local PartMenu = MenuV:InheritMenu(Status, "Menu pièces")
 local SpoilersMenu = MenuV:InheritMenu(VehiculeCustom, "Choisir un mod")
 local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Personnalisations autres")
 local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinte Fenêtre")
-local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Livrée de base")
+local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Sticker de base")
 local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Immatriculation")
 
 local ResprayMenu = MenuV:InheritMenu(VehiculeCustom, "Peinture")
@@ -23,6 +23,79 @@ local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Roues")
 local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fumée de roue")
 local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Activer ou désactiver les roues personnalisées")
 local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choisir une roue")
+
+Gready = false
+Gfinishready = false
+Gveh = nil
+Gped = nil
+Gcoords = nil
+Gdict = nil
+Gmodel = nil
+Goffset = nil
+Gheadin = nil
+Gvehicle = nil
+Gvehpos = nil
+Gvehjack = nil
+
+local function finishAnimation()
+    Gdict = "move_crawl"
+    local coords2 = GetEntityCoords(Gped)
+    RequestAnimDict(Gdict)
+    while not HasAnimDictLoaded(Gdict) do
+        Citizen.Wait(1)
+    end
+    TaskPlayAnimAdvanced(Gped, Gdict, "onback_fwd", coords2, 0.0, 0.0, Gheadin - 180, 1.0, 0.5, 2000, 1, 0.0, 1, 1)
+    Citizen.Wait(3000)
+    Gdict = "mp_car_bomb"
+    RequestAnimDict(Gdict)
+    while not HasAnimDictLoaded(Gdict) do
+        Citizen.Wait(1)
+    end
+
+    FreezeEntityPosition(Gveh, true)
+    SetVehicleFixed(Gvehicle)
+    SetVehicleDeformationFixed(Gvehicle)
+    SetVehicleUndriveable(Gvehicle, false)
+    SetVehicleEngineOn(Gvehicle, true, true)
+    ClearPedTasksImmediately(PlayerPedId())
+
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
+    Citizen.Wait(1250)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.4, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.3, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.2, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.15, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.1, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.05, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.025, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Gdict = "move_crawl"
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.01, true, true, true)
+    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z, true, true, true)
+    FreezeEntityPosition(Gveh, false)
+    Citizen.Wait(100)
+    DetachEntity(Gvehjack, true, false)
+    SetEntityCollision(Gvehjack, false, false)
+    DeleteEntity(Gvehjack)
+
+    SetEntityCollision(Gveh, true, true)
+    Gfinishready = false
+    exports["soz-hud"]:DrawNotification("Véhicule libéré")
+end
 
 local function OpenChooseWheelMenu(menu, k, v)
     menu:ClearItems()
@@ -199,7 +272,6 @@ local function OpenResprayColoursMenu(menu, v, colorcat)
     menu:On("close", function()
         menu:RemoveOnEvent("switch", eventresprayon)
         menu:Close()
-        menu:ClearItems()
         RestoreOriginalColours()
     end)
 end
@@ -510,7 +582,7 @@ local function OpenOldLiveryMenu(menu)
             menu:Close()
         end,
     })
-    local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
+    local plyVeh = Config.AttachedVehicle
     local livCount = GetVehicleLiveryCount(plyVeh)
     if livCount > 0 then
         local tempOldLivery = GetVehicleLivery(plyVeh)
@@ -553,7 +625,7 @@ local function OpenExtrasMenu(menu)
             menu:Close()
         end,
     })
-    local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
+    local plyVeh = Config.AttachedVehicle
     if GetVehicleClass(plyVeh) ~= 18 then
         for i = 1, 12 do
             if DoesExtraExist(plyVeh, i) then
@@ -583,7 +655,7 @@ local function OpenPlateIndexMenu(menu)
             menu:Close()
         end,
     })
-    local plyVeh = GetVehiclePedIsIn(PlayerPedId(), false)
+    local plyVeh = Config.AttachedVehicle
     local tempPlateIndex = GetVehicleNumberPlateTextIndex(plyVeh)
     local plateTypes = {"Jaune sur Noir", "Jaune sur Bleu", "Bleu sur Blanc #1", "Bleu sur Blanc #2"}
     if GetVehicleClass(plyVeh) ~= 18 then
@@ -705,8 +777,8 @@ local function OpenPartsMenu(menu)
 end
 
 local function OpenCustom(menu)
-    local veh = GetVehiclePedIsIn(PlayerPedId(), false)
-    local isMotorcycle = GetVehicleClass(plyVeh) == 8 -- Moto
+    local veh = Config.AttachedVehicle
+    local isMotorcycle = GetVehicleClass(veh) == 8 -- Moto
     menu:ClearItems()
     MenuV:OpenMenu(menu)
     menu:AddButton({
@@ -761,13 +833,13 @@ local function OpenCustom(menu)
         end,
     })
     menu:AddButton({
-        label = "Livrée de base",
+        label = "Sticker de base",
         select = function()
             OpenOldLiveryMenu(OldLiveryMenu)
         end,
     })
     menu:AddButton({
-        label = "Immatriculation",
+        label = "Couleur Immatriculation",
         select = function()
             OpenPlateIndexMenu(PlateIndexMenu)
         end,
@@ -781,26 +853,29 @@ local function OpenCustom(menu)
 end
 
 local function saveVehicle()
-    local plyPed = PlayerPedId()
-    local veh = GetVehiclePedIsIn(plyPed, false)
+    local veh = Config.AttachedVehicle
     local myCar = QBCore.Functions.GetVehicleProperties(veh)
     TriggerServerEvent("updateVehicle", myCar)
 end
 
 local function OpenMenu(menu)
-    local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+    local veh = Config.AttachedVehicle
     FreezeEntityPosition(veh, true)
     menu:AddButton({
         icon = "◀",
         label = "Libérer le véhicule",
         description = "Détacher le véhicule de la plateforme",
         select = function()
-            TriggerEvent("soz-bennys:client:UnattachVehicle")
-            exports["soz-hud"]:DrawNotification("Véhicule libéré")
-            FreezeEntityPosition(veh, false)
-            menu:Close()
-            SetVehicleDoorsLocked(veh, 1)
-            saveVehicle()
+            if Gready == true then
+                TriggerEvent("soz-bennys:client:UnattachVehicle")
+                Gfinishready = true
+                menu:Close()
+                finishAnimation()
+                saveVehicle()
+                SetVehicleDoorsLocked(veh, 1)
+            else
+                exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
+            end
         end,
     })
     menu:AddButton({
@@ -818,6 +893,15 @@ local function OpenMenu(menu)
             OpenCustom(VehiculeCustom)
         end,
     })
+    menu:On("close", function()
+        if Gready == true then
+            Gready = false
+            menu:Close()
+        else
+            exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
+            menu:Open()
+        end
+    end)
 end
 
 local function GenerateOpenMenu()
@@ -827,6 +911,89 @@ local function GenerateOpenMenu()
         VehiculeOptions:ClearItems()
         OpenMenu(VehiculeOptions)
         VehiculeOptions:Open()
+    end
+end
+
+local function startAnimation()
+    local veh = Config.AttachedVehicle
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+    local dict
+    local model = "prop_carjack"
+    local offset = GetOffsetFromEntityInWorldCoords(ped, 0.0, -2.0, 0.0)
+    local headin = GetEntityHeading(ped)
+
+    local vehicle = veh
+    FreezeEntityPosition(veh, true)
+    local vehpos = GetEntityCoords(veh)
+    dict = "mp_car_bomb"
+    RequestAnimDict(dict)
+    RequestModel(model)
+    while not HasAnimDictLoaded(dict) or not HasModelLoaded(model) do
+        Citizen.Wait(1)
+    end
+    local vehjack = CreateObject(GetHashKey(model), vehpos.x, vehpos.y, vehpos.z - 0.5, true, true, true)
+    AttachEntityToEntity(vehjack, veh, 0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, false, false, false, false, 0, true)
+
+    GenerateOpenMenu()
+    TaskTurnPedToFaceEntity(ped, veh, 500)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
+    Citizen.Wait(1250)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.01, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.025, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.05, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.1, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.15, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.2, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.3, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    dict = "move_crawl"
+    Citizen.Wait(1000)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.4, true, true, true)
+    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
+    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.5, true, true, true)
+    SetEntityCollision(veh, false, false)
+    TaskPedSlideToCoord(ped, offset, headin, 1000)
+    Citizen.Wait(1000)
+
+    RequestAnimDict(dict)
+    while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(100)
+    end
+    TaskPlayAnimAdvanced(ped, dict, "onback_bwd", coords, 0.0, 0.0, headin - 180, 1.0, 0.5, 3000, 1, 0.0, 1, 1)
+    dict = "amb@world_human_vehicle_mechanic@male@base"
+    Citizen.Wait(1000)
+    RequestAnimDict(dict)
+    while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(1)
+    end
+
+    Gveh = veh
+    FreezeEntityPosition(Gveh, true)
+    while Gfinishready == false do
+        TaskPlayAnim(ped, dict, "base", 8.0, -8.0, 710, 1, 0, false, false, false)
+        Citizen.Wait(700)
+        Gveh = veh
+        Gped = ped
+        Gcoords = coords
+        Gdict = dict
+        Gheadin = headin
+        Gvehicle = vehicle
+        Gvehpos = vehpos
+        Gvehjack = vehjack
+        Gready = true
     end
 end
 
@@ -848,16 +1015,16 @@ Dutymecha = BoxZone:Create(vector3(-204.9, -1337.93, 34.89), 5, 4, {
     maxZ = 37.89,
 })
 
-Vehiclemecha1 = BoxZone:Create(vector3(-222.43, -1324.31, 30.89), 7, 4, {
+Vehiclemecha1 = BoxZone:Create(vector3(-222.49, -1323.6, 30.89), 9, 6, {
     name = "Vehiclemecha1_z",
-    heading = 270,
+    heading = 90,
     minZ = 29.89,
     maxZ = 33.89,
 })
 
-Vehiclemecha2 = BoxZone:Create(vector3(-222.23, -1329.66, 30.89), 7, 4, {
+Vehiclemecha2 = BoxZone:Create(vector3(-222.62, -1330.24, 30.89), 9, 6, {
     name = "Vehiclemecha2_z",
-    heading = 270,
+    heading = 90,
     minZ = 29.89,
     maxZ = 33.89,
 })
@@ -929,7 +1096,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
     end
 end)
 
-local insidemecha = false
+Insidemecha = false
 
 Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
@@ -938,7 +1105,7 @@ Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
                 if IsPedInAnyVehicle(PlayerPedId()) then
                     local veh = GetVehiclePedIsIn(PlayerPedId())
                     if not IsThisModelABicycle(GetEntityModel(veh)) then
-                        insidemecha = true
+                        Insidemecha = true
                     else
                         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                     end
@@ -947,7 +1114,7 @@ Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
         end
     else
         if OnDuty == true and PlayerJob.id == "bennys" then
-            insidemecha = false
+            Insidemecha = false
             VehiculeOptions:Close()
             Config.AttachedVehicle = nil
         end
@@ -961,7 +1128,7 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
                 if IsPedInAnyVehicle(PlayerPedId()) then
                     local veh = GetVehiclePedIsIn(PlayerPedId())
                     if not IsThisModelABicycle(GetEntityModel(veh)) then
-                        insidemecha = true
+                        Insidemecha = true
                     else
                         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mette de vélos", "error")
                     end
@@ -970,7 +1137,7 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
         end
     else
         if OnDuty == true and PlayerJob.id == "bennys" then
-            insidemecha = false
+            Insidemecha = false
             VehiculeOptions:Close()
             Config.AttachedVehicle = nil
         end
@@ -978,17 +1145,23 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
 end)
 
 CreateThread(function()
-    while true do
-        if insidemecha == true then
-            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Menu d'entretien")
-            if IsControlJustPressed(1, 51) then
-                local veh = GetVehiclePedIsIn(PlayerPedId())
-                Config.AttachedVehicle = veh
-                TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", veh)
-                SetVehicleDoorsLocked(veh, 4)
-                GenerateOpenMenu()
-            end
-        end
-        Wait(2)
-    end
+    exports["qb-target"]:AddGlobalVehicle({
+        options = {
+            {
+                type = "client",
+                icon = "c:mechanic/Modifier.png",
+                label = "Modifier",
+                action = function(entity)
+                    Config.AttachedVehicle = entity
+                    TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", entity)
+                    SetVehicleDoorsLocked(entity, 4)
+                    startAnimation()
+                end,
+                canInteract = function(entity, distance, data)
+                    return Insidemecha
+                end,
+            },
+        },
+        distance = 3.0,
+    })
 end)
