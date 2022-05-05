@@ -40,7 +40,7 @@ Config.Shops = {
             ["Vans"] = "Vans",
         },
         ["Location"] = vector3(-45.67, -1098.34, 26.42), -- Blip Location
-        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 0), -- Spawn location when vehicle is bought
+        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 70.0), -- Spawn location when vehicle is bought
     },
     ["velo"] = {
         ["ShopLabel"] = "Concess Vélos", -- Blip name
@@ -435,7 +435,6 @@ Config.PoliceAlertChance = 0.5 -- Chance of alerting police during the day
 Config.PoliceNightAlertChance = 0.25 -- Chance of alerting police at night (times:01-06)
 
 -- LS CUSTOM
-
 Config.AttachedVehicle = nil
 
 Config.maxVehiclePerformanceUpgrades = 0 -- 0 pour pas de limite d'upgrade
