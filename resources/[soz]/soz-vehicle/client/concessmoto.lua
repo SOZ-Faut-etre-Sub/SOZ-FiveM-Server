@@ -2,6 +2,8 @@ local MotoList = MenuV:CreateMenu(nil, "Veuillez choisir une moto", "menu_shop_v
 local MotoModel = MenuV:InheritMenu(MotoList, {Title = nil})
 local MotoChoose = MenuV:InheritMenu(MotoModel, {Title = nil})
 
+MotoCategorie = {}
+GlobalMoto = {}
 InsideConcessMoto = false
 
 ZonesConcessMoto = {
@@ -13,140 +15,119 @@ ZonesConcessMoto = {
     }),
 }
 
-local bicycles = {}
+local motocycles = {}
 for k, cycle in pairs(QBCore.Shared.Vehicles) do
     local category = cycle["category"]
     for cat, _ in pairs(Config.Shops["moto"]["Categories"]) do
         if cat == category then
-            if bicycles[category] == nil then
-                bicycles[category] = {}
+            if motocycles[category] == nil then
+                motocycles[category] = {}
             end
-            bicycles[category][k] = cycle
+            motocycles[category][k] = cycle
         end
     end
 end
 
-local function ChooseCarModelsMenu(bicycle)
-    MotoChoose:ClearItems()
-    MenuV:OpenMenu(MotoChoose)
-    local cycle = bicycle
-    MotoChoose:AddButton({
+MotoChoose:On('open', function(m)
+    m:ClearItems()
+    local moto = GlobalMoto
+    m:AddButton({
         icon = "◀",
-        label = cycle["name"],
+        label = moto["name"],
         value = MotoModel,
         description = "Choisir un autre modèle",
         select = function()
-            MotoChoose:Close()
+            m:Close()
         end,
     })
-    MotoChoose:AddButton({
-        label = "Acheter " .. cycle["name"] .. " 💸 " .. cycle["price"] .. "$",
-        value = cycle,
+    m:AddButton({
+        label = "Acheter " .. moto["name"],
+        rightLabel = "💸 " .. moto["price"] .. "$",
         description = "Confirmer l'achat",
         select = function()
-            MotoChoose:Close()
+            m:Close()
             MotoModel:Close()
             MotoList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "moto", cycle["model"])
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "moto", moto["model"])
         end,
     })
-end
+end)
 
-local function OpenCarModelsMenu(category)
-    MotoModel:ClearItems()
-    MenuV:OpenMenu(MotoModel)
+MotoModel:On('open', function(m)
+    local RpcCategorie = MotoCategorie[1]
+    local RPCMotostorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
+    m:ClearItems()
     local firstbutton = 0
-    local bicycles = {}
-    for _, cyclecat in pairs(category) do
-        table.insert(bicycles, cyclecat)
+    local motocycles = {}
+    for _, motocat in pairs(MotoCategorie[2]) do
+        table.insert(motocycles, motocat)
     end
-    table.sort(bicycles, function(bicycleLhs, bicycleRhs)
+    table.sort(motocycles, function(bicycleLhs, bicycleRhs)
         return bicycleLhs["price"] < bicycleRhs["price"]
     end)
-    QBCore.Functions.TriggerCallback("soz-concess:server:getstock", function(bicyclestorage)
-        for k, cycle in pairs(bicycles) do
-            firstbutton = firstbutton + 1
-            if firstbutton == 1 then
-                MotoModel:AddButton({
-                    icon = "◀",
-                    label = cycle["category"],
-                    rightLabel = "",
-                    value = MotoList,
-                    description = "Choisir une autre catégorie",
-                    select = function()
-                        MotoModel:Close()
-                    end,
-                })
-            end
-            local newlabel = cycle["name"]
-            for _, y in pairs(bicyclestorage) do
-                if cycle.model == y.model then
-                    if y.stock == 0 then
-                        newlabel = "^9" .. cycle["name"]
-                        MotoModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. cycle["price"] .. "$",
-                            value = cycle,
-                            description = "❌ HORS STOCK de " .. cycle["name"],
-                        })
-                    elseif y.stock == 1 then
-                        newlabel = "~o~" .. cycle["name"]
-                        MotoModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. cycle["price"] .. "$",
-                            value = cycle,
-                            description = "⚠ Stock limité de  " .. cycle["name"],
-                            select = function(btn)
-                                local select = btn.Value
-                                ChooseCarModelsMenu(cycle)
-                            end,
-                        })
-                    else
-                        MotoModel:AddButton({
-                            label = newlabel,
-                            rightLabel = "💸 " .. cycle["price"] .. "$",
-                            value = cycle,
-                            description = "Acheter  " .. cycle["name"],
-                            select = function(btn)
-                                local select = btn.Value
-                                ChooseCarModelsMenu(cycle)
-                            end,
-                        })
-
-                    end
+    for k, cycle in pairs(motocycles) do
+        firstbutton = firstbutton + 1
+        if firstbutton == 1 then
+            m:AddButton({
+                icon = "◀",
+                label = cycle["category"],
+                value = MotoList,
+                description = "Choisir une autre catégorie",
+                select = function()
+                    m:Close()
+                end,
+            })
+        end
+        local newlabel = cycle["name"]
+        for _, y in pairs(RPCMotostorage) do
+            if cycle.model == y.model then
+                if y.stock == 0 then
+                    newlabel = "^9" .. cycle["name"]
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. cycle["price"] .. "$",
+                        description = "❌ HORS STOCK de " .. cycle["name"],
+                    })
+                elseif y.stock == 1 then
+                    newlabel = "~o~" .. cycle["name"]
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. cycle["price"] .. "$",
+                        value = MotoChoose,
+                        description = "⚠ Stock limité de  " .. cycle["name"],
+                        select = function()
+                            GlobalMoto = cycle
+                        end,
+                    })
+                else
+                    m:AddButton({
+                        label = newlabel,
+                        rightLabel = "💸 " .. cycle["price"] .. "$",
+                        value = MotoChoose,
+                        description = "Acheter  " .. cycle["name"],
+                        select = function()
+                            GlobalMoto = cycle
+                        end,
+                    })
                 end
             end
-
         end
-    end)
-    MotoModel:On("close", function()
-        MotoModel:RemoveOnEvent("switch", eventmodelswitch)
-    end)
-end
+    end
+end)
 
-local function MotoPanel(menu)
-    for k, cycle in pairs(bicycles) do
-        menu:AddButton({
+MotoList:On('open', function(m)
+    m:ClearItems()
+    for k, moto in pairs(motocycles) do
+        m:AddButton({
             label = k,
-            value = cycle,
+            value = MotoModel,
             description = "Nom de catégorie",
-            select = function(btn)
-                local select = btn.Value
-                OpenCarModelsMenu(select)
+            select = function()
+                MotoCategorie = {k, moto}
             end,
         })
     end
-end
-
-local function GenerateMotoMenu()
-    if MotoList.IsOpen then
-        MotoList:Close()
-    else
-        MotoList:ClearItems()
-        MotoPanel(MotoList)
-        MotoList:Open()
-    end
-end
+end)
 
 for indexConcessMoto, ConcessMoto in pairs(ZonesConcessMoto) do
     ConcessMoto:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
@@ -176,10 +157,10 @@ exports["qb-target"]:SpawnPed({
                 event = "soz-concessmoto:client:Menu",
                 icon = "c:concess/lister.png",
                 label = "Demander la liste des motos",
-                action = function(entity)
+                action = function()
                     TriggerEvent("soz-concessmoto:client:Menu", "")
                 end,
-                canInteract = function(entity)
+                canInteract = function()
                     return InsideConcessMoto
                 end,
             },
@@ -189,11 +170,11 @@ exports["qb-target"]:SpawnPed({
 })
 
 RegisterNetEvent("soz-concessmoto:client:Menu", function()
-    GenerateMotoMenu()
+    MotoList:Open()
 end)
 
 RegisterNetEvent("soz-concessmoto:client:buyShowroomVehicle", function(bicycle, plate)
-    local newlocation = vec4(Config.Shops["moto"]["VehicleSpawn"].x, Config.Shops["moto"]["VehicleSpawn"].y, Config.Shops["moto"]["VehicleSpawn"].z, 70)
+    local newlocation = vec4(Config.Shops["moto"]["VehicleSpawn"].x, Config.Shops["moto"]["VehicleSpawn"].y, Config.Shops["moto"]["VehicleSpawn"].z, Config.Shops["moto"]["VehicleSpawn"].w)
     QBCore.Functions.SpawnVehicle(bicycle, function(cyc)
         TaskWarpPedIntoVehicle(PlayerPedId(), cyc, -1)
         SetFuel(cyc, 100)

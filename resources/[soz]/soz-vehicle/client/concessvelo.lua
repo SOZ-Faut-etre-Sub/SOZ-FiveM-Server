@@ -3,7 +3,7 @@ local VeloModel = MenuV:InheritMenu(VeloList, {Title = nil})
 local VeloChoose = MenuV:InheritMenu(VeloModel, {Title = nil})
 
 VeloCategorie = {}
-Globalbicyclestorage = {}
+GlobalCycle = {}
 InsideConcessVelo = false
 
 ZonesConcessVelo = {
@@ -28,38 +28,38 @@ for k, cycle in pairs(QBCore.Shared.Vehicles) do
     end
 end
 
-local function ChooseCarModelsMenu(bicycle)
-    VeloChoose:ClearItems()
-    MenuV:OpenMenu(VeloChoose)
-    local cycle = bicycle
-    VeloChoose:AddButton({
+VeloChoose:On('open', function(m)
+    m:ClearItems()
+    local cycle = GlobalCycle
+    m:AddButton({
         icon = "◀",
         label = cycle["name"],
         value = VeloModel,
         description = "Choisir un autre modèle",
         select = function()
-            VeloChoose:Close()
+            m:Close()
         end,
     })
-    VeloChoose:AddButton({
+    m:AddButton({
         label = "Acheter " .. cycle["name"],
         rightLabel = "💸 " .. cycle["price"] .. "$",
-        value = cycle,
         description = "Confirmer l'achat",
         select = function()
-            VeloChoose:Close()
+            m:Close()
             VeloModel:Close()
             VeloList:Close()
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "velo", cycle["model"])
         end,
     })
-end
+end)
 
 VeloModel:On('open', function(m)
+    local RpcCategorie = VeloCategorie[1]
+    local RPCBicyclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock",RpcCategorie)
     m:ClearItems()
     local firstbutton = 0
     local bicycles = {}
-    for _, cyclecat in pairs(VeloCategorie) do
+    for _, cyclecat in pairs(VeloCategorie[2]) do
         table.insert(bicycles, cyclecat)
     end
     table.sort(bicycles, function(bicycleLhs, bicycleRhs)
@@ -79,14 +79,13 @@ VeloModel:On('open', function(m)
             })
         end
         local newlabel = cycle["name"]
-        for _, y in pairs(Globalbicyclestorage) do
+        for _, y in pairs(RPCBicyclestorage) do
             if cycle.model == y.model then
                 if y.stock == 0 then
                     newlabel = "^9" .. cycle["name"]
                     m:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
-                        value = cycle,
                         description = "❌ HORS STOCK de " .. cycle["name"],
                     })
                 elseif y.stock == 1 then
@@ -94,22 +93,20 @@ VeloModel:On('open', function(m)
                     m:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
-                        value = cycle,
+                        value = VeloChoose,
                         description = "⚠ Stock limité de  " .. cycle["name"],
-                        select = function(btn)
-                            local select = btn.Value
-                            ChooseCarModelsMenu(cycle)
+                        select = function()
+                            GlobalCycle = cycle
                         end,
                     })
                 else
                     m:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
-                        value = cycle,
+                        value = VeloChoose,
                         description = "Acheter  " .. cycle["name"],
-                        select = function(btn)
-                            local select = btn.Value
-                            ChooseCarModelsMenu(cycle)
+                        select = function()
+                            GlobalCycle = cycle
                         end,
                     })
                 end
@@ -126,8 +123,7 @@ VeloList:On('open', function(m)
             value = VeloModel,
             description = "Nom de catégorie",
             select = function()
-                VeloCategorie = cycle
-                Globalbicyclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock")
+                VeloCategorie = {k, cycle}
             end,
         })
     end
@@ -161,10 +157,10 @@ exports["qb-target"]:SpawnPed({
                 event = "soz-concessvelo:client:Menu",
                 icon = "c:concess/lister.png",
                 label = "Demander la liste des vélos",
-                action = function(entity)
+                action = function()
                     TriggerEvent("soz-concessvelo:client:Menu", "")
                 end,
-                canInteract = function(entity)
+                canInteract = function()
                     return InsideConcessVelo
                 end,
             },
@@ -178,7 +174,7 @@ RegisterNetEvent("soz-concessvelo:client:Menu", function()
 end)
 
 RegisterNetEvent("soz-concessvelo:client:buyShowroomVehicle", function(bicycle, plate)
-    local newlocation = vec4(Config.Shops["velo"]["VehicleSpawn"].x, Config.Shops["velo"]["VehicleSpawn"].y, Config.Shops["velo"]["VehicleSpawn"].z, 70)
+    local newlocation = vec4(Config.Shops["velo"]["VehicleSpawn"].x, Config.Shops["velo"]["VehicleSpawn"].y, Config.Shops["velo"]["VehicleSpawn"].z, Config.Shops["velo"]["VehicleSpawn"].w)
     QBCore.Functions.SpawnVehicle(bicycle, function(cyc)
         TaskWarpPedIntoVehicle(PlayerPedId(), cyc, -1)
         SetFuel(cyc, 100)
