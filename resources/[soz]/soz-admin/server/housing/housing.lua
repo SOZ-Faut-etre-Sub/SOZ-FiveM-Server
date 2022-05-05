@@ -1,7 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
 QBCore.Functions.CreateCallback("soz-admin:housing:server:GetHousing", function(source, cb)
-    local Housing = MySQL.query.await("SELECT * FROM `player_house`")
+    local Housing = MySQL.query.await("SELECT * FROM `player_house` WHERE identifier IS NOT NULL")
     cb(Housing)
 end)
 
@@ -83,3 +83,39 @@ RegisterNetEvent("soz-admin:server:housing:create", function(name, tp, building)
                            {["@name"] = name, ["@tp"] = coord, ["@building"] = building})
     end
 end)
+
+RegisterNetEvent("soz-admin:server:housing:CreateBuilding", function(name, zone)
+    local endzone = "{\"x\": " .. round(zone.center.x, 2)
+    endzone = endzone .. ", \"y\": "
+    endzone = endzone .. round(zone.center.y, 2) .. ", \"z\": "
+    endzone = endzone .. round(zone.center.z, 2) .. ", \"sx\": "
+    endzone = endzone .. zone.length .. ", \"sy\": "
+    endzone = endzone .. zone.width .. ", \"heading\": "
+    endzone = endzone .. zone.heading
+    if zone.minZ then
+        endzone = endzone .. ", \"minZ\": " .. round(zone.minZ, 2)
+    end
+    if zone.maxZ then
+        endzone = endzone .. ", \"maxZ\": " .. round(zone.maxZ, 2)
+    end
+    endzone = endzone .. "}"
+    MySQL.insert.await("INSERT INTO player_house (building, entry_zone) VALUES (@name, @endzone)", {
+        ["@name"] = name,
+        ["@endzone"] = endzone,
+    })
+end)
+
+RegisterNetEvent("soz-admin:server:housing:ChangeName", function(name, current)
+    MySQL.update.await("UPDATE player_house SET identifier = @name WHERE identifier = @current", {
+        ["@name"] = name,
+        ["@current"] = current,
+    })
+end)
+
+RegisterNetEvent("soz-admin:server:housing:ChangeBuilding", function(current, name)
+    MySQL.update.await("UPDATE player_house SET building = @name WHERE identifier = @current", {
+        ["@name"] = name,
+        ["@current"] = current,
+    })
+end)
+

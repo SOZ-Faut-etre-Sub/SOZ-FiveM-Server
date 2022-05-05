@@ -1,7 +1,7 @@
 CurrentHousingItemMenu:On("open", function(menu)
     menu:ClearItems()
 
-    if CurrentZoneData ~= nil then
+    if CurrentZoneData ~= nil and CurrentHousingData.building == nil then
         menu:AddCheckbox({
             label = "Afficher la zone",
             value = drawZone,
@@ -19,12 +19,61 @@ CurrentHousingItemMenu:On("open", function(menu)
                 TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
             end,
         })
-    else
+    elseif CurrentHousingData.building == nil and CurrentZoneData == nil then
         menu:AddButton({
-            label = "Ajouter la zone",
+            label = "Ajouter l'habitation à un batiment",
+            value = nil,
+            select = function()
+                menu:ClearItems()
+
+                QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
+                    for item, habitation in pairs(building) do
+                        menu:AddButton({
+                            label = habitation.building,
+                            value = ChangeCurrentHousingMenu,
+                            select = function()
+                                TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, habitation.building)
+                            end,
+                        })
+                    end
+                end)
+            end,
+        })
+
+        menu:AddButton({
+            label = "Ajouter la zone d'entrée",
             value = EndHousingMenu,
             select = function()
                 TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
+            end,
+        })
+
+    elseif CurrentHousingData.building ~= nil then
+        menu:AddButton({
+            label = "Changer l'habitation de batiment",
+            value = nil,
+            select = function()
+                menu:ClearItems()
+
+                QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
+                    for item, habitation in pairs(building) do
+                        menu:AddButton({
+                            label = habitation.building,
+                            value = ChangeCurrentHousingMenu,
+                            select = function()
+                                TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, habitation.building)
+                            end,
+                        })
+                    end
+                end)
+            end,
+        })
+
+        menu:AddButton({
+            label = "Supprimer Des Batiments",
+            value = nil,
+            select = function()
+                TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, nil)
             end,
         })
     end
@@ -32,6 +81,15 @@ end)
 
 ChangeCurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
+
+    menu:AddButton({
+        label = "Changer le Nom de l'habitation",
+        value = nil,
+        select = function()
+            NewName = exports["soz-hud"]:Input("Nom du l'habitation:", 50)
+            TriggerServerEvent("soz-admin:server:housing:ChangeName", NewName, CurrentHousingData.identifier)
+        end,
+    })
 
     menu:AddButton({
         label = "Se Téléporter dans l'habitation",
@@ -42,16 +100,14 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         end,
     })
 
-    if CurrentHousingData.building == nil then
-        menu:AddButton({
-            label = "Zone d'entrée",
-            value = CurrentHousingItemMenu,
-            select = function()
-                zone_type = "entry_zone"
-                CurrentZoneData = CurrentHousingData.entry_zone
-            end,
-        })
-    end
+    menu:AddButton({
+        label = "Zone d'entrée",
+        value = CurrentHousingItemMenu,
+        select = function()
+            zone_type = "entry_zone"
+            CurrentZoneData = CurrentHousingData.entry_zone
+        end,
+    })
 
     menu:AddButton({
         label = "Zone de sortie",
