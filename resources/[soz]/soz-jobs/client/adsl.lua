@@ -16,15 +16,15 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
         {
             type = "client",
             event = "jobs:adsl:begin",
-            icon = "fas fa-sign-in-alt",
-            label = "Commencer le job adsl",
+            icon = "c:pole/start.png",
+            label = "Job ADSL",
             job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:adsl:tenue",
-            icon = "fas fa-sign-in-alt",
-            label = "Prendre la tenue",
+            icon = "c:pole/equip.png",
+            label = "S'équiper",
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 return JobOutfit == false
@@ -33,8 +33,8 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
         {
             type = "client",
             event = "jobs:adsl:vehicle",
-            icon = "fas fa-sign-in-alt",
-            label = "Sortir le véhicule",
+            icon = "c:pole/vehicle.png",
+            label = "Sortir",
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 if JobOutfit == true then
@@ -45,8 +45,8 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
         {
             type = "client",
             event = "jobs:adsl:restart",
-            icon = "fas fa-sign-in-alt",
-            label = "Continuer le job adsl",
+            icon = "c:pole/restart.png",
+            label = "Relancer",
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 return OnJob == false
@@ -55,8 +55,8 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
         {
             type = "client",
             event = "jobs:adsl:end",
-            icon = "fas fa-sign-in-alt",
-            label = "Finir le job adsl",
+            icon = "c:pole/end.png",
+            label = "Terminer",
             job = SozJobCore.JobType.Adsl,
         },
     },
@@ -167,7 +167,7 @@ AddEventHandler("jobs:adsl:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {{type = "client", event = "jobs:adsl:fix", icon = "fas fa-sign-in-alt", label = "Réparer l'adsl"}},
+        options = {{type = "client", event = "jobs:adsl:fix", icon = "c:pole/repair.png", label = "Réparer"}},
         distance = 1.5,
     })
     ObjectifCoord = coords

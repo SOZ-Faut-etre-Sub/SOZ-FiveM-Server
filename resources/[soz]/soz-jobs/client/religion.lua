@@ -15,15 +15,15 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
         {
             type = "client",
             event = "jobs:religion:begin",
-            icon = "fas fa-sign-in-alt",
-            label = "Commencer le job religion",
+            icon = "c:pole/start.png",
+            label = "Job InfoChat",
             job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:religion:tenue",
-            icon = "fas fa-sign-in-alt",
-            label = "Prendre la tenue",
+            icon = "c:pole/equip.png",
+            label = "S'équiper",
             job = SozJobCore.JobType.Religious,
             canInteract = function()
                 return JobOutfit == false
@@ -32,8 +32,8 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
         {
             type = "client",
             event = "jobs:religion:vehicle",
-            icon = "fas fa-sign-in-alt",
-            label = "Sortir le véhicule",
+            icon = "c:pole/vehicle.png",
+            label = "sortir",
             job = SozJobCore.JobType.Religious,
             canInteract = function()
                 if JobOutfit == true then
@@ -44,8 +44,8 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
         {
             type = "client",
             event = "jobs:religion:restart",
-            icon = "fas fa-sign-in-alt",
-            label = "Continuer le job religion",
+            icon = "c:pole/restart.png",
+            label = "Relancer",
             job = SozJobCore.JobType.Religious,
             canInteract = function()
                 return OnJob == false
@@ -54,8 +54,8 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
         {
             type = "client",
             event = "jobs:religion:end",
-            icon = "fas fa-sign-in-alt",
-            label = "Finir le job religion",
+            icon = "c:pole/end.png",
+            label = "Terminer",
             job = SozJobCore.JobType.Religious,
         },
     },
@@ -76,14 +76,13 @@ AddEventHandler("jobs:religion:fix", function(ped)
         destroyblip(job_blip)
         payout_counter = payout_counter + 1
         FreezeEntityPosition(ped, false)
-        ClearGpsMultiRoute()
         OnJob = false
         TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
     end)
 end)
 
 local function SpawnVehicule()
-    local ModelHash = "romero"
+    local ModelHash = "fixter"
     local model = GetHashKey(ModelHash)
     if not IsModelInCdimage(model) then
         return
@@ -149,10 +148,7 @@ AddEventHandler("jobs:religion:start", function()
     TriggerServerEvent("job:anounce", "Rendez vous dans la zone")
     local coords = random_coord()
     createblip("religion", "Zone de conversion", 480, coords)
-    ClearGpsMultiRoute()
-    StartGpsMultiRoute(6, true, true)
-    AddPointToGpsMultiRoute(coords.x, coords.y, coords.z)
-    SetGpsMultiRouteRender(true)
+    SetNewWaypoint(coords.x, coords.y)
     exports["qb-target"]:AddBoxZone("religion_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
         name = "religion_zone",

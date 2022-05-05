@@ -16,15 +16,15 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
         {
             type = "client",
             event = "jobs:metal:begin",
-            icon = "fas fa-sign-in-alt",
-            label = "Commencer le job metal",
+            icon = "c:pole/start.png",
+            label = "Job DeMetal",
             job = SozJobCore.JobType.Unemployed,
         },
         {
             type = "client",
             event = "jobs:metal:tenue",
-            icon = "fas fa-sign-in-alt",
-            label = "Prendre la tenue",
+            icon = "c:pole/equip.png",
+            label = "S'équiper",
             job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 return JobOutfit == false
@@ -33,8 +33,8 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
         {
             type = "client",
             event = "jobs:metal:vehicle",
-            icon = "fas fa-sign-in-alt",
-            label = "Sortir le véhicule",
+            icon = "c:pole/vehicle.png",
+            label = "Sortir",
             job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 if JobOutfit == true then
@@ -45,8 +45,8 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
         {
             type = "client",
             event = "jobs:metal:restart",
-            icon = "fas fa-sign-in-alt",
-            label = "Continuer le job metal",
+            icon = "c:pole/restart.png",
+            label = "Relancer",
             job = SozJobCore.JobType.Scrapper,
             canInteract = function()
                 return OnJob == false
@@ -63,8 +63,8 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
         {
             type = "client",
             event = "jobs:metal:end",
-            icon = "fas fa-sign-in-alt",
-            label = "Finir le job de récolte de metal",
+            icon = "c:pole/end.png",
+            label = "Terminer",
             job = SozJobCore.JobType.Scrapper,
         },
     },
@@ -194,9 +194,7 @@ AddEventHandler("jobs:metal:start", function()
         maxZ = coords.maxZ,
         debugPoly = false,
     }, {
-        options = {
-            {type = "client", event = "jobs:metal:fix", icon = "fas fa-sign-in-alt", label = "Récolter du métal"},
-        },
+        options = {{type = "client", event = "jobs:metal:fix", icon = "c:pole/recolter.png", label = "Récolter"}},
         distance = 2.5,
     })
     ObjectifCoord = coords
