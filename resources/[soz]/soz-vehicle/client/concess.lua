@@ -80,7 +80,7 @@ VehiculeChoose:On("open", function(m)
         value = VehiculeModel,
         description = "Choisir un autre modèle",
         select = function()
-            VehiculeChoose:Close()
+            m:Close()
         end,
     })
     m:AddButton({
@@ -89,7 +89,7 @@ VehiculeChoose:On("open", function(m)
         value = voiture,
         description = "Confirmer l'achat",
         select = function()
-            VehiculeChoose:Close()
+            m:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"])
@@ -109,10 +109,6 @@ VehiculeModel:On("open", function(m)
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
-    local eventmodelswitch = VehiculeModel:On("switch", function(item, currentItem, prevItem)
-        clean()
-        CarModels(currentItem.Value)
-    end)
     for k, voiture in pairs(vehicules) do
         firstbutton = firstbutton + 1
         if firstbutton == 1 then
@@ -122,7 +118,7 @@ VehiculeModel:On("open", function(m)
                 value = VehiculeList,
                 description = "Choisir une autre catégorie",
                 select = function()
-                    VehiculeModel:Close()
+                    m:Close()
                 end,
             })
         end
@@ -134,39 +130,45 @@ VehiculeModel:On("open", function(m)
                     m:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
-                        value = voiture,
                         description = "❌ HORS STOCK de " .. voiture["name"],
+                        enter = function()
+                            clean()
+                            CarModels(voiture)
+                        end,
                     })
                 elseif y.stock == 1 then
                     newlabel = "~o~" .. voiture["name"]
                     m:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
-                        value = voiture,
+                        value = VehiculeChoose,
                         description = "⚠ Stock limité de  " .. voiture["name"],
                         select = function()
                             GlobalVehicle = voiture
-                            VehiculeChoose:Open()
+                        end,
+                        enter = function()
+                            clean()
+                            CarModels(voiture)
                         end,
                     })
                 else
                     m:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
-                        value = voiture,
+                        value = VehiculeChoose,
                         description = "Acheter  " .. voiture["name"],
                         select = function()
                             GlobalVehicle = voiture
-                            VehiculeChoose:Open()
+                        end,
+                        enter = function()
+                            clean()
+                            CarModels(voiture)
                         end,
                     })
                 end
             end
         end
     end
-    VehiculeModel:On("close", function()
-        VehiculeModel:RemoveOnEvent("switch", eventmodelswitch)
-    end)
 end)
 
 VehiculeList:On("open", function(m)
