@@ -38,7 +38,7 @@ local function OnDeath()
 
             TriggerEvent("ems:client:onDeath")
 
-            local ReasonMort = exports["soz-hud"]:Input("Reason du coma:", 200)
+            local ReasonMort = exports["soz-hud"]:Input("Raison du coma :", 200)
             TriggerServerEvent("lsmc:server:SetMort", ReasonMort)
         end
     end

@@ -1,8 +1,7 @@
 const app = document.getElementById('app');
 const musique = app.querySelector('audio');
 
-// @TODO [Start] Set to 0.2 when launching server
-musique.volume = 0;
+musique.volume = 0.2;
 
 document.querySelector('.info').addEventListener('click', function () {
     if (musique.paused) {

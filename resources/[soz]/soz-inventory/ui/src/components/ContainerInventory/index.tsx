@@ -20,6 +20,9 @@ const ContainerInventory = () => {
 
         if (type === 'stash') headerImage = 'storage'
         if (type === 'ammo') headerImage = 'armory'
+        if (type === 'tanker') headerImage = 'trunk'
+        if (type === 'storage') headerImage = 'default'
+        if (type === 'storage_tank') headerImage = 'default'
 
         return headerImage
     }, []);

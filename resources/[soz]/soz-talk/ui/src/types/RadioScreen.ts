@@ -1,5 +1,3 @@
-import {StateUpdater} from "preact/compat";
-
 export enum Ear {
     Left,
     Both,
@@ -18,7 +16,7 @@ export interface RadioScreen {
     enabled: boolean
     currentFrequency: FrequencyType
     primaryFrequency: Frequency
-    setPrimaryFrequency: StateUpdater<Frequency>
+    setPrimaryFrequency: any
     secondaryFrequency: Frequency
-    setSecondaryFrequency: StateUpdater<Frequency>
+    setSecondaryFrequency: any
 }

@@ -1,21 +1,20 @@
-import {ComponentProps, FunctionalComponent} from 'preact';
 import radio_sr from '../../assets/img/radio-sr.png';
 import radio_lr from '../../assets/img/radio-lr.png';
 import radioStyle from './radio.module.css';
 import cibiStyle from './cibi.module.css';
 import Screen from "@components/screen";
-import {useCallback, useEffect, useState} from "preact/hooks";
+import {useCallback, useEffect, useState} from "react";
 import {Ear, Frequency, FrequencyType} from "../../types/RadioScreen";
 import fetchAPI from "../../hooks/fetchAPI";
 import {TalkMessageData} from "../../types/TalkMessageEvent";
 
-const CloseIcon: FunctionalComponent<ComponentProps<any>> = (props) => (
+const CloseIcon: React.FC<any> = (props) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
     </svg>
 )
 
-const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
+const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
     const [display, setDisplay] = useState<boolean>(false)
     const [enabled, setEnabled] = useState<boolean>(false);
     const [currentFrequency, setCurrentFrequency] = useState<FrequencyType>('primary');
@@ -123,9 +122,9 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
     }, []);
 
     return (
-        <div class={`${style.container} ${display ? style.container_show : style.container_hide}`}>
-            <img class={style.radio} src={radio} alt="Radio"/>
-            <div class={style.screen}>
+        <div className={`${style.container} ${display ? style.container_show : style.container_hide}`}>
+            <img className={style.radio} src={radio} alt="Radio"/>
+            <div className={style.screen}>
                 <Screen
                     enabled={enabled}
                     currentFrequency={currentFrequency}
@@ -135,19 +134,19 @@ const Radio: FunctionalComponent<ComponentProps<any>> = (props) => {
                     setSecondaryFrequency={setSecondaryFrequency}
                 />
             </div>
-            <div class={style.actions}>
-                <div class={style.action_enable} onClick={toggleRadio}/>
-                <div class={style.action_validate} onClick={handleFrequencyChange}/>
-                <div class={style.action_mix} onClick={handleMixChange}/>
-                <CloseIcon class={style.action_close} onClick={handleClose}/>
+            <div className={style.actions}>
+                <div className={style.action_enable} onClick={toggleRadio}/>
+                <div className={style.action_validate} onClick={handleFrequencyChange}/>
+                <div className={style.action_mix} onClick={handleMixChange}/>
+                <CloseIcon className={style.action_close} onClick={handleClose}/>
 
-                <div class={style.action_volume_up}
+                <div className={style.action_volume_up}
                      onClick={() => handleVolumeChange(currentFrequency === 'primary' ? primaryFrequency.volume + 10 : secondaryFrequency.volume + 10)}/>
-                <div class={style.action_volume_down}
+                <div className={style.action_volume_down}
                      onClick={() => handleVolumeChange(currentFrequency === 'primary' ? primaryFrequency.volume - 10 : secondaryFrequency.volume - 10)}/>
 
-                <div class={style.action_freq_primary} onClick={() => handleCurrentFrequency('primary')}/>
-                <div class={style.action_freq_secondary} onClick={() => handleCurrentFrequency('secondary')}/>
+                <div className={style.action_freq_primary} onClick={() => handleCurrentFrequency('primary')}/>
+                <div className={style.action_freq_secondary} onClick={() => handleCurrentFrequency('secondary')}/>
             </div>
         </div>
     )
