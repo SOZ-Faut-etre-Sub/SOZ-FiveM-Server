@@ -24,8 +24,8 @@ QBCore.Functions.CreateCallback("soz-character:server:CreatePlayer", function(so
     local player = {charinfo = charinfo, skin = skin, cloth_config = clothConfig}
 
     if QBCore.Player.Login(source, false, player) then
-        exports["soz-monitor"]:Log("INFO", GetPlayerName(source) .. " has succesfully loaded!", {source = source})
         QBCore.Commands.Refresh(source)
+        TriggerEvent("monitor:server:event", "player_login", {player_source = source}, {})
 
         cb(true)
     else
