@@ -3,8 +3,9 @@ QBCore = exports["qb-core"]:GetCoreObject()
 local HorodateurOpen = False
 local HorodateurActive = False
 local lastLocation = nil
+local TotalDistance = 0
 
-HorodateurData = {Tarif = 6, TarifActuelle = 0, Distance = 0}
+HorodateurData = {Tarif = 1.6, TarifActuelle = 0, Distance = 0}
 
 local NpcData = {
     Active = false,
@@ -42,9 +43,10 @@ local function calculateFareAmount()
         if start then
             current = GetEntityCoords(PlayerPedId())
             distance = #(start - current)
-            HorodateurData["Distance"] = distance
+            TotalDistance = distance + TotalDistance
+            HorodateurData["Distance"] = TotalDistance
 
-            Tarif = (HorodateurData["Distance"] / 1000.00) * HorodateurData["Tarif"]
+            Tarif = (HorodateurData["Distance"] / 100.00) * HorodateurData["Tarif"]
 
             HorodateurData["TarifActuelle"] = math.ceil(Tarif)
 
@@ -76,12 +78,18 @@ RegisterNetEvent("taxi:client:toggleHorodateur", function()
             SendNUIMessage({action = "openMeter", toggle = false})
             HorodateurOpen = false
         end
+    else
+        if HorodateurOpen then
+            SendNUIMessage({action = "openMeter", toggle = false})
+            HorodateurOpen = false
+        end
     end
 end)
 
 RegisterNetEvent("taxi:client:enableHorodateur", function()
     if HorodateurOpen then
         SendNUIMessage({action = "toggleMeter"})
+        TotalDistance = 0
     end
 end)
 
@@ -111,6 +119,7 @@ CreateThread(function()
     while true do
         Wait(2000)
         calculateFareAmount()
+        lastLocation = GetEntityCoords(PlayerPedId())
     end
 end)
 
@@ -162,10 +171,8 @@ local function GetDeliveryLocation()
                         SetEntityAsNoLongerNeeded(NpcData.Npc)
                         local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
                         TaskGoStraightToCoord(NpcData.Npc, targetCoords.x, targetCoords.y, targetCoords.z, 1.0, -1, 0.0, 0.0)
-                        SendNUIMessage({action = "toggleMeter"})
                         TriggerServerEvent("taxi:server:NpcPay", HorodateurData.TarifActuelle)
                         meterActive = false
-                        SendNUIMessage({action = "resetMeter"})
                         exports["soz-hud"]:DrawNotification("Vous avez déposé la personne")
                         if NpcData.DeliveryBlip ~= nil then
                             RemoveBlip(NpcData.DeliveryBlip)
@@ -245,8 +252,6 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                                 HorodateurOpen = true
                                 HorodateurActive = true
                                 lastLocation = GetEntityCoords(PlayerPedId())
-                                SendNUIMessage({action = "openMeter", toggle = true, HorodateurData = Config.Horodateur})
-                                SendNUIMessage({action = "toggleMeter"})
                                 ClearPedTasksImmediately(NpcData.Npc)
                                 FreezeEntityPosition(NpcData.Npc, false)
                                 TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
