@@ -70,7 +70,7 @@ local function CarModels(vehicule)
     end)
 end
 
-VehiculeChoose:On('open', function(m)
+VehiculeChoose:On("open", function(m)
     clean()
     m:ClearItems()
     local voiture = GlobalVehicle
@@ -97,7 +97,7 @@ VehiculeChoose:On('open', function(m)
     })
 end)
 
-VehiculeModel:On('open', function(m)
+VehiculeModel:On("open", function(m)
     local RpcCategorie = VehicleCategorie[1]
     local RPCVehiclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
     m:ClearItems()
@@ -169,7 +169,7 @@ VehiculeModel:On('open', function(m)
     end)
 end)
 
-VehiculeList:On('open', function(m)
+VehiculeList:On("open", function(m)
     m:ClearItems()
     for k, voiture in pairs(vehicles) do
         m:AddButton({
@@ -246,7 +246,8 @@ RegisterNetEvent("soz-concess:client:Menu", function()
 end)
 
 RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plate)
-    local newlocation = vec4(Config.Shops["pdm"]["VehicleSpawn"].x, Config.Shops["pdm"]["VehicleSpawn"].y, Config.Shops["pdm"]["VehicleSpawn"].z, Config.Shops["pdm"]["VehicleSpawn"].w)
+    local newlocation = vec4(Config.Shops["pdm"]["VehicleSpawn"].x, Config.Shops["pdm"]["VehicleSpawn"].y, Config.Shops["pdm"]["VehicleSpawn"].z,
+                             Config.Shops["pdm"]["VehicleSpawn"].w)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         SetFuel(veh, 100)

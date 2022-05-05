@@ -28,7 +28,7 @@ for k, cycle in pairs(QBCore.Shared.Vehicles) do
     end
 end
 
-MotoChoose:On('open', function(m)
+MotoChoose:On("open", function(m)
     m:ClearItems()
     local moto = GlobalMoto
     m:AddButton({
@@ -53,7 +53,7 @@ MotoChoose:On('open', function(m)
     })
 end)
 
-MotoModel:On('open', function(m)
+MotoModel:On("open", function(m)
     local RpcCategorie = MotoCategorie[1]
     local RPCMotostorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
     m:ClearItems()
@@ -115,7 +115,7 @@ MotoModel:On('open', function(m)
     end
 end)
 
-MotoList:On('open', function(m)
+MotoList:On("open", function(m)
     m:ClearItems()
     for k, moto in pairs(motocycles) do
         m:AddButton({
@@ -174,7 +174,8 @@ RegisterNetEvent("soz-concessmoto:client:Menu", function()
 end)
 
 RegisterNetEvent("soz-concessmoto:client:buyShowroomVehicle", function(bicycle, plate)
-    local newlocation = vec4(Config.Shops["moto"]["VehicleSpawn"].x, Config.Shops["moto"]["VehicleSpawn"].y, Config.Shops["moto"]["VehicleSpawn"].z, Config.Shops["moto"]["VehicleSpawn"].w)
+    local newlocation = vec4(Config.Shops["moto"]["VehicleSpawn"].x, Config.Shops["moto"]["VehicleSpawn"].y, Config.Shops["moto"]["VehicleSpawn"].z,
+                             Config.Shops["moto"]["VehicleSpawn"].w)
     QBCore.Functions.SpawnVehicle(bicycle, function(cyc)
         TaskWarpPedIntoVehicle(PlayerPedId(), cyc, -1)
         SetFuel(cyc, 100)
