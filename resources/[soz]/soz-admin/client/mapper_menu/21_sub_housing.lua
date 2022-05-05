@@ -25,7 +25,7 @@ CurrentHousingItemMenu:On("open", function(menu)
             value = nil,
             select = function()
                 menu:ClearItems()
-                
+
                 QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
                     for item, habitation in pairs(building) do
                         menu:AddButton({
@@ -54,7 +54,7 @@ CurrentHousingItemMenu:On("open", function(menu)
             value = nil,
             select = function()
                 menu:ClearItems()
-                
+
                 QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
                     for item, habitation in pairs(building) do
                         menu:AddButton({

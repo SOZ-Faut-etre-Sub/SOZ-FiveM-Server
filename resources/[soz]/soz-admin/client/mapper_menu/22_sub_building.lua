@@ -27,8 +27,7 @@ ChangeCurrentBuildingMenu:On("open", function(menu)
             Blips = not Blips
             points = json.decode(CurrentHousingData.entry_zone)
             if Blips then
-                QBCore.Functions.CreateBlip(CurrentHousingData.building,
-                                            {
+                QBCore.Functions.CreateBlip(CurrentHousingData.building, {
                     name = CurrentHousingData.building,
                     coords = vector3(points.x, points.y, points.z),
                     sprite = 106,

@@ -99,17 +99,23 @@ RegisterNetEvent("soz-admin:server:housing:CreateBuilding", function(name, zone)
         endzone = endzone .. ", \"maxZ\": " .. round(zone.maxZ, 2)
     end
     endzone = endzone .. "}"
-    MySQL.insert.await("INSERT INTO player_house (building, entry_zone) VALUES (@name, @endzone)",
-                        {["@name"] = name, ["@endzone"] = endzone})
+    MySQL.insert.await("INSERT INTO player_house (building, entry_zone) VALUES (@name, @endzone)", {
+        ["@name"] = name,
+        ["@endzone"] = endzone,
+    })
 end)
 
 RegisterNetEvent("soz-admin:server:housing:ChangeName", function(name, current)
-    MySQL.update.await("UPDATE player_house SET identifier = @name WHERE identifier = @current",
-                           {["@name"] = name, ["@current"] = current})
+    MySQL.update.await("UPDATE player_house SET identifier = @name WHERE identifier = @current", {
+        ["@name"] = name,
+        ["@current"] = current,
+    })
 end)
 
 RegisterNetEvent("soz-admin:server:housing:ChangeBuilding", function(current, name)
-    MySQL.update.await("UPDATE player_house SET building = @name WHERE identifier = @current",
-                           {["@name"] = name, ["@current"] = current})
+    MySQL.update.await("UPDATE player_house SET building = @name WHERE identifier = @current", {
+        ["@name"] = name,
+        ["@current"] = current,
+    })
 end)
 
