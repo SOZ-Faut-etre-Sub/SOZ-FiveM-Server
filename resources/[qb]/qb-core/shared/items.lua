@@ -1893,18 +1893,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
-        ['combinable'] = {
-            accept = {
-                'screwdriverset'
-            },
-            reward = 'advancedlockpick',
-            anim = {
-                ['dict'] = 'anim@amb@business@weed@weed_inspecting_high_dry@',
-                ['lib'] = 'weed_inspecting_high_base_inspector',
-                ['text'] = 'Crafting lockpick',
-                ['timeOut'] = 7500,
-            }
-        },
+        ['combinable'] = nil,
         ['description'] = 'Très utile quand on perd sa clé... Ou pour d\'autres choses...'
     },
     ['electronickit'] = {
@@ -1935,17 +1924,6 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'L\'outil parfait pour faire infecter un ordinateur'
     },
-    ['screwdriverset'] = {
-        ['name'] = 'screwdriverset',
-        ['label'] = 'Boîte à outils',
-        ['weight'] = 1000,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = false,
-        ['shouldClose'] = false,
-        ['combinable'] = nil,
-        ['description'] = 'Très outile...'
-    },
 
     -- Vehicle Tools
     ['repairkit'] = {
@@ -1959,17 +1937,6 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.'
     },
-    ['advancedrepairkit'] = {
-        ['name'] = 'advancedrepairkit',
-        ['label'] = 'Kit de réparation avancé',
-        ['weight'] = 4000,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
-        ['combinable'] = nil,
-        ['description'] = 'Une superbe boîte à outils pour réparer votre véhicule.'
-    },
     ['cleaningkit'] = {
         ['name'] = 'cleaningkit',
         ['label'] = 'Kit de nettoyage',
@@ -1980,17 +1947,6 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !'
-    },
-    ['jerry_can'] = {
-        ['name'] = 'jerry_can',
-        ['label'] = 'Jerrycan 20L',
-        ['weight'] = 20000,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
-        ['combinable'] = nil,
-        ['description'] = 'Un jerrycan de 20L'
     },
 
     -- Medication
@@ -2005,17 +1961,6 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Pour remettre les gens sur pied.'
-    },
-    ['bandage'] = {
-        ['name'] = 'bandage',
-        ['label'] = 'Bandage',
-        ['weight'] = 0,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
-        ['combinable'] = nil,
-        ['description'] = 'En cas de coup dur, un bandage.'
     },
     ['ifaks'] = {
         ['name'] = 'ifaks',
@@ -2038,18 +1983,6 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Quand la douleur est trop forte, une petite pillule et c\'est reparti !'
-    },
-    ['antipyretic'] = {
-        ['name'] = 'antipyretic',
-        ['label'] = 'Antipyrétiques',
-        ['weight'] = 0,
-        ['type'] = 'item',
-        ['image'] = 'antipyretic.png',
-        ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
-        ['combinable'] = nil,
-        ['description'] = 'Quand on a la grippe, une petite pillule et c\'est reparti !'
     },
     ['antibiotic'] = {
         ['name'] = 'antibiotic',
