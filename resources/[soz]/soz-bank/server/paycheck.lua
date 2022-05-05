@@ -15,10 +15,18 @@ function PaycheckLoop()
             if Player.PlayerData.job.id == SozJobCore.JobType.Unemployed then
                 Account.AddMoney(Player.PlayerData.charinfo.account, payment)
                 NotifyPaycheck(Player.PlayerData.source)
+
+                TriggerEvent("monitor:server:event", "paycheck", {player_source = Player.PlayerData.source}, {
+                    amount = tonumber(payment),
+                })
             else
                 Account.TransfertMoney(Player.PlayerData.job.id, Player.PlayerData.charinfo.account, payment, function(success, reason)
                     if success then
                         NotifyPaycheck(Player.PlayerData.source)
+
+                        TriggerEvent("monitor:server:event", "paycheck", {player_source = Player.PlayerData.source}, {
+                            amount = tonumber(payment),
+                        })
                     else
                         print(reason)
                     end

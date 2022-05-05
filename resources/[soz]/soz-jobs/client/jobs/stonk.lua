@@ -270,6 +270,11 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
         if not wasCancelled then
             local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-collect-bag", nBags)
             if success then
+                TriggerServerEvent("monitor:server:event", "job_stonk_collect_bag", {}, {
+                    quantity = nBags,
+                    position = GetEntityCoords(PlayerPedId()),
+                }, true)
+
                 StonkJob.CollectedShops[currentShop] = GetGameTimer()
             end
         else
@@ -316,6 +321,12 @@ StonkJob.Functions.ResaleBags = function()
             local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-resale-bag", count)
             if success then
                 exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
+
+                TriggerServerEvent("monitor:server:event", "job_stonk_resale_bag", {}, {
+                    quantity = tonumber(count),
+                    position = GetEntityCoords(PlayerPedId()),
+                }, true)
+
                 Citizen.Wait(1000)
                 StonkJob.Functions.ResaleBags()
             end

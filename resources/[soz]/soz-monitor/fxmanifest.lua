@@ -11,6 +11,7 @@ server_scripts {
     "server/main.lua",
     "server/log.lua",
     "server/metric.lua",
+    "server/event.lua",
     "server/prometheus/inventory.lua",
     "server/prometheus/money.lua",
     "server/prometheus/player.lua",
