@@ -7,13 +7,18 @@ ChangeCurrentBuildingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "M
 EndHousingMenu = MenuV:InheritMenu(houseMenu)
 SetupHousingMenu = MenuV:InheritMenu(houseMenu)
 SetupBuildingMenu = MenuV:InheritMenu(houseMenu)
+CreateBuildingMenu = MenuV:InheritMenu(houseMenu)
+EndBuildingMenu = MenuV:InheritMenu(houseMenu)
+
 
 CurrentHousingData = {}
 CurrentZoneData = {}
 zone_type = nil
 CreateName = nil
 coord = nil
-building = nil
+Building = nil
+NewBuilding = nil
+Blips = false
 
 EndHousingMenu:On("open", function(menu)
     menu:ClearItems()
@@ -37,11 +42,12 @@ SetupBuildingMenu:On("open", function(menu)
                 label = habitation.building,
                 value = SetupHousingMenu,
                 select = function()
-                    building = habitation.building
+                    Building = habitation.building
                 end,
             })
         end
     end
+
 end)
 
 SetupHousingMenu:On("open", function(menu)
@@ -79,7 +85,7 @@ SetupHousingMenu:On("open", function(menu)
             label = "Créer l'habitation",
             value = nil,
             select = function()
-                TriggerServerEvent("soz-admin:server:housing:create", CreateName, coord, building)
+                TriggerServerEvent("soz-admin:server:housing:create", CreateName, coord, Building)
             end,
         })
     end
