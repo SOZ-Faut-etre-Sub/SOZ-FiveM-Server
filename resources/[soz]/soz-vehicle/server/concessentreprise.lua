@@ -17,6 +17,13 @@ QBCore.Functions.CreateCallback("soz-concessentreprise:server:getconcessmodels",
     end
 end)
 
+QBCore.Functions.CreateCallback("soz-concessentreprise:server:getGrade", function(source, cb)
+    local listejobgrades = MySQL.Sync.fetchAll("SELECT * FROM job_grades")
+    if listejobgrades[1] then
+        cb(listejobgrades)
+    end
+end)
+
 RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(vehicle, newlocation)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
