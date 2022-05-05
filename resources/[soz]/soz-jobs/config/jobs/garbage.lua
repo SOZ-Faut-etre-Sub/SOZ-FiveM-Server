@@ -34,3 +34,18 @@ GarbageConfig.Cloakroom = {
         Props = {[1] = {Drawable = 19, Texture = 0, Palette = 0}},
     },
 }
+
+GarbageConfig.RecycleItem = {
+    ["plastic"] = true,
+    ["metalscrap"] = true,
+    ["aluminum"] = true,
+    ["rubber"] = true,
+    ["electronickit"] = true,
+    ["rolex"] = true,
+    ["diamond_ring"] = true,
+    ["goldchain"] = true,
+    ["10kgoldchain"] = true,
+    ["goldbar"] = true,
+    ["garbagebag"] = true,
+    ["petroleum_residue"] = true,
+}

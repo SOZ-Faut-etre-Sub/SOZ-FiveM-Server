@@ -1,24 +1,29 @@
 local binProps = GetHashKey("prop_cs_bin_01_skinned")
 
 --- Events
-RegisterNetEvent("jobs:server:garbage:processBags", function()
+RegisterNetEvent("jobs:server:garbage:processBags", function(item)
+    if QBCore.Shared.Items[item] == nil then
+        return
+    end
+
     local Player = QBCore.Functions.GetPlayer(source)
-    local playerGarbageBagAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "garbagebag", nil, true)
+    local playerGarbageBagAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
     local bagToProcess = 5
 
     if playerGarbageBagAmount < 1 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il vous manque ~r~un sac poubelle", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il vous manque ~r~un " .. QBCore.Shared.Items[item].label, "error")
 
         return
     elseif playerGarbageBagAmount < bagToProcess then
         bagToProcess = playerGarbageBagAmount
     end
 
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "garbagebag", bagToProcess)
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez recyclé ~g~" .. bagToProcess .. " sacs poubelle")
+    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, bagToProcess)
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                       ("Vous avez recyclé ~g~%d %s"):format(bagToProcess, QBCore.Shared.Items[item].label))
     TriggerEvent("banking:server:TransfertMoney", "farm_garbage", "safe_garbage", bagToProcess * GarbageConfig.SellPrice)
 
-    if exports["soz-inventory"]:GetItem(Player.PlayerData.source, "garbagebag", nil, true) >= 1 then
+    if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
         TriggerClientEvent("jobs:client:garbage:processBags", Player.PlayerData.source)
     end
 end)
