@@ -53,18 +53,29 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
                             false, true)
     NetworkResurrectLocalPlayer(playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, 0, true, true, false)
     ClearPedTasksImmediately(playerPed)
-    PlaceObjectOnGroundProperly(playerPed)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
 
+    for height = playerObject.PlayerData.position.z, 1000 do
+        local found, z = GetGroundZFor_3dCoord_2(playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, height + 0.0)
+
+        if found then
+            SetPedCoordsKeepVehicle(playerPed, playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, z)
+            break
+        end
+
+        Wait(0)
+    end
+
     SetEntityHealth(playerPed, playerObject.PlayerData.metadata["health"])
+
+    while not HasCollisionLoadedAroundEntity(playerPed) do
+        Wait(0)
+    end
 
     -- Make player visible
     SetFocusEntity(PlayerPedId())
     FreezeEntityPosition(PlayerPedId(), false)
     SetEntityVisible(PlayerPedId(), true)
-
-    -- Wait 2 seconds for loading
-    Citizen.Wait(2000)
 
     -- Shutdown loading screen
     if shutdownLoadingScreen then
