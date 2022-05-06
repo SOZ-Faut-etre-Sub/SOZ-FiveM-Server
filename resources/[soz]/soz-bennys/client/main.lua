@@ -76,6 +76,10 @@ end
 RegisterNetEvent("soz-bennys:client:RepaireeePart", function(part)
     local veh = Config.AttachedVehicle
     local plate = QBCore.Functions.GetPlate(veh)
+    NetworkRequestControlOfEntity(veh)
+    while not NetworkHasControlOfEntity(veh) do
+        Wait(0)
+    end
     if part == "engine" then
         SetVehicleEngineHealth(veh, Config.MaxStatusValues[part])
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
@@ -422,6 +426,10 @@ local function Repairall(entity)
     }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
         ClearPedTasks(PlayerPedId())
         local plate = QBCore.Functions.GetPlate(entity)
+        NetworkRequestControlOfEntity(entity)
+        while not NetworkHasControlOfEntity(entity) do
+            Wait(0)
+        end
         SetVehicleBodyHealth(entity, 1000.0)
         SetVehicleFixed(entity)
         SetVehicleEngineHealth(entity, 1000.0)
@@ -449,6 +457,10 @@ local function CleanVehicle(entity)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
+        NetworkRequestControlOfEntity(entity)
+        while not NetworkHasControlOfEntity(entity) do
+            Wait(0)
+        end
         SetVehicleDirtLevel(entity, 0.1)
         SetVehicleUndriveable(entity, false)
         WashDecalsFromVehicle(entity, 1.0)

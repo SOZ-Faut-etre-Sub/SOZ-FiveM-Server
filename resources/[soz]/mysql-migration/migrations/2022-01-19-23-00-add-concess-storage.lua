@@ -40,7 +40,7 @@ table.insert(migrations, {
             REFERENCES `players` (citizenid) ON DELETE CASCADE ON UPDATE CASCADE;            
         ]],
         [[
-            CREATE TABLE `concess_storage` (
+            CREATE TABLE IF NOT EXISTS `concess_storage` (
                 `model` varchar(50) NOT NULL,
                 `stock` int(3) NOT NULL,
                 `category` varchar(60) DEFAULT NULL,
