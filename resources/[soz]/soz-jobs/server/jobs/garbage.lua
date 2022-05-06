@@ -21,7 +21,7 @@ RegisterNetEvent("jobs:server:garbage:processBags", function(item)
     exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, bagToProcess)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
                        ("Vous avez recyclé ~g~%d %s"):format(bagToProcess, QBCore.Shared.Items[item].label))
-    TriggerEvent("banking:server:TransfertMoney", "farm_garbage", "safe_garbage", bagToProcess * GarbageConfig.SellPrice)
+    TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", bagToProcess * GarbageConfig.SellPrice)
     TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
         player_source = Player.PlayerData.source,
     }, {quantity = tonumber(bagToProcess), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
