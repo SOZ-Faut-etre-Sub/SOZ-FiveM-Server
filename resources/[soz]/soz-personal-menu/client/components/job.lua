@@ -89,7 +89,7 @@ function JobEntry(menu)
             local label = "Permission : " .. permission.label
             local value = "n"
 
-            for _, gradePermission in ipairs(grade.permissions) do
+            for _, gradePermission in ipairs(grade.permissions or {}) do
                 if gradePermission == permissionId then
                     value = "y"
                     break
