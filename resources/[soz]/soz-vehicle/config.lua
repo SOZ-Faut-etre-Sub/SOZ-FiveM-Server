@@ -340,6 +340,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "news",
     },
+    ["mtp"] = {
+        label = "Michel Transport Petrol",
+        blipcoord = vector4(-276.89, 6017.69, 31.02, 226.23),
+        showBlip = false,
+        blipName = "Michel Transport Petrol",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "oil",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",

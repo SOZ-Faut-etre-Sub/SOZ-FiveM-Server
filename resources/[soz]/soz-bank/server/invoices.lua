@@ -1,7 +1,7 @@
 local PlayersInvoices = {}
 
 MySQL.ready(function()
-    MySQL.query("SELECT * FROM invoices WHERE payed = false", {}, function(result)
+    MySQL.query("SELECT * FROM invoices WHERE payed = false AND refused = false", {}, function(result)
         if result then
             for _, invoice in pairs(result) do
                 if PlayersInvoices[invoice.citizenid] == nil then
@@ -9,7 +9,6 @@ MySQL.ready(function()
                 end
 
                 PlayersInvoices[invoice.citizenid][invoice.id] = {
-                    emitterAccount = invoice.emitter,
                     emitterName = invoice.emitterName,
                     title = invoice.label,
                     amount = invoice.amount,
@@ -30,23 +29,51 @@ QBCore.Functions.CreateCallback("banking:server:getInvoices", function(source, c
 end)
 
 local function PayInvoice(citizenid, invoiceID)
-    local invoice = MySQL.single.await("SELECT * FROM invoices WHERE citizenid = ? AND id = ? AND payed = false", {
+    local invoice = MySQL.single.await("SELECT * FROM invoices WHERE citizenid = ? AND id = ? AND payed = false AND refused = false", {
         citizenid,
         invoiceID,
     })
     if invoice then
         local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
 
-        MySQL.Async.execute("UPDATE invoices SET payed = true WHERE citizenid = ? AND id = ? AND payed = false", {
-            invoice.citizenid,
-            invoice.id,
-        }, function(affectedRows)
+        MySQL.Async.execute("UPDATE invoices SET payed = true WHERE citizenid = ? AND id = ? AND payed = false AND refused = false",
+                            {invoice.citizenid, invoice.id}, function(affectedRows)
             if affectedRows then
                 if Player.Functions.RemoveMoney("money", invoice.amount) then
-                    Account.AddMoney(invoice.emitter, invoice.amount)
-                end
+                    local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
+                    Account.AddMoney(invoice.emitterSafe, invoice.amount)
+                    PlayersInvoices[citizenid][invoiceID] = nil
 
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture")
+                    if Emitter then
+                        TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
+                                           ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+                    end
+                end
+            end
+        end)
+    end
+end
+
+local function RejectInvoice(citizenid, invoiceID)
+    local invoice = MySQL.single.await("SELECT * FROM invoices WHERE citizenid = ? AND id = ? AND payed = false AND refused = false", {
+        citizenid,
+        invoiceID,
+    })
+    if invoice then
+        local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
+
+        MySQL.Async.execute("UPDATE invoices SET refused = true WHERE citizenid = ? AND id = ? AND payed = false AND refused = false",
+                            {invoice.citizenid, invoice.id}, function(affectedRows)
+            if affectedRows then
+                local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
                 PlayersInvoices[citizenid][invoiceID] = nil
+
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture")
+                if Emitter then
+                    TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
+                                       ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
+                end
             end
         end)
     end
@@ -64,10 +91,11 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
                 return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
             end
 
-            local id = MySQL.insert.await("INSERT INTO invoices (citizenid,emitter,emitterName,label,amount) VALUES (?,?,?,?,?) ", {
+            local id = MySQL.insert.await("INSERT INTO invoices (citizenid,emitter,emitterName,emitterSafe,label,amount) VALUES (?,?,?,?,?,?) ", {
                 Target.PlayerData.citizenid,
-                "safe_" .. Player.PlayerData.job.id,
+                Player.PlayerData.citizenid,
                 SozJobCore.Jobs[Player.PlayerData.job.id].label,
+                "safe_" .. Player.PlayerData.job.id,
                 label,
                 tonumber(amount),
             })
@@ -77,7 +105,6 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
             end
 
             PlayersInvoices[Target.PlayerData.citizenid][id] = {
-                emitterAccount = Player.PlayerData.job.id,
                 emitterName = SozJobCore.Jobs[Player.PlayerData.job.id].label,
                 title = label,
                 amount = tonumber(amount),
@@ -96,6 +123,7 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
 
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous venez de recevoir une facture", "info")
+            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id)
         end
     end
 end)
@@ -110,11 +138,25 @@ RegisterNetEvent("banking:server:payInvoice", function(invoiceID)
         if invoice then
             if invoice.amount <= CurrentMoney then
                 PayInvoice(Player.PlayerData.citizenid, invoiceID)
-
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez payé votre facture")
             else
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
             end
+        else
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
+        end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
+    end
+end)
+
+RegisterNetEvent("banking:server:rejectInvoice", function(invoiceID)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if PlayersInvoices[Player.PlayerData.citizenid] then
+        local invoice = PlayersInvoices[Player.PlayerData.citizenid][invoiceID]
+
+        if invoice then
+            RejectInvoice(Player.PlayerData.citizenid, invoiceID)
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
         end
