@@ -152,7 +152,10 @@ end)
 
 RegisterNetEvent("qb-garage:server:setVehicleInPound", function(plate)
     local parkingtime = os.time()
-    MySQL.Async.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ? WHERE plate = ?", {parkingtime, plate})
+    MySQL.Async.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ? WHERE plate = ?", {
+        parkingtime,
+        plate,
+    })
 end)
 
 RegisterNetEvent("qb-garage:server:setVehicleDestroy", function(plate)
