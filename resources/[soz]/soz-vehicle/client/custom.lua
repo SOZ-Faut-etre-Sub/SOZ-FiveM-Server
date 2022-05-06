@@ -199,15 +199,21 @@ local function OpenUpgrade(menu, v, k)
         elseif v.id == 18 then
             local currentTurboState = GetCurrentTurboState()
             if currentTurboState == 0 then
-                menu:AddButton({label = "Disable - ~g~Installed"})
-                menu:AddButton({
-                    label = "Enable" .. " - $" .. Config.vehicleCustomisationPricesCustom.turbo.price,
-                    description = "Acheter 💸",
-                    select = function()
-                        menu:Close()
-                        TriggerServerEvent("soz-custom:server:buyupgrade", v.id, 1, Config.vehicleCustomisationPricesCustom.turbo.price)
-                    end,
-                })
+                for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
+                    if customprice.id == v.id then
+                        local price = customprice.prices[1] *
+                                            QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
+                        menu:AddButton({label = "Disable - ~g~Installed"})
+                        menu:AddButton({
+                            label = "Enable" .. " - $" .. price,
+                            description = "Acheter 💸",
+                            select = function()
+                                menu:Close()
+                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, 1, price)
+                            end,
+                        })
+                    end
+                end
             else
                 menu:AddButton({
                     label = "Disable",
