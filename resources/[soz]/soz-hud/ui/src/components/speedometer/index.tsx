@@ -6,13 +6,14 @@ import {LightIndicator, LockIndicator, MotorIndicator, SeatbeltIndicator} from "
 import {FuelGauge, SpeedGauge} from "./Gauges";
 
 const SpeedoMeter: FunctionComponent<any> = () => {
-    const {inVehicle, updateInVehicle} = useContext(PlayerContext)
+    const {inVehicle, seatbelt: haveSeatbelt, updateInVehicle, updateSeatbelt: updatePlayerSeatbelt} = useContext(PlayerContext)
     const {speed, fuel, engine, lock, seatbelt, lightState, updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState} = useContext(VehicleDataContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'speedometer') {
-
             updateInVehicle(event.data.show)
+        } else if (event.data.action === 'update_needs') {
+            updatePlayerSeatbelt(event.data.haveSeatbelt)
         } else if (event.data.action === 'update_vehicle') {
             if (event.data.speed !== undefined) updateSpeed(event.data.speed)
             if (event.data.fuel !== undefined) updateFuel(event.data.fuel)
@@ -40,7 +41,7 @@ const SpeedoMeter: FunctionComponent<any> = () => {
     return (
         <div className={style.speedometer} style={{transition: "opacity .5s", opacity: inVehicle ? 1.0 : 0.0}} >
             <div className={style.leftContainer}>
-                <SeatbeltIndicator state={seatbelt} />
+                {seatbelt && <SeatbeltIndicator state={haveSeatbelt}/>}
                 <LockIndicator state={lock} />
             </div>
             <div className={style.centerContainer}>
