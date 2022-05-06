@@ -27,6 +27,9 @@ CreateThread(function()
             icon = "c:bluebird/recycler.png",
             event = "jobs:client:garbage:processBags",
             item = item,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
             job = "garbage",
         }
     end
