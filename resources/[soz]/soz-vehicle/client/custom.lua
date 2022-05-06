@@ -135,13 +135,18 @@ end
 local VehiculeOptions = MenuV:CreateMenu(nil, "LS Customs", "menu_shop_lscustoms", "soz", "custom:vehicle:options")
 local Upgrade = MenuV:InheritMenu(VehiculeOptions, "Upgrade")
 local UpgradeMenu = MenuV:InheritMenu(Upgrade, "Upgrade Menu")
+local VariableV
+local VariableK
 
-local function OpenUpgrade(menu, v, k)
+
+UpgradeMenu:On("open", function(menu)
+    local v = VariableV
+    local k = VariableK
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = Upgrade,
         select = function()
             menu:Close()
         end,
@@ -166,30 +171,30 @@ local function OpenUpgrade(menu, v, k)
 
                 if Config.maxVehiclePerformanceUpgrades == 0 then
                     if currentMod == n.id then
-                        menu:AddButton({label = n.name .. " - ~g~Installed"})
+                        menu:AddButton({label = n.name, rightLabel = "~g~Installé"})
                     else
                         menu:AddButton({
-                            label = n.name .. " - $" .. price,
-                            value = price,
+                            label = n.name,
+                            rightLabel = "💸 " .. price .. "$",
                             description = "Acheter 💸",
-                            select = function(btn)
+                            select = function()
                                 menu:Close()
-                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, btn.Value)
+                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price)
                             end,
                         })
                     end
                 else
                     if tempNum <= (Config.maxVehiclePerformanceUpgrades + 1) then
                         if currentMod == n.id then
-                            menu:AddButton({label = n.name .. " - ~g~Installed"})
+                            menu:AddButton({label = n.name, rightLabel = "~g~Installé"})
                         else
                             menu:AddButton({
-                                label = n.name .. " - $" .. price,
-                                value = price,
+                                label = n.name,
+                                rightLabel = "💸 " .. price .. "$",
                                 description = "Acheter 💸",
-                                select = function(btn)
+                                select = function()
                                     menu:Close()
-                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, btn.Value)
+                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price)
                                 end,
                             })
                         end
@@ -203,9 +208,10 @@ local function OpenUpgrade(menu, v, k)
                     if customprice.id == v.id then
                         local price = customprice.prices[1] *
                                             QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
-                        menu:AddButton({label = "Disable - ~g~Installed"})
+                        menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
                         menu:AddButton({
-                            label = "Enable" .. " - $" .. price,
+                            label = "Activer",
+                            rightLabel = "💸 " .. price .. "$",
                             description = "Acheter 💸",
                             select = function()
                                 menu:Close()
@@ -216,7 +222,7 @@ local function OpenUpgrade(menu, v, k)
                 end
             else
                 menu:AddButton({
-                    label = "Disable",
+                    label = "Désactiver",
                     description = "Gratuit 💸",
                     select = function()
                         menu:Close()
@@ -224,15 +230,14 @@ local function OpenUpgrade(menu, v, k)
                         exports["soz-hud"]:DrawNotification("Le turbo a été enlevé!")
                     end,
                 })
-                menu:AddButton({label = "Enable - Installed"})
+                menu:AddButton({label = "Activer", rightLabel = "~g~Installé"})
             end
         end
     end
-end
+end)
 
-local function OpenUpgradesMenu(menu)
+Upgrade:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
@@ -245,15 +250,18 @@ local function OpenUpgradesMenu(menu)
         if amountValidMods > 0 or v.id == 18 then
             menu:AddButton({
                 label = v.category,
+                value = UpgradeMenu,
                 select = function()
-                    OpenUpgrade(UpgradeMenu, v, k)
+                    VariableV = v
+                    VariableK = k
                 end,
             })
         end
     end
-end
+end)
 
-local function OpenMenu(menu)
+VehiculeOptions:On("open", function(menu)
+    menu:ClearItems()
     local veh = Config.AttachedVehicle
     FreezeEntityPosition(veh, true)
     menu:AddButton({
@@ -274,32 +282,23 @@ local function OpenMenu(menu)
     })
     menu:AddButton({
         label = "Amélioration du véhicule",
+        value = Upgrade,
         description = "Améliorer les pièces du véhicule",
         select = function()
             SetVehicleModKit(veh, 0)
-            OpenUpgradesMenu(Upgrade)
         end,
     })
-    menu:On("close", function()
-        if Gready == true then
-            Gready = false
-            menu:Close()
-        else
-            exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
-            menu:Open()
-        end
-    end)
-end
+end)
 
-local function GenerateOpenMenu()
-    if VehiculeOptions.IsOpen then
+VehiculeOptions:On("close", function()
+    if Gready == true then
+        Gready = false
         VehiculeOptions:Close()
     else
-        VehiculeOptions:ClearItems()
-        OpenMenu(VehiculeOptions)
+        exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
         VehiculeOptions:Open()
     end
-end
+end)
 
 local function UnattachVehicle()
     FreezeEntityPosition(Config.AttachedVehicle, false)
@@ -363,7 +362,7 @@ local function startAnimation()
     local vehjack = CreateObject(GetHashKey(model), vehpos.x, vehpos.y, vehpos.z - 0.5, true, true, true)
     AttachEntityToEntity(vehjack, veh, 0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, false, false, false, false, 0, true)
 
-    GenerateOpenMenu()
+    VehiculeOptions:Open()
     TaskTurnPedToFaceEntity(ped, veh, 500)
     TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
     Citizen.Wait(1250)
