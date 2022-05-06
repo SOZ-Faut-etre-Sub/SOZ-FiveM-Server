@@ -1,29 +1,38 @@
-local jobMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Pour se construire un avenir"})
+local jobMenu, JobOption = nil, {JobList = {}}
 
-local JobOption = {JobList = {}}
+function AdminMenuJob(menu, permission)
+    if jobMenu == nil then
+        jobMenu = MenuV:InheritMenu(menu, {subtitle = "Pour se construire un avenir"})
+    end
 
-jobMenu:On("open", function(menu)
-    menu:ClearItems()
+    jobMenu:ClearItems()
 
-    --- Menu entries
-    menu:AddSlider({
-        label = "Changer de métier",
-        value = nil,
-        values = JobOption.JobList,
-        select = function(_, value)
-            TriggerServerEvent("admin:jobs:setjob", value.jobID, value.gradeId)
-            exports["soz-hud"]:DrawNotification("Votre métier est maintenant : ~b~" .. value.label, "info")
-        end,
-    })
+    jobMenu:On("open", function(m)
+        m:ClearItems()
 
-    menu:AddCheckbox({
-        label = "Passer en service",
-        value = QBCore.Functions.GetPlayerData().job.onduty,
-        change = function()
-            TriggerServerEvent("QBCore:ToggleDuty")
-        end,
-    })
-end)
+        --- Menu entries
+        m:AddSlider({
+            label = "Changer de métier",
+            value = nil,
+            values = JobOption.JobList,
+            select = function(_, value)
+                TriggerServerEvent("admin:jobs:setjob", value.jobID, value.gradeId)
+                exports["soz-hud"]:DrawNotification("Votre métier est maintenant : ~b~" .. value.label, "info")
+            end,
+        })
+
+        m:AddCheckbox({
+            label = "Passer en service",
+            value = QBCore.Functions.GetPlayerData().job.onduty,
+            change = function()
+                TriggerServerEvent("QBCore:ToggleDuty")
+            end,
+        })
+    end)
+
+    --- Add to main menu
+    menu:AddButton({icon = "⛑", label = "Gestion métier", value = jobMenu, disabled = permission ~= "admin"})
+end
 
 RegisterNetEvent("soz-jobs:Client:OnJobSync", function(jobs)
     JobOption.JobList = {}
@@ -43,6 +52,3 @@ RegisterNetEvent("soz-jobs:Client:OnJobSync", function(jobs)
         return a.label < b.label
     end)
 end)
-
---- Add to main menu
-AdminMenu:AddButton({icon = "⛑", label = "Gestion métier", value = jobMenu})

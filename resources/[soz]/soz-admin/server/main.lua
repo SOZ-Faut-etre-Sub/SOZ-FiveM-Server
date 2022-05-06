@@ -1,4 +1,21 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozAdmin = {}
+
+--- Functions
+SozAdmin.Functions = {}
+
+SozAdmin.Functions.IsPlayerAdmin = function(source)
+    return QBCore.Functions.HasPermission(source, "admin")
+end
+
+SozAdmin.Functions.IsPlayerStaff = function(source)
+    return QBCore.Functions.HasPermission(source, "staff") or QBCore.Functions.HasPermission(source, "admin")
+end
+
+SozAdmin.Functions.IsPlayerHelper = function(source)
+    return QBCore.Functions.HasPermission(source, "helper") or QBCore.Functions.HasPermission(source, "staff") or
+               QBCore.Functions.HasPermission(source, "admin")
+end
 
 CheckIsAdminMenuIsAvailable = function(source)
     for _, role in ipairs(Config.AllowedRole) do
@@ -11,10 +28,22 @@ CheckIsAdminMenuIsAvailable = function(source)
 end
 
 QBCore.Functions.CreateCallback("admin:server:isAllowed", function(source, cb)
-    cb(CheckIsAdminMenuIsAvailable(source))
+    if SozAdmin.Functions.IsPlayerAdmin(source) then
+        cb(true, "admin")
+    elseif SozAdmin.Functions.IsPlayerStaff(source) then
+        cb(true, "staff")
+    elseif SozAdmin.Functions.IsPlayerHelper(source) then
+        cb(true, "helper")
+    else
+        cb(false)
+    end
 end)
 
 QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     local players = {}
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
         local targetped = GetPlayerPed(v)
@@ -35,15 +64,21 @@ QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
 end)
 
 RegisterNetEvent("admin:server:addPersistentProp", function(model, event, position)
-    if CheckIsAdminMenuIsAvailable then
-        exports.oxmysql:insert("INSERT INTO persistent_prop (model, event, position) VALUES (:model, :event, :position)",
-                               {["model"] = model, ["event"] = event, ["position"] = json.encode(position)}, function()
-            TriggerEvent("core:server:refreshPersistentProp")
-        end)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
     end
+
+    exports.oxmysql:insert("INSERT INTO persistent_prop (model, event, position) VALUES (:model, :event, :position)",
+                           {["model"] = model, ["event"] = event, ["position"] = json.encode(position)}, function()
+        TriggerEvent("core:server:refreshPersistentProp")
+    end)
 end)
 
 RegisterNetEvent("admin:server:goto", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     local src = source
     local admin = GetPlayerPed(src)
     local coords = GetEntityCoords(GetPlayerPed(player.id))
@@ -51,6 +86,10 @@ RegisterNetEvent("admin:server:goto", function(player)
 end)
 
 RegisterNetEvent("admin:server:bring", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     local src = source
     local admin = GetPlayerPed(src)
     local coords = GetEntityCoords(admin)
@@ -59,6 +98,10 @@ RegisterNetEvent("admin:server:bring", function(player)
 end)
 
 RegisterNetEvent("admin:server:spectate", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     local src = source
     local targetped = GetPlayerPed(player.id)
     local coords = GetEntityCoords(targetped)
@@ -66,43 +109,35 @@ RegisterNetEvent("admin:server:spectate", function(player)
 end)
 
 RegisterNetEvent("admin:server:freeze", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     local target = GetPlayerPed(player.id)
     FreezeEntityPosition(target, true)
 end)
 
 RegisterNetEvent("admin:server:unfreeze", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     local target = GetPlayerPed(player.id)
     FreezeEntityPosition(target, false)
 end)
 
-RegisterNetEvent("admin:server:intovehicle", function(player)
-    local src = source
-    local admin = GetPlayerPed(src)
-    local targetPed = GetPlayerPed(player.id)
-    local vehicule = GetVehiclePedIsIn(targetPed, false)
-    local seat = -1
-    if vehicule ~= 0 then
-        for i = 0, 8, 1 do
-            if GetPedInVehicleSeat(vehicule, i) == 0 then
-                seat = i
-                break
-            end
-        end
-        if seat ~= -1 then
-            SetPedIntoVehicle(admin, vehicule, seat)
-            TriggerClientEvent("hud:client:DrawNotification", src, "Monté dans le véhicule")
-        else
-            TriggerClientEvent("hud:client:DrawNotification", src, "Le véhicule n'a pas de siège libre!", "error")
-        end
-    else
-        TriggerClientEvent("hud:client:DrawNotification", src, "Le joueur n'est pas dans un véhicule!", "error")
-    end
-end)
-
 RegisterNetEvent("admin:server:kill", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     TriggerClientEvent("soz_ems:client:KillPlayer", player.id)
 end)
 
 RegisterNetEvent("admin:server:revive", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
     TriggerEvent("lsmc:server:revive", player.id)
 end)
