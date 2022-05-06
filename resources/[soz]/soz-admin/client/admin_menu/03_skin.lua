@@ -1,6 +1,4 @@
-local skinMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Chien, Chat, Président, ..."})
-local skinComponentMenu = MenuV:InheritMenu(skinMenu)
-
+local skinMenu, skinComponentMenu
 local PlayerComponent, PlayerComponentVariation = {}, {}
 local PlayerProp, PlayerPropVariation = {}, {}
 
@@ -97,98 +95,114 @@ local function getPlayerSkin()
     return skin
 end
 
---- Menu entries
-skinMenu:AddButton({
-    label = "Changer l'apparence du personnage",
-    value = nil,
-    select = function()
-        local model = exports["soz-hud"]:Input("Modèle de personnage :", 32)
+function AdminMenuSkin(menu, permission)
+    if skinMenu == nil then
+        skinMenu = MenuV:InheritMenu(menu, {subtitle = "Chien, Chat, Président, ..."})
+    end
+    if skinComponentMenu == nil then
+        skinComponentMenu = MenuV:InheritMenu(skinMenu)
+    end
 
-        if model and model ~= "" then
+    skinMenu:ClearItems()
+    skinComponentMenu:ClearItems()
+
+    skinMenu:AddButton({
+        label = "Changer l'apparence du personnage",
+        value = nil,
+        select = function()
+            local model = exports["soz-hud"]:Input("Modèle de personnage :", 32)
+
+            if model and model ~= "" then
+                SetModel(model)
+            end
+        end,
+    })
+
+    skinMenu:AddSlider({
+        label = "Liste d'apparence prédéfini",
+        value = "model",
+        values = {
+            {label = "Chien", value = "a_c_shepherd"},
+            {label = "Chat", value = "a_c_cat_01"},
+            {label = "Civil Femme", value = "u_f_y_mistress"},
+            {label = "Civil Homme", value = "a_m_y_latino_01"},
+            {label = "Joueur Femme", value = "mp_f_freemode_01"},
+            {label = "Joueur Homme", value = "mp_m_freemode_01"},
+        },
+        select = function(_, model)
             SetModel(model)
-        end
-    end,
-})
-
-skinMenu:AddSlider({
-    label = "Liste d'apparence prédéfini",
-    value = "model",
-    values = {
-        {label = "Chien", value = "a_c_shepherd"},
-        {label = "Chat", value = "a_c_cat_01"},
-        {label = "Civil Femme", value = "u_f_y_mistress"},
-        {label = "Civil Homme", value = "a_m_y_latino_01"},
-        {label = "Joueur Femme", value = "mp_f_freemode_01"},
-        {label = "Joueur Homme", value = "mp_m_freemode_01"},
-    },
-    select = function(_, model)
-        SetModel(model)
-    end,
-})
-
-skinMenu:AddButton({label = "Modifier les éléments du personnage", value = skinComponentMenu})
-
-skinComponentMenu:On("open", function(menu)
-    local ped = PlayerPedId()
-    menu:ClearItems()
-
-    menu:AddTitle({label = "Éléments du personnage"})
-    for _, i in pairs({3, 4, 6, 8, 11}) do
-        GenerateDrawableList(menu, ped, i)
-    end
-
-    menu:AddTitle({label = "Accessoires du personnage"})
-    for _, i in pairs({0, 1, 2, 6, 7}) do
-        PlayerProp[i] = GetPedPropIndex(ped, i)
-        PlayerPropVariation[i] = GetPedPropTextureIndex(ped, i)
-
-        if GetNumberOfPedPropDrawableVariations(ped, i) > 0 then
-            menu:AddSlider({
-                label = Config.PropName[i],
-                value = PlayerProp[i] + 1,
-                values = CreateRange(0, GetNumberOfPedPropDrawableVariations(ped, i) - 1),
-                change = function(_, value)
-                    PlayerProp[i] = value - 1
-                    ApplyPedComponent()
-                end,
-            })
-            menu:AddSlider({
-                label = Config.PropName[i] .. " variation",
-                value = PlayerPropVariation[i] + 1,
-                values = CreateRange(0, 20),
-                change = function(_, value)
-                    PlayerPropVariation[i] = value - 1
-                    ApplyPedComponent()
-                end,
-            })
-        end
-    end
-
-    menu:AddTitle({label = "Autres"})
-    for _, i in pairs({0, 1, 2, 5, 7, 9, 10}) do
-        GenerateDrawableList(menu, ped, i)
-    end
-
-    menu:AddTitle({label = "Actions"})
-    menu:AddButton({
-        label = "Copier la tenue dans le presse papier",
-        value = nil,
-        select = function()
-            SendNUIMessage({string = json.encode(getPlayerSkin())})
         end,
     })
+
+    skinMenu:AddButton({label = "Modifier les éléments du personnage", value = skinComponentMenu})
+
+    skinComponentMenu:On("open", function(m)
+        local ped = PlayerPedId()
+        m:ClearItems()
+
+        m:AddTitle({label = "Éléments du personnage"})
+        for _, i in pairs({3, 4, 6, 8, 11}) do
+            GenerateDrawableList(m, ped, i)
+        end
+
+        m:AddTitle({label = "Accessoires du personnage"})
+        for _, i in pairs({0, 1, 2, 6, 7}) do
+            PlayerProp[i] = GetPedPropIndex(ped, i)
+            PlayerPropVariation[i] = GetPedPropTextureIndex(ped, i)
+
+            if GetNumberOfPedPropDrawableVariations(ped, i) > 0 then
+                m:AddSlider({
+                    label = Config.PropName[i],
+                    value = PlayerProp[i] + 1,
+                    values = CreateRange(0, GetNumberOfPedPropDrawableVariations(ped, i) - 1),
+                    change = function(_, value)
+                        PlayerProp[i] = value - 1
+                        ApplyPedComponent()
+                    end,
+                })
+                m:AddSlider({
+                    label = Config.PropName[i] .. " variation",
+                    value = PlayerPropVariation[i] + 1,
+                    values = CreateRange(0, 20),
+                    change = function(_, value)
+                        PlayerPropVariation[i] = value - 1
+                        ApplyPedComponent()
+                    end,
+                })
+            end
+        end
+
+        m:AddTitle({label = "Autres"})
+        for _, i in pairs({0, 1, 2, 5, 7, 9, 10}) do
+            GenerateDrawableList(m, ped, i)
+        end
+
+        m:AddTitle({label = "Actions"})
+        m:AddButton({
+            label = "Copier la tenue dans le presse papier",
+            value = nil,
+            select = function()
+                SendNUIMessage({string = json.encode(getPlayerSkin())})
+            end,
+        })
+        m:AddButton({
+            label = "Sauvegarder cette tenue",
+            value = nil,
+            select = function()
+                TriggerServerEvent("admin:skin:UpdateClothes", getPlayerSkin())
+            end,
+        })
+    end)
+
+    skinComponentMenu:On("close", function(m)
+        m:ClearItems()
+    end)
+
+    --- Add to main menu
     menu:AddButton({
-        label = "Sauvegarder cette tenue",
-        value = nil,
-        select = function()
-            TriggerServerEvent("admin:skin:UpdateClothes", getPlayerSkin())
-        end,
+        icon = "🐕",
+        label = "Modification du style du joueur",
+        value = skinMenu,
+        disabled = permission ~= "admin",
     })
-end)
-
-skinComponentMenu:On("close", function(menu)
-    menu:ClearItems()
-end)
-
---- Add to main menu
-AdminMenu:AddButton({icon = "🐕", label = "Modification du style du joueur", value = skinMenu})
+end

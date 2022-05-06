@@ -1,7 +1,4 @@
-local vehicleMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "ça roule vite ?"})
-local vehicleCategories = MenuV:InheritMenu(vehicleMenu)
-local vehicleModels = MenuV:InheritMenu(vehicleMenu)
-
+local vehicleMenu, vehicleCategories, vehicleModels
 local vehicles = {}
 
 --- Functions
@@ -32,98 +29,128 @@ function CheckMods(id)
     return validMods, amountValidMods
 end
 
---- Menu entries
-vehicleMenu:AddButton({
-    label = "Faire apparaitre un véhicule",
-    value = nil,
-    select = function()
-        local model = exports["soz-hud"]:Input("Modèle du véhicule :", 32)
+function AdminMenuVehicles(menu, permission)
+    if vehicleMenu == nil then
+        vehicleMenu = MenuV:InheritMenu(menu, {subtitle = "ça roule vite ?"})
+    end
+    if vehicleCategories == nil then
+        vehicleCategories = MenuV:InheritMenu(vehicleMenu)
+    end
+    if vehicleModels == nil then
+        vehicleModels = MenuV:InheritMenu(vehicleMenu)
+    end
 
-        if model and model ~= "" then
-            TriggerServerEvent("QBCore:CallCommand", "car", {model})
-        end
-    end,
-})
+    vehicleMenu:ClearItems()
+    vehicleCategories:ClearItems()
+    vehicleModels:ClearItems()
 
-vehicleMenu:AddButton({label = "Choisir un véhicule à faire apparaitre", value = vehicleCategories})
+    vehicleMenu:AddButton({
+        label = "Faire apparaitre un véhicule",
+        value = nil,
+        select = function()
+            local model = exports["soz-hud"]:Input("Modèle du véhicule :", 32)
 
-vehicleMenu:AddButton({
-    label = "Réparer le véhicule",
-    value = nil,
-    select = function()
-        local vehicle = GetVehiclePedIsIn(PlayerPedId())
+            if model and model ~= "" then
+                TriggerServerEvent("QBCore:CallCommand", "car", {model})
+            end
+        end,
+        disabled = permission ~= "admin",
+    })
 
-        SetVehicleFixed(vehicle)
-        SetVehicleDeformationFixed(vehicle)
-        SetVehicleUndriveable(vehicle, false)
-    end,
-})
+    vehicleMenu:AddButton({
+        label = "Choisir un véhicule à faire apparaitre",
+        value = vehicleCategories,
+        disabled = permission ~= "admin",
+    })
 
-vehicleMenu:AddButton({
-    label = "Configuration FBI",
-    value = nil,
-    select = function()
-        local plyPed = PlayerPedId()
-        local plyVeh = GetVehiclePedIsIn(plyPed, false)
-        SetVehicleModKit(plyVeh, 0)
-        local amelioration = {11, 12, 13, 15, 16, 18}
+    vehicleMenu:AddButton({
+        label = "Réparer le véhicule",
+        value = nil,
+        select = function()
+            local vehicle = GetVehiclePedIsIn(PlayerPedId())
 
-        for _, v in pairs(amelioration) do
-            local validMods, amountValidMods = CheckMods(v)
-            if amountValidMods > 0 or v == 18 then
-                if v == 18 then
-                    ToggleVehicleMod(plyVeh, 18, 1)
-                else
-                    local mod
-                    for _, n in pairs(validMods) do
-                        mod = n
+            SetVehicleFixed(vehicle)
+            SetVehicleDeformationFixed(vehicle)
+            SetVehicleUndriveable(vehicle, false)
+        end,
+    })
+
+    vehicleMenu:AddButton({
+        label = "Ravitailler le véhicule",
+        value = nil,
+        select = function()
+            local vehicle = GetVehiclePedIsIn(PlayerPedId())
+            exports["soz-vehicle"]:SetFuel(vehicle, 100.0)
+        end,
+    })
+
+    vehicleMenu:AddButton({
+        label = "Configuration FBI",
+        value = nil,
+        select = function()
+            local plyPed = PlayerPedId()
+            local plyVeh = GetVehiclePedIsIn(plyPed, false)
+            SetVehicleModKit(plyVeh, 0)
+            local amelioration = {11, 12, 13, 15, 16, 18}
+
+            for _, v in pairs(amelioration) do
+                local validMods, amountValidMods = CheckMods(v)
+                if amountValidMods > 0 or v == 18 then
+                    if v == 18 then
+                        ToggleVehicleMod(plyVeh, 18, 1)
+                    else
+                        local mod
+                        for _, n in pairs(validMods) do
+                            mod = n
+                        end
+                        SetVehicleMod(plyVeh, v, mod.id)
                     end
-                    SetVehicleMod(plyVeh, v, mod.id)
                 end
             end
+
+            SetVehicleColours(plyVeh, 12, 12)
+            SetVehicleExtraColours(plyVeh, 12, 12)
+            SetVehicleWindowTint(plyVeh, 1)
+        end,
+        disabled = permission ~= "admin",
+    })
+
+    vehicleMenu:AddButton({
+        label = "Supprimer le véhicule",
+        value = nil,
+        select = function()
+            TriggerServerEvent("QBCore:CallCommand", "dv")
+        end,
+    })
+
+    vehicleCategories:On("open", function(m)
+        m:ClearItems()
+
+        for category, models in pairs(vehicles) do
+            m:AddButton({
+                label = category,
+                value = vehicleModels,
+                select = function()
+                    vehicleModels:ClearItems()
+
+                    for _, model in pairs(models) do
+                        vehicleModels:AddButton({
+                            label = model.name,
+                            value = model.model,
+                            select = function(item)
+                                TriggerServerEvent("QBCore:CallCommand", "car", {item.Value})
+                            end,
+                        })
+                    end
+                end,
+            })
         end
+    end)
 
-        SetVehicleColours(plyVeh, 12, 12)
-        SetVehicleExtraColours(plyVeh, 12, 12)
-        SetVehicleWindowTint(plyVeh, 1)
-    end,
-})
+    vehicleCategories:On("close", function(m)
+        m:ClearItems()
+    end)
 
-vehicleMenu:AddButton({
-    label = "Supprimer le véhicule",
-    value = nil,
-    select = function()
-        TriggerServerEvent("QBCore:CallCommand", "dv")
-    end,
-})
-
-vehicleCategories:On("open", function(menu)
-    menu:ClearItems()
-
-    for category, models in pairs(vehicles) do
-        menu:AddButton({
-            label = category,
-            value = vehicleModels,
-            select = function()
-                vehicleModels:ClearItems()
-
-                for _, model in pairs(models) do
-                    vehicleModels:AddButton({
-                        label = model.name,
-                        value = model.model,
-                        select = function(item)
-                            TriggerServerEvent("QBCore:CallCommand", "car", {item.Value})
-                        end,
-                    })
-                end
-            end,
-        })
-    end
-end)
-
-vehicleCategories:On("close", function(menu)
-    menu:ClearItems()
-end)
-
---- Add to main menu
-AdminMenu:AddButton({icon = "🚗", label = "Gestion du véhicule", value = vehicleMenu})
+    --- Add to main menu
+    menu:AddButton({icon = "🚗", label = "Gestion du véhicule", value = vehicleMenu})
+end
