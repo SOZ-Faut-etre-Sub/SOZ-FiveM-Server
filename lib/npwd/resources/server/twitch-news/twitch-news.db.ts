@@ -3,9 +3,9 @@ import DbInterface from '../db/db_wrapper';
 import {TwitchNewsMessage} from "../../../typings/twitch-news";
 
 export class _TwitchNewsDB {
-  async addNews({ type, image, message }: TwitchNewsMessage): Promise<number> {
-    const query = `INSERT INTO phone_twitch_news (type, image, message) VALUES (?, ?, ?)`;
-    const [setResult] = await DbInterface._rawExec(query, [type, image, message]);
+  async addNews({ type, image, message, reporter }: TwitchNewsMessage): Promise<number> {
+    const query = `INSERT INTO phone_twitch_news (type, image, message, reporter) VALUES (?, ?, ?, ?)`;
+    const [setResult] = await DbInterface._rawExec(query, [type, image, message, reporter]);
     return (<ResultSetHeader>setResult).insertId;
   }
 
