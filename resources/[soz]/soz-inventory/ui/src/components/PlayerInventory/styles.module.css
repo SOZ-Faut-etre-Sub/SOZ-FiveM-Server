@@ -23,11 +23,11 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    background: url("https://nui-img/soz/menu_inventory") no-repeat;
+    background: url("https://nui-img/soz/menu_inventory") left no-repeat;
     background-size: cover;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-    height: 5.9rem;
+    height: 4.6875rem;
     user-select: none;
 }
 

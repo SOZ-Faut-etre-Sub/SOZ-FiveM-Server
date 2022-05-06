@@ -38,31 +38,31 @@
 }
 
 .bin {
-    background: url("../../assets/bin.jpg") no-repeat;
+    background: url("../../assets/bin.jpg") left no-repeat;
     background-size: cover;
 }
 .boss_storage {
-    background: url("../../assets/boss_storage.jpg") no-repeat;
+    background: url("../../assets/boss_storage.jpg") left no-repeat;
     background-size: cover;
 }
 .fridge {
-    background: url("../../assets/fridge.jpg") no-repeat;
+    background: url("../../assets/fridge.jpg") left no-repeat;
     background-size: cover;
 }
 .player {
-    background: url("../../assets/player.jpg") no-repeat;
+    background: url("../../assets/player.jpg") left no-repeat;
     background-size: cover;
 }
 .seizure {
-    background: url("../../assets/seizure.jpg") no-repeat;
+    background: url("../../assets/seizure.jpg") left no-repeat;
     background-size: cover;
 }
 .stash {
-    background: url("../../assets/stash.jpg") no-repeat;
+    background: url("../../assets/stash.jpg") left no-repeat;
     background-size: cover;
 }
 .trunk {
-    background: url("../../assets/trunk.jpg") no-repeat;
+    background: url("../../assets/trunk.jpg") left no-repeat;
     background-size: cover;
 }
 
