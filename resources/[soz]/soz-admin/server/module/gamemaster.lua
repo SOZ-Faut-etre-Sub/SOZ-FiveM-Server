@@ -1,5 +1,5 @@
 RegisterNetEvent("admin:gamemaster:giveMoney", function(moneyType, amount)
-    if not CheckIsAdminMenuIsAvailable(source) then
+    if not SozAdmin.Functions.IsPlayerAdmin(source) then
         return
     end
 
@@ -10,7 +10,7 @@ RegisterNetEvent("admin:gamemaster:giveMoney", function(moneyType, amount)
 end)
 
 RegisterNetEvent("admin:gamemaster:unCuff", function(moneyType, amount)
-    if not CheckIsAdminMenuIsAvailable(source) then
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
         return
     end
 
@@ -21,7 +21,7 @@ RegisterNetEvent("admin:gamemaster:unCuff", function(moneyType, amount)
 end)
 
 RegisterNetEvent("admin:gamemaster:godmode", function(val)
-    if not CheckIsAdminMenuIsAvailable(source) then
+    if not SozAdmin.Functions.IsPlayerAdmin(source) then
         return
     end
 

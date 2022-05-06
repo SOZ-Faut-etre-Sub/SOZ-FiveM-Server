@@ -1,6 +1,4 @@
-local dynamicMapMenu = MenuV:InheritMenu(AdminMenu, {subtitle = "Des options à la carte"})
-
-local DynamicMapOption = {PlayerName = false, BlipsOnMap = false, mpTags = {}, blips = {}}
+local dynamicMapMenu, DynamicMapOption = nil, {PlayerName = false, BlipsOnMap = false, mpTags = {}, blips = {}}
 
 --- Functions
 local function DisplayPlayerName()
@@ -51,24 +49,31 @@ local function DisplayPlayerBlip()
     end)
 end
 
---- Menu entries
-dynamicMapMenu:AddCheckbox({
-    label = "Afficher le nom des joueurs",
-    value = nil,
-    change = function(_, checked)
-        DynamicMapOption.PlayerName = checked
-        DisplayPlayerName()
-    end,
-})
+function AdminMenuDynamicMap(menu, permission)
+    if dynamicMapMenu == nil then
+        dynamicMapMenu = MenuV:InheritMenu(menu, {subtitle = "Des options à la carte"})
+    end
 
-dynamicMapMenu:AddCheckbox({
-    label = "Afficher les joueurs sur la carte",
-    value = nil,
-    change = function(_, checked)
-        DynamicMapOption.BlipsOnMap = checked
-        DisplayPlayerBlip()
-    end,
-})
+    dynamicMapMenu:ClearItems()
 
---- Add to main menu
-AdminMenu:AddButton({icon = "🗺", label = "Informations interactive", value = dynamicMapMenu})
+    dynamicMapMenu:AddCheckbox({
+        label = "Afficher le nom des joueurs",
+        value = nil,
+        change = function(_, checked)
+            DynamicMapOption.PlayerName = checked
+            DisplayPlayerName()
+        end,
+    })
+
+    dynamicMapMenu:AddCheckbox({
+        label = "Afficher les joueurs sur la carte",
+        value = nil,
+        change = function(_, checked)
+            DynamicMapOption.BlipsOnMap = checked
+            DisplayPlayerBlip()
+        end,
+    })
+
+    --- Add to main menu
+    menu:AddButton({icon = "🗺", label = "Informations interactive", value = dynamicMapMenu})
+end
