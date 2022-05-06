@@ -9,8 +9,9 @@ import {SocietyEvents} from "@typings/society";
 import dayjs from "dayjs";
 import {Button} from '@ui/components/Button';
 import {Menu, Transition} from "@headlessui/react";
-import {BookmarkIcon, LocationMarkerIcon, PhoneIcon} from "@heroicons/react/solid";
+import {BookmarkIcon, LocationMarkerIcon, ChatIcon, PhoneIcon} from "@heroicons/react/solid";
 import {ThemeContext} from "../../../../styles/themeProvider";
+import {useHistory} from "react-router-dom";
 require('dayjs/locale/fr')
 dayjs.locale('fr')
 
@@ -18,6 +19,7 @@ const MessagesList = (): any => {
     const societyMessages = useMessagesValue();
     const {theme} = useContext(ThemeContext);
     const {initializeCall} = useCall();
+    const history = useHistory();
 
     const startCall = (number: string) => {
         LogDebugEvent({
@@ -26,6 +28,15 @@ const MessagesList = (): any => {
             data: true,
         });
         initializeCall(number);
+    };
+
+    const startMessage = (phoneNumber: string) => {
+        LogDebugEvent({
+            action: 'Routing to Message',
+            level: 1,
+            data: {phoneNumber},
+        });
+        history.push(`/messages/new?phoneNumber=${phoneNumber}`);
     };
 
     const setWaypoint = (pos) => {
@@ -78,22 +89,6 @@ const MessagesList = (): any => {
                         <Menu.Items
                             className="absolute z-30 right-0 w-56 mt-2 origin-top-right bg-gray-900 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
 
-                            {message.source_phone !== '' && (
-                                <Button
-                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                    onClick={() => startCall(message.source_phone)}
-                                >
-                                    <PhoneIcon className="mx-3 h-5 w-5"/> Appeler
-                                </Button>
-                            )}
-                            {message.position && (
-                                <Button
-                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                    onClick={() => setWaypoint(message.position)}
-                                >
-                                    <LocationMarkerIcon className="mx-3 h-5 w-5"/> Aller a la position
-                                </Button>
-                            )}
                             {message.isTaken ? (
                                 !message.isDone && <Button
                                     className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
@@ -107,6 +102,33 @@ const MessagesList = (): any => {
                                     onClick={() => setMessageState(message.id, true, false)}
                                 >
                                     <BookmarkIcon className="mx-3 h-5 w-5"/> Prendre l'appel
+                                </Button>
+                            )}
+
+                            {message.position && (
+                                <Button
+                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                    onClick={() => setWaypoint(message.position)}
+                                >
+                                    <LocationMarkerIcon className="mx-3 h-5 w-5"/> Aller a la position
+                                </Button>
+                            )}
+
+                            {message.source_phone !== '' && (
+                                <Button
+                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                    onClick={() => startMessage(message.source_phone)}
+                                >
+                                    <ChatIcon className="mx-3 h-5 w-5"/> Message
+                                </Button>
+                            )}
+
+                            {message.source_phone !== '' && (
+                                <Button
+                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                    onClick={() => startCall(message.source_phone)}
+                                >
+                                    <PhoneIcon className="mx-3 h-5 w-5"/> Appeler
                                 </Button>
                             )}
                         </Menu.Items>
