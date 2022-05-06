@@ -44,7 +44,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-resale-bag", function(sou
     end
 
     Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, nBags, nil)
-    TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.Price)
+    TriggerEvent("banking:server:TransferMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.Price)
     cb(true)
 end)
 
@@ -74,7 +74,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
     if amount > result.missingAmount then
         amount = result.missingAmount
     end
-    TriggerEvent("banking:server:TransfertMoney", StonkConfig.Accounts.FarmAccount, result.accountId, amount)
+    TriggerEvent("banking:server:TransferMoney", StonkConfig.Accounts.FarmAccount, result.accountId, amount)
 
     if data.bank ~= nil then
         TriggerEvent("monitor:server:event", "job_stonk_fill_account", {

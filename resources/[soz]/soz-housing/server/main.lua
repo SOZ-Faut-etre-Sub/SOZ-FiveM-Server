@@ -111,7 +111,7 @@ end)
 RegisterNetEvent("soz-housing:server:buy")
 AddEventHandler("soz-housing:server:buy", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
-    local succes, reason = TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, name, price)
+    local succes, reason = TriggerEvent("banking:server:TransferMoney", Player.PlayerData.charinfo.account, name, price)
     if succes then
         local BuyOrder = MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id",
                                             {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
@@ -124,7 +124,7 @@ end)
 RegisterNetEvent("soz-housing:server:sell")
 AddEventHandler("soz-housing:server:sell", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
-    local succes, reason = TriggerEvent("banking:server:TransfertMoney", name, Player.PlayerData.charinfo.account, price)
+    local succes, reason = TriggerEvent("banking:server:TransferMoney", name, Player.PlayerData.charinfo.account, price)
     if succes then
         local SellOrder = MySQL.update.await("UPDATE player_house SET OWNER = NULL WHERE identifier = @id", {
             ["@id"] = name,

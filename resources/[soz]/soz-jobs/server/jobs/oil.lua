@@ -110,7 +110,7 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
 
         if stock + amount <= 2000 then
             if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", itemToUse) then
-                TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "safe_oil", amount * FuelerConfig.SellPrice)
+                TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", amount * FuelerConfig.SellPrice)
                 TriggerEvent("soz-fuel:server:addStationStock", station, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
                                    ("Vous avez ~g~ajouté~s~ %dL d'essence dans la station"):format(itemToUse))
@@ -136,7 +136,7 @@ RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
     local tankerInv = "trunk_" .. tankerPlate
 
     if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
-        TriggerEvent("banking:server:TransfertMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
+        TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
         TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
                      {quantity = 10, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})

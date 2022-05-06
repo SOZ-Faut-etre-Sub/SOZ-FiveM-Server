@@ -67,7 +67,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
             Player.Functions.SetMetaData("licences", licences)
         end
 
-        TriggerEvent("banking:server:TransfertMoney", Player.PlayerData.charinfo.account, radar.station, fine)
+        TriggerEvent("banking:server:TransferMoney", Player.PlayerData.charinfo.account, radar.station, fine)
         TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
                            "CHAR_BLOCKED", "info")
 
