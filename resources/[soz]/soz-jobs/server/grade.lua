@@ -2,7 +2,7 @@ RegisterServerEvent("job:recruit", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -23,7 +23,7 @@ RegisterServerEvent("job:fire", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -44,7 +44,7 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -65,7 +65,7 @@ RegisterServerEvent("job:grade:add", function(name)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -88,7 +88,7 @@ RegisterServerEvent("job:grade:remove", function(id)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -126,7 +126,7 @@ RegisterServerEvent("job:grade:set-default", function(id)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -152,7 +152,7 @@ RegisterServerEvent("job:grade:set-salary", function(id, salary)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -183,7 +183,7 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
@@ -205,7 +205,7 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
 
     local newPermissions = {};
 
-    for _, existingPermission in ipairs(grade.permissions) do
+    for _, existingPermission in ipairs(grade.permissions or {}) do
         if existingPermission ~= permission then
             table.insert(newPermissions, existingPermission)
         end
@@ -225,7 +225,7 @@ RegisterServerEvent("job:grade:remove-permission", function(id, permission)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
         return
     end
 
