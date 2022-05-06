@@ -2,31 +2,33 @@ local shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:sho
 
 --- Targets
 CreateThread(function()
-    local shopOptions = {
-        {
-            label = "Récupérer du matériel",
-            icon = "fas fa-briefcase",
-            event = "police:client:weaponShop",
-            canInteract = function()
-                return SozJobCore.Functions.HasPermission("lspd", SozJobCore.JobPermission.ManageGrade) or
-                           SozJobCore.Functions.HasPermission("bcso", SozJobCore.JobPermission.ManageGrade)
-            end,
-        },
-    }
+    local shopOptions = function(job)
+        return {
+            {
+                label = "Récupérer du matériel",
+                icon = "fas fa-briefcase",
+                event = "police:client:weaponShop",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.ManageGrade)
+                end,
+                job = job,
+            },
+        }
+    end
 
     exports["qb-target"]:AddBoxZone("lspd:shop", vector3(620.64, -26.33, 90.51), 4.0, 0.8, {
         name = "lspd:shop",
         heading = 340,
         minZ = 89.5,
         maxZ = 92.5,
-    }, {options = shopOptions, distance = 2.5})
+    }, {options = shopOptions("lspd"), distance = 2.5})
 
     exports["qb-target"]:AddBoxZone("bcso:shop", vector3(1858.9, 3689.47, 38.07), 0.6, 0.6, {
         name = "bcso:shop",
         heading = 30,
         minZ = 37,
         maxZ = 39,
-    }, {options = shopOptions, distance = 2.5})
+    }, {options = shopOptions("bcso"), distance = 2.5})
 end)
 
 --- Events
