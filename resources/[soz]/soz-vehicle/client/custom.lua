@@ -138,7 +138,6 @@ local UpgradeMenu = MenuV:InheritMenu(Upgrade, "Upgrade Menu")
 local VariableV
 local VariableK
 
-
 UpgradeMenu:On("open", function(menu)
     local v = VariableV
     local k = VariableK
@@ -207,7 +206,7 @@ UpgradeMenu:On("open", function(menu)
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if customprice.id == v.id then
                         local price = customprice.prices[1] *
-                                            QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
+                                          QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
                         menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
                         menu:AddButton({
                             label = "Activer",
