@@ -156,7 +156,7 @@ exports["qb-target"]:SpawnPed({
                 type = "client",
                 event = "soz-concessmoto:client:Menu",
                 icon = "c:concess/lister.png",
-                label = "Demander la liste des motos",
+                label = "Liste Motos",
                 action = function()
                     TriggerEvent("soz-concessmoto:client:Menu", "")
                 end,
