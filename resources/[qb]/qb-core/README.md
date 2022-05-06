@@ -5,6 +5,7 @@
 - weapon_ammo
 
 - item
+- item_illegal
 
 - oil
 
