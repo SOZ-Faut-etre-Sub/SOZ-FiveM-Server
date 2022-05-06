@@ -230,7 +230,7 @@ exports["qb-target"]:SpawnPed({
                 type = "client",
                 event = "soz-concess:client:Menu",
                 icon = "c:concess/lister.png",
-                label = "Demander la liste des véhicules",
+                label = "Liste Véhicules",
                 action = function()
                     TriggerEvent("soz-concess:client:Menu", "")
                 end,
