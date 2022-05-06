@@ -2,6 +2,7 @@ import {createContext, useCallback, useMemo, useState, FunctionComponent, PropsW
 
 export const PlayerContext = createContext({
     inVehicle: false,
+    seatbelt: false,
     health: 200,
     armor: 0,
     hunger: 100,
@@ -9,6 +10,7 @@ export const PlayerContext = createContext({
     alcohol: 0,
     drug: 0,
     updateInVehicle: (i: boolean) => {},
+    updateSeatbelt: (s: boolean) => {},
     updateHealth: (v: number) => {},
     updateArmor: (v: number) => {},
     updateHunger: (v: number) => {},
@@ -19,6 +21,7 @@ export const PlayerContext = createContext({
 
 const PlayerProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) => {
     const [inVehicle, setInVehicle] = useState<boolean>(false)
+    const [seatbelt, setSeatbelt] = useState<boolean>(false)
     const [health, setHealth] = useState<number>(200)
     const [armor, setArmor] = useState<number>(0)
     const [hunger, setHunger] = useState<number>(100)
@@ -27,6 +30,7 @@ const PlayerProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) =>
     const [drug, setDrug] = useState<number>(0)
 
     const updateInVehicle = useCallback((i: boolean) => setInVehicle(i), [setInVehicle])
+    const updateSeatbelt = useCallback((s: boolean) => setSeatbelt(s), [setSeatbelt])
     const updateHealth = useCallback((v: number) => setHealth(v), [setHealth])
     const updateArmor = useCallback((v: number) => setArmor(v), [setArmor])
     const updateHunger = useCallback((v: number) => setHunger(v), [setHunger])
@@ -36,10 +40,10 @@ const PlayerProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) =>
 
     const value = useMemo(function () {
         return {
-            inVehicle, health, armor, hunger, thirst, alcohol, drug,
-            updateInVehicle, updateHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug
+            inVehicle, seatbelt, health, armor, hunger, thirst, alcohol, drug,
+            updateInVehicle, updateSeatbelt, updateHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug
         }
-    }, [inVehicle, health, armor, hunger, thirst, alcohol, drug, updateInVehicle, updateHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug])
+    }, [inVehicle, seatbelt, health, armor, hunger, thirst, alcohol, drug, updateInVehicle, updateSeatbelt, updateHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug])
 
     return (
         <PlayerContext.Provider value={value} >

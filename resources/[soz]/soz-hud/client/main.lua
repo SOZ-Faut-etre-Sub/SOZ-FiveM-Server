@@ -5,6 +5,8 @@ PlayerInVehicle, PlayerHaveGPS, PlayerHaveCompass = false, false, false
 HudDisplayed, HudRadar = false, true
 --- @class PlayerData
 local HudPlayerStatus = {
+    --- @type boolean
+    haveSeatbelt = false,
     --- @type number
     health = 200,
     --- @type number
@@ -95,12 +97,13 @@ local function setPlayerData(data)
     if shouldUpdate then
         SendNUIMessage({
             action = "update_needs",
-            health = data.health,
-            armor = data.armor,
-            hunger = data.hunger,
-            thirst = data.thirst,
-            alcohol = data.alcohol,
-            drug = data.drug,
+            haveSeatbelt = HudPlayerStatus.haveSeatbelt,
+            health = HudPlayerStatus.health,
+            armor = HudPlayerStatus.armor,
+            hunger = HudPlayerStatus.hunger,
+            thirst = HudPlayerStatus.thirst,
+            alcohol = HudPlayerStatus.alcohol,
+            drug = HudPlayerStatus.drug,
         })
     end
 end
@@ -184,7 +187,7 @@ RegisterNetEvent("hud:client:UpdateNeeds", function(newHunger, newThirst, newAlc
 end)
 
 RegisterNetEvent("hud:client:UpdateSeatbelt", function(newState)
-    setVehicleData({haveSeatbelt = newState})
+    setPlayerData({haveSeatbelt = newState})
 end)
 
 RegisterNetEvent("hud:client:OverrideVisibility", function(newState)
@@ -210,6 +213,7 @@ CreateThread(function()
             setHudDisplay(not IsPauseMenuActive())
             setPlayerData({health = GetEntityHealth(player)})
             if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
+                local class = GetVehicleClass(vehicle)
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
 
                 PlayerInVehicle = true
@@ -219,6 +223,7 @@ CreateThread(function()
                     fuel = GetVehicleFuelLevel(vehicle),
                     engine = GetVehicleEngineHealth(vehicle),
                     lock = GetVehicleDoorLockStatus(vehicle),
+                    haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
                     haveLight = haveLight,
                     lightsOn = lightsOn,
                     highBeamsOn = highBeamsOn,
