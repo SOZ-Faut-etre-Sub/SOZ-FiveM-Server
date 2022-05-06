@@ -157,7 +157,7 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
                         if not IsPedInAnyVehicle(ped) then
                             local vehicle = GetPlayersLastVehicle()
                             local vehicleCoords = GetEntityCoords(vehicle)
-                            if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 2.5 then
+                            if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 5.0 then
                                 if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
                                     if GetVehicleFuelLevel(vehicle) < 95 then
                                         return true
