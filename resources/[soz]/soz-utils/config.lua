@@ -52,26 +52,16 @@ Config.BlacklistedScenarios = {
     ["GROUPS"] = {2017590552, 2141866469, 1409640232, GetHashKey("ng_planes")},
 }
 
-Config.BlacklistedVehs = { --[[
-    [GetHashKey("SHAMAL")] = true,
-    [GetHashKey("LUXOR")] = true,
-    [GetHashKey("LUXOR2")] = true,
-    [GetHashKey("JET")] = true,
+Config.DisabledVehicle = {
     [GetHashKey("LAZER")] = true,
     [GetHashKey("BUZZARD")] = true,
-    [GetHashKey("BUZZARD2")] = true,
     [GetHashKey("ANNIHILATOR")] = true,
     [GetHashKey("SAVAGE")] = true,
-    [GetHashKey("TITAN")] = true,
     [GetHashKey("RHINO")] = true,
-    [GetHashKey("FIRETRUK")] = true,
-    [GetHashKey("MULE")] = true,
-    [GetHashKey("MAVERICK")] = true,
-    [GetHashKey("BLIMP")] = true,
-    [GetHashKey("AIRTUG")] = true,
-    [GetHashKey("CAMPER")] = true,
     [GetHashKey("HYDRA")] = true,
     [GetHashKey("OPPRESSOR")] = true,
+    [GetHashKey("technical")] = true,
+    [GetHashKey("technical2")] = true,
     [GetHashKey("technical3")] = true,
     [GetHashKey("insurgent3")] = true,
     [GetHashKey("apc")] = true,
@@ -84,7 +74,6 @@ Config.BlacklistedVehs = { --[[
     [GetHashKey("barrage")] = true,
     [GetHashKey("khanjali")] = true,
     [GetHashKey("caracara")] = true,
-    [GetHashKey("blimp3")] = true,
     [GetHashKey("menacer")] = true,
     [GetHashKey("oppressor2")] = true,
     [GetHashKey("scramjet")] = true,
@@ -98,10 +87,9 @@ Config.BlacklistedVehs = { --[[
     [GetHashKey("rrocket")] = true,
     [GetHashKey("ruiner2")] = true,
     [GetHashKey("deluxo")] = true,
---]]
 }
 
-Config.BlacklistedPeds = {
+Config.DisabledPeds = {
     [GetHashKey("s_m_y_ranger_01")] = true,
     [GetHashKey("s_m_y_sheriff_01")] = true,
     [GetHashKey("s_m_y_cop_01")] = true,
