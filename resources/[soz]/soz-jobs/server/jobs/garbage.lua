@@ -27,7 +27,7 @@ RegisterNetEvent("jobs:server:garbage:processBags", function(item)
     }, {quantity = tonumber(bagToProcess), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
 
     if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
-        TriggerClientEvent("jobs:client:garbage:processBags", Player.PlayerData.source)
+        TriggerClientEvent("jobs:client:garbage:processBags", Player.PlayerData.source, {item = item})
     end
 end)
 
