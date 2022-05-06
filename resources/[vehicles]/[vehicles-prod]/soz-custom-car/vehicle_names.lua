@@ -5,6 +5,9 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(0xF0DFD0A3, "Dodge Charger") -- sheriff3
     AddTextEntryByHash(0xD0368F51, "Chevrolet Tahoe") -- sheriff4
     AddTextEntryByHash(0x8B6605B9, "Moto Sheriff") -- sheriffb
+    AddTextEntryByHash(0x292DC34B, "Granger 3600LX du LSMC") -- ambcar
+    AddTextEntryByHash(0xD6016754, "Cognoscenti 55 du FIB") -- cogfbi
+    AddTextEntryByHash(0x4DC04683, "Paragon R du FIB") -- paragonfbi
 
     AddTextEntry('0x3AB04817','CallSign - 0')   -- NKS_A0
     AddTextEntry('0x896BE589','CallSign - 1')   -- NKS_A1
