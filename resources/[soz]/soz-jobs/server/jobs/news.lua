@@ -38,7 +38,7 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
         newspaperAmount = playerNewspaper
     end
 
-    TriggerEvent("banking:server:TransfertMoney", "farm_news", "safe_news", newspaperAmount * NewsConfig.SellPrice)
+    TriggerEvent("banking:server:TransferMoney", "farm_news", "safe_news", newspaperAmount * NewsConfig.SellPrice)
     exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "newspaper", newspaperAmount)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
 end)

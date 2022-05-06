@@ -26,6 +26,7 @@ Config.FarmAccountMoney = {
     ["farm_stonk"] = {money = 2000000, marked_money = 0},
     ["farm_mtp"] = {money = 100000, marked_money = 0},
     ["farm_garbage"] = {money = 100000, marked_money = 0},
+    ["farm_taxi"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
@@ -93,6 +94,13 @@ Config.SafeStorages = {
         owner = "bennys",
         position = vector3(-204.6, -1333.11, 34.89),
         size = vec2(1.0, 2.5),
+    },
+    ["safe_food"] = {
+        label = "Coffre Chateau-Marius",
+        owner = "food",
+        position = vector3(-1898.62, 2065.6, 141.0),
+        size = vec2(0.8, 2.2),
+        heading = 340,
     },
 }
 

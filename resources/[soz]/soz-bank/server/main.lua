@@ -76,7 +76,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertOffshoreMoney", functio
     cb(false, "unknown")
 end)
 
-QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source, cb, accountSource, accountTarget, amount, sendNotificationToTarget)
+QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source, cb, accountSource, accountTarget, amount, sendNotificationToTarget)
     local Player = QBCore.Functions.GetPlayer(source)
     local CurrentMoney = Player.Functions.GetMoney("money")
     amount = tonumber(amount)
@@ -116,7 +116,7 @@ QBCore.Functions.CreateCallback("banking:server:TransfertMoney", function(source
     cb(false, "unknown")
 end)
 
-RegisterNetEvent("banking:server:TransfertMoney", function(accountSource, accountTarget, amount, cb)
+RegisterNetEvent("banking:server:TransferMoney", function(accountSource, accountTarget, amount, cb)
     Account.TransfertMoney(accountSource, accountTarget, amount, function(success, reason)
         if cb then
             cb(success, reason)
