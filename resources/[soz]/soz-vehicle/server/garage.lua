@@ -150,6 +150,15 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
     end
 end)
 
+RegisterNetEvent("qb-garage:server:setVehicleInPound", function(plate)
+    local parkingtime = os.time()
+    MySQL.Async.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ? WHERE plate = ?", {parkingtime, plate})
+end)
+
+RegisterNetEvent("qb-garage:server:setVehicleDestroy", function(plate)
+    MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE plate = ?", {plate})
+end)
+
 RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, garage)
     MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, WHERE plate = ?", {state, garage, plate})
 end)
@@ -182,7 +191,7 @@ AddEventHandler("onResourceStart", function(resource)
                     local jours = os.difftime(os.time(), v.parkingtime) / (24 * 60 * 60) -- seconds in a day
                     local joursentiers = math.floor(jours)
                     if (v.state == 2 and joursentiers > 6) or (v.state == 4 and joursentiers > 2) then
-                        MySQL.Async.execute("DELETE FROM player_vehicles WHERE id = ?", {v.id})
+                        MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE id = ?", {v.id})
                     end
                 end
             end
