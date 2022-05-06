@@ -1,6 +1,7 @@
 local BennysCloak = MenuV:CreateMenu(nil, "Vestiaire Bennys", "menu_job_bennys", "soz", "bennys:menu:cloak")
 
-local function OpenCloakMenu(menu)
+BennysCloak:On("open", function(menu)
+    menu:ClearItems()
     menu:AddButton({
         label = "Tenue civile",
         value = nil,
@@ -28,18 +29,8 @@ local function OpenCloakMenu(menu)
             end,
         })
     end
-end
-
-local function GenerateCloakMenu()
-    if BennysCloak.IsOpen then
-        BennysCloak:Close()
-    else
-        BennysCloak:ClearItems()
-        OpenCloakMenu(BennysCloak)
-        BennysCloak:Open()
-    end
-end
+end)
 
 RegisterNetEvent("soz-bennys:client:OpenCloakroomMenu", function()
-    GenerateCloakMenu()
+    BennysCloak:Open()
 end)
