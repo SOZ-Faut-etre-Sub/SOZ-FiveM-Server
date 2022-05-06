@@ -19,6 +19,13 @@ class _TwitchNewsService {
             const news = await this.twitchNewsDB.addNews(reqObj.data);
             resp({status: 'ok', data: news});
 
+            emit(TwitchNewsEvents.API_NEWS_BROADCAST, {
+                type: reqObj.data.type,
+                message: reqObj.data.message,
+                reporter: reqObj.data.reporter,
+                image: reqObj.data.image,
+            });
+
             emitNet(TwitchNewsEvents.CREATE_NEWS_BROADCAST, -1, {
                 id: news,
                 type: reqObj.data.type,

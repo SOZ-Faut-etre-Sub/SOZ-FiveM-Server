@@ -1,5 +1,3 @@
-QBCore = exports["qb-core"]:GetCoreObject()
-
 QBCore.Functions.CreateCallback("soz-api:server:GetJwtToken", function(source, cb)
     local steam = QBCore.Functions.GetSozIdentifier(source)
     local url = GetConvar("soz_api_endpoint", "https://soz.zerator.com") .. "/accounts/create-token/" .. steam
