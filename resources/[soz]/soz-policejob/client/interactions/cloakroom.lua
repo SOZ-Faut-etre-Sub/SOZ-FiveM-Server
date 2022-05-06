@@ -16,7 +16,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
                 end)
             end,
         })
@@ -35,7 +35,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
                         anim = "male_shower_towel_dry_to_get_dressed",
                         flags = 16,
                     }, {}, {}, function() -- Done
-                        TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", skin)
+                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
                     end)
                 end,
             })
@@ -52,7 +52,7 @@ RegisterNetEvent("police:client:SetPrisonerClothes", function()
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-            TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", Config.PrisonerClothes[playerPedModel])
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", Config.PrisonerClothes[playerPedModel])
             LocalPlayer.state:set("havePrisonerClothes", true, true)
         end)
     else
@@ -60,7 +60,7 @@ RegisterNetEvent("police:client:SetPrisonerClothes", function()
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-            TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
             LocalPlayer.state:set("havePrisonerClothes", false, true)
         end)
     end
