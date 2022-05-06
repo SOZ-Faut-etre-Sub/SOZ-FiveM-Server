@@ -156,7 +156,7 @@ exports["qb-target"]:SpawnPed({
                 type = "client",
                 event = "soz-concessvelo:client:Menu",
                 icon = "c:concess/lister.png",
-                label = "Demander la liste des vélos",
+                label = "Liste Vélos",
                 action = function()
                     TriggerEvent("soz-concessvelo:client:Menu", "")
                 end,
