@@ -1,6 +1,7 @@
 local BennysF3 = MenuV:CreateMenu(nil, "Services Bennys", "menu_job_bennys", "soz", "bennys:menu:f3")
 
-local function OpenF3Menu(menu)
+BennysF3:On("open", function(menu)
+    menu:ClearItems()
     if OnDuty then
         menu:AddSlider({
             icon = "🚧",
@@ -17,18 +18,8 @@ local function OpenF3Menu(menu)
     else
         menu:AddButton({label = "Tu n'es pas en service !", disabled = true})
     end
-end
-
-local function GenerateF3Menu()
-    if BennysF3.IsOpen then
-        BennysF3:Close()
-    else
-        BennysF3:ClearItems()
-        OpenF3Menu(BennysF3)
-        BennysF3:Open()
-    end
-end
+end)
 
 RegisterNetEvent("bennys:client:OpenSocietyMenu", function()
-    GenerateF3Menu()
+    BennysF3:Open()
 end)

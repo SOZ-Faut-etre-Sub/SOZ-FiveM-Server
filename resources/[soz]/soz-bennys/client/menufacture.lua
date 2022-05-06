@@ -1,8 +1,10 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
 local BennysInvoice = MenuV:CreateMenu(nil, "Factures Bennys", "menu_job_bennys", "soz", "bennys:menu:invoice")
+local targetPlayer
 
-local function OpenInvoiceMenu(menu, targetPlayer)
+BennysInvoice:On("open", function(menu)
+    menu:ClearItems()
     local player = NetworkGetPlayerIndexFromPed(targetPlayer)
     menu:AddButton({
         label = "Factures personnalisées",
@@ -23,20 +25,6 @@ local function OpenInvoiceMenu(menu, targetPlayer)
             TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
         end,
     })
-end
-
-local function GenerateInvoiceMenu(entity)
-    if BennysInvoice.IsOpen then
-        BennysInvoice:Close()
-    else
-        BennysInvoice:ClearItems()
-        OpenInvoiceMenu(BennysInvoice, entity)
-        BennysInvoice:Open()
-    end
-end
-
-RegisterNetEvent("soz-bennys:client:OpenInvoiceMenu", function(entity)
-    GenerateInvoiceMenu(entity)
 end)
 
 CreateThread(function()
@@ -45,10 +33,10 @@ CreateThread(function()
             {
                 label = "Facture",
                 icon = "fas fa-file-invoice-dollar",
-                event = "soz-bennys:client:OpenInvoiceMenu",
                 job = "bennys",
                 action = function(entity)
-                    TriggerEvent("soz-bennys:client:OpenInvoiceMenu", entity)
+                    targetPlayer = entity
+                    BennysInvoice:Open()
                 end,
                 canInteract = function(entity)
                     return OnDuty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
