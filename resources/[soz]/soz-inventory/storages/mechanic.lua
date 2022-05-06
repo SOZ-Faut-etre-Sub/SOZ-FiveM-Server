@@ -14,3 +14,11 @@ Config.Storages["bennys_boss_storage"] = {
     position = vector3(-196.99, -1314.76, 31.09),
     size = vec2(1.5, 3.0),
 }
+
+Config.Storages["bennys_fridge"] = {
+    label = "Frigo Bennys",
+    type = "fridge",
+    owner = "bennys",
+    position = vector3(-204.2, -1340.54, 34.89),
+    size = vec2(2.0, 2.0),
+}
