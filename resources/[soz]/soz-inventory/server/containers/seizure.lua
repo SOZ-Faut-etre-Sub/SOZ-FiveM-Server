@@ -49,7 +49,7 @@ function SeizureInventory:AllowedItems(item)
         ["weapon_attachment"] = true,
         ["weapon_ammo"] = true,
         ["drug"] = true,
-        ["item"] = true,
+        ["item_illegal"] = true,
     }
     return typeAllowed[item.type or ""] or false
 end
