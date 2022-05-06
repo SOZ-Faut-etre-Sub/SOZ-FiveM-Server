@@ -27,7 +27,6 @@ local REGISTER_COMMAND = assert(RegisterCommand)
 local GET_HASH_KEY = assert(GetHashKey)
 local CreateThread = assert(Citizen.CreateThread)
 local Wait = assert(Citizen.Wait)
-local GetGameTimer = assert(GetGameTimer)
 
 ----------------------- [ MenuV ] -----------------------
 -- GitHub: https://github.com/ThymonA/menuv/
@@ -2072,8 +2071,6 @@ local menuv_table = {
     __type = 'MenuV',
     ---@type Menu|nil
     CurrentMenu = nil,
-    ---@type number
-    LastMenuUpdate = GetGameTimer(),
     ---@type string|nil
     CurrentUpdateUUID = nil,
     ---@type string
@@ -2296,8 +2293,6 @@ function MenuV:OpenMenu(menu, cb, reopen)
         end
     end)
 
-    MenuV.LastMenuUpdate = GetGameTimer()
-
     SEND_NUI_MESSAGE({
         action = 'OPEN_MENU',
         menu = menu:ToTable(),
@@ -2492,7 +2487,6 @@ REGISTER_NUI_CALLBACK('open', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID == uuid or MenuV.CurrentMenu.UUID == new_uuid) then return end
-    MenuV.LastMenuUpdate = GetGameTimer()
 
     for _, v in pairs(MenuV.ParentMenus) do
         if (v.UUID == uuid) then
@@ -2513,7 +2507,6 @@ REGISTER_NUI_CALLBACK('opened', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= uuid) then return end
-    MenuV.LastMenuUpdate = GetGameTimer()
 
     MenuV.CurrentMenu:Trigger('open')
 end)
@@ -2524,7 +2517,6 @@ REGISTER_NUI_CALLBACK('submit', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil) then return end
-    MenuV.LastMenuUpdate = GetGameTimer()
 
     for k, v in pairs(MenuV.CurrentMenu.Items) do
         if (v.UUID == uuid) then
@@ -2599,7 +2591,6 @@ REGISTER_NUI_CALLBACK('switch', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil) then return end
-    MenuV.LastMenuUpdate = GetGameTimer()
 
     for k, v in pairs(MenuV.CurrentMenu.Items) do
         if (v.UUID == prev_uuid) then
@@ -2626,7 +2617,6 @@ REGISTER_NUI_CALLBACK('update', function(info, cb)
     cb('ok')
 
     if (MenuV.CurrentMenu == nil) then return end
-    MenuV.LastMenuUpdate = GetGameTimer()
 
     for k, v in pairs(MenuV.CurrentMenu.Items) do
         if (v.UUID == uuid) then
@@ -2695,10 +2685,6 @@ CreateThread(function()
             EnableControlAction(0, 194, true) -- INPUT_FRONTEND_RRIGHT
             EnableControlAction(0, 239, true) -- INPUT_CURSOR_X
             EnableControlAction(0, 240, true) -- INPUT_CURSOR_Y
-        end
-
-        if GetGameTimer() - MenuV.LastMenuUpdate >= 20000 then
-            MenuV:CloseAll()
         end
 
         Wait(0)

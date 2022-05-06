@@ -206,6 +206,10 @@ export default VUE.extend({
             if (this.menu) { this.show = status; }
         },
         OPEN_MENU({ menu, reopen }: { menu: Menu, reopen: boolean }) {
+            if (this.resource !== menu.resource && this.resource !== 'menuv') {
+                this.POST(`https://menuv/close`, { uuid: this.uuid, r: this.resource });
+            }
+
             this.POST(`https://menuv/open`, { uuid: this.uuid, new_uuid: menu.uuid, r: this.resource });
             this.RESET_MENU();
 
