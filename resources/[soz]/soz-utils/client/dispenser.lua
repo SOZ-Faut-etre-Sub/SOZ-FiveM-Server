@@ -7,24 +7,23 @@ local vending_machine_food = {-654402915}
 local vending_cafe = {690372739}
 
 exports["qb-target"]:AddTargetModel(vending_machine_drink, {
-    options = {{event = "soz-core:client:dispenser:Drink", label = "Bouteille d'eau", icon = "c:food/bouteille.png"}},
+    options = {{event = "soz-utils:client:dispenser:Drink", label = "Bouteille d'eau", icon = "c:food/bouteille.png"}},
     distance = 1,
 })
 
-exports["qb-target"]:AddTargetModel(vending_machine_food,
-                                    {
-    options = {{event = "soz-core:client:dispenser:Eat", label = "Sandwich", icon = "c:food/baguette.png"}},
+exports["qb-target"]:AddTargetModel(vending_machine_food, {
+    options = {{event = "soz-utils:client:dispenser:Eat", label = "Sandwich", icon = "c:food/baguette.png"}},
     distance = 1,
 })
 
 exports["qb-target"]:AddTargetModel(vending_cafe,
                                     {
-    options = {{event = "soz-core:client:dispenser:Cafe", label = "Café", icon = "c:food/cafe.png"}},
+    options = {{event = "soz-utils:client:dispenser:Cafe", label = "Café", icon = "c:food/cafe.png"}},
     distance = 1,
 })
 
-RegisterNetEvent("soz-core:client:dispenser:Eat")
-AddEventHandler("soz-core:client:dispenser:Eat", function()
+RegisterNetEvent("soz-utils:client:dispenser:Eat")
+AddEventHandler("soz-utils:client:dispenser:Eat", function()
     local Player = QBCore.Functions.GetPlayerData()
     local price = 10
     if Player.money.money < price then
@@ -37,13 +36,13 @@ AddEventHandler("soz-core:client:dispenser:Eat", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "mini@sprunk", anim = "plyr_buy_drink_pt1", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-core:server:dispenser:pay", price, "sandwich")
+            TriggerServerEvent("soz-utils:server:dispenser:pay", price, "sandwich")
         end)
     end
 end)
 
-RegisterNetEvent("soz-core:client:dispenser:Drink")
-AddEventHandler("soz-core:client:dispenser:Drink", function()
+RegisterNetEvent("soz-utils:client:dispenser:Drink")
+AddEventHandler("soz-utils:client:dispenser:Drink", function()
     local Player = QBCore.Functions.GetPlayerData()
     local price = 10
     if Player.money.money < price then
@@ -56,13 +55,13 @@ AddEventHandler("soz-core:client:dispenser:Drink", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "mini@sprunk", anim = "plyr_buy_drink_pt1", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-core:server:dispenser:pay", price, "water_bottle")
+            TriggerServerEvent("soz-utils:server:dispenser:pay", price, "water_bottle")
         end)
     end
 end)
 
-RegisterNetEvent("soz-core:client:dispenser:Cafe")
-AddEventHandler("soz-core:client:dispenser:Cafe", function()
+RegisterNetEvent("soz-utils:client:dispenser:Cafe")
+AddEventHandler("soz-utils:client:dispenser:Cafe", function()
     local Player = QBCore.Functions.GetPlayerData()
     local price = 10
     if Player.money.money < price then
@@ -75,7 +74,7 @@ AddEventHandler("soz-core:client:dispenser:Cafe", function()
             disableMouse = false,
             disableCombat = true,
         }, {animDict = "mini@sprunk", anim = "plyr_buy_drink_pt1", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-core:server:dispenser:pay", price, "coffee")
+            TriggerServerEvent("soz-utils:server:dispenser:pay", price, "coffee")
         end)
     end
 end)

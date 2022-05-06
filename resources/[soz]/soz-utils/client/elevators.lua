@@ -73,7 +73,7 @@ local function CreateTargetOptions(elevatorData)
                     table.insert(options, {
                         icon = dir.icon,
                         label = string.format(dir.label, destination.label),
-                        event = elevatorData.event or "soz-core:client:elevator",
+                        event = elevatorData.event or "soz-utils:client:elevator",
                         destination = dest,
                     })
                 end
@@ -96,7 +96,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-AddEventHandler("soz-core:client:elevator", function(data)
+AddEventHandler("soz-utils:client:elevator", function(data)
     if not data.destination or not Elevators[data.destination] then
         return
     end
