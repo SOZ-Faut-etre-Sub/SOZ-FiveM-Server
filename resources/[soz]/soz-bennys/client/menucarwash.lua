@@ -1,7 +1,8 @@
 local VehiculeWash = MenuV:CreateMenu(nil, "Station lavage", "menu_job_depanneur", "soz", "mechanic:vehicle:wash")
 local insidewash = false
 
-local function WashMenu(menu)
+VehiculeWash:On("open", function(menu)
+    menu:ClearItems()
     menu:AddButton({
         icon = "◀",
         label = "Fermer menu",
@@ -17,17 +18,7 @@ local function WashMenu(menu)
             TriggerEvent("qb-carwash:client:washCar")
         end,
     })
-end
-
-local function GenerateWashMenu()
-    if VehiculeWash.IsOpen then
-        VehiculeWash:Close()
-    else
-        VehiculeWash:ClearItems()
-        WashMenu(VehiculeWash)
-        VehiculeWash:Open()
-    end
-end
+end)
 
 Washmecha = BoxZone:Create(vector3(-198.28, -1324.56, 30.89), 8, 6, {
     name = "Washmecha_z",
@@ -51,20 +42,25 @@ Washmecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
     else
         if OnDuty == true and PlayerJob.id == "bennys" then
             insidewash = false
-            VehiculeWash:Close()
         end
     end
 end)
 
 CreateThread(function()
-    while true do
-        if insidewash == true then
-            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Menu de lavage")
-            if IsControlJustPressed(1, 51) then
-                GenerateWashMenu()
-            end
-        end
-        Wait(2)
-    end
+    exports["qb-target"]:AddGlobalVehicle({
+        options = {
+            {
+                type = "client",
+                icon = "c:mechanic/Car_wash.png",
+                label = "Carwash",
+                action = function(entity)
+                    VehiculeWash:Open()
+                end,
+                canInteract = function(entity, distance, data)
+                    return insidewash
+                end,
+            },
+        },
+        distance = 3.0,
+    })
 end)
-
