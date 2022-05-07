@@ -1,10 +1,10 @@
 local BaseClothSet, NakedClothSet
 local components = {
-    [1] = {label = "Chapeau", componentId = 0, value = "HideHead"},
+    [1] = {label = "Chapeau", propId = 0, value = "HideHead"},
     [2] = {label = "Masque", componentId = 1, value = "HideMask"},
     [3] = {label = "Lunettes", propId = 1, value = "HideGlasses"},
-    [4] = {label = "Oreilles", propId = 2, value = "HideEar"},
-    [5] = {label = "Chaine", componentId = 7, value = "HideChain"},
+    [4] = {label = "Boucles", propId = 2, value = "HideEar"},
+    [5] = {label = "Collier", componentId = 7, value = "HideChain"},
     [6] = {label = "Gilet", componentId = 9, value = "HideBulletproof"},
     [7] = {label = "Haut", componentId = {3, 8, 10, 11}, value = "HideTop"},
     [8] = {label = "Montre", propId = 6, value = "HideLeftHand"},
@@ -66,12 +66,16 @@ function TenueEntry(menu)
             label = component.label,
             value = componentEquipped(ped, component.componentId) or propEquipped(ped, component.propId),
             change = function(_, value)
-                QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                    disableMovement = true,
-                    disableCombat = true,
-                }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:UpdateClothConfig", component.value, not value)
-                end)
+                if component.propId ~= nil then
+                    QBCore.Functions.RequestAnimDict("mp_masks@on_foot")
+                    TaskPlayAnim(ped, "mp_masks@on_foot", "put_on_mask", 8.0, -8.0, 2000, 16, 0, 1, 1, 1)
+                    Wait(2000)
+                elseif component.componentId ~= nil then
+                    QBCore.Functions.RequestAnimDict("anim@mp_yacht@shower@male@")
+                    TaskPlayAnim(ped, "anim@mp_yacht@shower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8.0, 3000, 16, 0, 1, 1, 1)
+                    Wait(3000)
+                end
+                TriggerServerEvent("soz-character:server:UpdateClothConfig", component.value, not value)
             end,
         })
     end
