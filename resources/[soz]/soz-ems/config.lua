@@ -18,21 +18,6 @@ Config.Locations = {
 Config.Cloakroom = {
     ["lsmc"] = {
         [GetHashKey("mp_m_freemode_01")] = {
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 92, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 101, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 30, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 54, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 29, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 213, Texture = 6, Palette = 0},
-                },
-                Props = {},
-            },
             ["Tenue incendie"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -50,21 +35,6 @@ Config.Cloakroom = {
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 106, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 105, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
-                    [7] = {Drawable = 14, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 6, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 219, Texture = 6, Palette = 0},
-                },
-                Props = {},
-            },
             ["Tenue incendie"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -84,6 +54,43 @@ Config.Cloakroom = {
     },
 }
 
+Config.DutyOutfit = {
+    ["lsmc"] = {
+        [0] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 92, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 101, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 30, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 54, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 29, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 213, Texture = 6, Palette = 0},
+                },
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 106, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 105, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 14, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 6, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 219, Texture = 6, Palette = 0},
+                },
+                Props = {},
+            },
+        },
+    },
+}
+
 Config.Fines = {
     [1] = {
         label = "Factures basique",
@@ -92,5 +99,19 @@ Config.Fines = {
             {label = "Premier secours", price = 4000},
             {label = "Réanimation", price = 8000},
         },
+    },
+}
+
+Config.BossShop = {
+    ["lsmc"] = {
+        [1] = {name = "outfit", metadata = {label = "LSMC", type = "lsmc"}, price = 100, amount = 1},
+        [2] = {name = "armor", metadata = {label = "LSMC", type = "lsmc"}, price = 150, amount = 1},
+        [3] = {name = "antibiotic", metadata = {}, price = 15, amount = 1},
+        [4] = {name = "painkiller", metadata = {}, price = 15, amount = 1},
+        [5] = {name = "defibrillator", metadata = {}, price = 25, amount = 1},
+        [6] = {name = "empty_bloodbag", metadata = {}, price = 5, amount = 1},
+        [7] = {name = "firstaid", metadata = {}, price = 35, amount = 1},
+        [8] = {name = "pommade", metadata = {}, price = 15, amount = 1},
+        [9] = {name = "tissue", metadata = {}, price = 5, amount = 1},
     },
 }
