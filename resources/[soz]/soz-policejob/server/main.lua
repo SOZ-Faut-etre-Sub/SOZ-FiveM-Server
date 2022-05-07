@@ -198,16 +198,18 @@ RegisterNetEvent("police:server:buy", function(weaponID)
         return
     end
 
-    local weapon = Config.WeaponShop[player.PlayerData.job.id][weaponID]
+    local item = Config.WeaponShop[player.PlayerData.job.id][weaponID]
 
-    if player.Functions.RemoveMoney("money", weapon.price) then
-        weapon.metadata.serie = tostring(string.upper(player.PlayerData.job.id) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
-                                             QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+    if player.Functions.RemoveMoney("money", item.price) then
+        if item.type == "weapon" then
+            item.metadata.serie = tostring(string.upper(player.PlayerData.job.id) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
+                                               QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+        end
 
-        exports["soz-inventory"]:AddItem(player.PlayerData.source, weapon.name, weapon.amount, weapon.metadata, nil, function(success, reason)
+        exports["soz-inventory"]:AddItem(player.PlayerData.source, item.name, item.amount, item.metadata, nil, function(success, reason)
             if success then
                 TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                   ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(weapon.amount, QBCore.Shared.Items[weapon.name].label, weapon.price))
+                                   ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(item.amount, QBCore.Shared.Items[item.name].label, item.price))
             end
         end)
     else

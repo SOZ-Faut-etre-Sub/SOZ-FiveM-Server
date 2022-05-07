@@ -1,5 +1,4 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu")
-local shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:news:shop:menu")
 local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic"}
 
 --- Targets
@@ -38,19 +37,7 @@ CreateThread(function()
         heading = 0,
         minZ = 27.82,
         maxZ = 30.82,
-    }, {
-        options = {
-            {
-                label = "Récupérer du matériel",
-                icon = "fas fa-briefcase",
-                event = "news:client:bossShop",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.ManageGrade)
-                end,
-            },
-        },
-        distance = 2.5,
-    })
+    }, {options = SozJobCore.Functions.GetBossShopActions("news", "news:client:bossShop"), distance = 2.5})
 end)
 
 --- Events
@@ -175,7 +162,6 @@ end)
 
 RegisterNetEvent("news:client:bossShop", function()
     if not SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.ManageGrade) then
-
         return
     end
 
@@ -186,7 +172,7 @@ RegisterNetEvent("news:client:bossShop", function()
             rightLabel = "$" .. item.price,
             value = itemID,
             select = function(btn)
-                TriggerServerEvent("news:server:buy", btn.Value)
+                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
             end,
         })
     end
