@@ -26,7 +26,7 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
                         anim = "male_shower_towel_dry_to_get_dressed",
                         flags = 16,
                     }, {}, {}, function() -- Done
-                        TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", skin)
+                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
                     end)
                 end,
             })

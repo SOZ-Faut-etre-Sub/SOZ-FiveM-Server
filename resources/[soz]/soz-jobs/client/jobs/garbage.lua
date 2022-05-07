@@ -142,7 +142,7 @@ RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
                 disableMovement = true,
                 disableCombat = true,
             }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", GarbageConfig.Cloakroom[PlayerData.skin.Model.Hash])
+                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", GarbageConfig.Cloakroom[PlayerData.skin.Model.Hash])
             end)
         end,
     })
