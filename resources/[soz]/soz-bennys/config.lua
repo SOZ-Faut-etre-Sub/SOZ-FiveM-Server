@@ -455,3 +455,8 @@ Config.Cloakroom = {
         },
     },
 }
+
+Config.BossShop = {
+    [1] = {name = "repairkit", metadata = {}, price = 50, amount = 1},
+    [2] = {name = "cleaningkit", metadata = {}, price = 40, amount = 1},
+}
