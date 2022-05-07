@@ -4,14 +4,13 @@ local JobVehicle = false
 local InVehicle = false
 local ObjectifCoord = {}
 local Counter = 0
+local harvetZone = nil
+local hasEnteredZoneOnce = false
 local DrawDistance = 100
 local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
 
-exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1, 1, {
-    name = "job metal",
-    heading = 0,
-    debugPoly = false,
-}, {
+exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1, 1,
+                                {name = "job metal", minZ = 24.0, maxZ = 26.0, heading = 0, debugPoly = false}, {
     options = {
         {
             type = "client",
@@ -44,19 +43,9 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
         },
         {
             type = "client",
-            event = "jobs:metal:restart",
-            icon = "c:pole/restart.png",
-            label = "Relancer",
-            job = SozJobCore.JobType.Scrapper,
-            canInteract = function()
-                return OnJob == false
-            end,
-        },
-        {
-            type = "client",
             event = "jobs:metal:vente",
             icon = "fas fa-sign-in-alt",
-            label = "Vendre du métal",
+            label = "Vendre de la ferraille",
             job = SozJobCore.JobType.Scrapper,
             item = "metalscrap",
         },
@@ -73,7 +62,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
 
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
-    QBCore.Functions.Progressbar("adsl_fix", "Récolte du metal..", 10000, false, true,
+    QBCore.Functions.Progressbar("adsl_fix", "Vous cherchez de la ferraille...", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -83,7 +72,6 @@ AddEventHandler("jobs:metal:fix", function()
         TaskPlayAnim(PlayerPedId(), "random@domestic", "pickup_low", 8.0, -8.0, -1, 49, 0, 0, 0, 0)
         amount = math.random(5, 15)
         TriggerServerEvent("job:get:metal", amount)
-        exports["qb-target"]:RemoveZone("adsl_zone")
         DrawInteractionMarker(ObjectifCoord, false)
         TriggerEvent("jobs:metal:start")
     end)
@@ -108,7 +96,14 @@ end
 
 RegisterNetEvent("jobs:metal:vente")
 AddEventHandler("jobs:metal:vente", function()
-    local sellamount = exports["soz-hud"]:Input(("Combien de métal scrap voulez vous vendre?"), 2)
+    local count = 0
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == "metalscrap" then
+            count = item.amount
+        end
+    end
+
+    local sellamount = exports["soz-hud"]:Input(("Combien de ferrailles voulez-vous vendre ?"), 2, count)
     TriggerServerEvent("job:remove:metal", sellamount)
     Counter = 0
 end)
@@ -143,12 +138,6 @@ AddEventHandler("jobs:metal:vehicle", function()
     TriggerEvent("jobs:metal:prestart")
 end)
 
-RegisterNetEvent("jobs:metal:restart")
-AddEventHandler("jobs:metal:restart", function()
-    JobCounter = 0
-    TriggerEvent("jobs:metal:start")
-end)
-
 local function random_coord()
     local result = SozJobCore.metal[math.random(#SozJobCore.metal)]
     if result.x == JobDone then
@@ -161,27 +150,37 @@ end
 RegisterNetEvent("jobs:metal:prestart")
 AddEventHandler("jobs:metal:prestart", function()
     TriggerServerEvent("job:anounce", "Rendez-vous dans la zone de récolte")
-    DrawDistance = 100
-    local ZoneRecolte = {x = -465.04, y = -1709.02, z = 18.74}
+    -- DrawDistance = 100
+    local ZoneRecolte = {x = -465.04, y = -1709.02, z = 18.74, w = 0.0}
     createblip("metal", "Zone de récolte", 801, ZoneRecolte)
     ClearGpsMultiRoute()
     StartGpsMultiRoute(6, true, true)
     AddPointToGpsMultiRoute(ZoneRecolte.x, ZoneRecolte.y, ZoneRecolte.z)
     SetGpsMultiRouteRender(true)
-    while DrawDistance >= 50 do
-        Citizen.Wait(1000)
-        local player = GetPlayerPed(-1)
-        local CoordPlayer = GetEntityCoords(player)
-        DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ZoneRecolte.x, ZoneRecolte.y, ZoneRecolte.z)
-    end
 
-    TriggerEvent("jobs:metal:start")
+    harvestZone = PolyZone:Create({
+        vector3(-399.53, -1675.22, 19.0),
+        vector3(-429.21, -1755.87, 19.0),
+        vector3(-488.37, -1765.92, 19.0),
+        vector3(-474.18, -1651.1, 19.0),
+    }, {name = "metal-harvest", minZ = 18.0, maxZ = 23.0, debugPoly = false})
+    harvestZone:onPlayerInOut(function(isInside)
+        if isInside then
+            if not hasEnteredZoneOnce then
+                hasEnteredZoneOnce = true
+                TriggerEvent("jobs:metal:start")
+            end
+            DrawInteractionMarker(ObjectifCoord, true)
+        else
+            DrawInteractionMarker(ObjectifCoord, false)
+        end
+    end)
 end)
 
 RegisterNetEvent("jobs:metal:start")
 AddEventHandler("jobs:metal:start", function()
     if Counter == 0 then
-        TriggerServerEvent("job:anounce", "Récoltez du métal")
+        TriggerServerEvent("job:anounce", "Récoltez de la ~b~ferraille~s~")
         Citizen.Wait(500)
         TriggerServerEvent("job:anounce", "Puis retournez le vendre au patron")
     end
@@ -195,7 +194,7 @@ AddEventHandler("jobs:metal:start", function()
         debugPoly = false,
     }, {
         options = {{type = "client", event = "jobs:metal:fix", icon = "c:pole/recolter.png", label = "Récolter"}},
-        distance = 2.5,
+        distance = 1.5,
     })
     ObjectifCoord = coords
     DrawInteractionMarker(ObjectifCoord, true)
@@ -213,4 +212,7 @@ AddEventHandler("jobs:metal:end", function()
     JobOutfit = false
     JobVehicle = false
     Counter = 0
+    hasEnteredZoneOnce = false
+    harvestZone:destroy()
+    harvestZone = nil
 end)
