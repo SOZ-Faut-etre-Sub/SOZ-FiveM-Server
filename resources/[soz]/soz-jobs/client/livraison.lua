@@ -71,7 +71,7 @@ AddEventHandler("jobs:livraison:fix", function()
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
+    }, {animDict = "mp_common", anim = "givetake2_a"}, {}, {}, function()
         exports["qb-target"]:RemoveZone("livraison_zone")
         destroyblip(job_blip)
         DrawInteractionMarker(ObjectifCoord, false)
@@ -113,16 +113,16 @@ end)
 
 RegisterNetEvent("jobs:livraison:tenue")
 AddEventHandler("jobs:livraison:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule")
+    TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
     JobOutfit = true
 end)
 
 RegisterNetEvent("jobs:livraison:vehicle")
 AddEventHandler("jobs:livraison:vehicle", function()
-    TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
+    TriggerServerEvent("job:anounce", "Enfourchez votre scooter de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.livraison_vehicule)
+    createblip("Véhicule", "Scooter de sevrice", 225, SozJobCore.livraison_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
