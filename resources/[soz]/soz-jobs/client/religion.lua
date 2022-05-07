@@ -128,16 +128,16 @@ end)
 
 RegisterNetEvent("jobs:religion:tenue")
 AddEventHandler("jobs:religion:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule")
+    TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
     JobOutfit = true
 end)
 
 RegisterNetEvent("jobs:religion:vehicle")
 AddEventHandler("jobs:religion:vehicle", function()
-    TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
+    TriggerServerEvent("job:anounce", "Enfourchez votre vélo de service")
     SpawnVehicule()
     JobVehicle = true
-    createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.religion_vehicule)
+    createblip("Véhicule", "Vélo de service", 225, SozJobCore.religion_vehicule)
     local player = GetPlayerPed(-1)
     while InVehicle == false do
         Citizen.Wait(100)
