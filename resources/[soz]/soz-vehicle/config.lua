@@ -280,6 +280,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "lspd",
     },
+    ["lsmc"] = {
+        label = "LSMC",
+        blipcoord = vector4(385.53, -1443.01, 28.43, 39.22),
+        showBlip = false,
+        blipName = "LSMC",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "lsmc",
+    },
     ["bcso"] = {
         label = "BCSO",
         blipcoord = vector4(1854.63, 3679.58, 32.83, 29.91),
