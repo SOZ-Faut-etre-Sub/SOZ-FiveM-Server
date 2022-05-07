@@ -33,7 +33,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             type = "client",
             event = "jobs:religion:vehicle",
             icon = "c:pole/vehicle.png",
-            label = "sortir",
+            label = "Sortir",
             job = SozJobCore.JobType.Religious,
             canInteract = function()
                 if JobOutfit == true then
@@ -196,6 +196,9 @@ AddEventHandler("jobs:religion:end", function()
     QBCore.Functions.DeleteVehicle(religion_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")
     destroyblip(job_blip)
+    if IsWaypointActive() then
+        DeleteWaypoint()
+    end
     OnJob = false
     JobOutfit = false
     JobVehicle = false
