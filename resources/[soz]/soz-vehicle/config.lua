@@ -350,6 +350,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "oil",
     },
+    ["taxi"] = {
+        label = "Carl Jr Service",
+        blipcoord = vector4(896.53, -146.94, 75.89, 59.71),
+        showBlip = false,
+        blipName = "Carl Jr Service",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "taxi",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",
