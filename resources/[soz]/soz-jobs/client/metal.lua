@@ -4,9 +4,8 @@ local JobVehicle = false
 local InVehicle = false
 local ObjectifCoord = {}
 local Counter = 0
-local harvetZone = nil
+local harvestZone = nil
 local hasEnteredZoneOnce = false
-local DrawDistance = 100
 local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
 
 exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1, 1,
@@ -150,7 +149,6 @@ end
 RegisterNetEvent("jobs:metal:prestart")
 AddEventHandler("jobs:metal:prestart", function()
     TriggerServerEvent("job:anounce", "Rendez-vous dans la zone de récolte")
-    -- DrawDistance = 100
     local ZoneRecolte = {x = -465.04, y = -1709.02, z = 18.74, w = 0.0}
     createblip("metal", "Zone de récolte", 801, ZoneRecolte)
     ClearGpsMultiRoute()
