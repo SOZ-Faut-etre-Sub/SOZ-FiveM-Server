@@ -489,7 +489,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             local curVeh = GetPlayersLastVehicle()
             local vehClass = GetVehicleClass(curVeh)
             if garage.vehicle == "car" or not garage.vehicle then
-                if vehClass ~= 14 and vehClass ~= 15 and vehClass ~= 16 then
+                if vehClass ~= 14 and vehClass ~= 16 then
                     ParkingEntrepriseList:Close()
                     enterVehicle(curVeh, indexgarage, type)
                 else
