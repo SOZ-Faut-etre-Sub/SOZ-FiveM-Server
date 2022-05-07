@@ -5,6 +5,15 @@ local JobVehicle = false
 local InVehicle = false
 local ObjectifCoord = {}
 local DrawDistance = 100
+local PrayersMax = 0
+local PrayersCount = 0
+local PrayersPed = {}
+
+local function ResetPrayersState()
+    PrayersMax = 0
+    PrayersCount = 0
+    PrayersPed = {}
+end
 
 exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07), 1, 1, {
     name = "job religion",
@@ -64,20 +73,32 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
 
 RegisterNetEvent("jobs:religion:fix")
 AddEventHandler("jobs:religion:fix", function(ped)
+    for _, p in ipairs(PrayersPed) do
+        if p == ped then
+            exports["soz-hud"]:DrawNotification("Vous avez déjà parlé à cette personne", "warning")
+            return
+        end
+    end
     FreezeEntityPosition(ped, true)
-    QBCore.Functions.Progressbar("religion_fix", "Promouvoir la religion", 10000, false, true,
+    QBCore.Functions.Progressbar("religion_fix", "Vous balancez une info chat...", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "timetable@amanda@ig_4", anim = "ig_4_base"}, {}, {}, function()
-        exports["qb-target"]:RemoveZone("religion_zone")
-        destroyblip(job_blip)
         payout_counter = payout_counter + 1
+        PrayersCount = PrayersCount + 1
+        table.insert(PrayersPed, ped)
         FreezeEntityPosition(ped, false)
-        OnJob = false
-        TriggerServerEvent("job:anounce", "Retournez au point de départ pour continuer ou finir le job")
+        if PrayersCount >= PrayersMax then
+            exports["soz-hud"]:DrawNotification(string.format("Vous avez prêchez %d infos chat dans cette zone", PrayersCount), "warning")
+            exports["soz-hud"]:DrawNotification("Retournez voir le prête", "info")
+            exports["qb-target"]:RemoveZone("religion_zone")
+            destroyblip(job_blip)
+            OnJob = false
+            ResetPrayersState()
+        end
     end)
 end)
 
@@ -145,10 +166,12 @@ end
 
 RegisterNetEvent("jobs:religion:start")
 AddEventHandler("jobs:religion:start", function()
-    TriggerServerEvent("job:anounce", "Rendez vous dans la zone")
+    TriggerServerEvent("job:anounce", "Rendez vous dans la zone pour diffuser vos infos chat")
     local coords = random_coord()
-    createblip("religion", "Zone de conversion", 480, coords)
+    createblip("religion", "Zone Info Chat", 480, coords)
     SetNewWaypoint(coords.x, coords.y)
+    ResetPrayersState()
+    PrayersMax = math.random(SozJobCore.religion_prayers_range.min, SozJobCore.religion_prayers_range.max)
     exports["qb-target"]:AddBoxZone("religion_zone", vector3(coords.x, coords.y, coords.z), coords.sx, coords.sy,
                                     {
         name = "religion_zone",
@@ -161,7 +184,7 @@ AddEventHandler("jobs:religion:start", function()
             {
                 type = "client",
                 icon = "fas fa-sign-in-alt",
-                label = "Parler d'epsylon",
+                label = "Donner une info chat",
                 canInteract = function(entity)
                     local type = GetEntityType(entity)
                     if type == 1 then
@@ -185,7 +208,7 @@ AddEventHandler("jobs:religion:start", function()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
-    TriggerServerEvent("job:anounce", "Parler à une personne d'epsylon")
+    TriggerServerEvent("job:anounce", "Balancez vos infos chat aux passants")
 end)
 
 RegisterNetEvent("jobs:religion:end")
@@ -203,4 +226,5 @@ AddEventHandler("jobs:religion:end", function()
     JobOutfit = false
     JobVehicle = false
     payout_counter = 0
+    ResetPrayersState()
 end)
