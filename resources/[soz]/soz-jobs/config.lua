@@ -209,6 +209,7 @@ SozJobCore.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
 
 SozJobCore.religion_payout = 150
 SozJobCore.religion_vehicule = {x = -763.69, y = -39.26, z = 37.69, w = 119.87}
+SozJobCore.religion_prayers_range = {min = 3, max = 6}
 
 SozJobCore.metal_payout = 5
 SozJobCore.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
@@ -234,7 +235,7 @@ SozJobCore.livraison = {
 
 SozJobCore.religion = {
     {x = -1517.37, y = -433.94, z = 63.06, sx = 45.4, sy = 53.8, heading = 49, minZ = 34.46, maxZ = 43.46},
-    {x = 235.83, y = 235.83, z = 37.57, sx = 45.8, sy = 54.0, heading = 340, minZ = 26.77, maxZ = 34.17},
+    {x = 235.83, y = 235.83, z = 105.5, sx = 45.8, sy = 54.0, heading = 340, minZ = 104.0, maxZ = 110.0},
     {x = -1221.01, y = -1546.34, z = 18.48, sx = 48.8, sy = 76.6, heading = 305, minZ = 3.08, maxZ = 7.08},
 }
 
