@@ -603,13 +603,15 @@ Config.Armors = {
         ["unmark"] = {Drawable = 27, Texture = 0, Palette = 0},
         ["lspd"] = {Drawable = 27, Texture = 1, Palette = 0},
         ["bcso"] = {Drawable = 27, Texture = 3, Palette = 0},
+        ["lsmc"] = {Drawable = 27, Texture = 0, Palette = 0}, -- is unmarked, need reskin
         ["stonk"] = {Drawable = 2, Texture = 0, Palette = 0},
         ["fbi"] = {Drawable = 27, Texture = 2, Palette = 0},
     },
     [GetHashKey("mp_f_freemode_01")] = {
-        ["unmark"] = {Drawable = 29, Texture = 0, Palette = 0},
+        ["unmark"] = {Drawable = 29, Texture = 7, Palette = 0},
         ["lspd"] = {Drawable = 29, Texture = 1, Palette = 0},
         ["bcso"] = {Drawable = 29, Texture = 3, Palette = 0},
+        ["lsmc"] = {Drawable = 29, Texture = 7, Palette = 0}, -- is unmarked, need reskin
         ["stonk"] = {Drawable = 2, Texture = 0, Palette = 0},
         ["fbi"] = {Drawable = 29, Texture = 2, Palette = 0},
     },
