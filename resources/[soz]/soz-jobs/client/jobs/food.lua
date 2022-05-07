@@ -19,33 +19,37 @@ local function SpawnFieldZones()
             end
         end
 
-        local zone = PolyZone:Create(points, {name = zoneName, minZ = minZ - 2.0, maxZ = maxZ + 2.0})
-        zone:onPlayerInOut(function(isInsideZone)
-            if isInsideZone then
-                local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
-                if not hasPermission or not PlayerData.job.onduty then
-                    return
+        exports["qb-target"]:AddPolyZone(zoneName, points, {
+            name = zoneName,
+            minZ = minZ - 2.0,
+            maxZ = maxZ + 2.0,
+            onPlayerInOut = function(isIn)
+                if isIn then
+                    currentField = zoneName
+                    QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
+                        currentFieldHealth = health
+                        DisplayFieldHealth(true)
+                    end, zoneName)
+                else
+                    currentField = nil
+                    currentFieldHealth = nil
+                    DisplayFieldHealth(false)
                 end
-
-                currentField = zone.name
-                DisplayHelpText()
-                QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
-                    currentFieldHealth = health
-                    DisplayFieldHealth(true)
-                end, zone.name)
-            else
-                currentField = nil
-                currentFieldHealth = nil
-                DisplayFieldHealth(false)
             end
-        end)
-        table.insert(FoodJob.Zones, zone)
-    end
-end
-
-local function DespawnFieldZones()
-    for _, zone in ipairs(FoodJob.Zones) do
-        zone:destroy()
+        }, {
+            options = {
+                {
+                    label = "Récolter",
+                    icon = "c:food/collecter.png",
+                    event = "soz-jobs:client:food-collect-ingredients",
+                    canInteract = function()
+                        local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
+                        return hasPermission and PlayerData.job.onduty
+                    end
+                }
+            }
+        })
+        table.insert(FoodJob.Zones, zoneName)
     end
 end
 
@@ -97,11 +101,10 @@ local function InitJob()
 end
 
 local function DestroyJob()
-    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest", "food:milk-process"}
+    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest", "food:milk-process", table.unpack(FoodJob.Zones)}
     for _, name in ipairs(zoneNames) do
         exports["qb-target"]:RemoveZone(name)
     end
-    DespawnFieldZones()
 end
 
 -- ON STARTUP
@@ -309,23 +312,6 @@ end)
 ---
 --- FARM
 ---
-function DisplayHelpText()
-    helpTextDisplayed = true
-    Citizen.CreateThread(function()
-        while currentField ~= nil and helpTextDisplayed do
-            AddTextEntry("START_RESALE", "Appuyez sur ~INPUT_CONTEXT~ pour débuter la récolte")
-            DisplayHelpTextThisFrame("START_RESALE", false)
-
-            if IsControlJustReleased(0, 51) then
-                helpTextDisplayed = false
-                TriggerEvent("soz-jobs:client:food-collect-ingredients")
-            end
-
-            Citizen.Wait(0)
-        end
-    end)
-end
-
 function DisplayFieldHealth(newVisibility)
     if newVisibility then
         SendNUIMessage({
@@ -388,8 +374,6 @@ FoodJob.Functions.CollectIngredients = function(field)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas recolté d'ingrédients", "error")
         end
-    end, function()
-        DisplayHelpText()
     end)
 end
 
