@@ -18,7 +18,7 @@ function BinInventory:load(id, owner)
     local inventory = {}
     local items = {
         ["plastic"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
-        ["metalscrap"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
+        ["metalscrap"] = math.random(0, 100) >= 80 and math.random(0, 1) or 0,
         ["aluminum"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
         ["rubber"] = math.random(0, 100) >= 80 and math.random(0, 2) or 0,
         ["electronickit"] = math.random(0, 100) >= 80 and 1 or 0,

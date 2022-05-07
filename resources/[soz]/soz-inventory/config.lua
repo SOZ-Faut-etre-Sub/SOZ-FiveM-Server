@@ -3,7 +3,7 @@ Config = {}
 Config.StorageCapacity = {
     ["default"] = {slot = 10, weight = 25000},
     ["player"] = {slot = 30, weight = 80000},
-    ["bin"] = {slot = 10, weight = 10000},
+    ["bin"] = {slot = 10, weight = 25000},
     --- society storages
     ["ammo"] = {slot = 100, weight = 250000},
     ["armory"] = {slot = 100, weight = 250000},
