@@ -13,7 +13,7 @@ const SpeedoMeter: FunctionComponent<any> = () => {
         if (event.data.action === 'speedometer') {
             updateInVehicle(event.data.show)
         } else if (event.data.action === 'update_needs') {
-            updatePlayerSeatbelt(event.data.haveSeatbelt)
+            if (event.data.haveSeatbelt !== undefined) updatePlayerSeatbelt(event.data.haveSeatbelt)
         } else if (event.data.action === 'update_vehicle') {
             if (event.data.speed !== undefined) updateSpeed(event.data.speed)
             if (event.data.fuel !== undefined) updateFuel(event.data.fuel)

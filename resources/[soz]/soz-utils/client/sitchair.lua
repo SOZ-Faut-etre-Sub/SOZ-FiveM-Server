@@ -37,7 +37,7 @@ exports["qb-target"]:AddTargetModel(sitchair, {
             icon = "c:global/sit.png",
             label = "S'asseoir",
             action = function(entity)
-                local player = GetPlayerPed(-1)
+                local player = PlayerPedId()
                 local coords = GetEntityCoords(entity)
                 local heading = GetEntityHeading(entity)
                 sit = true
@@ -47,7 +47,8 @@ exports["qb-target"]:AddTargetModel(sitchair, {
                 else
                     heading = heading + 179
                 end
-                TaskStartScenarioAtPosition(player, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", coords.x, coords.y, coords.z - 0.05, heading, 0, true, true)
+                local offset = Config.SeatChairOffset[GetEntityModel(entity)] or -(GetEntityHeightAboveGround(entity))
+                TaskStartScenarioAtPosition(player, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", coords.x, coords.y, coords.z + offset, heading, 0, true, true)
             end,
         },
     },

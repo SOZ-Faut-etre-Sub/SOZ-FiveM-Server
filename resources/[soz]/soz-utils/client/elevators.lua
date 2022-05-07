@@ -49,6 +49,27 @@ local Elevators = {
         downTo = {"stonk:1R", "stonk:0"},
         spawnPoint = vector4(14.58, -691.15, 45.01, 26.12),
     },
+    --- LSMC
+    ["lsmc:0"] = {
+        name = "Elevator0",
+        label = "Rez de chaussez",
+        buttons = vector2(337.33, -1433.18),
+        heading = 320,
+        z = {min = 32.51, max = 33.51},
+        upTo = "lsmc:1",
+        downTo = nil,
+        spawnPoint = vector4(336.04, -1430.85, 32.51, 146.98),
+    },
+    ["lsmc:1"] = {
+        name = "Elevator1",
+        label = "Toit",
+        buttons = vector2(337.45, -1433.03),
+        heading = 50,
+        z = {min = 46.52, max = 47.52},
+        upTo = nil,
+        downTo = "lsmc:0",
+        spawnPoint = vector4(336.3, -1431.05, 46.52, 140.67),
+    },
 }
 
 ---Create QB-Target options for a possible elevator destination
