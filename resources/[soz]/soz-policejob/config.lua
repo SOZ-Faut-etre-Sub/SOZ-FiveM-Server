@@ -1,6 +1,7 @@
 Config = {}
 
 Config.AllowedJobInteraction = {"lspd", "bcso"}
+Config.AllowedJobDragInteraction = {"lspd", "bcso", "lsmc"}
 
 Config.Badge = GetHashKey("prop_fib_badge")
 
