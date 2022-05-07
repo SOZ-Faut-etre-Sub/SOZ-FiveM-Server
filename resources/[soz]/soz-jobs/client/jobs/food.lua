@@ -35,7 +35,7 @@ local function SpawnFieldZones()
                     currentFieldHealth = nil
                     DisplayFieldHealth(false)
                 end
-            end
+            end,
         }, {
             options = {
                 {
@@ -45,9 +45,9 @@ local function SpawnFieldZones()
                     canInteract = function()
                         local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
                         return hasPermission and PlayerData.job.onduty
-                    end
-                }
-            }
+                    end,
+                },
+            },
         })
         table.insert(FoodJob.Zones, zoneName)
     end
@@ -101,7 +101,13 @@ local function InitJob()
 end
 
 local function DestroyJob()
-    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest", "food:milk-process", table.unpack(FoodJob.Zones)}
+    local zoneNames = {
+        "food:cloakroom",
+        "food:craft",
+        "food:milk_harvest",
+        "food:milk-process",
+        table.unpack(FoodJob.Zones),
+    }
     for _, name in ipairs(zoneNames) do
         exports["qb-target"]:RemoveZone(name)
     end
