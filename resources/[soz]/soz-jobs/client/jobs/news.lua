@@ -152,6 +152,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         },
         select = function(_, value)
             TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
+            societyMenu:Close()
         end,
     })
 
@@ -165,6 +166,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         },
         select = function(_, value)
             TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)
+            societyMenu:Close()
         end,
     })
 
