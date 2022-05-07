@@ -44,7 +44,7 @@ RegisterNetEvent("police:server:EscortPlayer", function(playerId)
     local target = QBCore.Functions.GetPlayer(playerId)
 
     if player and target and player ~= target then
-        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+        for _, allowedJob in ipairs(Config.AllowedJobDragInteraction) do
             if player.PlayerData.job.id == allowedJob then
                 Player(player.PlayerData.source).state:set("isEscorting", true, true)
                 Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
@@ -67,7 +67,7 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     local targetState = Player(target.PlayerData.source).state
 
     if player and target and player ~= target then
-        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+        for _, allowedJob in ipairs(Config.AllowedJobDragInteraction) do
             if player.PlayerData.job.id == allowedJob then
                 if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
                     Player(player.PlayerData.source).state:set("isEscorting", false, true)
