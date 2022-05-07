@@ -380,6 +380,16 @@ local function EnableTarget()
 		DisableTarget(false)
 	end
 end
+
+---Register onPlayerInOut() callback upon zone creation
+---@param zone table PolyZone
+---@param options table {onPlayerInOut = function(isInsideZone:boolean) end}
+local function RegisterZoneCallback(zone, options)
+	if options.onPlayerInOut then
+		zone:onPlayerInOut(options.onPlayerInOut)
+	end
+end
+
  function AddCircleZone(name, center, radius, options, targetoptions)
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = CircleZone:Create(center, radius, options)
