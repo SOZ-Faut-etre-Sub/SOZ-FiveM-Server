@@ -58,3 +58,17 @@ CreateThread(function()
         Wait(1000)
     end
 end)
+
+CreateThread(function()
+    while true do
+        Wait(1000 * 60 * 5)
+        if isshown and housingmap then
+            for item, zone in pairs(CurrentHousing) do
+                if zone.entry_zone ~= nil then
+                    QBCore.Functions.RemoveBlip(zone.identifier)
+                end
+            end
+            TriggerEvent("soz-housing:client:ShowBlip")
+        end
+    end
+end)

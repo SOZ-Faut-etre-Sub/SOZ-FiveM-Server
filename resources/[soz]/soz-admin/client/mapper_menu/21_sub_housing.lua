@@ -101,6 +101,15 @@ ChangeCurrentHousingMenu:On("open", function(menu)
     })
 
     menu:AddButton({
+        label = "Changer le point de TP",
+        value = nil,
+        select = function()
+            coord = GetEntityCoords(PlayerPedId())
+            TriggerServerEvent("soz-admin:server:housing:ChangeTP", CurrentHousingData.identifier, coord)
+        end,
+    })
+    
+    menu:AddButton({
         label = "Zone d'entrée",
         value = CurrentHousingItemMenu,
         select = function()
