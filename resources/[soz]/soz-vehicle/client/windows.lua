@@ -21,10 +21,10 @@ CreateThread(function()
             local vehicle = GetVehiclePedIsIn(ped, false)
 
             if NetworkHasControlOfEntity(vehicle) then
-                if IsControlJustPressed(0, 27) then
+                if IsControlJustPressed(0, 188) then
                     Entity(vehicle).state:set("windows", true, true)
                 end
-                if IsControlJustPressed(0, 173) then
+                if IsControlJustPressed(0, 187) then
                     Entity(vehicle).state:set("windows", false, true)
                 end
             else
