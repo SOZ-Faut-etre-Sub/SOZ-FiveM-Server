@@ -380,9 +380,20 @@ local function EnableTarget()
 		DisableTarget(false)
 	end
 end
+
+---Register onPlayerInOut() callback upon zone creation
+---@param zone table PolyZone
+---@param options table {onPlayerInOut = function(isInsideZone:boolean) end}
+local function RegisterZoneCallback(zone, options)
+	if options.onPlayerInOut then
+		zone:onPlayerInOut(options.onPlayerInOut)
+	end
+end
+
  function AddCircleZone(name, center, radius, options, targetoptions)
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = CircleZone:Create(center, radius, options)
+	RegisterZoneCallback(Zones[name], options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
 	Zones[name].targetoptions = targetoptions
 end
@@ -392,6 +403,7 @@ exports("AddCircleZone", AddCircleZone)
 local function AddBoxZone(name, center, length, width, options, targetoptions)
 	center = type(center) == 'table' and vector3(center.x, center.y, center.z) or center
 	Zones[name] = BoxZone:Create(center, length, width, options)
+	RegisterZoneCallback(Zones[name], options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
 	Zones[name].targetoptions = targetoptions
 end
@@ -406,6 +418,7 @@ local function AddPolyZone(name, points, options, targetoptions)
 		end
 	end
 	Zones[name] = PolyZone:Create(#_points > 0 and _points or points, options)
+	RegisterZoneCallback(Zones[name], options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
 	Zones[name].targetoptions = targetoptions
 end
