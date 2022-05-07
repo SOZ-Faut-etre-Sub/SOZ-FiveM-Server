@@ -99,7 +99,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
             SetPedCoordsKeepVehicle(PlayerPedId(), coord.x, coord.y, coord.z)
         end,
     })
-
+    
     menu:AddButton({
         label = "Changer le point de TP",
         value = nil,
