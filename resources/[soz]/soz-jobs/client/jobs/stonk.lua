@@ -97,10 +97,23 @@ Citizen.CreateThread(function()
     -- TARGET
     exports["qb-target"]:AddGlobalPlayer({
         options = {
-            {label = "Facturer", icon = "c:jobs/facture.png", event = "jobs:client:stonk:InvoicePlayer", job = "stonk"},
+            {
+                label = "Facturer",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:stonk:InvoicePlayer",
+                job = "cash-transfer",
+            },
         },
         distance = 1.5,
     })
+
+    -- BOSS STORAGE
+    exports["qb-target"]:AddBoxZone("stonk:shop", vector2(-15.5, -708.83), 0.6, 2.6, {
+        name = "food:shop",
+        heading = 25.0,
+        minZ = 45.02,
+        maxZ = 48.02,
+    }, {options = SozJobCore.Functions.GetBossShopActions("cash-transfer", "stonk:client:bossShop"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:stonk:InvoicePlayer", function(data)
@@ -187,6 +200,14 @@ RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function()
     --- @type Menu
     local menu = StonkJob.Menus["cash-transfer"].menu
     menu:ClearItems()
+
+    menu:AddButton({
+        label = "Tenue de service",
+        value = nil,
+        select = function()
+            TriggerEvent("stonk:client:applyDutyClothing")
+        end,
+    })
 
     menu:AddButton({
         label = "Tenue civile",
@@ -384,4 +405,43 @@ end
 
 AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
     StonkJob.Functions.FillIn(data)
+end)
+
+RegisterNetEvent("stonk:client:bossShop", function()
+    if not SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.ManageGrade) then
+        return
+    end
+
+    shopMenu:ClearItems()
+    for itemID, item in pairs(StonkConfig.BossShop) do
+        shopMenu:AddButton({
+            label = item.amount .. "x " .. QBCore.Shared.Items[item.name].label,
+            rightLabel = "$" .. item.price,
+            value = itemID,
+            select = function(btn)
+                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
+            end,
+        })
+    end
+
+    shopMenu:Open()
+end)
+
+--- Duty clothings
+RegisterNetEvent("stonk:client:applyDutyClothing", function()
+    local clothesConfig = {Components = {}, Props = {}}
+
+    for id, component in pairs(StonkConfig.DutyOutfit[PlayerData.skin.Model.Hash].Components) do
+        clothesConfig.Components[id] = component
+    end
+    for id, prop in pairs(StonkConfig.DutyOutfit[PlayerData.skin.Model.Hash].Props) do
+        clothesConfig.Props[id] = prop
+    end
+
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig)
+    end)
 end)

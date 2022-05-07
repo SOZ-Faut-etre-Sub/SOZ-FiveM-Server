@@ -602,26 +602,16 @@ Config.Armors = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["unmark"] = {Drawable = 27, Texture = 0, Palette = 0},
         ["lspd"] = {Drawable = 27, Texture = 1, Palette = 0},
-        ["fbi"] = {Drawable = 27, Texture = 2, Palette = 0},
         ["bcso"] = {Drawable = 27, Texture = 3, Palette = 0},
-
-        ["_"] = {Drawable = 27, Texture = 4, Palette = 0},
-        ["_"] = {Drawable = 27, Texture = 5, Palette = 0},
-        ["_"] = {Drawable = 27, Texture = 6, Palette = 0},
-        ["_"] = {Drawable = 27, Texture = 7, Palette = 0},
-        ["_"] = {Drawable = 27, Texture = 8, Palette = 0},
+        ["stonk"] = {Drawable = 2, Texture = 0, Palette = 0},
+        ["fbi"] = {Drawable = 27, Texture = 2, Palette = 0},
     },
     [GetHashKey("mp_f_freemode_01")] = {
         ["unmark"] = {Drawable = 29, Texture = 0, Palette = 0},
         ["lspd"] = {Drawable = 29, Texture = 1, Palette = 0},
-        ["fbi"] = {Drawable = 29, Texture = 2, Palette = 0},
         ["bcso"] = {Drawable = 29, Texture = 3, Palette = 0},
-
-        ["_"] = {Drawable = 29, Texture = 4, Palette = 0},
-        ["_"] = {Drawable = 29, Texture = 5, Palette = 0},
-        ["_"] = {Drawable = 29, Texture = 6, Palette = 0},
-        ["_"] = {Drawable = 29, Texture = 7, Palette = 0},
-        ["_"] = {Drawable = 29, Texture = 8, Palette = 0},
+        ["stonk"] = {Drawable = 2, Texture = 0, Palette = 0},
+        ["fbi"] = {Drawable = 29, Texture = 2, Palette = 0},
     },
 }
 
