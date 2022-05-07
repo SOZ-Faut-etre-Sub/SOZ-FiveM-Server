@@ -1,5 +1,22 @@
 Config = {}
 
+ComponentType = {
+    Head = 0,
+    Mask = 1,
+    Hair = 2,
+    Arms = 3,
+    Pants = 4,
+    Bag = 5,
+    Shoes = 6,
+    Chain = 7,
+    Top = 8,
+    Bulletproof = 9,
+    Decals = 10,
+    Torso = 11,
+}
+
+PropType = {Head = 0, Glasses = 1, Ear = 2, LeftHand = 6, RightHand = 7}
+
 Config.AnimationsList = {
     ["Positions"] = {
         ["S'asseoir"] = {

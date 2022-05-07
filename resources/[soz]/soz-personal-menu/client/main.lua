@@ -19,9 +19,10 @@ local function GenerateMenu()
     personalMenu:SetSubtitle(string.format("%s %s", PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
 
     IdentityEntry(personalMenu)
-    AnimationsEntry()
-    InvoiceEntry(personalMenu)
     KeysEntry(personalMenu)
+    TenueEntry(personalMenu)
+    InvoiceEntry(personalMenu)
+    AnimationsEntry()
     HudToggleEntry(personalMenu)
     JobEntry(personalMenu)
 
