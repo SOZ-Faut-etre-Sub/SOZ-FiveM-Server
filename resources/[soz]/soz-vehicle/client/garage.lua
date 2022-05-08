@@ -9,7 +9,7 @@ local VehiculeParkingPrive = MenuV:InheritMenu(ParkingPriveList, {Title = nil})
 local ParkingFourriereList = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car")
 local VehiculeParkingFourriere = MenuV:InheritMenu(ParkingFourriereList, {Title = nil})
 
-local ParkingEntrepriseList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingentreprise:vehicle:car")
+local ParkingEntrepriseList = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car")
 local VehiculeParkingEntreprise = MenuV:InheritMenu(ParkingEntrepriseList, {Title = nil})
 
 local function CheckPlayers(vehicle, garage)
