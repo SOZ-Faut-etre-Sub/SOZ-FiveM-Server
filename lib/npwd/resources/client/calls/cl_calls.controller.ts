@@ -14,6 +14,7 @@ import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { ServerPromiseResp } from '../../../typings/common';
 import { NuiCallbackFunc } from '@project-error/pe-utils';
+import {hidePhone} from "../cl_main";
 
 const callService = new CallService();
 
@@ -89,6 +90,12 @@ RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
 onNet(CallEvents.WAS_ENDED, () => {
   callService.handleEndCall();
   animationService.endPhoneCall();
+});
+
+onNet("ems:client:onDeath", () => {
+  callService.handleEndCall();
+  animationService.endPhoneCall();
+  hidePhone();
 });
 
 // Simple fetch so lets just proxy it
