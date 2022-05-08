@@ -25,36 +25,37 @@ end)
 
 ZonesCarwash = {
     ["carwash1"] = BoxZone:Create(vector3(-699.68, -933.16, 19.01), 12, 6, {
-        name="carwash1",
-        heading=0,
+        name = "carwash1",
+        heading = 0,
         minZ = 18.01,
         maxZ = 22.01,
-      }),
+    }),
     ["carwash2"] = BoxZone:Create(vector3(24.63, -1391.91, 29.35), 12, 7, {
-        name="carwash2",
-        heading=270,
+        name = "carwash2",
+        heading = 270,
         minZ = 28.35,
         maxZ = 32.35,
-      }),
+    }),
     ["carwash3"] = BoxZone:Create(vector3(175.31, -1736.71, 29.29), 10, 10, {
-        name="carwash3",
-        heading=0,
+        name = "carwash3",
+        heading = 0,
         minZ = 28.29,
         maxZ = 32.29,
-      }),
+    }),
     ["carwash4"] = BoxZone:Create(vector3(-75.24, 6429.37, 31.5), 12, 12, {
-        name="carwash4",
-        heading=45,
+        name = "carwash4",
+        heading = 45,
         minZ = 30.5,
         maxZ = 34.5,
-      }),
+    }),
     ["carwash5"] = BoxZone:Create(vector3(1361.11, 3594.16, 34.89), 10, 14, {
-        name="carwash5",
-        heading=290,
+        name = "carwash5",
+        heading = 290,
         minZ = 33.89,
         maxZ = 37.89,
-      }),
+    }),
 }
+
 
 InsideCarwash = false
 
