@@ -28,6 +28,48 @@ for k, cycle in pairs(QBCore.Shared.Vehicles) do
     end
 end
 
+local function clean()
+    local vcoords = vector3(1224.66, 2706.15, 38.01)
+    local stillthere = true
+    while stillthere do
+        local motocycles = QBCore.Functions.GetClosestVehicle(vcoords)
+        if #(vcoords - GetEntityCoords(motocycles)) <= 2.0 then
+            SetEntityAsMissionEntity(motocycles, true, true)
+            DeleteVehicle(motocycles)
+        else
+            stillthere = false
+        end
+    end
+end
+
+local function MotoModels(moto)
+    local motocycle = moto
+    local model = GetHashKey(motocycle["model"])
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        Citizen.Wait(10)
+    end
+    TriggerEvent("soz-concessmoto:client:createcam", "")
+    local mot = CreateVehicle(model, 1224.66, 2706.15, 38.01, 120.0, false, false)
+    SetModelAsNoLongerNeeded(model)
+    SetVehicleOnGroundProperly(mot)
+    SetEntityInvincible(mot, true)
+    SetEntityHeading(mot, 120.0)
+    SetVehicleDoorsLocked(mot, 6)
+    FreezeEntityPosition(mot, true)
+    SetVehicleNumberPlateText(mot, "SOZ")
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(0)
+            if IsControlPressed(0, 176) or IsControlPressed(0, 177) then
+                TriggerEvent("soz-concessmoto:client:deletecam", "")
+                clean()
+                break
+            end
+        end
+    end)
+end
+
 MotoChoose:On("open", function(m)
     m:ClearItems()
     local moto = GlobalMoto
@@ -87,6 +129,10 @@ MotoModel:On("open", function(m)
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         description = "❌ HORS STOCK de " .. cycle["name"],
+                        enter = function()
+                            clean()
+                            MotoModels(cycle)
+                        end,
                     })
                 elseif y.stock == 1 then
                     newlabel = "~o~" .. cycle["name"]
@@ -98,6 +144,10 @@ MotoModel:On("open", function(m)
                         select = function()
                             GlobalMoto = cycle
                         end,
+                        enter = function()
+                            clean()
+                            MotoModels(cycle)
+                        end,
                     })
                 else
                     m:AddButton({
@@ -107,6 +157,10 @@ MotoModel:On("open", function(m)
                         description = "Acheter  " .. cycle["name"],
                         select = function()
                             GlobalMoto = cycle
+                        end,
+                        enter = function()
+                            clean()
+                            MotoModels(cycle)
                         end,
                     })
                 end
@@ -127,6 +181,24 @@ MotoList:On("open", function(m)
             end,
         })
     end
+end)
+
+RegisterNetEvent("soz-concessmoto:client:createcam", function()
+    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA",1224.5, 2701.63, 39.01, 216.5, 0.00, 0.00, 60.00, false, 0)
+    PointCamAtCoord(cam, 1224.66, 2706.15, 38.01)
+    SetCamActive(cam, true)
+    RenderScriptCams(true, true, 1, true, true)
+    SetFocusPosAndVel(1224.5, 2701.63, 38.01, 0.0, 0.0, 0.0)
+    DisplayHud(false)
+    DisplayRadar(false)
+end)
+
+RegisterNetEvent("soz-concessmoto:client:deletecam", function()
+    RenderScriptCams(false)
+    DestroyAllCams(true)
+    SetFocusEntity(GetPlayerPed(PlayerId()))
+    DisplayHud(true)
+    DisplayRadar(true)
 end)
 
 for indexConcessMoto, ConcessMoto in pairs(ZonesConcessMoto) do
