@@ -368,7 +368,7 @@ NeonColoursMenu:On("open", function(menu)
                 rightLabel = "~g~Installé",
                 enter = function()
                     PreviewNeonColour(Config.vehicleNeonOptions.neonColours[k].r, Config.vehicleNeonOptions.neonColours[k].g,
-                    Config.vehicleNeonOptions.neonColours[k].b)
+                                      Config.vehicleNeonOptions.neonColours[k].b)
                 end,
             })
         else
@@ -382,7 +382,7 @@ NeonColoursMenu:On("open", function(menu)
                 end,
                 enter = function()
                     PreviewNeonColour(Config.vehicleNeonOptions.neonColours[k].r, Config.vehicleNeonOptions.neonColours[k].g,
-                    Config.vehicleNeonOptions.neonColours[k].b)
+                                      Config.vehicleNeonOptions.neonColours[k].b)
                 end,
             })
         end
@@ -469,10 +469,7 @@ NeonsMenu:On("open", function(menu)
             end,
         })
     end
-    menu:AddButton({
-        label = "Couleurs de Néon",
-        value = NeonColoursMenu,
-    })
+    menu:AddButton({label = "Couleurs de Néon", value = NeonColoursMenu})
 end)
 
 XenonsHeadlightsMenu:On("open", function(menu)
@@ -781,11 +778,7 @@ Status:On("open", function(menu)
                 elseif percentage == 100 then
                     percentage = math.round(percentage)
                 end
-                menu:AddButton({
-                    label = v,
-                    value = NoDamage,
-                    description = "Etat: " .. percentage .. "% / 100.0%",
-                })
+                menu:AddButton({label = v, value = NoDamage, description = "Etat: " .. percentage .. "% / 100.0%"})
             end
         end
     end
@@ -816,24 +809,12 @@ VehiculeCustom:On("open", function(menu)
             })
         end
     end
-    menu:AddButton({
-        label = "Peinture",
-        value = ResprayMenu,
-    })
+    menu:AddButton({label = "Peinture", value = ResprayMenu})
     if not isMotorcycle then
-        menu:AddButton({
-            label = "Teinte Fenêtre",
-            value = WindowTintMenu,
-        })
-        menu:AddButton({
-            label = "Néons",
-            value = NeonsMenu,
-        })
+        menu:AddButton({label = "Teinte Fenêtre", value = WindowTintMenu})
+        menu:AddButton({label = "Néons", value = NeonsMenu})
     end
-    menu:AddButton({
-        label = "Xénons",
-        value = XenonsHeadlightsMenu,
-    })
+    menu:AddButton({label = "Xénons", value = XenonsHeadlightsMenu})
     menu:AddButton({
         label = "Roues",
         value = WheelsMenu,
@@ -841,18 +822,9 @@ VehiculeCustom:On("open", function(menu)
             variableisMotorcycle = isMotorcycle
         end,
     })
-    menu:AddButton({
-        label = "Sticker de base",
-        value = OldLiveryMenu,
-    })
-    menu:AddButton({
-        label = "Couleur Immatriculation",
-        value = PlateIndexMenu,
-    })
-    menu:AddButton({
-        label = "Autres",
-        value = ExtrasMenu,
-    })
+    menu:AddButton({label = "Sticker de base", value = OldLiveryMenu})
+    menu:AddButton({label = "Couleur Immatriculation", value = PlateIndexMenu})
+    menu:AddButton({label = "Autres", value = ExtrasMenu})
 end)
 
 local function saveVehicle()
