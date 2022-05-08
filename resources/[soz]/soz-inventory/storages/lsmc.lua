@@ -16,6 +16,15 @@ Config.Storages["lsmc_stash"] = {
     heading = 320,
 }
 
+Config.Storages["lsmc_boss_storage"] = {
+    label = "Coffre Patron LSMC",
+    type = "boss_storage",
+    owner = "lsmc",
+    position = vector3(309.07, -1422.81, 32.51),
+    size = vec2(0.55, 2.55),
+    heading = 320,
+}
+
 Config.Storages["lsmc_organ"] = {
     label = "Stockage des organes",
     type = "organ",
