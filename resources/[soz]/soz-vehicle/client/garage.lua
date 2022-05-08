@@ -56,26 +56,20 @@ local function SortirMenu(type, garage, indexgarage)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    if v.state == 0 then
-                        v.state = Lang:t("status.out")
-                    elseif v.state == 1 then
-                        v.state = Lang:t("status.garaged")
-                    elseif v.state == 2 then
-                        v.state = Lang:t("status.impound")
+                    if v.state == 1 then
+                        VehiculeParkingPublic:AddButton({
+                            label = Lang:t("menu.header.public", {value = vname, value2 = v.plate}),
+                            description = Lang:t("menu.text.garage", {
+                                value = currentFuel,
+                                value2 = enginePercent,
+                                value3 = bodyPercent,
+                            }),
+                            select = function()
+                                VehiculeParkingPublic:Close()
+                                TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
+                            end,
+                        })
                     end
-                    VehiculeParkingPublic:AddButton({
-                        label = Lang:t("menu.header.public", {value = vname, value2 = v.plate}),
-                        description = Lang:t("menu.text.garage", {
-                            value = v.state,
-                            value2 = currentFuel,
-                            value3 = enginePercent,
-                            value4 = bodyPercent,
-                        }),
-                        select = function()
-                            VehiculeParkingPublic:Close()
-                            TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
-                        end,
-                    })
                 end
             end
         end, indexgarage, type, garage.vehicle)
@@ -103,26 +97,20 @@ local function SortirMenu(type, garage, indexgarage)
                     local timediff = time - v.parkingtime
                     local price = math.floor(timediff / 3600)
 
-                    if v.state == 0 then
-                        v.state = Lang:t("status.out")
-                    elseif v.state == 1 then
-                        v.state = Lang:t("status.garaged")
-                    elseif v.state == 2 then
-                        v.state = Lang:t("status.impound")
+                    if v.state == 1 then
+                        VehiculeParkingPrive:AddButton({
+                            label = Lang:t("menu.header.private", {value = vname, value2 = v.plate, value3 = price}),
+                            description = Lang:t("menu.text.garage", {
+                                value = currentFuel,
+                                value2 = enginePercent,
+                                value3 = bodyPercent,
+                            }),
+                            select = function()
+                                VehiculeParkingPrive:Close()
+                                TriggerEvent("qb-garages:client:TakeOutPrive", v, type, garage, indexgarage, price)
+                            end,
+                        })
                     end
-                    VehiculeParkingPrive:AddButton({
-                        label = Lang:t("menu.header.private", {value = vname, value2 = v.plate, value3 = price}),
-                        description = Lang:t("menu.text.garage", {
-                            value = v.state,
-                            value2 = currentFuel,
-                            value3 = enginePercent,
-                            value4 = bodyPercent,
-                        }),
-                        select = function()
-                            VehiculeParkingPrive:Close()
-                            TriggerEvent("qb-garages:client:TakeOutPrive", v, type, garage, indexgarage, price)
-                        end,
-                    })
                 end
             end
         end, indexgarage, type, garage.vehicle)
@@ -139,26 +127,20 @@ local function SortirMenu(type, garage, indexgarage)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    if v.state == 0 then
-                        v.state = Lang:t("status.out")
-                    elseif v.state == 1 then
-                        v.state = Lang:t("status.garaged")
-                    elseif v.state == 2 then
-                        v.state = Lang:t("status.impound")
+                    if v.state == 2 then
+                        VehiculeParkingFourriere:AddButton({
+                            label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
+                            description = Lang:t("menu.text.depot", {
+                                value = currentFuel,
+                                value2 = enginePercent,
+                                value3 = bodyPercent,
+                            }),
+                            select = function()
+                                VehiculeParkingFourriere:Close()
+                                TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
+                            end,
+                        })
                     end
-                    VehiculeParkingFourriere:AddButton({
-                        label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
-                        description = Lang:t("menu.text.depot", {
-                            value = v.state,
-                            value2 = currentFuel,
-                            value3 = enginePercent,
-                            value4 = bodyPercent,
-                        }),
-                        select = function()
-                            VehiculeParkingFourriere:Close()
-                            TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
-                        end,
-                    })
                 end
             end
         end, indexgarage, type, garage.vehicle)
@@ -184,29 +166,20 @@ local function SortirMenu(type, garage, indexgarage)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
 
-                    if v.state == 0 then
-                        v.state = Lang:t("status.out")
-                    elseif v.state == 1 then
-                        v.state = Lang:t("status.garaged")
-                    elseif v.state == 2 then
-                        v.state = Lang:t("status.impound")
-                    elseif v.state == 3 then
-                        v.state = Lang:t("status.garagedentre")
+                    if v.state == 1 then
+                        VehiculeParkingEntreprise:AddButton({
+                            label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate}),
+                            description = Lang:t("menu.text.garage", {
+                                value = currentFuel,
+                                value2 = enginePercent,
+                                value3 = bodyPercent,
+                            }),
+                            select = function()
+                                VehiculeParkingEntreprise:Close()
+                                TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
+                            end,
+                        })
                     end
-
-                    VehiculeParkingEntreprise:AddButton({
-                        label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate}),
-                        description = Lang:t("menu.text.garage", {
-                            value = v.state,
-                            value2 = currentFuel,
-                            value3 = enginePercent,
-                            value4 = bodyPercent,
-                        }),
-                        select = function()
-                            VehiculeParkingEntreprise:Close()
-                            TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
-                        end,
-                    })
                 end
             end
         end, PlayerJob.id)
