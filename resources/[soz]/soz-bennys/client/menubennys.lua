@@ -24,6 +24,13 @@ local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fum�
 local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Activer ou désactiver les roues personnalisées")
 local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choisir une roue")
 
+local variableChoosewheel
+local variableisMotorcycle
+local variablecatrespray
+local variableRespraytype
+local variableNeonstate
+local variableSpoilers
+local variablePart
 Gready = false
 Gfinishready = false
 Gveh = nil
@@ -97,12 +104,13 @@ local function finishAnimation()
     exports["soz-hud"]:DrawNotification("Véhicule libéré")
 end
 
-local function OpenChooseWheelMenu(menu, k, v)
+ChooseWheelMenu:On("open", function(menu)
+    local v = variableChoosewheel
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = WheelsMenu,
         select = function()
             menu:Close()
         end,
@@ -111,31 +119,28 @@ local function OpenChooseWheelMenu(menu, k, v)
     for m, n in pairs(validMods) do
         menu:AddButton({
             label = n.name,
-            value = n.id,
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyWheel(v.wheelID, n.id, v.id)
+                menu:Close()
+            end,
+            enter = function()
+                PreviewWheel(v.wheelID, n.id, v.id)
             end,
         })
     end
-    local eventwheelon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewWheel(v.wheelID, currentItem.Value, v.id)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventwheelon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalWheels()
-    end)
-end
+end)
 
-local function OpenCustomWheelsMenu(menu)
+ChooseWheelMenu:On("close", function()
+    RestoreOriginalWheels()
+end)
+
+CustomWheelsMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Roues",
+        value = WheelsMenu,
         select = function()
             menu:Close()
         end,
@@ -147,8 +152,8 @@ local function OpenCustomWheelsMenu(menu)
             label = "Activer",
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyCustomWheel(1)
+                menu:Close()
             end,
         })
     else
@@ -156,24 +161,20 @@ local function OpenCustomWheelsMenu(menu)
             label = "Désactiver",
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyCustomWheel(0)
+                menu:Close()
             end,
         })
         menu:AddButton({label = "Activer", rightLabel = "~g~Installé", description = ""})
     end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+end)
 
-local function OpenTyreSmokeMenu(menu)
+TyreSmokeMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Wheels",
+        value = WheelsMenu,
         select = function()
             menu:Close()
         end,
@@ -187,41 +188,38 @@ local function OpenTyreSmokeMenu(menu)
                 label = v.name,
                 description = "Améliorer 🔧",
                 select = function()
-                    menu:Close()
                     ApplyTyreSmoke(v.r, v.g, v.b)
+                    menu:Close()
                 end,
             })
         end
     end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+end)
 
-local function OpenWheelsMenu(menu, isMotorcycle)
+WheelsMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
     })
     for k, v in ipairs(Config.vehicleWheelOptions) do
-        if isMotorcycle then
+        if variableisMotorcycle then
             if v.id == -1 or v.id == 20 or v.id == 6 then
                 menu:AddButton({
                     label = v.category,
                     description = "",
                     select = function()
                         if v.id == 20 then
-                            OpenTyreSmokeMenu(TyreSmokeMenu)
+                            TyreSmokeMenu:Open()
                         elseif v.id == -1 then
-                            OpenCustomWheelsMenu(CustomWheelsMenu)
+                            CustomWheelsMenu:Open()
                         elseif v.id == 6 then
-                            OpenChooseWheelMenu(ChooseWheelMenu, k, v)
+                            variableChoosewheel = v
+                            ChooseWheelMenu:Open()
                         end
                     end,
                 })
@@ -232,53 +230,52 @@ local function OpenWheelsMenu(menu, isMotorcycle)
                 description = "",
                 select = function()
                     if v.id == 20 then
-                        OpenTyreSmokeMenu(TyreSmokeMenu)
+                        TyreSmokeMenu:Open()
                     elseif v.id == -1 then
-                        OpenCustomWheelsMenu(CustomWheelsMenu)
+                        CustomWheelsMenu:Open()
                     else
-                        OpenChooseWheelMenu(ChooseWheelMenu, k, v)
+                        variableChoosewheel = v
+                        ChooseWheelMenu:Open()
                     end
                 end,
             })
         end
     end
-end
+end)
 
-local function OpenResprayColoursMenu(menu, v, colorcat)
+ResprayColoursMenu:On("open", function(menu)
+    local v = variablecatrespray
+    local colorcat = variableRespraytype
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = ResprayTypeMenu,
         select = function()
             menu:Close()
         end,
     })
-
     for m, n in ipairs(v.colours) do
         menu:AddButton({
             label = n.name,
             description = "Améliorer 🔧",
-            value = n.id,
             select = function()
-                menu:Close()
                 ApplyColour(colorcat, v.id, n.id)
+                menu:Close()
+            end,
+            enter = function()
+                PreviewColour(colorcat, v.id, n.id)
             end,
         })
     end
-    local eventresprayon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewColour(colorcat, v.id, currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventresprayon)
-        menu:Close()
-        RestoreOriginalColours()
-    end)
-end
+end)
 
-local function OpenResprayTypeMenu(menu, colorcat)
+ResprayColoursMenu:On("close", function()
+    RestoreOriginalColours()
+end)
+
+ResprayTypeMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Catégories de couleur",
@@ -286,74 +283,79 @@ local function OpenResprayTypeMenu(menu, colorcat)
             menu:Close()
         end,
     })
-
     for k, v in ipairs(Config.vehicleResprayOptions) do
         menu:AddButton({
             label = v.category,
+            value = ResprayColoursMenu,
             description = "",
             select = function()
-                OpenResprayColoursMenu(ResprayColoursMenu, v, colorcat)
+                variablecatrespray = v
             end,
         })
     end
-end
+end)
 
-local function OpenResprayMenu(menu)
+ResprayMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
     })
-
     menu:AddButton({
         label = "Couleur Principale",
+        value = ResprayTypeMenu,
         select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 0)
+            variableRespraytype = 0
         end,
     })
     menu:AddButton({
         label = "Couleur Secondaire",
+        value = ResprayTypeMenu,
         select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 1)
+            variableRespraytype = 1
         end,
     })
     menu:AddButton({
         label = "Couleur Nacré",
+        value = ResprayTypeMenu,
         select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 2)
+            variableRespraytype = 2
         end,
     })
     menu:AddButton({
         label = "Couleur des Roues",
+        value = ResprayTypeMenu,
         select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 3)
+            variableRespraytype = 3
         end,
     })
     menu:AddButton({
         label = "Couleur du Tableau de bord",
+        value = ResprayTypeMenu,
         select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 4)
+            variableRespraytype = 4
         end,
     })
     menu:AddButton({
         label = "Couleur Intérieure",
+        value = ResprayTypeMenu,
         select = function()
-            OpenResprayTypeMenu(ResprayTypeMenu, 5)
+            variableRespraytype = 5
         end,
     })
-end
+end)
 
-local function OpenNeonColoursMenu(menu)
+NeonColoursMenu:On("open", function(menu)
     local currentNeonR, currentNeonG, currentNeonB = GetCurrentNeonColour()
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Menu Néons",
+        value = NeonsMenu,
         select = function()
             menu:Close()
         end,
@@ -361,83 +363,98 @@ local function OpenNeonColoursMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonColours) do
         if currentNeonR == Config.vehicleNeonOptions.neonColours[k].r and currentNeonG == Config.vehicleNeonOptions.neonColours[k].g and currentNeonB ==
             Config.vehicleNeonOptions.neonColours[k].b then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = k})
+            menu:AddButton({
+                label = v.name,
+                rightLabel = "~g~Installé",
+                enter = function()
+                    PreviewNeonColour(Config.vehicleNeonOptions.neonColours[k].r, Config.vehicleNeonOptions.neonColours[k].g,
+                    Config.vehicleNeonOptions.neonColours[k].b)
+                end,
+            })
         else
             menu:AddButton({
                 label = v.name,
-                value = k,
                 description = "Améliorer 🔧",
                 select = function()
-                    menu:Close()
                     ApplyNeonColour(Config.vehicleNeonOptions.neonColours[k].r, Config.vehicleNeonOptions.neonColours[k].g,
                                     Config.vehicleNeonOptions.neonColours[k].b)
+                    menu:Close()
+                end,
+                enter = function()
+                    PreviewNeonColour(Config.vehicleNeonOptions.neonColours[k].r, Config.vehicleNeonOptions.neonColours[k].g,
+                    Config.vehicleNeonOptions.neonColours[k].b)
                 end,
             })
         end
     end
-    local eventneoncolon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewNeonColour(Config.vehicleNeonOptions.neonColours[currentItem.Value].r, Config.vehicleNeonOptions.neonColours[currentItem.Value].g,
-                          Config.vehicleNeonOptions.neonColours[currentItem.Value].b)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventneoncolon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalNeonColours()
-    end)
-end
+end)
 
-local function OpenNeonStateMenu(menu, v, k)
+NeonColoursMenu:On("close", function()
+    RestoreOriginalNeonColours()
+end)
+
+NeonStateMenu:On("open", function(menu)
+    local v = variableNeonstate
     local currentNeonState = GetCurrentNeonState(v.id)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Menu Néons",
+        value = NeonsMenu,
         select = function()
             menu:Close()
         end,
     })
     if currentNeonState == 0 then
-        menu:AddButton({label = "Désactiver ~g~- Installé", value = 0})
+        menu:AddButton({
+            label = "Désactiver ~g~- Installé",
+            enter = function()
+                PreviewNeon(v.id, 0)
+            end,
+        })
         menu:AddButton({
             label = "Activer",
-            value = 1,
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyNeon(v.id, 1)
+                menu:Close()
+            end,
+            enter = function()
+                PreviewNeon(v.id, 1)
             end,
         })
     else
         menu:AddButton({
             label = "Désactiver",
-            value = 0,
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyNeon(v.id, 0)
+                menu:Close()
+            end,
+            enter = function()
+                PreviewNeon(v.id, 0)
             end,
         })
-        menu:AddButton({label = "Activer", rightLabel = "~g~Installé", value = 1})
+        menu:AddButton({
+            label = "Activer",
+            rightLabel = "~g~Installé",
+            enter = function()
+                PreviewNeon(v.id, 1)
+            end,
+        })
     end
-    local eventneonstateon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewNeon(v.id, currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventneonstateon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalNeonStates()
-    end)
-end
+end)
 
-local function OpenNeonsMenu(menu)
+NeonStateMenu:On("close", function()
+    RestoreOriginalNeonStates()
+end)
+
+NeonsMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
@@ -445,27 +462,25 @@ local function OpenNeonsMenu(menu)
     for k, v in ipairs(Config.vehicleNeonOptions.neonTypes) do
         menu:AddButton({
             label = v.name,
+            value = NeonStateMenu,
             description = "Activer ou Désactiver Néon",
             select = function()
-                OpenNeonStateMenu(NeonStateMenu, v, k)
+                variableNeonstate = k
             end,
         })
     end
     menu:AddButton({
         label = "Couleurs de Néon",
-        description = "",
-        select = function()
-            OpenNeonColoursMenu(NeonColoursMenu)
-        end,
+        value = NeonColoursMenu,
     })
-end
+end)
 
-local function OpenXenonsHeadlightsMenu(menu)
+XenonsHeadlightsMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
@@ -477,8 +492,8 @@ local function OpenXenonsHeadlightsMenu(menu)
             label = "Activer Xénons",
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyXenonLights(22, 1)
+                menu:Close()
             end,
         })
     else
@@ -486,24 +501,20 @@ local function OpenXenonsHeadlightsMenu(menu)
             label = "Désactiver Xenons",
             description = "Améliorer 🔧",
             select = function()
-                menu:Close()
                 ApplyXenonLights(22, 0)
+                menu:Close()
             end,
         })
         menu:AddButton({label = "Activer Xénons", rightLabel = "~g~Installé"})
     end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+end)
 
-local function OpenWindowTintMenu(menu)
+WindowTintMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
@@ -512,72 +523,81 @@ local function OpenWindowTintMenu(menu)
 
     for k, v in ipairs(Config.vehicleWindowTintOptions) do
         if currentWindowTint == v.id then
-            menu:AddButton({label = v.name, rightLabel = "~g~Installé", value = v.id})
+            menu:AddButton({
+                label = v.name,
+                rightLabel = "~g~Installé",
+                enter = function()
+                    PreviewWindowTint(v.id)
+                end,
+            })
         else
             menu:AddButton({
                 label = v.name,
-                value = v.id,
                 description = "Améliorer 🔧",
                 select = function()
-                    menu:Close()
                     ApplyWindowTint(v.id)
+                    menu:Close()
+                end,
+                enter = function()
+                    PreviewWindowTint(v.id)
                 end,
             })
         end
     end
-    local eventwindowon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewWindowTint(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventwindowon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalWindowTint()
-    end)
-end
+end)
 
-local function OpenSpoilersMenu(menu, k, v, validMods, currentMod)
+WindowTintMenu:On("close", function()
+    RestoreOriginalWindowTint()
+end)
+
+SpoilersMenu:On("open", function(menu)
+    local v = variableSpoilers[1]
+    local validMods = variableSpoilers[2]
+    local currentMod = variableSpoilers[3]
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
     })
     for m, n in pairs(validMods) do
         if currentMod == n.id then
-            menu:AddButton({label = n.name, rightLabel = "~g~Installé", value = n.id})
+            menu:AddButton({
+                label = n.name,
+                rightLabel = "~g~Installé",
+                enter = function()
+                    PreviewMod(v.id, n.id)
+                end,
+            })
         else
             menu:AddButton({
                 label = n.name,
-                value = n.id,
                 description = "Améliorer 🔧",
                 select = function()
-                    menu:Close()
                     ApplyMod(v.id, n.id)
+                    menu:Close()
+                end,
+                enter = function()
+                    PreviewMod(v.id, n.id)
                 end,
             })
         end
     end
-    local eventspoileron = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewMod(v.id, currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventspoileron)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOriginalMod()
-    end)
-end
+end)
 
-local function OpenOldLiveryMenu(menu)
+SpoilersMenu:On("close", function()
+    RestoreOriginalMod()
+end)
+
+OldLiveryMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
@@ -589,38 +609,41 @@ local function OpenOldLiveryMenu(menu)
         if GetVehicleClass(plyVeh) ~= 18 then
             for i = 0, GetVehicleLiveryCount(plyVeh) - 1 do
                 if tempOldLivery == i then
-                    menu:AddButton({label = i, rightLabel = "~g~Installé", value = i})
+                    menu:AddButton({
+                        label = i,
+                        rightLabel = "~g~Installé",
+                        enter = function()
+                            PreviewOldLivery(i)
+                        end,
+                    })
                 else
                     menu:AddButton({
                         label = i,
-                        value = i,
                         description = "Améliorer 🔧",
                         select = function()
-                            menu:Close()
                             ApplyOldLivery(i)
+                            menu:Close()
+                        end,
+                        enter = function()
+                            PreviewOldLivery(i)
                         end,
                     })
                 end
             end
         end
     end
-    local eventoldlivon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewOldLivery(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventoldlivon)
-        menu:Close()
-        menu:ClearItems()
-        RestoreOldLivery()
-    end)
-end
+end)
 
-local function OpenExtrasMenu(menu)
+OldLiveryMenu:On("close", function()
+    RestoreOldLivery()
+end)
+
+ExtrasMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
@@ -632,25 +655,21 @@ local function OpenExtrasMenu(menu)
                 menu:AddButton({
                     label = "Extra " .. tostring(i) .. " Toggle",
                     select = function()
-                        menu:Close()
                         ApplyExtra(i)
+                        menu:Close()
                     end,
                 })
             end
         end
     end
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+end)
 
-local function OpenPlateIndexMenu(menu)
+PlateIndexMenu:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = VehiculeCustom,
         select = function()
             menu:Close()
         end,
@@ -662,40 +681,45 @@ local function OpenPlateIndexMenu(menu)
         for i = 0, #plateTypes - 1 do
             if i ~= 4 then
                 if tempPlateIndex == i then
-                    menu:AddButton({label = plateTypes[i + 1], rightLabel = "~g~Installé", value = i + 1})
+                    menu:AddButton({
+                        label = plateTypes[i + 1],
+                        rightLabel = "~g~Installé",
+                        value = i + 1,
+                        enter = function()
+                            PreviewPlateIndex(i + 1)
+                        end,
+                    })
                 else
                     menu:AddButton({
                         label = plateTypes[i + 1],
                         value = i + 1,
                         description = "Améliorer 🔧",
                         select = function()
-                            menu:Close()
                             ApplyPlateIndex(i + 1)
+                            menu:Close()
+                        end,
+                        enter = function()
+                            PreviewPlateIndex(i + 1)
                         end,
                     })
                 end
             end
         end
     end
-    local eventplateon = menu:On("switch", function(item, currentItem, prevItem)
-        PreviewPlateIndex(currentItem.Value)
-    end)
-    menu:On("close", function()
-        menu:RemoveOnEvent("switch", eventplateon)
-        menu:Close()
-        menu:ClearItems()
-        RestorePlateIndex()
-    end)
-end
+end)
 
-local function OpenPart(menu, v, k)
+PlateIndexMenu:On("close", function()
+    RestorePlateIndex()
+end)
+
+PartMenu:On("open", function(menu)
+    local partName = variablePart[1]
+    local part = variablePart[2]
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
-    local partName = v
-    local part = k
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = Status,
         select = function()
             menu:Close()
         end,
@@ -707,37 +731,29 @@ local function OpenPart(menu, v, k)
             TriggerEvent("soz-bennys:client:CallRepairPart", part)
         end,
     })
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+end)
 
-local function OpenNoDamageMenu(menu, v, k)
+NoDamage:On("open", function(menu)
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Retour",
+        value = Status,
         description = "Cette pièce n'est pas endommagée",
         select = function()
             menu:Close()
         end,
     })
-    menu:On("close", function()
-        menu:Close()
-        menu:ClearItems()
-    end)
-end
+end)
 
-local function OpenPartsMenu(menu)
+Status:On("open", function(menu)
     local plate = QBCore.Functions.GetPlate(Config.AttachedVehicle)
+    menu:ClearItems()
     if VehicleStatus[plate] ~= nil then
-        menu:ClearItems()
-        MenuV:OpenMenu(menu)
         menu:AddButton({
             icon = "◀",
             label = "Menu Benny's",
+            value = VehiculeOptions,
             select = function()
                 menu:Close()
             end,
@@ -752,9 +768,10 @@ local function OpenPartsMenu(menu)
                 end
                 menu:AddButton({
                     label = v,
+                    value = PartMenu,
                     description = "Etat: " .. percentage .. "% / 100.0%",
                     select = function()
-                        OpenPart(PartMenu, v, k)
+                        variablePart = v
                     end,
                 })
             else
@@ -766,24 +783,22 @@ local function OpenPartsMenu(menu)
                 end
                 menu:AddButton({
                     label = v,
+                    value = NoDamage,
                     description = "Etat: " .. percentage .. "% / 100.0%",
-                    select = function()
-                        OpenNoDamageMenu(NoDamage)
-                    end,
                 })
             end
         end
     end
-end
+end)
 
-local function OpenCustom(menu)
+VehiculeCustom:On("open", function(menu)
     local veh = Config.AttachedVehicle
     local isMotorcycle = GetVehicleClass(veh) == 8 -- Moto
     menu:ClearItems()
-    MenuV:OpenMenu(menu)
     menu:AddButton({
         icon = "◀",
         label = "Menu Benny's",
+        value = VehiculeOptions,
         select = function()
             menu:Close()
         end,
@@ -794,63 +809,51 @@ local function OpenCustom(menu)
         if amountValidMods > 0 then
             menu:AddButton({
                 label = v.category,
+                value = SpoilersMenu,
                 select = function()
-                    OpenSpoilersMenu(SpoilersMenu, k, v, validMods, currentMod)
+                    variableSpoilers = {v, validMods, currentMod}
                 end,
             })
         end
     end
     menu:AddButton({
         label = "Peinture",
-        select = function()
-            OpenResprayMenu(ResprayMenu)
-        end,
+        value = ResprayMenu,
     })
     if not isMotorcycle then
         menu:AddButton({
             label = "Teinte Fenêtre",
-            select = function()
-                OpenWindowTintMenu(WindowTintMenu)
-            end,
+            value = WindowTintMenu,
         })
         menu:AddButton({
             label = "Néons",
-            select = function()
-                OpenNeonsMenu(NeonsMenu)
-            end,
+            value = NeonsMenu,
         })
     end
     menu:AddButton({
         label = "Xénons",
-        select = function()
-            OpenXenonsHeadlightsMenu(XenonsHeadlightsMenu)
-        end,
+        value = XenonsHeadlightsMenu,
     })
     menu:AddButton({
         label = "Roues",
+        value = WheelsMenu,
         select = function()
-            OpenWheelsMenu(WheelsMenu, isMotorcycle)
+            variableisMotorcycle = isMotorcycle
         end,
     })
     menu:AddButton({
         label = "Sticker de base",
-        select = function()
-            OpenOldLiveryMenu(OldLiveryMenu)
-        end,
+        value = OldLiveryMenu,
     })
     menu:AddButton({
         label = "Couleur Immatriculation",
-        select = function()
-            OpenPlateIndexMenu(PlateIndexMenu)
-        end,
+        value = PlateIndexMenu,
     })
     menu:AddButton({
         label = "Autres",
-        select = function()
-            OpenExtrasMenu(ExtrasMenu)
-        end,
+        value = ExtrasMenu,
     })
-end
+end)
 
 local function saveVehicle()
     local veh = Config.AttachedVehicle
@@ -858,7 +861,8 @@ local function saveVehicle()
     TriggerServerEvent("updateVehicle", myCar)
 end
 
-local function OpenMenu(menu)
+VehiculeOptions:On("open", function(menu)
+    menu:ClearItems()
     local veh = Config.AttachedVehicle
     FreezeEntityPosition(veh, true)
     menu:AddButton({
@@ -869,10 +873,12 @@ local function OpenMenu(menu)
             if Gready == true then
                 TriggerEvent("soz-bennys:client:UnattachVehicle")
                 Gfinishready = true
+                Gready = false
                 menu:Close()
                 finishAnimation()
                 saveVehicle()
                 SetVehicleDoorsLocked(veh, 1)
+                Gfinishready = false
             else
                 exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
             end
@@ -880,39 +886,29 @@ local function OpenMenu(menu)
     })
     menu:AddButton({
         label = "Réparation du véhicule",
+        value = Status,
         description = "Réparer les pièces du véhicule",
-        select = function()
-            OpenPartsMenu(Status)
-        end,
     })
     menu:AddButton({
         label = "Customisation du véhicule",
+        value = VehiculeCustom,
         description = "Changer les composants du véhicule",
         select = function()
             SetVehicleModKit(veh, 0)
-            OpenCustom(VehiculeCustom)
         end,
     })
-    menu:On("close", function()
-        if Gready == true then
-            Gready = false
-            menu:Close()
-        else
-            exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
-            menu:Open()
-        end
-    end)
-end
+end)
 
-local function GenerateOpenMenu()
-    if VehiculeOptions.IsOpen then
-        VehiculeOptions:Close()
-    else
-        VehiculeOptions:ClearItems()
-        OpenMenu(VehiculeOptions)
+VehiculeOptions:On("close", function()
+    if Gready == false and Gfinishready == false then
+        exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
         VehiculeOptions:Open()
+    elseif Gready == true then
+        VehiculeOptions:Open()
+    else
+        VehiculeOptions:Close()
     end
-end
+end)
 
 local function startAnimation()
     local veh = Config.AttachedVehicle
@@ -935,7 +931,7 @@ local function startAnimation()
     local vehjack = CreateObject(GetHashKey(model), vehpos.x, vehpos.y, vehpos.z - 0.5, true, true, true)
     AttachEntityToEntity(vehjack, veh, 0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, false, false, false, false, 0, true)
 
-    GenerateOpenMenu()
+    VehiculeOptions:Open()
     TaskTurnPedToFaceEntity(ped, veh, 500)
     TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
     Citizen.Wait(1250)

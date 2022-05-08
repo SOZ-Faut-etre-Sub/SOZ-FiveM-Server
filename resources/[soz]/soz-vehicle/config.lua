@@ -542,4 +542,4 @@ Config.Flatbeds = {
 
 Config.BedProp = "inm_flatbed_base" -- String | Hash Of The Bed Prop
 
-Config.GarageVehicles = {["flatbed3"] = "Flatbed", ["minivan"] = "Minivan"}
+Config.GarageVehicles = {["flatbed3"] = "Flatbed", ["burrito2"] = "Burrito"}
