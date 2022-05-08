@@ -62,19 +62,3 @@ RegisterNetEvent("jobs:server:news:UseMobileItem", function(item, event)
         TriggerClientEvent(event, Player.PlayerData.source)
     end
 end)
-
-RegisterNetEvent("news:server:buy", function(itemID)
-    local player = QBCore.Functions.GetPlayer(source)
-    local item = NewsConfig.BossShop[itemID]
-
-    if player.Functions.RemoveMoney("money", item.price) then
-        exports["soz-inventory"]:AddItem(player.PlayerData.source, item.name, item.amount, item.metadata, nil, function(success, reason)
-            if success then
-                TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                   ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(item.amount, QBCore.Shared.Items[item.name].label, item.price))
-            end
-        end)
-    else
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
-    end
-end)
