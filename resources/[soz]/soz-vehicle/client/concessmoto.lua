@@ -62,7 +62,7 @@ local function MotoModels(moto)
         while true do
             Citizen.Wait(0)
             if IsControlPressed(0, 176) or IsControlPressed(0, 177) then
-                TriggerEvent("soz-concessmoto:client:deletecam", "")
+                TriggerEvent("soz-concess:client:deletecam", "")
                 clean()
                 break
             end
@@ -191,14 +191,6 @@ RegisterNetEvent("soz-concessmoto:client:createcam", function()
     SetFocusPosAndVel(1224.5, 2701.63, 38.01, 0.0, 0.0, 0.0)
     DisplayHud(false)
     DisplayRadar(false)
-end)
-
-RegisterNetEvent("soz-concessmoto:client:deletecam", function()
-    RenderScriptCams(false)
-    DestroyAllCams(true)
-    SetFocusEntity(GetPlayerPed(PlayerId()))
-    DisplayHud(true)
-    DisplayRadar(true)
 end)
 
 for indexConcessMoto, ConcessMoto in pairs(ZonesConcessMoto) do
