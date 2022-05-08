@@ -57,14 +57,9 @@ end
 
 local function ValidVehicle()
     local ped = PlayerPedId()
-    local vehicle = GetEntityModel(GetVehiclePedIsIn(ped))
-    local retval = false
+    local model = GetEntityModel(GetVehiclePedIsIn(ped))
 
-    if vehicle == GetHashKey("taxi") then
-        retval = true
-    end
-
-    return retval
+    return Config.AllowedVehicleModel[model] or false
 end
 
 -- horodateur
@@ -113,7 +108,7 @@ RegisterKeyMapping("Horodateur-Taxi", "Horodateur Taxi", "keyboard", "OEM_7")
 
 RegisterKeyMapping("Horodateur-Taxi-active", "activer Horodateur Taxi", "keyboard", "OEM_5")
 
--- boucle 
+-- boucle
 
 CreateThread(function()
     while true do
