@@ -269,7 +269,7 @@ Config.AtmLocations = {
     ["atm_big_pack15"] = {accountId = "atm_big_pack15", coords = {x = -165.5844, y = 233.7307}},
     ["atm_big_pack16"] = {accountId = "atm_big_pack16", coords = {x = -96.75375, y = 6456.597}},
     ["atm_big_pack17"] = {accountId = "atm_big_pack17", coords = {x = -28.994955, y = -723.6976}},
-    ["atm_big_pack18"] = {accountId = "atm_big_pack18", coords = {x = 112.968, y = 775.4061}},
+    ["atm_big_pack18"] = {accountId = "atm_big_pack18", coords = {x = 112.968, y = -775.4061}},
     ["atm_big_pack19"] = {accountId = "atm_big_pack19", coords = {x = 146.65615, y = -1035.9215}},
     ["atm_big_pack20"] = {accountId = "atm_big_pack20", coords = {x = 289.39945, y = -1269.5545}},
     ["atm_big_pack21"] = {accountId = "atm_big_pack21", coords = {x = 296.52655, y = -895.2757}},
