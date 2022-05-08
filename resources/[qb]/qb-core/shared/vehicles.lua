@@ -2100,6 +2100,15 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('cog55'),
         ['shop']     = 'pdm',
     },
+    ['cogfbi']        = {
+        ['name']     = 'Cognoscenti FBI',
+        ['brand']    = 'Enus',
+        ['model']    = 'cogfbi',
+        ['price']    = 22000,
+        ['category'] = 'Sedans',
+        ['hash']     = GetHashKey('cogfbi'),
+        ['shop']     = 'na',
+    },
     ['cognoscenti']  = {
         ['name']     = 'Cognoscenti',
         ['brand']    = 'Enus',
@@ -2730,6 +2739,15 @@ QBShared.Vehicles = {
         ['category'] = 'Sports',
         ['hash']     = GetHashKey('paragon'),
         ['shop']     = 'luxury',
+    },
+    ['paragonfbi']      = {
+        ['name']     = 'Paragon FBI',
+        ['brand']    = 'Enus',
+        ['model']    = 'paragonfbi',
+        ['price']    = 60000,
+        ['category'] = 'Sports',
+        ['hash']     = GetHashKey('paragonfbi'),
+        ['shop']     = 'na',
     },
     ['pariah']       = {
         ['name']     = 'Pariah',
