@@ -489,6 +489,8 @@ Config.Licenses = {
 
 Config.RadarAllowedVehicle = {
     [GetHashKey("ambulance")] = true,
+    [GetHashKey("ambcar")] = true,
+    --- LSPD
     [GetHashKey("police")] = true,
     [GetHashKey("police2")] = true,
     [GetHashKey("police3")] = true,
@@ -496,12 +498,14 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("police5")] = true,
     [GetHashKey("police6")] = true,
     [GetHashKey("policeb")] = true,
-    [GetHashKey("pbus")] = true,
+    --- BCSO
     [GetHashKey("sheriff")] = true,
     [GetHashKey("sheriff2")] = true,
     [GetHashKey("sheriff3")] = true,
     [GetHashKey("sheriff4")] = true,
     [GetHashKey("sheriffb")] = true,
+    --- LSPD / BCSO
+    [GetHashKey("pbus")] = true,
 }
 --- Fines
 Config.Fines = {
