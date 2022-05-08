@@ -319,11 +319,11 @@ Citizen.CreateThread(function()
                                                     return true
                                                 else
                                                     exports["soz-hud"]:DrawNotification("La pompe est explosée", "error")
-                                                    Citizen.Wait(5000)
+                                                    Citizen.Wait(1000)
                                                 end
                                             else
                                                 exports["soz-hud"]:DrawNotification("Le réservoir est plein", "error")
-                                                Citizen.Wait(5000)
+                                                Citizen.Wait(1000)
                                                 return false
                                             end
                                         else
