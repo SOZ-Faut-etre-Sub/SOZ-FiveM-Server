@@ -271,9 +271,11 @@ VehiculeOptions:On("open", function(menu)
             if Gready == true then
                 TriggerEvent("soz-custom:client:UnattachVehicle")
                 Gfinishready = true
+                Gready = false
                 menu:Close()
                 finishAnimation()
                 SetVehicleDoorsLocked(veh, 1)
+                Gfinishready = false
             else
                 exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
             end
@@ -290,12 +292,13 @@ VehiculeOptions:On("open", function(menu)
 end)
 
 VehiculeOptions:On("close", function()
-    if Gready == true then
-        Gready = false
-        VehiculeOptions:Close()
-    else
+    if Gready == false and Gfinishready == false then
         exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
         VehiculeOptions:Open()
+    elseif Gready == true then
+        VehiculeOptions:Open()
+    else
+        VehiculeOptions:Close()
     end
 end)
 
