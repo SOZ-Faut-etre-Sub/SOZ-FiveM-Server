@@ -33,76 +33,6 @@ local variableSpoilers
 local variablePart
 Gready = false
 Gfinishready = false
-Gveh = nil
-Gped = nil
-Gcoords = nil
-Gdict = nil
-Gmodel = nil
-Goffset = nil
-Gheadin = nil
-Gvehicle = nil
-Gvehpos = nil
-Gvehjack = nil
-
-local function finishAnimation()
-    Gdict = "move_crawl"
-    local coords2 = GetEntityCoords(Gped)
-    RequestAnimDict(Gdict)
-    while not HasAnimDictLoaded(Gdict) do
-        Citizen.Wait(1)
-    end
-    TaskPlayAnimAdvanced(Gped, Gdict, "onback_fwd", coords2, 0.0, 0.0, Gheadin - 180, 1.0, 0.5, 2000, 1, 0.0, 1, 1)
-    Citizen.Wait(3000)
-    Gdict = "mp_car_bomb"
-    RequestAnimDict(Gdict)
-    while not HasAnimDictLoaded(Gdict) do
-        Citizen.Wait(1)
-    end
-
-    FreezeEntityPosition(Gveh, true)
-    SetVehicleFixed(Gvehicle)
-    SetVehicleDeformationFixed(Gvehicle)
-    SetVehicleUndriveable(Gvehicle, false)
-    SetVehicleEngineOn(Gvehicle, true, true)
-    ClearPedTasksImmediately(PlayerPedId())
-
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
-    Citizen.Wait(1250)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.4, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.3, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.2, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.15, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.1, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.05, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.025, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Gdict = "move_crawl"
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z + 0.01, true, true, true)
-    TaskPlayAnimAdvanced(Gped, Gdict, "car_bomb_mechanic", Gcoords, 0.0, 0.0, Gheadin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    SetEntityCoordsNoOffset(Gveh, Gvehpos.x, Gvehpos.y, Gvehpos.z, true, true, true)
-    FreezeEntityPosition(Gveh, false)
-    Citizen.Wait(100)
-    DetachEntity(Gvehjack, true, false)
-    SetEntityCollision(Gvehjack, false, false)
-    DeleteEntity(Gvehjack)
-
-    SetEntityCollision(Gveh, true, true)
-    Gfinishready = false
-    exports["soz-hud"]:DrawNotification("Véhicule libéré")
-end
 
 ChooseWheelMenu:On("open", function(menu)
     local v = variableChoosewheel
@@ -843,14 +773,12 @@ VehiculeOptions:On("open", function(menu)
         description = "Détacher le véhicule de la plateforme",
         select = function()
             if Gready == true then
-                TriggerEvent("soz-bennys:client:UnattachVehicle")
                 Gfinishready = true
+                TriggerEvent("soz-bennys:client:UnattachVehicle")
                 Gready = false
-                menu:Close()
-                finishAnimation()
                 saveVehicle()
                 SetVehicleDoorsLocked(veh, 1)
-                Gfinishready = false
+                menu:Close()
             else
                 exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
             end
@@ -883,85 +811,28 @@ VehiculeOptions:On("close", function()
 end)
 
 local function startAnimation()
-    local veh = Config.AttachedVehicle
+    Gfinishready = false
+    local vehicle = Config.AttachedVehicle
     local ped = PlayerPedId()
-    local coords = GetEntityCoords(ped)
-    local dict
-    local model = "prop_carjack"
-    local offset = GetOffsetFromEntityInWorldCoords(ped, 0.0, -2.0, 0.0)
-    local headin = GetEntityHeading(ped)
+    local dict = "mini@repair"
 
-    local vehicle = veh
-    FreezeEntityPosition(veh, true)
-    local vehpos = GetEntityCoords(veh)
-    dict = "mp_car_bomb"
-    RequestAnimDict(dict)
-    RequestModel(model)
-    while not HasAnimDictLoaded(dict) or not HasModelLoaded(model) do
-        Citizen.Wait(1)
-    end
-    local vehjack = CreateObject(GetHashKey(model), vehpos.x, vehpos.y, vehpos.z - 0.5, true, true, true)
-    AttachEntityToEntity(vehjack, veh, 0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, false, false, false, false, 0, true)
+    FreezeEntityPosition(vehicle, true)
 
     VehiculeOptions:Open()
-    TaskTurnPedToFaceEntity(ped, veh, 500)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
-    Citizen.Wait(1250)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.01, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.025, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.05, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.1, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.15, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.2, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.3, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    dict = "move_crawl"
-    Citizen.Wait(1000)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.4, true, true, true)
-    TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
-    SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.5, true, true, true)
-    SetEntityCollision(veh, false, false)
-    TaskPedSlideToCoord(ped, offset, headin, 1000)
-    Citizen.Wait(1000)
+    SetVehicleDoorsLocked(vehicle, 1)
+    TaskEnterVehicle(ped, vehicle, 3500, -1, 1.0, 1, 0)
+    Citizen.Wait(3500)
 
-    RequestAnimDict(dict)
-    while not HasAnimDictLoaded(dict) do
-        Citizen.Wait(100)
-    end
-    TaskPlayAnimAdvanced(ped, dict, "onback_bwd", coords, 0.0, 0.0, headin - 180, 1.0, 0.5, 3000, 1, 0.0, 1, 1)
-    dict = "amb@world_human_vehicle_mechanic@male@base"
-    Citizen.Wait(1000)
     RequestAnimDict(dict)
     while not HasAnimDictLoaded(dict) do
         Citizen.Wait(1)
     end
 
-    Gveh = veh
-    FreezeEntityPosition(Gveh, true)
+    FreezeEntityPosition(vehicle, true)
     while Gfinishready == false do
-        TaskPlayAnim(ped, dict, "base", 8.0, -8.0, 710, 1, 0, false, false, false)
-        Citizen.Wait(700)
-        Gveh = veh
-        Gped = ped
-        Gcoords = coords
-        Gdict = dict
-        Gheadin = headin
-        Gvehicle = vehicle
-        Gvehpos = vehpos
-        Gvehjack = vehjack
+        TaskPlayAnim(ped, dict, "fixing_a_car", 1.0, 1.0, 1000, 2, 0,true, true, true)
         Gready = true
+        Citizen.Wait(900)
     end
 end
 
@@ -1122,7 +993,6 @@ CreateThread(function()
                 action = function(entity)
                     Config.AttachedVehicle = entity
                     TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", entity)
-                    SetVehicleDoorsLocked(entity, 4)
                     startAnimation()
                 end,
                 canInteract = function(entity, distance, data)
