@@ -55,12 +55,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local enginePercent = round(v.engine / 10, 0)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
-                    local vname
-                    if v.job == nil or v.job == "" then
-                        vname = QBCore.Shared.Vehicles[v.vehicle].name
-                    else
-                        vname = Config.GarageVehicles[v.vehicle]
-                    end
+                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
                     if v.state == 0 then
                         v.state = Lang:t("status.out")
                     elseif v.state == 1 then
@@ -104,12 +99,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local enginePercent = round(v.engine / 10, 0)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
-                    local vname
-                    if v.job == nil or v.job == "" then
-                        vname = QBCore.Shared.Vehicles[v.vehicle].name
-                    else
-                        vname = Config.GarageVehicles[v.vehicle]
-                    end
+                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
                     local timediff = time - v.parkingtime
                     local price = math.floor(timediff / 3600)
 
@@ -148,12 +138,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local enginePercent = round(v.engine / 10, 0)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
-                    local vname
-                    if v.job == nil or v.job == "" then
-                        vname = QBCore.Shared.Vehicles[v.vehicle].name
-                    else
-                        vname = Config.GarageVehicles[v.vehicle]
-                    end
+                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
                     if v.state == 0 then
                         v.state = Lang:t("status.out")
                     elseif v.state == 1 then
@@ -197,7 +182,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local enginePercent = round(v.engine / 10, 0)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
-                    local vname = Config.GarageVehicles[v.vehicle]
+                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
 
                     if v.state == 0 then
                         v.state = Lang:t("status.out")
