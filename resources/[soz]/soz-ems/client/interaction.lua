@@ -33,7 +33,7 @@ CreateThread(function()
                             target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
                             position = GetEntityCoords(entity),
                         }, true)
-                        SetEntityHealth(entity, GetEntityHealth(entity) + 25)
+                        TriggerServerEvent("lsmc:server:heal", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                     end)
                 end,
                 item = "firstaid",
