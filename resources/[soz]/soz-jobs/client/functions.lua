@@ -29,6 +29,19 @@ SozJobCore.Functions.GetDutyActions = function(job)
     }
 end
 
+SozJobCore.Functions.GetBossShopActions = function(job, event)
+    return {
+        {
+            label = "Récupérer du matériel",
+            icon = "fas fa-briefcase",
+            event = event,
+            canInteract = function()
+                return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.ManageGrade)
+            end,
+        },
+    }
+end
+
 function CheckJobPermission(targetJobId, jobId, gradeId, permission)
     if targetJobId ~= jobId then
         return false
