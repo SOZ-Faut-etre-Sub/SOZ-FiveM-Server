@@ -1,5 +1,3 @@
-QBCore = exports["qb-core"]:GetCoreObject()
-
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
