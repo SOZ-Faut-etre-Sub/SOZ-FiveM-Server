@@ -489,6 +489,8 @@ Config.Licenses = {
 
 Config.RadarAllowedVehicle = {
     [GetHashKey("ambulance")] = true,
+    [GetHashKey("ambcar")] = true,
+    --- LSPD
     [GetHashKey("police")] = true,
     [GetHashKey("police2")] = true,
     [GetHashKey("police3")] = true,
@@ -496,12 +498,14 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("police5")] = true,
     [GetHashKey("police6")] = true,
     [GetHashKey("policeb")] = true,
-    [GetHashKey("pbus")] = true,
+    --- BCSO
     [GetHashKey("sheriff")] = true,
     [GetHashKey("sheriff2")] = true,
     [GetHashKey("sheriff3")] = true,
     [GetHashKey("sheriff4")] = true,
     [GetHashKey("sheriffb")] = true,
+    --- LSPD / BCSO
+    [GetHashKey("pbus")] = true,
 }
 --- Fines
 Config.Fines = {
@@ -625,15 +629,15 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 9,
-        speed = 90,
+        speed = 130,
     },
     [2] = {
         props = vector4(2365.11, 5763.63, 44.94, 236.35),
         zone = vector3(2386.17, 5745.69, 45.73),
         station = "bcso",
-        isOnline = true,
+        isOnline = false,
         zoneRadius = 10,
-        speed = 120,
+        speed = 0,
     },
     [3] = {
         props = vector4(-2831.09, 2176.07, 30.84, 320.84),
@@ -641,7 +645,7 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 15,
-        speed = 120,
+        speed = 130,
     },
     [4] = {
         props = vector4(2149.54, 3761.94, 31.89, 320.54),
@@ -649,7 +653,7 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 8,
-        speed = 90,
+        speed = 110,
     },
     [5] = {
         props = vector4(710.03, 2707.9, 39.23, 116.24),
@@ -657,7 +661,7 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 8,
-        speed = 90,
+        speed = 110,
     },
     [6] = {
         props = vector4(2234.08, 4744.3, 38.66, 111.03),
@@ -665,7 +669,7 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 8,
-        speed = 90,
+        speed = 110,
     },
     [7] = {
         props = vector4(1131.91, 1890.94, 64.72, 42.22),
@@ -673,7 +677,7 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 8,
-        speed = 90,
+        speed = 110,
     },
     [8] = {
         props = vector4(-1434.12, 1930.06, 72.43, 202.18),
@@ -681,15 +685,15 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 10,
-        speed = 90,
+        speed = 110,
     },
     [9] = {
         props = vector4(2767.39, 4601.74, 44.2, 29.84),
         zone = vector3(2751.96, 4625.0, 44.89),
         station = "bcso",
-        isOnline = true,
+        isOnline = false,
         zoneRadius = 10,
-        speed = 90,
+        speed = 0,
     },
     [10] = {
         props = vector4(-797.55, 2231.07, 86.17, 356.3),
@@ -697,7 +701,7 @@ Config.Radars = {
         station = "bcso",
         isOnline = true,
         zoneRadius = 8,
-        speed = 90,
+        speed = 110,
     },
     [11] = {
         props = vector4(-2467.23, -219.14, 16.65, 220.11),
@@ -705,7 +709,7 @@ Config.Radars = {
         station = "lspd",
         isOnline = true,
         zoneRadius = 8,
-        speed = 120,
+        speed = 130,
     },
     [12] = {
         props = vector4(-1919.08, 692.07, 125.73, 166.88),
@@ -713,7 +717,7 @@ Config.Radars = {
         station = "lspd",
         isOnline = true,
         zoneRadius = 12,
-        speed = 90,
+        speed = 110,
     },
     [13] = {
         props = vector4(-1650.11, -600.63, 32.63, 259.89),
@@ -767,9 +771,9 @@ Config.Radars = {
         props = vector4(844.38, 141.1, 71.3, 301.84),
         zone = vector3(868.5, 154.6, 73.41),
         station = "lspd",
-        isOnline = true,
+        isOnline = false,
         zoneRadius = 12,
-        speed = 120,
+        speed = 0,
     },
     [20] = {
         props = vector4(-1001.81, 102.48, 51.33, 59.55),
