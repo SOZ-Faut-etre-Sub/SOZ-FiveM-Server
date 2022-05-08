@@ -28,6 +28,47 @@ for k, cycle in pairs(QBCore.Shared.Vehicles) do
     end
 end
 
+local function clean()
+    local vcoords = vector3(-1240.39, -1498.58, 4.35)
+    local stillthere = true
+    while stillthere do
+        local bicycles = QBCore.Functions.GetClosestVehicle(vcoords)
+        if #(vcoords - GetEntityCoords(bicycles)) <= 2.0 then
+            SetEntityAsMissionEntity(bicycles, true, true)
+            DeleteVehicle(bicycles)
+        else
+            stillthere = false
+        end
+    end
+end
+
+local function VeloModels(velo)
+    local bicycle = velo
+    local model = GetHashKey(bicycle["model"])
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        Citizen.Wait(10)
+    end
+    TriggerEvent("soz-concessvelo:client:createcam", "")
+    local vel = CreateVehicle(model, -1240.39, -1498.58, 4.35, 350.0, false, false)
+    SetModelAsNoLongerNeeded(model)
+    SetVehicleOnGroundProperly(vel)
+    SetEntityInvincible(vel, true)
+    SetVehicleDoorsLocked(vel, 6)
+    FreezeEntityPosition(vel, true)
+    SetVehicleNumberPlateText(vel, "SOZ")
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(0)
+            if IsControlPressed(0, 176) or IsControlPressed(0, 177) then
+                TriggerEvent("soz-concess:client:deletecam", "")
+                clean()
+                break
+            end
+        end
+    end)
+end
+
 VeloChoose:On("open", function(m)
     m:ClearItems()
     local cycle = GlobalCycle
@@ -87,6 +128,10 @@ VeloModel:On("open", function(m)
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         description = "❌ HORS STOCK de " .. cycle["name"],
+                        enter = function()
+                            clean()
+                            VeloModels(cycle)
+                        end,
                     })
                 elseif y.stock == 1 then
                     newlabel = "~o~" .. cycle["name"]
@@ -98,6 +143,10 @@ VeloModel:On("open", function(m)
                         select = function()
                             GlobalCycle = cycle
                         end,
+                        enter = function()
+                            clean()
+                            VeloModels(cycle)
+                        end,
                     })
                 else
                     m:AddButton({
@@ -107,6 +156,10 @@ VeloModel:On("open", function(m)
                         description = "Acheter  " .. cycle["name"],
                         select = function()
                             GlobalCycle = cycle
+                        end,
+                        enter = function()
+                            clean()
+                            VeloModels(cycle)
                         end,
                     })
                 end
@@ -127,6 +180,16 @@ VeloList:On("open", function(m)
             end,
         })
     end
+end)
+
+RegisterNetEvent("soz-concessvelo:client:createcam", function()
+    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -1236.72, -1495.94, 5.33, 216.5, 0.00, 0.00, 60.00, false, 0)
+    PointCamAtCoord(cam, -1240.39, -1498.58, 4.35)
+    SetCamActive(cam, true)
+    RenderScriptCams(true, true, 1, true, true)
+    SetFocusPosAndVel(-1236.72, -1495.94, 4.33, 0.0, 0.0, 0.0)
+    DisplayHud(false)
+    DisplayRadar(false)
 end)
 
 for indexConcessVelo, ConcessVelo in pairs(ZonesConcessVelo) do
