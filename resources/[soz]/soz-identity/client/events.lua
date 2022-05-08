@@ -54,6 +54,10 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
     SendNUIMessage(data)
 end)
 
+RegisterNUICallback("nui-timeout", function()
+    TriggerEvent("soz-personal-menu:client:identity:resetMenu")
+end)
+
 -- HIDE ALL
 RegisterNetEvent("soz-identity:client:hide", function(src)
     SendNUIMessage({type = "hide", source = src})
