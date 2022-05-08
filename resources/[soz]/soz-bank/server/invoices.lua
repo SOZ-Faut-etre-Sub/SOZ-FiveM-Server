@@ -122,8 +122,7 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
             })
 
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
-            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous venez de recevoir une facture", "info")
-            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id)
+            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount)
         end
     end
 end)
