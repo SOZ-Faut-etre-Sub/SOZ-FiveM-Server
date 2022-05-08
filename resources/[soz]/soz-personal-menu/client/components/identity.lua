@@ -1,15 +1,16 @@
+local identitySubmenu
 local selectedCheckbox = nil
 local isShowingAround = false
 local showingTo = {}
 
-local function UpdateLicenseMenu(identitySubmenu, checkbox, showingAround)
+local function UpdateIdentityMenu(identitySubmenu, checkbox, showingAround)
     identitySubmenu:Close()
     identitySubmenu:ClearItems()
-    GenerateLicenseMenu(identitySubmenu, checkbox, showingAround)
+    GenerateIdentityMenu(identitySubmenu, checkbox, showingAround)
     identitySubmenu:Open()
 end
 
-function GenerateLicenseMenu(identitySubmenu, selectedCheckbox, showingAround)
+function GenerateIdentityMenu(identitySubmenu, selectedCheckbox, showingAround)
     local actions = {["see"] = "Voir", ["show"] = "Montrer"}
     local checkboxes = {
         ["identity"] = {label = "carte d'identité", event = "soz-identity:client:request-identity-data"},
@@ -44,7 +45,7 @@ function GenerateLicenseMenu(identitySubmenu, selectedCheckbox, showingAround)
                         local closePlayers = QBCore.Functions.GetPlayersFromCoords(coords, 3.0)
 
                         if type(closePlayers) == "table" and #closePlayers > 1 then
-                            UpdateLicenseMenu(identitySubmenu, selectedCheckbox, true)
+                            UpdateIdentityMenu(identitySubmenu, selectedCheckbox, true)
                             for _, player in ipairs(closePlayers) do
                                 if player ~= PlayerId() then
                                     local pid = GetPlayerServerId(player)
@@ -58,7 +59,7 @@ function GenerateLicenseMenu(identitySubmenu, selectedCheckbox, showingAround)
                         else
                             exports["soz-hud"]:DrawNotification("Il n'y a personne à proximité", "error", 3000)
                             selectedCheckbox = nil
-                            UpdateLicenseMenu(identitySubmenu, selectedCheckbox, isShowingAround)
+                            UpdateIdentityMenu(identitySubmenu, selectedCheckbox, isShowingAround)
                             return
                         end
                     end
@@ -91,11 +92,11 @@ function HideUI(identitySubmenu)
         isShowingAround = false
         showingTo = {}
     end
-    UpdateLicenseMenu(identitySubmenu, selectedCheckbox, isShowingAround)
+    UpdateIdentityMenu(identitySubmenu, selectedCheckbox, isShowingAround)
 end
 
 function IdentityEntry(menu)
-    local identitySubmenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de l'identité"})
+    identitySubmenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de l'identité"})
 
     menu:AddButton({
         label = "Mon identité",
@@ -103,5 +104,9 @@ function IdentityEntry(menu)
         description = "Voir/Montrer vos papiers d'identité",
     })
 
-    GenerateLicenseMenu(identitySubmenu, isShowingAround)
+    GenerateIdentityMenu(identitySubmenu, isShowingAround)
 end
+
+AddEventHandler("soz-personal-menu:client:identity:resetMenu", function()
+    UpdateIdentityMenu(identitySubmenu, nil, false)
+end)
