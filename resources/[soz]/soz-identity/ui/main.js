@@ -19,6 +19,7 @@ async function HideUI(...elements) {
 
 let visible = false;
 let source = null;
+let timeout;
 async function setVisible(value, src) {
     const identityElement = document.querySelector("#identity");
     const licensesElement = document.querySelector("#licenses");
@@ -41,6 +42,14 @@ async function setVisible(value, src) {
 
     if (value === "identity") await fadeIn(identityElement);
     else if (value === "licenses") await fadeIn(licensesElement);
+
+    if (value) {
+        if (timeout) clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            setVisible(false, src);
+            fetch(`https://${GetParentResourceName()}/nui-timeout`, { method: "POST" });
+        }, 10000);
+    } else if (timeout) clearTimeout(timeout);
 }
 
 // NUI Events

@@ -79,7 +79,7 @@ SozJobCore.Jobs = {
         permissions = {},
     },
     [SozJobCore.JobType.Scrapper] = {
-        label = "DeMetal Compagny",
+        label = "DeMetal Company",
         temporary = {
             payout = 5,
             vehicule_position = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67},
