@@ -65,6 +65,10 @@
     background: url("../../assets/trunk.jpg") left no-repeat;
     background-size: cover;
 }
+.organ {
+    background: url("../../assets/organ.jpg") left no-repeat;
+    background-size: cover;
+}
 
 .banner > span {
     float: right;
