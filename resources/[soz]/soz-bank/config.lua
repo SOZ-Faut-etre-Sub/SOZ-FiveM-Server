@@ -1,6 +1,6 @@
 Config = {}
 
-Config.PayCheckTimeOut = 15
+Config.PayCheckTimeOut = 20
 Config.MoneyCaseTrigger = 5000
 
 Config.OffShoreMaxWashAmount = math.random(50000, 150000)

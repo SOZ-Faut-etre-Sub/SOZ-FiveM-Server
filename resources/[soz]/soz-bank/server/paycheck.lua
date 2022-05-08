@@ -8,7 +8,7 @@ function PaycheckLoop()
     local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
     for _, Player in pairs(Players) do
-        local grade = SozJobCore.Jobs[Player.PlayerData.job.id].grades[tostring(Player.PlayerData.job.grade)] or nil
+        local grade = SozJobCore.Jobs[Player.PlayerData.job.id].grades[tostring(Player.PlayerData.job.grade)] or {}
         local payment = grade.salary or 0
 
         if Player.PlayerData.metadata["injail"] == 0 and Player.PlayerData.job and payment > 0 then
