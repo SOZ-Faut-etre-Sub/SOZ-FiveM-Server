@@ -56,7 +56,6 @@ ZonesCarwash = {
     }),
 }
 
-
 InsideCarwash = false
 
 for indexcarwash, carwash in pairs(ZonesCarwash) do
