@@ -42,8 +42,8 @@ local Translations = {
         },
         text = {
             vehicles = "Voir les véhicules stockés",
-            depot = "État: %{value}<br>Réservoir: %{value2} | Moteur: %{value3} | Carrosserie: %{value4}",
-            garage = "État: %{value}<br>Réservoir: %{value2} | Moteur: %{value3} | Carrosserie: %{value4}",
+            depot = "Réservoir: %{value2} | Moteur: %{value3} | Carrosserie: %{value4}",
+            garage = "Réservoir: %{value2} | Moteur: %{value3} | Carrosserie: %{value4}",
         },
     },
     status = {
