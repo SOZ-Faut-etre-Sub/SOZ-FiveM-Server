@@ -141,3 +141,16 @@ RegisterNetEvent("admin:server:revive", function(player)
 
     TriggerEvent("lsmc:server:revive", player.id)
 end)
+
+RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)
+    local src = source
+    if not SozAdmin.Functions.IsPlayerAdmin(src) then
+        return
+    end
+
+    QBCore.Player.Logout(src)
+    if QBCore.Player.Login(src, citizenid) then
+        TriggerEvent("QBCore:Server:OnPlayerLoaded")
+        TriggerClientEvent("QBCore:Client:OnPlayerLoaded", src)
+    end
+end)

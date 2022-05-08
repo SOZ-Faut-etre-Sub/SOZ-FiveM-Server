@@ -73,6 +73,17 @@ function AdminMenuDeveloper(menu, permission)
     })
 
     developerMenu:AddButton({
+        label = "Changer de joueur",
+        value = nil,
+        select = function()
+            local citizen = exports["soz-hud"]:Input("Citizen ID :", 32)
+            if citizen and citizen ~= "" then
+                TriggerServerEvent("admin:server:ChangePlayer", citizen)
+            end
+        end,
+    })
+
+    developerMenu:AddButton({
         label = "Redonner la faim/soif",
         value = nil,
         select = function()
