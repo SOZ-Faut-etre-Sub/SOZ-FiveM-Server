@@ -25,6 +25,10 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
     local vehicleSpeed = GetEntitySpeed(vehicle) * 3.6
     local fine = QBCore.Shared.Round((vehicleSpeed - radar.speed) * 1.5)
 
+    if not radar.isOnline then
+        return
+    end
+
     if vehicleSpeed - 5 > radar.speed then
         if GetPedInVehicleSeat(vehicle, -1) ~= GetPlayerPed(Player.PlayerData.source) then
             return
