@@ -38,6 +38,14 @@ end)
 
 CreateThread(function()
     while true do
+        DisablePlayerVehicleRewards(PlayerId())
+
+        Wait(0)
+    end
+end)
+
+CreateThread(function()
+    while true do
         Wait(1)
         local ped = PlayerPedId()
         if IsPedBeingStunned(ped) then
