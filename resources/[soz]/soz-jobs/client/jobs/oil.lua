@@ -478,7 +478,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
     Wait(500)
 
-    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la raffinerie~s~.", "info")
+    exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la cuve~s~.", "info")
 
     while canResellTanker do
         Wait(500)
@@ -498,7 +498,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     end
 
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
-    exports["soz-hud"]:DrawNotification("Le raffinage est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+    exports["soz-hud"]:DrawNotification("Le remplissage est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)
 
 RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
