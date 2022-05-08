@@ -1,5 +1,3 @@
-QBCore = exports["qb-core"]:GetCoreObject()
-
 -- maladie
 Rhume = false
 Grippe = false
@@ -58,28 +56,29 @@ end
 
 CreateThread(function()
     while true do
-        local Player = QBCore.Functions.GetPlayerData()
         Wait(1000 * 60 * 15)
-        Random = math.random(1, 1000)
-        if not IsDead and not Player.metadata.godmode then
-            -- maladie
-            if Random == 1 then
-                TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", true)
-                Rhume = true
-            end
-            if Random == 10 then
-                TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", true)
-                Grippe = true
-            end
-            if Random == 20 then
-                TriggerServerEvent("lsmc:server:SetMaladie", "Rougeur", true)
-                Rougeur = true
+        if LocalPlayer.state.isLoggedIn then
+            Random = math.random(1, 200)
+            if not IsDead and not PlayerData.metadata.godmode then
+                -- maladie
+                if Random == 1 then
+                    TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", true)
+                    Rhume = true
+                end
+                if Random == 10 then
+                    TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", true)
+                    Grippe = true
+                end
+                if Random == 20 then
+                    TriggerServerEvent("lsmc:server:SetMaladie", "Rougeur", true)
+                    Rougeur = true
+                end
             end
         end
     end
 end)
 
--- effet 
+-- effet
 
 CreateThread(function()
     while true do
