@@ -1,4 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
+
+PlayerData = QBCore.Functions.GetPlayerData()
 
 IsDead = false
 isInHospitalBed = false
@@ -7,12 +10,21 @@ DeathTime = 0
 Callems = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
     QBCore.Functions.CreateBlip("LSMC", {
         name = "Los Santos Medical Center",
         coords = vector3(356.35, -1416.63, 32.51),
         sprite = 61,
         scale = 1.0,
     })
+end)
+
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
+    PlayerData = data
+end)
+
+RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
+    PlayerData.job = JobInfo
 end)
 
 RegisterNetEvent("soz_ems:client:KillPlayer")
@@ -50,8 +62,8 @@ RegisterNetEvent("lsmc:client:GiveBlood")
 AddEventHandler("lsmc:client:GiveBlood", function()
     local player = PlayerPedId()
 
-    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] - 20)
-    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["thirst"] - 20)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", PlayerData.metadata["hunger"] - 20)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", PlayerData.metadata["thirst"] - 20)
 
     exports["soz-hud"]:DrawNotification("Vous avez donnez votre sang!")
 end)
