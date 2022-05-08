@@ -58,7 +58,7 @@ CreateThread(function()
     while true do
         Wait(1000 * 60 * 15)
         if LocalPlayer.state.isLoggedIn then
-            Random = math.random(1, 200)
+            Random = math.random(1, 1000)
             if not IsDead and not PlayerData.metadata.godmode then
                 -- maladie
                 if Random == 1 then
@@ -106,7 +106,7 @@ CreateThread(function()
         elseif Rein then
             TriggerServerEvent("QBCore:Server:Rein")
         elseif Poumon then
-            EnableContolAction(0, 21, false)
+            SetPlayerSprint(ped, false)
         elseif Foie then
             TriggerServerEvent("QBCore:Server:Foie")
         end

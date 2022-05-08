@@ -24,6 +24,26 @@ AddEventHandler("lsmc:server:GetOrgane", function()
     TriggerClientEvent("lsmc:client:SetMaladie", source, "foie", Poumon)
 end)
 
+RegisterServerEvent("lsmc:server:Greffer")
+AddEventHandler("lsmc:server:Greffer", function(id)
+    local Player = QBCore.Functions.GetPlayer(tonumber(id))
+    local Rein = Player.PlayerData.metadata["rein"]
+    local Poumon = Player.PlayerData.metadata["poumon"]
+    local Foie = Player.PlayerData.metadata["foie"]
+    if not Rein and not Poumon and not Foie then
+        TriggerClientEvent("lsmc:client:SetOperation", source, true, nil)
+    end
+    if not Rein and not Poumon and Foie then
+        TriggerClientEvent("lsmc:client:SetOperation", source, false, "Foie")
+    end
+    if not Rein and Poumon and not Foie then
+        TriggerClientEvent("lsmc:client:SetOperation", source, false, "Poumon")
+    end
+    if Rein and not Poumon and not Foie then
+        TriggerClientEvent("lsmc:client:SetOperation", source, false, "Rein")
+    end
+end)
+
 RegisterServerEvent("lsmc:server:SetMaladie")
 AddEventHandler("lsmc:server:SetMaladie", function(maladie, val)
     local Player = QBCore.Functions.GetPlayer(source)
