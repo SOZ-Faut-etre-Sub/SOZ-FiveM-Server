@@ -45,15 +45,15 @@ function CheckPlayerJobPermission(player, targetJobId, permission)
     return CheckJobPermission(targetJobId, player.job.id, player.job.grade, permission)
 end
 
-function GetJobDefaultGrade(targetJobId, jobId)
-    local gradeId
+function GetJobDefaultGrade(jobId)
+    local gradeId = 0
     local job = SozJobCore.Jobs[jobId]
 
-    if not job then
+    if job == nil then
         return gradeId
     end
 
-    for id, grade in ipairs(job.grades) do
+    for id, grade in pairs(job.grades) do
         if grade.is_default == 1 then
             gradeId = id
 

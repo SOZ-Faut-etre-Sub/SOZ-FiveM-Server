@@ -116,7 +116,7 @@ CreateThread(function()
 
 		JobCheck = function(job, permission)
 			if type(job) == 'table' then
-				if job[PlayerData.job.id] and PlayerData.job.grade >= job[PlayerData.job.id] then
+				if job[PlayerData.job.id] and tonumber(PlayerData.job.grade) >= job[PlayerData.job.id] then
 					return true
 				end
 			elseif type(job) == 'string' and job == PlayerData.job.id then
