@@ -3,17 +3,6 @@ QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)
 end)
 
-RegisterNetEvent("qb-carwash:server:washCar", function()
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-
-    if Player.Functions.RemoveMoney("money", Config.DefaultPrice, "car-washed") then
-        TriggerClientEvent("qb-carwash:client:washCar", src)
-    else
-        TriggerClientEvent("hud:client:DrawNotification", src, "Vous n'avez pas assez d'argent", "error")
-    end
-end)
-
 QBCore.Functions.CreateCallback("smallresources:server:GetCurrentPlayers", function(source, cb)
     local TotalPlayers = {0, GetConvarInt("sv_maxclients", 256)}
     for k, v in pairs(QBCore.Functions.GetPlayers()) do

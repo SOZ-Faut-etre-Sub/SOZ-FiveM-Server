@@ -541,3 +541,11 @@ Config.Flatbeds = {
 }
 
 Config.BedProp = "inm_flatbed_base" -- String | Hash Of The Bed Prop
+
+Config.CarWash = { -- carwash
+    [1] = {["label"] = "Lavage Auto", ["coords"] = vector3(25.29, -1391.96, 29.33)},
+    [2] = {["label"] = "Lavage Auto", ["coords"] = vector3(174.18, -1736.66, 29.35)},
+    [3] = {["label"] = "Lavage Auto", ["coords"] = vector3(-74.56, 6427.87, 31.44)},
+    [5] = {["label"] = "Lavage Auto", ["coords"] = vector3(1363.22, 3592.7, 34.92)},
+    [6] = {["label"] = "Lavage Auto", ["coords"] = vector3(-699.62, -932.7, 19.01)},
+}
