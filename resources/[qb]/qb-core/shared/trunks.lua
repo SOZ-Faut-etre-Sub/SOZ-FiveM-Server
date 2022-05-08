@@ -10,6 +10,9 @@ QBShared.Trunks = {
     -- BlueBird
     [GetHashKey('trash')] = { slot = 10, weight = 200000 },
 
+    -- STONKS
+    [GetHashKey('stockade')] = { slot = 10, weight = 500000 },
+
     -- Vehicles
     [GetHashKey('asbo')] = { slot = 10, weight = 50000 },
     [GetHashKey('blista')] = { slot = 10, weight = 50000 },

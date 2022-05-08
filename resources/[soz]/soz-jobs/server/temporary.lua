@@ -1,6 +1,6 @@
 RegisterServerEvent("job:set:unemployed", function()
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous êtes à nouveau sans emploie"))
+    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous êtes à nouveau sans emploi"))
     Player.Functions.SetJob(SozJobCore.JobType.Unemployed, nil)
 end)
 
@@ -46,8 +46,17 @@ end)
 RegisterServerEvent("job:get:metal", function(amount)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
     local metadata = {}
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, "metalscrap", amount, metadata, false)
-    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez reçu %s metalscrap", amount))
+    exports["soz-inventory"]:AddItem(Player.PlayerData.source, "metalscrap", amount, metadata, nil, function(success, reason)
+        if success then
+            TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez ramassé %d ferrailles", amount))
+        else
+            if reason == "invalid_weight" then
+                TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
+            else
+                TriggerClientEvent("hud:client:DrawNotification", source, string.format("Il y a eu une erreur: %s", reason), "error")
+            end
+        end
+    end)
 end)
 
 RegisterServerEvent("job:remove:metal", function(amount)
@@ -55,7 +64,7 @@ RegisterServerEvent("job:remove:metal", function(amount)
     local totalAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "metalscrap", nil, true)
     if tonumber(amount) <= tonumber(totalAmount) then
         exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "metalscrap", amount, nil)
-        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez vendu %s metalscrap", amount))
+        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous avez vendu %d ferrailles", amount))
         local payout = amount * SozJobCore.metal_payout
         TriggerEvent("job:payout:metal", payout, source)
     else
