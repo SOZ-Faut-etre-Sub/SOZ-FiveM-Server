@@ -31,6 +31,7 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Unemployed] = {label = "Sans emploi", grades = {}, permissions = {}},
     [SozJobCore.JobType.Adsl] = {
         label = "ADSL",
+        platePrefix = "ADSL",
         temporary = {
             payout = 25,
             vehicule_position = {x = 500.79, y = -105.88, z = 62.07, w = 253.78},
@@ -50,6 +51,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Delivery] = {
         label = "Fougère Prime",
+        platePrefix = "FOUG",
         temporary = {
             payout = 25,
             vehicule_position = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52},
@@ -66,6 +68,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Religious] = {
         label = "InfoChat",
+        platePrefix = "INFO",
         temporary = {
             payout = 150,
             vehicule_position = {x = -763.69, y = -39.26, z = 37.69, w = 119.87},
@@ -80,6 +83,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Scrapper] = {
         label = "DeMetal Company",
+        platePrefix = "DEMC",
         temporary = {
             payout = 5,
             vehicule_position = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67},
@@ -96,6 +100,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.LSPD] = {
         label = "Los Santos Police Department",
+        platePrefix = "LSPD",
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
@@ -106,6 +111,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.BCSO] = {
         label = "Blaine County Sheriff Office",
+        platePrefix = "BCSO",
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
@@ -116,6 +122,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.LSMC] = {
         label = "Los Santos Medical Center",
+        platePrefix = "LSMC",
         grades = {},
         menuCallback = "lsmc:client:OpenSocietyMenu",
         permissions = {
@@ -125,6 +132,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Taxi] = {
         label = "Carl Jr Service",
+        platePrefix = "CARL",
         grades = {},
         menuCallback = "taxi:client:OpenSocietyMenu",
         permissions = {
@@ -134,6 +142,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Food] = {
         label = "Château Marius",
+        platePrefix = "CHAT",
         grades = {},
         menuCallback = "jobs:client:food:OpenSocietyMenu",
         permissions = {
@@ -145,6 +154,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.News] = {
         label = "Twitch News",
+        platePrefix = "NEWS",
         grades = {},
         menuCallback = "jobs:client:news:OpenSocietyMenu",
         permissions = {
@@ -154,6 +164,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Garbage] = {
         label = "BlueBird",
+        platePrefix = "BLUE",
         grades = {},
         menuCallback = "jobs:client:garbage:OpenSocietyMenu",
         permissions = {
@@ -163,6 +174,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Oil] = {
         label = "Michel Transport Petrol",
+        platePrefix = "MITP",
         grades = {},
         menuCallback = "jobs:client:fueler:OpenSocietyMenu",
         permissions = {
@@ -172,6 +184,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.CashTransfer] = {
         label = "STONK Depository",
+        platePrefix = "STNK",
         grades = {},
         menuCallback = "stonk:client:OpenSocietyMenu",
         permissions = {
@@ -184,6 +197,7 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.Bennys] = {
         label = "Benny's",
+        platePrefix = "BENY",
         grades = {},
         menuCallback = "bennys:client:OpenSocietyMenu",
         permissions = {
