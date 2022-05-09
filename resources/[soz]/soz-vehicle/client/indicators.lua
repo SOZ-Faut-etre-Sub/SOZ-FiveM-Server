@@ -1,3 +1,5 @@
+local vehicleState = nil
+
 AddStateBagChangeHandler("indicators", nil, function(bagName, _, value, _, _)
     local vehNet = bagName:gsub("entity:", "")
     local vehicle = NetToVeh(tonumber(vehNet))
@@ -14,7 +16,9 @@ CreateThread(function()
 
         if IsPedInAnyVehicle(ped, false) then
             local vehicle = GetVehiclePedIsIn(ped, false)
-            local vehicleState = Entity(vehicle).state.indicators or {left = false, right = false}
+            if vehicleState == nil then
+                vehicleState = Entity(vehicle).state.indicators or {left = false, right = false}
+            end
 
             if NetworkHasControlOfEntity(vehicle) then
                 if IsControlJustPressed(0, 189) then
@@ -29,6 +33,7 @@ CreateThread(function()
                 Wait(1000)
             end
         else
+            vehicleState = nil
             Wait(1000)
         end
 
