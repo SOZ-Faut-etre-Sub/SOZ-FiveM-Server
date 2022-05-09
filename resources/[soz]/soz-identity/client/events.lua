@@ -38,7 +38,7 @@ end)
 
 -- LICENSES
 AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action)
+    TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action, {})
 end)
 
 -- COMMON
