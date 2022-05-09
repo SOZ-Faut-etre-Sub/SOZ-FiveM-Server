@@ -9,14 +9,16 @@ RegisterServerEvent("job:recruit", function(target)
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
 
     if targetPlayer.PlayerData.job.id ~= SozJobCore.JobType.Unemployed then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Le joueur est déjà employé dans une autre entreprise !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
 
     targetPlayer.Functions.SetJob(player.PlayerData.job.id, GetJobDefaultGrade(player.PlayerData.job.id))
 
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le joueur a été recruté dans l'entreprise !")
+    TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ fait maintenant partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
+                       "info")
+    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, "Vous avez été ~g~embauché~s~ !", "info")
 end)
 
 RegisterServerEvent("job:fire", function(target)
@@ -30,14 +32,16 @@ RegisterServerEvent("job:fire", function(target)
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Le joueur n'est pas dans votre entreprise !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
 
     targetPlayer.Functions.SetJob(SozJobCore.JobType.Unemployed, GetJobDefaultGrade(SozJobCore.JobType.Unemployed))
 
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le joueur a été viré de l'entreprise !")
+    TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne fait plus partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
+                       "info")
+    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, "Vous avez été ~r~viré~s~ !", "info")
 end)
 
 RegisterServerEvent("job:promote", function(target, gradeId)
@@ -51,14 +55,16 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Le joueur n'est pas dans votre entreprise !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
 
+    local gradeLabel = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[gradeId].name
     targetPlayer.Functions.SetJob(targetPlayer.PlayerData.job.id, gradeId)
 
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le joueur a été promu !")
+    TriggerClientEvent("hud:client:DrawNotification", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), gradeLabel), "info")
+    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, ("Vous avez été promu ~b~%s~s~ !"):format(gradeLabel), "info")
 end)
 
 RegisterServerEvent("job:grade:add", function(name)
