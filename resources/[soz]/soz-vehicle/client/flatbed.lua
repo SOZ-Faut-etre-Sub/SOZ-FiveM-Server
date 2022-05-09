@@ -325,11 +325,6 @@ RegisterNetEvent("soz-flatbed:client:callchaines", function(entity)
 end)
 
 RegisterNetEvent("soz-flatbed:client:callaction", function(entity)
-    print("bibi")
-    print(NetworkGetEntityOwner(entity))
-    print(PlayerId)
-    print(PlayerPedId)
-    print("aa")
     ActionFlatbed(entity)
 end)
 
