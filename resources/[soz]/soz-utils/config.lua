@@ -136,7 +136,13 @@ Config.BlacklistedPeds = {
     [GetHashKey("s_m_y_hwaycop_01")] = true,
 }
 
-Config.SeatChairOffset = {[444105316] = 0.5, [1037469683] = 0.4, [-109356459] = 0.5}
+Config.SeatChairOffset = {
+    [444105316] = {z = 0.5},
+    [1037469683] = {z = 0.4},
+    [-109356459] = {z = 0.5},
+    [49088219] = {z = 0.5, y = 0.4},
+    [-1173315865] = {z = 0.5},
+}
 
 Config.Teleports = {}
 
