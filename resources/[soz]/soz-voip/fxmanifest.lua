@@ -17,4 +17,4 @@ client_scripts {
 
 server_scripts {"server/main.lua", "server/events.lua", "server/store/*.lua", "server/module/*.lua"}
 
-dependencies {"/onesync", "interact-sound"}
+dependencies {"/onesync", "qb-core", "interact-sound"}
