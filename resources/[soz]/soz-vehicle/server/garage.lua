@@ -66,7 +66,7 @@ end)
 QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(source, cb, plate, type, house, gang)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
-    if type == "public" or type == "private" or type == "entreprise" then -- Public garages only for player cars
+    if type == "public" or type == "private" then -- Public garages only for player cars
         MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ? AND citizenid = ?", {
             plate,
             pData.PlayerData.citizenid,
@@ -111,10 +111,13 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(sour
                 cb(false)
             end
         end)
-    else -- Job garages only for cars that are owned by someone (for sharing and service)
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {plate}, function(result)
+    elseif type == "entreprise" then -- Job garages only for cars that are owned by someone (for sharing and service)
+        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ? AND citizenid = ?", {
+            plate,
+            pData.PlayerData.citizenid,
+        }, function(result)
             if result[1] then
-                cb(true)
+                cb(result[1])
             else
                 cb(false)
             end
