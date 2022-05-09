@@ -506,6 +506,9 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("sheriffb")] = true,
     --- LSPD / BCSO
     [GetHashKey("pbus")] = true,
+    --- FBI
+    [GetHashKey("cogfbi")] = true,
+    [GetHashKey("paragonfbi")] = true,
 }
 --- Fines
 Config.Fines = {
