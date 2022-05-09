@@ -166,7 +166,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
 
-                    if v.state == 1 then
+                    if v.state == 3 then
                         VehiculeParkingEntreprise:AddButton({
                             label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate}),
                             description = Lang:t("menu.text.garage", {
