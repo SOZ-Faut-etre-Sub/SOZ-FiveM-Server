@@ -325,11 +325,6 @@ RegisterNetEvent("soz-flatbed:client:callchaines", function(entity)
 end)
 
 RegisterNetEvent("soz-flatbed:client:callaction", function(entity)
-    print("bibi")
-    print(NetworkGetEntityOwner(entity))
-    print(PlayerId)
-    print(PlayerPedId)
-    print("aa")
     ActionFlatbed(entity)
 end)
 
@@ -348,7 +343,7 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     return not LastStatus
@@ -366,7 +361,7 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     return LastStatus
@@ -384,7 +379,7 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     return not LastAttach
@@ -402,7 +397,7 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     return LastAttach
@@ -420,7 +415,7 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     return LastAttach
@@ -439,7 +434,7 @@ CreateThread(function()
                     if GetEntityModel(entity) == GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
