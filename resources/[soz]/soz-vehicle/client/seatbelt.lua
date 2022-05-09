@@ -207,7 +207,7 @@ function EjectFromVehicle()
     Wait(1)
     SetPedToRagdoll(ped, 5511, 5511, 0, 0, 0, 0)
     SetEntityVelocity(ped, veloc.x * 3, veloc.y * 3, veloc.z * 3)
-    local ejectspeed = math.ceil(GetEntitySpeed(ped) * 5)
+    local ejectspeed = math.abs(math.ceil(GetEntitySpeed(ped) * 5))
     if (GetEntityHealth(ped) - (ejectspeed / 1.5)) > 0 then
         SetEntityHealth(ped, (GetEntityHealth(ped) - (ejectspeed / 1.5)))
     elseif GetEntityHealth(ped) ~= 0 then
