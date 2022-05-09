@@ -4,6 +4,10 @@ local function fnRadioTalkPush(module, isPrimary)
         return
     end
 
+    if PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
+        return
+    end
+
     if CurrentPlayer.RadioButtonPressed or CurrentPlayer.LastRadioButtonPressed + 200 > GetGameTimer() then
         return
     end
@@ -26,6 +30,11 @@ end
 
 local function fnRadioTalkRelease(module, isPrimary)
     local radioChannel = LocalPlayer.state[module][isPrimary and "primaryChannel" or "secondaryChannel"]
+
+    if PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
+        return
+    end
+
     if radioChannel > 0 and CurrentPlayer.RadioButtonPressed then
         CurrentPlayer.RadioButtonPressed = false
         MumbleClearVoiceTargetPlayers(Config.VoiceTarget)
