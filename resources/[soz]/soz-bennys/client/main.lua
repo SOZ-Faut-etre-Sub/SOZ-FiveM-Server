@@ -486,7 +486,6 @@ CreateThread(function()
             {
                 type = "client",
                 icon = "c:mechanic/reparer.png",
-                event = "soz-bennys:client:manualrepair",
                 label = "Réparer",
                 action = function(entity)
                     Repairall(entity)
@@ -501,7 +500,6 @@ CreateThread(function()
             {
                 type = "client",
                 icon = "c:mechanic/nettoyer.png",
-                event = "qb-carwash:client:washCar",
                 label = "Laver",
                 action = function(entity)
                     CleanVehicle(entity)
