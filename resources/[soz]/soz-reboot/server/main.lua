@@ -46,9 +46,10 @@ local thunder = function()
     Wait(2 * 60 * 1000)
     GlobalState.blackout = true
     Wait(2 * 60 * 1000)
-    TriggerClientEvent("InteractSound_CL:PlayOnOne", -1, "system/reboot", 0.2)
+    TriggerClientEvent("InteractSound_CL:PlayOnOne", -1, "system/reboot", 0.05)
     Wait(30 * 1000)
-    TriggerClientEvent("InteractSound_CL:PlayOnOne", -1, "system/reboot", 0.2)
+    TriggerClientEvent("InteractSound_CL:PlayOnOne", -1, "system/reboot", 0.05)
+    Wait(30 * 1000)
 
     reboot()
 end
