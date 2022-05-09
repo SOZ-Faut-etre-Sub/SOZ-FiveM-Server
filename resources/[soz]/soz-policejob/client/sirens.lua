@@ -2,8 +2,10 @@ AddStateBagChangeHandler("isSirenMuted", nil, function(bagName, key, value, _, _
     local entNet = bagName:gsub("entity:", "")
 
     if key == "isSirenMuted" and type(value) == "boolean" then
-        local veh = NetToVeh(tonumber(entNet))
-        SetVehicleHasMutedSirens(veh, value)
+        local vehicle = NetToVeh(tonumber(entNet))
+        if vehicle ~= 0 then
+            SetVehicleHasMutedSirens(vehicle, value)
+        end
     end
 end)
 
@@ -13,7 +15,7 @@ RegisterCommand("togglesirens", function()
     local vehicle = GetVehiclePedIsIn(ped, false)
     local lastState = Entity(vehicle).state.isSirenMuted
 
-    if vehicle then
+    if vehicle ~= 0 then
         Entity(vehicle).state:set("isSirenMuted", not lastState, true)
     end
 end, false)
