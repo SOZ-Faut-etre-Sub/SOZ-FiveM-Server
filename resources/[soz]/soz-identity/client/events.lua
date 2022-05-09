@@ -44,9 +44,9 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
         data.gender = "Féminin"
     end
 
-    local job = PlayerData.job
-    if job ~= nil then
-        data.job = exports["soz-jobs"]:GetJobLabel(job.id)
+    local jobId = data.job
+    if jobId ~= nil then
+        data.job = exports["soz-jobs"]:GetJobLabel(jobId)
     else
         data.job = "-"
     end
