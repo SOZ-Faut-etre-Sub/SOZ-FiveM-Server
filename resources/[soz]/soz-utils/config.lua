@@ -10,26 +10,52 @@ Config.RemoveWeaponDropsTimer = 25
 Config.DefaultPrice = 20 -- carwash
 Config.DirtLevel = 0.1 -- carwash dirt level
 
+--- Refill 100% for stress test
 ConsumablesEat = {
-    ["sandwich"] = math.random(35, 54),
-    ["tosti"] = math.random(40, 50),
-    ["twerks_candy"] = math.random(35, 54),
-    ["snikkel_candy"] = math.random(40, 50),
+    ["sandwich"] = 100, -- math.random(35, 54),
+    ["tosti"] = 100, -- math.random(40, 50),
+    ["twerks_candy"] = 100, -- math.random(35, 54),
+    ["snikkel_candy"] = 100, -- math.random(40, 50),
+    ["sausage1"] = 100,
+    ["sausage2"] = 100,
+    ["sausage3"] = 100,
+    ["sausage4"] = 100,
+    ["sausage5"] = 100,
+    ["cheese1"] = 100,
+    ["cheese2"] = 100,
+    ["cheese3"] = 100,
+    ["cheese4"] = 100,
+    ["cheese5"] = 100,
+    ["cheese6"] = 100,
+    ["cheese7"] = 100,
+    ["cheese8"] = 100,
+    ["cheese9"] = 100,
+    ["grapejuice1"] = 100,
+    ["grapejuice2"] = 100,
+    ["grapejuice3"] = 100,
+    ["grapejuice4"] = 100,
+    ["grapejuice5"] = 100,
 }
 
+--- Refill 100% for stress test
 ConsumablesDrink = {
-    ["water_bottle"] = math.random(35, 54),
-    ["kurkakola"] = math.random(35, 54),
-    ["coffee"] = math.random(40, 50),
+    ["water_bottle"] = 100, -- math.random(35, 54),
+    ["coffee"] = 100, -- math.random(40, 50),
+    ["kurkakola"] = 100, -- math.random(35, 54),
     ["whiskey"] = math.random(5, 10),
     ["beer"] = math.random(5, 10),
     ["vodka"] = math.random(5, 10),
+    ["milk"] = 100,
 }
 
 ConsumablesAlcohol = {
     ["whiskey"] = math.random(20, 30),
-    ["beer"] = math.random(30, 40),
     ["vodka"] = math.random(20, 40),
+    ["beer"] = math.random(30, 40),
+    ["wine1"] = math.random(40, 60),
+    ["wine2"] = math.random(40, 60),
+    ["wine3"] = math.random(40, 60),
+    ["wine4"] = math.random(40, 60),
 }
 
 ConsumablesDrug = {

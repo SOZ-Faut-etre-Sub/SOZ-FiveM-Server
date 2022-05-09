@@ -8,47 +8,25 @@ local function removeItemAndSendEvent(source, item, event, extra)
 end
 
 --- Eat
-QBCore.Functions.CreateUseableItem("sandwich", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Eat")
-end)
-
-QBCore.Functions.CreateUseableItem("twerks_candy", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Eat")
-end)
-
-QBCore.Functions.CreateUseableItem("snikkel_candy", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Eat")
-end)
-
-QBCore.Functions.CreateUseableItem("tosti", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Eat")
-end)
+for name, _ in pairs(ConsumablesEat) do
+    QBCore.Functions.CreateUseableItem(name, function(source, item)
+        removeItemAndSendEvent(source, item, "consumables:client:Eat")
+    end)
+end
 
 --- Drink
-QBCore.Functions.CreateUseableItem("water_bottle", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Drink")
-end)
-
-QBCore.Functions.CreateUseableItem("coffee", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Drink")
-end)
-
-QBCore.Functions.CreateUseableItem("kurkakola", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:Drink")
-end)
+for name, _ in pairs(ConsumablesDrink) do
+    QBCore.Functions.CreateUseableItem(name, function(source, item)
+        removeItemAndSendEvent(source, item, "consumables:client:Drink")
+    end)
+end
 
 --- Alcohol
-QBCore.Functions.CreateUseableItem("vodka", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol", "prop_drink_whisky")
-end)
-
-QBCore.Functions.CreateUseableItem("beer", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol", "prop_amb_beer_bottle")
-end)
-
-QBCore.Functions.CreateUseableItem("whiskey", function(source, item)
-    removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol", "prop_drink_whisky")
-end)
+for name, _ in pairs(ConsumablesAlcohol) do
+    QBCore.Functions.CreateUseableItem(name, function(source, item)
+        removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol", "prop_amb_beer_bottle")
+    end)
+end
 
 --- Drug
 QBCore.Functions.CreateUseableItem("joint", function(source, item)
