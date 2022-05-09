@@ -426,19 +426,19 @@ local function startAnimation()
     end
 end
 
-CreateThread(function()
-    for k, v in pairs(Config.lscustom) do
-        if v.blip then
-            local blip = AddBlipForCoord(v.coords.x, v.coords.y, v.coords.z)
-            SetBlipSprite(blip, 72)
-            SetBlipScale(blip, 0.8)
-            SetBlipColour(blip, 46)
-            SetBlipAsShortRange(blip, true)
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString("LS Custom")
-            EndTextCommandSetBlipName(blip)
+AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
+    CreateThread(function()
+        for k, v in pairs(Config.lscustom) do
+            if v.blip then
+                QBCore.Functions.CreateBlip("custom_" .. k, {
+                    name = "LS Custom",
+                    coords = vector3(v.coords.x, v.coords.y, v.coords.z),
+                    sprite = 72,
+                    color = 46,
+                })
+            end
         end
-    end
+    end)
 end)
 
 local lszones = {

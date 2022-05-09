@@ -250,13 +250,10 @@ RegisterNetEvent("soz-concessvelo:client:buyShowroomVehicle", function(bicycle, 
 end)
 
 CreateThread(function()
-    local CycleDealer = AddBlipForCoord(Config.Shops["velo"]["Location"])
-    SetBlipSprite(CycleDealer, 559)
-    SetBlipDisplay(CycleDealer, 4)
-    SetBlipScale(CycleDealer, 1.0)
-    SetBlipColour(CycleDealer, 46)
-    SetBlipAsShortRange(CycleDealer, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName(Config.Shops["velo"]["ShopLabel"])
-    EndTextCommandSetBlipName(CycleDealer)
+    QBCore.Functions.CreateBlip("concess_velo", {
+        name = Config.Shops["velo"]["ShopLabel"],
+        coords = Config.Shops["velo"]["Location"],
+        sprite = 559,
+        color = 46,
+    })
 end)
