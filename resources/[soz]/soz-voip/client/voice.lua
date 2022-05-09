@@ -1,15 +1,4 @@
-local mutedPlayers = {}
 local disableSubmixReset = {}
-
-RegisterNetEvent("voip:client:mutePlayer", function(source, state)
-    if state then
-        mutedPlayers[source] = true
-        MumbleSetVolumeOverrideByServerId(source, 0.0)
-    else
-        mutedPlayers[source] = nil
-        MumbleSetVolumeOverrideByServerId(source, 1.0)
-    end
-end)
 
 --- function playerTargets
 --- Adds players voices to the local players listen channels allowing
@@ -40,9 +29,6 @@ end
 --- @param enabled boolean if the players voice is getting activated or deactivated
 --- @param moduleType string the volume & submix to use for the voice.
 function toggleVoice(plySource, enabled, moduleType, extra)
-    if mutedPlayers[plySource] then
-        return
-    end
     if enabled then
         MumbleSetVolumeOverrideByServerId(plySource, enabled and 1.0)
         if moduleType then
