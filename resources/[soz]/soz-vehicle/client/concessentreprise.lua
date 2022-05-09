@@ -51,7 +51,6 @@ local function TakeOutGarage(vehicule)
         exports["soz-hud"]:DrawNotification("Déjà une voiture sur une des sorties", "primary", 4500)
     else
         TriggerServerEvent("soz-concessentreprise:server:buyShowroomVehicle", vehicule, newlocation)
-        exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
     end
 end
 
