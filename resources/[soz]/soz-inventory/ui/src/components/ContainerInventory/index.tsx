@@ -69,6 +69,7 @@ const ContainerInventory = () => {
 
                 setDisplay(true);
             } catch (e: any) {
+                console.error(e, event.data.playerInventory, event.data.targetInventory);
                 closeNUI(() => {
                     setDisplay(false);
                 }, {
@@ -87,6 +88,7 @@ const ContainerInventory = () => {
                     setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
                 }
             } catch (e: any) {
+                console.error(e, event.data.playerInventory, event.data.targetInventory);
                 closeNUI(() => {
                     setDisplay(false);
                 }, {
