@@ -300,18 +300,6 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
     end
 end)
 
-RegisterNetEvent("soz-concess:client:addvehicleentreprise", function(vehicle, newlocation, plate)
-    QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-        SetVehicleNumberPlateText(veh, plate)
-        SetFuel(veh, 100)
-        SetVehicleLivery(veh, 1) -- C'EST POUR LE LIVERY FLATBED DONC POUR LES AUTRES JOB A FAIRE UNE CONDITION SI JOB DIFERENT DE BENNYS ALORS PAS METTRE CETTE LIGNE
-        SetEntityAsMissionEntity(veh, true, true)
-        TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-        TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
-    end, newlocation, true)
-end)
-
 local function enterVehicle(veh, indexgarage, type, garage)
     local plate = QBCore.Functions.GetPlate(veh)
     local vehicleCoords = GetEntityCoords(veh)
