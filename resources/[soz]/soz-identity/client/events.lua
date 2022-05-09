@@ -18,7 +18,22 @@ end)
 --
 -- ID CARD
 AddEventHandler("soz-identity:client:request-identity-data", function(target, action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "identity", action)
+    local data = {}
+
+    if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
+        data.gender = "Masculin"
+    else
+        data.gender = "Féminin"
+    end
+
+    local jobId = PlayerData.job.id
+    if jobId ~= nil then
+        data.job = exports["soz-jobs"]:GetJobLabel(jobId)
+    else
+        data.job = "-"
+    end
+
+    TriggerServerEvent("soz-identity:server:request-data", target, "identity", action, data)
 end)
 
 -- LICENSES
@@ -28,29 +43,6 @@ end)
 
 -- COMMON
 RegisterNetEvent("soz-identity:client:display-ui", function(data)
-    local ped = PlayerPedId()
-
-    if (data.scope == "identity") then
-        Citizen.CreateThread(function()
-            -- Send mugshot asynchronously as it can take a few seconds to generate
-            local mugshot = exports["soz-identity"]:GetPedheadshot(ped)
-            SendNUIMessage({scope = "mugshot", mugshot = GetPedheadshotTxdString(mugshot)})
-        end)
-    end
-
-    if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
-        data.gender = "Masculin"
-    else
-        data.gender = "Féminin"
-    end
-
-    local jobId = data.job
-    if jobId ~= nil then
-        data.job = exports["soz-jobs"]:GetJobLabel(jobId)
-    else
-        data.job = "-"
-    end
-
     SendNUIMessage(data)
 end)
 

@@ -1,6 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterNetEvent("soz-identity:server:request-data", function(target, scope, action)
+RegisterNetEvent("soz-identity:server:request-data", function(target, scope, action, clientData)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -18,7 +18,8 @@ RegisterNetEvent("soz-identity:server:request-data", function(target, scope, act
         action = action,
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
-        job = Player.PlayerData.job.id,
+        gender = clientData.gender,
+        job = clientData.job,
         address = "-",
         phone = charinfo.phone,
         licences = licences,
