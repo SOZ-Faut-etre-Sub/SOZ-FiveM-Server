@@ -327,6 +327,7 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
                     local totalFuel = GetVehicleFuelLevel(veh)
                     local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
+                    TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", vehProperties)
                     CheckPlayers(veh, garage)
                     TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
                     if plate then
