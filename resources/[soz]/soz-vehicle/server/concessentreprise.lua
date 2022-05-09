@@ -1,7 +1,8 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 local function GeneratePlateEntreprise(job)
-    local plate = job .. tostring(math.random(01, 99))
+    local plate = SozJobCore.Jobs[job].platePrefix .. " " .. tostring(math.random(111, 999))
     local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {plate})
     if result then
         return GeneratePlateEntreprise(job)
