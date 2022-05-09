@@ -47,11 +47,13 @@ exports["qb-target"]:AddTargetModel(sitchair, {
                 else
                     heading = heading + 179
                 end
-                local offset = Config.SeatChairOffset[GetEntityModel(entity)] or -(GetEntityHeightAboveGround(entity))
-                TaskStartScenarioAtPosition(player, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", coords.x, coords.y, coords.z + offset, heading, 0, true, true)
+                local offset = Config.SeatChairOffset[GetEntityModel(entity)] or {
+                    z = -(GetEntityHeightAboveGround(entity)),
+                }
+                TaskStartScenarioAtPosition(player, "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", coords.x + (offset.x or 0.0), coords.y + (offset.y or 0.0),
+                                            coords.z + (offset.z or 0.0), heading, 0, true, true)
             end,
         },
     },
     distance = 1,
 })
-
