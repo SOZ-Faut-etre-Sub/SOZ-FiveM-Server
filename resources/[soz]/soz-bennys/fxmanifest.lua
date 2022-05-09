@@ -16,7 +16,6 @@ client_scripts {
     "client/functionsPreview.lua",
     "client/functionsRestore.lua",
     "client/menubennys.lua",
-    "client/menucarwash.lua",
     "client/menugarage.lua",
     "client/menuf3.lua",
     "client/menucloakroom.lua",
