@@ -44,11 +44,17 @@ const PlayerInventory = () => {
         if (event.data.action === "openPlayerInventory") {
             if (event.data.playerInventory === undefined) return
 
-            setPlayerInventory(event.data.playerInventory);
-            setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `player_${item.slot}`})));
-            setPlayerMoney(event.data.playerMoney);
+            try {
+                setPlayerInventory(event.data.playerInventory);
+                setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `player_${item.slot}`})));
+                setPlayerMoney(event.data.playerMoney);
 
-            setDisplay(true);
+                setDisplay(true);
+            } catch (e: any) {
+                console.error(e, event.data.playerInventory, event.data.playerMoney);
+                closeNUI(() => setDisplay(false))
+            }
+
         }
     }, [setDisplay, setPlayerMoney, setPlayerInventory, setPlayerInventoryItems]);
 
