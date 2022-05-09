@@ -368,24 +368,19 @@ RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
     exports["soz-hud"]:DrawNotification("Le véhicule a été mis à la fourrière")
 end)
 
-CreateThread(function()
-    for _, garage in pairs(Garages) do
-        if garage.showBlip and garage.type ~= "entreprise" then
-            local garageBlip = AddBlipForCoord(garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z)
-            SetBlipSprite(garageBlip, garage.blipNumber)
-            SetBlipDisplay(garageBlip, 4)
-            SetBlipScale(garageBlip, 0.80)
-            SetBlipAsShortRange(garageBlip, true)
-            if garage.type == "private" then
-                SetBlipColour(garageBlip, 5)
-            else
-                SetBlipColour(garageBlip, 3)
+AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
+    CreateThread(function()
+        for garageId, garage in pairs(Garages) do
+            if garage.showBlip and garage.type ~= "entreprise" then
+                QBCore.Functions.CreateBlip("garage_" .. garageId, {
+                    name = garage.blipName,
+                    coords = vector3(garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z),
+                    sprite = garage.blipNumber,
+                    color = garage.type == "private" and 5 or 3,
+                })
             end
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(garage.blipName)
-            EndTextCommandSetBlipName(garageBlip)
         end
-    end
+    end)
 end)
 
 RegisterNetEvent("qb-garages:client:TakeOutPrive", function(v, type, garage, indexgarage, price)

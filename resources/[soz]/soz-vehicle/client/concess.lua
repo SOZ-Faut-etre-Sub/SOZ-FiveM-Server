@@ -261,13 +261,10 @@ RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plat
 end)
 
 CreateThread(function()
-    local Dealer = AddBlipForCoord(Config.Shops["pdm"]["Location"])
-    SetBlipSprite(Dealer, 523)
-    SetBlipDisplay(Dealer, 4)
-    SetBlipScale(Dealer, 0.8)
-    SetBlipColour(Dealer, 46)
-    SetBlipAsShortRange(Dealer, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName(Config.Shops["pdm"]["ShopLabel"])
-    EndTextCommandSetBlipName(Dealer)
+    QBCore.Functions.CreateBlip("concess_pdm", {
+        name = Config.Shops["pdm"]["ShopLabel"],
+        coords = Config.Shops["pdm"]["Location"],
+        sprite = 523,
+        color = 46,
+    })
 end)

@@ -278,9 +278,14 @@ Citizen.CreateThread(function()
     local stations = QBCore.Functions.TriggerRpc("soz-fuel:server:getStations")
 
     for _, station in pairs(stations) do
-        local position = vector3(station.position.x, station.position.y, station.position.z)
         if station.type == "public" then
-            CreateBlip(position)
+            QBCore.Functions.CreateBlip("station_" .. station.id, {
+                name = "Station essence",
+                coords = vector3(station.position.x, station.position.y, station.position.z),
+                sprite = 361,
+                color = 4,
+                alpha = 100,
+            })
         end
 
         local zone = BoxZone:Create(vector3(station.zone.position.x, station.zone.position.y, station.zone.position.z), station.zone.length, station.zone.width,
@@ -388,20 +393,6 @@ end
 
 exports("GetFuel", GetFuel)
 exports("SetFuel", SetFuel)
-
-function CreateBlip(coords)
-    local blip = AddBlipForCoord(coords)
-    SetBlipSprite(blip, 361)
-    SetBlipScale(blip, 0.8)
-    SetBlipColour(blip, 4)
-    SetBlipDisplay(blip, 4)
-    SetBlipAlpha(blip, 100)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Station essence")
-    EndTextCommandSetBlipName(blip)
-    return blip
-end
 
 RegisterNetEvent("fuel:client:GetFuelLevel", function(data)
     local stationFuelLevel = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", data.station)
