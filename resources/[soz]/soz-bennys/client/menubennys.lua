@@ -830,7 +830,7 @@ local function startAnimation()
 
     FreezeEntityPosition(vehicle, true)
     while Gfinishready == false do
-        TaskPlayAnim(ped, dict, "fixing_a_car", 1.0, 1.0, 1000, 2, 0, true, true, true)
+        TaskPlayAnim(ped, dict, "fixing_a_car", 3.0, 3.0, 1000, 2, 0, true, true, true)
         Gready = true
         Citizen.Wait(900)
     end
