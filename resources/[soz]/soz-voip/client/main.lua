@@ -1,4 +1,6 @@
 --- Variables
+QBCore = exports["qb-core"]:GetCoreObject()
+PlayerData = QBCore.Functions.GetPlayerData()
 voiceModule = {}
 
 CurrentPlayer = {
@@ -12,6 +14,18 @@ CurrentPlayer = {
     RadioButtonPressed = false,
     LastRadioButtonPressed = GetGameTimer(),
 }
+
+AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+end)
+
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
+    PlayerData = data
+end)
+
+RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
+    PlayerData = {}
+end)
 
 ---Events
 AddEventHandler("onClientResourceStart", function(resource)
