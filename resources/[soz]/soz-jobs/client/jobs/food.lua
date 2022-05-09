@@ -143,7 +143,7 @@ Citizen.CreateThread(function()
                 label = "Prise de service",
                 event = "jobs:client:food-toggle-duty",
                 canInteract = function()
-                    return not PlayerData.job.onduty
+                    return PlayerData.job.id == SozJobCore.JobType.Food and not PlayerData.job.onduty
                 end,
             },
             {
@@ -151,7 +151,7 @@ Citizen.CreateThread(function()
                 label = "Fin de service",
                 event = "jobs:client:food-toggle-duty",
                 canInteract = function()
-                    return PlayerData.job.onduty
+                    return PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty
                 end,
             },
         },
