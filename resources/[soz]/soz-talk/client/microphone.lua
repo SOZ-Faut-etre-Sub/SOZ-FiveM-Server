@@ -60,7 +60,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
         end
     end
 
-    if not haveItem then
+    if microphoneInUse and not haveItem then
         resetMicrophone()
     end
 end)
