@@ -29,7 +29,6 @@ local function GetDead(entity)
     targetplayer = nil
     while count ~= 6 and targetplayer == nil do
         targetplayer = GetPedInVehicleSeat(entity, count)
-        print(targetplayer)
         count = count + 1
     end
     if targetplayer ~= nil and targetplayer ~= 0 then
