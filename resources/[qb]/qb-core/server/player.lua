@@ -256,7 +256,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log(amount > 100000 and 'FATAL' or 'WARN', 'Bank movement - Add ! ' .. amount .. '$ (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
+            exports['soz-monitor']:Log('WARN', 'Bank movement - Add ! ' .. amount .. '$ (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, false)
             return true
         end
@@ -280,7 +280,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log(amount > 100000 and 'FATAL' or 'WARN', 'Bank movement - Remove ! ' .. amount .. '$ (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
+            exports['soz-monitor']:Log('WARN', 'Bank movement - Remove ! ' .. amount .. '$ (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, true)
             if moneytype == 'bank' then
                 TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)

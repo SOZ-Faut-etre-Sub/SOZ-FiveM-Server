@@ -113,7 +113,7 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
                 TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", amount * FuelerConfig.SellPrice)
                 TriggerEvent("soz-fuel:server:addStationStock", station, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                                   ("Vous avez ~g~ajouté~s~ %dL d'essence dans la station"):format(itemToUse))
+                                   ("Vous avez ~g~ajouté~s~ %dL d'essence dans la station"):format(itemToUse * 10))
 
                 TriggerEvent("monitor:server:event", "job_mtp_refill_station", {
                     player_source = Player.PlayerData.source,
