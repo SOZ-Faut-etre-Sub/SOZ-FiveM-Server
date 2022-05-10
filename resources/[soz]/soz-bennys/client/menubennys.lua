@@ -395,7 +395,7 @@ NeonsMenu:On("open", function(menu)
             value = NeonStateMenu,
             description = "Activer ou Désactiver Néon",
             select = function()
-                variableNeonstate = k
+                variableNeonstate = v
             end,
         })
     end
