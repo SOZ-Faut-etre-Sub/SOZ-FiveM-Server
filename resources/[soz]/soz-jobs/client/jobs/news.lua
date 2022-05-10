@@ -42,6 +42,10 @@ end)
 
 --- Events
 RegisterNetEvent("jobs:client:news:SellNewspaper", function()
+    if QBCore.Functions.GetBlip("jobs:news:sell") ~= false then
+        return
+    end
+
     local delivery = NewsConfig.Deliveries[math.random(#NewsConfig.Deliveries)]
 
     exports["qb-target"]:AddBoxZone("jobs:news:sell", delivery, 1.0, 1.0,
