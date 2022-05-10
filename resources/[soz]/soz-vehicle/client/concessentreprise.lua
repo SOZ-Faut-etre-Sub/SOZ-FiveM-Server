@@ -1,5 +1,10 @@
-InsideConcessEntreprise = false
-ModelVariable = {}
+local SozJobCore = exports["soz-jobs"]:GetCoreObject()
+
+local vehicleModel = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car_society", "soz", "concessentre:vehicle:car")
+local vehicleChoose = MenuV:InheritMenu(vehicleModel)
+
+local InsideConcessEntreprise = false
+local selectedModel = {}
 
 ZonesConcessEntreprise = {
     ["ConcessEntreprise"] = BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
@@ -25,13 +30,8 @@ PlacesConcessEntreprise = {
     }),
 }
 
-local VehiculeModel = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car_society", "soz", "concessentre:vehicle:car")
-local VehiculeChoose = MenuV:InheritMenu(VehiculeModel, {Title = nil})
-
 local function TakeOutGarage(vehicule)
-    local location
-    local heading
-    local placedispo = 0
+    local location, heading, placedispo = nil, nil, 0
     for _, entreprisepar in pairs(PlacesConcessEntreprise) do
         local vehicles2 = GetGamePool("CVehicle")
         local inside = false
@@ -54,50 +54,48 @@ local function TakeOutGarage(vehicule)
     end
 end
 
-VehiculeChoose:On("open", function(m)
+vehicleModel:On("open", function(m)
+    local listVehicles = QBCore.Functions.TriggerRpc("soz-concessentreprise:server:getAvailableVehicles")
+
     m:ClearItems()
-    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(ModelVariable.vehicle))
+    for vehicle, model in pairs(listVehicles) do
+        local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(vehicle))
+        m:AddButton({
+            label = vehicleName,
+            rightLabel = "💸 " .. model.price .. "$",
+            value = vehicleChoose,
+            description = "Acheter  " .. vehicleName,
+            select = function()
+                selectedModel = vehicle
+            end,
+        })
+    end
+end)
+
+vehicleChoose:On("open", function(m)
+    m:ClearItems()
+    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(selectedModel))
     m:AddButton({
         icon = "◀",
         label = "Retour",
-        value = VehiculeModel,
+        value = vehicleModel,
         description = "Choisir un autre modèle",
         select = function()
-            VehiculeChoose:Close()
+            vehicleChoose:Close()
         end,
     })
     m:AddButton({
         label = "Acheter " .. vehicleName,
-        rightLabel = "💸 " .. ModelVariable.price .. "$",
         description = "Confirmer l'achat",
         select = function()
-            VehiculeChoose:Close()
-            VehiculeModel:Close()
-            TakeOutGarage(ModelVariable)
+            vehicleChoose:Close()
+            vehicleModel:Close()
+            TakeOutGarage(selectedModel)
         end,
     })
 end)
 
-VehiculeModel:On("open", function(m)
-    local listconcessmodels = QBCore.Functions.TriggerRpc("soz-concessentreprise:server:getconcessmodels")
-    m:ClearItems()
-    for _, model in pairs(listconcessmodels) do
-        if model.job == PlayerJob.id then
-            local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(model.vehicle))
-            m:AddButton({
-                label = vehicleName,
-                rightLabel = "💸 " .. model.price .. "$",
-                value = VehiculeChoose,
-                description = "Acheter  " .. vehicleName,
-                select = function()
-                    ModelVariable = model
-                end,
-            })
-        end
-    end
-end)
-
-for indexConcessEntreprise, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
+for _, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
     ConcessEntreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
             InsideConcessEntreprise = true
@@ -108,17 +106,11 @@ for indexConcessEntreprise, ConcessEntreprise in pairs(ZonesConcessEntreprise) d
 end
 
 RegisterNetEvent("soz-concessentreprise:checkGrade", function()
-    QBCore.Functions.TriggerCallback("soz-concessentreprise:server:getGrade", function(listejobgrades)
-        for _, job in ipairs(listejobgrades) do
-            if job.id == PlayerJob.grade then
-                if job.owner == 1 then
-                    VehiculeModel:Open()
-                else
-                    exports["soz-hud"]:DrawNotification("Vous n'êtes pas patron de votre entreprise", "error")
-                end
-            end
-        end
-    end)
+    if SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyDealershipVehicle) then
+        vehicleModel:Open()
+    else
+        exports["soz-hud"]:DrawNotification("Vous n'avez pas les droits d'accéder au concessionnaire", "error")
+    end
 end)
 
 exports["qb-target"]:SpawnPed({
@@ -136,9 +128,6 @@ exports["qb-target"]:SpawnPed({
                 event = "soz-concessentreprise:checkGrade",
                 icon = "c:concess/lister.png",
                 label = "Liste Véhicules",
-                action = function()
-                    TriggerEvent("soz-concessentreprise:checkGrade")
-                end,
                 canInteract = function()
                     if OnDuty == false then
                         return false
