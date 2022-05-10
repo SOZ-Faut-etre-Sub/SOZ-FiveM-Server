@@ -32,8 +32,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
         ["@model"] = vehicle,
     })
     if vehiclestock[1].stock > 0 then
-        if money >= vehiclePrice then
-            pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
+        if pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom") then
             local garage
             if concess == "pdm" then
                 garage = "airportpublic"
