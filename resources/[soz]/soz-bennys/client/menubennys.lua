@@ -654,8 +654,8 @@ PartMenu:On("open", function(menu)
     menu:AddButton({
         label = "Réparer " .. partName .. " 🔧",
         select = function()
-            menu:Close()
             TriggerEvent("soz-bennys:client:CallRepairPart", part)
+            menu:Close()
         end,
     })
 end)
@@ -698,7 +698,7 @@ Status:On("open", function(menu)
                     value = PartMenu,
                     description = "Etat: " .. percentage .. "% / 100.0%",
                     select = function()
-                        variablePart = v
+                        variablePart = {v, k}
                     end,
                 })
             else
