@@ -236,19 +236,6 @@ RegisterNetEvent("soz-concessvelo:client:Menu", function()
     VeloList:Open()
 end)
 
-RegisterNetEvent("soz-concessvelo:client:buyShowroomVehicle", function(bicycle, plate)
-    local newlocation = vec4(Config.Shops["velo"]["VehicleSpawn"].x, Config.Shops["velo"]["VehicleSpawn"].y, Config.Shops["velo"]["VehicleSpawn"].z,
-                             Config.Shops["velo"]["VehicleSpawn"].w)
-    QBCore.Functions.SpawnVehicle(bicycle, function(cyc)
-        TaskWarpPedIntoVehicle(PlayerPedId(), cyc, -1)
-        SetFuel(cyc, 100)
-        SetVehicleNumberPlateText(cyc, plate)
-        SetEntityAsMissionEntity(cyc, true, true)
-        TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(cyc))
-        TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(cyc))
-    end, newlocation, true)
-end)
-
 CreateThread(function()
     QBCore.Functions.CreateBlip("concess_velo", {
         name = Config.Shops["velo"]["ShopLabel"],
