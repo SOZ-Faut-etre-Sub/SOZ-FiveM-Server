@@ -27,6 +27,9 @@ CurrentHousingItemMenu:On("open", function(menu)
                 menu:ClearItems()
 
                 QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
+                    table.sort(building, function(a, b)
+                        return a.building < b.building
+                    end)
                     for item, habitation in pairs(building) do
                         menu:AddButton({
                             label = habitation.building,
@@ -56,6 +59,9 @@ CurrentHousingItemMenu:On("open", function(menu)
                 menu:ClearItems()
 
                 QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
+                    table.sort(building, function(a, b)
+                        return a.building < b.building
+                    end)
                     for item, habitation in pairs(building) do
                         menu:AddButton({
                             label = habitation.building,
@@ -168,6 +174,9 @@ CurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
 
     QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetHousing", function(housing)
+        table.sort(housing, function(a, b)
+            return a.identifier < b.identifier
+        end)
         for item, habitation in pairs(housing) do
             menu:AddButton({
                 label = habitation.identifier,
