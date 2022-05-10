@@ -27,6 +27,14 @@ export class _SocietiesDB {
     return (<ResultSetHeader>setResult).affectedRows === 1;
   }
 
+  async getMessage(
+    id: number,
+  ): Promise<SocietyMessage[]> {
+    const query = `SELECT *, unix_timestamp(createdAt)*1000 as createdAt, unix_timestamp(updatedAt)*1000 as updatedAt FROM phone_society_messages WHERE id = ?`;
+    const [result] = await DbInterface._rawExec(query, [id]);
+    return <SocietyMessage[]>result;
+  }
+
   async getMessages(
     identifier: string,
   ): Promise<SocietyMessage[]> {
