@@ -57,7 +57,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                     garage,
                     1,
                     depotprice,
-                    os.time()
+                    os.time(),
                 })
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
         else
