@@ -9,7 +9,7 @@ CreateThread(function()
                 icon = "fas fa-briefcase",
                 event = "ems:client:weaponShop",
                 canInteract = function()
-                    return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.ManageGrade)
+                    return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.SocietyShop)
                 end,
                 job = job,
             },

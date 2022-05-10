@@ -10,7 +10,7 @@ CreateThread(function()
                 icon = "fas fa-briefcase",
                 event = "bennts:client:weaponShop",
                 canInteract = function()
-                    return SozJobCore.Functions.HasPermission("bennys", SozJobCore.JobPermission.ManageGrade)
+                    return SozJobCore.Functions.HasPermission("bennys", SozJobCore.JobPermission.SocietyShop)
                 end,
                 job = "bennys",
             },
