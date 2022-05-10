@@ -75,3 +75,26 @@ RegisterNetEvent("onPlayerDropped", function(serverId)
         MumbleRemoveVoiceChannelListen(serverId)
     end
 end)
+
+CreateThread(function()
+    local ScreenFaded = false
+    while true do
+        if not MumbleIsConnected() then
+            if not ScreenFaded then
+                TriggerScreenblurFadeIn(500)
+                ScreenFaded = true
+            end
+
+            QBCore.Functions.DrawText(0.1, 0.45, 0.0, 0.0, 2.0, 193, 35, 35, 255, "Veuillez activer votre VoIP dans les paramètres")
+        else
+            if ScreenFaded then
+                TriggerScreenblurFadeOut(500)
+                ScreenFaded = false
+            end
+
+            Wait(10000)
+        end
+
+        Wait(0)
+    end
+end)
