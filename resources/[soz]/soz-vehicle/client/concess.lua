@@ -247,19 +247,6 @@ RegisterNetEvent("soz-concess:client:Menu", function()
     VehiculeList:Open()
 end)
 
-RegisterNetEvent("soz-concess:client:buyShowroomVehicle", function(vehicle, plate)
-    local newlocation = vec4(Config.Shops["pdm"]["VehicleSpawn"].x, Config.Shops["pdm"]["VehicleSpawn"].y, Config.Shops["pdm"]["VehicleSpawn"].z,
-                             Config.Shops["pdm"]["VehicleSpawn"].w)
-    QBCore.Functions.SpawnVehicle(vehicle, function(veh)
-        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-        SetFuel(veh, 100)
-        SetVehicleNumberPlateText(veh, plate)
-        SetEntityAsMissionEntity(veh, true, true)
-        TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-        TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
-    end, newlocation, true)
-end)
-
 CreateThread(function()
     QBCore.Functions.CreateBlip("concess_pdm", {
         name = Config.Shops["pdm"]["ShopLabel"],

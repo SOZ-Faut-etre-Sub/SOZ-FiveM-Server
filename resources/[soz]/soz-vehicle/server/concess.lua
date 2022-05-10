@@ -33,19 +33,22 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     })
     if vehiclestock[1].stock > 0 then
         if money >= vehiclePrice then
-            MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, 0, depotprice, os.time()})
-            MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
-            TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat!")
             pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom")
+            local garage
             if concess == "pdm" then
-                TriggerClientEvent("soz-concess:client:buyShowroomVehicle", src, vehicle, plate)
+                garage = "airportpublic"
+                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
             elseif concess == "velo" then
-                TriggerClientEvent("soz-concessvelo:client:buyShowroomVehicle", src, vehicle, plate)
+                garage = "airportpublic"
+                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
             else
-                TriggerClientEvent("soz-concessmoto:client:buyShowroomVehicle", src, vehicle, plate)
+                garage = "haanparking"
+                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             end
+            MySQL.Async.insert(
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, garage, 1, depotprice, os.time()})
+            MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
         else
             TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
         end
