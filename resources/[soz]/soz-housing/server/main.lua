@@ -111,33 +111,40 @@ end)
 RegisterNetEvent("soz-housing:server:buy")
 AddEventHandler("soz-housing:server:buy", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
-    local succes, reason = TriggerEvent("banking:server:TransferMoney", Player.PlayerData.charinfo.account, name, price)
-    if succes then
-        local BuyOrder = MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id",
-                                            {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation")
+
+    if Player.Functions.RemoveMoney("money", price) then
+        MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id", {
+            ["@id"] = name,
+            ["@citizenid"] = Player.PlayerData.citizenid,
+        })
+
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation.")
+        TriggerEvent("soz-housing:server:SyncAvailableHousing")
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, reason)
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent sur vous.", "error")
     end
 end)
 
 RegisterNetEvent("soz-housing:server:sell")
 AddEventHandler("soz-housing:server:sell", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
-    local succes, reason = TriggerEvent("banking:server:TransferMoney", name, Player.PlayerData.charinfo.account, price)
-    if succes then
-        local SellOrder = MySQL.update.await("UPDATE player_house SET OWNER = NULL WHERE identifier = @id", {
-            ["@id"] = name,
-        })
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous avez vendu l'habitation")
-    else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, reason)
+
+    if Player.Functions.AddMoney("money", price / 2) then
+        MySQL.update.await("UPDATE player_house SET OWNER = NULL WHERE identifier = @id", {["@id"] = name})
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous avez vendu l'habitation.")
+        TriggerEvent("soz-housing:server:SyncAvailableHousing")
     end
 end)
 
-RegisterNetEvent("soz-housing:server:GetAvailableHousing")
-AddEventHandler("soz-housing:server:GetAvailableHousing", function()
-    local Player = QBCore.Functions.GetPlayer(source)
+RegisterNetEvent("soz-housing:server:SyncAvailableHousing")
+AddEventHandler("soz-housing:server:SyncAvailableHousing", function()
     local AvailableHousing = MySQL.query.await("SELECT identifier, entry_zone FROM player_house WHERE owner IS NULL")
-    TriggerClientEvent("soz-housing:client:SetAvailableHousing", Player.PlayerData.source, AvailableHousing)
+
+    TriggerClientEvent("soz-housing:client:SyncAvailableHousing", -1, AvailableHousing)
+end)
+
+QBCore.Functions.CreateCallback("soz-housing:server:GetAvailableHousing", function(source, cb)
+    local AvailableHousing = MySQL.query.await("SELECT identifier, entry_zone FROM player_house WHERE owner IS NULL")
+
+    cb(AvailableHousing)
 end)

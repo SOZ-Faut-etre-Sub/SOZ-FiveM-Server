@@ -119,3 +119,10 @@ RegisterNetEvent("soz-admin:server:housing:ChangeBuilding", function(current, na
     })
 end)
 
+RegisterNetEvent("soz-admin:server:housing:ChangeTP", function(current, coord)
+    MySQL.update.await("UPDATE player_house SET teleport = @coord WHERE identifier = @current", {
+        ["@coord"] = coord,
+        ["@current"] = current,
+    })
+end)
+
