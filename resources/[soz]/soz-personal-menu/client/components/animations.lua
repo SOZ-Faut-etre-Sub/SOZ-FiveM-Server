@@ -75,11 +75,16 @@ GenerateAnimationList = function(menu, category, content)
         rightLabel = content[3] or nil,
         select = function()
             if favoriteAnimationRegister then
-                SetResourceKvp("soz/animation/" .. favoriteAnimationKey, json.encode(content[5]))
+                SetResourceKvp("soz/animation/" .. favoriteAnimationKey, json.encode({
+                    label = content[1],
+                    anim = content[5],
+                }))
                 favoriteAnimationRegister = false
 
-                personalAnimationMenu:Close()
-                animationMenu:Close()
+                MenuV:CloseAll(function()
+                    personalAnimationMenu:Close()
+                    animationMenu:Close()
+                end)
             else
                 PlayEmote(content[5])
             end
@@ -116,21 +121,28 @@ end
 
 function AnimationsEntry()
     personalMenu:AddButton({label = "Animations", value = animationMenu})
-end
 
-CreateThread(function()
-    animationMenu:AddButton({label = "Animations", value = allAnimationMenu})
-    animationMenu:AddButton({label = "Démarches", value = allWalksMenu})
-    animationMenu:AddButton({label = "Mes Animations", value = personalAnimationMenu})
-
+    personalAnimationMenu:ClearItems()
     for shortcut = 1, 10 do
         shortcut = string.format("%02d", shortcut)
-        personalAnimationMenu:AddButton({
+        local animation = GetResourceKvpString("soz/animation/" .. shortcut)
+        personalAnimationMenu:AddSlider({
             label = "Animation personnelles " .. shortcut,
-            value = animationMenu,
-            select = function()
-                favoriteAnimationRegister = true
-                favoriteAnimationKey = shortcut
+            value = nil,
+            values = {{label = "Changer", value = "change"}, {label = "Supprimer", value = "delete"}},
+            description = animation and json.decode(animation).label or "Aucune",
+            select = function(_, value)
+                if value == "change" then
+                    favoriteAnimationRegister = true
+                    favoriteAnimationKey = shortcut
+                    allAnimationMenu:Open()
+                elseif value == "delete" then
+                    DeleteResourceKvp("soz/animation/" .. shortcut)
+                    MenuV:CloseAll(function()
+                        personalAnimationMenu:Close()
+                        animationMenu:Close()
+                    end)
+                end
             end,
         })
 
@@ -139,11 +151,18 @@ CreateThread(function()
             if IsPedOnFoot(PlayerPedId()) then
                 local kvpValue = GetResourceKvpString("soz/animation/" .. shortcut)
                 if kvpValue then
-                    PlayEmote(json.decode(kvpValue))
+                    local animation = json.decode(kvpValue)
+                    PlayEmote(animation.anim)
                 end
             end
         end, true)
     end
+end
+
+CreateThread(function()
+    animationMenu:AddButton({label = "Animations", value = allAnimationMenu})
+    animationMenu:AddButton({label = "Démarches", value = allWalksMenu})
+    animationMenu:AddButton({label = "Mes Animations", value = personalAnimationMenu})
 
     --- Walk style menu
     allWalksMenu:AddButton({
