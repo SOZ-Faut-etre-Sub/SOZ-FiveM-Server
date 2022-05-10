@@ -166,7 +166,7 @@ RegisterNetEvent("qb-garage:server:setVehicleDestroy", function(plate)
 end)
 
 RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, garage)
-    MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, WHERE plate = ?", {state, garage, plate})
+    MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ? WHERE plate = ?", {state, garage, plate})
 end)
 
 RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
