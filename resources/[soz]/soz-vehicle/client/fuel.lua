@@ -2,6 +2,7 @@ local isFueling = false
 local fuelSynced = false
 local ObjectToHand
 local CordePompe = 0
+local pistoletdansmain = false
 
 function Round(num, numDecimalPlaces)
     local mult = 10 ^ (numDecimalPlaces or 0)
@@ -265,6 +266,7 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
         SetVehicleUndriveable(entity, false)
         SetVehicleEngineOn(entity, true, false, false)
         ClearAnimation()
+        pistoletdansmain = false
         if stationType ~= "private" then
             TriggerServerEvent("fuel:pay", tonumber(math.ceil(cout)), GetPlayerServerId(PlayerId()))
         end
@@ -307,9 +309,16 @@ Citizen.CreateThread(function()
                         icon = "c:fuel/pistolet.png",
                         label = "Pistolet",
                         action = function(entity)
-                            local ped = PlayerPedId()
-                            local vehicle = GetPlayersLastVehicle()
-                            TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle, station.type)
+                            if pistoletdansmain then
+                                pistoletdansmain = false
+                                ClearAnimation()
+                                TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
+                            else
+                                pistoletdansmain = true
+                                local ped = PlayerPedId()
+                                local vehicle = GetPlayersLastVehicle()
+                                TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle, station.type)
+                            end
                         end,
                         canInteract = function(entity)
                             local ped = PlayerPedId()
