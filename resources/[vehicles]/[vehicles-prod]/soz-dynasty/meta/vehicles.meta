@@ -3,19 +3,19 @@
   <residentTxd>vehshare</residentTxd>
   <residentAnims />
   <InitDatas>
-  <Item>
-      <modelName>Dynasty</modelName>
-      <txdName>Dynasty</txdName>
+    <Item>
+      <modelName>dynastycarl</modelName>
+      <txdName>dynastycarl</txdName>
       <handlingId>DYNASTY</handlingId>
-      <gameName>Dynasty</gameName>
-      <vehicleMakeName>WEENY</vehicleMakeName>
-      <expressionDictName>null</expressionDictName>
+      <gameName>dynastycarl</gameName>
+      <vehicleMakeName>dynastycarl</vehicleMakeName>
+<expressionDictName>null</expressionDictName>
       <expressionName>null</expressionName>
       <animConvRoofDictName>null</animConvRoofDictName>
       <animConvRoofName>null</animConvRoofName>
       <animConvRoofWindowsAffected />
       <ptfxAssetName>null</ptfxAssetName>
-      <audioNameHash />
+      <audioNameHash>DYNASTY</audioNameHash>
       <layout>LAYOUT_STD_DYNASTY</layout>
       <coverBoundOffsets>DYNASTY_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
@@ -91,7 +91,7 @@
       <frequency value="5" />
       <swankness>SWANKNESS_1</swankness>
       <maxNum value="1" />
-      <flags>FLAG_HAS_LIVERY FLAG_USE_STRICTER_EXIT_COLLISION_TESTS FLAG_DROP_SUSPENSION_WHEN_STOPPED FLAG_USE_RESTRICTED_DRIVEBY_HEIGHT_HIGH FLAG_CARGOBOB_HOOK_UP_CHASSIS</flags>
+      <flags>FLAG_USE_STRICTER_EXIT_COLLISION_TESTS FLAG_DROP_SUSPENSION_WHEN_STOPPED FLAG_USE_RESTRICTED_DRIVEBY_HEIGHT_HIGH FLAG_CARGOBOB_HOOK_UP_CHASSIS</flags>
       <type>VEHICLE_TYPE_CAR</type>
       <plateType>VPT_BACK_PLATES</plateType>
 	  <dashboardType>VDT_ZTYPE</dashboardType>
@@ -122,11 +122,11 @@
         <Item>STD_DYNASTY_REAR_RIGHT</Item>
       </firstPersonDrivebyData>
     </Item>
-	  </InitDatas>
+  </InitDatas>
   <txdRelationships>
     <Item>
-      <parent>vehshare</parent>
-      <child>dynasty</child>
+      <parent>vehicles_btype_interior</parent>
+      <child>dynastycarl</child>
     </Item>
   </txdRelationships>
-</CVehicleModelInfo__InitDataList>	
+</CVehicleModelInfo__InitDataList>
