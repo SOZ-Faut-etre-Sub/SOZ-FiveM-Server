@@ -21,6 +21,7 @@ SozJobCore.JobType = {
 
 SozJobCore.JobPermission = {
     ManageGrade = "manage-grade",
+    SocietyDealershipVehicle = "society-dealership-vehicle",
     SocietyPrivateStorage = "society-private-storage",
     SocietyBankAccount = "society-bank-account",
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
@@ -107,6 +108,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.BCSO] = {
@@ -118,6 +120,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.LSMC] = {
@@ -128,6 +131,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.Taxi] = {
@@ -138,6 +143,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.Food] = {
@@ -148,6 +155,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.Food.Harvest] = {label = "Récolter des ingrédients"},
             [SozJobCore.JobPermission.Food.Craft] = {label = "Cuisiner"},
         },
@@ -160,6 +169,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.Garbage] = {
@@ -170,6 +181,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.Oil] = {
@@ -180,6 +193,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.CashTransfer] = {
@@ -190,6 +205,8 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.CashTransfer.CollectBags] = {label = "Collecte sacs d'argent"},
             [SozJobCore.JobPermission.CashTransfer.ResaleBags] = {label = "Déposer sacs d'argent"},
             [SozJobCore.JobPermission.CashTransfer.FillIn] = {label = "Remplir banque / ATM"},
@@ -203,15 +220,14 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
     },
     [SozJobCore.JobType.Debug] = {
         label = "Debug job",
         grades = {},
-        permissions = {
-            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
-            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
-        },
+        permissions = {},
     },
 }
 
