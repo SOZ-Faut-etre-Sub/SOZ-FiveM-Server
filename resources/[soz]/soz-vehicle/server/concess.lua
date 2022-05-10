@@ -47,7 +47,18 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
             end
             MySQL.Async.insert(
                 "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                {pData.PlayerData.license, cid, vehicle, GetHashKey(vehicle), "{}", plate, garage, 1, depotprice, os.time()})
+                {
+                    pData.PlayerData.license,
+                    cid,
+                    vehicle,
+                    GetHashKey(vehicle),
+                    "{}",
+                    plate,
+                    garage,
+                    1,
+                    depotprice,
+                    os.time()
+                })
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
         else
             TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
