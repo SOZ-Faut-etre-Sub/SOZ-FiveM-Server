@@ -21,6 +21,12 @@ local PlayEmote = function(animation)
             StopAnimTask(ped, animation[1], animation[2], 1.0)
         else
             TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
+
+            if animation[6] then
+                local animDuration = GetAnimDuration(animation[1], animation[2])
+                Wait(animDuration * 1000)
+                TaskPlayAnim(ped, animation[1], animation[6], 8.0, -8.0, -1, animation[3], 0, canMove, canMove, canMove)
+            end
         end
     else
         if IsPedUsingScenario(ped, animation[2]) then
