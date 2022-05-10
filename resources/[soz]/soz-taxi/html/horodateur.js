@@ -1,5 +1,4 @@
-var meterStarted = false;
-var meterPlate = null;
+let meterStarted = false;
 
 $(document).ready(function(){
 
@@ -8,25 +7,23 @@ $(document).ready(function(){
     window.addEventListener('message', function(event){
         var eventData = event.data;
 
-        if (eventData.action == "openMeter") {
+        if (eventData.action === "openMeter") {
             if (eventData.toggle) {
                 openMeter(eventData.HorodateurData)
-                meterPlate = eventData.plate;
             } else {
                 closeMeter()
-                meterPlate = null;
             }
         }
 
-        if (eventData.action == "toggleMeter") {
+        if (eventData.action === "toggleMeter") {
             meterToggle()
         }
 
-        if (eventData.action == "updateMeter") {
+        if (eventData.action === "updateMeter") {
             updateMeter(eventData.HorodateurData)
         }
 
-        if (eventData.action == "resetMeter") {
+        if (eventData.action === "resetMeter") {
             resetMeter()
         }
     });

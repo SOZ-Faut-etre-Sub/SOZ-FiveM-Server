@@ -1,7 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-local HorodateurOpen = False
-local HorodateurActive = False
+local HorodateurOpen = false
+local HorodateurActive = false
 local lastLocation = nil
 local TotalDistance = 0
 
@@ -167,7 +167,8 @@ local function GetDeliveryLocation()
                         local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
                         TaskGoStraightToCoord(NpcData.Npc, targetCoords.x, targetCoords.y, targetCoords.z, 1.0, -1, 0.0, 0.0)
                         TriggerServerEvent("taxi:server:NpcPay", HorodateurData.TarifActuelle)
-                        meterActive = false
+                        HorodateurActive = false
+                        TotalDistance = 0
                         exports["soz-hud"]:DrawNotification("Vous avez déposé la personne")
                         if NpcData.DeliveryBlip ~= nil then
                             RemoveBlip(NpcData.DeliveryBlip)
@@ -250,7 +251,7 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                                 ClearPedTasksImmediately(NpcData.Npc)
                                 FreezeEntityPosition(NpcData.Npc, false)
                                 TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
-                                exports["soz-hud"]:DrawNotification("Amenez la Personne a la déstination spécifiée")
+                                exports["soz-hud"]:DrawNotification("Amenez la personne a la destination spécifiée")
                                 if NpcData.NpcBlip ~= nil then
                                     RemoveBlip(NpcData.NpcBlip)
                                 end
@@ -267,6 +268,6 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
             exports["soz-hud"]:DrawNotification("Vous êtes déjà en mission")
         end
     else
-        exports["soz-hud"]:DrawNotification("Vous n\'êtes pas dans un taxi")
+        exports["soz-hud"]:DrawNotification("Vous n'êtes pas dans un taxi")
     end
 end)
