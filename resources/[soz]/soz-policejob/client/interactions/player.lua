@@ -198,8 +198,8 @@ RegisterNetEvent("police:client:SetEscorting", function()
         Wait(1000)
 
         while LocalPlayer.state.isEscorting do
-            QBCore.Functions.ShowHelpNotification("~INPUT_CONTEXT~ Pour lâcher")
-            if IsControlJustReleased(0, 51) then
+            QBCore.Functions.ShowHelpNotification("~INPUT_FRONTEND_RRIGHT~ Pour lâcher")
+            if IsControlJustReleased(0, 194) or IsControlJustReleased(0, 225) then
                 local player, distance = QBCore.Functions.GetClosestPlayer()
                 if player ~= -1 and distance < 2.5 then
                     if not LocalPlayer.state.isEscorted and LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
