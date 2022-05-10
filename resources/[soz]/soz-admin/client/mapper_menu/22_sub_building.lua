@@ -70,6 +70,9 @@ CurrentBuildingMenu:On("open", function(menu)
     menu:ClearItems()
 
     QBCore.Functions.TriggerCallback("soz-admin:housing:server:GetBuilding", function(building)
+        table.sort(building, function(a, b)
+            return a.building < b.building
+        end)
         for item, habitation in pairs(building) do
             menu:AddButton({
                 label = habitation.building,
