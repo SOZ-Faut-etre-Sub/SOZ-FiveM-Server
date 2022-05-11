@@ -1373,7 +1373,7 @@ exports["qb-target"]:AddGlobalVehicle({
         {
             type = "client",
             event = "qb-garages:client:PutInDepot",
-            icon = "c:mechanic/CarFourrière.png",
+            icon = "c:mechanic/CarFourriere.png",
             label = "Fourriérer",
             action = function(entity)
                 TriggerEvent("qb-garages:client:PutInDepot", entity)
