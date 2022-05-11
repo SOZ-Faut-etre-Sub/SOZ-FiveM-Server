@@ -494,7 +494,7 @@ SpoilersMenu:On("open", function(menu)
     local validMods = variableSpoilers[2]
     local currentMod = variableSpoilers[3]
     menu:ClearItems()
-    menu:AddTitle({label =  v.category})
+    menu:AddTitle({label = v.category})
     menu:AddButton({
         icon = "◀",
         label = "Customisation",
@@ -812,11 +812,7 @@ VehiculeOptions:On("open", function(menu)
             end
         end,
     })
-    menu:AddButton({
-        label = "Réparation",
-        value = Status,
-        description = "Réparer les pièces du véhicule",
-    })
+    menu:AddButton({label = "Réparation", value = Status, description = "Réparer les pièces du véhicule"})
     menu:AddButton({
         label = "Customisation",
         value = VehiculeCustom,
