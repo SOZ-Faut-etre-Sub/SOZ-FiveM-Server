@@ -221,6 +221,21 @@ RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, ind
     end)
 end)
 
+QBCore.Functions.CreateCallback("qb-garage:server:getstock", function(source, cb, indexgarage)
+    local parkingstock = MySQL.Sync.fetchAll("SELECT stock FROM parking_storage WHERE parking = ?", {indexgarage})
+    if parkingstock[1] then
+        cb(parkingstock[1])
+    end
+end)
+
+RegisterNetEvent("qb-garage:server:updatestock", function(garage, rajouter)
+    if rajouter then
+        MySQL.Async.execute("UPDATE parking_storage SET stock = stock + 1 WHERE parking = ?", {garage})
+    else
+        MySQL.Async.execute("UPDATE parking_storage SET stock = stock - 1 WHERE parking = ?", {garage})
+    end
+end)
+
 RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, indexgarage, price)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
