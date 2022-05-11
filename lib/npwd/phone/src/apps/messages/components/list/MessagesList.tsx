@@ -4,12 +4,18 @@ import {SearchField} from '@ui/components/SearchField';
 import {useTranslation} from 'react-i18next';
 import {useFilteredConversationsValue, useFilterValueState} from '../../hooks/state';
 import {ThemeContext} from "../../../../styles/themeProvider";
+import {useContactActions} from "../../../contacts/hooks/useContactActions";
+import {useFilteredContacts} from "../../../contacts/hooks/state";
 
 const MessagesList = (): any => {
     const [t] = useTranslation();
     const {theme} = useContext(ThemeContext);
 
     const {conversations, goToConversation} = useMessages();
+
+    // Fix to force load contacts state. Todo: rework and use global state instead
+    const _ = useFilteredContacts();
+    const {getDisplayByNumber} = useContactActions();
 
     const filteredConversations = useFilteredConversationsValue();
     const [searchValue, setSearchValue] = useFilterValueState();
@@ -37,7 +43,7 @@ const MessagesList = (): any => {
                                 </div>
                                 <div className="flex-1 min-w-0 cursor-pointer">
                                     <span className="absolute inset-0" aria-hidden="true"/>
-                                    <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>{conversation.display || conversation.phoneNumber}</p>
+                                    <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>{getDisplayByNumber(conversation.phoneNumber)}</p>
                                 </div>
                             </div>
                         </li>
