@@ -186,7 +186,7 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
 end)
 
 function DisplayText(newFuel, cout, stationType)
-    local text = "~INPUT_CONTEXT~ Arrêter la pompe. Flux: ~g~" .. Round(newFuel, 1) .. "L / 100L"
+    local text = "~INPUT_FRONTEND_RRIGHT~ Arrêter la pompe. Flux: ~g~" .. Round(newFuel, 1) .. "L / 100L"
     if stationType ~= "private" then
         text = text .. " ~w~Coût: ~g~" .. cout .. " $"
     end
@@ -216,8 +216,8 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
         TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
         TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
 
-        while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustPressed(1, 51) and GetPedInVehicleSeat(entity, -1) ==
-            0 and GetEntityHealth(gasentity) > 0 do
+        while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustReleased(0, 194) and
+            not IsControlJustReleased(0, 225) and GetPedInVehicleSeat(entity, -1) == 0 and GetEntityHealth(gasentity) > 0 do
             currentFuelAdd = currentFuelAdd + 0.02
             newFuel = currentFuel + currentFuelAdd
 

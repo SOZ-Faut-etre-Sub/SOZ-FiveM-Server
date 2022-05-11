@@ -35,6 +35,9 @@ end)
 SetupBuildingMenu:On("open", function(menu)
     menu:ClearItems()
 
+    table.sort(CurrentBuildingMenu, function(a, b)
+        return a.building < b.building
+    end)
     for item, habitation in pairs(CurrentHousingData) do
         if habitation.building ~= nil and habitation.entry_zone ~= nil then
             menu:AddButton({
@@ -95,6 +98,10 @@ houseMenu:AddButton({label = "Modifier une habitation", value = CurrentHousingMe
 houseMenu:AddButton({label = "Modifier un batiment", value = CurrentBuildingMenu})
 
 local function TestDoubleName(name)
+    table.sort(CurrentHousingData, function(a, b)
+        return a.identifier < b.identifier
+    end)
+
     for item, habitation in pairs(CurrentHousingData) do
         if habitation.identifier == name then
             return false
