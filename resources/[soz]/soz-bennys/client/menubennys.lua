@@ -5,7 +5,7 @@ local NoDamage = MenuV:InheritMenu(Status, "Aucun dommage")
 local PartMenu = MenuV:InheritMenu(Status, "Menu pièces")
 local SpoilersMenu = MenuV:InheritMenu(VehiculeCustom, "Choisir un mod")
 local ExtrasMenu = MenuV:InheritMenu(VehiculeCustom, "Personnalisations autres")
-local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinte Fenêtre")
+local WindowTintMenu = MenuV:InheritMenu(VehiculeCustom, "Teinture Fenêtre")
 local OldLiveryMenu = MenuV:InheritMenu(VehiculeCustom, "Sticker de base")
 local PlateIndexMenu = MenuV:InheritMenu(VehiculeCustom, "Immatriculation")
 
@@ -14,15 +14,15 @@ local ResprayTypeMenu = MenuV:InheritMenu(ResprayMenu, "Type de Peinture")
 local ResprayColoursMenu = MenuV:InheritMenu(ResprayMenu, "Couleurs de Peinture")
 
 local NeonsMenu = MenuV:InheritMenu(VehiculeCustom, "Néons")
-local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Etat des Néons")
+local NeonStateMenu = MenuV:InheritMenu(NeonsMenu, "Etat du Néon")
 local NeonColoursMenu = MenuV:InheritMenu(NeonsMenu, "Couleur des Néons")
 
 local XenonsHeadlightsMenu = MenuV:InheritMenu(VehiculeCustom, "Xénons")
 
 local WheelsMenu = MenuV:InheritMenu(VehiculeCustom, "Roues")
-local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Personnalisation de la fumée de roue")
-local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Activer ou désactiver les roues personnalisées")
-local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choisir une roue")
+local TyreSmokeMenu = MenuV:InheritMenu(WheelsMenu, "Fumée de roue")
+local CustomWheelsMenu = MenuV:InheritMenu(WheelsMenu, "Roues personnalisées")
+local ChooseWheelMenu = MenuV:InheritMenu(WheelsMenu, "Choix de roue")
 
 local variableChoosewheel
 local variableisMotorcycle
@@ -37,9 +37,10 @@ Gfinishready = false
 ChooseWheelMenu:On("open", function(menu)
     local v = variableChoosewheel
     menu:ClearItems()
+    menu:AddTitle({label = "Choix de roue"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Roues",
         value = WheelsMenu,
         select = function()
             menu:Close()
@@ -67,6 +68,7 @@ end)
 
 CustomWheelsMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Roues personalisées"})
     menu:AddButton({
         icon = "◀",
         label = "Roues",
@@ -101,9 +103,10 @@ end)
 
 TyreSmokeMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Fumée de roue"})
     menu:AddButton({
         icon = "◀",
-        label = "Wheels",
+        label = "Roues",
         value = WheelsMenu,
         select = function()
             menu:Close()
@@ -128,9 +131,10 @@ end)
 
 WheelsMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Roues"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -177,9 +181,10 @@ ResprayColoursMenu:On("open", function(menu)
     local v = variablecatrespray
     local colorcat = variableRespraytype
     menu:ClearItems()
+    menu:AddTitle({label = variablecatrespray.category})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Couleur",
         value = ResprayTypeMenu,
         select = function()
             menu:Close()
@@ -206,9 +211,10 @@ end)
 
 ResprayTypeMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Couleur"})
     menu:AddButton({
         icon = "◀",
-        label = "Catégories de couleur",
+        label = "Peinture",
         select = function()
             menu:Close()
         end,
@@ -227,9 +233,10 @@ end)
 
 ResprayMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Peinture"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -282,9 +289,10 @@ end)
 NeonColoursMenu:On("open", function(menu)
     local currentNeonR, currentNeonG, currentNeonB = GetCurrentNeonColour()
     menu:ClearItems()
+    menu:AddTitle({label = "Couleurs de Néon"})
     menu:AddButton({
         icon = "◀",
-        label = "Menu Néons",
+        label = "Néons",
         value = NeonsMenu,
         select = function()
             menu:Close()
@@ -327,9 +335,10 @@ NeonStateMenu:On("open", function(menu)
     local v = variableNeonstate
     local currentNeonState = GetCurrentNeonState(v.id)
     menu:ClearItems()
+    menu:AddTitle({label = "Etat du Néon"})
     menu:AddButton({
         icon = "◀",
-        label = "Menu Néons",
+        label = "Néons",
         value = NeonsMenu,
         select = function()
             menu:Close()
@@ -381,9 +390,10 @@ end)
 
 NeonsMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Néons"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -393,7 +403,7 @@ NeonsMenu:On("open", function(menu)
         menu:AddButton({
             label = v.name,
             value = NeonStateMenu,
-            description = "Activer ou Désactiver Néon",
+            description = "Etat du Néon",
             select = function()
                 variableNeonstate = v
             end,
@@ -404,9 +414,10 @@ end)
 
 XenonsHeadlightsMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Xénons"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -438,9 +449,10 @@ end)
 
 WindowTintMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Teinture Fenêtre"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -482,9 +494,10 @@ SpoilersMenu:On("open", function(menu)
     local validMods = variableSpoilers[2]
     local currentMod = variableSpoilers[3]
     menu:ClearItems()
+    menu:AddTitle({label =  v.category})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -521,9 +534,10 @@ end)
 
 OldLiveryMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Sticker de base"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -567,9 +581,10 @@ end)
 
 ExtrasMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Autres"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -593,9 +608,10 @@ end)
 
 PlateIndexMenu:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Couleur Immatriculation"})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Customisation",
         value = VehiculeCustom,
         select = function()
             menu:Close()
@@ -643,9 +659,10 @@ PartMenu:On("open", function(menu)
     local partName = variablePart[1]
     local part = variablePart[2]
     menu:ClearItems()
+    menu:AddTitle({label = partName})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Réparation",
         value = Status,
         select = function()
             menu:Close()
@@ -662,9 +679,10 @@ end)
 
 NoDamage:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = variablePart[1]})
     menu:AddButton({
         icon = "◀",
-        label = "Retour",
+        label = "Réparation",
         value = Status,
         description = "Cette pièce n'est pas endommagée",
         select = function()
@@ -676,6 +694,7 @@ end)
 Status:On("open", function(menu)
     local plate = QBCore.Functions.GetPlate(Config.AttachedVehicle)
     menu:ClearItems()
+    menu:AddTitle({label = "Réparation"})
     if VehicleStatus[plate] ~= nil then
         menu:AddButton({
             icon = "◀",
@@ -708,7 +727,14 @@ Status:On("open", function(menu)
                 elseif percentage == 100 then
                     percentage = math.round(percentage)
                 end
-                menu:AddButton({label = v, value = NoDamage, description = "Etat: " .. percentage .. "% / 100.0%"})
+                menu:AddButton({
+                    label = v,
+                    value = NoDamage,
+                    description = "Etat: " .. percentage .. "% / 100.0%",
+                    select = function()
+                        variablePart = {v, k}
+                    end,
+                })
             end
         end
     end
@@ -718,6 +744,7 @@ VehiculeCustom:On("open", function(menu)
     local veh = Config.AttachedVehicle
     local isMotorcycle = GetVehicleClass(veh) == 8 -- Moto
     menu:ClearItems()
+    menu:AddTitle({label = "Customisation"})
     menu:AddButton({
         icon = "◀",
         label = "Menu Benny's",
@@ -741,7 +768,7 @@ VehiculeCustom:On("open", function(menu)
     end
     menu:AddButton({label = "Peinture", value = ResprayMenu})
     if not isMotorcycle then
-        menu:AddButton({label = "Teinte Fenêtre", value = WindowTintMenu})
+        menu:AddButton({label = "Teinture Fenêtre", value = WindowTintMenu})
         menu:AddButton({label = "Néons", value = NeonsMenu})
     end
     menu:AddButton({label = "Xénons", value = XenonsHeadlightsMenu})
@@ -765,6 +792,7 @@ end
 
 VehiculeOptions:On("open", function(menu)
     menu:ClearItems()
+    menu:AddTitle({label = "Menu Benny's"})
     local veh = Config.AttachedVehicle
     FreezeEntityPosition(veh, true)
     menu:AddButton({
@@ -785,12 +813,12 @@ VehiculeOptions:On("open", function(menu)
         end,
     })
     menu:AddButton({
-        label = "Réparation du véhicule",
+        label = "Réparation",
         value = Status,
         description = "Réparer les pièces du véhicule",
     })
     menu:AddButton({
-        label = "Customisation du véhicule",
+        label = "Customisation",
         value = VehiculeCustom,
         description = "Changer les composants du véhicule",
         select = function()
