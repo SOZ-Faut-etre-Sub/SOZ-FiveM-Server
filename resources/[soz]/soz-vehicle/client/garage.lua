@@ -330,8 +330,9 @@ local function enterVehicle(veh, indexgarage, type, garage)
                 local totalFuel = GetVehicleFuelLevel(veh)
                 local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
                 if type == "private" then
-                    local placesdispo = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
-                    if placesdispo.stock >= 1 then
+                    local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
+                    local placesdispo = 38 - placesstock["COUNT(*)"]
+                    if placesdispo >= 1 then
                         TriggerServerEvent("qb-garage:server:updatestock", indexgarage, false)
                         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", vehProperties)
                         CheckPlayers(veh, garage)
@@ -424,8 +425,9 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             SortirMenu(type, garage, indexgarage)
         end)
     elseif type == "private" then
-        local placesdispo = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
-        menu:AddTitle({label = garage.label .. " | Places libre: " .. placesdispo.stock .. " / 38"})
+        local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
+        local placesdispo = 38 - placesstock["COUNT(*)"]
+        menu:AddTitle({label = garage.label .. " | Places libre: " .. placesdispo .. " / 38"})
         local button = menu:AddButton({label = "Ranger véhicule"})
         button:On("select", function()
             local curVeh = GetPlayersLastVehicle()
