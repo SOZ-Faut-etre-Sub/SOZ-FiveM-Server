@@ -69,24 +69,25 @@ local function MotoModels(moto)
     end)
 end
 
-MotoChoose:On("open", function(m)
-    m:ClearItems()
+MotoChoose:On("open", function(menu)
+    menu:ClearItems()
     local moto = GlobalMoto
-    m:AddButton({
+    menu:AddTitle({label = moto.name})
+    menu:AddButton({
         icon = "◀",
-        label = moto["name"],
+        label = VehicleCategorie[1],
         value = MotoModel,
         description = "Choisir un autre modèle",
         select = function()
-            m:Close()
+            menu:Close()
         end,
     })
-    m:AddButton({
+    menu:AddButton({
         label = "Acheter " .. moto["name"],
         rightLabel = "💸 " .. moto["price"] .. "$",
         description = "Confirmer l'achat",
         select = function()
-            m:Close()
+            menu:Close()
             MotoModel:Close()
             MotoList:Close()
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "moto", moto["model"])
@@ -94,11 +95,10 @@ MotoChoose:On("open", function(m)
     })
 end)
 
-MotoModel:On("open", function(m)
+MotoModel:On("open", function(menu)
     local RpcCategorie = MotoCategorie[1]
     local RPCMotostorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
-    m:ClearItems()
-    local firstbutton = 0
+    menu:ClearItems()
     local motocycles = {}
     for _, motocat in pairs(MotoCategorie[2]) do
         table.insert(motocycles, motocat)
@@ -106,25 +106,23 @@ MotoModel:On("open", function(m)
     table.sort(motocycles, function(bicycleLhs, bicycleRhs)
         return bicycleLhs["price"] < bicycleRhs["price"]
     end)
+    menu:AddTitle({label = RpcCategorie})
+    menu:AddButton({
+        icon = "◀",
+        label = "Catégories",
+        value = MotoList,
+        description = "Choisir une autre catégorie",
+        select = function()
+            menu:Close()
+        end,
+    })
     for k, cycle in pairs(motocycles) do
-        firstbutton = firstbutton + 1
-        if firstbutton == 1 then
-            m:AddButton({
-                icon = "◀",
-                label = cycle["category"],
-                value = MotoList,
-                description = "Choisir une autre catégorie",
-                select = function()
-                    m:Close()
-                end,
-            })
-        end
         local newlabel = cycle["name"]
         for _, y in pairs(RPCMotostorage) do
             if cycle.model == y.model then
                 if y.stock == 0 then
                     newlabel = "^9" .. cycle["name"]
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         description = "❌ HORS STOCK de " .. cycle["name"],
@@ -135,7 +133,7 @@ MotoModel:On("open", function(m)
                     })
                 elseif y.stock == 1 then
                     newlabel = "~o~" .. cycle["name"]
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         value = MotoChoose,
@@ -149,7 +147,7 @@ MotoModel:On("open", function(m)
                         end,
                     })
                 else
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         value = MotoChoose,
@@ -168,10 +166,11 @@ MotoModel:On("open", function(m)
     end
 end)
 
-MotoList:On("open", function(m)
-    m:ClearItems()
+MotoList:On("open", function(menu)
+    menu:ClearItems()
+    menu:AddTitle({label = "Catégories"})
     for k, moto in pairs(motocycles) do
-        m:AddButton({
+        menu:AddButton({
             label = k,
             value = MotoModel,
             description = "Nom de catégorie",
