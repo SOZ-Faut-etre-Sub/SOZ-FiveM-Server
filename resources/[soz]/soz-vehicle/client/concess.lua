@@ -70,26 +70,27 @@ local function CarModels(vehicule)
     end)
 end
 
-VehiculeChoose:On("open", function(m)
+VehiculeChoose:On("open", function(menu)
     clean()
-    m:ClearItems()
+    menu:ClearItems()
     local voiture = GlobalVehicle
-    m:AddButton({
+    menu:AddTitle({label = voiture.name})
+    menu:AddButton({
         icon = "◀",
-        label = voiture["name"],
+        label = VehicleCategorie[1],
         value = VehiculeModel,
         description = "Choisir un autre modèle",
         select = function()
-            m:Close()
+            menu:Close()
         end,
     })
-    m:AddButton({
+    menu:AddButton({
         label = "Acheter " .. voiture["name"],
         rightLabel = "💸 " .. voiture["price"] .. "$",
         value = voiture,
         description = "Confirmer l'achat",
         select = function()
-            m:Close()
+            menu:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"])
@@ -97,11 +98,10 @@ VehiculeChoose:On("open", function(m)
     })
 end)
 
-VehiculeModel:On("open", function(m)
+VehiculeModel:On("open", function(menu)
     local RpcCategorie = VehicleCategorie[1]
     local RPCVehiclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
-    m:ClearItems()
-    local firstbutton = 0
+    menu:ClearItems()
     local vehicules = {}
     for _, voiture in pairs(VehicleCategorie[2]) do
         table.insert(vehicules, voiture)
@@ -109,25 +109,23 @@ VehiculeModel:On("open", function(m)
     table.sort(vehicules, function(vehiculeLhs, vehiculeRhs)
         return vehiculeLhs["price"] < vehiculeRhs["price"]
     end)
+    menu:AddTitle({label = RpcCategorie})
+    menu:AddButton({
+        icon = "◀",
+        label = "Catégories",
+        value = VehiculeList,
+        description = "Choisir une autre catégorie",
+        select = function()
+            menu:Close()
+        end,
+    })
     for k, voiture in pairs(vehicules) do
-        firstbutton = firstbutton + 1
-        if firstbutton == 1 then
-            m:AddButton({
-                icon = "◀",
-                label = voiture["category"],
-                value = VehiculeList,
-                description = "Choisir une autre catégorie",
-                select = function()
-                    m:Close()
-                end,
-            })
-        end
         local newlabel = voiture["name"]
         for _, y in pairs(RPCVehiclestorage) do
             if voiture.model == y.model then
                 if y.stock == 0 then
                     newlabel = "^9" .. voiture["name"]
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
                         description = "❌ HORS STOCK de " .. voiture["name"],
@@ -138,7 +136,7 @@ VehiculeModel:On("open", function(m)
                     })
                 elseif y.stock == 1 then
                     newlabel = "~o~" .. voiture["name"]
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
                         value = VehiculeChoose,
@@ -152,7 +150,7 @@ VehiculeModel:On("open", function(m)
                         end,
                     })
                 else
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
                         value = VehiculeChoose,
@@ -171,10 +169,11 @@ VehiculeModel:On("open", function(m)
     end
 end)
 
-VehiculeList:On("open", function(m)
-    m:ClearItems()
+VehiculeList:On("open", function(menu)
+    menu:ClearItems()
+    menu:AddTitle({label = "Catégories"})
     for k, voiture in pairs(vehicles) do
-        m:AddButton({
+        menu:AddButton({
             label = k,
             value = VehiculeModel,
             description = "Nom de catégorie",
