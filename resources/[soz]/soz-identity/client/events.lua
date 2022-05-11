@@ -18,25 +18,15 @@ end)
 --
 -- ID CARD
 AddEventHandler("soz-identity:client:request-identity-data", function(target, action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "identity", action)
-end)
-
--- LICENSES
-AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action)
-end)
-
--- COMMON
-RegisterNetEvent("soz-identity:client:display-ui", function(data)
-    local ped = PlayerPedId()
-
-    if (data.scope == "identity") then
-        Citizen.CreateThread(function()
-            -- Send mugshot asynchronously as it can take a few seconds to generate
-            local mugshot = exports["soz-identity"]:GetPedheadshot(ped)
-            SendNUIMessage({scope = "mugshot", mugshot = GetPedheadshotTxdString(mugshot)})
-        end)
-    end
+    local charinfo = PlayerData.charinfo
+    local data = {
+        firstName = charinfo.firstname,
+        lastName = charinfo.lastname,
+        job = "-",
+        address = "-",
+        phone = charinfo.phone,
+        pid = PlayerPedId(),
+    }
 
     if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
         data.gender = "Masculin"
@@ -44,14 +34,31 @@ RegisterNetEvent("soz-identity:client:display-ui", function(data)
         data.gender = "Féminin"
     end
 
-    local job = PlayerData.job
-    if job ~= nil then
-        data.job = exports["soz-jobs"]:GetJobLabel(job.id)
-    else
-        data.job = "-"
+    local jobId = PlayerData.job.id
+    if jobId ~= nil then
+        data.job = exports["soz-jobs"]:GetJobLabel(jobId)
     end
 
+    TriggerServerEvent("soz-identity:server:request-data", target, "identity", action, data)
+end)
+
+-- LICENSES
+AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
+    TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action, {
+        licences = PlayerData.metadata["licenses"],
+    })
+end)
+
+-- COMMON
+RegisterNetEvent("soz-identity:client:display-ui", function(data)
     SendNUIMessage(data)
+    if data.scope == "identity" and data.pid then
+        Citizen.CreateThread(function()
+            -- Send mugshot asynchronously as it can take a few seconds to generate
+            local mugshot = exports["soz-identity"]:GetPedheadshot(data.pid)
+            SendNUIMessage({scope = "mugshot", mugshot = GetPedheadshotTxdString(mugshot)})
+        end)
+    end
 end)
 
 RegisterNUICallback("nui-timeout", function()
