@@ -69,24 +69,25 @@ local function VeloModels(velo)
     end)
 end
 
-VeloChoose:On("open", function(m)
-    m:ClearItems()
+VeloChoose:On("open", function(menu)
+    menu:ClearItems()
     local cycle = GlobalCycle
-    m:AddButton({
+    menu:AddTitle({label = cycle.name})
+    menu:AddButton({
         icon = "◀",
-        label = cycle["name"],
+        label = VehicleCategorie[1],
         value = VeloModel,
         description = "Choisir un autre modèle",
         select = function()
-            m:Close()
+            menu:Close()
         end,
     })
-    m:AddButton({
+    menu:AddButton({
         label = "Acheter " .. cycle["name"],
         rightLabel = "💸 " .. cycle["price"] .. "$",
         description = "Confirmer l'achat",
         select = function()
-            m:Close()
+            menu:Close()
             VeloModel:Close()
             VeloList:Close()
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "velo", cycle["model"])
@@ -94,11 +95,10 @@ VeloChoose:On("open", function(m)
     })
 end)
 
-VeloModel:On("open", function(m)
+VeloModel:On("open", function(menu)
     local RpcCategorie = VeloCategorie[1]
     local RPCBicyclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
-    m:ClearItems()
-    local firstbutton = 0
+    menu:ClearItems()
     local bicycles = {}
     for _, cyclecat in pairs(VeloCategorie[2]) do
         table.insert(bicycles, cyclecat)
@@ -106,25 +106,23 @@ VeloModel:On("open", function(m)
     table.sort(bicycles, function(bicycleLhs, bicycleRhs)
         return bicycleLhs["price"] < bicycleRhs["price"]
     end)
+    menu:AddTitle({label = RpcCategorie})
+    menu:AddButton({
+        icon = "◀",
+        label = "Catégories",
+        value = VeloList,
+        description = "Choisir une autre catégorie",
+        select = function()
+            menu:Close()
+        end,
+    })
     for k, cycle in pairs(bicycles) do
-        firstbutton = firstbutton + 1
-        if firstbutton == 1 then
-            m:AddButton({
-                icon = "◀",
-                label = cycle["category"],
-                value = VeloList,
-                description = "Choisir une autre catégorie",
-                select = function()
-                    m:Close()
-                end,
-            })
-        end
         local newlabel = cycle["name"]
         for _, y in pairs(RPCBicyclestorage) do
             if cycle.model == y.model then
                 if y.stock == 0 then
                     newlabel = "^9" .. cycle["name"]
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         description = "❌ HORS STOCK de " .. cycle["name"],
@@ -135,7 +133,7 @@ VeloModel:On("open", function(m)
                     })
                 elseif y.stock == 1 then
                     newlabel = "~o~" .. cycle["name"]
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         value = VeloChoose,
@@ -149,7 +147,7 @@ VeloModel:On("open", function(m)
                         end,
                     })
                 else
-                    m:AddButton({
+                    menu:AddButton({
                         label = newlabel,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         value = VeloChoose,
@@ -168,10 +166,11 @@ VeloModel:On("open", function(m)
     end
 end)
 
-VeloList:On("open", function(m)
-    m:ClearItems()
+VeloList:On("open", function(menu)
+    menu:ClearItems()
+    menu:AddTitle({label = "Catégories"})
     for k, cycle in pairs(bicycles) do
-        m:AddButton({
+        menu:AddButton({
             label = k,
             value = VeloModel,
             description = "Nom de catégorie",
