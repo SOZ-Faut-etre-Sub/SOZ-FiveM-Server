@@ -6,9 +6,8 @@ local function DisplayPlayerName()
         while DynamicMapOption.PlayerName do
             QBCore.Functions.TriggerCallback("admin:server:getplayers", function(players)
                 for _, player in pairs(players) do
-                    DynamicMapOption.mpTags[player.citizenid] = CreateMpGamerTagForNetPlayer(GetPlayerFromServerId(player.sourceplayer), player.name, false,
-                                                                                             false, "", 0, 0, 0, 0)
-
+                    DynamicMapOption.mpTags[player.citizenid] = GetPlayerFromServerId(player.sourceplayer)
+                    CreateMpGamerTagWithCrewColor(DynamicMapOption.mpTags[player.citizenid], player.name, false, false, "", 0, 0, 0, 0)
                     SetMpGamerTagVisibility(DynamicMapOption.mpTags[player.citizenid], 0, true)
                 end
             end)
