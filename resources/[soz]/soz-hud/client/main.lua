@@ -221,7 +221,7 @@ CreateThread(function()
                 setVehicleData({
                     speed = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
                     fuel = GetVehicleFuelLevel(vehicle),
-                    engine = GetVehicleEngineHealth(vehicle),
+                    engine = math.ceil(GetVehicleEngineHealth(vehicle)),
                     lock = GetVehicleDoorLockStatus(vehicle),
                     haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
                     haveLight = haveLight,
