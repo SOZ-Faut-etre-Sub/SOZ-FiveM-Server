@@ -238,6 +238,18 @@ class _PlayerService {
   }
 
   /**
+   * Return all player with the given society number
+   * @param phoneNumber The phone number to return identifier for
+   **/
+  async getPlayersFromNumber(phoneNumber: string): Promise<Player|null> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [_, player] of this.playersBySource) {
+        if (player.getPhoneNumber() === phoneNumber) return player;
+    }
+    return null;
+  }
+
+  /**
    * Clear all data from the database we don't want to stored after the player as disconnected.
    */
   async clearPlayerData(src: number) {
