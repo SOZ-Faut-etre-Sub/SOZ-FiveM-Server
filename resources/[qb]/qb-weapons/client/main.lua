@@ -124,25 +124,8 @@ RegisterNetEvent("weapons:client:EquipAttachment", function(ItemData, attachment
 end)
 
 -- Threads
-
 CreateThread(function()
     SetWeaponsNoAutoswap(true)
-end)
-
-CreateThread(function()
-    while true do
-        local ped = PlayerPedId()
-        if IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then
-            local weapon = GetSelectedPedWeapon(ped)
-            local ammo = GetAmmoInPedWeapon(ped, weapon)
-            TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
-            if MultiplierAmount > 0 then
-                TriggerServerEvent("weapons:server:UpdateWeaponQuality", CurrentWeaponData, MultiplierAmount)
-                MultiplierAmount = 0
-            end
-        end
-        Wait(1)
-    end
 end)
 
 CreateThread(function()
@@ -192,71 +175,5 @@ CreateThread(function()
             end
         end
         Wait(1)
-    end
-end)
-
-CreateThread(function()
-    while true do
-        if LocalPlayer.state.isLoggedIn then
-            local inRange = false
-            local ped = PlayerPedId()
-            local pos = GetEntityCoords(ped)
-            for k, data in pairs(Config.WeaponRepairPoints) do
-                local distance = #(pos - data.coords)
-                if distance < 10 then
-                    inRange = true
-                    if distance < 1 then
-                        if data.IsRepairing then
-                            if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop in this moment is ~r~NOT~w~ usable.')
-                            else
-                                if not data.RepairingData.Ready then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'Your weapon will be repaired.')
-                                else
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] - Take Weapon Back')
-                                end
-                            end
-                        else
-                            if CurrentWeaponData and next(CurrentWeaponData) then
-                                if not data.RepairingData.Ready then
-                                    local WeaponData = QBCore.Shared.Weapons[GetHashKey(CurrentWeaponData.name)]
-                                    local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] Repair Weapon, ~g~$'..Config.WeaponRepairCosts[WeaponClass]..'~w~')
-                                    if IsControlJustPressed(0, 38) then
-                                        QBCore.Functions.TriggerCallback('weapons:server:RepairWeapon', function(HasMoney)
-                                            if HasMoney then
-                                                CurrentWeaponData = {}
-                                            end
-                                        end, k, CurrentWeaponData)
-                                    end
-                                else
-                                    if data.RepairingData.CitizenId ~= PlayerData.citizenid then
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'The repairshop is this moment ~r~NOT~w~ usable.')
-                                    else
-                                        DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] - Take Weapon Back')
-                                        if IsControlJustPressed(0, 38) then
-                                            TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
-                                        end
-                                    end
-                                end
-                            else
-                                if data.RepairingData.CitizenId == nil then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, 'You dont have a weapon in your hands.')
-                                elseif data.RepairingData.CitizenId == PlayerData.citizenid then
-                                    DrawText3Ds(data.coords.x, data.coords.y, data.coords.z, '[E] - Take Weapon Back')
-                                    if IsControlJustPressed(0, 38) then
-                                        TriggerServerEvent('weapons:server:TakeBackWeapon', k, data)
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-            if not inRange then
-                Wait(1000)
-            end
-        end
-        Wait(3)
     end
 end)
