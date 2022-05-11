@@ -1,6 +1,22 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
+local Vehicles = {}
+
+--- Main
+MySQL.ready(function()
+    MySQL.query("SELECT * FROM concess_entreprise", {}, function(result)
+        for _, v in pairs(result or {}) do
+            if Vehicles[v.job] == nil then
+                Vehicles[v.job] = {}
+            end
+
+            Vehicles[v.job][v.vehicle] = {price = v.price}
+        end
+    end)
+end)
+
+--- Functions
 local function GeneratePlateEntreprise(job)
     local plate = SozJobCore.Jobs[job].platePrefix .. " " .. tostring(math.random(111, 999))
     local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {plate})
@@ -11,49 +27,43 @@ local function GeneratePlateEntreprise(job)
     end
 end
 
-QBCore.Functions.CreateCallback("soz-concessentreprise:server:getconcessmodels", function(source, cb)
-    local listconcessmodels = MySQL.Sync.fetchAll("SELECT * FROM concess_entreprise")
-    if listconcessmodels[1] then
-        cb(listconcessmodels)
-    end
-end)
+QBCore.Functions.CreateCallback("soz-concessentreprise:server:getAvailableVehicles", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
 
-QBCore.Functions.CreateCallback("soz-concessentreprise:server:getGrade", function(source, cb)
-    local listejobgrades = MySQL.Sync.fetchAll("SELECT * FROM job_grades")
-    if listejobgrades[1] then
-        cb(listejobgrades)
+    if not SozJobCore.Functions.HasPermission(Player.PlayerData.job.id, Player.PlayerData.job.id, Player.PlayerData.job.grade,
+                                              SozJobCore.JobPermission.SocietyDealershipVehicle) then
+        cb(nil)
+        return
     end
+
+    cb(Vehicles[Player.PlayerData.job.id] or {})
 end)
 
 RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(vehicle, newlocation)
-    local src = source
-    local pData = QBCore.Functions.GetPlayer(src)
-    local cid = pData.PlayerData.citizenid
-    local money = pData.PlayerData.money["money"]
-    local plate = GeneratePlateEntreprise(vehicle.job)
-    local depotprice = math.ceil(vehicle.price / 100)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local plate = GeneratePlateEntreprise(Player.PlayerData.job.id)
+    local depotprice = math.ceil(Vehicles[Player.PlayerData.job.id][vehicle].price / 100)
     if depotprice < 100 then
         depotprice = 100
     end
-    if money > tonumber(vehicle.price) then
+    if Player.Functions.RemoveMoney("money", Vehicles[Player.PlayerData.job.id][vehicle].price, "vehicle-bought-in-showroom") then
         MySQL.Async.insert(
             "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, depotprice, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             {
-                pData.PlayerData.license,
-                cid,
-                vehicle.vehicle,
-                GetHashKey(vehicle.vehicle),
+                Player.PlayerData.license,
+                Player.PlayerData.citizenid,
+                vehicle,
+                GetHashKey(vehicle),
                 "{}",
                 plate,
                 0,
                 depotprice,
-                vehicle.job,
+                Player.PlayerData.job.id,
                 os.time(),
             })
-        TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat!")
-        TriggerClientEvent("soz-concessentreprise:client:buyShowroomVehicle", src, vehicle.vehicle, plate, newlocation)
-        pData.Functions.RemoveMoney("money", vehicle.price, "vehicle-bought-in-showroom")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Merci pour votre achat!")
+        TriggerClientEvent("soz-concessentreprise:client:buyShowroomVehicle", Player.PlayerData.source, vehicle, plate, newlocation)
     else
-        TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Pas assez d'argent", "error")
     end
 end)

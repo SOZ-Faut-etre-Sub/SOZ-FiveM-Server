@@ -36,7 +36,7 @@ SozJobCore.Functions.GetBossShopActions = function(job, event)
             icon = "fas fa-briefcase",
             event = event,
             canInteract = function()
-                return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.ManageGrade)
+                return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.SocietyShop)
             end,
         },
     }
