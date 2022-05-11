@@ -199,7 +199,7 @@ end
 
 RegisterNetEvent("fuel:client:PumpToCar")
 AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, stationType)
-    exports["qb-target"]:RemoveTargetModel(entity, "Remplir")
+    exports["qb-target"]:RemoveTargetEntity(entity, "Remplir")
     local stockstation = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", id)
 
     if stockstation > 100 then
