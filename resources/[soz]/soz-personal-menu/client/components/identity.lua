@@ -50,7 +50,7 @@ function GenerateIdentityMenu(identitySubmenu, selectedCheckbox, showingAround)
                                 if player ~= PlayerId() then
                                     local pid = GetPlayerServerId(player)
                                     table.insert(showingTo, pid)
-                                    TriggerEvent(checkbox.event, GetPlayerServerId(player), action)
+                                    TriggerEvent(checkbox.event, pid, action)
                                 else
                                     TriggerEvent("soz-identity:client:give-animation")
                                 end
