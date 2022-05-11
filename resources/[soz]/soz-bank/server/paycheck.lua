@@ -20,6 +20,10 @@ function PaycheckLoop()
                     amount = tonumber(payment),
                 })
             else
+                if not Player.PlayerData.job.onduty then
+                    payment = math.ceil(payment / 2)
+                end
+
                 Account.TransfertMoney(Player.PlayerData.job.id, Player.PlayerData.charinfo.account, payment, function(success, reason)
                     if success then
                         NotifyPaycheck(Player.PlayerData.source)
