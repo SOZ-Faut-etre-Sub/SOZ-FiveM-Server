@@ -59,8 +59,16 @@ class _SocietyService {
     let identifier = PlayerService.getPlayer(reqObj.source).getSocietyPhoneNumber();
 
     try {
-      const contact = await this.contactsDB.updateMessage(reqObj.data);
-      resp({ status: 'ok', data: contact });
+      const message = await this.contactsDB.updateMessage(reqObj.data);
+      resp({ status: 'ok', data: message });
+
+      const societyMessage = await this.contactsDB.getMessage(reqObj.data.id);
+      if (societyMessage[0]) {
+          const player = await PlayerService.getPlayersFromNumber(societyMessage[0].source_phone);
+          if (player) {
+            emitNet("hud:client:DrawNotification", player.source, "Votre ~b~appel~s~ vient d'être pris !", "info")
+          }
+      }
 
       const players = await PlayerService.getPlayersFromSocietyNumber(identifier);
       players.forEach((player) => {
