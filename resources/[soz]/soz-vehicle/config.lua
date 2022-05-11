@@ -30,7 +30,6 @@ Config.Shops = {
         ["ShopLabel"] = "Concess Véhicules", -- Blip name
         ["showBlip"] = true,
         ["Categories"] = {
-            ["Sportsclassics"] = "Sports Classics",
             ["Sedans"] = "Sedans",
             ["Coupes"] = "Coupes",
             ["Suvs"] = "SUVs",
