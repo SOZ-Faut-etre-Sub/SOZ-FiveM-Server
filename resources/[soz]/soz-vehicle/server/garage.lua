@@ -222,7 +222,9 @@ RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, ind
 end)
 
 QBCore.Functions.CreateCallback("qb-garage:server:getstock", function(source, cb, indexgarage)
-    local parkingcount = MySQL.Sync.fetchSingle("SELECT COUNT(*) FROM player_vehicles WHERE garage = ? AND state = 1", {indexgarage})
+    local parkingcount = MySQL.Sync.fetchSingle("SELECT COUNT(*) FROM player_vehicles WHERE garage = ? AND state = 1", {
+        indexgarage,
+    })
     if parkingcount then
         cb(parkingcount)
     end
