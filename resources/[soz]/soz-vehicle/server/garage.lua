@@ -1,5 +1,4 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
-local OutsideVehicles = {}
 local garage_props = GetHashKey("soz_prop_paystation")
 
 CreateThread(function()
@@ -178,13 +177,6 @@ RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
         cid,
         plate,
     })
-end)
-
-RegisterNetEvent("qb-garages:server:UpdateOutsideVehicles", function(Vehicles)
-    local src = source
-    local Ply = QBCore.Functions.GetPlayer(src)
-    local CitizenId = Ply.PlayerData.citizenid
-    OutsideVehicles[CitizenId] = Vehicles
 end)
 
 AddEventHandler("onResourceStart", function(resource)

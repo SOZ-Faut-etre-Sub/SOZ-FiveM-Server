@@ -286,7 +286,6 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 local properties = QBCore.Functions.TriggerRpc("qb-garage:server:GetVehicleProperties", vehicle.plate)
                 if vehicle.plate then
                     OutsideVehicles[vehicle.plate] = veh
-                    TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
                 end
                 QBCore.Functions.SetVehicleProperties(veh, properties)
                 SetVehicleNumberPlateText(veh, vehicle.plate)
@@ -338,7 +337,6 @@ local function enterVehicle(veh, indexgarage, type, garage)
                         TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
                         if plate then
                             OutsideVehicles[plate] = nil
-                            TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
                         end
                         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
                     else
@@ -350,7 +348,6 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
                     if plate then
                         OutsideVehicles[plate] = nil
-                        TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
                     end
                     exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
                 end
@@ -374,7 +371,6 @@ RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
     TriggerServerEvent("qb-garage:server:updateVehicle", 2, totalFuel, engineDamage, bodyDamage, plate, "fourriere", "depot")
     if plate then
         OutsideVehicles[plate] = nil
-        TriggerServerEvent("qb-garages:server:UpdateOutsideVehicles", OutsideVehicles)
     end
     exports["soz-hud"]:DrawNotification("Le véhicule a été mis à la fourrière")
 end)
