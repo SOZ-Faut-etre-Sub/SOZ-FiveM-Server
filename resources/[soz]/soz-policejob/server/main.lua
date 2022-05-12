@@ -201,11 +201,6 @@ RegisterNetEvent("police:server:buy", function(weaponID)
     local item = Config.WeaponShop[player.PlayerData.job.id][weaponID]
 
     if player.Functions.RemoveMoney("money", item.price) then
-        if item.type == "weapon" then
-            item.metadata.serie = tostring(string.upper(player.PlayerData.job.id) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
-                                               QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
-        end
-
         exports["soz-inventory"]:AddItem(player.PlayerData.source, item.name, item.amount, item.metadata, nil, function(success, reason)
             if success then
                 TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,

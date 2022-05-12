@@ -122,10 +122,6 @@ RegisterNetEvent('QBCore:Client:TriggerCallback', function(name, ...)
     end
 end)
 
-RegisterNetEvent('QBCore:Client:UseItem', function(item)
-    TriggerServerEvent('QBCore:Server:UseItem', item)
-end)
-
 -- Me command
 
 local function Draw3DText(coords, str)
