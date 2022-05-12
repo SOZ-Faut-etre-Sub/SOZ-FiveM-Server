@@ -1016,7 +1016,6 @@ CreateThread(function()
                 label = "Modifier",
                 action = function(entity)
                     Config.AttachedVehicle = entity
-                    TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", entity)
                     startAnimation()
                 end,
                 canInteract = function(entity, distance, data)

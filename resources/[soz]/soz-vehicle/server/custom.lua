@@ -23,20 +23,6 @@ function IsVehicleOwned(plate)
     return result
 end
 
-QBCore.Functions.CreateCallback("qb-vehicletuning:server:GetAttachedVehicle", function(source, cb)
-    cb(Config.AttachedVehicle)
-end)
-
-RegisterNetEvent("qb-vehicletuning:server:SetAttachedVehicle", function(veh)
-    if veh ~= false then
-        Config.AttachedVehicle = veh
-        TriggerClientEvent("soz-custom:client:SetAttachedVehicle", -1, veh)
-    else
-        Config.AttachedVehicle = nil
-        TriggerClientEvent("soz-custom:client:SetAttachedVehicle", -1, false)
-    end
-end)
-
 RegisterNetEvent("qb-vehicletuning:server:CheckForItems", function(part)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
