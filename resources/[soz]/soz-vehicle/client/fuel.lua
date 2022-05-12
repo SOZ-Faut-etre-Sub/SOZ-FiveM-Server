@@ -3,6 +3,7 @@ local fuelSynced = false
 local ObjectToHand
 local CordePompe = 0
 local pistoletdansmain = false
+InsideEssence = false
 
 function Round(num, numDecimalPlaces)
     local mult = 10 ^ (numDecimalPlaces or 0)
@@ -132,7 +133,7 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
     local initL = ropeSize * 2
     CordePompe = AddRope(pCoords, 0.0, 0.0, 0.0, maxL, 1, initL, minL, 2.0, false, false, false, 1.0, false, 0)
 
-    Citizen.CreateThread(function()
+    CreateThread(function()
         local obj = gasentity
         while CordePompe ~= 0 do
             Citizen.Wait(10)
@@ -140,7 +141,6 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
             AttachEntitiesToRope(CordePompe, PlayerPedId(), obj, pCoordsUpdated, vCoords, 1)
         end
     end)
-
     exports["qb-target"]:AddTargetEntity(vehicle, {
         options = {
             {
@@ -149,7 +149,6 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
                 label = "Remplir",
                 action = function(entity)
                     local ped = PlayerPedId()
-                    local vehicle = GetPlayersLastVehicle()
                     TriggerEvent("fuel:client:PumpToCar", id, gasentity, ped, entity, stationType)
                 end,
                 canInteract = function(entity)
@@ -161,7 +160,11 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
                             if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 5.0 then
                                 if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
                                     if GetVehicleFuelLevel(vehicle) < 95 then
-                                        return true
+                                        if InsideEssence and pistoletdansmain then
+                                            return true
+                                        else
+                                            return false
+                                        end
                                     else
                                         TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
                                         Citizen.Wait(5000)
@@ -199,9 +202,7 @@ end
 
 RegisterNetEvent("fuel:client:PumpToCar")
 AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, stationType)
-    exports["qb-target"]:RemoveTargetEntity(entity, "Remplir")
     local stockstation = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", id)
-
     if stockstation > 100 then
         isFueling = true
         TriggerServerEvent("soz-fuel:server:setTempFuel", id)
@@ -295,6 +296,7 @@ Citizen.CreateThread(function()
 
         zone:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
             if isPointInside then
+                InsideEssence = true
                 TriggerEvent("locations:zone:enter", "fueler_petrol_station", station.id)
 
                 local StationStateJobLimiter = {["oil"] = 0}
@@ -382,7 +384,9 @@ Citizen.CreateThread(function()
                     distance = 3.0,
                 })
             else
+                InsideEssence = false
                 TriggerEvent("locations:zone:exit", "fueler_petrol_station")
+                exports['qb-target']:RemoveTargetEntity(GetPlayersLastVehicle(),'Remplir')
                 exports["qb-target"]:RemoveTargetModel(station.model, "Pistolet")
             end
         end)

@@ -914,7 +914,7 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
         })
     else
         if OnDuty == true and PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(-2094907124, "Service")
+            exports["qb-target"]:RemoveTargetModel(-2094907124, "Se changer")
         end
     end
 end)
@@ -954,7 +954,7 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
         })
     else
         if PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(-1830645735, "Service")
+            exports["qb-target"]:RemoveTargetModel(-1830645735, "Prendre son service")
         end
     end
 end)
