@@ -462,7 +462,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
                 if slot then
                     local it = Inventory.GetItem(invSource, item, metadata)
                     if it then
-                        itemSlots, totalAmount, metadata = it.slot, it.amount, it.metadata
+                        itemSlots, totalAmount = it.slot, it.amount
                     end
                 else
                     itemSlots, totalAmount = Inventory.GetItemSlots(invSource, item, metadata)
