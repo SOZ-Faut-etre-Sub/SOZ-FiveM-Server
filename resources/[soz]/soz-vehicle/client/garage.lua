@@ -94,9 +94,12 @@ local function SortirMenu(type, garage, indexgarage)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    local timediff = time - v.parkingtime
-                    local price = math.floor(timediff / 3600)
-
+                    local timediff = math.floor((time - v.parkingtime) / 3600)
+                    local prixneuf = QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(v.vehicle):lower()].price
+                    local price = timediff * (prixneuf * 0.005)
+                    if price > (prixneuf * 0.10) then
+                        price = prixneuf * 0.10
+                    end
                     if v.state == 1 then
                         VehiculeParkingPrive:AddButton({
                             label = Lang:t("menu.header.private", {value = vname, value2 = v.plate, value3 = price}),
