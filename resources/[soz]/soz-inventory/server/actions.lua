@@ -18,19 +18,25 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
     local Player = QBCore.Functions.GetPlayer(source)
     local itemData = Player.Functions.GetItemBySlot(slot)
 
-    if itemData ~= nil then
-        if itemData.type == "weapon" then
-            if itemData.metadata.quality ~= nil then
-                if itemData.metadata.quality > 0 then
-                    TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, true)
-                else
-                    TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, false)
-                end
-            else
+    if itemData == nil then
+        return
+    end
+
+    if itemData.type == "weapon" then
+        if itemData.metadata.quality ~= nil then
+            if itemData.metadata.quality > 0 then
                 TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, true)
+            else
+                TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, false)
             end
-        elseif itemData.useable then
-            TriggerClientEvent("QBCore:Client:UseItem", Player.PlayerData.source, itemData)
+        else
+            TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, true)
+        end
+    elseif itemData.useable then
+        if itemData and itemData.amount > 0 then
+            if QBCore.Functions.CanUseItem(itemData.name) then
+                QBCore.Functions.UseItem(Player.PlayerData.source, itemData)
+            end
         end
     end
 end)
