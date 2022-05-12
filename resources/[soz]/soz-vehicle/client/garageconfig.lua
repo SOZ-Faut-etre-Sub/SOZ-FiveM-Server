@@ -967,8 +967,9 @@ PlacesPublic = {
         maxZ = 8.99,
         data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic8"] = BoxZone:Create(vector3(-577.67, -2190.13, 5.99), 8, 4, {
-        name="airportpublic8",
+    ["airportpublic8"] = BoxZone:Create(vector3(-577.67, -2190.13, 5.99), 8, 4,
+                                        {
+        name = "airportpublic8",
         heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
@@ -982,9 +983,10 @@ PlacesPublic = {
         maxZ = 8.99,
         data = {indexGarage = "airportpublic"},
     }),
-    ["airportpublic10"] = BoxZone:Create(vector3(-619.56, -2180.8, 5.99), 8, 4, {
-        name="airportpublic10",
-        heading=5,
+    ["airportpublic10"] = BoxZone:Create(vector3(-619.56, -2180.8, 5.99), 8, 4,
+                                         {
+        name = "airportpublic10",
+        heading = 5,
         minZ = 4.99,
         maxZ = 8.99,
         data = {indexGarage = "airportpublic"},
@@ -1053,7 +1055,8 @@ PlacesPublic = {
         maxZ = 34.23,
         data = {indexGarage = "haanparking"},
     }),
-    ["haanparking9"] = BoxZone:Create(vector3(73.78, 6362.8, 31.23), 8, 4, {
+    ["haanparking9"] = BoxZone:Create(vector3(73.78, 6362.8, 31.23), 8, 4,
+                                      {
         name = "haanparking9",
         heading = 35,
         minZ = 30.23,
