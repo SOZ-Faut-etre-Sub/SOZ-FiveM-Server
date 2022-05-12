@@ -38,15 +38,20 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
 end)
 
 --- Eat
-RegisterNetEvent("consumables:client:Eat", function(itemName)
+RegisterNetEvent("consumables:client:Eat", function(itemName, expired)
     QBCore.Functions.Progressbar("eat_something", "", 5000, false, true, {disableCombat = true},
                                  {animDict = "mp_player_inteat@burger", anim = "mp_player_int_eat_burger", flags = 49}, {}, {}, function()
-        TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + ConsumablesEat[itemName])
+        if expired then
+            TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] - ConsumablesExpiredEat)
+            TriggerEvent("lsmc:client:SetMaladie", "Intoxication", true)
+        else
+            TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + ConsumablesEat[itemName])
+        end
     end)
 end)
 
 --- Drink
-RegisterNetEvent("consumables:client:Drink", function(itemName)
+RegisterNetEvent("consumables:client:Drink", function(itemName, expired)
     QBCore.Functions.Progressbar("drink_something", "", 5000, false, true, {disableCombat = true},
                                  {animDict = "amb@world_human_drinking@coffee@male@idle_a", anim = "idle_c", flags = 49},
                                  {
@@ -54,18 +59,29 @@ RegisterNetEvent("consumables:client:Drink", function(itemName)
         bone = 28422,
         coords = {x = 0.01, y = -0.01, z = -0.06},
     }, {}, function()
-        TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])
+        if expired then
+            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] - ConsumablesExpiredDrink)
+            TriggerEvent("lsmc:client:SetMaladie", "Intoxication", true)
+        else
+            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])
+        end
     end)
 end)
 
 --- Alcohol
-RegisterNetEvent("consumables:client:DrinkAlcohol", function(itemName, model)
+RegisterNetEvent("consumables:client:DrinkAlcohol", function(itemName, extra)
     QBCore.Functions.Progressbar("snort_coke", "", math.random(3000, 6000), false, true, {disableCombat = true},
                                  {animDict = "amb@world_human_drinking@coffee@male@idle_a", anim = "idle_c", flags = 49},
-                                 {model = model, bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.06}}, {}, function()
-        -- L'alcool c'est de l'eau
-        TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])
-        TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] + ConsumablesAlcohol[itemName])
+                                 {model = extra.model, bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.06}}, {}, function()
+        if extra.expired then
+            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] - ConsumablesExpiredDrink)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] + ConsumablesExpiredDrink)
+            TriggerEvent("lsmc:client:SetMaladie", "Intoxication", true)
+        else
+            -- L'alcool c'est de l'eau
+            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])
+            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] + ConsumablesAlcohol[itemName])
+        end
     end)
 end)
 
