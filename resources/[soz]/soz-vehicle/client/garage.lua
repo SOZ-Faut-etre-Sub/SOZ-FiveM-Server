@@ -297,9 +297,6 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
                 SetVehicleEngineOn(veh, true, true)
             end, newlocation, true)
-            if type == "private" then
-                TriggerServerEvent("qb-garage:server:updatestock", indexgarage, true)
-            end
             exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
         end
     end
@@ -336,7 +333,6 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
                     local placesdispo = 38 - placesstock["COUNT(*)"]
                     if placesdispo >= 1 then
-                        TriggerServerEvent("qb-garage:server:updatestock", indexgarage, false)
                         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", vehProperties)
                         CheckPlayers(veh, garage)
                         TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type)
