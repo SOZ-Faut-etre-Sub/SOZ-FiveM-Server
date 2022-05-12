@@ -1177,6 +1177,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 2,
         ['combinable'] = nil,
         ['description'] = 'Avant tout du pain pour l\'estomac.'
     },
@@ -1190,6 +1191,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 31,
         ['combinable'] = nil,
         ['description'] = 'De l\'eau, merci.'
     },
@@ -1225,6 +1227,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Rien de mieux qu\'une bonne bière fraiche !'
     },
@@ -1236,6 +1239,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 365,
         ['combinable'] = nil,
         ['description'] = 'Pour toutes les petites soifs !'
     },
@@ -1247,6 +1251,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 365,
         ['combinable'] = nil,
         ['description'] = 'Pour toutes les petites soifs !'
     },
@@ -1258,6 +1263,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Raisin violet au goût légèrement sucré.'
     },
@@ -1269,6 +1275,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Raisin blanc, assez sucré.'
     },
@@ -1280,6 +1287,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Raisin vert, sucré, avec une pointe d\'acidité.'
     },
@@ -1291,6 +1299,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Raisin jaune avec un léger gout de miel.'
     },
@@ -1302,6 +1311,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin rouge avec une légère note sucrée !'
     },
@@ -1313,6 +1323,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin blanc assez sucré !'
     },
@@ -1324,6 +1335,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin blanc avec une note d\'acidité !'
     },
@@ -1335,6 +1347,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin blanc sirupeux au petit goût de miel !'
     },
@@ -1346,6 +1359,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus de raisins rouges !'
     },
@@ -1357,6 +1371,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus très sucré !'
     },
@@ -1368,6 +1383,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus de fruit légèrement acide !'
     },
@@ -1379,6 +1395,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus multifruits, pleins de vitamines !'
     },
@@ -1390,6 +1407,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus de fruit au miel !'
     },
@@ -1401,6 +1419,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Ragoutant, mais vraiment bon !'
     },
@@ -1412,6 +1431,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Bien grillé s\'il vous plaît !'
     },
@@ -1434,6 +1454,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un régal si bien assaisonné.'
     },
@@ -1445,6 +1466,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Quel cuisson ?'
     },
@@ -1456,6 +1478,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'A faire mijoter !'
     },
@@ -1467,6 +1490,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Tout le monde n\'aime pas ça !'
     },
@@ -1478,6 +1502,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Rosé pour la cuisson !'
     },
@@ -1489,6 +1514,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un gout inimaginable !'
     },
@@ -1500,6 +1526,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Le saucisson le plus long jamais vu !'
     },
@@ -1511,6 +1538,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un peu plus gras que la moyenne !'
     },
@@ -1522,6 +1550,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Pour un apéro réussi entre amis !'
     },
@@ -1533,6 +1562,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un gout très prononcé !'
     },
@@ -1544,6 +1574,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Encore tout frais !'
     },
@@ -1555,6 +1586,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Avant ou après avoir mis les céréales ?'
     },
@@ -1566,6 +1598,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Idéal en tranche ou rapé !'
     },
@@ -1577,6 +1610,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un amour du fromage !'
     },
@@ -1588,6 +1622,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Parait que c\'est bon avec du café !'
     },
@@ -1599,6 +1634,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un fromage légèrement salé !'
     },
@@ -1610,6 +1646,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Très bon avec une confiture !'
     },
@@ -1621,6 +1658,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Le fromage des touts petits !'
     },
@@ -1632,6 +1670,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Dans une bonne baguette !'
     },
@@ -1643,6 +1682,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Idéal pour les burgers !'
     },
@@ -1654,6 +1694,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = false,
+        ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un très bon fromage fondu en sauce !'
     },
@@ -2076,6 +2117,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
+        ['durability'] = 60,
         ['combinable'] = nil,
         ['description'] = 'Utile pour respirer.'
     },
@@ -2088,6 +2130,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
+        ['durability'] = 60,
         ['combinable'] = nil,
         ['description'] = 'Attention à la crise.'
     },
@@ -2100,6 +2143,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
+        ['durability'] = 60,
         ['combinable'] = nil,
         ['description'] = 'Ca pourrait t\'en couter un.'
     },
