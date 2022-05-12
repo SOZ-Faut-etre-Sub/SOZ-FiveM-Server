@@ -49,7 +49,7 @@ RegisterNUICallback("transfertItem", function(data, cb)
                 TaskPlayAnim(PlayerPedId(), "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
                 PlaySoundFrontend(-1, "Collect_Pickup", "DLC_IE_PL_Player_Sounds", true)
             end
-        end, data.source, data.target, data.item.name, amount, data.item.slot)
+        end, data.source, data.target, data.item.name, amount, data.item.metadata, data.item.slot)
     else
         cb({status = false})
     end
