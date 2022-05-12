@@ -23,8 +23,15 @@ QBCore.Commands.Add("giveitem", "Give An Item", {
                 local metadata = {}
                 if itemData["type"] == "weapon" then
                     amount = 1
-                    metadata.serie = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) ..
-                                                  QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+                end
+
+                for id, meta in pairs(args) do
+                    if id > 3 then
+                        local key, value = string.match(meta, "(%S+)=(%S+)")
+                        if key ~= nil and value ~= nil then
+                            metadata[key] = value
+                        end
+                    end
                 end
 
                 Inventory.AddItem(Player.PlayerData.source, itemData["name"], amount, metadata, false, function(success, reason)
