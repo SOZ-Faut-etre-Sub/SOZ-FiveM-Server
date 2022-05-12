@@ -386,7 +386,7 @@ Citizen.CreateThread(function()
             else
                 InsideEssence = false
                 TriggerEvent("locations:zone:exit", "fueler_petrol_station")
-                exports['qb-target']:RemoveTargetEntity(GetPlayersLastVehicle(),'Remplir')
+                exports["qb-target"]:RemoveTargetEntity(GetPlayersLastVehicle(), "Remplir")
                 exports["qb-target"]:RemoveTargetModel(station.model, "Pistolet")
             end
         end)
