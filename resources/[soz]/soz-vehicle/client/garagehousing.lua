@@ -72,7 +72,7 @@ RegisterNetEvent("qb-garageshousing:client:takeOutGarage", function(vehicle, typ
     local placedispo = 0
 
     if type == "housing" then
-        for _, publicpar in pairs(PlacesPublic) do  --ici je vérifie s'il y a au moins une place de dispo dans toutes les zones configurées dans garageconfig.lua. Faudra faire "PlacesHousing" ou comme tu veux pour gérer ça après
+        for _, publicpar in pairs(PlacesPublic) do -- ici je vérifie s'il y a au moins une place de dispo dans toutes les zones configurées dans garageconfig.lua. Faudra faire "PlacesHousing" ou comme tu veux pour gérer ça après
             if publicpar.data.indexGarage == indexgarage then
                 local vehicles2 = GetGamePool("CVehicle")
                 local inside = false
@@ -126,7 +126,7 @@ local function enterVehicle(veh, indexgarage, type, garage)
                 local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
                 local totalFuel = GetVehicleFuelLevel(veh)
                 local vehProperties = QBCore.Functions.GetVehicleProperties(veh)
-                if type == "private" or type == "housing" then    -- j'ai laissé certains ancien types pour que comme ça c'est prêt à être merge dans le garage.lua
+                if type == "private" or type == "housing" then -- j'ai laissé certains ancien types pour que comme ça c'est prêt à être merge dans le garage.lua
                     local placesstock = QBCore.Functions.TriggerRpc("qb-garagehousing:server:getstock", indexgarage)
                     local placesdispo = 5 - placesstock["COUNT(*)"] -- Le chiffre 5 ici c'est en gros le nbr max de voiture dans le garage housing donc ça dépend du tier de la house donc tu mets le chiffre que tu veux maybe 1 pour l'instant?
                     if placesdispo >= 1 then
