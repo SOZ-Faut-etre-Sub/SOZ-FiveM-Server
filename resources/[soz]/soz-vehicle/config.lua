@@ -464,7 +464,7 @@ Config.PoliceAlertChance = 0.5 -- Chance of alerting police during the day
 Config.PoliceNightAlertChance = 0.25 -- Chance of alerting police at night (times:01-06)
 
 -- LS CUSTOM
-Config.AttachedVehicle = nil
+Config.AttachedCustomVehicle = nil
 
 Config.maxVehiclePerformanceUpgrades = 0 -- 0 pour pas de limite d'upgrade
 

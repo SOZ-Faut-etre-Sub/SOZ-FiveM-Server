@@ -13,14 +13,14 @@ Gvehpos = nil
 Gvehjack = nil
 
 function GetCurrentMod(id)
-    local mod = GetVehicleMod(Config.AttachedVehicle, id)
-    local modName = GetLabelText(GetModTextLabel(Config.AttachedVehicle, id, mod))
+    local mod = GetVehicleMod(Config.AttachedCustomVehicle, id)
+    local modName = GetLabelText(GetModTextLabel(Config.AttachedCustomVehicle, id, mod))
 
     return mod, modName
 end
 
 function GetCurrentTurboState()
-    local isEnabled = IsToggleModOn(Config.AttachedVehicle, 18)
+    local isEnabled = IsToggleModOn(Config.AttachedCustomVehicle, 18)
 
     if isEnabled then
         return 1
@@ -30,14 +30,14 @@ function GetCurrentTurboState()
 end
 
 function CheckValidMods(category, id)
-    local tempMod = GetVehicleMod(Config.AttachedVehicle, id)
+    local tempMod = GetVehicleMod(Config.AttachedCustomVehicle, id)
     local validMods = {}
     local amountValidMods = 0
     local hornNames = {}
-    local modAmount = GetNumVehicleMods(Config.AttachedVehicle, id)
+    local modAmount = GetNumVehicleMods(Config.AttachedCustomVehicle, id)
 
     for i = 1, modAmount do
-        local label = GetModTextLabel(Config.AttachedVehicle, id, (i - 1))
+        local label = GetModTextLabel(Config.AttachedCustomVehicle, id, (i - 1))
         local modName = GetLabelText(label)
 
         if modName == "NULL" then
@@ -66,9 +66,9 @@ end
 
 RegisterNetEvent("soz-custom:client:applymod", function(categoryID, modID)
     if categoryID == 18 then
-        ToggleVehicleMod(Config.AttachedVehicle, categoryID, modID)
+        ToggleVehicleMod(Config.AttachedCustomVehicle, categoryID, modID)
     else
-        SetVehicleMod(Config.AttachedVehicle, categoryID, modID)
+        SetVehicleMod(Config.AttachedCustomVehicle, categoryID, modID)
     end
 end)
 
@@ -164,7 +164,7 @@ UpgradeMenu:On("open", function(menu)
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if v.id == customprice.id then
                         price = customprice.prices[tempNum] *
-                                    QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
+                                    QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedCustomVehicle)):lower()].price
                     end
                 end
 
@@ -206,7 +206,7 @@ UpgradeMenu:On("open", function(menu)
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if customprice.id == v.id then
                         local price = customprice.prices[1] *
-                                          QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedVehicle)):lower()].price
+                                          QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedCustomVehicle)):lower()].price
                         menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
                         menu:AddButton({
                             label = "Activer",
@@ -261,7 +261,7 @@ end)
 
 VehiculeOptions:On("open", function(menu)
     menu:ClearItems()
-    local veh = Config.AttachedVehicle
+    local veh = Config.AttachedCustomVehicle
     FreezeEntityPosition(veh, true)
     menu:AddButton({
         icon = "◀",
@@ -303,9 +303,8 @@ VehiculeOptions:On("close", function()
 end)
 
 local function UnattachVehicle()
-    FreezeEntityPosition(Config.AttachedVehicle, false)
-    Config.AttachedVehicle = nil
-    TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", false)
+    FreezeEntityPosition(Config.AttachedCustomVehicle, false)
+    Config.AttachedCustomVehicle = nil
 end
 
 -- Events
@@ -315,15 +314,15 @@ end)
 
 RegisterNetEvent("soz-custom:client:SetAttachedVehicle", function(veh)
     if veh ~= false then
-        Config.AttachedVehicle = veh
+        Config.AttachedCustomVehicle = veh
     else
-        Config.AttachedVehicle = nil
+        Config.AttachedCustomVehicle = nil
     end
 end)
 
 RegisterNetEvent("vehiclemod:client:setPartLevel", function(part, level)
     if (IsPedInAnyVehicle(PlayerPedId(), false)) then
-        local veh = Config.AttachedVehicle
+        local veh = Config.AttachedCustomVehicle
         if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
             local plate = QBCore.Functions.GetPlate(veh)
             if part == "engine" then
@@ -344,7 +343,7 @@ RegisterNetEvent("vehiclemod:client:setPartLevel", function(part, level)
 end)
 
 local function startAnimation()
-    local veh = Config.AttachedVehicle
+    local veh = Config.AttachedCustomVehicle
     local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
     local dict
@@ -478,7 +477,7 @@ Insidecustom = false
 for int = 1, 5 do
     lszones[int]:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
-            if Config.AttachedVehicle == nil then
+            if Config.AttachedCustomVehicle == nil then
                 Insidecustom = true
             else
                 exports["soz-hud"]:DrawNotification("Il y a déjà une voiture en cours de modification", "error")
@@ -486,7 +485,7 @@ for int = 1, 5 do
         else
             Insidecustom = false
             VehiculeOptions:Close()
-            Config.AttachedVehicle = nil
+            Config.AttachedCustomVehicle = nil
         end
     end)
 end
@@ -499,8 +498,7 @@ CreateThread(function()
                 icon = "c:mechanic/Ameliorer.png",
                 label = "Améliorer",
                 action = function(entity)
-                    Config.AttachedVehicle = entity
-                    TriggerServerEvent("qb-vehicletuning:server:SetAttachedVehicle", entity)
+                    Config.AttachedCustomVehicle = entity
                     SetVehicleDoorsLocked(entity, 2)
                     startAnimation()
                 end,
