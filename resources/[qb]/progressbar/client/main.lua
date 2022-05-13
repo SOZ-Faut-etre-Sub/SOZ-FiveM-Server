@@ -87,8 +87,14 @@ function Process(action, start, tick, finish)
                     if tick ~= nil then
                         tick()
                     end
-                    if IsControlJustPressed(0, 200) and Action.canCancel then
-                        TriggerEvent("progressbar:client:cancel")
+
+                    if Action.canCancel then
+                        AddTextEntry('CancelMsg', 'Appuyez sur ~INPUT_FRONTEND_RRIGHT~ ou ~INPUT_CURSOR_CANCEL~ pour annuler')
+                        BeginTextCommandDisplayHelp('CancelMsg')
+                        EndTextCommandDisplayHelp(0, false, true, -1)
+                        if IsControlJustPressed(0, 194) or IsControlJustPressed(0, 238) then
+                            TriggerEvent("progressbar:client:cancel")
+                        end
                     end
 
                     if IsEntityDead(ped) and not Action.useWhileDead then
