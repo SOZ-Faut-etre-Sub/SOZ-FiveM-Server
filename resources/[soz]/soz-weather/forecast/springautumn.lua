@@ -1,0 +1,17 @@
+SpringAutumnForecast = {
+    extrasunny = {clearing = 15, overcast = 15},
+    clear = {clearing = 15, overcast = 15, smog = 100, foggy = 100},
+    neutral = {},
+    smog = {clearing = 15, overcast = 15},
+    foggy = {clearing = 15, overcast = 15},
+    overcast = {clear = 85, clouds = 85, extrasunny = 85},
+    clouds = {clearing = 15, overcast = 15},
+    clearing = {clear = 15, clouds = 15, extrasunny = 15, thunder = 100, rain = 100},
+    rain = {clearing = 5, overcast = 5},
+    thunder = {},
+    snow = {},
+    blizzard = {},
+    snowlight = {},
+    xmas = {},
+    halloween = {},
+}
