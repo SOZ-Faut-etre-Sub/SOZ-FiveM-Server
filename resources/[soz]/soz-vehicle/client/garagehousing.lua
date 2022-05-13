@@ -1,4 +1,4 @@
-local ParkingHousingList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car")
+local ParkingHousingList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkinghousing:vehicle:car")
 local VehiculeParkingHousing = MenuV:InheritMenu(ParkingHousingList, {Title = nil})
 
 local function CheckPlayers(vehicle, garage)
