@@ -352,7 +352,7 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
                 end
             else
-                exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprsie", "error", 3500)
+                exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprise", "error", 3500)
             end
         else
             exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
