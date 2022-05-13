@@ -48,7 +48,7 @@ local function SpawnFieldZones()
                     end,
                 },
             },
-            distance = 1.5
+            distance = 1.5,
         })
         table.insert(FoodJob.Zones, zoneName)
     end
