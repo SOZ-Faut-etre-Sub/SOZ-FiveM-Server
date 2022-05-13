@@ -22,7 +22,13 @@ end
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
-            {label = "Facturer", color = "oil", icon = "c:jobs/facture.png", event = "jobs:client:fueler:InvoicePlayer", job = "oil"},
+            {
+                label = "Facturer",
+                color = "oil",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:fueler:InvoicePlayer",
+                job = "oil",
+            },
         },
         distance = 1.5,
     })

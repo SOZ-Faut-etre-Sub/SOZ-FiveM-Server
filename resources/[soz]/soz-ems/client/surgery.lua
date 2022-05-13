@@ -38,15 +38,15 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever un Poumon..", 10000, false, true,
-                        {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                            local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                            TriggerServerEvent("lsmc:server:SetOrgane", id, "Poumon", true)
-                        end)
+                                                 {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Poumon", true)
+                    end)
                 end,
             },
             {
@@ -59,15 +59,15 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever un Rein..", 10000, false, true,
-                        {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                            local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                            TriggerServerEvent("lsmc:server:SetOrgane", id, "Rein", true)
-                        end)
+                                                 {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Rein", true)
+                    end)
                 end,
             },
             {
@@ -80,15 +80,15 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever le Foie..", 10000, false, true,
-                        {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                            local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                            TriggerServerEvent("lsmc:server:SetOrgane", id, "Foie", true)
-                        end)
+                                                 {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Foie", true)
+                    end)
                 end,
             },
             {
@@ -98,19 +98,19 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and
-                        not Operation
+                               not Operation
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Greffer un " .. MissingOrgane, 10000, false, true,
-                        {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                            local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                            TriggerServerEvent("lsmc:server:SetOrgane", id, MissingOrgane, true)
-                        end)
+                                                 {
+                        disableMovement = true,
+                        disableCarMovement = true,
+                        disableMouse = false,
+                        disableCombat = true,
+                    }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+                        local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                        TriggerServerEvent("lsmc:server:SetOrgane", id, MissingOrgane, true)
+                    end)
                 end,
             },
         },
