@@ -1,7 +1,7 @@
 Config = {}
 
-Config.AllowedJobInteraction = {"lspd", "bcso"}
-Config.AllowedJobDragInteraction = {"lspd", "bcso", "lsmc"}
+Config.AllowedJobInteraction = {"fbi", "lspd", "bcso"}
+Config.AllowedJobDragInteraction = {"fbi", "lspd", "bcso", "lsmc"}
 
 Config.Badge = GetHashKey("prop_fib_badge")
 
@@ -507,6 +507,8 @@ Config.RadarAllowedVehicle = {
     --- LSPD / BCSO
     [GetHashKey("pbus")] = true,
     --- FBI
+    [GetHashKey("fbi")] = true,
+    [GetHashKey("fbi2")] = true,
     [GetHashKey("cogfbi")] = true,
     [GetHashKey("paragonfbi")] = true,
 }
