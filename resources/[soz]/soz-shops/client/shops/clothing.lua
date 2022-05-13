@@ -100,7 +100,7 @@ function ClothingShop:GenerateMenu(skipIntro)
                     value = 0,
                     values = itemOptions,
                     change = function(_, value)
-                        for id, component in pairs(itemOptions[value].item.Components) do
+                        for id, component in pairs(itemOptions[value].item.ApplyComponents) do
                             SetPedComponentVariation(PlayerPedId(), id, component.Drawable, component.Texture or 0, component.Palette or 0);
                         end
                     end,
