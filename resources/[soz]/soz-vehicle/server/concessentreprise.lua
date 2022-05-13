@@ -71,7 +71,10 @@ end)
 QBCore.Functions.CreateCallback("soz-concessentreprise:server:getLiveryType", function(source, cb, vehicle)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local result = MySQL.Sync.fetchAll("SELECT liverytype FROM concess_entreprise WHERE job = ? AND vehicle = ?", {Player.PlayerData.job.id, vehicle})
+    local result = MySQL.Sync.fetchAll("SELECT liverytype FROM concess_entreprise WHERE job = ? AND vehicle = ?", {
+        Player.PlayerData.job.id,
+        vehicle,
+    })
     if result[1] then
         cb(result[1])
     end
