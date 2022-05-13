@@ -278,10 +278,10 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 end
             end
         end
-        local newlocation = vec4(location.x, location.y, location.z, heading)
         if placedispo == 0 then
             exports["soz-hud"]:DrawNotification("Déjà une voiture sur un des parking", "primary", 4500)
         else
+            local newlocation = vec4(location.x, location.y, location.z, heading)
             QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
                 local properties = QBCore.Functions.TriggerRpc("qb-garage:server:GetVehicleProperties", vehicle.plate)
                 if vehicle.plate then
