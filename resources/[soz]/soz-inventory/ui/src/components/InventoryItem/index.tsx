@@ -57,7 +57,7 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
                 extraLabel = `(${item.metadata['label']})`
             }
             if (item.metadata['expiration'] !== undefined) {
-                expiration = (new Date().getDate() > new Date(item.metadata['expiration']).getDate()) ? `[Périmé]` : ''
+                expiration = (new Date().getTime() > new Date(item.metadata['expiration']).getTime()) ? `[Périmé]` : ''
             }
         }
 
@@ -75,7 +75,7 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
                 {item.description}
                 {item.metadata !== undefined && item.metadata['expiration'] !== undefined && <>
                     <br/>
-                    <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long"})}</span>
+                    <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long", year: "numeric"})}</span>
                 </>}
             </span>}
 
