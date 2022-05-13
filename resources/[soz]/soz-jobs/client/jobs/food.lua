@@ -44,10 +44,11 @@ local function SpawnFieldZones()
                     event = "soz-jobs:client:food-collect-ingredients",
                     canInteract = function()
                         local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
-                        return hasPermission and PlayerData.job.onduty
+                        return hasPermission and PlayerData.job.onduty and currentField
                     end,
                 },
             },
+            distance = 1.5
         })
         table.insert(FoodJob.Zones, zoneName)
     end
