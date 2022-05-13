@@ -1,21 +1,18 @@
 Config.Products["supermarket"] = {
-    [1] = {name = "water_bottle", price = 2, amount = 50},
-    [2] = {name = "coffee", price = 2, amount = 50},
-    [3] = {name = "kurkakola", price = 2, amount = 50},
-    [4] = {name = "tosti", price = 2, amount = 50},
-    [5] = {name = "twerks_candy", price = 2, amount = 50},
-    [6] = {name = "snikkel_candy", price = 2, amount = 50},
-    [7] = {name = "sandwich", price = 2, amount = 50},
-    [8] = {name = "phone", price = 150, amount = 50},
-    [9] = {name = "compass", price = 50, amount = 50},
-    [10] = {name = "gps", price = 50, amount = 50},
+    [1] = {name = "sandwich", price = 4, amount = 2000},
+    [2] = {name = "water_bottle", price = 2, amount = 2000},
+    [3] = {name = "gps", price = 20, amount = 2000},
+    [4] = {name = "compass", price = 15, amount = 2000},
+    [5] = {name = "binoculars", price = 8, amount = 2000},
+    [6] = {name = "phone", price = 499, amount = 2000},
+    [7] = {name = "diving_gear", price = 2600, amount = 2000},
 }
 
 Config.Products["247supermarket"] = Config.Products["supermarket"]
 Config.Products["ltdgasoline"] = Config.Products["supermarket"]
 Config.Products["robsliquor"] = Config.Products["supermarket"]
 
-Config.Products["zkea"] = {[1] = {name = "house_map", price = 15, amount = 50}}
+Config.Products["zkea"] = {[1] = {name = "house_map", price = 15, amount = 2000}}
 
 Config.Locations["247supermarket"] = {
     vector4(24.14, -1347.22, 29.5, 273.39),
