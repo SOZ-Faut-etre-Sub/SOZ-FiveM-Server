@@ -49,9 +49,10 @@ type SocietyNumber = {
 }
 
 export const SocietyNumberList: SocietyNumber = {
-  lspd: '555-LSPD',
+  fbi: '555-POLICE',
+  lspd: '555-POLICE',
   lsmc: '555-LSMC',
-  bcso: '555-BCSO',
+  bcso: '555-POLICE',
   news: '555-NEWS',
   garbage: '555-BLUEBIRD',
   taxi: '555-CARLJR',
