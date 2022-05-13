@@ -67,10 +67,34 @@ body {
   --item-color: 209;
 }
 .target-item.bcso {
-  --item-color: 141;
+  --item-color: 164;
 }
 .target-item.lsmc {
-  --item-color: 130;
+  --item-color: 142;
+}
+.target-item.oil {
+  --item-color: 49;
+}
+.target-item.news {
+  --item-color: 264;
+}
+.target-item.taxi {
+  --item-color: 60;
+}
+.target-item.food {
+  --item-color: 344;
+}
+.target-item.garbage {
+  --item-color: 200;
+}
+.target-item.cash-transfer {
+  --item-color: 105;
+}
+.target-item.bennys {
+  --item-color: 10;
+}
+.target-item.fbi {
+  --item-color: 207;
 }
 
 .target-item .tooltip {

@@ -40,6 +40,7 @@ local function SpawnFieldZones()
             options = {
                 {
                     label = "Récolter",
+                    color = "food",
                     icon = "c:food/collecter.png",
                     event = "soz-jobs:client:food-collect-ingredients",
                     canInteract = function()
@@ -85,20 +86,20 @@ local function SpawnJobZones()
         heading = 250.0,
         minZ = 141.0,
         maxZ = 141.5,
-    }, {options = {{icon = "c:food/cuisiner.png", event = "jobs:client:food:OpenCraftingMenu", label = "Cuisiner"}}})
+    }, {options = {{icon = "c:food/cuisiner.png", color = "food", event = "jobs:client:food:OpenCraftingMenu", label = "Cuisiner"}}})
 
     -- MILK
     exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
         heading = 133.3,
         minZ = 45.5,
         maxZ = 49.5,
-    }, {options = {{icon = "c:food/collecter.png", event = "jobs:client:food-harvest-milk", label = "Récupérer"}}})
+    }, {options = {{icon = "c:food/collecter.png", color = "food", event = "jobs:client:food-harvest-milk", label = "Récupérer"}}})
 
     exports["qb-target"]:AddBoxZone("food:milk-process", vector2(-1929.02, 2059.16), 0.5, 1.5, {
         heading = 166.6,
         minZ = 140.0,
         maxZ = 142.5,
-    }, {options = {{icon = "c:food/echanger.png", event = "jobs:client:food-process-milk", label = "Echanger"}}})
+    }, {options = {{icon = "c:food/echanger.png", color = "food", event = "jobs:client:food-process-milk", label = "Echanger"}}})
 end
 
 local function InitJob()
@@ -160,7 +161,7 @@ Citizen.CreateThread(function()
     -- TARGET
     exports["qb-target"]:AddGlobalPlayer({
         options = {
-            {label = "Facturer", icon = "c:jobs/facture.png", event = "jobs:client:food:InvoicePlayer", job = "food"},
+            {label = "Facturer", color = "food", icon = "c:jobs/facture.png", event = "jobs:client:food:InvoicePlayer", job = "food"},
         },
         distance = 1.5,
     })

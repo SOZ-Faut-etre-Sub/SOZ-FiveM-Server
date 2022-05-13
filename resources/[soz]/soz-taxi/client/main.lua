@@ -85,6 +85,7 @@ CreateThread(function()
         options = {
             {
                 label = "Facture",
+                color = "taxi",
                 icon = "fas fa-file-invoice-dollar",
                 event = "taxi:client:InvoicePlayer",
                 job = {["taxi"] = 0},

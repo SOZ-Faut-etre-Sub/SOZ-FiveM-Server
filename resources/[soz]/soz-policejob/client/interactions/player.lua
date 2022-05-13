@@ -1,9 +1,14 @@
 --- Targets
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        return
+    end
+
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Amender",
+                color = PlayerData.job.id,
                 icon = "c:police/amender.png",
                 event = "police:client:InvoicePlayer",
                 canInteract = function(player)
@@ -13,6 +18,7 @@ CreateThread(function()
             },
             {
                 label = "Permis",
+                color = PlayerData.job.id,
                 icon = "c:police/permis.png",
                 event = "police:client:LicensePlayer",
                 canInteract = function(player)
@@ -22,44 +28,48 @@ CreateThread(function()
             },
             {
                 label = "Fouiller",
+                color = PlayerData.job.id,
                 icon = "c:police/fouiller.png",
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and
-                               (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
+                        (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Menotter",
+                color = PlayerData.job.id,
                 icon = "c:police/menotter.png",
                 event = "police:client:CuffPlayer",
                 item = "handcuffs",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                               not IsPedInAnyVehicle(PlayerPedId())
+                        not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Démenotter",
+                color = PlayerData.job.id,
                 icon = "c:police/demenotter.png",
                 event = "police:client:UnCuffPlayer",
                 item = "handcuffs_key",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                               not IsPedInAnyVehicle(PlayerPedId())
+                        not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
             {
                 label = "Escorter",
+                color = PlayerData.job.id,
                 icon = "c:police/escorter.png",
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
                     return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
-                               not IsPedInAnyVehicle(PlayerPedId())
+                        not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
             },
