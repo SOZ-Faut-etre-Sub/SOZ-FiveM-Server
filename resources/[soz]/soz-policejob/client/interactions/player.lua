@@ -33,7 +33,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and
-                        (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
+                               (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -45,7 +45,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 item = "handcuffs",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                        not IsPedInAnyVehicle(PlayerPedId())
+                               not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -57,7 +57,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 item = "handcuffs_key",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                        not IsPedInAnyVehicle(PlayerPedId())
+                               not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
             },
@@ -69,7 +69,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
                     return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
-                        not IsPedInAnyVehicle(PlayerPedId())
+                               not IsPedInAnyVehicle(PlayerPedId())
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
             },
