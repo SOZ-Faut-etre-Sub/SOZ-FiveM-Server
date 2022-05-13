@@ -1343,7 +1343,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
     fourriere:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
             InsideFourriere = true
-            exports["qb-target"]:AddTargetModel(115679102, {
+            exports["qb-target"]:AddTargetModel(339728328, {
                 options = {
                     {
                         type = "client",
@@ -1363,7 +1363,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
             })
         else
             InsideFourriere = false
-            exports["qb-target"]:RemoveTargetModel(115679102, "Accéder à la fourrière")
+            exports["qb-target"]:RemoveTargetModel(339728328, "Accéder à la fourrière")
         end
     end)
 end
@@ -1422,7 +1422,7 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                 distance = 2.5,
             })
         else
-            exports["qb-target"]:RemoveTargetModel(115679102, "Accéder au parking entreprise")
+            exports["qb-target"]:RemoveTargetModel(GetHashKey("soz_prop_paystation"), "Accéder au parking entreprise")
         end
     end)
 end
