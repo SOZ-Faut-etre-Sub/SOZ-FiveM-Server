@@ -1274,13 +1274,13 @@ PlacesEntreprise = {
     ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6,
                               {name = "mtp2", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
     ["taxi1"] = BoxZone:Create(vector3(897.59, -152.25, 76.56), 9.8, 6.2,
-                              {
-       name = "taxi1",
-       heading = 328,
-       minZ = 75.56,
-       maxZ = 78.56,
-       data = {indexGarage = "taxi"},
-   }),
+                               {
+        name = "taxi1",
+        heading = 328,
+        minZ = 75.56,
+        maxZ = 78.56,
+        data = {indexGarage = "taxi"},
+    }),
 }
 
 for indexpriv, prive in pairs(Zonesprives) do
