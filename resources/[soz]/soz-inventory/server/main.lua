@@ -300,6 +300,13 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
             if inv then
                 metadata, amount = metadata or {}, amount
 
+                if item.type == "weapon" and metadata.serial == nil then
+                    metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) ..
+                                                   QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+                elseif item.durability and metadata.expiration == nil then
+                    metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
+                end
+
                 if Inventory.CanCarryItem(inv, item, amount, metadata) then
                     local existing = false
 
@@ -455,7 +462,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
                 if slot then
                     local it = Inventory.GetItem(invSource, item, metadata)
                     if it then
-                        itemSlots, totalAmount, metadata = it.slot, it.amount, it.metadata
+                        itemSlots, totalAmount = it.slot, it.amount
                     end
                 else
                     itemSlots, totalAmount = Inventory.GetItemSlots(invSource, item, metadata)

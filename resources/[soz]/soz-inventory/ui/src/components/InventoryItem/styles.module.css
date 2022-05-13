@@ -20,7 +20,7 @@
     margin-top: .2rem;
 }
 
-.inv-item:hover .tooltip {
+.item:hover .tooltip {
     visibility: visible;
 }
 
@@ -33,12 +33,13 @@
 .tooltip {
     position: absolute;
     visibility: hidden;
+    left: 0;
+    width: 16.5vw;
+    top: 60vh;
     background: rgba(0, 0, 0, .6);
     color: #fff;
     padding: .5rem .8rem;
-    margin: .5rem 0 0 .5rem;
     border-radius: 6px;
-    max-width: 18vw;
 }
 
 /* Sortable Container */
@@ -50,8 +51,7 @@
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    min-height: 40vh;
-    max-height: 60vh;
+    height: 50vh;
 }
 
 .content::-webkit-scrollbar {

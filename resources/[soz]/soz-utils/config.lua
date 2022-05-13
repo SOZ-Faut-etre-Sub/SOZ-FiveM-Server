@@ -66,6 +66,9 @@ ConsumablesDrug = {
     ["meth"] = math.random(30, 50),
 }
 
+ConsumablesExpiredEat = 5
+ConsumablesExpiredDrink = 5
+
 Config.BlacklistedScenarios = {
     ["TYPES"] = {
         "WORLD_VEHICLE_MILITARY_PLANES_SMALL",

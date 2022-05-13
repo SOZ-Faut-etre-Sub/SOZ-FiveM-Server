@@ -49,9 +49,19 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
         if (!item) return 'Mon argent'
 
         const amount = item.type !== 'key' ? item.amount : ''
-        const extraLabel = (item.metadata !== undefined && item.metadata['label'] !== undefined) ? `(${item.metadata['label']})` : ''
+        let extraLabel = ''
+        let expiration = ''
 
-        return `${amount} ${item.label} ${extraLabel}`
+        if (item.metadata !== undefined) {
+            if (item.metadata['label'] !== undefined) {
+                extraLabel = `(${item.metadata['label']})`
+            }
+            if (item.metadata['expiration'] !== undefined) {
+                expiration = (new Date().getDate() > new Date(item.metadata['expiration']).getDate()) ? `[Périmé]` : ''
+            }
+        }
+
+        return `${amount} ${item.label} ${extraLabel} ${expiration}`
     }
 
     return (
@@ -61,7 +71,13 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
                 <span>{getLabel()}</span>
                 <span>{money && money.toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
             </div>
-            {item && <span className={styles.tooltip}>{item.description}</span>}
+            {item && <span className={styles.tooltip}>
+                {item.description}
+                {item.metadata !== undefined && item.metadata['expiration'] !== undefined && <>
+                    <br/>
+                    <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long"})}</span>
+                </>}
+            </span>}
 
             {contextMenu && (
                 <div ref={contextRef} className={styles.contextMenu}

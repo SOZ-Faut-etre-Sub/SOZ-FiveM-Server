@@ -209,16 +209,6 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
 end)
 
 -- Items
-
-RegisterNetEvent('QBCore:Server:UseItem', function(item)
-    local src = source
-    if item and item.amount > 0 then
-        if QBCore.Functions.CanUseItem(item.name) then
-            QBCore.Functions.UseItem(src, item)
-        end
-    end
-end)
-
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
     local Player = QBCore.Functions.GetPlayer(source)
     exports['soz-monitor']:Log('FATAL', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
