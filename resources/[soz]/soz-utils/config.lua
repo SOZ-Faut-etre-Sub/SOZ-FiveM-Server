@@ -45,6 +45,10 @@ ConsumablesDrink = {
     ["whiskey"] = math.random(5, 10),
     ["beer"] = math.random(5, 10),
     ["vodka"] = math.random(5, 10),
+    ["wine1"] = math.random(5, 10),
+    ["wine2"] = math.random(5, 10),
+    ["wine3"] = math.random(5, 10),
+    ["wine4"] = math.random(5, 10),
     ["milk"] = 100,
 }
 
