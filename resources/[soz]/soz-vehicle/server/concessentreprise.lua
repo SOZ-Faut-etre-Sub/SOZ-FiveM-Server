@@ -67,3 +67,12 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Pas assez d'argent", "error")
     end
 end)
+
+QBCore.Functions.CreateCallback("soz-concessentreprise:server:getLiveryType", function(source, cb, vehicle)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    local result = MySQL.Sync.fetchAll("SELECT liverytype FROM concess_entreprise WHERE job = ? AND vehicle = ?", {Player.PlayerData.job.id, vehicle})
+    if result[1] then
+        cb(result[1])
+    end
+end)
