@@ -32,6 +32,7 @@ CreateThread(function()
         options = {
             {
                 label = "Facture",
+                color = "bennys",
                 icon = "fas fa-file-invoice-dollar",
                 job = "bennys",
                 action = function(entity)

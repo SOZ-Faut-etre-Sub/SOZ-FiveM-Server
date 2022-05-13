@@ -22,7 +22,7 @@ end
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
-            {label = "Facturer", icon = "c:jobs/facture.png", event = "jobs:client:fueler:InvoicePlayer", job = "oil"},
+            {label = "Facturer", color = "oil", icon = "c:jobs/facture.png", event = "jobs:client:fueler:InvoicePlayer", job = "oil"},
         },
         distance = 1.5,
     })
@@ -54,6 +54,7 @@ CreateThread(function()
                 event = "jobs:client:fueler:StartCraftEssence",
                 icon = "c:fuel/pistolet.png",
                 label = "Carburant conditionné",
+                color = "oil",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -63,6 +64,7 @@ CreateThread(function()
                 event = "jobs:client:fueler:StartCraftEssenceJerryCan",
                 icon = "c:fuel/pistolet.png",
                 label = "Bidon d’essence",
+                color = "oil",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -79,6 +81,7 @@ CreateThread(function()
                 event = "jobs:client:fueler:StartTankerResell",
                 icon = "c:fuel/remplir.png",
                 label = "Relier le Tanker",
+                color = "oil",
                 canInteract = function()
                     return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                 end,
@@ -98,6 +101,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     event = "jobs:client:fueler:PrepareTankerRefill",
                     icon = "c:fuel/pistolet.png",
                     label = "Connecter le Tanker",
+                    color = "oil",
                     canInteract = function()
                         return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
                     end,
@@ -107,6 +111,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     event = "jobs:client:fueler:CancelTankerRefill",
                     icon = "c:fuel/pistolet.png",
                     label = "Déconnecter le Tanker",
+                    color = "oil",
                     canInteract = function()
                         return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
@@ -123,6 +128,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     event = "jobs:client:fueler:StartTankerRefill",
                     icon = "c:fuel/remplir.png",
                     label = "Relier le Tanker",
+                    color = "oil",
                     canInteract = function()
                         return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
@@ -138,6 +144,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                 event = "jobs:client:fueler:StartTankerRefining",
                 icon = "c:fuel/remplir.png",
                 label = "Relier le Tanker",
+                color = "oil",
                 canInteract = function()
                     return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                 end,
@@ -172,6 +179,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     event = "jobs:client:fueler:StartTankerResell",
                     icon = "c:fuel/remplir.png",
                     label = "Relier le Tanker",
+                    color = "oil",
                     canInteract = function()
                         return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,

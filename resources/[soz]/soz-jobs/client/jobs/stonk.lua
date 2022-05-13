@@ -99,6 +99,7 @@ Citizen.CreateThread(function()
         options = {
             {
                 label = "Facturer",
+                color = "cash-transfer",
                 icon = "c:jobs/facture.png",
                 event = "jobs:client:stonk:InvoicePlayer",
                 job = "cash-transfer",
