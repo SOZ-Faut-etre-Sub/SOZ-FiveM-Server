@@ -15,7 +15,7 @@ InjectDebugData([
   {
     app: 'SOCIETY_SIMCARD',
     method: PhoneEvents.SET_SOCIETY_NUMBER,
-    data: '555-LSPD',
+    data: '555-POLICE',
   },
   {
     app: 'AVATAR',
