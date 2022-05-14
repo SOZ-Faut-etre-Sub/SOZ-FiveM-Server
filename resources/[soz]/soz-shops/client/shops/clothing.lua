@@ -151,5 +151,3 @@ end
 ShopContext["ponsonbys"] = ClothingShop:new("PONSONBYS", "ponsonbys", {sprite = 73, color = 26}, "s_f_m_shop_high")
 ShopContext["suburban"] = ClothingShop:new("SubUrban", "suburban", {sprite = 73, color = 29}, "s_f_y_shop_mid")
 ShopContext["binco"] = ClothingShop:new("Binco", "binco", {sprite = 73, color = 33}, "s_f_y_shop_low")
-
-ShopContext["ponsonbys"]:GenerateMenu()
