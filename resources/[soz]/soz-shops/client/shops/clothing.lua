@@ -113,8 +113,14 @@ function ClothingShop:GenerateMenu(skipIntro)
                     value = 0,
                     values = itemOptions,
                     change = function(_, value)
+                        local ped = PlayerPedId()
                         for id, component in pairs(itemOptions[value].item.ApplyComponents) do
-                            SetPedComponentVariation(PlayerPedId(), id, component.Drawable, component.Texture or 0, component.Palette or 0);
+                            SetPedComponentVariation(ped, id, component.Drawable, component.Texture or 0, component.Palette or 0);
+                        end
+
+                        local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
+                        if torsoDrawable ~= -1 and torsoTexture ~= -1 then
+                            SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
                         end
                     end,
                     select = function(_, value)
