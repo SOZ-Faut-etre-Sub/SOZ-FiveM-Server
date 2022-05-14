@@ -1,4 +1,4 @@
-local ParkingHousingList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car")
+local ParkingHousingList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkinghousing:vehicle:car")
 local VehiculeParkingHousing = MenuV:InheritMenu(ParkingHousingList, {Title = nil})
 
 local function CheckPlayers(vehicle, garage)
@@ -139,7 +139,7 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     end
                 end
             else
-                exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprsie", "error", 3500)
+                exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprise", "error", 3500)
             end
         else
             exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)

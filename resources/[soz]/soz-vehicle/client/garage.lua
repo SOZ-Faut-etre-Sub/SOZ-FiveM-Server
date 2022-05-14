@@ -278,10 +278,10 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 end
             end
         end
-        local newlocation = vec4(location.x, location.y, location.z, heading)
         if placedispo == 0 then
             exports["soz-hud"]:DrawNotification("Déjà une voiture sur un des parking", "primary", 4500)
         else
+            local newlocation = vec4(location.x, location.y, location.z, heading)
             QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
                 local properties = QBCore.Functions.TriggerRpc("qb-garage:server:GetVehicleProperties", vehicle.plate)
                 if vehicle.plate then
@@ -352,7 +352,7 @@ local function enterVehicle(veh, indexgarage, type, garage)
                     exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_parked"), "primary", 4500)
                 end
             else
-                exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprsie", "error", 3500)
+                exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprise", "error", 3500)
             end
         else
             exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
