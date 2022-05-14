@@ -2,17 +2,17 @@ Config = {}
 
 Config.StorageCapacity = {
     ["default"] = {slot = 10, weight = 25000},
-    ["player"] = {slot = 30, weight = 80000},
+    ["player"] = {slot = 30, weight = 20000},
     ["bin"] = {slot = 10, weight = 25000},
     --- society storages
-    ["ammo"] = {slot = 100, weight = 250000},
-    ["armory"] = {slot = 100, weight = 250000},
-    ["boss_storage"] = {slot = 100, weight = 250000},
-    ["fridge"] = {slot = 100, weight = 250000},
-    ["organ"] = {slot = 100, weight = 250000},
-    ["seizure"] = {slot = 100, weight = 250000},
-    ["storage"] = {slot = 100, weight = 250000},
-    ["storage_tank"] = {slot = 10, weight = 250000},
+    ["ammo"] = {slot = 100, weight = 10000000},
+    ["armory"] = {slot = 100, weight = 10000000},
+    ["boss_storage"] = {slot = 100, weight = 10000000},
+    ["fridge"] = {slot = 100, weight = 10000000},
+    ["organ"] = {slot = 100, weight = 10000000},
+    ["seizure"] = {slot = 100, weight = 10000000},
+    ["storage"] = {slot = 100, weight = 10000000},
+    ["storage_tank"] = {slot = 10, weight = 10000000},
 }
 
 Config.ErrorMessage = {
