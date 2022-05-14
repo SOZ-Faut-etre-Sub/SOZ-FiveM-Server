@@ -6,6 +6,8 @@ shared_script "config.lua"
 
 client_scripts {
     "@menuv/menuv.lua",
+    "@soz-character/client/skin/clothing.lua",
+
     "client/main.lua",
     "client/noclip.lua",
     "client/admin_menu/*.lua",
@@ -18,4 +20,4 @@ server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/module/*.lu
 ui_page "html/index.html"
 files {"html/index.html", "html/index.js"}
 
-dependencies {"qb-core", "menuv", "soz-jobs"}
+dependencies {"qb-core", "menuv", "soz-character", "soz-jobs"}

@@ -131,6 +131,11 @@ local function ApplyPedClothSet(ped, clothSet)
             SetPedPropIndex(ped, tonumber(propId), prop.Drawable, prop.Texture or 0, prop.Palette or 0);
         end
     end
+
+    local torsoDrawable, torsoTexture = GetProperTorso(ped, clothSet.Components["11"].Drawable, clothSet.Components["11"].Texture)
+    if torsoDrawable ~= -1 and torsoTexture ~= -1 then
+        SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
+    end
 end
 
 function ApplyPlayerBodySkin(playerId, bodySkin)

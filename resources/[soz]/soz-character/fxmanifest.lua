@@ -16,6 +16,7 @@ client_script {
     "client/main.lua",
 
     "client/skin/apply.lua",
+    "client/skin/clothing.lua",
     "client/skin/menu/menu.lua",
     "client/skin/menu/menu_model.lua",
     "client/skin/menu/menu_body.lua",
