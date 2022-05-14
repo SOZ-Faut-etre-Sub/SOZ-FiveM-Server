@@ -1,4 +1,9 @@
-<Item>
+<?xml version="1.0" encoding="UTF-8"?>
+<CVehicleModelInfo__InitDataList>
+    <residentTxd>vehshare</residentTxd>
+    <residentAnims />
+    <InitDatas>
+	<Item>
     <modelName>sheriffb</modelName>
     <txdName>sheriffb</txdName>
     <handlingId>POLICEB</handlingId>
@@ -10,7 +15,7 @@
     <animConvRoofName>null</animConvRoofName>
     <animConvRoofWindowsAffected />
     <ptfxAssetName>null</ptfxAssetName>
-    <audioNameHash />
+    <audioNameHash>POLICEB</audioNameHash>
     <layout>LAYOUT_BIKE_POLICE</layout>
     <coverBoundOffsets>POLICEB_COVER_OFFSET_INFO</coverBoundOffsets>
     <POVTuningInfo>POLICEB_POV_TUNING</POVTuningInfo>
@@ -100,4 +105,12 @@
     <firstPersonDrivebyData>
         <Item>BIKE_POLICEB_FRONT</Item>
     </firstPersonDrivebyData>
-</Item>
+        </Item>
+    </InitDatas>
+    <txdRelationships>
+        <Item>
+            <parent>vehicles_chopperbk_interior</parent>
+            <child>sheriffb</child>
+        </Item>
+    </txdRelationships>
+</CVehicleModelInfo__InitDataList>
