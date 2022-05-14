@@ -11,6 +11,17 @@ local function CreateItemsWithTextures(componentType, drawableId, textures)
     return items
 end
 
+local sacCollections = {
+    {
+        Name = "Sacs",
+        Price = 50,
+        Items = table.unpack({
+            CreateItemsWithTextures(5, 44, {{Name = "Petit sac", Id = 0}}),
+            CreateItemsWithTextures(5, 45, {{Name = "Grand sac", Id = 0}}),
+        }),
+    },
+}
+
 Config.Products["ponsonbys"] = {
     [GetHashKey("mp_m_freemode_01")] = {
         [1] = {
@@ -1015,6 +1026,7 @@ Config.Products["ponsonbys"] = {
                 },
             },
         },
+        [4] = {Name = "Sacs", Collections = sacCollections},
     },
     [GetHashKey("mp_f_freemode_01")] = {
         [1] = {
@@ -2265,6 +2277,7 @@ Config.Products["ponsonbys"] = {
                 },
             },
         },
+        [4] = {Name = "Sacs", Collections = sacCollections},
     },
 }
 
@@ -5655,6 +5668,7 @@ Config.Products["suburban"] = {
                 },
             },
         },
+        [4] = {Name = "Sacs", Collections = sacCollections},
     },
     [GetHashKey("mp_f_freemode_01")] = {
         [1] = {
@@ -9787,6 +9801,7 @@ Config.Products["suburban"] = {
                 },
             },
         },
+        [4] = {Name = "Sacs", Collections = sacCollections},
     },
 }
 
