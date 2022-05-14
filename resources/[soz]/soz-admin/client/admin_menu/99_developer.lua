@@ -87,8 +87,10 @@ function AdminMenuDeveloper(menu, permission)
         label = "Redonner la faim/soif",
         value = nil,
         select = function()
-            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + 100)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + 100)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", 0)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "drug", 0)
         end,
     })
 

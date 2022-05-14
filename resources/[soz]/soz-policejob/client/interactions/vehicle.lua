@@ -1,10 +1,14 @@
 --- Targets
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        return
+    end
+
     exports["qb-target"]:AddGlobalVehicle({
         options = {
             {
                 label = "Immatriculation",
-                color = "lspd",
+                color = PlayerData.job.id,
                 icon = "c:police/immatriculation.png",
                 event = "police:client:getVehicleOwner",
                 canInteract = function(player)
@@ -14,7 +18,7 @@ CreateThread(function()
             },
             {
                 label = "Fouiller",
-                color = "lspd",
+                color = PlayerData.job.id,
                 icon = "c:police/fouiller_vehicle.png",
                 event = "police:client:SearchVehicle",
                 canInteract = function(player)
@@ -24,7 +28,7 @@ CreateThread(function()
             },
             {
                 label = "Ouvrir",
-                color = "lspd",
+                color = PlayerData.job.id,
                 icon = "c:police/forcer.png",
                 event = "police:client:LockPickVehicle",
                 canInteract = function(player)
