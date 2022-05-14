@@ -63,8 +63,9 @@ RegisterNetEvent("police:client:SearchVehicle", function(data)
     }, {animDict = "amb@prop_human_bum_bin@idle_a", anim = "idle_a", flags = 16}, {}, {}, function()
         local plate = QBCore.Functions.GetPlate(data.entity)
         local model = GetEntityModel(data.entity)
+        local class = GetVehicleClass(data.entity)
 
-        TriggerServerEvent("inventory:server:openInventory", "trunk", plate, model)
+        TriggerServerEvent("inventory:server:openInventory", "trunk", plate, {model = model, class = class})
     end)
 end)
 
