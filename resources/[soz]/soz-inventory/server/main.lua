@@ -576,7 +576,7 @@ function Inventory.SetSlot(inv, item, amount, metadata, slot)
             name = item.name,
             label = item.label,
             amount = newAmount,
-            metadata = metadata,
+            metadata = metadata or currentSlot.metadata,
             description = item.description,
             weight = item.weight,
             type = item.type,
