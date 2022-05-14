@@ -1,9 +1,14 @@
 --- Targets
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        return
+    end
+
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Amender",
+                color = PlayerData.job.id,
                 icon = "c:police/amender.png",
                 event = "police:client:InvoicePlayer",
                 canInteract = function(player)
@@ -13,6 +18,7 @@ CreateThread(function()
             },
             {
                 label = "Permis",
+                color = PlayerData.job.id,
                 icon = "c:police/permis.png",
                 event = "police:client:LicensePlayer",
                 canInteract = function(player)
@@ -22,6 +28,7 @@ CreateThread(function()
             },
             {
                 label = "Fouiller",
+                color = PlayerData.job.id,
                 icon = "c:police/fouiller.png",
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
@@ -32,6 +39,7 @@ CreateThread(function()
             },
             {
                 label = "Menotter",
+                color = PlayerData.job.id,
                 icon = "c:police/menotter.png",
                 event = "police:client:CuffPlayer",
                 item = "handcuffs",
@@ -43,6 +51,7 @@ CreateThread(function()
             },
             {
                 label = "Démenotter",
+                color = PlayerData.job.id,
                 icon = "c:police/demenotter.png",
                 event = "police:client:UnCuffPlayer",
                 item = "handcuffs_key",
@@ -54,6 +63,7 @@ CreateThread(function()
             },
             {
                 label = "Escorter",
+                color = PlayerData.job.id,
                 icon = "c:police/escorter.png",
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)

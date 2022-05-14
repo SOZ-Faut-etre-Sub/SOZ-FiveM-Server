@@ -19,11 +19,16 @@ Citizen.CreateThread(function()
     end
 end)
 
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        return
+    end
+
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Enlever un Poumon",
+                color = PlayerData.job.id,
                 icon = "c:ems/remove_poumon.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
@@ -46,6 +51,7 @@ CreateThread(function()
             },
             {
                 label = "Enlever un Rein",
+                color = PlayerData.job.id,
                 icon = "c:ems/remove_rein.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
@@ -66,6 +72,7 @@ CreateThread(function()
             },
             {
                 label = "Enlever le Foie",
+                color = PlayerData.job.id,
                 icon = "c:ems/remove_foie.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
@@ -86,6 +93,7 @@ CreateThread(function()
             },
             {
                 label = "greffer",
+                color = PlayerData.job.id,
                 icon = "c:ems/greffer.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)

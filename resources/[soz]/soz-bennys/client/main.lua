@@ -495,6 +495,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/reparer.png",
                 label = "Réparer",
+                color = "bennys",
                 action = function(entity)
                     Repairall(entity)
                 end,
@@ -509,6 +510,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/nettoyer.png",
                 label = "Laver",
+                color = "bennys",
                 action = function(entity)
                     CleanVehicle(entity)
                 end,

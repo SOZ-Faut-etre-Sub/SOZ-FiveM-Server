@@ -5,7 +5,13 @@ local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_li
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
-            {label = "Facturer", icon = "c:jobs/facture.png", event = "jobs:client:news:InvoicePlayer", job = "news"},
+            {
+                label = "Facturer",
+                color = "news",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:news:InvoicePlayer",
+                job = "news",
+            },
         },
         distance = 1.5,
     })
@@ -16,7 +22,13 @@ CreateThread(function()
 
     exports["qb-target"]:AddTargetModel(removalObject, {
         options = {
-            {label = "Récupérer", icon = "c:jobs/recuperer.png", event = "job:client:RemoveObject", collect = true},
+            {
+                label = "Récupérer",
+                color = "news",
+                icon = "c:jobs/recuperer.png",
+                event = "job:client:RemoveObject",
+                collect = true,
+            },
         },
         distance = 2.5,
     })
@@ -27,7 +39,13 @@ CreateThread(function()
         maxZ = 33.5,
     }, {
         options = {
-            {label = "Imprimer", icon = "c:news/imprimer.png", event = "jobs:client:news:farmNewspaper", job = "news"},
+            {
+                label = "Imprimer",
+                color = "news",
+                icon = "c:news/imprimer.png",
+                event = "jobs:client:news:farmNewspaper",
+                job = "news",
+            },
         },
         distance = 2.5,
     })
@@ -56,7 +74,13 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
         maxZ = delivery.z + 1.5,
     }, {
         options = {
-            {label = "Livrer", icon = "c:news/livrer.png", event = "jobs:client:news:newspaperSold", job = "news"},
+            {
+                label = "Livrer",
+                color = "news",
+                icon = "c:news/livrer.png",
+                event = "jobs:client:news:newspaperSold",
+                job = "news",
+            },
         },
         distance = 2.5,
     })

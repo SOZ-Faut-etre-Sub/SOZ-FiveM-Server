@@ -34,7 +34,7 @@ body {
 /* Items */
 .target-item {
   position: absolute;
-  background: linear-gradient(45deg, hsla(var(--item-color), 88%, 20%, .8) 0%, hsla(var(--item-color), 88%, 35%, .8) 100%);
+  border: 0.125rem solid hsla(var(--item-color), 88%, 35%, .8);
   color: #fff;
   border-radius: 50%;
   padding: 15px;
@@ -45,7 +45,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  box-shadow: 0 0 10px hsla(var(--item-color), 89%, 15%, 0.6), inset 0 0 10px hsla(var(--item-color), 88%, 20%, 0.6);
+  box-shadow: 0 0 5px hsla(var(--item-color), 89%, 15%, 0.6), inset 0 0 5px hsla(var(--item-color), 88%, 20%, 0.6);
   cursor: pointer;
   transform: scale(0) translateY(0) translateX(0);
   opacity: 0;
@@ -54,7 +54,7 @@ body {
 }
 
 .target-item:hover {
-  background: linear-gradient(45deg, hsla(var(--item-color), 88%, 20%, .9) 0%, hsla(var(--item-color), 88%, 35%, .9) 100%);
+  border: 0.125rem solid hsla(var(--item-color), 88%, 30%, .8);
 }
 
 .target-item .icon img {
@@ -67,10 +67,34 @@ body {
   --item-color: 209;
 }
 .target-item.bcso {
-  --item-color: 141;
+  --item-color: 164;
 }
 .target-item.lsmc {
-  --item-color: 130;
+  --item-color: 142;
+}
+.target-item.oil {
+  --item-color: 49;
+}
+.target-item.news {
+  --item-color: 264;
+}
+.target-item.taxi {
+  --item-color: 60;
+}
+.target-item.food {
+  --item-color: 344;
+}
+.target-item.garbage {
+  --item-color: 200;
+}
+.target-item.cash-transfer {
+  --item-color: 105;
+}
+.target-item.bennys {
+  --item-color: 10;
+}
+.target-item.fbi {
+  --item-color: 207;
 }
 
 .target-item .tooltip {
