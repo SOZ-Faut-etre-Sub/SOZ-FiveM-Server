@@ -27,14 +27,46 @@ QBShared.Trunks = {
 
     --- Override for specific vehicle
 
-    -- Tankers
-    [GetHashKey('tanker')] = { slot = 5, weight = 550000 },
-    [GetHashKey('tanker2')] = { slot = 5, weight = 550000 },
+    --- LSPD
+    [GetHashKey('police5')] = { slot = 5, weight = 80000 },
+    [GetHashKey('police6')] = { slot = 5, weight = 80000 },
+    [GetHashKey('policeb')] = { slot = 5, weight = 30000 },
+    [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
+
+    --- BCSO
+    [GetHashKey('sheriff3')] = { slot = 5, weight = 60000 },
+    [GetHashKey('sheriff4')] = { slot = 5, weight = 80000 },
+    [GetHashKey('sheriffb')] = { slot = 5, weight = 30000 },
+    [GetHashKey('maverick2')] = { slot = 5, weight = 200000 },
+
+    --- LSMC
+    [GetHashKey('ambulance')] = { slot = 5, weight = 100000 },
+    [GetHashKey('ambcar')] = { slot = 5, weight = 80000 },
+    [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
+
+    -- STONKS
+    [GetHashKey('stockade')] = { slot = 10, weight = 200000 },
+    [GetHashKey('baller8')] = { slot = 10, weight = 80000 },
+
+    -- Twitch News
+    [GetHashKey('newsvan')] = { slot = 10, weight = 100000 },
+    [GetHashKey('frogger3')] = { slot = 10, weight = 200000 },
+
+    -- Chateau Marius
+    [GetHashKey('mule6')] = { slot = 10, weight = 200000 },
+
+    -- Michel Transport Petrol
+    [GetHashKey('packer2')] = { slot = 5, weight = 40000 },
+    [GetHashKey('tanker')] = { slot = 5, weight = 300000 },
+    [GetHashKey('utillitruck4')] = { slot = 5, weight = 100000 },
+
+    -- CarlJr Service
+    [GetHashKey('dynasty2')] = { slot = 10, weight = 40000 },
+
+    -- Benny's
+    [GetHashKey('flatbed3')] = { slot = 10, weight = 40000 },
+    [GetHashKey('burito6')] = { slot = 10, weight = 100000 },
 
     -- BlueBird
     [GetHashKey('trash')] = { slot = 10, weight = 200000 },
-
-    -- STONKS
-    [GetHashKey('stockade')] = { slot = 10, weight = 500000 },
-
 }
