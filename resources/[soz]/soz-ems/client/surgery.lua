@@ -9,6 +9,7 @@ local surgery = BoxZone:Create(vector3(334.97, -1446.74, 32.51), 8.4, 6.2, {
 InsideSurgery = false
 Operation = nil
 MissingOrgane = nil
+ItemOrgan = nil
 
 Citizen.CreateThread(function()
     while true do
@@ -104,6 +105,7 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:SetOrgane", id, MissingOrgane, true)
                     end)
                 end,
+                item = ItemOrgan,
             },
         },
         distance = 2.5,
@@ -114,4 +116,5 @@ RegisterNetEvent("lsmc:client:SetOperation")
 AddEventHandler("lsmc:client:SetOperation", function(val, missing)
     Operation = val
     MissingOrgane = missing
+    ItemOrgan = MissingOrgane:lower()
 end)
