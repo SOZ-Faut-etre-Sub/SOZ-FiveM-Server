@@ -78,15 +78,9 @@ Config.Products["ponsonbys"] = {
                             {Name = "(DEBUG) 111_4", Id = 4},
                             {Name = "(DEBUG) 111_5", Id = 5},
                         }),
-                        CreateItemsWithTextures(11, 131, {
-                            {Name = GetLabelText("CLO_EXM_EU_2_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 132, {
-                            {Name = GetLabelText("CLO_EXM_EU_3_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 133, {
-                            {Name = GetLabelText("CLO_EXM_EU_4_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 131, {{Name = GetLabelText("CLO_EXM_EU_2_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 132, {{Name = GetLabelText("CLO_EXM_EU_3_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 133, {{Name = GetLabelText("CLO_EXM_EU_4_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 199, {
                             {Name = GetLabelText("CLO_X4M_U_13_0"), Id = 0},
                             {Name = GetLabelText("CLO_X4M_U_13_1"), Id = 1},
@@ -270,9 +264,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_INDM_U_0_1"), Id = 1},
                             {Name = GetLabelText("CLO_INDM_U_0_2"), Id = 2},
                         }),
-                        CreateItemsWithTextures(11, 120, {
-                            {Name = GetLabelText("CLO_V2M_U_1_11"), Id = 11},
-                        }),
+                        CreateItemsWithTextures(11, 120, {{Name = GetLabelText("CLO_V2M_U_1_11"), Id = 11}}),
                         CreateItemsWithTextures(11, 139, {
                             {Name = GetLabelText("CLO_EXM_EU_10_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXM_EU_10_1"), Id = 1},
@@ -323,9 +315,7 @@ Config.Products["ponsonbys"] = {
                             {Name = "(DEBUG) 258_13", Id = 13},
                             {Name = "(DEBUG) 258_14", Id = 14},
                         }),
-                        CreateItemsWithTextures(11, 290, {
-                            {Name = "(DEBUG) 290_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 290, {{Name = "(DEBUG) 290_0", Id = 0}}),
                         CreateItemsWithTextures(11, 306, {
                             {Name = GetLabelText("CLO_VWM_U_15_0"), Id = 0},
                             {Name = GetLabelText("CLO_VWM_U_15_1"), Id = 1},
@@ -334,9 +324,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_VWM_U_15_6"), Id = 6},
                             {Name = GetLabelText("CLO_VWM_U_15_9"), Id = 9},
                         }),
-                        CreateItemsWithTextures(11, 365, {
-                            {Name = "(DEBUG) 265_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 365, {{Name = "(DEBUG) 265_0", Id = 0}}),
                     }),
                 },
                 [3] = {
@@ -511,12 +499,8 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_H3M_U_3_7"), Id = 7},
                             {Name = GetLabelText("CLO_H3M_U_3_8"), Id = 8},
                         }),
-                        CreateItemsWithTextures(11, 321, {
-                            {Name = GetLabelText("CLO_H3M_U_7_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 322, {
-                            {Name = GetLabelText("CLO_H3M_U_7_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 321, {{Name = GetLabelText("CLO_H3M_U_7_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 322, {{Name = GetLabelText("CLO_H3M_U_7_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 337, {
                             {Name = GetLabelText("CLO_SUM_U_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_SUM_U_5_1"), Id = 1},
@@ -823,18 +807,14 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_EXM_AL_6_2"), Id = 2},
                             {Name = GetLabelText("CLO_EXM_AL_6_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(4, 51, {
-                            {Name = GetLabelText("CLO_EXM_AL_7_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 51, {{Name = GetLabelText("CLO_EXM_AL_7_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 52, {
                             {Name = GetLabelText("CLO_EXM_AL_8_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXM_AL_8_1"), Id = 1},
                             {Name = GetLabelText("CLO_EXM_AL_8_2"), Id = 2},
                             {Name = GetLabelText("CLO_EXM_AL_8_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(4, 53, {
-                            {Name = GetLabelText("CLO_EXM_AL_9_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 53, {{Name = GetLabelText("CLO_EXM_AL_9_0"), Id = 0}}),
                     }),
                 },
             },
@@ -982,9 +962,7 @@ Config.Products["ponsonbys"] = {
                     Name = "Bottes",
                     Price = 50,
                     Items = table.unpack({
-                        CreateItemsWithTextures(6, 19, {
-                            {Name = GetLabelText("CLO_VALM_F_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 19, {{Name = GetLabelText("CLO_VALM_F_1_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 52, {
                             {Name = GetLabelText("CLO_BIM_F_2_0"), Id = 0},
                             {Name = GetLabelText("CLO_BIM_F_2_1"), Id = 1},
@@ -1010,9 +988,7 @@ Config.Products["ponsonbys"] = {
                     Name = "Chaussons",
                     Price = 50,
                     Items = table.unpack({
-                        CreateItemsWithTextures(6, 41, {
-                            {Name = GetLabelText("CLO_S2M_F_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 41, {{Name = GetLabelText("CLO_S2M_F_0_0"), Id = 0}}),
                         --- TODO: trouver les bons labels
                         CreateItemsWithTextures(6, 87, {
                             {Name = GetLabelText("F_FMM_3_0"), Id = 0},
@@ -1034,9 +1010,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("F_FMM_3_16"), Id = 16},
                             {Name = GetLabelText("F_FMM_3_17"), Id = 17},
                         }),
-                        CreateItemsWithTextures(6, 95, {
-                            {Name = GetLabelText("CLO_H3M_F_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 95, {{Name = GetLabelText("CLO_H3M_F_0_0"), Id = 0}}),
                     }),
                 },
             },
@@ -1228,12 +1202,8 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_H3F_U_5_7"), Id = 7},
                             {Name = GetLabelText("CLO_H3F_U_5_8"), Id = 8},
                         }),
-                        CreateItemsWithTextures(11, 332, {
-                            {Name = GetLabelText("CLO_H3F_U_7_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 333, {
-                            {Name = GetLabelText("CLO_H3F_U_8_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 332, {{Name = GetLabelText("CLO_H3F_U_7_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 333, {{Name = GetLabelText("CLO_H3F_U_8_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 354, {
                             {Name = GetLabelText("CLO_SUF_U_7_17"), Id = 17},
                             {Name = GetLabelText("CLO_SUF_U_7_18"), Id = 18},
@@ -1599,9 +1569,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_IEF_U_20_15"), Id = 15},
                             {Name = GetLabelText("CLO_IEF_U_20_16"), Id = 16},
                         }),
-                        CreateItemsWithTextures(11, 236, {
-                            {Name = GetLabelText("CLO_GRF_U_26_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 236, {{Name = GetLabelText("CLO_GRF_U_26_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 247, {
                             {Name = "(DEBUG) 247_0", Id = 0},
                             {Name = "(DEBUG) 247_1", Id = 1},
@@ -1740,9 +1708,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_BUSF_L_0_11"), Id = 11},
                             {Name = GetLabelText("CLO_BUSF_L_0_12"), Id = 12},
                         }),
-                        CreateItemsWithTextures(4, 34, {
-                            {Name = "(DEBUG) 34_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 34, {{Name = "(DEBUG) 34_0", Id = 0}}),
                         CreateItemsWithTextures(4, 37, {
                             {Name = GetLabelText("CLO_HSTF_L_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_HSTF_L_5_1"), Id = 1},
@@ -1787,18 +1753,14 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_EXF_AL_6_2"), Id = 2},
                             {Name = GetLabelText("CLO_EXF_AL_6_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(4, 53, {
-                            {Name = GetLabelText("CLO_EXF_AL_7_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 53, {{Name = GetLabelText("CLO_EXF_AL_7_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 54, {
                             {Name = GetLabelText("CLO_EXF_AL_8_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXF_AL_8_1"), Id = 1},
                             {Name = GetLabelText("CLO_EXF_AL_8_2"), Id = 2},
                             {Name = GetLabelText("CLO_EXF_AL_8_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(4, 55, {
-                            {Name = GetLabelText("CLO_EXF_AL_9_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 55, {{Name = GetLabelText("CLO_EXF_AL_9_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 64, {
                             {Name = GetLabelText("CLO_S2F_L_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_S2F_L_0_1"), Id = 1},
@@ -2043,9 +2005,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_VWF_L_1_9"), Id = 9},
                             {Name = GetLabelText("CLO_VWF_L_1_10"), Id = 10},
                         }),
-                        CreateItemsWithTextures(4, 137, {
-                            {Name = GetLabelText("CLO_SUF_L_5_15"), Id = 15},
-                        }),
+                        CreateItemsWithTextures(4, 137, {{Name = GetLabelText("CLO_SUF_L_5_15"), Id = 15}}),
                     }),
                 },
                 [5] = {
@@ -2111,9 +2071,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_BUSF_L_1_11"), Id = 11},
                             {Name = GetLabelText("CLO_BUSF_L_1_12"), Id = 12},
                         }),
-                        CreateItemsWithTextures(4, 28, {
-                            {Name = GetLabelText("CLO_INDF_L_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 28, {{Name = GetLabelText("CLO_INDF_L_0_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 36, {
                             {Name = GetLabelText("CLO_HSTF_L_4_0"), Id = 0},
                             {Name = GetLabelText("CLO_HSTF_L_4_1"), Id = 1},
@@ -2343,12 +2301,8 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMM_1_12"), Id = 12},
                             {Name = GetLabelText("U_FMM_1_14"), Id = 14},
                         }),
-                        CreateItemsWithTextures(11, 2, {
-                            {Name = GetLabelText("U_FMM_2_9"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 8, {
-                            {Name = GetLabelText("U_FMM_8_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 2, {{Name = GetLabelText("U_FMM_2_9"), Id = 0}}),
+                        CreateItemsWithTextures(11, 8, {{Name = GetLabelText("U_FMM_8_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 16, {
                             {Name = GetLabelText("CLO_BBM_U_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_BBM_U_1_1"), Id = 1},
@@ -2367,9 +2321,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_VALM_U_2_1"), Id = 1},
                             {Name = GetLabelText("CLO_VALM_U_2_2"), Id = 2},
                         }),
-                        CreateItemsWithTextures(11, 33, {
-                            {Name = GetLabelText("CLO_HP_U_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 33, {{Name = GetLabelText("CLO_HP_U_0_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 34, {
                             {Name = GetLabelText("CLO_HP_U_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_HP_U_1_1"), Id = 1},
@@ -2403,12 +2355,8 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_INDM_D_1"), Id = 0},
                             {Name = GetLabelText("CLO_INDM_U_2_1"), Id = 1},
                         }),
-                        CreateItemsWithTextures(11, 56, {
-                            {Name = "(DEBUG) 56_0", Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 71, {
-                            {Name = GetLabelText("CLO_LXM_U_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 56, {{Name = "(DEBUG) 56_0", Id = 0}}),
+                        CreateItemsWithTextures(11, 71, {{Name = GetLabelText("CLO_LXM_U_1_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 73, {
                             {Name = GetLabelText("CLO_LXM_U_5_4"), Id = 4},
                             {Name = GetLabelText("CLO_LXM_U_5_5"), Id = 5},
@@ -2455,9 +2403,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_EXM_AU_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXM_AU_6_1"), Id = 1},
                         }),
-                        CreateItemsWithTextures(11, 109, {
-                            {Name = GetLabelText("CLO_EXM_AU_18_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 109, {{Name = GetLabelText("CLO_EXM_AU_18_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 128, {
                             {Name = "(DEBUG) 128_0", Id = 0},
                             {Name = "(DEBUG) 128_1", Id = 1},
@@ -2549,9 +2495,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_GRM_U_19_0"), Id = 0},
                             {Name = GetLabelText("CLO_GRM_U_19_1"), Id = 1},
                         }),
-                        CreateItemsWithTextures(11, 226, {
-                            {Name = GetLabelText("CLO_GRM_U_20_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 226, {{Name = GetLabelText("CLO_GRM_U_20_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 237, {
                             {Name = "(DEBUG) 237_0", Id = 0},
                             {Name = "(DEBUG) 237_1", Id = 1},
@@ -2823,9 +2767,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_H4M_U_0_8"), Id = 8},
                             {Name = GetLabelText("CLO_H4M_U_0_9"), Id = 9},
                         }),
-                        CreateItemsWithTextures(11, 356, {
-                            {Name = GetLabelText("CLO_H4M_U_5_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 356, {{Name = GetLabelText("CLO_H4M_U_5_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 357, {
                             {Name = GetLabelText("CLO_H4M_U_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_H4M_U_6_1"), Id = 1},
@@ -3224,18 +3166,10 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_VWM_U_17_19"), Id = 19},
                             {Name = GetLabelText("CLO_VWM_U_17_20"), Id = 20},
                         }),
-                        CreateItemsWithTextures(11, 326, {
-                            {Name = GetLabelText("CLO_H3M_U_12_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 237, {
-                            {Name = "(DEBUG) 237_0", Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 330, {
-                            {Name = GetLabelText("CLO_H3M_U_16_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 331, {
-                            {Name = GetLabelText("CLO_H3M_U_16_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 326, {{Name = GetLabelText("CLO_H3M_U_12_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 237, {{Name = "(DEBUG) 237_0", Id = 0}}),
+                        CreateItemsWithTextures(11, 330, {{Name = GetLabelText("CLO_H3M_U_16_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 331, {{Name = GetLabelText("CLO_H3M_U_16_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 332, {
                             {Name = GetLabelText("CLO_SUM_U_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_SUM_U_0_1"), Id = 1},
@@ -3317,9 +3251,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMM_7_14"), Id = 14},
                             {Name = GetLabelText("U_FMM_7_15"), Id = 15},
                         }),
-                        CreateItemsWithTextures(11, 57, {
-                            {Name = GetLabelText("CLO_HSTM_U_4_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 57, {{Name = GetLabelText("CLO_HSTM_U_4_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 86, {
                             {Name = GetLabelText("CLO_S1M_U_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_S1M_U_6_1"), Id = 1},
@@ -3355,9 +3287,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_S1M_U_8_10"), Id = 10},
                             {Name = GetLabelText("CLO_S1M_U_8_11"), Id = 11},
                         }),
-                        CreateItemsWithTextures(11, 96, {
-                            {Name = GetLabelText("CLO_EXM_AU_5_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 96, {{Name = GetLabelText("CLO_EXM_AU_5_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 134, {
                             {Name = GetLabelText("CLO_EXM_EU_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXM_EU_5_1"), Id = 1},
@@ -3647,21 +3577,11 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_HP_U_8_2"), Id = 2},
                             {Name = GetLabelText("CLO_HP_U_8_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(11, 42, {
-                            {Name = GetLabelText("CLO_HP_U_9_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 43, {
-                            {Name = GetLabelText("CLO_HP_U_9_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 63, {
-                            {Name = GetLabelText("CLO_HSTM_U_10_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 85, {
-                            {Name = GetLabelText("CLO_S1M_U_5_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 105, {
-                            {Name = GetLabelText("CLO_EXM_AU_14_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 42, {{Name = GetLabelText("CLO_HP_U_9_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 43, {{Name = GetLabelText("CLO_HP_U_9_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 63, {{Name = GetLabelText("CLO_HSTM_U_10_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 85, {{Name = GetLabelText("CLO_S1M_U_5_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 105, {{Name = GetLabelText("CLO_EXM_AU_14_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 117, {
                             {Name = GetLabelText("CLO_X3M_U_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_X3M_U_1_1"), Id = 1},
@@ -4132,9 +4052,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 59_10", Id = 10},
                             {Name = "(DEBUG) 59_11", Id = 11},
                         }),
-                        CreateItemsWithTextures(4, 63, {
-                            {Name = GetLabelText("CLO_S2M_L_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 63, {{Name = GetLabelText("CLO_S2M_L_1_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 71, {
                             {Name = GetLabelText("CLO_BIM_L_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_BIM_L_0_1"), Id = 1},
@@ -4348,15 +4266,9 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_AWM_L_3_10"), Id = 10},
                             {Name = GetLabelText("CLO_AWM_L_3_11"), Id = 11},
                         }),
-                        CreateItemsWithTextures(4, 122, {
-                            {Name = GetLabelText("CLO_H3M_L_2_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(4, 123, {
-                            {Name = GetLabelText("CLO_H3M_L_2_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(4, 126, {
-                            {Name = GetLabelText("CLO_H3M_L_6_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 122, {{Name = GetLabelText("CLO_H3M_L_2_0"), Id = 0}}),
+                        CreateItemsWithTextures(4, 123, {{Name = GetLabelText("CLO_H3M_L_2_0"), Id = 0}}),
+                        CreateItemsWithTextures(4, 126, {{Name = GetLabelText("CLO_H3M_L_6_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 129, {
                             {Name = GetLabelText("CLO_SUM_L_2_0"), Id = 0},
                             {Name = GetLabelText("CLO_SUM_L_2_1"), Id = 1},
@@ -4604,9 +4516,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_SUM_L_1_19"), Id = 19},
                             {Name = GetLabelText("CLO_SUM_L_1_20"), Id = 20},
                         }),
-                        CreateItemsWithTextures(4, 131, {
-                            {Name = GetLabelText("CLO_H4M_L_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 131, {{Name = GetLabelText("CLO_H4M_L_0_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 138, {
                             {Name = GetLabelText("CLO_FXM_L_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_FXM_L_0_1"), Id = 1},
@@ -4698,9 +4608,7 @@ Config.Products["suburban"] = {
                     Name = "Shorts & Bermudas",
                     Price = 50,
                     Items = table.unpack({
-                        CreateItemsWithTextures(4, 2, {
-                            {Name = GetLabelText("L_FMM_2_11"), Id = 11},
-                        }),
+                        CreateItemsWithTextures(4, 2, {{Name = GetLabelText("L_FMM_2_11"), Id = 11}}),
                         CreateItemsWithTextures(4, 14, {
                             {Name = GetLabelText("L_FMM_14_0"), Id = 0},
                             {Name = GetLabelText("L_FMM_14_1"), Id = 1},
@@ -5034,9 +4942,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_VWM_F_2_13"), Id = 13},
                             {Name = GetLabelText("CLO_VWM_F_2_14"), Id = 14},
                         }),
-                        CreateItemsWithTextures(6, 97, {
-                            {Name = GetLabelText("CLO_H4M_F_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 97, {{Name = GetLabelText("CLO_H4M_F_0_0"), Id = 0}}),
                     }),
                 },
                 [2] = {
@@ -5148,9 +5054,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_LXM_F_1_4"), Id = 4},
                             {Name = GetLabelText("CLO_LXM_F_1_5"), Id = 5},
                         }),
-                        CreateItemsWithTextures(6, 29, {
-                            {Name = GetLabelText("CLO_LXM_F_2_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 29, {{Name = GetLabelText("CLO_LXM_F_2_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 43, {
                             {Name = GetLabelText("CLO_S2M_F_2_0"), Id = 0},
                             {Name = GetLabelText("CLO_S2M_F_2_1"), Id = 1},
@@ -5349,18 +5253,10 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("F_FMM_15_14"), Id = 14},
                             {Name = GetLabelText("F_FMM_15_15"), Id = 15},
                         }),
-                        CreateItemsWithTextures(6, 17, {
-                            {Name = GetLabelText("CLO_XMASM_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 24, {
-                            {Name = GetLabelText("CLO_PIM_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 25, {
-                            {Name = GetLabelText("CLO_HSTM_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 27, {
-                            {Name = GetLabelText("CLO_HSTM_F_2_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 17, {{Name = GetLabelText("CLO_XMASM_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 24, {{Name = GetLabelText("CLO_PIM_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 25, {{Name = GetLabelText("CLO_HSTM_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 27, {{Name = GetLabelText("CLO_HSTM_F_2_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 35, {
                             {Name = GetLabelText("CLO_EXM_AF_2_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXM_AF_2_1"), Id = 1},
@@ -5538,9 +5434,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 85_14", Id = 14},
                             {Name = "(DEBUG) 85_15", Id = 15},
                         }),
-                        CreateItemsWithTextures(6, 96, {
-                            {Name = GetLabelText("CLO_H4M_F_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 96, {{Name = GetLabelText("CLO_H4M_F_0_0"), Id = 0}}),
                     }),
                 },
                 [5] = {
@@ -5952,9 +5846,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_LXF_DEC_28"), Id = 0},
                             {Name = GetLabelText("CLO_LXF_DEC_28"), Id = 1},
                         }),
-                        CreateItemsWithTextures(11, 67, {
-                            {Name = GetLabelText("CLO_LXF_U_5_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 67, {{Name = GetLabelText("CLO_LXF_U_5_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 68, {
                             {Name = GetLabelText("CLO_LXF_U_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_LXF_U_6_1"), Id = 1},
@@ -6042,12 +5934,8 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_S2F_U_9_1"), Id = 1},
                             {Name = GetLabelText("CLO_S2F_U_9_2"), Id = 2},
                         }),
-                        CreateItemsWithTextures(11, 128, {
-                            {Name = GetLabelText("CLO_EXF_EU_1_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 129, {
-                            {Name = GetLabelText("CLO_EXF_EU_2_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 128, {{Name = GetLabelText("CLO_EXF_EU_1_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 129, {{Name = GetLabelText("CLO_EXF_EU_2_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 141, {
                             {Name = "(DEBUG) 141_0", Id = 0},
                             {Name = "(DEBUG) 141_1", Id = 1},
@@ -6098,9 +5986,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_BIF_U_16_4"), Id = 4},
                             {Name = GetLabelText("CLO_BIF_U_16_5"), Id = 5},
                         }),
-                        CreateItemsWithTextures(11, 178, {
-                            {Name = GetLabelText("CLO_BIF_U_24_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 178, {{Name = GetLabelText("CLO_BIF_U_24_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 212, {
                             {Name = GetLabelText("CLO_GRF_U_2_0"), Id = 0},
                             {Name = GetLabelText("CLO_GRF_U_2_1"), Id = 1},
@@ -6490,9 +6376,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 369_3", Id = 3},
                             {Name = "(DEBUG) 369_4", Id = 4},
                         }),
-                        CreateItemsWithTextures(11, 374, {
-                            {Name = GetLabelText("CLO_H4F_U_4_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 374, {{Name = GetLabelText("CLO_H4F_U_4_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 375, {
                             {Name = GetLabelText("CLO_H4F_U_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_H4F_U_5_1"), Id = 1},
@@ -6624,9 +6508,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_EXF_AU_16_3"), Id = 3},
                             {Name = GetLabelText("CLO_EXF_AU_16_4"), Id = 4},
                         }),
-                        CreateItemsWithTextures(11, 100, {
-                            {Name = GetLabelText("CLO_EXF_AU_18_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 100, {{Name = GetLabelText("CLO_EXF_AU_18_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 123, {
                             {Name = GetLabelText("CLO_S2F_U_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_S2F_U_6_1"), Id = 1},
@@ -6689,9 +6571,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_BIF_U_8_5"), Id = 5},
                             {Name = GetLabelText("CLO_BIF_U_8_6"), Id = 6},
                         }),
-                        CreateItemsWithTextures(11, 173, {
-                            {Name = GetLabelText("CLO_BIF_U_19_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 173, {{Name = GetLabelText("CLO_BIF_U_19_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 179, {
                             {Name = GetLabelText("CLO_BIF_U_25_0"), Id = 0},
                             {Name = GetLabelText("CLO_BIF_U_25_1"), Id = 1},
@@ -7282,9 +7162,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_H3F_U_11_18"), Id = 18},
                             {Name = GetLabelText("CLO_H3F_U_11_19"), Id = 19},
                         }),
-                        CreateItemsWithTextures(11, 341, {
-                            {Name = GetLabelText("CLO_H3F_U_16_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 341, {{Name = GetLabelText("CLO_H3F_U_16_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 376, {
                             {Name = GetLabelText("CLO_H4F_U_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_H4F_U_6_1"), Id = 1},
@@ -7356,9 +7234,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMF_3_13"), Id = 13},
                             {Name = GetLabelText("U_FMF_3_14"), Id = 14},
                         }),
-                        CreateItemsWithTextures(11, 50, {
-                            {Name = GetLabelText("CLO_HSTF_U_4_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 50, {{Name = GetLabelText("CLO_HSTF_U_4_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 62, {
                             {Name = GetLabelText("CLO_HSTF_U_16_0"), Id = 0},
                             {Name = GetLabelText("CLO_HSTF_U_16_1"), Id = 1},
@@ -7385,9 +7261,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_S1F_U_5_6"), Id = 6},
                             {Name = GetLabelText("CLO_S1F_U_5_7"), Id = 7},
                         }),
-                        CreateItemsWithTextures(11, 87, {
-                            {Name = GetLabelText("CLO_EXF_AU_5_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 87, {{Name = GetLabelText("CLO_EXF_AU_5_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 131, {
                             {Name = GetLabelText("CLO_EXF_EU_4_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXF_EU_4_1"), Id = 1},
@@ -7669,12 +7543,8 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_VWF_U_13_19"), Id = 19},
                             {Name = GetLabelText("CLO_VWF_U_13_20"), Id = 20},
                         }),
-                        CreateItemsWithTextures(11, 345, {
-                            {Name = GetLabelText("CLO_H3F_U_20_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(11, 346, {
-                            {Name = GetLabelText("CLO_H3F_U_20_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 345, {{Name = GetLabelText("CLO_H3F_U_20_0"), Id = 0}}),
+                        CreateItemsWithTextures(11, 346, {{Name = GetLabelText("CLO_H3F_U_20_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 370, {
                             {Name = "(DEBUG) 370_0", Id = 0},
                             {Name = "(DEBUG) 370_1", Id = 1},
@@ -7818,9 +7688,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMF_14_14"), Id = 14},
                             {Name = GetLabelText("U_FMF_14_15"), Id = 15},
                         }),
-                        CreateItemsWithTextures(11, 17, {
-                            {Name = GetLabelText("CLO_BBF_U_2_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 17, {{Name = GetLabelText("CLO_BBF_U_2_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 27, {
                             {Name = GetLabelText("CLO_BUSF_U_3_0"), Id = 0},
                             {Name = GetLabelText("CLO_BUSF_U_3_1"), Id = 1},
@@ -7847,9 +7715,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMF_9_14"), Id = 14},
                             {Name = GetLabelText("CLO_BBF_U_2_0"), Id = 15},
                         }),
-                        CreateItemsWithTextures(11, 56, {
-                            {Name = GetLabelText("CLO_HSTF_U_10_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 56, {{Name = GetLabelText("CLO_HSTF_U_10_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 59, {
                             {Name = "(DEBUG) 59_0", Id = 0},
                             {Name = "(DEBUG) 59_1", Id = 1},
@@ -7863,17 +7729,13 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_S1F_U_3_3"), Id = 3},
                             {Name = GetLabelText("CLO_S1F_U_3_4"), Id = 4},
                         }),
-                        CreateItemsWithTextures(11, 77, {
-                            {Name = GetLabelText("CLO_S1F_U_4_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 77, {{Name = GetLabelText("CLO_S1F_U_4_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 86, {
                             {Name = GetLabelText("CLO_EXF_AU_4_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXF_AU_4_1"), Id = 1},
                             {Name = GetLabelText("CLO_EXF_AU_4_2"), Id = 2},
                         }),
-                        CreateItemsWithTextures(11, 96, {
-                            {Name = GetLabelText("CLO_EXF_AU_14_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 96, {{Name = GetLabelText("CLO_EXF_AU_14_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 109, {
                             {Name = GetLabelText("CLO_X3F_U_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_X3F_U_1_1"), Id = 1},
@@ -7935,9 +7797,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_S2F_U_4_15"), Id = 15},
                             {Name = GetLabelText("CLO_S2F_U_4_16"), Id = 16},
                         }),
-                        CreateItemsWithTextures(11, 130, {
-                            {Name = GetLabelText("CLO_EXF_EU_3_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(11, 130, {{Name = GetLabelText("CLO_EXF_EU_3_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 161, {
                             {Name = GetLabelText("CLO_BIF_U_7_0"), Id = 0},
                             {Name = GetLabelText("CLO_BIF_U_7_1"), Id = 1},
@@ -8204,9 +8064,7 @@ Config.Products["suburban"] = {
                     Name = "Joggings & Survêtements",
                     Price = 50,
                     Items = table.unpack({
-                        CreateItemsWithTextures(4, 53, {
-                            {Name = GetLabelText("CLO_EXF_AL_7_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 53, {{Name = GetLabelText("CLO_EXF_AL_7_0_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 60, {
                             {Name = "(DEBUG) 60_0", Id = 0},
                             {Name = "(DEBUG) 60_1", Id = 1},
@@ -8380,9 +8238,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_LTSFL_0_3"), Id = 3},
                             {Name = GetLabelText("CLO_LTSFL_0_4"), Id = 4},
                         }),
-                        CreateItemsWithTextures(4, 32, {
-                            {Name = GetLabelText("CLO_HSTF_L_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 32, {{Name = GetLabelText("CLO_HSTF_L_0_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 61, {
                             {Name = "(DEBUG) 61_0", Id = 0},
                             {Name = "(DEBUG) 61_1", Id = 1},
@@ -8439,9 +8295,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_GRF_L_2_19"), Id = 19},
                             {Name = "(DEBUG) 91_20", Id = 20},
                         }),
-                        CreateItemsWithTextures(4, 129, {
-                            {Name = GetLabelText("CLO_H3F_L_2_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 129, {{Name = GetLabelText("CLO_H3F_L_2_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 137, {
                             {Name = GetLabelText("CLO_SUF_L_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_SUF_L_5_1"), Id = 1},
@@ -8502,9 +8356,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_BBF_010"), Id = 10},
                             {Name = GetLabelText("CLO_BBF_011"), Id = 11},
                         }),
-                        CreateItemsWithTextures(4, 26, {
-                            {Name = GetLabelText("CLO_HP_F_L_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 26, {{Name = GetLabelText("CLO_HP_F_L_1_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 49, {
                             {Name = GetLabelText("CLO_EXF_AL_3_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXF_AL_3_1"), Id = 1},
@@ -8519,9 +8371,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("L_FMF_15_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_15_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(4, 21, {
-                            {Name = "(DEBUG) 21_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 21, {{Name = "(DEBUG) 21_0", Id = 0}}),
                     }),
                 },
                 [6] = {
@@ -8625,9 +8475,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 102_19", Id = 19},
                             {Name = "(DEBUG) 102_20", Id = 20},
                         }),
-                        CreateItemsWithTextures(4,138, {
-                            {Name = GetLabelText("CLO_H4F_L_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 138, {{Name = GetLabelText("CLO_H4F_L_0_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 143, {
                             {Name = "(DEBUG) 143_0", Id = 0},
                             {Name = "(DEBUG) 143_1", Id = 1},
@@ -8674,9 +8522,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("L_FMF_11_14"), Id = 14},
                             {Name = GetLabelText("L_FMF_11_15"), Id = 15},
                         }),
-                        CreateItemsWithTextures(4, 33, {
-                            {Name = GetLabelText("CLO_HSTF_L_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 33, {{Name = GetLabelText("CLO_HSTF_L_1_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 38, {
                             {Name = "(DEBUG) 38_0", Id = 0},
                             {Name = "(DEBUG) 38_1", Id = 1},
@@ -8912,9 +8758,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 110_16", Id = 16},
                             {Name = "(DEBUG) 110_17", Id = 17},
                         }),
-                        CreateItemsWithTextures(4, 111, {
-                            {Name = "(DEBUG) 111_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 111, {{Name = "(DEBUG) 111_0", Id = 0}}),
                         CreateItemsWithTextures(4, 112, {
                             {Name = GetLabelText("CLO_AWF_L_3_0"), Id = 0},
                             {Name = GetLabelText("CLO_AWF_L_3_1"), Id = 1},
@@ -8944,9 +8788,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_VWF_L_2_18"), Id = 18},
                             {Name = GetLabelText("CLO_VWF_L_2_19"), Id = 19},
                         }),
-                        CreateItemsWithTextures(4, 128, {
-                            {Name = GetLabelText("CLO_H3F_L_2_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 128, {{Name = GetLabelText("CLO_H3F_L_2_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 135, {
                             {Name = GetLabelText("CLO_SUF_L_3_0"), Id = 0},
                             {Name = GetLabelText("CLO_SUF_L_3_1"), Id = 1},
@@ -8957,9 +8799,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_SUF_L_3_6"), Id = 6},
                             {Name = GetLabelText("CLO_SUF_L_3_7"), Id = 7},
                         }),
-                        CreateItemsWithTextures(4, 140, {
-                            {Name = "(DEBUG) 140_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(4, 140, {{Name = "(DEBUG) 140_0", Id = 0}}),
                         CreateItemsWithTextures(4, 92, {
                             {Name = GetLabelText("CLO_FXF_L_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_FXF_L_5_1"), Id = 1},
@@ -9107,12 +8947,8 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("F_FMF_11_2"), Id = 2},
                             {Name = GetLabelText("F_FMF_11_3"), Id = 3},
                         }),
-                        CreateItemsWithTextures(6, 27, {
-                            {Name = GetLabelText("CLO_HSTF_F_2_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 28, {
-                            {Name = GetLabelText("CLO_HSTF_F_3_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 27, {{Name = GetLabelText("CLO_HSTF_F_2_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 28, {{Name = GetLabelText("CLO_HSTF_F_3_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 32, {
                             {Name = GetLabelText("CLO_S1F_F_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_S1F_F_0_1"), Id = 1},
@@ -9263,9 +9099,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_VWF_F_3_6"), Id = 6},
                             {Name = GetLabelText("CLO_VWF_F_3_7"), Id = 7},
                         }),
-                        CreateItemsWithTextures(6, 99, {
-                            {Name = GetLabelText("CLO_H3F_F_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 99, {{Name = GetLabelText("CLO_H3F_F_0_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 100, {
                             {Name = GetLabelText("CLO_TRF_F_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_TRF_F_1_1"), Id = 1},
@@ -9377,15 +9211,9 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_HP_F_F_0_8"), Id = 8},
                             {Name = GetLabelText("CLO_HP_F_F_0_9"), Id = 9},
                         }),
-                        CreateItemsWithTextures(6, 24, {
-                            {Name = GetLabelText("CLO_PIF_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 25, {
-                            {Name = GetLabelText("CLO_HSTF_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 26, {
-                            {Name = GetLabelText("CLO_HSTF_F_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 24, {{Name = GetLabelText("CLO_PIF_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 25, {{Name = GetLabelText("CLO_HSTF_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 26, {{Name = GetLabelText("CLO_HSTF_F_1_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 36, {
                             {Name = GetLabelText("CLO_EXF_AF_2_0"), Id = 0},
                             {Name = GetLabelText("CLO_EXF_AF_2_1"), Id = 1},
@@ -9586,9 +9414,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 92_10", Id = 10},
                             {Name = "(DEBUG) 92_11", Id = 11},
                         }),
-                        CreateItemsWithTextures(6, 100, {
-                            {Name = GetLabelText("CLO_H4F_F_0_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 100, {{Name = GetLabelText("CLO_H4F_F_0_0"), Id = 0}}),
                     }),
                 },
                 [5] = {
@@ -9683,9 +9509,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 78_0", Id = 0},
                             {Name = "(DEBUG) 78_1", Id = 1},
                         }),
-                        CreateItemsWithTextures(6, 93, {
-                            {Name = "(DEBUG) 93_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 93, {{Name = "(DEBUG) 93_0", Id = 0}}),
                         CreateItemsWithTextures(6, 105, {
                             {Name = "(DEBUG) 105_0", Id = 0},
                             {Name = "(DEBUG) 105_1", Id = 1},
@@ -9771,12 +9595,8 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_HP_F_F_1_14"), Id = 14},
                             {Name = GetLabelText("CLO_HP_F_F_1_15"), Id = 15},
                         }),
-                        CreateItemsWithTextures(6, 30, {
-                            {Name = GetLabelText("CLO_LXF_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 31, {
-                            {Name = GetLabelText("CLO_LXF_F_1_0"), Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 30, {{Name = GetLabelText("CLO_LXF_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 31, {{Name = GetLabelText("CLO_LXF_F_1_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 43, {
                             {Name = GetLabelText("CLO_S2F_F_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_S2F_F_0_1"), Id = 1},
@@ -9938,12 +9758,8 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 90_14", Id = 14},
                             {Name = "(DEBUG) 90_15", Id = 15},
                         }),
-                        CreateItemsWithTextures(6, 101, {
-                            {Name = GetLabelText("CLO_H4F_F_0_0"), Id = 0},
-                        }),
-                        CreateItemsWithTextures(6, 102, {
-                            {Name = "(DEBUG) 102_0", Id = 0},
-                        }),
+                        CreateItemsWithTextures(6, 101, {{Name = GetLabelText("CLO_H4F_F_0_0"), Id = 0}}),
+                        CreateItemsWithTextures(6, 102, {{Name = "(DEBUG) 102_0", Id = 0}}),
                     }),
                 },
                 [8] = {
