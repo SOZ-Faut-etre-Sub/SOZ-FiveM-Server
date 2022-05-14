@@ -38,3 +38,11 @@ RegisterNetEvent("core:server:zoneIntrusion", function(zone)
         print(("[SOZ REPORTER] Intrusion de %s dans la zone: %s"):format(Player.Functions.GetName(), zone))
     end
 end)
+
+exports("SendHTTPRequest", function(convar, data)
+    local endpoint = GetConvar(convar, "")
+
+    if endpoint ~= "" then
+        PerformHttpRequest(endpoint, nil, "POST", json.encode(data), {["Content-Type"] = "application/json"})
+    end
+end)
