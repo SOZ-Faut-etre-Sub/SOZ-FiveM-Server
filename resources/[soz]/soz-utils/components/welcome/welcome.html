@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-js-wheel-zoom@6.12.0/dist/wheel-zoom.min.js"></script>
     <style>
         html,
         body {
@@ -15,13 +15,13 @@
         }
 
         #wrapper {
+            position: absolute;
+            inset: 0;
+            margin-top: 2vh;
             display: flex;
-            width: 98vw;
-            height: 98vh;
-            padding: 2rem 0 5rem 0;
-            position: relative;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             transition: all 0.5s ease-in-out;
             transform: translateY(100vh);
             opacity: 0;
@@ -32,20 +32,25 @@
             opacity: 1;
         }
 
-        .page {
-            max-width: 80vw;
+        #pages {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            max-height: 90vh;
         }
 
-        #close {
-            width: 80vw;
-            text-align: right;
-            cursor: pointer;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
+        .page {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .buttons {
+            display: flex;
+            width: 20vw;
+            justify-content: space-between;
+            flex-direction: row;
             padding-bottom: 3rem;
         }
 
@@ -65,36 +70,43 @@
 
 <body>
     <div id="wrapper">
-        <div id="close">
-            <span id="close-btn" class="text-border">&#xd7;</span>
+        <div id="pages">
+            <img src="./welcome-0.jpg" class="page" id="p0" />
+            <img src="./welcome-1.jpg" class="page" id="p1" />
+            <img src="./welcome-2.jpg" class="page" id="p2" />
+            <img src="./welcome-3.jpg" class="page" id="p3" />
+            <img src="./welcome-4.jpg" class="page" id="p4" />
         </div>
-
-        <img src="./welcome1.png" class="page" id="one" />
-        <img src="./welcome2.png" class="page" id="two" />
 
         <div class="buttons">
             <button id="btnL" class="text-border" value="-1">&#x1f844;</button>
+            <button id="close-btn" class="text-border">&#xd7;</button>
             <button id="btnR" class="text-border" value="1">&#x1f846;</button>
         </div>
     </div>
 
     <script type="text/javascript" defer>
         let activeStep = 0;
+
+        let wzoom = []
         const steps = [
-            document.querySelector("#one"),
-            document.querySelector("#two"),
+            document.querySelector("#p0"),
+            document.querySelector("#p1"),
+            document.querySelector("#p2"),
+            document.querySelector("#p3"),
+            document.querySelector("#p4"),
         ];
 
         const btnL = document.querySelector("#btnL");
         const btnR = document.querySelector("#btnR");
 
         function updateBtn(stepIdx) {
-            btnL.style.display = "block";
-            btnR.style.display = "block";
+            btnL.style.opacity = '1';
+            btnR.style.opacity = '1';
             if (stepIdx === 0) {
-                btnL.style.display = "none";
-            } else if (stepIdx == steps.length - 1) {
-                btnR.style.display = "none";
+                btnL.style.opacity = '0';
+            } else if (stepIdx === steps.length - 1) {
+                btnR.style.opacity = '0';
             }
         }
 
@@ -108,6 +120,10 @@
 
         [btnL, btnR].forEach((el) => {
             el.onclick = (event) => {
+                if (parseInt(el.value) + activeStep >= steps.length || parseInt(el.value) + activeStep < 0) {
+                    return;
+                }
+
                 activeStep += parseInt(el.value);
                 showStep(activeStep);
                 scrollTo(0, 0);
@@ -127,13 +143,18 @@
             if (action === "show") {
                 wrapper.classList.add("show");
                 showStep(activeStep);
-                return;
+
+                steps.forEach((el, index) => wzoom[index] = WZoom.create(el, {zoomOnClick: false}))
             }
 
             if (action === "hide") {
                 wrapper.classList.remove("show");
                 activeStep = 0;
-                return;
+
+                wzoom.forEach((el, index) => {
+                    el.destroy();
+                    delete wzoom[index];
+                })
             }
         });
     </script>
