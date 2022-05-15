@@ -57,6 +57,11 @@ exports["qb-target"]:AddBoxZone("duty_taxi", vector3(903.47, -157.88, 74.17), 1.
 RegisterNetEvent("taxi:duty")
 AddEventHandler("taxi:duty", function()
     TriggerServerEvent("QBCore:ToggleDuty")
+    if PlayerData.job.onduty then
+        ResetNpcTask()
+        RemoveBlip(NpcData.DeliveryBlip)
+        DeletePed(NpcData.Npc)
+    end
 end)
 
 exports["qb-target"]:AddBoxZone("taxi:cloakroom", vector3(889.1, -178.53, 74.7), 0.4, 6.8, {
@@ -100,4 +105,10 @@ end)
 
 RegisterNetEvent("taxi:client:InvoicePlayer", function(data)
     TaxiJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
+end)
+
+RegisterNetEvent("ems:client:onDeath", function()
+    ResetNpcTask()
+    RemoveBlip(NpcData.DeliveryBlip)
+    DeletePed(NpcData.Npc)
 end)
