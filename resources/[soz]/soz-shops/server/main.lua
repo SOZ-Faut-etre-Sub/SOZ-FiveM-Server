@@ -82,6 +82,14 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
                     clothConfig["BaseClothSet"].Components[tostring(componentId)].Palette = tonumber(component.Palette) or 0
                 end
 
+                if productID.torso and productID.torso.drawable and productID.torso.texture then
+                    clothConfig["BaseClothSet"].Components["3"] = {
+                        Drawable = tonumber(productID.torso.drawable),
+                        Texture = tonumber(productID.torso.texture),
+                        Palette = 0,
+                    }
+                end
+
                 Player.Functions.SetClothConfig(clothConfig, true)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un habit pour ~g~$%s"):format(price))
             else
