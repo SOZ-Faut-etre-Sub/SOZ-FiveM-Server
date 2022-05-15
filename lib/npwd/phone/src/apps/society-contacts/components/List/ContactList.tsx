@@ -16,7 +16,7 @@ export const ContactList: React.FC = () => {
     return (
         <div className="mt-5">
             <SearchContacts/>
-            <nav className="h-[780px] pb-10 overflow-y-auto" aria-label="Directory">
+            <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts).sort().map((letter) => (
                     <div key={letter} className="relative">
                         <div className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${theme === 'dark' ? 'bg-black text-gray-400' : 'bg-[#F2F2F6] text-gray-600'}`}>
