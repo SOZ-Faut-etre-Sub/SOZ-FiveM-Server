@@ -13,6 +13,7 @@ local function itemIsExpired(item)
         return os.time({year = year, month = month, day = day}) < os.time()
     end
 end
+exports("ItemIsExpired", itemIsExpired)
 
 --- Eat
 for name, _ in pairs(ConsumablesEat) do

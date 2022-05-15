@@ -128,3 +128,38 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne possédez pas l'argent requis pour le transfert", "error")
     end
 end)
+
+RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resellZone)
+    if resellZone == nil then
+        return
+    end
+
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if amount <= 0 then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez rien à vendre", "error")
+        return
+    elseif amount > item.amount then
+        amount = item.amount
+    end
+
+    if item.metadata.expiration ~= nil and exports["soz-utils"]:ItemIsExpired(item) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas revendre des produits périmés", "error")
+        return
+    end
+
+    local itemSpec = QBCore.Shared.Items[item.name]
+    if itemSpec == nil or not itemSpec.resellPrice or not itemSpec.resellZone or itemSpec.resellZone ~= resellZone.ZoneName then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Cet item ne peut pas être revendu", "error")
+        return
+    end
+
+    local success = Inventory.RemoveItem(Player.PlayerData.source, item.name, amount, item.metadata, item.slot)
+    if not success then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez rien vendu", "error")
+        return
+    end
+
+    TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, itemSpec.resellPrice * amount)
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
+end)
