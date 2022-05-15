@@ -56,6 +56,10 @@
       "MESSAGES": {
         "INVALID_SETTINGS": "Paramètres invalides stockés! Veuillez réinitialiser les paramètres.",
         "SETTINGS_RESET": "Les paramètres ont été réinitialisés!"
+      },
+      "FEEDBACK": {
+        "UPDATE_FAILED": "Mise a jour impossible",
+        "UPDATE_SUCCESS": "Image mise a jour"
       }
     },
     "CAMERA": {
@@ -224,6 +228,7 @@
     "APPS_SOCIETY_CONTACTS": "Annuaire Entreprise",
     "APPS_SOCIETY_MESSAGES": "Répondeur Entreprise",
     "APPS_TWITCH_NEWS": "Twitch News",
+    "APPS_ZUTOM": "Zutom",
     "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
     "GENERIC_LOADING": "Chargement...",
     "GENERIC_WAIT": "Veuillez patienter...",
