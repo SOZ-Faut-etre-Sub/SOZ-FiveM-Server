@@ -20,15 +20,9 @@ const NewMessageGroupForm = ({phoneNumber}: { phoneNumber?: string }) => {
 
     useEffect(() => {
         if (phoneNumber) {
-            const find = getContactByNumber(phoneNumber);
-            if (find) {
-                setParticipant(find);
-                addConversation(phoneNumber);
-            } else {
-                setParticipantValue(phoneNumber);
-            }
+            addConversation(phoneNumber);
         }
-    }, [phoneNumber, getContactByNumber, addConversation]);
+    }, [phoneNumber, addConversation]);
 
     const handleCancel = () => {
         history.push('/messages');
