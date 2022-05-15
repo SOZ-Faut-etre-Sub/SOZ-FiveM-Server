@@ -1,5 +1,3 @@
-QBCore = exports["qb-core"]:GetCoreObject()
-
 local function removeItemAndSendEvent(source, item, event, extra)
     local Player = QBCore.Functions.GetPlayer(source)
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1, item.metadata, item.slot) then
