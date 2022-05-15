@@ -18,12 +18,12 @@ local function toggleMegaphoneAnimation(pState)
 end
 
 local function useMegaphone()
-    LocalPlayer.state:set("useMegaphone", true, true)
+    TriggerServerEvent("voip:server:setPlayerWithMegaphone", true)
     exports["soz-voip"]:overrideProximityRange(Config.Megaphone.Range, true)
 end
 
 local function resetMegaphone()
-    LocalPlayer.state:set("useMegaphone", false, true)
+    TriggerServerEvent("voip:server:setPlayerWithMegaphone", false)
     exports["soz-voip"]:clearProximityOverride()
 end
 
