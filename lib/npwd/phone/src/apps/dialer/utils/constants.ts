@@ -7,7 +7,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: true,
-        start: '1615939174',
+        start: '2022-05-11 20:04:21.0',
         end: null,
     },
     {
@@ -16,7 +16,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '704-1549',
         receiver: '704-1549',
         is_accepted: false,
-        start: '1615939850',
+        start: '2022-05-15 21:04:21.0',
         end: null,
     },
     {
@@ -25,7 +25,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '1615938850',
+        start: '2022-05-15 21:10:21.0',
         end: null,
     },
 ];
