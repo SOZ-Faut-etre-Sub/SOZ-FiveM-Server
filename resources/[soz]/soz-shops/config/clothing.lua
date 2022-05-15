@@ -6,6 +6,10 @@ local function CreateItemsWithTextures(componentType, drawableId, textures)
             ApplyComponents = {[componentType] = {Drawable = drawableId, Texture = texture.Id, Palette = 0}},
         }
 
+        if componentType == 11 then
+            item.ApplyComponents[8] = {Drawable = 15, Texture = 0, Palette = 0}
+        end
+
         table.insert(items, item)
     end
     return items
@@ -3242,6 +3246,7 @@ Config.Products["suburban"] = {
                         }),
                     }),
                 },
+                --[[ Disabled due to undercoat needs TODO: implement dynamic submenu for undercoat
                 [3] = {
                     Name = "Sweats & Hoodies",
                     Price = 50,
@@ -3548,6 +3553,7 @@ Config.Products["suburban"] = {
                         }),
                     }),
                 },
+                ]]
                 [4] = {
                     Name = "Chemises",
                     Price = 50,
