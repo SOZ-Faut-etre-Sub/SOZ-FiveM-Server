@@ -341,9 +341,15 @@ function QBCore.Player.CreatePlayer(PlayerData)
         local jobBag = 0
 
         if self.PlayerData.cloth_config["BaseClothSet"] then
+            if not self.PlayerData.cloth_config["BaseClothSet"].Components["5"] then
+                return
+            end
             baseBag = self.PlayerData.cloth_config["BaseClothSet"].Components["5"].Drawable
         end
         if self.PlayerData.cloth_config["JobClothSet"] then
+            if not self.PlayerData.cloth_config["JobClothSet"].Components["5"] then
+                return
+            end
             jobBag = self.PlayerData.cloth_config["JobClothSet"].Components["5"].Drawable
         end
 
