@@ -132,9 +132,11 @@ local function ApplyPedClothSet(ped, clothSet)
         end
     end
 
-    local torsoDrawable, torsoTexture = GetProperTorso(ped, clothSet.Components["11"].Drawable, clothSet.Components["11"].Texture)
-    if torsoDrawable ~= -1 and torsoTexture ~= -1 then
-        SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
+    if clothSet.Components["11"] then
+        local torsoDrawable, torsoTexture = GetProperTorso(ped, clothSet.Components["11"].Drawable, clothSet.Components["11"].Texture)
+        if torsoDrawable ~= -1 and torsoTexture ~= -1 then
+            SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
+        end
     end
 end
 
