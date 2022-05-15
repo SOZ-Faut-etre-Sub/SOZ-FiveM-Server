@@ -1,3 +1,5 @@
+QBCore = exports["qb-core"]:GetCoreObject()
+
 QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     local src = source
     TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)
