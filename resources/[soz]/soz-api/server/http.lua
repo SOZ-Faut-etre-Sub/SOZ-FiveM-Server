@@ -44,6 +44,12 @@ SetHttpHandler(function(req, res)
 
         return;
     end
+    -- Get list of items
+    if req.path == "/items" and req.method == "GET" then
+        res.send(json.encode(QBCore.Shared.Items))
+
+        return;
+    end
 
     -- Kick a player
     if req.path == "/kick-player" and req.method == "POST" then
