@@ -19,9 +19,13 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
-            local trunkConfig = QBCore.Shared.Trunks["default"]
-            if ctx and QBCore.Shared.Trunks[ctx] then
-                trunkConfig = QBCore.Shared.Trunks[ctx]
+            if not ctx then
+                return
+            end
+
+            local trunkConfig = QBCore.Shared.Trunks[ctx.class]
+            if ctx.model and QBCore.Shared.Trunks[ctx.model] then
+                trunkConfig = QBCore.Shared.Trunks[ctx.model]
             end
 
             targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, trunkConfig.weight, invID)

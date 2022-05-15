@@ -43,6 +43,7 @@ local function JobPosition(job, coords, sprite)
     BeginTextCommandSetBlipName(job)
     EndTextCommandSetBlipName(blip)
     SetBlipCategory(blip, 2)
+    SetNewWaypoint(coords.x, coords.y)
 end
 
 local function notif()

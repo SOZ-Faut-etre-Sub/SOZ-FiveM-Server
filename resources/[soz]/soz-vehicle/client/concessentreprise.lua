@@ -141,9 +141,11 @@ exports["qb-target"]:SpawnPed({
 })
 
 RegisterNetEvent("soz-concessentreprise:client:buyShowroomVehicle", function(vehicle, plate, newlocation)
+    local liverytype = QBCore.Functions.TriggerRpc("soz-concessentreprise:server:getLiveryType", vehicle)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         SetFuel(veh, 100)
+        SetVehicleLivery(veh, liverytype.liverytype)
         SetVehicleNumberPlateText(veh, plate)
         SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))

@@ -167,11 +167,11 @@ Zonesentreprise = {
         minZ = 29.49,
         maxZ = 35.49,
     }),
-    ["taxi"] = BoxZone:Create(vector3(897.59, -152.25, 76.89), 9.8, 6.2, {
+    ["taxi"] = BoxZone:Create(vector3(897.59, -152.25, 76.56), 9.8, 6.2, {
         name = "taxi_z",
         heading = 328,
-        minZ = 75.89,
-        maxZ = 78.89,
+        minZ = 75.56,
+        maxZ = 78.56,
     }),
 }
 
@@ -1205,20 +1205,48 @@ PlacesEntreprise = {
         maxZ = 73.63,
         data = {indexGarage = "lspd"},
     }),
-    ["lsmc1"] = BoxZone:Create(vector3(387.24, -1449.69, 29.43), 6.4, 4.4,
-                               {name = "lsmc1", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
-    ["lsmc2"] = BoxZone:Create(vector3(391.08, -1447.58, 29.44), 6.4, 4.4,
-                               {name = "lsmc2", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
-    ["lsmc3"] = BoxZone:Create(vector3(394.53, -1445.57, 29.43), 6.4, 4.4,
-                               {name = "lsmc3", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
-    ["lsmc4"] = BoxZone:Create(vector3(398.23, -1443.44, 29.42), 6.4, 4.4,
-                               {name = "lsmc4", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
-    ["lsmc5"] = BoxZone:Create(vector3(401.91, -1441.29, 29.39), 6.4, 4.4,
-                               {name = "lsmc5", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
-    ["lsmc6"] = BoxZone:Create(vector3(405.41, -1439.28, 29.41), 6.4, 4.4,
-                               {name = "lsmc6", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
-    ["lsmc7"] = BoxZone:Create(vector3(409.14, -1437.14, 29.43), 6.4, 4.4,
-                               {name = "lsmc7", heading = 30, minZ = 28.43, maxZ = 31.43, data = {indexGarage = "lsmc"}}),
+    ["lsmc1"] = BoxZone:Create(vector3(415.82, -1432.47, 29.44), 7, 5, {
+        name = "lsmc1",
+        heading = 30,
+        minZ = 28.44,
+        maxZ = 32.44,
+        data = {indexGarage = "lsmc"},
+    }),
+    ["lsmc2"] = BoxZone:Create(vector3(408.82, -1436.46, 29.44), 7, 5, {
+        name = "lsmc2",
+        heading = 30,
+        minZ = 28.44,
+        maxZ = 32.44,
+        data = {indexGarage = "lsmc"},
+    }),
+    ["lsmc3"] = BoxZone:Create(vector3(401.67, -1426.36, 29.43), 7, 5, {
+        name = "lsmc3",
+        heading = 50,
+        minZ = 28.43,
+        maxZ = 32.43,
+        data = {indexGarage = "lsmc"},
+    }),
+    ["lsmc4"] = BoxZone:Create(vector3(401.61, -1440.62, 29.43), 7, 5, {
+        name = "lsmc4",
+        heading = 30,
+        minZ = 28.43,
+        maxZ = 32.43,
+        data = {indexGarage = "lsmc"},
+    }),
+    ["lsmc5"] = BoxZone:Create(vector3(394.21, -1444.85, 29.46), 7, 5, {
+        name = "lsmc5",
+        heading = 30,
+        minZ = 28.46,
+        maxZ = 32.46,
+        data = {indexGarage = "lsmc"},
+    }),
+    ["lsmc6"] = BoxZone:Create(vector3(383.24, -1451.06, 29.43), 7, 5, {
+        name = "lsmc6",
+        heading = 30,
+        minZ = 28.43,
+        maxZ = 32.43,
+        data = {indexGarage = "lsmc"},
+    }),
     ["bcso1"] = BoxZone:Create(vector3(1847.36, 3672.06, 33.72), 6.2, 3.8,
                                {name = "bcso1", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
     ["bcso2"] = BoxZone:Create(vector3(1850.38, 3673.92, 33.76), 6.2, 3.8,
@@ -1273,12 +1301,12 @@ PlacesEntreprise = {
                               {name = "mtp1", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
     ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6,
                               {name = "mtp2", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
-    ["taxi1"] = BoxZone:Create(vector3(897.59, -152.25, 76.89), 9.8, 6.2,
+    ["taxi1"] = BoxZone:Create(vector3(897.59, -152.25, 76.56), 9.8, 6.2,
                                {
         name = "taxi1",
         heading = 328,
-        minZ = 75.89,
-        maxZ = 78.89,
+        minZ = 75.56,
+        maxZ = 78.56,
         data = {indexGarage = "taxi"},
     }),
 }
@@ -1343,7 +1371,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
     fourriere:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
             InsideFourriere = true
-            exports["qb-target"]:AddTargetModel(115679102, {
+            exports["qb-target"]:AddTargetModel(339728328, {
                 options = {
                     {
                         type = "client",
@@ -1363,7 +1391,7 @@ for indexfourriere, fourriere in pairs(Zonesfourriere) do
             })
         else
             InsideFourriere = false
-            exports["qb-target"]:RemoveTargetModel(115679102, "Accéder à la fourrière")
+            exports["qb-target"]:RemoveTargetModel(339728328, "Accéder à la fourrière")
         end
     end)
 end
@@ -1422,7 +1450,7 @@ for indexentreprise, entreprise in pairs(Zonesentreprise) do
                 distance = 2.5,
             })
         else
-            exports["qb-target"]:RemoveTargetModel(115679102, "Accéder au parking entreprise")
+            exports["qb-target"]:RemoveTargetModel(GetHashKey("soz_prop_paystation"), "Accéder au parking entreprise")
         end
     end)
 end

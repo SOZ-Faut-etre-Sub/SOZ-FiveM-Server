@@ -239,3 +239,20 @@ CreateThread(function()
         Wait(50)
     end
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        local serverid = GetPlayerServerId(PlayerId())
+        AddTextEntry("FE_THDR_GTAO", "~g~SOZ" .. " ~w~- " .. "~b~ID " .. serverid .. "")
+        AddTextEntry("PM_PANE_LEAVE", "~o~Retourner sur la liste des serveurs.")
+        AddTextEntry("PM_PANE_QUIT", "~r~Quitter cette belle ville :c")
+        AddTextEntry("PM_SCR_MAP", "~b~Carte de Los Santos")
+        AddTextEntry("PM_SCR_GAM", "~r~Prendre l'avion")
+        AddTextEntry("PM_SCR_INF", "~g~Logs")
+        AddTextEntry("PM_SCR_SET", "~p~Configuration")
+        AddTextEntry("PM_SCR_STA", "~y~Statistiques")
+        AddTextEntry("PM_SCR_GAL", "Galerie")
+        AddTextEntry("PM_SCR_RPL", "~t~Editeur")
+    end
+end)

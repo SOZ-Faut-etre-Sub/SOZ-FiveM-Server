@@ -362,6 +362,7 @@ Citizen.CreateThread(function()
                     options = {
                         {
                             label = "Remplir la station",
+                            color = "oil",
                             icon = "c:fuel/pistolet.png",
                             event = "jobs:client:fueler:StartStationRefill",
                             canInteract = function()

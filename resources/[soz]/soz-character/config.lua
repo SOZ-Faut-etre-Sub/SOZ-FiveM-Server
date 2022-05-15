@@ -26,3 +26,12 @@ Config.Locations = {
         },
     },
 }
+
+Config.NewPlayerDefaultItems = {
+    {name = "phone", quantity = 1},
+    {name = "cheese9", quantity = 4},
+    {name = "sausage4", quantity = 4},
+    {name = "grapejuice2", quantity = 4},
+    {name = "grapejuice3", quantity = 2},
+    {name = "grapejuice5", quantity = 2},
+}

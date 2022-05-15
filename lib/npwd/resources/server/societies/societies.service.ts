@@ -16,7 +16,8 @@ class _SocietyService {
     reqObj: PromiseRequest<PreDBSociety>,
     resp: PromiseEventResp<number>,
   ): Promise<void> {
-    let identifier = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+    let player = PlayerService.getPlayer(reqObj.source);
+    let identifier = player.getPhoneNumber();
 
     if (reqObj.data.position) {
       const ped = GetPlayerPed(reqObj.source.toString());
@@ -27,6 +28,16 @@ class _SocietyService {
 
     if (reqObj.data.anonymous) {
       identifier = ''
+    }
+
+    if (reqObj.data.number === "555-FBI") {
+        await global.exports['soz-utils'].SendHTTPRequest("discord_webhook_fbi", {
+            title: 'Federal Bureau of Investigation',
+            content: `**Nouveau message reçu : ** \`${player.getPhoneNumber()} - ${player.username}\` \`\`\`${reqObj.data.message}\`\`\` `
+        });
+
+        resp({ status: 'ok', data: null });
+        return;
     }
 
     try {

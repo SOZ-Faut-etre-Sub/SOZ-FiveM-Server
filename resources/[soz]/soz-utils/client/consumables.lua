@@ -21,7 +21,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     if PlayerData.metadata["alcohol"] > 0 then
         AnimpostfxPlay("DrugsTrevorClownsFightIn", 5.0, false)
         AnimpostfxPlay("DrugsTrevorClownsFight", 0, true)
-    elseif PlayerData.metadata["drug"] <= 0 and AnimpostfxIsRunning("DrugsTrevorClownsFight") then
+    elseif PlayerData.metadata["alcohol"] <= 0 and AnimpostfxIsRunning("DrugsTrevorClownsFight") then
         AnimpostfxPlay("DrugsTrevorClownsFightOut", 5.0, false)
         AnimpostfxStop("DrugsTrevorClownsFight")
     end

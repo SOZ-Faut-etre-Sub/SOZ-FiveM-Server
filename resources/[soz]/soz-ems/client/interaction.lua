@@ -1,8 +1,13 @@
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        return
+    end
+
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Facture",
+                color = PlayerData.job.id,
                 icon = "fas fa-file-invoice-dollar",
                 event = "lsmc:client:InvoicePlayer",
                 job = {["lsmc"] = 0},
@@ -12,6 +17,7 @@ CreateThread(function()
             },
             {
                 label = "Soigner",
+                color = PlayerData.job.id,
                 icon = "c:ems/heal.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
@@ -40,6 +46,7 @@ CreateThread(function()
             },
             {
                 label = "Réanimer",
+                color = PlayerData.job.id,
                 icon = "c:ems/revive.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
@@ -67,6 +74,7 @@ CreateThread(function()
             },
             {
                 label = "Réanimer",
+                color = PlayerData.job.id,
                 icon = "c:ems/revive.png",
                 canInteract = function(entity)
                     return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
@@ -92,6 +100,7 @@ CreateThread(function()
             },
             {
                 label = "Prise de sang",
+                color = PlayerData.job.id,
                 icon = "c:ems/take_blood.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
