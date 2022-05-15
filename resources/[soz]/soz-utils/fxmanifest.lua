@@ -16,7 +16,7 @@ files {
     "popgroups.ymt",
     "relationships.dat",
     "components/welcome/welcome.html",
-    "components/welcome/*.png",
+    "components/welcome/*.jpg",
 }
 
 ui_page "components/welcome/welcome.html"
