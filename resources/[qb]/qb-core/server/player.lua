@@ -336,15 +336,35 @@ function QBCore.Player.CreatePlayer(PlayerData)
         exports['soz-monitor']:Log('TRACE', 'Update player skin ' .. json.encode(skin), { player = self.PlayerData })
     end
 
+    self.Functions.UpdateMaxWeight = function()
+        local baseBag = 0
+        local jobBag = 0
+
+        if self.PlayerData.cloth_config["BaseClothSet"] then
+            baseBag = self.PlayerData.cloth_config["BaseClothSet"].Components["5"].Drawable
+        end
+        if self.PlayerData.cloth_config["JobClothSet"] then
+            jobBag = self.PlayerData.cloth_config["JobClothSet"].Components["5"].Drawable
+        end
+
+        if baseBag == 0 or jobBag == 0 then
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000)
+        else
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000)
+        end
+    end
+
     self.Functions.SetClothConfig = function(config, skipApply)
         self.PlayerData.cloth_config = config
         self.Functions.UpdatePlayerData(true)
+
+        self.Functions.UpdateMaxWeight()
 
         if not skipApply then
             TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
         end
 
-        exports['soz-monitor']:Log('TRACE', 'Update player cloth config ' .. json.encode(skin), { player = self.PlayerData })
+        exports['soz-monitor']:Log('TRACE', 'Update player cloth config ' .. json.encode(config), { player = self.PlayerData })
     end
 
     self.Functions.GetItemByName = function(item)
@@ -404,6 +424,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     -- At this point we are safe to emit new instance to third party resource for load handling
     TriggerEvent('QBCore:Server:PlayerLoaded', self)
     self.Functions.UpdatePlayerData()
+    self.Functions.UpdateMaxWeight()
 end
 
 -- Save player info to database (make sure citizenid is the primary key in your database)
