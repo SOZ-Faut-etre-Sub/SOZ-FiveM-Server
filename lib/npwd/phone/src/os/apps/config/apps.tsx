@@ -134,7 +134,7 @@ export const APPS: IAppConfig[] = [
     },
     {
         id: 'ZUTOM',
-        nameLocale: 'ZUTOM',
+        nameLocale: 'APPS_ZUTOM',
         color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
         path: '/zutom',
         Route: () => (

@@ -94,7 +94,7 @@ const ContactsInfoPage: React.FC = () => {
                         />
                     </div>
                     <div className="mt-4 grid gap-3 grid-cols-3">
-                        <ActionButton onClick={handleSend} disabled={message.length < 5}>
+                        <ActionButton onClick={handleSend} disabled={message.length < 3}>
                             <ChatIcon className="h-6 w-6"/>
                             <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND')}</p>
                         </ActionButton>
@@ -108,11 +108,12 @@ const ContactsInfoPage: React.FC = () => {
                             <p className="text-sm text-center">Rappel {anonymous ? 'interdit' : 'autorisé'}</p>
                         </ActionButton>
 
-                        <ActionButton onClick={handleSendWithLocation} disabled={message.length < 5}>
+                        <ActionButton onClick={handleSendWithLocation} disabled={message.length < 3}>
                             <LocationMarkerIcon className="h-6 w-6"/>
                             <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND_POSITION')}</p>
                         </ActionButton>
                     </div>
+                    {message.length < 3 && <p className="text-sm text-center text-red-500 pt-2">Votre message est trop court</p>}
                 </AppContent>
             </AppWrapper>
         </Transition>

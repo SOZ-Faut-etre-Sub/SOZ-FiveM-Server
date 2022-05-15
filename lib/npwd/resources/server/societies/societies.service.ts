@@ -67,9 +67,11 @@ class _SocietyService {
     reqObj: PromiseRequest<DBSocietyUpdate>,
     resp: PromiseEventResp<boolean>,
   ): Promise<void> {
-    let identifier = PlayerService.getPlayer(reqObj.source).getSocietyPhoneNumber();
+    const player = PlayerService.getPlayer(reqObj.source);
+    let identifier = player.getSocietyPhoneNumber();
 
     try {
+      reqObj.data.takenBy = player.username;
       const message = await this.contactsDB.updateMessage(reqObj.data);
       resp({ status: 'ok', data: message });
 

@@ -22,6 +22,7 @@ export const useMessageActions = (): MessageActionProps => {
                     message: messageDto.message,
                     position: messageDto.position,
                     isTaken: messageDto.isTaken,
+                    takenBy: messageDto.takenBy,
                     isDone: messageDto.isDone,
                     createdAt: messageDto.createdAt,
                     updatedAt: messageDto.updatedAt
