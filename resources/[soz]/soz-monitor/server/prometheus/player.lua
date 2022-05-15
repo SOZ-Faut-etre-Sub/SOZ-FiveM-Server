@@ -5,16 +5,18 @@ local function BuildListFromDatabase()
     local newPlayerList = {}
     local players = MySQL.query.await("SELECT * FROM player WHERE is_default = 1", {})
 
-    for _, player in ipairs(players) do
+    for _, player in pairs(players) do
         local playerData = player
 
-        playerData.money = json.decode(playerData.money)
-        playerData.job = json.decode(playerData.job)
-        playerData.position = json.decode(playerData.position)
-        playerData.metadata = json.decode(playerData.metadata)
-        playerData.charinfo = json.decode(playerData.charinfo)
-        playerData.skin = json.decode(playerData.skin)
-        playerData.cloth_config = json.decode(playerData.cloth_config)
+        print(playerData.job)
+
+        playerData.money = json.decode(player.money)
+        playerData.job = json.decode(player.job)
+        playerData.position = json.decode(player.position)
+        playerData.metadata = json.decode(player.metadata)
+        playerData.charinfo = json.decode(player.charinfo)
+        playerData.skin = json.decode(player.skin)
+        playerData.cloth_config = json.decode(player.cloth_config)
 
         if playerData.gang then
             playerData.gang = json.decode(playerData.gang)
@@ -33,23 +35,27 @@ local function OverrideConnected()
     local players = QBCore.Functions.GetQBPlayers()
     playerListConnected = {}
 
-    for _, player in ipairs(players) do
+    for _, player in pairs(players) do
         local playerData = player.PlayerData
 
-        playerList[playerData.license] = playerData
         playerListConnected[playerData.license] = playerData
-
         playerListConnected[playerData.license].connection_status = "connected"
     end
 end
 
 Citizen.CreateThread(function()
-    BuildListFromDatabase()
+    while true do
+        BuildListFromDatabase()
 
+        Citizen.Wait(60 * 1000)
+    end
+end)
+
+Citizen.CreateThread(function()
     while true do
         OverrideConnected()
 
-        Citizen.Wait(3000)
+        Citizen.Wait(4 * 1000)
     end
 end)
 
@@ -79,8 +85,12 @@ function GetPlayerMetrics()
     local labels = {}
 
     for id, player in pairs(playerList) do
+        if playerListConnected[id] then
+            player = playerListConnected[id]
+        end
+
         labels[id] = string.format("id=\"%s\",name=\"%s %s\",license=\"%s\",job=\"%s\",grade=\"%s\",status=\"%s\"", player.citizenid, player.charinfo.firstname,
-                                   player.charinfo.lastname, player.license, player.job.id, player.job.gradeId or 0, player.connection_status)
+                                   player.charinfo.lastname, player.license, player.job.id, player.job.grade or 0, player.connection_status)
     end
 
     metricsString = metricsString .. CreateMetrics("soz_player_connected", "gauge", "Is player connected", labels, function(player)
