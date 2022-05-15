@@ -7,7 +7,7 @@ local TotalDistance = 0
 
 HorodateurData = {Tarif = 1.6, TarifActuelle = 0, Distance = 0}
 
-local NpcData = {
+NpcData = {
     Active = false,
     CurrentNpc = nil,
     LastNpc = nil,
@@ -21,7 +21,7 @@ local NpcData = {
     CountDown = 180,
 }
 
-local function ResetNpcTask()
+function ResetNpcTask()
     NpcData = {
         Active = false,
         CurrentNpc = nil,
@@ -146,8 +146,7 @@ local function GetDeliveryLocation()
                                            Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y,
                                            Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z)
     SetBlipColour(NpcData.DeliveryBlip, 3)
-    SetBlipRoute(NpcData.DeliveryBlip, true)
-    SetBlipRouteColour(NpcData.DeliveryBlip, 3)
+    SetNewWaypoint(NpcData.DeliveryBlip.x, NpcData.DeliveryBlip.y)
     NpcData.LastDeliver = NpcData.CurrentDeliver
     CreateThread(function()
         while true do
@@ -218,8 +217,7 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
             NpcData.NpcBlip = AddBlipForCoord(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y,
                                               Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z)
             SetBlipColour(NpcData.NpcBlip, 3)
-            SetBlipRoute(NpcData.NpcBlip, true)
-            SetBlipRouteColour(NpcData.NpcBlip, 3)
+            SetNewWaypoint(NpcData.NpcBlip.x, NpcData.NpcData.y)
             NpcData.LastNpc = NpcData.CurrentNpc
             NpcData.Active = true
 
