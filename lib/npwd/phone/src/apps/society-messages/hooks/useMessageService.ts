@@ -17,13 +17,13 @@ export const useSocietyMessagesService = () => {
     const {visibility} = usePhoneVisibility();
     const [, setMessages] = useMessagesState()
 
-    const handleMessageBroadcast = ({id, conversation_id, source_phone, message, position, isTaken, isDone, createdAt, updatedAt}) => {
+    const handleMessageBroadcast = ({id, conversation_id, source_phone, message, position, isTaken, takenBy, isDone, createdAt, updatedAt}) => {
         if (visibility && pathname.includes('/society-messages')) {
             return;
         }
 
         setNotification({message});
-        updateLocalMessages({id, conversation_id, source_phone, message, position, isTaken, isDone, createdAt, updatedAt});
+        updateLocalMessages({id, conversation_id, source_phone, message, position, isTaken, takenBy, isDone, createdAt, updatedAt});
     };
 
     const handleResetMessages = async () => {
