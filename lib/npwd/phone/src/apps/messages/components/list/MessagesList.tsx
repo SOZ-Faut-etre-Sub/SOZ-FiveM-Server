@@ -29,7 +29,7 @@ const MessagesList = (): any => {
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder={t('MESSAGES.SEARCH_PLACEHOLDER')}
             />
-            <nav className="h-[780px] pb-10 my-2 overflow-y-auto" aria-label="Directory">
+            <nav className="h-[740px] pb-10 my-2 overflow-y-auto" aria-label="Directory">
                 <ul className={`relative divide-y ${theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'}`}>
                     {filteredConversations.map((conversation) => (
                         <li key={conversation.conversation_id} className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} w-full cursor-pointer`} onClick={() => goToConversation(conversation)}>

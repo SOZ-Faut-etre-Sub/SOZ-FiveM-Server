@@ -70,7 +70,7 @@ const WallpaperModal: React.FC = () => {
                             Fermer
                         </Button>
                     </AppTitle>
-                    <AppContent className="mt-8 mb-4 h-[780px] overflow-scroll">
+                    <AppContent className="mt-8 mb-4 h-[740px] overflow-scroll">
                         <List>
                             <SettingItem
                                 label={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE')}

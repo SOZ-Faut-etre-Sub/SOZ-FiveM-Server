@@ -22,7 +22,7 @@ export const AppWrapper: React.FC<AppWrapperTypes> = ({
     }
 
     return (
-        <div className={`${color()} p-0 m-0 relative flex flex-col h-full w-full min-h-[720px] ${className}`}>
+        <div className={`${color()} p-0 m-0 relative flex flex-col h-full w-full min-h-[700px] ${className}`}>
             {children}
         </div>
     );
