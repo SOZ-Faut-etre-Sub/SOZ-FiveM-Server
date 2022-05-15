@@ -237,13 +237,13 @@ QBShared.Items = {
     -- Handguns
     ['weapon_pistol'] = {
         ['name'] = 'weapon_pistol',
-        ['label'] = 'Walther P99',
+        ['label'] = 'Pistolet',
         ['weight'] = 2000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'A small firearm designed to be held in one hand'
+        ['description'] = 'Un pistolet très maniable, parfait pour assurer sa sécurité.'
     },
     ['weapon_pistol_mk2'] = {
         ['name'] = 'weapon_pistol_mk2',
