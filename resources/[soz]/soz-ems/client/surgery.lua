@@ -20,6 +20,20 @@ Citizen.CreateThread(function()
     end
 end)
 
+local function playerHasItem(item, amount)
+    for _, slot in pairs(PlayerData.items) do
+        if slot.name == item then
+            if amount then
+                return amount <= slot.amount
+            else
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
@@ -91,7 +105,7 @@ CreateThread(function()
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and
-                               not Operation
+                               not Operation and playerHasItem(ItemOrgan)
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Greffer un " .. MissingOrgane, 10000, false, true,
@@ -105,7 +119,6 @@ CreateThread(function()
                         TriggerServerEvent("lsmc:server:SetOrgane", id, MissingOrgane, true)
                     end)
                 end,
-                item = ItemOrgan,
             },
         },
         distance = 2.5,
