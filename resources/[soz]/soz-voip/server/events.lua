@@ -9,3 +9,12 @@ end)
 RegisterNetEvent("voip:server:muteMe", function(mute)
     MumbleSetPlayerMuted(source, mute)
 end)
+
+--- Sync items
+RegisterNetEvent("voip:server:setPlayerWithMegaphone", function(enabled)
+    TriggerClientEvent("voip:client:setPlayerWithMegaphone", -1, source, enabled)
+end)
+
+RegisterNetEvent("voip:server:setPlayerWithMicrophone", function(enabled)
+    TriggerClientEvent("voip:client:setPlayerWithMicrophone", -1, source, enabled)
+end)
