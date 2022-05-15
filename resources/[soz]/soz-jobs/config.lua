@@ -173,6 +173,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.Food.Craft] = {label = "Cuisiner"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
         },
+        resell = {
+            coords = vector4(-57.01, -2448.4, 7.24, 145.77), -- Must be vec4
+            ZoneName = "Resell:LSPort:Food",
+            SourceAccount = "farm_food",
+            TargetAccount = "safe_food",
+        },
     },
     [SozJobCore.JobType.News] = {
         label = "Twitch News",

@@ -27,6 +27,7 @@ Config.FarmAccountMoney = {
     ["farm_mtp"] = {money = 100000, marked_money = 0},
     ["farm_garbage"] = {money = 100000, marked_money = 0},
     ["farm_taxi"] = {money = 100000, marked_money = 0},
+    ["farm_food"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
