@@ -83,6 +83,11 @@ RegisterNUICallback("player/giveMarkedMoney", function(data, cb)
     cb(true)
 end)
 
+local currentResellZone = nil
+AddEventHandler("player/setCurrentResellZone", function(newValue)
+    currentResellZone = newValue
+end)
+
 RegisterNUICallback("player/giveItemToTarget", function(data, cb)
     local hit, _, _, entityHit, entityType, _ = ScreenToWorld()
     SetNuiFocus(false, false)
@@ -96,7 +101,14 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
 
         if amount and tonumber(amount) > 0 then
             SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
-            TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit)), data, tonumber(amount))
+            local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
+            if playerIdx == -1 then -- Is NPC
+                if currentResellZone ~= nil then
+                    TriggerServerEvent("inventory:server:ResellItem", data, tonumber(amount), currentResellZone)
+                end
+            else
+                TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
+            end
         end
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
