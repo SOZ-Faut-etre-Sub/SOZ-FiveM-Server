@@ -108,8 +108,8 @@ function GetPlayerMetrics()
     end)
 
     metricsString = metricsString .. CreateMetrics("soz_player_onduty", "gauge", "Is player on duty", labels, function(player)
-        if player.connection_status == "connected" then
-            return player.job.onduty
+        if player.connection_status == "connected" and player.job.onduty then
+            return 1
         end
 
         return 0
