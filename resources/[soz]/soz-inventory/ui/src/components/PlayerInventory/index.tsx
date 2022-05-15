@@ -45,8 +45,11 @@ const PlayerInventory = () => {
             if (event.data.playerInventory === undefined) return
 
             try {
+                let items = event.data.playerInventory.items
+                if (typeof items === 'object') items = Object.values(items)
+
                 setPlayerInventory(event.data.playerInventory);
-                setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `player_${item.slot}`})));
+                setPlayerInventoryItems(items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `player_${item.slot}`})));
                 setPlayerMoney(event.data.playerMoney);
 
                 setDisplay(true);
