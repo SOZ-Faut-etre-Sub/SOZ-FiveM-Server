@@ -1,4 +1,12 @@
-local function CreateItemsWithTextures(componentType, drawableId, textures)
+local function flatten(values)
+    local result = {}
+    for _, item in pairs(values) do
+        result[#result + 1] = item[1]
+    end
+    return result
+end
+
+local function CreateItemsWithTextures(componentType, drawableId, textures, torso)
     local items = {}
     for _, texture in pairs(textures) do
         local item = {
@@ -10,6 +18,10 @@ local function CreateItemsWithTextures(componentType, drawableId, textures)
             item.ApplyComponents[8] = {Drawable = 15, Texture = 0, Palette = 0}
         end
 
+        if torso then
+            item.ApplyComponents[3] = {Drawable = torso, Texture = 0, Palette = 0}
+        end
+
         table.insert(items, item)
     end
     return items
@@ -19,7 +31,7 @@ local sacCollections = {
     {
         Name = "Sacs",
         Price = 50,
-        Items = table.unpack({
+        Items = flatten({
             CreateItemsWithTextures(5, 44, {{Name = "Petit sac", Id = 0}}),
             CreateItemsWithTextures(5, 45, {{Name = "Grand sac", Id = 0}}),
         }),
@@ -34,7 +46,7 @@ Config.Products["ponsonbys"] = {
                 [1] = {
                     Name = "T-shirts & Polos",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 9, {
                             {Name = GetLabelText("U_FMM_9_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_9_1"), Id = 1},
@@ -263,7 +275,7 @@ Config.Products["ponsonbys"] = {
                 [2] = {
                     Name = "Pulls & gilets",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 11, {
                             {Name = GetLabelText("U_FMM_11_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_11_1"), Id = 1},
@@ -345,7 +357,7 @@ Config.Products["ponsonbys"] = {
                 [3] = {
                     Name = "Sweats & Hoodies",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 305, {
                             {Name = GetLabelText("CLO_VWM_U_15_0"), Id = 0},
                             {Name = GetLabelText("CLO_VWM_U_15_1"), Id = 1},
@@ -405,7 +417,7 @@ Config.Products["ponsonbys"] = {
                 [4] = {
                     Name = "Chemises",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 13, {
                             {Name = GetLabelText("U_FMM_13_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_13_1"), Id = 1},
@@ -647,7 +659,7 @@ Config.Products["ponsonbys"] = {
                 [1] = {
                     Name = "Jeans",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 4, {
                             {Name = GetLabelText("L_FMM_4_0"), Id = 0},
                             {Name = GetLabelText("L_FMM_4_1"), Id = 1},
@@ -659,7 +671,7 @@ Config.Products["ponsonbys"] = {
                 [2] = {
                     Name = "Short & Bermudas",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 6, {
                             {Name = GetLabelText("L_FMM_6_0"), Id = 0},
                             {Name = GetLabelText("L_FMM_6_1"), Id = 1},
@@ -705,7 +717,7 @@ Config.Products["ponsonbys"] = {
                 [3] = {
                     Name = "Costume",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 24, {
                             {Name = GetLabelText("CLO_HILF_L_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_HILF_L_0_1"), Id = 1},
@@ -840,7 +852,7 @@ Config.Products["ponsonbys"] = {
                 [1] = {
                     Name = "Derbies & Richelieus",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 3, {
                             {Name = GetLabelText("F_FMM_3_0"), Id = 0},
                             {Name = GetLabelText("F_FMM_3_1"), Id = 1},
@@ -930,7 +942,7 @@ Config.Products["ponsonbys"] = {
                 [2] = {
                     Name = "Chaussures basses",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 11, {
                             {Name = GetLabelText("F_FMM_11_9"), Id = 9},
                             {Name = GetLabelText("F_FMM_11_12"), Id = 12},
@@ -976,7 +988,7 @@ Config.Products["ponsonbys"] = {
                 [3] = {
                     Name = "Bottes",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 19, {{Name = GetLabelText("CLO_VALM_F_1_0"), Id = 0}}),
                         CreateItemsWithTextures(6, 52, {
                             {Name = GetLabelText("CLO_BIM_F_2_0"), Id = 0},
@@ -1002,7 +1014,7 @@ Config.Products["ponsonbys"] = {
                 [4] = {
                     Name = "Chaussons",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 41, {{Name = GetLabelText("CLO_S2M_F_0_0"), Id = 0}}),
                         --- TODO: trouver les bons labels
                         CreateItemsWithTextures(6, 87, {
@@ -1039,7 +1051,7 @@ Config.Products["ponsonbys"] = {
                 [1] = {
                     Name = "Chemises",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 83, {
                             {Name = GetLabelText("CLO_APF_U_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_APF_U_1_1"), Id = 1},
@@ -1394,7 +1406,7 @@ Config.Products["ponsonbys"] = {
                 [2] = {
                     Name = "Pulls & gilets",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 103, {
                             {Name = "(DEBUG) 103_0", Id = 0},
                             {Name = "(DEBUG) 103_1", Id = 1},
@@ -1446,7 +1458,7 @@ Config.Products["ponsonbys"] = {
                 [3] = {
                     Name = "Sweats & Hoodies",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 271, {
                             {Name = GetLabelText("CLO_BHF_U_7_4"), Id = 4},
                             {Name = GetLabelText("CLO_BHF_U_7_5"), Id = 5},
@@ -1494,7 +1506,7 @@ Config.Products["ponsonbys"] = {
                 [4] = {
                     Name = "T-shirts & Polos",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 105, {
                             {Name = GetLabelText("CLO_APF_U_23_0"), Id = 0},
                             {Name = GetLabelText("CLO_APF_U_23_1"), Id = 1},
@@ -1703,7 +1715,7 @@ Config.Products["ponsonbys"] = {
                 [1] = {
                     Name = "Pantalon",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 6, {
                             {Name = GetLabelText("L_FMF_6_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_6_1"), Id = 1},
@@ -1910,7 +1922,7 @@ Config.Products["ponsonbys"] = {
                 [2] = {
                     Name = "Maillots de bain",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 56, {
                             {Name = GetLabelText("CLO_APF_L_10_0"), Id = 0},
                             {Name = GetLabelText("CLO_APF_L_10_1"), Id = 1},
@@ -1924,7 +1936,7 @@ Config.Products["ponsonbys"] = {
                 [3] = {
                     Name = "Sous-Vêtements",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 19, {
                             {Name = GetLabelText("CLO_VALF_L_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_VALF_L_0_1"), Id = 1},
@@ -1975,7 +1987,7 @@ Config.Products["ponsonbys"] = {
                 [4] = {
                     Name = "Short & Bermudas",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 107, {
                             {Name = GetLabelText("CLO_BHF_L_3_0"), Id = 0},
                             {Name = GetLabelText("CLO_BHF_L_3_1"), Id = 1},
@@ -2027,7 +2039,7 @@ Config.Products["ponsonbys"] = {
                 [5] = {
                     Name = "Jupes",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 7, {
                             {Name = GetLabelText("L_FMF_7_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_7_1"), Id = 1},
@@ -2127,7 +2139,7 @@ Config.Products["ponsonbys"] = {
                 [1] = {
                     Name = "Chaussures basses",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 29, {
                             {Name = GetLabelText("CLO_HSTF_F_4_0"), Id = 0},
                             {Name = GetLabelText("CLO_HSTF_F_4_1"), Id = 1},
@@ -2144,7 +2156,7 @@ Config.Products["ponsonbys"] = {
                 [2] = {
                     Name = "Talons",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 0, {
                             {Name = GetLabelText("F_FMF_0_0"), Id = 0},
                             {Name = GetLabelText("F_FMF_0_1"), Id = 1},
@@ -2293,7 +2305,7 @@ Config.Products["suburban"] = {
                 [1] = {
                     Name = "T-shirts & Polos",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 0, {
                             {Name = GetLabelText("U_FMM_0_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_0_1"), Id = 1},
@@ -2304,7 +2316,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMM_0_7"), Id = 7},
                             {Name = GetLabelText("U_FMM_0_8"), Id = 8},
                             {Name = GetLabelText("U_FMM_0_11"), Id = 11},
-                        }),
+                        }, 0),
                         CreateItemsWithTextures(11, 1, {
                             {Name = GetLabelText("U_FMM_1_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_1_1"), Id = 1},
@@ -2317,9 +2329,9 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("U_FMM_1_11"), Id = 11},
                             {Name = GetLabelText("U_FMM_1_12"), Id = 12},
                             {Name = GetLabelText("U_FMM_1_14"), Id = 14},
-                        }),
-                        CreateItemsWithTextures(11, 2, {{Name = GetLabelText("U_FMM_2_9"), Id = 0}}),
-                        CreateItemsWithTextures(11, 8, {{Name = GetLabelText("U_FMM_8_0"), Id = 0}}),
+                        }, 0),
+                        CreateItemsWithTextures(11, 2, {{Name = GetLabelText("U_FMM_2_9"), Id = 0}}, 0),
+                        CreateItemsWithTextures(11, 8, {{Name = GetLabelText("U_FMM_8_0"), Id = 0}}, 8),
                         CreateItemsWithTextures(11, 16, {
                             {Name = GetLabelText("CLO_BBM_U_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_BBM_U_1_1"), Id = 1},
@@ -2372,7 +2384,7 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_INDM_D_1"), Id = 0},
                             {Name = GetLabelText("CLO_INDM_U_2_1"), Id = 1},
                         }),
-                        CreateItemsWithTextures(11, 56, {{Name = "(DEBUG) 56_0", Id = 0}}),
+                        CreateItemsWithTextures(11, 56, {{Name = "(DEBUG) 56_0", Id = 0}}, 0),
                         CreateItemsWithTextures(11, 71, {{Name = GetLabelText("CLO_LXM_U_1_0"), Id = 0}}),
                         CreateItemsWithTextures(11, 73, {
                             {Name = GetLabelText("CLO_LXM_U_5_4"), Id = 4},
@@ -2432,7 +2444,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 128_7", Id = 7},
                             {Name = "(DEBUG) 128_8", Id = 8},
                             {Name = "(DEBUG) 128_9", Id = 9},
-                        }),
+                        }, 0),
                         CreateItemsWithTextures(11, 146, {
                             {Name = "(DEBUG) 146_0", Id = 0},
                             {Name = "(DEBUG) 146_1", Id = 1},
@@ -2443,7 +2455,7 @@ Config.Products["suburban"] = {
                             {Name = "(DEBUG) 146_6", Id = 6},
                             {Name = "(DEBUG) 146_7", Id = 7},
                             {Name = "(DEBUG) 146_8", Id = 8},
-                        }),
+                        }, 0),
                         CreateItemsWithTextures(11, 152, {
                             {Name = GetLabelText("CLO_STM_U_5_0"), Id = 0},
                             {Name = GetLabelText("CLO_STM_U_5_1"), Id = 1},
@@ -2827,7 +2839,7 @@ Config.Products["suburban"] = {
                 [2] = {
                     Name = "Pulls & gilets",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 5, {
                             {Name = GetLabelText("U_FMM_5_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_5_1"), Id = 1},
@@ -3250,7 +3262,7 @@ Config.Products["suburban"] = {
                 [3] = {
                     Name = "Sweats & Hoodies",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 7, {
                             {Name = GetLabelText("U_FMM_7_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_7_1"), Id = 1},
@@ -3557,7 +3569,7 @@ Config.Products["suburban"] = {
                 [4] = {
                     Name = "Chemises",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 12, {
                             {Name = GetLabelText("U_FMM_12_0"), Id = 0},
                             {Name = GetLabelText("U_FMM_12_1"), Id = 1},
@@ -3937,7 +3949,7 @@ Config.Products["suburban"] = {
                 [1] = {
                     Name = "Jeans",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 0, {
                             {Name = GetLabelText("L_FMM_0_0"), Id = 0},
                             {Name = GetLabelText("L_FMM_0_1"), Id = 1},
@@ -4318,7 +4330,7 @@ Config.Products["suburban"] = {
                 [2] = {
                     Name = "Joggings & Survêtements",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 3, {
                             {Name = GetLabelText("L_FMM_3_0"), Id = 0},
                             {Name = GetLabelText("L_FMM_3_1"), Id = 1},
@@ -4626,7 +4638,7 @@ Config.Products["suburban"] = {
                 [3] = {
                     Name = "Shorts & Bermudas",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 2, {{Name = GetLabelText("L_FMM_2_11"), Id = 11}}),
                         CreateItemsWithTextures(4, 14, {
                             {Name = GetLabelText("L_FMM_14_0"), Id = 0},
@@ -4727,7 +4739,7 @@ Config.Products["suburban"] = {
                 [4] = {
                     Name = "USA",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 29, {
                             {Name = GetLabelText("CLO_INDM_L_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_INDM_L_0_1"), Id = 1},
@@ -4738,7 +4750,7 @@ Config.Products["suburban"] = {
                 [5] = {
                     Name = "Sous-Vêtements",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 61, {
                             {Name = GetLabelText("CLO_V2M_L_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_V2M_L_1_1"), Id = 1},
@@ -4760,7 +4772,7 @@ Config.Products["suburban"] = {
                 [6] = {
                     Name = "Peignoirs",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 119, {
                             {Name = "(DEBUG) 119_0", Id = 0},
                             {Name = "(DEBUG) 119_1", Id = 1},
@@ -4784,7 +4796,7 @@ Config.Products["suburban"] = {
                 [1] = {
                     Name = "Chaussures basses",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 1, {
                             {Name = GetLabelText("F_FMM_1_0"), Id = 0},
                             {Name = GetLabelText("F_FMM_1_1"), Id = 1},
@@ -4967,7 +4979,7 @@ Config.Products["suburban"] = {
                 [2] = {
                     Name = "Sneakers",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 2, {
                             {Name = "(DEBUG) 2_0", Id = 0},
                             {Name = GetLabelText("F_FMM_2_6"), Id = 6},
@@ -5187,7 +5199,7 @@ Config.Products["suburban"] = {
                 [3] = {
                     Name = "Sandales",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 5, {
                             {Name = GetLabelText("F_FMM_5_0"), Id = 0},
                             {Name = GetLabelText("F_FMM_5_1"), Id = 1},
@@ -5217,7 +5229,7 @@ Config.Products["suburban"] = {
                 [4] = {
                     Name = "Bottes",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 12, {
                             {Name = GetLabelText("F_FMM_12_0"), Id = 0},
                             {Name = GetLabelText("F_FMM_12_1"), Id = 1},
@@ -5459,7 +5471,7 @@ Config.Products["suburban"] = {
                 [5] = {
                     Name = "Sport & Marche",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 31, {
                             {Name = GetLabelText("CLO_S1M_F_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_S1M_F_0_1"), Id = 1},
@@ -5586,7 +5598,7 @@ Config.Products["suburban"] = {
                 [6] = {
                     Name = "Chaussons",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 42, {
                             {Name = GetLabelText("CLO_S2M_F_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_S2M_F_1_1"), Id = 1},
@@ -5683,7 +5695,7 @@ Config.Products["suburban"] = {
                 [1] = {
                     Name = "T-shirts & Polos",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 255, {
                             {Name = GetLabelText("CLO_H2F_U_6_0"), Id = 0},
                             {Name = GetLabelText("CLO_H2F_U_6_1"), Id = 1},
@@ -6472,7 +6484,7 @@ Config.Products["suburban"] = {
                 [2] = {
                     Name = "Pulls & gilets",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 42, {
                             {Name = GetLabelText("CLO_LTSFU_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_LTSFU_0_1"), Id = 1},
@@ -7241,7 +7253,7 @@ Config.Products["suburban"] = {
                 [3] = {
                     Name = "Sweats & Hoodies",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 3, {
                             {Name = GetLabelText("U_FMF_3_0"), Id = 0},
                             {Name = GetLabelText("U_FMF_3_1"), Id = 1},
@@ -7672,7 +7684,7 @@ Config.Products["suburban"] = {
                 [4] = {
                     Name = "Chemises",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(11, 9, {
                             {Name = GetLabelText("U_FMF_9_0"), Id = 0},
                             {Name = GetLabelText("U_FMF_9_1"), Id = 1},
@@ -8018,7 +8030,7 @@ Config.Products["suburban"] = {
                 [1] = {
                     Name = "Jeans",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 0, {
                             {Name = GetLabelText("L_FMF_0_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_0_1"), Id = 1},
@@ -8083,7 +8095,7 @@ Config.Products["suburban"] = {
                 [2] = {
                     Name = "Joggings & Survêtements",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 53, {{Name = GetLabelText("CLO_EXF_AL_7_0_0"), Id = 0}}),
                         CreateItemsWithTextures(4, 60, {
                             {Name = "(DEBUG) 60_0", Id = 0},
@@ -8202,7 +8214,7 @@ Config.Products["suburban"] = {
                 [3] = {
                     Name = "Shorts & Bermudas",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 2, {
                             {Name = GetLabelText("L_FMF_2_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_2_1"), Id = 1},
@@ -8337,7 +8349,7 @@ Config.Products["suburban"] = {
                 [4] = {
                     Name = "Jupes",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 9, {
                             {Name = GetLabelText("L_FMF_9_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_9_1"), Id = 1},
@@ -8386,7 +8398,7 @@ Config.Products["suburban"] = {
                 [5] = {
                     Name = "Sous-Vêtements",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 15, {
                             {Name = GetLabelText("L_FMF_15_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_15_3"), Id = 3},
@@ -8397,7 +8409,7 @@ Config.Products["suburban"] = {
                 [6] = {
                     Name = "Maillots de bain",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 15, {
                             {Name = GetLabelText("L_FMF_15_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_15_3"), Id = 3},
@@ -8423,7 +8435,7 @@ Config.Products["suburban"] = {
                 [7] = {
                     Name = "Leggings",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 0, {
                             {Name = GetLabelText("L_FMF_0_3"), Id = 3},
                             {Name = GetLabelText("L_FMF_0_4"), Id = 4},
@@ -8505,7 +8517,7 @@ Config.Products["suburban"] = {
                 [8] = {
                     Name = "Pantalons",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(4, 3, {
                             {Name = GetLabelText("L_FMF_3_0"), Id = 0},
                             {Name = GetLabelText("L_FMF_3_1"), Id = 1},
@@ -8853,7 +8865,7 @@ Config.Products["suburban"] = {
                 [1] = {
                     Name = "Chaussures basses",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 3, {
                             {Name = GetLabelText("F_FMF_3_0"), Id = 0},
                             {Name = GetLabelText("F_FMF_3_1"), Id = 1},
@@ -8930,7 +8942,7 @@ Config.Products["suburban"] = {
                 [2] = {
                     Name = "Sneakers",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 1, {
                             {Name = GetLabelText("F_FMF_1_0"), Id = 0},
                             {Name = GetLabelText("F_FMF_1_1"), Id = 1},
@@ -9148,7 +9160,7 @@ Config.Products["suburban"] = {
                 [3] = {
                     Name = "Sandales",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 5, {
                             {Name = GetLabelText("F_FMF_5_0"), Id = 0},
                             {Name = GetLabelText("F_FMF_5_1"), Id = 1},
@@ -9192,7 +9204,7 @@ Config.Products["suburban"] = {
                 [4] = {
                     Name = "Bottes",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 2, {
                             {Name = GetLabelText("F_FMF_2_0"), Id = 0},
                             {Name = GetLabelText("F_FMF_2_1"), Id = 1},
@@ -9440,7 +9452,7 @@ Config.Products["suburban"] = {
                 [5] = {
                     Name = "Sport & Marche",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 47, {
                             {Name = "(DEBUG) 47_0", Id = 0},
                             {Name = "(DEBUG) 47_1", Id = 1},
@@ -9545,7 +9557,7 @@ Config.Products["suburban"] = {
                 [6] = {
                     Name = "Chaussons",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 61, {
                             {Name = "(DEBUG) 61_0", Id = 0},
                             {Name = "(DEBUG) 61_1", Id = 1},
@@ -9596,7 +9608,7 @@ Config.Products["suburban"] = {
                 [7] = {
                     Name = "Bottines",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 22, {
                             {Name = GetLabelText("CLO_HP_F_F_1_0"), Id = 0},
                             {Name = GetLabelText("CLO_HP_F_F_1_1"), Id = 1},
@@ -9785,7 +9797,7 @@ Config.Products["suburban"] = {
                 [8] = {
                     Name = "Bottines",
                     Price = 50,
-                    Items = table.unpack({
+                    Items = flatten({
                         CreateItemsWithTextures(6, 49, {
                             {Name = "(DEBUG) 49_0", Id = 0},
                             {Name = "(DEBUG) 49_1", Id = 1},
