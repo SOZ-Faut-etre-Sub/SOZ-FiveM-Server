@@ -1,12 +1,15 @@
 local plyCoords = GetEntityCoords(PlayerPedId())
 
+local playerWithMegaphone = {}
+local playerWithMicrophone = {}
+
 function orig_addProximityCheck(ply)
     local tgtPed = GetPlayerPed(ply)
     local voiceRange = Config.VoiceModes[CurrentPlayer.VoiceMode]
 
-    if LocalPlayer.state.useMegaphone == true then
+    if playerWithMegaphone[CurrentPlayer.ServerId] then
         voiceRange = Config.Megaphone.Range
-    elseif LocalPlayer.state.useMicrophone == true then
+    elseif playerWithMicrophone[CurrentPlayer.ServerId] then
         voiceRange = Config.Microphone.Range
     end
 
@@ -30,7 +33,7 @@ function addNearbyPlayers()
             MumbleAddVoiceTargetChannel(Config.VoiceTarget, serverId)
         end
 
-        if Player(serverId).state.useMegaphone == true then
+        if playerWithMegaphone[serverId] then
             ApplySubmixEffect("megaphone", serverId)
         end
 
@@ -63,6 +66,16 @@ function setSpectatorMode(enabled)
         end
     end
 end
+
+RegisterNetEvent("voip:client:setPlayerWithMegaphone", function(player, enabled)
+    print("setPlayerWithMegaphone", player, enabled)
+    playerWithMegaphone[player] = enabled
+end)
+
+RegisterNetEvent("voip:client:setPlayerWithMicrophone", function(player, enabled)
+    print("setPlayerWithMicrophone", player, enabled)
+    playerWithMicrophone[player] = enabled
+end)
 
 Citizen.CreateThread(function()
     while true do
