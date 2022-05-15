@@ -321,6 +321,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
         local removePointMenu = MenuV:InheritMenu(menu, {subtitle = "Retirer des points"})
         local removeLicenseMenu = MenuV:InheritMenu(menu, {subtitle = "Retirer un permis"})
+        local giveLicenseMenu = MenuV:InheritMenu(menu, {subtitle = "Attribuer un permis"})
 
         for license, value in pairs(playerLicenses) do
             if type(value) == "number" and value > 1 then
@@ -414,8 +415,54 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
             end
         end
 
+        for _, license in pairs({"weapon", "hunting", "fishing"}) do
+            if playerLicenses[license] then
+                giveLicenseMenu:AddButton({
+                    label = Config.Licenses[license].label,
+                    rightLabel = "Déjà valide",
+                    value = nil,
+                    disabled = true,
+                })
+            else
+                giveLicenseMenu:AddButton({
+                    label = Config.Licenses[license].label,
+                    value = nil,
+                    select = function()
+                        local ped = PlayerPedId()
+                        QBCore.Functions.Progressbar("job:police:license", "Enregistrement du permis en cours...", 5000, false, true,
+                                                     {
+                            disableMovement = false,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {animDict = "missheistdockssetup1clipboard@base", anim = "base", flags = 16}, {
+                            model = "prop_notepad_01",
+                            bone = 18905,
+                            coords = {x = 0.1, y = 0.02, z = 0.05},
+                            rotation = {x = 10.0, y = 0.0, z = 0.0},
+                        }, {
+                            model = "prop_pencil_01",
+                            bone = 58866,
+                            coords = {x = 0.11, y = -0.02, z = 0.001},
+                            rotation = {x = -120.0, y = 0.0, z = 0.0},
+                        }, function() -- Done
+                            if #(GetEntityCoords(ped) - GetEntityCoords(GetPlayerPed(player))) < 2.5 then
+                                TriggerServerEvent("police:server:GiveLicense", GetPlayerServerId(player), license)
+                            else
+                                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                            end
+                        end)
+
+                        removeLicenseMenu:Close()
+                        menu:Close()
+                    end,
+                })
+            end
+        end
+
         menu:AddButton({label = "Retirer des points sur un permis", value = removePointMenu})
         menu:AddButton({label = "Retirer complètement un permis", value = removeLicenseMenu})
+        menu:AddButton({label = "Attribuer un permis", value = giveLicenseMenu})
     end)
 end
 
