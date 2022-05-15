@@ -66,15 +66,17 @@ function TenueEntry(menu)
             label = component.label,
             value = componentEquipped(ped, component.componentId) or propEquipped(ped, component.propId),
             change = function(_, value)
+                FreezeEntityPosition(PlayerPedId(), true)
                 if component.propId ~= nil then
                     QBCore.Functions.RequestAnimDict("mp_masks@on_foot")
-                    TaskPlayAnim(ped, "mp_masks@on_foot", "put_on_mask", 8.0, -8.0, 2000, 16, 0, 1, 1, 1)
+                    TaskPlayAnim(ped, "mp_masks@on_foot", "put_on_mask", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
                     Wait(2000)
                 elseif component.componentId ~= nil then
                     QBCore.Functions.RequestAnimDict("anim@mp_yacht@shower@male@")
-                    TaskPlayAnim(ped, "anim@mp_yacht@shower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8.0, 3000, 16, 0, 1, 1, 1)
+                    TaskPlayAnim(ped, "anim@mp_yacht@shower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8.0, 3000, 16, 0, 0, 0, 0)
                     Wait(3000)
                 end
+                FreezeEntityPosition(PlayerPedId(), false)
                 TriggerServerEvent("soz-character:server:UpdateClothConfig", component.value, not value)
             end,
         })
