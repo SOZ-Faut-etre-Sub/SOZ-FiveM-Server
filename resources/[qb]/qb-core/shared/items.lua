@@ -2726,4 +2726,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour retrouver ton chez toi !'
     },
+
+    -- other
+    ['welcome_book'] = {
+        ['name'] = 'welcome_book',
+        ['label'] = 'Dépliant Touristique',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Bienvenue sur SOZ !'
+    },
 }

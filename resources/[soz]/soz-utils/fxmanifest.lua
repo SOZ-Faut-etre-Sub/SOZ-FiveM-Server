@@ -11,6 +11,14 @@ server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
 data_file "FIVEM_LOVES_YOU_4B38E96CC036038F" "events.meta"
 data_file "FIVEM_LOVES_YOU_341B23A2F0E0F131" "popgroups.ymt"
 
-files {"events.meta", "popgroups.ymt", "relationships.dat"}
+files {
+    "events.meta",
+    "popgroups.ymt",
+    "relationships.dat",
+    "components/welcome/welcome.html",
+    "components/welcome/*.jpg",
+}
+
+ui_page "components/welcome/welcome.html"
 
 lua54 "yes"
