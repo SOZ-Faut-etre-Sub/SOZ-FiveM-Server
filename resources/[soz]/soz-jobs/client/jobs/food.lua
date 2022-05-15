@@ -657,8 +657,8 @@ Citizen.CreateThread(function()
             invincible = true,
             blockevents = true,
             scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {options = {}}
-        }
+            target = {options = {}},
+        },
     })
 
     local zone = BoxZone:Create(coords, 3.0, 3.0, {
@@ -666,7 +666,6 @@ Citizen.CreateThread(function()
         heading = coords.w,
         minZ = coords.z - 2.0,
         maxZ = coords.z + 2.0,
-        debugPoly = true,
     })
     zone:onPlayerInOut(function(isInside)
         if isInside then
