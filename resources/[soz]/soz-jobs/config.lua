@@ -2,6 +2,7 @@ SozJobCore = {}
 
 SozJobCore.JobType = {
     Unemployed = "unemployed",
+    FBI = "fbi",
     Adsl = "adsl",
     Delivery = "delivery",
     Religious = "religious",
@@ -98,6 +99,13 @@ SozJobCore.Jobs = {
             },
         },
         grades = {},
+        permissions = {},
+    },
+    [SozJobCore.JobType.FBI] = {
+        label = "Federal Bureau of Investigation",
+        platePrefix = " FBI",
+        grades = {},
+        menuCallback = "police:client:OpenSocietyMenu",
         permissions = {},
     },
     [SozJobCore.JobType.LSPD] = {

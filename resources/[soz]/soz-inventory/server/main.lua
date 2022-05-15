@@ -151,6 +151,14 @@ function Inventory.CalculateWeight(items)
     return weight
 end
 
+function Inventory.SetMaxWeight(inv, weight)
+    inv = Inventory(inv)
+    if inv then
+        inv.maxWeight = weight
+    end
+end
+exports("SetMaxWeight", Inventory.SetMaxWeight)
+
 function Inventory.SlotWeight(item, slot)
     local weight = item.weight * slot.amount
     if not slot.metadata then
@@ -576,7 +584,7 @@ function Inventory.SetSlot(inv, item, amount, metadata, slot)
             name = item.name,
             label = item.label,
             amount = newAmount,
-            metadata = metadata,
+            metadata = metadata or currentSlot.metadata,
             description = item.description,
             weight = item.weight,
             type = item.type,

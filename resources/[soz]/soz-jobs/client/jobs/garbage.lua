@@ -24,6 +24,7 @@ CreateThread(function()
     for item, _ in pairs(GarbageConfig.RecycleItem) do
         garbageActions[#garbageActions + 1] = {
             label = ("Recycler \"%s\""):format(QBCore.Shared.Items[item].label),
+            color = "garbage",
             icon = "c:bluebird/recycler.png",
             event = "jobs:client:garbage:processBags",
             item = item,

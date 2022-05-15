@@ -1,9 +1,14 @@
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        return
+    end
+
     exports["qb-target"]:AddBoxZone("police:moneychecker", vector3(586.82, 13.41, 76.63), 2.4, 0.8,
                                     {name = "police:moneychecker", heading = 350, minZ = 76.63, maxZ = 77.63}, {
         options = {
             {
                 label = "Analyser",
+                color = PlayerData.job.id,
                 icon = "c:police/fouiller.png",
                 event = "police:client:MoneyChecker",
                 canInteract = function(player)
