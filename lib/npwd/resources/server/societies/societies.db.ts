@@ -20,7 +20,7 @@ export class _SocietiesDB {
   }
 
   async updateMessage(
-    { id, take, done }: DBSocietyUpdate,
+    { id, take, takenBy, done }: DBSocietyUpdate,
   ): Promise<boolean> {
     const query = `UPDATE phone_society_messages SET isTaken=?, isDone=? WHERE id=?`;
     const [setResult] = await DbInterface._rawExec(query, [take, done, id]);

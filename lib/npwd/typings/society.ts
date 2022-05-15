@@ -9,6 +9,7 @@ export interface PreDBSociety {
 export interface DBSocietyUpdate {
   id: number;
   take: boolean;
+  takenBy: string;
   done: boolean;
 }
 
@@ -26,6 +27,7 @@ export interface SocietyMessage {
   message: string;
   position: string;
   isTaken: boolean;
+  takenBy: string|null;
   isDone: boolean;
   createdAt: string;
   updatedAt: string;
