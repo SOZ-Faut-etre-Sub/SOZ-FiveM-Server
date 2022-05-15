@@ -18,6 +18,7 @@ local function GenerateMenu()
     personalMenu:ClearItems()
     personalMenu:SetSubtitle(string.format("%s %s", PlayerData.charinfo.firstname, PlayerData.charinfo.lastname))
 
+    WelcomeEntry(personalMenu)
     IdentityEntry(personalMenu)
     KeysEntry(personalMenu)
     TenueEntry(personalMenu)
