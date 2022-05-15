@@ -22,10 +22,10 @@ function ClothingShop:setupCam()
         cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 
         SetCamCoord(cam, GetEntityCoords(ped))
-        SetCamRot(cam, 0.0, 0.0, 0.0)
+        SetCamRot(cam, -20.0, 0.0, 0.0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 0, true, true)
-        SetCamCoord(cam, x, y - 0.5, z + 0.7)
+        SetCamCoord(cam, x, y - 2.0, z + 1.0)
 
         self:playIdleAnimation()
     end
@@ -83,6 +83,19 @@ function ClothingShop:GenerateMenu(skipIntro)
     self:deleteCam()
     self:setupCam()
 
+    shopMenu:AddCheckbox({
+        label = "Libérer la caméra",
+        value = cam,
+        change = function(_, value)
+            if value then
+                self:deleteCam()
+                FreezeEntityPosition(PlayerPedId(), true)
+            else
+                self:setupCam()
+            end
+        end,
+    })
+
     for categoryID, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
         local partMenu = MenuV:InheritMenu(shopMenu, {subtitle = content.Name})
 
@@ -100,8 +113,14 @@ function ClothingShop:GenerateMenu(skipIntro)
                     value = 0,
                     values = itemOptions,
                     change = function(_, value)
-                        for id, component in pairs(itemOptions[value].item.Components) do
-                            SetPedComponentVariation(PlayerPedId(), id, component.Drawable, component.Texture or 0, component.Palette or 0);
+                        local ped = PlayerPedId()
+                        for id, component in pairs(itemOptions[value].item.ApplyComponents) do
+                            SetPedComponentVariation(ped, id, component.Drawable, component.Texture or 0, component.Palette or 0);
+                        end
+
+                        local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
+                        if torsoDrawable ~= -1 and torsoTexture ~= -1 then
+                            SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
                         end
                     end,
                     select = function(_, value)
