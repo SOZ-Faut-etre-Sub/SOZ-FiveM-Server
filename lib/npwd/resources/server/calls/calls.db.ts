@@ -23,7 +23,7 @@ export class CallsRepo {
         limit = FetchDefaultLimits.CALLS_FETCH_LIMIT,
     ): Promise<CallHistoryItem[]> {
         const query =
-            'SELECT * FROM phone_calls WHERE receiver = ? OR transmitter = ? ORDER BY id DESC LIMIT ?';
+            'SELECT * FROM phone_calls WHERE receiver = ? OR transmitter = ? ORDER BY start DESC LIMIT ?';
         const [result] = await DbInterface._rawExec(query, [phoneNumber, phoneNumber, limit]);
 
         return <CallHistoryItem[]>result;
