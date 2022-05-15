@@ -13,4 +13,7 @@ client_scripts {
     "client/components/*.lua",
 }
 
+ui_page "client/components/welcome.html"
+files {"client/components/welcome.html"}
+
 dependencies {"qb-core", "soz-hud", "menuv"}
