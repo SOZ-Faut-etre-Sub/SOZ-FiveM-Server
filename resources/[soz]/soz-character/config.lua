@@ -29,6 +29,7 @@ Config.Locations = {
 
 Config.NewPlayerDefaultItems = {
     {name = "phone", quantity = 1},
+    {name = "welcome_book", quantity = 1},
     {name = "cheese9", quantity = 4},
     {name = "sausage4", quantity = 4},
     {name = "grapejuice2", quantity = 4},

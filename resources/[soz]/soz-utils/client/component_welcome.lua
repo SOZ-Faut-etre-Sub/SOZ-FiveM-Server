@@ -1,0 +1,10 @@
+RegisterNUICallback("welcome-hide", function(data, cb)
+    SendNUIMessage({action = "hide"})
+    SetNuiFocus(false, false)
+    cb("ok")
+end)
+
+RegisterNetEvent("soz-utils:welcome-show", function()
+    SendNUIMessage({action = "show"})
+    SetNuiFocus(true, true)
+end)
