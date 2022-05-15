@@ -133,13 +133,13 @@ export const useSettingsAPI = () => {
             }).then((serverResp) => {
                 if (serverResp.status !== 'ok') {
                     return addAlert({
-                        message: t('CONTACTS.FEEDBACK.ADD_FAILED'),
+                        message: t('SETTINGS.FEEDBACK.UPDATE_FAILED'),
                         type: 'error',
                     });
                 }
 
                 addAlert({
-                    message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
+                    message: t('SETTINGS.FEEDBACK.UPDATE_SUCCESS'),
                     type: 'success',
                 });
             });
