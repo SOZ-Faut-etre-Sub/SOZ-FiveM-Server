@@ -10,10 +10,10 @@ client_scripts {
     "@menuv/menuv.lua",
     "@soz-character/client/skin/create/default.lua",
     "client/main.lua",
-    "client/components/*.lua",
+    "client/components/**/*.lua",
 }
 
-ui_page "client/components/welcome.html"
-files {"client/components/welcome.html"}
+ui_page "client/components/welcome/welcome.html"
+files {"client/components/welcome/welcome.html", "client/components/welcome/*.png"}
 
 dependencies {"qb-core", "soz-hud", "menuv"}
