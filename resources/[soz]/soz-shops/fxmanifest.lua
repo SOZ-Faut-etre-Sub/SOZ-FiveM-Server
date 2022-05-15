@@ -6,6 +6,7 @@ shared_scripts {"config/*.lua", "config/datasource/*.json"}
 
 client_scripts {
     "@menuv/menuv.lua",
+    "@soz-character/client/skin/clothing.lua",
     "@soz-character/client/skin/menu/menu.lua",
 
     "client/main.lua",
