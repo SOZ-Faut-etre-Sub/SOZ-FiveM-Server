@@ -21,10 +21,6 @@ function GetProperTorso(ped, drawable, texture)
         end
     end
 
-    if torsoDrawable == -1 or torsoDrawable == nil or torsoTexture == -1 or torsoTexture == nil then
-        torsoDrawable, torsoTexture = 15, 0
-    end
-
     return torsoDrawable, torsoTexture
 end
 
