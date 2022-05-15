@@ -1,13 +1,15 @@
 -- Get all metrics about inventory
 local playerInventoryList = {}
+local playerInventoryListConnected = {}
 
 local function BuildListFromDatabase()
     local players = MySQL.query.await("SELECT * FROM player WHERE is_default = 1", {})
+    local newPlayerInventoryList = {}
 
-    for _, player in ipairs(players) do
+    for _, player in pairs(players) do
         local charinfo = json.decode(player.charinfo)
 
-        playerInventoryList[player.citizenid] = {
+        newPlayerInventoryList[player.citizenid] = {
             name = charinfo.firstname .. " " .. charinfo.lastname,
             items = json.decode(player.inventory),
             type = "player",
@@ -15,14 +17,17 @@ local function BuildListFromDatabase()
             maxWeight = 80000,
         }
     end
+
+    playerInventoryList = newPlayerInventoryList
 end
 
 local function OverrideConnected()
     local players = QBCore.Functions.GetQBPlayers()
+    local newPlayerInventoryListConnected = {}
 
-    for _, player in ipairs(players) do
+    for _, player in pairs(players) do
         local playerData = player.PlayerData
-        playerInventoryList[playerData.citizenid] = {
+        newPlayerInventoryListConnected[playerData.citizenid] = {
             name = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname,
             items = playerData.items,
             type = "player",
@@ -30,15 +35,23 @@ local function OverrideConnected()
             maxWeight = 80000,
         }
     end
+
+    playerInventoryListConnected = newPlayerInventoryListConnected
 end
 
 Citizen.CreateThread(function()
-    BuildListFromDatabase()
+    while true do
+        BuildListFromDatabase()
 
+        Citizen.Wait(60 * 1000)
+    end
+end)
+
+Citizen.CreateThread(function()
     while true do
         OverrideConnected()
 
-        Citizen.Wait(3000)
+        Citizen.Wait(4 * 1000)
     end
 end)
 
@@ -58,6 +71,10 @@ local function BuildInventoryMetrics(inventoryMetrics, name, description, type, 
     end
 
     for id, inventoryPlayer in pairs(playerInventoryList) do
+        if playerInventoryListConnected[id] then
+            inventoryPlayer = playerInventoryListConnected[id]
+        end
+
         metricsString = metricsString .. string.format([[
 %s{id="%s",type="player",label="%s",owner="%s"} %d
 ]], name, id, inventoryPlayer.name, id, getValue(inventoryPlayer))
@@ -85,7 +102,7 @@ function GetInventoryMetrics()
 
         local weight = 0
 
-        for _, item in ipairs(inventoryMetric.items) do
+        for _, item in pairs(inventoryMetric.items) do
             local itemDef = QBCore.Shared.Items[item.name]
 
             if itemDef then
@@ -118,6 +135,10 @@ soz_inventory_item_count{id="%s",type="%s",label="%s",owner="%s",item_type="%s",
     end
 
     for id, inventoryPlayer in pairs(playerInventoryList) do
+        if playerInventoryListConnected[id] then
+            inventoryPlayer = playerInventoryListConnected[id]
+        end
+
         if itemsTtype == "table" then
             for _, item in pairs(inventoryPlayer.items) do
                 local itemDef = QBCore.Shared.Items[item.name]
