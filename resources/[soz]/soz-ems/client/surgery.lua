@@ -9,6 +9,7 @@ local surgery = BoxZone:Create(vector3(334.97, -1446.74, 32.51), 8.4, 6.2, {
 InsideSurgery = false
 Operation = nil
 MissingOrgane = nil
+ItemOrgan = nil
 
 Citizen.CreateThread(function()
     while true do
@@ -23,7 +24,23 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
     if not duty then
         return
     end
+end)
 
+local function playerHasItem(item, amount)
+    for _, slot in pairs(PlayerData.items) do
+        if slot.name == item then
+            if amount then
+                return amount <= slot.amount
+            else
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
@@ -98,7 +115,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and
-                               not Operation
+                               not Operation and playerHasItem(ItemOrgan)
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Greffer un " .. MissingOrgane, 10000, false, true,
@@ -122,4 +139,5 @@ RegisterNetEvent("lsmc:client:SetOperation")
 AddEventHandler("lsmc:client:SetOperation", function(val, missing)
     Operation = val
     MissingOrgane = missing
+    ItemOrgan = MissingOrgane:lower()
 end)
