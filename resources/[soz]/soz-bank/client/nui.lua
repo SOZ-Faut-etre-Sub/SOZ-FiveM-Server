@@ -40,7 +40,9 @@ RegisterNetEvent("banking:openATMScreen", function(data)
 end)
 
 RegisterNetEvent("banking:openSocietyBankScreen", function()
-    openBankScreen(PlayerData.job.id)
+    local currentBank = exports["soz-bank"]:GetCurrentBank()
+    local accountId = QBCore.Functions.TriggerRpc("banking:server:getBankAccount", currentBank.bank)
+    openBankScreen(PlayerData.job.id, false, accountId)
 end)
 
 RegisterNUICallback("NUIFocusOff", function(data, cb)
