@@ -8,10 +8,7 @@ local RadarMessage = {
 
 CreateThread(function()
     for _, radar in pairs(Config.Radars) do
-        local prop = CreateObjectNoOffset(radar_props, radar.props.x, radar.props.y, radar.props.z, true, true, false)
-        SetEntityDistanceCullingRadius(prop, 8000.0)
-        SetEntityHeading(prop, radar.props.w)
-        FreezeEntityPosition(prop, true)
+        exports["soz-utils"]:CreateObject(radar_props, radar.props.x, radar.props.y, radar.props.z, radar.props.w, 8000.0, true)
     end
 end)
 

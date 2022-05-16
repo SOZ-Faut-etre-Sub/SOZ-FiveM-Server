@@ -19,11 +19,7 @@ end)
 
 --- Events
 RegisterNetEvent("police:server:AddSpike", function(position)
-    local spike = CreateObjectNoOffset(spike_prop, position.x, position.y, position.z, true, true, false)
-    SetEntityDistanceCullingRadius(spike, 8000.0)
-    SetEntityHeading(spike, position.w)
-    FreezeEntityPosition(spike, true)
-
+    local spike = exports["soz-utils"]:CreateObject(spike_prop, position.x, position.y, position.z, position.w, 8000.0, true)
     Spikes[NetworkGetNetworkIdFromEntity(spike)] = position
 
     TriggerClientEvent("police:client:SyncSpikes", -1, Spikes)
