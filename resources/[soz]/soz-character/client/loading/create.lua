@@ -62,6 +62,7 @@ end
 function CharacterCreate(SpawnId, charInfo, character)
     local playerPed = PlayerPedId()
 
+    FreezeEntityPosition(playerPed, true)
     SetEntityVisible(playerPed, true)
     SetNuiFocus(false, false)
 

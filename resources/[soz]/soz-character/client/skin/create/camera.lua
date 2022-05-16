@@ -20,15 +20,15 @@ Camera.Activate = function(delay)
         Citizen.Wait(delay)
     end
 
-    Citizen.Wait(1000)
-
     if not DoesCamExist(Camera.entity) then
         Camera.entity = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
     end
 
     local playerPed = PlayerPedId()
-    FreezePedCameraRotation(playerPed, true)
     FreezeEntityPosition(playerPed, false)
+    Citizen.Wait(1000)
+
+    FreezePedCameraRotation(playerPed, true)
 
     PlayIdleAnimation()
 
