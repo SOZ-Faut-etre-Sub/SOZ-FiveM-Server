@@ -32,4 +32,4 @@ function CreateObject(model, x, y, z, w, culling, freeze)
     return entity
 end
 
-export('CreateObject', CreateObject)
+exports('CreateObject', CreateObject)
