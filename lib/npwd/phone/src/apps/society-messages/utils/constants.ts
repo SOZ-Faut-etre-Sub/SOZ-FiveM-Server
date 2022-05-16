@@ -9,6 +9,7 @@ export const MockSocietyMessages: SocietyMessage[] = [
         position: '{"x":205.12088012695312,"y":1160.4395751953125,"z":226.99560546875}',
         isTaken: false,
         takenBy: null,
+        takenByUsername: null,
         isDone: false,
         createdAt: '2022-01-14T09:58:18.000Z',
         updatedAt: '2022-01-14T09:58:18.000Z'
@@ -20,7 +21,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         message: 'Lorem ipsum dolor sit amet, cons ectetur adipis cing elit.',
         position: null,
         isTaken: true,
-        takenBy: 'John Doe',
+        takenBy: 'XXX',
+        takenByUsername: 'John Doe',
         isDone: false,
         createdAt: '2022-01-14T09:58:18.000Z',
         updatedAt: '2022-01-14T09:58:18.000Z'
@@ -32,7 +34,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         message: 'Lorem ipsum dolor sit amet, cons ctetur adipi scing elit.',
         position: null,
         isTaken: true,
-        takenBy: 'John Doe',
+        takenBy: 'XXX',
+        takenByUsername: 'John Doe',
         isDone: true,
         createdAt: '2022-01-14T09:58:18.000Z',
         updatedAt: '2022-01-14T09:58:18.000Z'
@@ -44,7 +47,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         message: 'Lorem ipsum dolor sit amet, cons ctetur adipi scing elit.',
         position: '{"x":205.12088012695312,"y":1160.4395751953125,"z":226.99560546875}',
         isTaken: true,
-        takenBy: 'John Doe',
+        takenBy: 'XXX',
+        takenByUsername: 'John Doe',
         isDone: true,
         createdAt: '2022-01-14T09:58:18.000Z',
         updatedAt: '2022-01-14T09:58:18.000Z'
