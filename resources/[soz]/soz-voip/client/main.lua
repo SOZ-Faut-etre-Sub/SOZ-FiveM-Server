@@ -79,7 +79,7 @@ end)
 CreateThread(function()
     local ScreenFaded = false
     while true do
-        if not MumbleIsConnected() then
+        if not MumbleIsConnected() and (PlayerData.metadata ~= nil and not PlayerData.metadata["godmode"]) then
             if not ScreenFaded then
                 TriggerScreenblurFadeIn(500)
                 ScreenFaded = true
