@@ -2,9 +2,9 @@ function CreateObject(model, x, y, z, w, culling, freeze)
     local entity = CreateObjectNoOffset(model, x, y, z, true, true, false)
     SetEntityHeading(entity, w)
 
-    --if culling then
+    -- if culling then
     --    SetEntityDistanceCullingRadius(entity, culling)
-    --end
+    -- end
 
     if freeze then
         FreezeEntityPosition(entity, true)
@@ -18,9 +18,9 @@ function CreateObject(model, x, y, z, w, culling, freeze)
                 entity = CreateObjectNoOffset(model, x, y, z, true, true, false)
                 SetEntityHeading(entity, w)
 
-                --if culling then
+                -- if culling then
                 --    SetEntityDistanceCullingRadius(entity, culling)
-                --end
+                -- end
 
                 if freeze then
                     FreezeEntityPosition(entity, true)
