@@ -92,3 +92,24 @@ function CreateCharacterWizard(spawnId, character)
 
     return character
 end
+
+RegisterNetEvent("soz-character:client:RequestCharacterWizard", function()
+    local player = QBCore.Functions.GetPlayerData()
+    local confirm = false
+    local character = {Skin = player.skin, ClothConfig = player.cloth_config}
+
+    while not confirm do
+        Camera.Activate()
+        character = OpenCreateCharacterMenu(character.Skin, character.ClothConfig, "spawn2");
+        Camera.Deactivate()
+
+        local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
+
+        if confirmWord:lower() == "oui" then
+            confirm = true
+        end
+    end
+
+    TriggerServerEvent("soz-character:server:set-skin", character.Skin, character.ClothConfig)
+    exports["soz-hud"]:DrawNotification("Votre chirurgie c'est bien passé !")
+end)
