@@ -23,6 +23,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
     local vehicleType = GetVehicleType(vehicle)
     local vehiclePlate = GetVehicleNumberPlateText(vehicle)
     local vehicleSpeed = GetEntitySpeed(vehicle) * 3.6
+    local vehiclePosition = GetEntityCoords(vehicle)
     local fine = QBCore.Shared.Round((vehicleSpeed - radar.speed) * 1.5)
 
     if not radar.isOnline then
@@ -45,6 +46,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
         end
 
         radarMessage = radarMessage .. ("Amende: ~r~%s$~s~~n~"):format(fine)
+        local licenceAction = "no_action"
 
         if vehicleSpeed - radar.speed >= 40 then
             local licences = Player.PlayerData.metadata["licences"]
@@ -60,16 +62,32 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
                 licences[licenceType] = licences[licenceType] - 1
 
                 if licences[licenceType] >= 1 then
+                    licenceAction = "remove_point"
                     radarMessage = radarMessage .. "Point: ~r~-1 Point(s)~s~~n~"
                 else
+                    licenceAction = "remove_licence"
                     radarMessage = radarMessage .. "~r~Retrait du permis~s~~n~"
                 end
             else
+                licenceAction = "no_licence"
                 radarMessage = radarMessage .. "~r~Aucun permis~s~~n~"
             end
 
             Player.Functions.SetMetaData("licences", licences)
         end
+
+        TriggerEvent("monitor:server:event", "radar_flash", {
+            player_source = Player.PlayerData.source,
+            radar_id = radarID,
+            vehicle_plate = vehiclePlate,
+        }, {
+            licence_action = licenceAction,
+            amount = fine,
+            vehicle_speed = vehicleSpeed,
+            vehicle_model = vehicleModel,
+            vehicle_type = vehicleType,
+            position = vehiclePosition,
+        })
 
         TriggerEvent("banking:server:TransferMoney", Player.PlayerData.charinfo.account, radar.station, fine)
         TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,

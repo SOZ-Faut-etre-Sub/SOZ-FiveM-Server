@@ -60,20 +60,28 @@ RegisterNetEvent("qb-vehicletuning:server:Removeitem", function(item, amount)
     Player.Functions.RemoveItem(item, amount)
 end)
 
-RegisterNetEvent("soz-custom:server:buyupgrade", function(id, n, price)
+RegisterNetEvent("soz-custom:server:buyupgrade", function(id, n, price, plate)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local money = pData.PlayerData.money["money"]
     if money > price then
-        if n == 1 then
-            TriggerClientEvent("hud:client:DrawNotification", src, "Le turbo a été installé!")
-            TriggerClientEvent("soz-custom:client:applymod", src, id, 1)
-        else
-            TriggerClientEvent("hud:client:DrawNotification", src, "Le " .. n.name .. " a été installé!")
-            TriggerClientEvent("soz-custom:client:applymod", src, id, n.id)
+        local mod_id = 1
+        local mod_name = "turbo"
+
+        if n ~= 1 then
+            mod_id = n.id
+            mod_name = n.name
         end
+
+        TriggerClientEvent("hud:client:DrawNotification", src, "Le " .. mod_name .. " a été installé!")
+        TriggerClientEvent("soz-custom:client:applymod", src, id, mod_id)
+
         pData.Functions.RemoveMoney("money", price, "upgrade-bought-in-lscustom")
 
+        TriggerEvent("monitor:server:event", "vehicle_upgrade_buy", {
+            player_source = Player.PlayerData.source,
+            vehicle_plate = plate,
+        }, {amount = price, category_id = id, mod_id = mod_id, mod_name = mod_name, vehicle_plate = plate})
     else
         TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
     end

@@ -40,7 +40,7 @@ local function playerHasItem(item, amount)
     return false
 end
 
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
