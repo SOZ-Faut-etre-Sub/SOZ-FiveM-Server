@@ -10,8 +10,8 @@ QBConfig.Money.MoneyTypes = { ['money'] = 500, ['marked_money'] = 0 }
 QBConfig.Money.DontAllowMinus = { 'money', 'marked_money' } -- Money that is not allowed going in minus
 
 QBConfig.Player = {}
-QBConfig.Player.HungerRate = 4.2 -- Rate at which hunger goes down.
-QBConfig.Player.ThirstRate = 3.8 -- Rate at which thirst goes down.
+QBConfig.Player.HungerRate = 8.3 -- Rate at which hunger goes down.
+QBConfig.Player.ThirstRate = 11.1 -- Rate at which thirst goes down.
 QBConfig.Player.AlcoholRate = 3.8 -- Rate at which thirst goes down.
 QBConfig.Player.DrugRate = 2.0 -- Rate at which thirst goes down.
 QBConfig.Player.Bloodtypes = {
