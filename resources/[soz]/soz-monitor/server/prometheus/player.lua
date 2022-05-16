@@ -8,8 +8,6 @@ local function BuildListFromDatabase()
     for _, player in pairs(players) do
         local playerData = player
 
-        print(playerData.job)
-
         playerData.money = json.decode(player.money)
         playerData.job = json.decode(player.job)
         playerData.position = json.decode(player.position)

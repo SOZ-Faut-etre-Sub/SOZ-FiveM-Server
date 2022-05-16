@@ -82,7 +82,6 @@ function CreateCharacterWizard(spawnId, character)
         if confirmWord:lower() == "oui" then
             confirm = true
             TriggerServerEvent("soz-character:server:InCharacterMenu", false)
-            TriggerServerEvent("soz-character:server:SetGodmode", false)
         end
     end
 

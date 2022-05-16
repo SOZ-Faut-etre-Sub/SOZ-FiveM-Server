@@ -11,7 +11,7 @@ local function BuildListFromDatabase()
 
         newPlayerInventoryList[player.citizenid] = {
             name = charinfo.firstname .. " " .. charinfo.lastname,
-            items = json.decode(player.inventory),
+            items = json.decode(player.inventory) or {},
             type = "player",
             slots = 30,
             maxWeight = 80000,
@@ -29,7 +29,7 @@ local function OverrideConnected()
         local playerData = player.PlayerData
         newPlayerInventoryListConnected[playerData.citizenid] = {
             name = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname,
-            items = playerData.items,
+            items = playerData.items or {},
             type = "player",
             slots = 30,
             maxWeight = 80000,
