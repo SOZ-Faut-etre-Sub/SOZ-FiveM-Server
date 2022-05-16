@@ -146,7 +146,7 @@ local function GetDeliveryLocation()
                                            Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y,
                                            Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z)
     SetBlipColour(NpcData.DeliveryBlip, 3)
-    SetNewWaypoint(NpcData.DeliveryBlip.x, NpcData.DeliveryBlip.y)
+    SetNewWaypoint(Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y)
     NpcData.LastDeliver = NpcData.CurrentDeliver
     CreateThread(function()
         while true do
@@ -217,7 +217,7 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
             NpcData.NpcBlip = AddBlipForCoord(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y,
                                               Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z)
             SetBlipColour(NpcData.NpcBlip, 3)
-            SetNewWaypoint(NpcData.NpcBlip.x, NpcData.NpcData.y)
+            SetNewWaypoint(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y)
             NpcData.LastNpc = NpcData.CurrentNpc
             NpcData.Active = true
 
@@ -268,4 +268,15 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
     else
         exports["soz-hud"]:DrawNotification("Vous n'êtes pas dans un taxi")
     end
+end)
+
+
+RegisterNetEvent("ems:client:onDeath", function()
+    ResetNpcTask()
+    RemoveBlip(NpcData.DeliveryBlip)
+    RemoveBlip(NpcData.NpcBlip)
+    SetEntityAsMissionEntity(NpcData.Npc, false, true)
+    SetEntityAsNoLongerNeeded(NpcData.Npc)
+    DeletePed(NpcData.Npc)
+    print("t")
 end)
