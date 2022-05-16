@@ -59,3 +59,15 @@ RegisterNetEvent("ems:server:buy", function(itemID)
         TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
+
+QBCore.Functions.CreateCallback("lsmc:server:IsDead", function(id, cb)
+    local Player = QBCore.Functions.GetPlayer(id)
+    local isdead = Player.PlayerData.metadata["isdead"]
+    cb(isdead)
+end)
+
+RegisterServerEvent("lsmc:server:tp")
+AddEventHandler("lsmc:server:tp", function(id, coords)
+    local Player = QBCore.Functions.GetPlayer(tonumber(id))
+    TriggerClientEvent("lsmc:client:VehTpDead", Player.PlayerData.source, coords)
+end)

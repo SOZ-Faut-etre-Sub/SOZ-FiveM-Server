@@ -26,12 +26,14 @@ exports["qb-target"]:AddTargetModel(lit_ems, {
 
 local function GetDead(entity)
     local count = -1
+    local isdead = false
     targetplayer = nil
     while count ~= 6 and targetplayer == nil do
         targetplayer = GetPedInVehicleSeat(entity, count)
+        isdead = QBCore.Functions.TriggerRpc("lsmc:server:IsDead", GetPlayerServerId(NetworkGetPlayerIndexFromPed(targetplayer)))
         count = count + 1
     end
-    if targetplayer ~= nil and targetplayer ~= 0 then
+    if targetplayer ~= nil and targetplayer ~= 0 and isdead then
         return true
     else
         return false
@@ -47,11 +49,15 @@ exports["qb-target"]:AddGlobalVehicle({
                 return GetDead(entity)
             end,
             action = function(entity)
-                coords = GetEntityCoords(PlayerId())
-                TaskLeaveVehicle(targetplayer, entity, 16)
-                StartPlayerTeleport(GetPlayerServerId(NetworkGetPlayerIndexFromPed(targetplayer)), coords.x, coords.y, coords.z, 0.0, false, true, true)
+                coords = GetEntityCoords(PlayerPedId())
+                TriggerServerEvent("lsmc:server:tp", GetPlayerServerId(NetworkGetPlayerIndexFromPed(targetplayer)), coords)
             end,
         },
     },
     distance = 2.5,
 })
+
+RegisterNetEvent("lsmc:client:VehTpDead")
+AddEventHandler("lsmc:client:VehTpDead", function(coords)
+    StartPlayerTeleport(PlayerId(), coords.x, coords.y, coords.z, 0.0, false, true, true)
+end)
