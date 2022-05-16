@@ -270,13 +270,12 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
     end
 end)
 
+function ClearNpcMission()
+
+    print("clear npc missions")
+end
+
 
 RegisterNetEvent("ems:client:onDeath", function()
-    ResetNpcTask()
-    RemoveBlip(NpcData.DeliveryBlip)
-    RemoveBlip(NpcData.NpcBlip)
-    SetEntityAsMissionEntity(NpcData.Npc, false, true)
-    SetEntityAsNoLongerNeeded(NpcData.Npc)
-    DeletePed(NpcData.Npc)
-    print("t")
+    ClearNpcMission()
 end)
