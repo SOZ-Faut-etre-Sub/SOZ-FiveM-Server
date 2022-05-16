@@ -37,6 +37,13 @@ QBCore.Functions.CreateCallback("soz-character:server:CreatePlayer", function(so
     end
 end)
 
+RegisterNetEvent("soz-character:server:set-skin", function(skin, clothConfig)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    Player.Functions.SetSkin(skin, false)
+    Player.Functions.SetClothConfig(clothConfig, false)
+end)
+
 RegisterNetEvent("soz-character:server:InCharacterMenu", function(inMenu)
     if inMenu then
         QBCore.Functions.SetPlayerBucket(source, source)
