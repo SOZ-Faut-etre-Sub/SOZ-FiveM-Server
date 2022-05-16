@@ -158,7 +158,7 @@ local function GetDeliveryLocation()
                                      Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z))
             if dist < 20 then
                 if dist < 5 then
-                    if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) then
+                    if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
                         local veh = GetVehiclePedIsIn(ped, 0)
                         TaskLeaveVehicle(NpcData.Npc, veh, 0)
                         SetEntityAsMissionEntity(NpcData.Npc, false, true)
@@ -232,7 +232,7 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
 
                     if dist < 20 then
                         if dist < 5 then
-                            if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) then
+                            if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
                                 local veh = GetVehiclePedIsIn(ped, 0)
                                 local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(veh)
 
