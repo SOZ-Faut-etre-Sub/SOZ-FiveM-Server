@@ -4,6 +4,8 @@ voiceModule = {}
 
 --- Player management
 AddEventHandler("playerJoining", function()
+    EnsureEntityStateBag(GetPlayerPed(source))
+
     local player = Player(source).state
     if not player.voipInit then
         player:set("muted", false, true)
