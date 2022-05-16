@@ -5,6 +5,7 @@ CreateThread(function()
     for _, garage in pairs(Garages) do
         if garage.type == "entreprise" then
             local prop = CreateObjectNoOffset(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, true, true, false)
+            SetEntityDistanceCullingRadius(prop, 8000.0)
             SetEntityHeading(prop, garage.blipcoord.w)
             FreezeEntityPosition(prop, true)
         end
