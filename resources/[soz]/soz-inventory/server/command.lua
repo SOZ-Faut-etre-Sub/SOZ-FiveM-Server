@@ -48,6 +48,9 @@ QBCore.Commands.Add("giveitem", "Give An Item", {
     end
 end, "admin")
 
-QBCore.Commands.Add('setinv', 'Force player inventory weight (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'weight', help = 'Weight' }}, true, function(source, args)
+QBCore.Commands.Add("setinv", "Force player inventory weight (Admin Only)", {
+    {name = "id", help = "Player ID"},
+    {name = "weight", help = "Weight"},
+}, true, function(source, args)
     Inventory.SetMaxWeight(tonumber(args[1]), tostring(args[2]))
-end, 'admin')
+end, "admin")
