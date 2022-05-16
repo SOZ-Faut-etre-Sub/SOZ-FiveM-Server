@@ -37,12 +37,6 @@ QBCore.Functions.CreateCallback("soz-character:server:CreatePlayer", function(so
     end
 end)
 
-RegisterServerEvent("soz-character:server:SetGodmode")
-AddEventHandler("soz-character:server:SetGodmode", function(source, val)
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.SetMetaData("godmode", val)
-end)
-
 RegisterNetEvent("soz-character:server:InCharacterMenu", function(inMenu)
     if inMenu then
         QBCore.Functions.SetPlayerBucket(source, source)

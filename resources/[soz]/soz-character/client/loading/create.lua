@@ -16,7 +16,6 @@ function CreatePlayer(shutdownLoadingScreen)
 
     -- set God mode
     TriggerServerEvent("soz-character:server:InCharacterMenu", true)
-    TriggerServerEvent("soz-character:server:SetGodmode", true)
 end
 
 RegisterNUICallback("SpawnPlayer", function(data)

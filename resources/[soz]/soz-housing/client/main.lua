@@ -13,8 +13,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     TriggerServerEvent("soz-housing:server:SetZone")
 end)
 
-TriggerServerEvent("soz-housing:server:SetZone")
-
 RegisterNetEvent("soz-housing:client:SetEntry")
 AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
     Citizen.CreateThread(function()
