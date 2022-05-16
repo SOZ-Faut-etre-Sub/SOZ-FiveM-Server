@@ -101,6 +101,8 @@ for _, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
             InsideConcessEntreprise = true
         else
             InsideConcessEntreprise = false
+            vehicleChoose:Close()
+            vehicleModel:Close()
         end
     end)
 end

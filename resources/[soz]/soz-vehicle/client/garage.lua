@@ -463,6 +463,31 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                 end
             end
         end)
+        menu:AddButton({
+            label = "Ranger remorque",
+            select = function()
+                local vehicle, distance = QBCore.Functions.GetClosestVehicle({
+                    x = garage.blipcoord.x,
+                    y = garage.blipcoord.y,
+                    z = garage.blipcoord.z,
+                })
+
+                if distance >= 10.0 then
+                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_in_parking"), "error")
+                    return
+                end
+
+                if garage.vehicle == "car" or not garage.vehicle then
+                    local vehClass = GetVehicleClass(vehicle)
+                    if vehClass ~= 14 and vehClass ~= 16 then
+                        ParkingEntrepriseList:Close()
+                        enterVehicle(vehicle, indexgarage, type)
+                    else
+                        exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
+                    end
+                end
+            end,
+        })
         local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
             ParkingEntrepriseList:Close()
