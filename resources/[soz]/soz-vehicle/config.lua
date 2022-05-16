@@ -361,7 +361,7 @@ Garages = {
     },
     ["taxi"] = {
         label = "Carl Jr Service",
-        blipcoord = vector4(896.53, -146.94, 75.89, 59.71),
+        blipcoord = vector4(904.43, -168.09, 73.09, 61.18),
         showBlip = false,
         blipName = "Carl Jr Service",
         blipNumber = 357,
