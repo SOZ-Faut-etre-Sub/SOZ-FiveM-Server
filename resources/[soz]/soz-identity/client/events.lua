@@ -44,8 +44,8 @@ end)
 
 -- LICENSES
 AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "licenses", action, {
-        licences = PlayerData.metadata["licenses"],
+    TriggerServerEvent("soz-identity:server:request-data", target, "licences", action, {
+        licences = PlayerData.metadata["licences"],
     })
 end)
 
