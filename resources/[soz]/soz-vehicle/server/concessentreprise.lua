@@ -46,7 +46,10 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
     if depotprice < 100 then
         depotprice = 100
     end
-    if Player.Functions.RemoveMoney("money", Vehicles[Player.PlayerData.job.id][vehicle].price, "vehicle-bought-in-showroom") then
+
+    local price = Vehicles[Player.PlayerData.job.id][vehicle].price
+
+    if Player.Functions.RemoveMoney("money", price, "vehicle-bought-in-showroom") then
         MySQL.Async.insert(
             "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state, depotprice, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             {
@@ -61,6 +64,15 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
                 Player.PlayerData.job.id,
                 os.time(),
             })
+
+        TriggerEvent("monitor:server:event", "vehicle_buy", {
+            player_source = Player.PlayerData.source,
+            buy_type = "job",
+        }, {
+            vehicle_id = vehicle,
+            amount = price,
+        })
+
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Merci pour votre achat!")
         TriggerClientEvent("soz-concessentreprise:client:buyShowroomVehicle", Player.PlayerData.source, vehicle, plate, newlocation)
     else

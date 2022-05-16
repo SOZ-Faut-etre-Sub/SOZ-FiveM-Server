@@ -118,6 +118,13 @@ AddEventHandler("soz-housing:server:buy", function(name, price)
             ["@citizenid"] = Player.PlayerData.citizenid,
         })
 
+        TriggerEvent("monitor:server:event", "house_buy", {
+            player_source = player.PlayerData.source,
+        }, {
+            house_id = name,
+            amount = price,
+        })
+
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation.")
         TriggerEvent("soz-housing:server:SyncAvailableHousing")
     else
