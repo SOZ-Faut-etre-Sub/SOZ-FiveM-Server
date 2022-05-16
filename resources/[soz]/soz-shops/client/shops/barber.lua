@@ -167,7 +167,7 @@ function BarberShop:GenerateMenu()
     end
 
     shopMenu:AddButton({
-        label = "Chirurgie ésthétique en promotion",
+        label = "Chirurgie esthétique en promotion",
         select = function()
             shopMenu:Close()
             TriggerEvent("soz-character:client:RequestCharacterWizard")
