@@ -208,6 +208,9 @@ for indexConcess, Concess in pairs(ZonesConcessVehicule) do
             InsideConcess = true
         else
             InsideConcess = false
+            VehiculeChoose:Close()
+            VehiculeModel:Close()
+            VehiculeList:Close()
         end
     end)
 end
