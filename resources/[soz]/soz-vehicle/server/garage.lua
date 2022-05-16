@@ -4,10 +4,7 @@ local garage_props = GetHashKey("soz_prop_paystation")
 CreateThread(function()
     for _, garage in pairs(Garages) do
         if garage.type == "entreprise" then
-            local prop = CreateObjectNoOffset(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, true, true, false)
-            SetEntityDistanceCullingRadius(prop, 8000.0)
-            SetEntityHeading(prop, garage.blipcoord.w)
-            FreezeEntityPosition(prop, true)
+            exports["soz-utils"]:CreateObject(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, garage.blipcoord.w, 8000.0, true)
         end
     end
 end)
