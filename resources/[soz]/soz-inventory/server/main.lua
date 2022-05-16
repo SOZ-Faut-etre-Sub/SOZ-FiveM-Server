@@ -538,7 +538,7 @@ function Inventory.GetItem(inv, item, metadata, returnsAmount)
         if inv then
             metadata = not metadata and false or type(metadata) == "string" and {type = metadata} or metadata
             for _, v in pairs(inv.items) do
-                if v and v.name == item.name and (not metadata or table.contains(v.metadata, metadata)) then
+                if v and v.name == item.name and (not metadata or json.encode(v.metadata) == json.encode(metadata)) then
                     amount = amount + v.amount
                 end
             end
