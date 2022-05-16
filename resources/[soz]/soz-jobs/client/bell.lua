@@ -52,8 +52,8 @@ CreateThread(function()
     exports["qb-target"]:AddBoxZone("bell:mtp", vector3(-245.88, 6072.43, 32.33), 0.25, 0.35, {
         name = "bell:mtp",
         heading = 76.0,
-        minZ = 32.5,
-        maxZ = 32.33,
+        minZ = 32.3,
+        maxZ = 32.6,
     }, {options = callSociety("555-MTP"), distance = 2.5})
 end)
 
