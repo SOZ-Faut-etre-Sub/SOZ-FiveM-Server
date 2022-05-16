@@ -107,8 +107,3 @@ RegisterNetEvent("taxi:client:InvoicePlayer", function(data)
     TaxiJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
 end)
 
-RegisterNetEvent("ems:client:onDeath", function()
-    ResetNpcTask()
-    RemoveBlip(NpcData.DeliveryBlip)
-    DeletePed(NpcData.Npc)
-end)
