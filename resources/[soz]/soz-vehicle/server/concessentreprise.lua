@@ -65,10 +65,7 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
                 os.time(),
             })
 
-        TriggerEvent("monitor:server:event", "vehicle_buy", {
-            player_source = Player.PlayerData.source,
-            buy_type = "job",
-        }, {
+        TriggerEvent("monitor:server:event", "vehicle_buy", {player_source = Player.PlayerData.source, buy_type = "job"}, {
             vehicle_id = vehicle,
             amount = price,
         })

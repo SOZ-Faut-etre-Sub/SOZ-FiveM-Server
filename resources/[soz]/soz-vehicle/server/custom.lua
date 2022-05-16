@@ -81,13 +81,7 @@ RegisterNetEvent("soz-custom:server:buyupgrade", function(id, n, price, plate)
         TriggerEvent("monitor:server:event", "vehicle_upgrade_buy", {
             player_source = Player.PlayerData.source,
             vehicle_plate = plate,
-        }, {
-            amount = price,
-            category_id = id,
-            mod_id = mod_id,
-            mod_name = mod_name,
-            vehicle_plate = plate,
-        })
+        }, {amount = price, category_id = id, mod_id = mod_id, mod_name = mod_name, vehicle_plate = plate})
     else
         TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
     end
