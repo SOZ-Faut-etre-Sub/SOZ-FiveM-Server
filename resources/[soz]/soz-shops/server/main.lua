@@ -42,12 +42,12 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
                 local skin = Player.PlayerData.skin
                 skin.Tattoos = skin.Tattoos or {}
 
-                table.insert(skin.Tattoos, {
+                skin.Tattoos[#skin.Tattoos + 1] = {
                     Collection = GetHashKey(productID.collection),
                     Overlay = GetHashKey(productID.overlay),
-                })
+                }
 
-                Player.Functions.SetSkin(skin)
+                Player.Functions.SetSkin(skin, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
             elseif product == "barber" then
                 local barberShop = Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category]
@@ -59,7 +59,7 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
                     end
                 end
 
-                Player.Functions.SetSkin(skin)
+                Player.Functions.SetSkin(skin, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez changé de coupe pour ~g~$%s"):format(price))
             elseif product == "jewelry" then
                 local clothConfig = Player.PlayerData.cloth_config
