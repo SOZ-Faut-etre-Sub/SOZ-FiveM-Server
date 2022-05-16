@@ -172,7 +172,6 @@ Zonesentreprise = {
         heading = 55,
         minZ = 72.23,
         maxZ = 77.63,
-        debugPoly= true,
     }),
 }
 
@@ -1303,37 +1302,13 @@ PlacesEntreprise = {
     ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6,
                               {name = "mtp2", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
     ["taxi1"] = BoxZone:Create(vector3(911.33, -162.69, 74.13), 6.2, 3.2,
-        {
-            name = "taxi1",
-            heading = 15,
-            minZ = 72.69,
-            maxZ = 76.53,
-            data = {indexGarage = "taxi"},
-        }),
+                               {name = "taxi1", heading = 15, minZ = 72.69, maxZ = 76.53, data = {indexGarage = "taxi"}}),
     ["taxi2"] = BoxZone:Create(vector3(913.54, -159.2, 74.69), 6.6, 3.2,
-        {
-            name = "taxi2",
-            heading = 15,
-            minZ = 73.69,
-            maxZ = 77.69,
-            data = {indexGarage = "taxi"},
-        }),
+                               {name = "taxi2", heading = 15, minZ = 73.69, maxZ = 77.69, data = {indexGarage = "taxi"}}),
     ["taxi3"] = BoxZone:Create(vector3(919.02, -167.06, 74.33), 3.0, 7.2,
-        {
-            name = "taxi3",
-            heading = 10,
-            minZ = 73.33,
-            maxZ = 77.33,
-            data = {indexGarage = "taxi"},
-        }),
+                               {name = "taxi3", heading = 10, minZ = 73.33, maxZ = 77.33, data = {indexGarage = "taxi"}}),
     ["taxi4"] = BoxZone:Create(vector3(916.75, -170.56, 74.23), 3.2, 7.0,
-        {
-            name = "taxi4",
-            heading = 10,
-            minZ = 73.03,
-            maxZ = 77.03,
-            data = {indexGarage = "taxi"},
-        }),
+                               {name = "taxi4", heading = 10, minZ = 73.03, maxZ = 77.03, data = {indexGarage = "taxi"}}),
 }
 
 for indexpriv, prive in pairs(Zonesprives) do
