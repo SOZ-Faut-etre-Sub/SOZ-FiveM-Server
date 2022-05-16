@@ -71,7 +71,8 @@ class _SocietyService {
     let identifier = player.getSocietyPhoneNumber();
 
     try {
-      reqObj.data.takenBy = player.username;
+      reqObj.data.takenBy = player.getIdentifier();
+      reqObj.data.takenByUsername = player.username;
       const message = await this.contactsDB.updateMessage(reqObj.data);
       resp({ status: 'ok', data: message });
 

@@ -7,9 +7,7 @@ export class _SocietiesDB {
     identifier: string,
     { number, message, pedPosition }: PreDBSociety,
   ): Promise<number> {
-    const query = `INSERT INTO phone_society_messages (conversation_id, source_phone, message, position)
-                   VALUES (?, ?, ?, ?)`;
-
+    const query = `INSERT INTO phone_society_messages (conversation_id, source_phone, message, position) VALUES (?, ?, ?, ?)`;
     const [setResult] = await DbInterface._rawExec(query, [
       number,
       identifier,
@@ -20,10 +18,10 @@ export class _SocietiesDB {
   }
 
   async updateMessage(
-    { id, take, takenBy, done }: DBSocietyUpdate,
+    { id, take, takenBy, takenByUsername, done }: DBSocietyUpdate,
   ): Promise<boolean> {
-    const query = `UPDATE phone_society_messages SET isTaken=?, takenBy=?, isDone=? WHERE id=?`;
-    const [setResult] = await DbInterface._rawExec(query, [take, takenBy, done, id]);
+    const query = `UPDATE phone_society_messages SET isTaken=?, takenBy=?, takenByUsername=?, isDone=? WHERE id=?`;
+    const [setResult] = await DbInterface._rawExec(query, [take, takenBy, takenByUsername, done, id]);
     return (<ResultSetHeader>setResult).affectedRows === 1;
   }
 
