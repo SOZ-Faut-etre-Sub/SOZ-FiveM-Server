@@ -12,6 +12,7 @@ local function setPersistentProp(prop)
     if prop.event == nil then
         local objCoord = persistent_props[prop.id].position
         local obj = CreateObjectNoOffset(prop.model, objCoord.x, objCoord.y, objCoord.z, true, true, false)
+        SetEntityDistanceCullingRadius(obj, 8000.0)
         SetEntityHeading(obj, objCoord.w)
         FreezeEntityPosition(obj, true)
 

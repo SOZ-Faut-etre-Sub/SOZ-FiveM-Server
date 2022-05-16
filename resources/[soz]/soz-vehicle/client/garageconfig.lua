@@ -119,7 +119,7 @@ Zonesentreprise = {
         minZ = 30.3,
         maxZ = 34.3,
     }),
-    ["stonk"] = BoxZone:Create(vector3(-8.17, -671.17, 31.94), 30, 15, {
+    ["stonk"] = BoxZone:Create(vector3(-8.17, -671.17, 31.94), 30, 25, {
         name = "stonk_z",
         heading = 95,
         minZ = 30.94,
@@ -155,7 +155,7 @@ Zonesentreprise = {
         minZ = 25.75,
         maxZ = 29.75,
     }),
-    ["food"] = BoxZone:Create(vector3(-1919.75, 2050.64, 140.64), 9, 9, {
+    ["food"] = BoxZone:Create(vector3(-1919.75, 2050.64, 140.64), 12, 25, {
         name = "food:garage:car",
         heading = 257.89,
         minZ = 139.64,
@@ -167,7 +167,7 @@ Zonesentreprise = {
         minZ = 29.49,
         maxZ = 35.49,
     }),
-    ["taxi"] = BoxZone:Create(vector3(897.59, -152.25, 76.56), 9.8, 6.2, {
+    ["taxi"] = BoxZone:Create(vector3(897.59, -152.25, 76.56), 9.8, 8, {
         name = "taxi_z",
         heading = 328,
         minZ = 75.56,
