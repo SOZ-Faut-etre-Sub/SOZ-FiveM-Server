@@ -152,6 +152,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
                 type = value,
                 message = message,
                 reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+                reporterId = PlayerData.citizenid,
             })
         end,
     })

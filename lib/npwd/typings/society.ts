@@ -10,6 +10,7 @@ export interface DBSocietyUpdate {
   id: number;
   take: boolean;
   takenBy: string;
+  takenByUsername: string;
   done: boolean;
 }
 
@@ -28,6 +29,7 @@ export interface SocietyMessage {
   position: string;
   isTaken: boolean;
   takenBy: string|null;
+  takenByUsername: string|null;
   isDone: boolean;
   createdAt: string;
   updatedAt: string;

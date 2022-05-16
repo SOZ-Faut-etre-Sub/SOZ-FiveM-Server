@@ -23,6 +23,7 @@ class _TwitchNewsService {
                 type: reqObj.data.type,
                 message: reqObj.data.message,
                 reporter: reqObj.data.reporter,
+                reporterId: reqObj.data.reporterId,
                 image: reqObj.data.image,
             });
 
@@ -30,6 +31,7 @@ class _TwitchNewsService {
                 id: news,
                 type: reqObj.data.type,
                 reporter: reqObj.data.reporter,
+                reporterId: reqObj.data.reporterId,
                 image: reqObj.data.image,
                 message: reqObj.data.message,
                 createdAt: new Date().getTime()

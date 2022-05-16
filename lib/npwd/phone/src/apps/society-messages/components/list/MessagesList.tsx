@@ -68,7 +68,7 @@ const MessagesList = (): any => {
                                         <span>L'appel est fini !</span>
                                     ) : (
                                         message.isTaken ? (
-                                            <span>L'appel est pris par {message.takenBy} !</span>
+                                            <span>L'appel est pris par {message.takenByUsername} !</span>
                                         ) : (
                                             <span></span>
                                         )
