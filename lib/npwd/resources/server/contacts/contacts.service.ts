@@ -12,12 +12,18 @@ class _ContactService {
     contactsLogger.debug('Contacts service started');
   }
 
+  formatPhoneNumber(phone: string) {
+      const numbers = phone.match(/(555)-?(\d{4})/);
+      return `${numbers[1]}-${numbers[2]}`
+  }
+
   async handleUpdateContact(
     reqObj: PromiseRequest<Contact>,
     resp: PromiseEventResp<void>,
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
+      reqObj.data.number = this.formatPhoneNumber(reqObj.data.number)
       await this.contactsDB.updateContact(reqObj.data, identifier);
       resp({ status: 'ok' });
     } catch (e) {
@@ -44,6 +50,7 @@ class _ContactService {
   ): Promise<void> {
     const identifier = PlayerService.getIdentifier(reqObj.source);
     try {
+      reqObj.data.number = this.formatPhoneNumber(reqObj.data.number)
       const contact = await this.contactsDB.addContact(identifier, reqObj.data);
 
       resp({ status: 'ok', data: contact });

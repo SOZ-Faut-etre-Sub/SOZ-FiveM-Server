@@ -18,6 +18,7 @@ import LogDebugEvent from "@os/debug/LogDebugEvents";
 import {useCall} from "@os/call/hooks/useCall";
 import {ActionButton} from "@ui/components/ActionButton";
 import {ThemeContext} from "../../../../styles/themeProvider";
+import NumberFormat from "react-number-format";
 
 interface ContactInfoRouteParams {
     mode: string;
@@ -52,7 +53,7 @@ const ContactsInfoPage: React.FC = () => {
     const contact = getContact(parseInt(id));
 
     const [name, setName] = useState(() => contact?.display || '');
-    const [number, setNumber] = useState(() => contact?.number || '');
+    const [number, setNumber] = useState(() => contact?.number || '555-');
     const [avatar, setAvatar] = useState(() => contact?.avatar || '');
     // Set state after checking if null
 
@@ -166,8 +167,10 @@ const ContactsInfoPage: React.FC = () => {
                         </div>
                         <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
-                            <TextField
-                                placeholder={t('CONTACTS.FORM_NUMBER')}
+                            <NumberFormat
+                                className={`w-full ${theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-gray-300 text-black'} rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none`}
+                                format="###-####"
+                                defaultValue="555-"
                                 value={number}
                                 onChange={handleNumberChange}
                             />
