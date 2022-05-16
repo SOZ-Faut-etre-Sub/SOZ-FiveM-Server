@@ -10,7 +10,7 @@ function CreateObject(model, x, y, z, w, culling, freeze)
         FreezeEntityPosition(entity, true)
     end
 
-    Citizen.CreateThread(function ()
+    Citizen.CreateThread(function()
         while true do
             Wait(10 * 1000)
 
@@ -32,4 +32,4 @@ function CreateObject(model, x, y, z, w, culling, freeze)
     return entity
 end
 
-exports('CreateObject', CreateObject)
+exports("CreateObject", CreateObject)
