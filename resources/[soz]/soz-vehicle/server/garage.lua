@@ -182,7 +182,9 @@ end)
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(100)
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL", {})
+
         MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4", {}, function(result)
             if result[1] then
                 for k, v in pairs(result) do
