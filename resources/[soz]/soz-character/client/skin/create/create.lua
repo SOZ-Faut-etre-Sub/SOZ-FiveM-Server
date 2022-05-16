@@ -64,6 +64,14 @@ function CreateCharacterWizard(spawnId, character)
     SetEntityVisible(player, true)
     DoScreenFadeIn(500)
 
+    CreateThread(function()
+        while not confirm do
+            Scaleform.Display()
+
+            Wait(0)
+        end
+    end)
+
     while not confirm do
         Camera.Activate()
         character = OpenCreateCharacterMenu(character.Skin, character.ClothConfig, spawnId);

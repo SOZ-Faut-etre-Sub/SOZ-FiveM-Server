@@ -23,6 +23,7 @@ client_script {
     "client/skin/menu/menu_hair.lua",
     "client/skin/menu/menu_makeup.lua",
     "client/skin/menu/menu_cloth.lua",
+    "client/skin/create/scaleform.lua",
     "client/skin/create/camera.lua",
     "client/skin/create/default.lua",
     "client/skin/create/create.lua",
