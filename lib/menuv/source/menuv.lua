@@ -629,7 +629,9 @@ end)
 
 CreateThread(function()
     while true do
-        if MenuV.CurrentMenu ~= nil then
+        local hidden = IsScreenFadedOut() or IsPauseMenuActive()
+
+        if MenuV.CurrentMenu ~= nil and not hidden then
             DisableAllControlActions(0)
 
             EnableControlAction(0, 1, true) -- INPUT_LOOK_LR
