@@ -24,6 +24,10 @@ function RadioShortRange:setPlayer(source, channel, isPrimary)
     local state = Player(source).state["radio-sr"]
     channel = tonumber(channel)
 
+    if state == nil then
+        return
+    end
+
     self:removePlayer(source, isPrimary and state.primaryChannel or state.secondaryChannel)
 
     if isPrimary then
