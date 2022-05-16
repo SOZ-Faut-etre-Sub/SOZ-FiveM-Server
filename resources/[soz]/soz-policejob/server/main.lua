@@ -160,6 +160,34 @@ RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, 
     end
 end)
 
+RegisterNetEvent("police:server:GiveLicense", function(targetId, licenseType)
+    local player = QBCore.Functions.GetPlayer(source)
+    local target = QBCore.Functions.GetPlayer(targetId)
+
+    if player and target and player ~= target then
+        for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
+            if player.PlayerData.job.id == allowedJob then
+                local licenses = target.PlayerData.metadata["licences"]
+
+                if not licenses[licenseType] then
+                    licenses[licenseType] = true
+
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                                       "Vous avez donné le permis: ~b~" .. Config.Licenses[licenseType].label)
+                    TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                                       "Vous avez reçu un nouveau permis : ~b~" .. Config.Licenses[licenseType].label .. "~s~ !", "info")
+
+                    target.Functions.SetMetaData("licences", licenses)
+                else
+                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Ce permis est déjà valide", "error")
+                end
+
+                return
+            end
+        end
+    end
+end)
+
 --- Wanted
 QBCore.Functions.CreateCallback("police:server:GetWantedPlayers", function(source, cb)
     local player = QBCore.Functions.GetPlayer(source)
