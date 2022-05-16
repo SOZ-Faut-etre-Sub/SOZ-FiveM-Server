@@ -20,6 +20,7 @@ end)
 --- Events
 RegisterNetEvent("police:server:AddSpike", function(position)
     local spike = CreateObjectNoOffset(spike_prop, position.x, position.y, position.z, true, true, false)
+    SetEntityDistanceCullingRadius(spike, 8000.0)
     SetEntityHeading(spike, position.w)
     FreezeEntityPosition(spike, true)
 
