@@ -5,6 +5,7 @@ OnDuty = false
 PlayerJob = {}
 PlayerData = {}
 local effectTimer = 0
+local SpeedLimiter = 0
 
 OriginalCategory = nil
 OriginalMod = nil
@@ -148,8 +149,16 @@ function ApplyEffects(vehicle)
         if nbrpassagers >= 1 then
             local pourcentage = 0.02 * nbrpassagers
             local newspeed = GetVehicleEstimatedMaxSpeed(vehicle) - (GetVehicleEstimatedMaxSpeed(vehicle) * (pourcentage))
-            SetVehicleMaxSpeed(vehicle, newspeed)
+            if newspeed < SpeedLimiter then
+                SpeedLimiter = newspeed
+            end
+            SetVehicleMaxSpeed(vehicle, SpeedLimiter)
+        elseif nbrpassagers == 0 and SpeedLimiter ~= 0 then
+            SetVehicleMaxSpeed(vehicle, SpeedLimiter / 3.6 - 0.25)
+        elseif SpeedLimiter == 0 then
+            SetVehicleMaxSpeed(vehicle, GetVehicleEstimatedMaxSpeed(vehicle))
         end
+
     end
     if GetVehicleClass(vehicle) ~= 13 and GetVehicleClass(vehicle) ~= 21 and GetVehicleClass(vehicle) ~= 16 and GetVehicleClass(vehicle) ~= 15 and
         GetVehicleClass(vehicle) ~= 14 then
@@ -294,6 +303,12 @@ function ApplyEffects(vehicle)
         end
     end
 end
+
+RegisterNetEvent("soz-bennys:client:UpdateLimiter")
+AddEventHandler("soz-bennys:client:UpdateLimiter", function(speed)
+    SpeedLimiter = speed
+    ApplyEffects(GetVehiclePedIsIn(PlayerPedId(), false))
+end)
 
 RegisterNetEvent("soz-bennys:client:setVehicleStatus", function(plate, status)
     VehicleStatus[plate] = status

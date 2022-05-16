@@ -35,7 +35,13 @@ local function SpeedLimiterMenu(vehicle)
         },
     })
     speed:On("select", function(item, value)
-        SetVehicleMaxSpeed(vehicle, value / 3.6 - 0.25)
+        local currentspeed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 3.6 + 0.25
+        if currentspeed > value and value ~= 0 then
+            exports["soz-hud"]:DrawNotification("Vous allez trop vite pour faire ça", "error")
+            return
+        else
+            TriggerEvent("soz-bennys:client:UpdateLimiter", value)
+        end
     end)
 end
 
