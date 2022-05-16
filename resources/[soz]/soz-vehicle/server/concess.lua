@@ -63,10 +63,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
             TriggerEvent("monitor:server:event", "vehicle_buy", {
                 player_source = Player.PlayerData.source,
                 buy_type = "player",
-            }, {
-                vehicle_id = vehicle,
-                amount = vehiclePrice,
-            })
+            }, {vehicle_id = vehicle, amount = vehiclePrice})
         else
             TriggerClientEvent("hud:client:DrawNotification", src, "Pas assez d'argent", "error")
         end

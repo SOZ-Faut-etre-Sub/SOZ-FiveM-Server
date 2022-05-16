@@ -21,13 +21,8 @@ RegisterNetEvent("jobs:shop:server:buy", function(itemID)
     end
 
     if player.Functions.RemoveMoney("money", item.price) then
-        TriggerEvent("monitor:server:event", "shop_buy", {
-            player_source = player.PlayerData.source,
-            shop_type = "job",
-        }, {
-            item_name = item.name,
-            amount = item.price,
-        })
+        TriggerEvent("monitor:server:event", "shop_buy", {player_source = player.PlayerData.source, shop_type = "job"},
+                     {item_name = item.name, amount = item.price})
 
         exports["soz-inventory"]:AddItem(player.PlayerData.source, item.name, item.amount, item.metadata, nil, function(success, reason)
             if success then
