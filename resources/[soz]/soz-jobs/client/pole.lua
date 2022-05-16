@@ -17,22 +17,9 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 
 end)
 
-exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
-    name = "pole emploi",
-    heading = 0,
-    debugPoly = false,
-}, {
-    options = {
-        {
-            type = "client",
-            event = "jobs:pole:menu",
-            icon = "fas fa-sign-in-alt",
-            label = "information pôle emploi",
-            job = SozJobCore.JobType.Unemployed,
-        },
-    },
-    distance = 2.5,
-})
+local function notif()
+    TriggerServerEvent("job:anounce", "Rendez vous au point sur votre carte pour prendre le métier")
+end
 
 local function JobPosition(job, coords, sprite)
     blip = AddBlipForCoord(coords.x, coords.y, coords.z)
@@ -46,9 +33,58 @@ local function JobPosition(job, coords, sprite)
     SetNewWaypoint(coords.x, coords.y)
 end
 
-local function notif()
-    TriggerServerEvent("job:anounce", "Rendez vous au point sur votre carte pour prendre le métier")
-end
+exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 1, 1, {
+    name = "pole emploi",
+    heading = 0,
+    debugPoly = false,
+}, {
+    options = {
+        {
+            type = "client",
+            event = "jobs:pole:menu",
+            icon = "fas fa-sign-in-alt",
+            label = "information pôle emploi",
+            job = SozJobCore.JobType.Unemployed,
+        },
+        {
+            icon = "fas fa-sign-in-alt",
+            label = "Gps Adsl",
+            job = SozJobCore.JobType.Adsl,
+            action = function()
+                notif()
+                JobPosition("adsl", adsl_position, 280)
+            end,
+        },
+        {
+            icon = "fas fa-sign-in-alt",
+            label = "Gps Fougère Prime",
+            job = SozJobCore.JobType.Delivery,
+            action = function()
+                notif()
+                JobPosition("delivery", livraison_position, 280)
+            end,
+        },
+        {
+            icon = "fas fa-sign-in-alt",
+            label = "Gps DeMetal",
+            job = SozJobCore.JobType.Scrapper,
+            action = function()
+                notif()
+                JobPosition("metal", metal_position, 280)
+            end,
+        },
+        {
+            icon = "fas fa-sign-in-alt",
+            label = "Gps InfoChat",
+            job = SozJobCore.JobType.Religious,
+            action = function()
+                notif()
+                JobPosition("religion", religion_position, 280)
+            end,
+        },
+    },
+    distance = 2.5,
+})
 
 local function JobPanel(menu)
     local adsl = menu:AddButton({label = "Adsl", description = " Poseur de cable d'ADSL "})
@@ -70,14 +106,14 @@ local function JobPanel(menu)
             destroyblip(blip)
         end
         notif()
-        JobPosition("livraison", livraison_position, 280)
+        JobPosition("delivery", livraison_position, 280)
     end)
     religion:On("select", function()
         if blip ~= nil then
             destroyblip(blip)
         end
         notif()
-        JobPosition("metal", religion_position, 280)
+        JobPosition("religion", religion_position, 280)
     end)
     metal:On("select", function()
         if blip ~= nil then
