@@ -6,7 +6,7 @@ QBConfig.UpdateInterval = 5 -- how often to update player data in minutes
 QBConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in ms
 
 QBConfig.Money = {}
-QBConfig.Money.MoneyTypes = { ['money'] = 500, ['marked_money'] = 0 }
+QBConfig.Money.MoneyTypes = { ['money'] = 200, ['marked_money'] = 0 }
 QBConfig.Money.DontAllowMinus = { 'money', 'marked_money' } -- Money that is not allowed going in minus
 
 QBConfig.Player = {}
