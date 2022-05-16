@@ -8,8 +8,7 @@ Citizen.CreateThread(function()
         local ped = PlayerPedId()
         local pco = GetEntityCoords(ped)
         local vehicle = GetClosestVehicle(pco, 5.0, 0, 71)
-        if DoesEntityExist(vehicle) and IsEntityAVehicle(vehicle) and IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1)) or DoesEntityExist(vehicle) and
-            IsEntityAVehicle(vehicle) and GetPedInVehicleSeat(vehicle, -1) == 0 then
+        if DoesEntityExist(vehicle) and IsEntityAVehicle(vehicle) and ( IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1)) or GetPedInVehicleSeat(vehicle, -1) == 0 ) then
             delay = 25
             local bldoor = GetWorldPositionOfEntityBone(vehicle, GetEntityBoneIndexByName(vehicle, "window_lr"))
             local brdoor = GetWorldPositionOfEntityBone(vehicle, GetEntityBoneIndexByName(vehicle, "window_rr"))
