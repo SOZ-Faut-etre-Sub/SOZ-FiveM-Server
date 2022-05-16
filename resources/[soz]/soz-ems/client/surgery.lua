@@ -139,5 +139,9 @@ RegisterNetEvent("lsmc:client:SetOperation")
 AddEventHandler("lsmc:client:SetOperation", function(val, missing)
     Operation = val
     MissingOrgane = missing
-    ItemOrgan = MissingOrgane:lower()
+    if missing == nil then
+        ItemOrgan = ""
+    else
+        ItemOrgan = MissingOrgane:lower()
+    end
 end)
