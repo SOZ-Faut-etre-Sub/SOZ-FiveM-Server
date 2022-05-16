@@ -36,6 +36,22 @@ function ResetNpcTask()
     }
 end
 
+function ClearNpcMission()
+    if NpcData.NpcBlip ~= nil then
+        RemoveBlip(NpcData.NpcBlip)
+    end
+    if NpcData.DeliveryBlip ~= nil then
+        RemoveBlip(NpcData.DeliveryBlip)
+    end
+    local RemovePed = function(ped)
+        SetTimeout(60000, function()
+            DeletePed(ped)
+        end)
+    end
+    RemovePed(NpcData.Npc)
+    ResetNpcTask()
+end
+
 local function calculateFareAmount()
     if HorodateurActive then
         start = lastLocation
@@ -156,31 +172,34 @@ local function GetDeliveryLocation()
                              vector3(Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x,
                                      Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y,
                                      Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].z))
-            if dist < 20 then
-                if dist < 5 then
-                    if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
-                        local veh = GetVehiclePedIsIn(ped, 0)
-                        TaskLeaveVehicle(NpcData.Npc, veh, 0)
-                        SetEntityAsMissionEntity(NpcData.Npc, false, true)
-                        SetEntityAsNoLongerNeeded(NpcData.Npc)
-                        local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
-                        TaskGoStraightToCoord(NpcData.Npc, targetCoords.x, targetCoords.y, targetCoords.z, 1.0, -1, 0.0, 0.0)
-                        TriggerServerEvent("taxi:server:NpcPay", HorodateurData.TarifActuelle)
-                        HorodateurActive = false
-                        TotalDistance = 0
-                        exports["soz-hud"]:DrawNotification("Vous avez déposé la personne")
-                        if NpcData.DeliveryBlip ~= nil then
-                            RemoveBlip(NpcData.DeliveryBlip)
-                        end
-                        local RemovePed = function(ped)
-                            SetTimeout(60000, function()
-                                DeletePed(ped)
-                            end)
-                        end
-                        RemovePed(NpcData.Npc)
-                        ResetNpcTask()
-                        break
+            if dist < 5 then
+                if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
+                    local veh = GetVehiclePedIsIn(ped, 0)
+                    if not IsPedInVehicle(NpcData.Npc, veh, false) then
+                        ClearNpcMission()
+                        exports["soz-hud"]:DrawNotification("Vous n'avez pas la personne dans votre véhicule")
+                        return
                     end
+                    TaskLeaveVehicle(NpcData.Npc, veh, 0)
+                    SetEntityAsMissionEntity(NpcData.Npc, false, true)
+                    SetEntityAsNoLongerNeeded(NpcData.Npc)
+                    local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
+                    TaskGoStraightToCoord(NpcData.Npc, targetCoords.x, targetCoords.y, targetCoords.z, 1.0, -1, 0.0, 0.0)
+                    TriggerServerEvent("taxi:server:NpcPay", HorodateurData.TarifActuelle)
+                    HorodateurActive = false
+                    TotalDistance = 0
+                    exports["soz-hud"]:DrawNotification("Vous avez déposé la personne")
+                    if NpcData.DeliveryBlip ~= nil then
+                        RemoveBlip(NpcData.DeliveryBlip)
+                    end
+                    local RemovePed = function(ped)
+                        SetTimeout(60000, function()
+                            DeletePed(ped)
+                        end)
+                    end
+                    RemovePed(NpcData.Npc)
+                    ResetNpcTask()
+                    break
                 end
             end
             Wait(1)
@@ -230,32 +249,30 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                                      vector3(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y,
                                              Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z))
 
-                    if dist < 20 then
-                        if dist < 5 then
-                            if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
-                                local veh = GetVehiclePedIsIn(ped, 0)
-                                local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(veh)
+                    if dist < 5 then
+                        if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
+                            local veh = GetVehiclePedIsIn(ped, 0)
+                            local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(veh)
 
-                                for i = maxSeats - 1, 0, -1 do
-                                    if IsVehicleSeatFree(veh, i) then
-                                        freeSeat = i
-                                        break
-                                    end
+                            for i = maxSeats - 1, 0, -1 do
+                                if IsVehicleSeatFree(veh, i) then
+                                    freeSeat = i
+                                    break
                                 end
-
-                                HorodateurOpen = true
-                                HorodateurActive = true
-                                lastLocation = GetEntityCoords(PlayerPedId())
-                                ClearPedTasksImmediately(NpcData.Npc)
-                                FreezeEntityPosition(NpcData.Npc, false)
-                                TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
-                                exports["soz-hud"]:DrawNotification("Amenez la personne a la destination spécifiée")
-                                if NpcData.NpcBlip ~= nil then
-                                    RemoveBlip(NpcData.NpcBlip)
-                                end
-                                GetDeliveryLocation()
-                                NpcData.NpcTaken = true
                             end
+
+                            HorodateurOpen = true
+                            HorodateurActive = true
+                            lastLocation = GetEntityCoords(PlayerPedId())
+                            ClearPedTasksImmediately(NpcData.Npc)
+                            FreezeEntityPosition(NpcData.Npc, false)
+                            TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
+                            exports["soz-hud"]:DrawNotification("Amenez la personne a la destination spécifiée")
+                            if NpcData.NpcBlip ~= nil then
+                                RemoveBlip(NpcData.NpcBlip)
+                            end
+                            GetDeliveryLocation()
+                            NpcData.NpcTaken = true
                         end
                     end
 
@@ -269,12 +286,6 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
         exports["soz-hud"]:DrawNotification("Vous n'êtes pas dans un taxi")
     end
 end)
-
-function ClearNpcMission()
-
-    print("clear npc missions")
-end
-
 
 RegisterNetEvent("ems:client:onDeath", function()
     ClearNpcMission()
