@@ -18,7 +18,11 @@ end)
 
 --- Events
 RegisterNetEvent("job:server:AddObject", function(object, position)
-    local obj = exports["soz-utils"]:CreateObject(object, position.x, position.y, position.z, position.w, 8000.0, ObjectWithoutFreeze[object] ~= true)
+    local obj = CreateObjectNoOffset(object, position.x, position.y, position.z, true, true, false)
+    SetEntityHeading(obj, position.w or 0)
+    if ObjectWithoutFreeze[object] ~= true then
+        FreezeEntityPosition(obj, true)
+    end
 
     Objects[NetworkGetNetworkIdFromEntity(obj)] = position
 end)
