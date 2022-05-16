@@ -58,9 +58,7 @@ RegisterNetEvent("taxi:duty")
 AddEventHandler("taxi:duty", function()
     TriggerServerEvent("QBCore:ToggleDuty")
     if PlayerData.job.onduty then
-        ResetNpcTask()
-        RemoveBlip(NpcData.DeliveryBlip)
-        DeletePed(NpcData.Npc)
+        ClearNpcMission()
     end
 end)
 
