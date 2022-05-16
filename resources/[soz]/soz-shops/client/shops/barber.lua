@@ -166,6 +166,14 @@ function BarberShop:GenerateMenu()
         })
     end
 
+    shopMenu:AddButton({
+        label = "Chirurgie esthétique en promotion",
+        select = function()
+            shopMenu:Close()
+            TriggerEvent("soz-character:client:RequestCharacterWizard")
+        end,
+    })
+
     shopMenu:On("close", function()
         TriggerEvent("soz-character:Client:ApplyCurrentSkin")
         self:clearAllAnimations()
