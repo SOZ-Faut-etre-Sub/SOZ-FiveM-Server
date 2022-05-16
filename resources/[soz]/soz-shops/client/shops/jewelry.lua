@@ -71,13 +71,12 @@ function JewelryShop:GenerateMenu()
     local ped = PlayerPedId()
     local PlayerData = QBCore.Functions.GetPlayerData()
 
-    self:deleteCam()
-    self:setupCam()
-
     for _, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
         shopMenu:AddButton({label = content.label, value = content.menu})
 
         if content.menu == nil then
+            TriggerEvent("hud:client:DrawNotification", string.format("Le vendeur est occupé, veuillez réessayer dans quelques instants."))
+
             return
         end
 
@@ -86,8 +85,13 @@ function JewelryShop:GenerateMenu()
         end)
     end
 
+    shopMenu:On("open", function()
+        self:deleteCam()
+        self:setupCam()
+    end)
+
     shopMenu:On("close", function()
-        TriggerEvent("soz-character:Client:ApplyCurrentSkin")
+        TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
         self:clearAllAnimations()
         self:deleteCam()
     end)

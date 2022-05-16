@@ -62,13 +62,14 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
                 Player.Functions.SetSkin(skin)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez changé de coupe pour ~g~$%s"):format(price))
             elseif product == "jewelry" then
-                local skin = Player.PlayerData.skin
+                local clothConfig = Player.PlayerData.cloth_config
 
-                skin[productID.overlay] = {}
-                skin[productID.overlay].Drawable = tonumber(productID.component)
-                skin[productID.overlay].Texture = tonumber(productID.drawable)
+                clothConfig["BaseClothSet"].Props[tostring(productID.category)] = {
+                    Drawable = tonumber(productID.component),
+                    Texture = tonumber(productID.drawable),
+                }
 
-                Player.Functions.SetSkin(skin)
+                Player.Functions.SetClothConfig(clothConfig, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
             elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
                 local clothConfig = Player.PlayerData.cloth_config
@@ -90,7 +91,7 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
                     }
                 end
 
-                Player.Functions.SetClothConfig(clothConfig, true)
+                Player.Functions.SetClothConfig(clothConfig, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un habit pour ~g~$%s"):format(price))
             else
                 exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
