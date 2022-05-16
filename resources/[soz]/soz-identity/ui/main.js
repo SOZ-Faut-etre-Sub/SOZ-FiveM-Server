@@ -41,7 +41,7 @@ async function setVisible(value, src) {
     }
 
     if (value === "identity") await fadeIn(identityElement);
-    else if (value === "licenses") await fadeIn(licensesElement);
+    else if (value === "licences") await fadeIn(licensesElement);
 
     if (value) {
         if (timeout) clearTimeout(timeout)
@@ -66,8 +66,8 @@ window.addEventListener("message", (event) => {
     if (scope === "mugshot") {
         displayMugshot(event.data.mugshot);
     }
-    
-    if (scope === "licenses" && type === "display") {
+
+    if (scope === "licences" && type === "display") {
         displayLicensesData(event.data.licences);
         displayPlayerName(
             event.data.firstName,
