@@ -35,6 +35,5 @@ local relationshipTypes = {
 }
 
 for _, group in ipairs(relationshipTypes) do
-    SetRelationshipBetweenGroups(1, GetHashKey(group), GetHashKey("PLAYER"))
-    SetRelationshipBetweenGroups(1, GetHashKey("PLAYER"), GetHashKey(group))
+    SetRelationshipBetweenGroups(3, GetHashKey(group), GetHashKey("PLAYER"))
 end
