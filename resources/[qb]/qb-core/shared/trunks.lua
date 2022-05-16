@@ -57,7 +57,7 @@ QBShared.Trunks = {
 
     -- Michel Transport Petrol
     [GetHashKey('packer2')] = { slot = 5, weight = 40000 },
-    [GetHashKey('tanker')] = { slot = 5, weight = 300000 },
+    [GetHashKey('tanker')] = { slot = 5, weight = 550000 },
     [GetHashKey('utillitruck4')] = { slot = 5, weight = 100000 },
 
     -- CarlJr Service
