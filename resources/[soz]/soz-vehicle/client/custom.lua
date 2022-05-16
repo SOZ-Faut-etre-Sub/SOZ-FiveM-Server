@@ -246,7 +246,7 @@ Upgrade:On("open", function(menu)
     })
     for k, v in ipairs(Config.vehicleCustomisationCustom) do
         local validMods, amountValidMods = CheckValidMods(v.category, v.id)
-        if amountValidMods > 0 or v.id == 18 then
+        if amountValidMods > 0 or (v.id == 18 and GetVehicleClass(Config.AttachedCustomVehicle) ~= 13) then
             menu:AddButton({
                 label = v.category,
                 value = UpgradeMenu,
