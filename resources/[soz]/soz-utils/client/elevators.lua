@@ -1,6 +1,6 @@
 local Elevators = {
     ["stonk:0"] = {
-        name = "Elevator0",
+        name = "Stonk:Elevator0",
         label = "Sous-sol",
         buttons = vector2(11.99, -668.57),
         heading = 6.3,
@@ -10,7 +10,7 @@ local Elevators = {
         spawnPoint = vector4(10.53, -671.79, 32.45, 359.77),
     },
     ["stonk:1L"] = { -- Level 1, Left-side (facing elevators from outside)
-        name = "Elevator1L",
+        name = "Stonk:Elevator1L",
         label = "Coffre",
         buttons = vector2(15.79, -689.22),
         heading = 24.38,
@@ -20,7 +20,7 @@ local Elevators = {
         spawnPoint = vector4(17.27, -690.0, 39.73, 23.0),
     },
     ["stonk:1R"] = { -- Level 1, Right-side (facing elevators from outside)
-        name = "Elevator1R",
+        name = "Stonk:Elevator1R",
         label = "Coffre",
         buttons = vector2(13.05, -690.47),
         heading = 24.38,
@@ -30,7 +30,7 @@ local Elevators = {
         spawnPoint = vector4(14.59, -691.35, 39.73, 23.0),
     },
     ["stonk:2L"] = { -- Level 2, Left-side (facing elevators from outside)
-        name = "Elevator2L",
+        name = "Stonk:Elevator2L",
         label = "Niveau principal",
         buttons = vector2(15.75, -689.18),
         heading = 24.38,
@@ -40,7 +40,7 @@ local Elevators = {
         spawnPoint = vector4(17.3, -689.98, 45.01, 23.0),
     },
     ["stonk:2R"] = { -- Level 2, Right-side (facing elevators from outside)
-        name = "Elevator2R",
+        name = "Stonk:Elevator2R",
         label = "Niveau principal",
         buttons = vector2(13.09, -690.53),
         heading = 24.38,
@@ -51,7 +51,7 @@ local Elevators = {
     },
     --- LSMC
     ["lsmc:0"] = {
-        name = "Elevator0",
+        name = "LSMC:Elevator0",
         label = "Rez de chaussez",
         buttons = vector2(337.33, -1433.18),
         heading = 320,
@@ -61,7 +61,7 @@ local Elevators = {
         spawnPoint = vector4(336.04, -1430.85, 32.51, 146.98),
     },
     ["lsmc:1"] = {
-        name = "Elevator1",
+        name = "LSMC:Elevator1",
         label = "Toit",
         buttons = vector2(337.45, -1433.03),
         heading = 50,
