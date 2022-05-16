@@ -20,8 +20,14 @@ end
 
 function PhoneCall:setPlayer(source, channel)
     channel = tonumber(channel)
-    local oldChannel = Player(source).state.call.channel
-    Player(source).state.call.channel = channel
+    local state = Player(source).state
+
+    if state == nil then
+        return
+    end
+
+    local oldChannel = state.call.channel
+    state.call.channel = channel
 
     if channel ~= 0 then
         self:addPlayer(source, channel)
