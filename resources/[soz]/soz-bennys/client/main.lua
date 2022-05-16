@@ -142,8 +142,6 @@ exports("GetVehicleStatusList", GetVehicleStatusList)
 exports("GetVehicleStatus", GetVehicleStatus)
 exports("SetVehicleStatus", SetVehicleStatus)
 
-
-
 function ApplyEffects(vehicle)
     local plate = QBCore.Functions.GetPlate(vehicle)
     if (GetVehicleClass(vehicle) >= 0 and GetVehicleClass(vehicle) <= 13) or GetVehicleClass(vehicle) == 18 then
