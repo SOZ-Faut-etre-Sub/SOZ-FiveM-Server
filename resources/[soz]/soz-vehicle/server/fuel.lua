@@ -36,6 +36,7 @@ MySQL.ready(function()
         if station.type == "private" then
             local stationCoord = stations[station.id].position
             local prop = CreateObjectNoOffset(station.model, stationCoord.x, stationCoord.y, stationCoord.z, true, true, false)
+            SetEntityDistanceCullingRadius(prop, 8000.0)
             SetEntityHeading(prop, stationCoord.w)
             FreezeEntityPosition(prop, true)
         end

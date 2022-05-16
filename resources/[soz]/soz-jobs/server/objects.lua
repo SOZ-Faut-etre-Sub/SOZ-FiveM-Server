@@ -19,6 +19,7 @@ end)
 --- Events
 RegisterNetEvent("job:server:AddObject", function(object, position)
     local obj = CreateObjectNoOffset(object, position.x, position.y, position.z, true, true, false)
+    SetEntityDistanceCullingRadius(obj, 8000.0)
     SetEntityHeading(obj, position.w or 0)
     if ObjectWithoutFreeze[object] ~= true then
         FreezeEntityPosition(obj, true)
