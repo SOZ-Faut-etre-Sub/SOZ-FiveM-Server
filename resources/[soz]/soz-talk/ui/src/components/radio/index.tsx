@@ -48,7 +48,7 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
     const [primaryFrequency, setPrimaryFrequency] = useState<Frequency>({frequency: 0.0, volume: 100, ear: Ear.Both});
     const [secondaryFrequency, setSecondaryFrequency] = useState<Frequency>({frequency: 0.0, volume: 100, ear: Ear.Both});
 
-    const {control, handleSubmit, formState: { errors }} = useForm();
+    const {control, handleSubmit, formState: { errors }, setValue} = useForm();
 
     /* Design */
     const radio = props.type === 'radio' ? radio_sr : radio_lr
@@ -125,8 +125,10 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                 if (frequency) {
                     if (isPrimary) {
                         setPrimaryFrequency(s => ({...s, ...{frequency: frequency/100}}))
+                        setValue('primaryFrequency', frequency)
                     } else {
                         setSecondaryFrequency(s => ({...s, ...{frequency: frequency/100}}))
+                        setValue('secondaryFrequency', frequency)
                     }
                 }
             } else if (action === 'volume_change') {
