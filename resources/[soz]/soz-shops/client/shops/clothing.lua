@@ -149,6 +149,7 @@ function ClothingShop:GenerateMenu(skipIntro)
     end
 
     shopMenu:On("close", function()
+        TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
         TriggerEvent("soz-character:Client:ApplyCurrentSkin")
         self:clearAllAnimations()
         self:deleteCam()
