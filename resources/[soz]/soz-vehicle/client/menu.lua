@@ -81,7 +81,7 @@ local function GenerateMenu()
             DoorManagementMenu(vehicle)
         end
         if GetPedInVehicleSeat(vehicle, 0) == player then
-            CibiMenu()
+            CibiMenu(vehicle)
         end
 
         if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= vehicleMenu.UUID then
