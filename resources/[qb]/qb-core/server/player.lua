@@ -563,7 +563,7 @@ function QBCore.Player.CreatePhoneNumber()
     while not UniqueFound do
         PhoneNumber = tostring('555-' .. QBCore.Shared.RandomInt(4))
         local query = '%' .. PhoneNumber .. '%'
-        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `player` WHERE `metadata` LIKE ?', { query })
+        local result = exports.oxmysql:executeSync('SELECT COUNT(*) as count FROM `player` WHERE `charinfo` LIKE ?', { query })
         if result[1].count == 0 then
             UniqueFound = true
         end
