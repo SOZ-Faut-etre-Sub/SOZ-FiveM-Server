@@ -145,7 +145,7 @@ exports("SetVehicleStatus", SetVehicleStatus)
 function ApplyEffects(vehicle)
     local plate = QBCore.Functions.GetPlate(vehicle)
     if (GetVehicleClass(vehicle) >= 0 and GetVehicleClass(vehicle) <= 13) or GetVehicleClass(vehicle) == 18 then
-        if SpeedLimiter ~= 0 then
+        if SpeedLimiter ~= 0 and (GetVehicleEstimatedMaxSpeed(vehicle * 3.6) >= SpeedLimiter) then
             SetVehicleMaxSpeed(vehicle, SpeedLimiter / 3.6 - 0.25)
         else
             local nbrpassagers = GetVehicleNumberOfPassengers(vehicle)
