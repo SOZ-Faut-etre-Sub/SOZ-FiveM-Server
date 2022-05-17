@@ -259,8 +259,9 @@ function QBCore.Player.CreatePlayer(PlayerData)
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log('WARN', 'Bank movement - Add ! ' .. amount .. '$ (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
+
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, false)
+
             return true
         end
         return false
@@ -283,7 +284,6 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log('WARN', 'Bank movement - Remove ! ' .. amount .. '$ (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, true)
             if moneytype == 'bank' then
                 TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
@@ -297,15 +297,18 @@ function QBCore.Player.CreatePlayer(PlayerData)
         reason = reason or 'unknown'
         local moneytype = moneytype:lower()
         local amount = tonumber(amount)
+
         if amount < 0 then
             return
         end
+
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = amount
             self.Functions.UpdatePlayerData()
-            exports['soz-monitor']:Log('WARN', 'Bank movement - Set ! ' .. amount .. '$ (' .. moneytype .. ') set, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype], { player = self.PlayerData })
+
             return true
         end
+
         return false
     end
 
