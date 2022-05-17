@@ -1,8 +1,4 @@
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    if not duty then
-        return
-    end
-
+CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
