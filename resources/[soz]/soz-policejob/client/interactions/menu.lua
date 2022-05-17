@@ -198,7 +198,7 @@ end
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
         if PlayerData.job.onduty then
-            RedAlertEntity(menu, PoliceJob.Menus[job].societyNumber)
+            RedAlertEntity(menu, "555-POLICE")
             PropsEntity(menu)
             BadgeEntity(menu)
             WantedEntity(menu, job)

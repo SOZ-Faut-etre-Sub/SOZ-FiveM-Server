@@ -52,11 +52,15 @@ type SocietyNumber = {
   [key: string]: string
 }
 
+export type SocietyInsertDTO = {
+    [key: string]: number
+}
+
 export const SocietyNumberList: SocietyNumber = {
-  fbi: '555-POLICE',
-  lspd: '555-POLICE',
+  fbi: '555-FBI',
+  lspd: '555-LSPD',
   lsmc: '555-LSMC',
-  bcso: '555-POLICE',
+  bcso: '555-BCSO',
   news: '555-NEWS',
   garbage: '555-BLUEBIRD',
   taxi: '555-CARLJR',
