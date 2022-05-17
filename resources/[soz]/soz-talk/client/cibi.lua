@@ -20,7 +20,12 @@ local function vehicleUnregisterHandlers()
 end
 
 local function vehicleRegisterHandlers()
+    local playerPed = PlayerPedId()
     local state = Entity(currentVehicle).state
+
+    if GetPedInVehicleSeat(currentVehicle, -1) ~= playerPed and GetPedInVehicleSeat(currentVehicle, 0) ~= playerPed then
+        return
+    end
 
     handleUpdateRadio(state.primaryRadio, true)
     handleUpdateRadio(state.secondaryRadio, false)
