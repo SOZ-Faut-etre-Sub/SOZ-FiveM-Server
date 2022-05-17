@@ -12,7 +12,6 @@ FoodConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
             [1] = {Drawable = 0, Texture = 0, Palette = 0},
-            [2] = {Drawable = 10, Texture = 0, Palette = 0},
             [3] = {Drawable = 0, Texture = 0, Palette = 0},
             [4] = {Drawable = 90, Texture = 0, Palette = 0},
             [5] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -29,7 +28,6 @@ FoodConfig.Cloakroom = {
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
             [1] = {Drawable = 0, Texture = 0, Palette = 0},
-            [2] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 0, Texture = 0, Palette = 0},
             [4] = {Drawable = 93, Texture = 0, Palette = 0},
             [5] = {Drawable = 0, Texture = 0, Palette = 0},
