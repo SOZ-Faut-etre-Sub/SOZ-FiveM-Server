@@ -15,12 +15,12 @@ Citizen.CreateThread(function()
             local playerpos = GetEntityCoords(GetPlayerPed(-1), 1)
             local distanceToBrdoor = GetDistanceBetweenCoords(brdoor, playerpos, 1)
             local distanceToBldoor = GetDistanceBetweenCoords(bldoor, playerpos, 1)
-            if distanceToBrdoor < 0.9 and DoesVehicleHaveDoor(vehicle, 3) and not DoesEntityExist(GetPedInVehicleSeat(vehicle, 2)) and
+            if distanceToBrdoor < 1.1 and DoesVehicleHaveDoor(vehicle, 3) and not DoesEntityExist(GetPedInVehicleSeat(vehicle, 2)) and
                 GetVehicleDoorLockStatus(vehicle) ~= 2 then
                 if (IsControlJustPressed(1, 49)) then
                     TaskEnterVehicle(PlayerPedId(), vehicle, 10000, 2, 1.0, 1, 0)
                 end
-            elseif distanceToBldoor < 0.9 and DoesVehicleHaveDoor(vehicle, 2) and not DoesEntityExist(GetPedInVehicleSeat(vehicle, 1)) and
+            elseif distanceToBldoor < 1.1 and DoesVehicleHaveDoor(vehicle, 2) and not DoesEntityExist(GetPedInVehicleSeat(vehicle, 1)) and
                 GetVehicleDoorLockStatus(vehicle) ~= 2 then
                 if (IsControlJustPressed(1, 49)) then
                     TaskEnterVehicle(PlayerPedId(), vehicle, 10000, 1, 1.0, 1, 0)
