@@ -144,9 +144,8 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
             "UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
             {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
     else
-        MySQL.Async.execute(
-            "UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND job = ?",
-            {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.job.id})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND job = ?",
+                            {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.job.id})
     end
 end)
 
