@@ -246,8 +246,8 @@ end
 
 local function HandleVehicleAndPed(instructor, vehicle)
     -- Delete ped and vehicle
-        DeletePed(instructor)
-        DeleteVehicle(vehicle)
+    DeletePed(instructor)
+    DeleteVehicle(vehicle)
 end
 
 local function HandleEntitiesAndTeleportBack(instructor, vehicle)
@@ -271,7 +271,7 @@ function TerminateExam(isSuccess, licenseType)
     RunExitSequence()
 
     local PlayerData = QBCore.Functions.GetPlayerData()
-    local isDead = PlayerData.metadata['isdead']
+    local isDead = PlayerData.metadata["isdead"]
     if isDead then
         HandleVehicleAndPed(instructorEntity, vehicleEntity)
     else

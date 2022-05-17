@@ -21,8 +21,8 @@ local function GetPenalties(licenseType)
             failMsg = "Pas de permis pour les morts...",
             isValid = function()
                 local PlayerData = QBCore.Functions.GetPlayerData()
-                return not PlayerData.metadata['isdead']
-            end
+                return not PlayerData.metadata["isdead"]
+            end,
         },
 
         ["overspeed"] = {
