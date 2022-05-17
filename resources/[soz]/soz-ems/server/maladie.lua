@@ -1,5 +1,14 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
+RegisterServerEvent("lsmc:maladie:server:SetCurrentDisease")
+AddEventHandler("lsmc:maladie:server:SetCurrentDisease", function(disease, id)
+    local Player = QBCore.Functions.GetPlayer(id or source)
+
+    Player.Functions.SetMetaData("disease", disease)
+
+    TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Plauer.PlayerData.source, disease)
+end)
+
 RegisterServerEvent("lsmc:server:GetMaladie")
 AddEventHandler("lsmc:server:GetMaladie", function()
     local Player = QBCore.Functions.GetPlayer(source)
