@@ -57,6 +57,23 @@ class _SocietyService {
           isDone: false,
         });
       })
+
+      if (reqObj.data.number === "555-LSMC" && players.length == 0) {
+          const polices = await PlayerService.getPlayersFromSocietyNumber('555-POLICE');
+          polices.forEach((player) => {
+              emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player.source, {
+                  id: contact,
+                  conversation_id: reqObj.data.number,
+                  source_phone: identifier,
+                  message: '[TRF-LSMC] ' + reqObj.data.message,
+                  position: reqObj.data.pedPosition,
+                  isTaken: false,
+                  isDone: false,
+              });
+          })
+      }
+
+
     } catch (e) {
       societiesLogger.error(`Error in handleAddSociety, ${e.message}`);
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
