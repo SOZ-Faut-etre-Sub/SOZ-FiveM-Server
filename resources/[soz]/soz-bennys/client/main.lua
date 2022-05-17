@@ -145,20 +145,17 @@ exports("SetVehicleStatus", SetVehicleStatus)
 function ApplyEffects(vehicle)
     local plate = QBCore.Functions.GetPlate(vehicle)
     if (GetVehicleClass(vehicle) >= 0 and GetVehicleClass(vehicle) <= 13) or GetVehicleClass(vehicle) == 18 then
-        local nbrpassagers = GetVehicleNumberOfPassengers(vehicle)
-        if nbrpassagers >= 1 then
-            local pourcentage = 0.02 * nbrpassagers
-            local newspeed = GetVehicleEstimatedMaxSpeed(vehicle) - (GetVehicleEstimatedMaxSpeed(vehicle) * (pourcentage))
-            if newspeed < SpeedLimiter then
-                SpeedLimiter = newspeed
-            end
-            SetVehicleMaxSpeed(vehicle, SpeedLimiter)
-        elseif nbrpassagers == 0 and SpeedLimiter ~= 0 then
+        if SpeedLimiter ~= 0 then
             SetVehicleMaxSpeed(vehicle, SpeedLimiter / 3.6 - 0.25)
-        elseif SpeedLimiter == 0 then
-            SetVehicleMaxSpeed(vehicle, GetVehicleEstimatedMaxSpeed(vehicle))
+        else
+            local nbrpassagers = GetVehicleNumberOfPassengers(vehicle)
+            if nbrpassagers >= 1 then
+                local pourcentage = 0.02 * nbrpassagers
+                ModifyVehicleTopSpeed(vehicle, (1 - pourcentage))
+            elseif nbrpassagers == 0 then
+                ModifyVehicleTopSpeed(vehicle, 1)
+            end
         end
-
     end
     if GetVehicleClass(vehicle) ~= 13 and GetVehicleClass(vehicle) ~= 21 and GetVehicleClass(vehicle) ~= 16 and GetVehicleClass(vehicle) ~= 15 and
         GetVehicleClass(vehicle) ~= 14 then
@@ -481,11 +478,15 @@ local function CleanVehicle(entity)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
+        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, false)
+        ClearPedTasks(PlayerPedId())
+        NetworkRequestControlOfEntity(entity)
+        while not NetworkHasControlOfEntity(entity) do
+            Wait(0)
+        end
         SetVehicleDirtLevel(entity, 0.1)
         SetVehicleUndriveable(entity, false)
         WashDecalsFromVehicle(entity, 1.0)
-        ClearAllPedProps(ped)
-        ClearPedTasks(ped)
 
         TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
             vehicle_plate = QBCore.Functions.GetPlate(entity),
@@ -494,8 +495,8 @@ local function CleanVehicle(entity)
         }, true)
     end, function() -- Cancel
         exports["soz-hud"]:DrawNotification("Nettoyage échoué")
-        ClearAllPedProps(ped)
-        ClearPedTasks(ped)
+        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, false)
+        ClearPedTasks(PlayerPedId())
     end)
 end
 
