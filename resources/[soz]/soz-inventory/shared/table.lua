@@ -15,7 +15,11 @@ local function contains(tbl, value)
             values = values + 1
 
             for _, v2 in pairs(tbl) do
-                if v1 == v2 then
+                if type(v1) == "table" and type(v2) == "table" then
+                    if contains(v1, v2) then
+                        matched_values = matched_values + 1
+                    end
+                elseif v1 == v2 then
                     matched_values = matched_values + 1
                 end
             end
