@@ -1,7 +1,7 @@
 import PlayerService from '../players/player.service';
 import { societiesLogger } from './societies.utils';
 import SocietiesDb, { _SocietiesDB } from './societies.db';
-import {DBSocietyUpdate, PreDBSociety, SocietyEvents, SocietyMessage} from '../../../typings/society';
+import {DBSocietyUpdate, PreDBSociety, SocietyEvents, SocietyInsertDTO, SocietyMessage} from '../../../typings/society';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 
 class _SocietyService {
@@ -10,6 +10,23 @@ class _SocietyService {
   constructor() {
     this.contactsDB = SocietiesDb;
     societiesLogger.debug('Societies service started');
+  }
+
+  createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
+      emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, {
+          id: messageId,
+          conversation_id: data.number,
+          source_phone: sourcePhone,
+          message: data.message,
+          position: data.pedPosition,
+          isTaken: false,
+          isDone: false,
+      });
+  }
+
+  replaceSocietyPhoneNumber(data: PreDBSociety, phoneSocietyNumber: string): PreDBSociety {
+      data.number = phoneSocietyNumber;
+      return data
   }
 
   async handleSendSocietyMessage(
@@ -35,45 +52,46 @@ class _SocietyService {
             title: 'Federal Bureau of Investigation',
             content: `**Nouveau message reçu : ** \`${player.getPhoneNumber()} - ${player.username}\` \`\`\`${reqObj.data.message}\`\`\` `
         });
-
-        resp({ status: 'ok', data: null });
-        return;
     }
 
     try {
       const contact = await this.contactsDB.addSociety(identifier, reqObj.data);
-
       resp({ status: 'ok', data: contact });
 
       const players = await PlayerService.getPlayersFromSocietyNumber(reqObj.data.number);
       players.forEach((player) => {
-        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player.source, {
-          id: contact,
-          conversation_id: reqObj.data.number,
-          source_phone: identifier,
-          message: reqObj.data.message,
-          position: reqObj.data.pedPosition,
-          isTaken: false,
-          isDone: false,
-        });
+        this.createMessageBroadcastEvent(player.source, contact, identifier, reqObj.data);
       })
 
       if (reqObj.data.number === "555-LSMC" && players.length == 0) {
-          const polices = await PlayerService.getPlayersFromSocietyNumber('555-POLICE');
-          polices.forEach((player) => {
-              emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player.source, {
-                  id: contact,
-                  conversation_id: reqObj.data.number,
-                  source_phone: identifier,
-                  message: '[TRF-LSMC] ' + reqObj.data.message,
-                  position: reqObj.data.pedPosition,
-                  isTaken: false,
-                  isDone: false,
-              });
+          const lspd = await PlayerService.getPlayersFromSocietyNumber('555-LSPD');
+          const bcso = await PlayerService.getPlayersFromSocietyNumber('555-BCSO');
+
+          const message: SocietyInsertDTO = {
+              '555-LSPD': await this.contactsDB.addSociety(identifier, this.replaceSocietyPhoneNumber(reqObj.data, '555-LSPD')),
+              '555-BCSO': await this.contactsDB.addSociety(identifier, this.replaceSocietyPhoneNumber(reqObj.data, '555-BCSO'))
+          };
+
+          [lspd, bcso].reduce((acc, val) => acc.concat(val), []).forEach((player) => {
+              this.createMessageBroadcastEvent(player.source, message[player.getSocietyPhoneNumber()], identifier, reqObj.data);
           })
       }
 
+      if (reqObj.data.number === "555-POLICE") {
+          const lspd = await PlayerService.getPlayersFromSocietyNumber('555-LSPD');
+          const bcso = await PlayerService.getPlayersFromSocietyNumber('555-BCSO');
+          const fbi = await PlayerService.getPlayersFromSocietyNumber('555-FBI');
 
+          const message: SocietyInsertDTO = {
+              '555-LSPD': await this.contactsDB.addSociety(identifier, this.replaceSocietyPhoneNumber(reqObj.data, '555-LSPD')),
+              '555-BCSO': await this.contactsDB.addSociety(identifier, this.replaceSocietyPhoneNumber(reqObj.data, '555-BCSO')),
+              '555-FBI': await this.contactsDB.addSociety(identifier, this.replaceSocietyPhoneNumber(reqObj.data, '555-FBI'))
+          };
+
+          [lspd, bcso, fbi].reduce((acc, val) => acc.concat(val), []).forEach((player) => {
+              this.createMessageBroadcastEvent(player.source, message[player.getSocietyPhoneNumber()], identifier, reqObj.data);
+          })
+      }
     } catch (e) {
       societiesLogger.error(`Error in handleAddSociety, ${e.message}`);
       resp({ status: 'error', errorMsg: 'DB_ERROR' });
