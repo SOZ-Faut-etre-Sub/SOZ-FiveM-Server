@@ -145,8 +145,8 @@ RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine,
             {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
     else
         MySQL.Async.execute(
-            "UPDATE player_vehicles SET license = NULL, citizenid = NULL, state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND citizenid = ?",
-            {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.citizenid})
+            "UPDATE player_vehicles SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ? WHERE plate = ? AND job = ?",
+            {state, garage, fuel, engine, body, parkingtime, plate, pData.PlayerData.job.id})
     end
 end)
 
@@ -182,6 +182,9 @@ AddEventHandler("onResourceStart", function(resource)
         Wait(100)
         MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL", {})
         MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL", {})
+
+        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'", {})
 
         MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4", {}, function(result)
             if result[1] then
