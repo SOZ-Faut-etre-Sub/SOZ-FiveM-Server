@@ -7,7 +7,7 @@ QBCore.Functions.CreateUseableItem("tissue", function(source)
 
     if player.PlayerData.metadata["disease"] == "rhume" then
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un mouchoir et vous vous sentez mieux !"))
-        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", source, nil)
+        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", nil, source)
     else
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un mouchoir, mais rien ne sort !"))
     end
@@ -15,13 +15,23 @@ QBCore.Functions.CreateUseableItem("tissue", function(source)
     exports["soz-inventory"]:RemoveItem(source, "tissue", 1, nil)
 end)
 
+QBCore.Functions.CreateUseableItem("antibiotic", function(source)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if player.PlayerData.metadata["disease"] == "intoxication" then
+        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", nil, source)
+        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un antibiotique et vous vous sentez mieux !"))
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un antibiotique, mais rien ne change !"))
+    end
+
+    exports["soz-inventory"]:RemoveItem(source, "antibiotic", 1, nil)
+end)
+
 QBCore.Functions.CreateUseableItem("pommade", function(source)
     TriggerClientEvent("lsmc:client:pommade", source)
 end)
 
-QBCore.Functions.CreateUseableItem("antibiotic", function(source)
-    TriggerClientEvent("lsmc:client:antibiotique", source)
-end)
 
 QBCore.Functions.CreateUseableItem("ifaks", function(source)
     TriggerClientEvent("lsmc:client:ifaks", source)
