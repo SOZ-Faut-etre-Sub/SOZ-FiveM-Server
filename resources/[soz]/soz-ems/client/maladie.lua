@@ -28,17 +28,49 @@ RegisterNetEvent("lsmc:maladie:ClearDisease", function(val)
 end)
 
 RegisterNetEvent("lsmc:client:SetMaladie", function(maladie, val)
-    if maladie == "Rhume" then
+    if maladie == "rhume" then
+        if Rhume ~= val then
+            if val then
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez attrapé un rhume, utilisez un mouchoir !"))
+            else
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous vous sentez mieux !"))
+            end
+        end
+
         Rhume = val
-    elseif maladie == "Grippe" then
+    elseif maladie == "grippe" then
+        if Grippe ~= val then
+            if val then
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez attrapé la grippe, allez voir un medecin !"))
+            else
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous vous sentez mieux !"))
+            end
+        end
+
         Grippe = val
-    elseif maladie == "Rougeur" then
+    elseif maladie == "rougeur" then
         Rougeur = val
-    elseif maladie == "Intoxication" then
+    elseif maladie == "intoxication" then
+        if Intoxication ~= val then
+            if val then
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez mal au ventre, prenez un antibiotique !"))
+            else
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous n'avez plus mal au ventre !"))
+            end
+        end
+
         Intoxication = val
     elseif maladie == "foie" then
         Foie = val
     elseif maladie == "poumon" then
+        if Poumon ~= val then
+            if val then
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez mal du mal à respirer, impossible de courir !"))
+            else
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous respirez à nouveau, vous êtes prêt pour un marathon !"))
+            end
+        end
+
         Poumon = val
     elseif maladie == "rein" then
         Rein = val
@@ -62,15 +94,15 @@ CreateThread(function()
             if not IsDead and not PlayerData.metadata.godmode then
                 -- maladie
                 if Random == 1 then
-                    TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", true)
+                    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", true)
                     Rhume = true
                 end
                 if Random == 10 then
-                    TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", true)
+                    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", true)
                     Grippe = true
                 end
                 if Random == 20 then
-                    TriggerServerEvent("lsmc:server:SetMaladie", "Rougeur", true)
+                    TriggerServerEvent("lsmc:server:SetMaladie", "rougeur", true)
                     Rougeur = true
                 end
             end
@@ -96,7 +128,10 @@ CreateThread(function()
             TriggerScreenblurFadeIn(100)
             local player, distance = QBCore.Functions.GetClosestPlayer()
             local id = GetPlayerServerId(player)
-            if player ~= -1 and distance < 5.5 then
+            local propagation = math.random(1, 2)
+
+            if player ~= -1 and distance < 4.5 and propagation == 1 then
+                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez contaminé l'un de vos concitoyens !"))
                 TriggerServerEvent("lsmc:server:SetOrgane", id, "grippe", true)
             end
         elseif Rougeur then
@@ -117,15 +152,27 @@ end)
 
 RegisterNetEvent("lsmc:client:mouchoir")
 AddEventHandler("lsmc:client:mouchoir", function()
+    if Rhume then
+        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un mouchoir et vous vous sentez mieux !"))
+    else
+        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un mouchoir, mais rien ne sort !"))
+    end
+
+    TriggerServerEvent("lsmc:server:remove", "tissue")
     Rhume = false
     TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
-    TriggerServerEvent("lsmc:server:remove", "mouchoir")
 end)
 
 RegisterNetEvent("lsmc:client:antibiotique")
 AddEventHandler("lsmc:client:antibiotique", function()
+    if Intoxication then
+        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un antibiotique et vous vous sentez mieux !"))
+    else
+        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un antibiotique, mais rien ne change !"))
+    end
+
     Intoxication = false
     TriggerScreenblurFadeOut(100)
     TriggerServerEvent("lsmc:server:SetMaladie", "intoxication", false)
-    TriggerServerEvent("lsmc:server:remove", "antibiotique")
+    TriggerServerEvent("lsmc:server:remove", "antibiotic")
 end)

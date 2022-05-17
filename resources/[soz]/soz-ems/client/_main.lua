@@ -75,14 +75,14 @@ function ResetAll()
     Callems = false
 
     Rhume = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
     Grippe = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", false)
     Dos = false
     Rougeur = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "Rougeur", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "rougeur", false)
     Intoxication = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "Intoxication", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "intoxication", false)
 
     ClearPedTasks()
     TriggerScreenblurFadeOut()
@@ -125,7 +125,7 @@ AddEventHandler("lsmc:client:ifaks", function()
     local player = PlayerPedId()
     SetEntityHealth(player, GetEntityHealth(player) + 25)
     Rhume = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
     Grippe = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", false)
 end)

@@ -4,24 +4,24 @@ RegisterServerEvent("lsmc:server:GetMaladie")
 AddEventHandler("lsmc:server:GetMaladie", function()
     local Player = QBCore.Functions.GetPlayer(source)
     local Rhume = Player.PlayerData.metadata["rhume"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "Rhume", Rhume)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "rhume", Rhume or false)
     local Grippe = Player.PlayerData.metadata["grippe"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "Grippe", Grippe)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "grippe", Grippe or false)
     local Rougeur = Player.PlayerData.metadata["rougeur"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "Rougeur", Rougeur)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "rougeur", Rougeur or false)
     local Intoxication = Player.PlayerData.metadata["intoxication"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "Intoxication", Intoxication)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "intoxication", Intoxication or false)
 end)
 
 RegisterServerEvent("lsmc:server:GetOrgane")
 AddEventHandler("lsmc:server:GetOrgane", function()
     local Player = QBCore.Functions.GetPlayer(source)
     local Rein = Player.PlayerData.metadata["rein"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "rein", Rein)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "rein", Rein or false)
     local Poumon = Player.PlayerData.metadata["poumon"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "poumon", Poumon)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "poumon", Poumon or false)
     local Foie = Player.PlayerData.metadata["foie"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "foie", Foie)
+    TriggerClientEvent("lsmc:client:SetMaladie", source, "foie", Foie or false)
 end)
 
 RegisterServerEvent("lsmc:server:Greffer")
@@ -54,7 +54,7 @@ RegisterServerEvent("lsmc:server:SetOrgane")
 AddEventHandler("lsmc:server:SetOrgane", function(id, organe, val)
     local Player = QBCore.Functions.GetPlayer(id)
     Player.Functions.SetMetaData(organe, val)
-    TriggerClientEvent("lsmc:client:SetMaladie", id, organe, val)
+    TriggerClientEvent("lsmc:client:SetMaladie", id, organe, val or false)
 end)
 
 RegisterServerEvent("lsmc:server:SetMort")
