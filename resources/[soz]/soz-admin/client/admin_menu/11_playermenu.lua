@@ -67,6 +67,15 @@ function AdminMenuPlayers(menu, permission)
         end,
     })
 
+    playerMenu:AddSlider({
+        label = "Rendre malade",
+        value = "maladie",
+        values = {{label = "Rhume", value = "rhume"}, {label = "Grippe", value = "grippe"}},
+        select = function(_, value)
+            TriggerServerEvent("lsmc:server:SetOrgane", CurrentPlayerData.id, value, true)
+        end,
+    })
+
     --- Add to main menu
     AdminMenu:AddButton({icon = "👨‍💻‍", label = "Gestion des joueurs", value = playersMenu})
 end
