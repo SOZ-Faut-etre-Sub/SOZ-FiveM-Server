@@ -19,6 +19,7 @@ function StartUnzoomSkyCam()
     SetCamParams(UnzoomSkyCam, -400.00, 1700.00, 31.85 + 3000, -85.00, 0.00, 260.00, 100.0, 4500, 0, 0, 2)
     SetEntityCoords(PlayerPedId(), -421.0049, 1155.414, 324.8574 - 0.9, 0, 0, 0, false)
     SetEntityHeading(PlayerPedId(), 80)
+    FreezeEntityPosition(PlayerPedId(), true)
     Citizen.Wait(4500)
 end
 
