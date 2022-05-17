@@ -63,7 +63,7 @@ AddEventHandler("lsmc:client:GiveBlood", function()
     local player = PlayerPedId()
 
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", PlayerData.metadata["hunger"] - 20)
-    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", PlayerData.metadata["thirst"] - 20)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", PlayerData.metadata["thirst"] - 20)
 
     exports["soz-hud"]:DrawNotification("Vous avez donnez votre sang!")
 end)

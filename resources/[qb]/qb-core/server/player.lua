@@ -69,13 +69,16 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata = PlayerData.metadata or {}
     -- Status
     PlayerData.metadata['walk'] = PlayerData.metadata['walk'] or nil
+    PlayerData.metadata['isdead'] = PlayerData.metadata['isdead'] or false
     PlayerData.metadata['health'] = PlayerData.metadata['health'] or 200
+    if PlayerData.metadata['isdead'] then
+        PlayerData.metadata['health'] = 0
+    end
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] or 0
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
     PlayerData.metadata['armor'] = PlayerData.metadata['armor'] or 0
-    PlayerData.metadata['isdead'] = PlayerData.metadata['isdead'] or false
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
     PlayerData.metadata['ishandcuffed'] = PlayerData.metadata['ishandcuffed'] or false
     PlayerData.metadata['tracker'] = PlayerData.metadata['tracker'] or false
