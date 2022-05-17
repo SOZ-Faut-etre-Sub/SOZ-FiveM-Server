@@ -44,6 +44,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
             id="phone"
             className={isExact ? "PhoneScreen" : "PhoneScreen PhoneScreenNoHome"}
             style={{
+                backgroundColor: '#545454',
               backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
                 ? `url(${settings.wallpaper.value})`
                 : `url(media/backgrounds/${settings.wallpaper.value})`,
