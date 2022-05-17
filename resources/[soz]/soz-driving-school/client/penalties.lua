@@ -15,6 +15,16 @@ end)
 
 local function GetPenalties(licenseType)
     local all_penalties = {
+        ["dead"] = {
+            duration = Config.PenaltyMaxDuration,
+            noWarning = true,
+            failMsg = "Pas de permis pour les morts...",
+            isValid = function()
+                local PlayerData = QBCore.Functions.GetPlayerData()
+                return not PlayerData.metadata["isdead"]
+            end,
+        },
+
         ["overspeed"] = {
             duration = 0,
             warning = false,
