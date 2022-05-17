@@ -178,7 +178,7 @@ UpgradeMenu:On("open", function(menu)
                             description = "Acheter 💸",
                             select = function()
                                 menu:Close()
-                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price, QBCore.Functions.GetPlate(config.AttachedCustomVehicle))
+                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
                             end,
                         })
                     end
@@ -193,7 +193,7 @@ UpgradeMenu:On("open", function(menu)
                                 description = "Acheter 💸",
                                 select = function()
                                     menu:Close()
-                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price, QBCore.Functions.GetPlate(config.AttachedCustomVehicle))
+                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
                                 end,
                             })
                         end
@@ -214,7 +214,7 @@ UpgradeMenu:On("open", function(menu)
                             description = "Acheter 💸",
                             select = function()
                                 menu:Close()
-                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, 1, price, QBCore.Functions.GetPlate(config.AttachedCustomVehicle))
+                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, 1, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
                             end,
                         })
                     end
