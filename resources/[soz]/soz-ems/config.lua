@@ -4,6 +4,11 @@ Config.AllowedJobInteraction = {"lsmc"}
 
 Config.DeathTime = 900
 
+Config.ConditionType = {
+    NoRun = "NoRun",
+    NoHair = "NoHair",
+}
+
 Config.Locations = {
     ["lit"] = {
         [1] = {coords = vector3(312.84, -1433.25, 32.07), used = false},

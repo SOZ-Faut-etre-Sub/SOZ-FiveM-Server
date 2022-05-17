@@ -1,81 +1,6 @@
--- maladie
-Rhume = false
-Grippe = false
-Dos = false
-Rougeur = false
-Intoxication = false
+local DiseaseLoop = false
 
--- organe
 
-Foie = false
-Poumon = false
-Rein = false
-
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    TriggerServerEvent("lsmc:server:GetMaladie")
-    TriggerServerEvent("lsmc:server:GetOrgane")
-end)
-
-RegisterNetEvent("lsmc:maladie:ClearDisease", function(val)
-    Rhume = false
-    Grippe = false
-    Dos = false
-    Rougeur = false
-    Intoxication = false
-
-    ClearPedTasks()
-    TriggerScreenblurFadeOut()
-end)
-
-RegisterNetEvent("lsmc:client:SetMaladie", function(maladie, val)
-    if maladie == "rhume" then
-        if Rhume ~= val then
-            if val then
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez attrapé un rhume, utilisez un mouchoir !"))
-            else
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous vous sentez mieux !"))
-            end
-        end
-
-        Rhume = val
-    elseif maladie == "grippe" then
-        if Grippe ~= val then
-            if val then
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez attrapé la grippe, allez voir un medecin !"))
-            else
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous vous sentez mieux !"))
-            end
-        end
-
-        Grippe = val
-    elseif maladie == "rougeur" then
-        Rougeur = val
-    elseif maladie == "intoxication" then
-        if Intoxication ~= val then
-            if val then
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez mal au ventre, prenez un antibiotique !"))
-            else
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous n'avez plus mal au ventre !"))
-            end
-        end
-
-        Intoxication = val
-    elseif maladie == "foie" then
-        Foie = val
-    elseif maladie == "poumon" then
-        if Poumon ~= val then
-            if val then
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez mal du mal à respirer, impossible de courir !"))
-            else
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous respirez à nouveau, vous êtes prêt pour un marathon !"))
-            end
-        end
-
-        Poumon = val
-    elseif maladie == "rein" then
-        Rein = val
-    end
-end)
 
 local function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
@@ -83,6 +8,78 @@ local function loadAnimDict(dict)
         Wait(5)
     end
 end
+
+RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disease)
+    if not disease then
+        -- clean
+        TriggerScreenblurFadeOut(100)
+        ClearPedTasks(ped)
+        DiseaseLoop = false
+
+        return
+    end
+
+    if disease == "rhume" then
+        DiseaseLoop = true
+
+        Citizen.CreateThead(function ()
+            while DiseaseLoop do
+                loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
+                TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
+                TriggerScreenblurFadeIn(100)
+                Wait(1500)
+                TriggerScreenblurFadeOut(100)
+                ClearPedTasks()
+
+                Wait(10000)
+            end
+        end)
+    end
+
+    if disease == "grippe" then
+        DiseaseLoop = true
+        TriggerScreenblurFadeIn(100)
+
+        Citizen.CreateThead(function ()
+            while DiseaseLoop do
+                local player, distance = QBCore.Functions.GetClosestPlayer()
+                local id = GetPlayerServerId(player)
+                local propagation = math.random(1, 5)
+
+                if player ~= -1 and distance < 4.5 and propagation == 1 then
+                    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "grippe", id)
+                end
+
+                Wait(60 * 1000)
+            end
+        end)
+    end
+end)
+
+local function has_value(tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
+RegisterNetEvent("lsmc:maladie:client:ApplyConditions", function(conditions)
+    local ped = PlayerPedId()
+    conditions = conditions or {}
+
+    if has_value(conditions, Config.ConditionType.NoRun) then
+        SetPlayerSprint(ped, false)
+    else
+        SetPlayerSprint(ped, false)
+    end
+
+    if has_value(conditions, Config.ConditionType.NoHair) then
+        -- SetPlayerSprint(ped, false)
+    end
+end)
 
 -- set effet
 
@@ -94,69 +91,24 @@ CreateThread(function()
             if not IsDead and not PlayerData.metadata.godmode then
                 -- maladie
                 if Random == 1 then
-                    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", true)
-                    Rhume = true
+                    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "rhume")
                 end
+
                 if Random == 10 then
-                    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", true)
-                    Grippe = true
+                    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "grippe")
                 end
+
                 if Random == 20 then
-                    TriggerServerEvent("lsmc:server:SetMaladie", "rougeur", true)
-                    Rougeur = true
+                    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "rougeur")
                 end
             end
         end
     end
 end)
-
--- effet
-
-CreateThread(function()
-    while true do
-        local ped = PlayerPedId()
-        Wait(15000)
-        -- maladie
-        if Rhume then
-            loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
-            TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
-            TriggerScreenblurFadeIn(100)
-            Wait(1500)
-            TriggerScreenblurFadeOut(100)
-            ClearPedTasks(ped)
-        elseif Grippe then
-            TriggerScreenblurFadeIn(100)
-            local player, distance = QBCore.Functions.GetClosestPlayer()
-            local id = GetPlayerServerId(player)
-            local propagation = math.random(1, 50)
-
-            if player ~= -1 and distance < 4.5 and propagation == 1 then
-                TriggerEvent("hud:client:DrawNotification", string.format("Vous avez contaminé l'un de vos concitoyens !"))
-                TriggerServerEvent("lsmc:server:SetOrgane", id, "grippe", true)
-            end
-        elseif Rougeur then
-        elseif Intoxication then
-            EnableContolAction(0, 21, false)
-            -- organe
-        elseif Rein then
-            TriggerServerEvent("QBCore:Server:Rein")
-        elseif Poumon then
-            SetPlayerSprint(ped, false)
-        elseif Foie then
-            TriggerServerEvent("QBCore:Server:Foie")
-        end
-    end
-end)
-
 --- item
 
 RegisterNetEvent("lsmc:client:mouchoir")
 AddEventHandler("lsmc:client:mouchoir", function()
-    if Rhume then
-        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un mouchoir et vous vous sentez mieux !"))
-    else
-        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un mouchoir, mais rien ne sort !"))
-    end
 
     TriggerServerEvent("lsmc:server:remove", "tissue")
     Rhume = false
