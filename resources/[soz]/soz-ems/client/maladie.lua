@@ -128,7 +128,7 @@ CreateThread(function()
             TriggerScreenblurFadeIn(100)
             local player, distance = QBCore.Functions.GetClosestPlayer()
             local id = GetPlayerServerId(player)
-            local propagation = math.random(1, 2)
+            local propagation = math.random(1, 50)
 
             if player ~= -1 and distance < 4.5 and propagation == 1 then
                 TriggerEvent("hud:client:DrawNotification", string.format("Vous avez contaminé l'un de vos concitoyens !"))
@@ -165,14 +165,17 @@ end)
 
 RegisterNetEvent("lsmc:client:antibiotique")
 AddEventHandler("lsmc:client:antibiotique", function()
-    if Intoxication then
+    if Intoxication or Grippe then
         TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un antibiotique et vous vous sentez mieux !"))
     else
         TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un antibiotique, mais rien ne change !"))
     end
 
     Intoxication = false
+    Grippe = false
+
     TriggerScreenblurFadeOut(100)
     TriggerServerEvent("lsmc:server:SetMaladie", "intoxication", false)
+    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", false)
     TriggerServerEvent("lsmc:server:remove", "antibiotic")
 end)
