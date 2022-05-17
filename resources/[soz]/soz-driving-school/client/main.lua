@@ -1,4 +1,4 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 
 local playerInsideZone = false -- Is player inside for for NPC interaction ?
 

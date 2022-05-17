@@ -245,13 +245,18 @@ local function RunExitSequence()
 end
 
 local function HandleVehicleAndPed(instructor, vehicle)
+    -- Delete ped and vehicle
+    DeletePed(instructor)
+    DeleteVehicle(vehicle)
+end
+
+local function HandleEntitiesAndTeleportBack(instructor, vehicle)
     Citizen.CreateThread(function()
         -- Fade to black screen
         ScreenFadeOut()
 
         -- Delete ped and vehicle
-        DeletePed(instructor)
-        DeleteVehicle(vehicle)
+        HandleVehicleAndPed(instructor, vehicle)
 
         -- Spawn user to driving school
         local ped = PlayerPedId()
@@ -265,7 +270,14 @@ end
 function TerminateExam(isSuccess, licenseType)
     RunExitSequence()
 
-    HandleVehicleAndPed(instructorEntity, vehicleEntity)
+    local PlayerData = QBCore.Functions.GetPlayerData()
+    local isDead = PlayerData.metadata["isdead"]
+    if isDead then
+        HandleVehicleAndPed(instructorEntity, vehicleEntity)
+    else
+        HandleEntitiesAndTeleportBack(instructorEntity, vehicleEntity)
+    end
+
     CleanUpPenaltySystem()
     RemoveBlip(CurrentBlip)
     passingExam = false
