@@ -267,6 +267,17 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                             ClearPedTasksImmediately(NpcData.Npc)
                             FreezeEntityPosition(NpcData.Npc, false)
                             TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
+                            local count = 0
+                            while not IsPedInVehicle(NpcData.Npc, veh, false) do
+                                if count == 15 or dist > 5 then
+                                    ClearNpcMission()
+                                    exports["soz-hud"]:DrawNotification("Ouvre ton véhicule, là prochaine fois ?")
+                                    return
+                                end
+                                Wait(1000)
+                                TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
+                                count = count + 1
+                            end
                             exports["soz-hud"]:DrawNotification("Amenez la personne a la destination spécifiée")
                             if NpcData.NpcBlip ~= nil then
                                 RemoveBlip(NpcData.NpcBlip)
