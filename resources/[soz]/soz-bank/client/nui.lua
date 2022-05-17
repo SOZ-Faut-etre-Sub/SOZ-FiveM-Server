@@ -142,6 +142,9 @@ RegisterNUICallback("doWithdraw", function(data, cb)
                 TriggerServerEvent("banking:server:RemoveLiquidity", data.bankAtmAccount, amount)
                 local newAmount = amount
                 if lastUse and lastUse.amountWithdrawn then
+                    if lastUse.amountWithdrawn == terminalConfig.maxWithdrawal then
+                        lastUse.amountWithdrawn = 0
+                    end
                     newAmount = amount + lastUse.amountWithdrawn
                 end
                 UsedBankAtm[data.bankAtmAccount] = {lastUsed = GetGameTimer(), amountWithdrawn = newAmount}
