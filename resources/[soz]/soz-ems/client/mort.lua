@@ -120,6 +120,7 @@ CreateThread(function()
             EnableControlAction(0, 213, true)
             EnableControlAction(0, 249, true)
             EnableControlAction(0, 46, true)
+            EnableControlAction(0, 200, true)
 
             if not isInHospitalBed then
                 if DeathTime > 0 then
