@@ -39,6 +39,9 @@ RegisterNetEvent("core:server:zoneIntrusion", function(zone)
     else
         print(("[SOZ REPORTER] Intrusion de %s dans la zone: %s"):format(Player.Functions.GetName(), zone))
     end
+
+    TriggerEvent("monitor:server:event", "zone_intrusion", {player_source = Player.PlayerData.source, zone = zone},
+                 {position = GetEntityCoords(Player.PlayerData.source)})
 end)
 
 exports("SendHTTPRequest", function(convar, data)
