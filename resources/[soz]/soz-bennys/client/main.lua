@@ -148,7 +148,7 @@ function ApplyEffects(vehicle)
         if SpeedLimiter ~= 0 and ((GetVehicleEstimatedMaxSpeed(vehicle) * 3.6) >= SpeedLimiter) then
             SetVehicleMaxSpeed(vehicle, SpeedLimiter / 3.6 - 0.25)
         else
-            local maxSpeed = GetVehicleHandlingFloat(vehicle,"CHandlingData","fInitialDriveMaxFlatVel")
+            local maxSpeed = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fInitialDriveMaxFlatVel")
             SetVehicleMaxSpeed(vehicle, maxSpeed)
             local nbrpassagers = GetVehicleNumberOfPassengers(vehicle)
             if nbrpassagers >= 1 then
