@@ -43,7 +43,7 @@ RegisterNetEvent("consumables:client:Eat", function(itemName, expired)
                                  {animDict = "mp_player_inteat@burger", anim = "mp_player_int_eat_burger", flags = 49}, {}, {}, function()
         if expired then
             TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] - ConsumablesExpiredEat)
-            TriggerEvent("lsmc:client:SetMaladie", "Intoxication", true)
+            TriggerEvent("lsmc:client:SetMaladie", "intoxication", true)
         else
             TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + ConsumablesEat[itemName])
         end
@@ -61,7 +61,7 @@ RegisterNetEvent("consumables:client:Drink", function(itemName, expired)
     }, {}, function()
         if expired then
             TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] - ConsumablesExpiredDrink)
-            TriggerEvent("lsmc:client:SetMaladie", "Intoxication", true)
+            TriggerEvent("lsmc:client:SetMaladie", "intoxication", true)
         else
             TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])
         end
@@ -76,7 +76,7 @@ RegisterNetEvent("consumables:client:DrinkAlcohol", function(itemName, extra)
         if extra.expired then
             TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] - ConsumablesExpiredDrink)
             TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] + ConsumablesExpiredDrink)
-            TriggerEvent("lsmc:client:SetMaladie", "Intoxication", true)
+            TriggerEvent("lsmc:client:SetMaladie", "intoxication", true)
         else
             -- L'alcool c'est de l'eau
             TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])

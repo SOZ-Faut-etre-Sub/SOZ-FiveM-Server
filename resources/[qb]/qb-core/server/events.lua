@@ -147,7 +147,7 @@ end)
 RegisterNetEvent('QBCore:UpdatePlayer', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if Player and not Player.PlayerData.metadata['godmode'] then
+    if Player and not Player.PlayerData.metadata['godmode'] and not Player.PlayerData.metadata['isdead'] then
         local newHunger = Player.PlayerData.metadata['hunger'] - QBCore.Config.Player.HungerRate
         local newThirst = Player.PlayerData.metadata['thirst'] - QBCore.Config.Player.ThirstRate
         local newAlcohol = Player.PlayerData.metadata['alcohol'] - QBCore.Config.Player.AlcoholRate
