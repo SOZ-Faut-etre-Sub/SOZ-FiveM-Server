@@ -481,10 +481,6 @@ local function CleanVehicle(entity)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
-        NetworkRequestControlOfEntity(entity)
-        while not NetworkHasControlOfEntity(entity) do
-            Wait(0)
-        end
         SetVehicleDirtLevel(entity, 0.1)
         SetVehicleUndriveable(entity, false)
         WashDecalsFromVehicle(entity, 1.0)
