@@ -214,7 +214,7 @@ end)
 RegisterNetEvent("jobs:religion:end")
 AddEventHandler("jobs:religion:end", function()
     TriggerServerEvent("job:set:unemployed")
-    local money = SozJobCore.adsl_payout * payout_counter
+    local money = SozJobCore.religion_payout * payout_counter
     TriggerServerEvent("job:payout", money)
     QBCore.Functions.DeleteVehicle(religion_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")

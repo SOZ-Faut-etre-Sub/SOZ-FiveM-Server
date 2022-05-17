@@ -69,7 +69,7 @@ AddEventHandler("jobs:metal:fix", function()
         disableCombat = true,
     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
         TaskPlayAnim(PlayerPedId(), "random@domestic", "pickup_low", 8.0, -8.0, -1, 49, 0, 0, 0, 0)
-        amount = math.random(5, 15)
+        amount = math.random(2, 6)
         TriggerServerEvent("job:get:metal", amount)
         DrawInteractionMarker(ObjectifCoord, false)
         TriggerEvent("jobs:metal:start")
