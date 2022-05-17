@@ -1,7 +1,5 @@
 local DiseaseLoop = false
 
-
-
 local function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
         RequestAnimDict(dict)
@@ -10,7 +8,7 @@ local function loadAnimDict(dict)
 end
 
 RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disease)
-    if not disease then
+    if disease == false then
         -- clean
         TriggerScreenblurFadeOut(100)
         ClearPedTasks(ped)
@@ -22,7 +20,9 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
     if disease == "rhume" then
         DiseaseLoop = true
 
-        Citizen.CreateThead(function ()
+        exports["soz-hud"]:DrawNotification("Vous avez un petit rhume")
+
+        Citizen.CreateThread(function ()
             while DiseaseLoop do
                 loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
                 TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
@@ -40,7 +40,9 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
         DiseaseLoop = true
         TriggerScreenblurFadeIn(100)
 
-        Citizen.CreateThead(function ()
+        exports["soz-hud"]:DrawNotification("Vous avez la grippe")
+
+        Citizen.CreateThread(function ()
             while DiseaseLoop do
                 local player, distance = QBCore.Functions.GetClosestPlayer()
                 local id = GetPlayerServerId(player)
@@ -104,30 +106,4 @@ CreateThread(function()
             end
         end
     end
-end)
---- item
-
-RegisterNetEvent("lsmc:client:mouchoir")
-AddEventHandler("lsmc:client:mouchoir", function()
-
-    TriggerServerEvent("lsmc:server:remove", "tissue")
-    Rhume = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
-end)
-
-RegisterNetEvent("lsmc:client:antibiotique")
-AddEventHandler("lsmc:client:antibiotique", function()
-    if Intoxication or Grippe then
-        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un antibiotique et vous vous sentez mieux !"))
-    else
-        TriggerEvent("hud:client:DrawNotification", string.format("Vous utilisez un antibiotique, mais rien ne change !"))
-    end
-
-    Intoxication = false
-    Grippe = false
-
-    TriggerScreenblurFadeOut(100)
-    TriggerServerEvent("lsmc:server:SetMaladie", "intoxication", false)
-    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", false)
-    TriggerServerEvent("lsmc:server:remove", "antibiotic")
 end)

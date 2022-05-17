@@ -63,7 +63,7 @@ AddEventHandler("lsmc:client:GiveBlood", function()
     local player = PlayerPedId()
 
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", PlayerData.metadata["hunger"] - 20)
-    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", PlayerData.metadata["thirst"] - 20)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", PlayerData.metadata["thirst"] - 20)
 
     exports["soz-hud"]:DrawNotification("Vous avez donnez votre sang!")
 end)
@@ -74,18 +74,8 @@ function ResetAll()
     isInHospitalBed = false
     Callems = false
 
-    Rhume = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
-    Grippe = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", false)
-    Dos = false
-    Rougeur = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "rougeur", false)
-    Intoxication = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "intoxication", false)
+    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", false)
 
-    ClearPedTasks()
-    TriggerScreenblurFadeOut()
     StopScreenEffect("DeathFailOut")
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
@@ -124,8 +114,14 @@ RegisterNetEvent("lsmc:client:ifaks")
 AddEventHandler("lsmc:client:ifaks", function()
     local player = PlayerPedId()
     SetEntityHealth(player, GetEntityHealth(player) + 25)
-    Rhume = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "rhume", false)
-    Grippe = false
-    TriggerServerEvent("lsmc:server:SetMaladie", "grippe", false)
+end)
+
+RegisterNetEvent("lsmc:client:heal")
+AddEventHandler("lsmc:client:heal", function(disease)
+    local player = PlayerPedId()
+    SetEntityHealth(player, GetEntityHealth(player) + 25)
+    if disease == "grippe" then
+        TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", false)
+        exports["soz-hud"]:DrawNotification("Vous êtes guéri!")
+    end
 end)
