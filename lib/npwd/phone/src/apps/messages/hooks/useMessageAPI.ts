@@ -69,7 +69,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                     targetNumber,
                 },
             ).then((resp) => {
-                if (resp.status !== 'ok') {
+                if (resp.status === 'error') {
                     history.push('/messages');
                     return addAlert({
                         message: t('MESSAGES.FEEDBACK.CONVERSATION_CREATE_ONE_NUMBER_FAILED', {
@@ -85,6 +85,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
 
                 if (doesConversationExist) {
                     history.push('/messages/conversations/' + resp.data.conversation_id);
+                    return
                 }
 
                 const display = getDisplayByNumber(resp.data.phoneNumber);
