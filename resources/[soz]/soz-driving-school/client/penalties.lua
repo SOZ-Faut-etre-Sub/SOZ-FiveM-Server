@@ -22,7 +22,7 @@ local function GetPenalties(licenseType)
             failMsg = "Tu n'as pas su maîtriser ta vitesse. On arrête là...",
             isValid = function(context)
                 local speed = math.ceil(GetEntitySpeed(context.vehicle) * 3.6)
-                if speed > 90.0 then
+                if speed > 90.5 then
                     return false
                 end
                 return true
