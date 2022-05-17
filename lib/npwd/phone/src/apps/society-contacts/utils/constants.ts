@@ -10,7 +10,7 @@ export const SocietyContactsState: Society[] = [
     {
         id: 2,
         display: 'LSPD',
-        number: '555-POLICE',
+        number: '555-LSPD',
         avatar: 'media/society_icon/lspd.webp',
     },
     {
@@ -22,7 +22,7 @@ export const SocietyContactsState: Society[] = [
     {
         id: 4,
         display: 'BCSO',
-        number: '555-POLICE',
+        number: '555-BCSO',
         avatar: 'media/society_icon/bcso.webp',
     },
     {
