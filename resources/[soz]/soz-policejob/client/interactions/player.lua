@@ -1,14 +1,10 @@
 --- Targets
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    if not duty then
-        return
-    end
-
+Citizen.CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Amender",
-                color = PlayerData.job.id,
+                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
                 icon = "c:police/amender.png",
                 event = "police:client:InvoicePlayer",
                 canInteract = function(player)
@@ -18,7 +14,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
             },
             {
                 label = "Permis",
-                color = PlayerData.job.id,
+                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
                 icon = "c:police/permis.png",
                 event = "police:client:LicensePlayer",
                 canInteract = function(player)
@@ -28,7 +24,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
             },
             {
                 label = "Fouiller",
-                color = PlayerData.job.id,
+                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
                 icon = "c:police/fouiller.png",
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
@@ -39,7 +35,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
             },
             {
                 label = "Menotter",
-                color = PlayerData.job.id,
+                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
                 icon = "c:police/menotter.png",
                 event = "police:client:CuffPlayer",
                 item = "handcuffs",
@@ -51,7 +47,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
             },
             {
                 label = "Démenotter",
-                color = PlayerData.job.id,
+                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
                 icon = "c:police/demenotter.png",
                 event = "police:client:UnCuffPlayer",
                 item = "handcuffs_key",
@@ -63,7 +59,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
             },
             {
                 label = "Escorter",
-                color = PlayerData.job.id,
+                color = "lspd", -- @TODO Bad color if bcso or lsmc find another solution to get color (allow a function ?)
                 icon = "c:police/escorter.png",
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)

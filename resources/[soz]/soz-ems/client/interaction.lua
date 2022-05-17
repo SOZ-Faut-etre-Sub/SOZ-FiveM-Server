@@ -3,19 +3,19 @@ CreateThread(function()
         options = {
             {
                 label = "Facture",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "fas fa-file-invoice-dollar",
                 event = "lsmc:client:InvoicePlayer",
-                job = {["lsmc"] = 0},
+                job = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
                 end,
             },
             {
                 label = "Soigner",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/heal.png",
-                job = {["lsmc"] = 0},
+                job = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
@@ -42,9 +42,9 @@ CreateThread(function()
             },
             {
                 label = "Réanimer",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/revive.png",
-                job = {["lsmc"] = 0},
+                job = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
@@ -70,7 +70,7 @@ CreateThread(function()
             },
             {
                 label = "Réanimer",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/revive.png",
                 canInteract = function(entity)
                     return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
@@ -96,9 +96,9 @@ CreateThread(function()
             },
             {
                 label = "Prise de sang",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/take_blood.png",
-                job = {["lsmc"] = 0},
+                job = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
