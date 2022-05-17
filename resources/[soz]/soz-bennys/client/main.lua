@@ -478,8 +478,9 @@ local function CleanVehicle(entity)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
-        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, false)
+        ClearAllPedProps(PlayerPedId())
         ClearPedTasks(PlayerPedId())
+        ClearPedTasksImmediately(PlayerPedId())
         NetworkRequestControlOfEntity(entity)
         while not NetworkHasControlOfEntity(entity) do
             Wait(0)
@@ -495,8 +496,9 @@ local function CleanVehicle(entity)
         }, true)
     end, function() -- Cancel
         exports["soz-hud"]:DrawNotification("Nettoyage échoué")
-        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, false)
+        ClearAllPedProps(PlayerPedId())
         ClearPedTasks(PlayerPedId())
+        ClearPedTasksImmediately(PlayerPedId())
     end)
 end
 
