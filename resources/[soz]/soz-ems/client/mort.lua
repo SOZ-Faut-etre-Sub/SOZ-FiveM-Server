@@ -53,7 +53,7 @@ function DeathTimer()
             TriggerEvent("soz-ems:client:callems")
             hold = 5
         end
-        if Callems == false and IsControlPressed(0, 38) then
+        if Callems == false or isInHospitalBed and IsControlPressed(0, 38) then
             if hold - 1 >= 0 then
                 hold = hold - 1
             else
@@ -69,6 +69,7 @@ function DeathTimer()
                 hold = 5
             elseif not isInHospitalBed and IsDead then
                 TriggerEvent("soz-ems:client:respawn")
+                hold = 5
             end
         end
     end
