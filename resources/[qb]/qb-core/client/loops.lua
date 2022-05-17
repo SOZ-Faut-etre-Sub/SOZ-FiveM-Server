@@ -16,7 +16,7 @@ CreateThread(function()
                     QBCore.Functions.GetPlayerData().metadata['thirst'] <= 0 then
                 local ped = PlayerPedId()
                 local currentHealth = GetEntityHealth(ped)
-                SetEntityHealth(ped, currentHealth - math.random(5, 10))
+                SetEntityHealth(ped, currentHealth - math.random(7, 15))
             end
         end
     end

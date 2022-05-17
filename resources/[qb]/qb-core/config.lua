@@ -2,7 +2,7 @@ QBConfig = {}
 
 QBConfig.MaxPlayers = GetConvarInt('sv_maxclients', 48) -- Gets max players from config file, default 48
 QBConfig.DefaultSpawn = vector4(-1035.71, -2731.87, 12.86, 0.0)
-QBConfig.UpdateInterval = 5 -- how often to update player data in minutes
+QBConfig.UpdateInterval = 1 -- how often to update player data in minutes
 QBConfig.StatusInterval = 5000 -- how often to check hunger/thirst status in ms
 
 QBConfig.Money = {}
@@ -10,10 +10,10 @@ QBConfig.Money.MoneyTypes = { ['money'] = 200, ['marked_money'] = 0 }
 QBConfig.Money.DontAllowMinus = { 'money', 'marked_money' } -- Money that is not allowed going in minus
 
 QBConfig.Player = {}
-QBConfig.Player.HungerRate = 8.3 -- Rate at which hunger goes down.
-QBConfig.Player.ThirstRate = 11.1 -- Rate at which thirst goes down.
+QBConfig.Player.HungerRate = 1.6 -- Rate at which hunger goes down.
+QBConfig.Player.ThirstRate = 2.2 -- Rate at which thirst goes down.
 QBConfig.Player.AlcoholRate = 3.8 -- Rate at which thirst goes down.
-QBConfig.Player.DrugRate = 2.0 -- Rate at which thirst goes down.
+QBConfig.Player.DrugRate = 2.1 -- Rate at which thirst goes down.
 QBConfig.Player.Bloodtypes = {
     "A+",
     "A-",
