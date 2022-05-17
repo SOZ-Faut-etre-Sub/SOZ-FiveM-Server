@@ -91,7 +91,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
         })
 
         if not allowAnonymous then
-            deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. steam)
+            deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. tostring(steam))
         end
 
         QBCore.Functions.SetPermission(steam, defaultAnonymousRole)
