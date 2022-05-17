@@ -75,10 +75,14 @@ function ResetAll()
     Callems = false
 
     Rhume = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", false)
     Grippe = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", false)
     Dos = false
     Rougeur = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "Rougeur", false)
     Intoxication = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "Intoxication", false)
 
     ClearPedTasks()
     TriggerScreenblurFadeOut()
@@ -120,4 +124,8 @@ RegisterNetEvent("lsmc:client:ifaks")
 AddEventHandler("lsmc:client:ifaks", function()
     local player = PlayerPedId()
     SetEntityHealth(player, GetEntityHealth(player) + 25)
+    Rhume = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "Rhume", false)
+    Grippe = false
+    TriggerServerEvent("lsmc:server:SetMaladie", "Grippe", false)
 end)
