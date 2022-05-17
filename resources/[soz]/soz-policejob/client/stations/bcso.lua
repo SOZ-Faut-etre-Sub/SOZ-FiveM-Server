@@ -1,9 +1,6 @@
 --- Register Menu
 CreateThread(function()
-    PoliceJob.Menus["bcso"] = {
-        menu = MenuV:CreateMenu(nil, "", "menu_job_bcso", "soz", "bcso:menu"),
-        societyNumber = "555-POLICE",
-    }
+    PoliceJob.Menus["bcso"] = {menu = MenuV:CreateMenu(nil, "", "menu_job_bcso", "soz", "bcso:menu")}
 end)
 
 --- Register Targets
