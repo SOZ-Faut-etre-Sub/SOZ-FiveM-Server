@@ -12,9 +12,6 @@ import {ThemeContext} from "../../../../styles/themeProvider";
 const NewMessageGroupForm = ({phoneNumber}: { phoneNumber?: string }) => {
     const history = useHistory();
     const {theme} = useContext(ThemeContext);
-    const [, setParticipant] = useState<any>('');
-    const [, setParticipantValue] = useState('');
-    const {getContactByNumber} = useContactActions();
     const contacts = useFilteredContacts();
     const {addConversation} = useMessageAPI();
 
