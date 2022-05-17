@@ -244,33 +244,28 @@ local function RunExitSequence()
     TaskLeaveVehicle(instructorEntity, vehicleEntity, 0)
 end
 
-local function HandleVehicleAndPed(isSuccess, instructor, vehicle)
-    if isSuccess then
-        Citizen.CreateThread(function()
-            -- Fade to black screen
-            ScreenFadeOut()
+local function HandleVehicleAndPed(instructor, vehicle)
+    Citizen.CreateThread(function()
+        -- Fade to black screen
+        ScreenFadeOut()
 
-            -- Delete ped and vehicle
-            DeletePed(instructor)
-            DeleteVehicle(vehicle)
+        -- Delete ped and vehicle
+        DeletePed(instructor)
+        DeleteVehicle(vehicle)
 
-            -- Spawn user to driving school
-            local ped = PlayerPedId()
-            SetEntityCoords(ped, Config.PlayerDefaultLocation)
-            SetEntityRotation(ped, 0.0, 0.0, Config.PlayerDefaultLocation.w, 0, false)
+        -- Spawn user to driving school
+        local ped = PlayerPedId()
+        SetEntityCoords(ped, Config.PlayerDefaultLocation)
+        SetEntityRotation(ped, 0.0, 0.0, Config.PlayerDefaultLocation.w, 0, false)
 
-            ScreenFadeIn()
-        end)
-    else
-        SetEntityAsNoLongerNeeded(instructor)
-        SetEntityAsNoLongerNeeded(vehicle)
-    end
+        ScreenFadeIn()
+    end)
 end
 
 function TerminateExam(isSuccess, licenseType)
     RunExitSequence()
 
-    HandleVehicleAndPed(isSuccess, instructorEntity, vehicleEntity)
+    HandleVehicleAndPed(instructorEntity, vehicleEntity)
     CleanUpPenaltySystem()
     RemoveBlip(CurrentBlip)
     passingExam = false
