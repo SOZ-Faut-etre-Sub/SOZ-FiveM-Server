@@ -25,7 +25,7 @@ export const SocietyMessagesApp = () => {
         >
             <AppWrapper>
                 <AppTitle app={messages}/>
-                <AppContent>
+                <AppContent className="mt-4 h-[750px] overflow-scroll">
                     <React.Suspense fallback={<LoadingSpinner/>}>
                         <Route path="/society-messages" exact component={MessagesList}/>
                     </React.Suspense>
