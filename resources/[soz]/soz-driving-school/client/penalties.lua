@@ -15,6 +15,16 @@ end)
 
 local function GetPenalties(licenseType)
     local all_penalties = {
+        ["dead"] = {
+            duration = Config.PenaltyMaxDuration,
+            noWarning = true,
+            failMsg = "Pas de permis pour les morts...",
+            isValid = function()
+                local PlayerData = QBCore.Functions.GetPlayerData()
+                return not PlayerData.metadata["isdead"]
+            end,
+        },
+
         ["overspeed"] = {
             duration = 0,
             warning = false,
@@ -22,7 +32,7 @@ local function GetPenalties(licenseType)
             failMsg = "Tu n'as pas su maîtriser ta vitesse. On arrête là...",
             isValid = function(context)
                 local speed = math.ceil(GetEntitySpeed(context.vehicle) * 3.6)
-                if speed > 90.0 then
+                if speed > 90.5 then
                     return false
                 end
                 return true

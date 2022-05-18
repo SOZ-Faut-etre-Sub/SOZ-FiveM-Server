@@ -50,7 +50,7 @@ export const DialerHistory: React.FC = () => {
 
     return (
         <nav className="pb-10 h-full overflow-y-auto" aria-label="Directory">
-            {Object.keys(calls).sort().map((date) => (
+            {Object.keys(calls).sort().reverse().map((date) => (
                 <div key={date} className="relative">
                     <div className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${theme === 'dark' ? 'bg-black text-gray-400' : 'bg-[#F2F2F6] text-gray-600'}`}>
                         <h3>{date}</h3>

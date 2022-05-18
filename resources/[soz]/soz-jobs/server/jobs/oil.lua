@@ -88,7 +88,10 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
                                        ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(essenceItemAmount))
                     TriggerEvent("monitor:server:event", "job_mtp_create_jerrycan", {
                         player_source = Player.PlayerData.source,
-                    }, {quantity = essenceItemAmount, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})
+                    }, {
+                        quantity = essenceItemAmount,
+                        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+                    })
                 else
                     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
                 end

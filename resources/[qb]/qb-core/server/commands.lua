@@ -158,3 +158,59 @@ QBCore.Commands.Add('setgang', 'Set A Players Gang (Admin Only)', { { name = 'id
         TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end
 end, 'admin')
+
+-- PolyZone
+
+QBCore.Commands.Add('pzcreate', 'Starts creation of a zone for PolyZone of one of the available types: circle, box, poly (Admin Only)', {{name="zoneType", help="Zone Type (required)"}, { name = 'name', help = 'Name of Zone' }}, true, function(source, args)
+    local zoneType = args[1]
+    if zoneType == nil then
+        TriggerClientEvent('chat:addMessage', source, {
+        color = { 255, 0, 0},
+        multiline = true,
+        args = {"Me", "Please add zone type to create (poly, circle, box)!"}
+      })
+      return
+    end
+    if zoneType ~= 'poly' and zoneType ~= 'circle' and zoneType ~= 'box' then
+        TriggerClientEvent('chat:addMessage', source, {
+        color = { 255, 0, 0},
+        multiline = true,
+        args = {"Me", "Zone type must be one of: poly, circle, box"}
+      })
+      return
+    end
+    local name = args[2]
+    if name == nil then
+        TriggerClientEvent('chat:addMessage', source, {
+        color = { 255, 0, 0},
+        multiline = true,
+        args = {"Me", "Please add a name!"}
+      })
+      return
+    end
+    TriggerClientEvent("polyzone:pzcreate", source, zoneType, name, args)
+end, 'admin')
+
+QBCore.Commands.Add('pzadd', 'Adds point to zone (Admin Only)', {}, false, function(source)
+    TriggerClientEvent("polyzone:pzadd", source)
+end, 'admin')
+
+QBCore.Commands.Add('pzundo', 'Undoes the last point added (Admin Only)', {}, false, function(source)
+    TriggerClientEvent("polyzone:pzundo", source)
+end, 'admin')
+
+QBCore.Commands.Add('pzfinish', 'Finishes and prints zone (Admin Only)', {}, false, function(source)
+    TriggerClientEvent("polyzone:pzfinish", source)
+end, 'admin')
+
+QBCore.Commands.Add('pzlast', 'Starts creation of the last zone you finished (only works on BoxZone and CircleZone) (Admin Only)', {}, false, function(source)
+    TriggerClientEvent("polyzone:pzlast", source)
+end, 'admin')
+
+QBCore.Commands.Add('pzcancel', 'Cancel zone creation (Admin Only)', {}, false, function(source)
+    TriggerClientEvent("polyzone:pzcancel", source)
+end, 'admin')
+
+QBCore.Commands.Add('pzcomboinfo', 'Prints some useful info for all created ComboZones (Admin Only)', {}, false, function(source)
+    TriggerClientEvent("polyzone:pzcomboinfo", source)
+end, 'admin')

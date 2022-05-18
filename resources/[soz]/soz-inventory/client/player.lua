@@ -6,7 +6,7 @@ RegisterCommand("inventory", function()
         return
     end
 
-    exports["menuv"]:SendNUIMessage({action = "RESET_MENU"})
+    exports["menuv"]:SendNUIMessage({action = "KEY_CLOSE_ALL"})
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
             SendNUIMessage({
@@ -173,16 +173,20 @@ end)
 exports("hasPhone", function()
     local p = promise.new()
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
-        if inventory ~= nil then
-            if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and
-                not IsPauseMenuActive() then
-                for _, item in pairs(inventory.items) do
-                    if item.name == "phone" then
-                        p:resolve(true)
-                        break
-                    end
-                end
-                p:resolve(false)
+        if inventory == nil then
+            p:resolve(false)
+            return
+        end
+
+        if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() then
+            p:resolve(false)
+            return
+        end
+
+        for _, item in pairs(inventory.items) do
+            if item.name == "phone" then
+                p:resolve(true)
+                return
             end
         end
     end, "player", PlayerId())

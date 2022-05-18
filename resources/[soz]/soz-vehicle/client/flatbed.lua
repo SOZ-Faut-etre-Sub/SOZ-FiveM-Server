@@ -434,7 +434,8 @@ CreateThread(function()
                     if GetEntityModel(entity) == GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(entity) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(GetVehiclePedIsIn(PlayerPedId(), true)) ~=
+                        NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
@@ -446,5 +447,18 @@ CreateThread(function()
             },
         },
         distance = 3,
+    })
+    exports["qb-target"]:AddTargetModel(-669511193, {
+        options = {
+            {
+                type = "client",
+                icon = "fa-solid fa-ban",
+                label = "Supprimer",
+                action = function(entity)
+                    DeleteEntity(entity)
+                end,
+            },
+        },
+        distance = 2.5,
     })
 end)
