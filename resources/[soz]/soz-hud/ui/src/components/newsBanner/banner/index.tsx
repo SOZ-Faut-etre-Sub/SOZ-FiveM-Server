@@ -22,6 +22,16 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
         return () => clearTimeout(timeoutId)
     }, []);
 
+    const newsTitle = (type: string) => {
+        if (/(lspd|bcso)/.test(type)) {
+            return 'Avis de recherche';
+        } else if (type === 'fbi') {
+            return 'Annonce';
+        } else {
+            return type;
+        }
+    }
+
     return (
         <div className={cn(styles.news, styles[news.type], {
             [styles.slideOut]: isClosing,
@@ -30,9 +40,7 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
             transform: `translateX(${index*0.5}rem) translateY(-${index*0.5}rem)`,
             opacity: `calc(1.0 - ${index*0.3})`,
         }}>
-            <h3 className={styles.header}>
-                {/(lspd|bcso)/.test(news.type) ? 'Avis de recherche' : news.type}
-            </h3>
+            <h3 className={styles.header}>{newsTitle(news.type)}</h3>
             <div className={styles.content}>
                 {/(lspd|bcso)/.test(news.type) ? (
                     <p className={styles.text}>
