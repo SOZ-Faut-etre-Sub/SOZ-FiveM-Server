@@ -65,7 +65,7 @@ function DeathTimer()
         end
         if DeathTime <= 0 then
             if IsControlPressed(0, 38) and hold <= 0 and isInHospitalBed then
-                TriggerEvent("soz_ems:client:Revive")
+                TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(PlayerId()))
                 hold = 5
             elseif not isInHospitalBed and IsDead then
                 TriggerEvent("soz-ems:client:respawn")
