@@ -19,7 +19,7 @@ export const contactsState = {
             let listedContact = [];
 
             if (filterInputVal) {
-                const regExp = new RegExp(filterInputVal, 'gi');
+                const regExp = new RegExp(filterInputVal.replace(/[^a-zA-Z\d]/g,''), 'gi');
                 contacts = contacts.filter(
                     (contact) => contact.display.match(regExp) || contact.number.match(regExp),
                 )

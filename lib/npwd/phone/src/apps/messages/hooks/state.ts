@@ -44,7 +44,7 @@ export const messageState = {
 
             if (!searchValue) return messageConversations; // added this
 
-            const regExp = new RegExp(searchValue, 'gi');
+            const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g,''), 'gi');
 
             return messageConversations.filter(
                 (conversation) =>
