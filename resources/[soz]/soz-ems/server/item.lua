@@ -7,7 +7,7 @@ QBCore.Functions.CreateUseableItem("tissue", function(source)
 
     if player.PlayerData.metadata["disease"] == "rhume" then
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un mouchoir et vous vous sentez mieux !"))
-        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", nil, source)
+        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", false, source)
     else
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un mouchoir, mais rien ne sort !"))
     end
@@ -19,7 +19,7 @@ QBCore.Functions.CreateUseableItem("antibiotic", function(source)
     local player = QBCore.Functions.GetPlayer(source)
 
     if player.PlayerData.metadata["disease"] == "intoxication" then
-        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", nil, source)
+        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", false, source)
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un antibiotique et vous vous sentez mieux !"))
     else
         TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un antibiotique, mais rien ne change !"))
