@@ -435,7 +435,7 @@ CreateThread(function()
                         return false
                     end
                     if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(GetVehiclePedIsIn(PlayerPedId(), true)) ~=
-                    NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+                        NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
