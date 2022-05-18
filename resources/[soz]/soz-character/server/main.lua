@@ -28,10 +28,10 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
         end
 
         for componentId, component in pairs(clothes.Components or {}) do
-            clothConfig["JobClothSet"].Components[tonumber(componentId)] = component
+            clothConfig["JobClothSet"].Components[tostring(componentId)] = component
         end
         for propId, prop in pairs(clothes.Props or {}) do
-            clothConfig["JobClothSet"].Props[tonumber(propId)] = prop
+            clothConfig["JobClothSet"].Props[tostring(propId)] = prop
         end
     end
 
