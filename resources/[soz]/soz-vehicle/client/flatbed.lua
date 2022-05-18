@@ -331,6 +331,7 @@ end)
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
+            --[[
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
@@ -403,6 +404,7 @@ CreateThread(function()
                     return LastAttach
                 end,
             },
+            --]]
             {
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
