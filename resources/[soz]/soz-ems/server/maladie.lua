@@ -4,9 +4,13 @@ RegisterServerEvent("lsmc:maladie:server:SetCurrentDisease")
 AddEventHandler("lsmc:maladie:server:SetCurrentDisease", function(disease, id)
     local Player = QBCore.Functions.GetPlayer(id or source)
 
-    Player.Functions.SetMetaData("disease", disease)
-
-    TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
+    if disease ~= "grippe" then
+        Player.Functions.SetMetaData("disease", disease)
+        TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
+    elseif disease == "grippe" and not Player.PlayerData.metadata["hazmat"] then
+        Player.Functions.SetMetaData("disease", disease)
+        TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
+    end
 end)
 
 RegisterServerEvent("lsmc:surgery:server:SetCurrentOrgan")
@@ -16,6 +20,13 @@ AddEventHandler("lsmc:surgery:server:SetCurrentOrgan", function(organe, id)
     Player.Functions.SetMetaData("organ", organe)
 
     TriggerClientEvent("lsmc:surgery:client:ApplyCurrentOrgan", Player.PlayerData.source, organe)
+end)
+
+RegisterServerEvent("lsmc:server:SetHazmat")
+AddEventHandler("lsmc:server:SetHazmat", function(hazmat)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    Player.Functions.SetMetaData("hazmat", hazmat)
 end)
 
 QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(id, cb)
