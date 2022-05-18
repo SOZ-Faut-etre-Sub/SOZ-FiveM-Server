@@ -1,9 +1,14 @@
 local DOOR_INDEX_CONFIG = {
-    ["seat_dside_f"] = -1, ["seat_pside_f"] = 0,
-    ["seat_dside_r"] = 1, ["seat_pside_r"] = 2,
-    ["door_dside_f"] = -1, ["door_pside_f"] = 0,
-    ["door_dside_r"] = 1, ["door_pside_r"] = 2,
-    ["wheel_lr"] = {3, 5}, ["wheel_rr"] = {4, 6}
+    ["seat_dside_f"] = -1,
+    ["seat_pside_f"] = 0,
+    ["seat_dside_r"] = 1,
+    ["seat_pside_r"] = 2,
+    ["door_dside_f"] = -1,
+    ["door_pside_f"] = 0,
+    ["door_dside_r"] = 1,
+    ["door_pside_r"] = 2,
+    ["wheel_lr"] = {3, 5},
+    ["wheel_rr"] = {4, 6},
 }
 
 Citizen.CreateThread(function()
@@ -49,18 +54,28 @@ Citizen.CreateThread(function()
 
                     if closestDoor == nil then
                         if distance <= minDistance then
-                            closestDoor = {bone = bone, boneDist = distance, bonePos = bonePos, seatIndex = availableSeatIndex}
+                            closestDoor = {
+                                bone = bone,
+                                boneDist = distance,
+                                bonePos = bonePos,
+                                seatIndex = availableSeatIndex,
+                            }
                         end
                     else
                         if distance < closestDoor.boneDist then
-                            closestDoor = {bone = bone, boneDist = distance, bonePos = bonePos, seatIndex = availableSeatIndex}
+                            closestDoor = {
+                                bone = bone,
+                                boneDist = distance,
+                                bonePos = bonePos,
+                                seatIndex = availableSeatIndex,
+                            }
                         end
                     end
                 end
             end
 
             if closestDoor ~= nil then
-                --ClearPedTasksImmediately(playerPed)
+                -- ClearPedTasksImmediately(playerPed)
                 TaskEnterVehicle(playerPed, vehicle, -1, closestDoor.seatIndex, 1.0, 1, 0)
                 Wait(200)
 
