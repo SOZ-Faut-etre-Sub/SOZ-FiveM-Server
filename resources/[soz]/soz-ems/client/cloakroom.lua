@@ -4,6 +4,7 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
             label = "Tenue de service",
             value = nil,
             select = function()
+                TriggerServerEvent("lsmc:server:SetHazmat", false)
                 TriggerEvent("ems:client:applyDutyClothing", PlayerData.job.id)
             end,
         })
@@ -12,6 +13,7 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
             label = "Tenue civile",
             value = nil,
             select = function()
+                TriggerServerEvent("lsmc:server:SetHazmat", false)
                 QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
                     disableMovement = true,
                     disableCombat = true,
@@ -26,6 +28,11 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
                 label = name,
                 value = nil,
                 select = function()
+                    if string.match(name, "hazmat") then
+                        TriggerServerEvent("lsmc:server:SetHazmat", true)
+                    else
+                        TriggerServerEvent("lsmc:server:SetHazmat", false)
+                    end
                     QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
                         disableMovement = true,
                         disableCombat = true,
