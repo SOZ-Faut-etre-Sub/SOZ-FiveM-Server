@@ -197,6 +197,27 @@ end
 
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
+        if PlayerData.job.id == "fbi" then
+            menu:AddButton({
+                label = "Faire une communication",
+                value = nil,
+                select = function(_, value)
+                    local message = exports["soz-hud"]:Input("Message de la communication", 512)
+                    if message == nil or message == "" then
+                        exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
+                        return
+                    end
+
+                    TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
+                        type = PlayerData.job.id,
+                        message = message,
+                        reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+                        reporterId = PlayerData.citizenid,
+                    })
+                end,
+            })
+        end
+
         if PlayerData.job.onduty then
             RedAlertEntity(menu, "555-POLICE")
             PropsEntity(menu)
