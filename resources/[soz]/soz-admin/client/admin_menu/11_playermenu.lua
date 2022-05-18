@@ -70,11 +70,13 @@ function AdminMenuPlayers(menu, permission)
     playerMenu:AddSlider({
         label = "Rendre malade",
         value = "maladie",
-        values = {{label = "Rhume", value = "rhume"},
-                  {label = "Grippe", value = "grippe"},
-                  {label = "Intoxication", value = "intoxication"},
-                  {label = "Rougeur", value = "rougeur"},
-                  {label = "Soigner", value = false}},
+        values = {
+            {label = "Rhume", value = "rhume"},
+            {label = "Grippe", value = "grippe"},
+            {label = "Intoxication", value = "intoxication"},
+            {label = "Rougeur", value = "rougeur"},
+            {label = "Soigner", value = false},
+        },
         select = function(_, value)
             TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", value, CurrentPlayerData.id)
         end,

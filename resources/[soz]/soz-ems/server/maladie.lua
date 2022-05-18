@@ -21,6 +21,9 @@ end)
 QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(id, cb)
     local Player = QBCore.Functions.GetPlayer(id)
     local organ = Player.PlayerData.metadata["organ"]
+    if organ == nil then
+        organ = false
+    end
     cb(organ)
 end)
 
