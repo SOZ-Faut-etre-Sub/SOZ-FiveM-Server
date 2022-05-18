@@ -64,6 +64,7 @@ end)
 
 ChooseWheelMenu:On("close", function()
     RestoreOriginalWheels()
+    ChooseWheelMenu:ClearItems()
 end)
 
 CustomWheelsMenu:On("open", function(menu)
@@ -101,6 +102,10 @@ CustomWheelsMenu:On("open", function(menu)
     end
 end)
 
+CustomWheelsMenu:On("close", function()
+    CustomWheelsMenu:ClearItems()
+end)
+
 TyreSmokeMenu:On("open", function(menu)
     menu:ClearItems()
     menu:AddTitle({label = "Fumée de roue"})
@@ -127,6 +132,10 @@ TyreSmokeMenu:On("open", function(menu)
             })
         end
     end
+end)
+
+TyreSmokeMenu:On("close", function()
+    TyreSmokeMenu:ClearItems()
 end)
 
 WheelsMenu:On("open", function(menu)
@@ -177,6 +186,10 @@ WheelsMenu:On("open", function(menu)
     end
 end)
 
+WheelsMenu:On("close", function()
+    WheelsMenu:ClearItems()
+end)
+
 ResprayColoursMenu:On("open", function(menu)
     local v = variablecatrespray
     local colorcat = variableRespraytype
@@ -206,6 +219,7 @@ ResprayColoursMenu:On("open", function(menu)
 end)
 
 ResprayColoursMenu:On("close", function()
+    ResprayColoursMenu:ClearItems()
     RestoreOriginalColours()
 end)
 
@@ -229,6 +243,10 @@ ResprayTypeMenu:On("open", function(menu)
             end,
         })
     end
+end)
+
+ResprayTypeMenu:On("close", function()
+    ResprayTypeMenu:ClearItems()
 end)
 
 ResprayMenu:On("open", function(menu)
@@ -286,6 +304,10 @@ ResprayMenu:On("open", function(menu)
     })
 end)
 
+ResprayMenu:On("close", function()
+    ResprayMenu:ClearItems()
+end)
+
 NeonColoursMenu:On("open", function(menu)
     local currentNeonR, currentNeonG, currentNeonB = GetCurrentNeonColour()
     menu:ClearItems()
@@ -328,6 +350,7 @@ NeonColoursMenu:On("open", function(menu)
 end)
 
 NeonColoursMenu:On("close", function()
+    NeonColoursMenu:ClearItems()
     RestoreOriginalNeonColours()
 end)
 
@@ -386,6 +409,7 @@ end)
 
 NeonStateMenu:On("close", function()
     RestoreOriginalNeonStates()
+    NeonStateMenu:ClearItems()
 end)
 
 NeonsMenu:On("open", function(menu)
@@ -410,6 +434,10 @@ NeonsMenu:On("open", function(menu)
         })
     end
     menu:AddButton({label = "Couleurs de Néon", value = NeonColoursMenu})
+end)
+
+NeonsMenu:On("close", function()
+    NeonsMenu:ClearItems()
 end)
 
 XenonsHeadlightsMenu:On("open", function(menu)
@@ -445,6 +473,10 @@ XenonsHeadlightsMenu:On("open", function(menu)
         })
         menu:AddButton({label = "Activer Xénons", rightLabel = "~g~Installé"})
     end
+end)
+
+XenonsHeadlightsMenu:On("close", function()
+    XenonsHeadlightsMenu:ClearItems()
 end)
 
 WindowTintMenu:On("open", function(menu)
@@ -486,6 +518,7 @@ WindowTintMenu:On("open", function(menu)
 end)
 
 WindowTintMenu:On("close", function()
+    WindowTintMenu:ClearItems()
     RestoreOriginalWindowTint()
 end)
 
@@ -529,6 +562,7 @@ SpoilersMenu:On("open", function(menu)
 end)
 
 SpoilersMenu:On("close", function()
+    SpoilersMenu:ClearItems()
     RestoreOriginalMod()
 end)
 
@@ -576,6 +610,7 @@ OldLiveryMenu:On("open", function(menu)
 end)
 
 OldLiveryMenu:On("close", function()
+    OldLiveryMenu:ClearItems()
     RestoreOldLivery()
 end)
 
@@ -604,6 +639,10 @@ ExtrasMenu:On("open", function(menu)
             end
         end
     end
+end)
+
+ExtrasMenu:On("close", function()
+    ExtrasMenu:ClearItems()
 end)
 
 PlateIndexMenu:On("open", function(menu)
@@ -652,6 +691,7 @@ PlateIndexMenu:On("open", function(menu)
 end)
 
 PlateIndexMenu:On("close", function()
+    PlateIndexMenu:ClearItems()
     RestorePlateIndex()
 end)
 
@@ -677,6 +717,10 @@ PartMenu:On("open", function(menu)
     })
 end)
 
+PartMenu:On("close", function()
+    PartMenu:ClearItems()
+end)
+
 NoDamage:On("open", function(menu)
     menu:ClearItems()
     menu:AddTitle({label = variablePart[1]})
@@ -689,6 +733,10 @@ NoDamage:On("open", function(menu)
             menu:Close()
         end,
     })
+end)
+
+NoDamage:On("close", function()
+    NoDamage:ClearItems()
 end)
 
 Status:On("open", function(menu)
@@ -740,6 +788,10 @@ Status:On("open", function(menu)
     end
 end)
 
+Status:On("close", function()
+    Status:ClearItems()
+end)
+
 VehiculeCustom:On("open", function(menu)
     local veh = Config.AttachedVehicle
     local isMotorcycle = GetVehicleClass(veh) == 8 -- Moto
@@ -784,6 +836,10 @@ VehiculeCustom:On("open", function(menu)
     menu:AddButton({label = "Autres", value = ExtrasMenu})
 end)
 
+VehiculeCustom:On("close", function()
+    VehiculeCustom:ClearItems()
+end)
+
 local function saveVehicle()
     local veh = Config.AttachedVehicle
     local myCar = QBCore.Functions.GetVehicleProperties(veh)
@@ -802,9 +858,9 @@ VehiculeOptions:On("open", function(menu)
         select = function()
             if Gready == true then
                 Gfinishready = true
-                TriggerEvent("soz-bennys:client:UnattachVehicle")
                 Gready = false
                 saveVehicle()
+                TriggerEvent("soz-bennys:client:UnattachVehicle")
                 SetVehicleDoorsLocked(veh, 1)
                 menu:Close()
             else
@@ -824,6 +880,7 @@ VehiculeOptions:On("open", function(menu)
 end)
 
 VehiculeOptions:On("close", function()
+    VehiculeOptions:ClearItems()
     if Gready == false and Gfinishready == false then
         exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
         VehiculeOptions:Open()
