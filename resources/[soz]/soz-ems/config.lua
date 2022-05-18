@@ -36,13 +36,13 @@ Config.Cloakroom = {
             },
             ["Tenue hazmat"] = {
                 Components = {
-                    [1] = {Drawable = 129, Texture = 12, Palette = 0},
+                    [1] = {Drawable = 46, Texture = 0, Palette = 0},
                     [3] = {Drawable = 86, Texture = 0, Palette = 0},
                     [4] = {Drawable = 40, Texture = 2, Palette = 0},
                     [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 25, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 14, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 62, Texture = 2, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 67, Texture = 2, Palette = 0},
@@ -67,13 +67,13 @@ Config.Cloakroom = {
             },
             ["Tenue hazmat"] = {
                 Components = {
-                    [1] = {Drawable = 129, Texture = 12, Palette = 0},
+                    [1] = {Drawable = 46, Texture = 0, Palette = 0},
                     [3] = {Drawable = 101, Texture = 0, Palette = 0},
                     [4] = {Drawable = 40, Texture = 2, Palette = 0},
                     [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 25, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 14, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 43, Texture = 2, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 61, Texture = 2, Palette = 0},
