@@ -1,60 +1,41 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterServerEvent("lsmc:server:GetMaladie")
-AddEventHandler("lsmc:server:GetMaladie", function()
+RegisterServerEvent("lsmc:maladie:server:SetCurrentDisease")
+AddEventHandler("lsmc:maladie:server:SetCurrentDisease", function(disease, id)
+    local Player = QBCore.Functions.GetPlayer(id or source)
+
+    if disease ~= "grippe" then
+        Player.Functions.SetMetaData("disease", disease)
+        TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
+    elseif disease == "grippe" and not Player.PlayerData.metadata["hazmat"] then
+        Player.Functions.SetMetaData("disease", disease)
+        TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
+    end
+end)
+
+RegisterServerEvent("lsmc:surgery:server:SetCurrentOrgan")
+AddEventHandler("lsmc:surgery:server:SetCurrentOrgan", function(organe, id)
+    local Player = QBCore.Functions.GetPlayer(id or source)
+
+    Player.Functions.SetMetaData("organ", organe)
+
+    TriggerClientEvent("lsmc:surgery:client:ApplyCurrentOrgan", Player.PlayerData.source, organe)
+end)
+
+RegisterServerEvent("lsmc:server:SetHazmat")
+AddEventHandler("lsmc:server:SetHazmat", function(hazmat)
     local Player = QBCore.Functions.GetPlayer(source)
-    local Rhume = Player.PlayerData.metadata["rhume"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "rhume", Rhume or false)
-    local Grippe = Player.PlayerData.metadata["grippe"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "grippe", Grippe or false)
-    local Rougeur = Player.PlayerData.metadata["rougeur"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "rougeur", Rougeur or false)
-    local Intoxication = Player.PlayerData.metadata["intoxication"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "intoxication", Intoxication or false)
+
+    Player.Functions.SetMetaData("hazmat", hazmat)
 end)
 
-RegisterServerEvent("lsmc:server:GetOrgane")
-AddEventHandler("lsmc:server:GetOrgane", function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    local Rein = Player.PlayerData.metadata["rein"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "rein", Rein or false)
-    local Poumon = Player.PlayerData.metadata["poumon"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "poumon", Poumon or false)
-    local Foie = Player.PlayerData.metadata["foie"]
-    TriggerClientEvent("lsmc:client:SetMaladie", source, "foie", Foie or false)
-end)
-
-RegisterServerEvent("lsmc:server:Greffer")
-AddEventHandler("lsmc:server:Greffer", function(id)
-    local Player = QBCore.Functions.GetPlayer(tonumber(id))
-    local Rein = Player.PlayerData.metadata["rein"]
-    local Poumon = Player.PlayerData.metadata["poumon"]
-    local Foie = Player.PlayerData.metadata["foie"]
-    if not Rein and not Poumon and not Foie then
-        TriggerClientEvent("lsmc:client:SetOperation", source, true, nil)
-    end
-    if not Rein and not Poumon and Foie then
-        TriggerClientEvent("lsmc:client:SetOperation", source, false, "Foie")
-    end
-    if not Rein and Poumon and not Foie then
-        TriggerClientEvent("lsmc:client:SetOperation", source, false, "Poumon")
-    end
-    if Rein and not Poumon and not Foie then
-        TriggerClientEvent("lsmc:client:SetOperation", source, false, "Rein")
-    end
-end)
-
-RegisterServerEvent("lsmc:server:SetMaladie")
-AddEventHandler("lsmc:server:SetMaladie", function(maladie, val)
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.SetMetaData(maladie, val)
-end)
-
-RegisterServerEvent("lsmc:server:SetOrgane")
-AddEventHandler("lsmc:server:SetOrgane", function(id, organe, val)
+QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(id, cb)
     local Player = QBCore.Functions.GetPlayer(id)
-    Player.Functions.SetMetaData(organe, val)
-    TriggerClientEvent("lsmc:client:SetMaladie", id, organe, val or false)
+    local organ = Player.PlayerData.metadata["organ"]
+    if organ == nil then
+        organ = false
+    end
+    cb(organ)
 end)
 
 RegisterServerEvent("lsmc:server:SetMort")

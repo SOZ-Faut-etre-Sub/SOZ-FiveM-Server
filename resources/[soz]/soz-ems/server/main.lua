@@ -26,7 +26,7 @@ end)
 RegisterServerEvent("lsmc:server:heal")
 AddEventHandler("lsmc:server:heal", function(id)
     local Player = QBCore.Functions.GetPlayer(tonumber(id))
-    TriggerClientEvent("lsmc:client:ifaks", Player.PlayerData.source)
+    TriggerClientEvent("lsmc:client:heal", Player.PlayerData.source, Player.PlayerData.metadata["disease"])
 end)
 
 RegisterServerEvent("lsmc:server:GiveBlood")

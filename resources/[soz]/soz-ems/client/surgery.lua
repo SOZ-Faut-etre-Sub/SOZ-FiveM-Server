@@ -7,9 +7,7 @@ local surgery = BoxZone:Create(vector3(334.97, -1446.74, 32.51), 8.4, 6.2, {
 })
 
 InsideSurgery = false
-Operation = nil
-MissingOrgane = nil
-ItemOrgan = nil
+Organe = nil
 
 Citizen.CreateThread(function()
     while true do
@@ -40,18 +38,19 @@ local function playerHasItem(item, amount)
     return false
 end
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+Citizen.CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Enlever un Poumon",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/remove_poumon.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    TriggerServerEvent("lsmc:server:Greffer", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                    Organe = QBCore.Functions.TriggerRpc("lsmc:server:GetCurrentOrgan", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                     Wait(100)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Operation
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
+                               false
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever un Poumon..", 10000, false, true,
@@ -62,17 +61,18 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
                         local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Poumon", true)
+                        TriggerServerEvent("lsmc:surgery:server:SetCurrentOrgan", "poumon", id)
                     end)
                 end,
             },
             {
                 label = "Enlever un Rein",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/remove_rein.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Operation
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
+                               false
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever un Rein..", 10000, false, true,
@@ -83,17 +83,18 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
                         local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Rein", true)
+                        TriggerServerEvent("lsmc:surgery:server:SetCurrentOrgan", "rein", id)
                     end)
                 end,
             },
             {
                 label = "Enlever le Foie",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/remove_foie.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Operation
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
+                               false
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever le Foie..", 10000, false, true,
@@ -104,21 +105,21 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
                         local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                        TriggerServerEvent("lsmc:server:SetOrgane", id, "Foie", true)
+                        TriggerServerEvent("lsmc:surgery:server:SetCurrentOrgan", "foie", id)
                     end)
                 end,
             },
             {
                 label = "greffer",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/greffer.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and
-                               not Operation and playerHasItem(ItemOrgan)
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ~=
+                               false and playerHasItem(Organe)
                 end,
                 action = function(entity)
-                    QBCore.Functions.Progressbar("Soigner", "Greffer un " .. MissingOrgane, 10000, false, true,
+                    QBCore.Functions.Progressbar("Soigner", "Greffer un " .. Organe, 10000, false, true,
                                                  {
                         disableMovement = true,
                         disableCarMovement = true,
@@ -126,22 +127,11 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
                         local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                        TriggerServerEvent("lsmc:server:SetOrgane", id, MissingOrgane, true)
+                        TriggerServerEvent("lsmc:surgery:server:SetCurrentOrgan", false, id)
                     end)
                 end,
             },
         },
         distance = 2.5,
     })
-end)
-
-RegisterNetEvent("lsmc:client:SetOperation")
-AddEventHandler("lsmc:client:SetOperation", function(val, missing)
-    Operation = val
-    MissingOrgane = missing
-    if missing == nil then
-        ItemOrgan = ""
-    else
-        ItemOrgan = MissingOrgane:lower()
-    end
 end)
