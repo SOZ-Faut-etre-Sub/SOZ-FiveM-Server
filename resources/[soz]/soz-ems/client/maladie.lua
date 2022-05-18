@@ -22,7 +22,7 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
 
         exports["soz-hud"]:DrawNotification("Vous avez un petit rhume")
 
-        Citizen.CreateThread(function ()
+        Citizen.CreateThread(function()
             while DiseaseLoop do
                 loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
                 TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
@@ -42,7 +42,7 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
 
         exports["soz-hud"]:DrawNotification("Vous avez la grippe")
 
-        Citizen.CreateThread(function ()
+        Citizen.CreateThread(function()
             while DiseaseLoop do
                 local player, distance = QBCore.Functions.GetClosestPlayer()
                 local id = GetPlayerServerId(player)
@@ -75,7 +75,7 @@ RegisterNetEvent("lsmc:maladie:client:ApplyConditions", function(conditions)
     if has_value(conditions, Config.ConditionType.NoRun) then
         SetPlayerSprint(ped, false)
     else
-        SetPlayerSprint(ped, false)
+        SetPlayerSprint(ped, true)
     end
 
     if has_value(conditions, Config.ConditionType.NoHair) then

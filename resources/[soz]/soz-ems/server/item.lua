@@ -32,7 +32,6 @@ QBCore.Functions.CreateUseableItem("pommade", function(source)
     TriggerClientEvent("lsmc:client:pommade", source)
 end)
 
-
 QBCore.Functions.CreateUseableItem("ifaks", function(source)
     TriggerClientEvent("lsmc:client:ifaks", source)
 end)
