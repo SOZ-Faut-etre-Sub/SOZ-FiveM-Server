@@ -6,7 +6,7 @@
     <Item>
       <modelName>police5</modelName>
       <txdName>police5</txdName>
-      <handlingId>BUFFALO</handlingId>
+      <handlingId>BUFFALO4</handlingId>
       <gameName>police5</gameName>
       <vehicleMakeName>BUFFALO</vehicleMakeName>
       <expressionDictName>null</expressionDictName>
@@ -15,7 +15,7 @@
       <animConvRoofName>null</animConvRoofName>
       <animConvRoofWindowsAffected />
       <ptfxAssetName />
-      <audioNameHash>POLICE2</audioNameHash>
+      <audioNameHash>BUFFALO4</audioNameHash>
       <layout>LAYOUT_STANDARD_BUFFALO4</layout>
       <coverBoundOffsets>BUFFALO44_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
