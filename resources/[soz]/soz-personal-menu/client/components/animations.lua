@@ -145,17 +145,6 @@ function AnimationsEntry()
                 end
             end,
         })
-
-        RegisterKeyMapping("animation_shortcut_" .. shortcut, "Lancer l'animation personnalisée " .. shortcut, "keyboard", "")
-        RegisterCommand("animation_shortcut_" .. shortcut, function(source, args, rawCommand)
-            if IsPedOnFoot(PlayerPedId()) then
-                local kvpValue = GetResourceKvpString("soz/animation/" .. shortcut)
-                if kvpValue then
-                    local animation = json.decode(kvpValue)
-                    PlayEmote(animation.anim)
-                end
-            end
-        end, true)
     end
 end
 
@@ -204,4 +193,21 @@ end)
 
 RegisterNetEvent("personal:client:ApplyWalkStyle", function()
     forceApplyWalkStyle()
+end)
+
+Citizen.CreateThread(function()
+    for shortcut = 1, 10 do
+        shortcut = string.format("%02d", shortcut)
+
+        RegisterKeyMapping("animation_shortcut_" .. shortcut, "Lancer l'animation personnalisée " .. shortcut, "keyboard", "")
+        RegisterCommand("animation_shortcut_" .. shortcut, function(source, args, rawCommand)
+            if IsPedOnFoot(PlayerPedId()) then
+                local kvpValue = GetResourceKvpString("soz/animation/" .. shortcut)
+                if kvpValue then
+                    local animation = json.decode(kvpValue)
+                    PlayEmote(animation.anim)
+                end
+            end
+        end, true)
+    end
 end)

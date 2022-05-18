@@ -69,16 +69,20 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
 
     Wait(0)
 
+    local allowAnonymous = GetConvar("soz_allow_anonymous_login", "false") == "true"
+    local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
+
     if not steam then
         exports["soz-monitor"]:Log("ERROR", name .. ": error finding steam id for this user.", {
             event = "playerConnecting"
         })
 
         deferrals.done('Impossible de recupérer votre identifiant steam, verifier que le client est bien lancé.')
-    end
 
-    local allowAnonymous = GetConvar("soz_allow_anonymous_login", "false") == "true"
-    local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
+        if not allowAnonymous then
+            return
+        end
+    end
 
     local status, result = pcall(function()
         return GetUserAccount(steam)
@@ -92,6 +96,8 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
 
         if not allowAnonymous then
             deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. tostring(steam))
+
+            return
         end
 
         QBCore.Functions.SetPermission(steam, defaultAnonymousRole)

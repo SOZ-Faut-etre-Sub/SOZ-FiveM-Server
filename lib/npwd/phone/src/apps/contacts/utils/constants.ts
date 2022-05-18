@@ -10,13 +10,13 @@ export const BrowserContactsState: Contact[] = [
         id: 2,
         display: 'Taso',
         number: '215-8139',
-        avatar: 'http://i.tasoagc.dev/i9Ig',
+        avatar: 'https://placekitten.com/1920/1080',
     },
     {
         id: 3,
         display: 'Chip',
         number: '603-275-8373',
-        avatar: 'http://i.tasoagc.dev/2QYV',
+        avatar: 'https://placekitten.com/1920/1080',
     },
     {
         id: 4,

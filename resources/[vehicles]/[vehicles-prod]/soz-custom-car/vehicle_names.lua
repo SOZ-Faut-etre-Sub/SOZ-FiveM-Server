@@ -1,13 +1,13 @@
 Citizen.CreateThread(function()
     --- Vehicles
-    AddTextEntryByHash(0x9C32EB57, "Buffalo STX") -- police5
-    AddTextEntryByHash(0xB2FF98F0, "Vapid Scout") -- police6
-    AddTextEntryByHash(0xF0DFD0A3, "Dodge Charger") -- sheriff3
-    AddTextEntryByHash(0xD0368F51, "Chevrolet Tahoe") -- sheriff4
-    AddTextEntryByHash(0x8B6605B9, "Moto Sheriff") -- sheriffb
-    AddTextEntryByHash(0x292DC34B, "Granger 3600LX du LSMC") -- ambcar
-    AddTextEntryByHash(0xD6016754, "Cognoscenti 55 du FIB") -- cogfbi
-    AddTextEntryByHash(0x4DC04683, "Paragon R du FIB") -- paragonfbi
+    -- AddTextEntryByHash(0x9C32EB57, "Buffalo STX") -- police5
+    -- AddTextEntryByHash(0xB2FF98F0, "Vapid Scout") -- police6
+    -- AddTextEntryByHash(0xF0DFD0A3, "Buffalo Charger") -- sheriff3
+    -- AddTextEntryByHash(0xD0368F51, "Albany Tahoe") -- sheriff4
+    -- AddTextEntryByHash(0x8B6605B9, "Moto Sheriff") -- sheriffb
+    -- AddTextEntryByHash(0x292DC34B, "Granger 3600LX du LSMC") -- ambcar
+    -- AddTextEntryByHash(0xD6016754, "Cognoscenti 55 du FIB") -- cogfbi
+    -- AddTextEntryByHash(0x4DC04683, "Paragon R du FIB") -- paragonfbi
 
     AddTextEntry('0xA4849CEF','Numéro - 0')   -- POLICE5_A0
     AddTextEntry('0xD083F4ED','Numéro - 1')   -- POLICE5_A1

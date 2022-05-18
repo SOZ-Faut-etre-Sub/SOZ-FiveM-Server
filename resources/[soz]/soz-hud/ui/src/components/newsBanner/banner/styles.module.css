@@ -22,6 +22,11 @@
     background-size: contain;
 }
 
+.news.fbi {
+    background: url("../../../assets/twitch-news/fbi.png") no-repeat;
+    background-size: contain;
+}
+
 .news * {
     padding: 0;
     margin: 0;
