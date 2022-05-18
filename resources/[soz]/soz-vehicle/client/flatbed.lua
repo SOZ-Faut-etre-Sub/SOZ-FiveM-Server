@@ -450,6 +450,7 @@ CreateThread(function()
         },
         distance = 3,
     })
+    --[[
     exports["qb-target"]:AddTargetModel(-669511193, {
         options = {
             {
@@ -463,4 +464,5 @@ CreateThread(function()
         },
         distance = 2.5,
     })
+    --]]
 end)
