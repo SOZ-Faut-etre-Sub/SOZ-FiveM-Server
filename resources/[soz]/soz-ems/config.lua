@@ -4,10 +4,7 @@ Config.AllowedJobInteraction = {"lsmc"}
 
 Config.DeathTime = 900
 
-Config.ConditionType = {
-    NoRun = "NoRun",
-    NoHair = "NoHair",
-}
+Config.ConditionType = {NoRun = "NoRun", NoHair = "NoHair"}
 
 Config.Locations = {
     ["lit"] = {
