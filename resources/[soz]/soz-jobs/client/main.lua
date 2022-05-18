@@ -64,7 +64,8 @@ CreateThread(function()
                     TriggerServerEvent("job:recruit", targetSource)
                 end,
                 canInteract = function(entity)
-                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+                        not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
                         return false
                     end
 

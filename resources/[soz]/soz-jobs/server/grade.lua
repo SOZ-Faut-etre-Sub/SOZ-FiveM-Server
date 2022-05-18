@@ -2,7 +2,8 @@ RegisterServerEvent("job:recruit", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+        not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
         return
     end
 

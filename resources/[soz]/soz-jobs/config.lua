@@ -21,6 +21,7 @@ SozJobCore.JobType = {
 }
 
 SozJobCore.JobPermission = {
+    Enrollment = "enrollment",
     ManageGrade = "manage-grade",
     SocietyDealershipVehicle = "society-dealership-vehicle",
     SocietyPrivateStorage = "society-private-storage",
@@ -114,6 +115,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -127,6 +129,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -140,6 +143,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "lsmc:client:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -153,6 +157,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "taxi:client:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -165,6 +170,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "jobs:client:food:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -186,6 +192,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "jobs:client:news:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -199,6 +206,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "jobs:client:garbage:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -211,6 +219,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "jobs:client:fueler:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -223,6 +232,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "stonk:client:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
@@ -239,6 +249,7 @@ SozJobCore.Jobs = {
         grades = {},
         menuCallback = "bennys:client:OpenSocietyMenu",
         permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
