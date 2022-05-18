@@ -23,4 +23,39 @@ export const BrowserContactsState: Contact[] = [
         display: 'Kidz',
         number: '444-4444',
     },
+    {
+        id: 5,
+        display: 'Kidz',
+        number: '444-4444',
+    },
+    {
+        id: 6,
+        display: 'Kidz',
+        number: '444-4444',
+    },
+    {
+        id: 7,
+        display: 'Kidz',
+        number: '444-4444',
+    },
+    {
+        id: 8,
+        display: 'Kidz',
+        number: '444-4444',
+    },
+    {
+        id: 9,
+        display: 'Kidz',
+        number: '444-4444',
+    },
+    {
+        id: 10,
+        display: 'Kidz',
+        number: '444-4444',
+    },
+    {
+        id: 11,
+        display: 'Kidz',
+        number: '444-4444',
+    },
 ];
