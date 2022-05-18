@@ -1,5 +1,4 @@
 local relationshipTypes = {
-    "PLAYER",
     "CIVMALE",
     "CIVFEMALE",
     "COP",
