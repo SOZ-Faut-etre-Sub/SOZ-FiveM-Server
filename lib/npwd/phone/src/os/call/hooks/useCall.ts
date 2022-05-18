@@ -7,6 +7,8 @@ import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 import { ServerPromiseResp } from '@typings/common';
+import {PhoneEvents} from "@typings/phone";
+import {isEnvBrowser} from "@utils/misc";
 
 interface CallHook {
   call: ActiveCall;
@@ -50,11 +52,17 @@ export const useCall = (): CallHook => {
     fetchNui(CallEvents.ACCEPT_CALL, {
       transmitterNumber: call.transmitter,
     });
+    fetchNui(PhoneEvents.TOGGLE_KEYS, {
+        keepGameFocus: true,
+    });
   }, [call]);
 
   const rejectCall = useCallback(() => {
     fetchNui(CallEvents.REJECTED, {
       transmitterNumber: call.transmitter,
+    });
+    fetchNui(PhoneEvents.TOGGLE_KEYS, {
+        keepGameFocus: true,
     });
   }, [call]);
 
