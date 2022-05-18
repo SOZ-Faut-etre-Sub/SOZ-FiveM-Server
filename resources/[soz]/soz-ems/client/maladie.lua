@@ -1,4 +1,5 @@
 local DiseaseLoop = false
+hazmat = false
 
 local function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
@@ -36,7 +37,7 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
         end)
     end
 
-    if disease == "grippe" then
+    if disease == "grippe" and not hazmat then
         DiseaseLoop = true
         TriggerScreenblurFadeIn(100)
 
@@ -98,10 +99,6 @@ CreateThread(function()
 
                 if Random == 10 then
                     TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "grippe")
-                end
-
-                if Random == 20 then
-                    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "rougeur")
                 end
             end
         end
