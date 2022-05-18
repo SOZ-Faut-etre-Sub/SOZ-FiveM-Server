@@ -159,10 +159,10 @@ RegisterNetEvent('QBCore:UpdatePlayer', function()
         local newAlcohol = Player.PlayerData.metadata['alcohol'] - QBCore.Config.Player.AlcoholRate
         local newDrug = Player.PlayerData.metadata['drug'] - QBCore.Config.Player.DrugRate
 
-        if Player.PlayerData.metadata['foie'] then
+        if Player.PlayerData.metadata['organ'] == "foie" then
             newHunger = Player.PlayerData.metadata['hunger'] - 8.4
         end
-        if Player.PlayerData.metadata['rein'] then
+        if Player.PlayerData.metadata['organ'] == "rein" then
             newThirst = Player.PlayerData.metadata['thirst'] - 7.6
         end
         if newHunger <= 0 then

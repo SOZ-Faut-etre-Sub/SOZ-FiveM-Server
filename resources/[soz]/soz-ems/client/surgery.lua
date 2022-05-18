@@ -8,7 +8,6 @@ local surgery = BoxZone:Create(vector3(334.97, -1446.74, 32.51), 8.4, 6.2, {
 
 InsideSurgery = false
 Organe = nil
-ItemOrgan = nil
 
 Citizen.CreateThread(function()
     while true do
@@ -39,19 +38,19 @@ local function playerHasItem(item, amount)
     return false
 end
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+Citizen.CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
                 label = "Enlever un Poumon",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/remove_poumon.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    Organe = QBCore.Functions.TriggerRpc("lsmc:server:GetCurrentOran", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                    Organe = QBCore.Functions.TriggerRpc("lsmc:server:GetCurrentOrgan", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                     Wait(100)
-                    print(Organe)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe == false
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
+                               false
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever un Poumon..", 10000, false, true,
@@ -68,11 +67,12 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             },
             {
                 label = "Enlever un Rein",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/remove_rein.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe == false
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
+                               false
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever un Rein..", 10000, false, true,
@@ -89,11 +89,12 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             },
             {
                 label = "Enlever le Foie",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/remove_foie.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe == false
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
+                               false
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Enlever le Foie..", 10000, false, true,
@@ -110,11 +111,12 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             },
             {
                 label = "greffer",
-                color = PlayerData.job.id,
+                color = "lsmc",
                 icon = "c:ems/greffer.png",
                 job = {["lsmc"] = 0},
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ~= false and playerHasItem(Organe)
+                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ~=
+                               false and playerHasItem(Organe)
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Greffer un " .. Organe, 10000, false, true,
