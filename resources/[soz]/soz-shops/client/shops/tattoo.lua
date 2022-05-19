@@ -1,6 +1,5 @@
 --- @class TattooShop
 TattooShop = {}
-local confirmMenu, confirmItem, confirmValue = nil, nil, {}
 local cam, camVariationList, camVariationId, camVariationCoord = nil, {}, 1, nil
 
 function TattooShop:new(...)
@@ -59,13 +58,6 @@ function TattooShop:GenerateMenu(skipIntro)
 
     self:PreGenerateMenu(skipIntro)
 
-    if MenuV:IsNamespaceAvailable("shop:tattoo:confirm") then
-        confirmMenu = MenuV:InheritMenu(shopMenu, nil, "shop:tattoo:confirm")
-    end
-
-    confirmMenu:ClearItems()
-    confirmItem = confirmMenu:AddConfirm({label = "Voulez-vous vraiment ce tatouage ?", value = "n"})
-
     for categoryId, category in pairs(Config.TattooCategories) do
         if MenuV:IsNamespaceAvailable("tattoo:cat:" .. categoryId) then
             Config.TattooCategories[categoryId].menu = MenuV:InheritMenu(shopMenu, {Subtitle = category.label}, "tattoo:cat:" .. categoryId)
@@ -97,30 +89,23 @@ function TattooShop:GenerateMenu(skipIntro)
         local overlayField = gender == 0 and "HashNameMale" or "HashNameFemale"
 
         if tattoo[overlayField] ~= "" then
-            local entry = Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
+            Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
                 label = GetLabelText(tattoo["Name"]),
                 value = {collection = tattoo["Collection"], overlay = tattoo[overlayField]},
                 rightLabel = "$" .. QBCore.Shared.GroupDigits(tattoo["Price"]),
+                select = function(item)
+                    local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+                    if validation == "oui" then
+                        TriggerServerEvent("shops:server:pay", "tattoo", item:GetValue(), 1)
+                    end
+                end,
             })
-
-            --- @param select Item
-            entry:On("select", function(select)
-                confirmValue = select:GetValue()
-                confirmMenu:Open()
-            end)
         end
     end
 
-    confirmItem:On("confirm", function()
-        TriggerServerEvent("shops:server:pay", "tattoo", confirmValue, 1)
-
-        MenuV:CloseAll(function()
-            self:GenerateMenu(true)
-        end)
-    end)
-
-    shopMenu:On("close", function()
+    shopMenu:On("close", function(m)
         self:OnMenuClose()
+        m:ClearItems()
     end)
 
     shopMenu:Open()
