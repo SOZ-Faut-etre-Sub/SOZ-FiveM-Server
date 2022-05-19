@@ -38,6 +38,8 @@ end
 function RegisterProximityModule()
     console.debug("Proximity module registering...")
 
+    RegisterModuleContext("proximity", 0)
+
     --- Keybindings
     RegisterCommand("voip-voice_up", ProximityVoiceIncrease, false)
     RegisterKeyMapping("voip-voice_up", "Parler plus fort", "keyboard", Config.rangeIncreaseHotkey)

@@ -20,6 +20,7 @@ Config.voiceRanges = {
 
 --- Volume
 Config.volumes = {
+    ["call"] = 0.8,
     ["vehicle"] = 0.5,
 }
 
