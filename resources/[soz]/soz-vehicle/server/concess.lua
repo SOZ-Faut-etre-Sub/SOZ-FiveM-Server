@@ -61,7 +61,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
 
             TriggerEvent("monitor:server:event", "vehicle_buy", {
-                player_source = Player.PlayerData.source,
+                player_source = pData.PlayerData.source,
                 buy_type = "player",
             }, {vehicle_id = vehicle, amount = vehiclePrice})
         else
