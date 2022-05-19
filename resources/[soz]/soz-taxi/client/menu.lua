@@ -45,13 +45,24 @@ TaxiJob.Functions.Menu.GenerateJobMenu = function(job)
                     TriggerEvent("taxi:client:enableHorodateur")
                 end,
             })
-            menu:AddButton({
-                label = "Prendre une mission",
-                value = nil,
-                select = function()
-                    TriggerEvent("taxi:client:DoTaxiNpc")
-                end,
-            })
+            if not NpcData.Active then
+                menu:AddButton({
+                    label = "Prendre une mission",
+                    value = nil,
+                    select = function()
+                        TriggerEvent("taxi:client:DoTaxiNpc")
+                    end,
+                })
+            else
+                menu:AddButton({
+                    label = "Annuler la mission",
+                    value = nil,
+                    select = function()
+                        exports["soz-hud"]:DrawNotification("Vous avez annulé la mission")
+                        ClearNpcMission()
+                    end,
+                })
+            end
         else
             menu:AddButton({label = "Tu n'es pas en service !", disabled = true})
         end
