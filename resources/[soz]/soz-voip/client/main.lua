@@ -6,6 +6,9 @@ PlayerData = {
     Muted = false,
     CurrentTarget = 1,
 
+    IsCalling = false,
+    CurrentCall = nil,
+
     PlayerCoords = vector3(0.0, 0.0, 0.0),
     PlayerPreviousCoords = vector3(0.0, 0.0, 0.0),
 
@@ -49,22 +52,13 @@ AddEventHandler('voip:client:state', function (state)
     end
 end)
 
-function SetVoiceTargets(targetID)
-    local players = {}
+function RegisterModuleContext(context, priority)
+    Transmissions:registerContext(context)
+    Targets:registerContext(context)
+    Channels:registerContext(context)
+    Transmissions:setContextData(context, "priority", priority)
 
-end
-
-function ChangeVoiceTarget(targetID)
-    PlayerData.CurrentTarget = targetID
-    MumbleSetVoiceTarget(targetID)
-end
-
-function RefreshTargets()
-    local voiceTarget = PlayerData.CurrentTarget
-
-    MumbleClearVoiceTarget(voiceTarget)
-    SetVoiceTargets(voiceTarget)
-    ChangeVoiceTarget(voiceTarget)
+    console.debug("Context %s registered with priority %s", context, priority)
 end
 
 Citizen.CreateThread(function()
@@ -74,6 +68,7 @@ Citizen.CreateThread(function()
     end
 
     RegisterProximityModule()
+    RegisterCallModule()
 
     SetVoiceProximity(PlayerData.CurrentProximity)
 end)

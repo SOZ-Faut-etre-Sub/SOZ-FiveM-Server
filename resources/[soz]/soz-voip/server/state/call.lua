@@ -1,0 +1,75 @@
+--- @class CallStateManager
+CallStateManager = {}
+local CallList = {}
+
+function CallStateManager:new()
+    self.__index = self
+    return setmetatable({}, self)
+end
+
+function CallStateManager:getConsumersByCallId(callId)
+    return CallList[callId] or {}
+end
+
+function CallStateManager:getCallByPhoneNumber(phoneNumber)
+    for callId, consumers in pairs(CallList) do
+        if consumers.emitterPhone == phoneNumber or consumers.receiverPhone then
+            return CallList[callId]
+        end
+    end
+    return nil
+end
+
+function CallStateManager:createCall(emitter, receiver)
+    local source = QBCore.Functions.GetPlayer(emitter)
+    local target = QBCore.Functions.GetPlayer(receiver)
+    local callId = nil
+
+    if source == target then
+        console.debug("[CallStateManager:createCall] Cannot create call with self")
+        return
+    end
+
+    if source == nil or target == nil then
+        console.debug("[CallStateManager:createCall] Player not found")
+        return
+    end
+
+    repeat
+        callId = QBCore.Shared.UuidV4()
+    until not CallList[callId]
+
+    CallList[callId] = {
+        callId = callId,
+        callerId = source.PlayerData.source,
+        callerPhone = source.PlayerData.charinfo.phone,
+        receiverId = target.PlayerData.source,
+        receiverPhone = target.PlayerData.charinfo.phone,
+    }
+
+    local call = CallList[callId]
+    TriggerClientEvent('voip:client:call:start', call.callerId, call.receiverId, callId)
+    TriggerClientEvent('voip:client:call:start', call.receiverId, call.callerId, callId)
+
+    TriggerEvent("monitor:server:event", "voip_call", {player_source = source.PlayerData.source, call_type = "emitter"}, call)
+    TriggerEvent("monitor:server:event", "voip_call", {player_source = target.PlayerData.source, call_type = "receiver"}, call)
+
+    console.debug("CallStateManager:createCall between %s and %s", call.callerPhone, call.receiverPhone)
+end
+
+function CallStateManager:destroyCall(callId)
+    local call = CallList[callId]
+
+    if call == nil then
+        return
+    end
+
+    TriggerClientEvent('voip:client:call:end', call.callerId, call.receiverId, callId)
+    TriggerClientEvent('voip:client:call:end', call.receiverId, call.callerId, callId)
+
+    TriggerEvent("monitor:server:event", "voip_call", {player_source = call.callerId, type = "ended"}, CallList[callId])
+    TriggerEvent("monitor:server:event", "voip_call", {player_source = call.receiverId, type = "ended"}, CallList[callId])
+
+    CallList[callId] = nil
+    console.debug("CallStateManager:destroyCall %s", callId)
+end

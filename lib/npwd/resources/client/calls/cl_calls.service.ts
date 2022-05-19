@@ -61,13 +61,13 @@ export class CallService {
 
   handleCallAccepted(callData: ActiveCall) {
     this.currentCall = callData.channelId;
-    exp['soz-voip'].setCallChannel(callData.channelId);
+    emitNet("voip:server:call:start", callData.channelId);
     CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALLER, callData);
   }
 
   handleEndCall() {
     this.currentCall = 0;
-    exp['soz-voip'].setCallChannel(0);
+    emitNet("voip:server:call:end");
     this.openCallModal(false);
 
     CallService.sendCallAction<null>(CallEvents.SET_CALLER, null);
