@@ -476,17 +476,4 @@ CreateThread(function()
         },
         distance = 3,
     })
-    exports["qb-target"]:AddTargetModel(-669511193, {
-        options = {
-            {
-                type = "client",
-                icon = "fa-solid fa-ban",
-                label = "Supprimer",
-                action = function(entity)
-                    DeleteEntity(entity)
-                end,
-            },
-        },
-        distance = 2.5,
-    })
 end)
