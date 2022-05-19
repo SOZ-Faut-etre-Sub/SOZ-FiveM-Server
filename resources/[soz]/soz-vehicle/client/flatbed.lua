@@ -205,7 +205,7 @@ RegisterNetEvent("soz-flatbed:client:actionattach", function(BedInfo)
 
     if DoesEntityExist(ClosestVehicle) and ClosestVehicle ~= LastVehicle then
         local VehicleCoords = GetEntityCoords(ClosestVehicle)
-        AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true, false, 
+        AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true, false,
                              false, false, nil, true)
 
         TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached", NetworkGetNetworkIdFromEntity(ClosestVehicle))
@@ -323,7 +323,7 @@ local function ChainesFlatbed(entity)
         if LastStatus then
             Busy = true
             if LastAttach then
-                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "detach", 
+                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "detach",
                                    GetPlayerServerId(NetworkGetEntityOwner(entity)))
             else
                 TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "attach",
