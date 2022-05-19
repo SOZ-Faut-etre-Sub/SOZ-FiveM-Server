@@ -98,6 +98,7 @@ function TattooShop:GenerateMenu(skipIntro)
         shopMenu:AddButton({label = category.label, value = Config.TattooCategories[categoryId].menu})
     end
 
+    TriggerScreenblurFadeIn(50)
     for _, tattoo in pairs(self:getShopProducts()) do
         local overlayField = gender == 0 and "HashNameMale" or "HashNameFemale"
 
@@ -113,8 +114,12 @@ function TattooShop:GenerateMenu(skipIntro)
                     end
                 end,
             })
+
+            QBCore.Functions.DrawText(0.4, 0.9, 0.0, 0.0, 0.8, 255, 255, 255, 255, "Chargement en cours...")
+            Citizen.Wait(0)
         end
     end
+    TriggerScreenblurFadeOut(50)
 
     shopMenu:On("close", function(m)
         self:OnMenuClose()
