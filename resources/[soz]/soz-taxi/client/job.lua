@@ -131,6 +131,12 @@ CreateThread(function()
         Wait(2000)
         calculateFareAmount()
         lastLocation = GetEntityCoords(PlayerPedId())
+
+        -- horodateur
+
+        if not ValidVehicle() then
+            TriggerEvent("taxi:client:toggleHorodateur")
+        end
     end
 end)
 
