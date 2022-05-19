@@ -60,7 +60,7 @@ RegisterNetEvent("ems:server:buy", function(itemID)
     end
 end)
 
-QBCore.Functions.CreateCallback("lsmc:server:IsDead", function(id, cb)
+QBCore.Functions.CreateCallback("lsmc:server:IsDead", function(source, cb, id)
     local Player = QBCore.Functions.GetPlayer(id)
     local isdead = Player.PlayerData.metadata["isdead"]
     cb(isdead)
