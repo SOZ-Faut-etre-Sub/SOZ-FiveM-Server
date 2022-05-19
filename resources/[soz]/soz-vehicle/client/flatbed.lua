@@ -159,7 +159,6 @@ RegisterNetEvent("soz-flatbed:client:actionraise", function(BedInfo)
     local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
     local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
 
-   
     local BedPos = VehicleInfo.Active.Pos
     local BedRot = VehicleInfo.Active.Rot
 
@@ -206,11 +205,10 @@ RegisterNetEvent("soz-flatbed:client:actionattach", function(BedInfo)
 
     if DoesEntityExist(ClosestVehicle) and ClosestVehicle ~= LastVehicle then
         local VehicleCoords = GetEntityCoords(ClosestVehicle)
-        AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true,
-                             false, false, false, nil, true)
+        AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true, false, 
+                             false, false, nil, true)
 
-        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached",
-                           NetworkGetNetworkIdFromEntity(ClosestVehicle))
+        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached", NetworkGetNetworkIdFromEntity(ClosestVehicle))
     end
 end)
 
@@ -325,9 +323,11 @@ local function ChainesFlatbed(entity)
         if LastStatus then
             Busy = true
             if LastAttach then
-                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "detach", GetPlayerServerId(NetworkGetEntityOwner(entity)))
+                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "detach", 
+                                   GetPlayerServerId(NetworkGetEntityOwner(entity)))
             else
-                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "attach", GetPlayerServerId(NetworkGetEntityOwner(entity)))
+                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "attach",
+                                   GetPlayerServerId(NetworkGetEntityOwner(entity)))
             end
         end
     end
