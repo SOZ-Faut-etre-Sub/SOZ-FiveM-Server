@@ -72,6 +72,10 @@ vehicleModel:On("open", function(m)
     end
 end)
 
+vehicleModel:On("close", function()
+    vehicleModel:ClearItems()
+end)
+
 vehicleChoose:On("open", function(m)
     m:ClearItems()
     local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(selectedModel))
@@ -93,6 +97,10 @@ vehicleChoose:On("open", function(m)
             TakeOutGarage(selectedModel)
         end,
     })
+end)
+
+vehicleChoose:On("close", function()
+    vehicleChoose:ClearItems()
 end)
 
 for _, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
