@@ -273,8 +273,9 @@ Citizen.CreateThread(function()
                 for Index, CurrentFlatbed in pairs(Config.Flatbeds) do
                     if VehicleModel == GetHashKey(CurrentFlatbed.Hash) then
                         LastVehicle = PlayerVehicle
-
-                        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(PlayerVehicle))
+                        if NetworkGetEntityOwner(PlayerVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+                            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(PlayerVehicle))
+                        end
                         break
                     end
                 end
@@ -354,7 +355,6 @@ end)
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
-            --[[
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
@@ -427,7 +427,6 @@ CreateThread(function()
                     return LastAttach
                 end,
             },
-            --]]
             {
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
