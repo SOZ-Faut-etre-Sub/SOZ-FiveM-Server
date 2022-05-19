@@ -149,7 +149,6 @@ RegisterNetEvent("soz-concessentreprise:client:buyShowroomVehicle", function(veh
         SetFuel(veh, 100)
         SetVehicleLivery(veh, liverytype.liverytype)
         SetVehicleNumberPlateText(veh, plate)
-        SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
     end, newlocation, true)
