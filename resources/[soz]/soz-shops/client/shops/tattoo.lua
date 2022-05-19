@@ -58,6 +58,19 @@ function TattooShop:GenerateMenu(skipIntro)
 
     self:PreGenerateMenu(skipIntro)
 
+    shopMenu:AddButton({
+        icon = "⚠️",
+        label = "Se faire retirer les tatouages",
+        description = "Suite a une encres de mauvaise qualité vous pouvez retirer tous vos tatouages.",
+        value = nil,
+        select = function(item)
+            local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+            if validation == "oui" then
+                TriggerServerEvent("shops:server:resetTattoos")
+            end
+        end,
+    })
+
     for categoryId, category in pairs(Config.TattooCategories) do
         if MenuV:IsNamespaceAvailable("tattoo:cat:" .. categoryId) then
             Config.TattooCategories[categoryId].menu = MenuV:InheritMenu(shopMenu, {Subtitle = category.label}, "tattoo:cat:" .. categoryId)

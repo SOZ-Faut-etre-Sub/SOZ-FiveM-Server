@@ -112,3 +112,15 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
         end
     end
 end)
+
+RegisterNetEvent("shops:server:resetTattoos", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    if Player then
+        local skin = Player.PlayerData.skin
+        skin.Tattoos = {}
+
+        Player.Functions.SetSkin(skin, false)
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de vous faire retirer tous vos tatouages")
+    end
+end)
