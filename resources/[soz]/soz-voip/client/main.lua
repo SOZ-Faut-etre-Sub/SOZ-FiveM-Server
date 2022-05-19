@@ -36,13 +36,16 @@ AddEventHandler("onClientResourceStart", function(resource)
     TriggerEvent("hud:client:UpdateVoiceMode", CurrentPlayer.VoiceMode - 1)
 
     local state = LocalPlayer.state
-    if state["radio-sr"].primaryChannel ~= 0 then
+
+    if state["radio-sr"] ~= nil and state["radio-sr"].primaryChannel ~= 0 then
         TriggerServerEvent("voip:server:setPlayerInChannel", "radio-sr", state["radio-sr"].primaryChannel, true)
     end
-    if state["radio-sr"].secondaryChannel ~= 0 then
+
+    if state["radio-sr"] ~= nil and state["radio-sr"].secondaryChannel ~= 0 then
         TriggerServerEvent("voip:server:setPlayerInChannel", "radio-sr", state["radio-sr"].secondaryChannel, false)
     end
-    if state.call.channel ~= nil then
+
+    if state.call ~= nil and state.call.channel ~= nil then
         TriggerServerEvent("voip:server:setPlayerInChannel", "call", state.call.channel, false)
     end
 end)
