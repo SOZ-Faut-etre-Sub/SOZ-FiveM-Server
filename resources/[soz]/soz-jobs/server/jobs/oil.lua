@@ -148,6 +148,21 @@ RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
     end
 end)
 
+QBCore.Functions.CreateCallback("jobs:server:fueler:ensureInventory", function(source, cb, tankerId, model, class)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+    local inventory = exports["soz-inventory"]:GetOrCreateInventory("tanker", tankerPlate, {
+        model = model,
+        class = class,
+    })
+
+    if inventory ~= nil then
+        cb(true)
+    else
+        cb(false)
+    end
+end)
+
 --- Callback
 QBCore.Functions.CreateCallback("jobs:server:fueler:canRefill", function(source, cb, tankerId)
     local tanker = NetworkGetEntityFromNetworkId(tankerId)
