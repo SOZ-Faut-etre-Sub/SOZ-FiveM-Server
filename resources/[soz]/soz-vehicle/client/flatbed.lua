@@ -106,7 +106,9 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action, owner)
             exports["soz-hud"]:DrawNotification("Vous avez détaché le véhicule !")
         end
     else
-        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(LastVehicle))
+        if NetworkGetEntityOwner(LastVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(LastVehicle))
+        end
     end
 
     Busy = false
@@ -248,7 +250,9 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
             exports["soz-hud"]:DrawNotification("Vous avez enlevé le véhicule du plateau !")
         end
     else
-        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
+        if NetworkGetEntityOwner(entity) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
+        end
     end
 
     Busy = false
