@@ -35,6 +35,8 @@ Citizen.CreateThread(function()
                 if type(seatIndex) == "number" then
                     useSeat = GetPedInVehicleSeat(vehicle, seatIndex) == 0
                 else
+                    availableSeatIndex = max
+
                     for _, index in pairs(seatIndex) do
                         if not useSeat and GetPedInVehicleSeat(vehicle, index) == 0 then
                             useSeat = true
