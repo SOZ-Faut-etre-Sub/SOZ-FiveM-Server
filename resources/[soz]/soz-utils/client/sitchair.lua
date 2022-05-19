@@ -23,7 +23,8 @@ local sitchair = {
 
 RegisterCommand("unsit", function()
     local player = GetPlayerPed(-1)
-    if sit == true then
+    local distance = #(lastCoord - GetEntityCoords(player))
+    if sit == true and distance <= 2.5 then
         SetPedCoordsKeepVehicle(player, lastCoord)
         sit = false
     end
