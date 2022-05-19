@@ -21,17 +21,15 @@ function CallStateManager:getCallByPhoneNumber(phoneNumber)
 end
 
 function CallStateManager:createCall(emitter, receiver)
-    local source = QBCore.Functions.GetPlayer(emitter)
-    local target = QBCore.Functions.GetPlayer(receiver)
+    local source = QBCore.Functions.GetPlayerByPhone(emitter)
+    local target = QBCore.Functions.GetPlayerByPhone(receiver)
     local callId = nil
 
     if source == target then
-        console.debug("[CallStateManager:createCall] Cannot create call with self")
         return
     end
 
     if source == nil or target == nil then
-        console.debug("[CallStateManager:createCall] Player not found")
         return
     end
 
@@ -55,6 +53,7 @@ function CallStateManager:createCall(emitter, receiver)
     TriggerEvent("monitor:server:event", "voip_call", {player_source = target.PlayerData.source, call_type = "receiver"}, call)
 
     console.debug("CallStateManager:createCall between %s and %s", call.callerPhone, call.receiverPhone)
+    return callId
 end
 
 function CallStateManager:destroyCall(callId)

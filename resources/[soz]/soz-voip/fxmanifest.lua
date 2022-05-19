@@ -10,10 +10,11 @@ shared_scripts {
 
 client_scripts {
     "client/main.lua",
+    "client/transmission.lua",
     "client/targets.lua",
     "client/channels.lua",
-    "client/transmission.lua",
     "client/modules/*.lua",
+    "client/blockscreen.lua",
 }
 
 server_scripts {

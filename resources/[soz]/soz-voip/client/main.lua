@@ -64,7 +64,7 @@ end
 Citizen.CreateThread(function()
     for id, _ in pairs(Config.voiceTargets) do
         MumbleClearVoiceTarget(id)
-        console.debug("Cleared voice target " .. id)
+        console.debug("Cleared voice target %s", id)
     end
 
     RegisterProximityModule()

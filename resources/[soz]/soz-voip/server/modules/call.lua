@@ -1,11 +1,10 @@
 local CallState = CallStateManager:new()
 
-RegisterNetEvent("voip:server:call:start", function(target)
-    local player = QBCore.Functions.GetPlayer(target)
-    local call = CallState:getCallByPhoneNumber(player.PlayerData.charinfo.phone)
+RegisterNetEvent("voip:server:call:start", function(caller, receiver)
+    local call = CallState:getCallByPhoneNumber(receiver)
 
     if call == nil then
-        CallState:createCall(target, source)
+        CallState:createCall(caller, receiver)
     end
 end)
 
