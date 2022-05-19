@@ -98,6 +98,10 @@ VehiculeChoose:On("open", function(menu)
     })
 end)
 
+VehiculeChoose:On("close", function()
+    VehiculeChoose:ClearItems()
+end)
+
 VehiculeModel:On("open", function(menu)
     local RpcCategorie = VehicleCategorie[1]
     local RPCVehiclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
@@ -169,6 +173,10 @@ VehiculeModel:On("open", function(menu)
     end
 end)
 
+VehiculeModel:On("close", function()
+    VehiculeModel:ClearItems()
+end)
+
 VehiculeList:On("open", function(menu)
     menu:ClearItems()
     menu:AddTitle({label = "Catégories"})
@@ -182,6 +190,10 @@ VehiculeList:On("open", function(menu)
             end,
         })
     end
+end)
+
+VehiculeList:On("close", function()
+    VehiculeList:ClearItems()
 end)
 
 RegisterNetEvent("soz-concess:client:createcam", function()
