@@ -277,25 +277,38 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
                 end
             end
         end
+
         if placedispo == 0 then
             exports["soz-hud"]:DrawNotification("Déjà une voiture sur un des parking", "primary", 4500)
-        else
-            local newlocation = vec4(location.x, location.y, location.z, heading)
-            QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                local properties = QBCore.Functions.TriggerRpc("qb-garage:server:GetVehicleProperties", vehicle.plate)
-                if vehicle.plate then
-                    OutsideVehicles[vehicle.plate] = veh
-                end
-                QBCore.Functions.SetVehicleProperties(veh, properties)
-                SetVehicleNumberPlateText(veh, vehicle.plate)
-                SetFuel(veh, currentFuel + 0.0)
-                TriggerServerEvent("qb-garage:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
-                TriggerServerEvent("qb-garage:server:updateVehicleCitizen", vehicle.plate)
-                TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-                SetVehicleEngineOn(veh, true, true)
-            end, newlocation, true)
-            exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
+
+            return
         end
+
+        local canTakeOutVehicle = QBCore.Functions.TriggerRpc("qb-garage:server:CanTakeOutVehicle", vehicle.plate)
+
+        if not canTakeOutVehicle then
+            exports["soz-hud"]:DrawNotification("Le véhicule a déjà été sorti.", "error", 4500)
+
+            return
+        end
+
+        local newlocation = vec4(location.x, location.y, location.z, heading)
+
+        QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+            local properties = QBCore.Functions.TriggerRpc("qb-garage:server:GetVehicleProperties", vehicle.plate)
+            if vehicle.plate then
+                OutsideVehicles[vehicle.plate] = veh
+            end
+            QBCore.Functions.SetVehicleProperties(veh, properties)
+            SetVehicleNumberPlateText(veh, vehicle.plate)
+            SetFuel(veh, currentFuel + 0.0)
+            TriggerServerEvent("qb-garage:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
+            TriggerServerEvent("qb-garage:server:updateVehicleCitizen", vehicle.plate)
+            TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
+            SetVehicleEngineOn(veh, true, true)
+        end, newlocation, true)
+
+        exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
     end
 end)
 
