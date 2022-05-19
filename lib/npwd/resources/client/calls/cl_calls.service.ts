@@ -61,7 +61,7 @@ export class CallService {
 
   handleCallAccepted(callData: ActiveCall) {
     this.currentCall = callData.channelId;
-    emitNet("voip:server:call:start", callData.channelId);
+    emitNet("voip:server:call:start", callData.transmitter, callData.receiver);
     CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALLER, callData);
   }
 
