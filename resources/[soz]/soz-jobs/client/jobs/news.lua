@@ -16,9 +16,25 @@ CreateThread(function()
         distance = 1.5,
     })
 
-    exports["qb-target"]:AddBoxZone("news:duty", vector3(-587.75, -934.67, 23.82), 0.4, 0.8,
-                                    {name = "news:cloakroom", heading = 32, minZ = 23.72, maxZ = 24.32},
-                                    {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
+    exports["qb-target"]:AddBoxZone("news:duty", vector3(-587.75, -934.67, 23.82), 0.4, 0.8, {
+        name = "news:duty",
+        heading = 32,
+        minZ = 23.72,
+        maxZ = 24.32,
+    }, {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("news:cloakroom", vector3(-568.22, -935.54, 33.76), 0.65, 3.75,
+                                    {name = "news:cloakroom", heading = 90, minZ = 32.76, maxZ = 35.76}, {
+        options = {
+            {
+                label = "S'habiller",
+                icon = "c:jobs/habiller.png",
+                event = "jobs:client:news:OpenCloakroomMenu",
+                job = "news",
+            },
+        },
+        distance = 2.5,
+    })
 
     exports["qb-target"]:AddTargetModel(removalObject, {
         options = {
@@ -59,6 +75,40 @@ CreateThread(function()
 end)
 
 --- Events
+RegisterNetEvent("jobs:client:news:OpenCloakroomMenu", function()
+    societyMenu:ClearItems()
+
+    societyMenu:AddButton({
+        label = "Tenue civile",
+        value = nil,
+        select = function()
+            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+                disableMovement = true,
+                disableCombat = true,
+            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            end)
+        end,
+    })
+
+    for name, skin in pairs(NewsConfig.Cloakroom[PlayerData.skin.Model.Hash]) do
+        societyMenu:AddButton({
+            label = name,
+            value = nil,
+            select = function()
+                QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+                    disableMovement = true,
+                    disableCombat = true,
+                }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                end)
+            end,
+        })
+    end
+
+    societyMenu:Open()
+end)
+
 RegisterNetEvent("jobs:client:news:SellNewspaper", function()
     if QBCore.Functions.GetBlip("jobs:news:sell") ~= false then
         return
