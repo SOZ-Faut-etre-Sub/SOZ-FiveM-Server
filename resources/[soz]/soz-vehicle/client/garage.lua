@@ -10,6 +10,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
+                state = 1,
             },
             ["private"] = {
                 type = "private",
@@ -17,6 +18,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
+                state = 1,
             },
             ["depot"] = {
                 type = "depot",
@@ -24,6 +26,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {},
+                state = 2,
             },
             ["entreprise"] = {
                 type = "entreprise",
@@ -31,6 +34,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 16},
+                state = 3,
             },
         }
 
@@ -42,8 +46,8 @@ AddEventHandler('onClientResourceStart', function(resourceName)
 end)
 
 local function GetGarageType(type_)
-    if GarageTypes[types_] and type(GarageTypes[types_]) == "table" then
-        return GarageTypes[types_]
+    if GarageTypes[type_] and type(GarageTypes[type_]) == "table" then
+        return GarageTypes[type_]
     end
     error(string.format("Invalid GarageType: %s", type_))
 end
@@ -66,158 +70,75 @@ local function round(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end
 
-local function SortirMenu(type, garage, indexgarage)
-    if type == "public" then
-        GarageTypes.public.submenu:ClearItems()
-        MenuV:OpenMenu(GarageTypes.public.submenu)
+local function GenerateVehicleList(result, garage, indexgarage, garageType, time)
+    if result == nil then
+        exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
+        return
+    end
 
-        GarageTypes.public.submenu:AddButton({
+    for _, v in pairs(result) do
+        local enginePercent = round(v.engine / 10, 0)
+        local bodyPercent = round(v.body / 10, 0)
+        local currentFuel = v.fuel
+        local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
+
+        local price
+        if garageType.type == "private" then
+            local timediff = math.floor((time - v.parkingtime) / 3600)
+            price = timediff * 100
+            if price > 1000 then
+                price = 1000
+            end
+        end
+
+        if v.state == garageType.state then
+            garageType.submenu:AddButton({
+                label = Lang:t(string.format("menu.header.%s", garageType.type), {value = vname, value2 = v.plate, value3 = price}),
+                description = Lang:t("menu.text.garage", {
+                    value = currentFuel,
+                    value2 = enginePercent,
+                    value3 = bodyPercent,
+                }),
+                select = function()
+                    garageType.submenu:Close()
+                    if garageType.type == "depot" then
+                        TriggerServerEvent("qb-garage:server:PayDepotPrice", v, garageType.type, garage, indexgarage)
+                    elseif garageType.type == "entreprise" then
+                        TriggerEvent("qb-garages:client:TakeOutPrive", v, garageType.type, garage, indexgarage, price)
+                    else
+                        TriggerEvent("qb-garages:client:takeOutGarage", v, garageType.type, garage, indexgarage)
+                    end
+                end,
+            })
+        end
+    end
+end
+
+local function SortirMenu(type_, garage, indexgarage)
+    local garageType = GetGarageType(type_)
+
+    garageType.submenu:ClearItems()
+
+    if type_ ~= "depot" then
+        garageType.submenu:AddButton({
             icon = "◀",
             label = "Retour au menu",
-            value = GarageTypes.public.menu,
+            value = garageType.menu,
             select = function()
-                GarageTypes.public.submenu:Close()
+                garageType.submenu:Close()
             end,
         })
+    end
+    garageType.submenu:Open()
 
-        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
-            if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
-            else
-                for k, v in pairs(result) do
-                    local enginePercent = round(v.engine / 10, 0)
-                    local bodyPercent = round(v.body / 10, 0)
-                    local currentFuel = v.fuel
-                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    if v.state == 1 then
-                        GarageTypes.public.submenu:AddButton({
-                            label = Lang:t("menu.header.public", {value = vname, value2 = v.plate}),
-                            description = Lang:t("menu.text.garage", {
-                                value = currentFuel,
-                                value2 = enginePercent,
-                                value3 = bodyPercent,
-                            }),
-                            select = function()
-                                GarageTypes.public.submenu:Close()
-                                TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
-                            end,
-                        })
-                    end
-                end
-            end
-        end, indexgarage, type, garage.vehicle)
-    elseif type == "private" then
-        GarageTypes.private.submenu:ClearItems()
-        MenuV:OpenMenu(GarageTypes.private.submenu)
-
-        GarageTypes.private.submenu:AddButton({
-            icon = "◀",
-            label = "Retour au menu",
-            value = GarageTypes.private.menu,
-            select = function()
-                GarageTypes.private.submenu:Close()
-            end,
-        })
-        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
-            if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
-            else
-                for k, v in pairs(result) do
-                    local enginePercent = round(v.engine / 10, 0)
-                    local bodyPercent = round(v.body / 10, 0)
-                    local currentFuel = v.fuel
-                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    local timediff = math.floor((time - v.parkingtime) / 3600)
-                    local price = timediff * 100
-                    if price > 1000 then
-                        price = 1000
-                    end
-                    if v.state == 1 then
-                        GarageTypes.private.submenu:AddButton({
-                            label = Lang:t("menu.header.private", {value = vname, value2 = v.plate, value3 = price}),
-                            description = Lang:t("menu.text.garage", {
-                                value = currentFuel,
-                                value2 = enginePercent,
-                                value3 = bodyPercent,
-                            }),
-                            select = function()
-                                GarageTypes.private.submenu:Close()
-                                TriggerEvent("qb-garages:client:TakeOutPrive", v, type, garage, indexgarage, price)
-                            end,
-                        })
-                    end
-                end
-            end
-        end, indexgarage, type, garage.vehicle)
-    elseif type == "depot" then
-        GarageTypes.depot.submenu:ClearItems()
-        MenuV:OpenMenu(GarageTypes.depot.submenu)
-
-        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
-            if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
-            else
-                for k, v in pairs(result) do
-                    local enginePercent = round(v.engine / 10, 0)
-                    local bodyPercent = round(v.body / 10, 0)
-                    local currentFuel = v.fuel
-                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    if v.state == 2 then
-                        GarageTypes.depot.submenu:AddButton({
-                            label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
-                            description = Lang:t("menu.text.depot", {
-                                value = currentFuel,
-                                value2 = enginePercent,
-                                value3 = bodyPercent,
-                            }),
-                            select = function()
-                                GarageTypes.depot.submenu:Close()
-                                TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
-                            end,
-                        })
-                    end
-                end
-            end
-        end, indexgarage, type, garage.vehicle)
-    elseif type == "entreprise" then
-        GarageTypes.entreprise.submenu:ClearItems()
-        MenuV:OpenMenu(GarageTypes.entreprise.submenu)
-
-        GarageTypes.entreprise.submenu:AddButton({
-            icon = "◀",
-            label = "Retour au menu",
-            value = GarageTypes.entreprise.menu,
-            select = function()
-                GarageTypes.entreprise.submenu:Close()
-            end,
-        })
+    if type_ == "entreprise" then
         QBCore.Functions.TriggerCallback("qb-garage:server:GetPlayerEntreprise", function(result)
-            if result == nil then
-                exports["soz-hud"]:DrawNotification(Lang:t("error.no_vehicles"), "error")
-            else
-                for k, v in pairs(result) do
-                    local enginePercent = round(v.engine / 10, 0)
-                    local bodyPercent = round(v.body / 10, 0)
-                    local currentFuel = v.fuel
-                    local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-
-                    if v.state == 3 then
-                        GarageTypes.entreprise.submenu:AddButton({
-                            label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate}),
-                            description = Lang:t("menu.text.garage", {
-                                value = currentFuel,
-                                value2 = enginePercent,
-                                value3 = bodyPercent,
-                            }),
-                            select = function()
-                                GarageTypes.entreprise.submenu:Close()
-                                TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
-                            end,
-                        })
-                    end
-                end
-            end
+            GenerateVehicleList(result, garage, indexgarage, garageType)
         end, PlayerJob.id)
+    else
+        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
+            GenerateVehicleList(result, garage, indexgarage, garageType, time)
+        end, indexgarage, type_, garage.vehicle)
     end
 end
 
@@ -532,7 +453,7 @@ local function ParkingPanel(menu, type_, garage, indexgarage)
 end
 
 local function GenerateMenu(type_, garage, indexgarage)
-    local garageType = GetGarageType(type)
+    local garageType = GetGarageType(type_)
     if not garageType.menu then
         return
     end
