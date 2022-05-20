@@ -120,6 +120,7 @@ RegisterNetEvent("lsmc:client:ifaks")
 AddEventHandler("lsmc:client:ifaks", function()
     local player = PlayerPedId()
     SetEntityHealth(player, GetEntityHealth(player) + 25)
+    TriggerEvent("personal:client:ApplyWalkStyle")
 end)
 
 RegisterNetEvent("lsmc:client:heal")
@@ -130,4 +131,5 @@ AddEventHandler("lsmc:client:heal", function(disease)
         TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", false)
         exports["soz-hud"]:DrawNotification("Vous êtes guéri!")
     end
+    TriggerEvent("personal:client:ApplyWalkStyle")
 end)
