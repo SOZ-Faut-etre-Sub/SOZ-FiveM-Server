@@ -41,6 +41,13 @@ AddEventHandler('onClientResourceStart', function(resourceName)
     end
 end)
 
+local function GetGarageType(type_)
+    if GarageTypes[types_] and type(GarageTypes[types_]) == "table" then
+        return GarageTypes[types_]
+    end
+    error(string.format("Invalid GarageType: %s", type_))
+end
+
 local function EjectAnyPassager(vehicle)
     for i = -1, 5, 1 do
         local seat = GetPedInVehicleSeat(vehicle, i)
@@ -381,9 +388,9 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     end
 
     local vehClass = GetVehicleClass(veh)
-    local garageType = GarageTypes[type_]
-    if garageType and type(garageType.excludeVehClass) == "table" then
-        for class in garageType.excludeVehClass do
+    local garageType = GetGarageType(type_)
+    if type(garageType.excludeVehClass) == "table" then
+        for _, class in ipairs(garageType.excludeVehClass) do
             if class == vehClass then
                 exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
                 return false
@@ -460,10 +467,7 @@ RegisterNetEvent("qb-garages:client:TakeOutPrive", function(v, type, garage, ind
 end)
 
 local function ParkingPanel(menu, type_, garage, indexgarage)
-    local garageType = GarageTypes[type_]
-    if not garageType then
-        return
-    end
+    local garageType = GetGarageType(type_)
 
     -- Menu
     if type_ == "private" then
@@ -528,8 +532,8 @@ local function ParkingPanel(menu, type_, garage, indexgarage)
 end
 
 local function GenerateMenu(type_, garage, indexgarage)
-    local garageType = GarageTypes[type_]
-    if not garageType or not garageType.menu then
+    local garageType = GetGarageType(type)
+    if not garageType.menu then
         return
     end
 
