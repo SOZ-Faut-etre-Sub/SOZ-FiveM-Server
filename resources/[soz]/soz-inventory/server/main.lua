@@ -661,6 +661,16 @@ RegisterNetEvent("inventory:DropPlayerInventory", function(playerID --[[PlayerDa
 end)
 
 --- Loops
+local function purgeBinLoop()
+    for _, inv in pairs(Inventories) do
+        if inv.datastore and inv.type == "bin" then
+            Inventory.Remove(inv)
+        end
+    end
+
+    SetTimeout(2 * 60 * 60 * 1000, purgeBinLoop)
+end
+
 local function saveInventories(loop)
     for _, inv in pairs(Inventories) do
         if not inv.datastore and inv.changed then
@@ -676,6 +686,7 @@ local function saveInventories(loop)
 end
 
 saveInventories(true)
+purgeBinLoop()
 
 -- Events
 AddEventHandler("onResourceStart", function(resource)
