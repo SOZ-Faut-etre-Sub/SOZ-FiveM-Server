@@ -85,11 +85,13 @@ function CheckJobPermission(targetJobId, jobId, gradeId, permission)
         return true
     end
 
-    permissions = grade.permissions
+    local permissions = grade.permissions
 
-    for _, v in pairs(permissions) do
-        if v == permission then
-            return true
+    if permissions ~= nil then
+        for _, v in pairs(permissions) do
+            if v == permission then
+                return true
+            end
         end
     end
 
