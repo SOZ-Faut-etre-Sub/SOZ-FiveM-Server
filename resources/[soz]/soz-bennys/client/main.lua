@@ -78,19 +78,15 @@ end
 RegisterNetEvent("soz-bennys:client:RepaireeePart", function(part)
     local veh = Config.AttachedVehicle
     local plate = QBCore.Functions.GetPlate(veh)
-    NetworkRequestControlOfEntity(veh)
-    while not NetworkHasControlOfEntity(veh) do
-        Wait(0)
-    end
+    local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(veh))
+
     if part == "engine" then
-        SetVehicleEngineHealth(veh, Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-bennys:server:EngineRepair", VehToNet(veh), serverIDcar, Config.MaxStatusValues[part])
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", Config.MaxStatusValues[part])
     elseif part == "body" then
         local enhealth = GetVehicleEngineHealth(veh)
-        SetVehicleBodyHealth(veh, Config.MaxStatusValues[part])
+        TriggerServerEvent("soz-bennys:server:BodyRepair", VehToNet(veh), serverIDcar, Config.MaxStatusValues[part], enhealth)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", Config.MaxStatusValues[part])
-        SetVehicleFixed(veh)
-        SetVehicleEngineHealth(veh, enhealth)
     else
         TriggerServerEvent("soz-bennys:server:updatePart", plate, part, Config.MaxStatusValues[part])
     end
@@ -431,6 +427,33 @@ RegisterNetEvent("soz-bennys:client:SetAttachedVehicle", function(veh)
     end
 end)
 
+RegisterNetEvent("soz-bennys:client:Repair", function(net)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetVehicleBodyHealth(veh, 1000.0)
+    SetVehicleFixed(veh)
+    SetVehicleEngineHealth(veh, 1000.0)
+end)
+
+RegisterNetEvent("soz-bennys:client:Clean", function(net)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetVehicleDirtLevel(veh, 0.1)
+    SetVehicleUndriveable(veh, false)
+    WashDecalsFromVehicle(veh, 1.0)
+end)
+
+RegisterNetEvent("soz-bennys:client:EngineRepair", function(net, partstatus)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetVehicleEngineHealth(veh, partstatus)
+end)
+
+RegisterNetEvent("soz-bennys:client:BodyRepair", function(net, partstatus, enhealth)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetVehicleBodyHealth(veh, partstatus)
+    SetVehicleFixed(veh)
+    SetVehicleEngineHealth(veh, enhealth)
+
+end)
+
 local function Repairall(entity)
     local engineHealth = GetVehicleEngineHealth(entity)
     local bodyHealth = GetVehicleBodyHealth(entity)
@@ -449,16 +472,10 @@ local function Repairall(entity)
     }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
         ClearPedTasks(PlayerPedId())
         local plate = QBCore.Functions.GetPlate(entity)
-        NetworkRequestControlOfEntity(entity)
-        while not NetworkHasControlOfEntity(entity) do
-            Wait(0)
-        end
-        SetVehicleBodyHealth(entity, 1000.0)
-        SetVehicleFixed(entity)
-        SetVehicleEngineHealth(entity, 1000.0)
+        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
+        TriggerServerEvent("soz-bennys:server:Repair", VehToNet(entity), serverIDcar)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", 1000.0)
         TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", 1000.0)
-
         TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle", {}, {
             vehicle_plate = plate,
             vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
@@ -483,14 +500,8 @@ local function CleanVehicle(entity)
         ClearAllPedProps(PlayerPedId())
         ClearPedTasks(PlayerPedId())
         ClearPedTasksImmediately(PlayerPedId())
-        NetworkRequestControlOfEntity(entity)
-        while not NetworkHasControlOfEntity(entity) do
-            Wait(0)
-        end
-        SetVehicleDirtLevel(entity, 0.1)
-        SetVehicleUndriveable(entity, false)
-        WashDecalsFromVehicle(entity, 1.0)
-
+        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
+        TriggerServerEvent("soz-bennys:server:Clean", VehToNet(entity), serverIDcar)
         TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
             vehicle_plate = QBCore.Functions.GetPlate(entity),
             vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
