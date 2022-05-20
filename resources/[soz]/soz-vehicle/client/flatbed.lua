@@ -359,6 +359,7 @@ end)
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
+            --[[
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
@@ -431,6 +432,7 @@ CreateThread(function()
                     return LastAttach
                 end,
             },
+            --]]
             {
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
@@ -471,6 +473,19 @@ CreateThread(function()
                         return false
                     end
                     return true
+                end,
+            },
+        },
+        distance = 3,
+    })
+    exports["qb-target"]:AddTargetModel(-669511193, {
+        options = {
+            {
+                type = "client",
+                icon = "fa-solid fa-ban",
+                label = "Supprimer",
+                action = function(entity)
+                    DeleteEntity(entity)
                 end,
             },
         },
