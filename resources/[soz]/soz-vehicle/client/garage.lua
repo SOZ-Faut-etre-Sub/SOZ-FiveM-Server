@@ -45,7 +45,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
         GarageTypes.public.submenu = MenuV:InheritMenu(GarageTypes.public.menu, {Title = nil})
         GarageTypes.private.submenu = MenuV:InheritMenu(GarageTypes.private.menu, {Title = nil})
         GarageTypes.depot.submenu = MenuV:InheritMenu(GarageTypes.depot.menu, {Title = nil})
-        GarageTypes.entreprise.submenu = MenuV:InheritMenu(GarageTypes.entreprise.submenu, {Title = nil})
+        GarageTypes.entreprise.submenu = MenuV:InheritMenu(GarageTypes.entreprise.menu, {Title = nil})
     end
 end)
 
@@ -93,6 +93,8 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
             if price > 1000 then
                 price = 1000
             end
+        elseif garageType.type == "depot" then
+            price = v.depotprice
         end
 
         if v.state == garageType.state then
@@ -107,7 +109,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                     garageType.submenu:Close()
                     if garageType.type == "depot" then
                         TriggerServerEvent("qb-garage:server:PayDepotPrice", v, garageType.type, garage, indexgarage)
-                    elseif garageType.type == "entreprise" then
+                    elseif garageType.type == "private" then
                         TriggerEvent("qb-garages:client:TakeOutPrive", v, garageType.type, garage, indexgarage, price)
                     else
                         TriggerEvent("qb-garages:client:takeOutGarage", v, garageType.type, garage, indexgarage)
