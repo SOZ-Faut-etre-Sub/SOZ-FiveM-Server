@@ -9,24 +9,28 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 zones = Zonespublic,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
                 submenu = nil,
+                excludeVehClass = {14, 15, 16},
             },
             ["private"] = {
                 type = "private",
                 zones = Zonesprives,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car"),
                 submenu = nil,
+                excludeVehClass = {14, 15, 16},
             },
             ["depot"] = {
                 type = "depot",
                 zones = Zonesfourriere,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car"),
                 submenu = nil,
+                excludeVehClass = {},
             },
             ["entreprise"] = {
                 type = "entreprise",
                 zones = Zonesentreprise,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car"),
                 submenu = nil,
+                excludeVehClass = {14, 16},
             },
         }
 
@@ -376,6 +380,17 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
         return false
     end
 
+    local vehClass = GetVehicleClass(veh)
+    local garageType = GarageTypes[type_]
+    if garageType and type(garageType.excludeVehClass) == "table" then
+        for class in garageType.excludeVehClass do
+            if class == vehClass then
+                exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
+                return false
+            end
+        end
+    end
+
     if type_ == "entreprise" and owned.job == nil then
         exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprise", "error", 3500)
         return false
@@ -444,71 +459,37 @@ RegisterNetEvent("qb-garages:client:TakeOutPrive", function(v, type, garage, ind
     end
 end)
 
-local function ParkingPanel(menu, type, garage, indexgarage)
-    if type == "public" then
-        menu:AddTitle({label = garage.label})
-        local button = menu:AddButton({label = "Ranger véhicule"})
-        button:On("select", function()
-            local curVeh = GetPlayersLastVehicle()
-            local vehClass = GetVehicleClass(curVeh)
-            if garage.vehicle == "car" or not garage.vehicle then
-                if vehClass ~= 14 and vehClass ~= 15 and vehClass ~= 16 then
-                    GarageTypes.public.menu:Close()
-                    GetVehicleInGarage(curVeh, indexgarage, type)
-                else
-                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
-                end
-            end
-        end)
-        local button2 = menu:AddButton({label = "Sortir véhicule"})
-        button2:On("select", function()
-            GarageTypes.public.menu:Close()
-            SortirMenu(type, garage, indexgarage)
-        end)
-    elseif type == "private" then
+local function ParkingPanel(menu, type_, garage, indexgarage)
+    local garageType = GarageTypes[type_]
+    if not garageType then
+        return
+    end
+
+    -- Menu
+    if type_ == "private" then
         local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
         local placesdispo = 38 - placesstock["COUNT(*)"]
         menu:AddTitle({label = garage.label .. " | Places libre: " .. placesdispo .. " / 38"})
-        local button = menu:AddButton({label = "Ranger véhicule"})
-        button:On("select", function()
-            local curVeh = GetPlayersLastVehicle()
-            local vehClass = GetVehicleClass(curVeh)
-            if garage.vehicle == "car" or not garage.vehicle then
-                if vehClass ~= 14 and vehClass ~= 15 and vehClass ~= 16 then
-                    GarageTypes.private.menu:Close()
-                    GetVehicleInGarage(curVeh, indexgarage, type)
-                else
-                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
+    else
+        menu:AddTitle({label = garage.label})
+    end
+
+    -- Ranger véhicule: public, private, entreprise
+    if type_ ~= "depot" then
+        menu:AddButton({
+            label = "Ranger véhicule",
+            select = function()
+                local curVeh = GetPlayersLastVehicle()
+                if garage.vehicle == "car" or not garage.vehicle then
+                    garageType.menu:Close()
+                    GetVehicleInGarage(curVeh, indexgarage, type_)
                 end
             end
-        end)
-        local button2 = menu:AddButton({label = "Sortir véhicule"})
-        button2:On("select", function()
-            GarageTypes.private.menu:Close()
-            SortirMenu(type, garage, indexgarage)
-        end)
-    elseif type == "depot" then
-        menu:AddTitle({label = garage.label})
-        local button2 = menu:AddButton({label = "Sortir véhicule"})
-        button2:On("select", function()
-            GarageTypes.depot.menu:Close()
-            SortirMenu(type, garage, indexgarage)
-        end)
-    elseif type == "entreprise" then
-        menu:AddTitle({label = garage.label})
-        local button = menu:AddButton({label = "Ranger véhicule"})
-        button:On("select", function()
-            local curVeh = GetPlayersLastVehicle()
-            local vehClass = GetVehicleClass(curVeh)
-            if garage.vehicle == "car" or not garage.vehicle then
-                if vehClass ~= 14 and vehClass ~= 16 then
-                    GarageTypes.entreprise.menu:Close()
-                    GetVehicleInGarage(curVeh, indexgarage, type)
-                else
-                    exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
-                end
-            end
-        end)
+        })
+    end
+
+    -- Ranger Remorque: entreprise
+    if type_ == "entreprise" then
         menu:AddButton({
             label = "Ranger remorque",
             select = function()
@@ -526,20 +507,24 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                 if garage.vehicle == "car" or not garage.vehicle then
                     local vehClass = GetVehicleClass(vehicle)
                     if vehClass ~= 14 and vehClass ~= 16 then
-                        GarageTypes.entreprise.menu:Close()
-                        GetVehicleInGarage(vehicle, indexgarage, type)
+                        garageType.menu:Close()
+                        GetVehicleInGarage(vehicle, indexgarage, type_)
                     else
                         exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
                     end
                 end
             end,
         })
-        local button2 = menu:AddButton({label = "Sortir véhicule"})
-        button2:On("select", function()
-            GarageTypes.entreprise.menu:Close()
-            SortirMenu(type, garage, indexgarage)
-        end)
     end
+
+    -- Sortir véhicule
+    menu:AddButton({
+        label = "Sortir véhicule",
+        select = function()
+            garageType.menu:Close()
+            SortirMenu(type_, garage, indexgarage)
+        end
+    })
 end
 
 local function GenerateMenu(type_, garage, indexgarage)
