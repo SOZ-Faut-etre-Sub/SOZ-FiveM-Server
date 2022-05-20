@@ -10,20 +10,20 @@ end
 
 --- Effects
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
-    if PlayerData.metadata["drug"] > 0 then
-        AnimpostfxPlay("DrugsMichaelAliensFightIn", 5.0, false)
+    if PlayerData.metadata["drug"] > 0 and not AnimpostfxIsRunning("DrugsMichaelAliensFight") then
+        AnimpostfxPlay("DrugsMichaelAliensFightIn", 0, false)
         AnimpostfxPlay("DrugsMichaelAliensFight", 0, true)
     elseif PlayerData.metadata["drug"] <= 0 and AnimpostfxIsRunning("DrugsMichaelAliensFight") then
-        AnimpostfxPlay("DrugsMichaelAliensFightOut", 5.0, false)
-        AnimpostfxStop("DrugsMichaelAliensFight")
+        AnimpostfxStopAndDoUnk("DrugsMichaelAliensFight")
+        AnimpostfxStopAndDoUnk("DrugsMichaelAliensFightIn")
     end
 
-    if PlayerData.metadata["alcohol"] > 0 then
-        AnimpostfxPlay("DrugsTrevorClownsFightIn", 5.0, false)
+    if PlayerData.metadata["alcohol"] > 0 and not AnimpostfxIsRunning("DrugsTrevorClownsFight") then
+        AnimpostfxPlay("DrugsTrevorClownsFightIn", 0, false)
         AnimpostfxPlay("DrugsTrevorClownsFight", 0, true)
     elseif PlayerData.metadata["alcohol"] <= 0 and AnimpostfxIsRunning("DrugsTrevorClownsFight") then
-        AnimpostfxPlay("DrugsTrevorClownsFightOut", 5.0, false)
-        AnimpostfxStop("DrugsTrevorClownsFight")
+        AnimpostfxStopAndDoUnk("DrugsTrevorClownsFight")
+        AnimpostfxStopAndDoUnk("DrugsTrevorClownsFightIn")
     end
 
     if PlayerData.metadata["alcohol"] > 80 or PlayerData.metadata["drug"] > 80 then
@@ -33,6 +33,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     elseif PlayerData.metadata["alcohol"] > 0 or PlayerData.metadata["drug"] > 0 then
         PlayWalking("move_m@drunk@slightlydrunk")
     else
+        ResetPedMovementClipset(PlayerPedId())
         TriggerEvent("personal:client:ApplyWalkStyle")
     end
 end)
