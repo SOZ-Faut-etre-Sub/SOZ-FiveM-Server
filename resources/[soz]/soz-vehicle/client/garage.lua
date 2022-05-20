@@ -36,14 +36,11 @@ local VehiculeParkingFourriere = MenuV:InheritMenu(ParkingFourriereList, {Title 
 local ParkingEntrepriseList = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car")
 local VehiculeParkingEntreprise = MenuV:InheritMenu(ParkingEntrepriseList, {Title = nil})
 
-local function CheckPlayers(vehicle, garage)
+local function EjectAnyPassager(vehicle)
     for i = -1, 5, 1 do
         local seat = GetPedInVehicleSeat(vehicle, i)
         if seat then
             TaskLeaveVehicle(seat, vehicle, 0)
-            if garage then
-                SetEntityCoords(seat, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z)
-            end
         end
     end
     SetVehicleDoorsLocked(vehicle)
@@ -349,7 +346,7 @@ local function IsVehicleInsideParking(veh, type_, indexgarage)
     return false
 end
 
-local function GetVehicleInGarage(veh, indexgarage, type_, garage)
+local function GetVehicleInGarage(veh, indexgarage, type_)
     local insideParking = IsVehicleInsideParking(veh, type_, indexgarage)
     if not insideParking then
         exports["soz-hud"]:DrawNotification(Lang:t("error.not_in_parking"), "error", 3500)
@@ -382,7 +379,7 @@ local function GetVehicleInGarage(veh, indexgarage, type_, garage)
         local placesdispo = 38 - placesstock["COUNT(*)"]
         if placesdispo >= 1 then
             TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", vehProperties)
-            CheckPlayers(veh, garage)
+            EjectAnyPassager(veh)
             TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type_)
             if plate then
                 OutsideVehicles[plate] = nil
@@ -393,7 +390,7 @@ local function GetVehicleInGarage(veh, indexgarage, type_, garage)
         end
     else
         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", vehProperties)
-        CheckPlayers(veh, garage)
+        EjectAnyPassager(veh)
         TriggerServerEvent("qb-garage:server:updateVehicle", state, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type_)
         if plate then
             OutsideVehicles[plate] = nil
@@ -407,7 +404,7 @@ RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
     local bodyDamage = math.ceil(GetVehicleBodyHealth(entity))
     local engineDamage = math.ceil(GetVehicleEngineHealth(entity))
     local totalFuel = GetVehicleFuelLevel(entity)
-    CheckPlayers(entity)
+    EjectAnyPassager(entity)
     TriggerServerEvent("qb-garage:server:updateVehicle", 2, totalFuel, engineDamage, bodyDamage, plate, "fourriere", "depot")
     if plate then
         OutsideVehicles[plate] = nil
