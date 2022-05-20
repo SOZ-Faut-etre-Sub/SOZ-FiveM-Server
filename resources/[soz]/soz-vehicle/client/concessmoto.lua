@@ -95,6 +95,10 @@ MotoChoose:On("open", function(menu)
     })
 end)
 
+MotoChoose:On("close", function()
+    MotoChoose:ClearItems()
+end)
+
 MotoModel:On("open", function(menu)
     local RpcCategorie = MotoCategorie[1]
     local RPCMotostorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
@@ -166,6 +170,10 @@ MotoModel:On("open", function(menu)
     end
 end)
 
+MotoModel:On("close", function()
+    MotoModel:ClearItems()
+end)
+
 MotoList:On("open", function(menu)
     menu:ClearItems()
     menu:AddTitle({label = "Catégories"})
@@ -179,6 +187,10 @@ MotoList:On("open", function(menu)
             end,
         })
     end
+end)
+
+MotoList:On("close", function()
+    MotoList:ClearItems()
 end)
 
 RegisterNetEvent("soz-concessmoto:client:createcam", function()

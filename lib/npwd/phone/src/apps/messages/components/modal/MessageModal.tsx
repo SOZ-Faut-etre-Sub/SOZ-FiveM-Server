@@ -104,10 +104,6 @@ export const MessageModal = () => {
             <AppWrapper>
                 <AppTitle title={header} isBigHeader={false} action={
                     <div className="flex">
-                        <Button className="mx-3">
-                            <TrashIcon className="h-6 w-6 text-red-500 cursor-pointer"
-                                       onClick={() => deleteConversation([activeMessageConversation.conversation_id])}/>
-                        </Button>
                         {getDisplayByNumber(targetNumber) === targetNumber &&
                             <Button className="mx-3">
                                 <UserAddIcon className="h-6 w-6 cursor-pointer" onClick={() => handleAddContact(targetNumber)}/>

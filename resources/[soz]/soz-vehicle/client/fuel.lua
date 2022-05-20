@@ -224,7 +224,10 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
             newFuel = currentFuel + currentFuelAdd
 
             fueldiff = currentFuelAdd / 100
-            cout = math.ceil(fueldiff * Config.RefillCost)
+
+            if stationType ~= "private" then
+                cout = math.ceil(fueldiff * Config.RefillCost)
+            end
 
             DisplayText(newFuel, cout, stationType)
             SetVehicleUndriveable(entity, true)

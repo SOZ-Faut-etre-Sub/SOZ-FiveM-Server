@@ -132,6 +132,17 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", functio
     cb(properties)
 end)
 
+QBCore.Functions.CreateCallback("qb-garage:server:CanTakeOutVehicle", function(source, cb, plate)
+    local vehicle = MySQL.Sync.fetchSingle("SELECT state FROM player_vehicles WHERE plate = ?", {plate})
+
+    if vehicle then
+        -- Only Takeout Vehicle
+        cb(vehicle.state == 1 or vehicle.state == 2 or vehicle.state == 3)
+    else
+        cb(false)
+    end
+end)
+
 RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine, body, plate, garage, type)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)

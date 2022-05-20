@@ -131,8 +131,12 @@ Zonesentreprise = {
         minZ = 69.63,
         maxZ = 73.63,
     }),
-    ["lsmc"] = BoxZone:Create(vector3(326.96, -1475.11, 29.12), 27.2, 21.2,
-                              {name = "lsmc:garage:car", heading = 50, minZ = 28.12, maxZ = 32.12, debugPoly = true}),
+    ["lsmc"] = BoxZone:Create(vector3(326.96, -1475.11, 29.12), 27.2, 21.2, {
+        name = "lsmc:garage:car",
+        heading = 50,
+        minZ = 28.12,
+        maxZ = 32.12,
+    }),
     ["bcso"] = BoxZone:Create(vector3(1858.13, 3677.16, 33.76), 8.4, 28.8, {
         name = "bcso:garage:car",
         heading = 30,

@@ -37,18 +37,29 @@ function ResetNpcTask()
 end
 
 function ClearNpcMission()
+    -- clear blip
     if NpcData.NpcBlip ~= nil then
         RemoveBlip(NpcData.NpcBlip)
     end
     if NpcData.DeliveryBlip ~= nil then
         RemoveBlip(NpcData.DeliveryBlip)
     end
+    -- clear ped
     local RemovePed = function(ped)
         SetTimeout(60000, function()
             DeletePed(ped)
         end)
     end
-    RemovePed(NpcData.Npc)
+    -- clear thread
+    if NpcData.NpcTaken then
+        TaskLeaveVehicle(NpcData.Npc, GetVehiclePedIsIn(NpcData.Npc, 0), 0)
+        SetEntityAsMissionEntity(NpcData.Npc, false, true)
+        SetEntityAsNoLongerNeeded(NpcData.Npc)
+    else
+        NpcData.NpcTaken = true
+        Wait(100)
+        RemovePed(NpcData.Npc)
+    end
     ResetNpcTask()
 end
 
@@ -131,6 +142,12 @@ CreateThread(function()
         Wait(2000)
         calculateFareAmount()
         lastLocation = GetEntityCoords(PlayerPedId())
+
+        -- horodateur
+
+        if not ValidVehicle() then
+            TriggerEvent("taxi:client:toggleHorodateur")
+        end
     end
 end)
 
@@ -165,7 +182,7 @@ local function GetDeliveryLocation()
     SetNewWaypoint(Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].x, Config.NPCLocations.DeliverLocations[NpcData.CurrentDeliver].y)
     NpcData.LastDeliver = NpcData.CurrentDeliver
     CreateThread(function()
-        while true do
+        while NpcData.NpcTaken do
             local ped = PlayerPedId()
             local pos = GetEntityCoords(ped)
             local dist = #(pos -

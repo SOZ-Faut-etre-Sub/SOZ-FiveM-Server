@@ -2,41 +2,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
     local Player = QBCore.Functions.GetPlayer(source)
 
     local sourceInv = Inventory(source)
-    local targetInv = Inventory(invID)
-
-    local storageConfig = Config.StorageCapacity["default"]
-    if Config.StorageCapacity[storageType] then
-        storageConfig = Config.StorageCapacity[storageType]
-    end
-
-    if storageType == "bin" then
-        targetInv = Inventory("bin_" .. invID)
-
-        if targetInv == nil then
-            targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
-        end
-    elseif storageType == "trunk" or storageType == "tanker" then
-        targetInv = Inventory("trunk_" .. invID)
-
-        if targetInv == nil then
-            if not ctx then
-                return
-            end
-
-            local trunkConfig = QBCore.Shared.Trunks[ctx.class]
-            if ctx.model and QBCore.Shared.Trunks[ctx.model] then
-                trunkConfig = QBCore.Shared.Trunks[ctx.model]
-            end
-
-            targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, trunkConfig.weight, invID)
-        end
-    elseif storageType == "stash" then
-        targetInv = Inventory("stash_" .. invID)
-
-        if targetInv == nil then
-            targetInv = Inventory.Create("stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
-        end
-    end
+    local targetInv = GetOrCreateInventory(storageType, invID, ctx)
 
     if Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
         targetInv.users[Player.PlayerData.source] = true
