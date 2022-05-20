@@ -11,8 +11,7 @@ function BuildCurrentGradesValues(jobId)
     end
 
     for gradeId, grade in pairs(job.grades) do
-        table.insert(values, { label = grade.name,
-                               value = {label = grade.name, jobID = jobId, gradeId = gradeId},})
+        table.insert(values, {label = grade.name, value = {label = grade.name, jobID = jobId, gradeId = gradeId}})
     end
 
     return values
