@@ -40,22 +40,22 @@ local function GetDead(entity)
     end
 end
 
-exports["qb-target"]:AddGlobalVehicle({
-    options = {
-        {
-            icon = "c:ems/sortir.png",
-            label = "Extraire le mort",
-            canInteract = function(entity)
-                return GetDead(entity)
-            end,
-            action = function(entity)
-                coords = GetEntityCoords(PlayerPedId())
-                TriggerServerEvent("lsmc:server:tp", GetPlayerServerId(NetworkGetPlayerIndexFromPed(targetplayer)), coords)
-            end,
-        },
-    },
-    distance = 2.5,
-})
+--exports["qb-target"]:AddGlobalVehicle({
+--    options = {
+--        {
+--            icon = "c:ems/sortir.png",
+--            label = "Extraire le mort",
+--            canInteract = function(entity)
+--                return GetDead(entity)
+--            end,
+--            action = function(entity)
+--                coords = GetEntityCoords(PlayerPedId())
+--                TriggerServerEvent("lsmc:server:tp", GetPlayerServerId(NetworkGetPlayerIndexFromPed(targetplayer)), coords)
+--            end,
+--        },
+--    },
+--    distance = 2.5,
+--})
 
 RegisterNetEvent("lsmc:client:VehTpDead")
 AddEventHandler("lsmc:client:VehTpDead", function(coords)
