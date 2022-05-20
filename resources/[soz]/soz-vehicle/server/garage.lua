@@ -28,7 +28,8 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(s
     end
 
     if type == "depot" then -- Depot give player cars that are not in garage only
-        local canTakeOutPoundJob = SozJobCore.Functions.HasPermission(pData.PlayerData.job.id, pData.PlayerData.job.id, pData.PlayerData.job.grade, SozJobCore.JobPermission.SocietyTakeOutPound)
+        local canTakeOutPoundJob = SozJobCore.Functions.HasPermission(pData.PlayerData.job.id, pData.PlayerData.job.id, pData.PlayerData.job.grade,
+                                                                      SozJobCore.JobPermission.SocietyTakeOutPound)
         local vehicles = {}
 
         if canTakeOutPoundJob then
