@@ -1,8 +1,8 @@
 local OutsideVehicles = {}
 
 local GarageTypes
-AddEventHandler('onClientResourceStart', function(resourceName)
-    if(GetCurrentResourceName() == resourceName) then
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if (GetCurrentResourceName() == resourceName) then
         GarageTypes = {
             ["public"] = {
                 type = "public",
@@ -38,7 +38,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 submenu = nil,
                 excludeVehClass = {14, 16},
                 state = 3,
-                places  = PlacesEntreprise,
+                places = PlacesEntreprise,
             },
         }
 
@@ -99,7 +99,11 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
 
         if v.state == garageType.state then
             garageType.submenu:AddButton({
-                label = Lang:t(string.format("menu.header.%s", garageType.type), {value = vname, value2 = v.plate, value3 = price}),
+                label = Lang:t(string.format("menu.header.%s", garageType.type), {
+                    value = vname,
+                    value2 = v.plate,
+                    value3 = price,
+                }),
                 description = Lang:t("menu.text.garage", {
                     value = currentFuel,
                     value2 = enginePercent,
@@ -224,7 +228,7 @@ end)
 
 local function IsVehicleInsideParking(veh, type_, indexgarage)
     local zones = (GarageTypes[type_] or {}).zones
-    if not zones  then
+    if not zones then
         return
     end
 
@@ -365,7 +369,7 @@ local function ParkingPanel(menu, type_, garage, indexgarage)
                     garageType.menu:Close()
                     GetVehicleInGarage(curVeh, indexgarage, type_)
                 end
-            end
+            end,
         })
     end
 
@@ -404,7 +408,7 @@ local function ParkingPanel(menu, type_, garage, indexgarage)
         select = function()
             garageType.menu:Close()
             SortirMenu(type_, garage, indexgarage)
-        end
+        end,
     })
 end
 
