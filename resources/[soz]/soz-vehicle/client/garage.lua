@@ -7,34 +7,35 @@ AddEventHandler('onClientResourceStart', function(resourceName)
             ["public"] = {
                 type = "public",
                 zones = Zonespublic,
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
+                submenu = nil,
             },
             ["private"] = {
                 type = "private",
                 zones = Zonesprives,
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car"),
+                submenu = nil,
             },
             ["depot"] = {
                 type = "depot",
                 zones = Zonesfourriere,
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car"),
+                submenu = nil,
             },
             ["entreprise"] = {
                 type = "entreprise",
                 zones = Zonesentreprise,
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car"),
+                submenu = nil,
             },
         }
+
+        GarageTypes.public.submenu = MenuV:InheritMenu(GarageTypes.public.menu, {Title = nil})
+        GarageTypes.private.submenu = MenuV:InheritMenu(GarageTypes.private.menu, {Title = nil})
+        GarageTypes.depot.submenu = MenuV:InheritMenu(GarageTypes.depot.menu, {Title = nil})
+        GarageTypes.entreprise.submenu = MenuV:InheritMenu(GarageTypes.entreprise.submenu, {Title = nil})
     end
 end)
-
-local ParkingPublicList = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car")
-local VehiculeParkingPublic = MenuV:InheritMenu(ParkingPublicList, {Title = nil})
-
-local ParkingPriveList = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car")
-local VehiculeParkingPrive = MenuV:InheritMenu(ParkingPriveList, {Title = nil})
-
-local ParkingFourriereList = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car")
-local VehiculeParkingFourriere = MenuV:InheritMenu(ParkingFourriereList, {Title = nil})
-
-local ParkingEntrepriseList = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car")
-local VehiculeParkingEntreprise = MenuV:InheritMenu(ParkingEntrepriseList, {Title = nil})
 
 local function EjectAnyPassager(vehicle)
     for i = -1, 5, 1 do
@@ -56,15 +57,15 @@ end
 
 local function SortirMenu(type, garage, indexgarage)
     if type == "public" then
-        VehiculeParkingPublic:ClearItems()
-        MenuV:OpenMenu(VehiculeParkingPublic)
+        GarageTypes.public.submenu:ClearItems()
+        MenuV:OpenMenu(GarageTypes.public.submenu)
 
-        VehiculeParkingPublic:AddButton({
+        GarageTypes.public.submenu:AddButton({
             icon = "◀",
             label = "Retour au menu",
-            value = ParkingPublicList,
+            value = GarageTypes.public.menu,
             select = function()
-                VehiculeParkingPublic:Close()
+                GarageTypes.public.submenu:Close()
             end,
         })
 
@@ -78,7 +79,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
                     if v.state == 1 then
-                        VehiculeParkingPublic:AddButton({
+                        GarageTypes.public.submenu:AddButton({
                             label = Lang:t("menu.header.public", {value = vname, value2 = v.plate}),
                             description = Lang:t("menu.text.garage", {
                                 value = currentFuel,
@@ -86,7 +87,7 @@ local function SortirMenu(type, garage, indexgarage)
                                 value3 = bodyPercent,
                             }),
                             select = function()
-                                VehiculeParkingPublic:Close()
+                                GarageTypes.public.submenu:Close()
                                 TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
                             end,
                         })
@@ -95,15 +96,15 @@ local function SortirMenu(type, garage, indexgarage)
             end
         end, indexgarage, type, garage.vehicle)
     elseif type == "private" then
-        VehiculeParkingPrive:ClearItems()
-        MenuV:OpenMenu(VehiculeParkingPrive)
+        GarageTypes.private.submenu:ClearItems()
+        MenuV:OpenMenu(GarageTypes.private.submenu)
 
-        VehiculeParkingPrive:AddButton({
+        GarageTypes.private.submenu:AddButton({
             icon = "◀",
             label = "Retour au menu",
-            value = ParkingPriveList,
+            value = GarageTypes.private.menu,
             select = function()
-                VehiculeParkingPrive:Close()
+                GarageTypes.private.submenu:Close()
             end,
         })
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
@@ -121,7 +122,7 @@ local function SortirMenu(type, garage, indexgarage)
                         price = 1000
                     end
                     if v.state == 1 then
-                        VehiculeParkingPrive:AddButton({
+                        GarageTypes.private.submenu:AddButton({
                             label = Lang:t("menu.header.private", {value = vname, value2 = v.plate, value3 = price}),
                             description = Lang:t("menu.text.garage", {
                                 value = currentFuel,
@@ -129,7 +130,7 @@ local function SortirMenu(type, garage, indexgarage)
                                 value3 = bodyPercent,
                             }),
                             select = function()
-                                VehiculeParkingPrive:Close()
+                                GarageTypes.private.submenu:Close()
                                 TriggerEvent("qb-garages:client:TakeOutPrive", v, type, garage, indexgarage, price)
                             end,
                         })
@@ -138,8 +139,8 @@ local function SortirMenu(type, garage, indexgarage)
             end
         end, indexgarage, type, garage.vehicle)
     elseif type == "depot" then
-        VehiculeParkingFourriere:ClearItems()
-        MenuV:OpenMenu(VehiculeParkingFourriere)
+        GarageTypes.depot.submenu:ClearItems()
+        MenuV:OpenMenu(GarageTypes.depot.submenu)
 
         QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result)
             if result == nil then
@@ -151,7 +152,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
                     if v.state == 2 then
-                        VehiculeParkingFourriere:AddButton({
+                        GarageTypes.depot.submenu:AddButton({
                             label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
                             description = Lang:t("menu.text.depot", {
                                 value = currentFuel,
@@ -159,7 +160,7 @@ local function SortirMenu(type, garage, indexgarage)
                                 value3 = bodyPercent,
                             }),
                             select = function()
-                                VehiculeParkingFourriere:Close()
+                                GarageTypes.depot.submenu:Close()
                                 TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
                             end,
                         })
@@ -168,15 +169,15 @@ local function SortirMenu(type, garage, indexgarage)
             end
         end, indexgarage, type, garage.vehicle)
     elseif type == "entreprise" then
-        VehiculeParkingEntreprise:ClearItems()
-        MenuV:OpenMenu(VehiculeParkingEntreprise)
+        GarageTypes.entreprise.submenu:ClearItems()
+        MenuV:OpenMenu(GarageTypes.entreprise.submenu)
 
-        VehiculeParkingEntreprise:AddButton({
+        GarageTypes.entreprise.submenu:AddButton({
             icon = "◀",
             label = "Retour au menu",
-            value = ParkingEntrepriseList,
+            value = GarageTypes.entreprise.menu,
             select = function()
-                VehiculeParkingEntreprise:Close()
+                GarageTypes.entreprise.submenu:Close()
             end,
         })
         QBCore.Functions.TriggerCallback("qb-garage:server:GetPlayerEntreprise", function(result)
@@ -190,7 +191,7 @@ local function SortirMenu(type, garage, indexgarage)
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
 
                     if v.state == 3 then
-                        VehiculeParkingEntreprise:AddButton({
+                        GarageTypes.entreprise.submenu:AddButton({
                             label = Lang:t("menu.header.entreprise", {value = vname, value2 = v.plate}),
                             description = Lang:t("menu.text.garage", {
                                 value = currentFuel,
@@ -198,7 +199,7 @@ local function SortirMenu(type, garage, indexgarage)
                                 value3 = bodyPercent,
                             }),
                             select = function()
-                                VehiculeParkingEntreprise:Close()
+                                GarageTypes.entreprise.submenu:Close()
                                 TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
                             end,
                         })
@@ -452,7 +453,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             local vehClass = GetVehicleClass(curVeh)
             if garage.vehicle == "car" or not garage.vehicle then
                 if vehClass ~= 14 and vehClass ~= 15 and vehClass ~= 16 then
-                    ParkingPublicList:Close()
+                    GarageTypes.public.menu:Close()
                     GetVehicleInGarage(curVeh, indexgarage, type)
                 else
                     exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
@@ -461,7 +462,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
         end)
         local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
-            ParkingPublicList:Close()
+            GarageTypes.public.menu:Close()
             SortirMenu(type, garage, indexgarage)
         end)
     elseif type == "private" then
@@ -474,7 +475,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             local vehClass = GetVehicleClass(curVeh)
             if garage.vehicle == "car" or not garage.vehicle then
                 if vehClass ~= 14 and vehClass ~= 15 and vehClass ~= 16 then
-                    ParkingPriveList:Close()
+                    GarageTypes.private.menu:Close()
                     GetVehicleInGarage(curVeh, indexgarage, type)
                 else
                     exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
@@ -483,14 +484,14 @@ local function ParkingPanel(menu, type, garage, indexgarage)
         end)
         local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
-            ParkingPriveList:Close()
+            GarageTypes.private.menu:Close()
             SortirMenu(type, garage, indexgarage)
         end)
     elseif type == "depot" then
         menu:AddTitle({label = garage.label})
         local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
-            ParkingFourriereList:Close()
+            GarageTypes.depot.menu:Close()
             SortirMenu(type, garage, indexgarage)
         end)
     elseif type == "entreprise" then
@@ -501,7 +502,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
             local vehClass = GetVehicleClass(curVeh)
             if garage.vehicle == "car" or not garage.vehicle then
                 if vehClass ~= 14 and vehClass ~= 16 then
-                    ParkingEntrepriseList:Close()
+                    GarageTypes.entreprise.menu:Close()
                     GetVehicleInGarage(curVeh, indexgarage, type)
                 else
                     exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
@@ -525,7 +526,7 @@ local function ParkingPanel(menu, type, garage, indexgarage)
                 if garage.vehicle == "car" or not garage.vehicle then
                     local vehClass = GetVehicleClass(vehicle)
                     if vehClass ~= 14 and vehClass ~= 16 then
-                        ParkingEntrepriseList:Close()
+                        GarageTypes.entreprise.menu:Close()
                         GetVehicleInGarage(vehicle, indexgarage, type)
                     else
                         exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
@@ -535,45 +536,25 @@ local function ParkingPanel(menu, type, garage, indexgarage)
         })
         local button2 = menu:AddButton({label = "Sortir véhicule"})
         button2:On("select", function()
-            ParkingEntrepriseList:Close()
+            GarageTypes.entreprise.menu:Close()
             SortirMenu(type, garage, indexgarage)
         end)
     end
 end
 
-local function GenerateMenu(type, garage, indexgarage)
-    if type == "public" then
-        if ParkingPublicList.IsOpen then
-            ParkingPublicList:Close()
-        else
-            ParkingPublicList:ClearItems()
-            ParkingPanel(ParkingPublicList, type, garage, indexgarage)
-            ParkingPublicList:Open()
-        end
-    elseif type == "private" then
-        if ParkingPriveList.IsOpen then
-            ParkingPriveList:Close()
-        else
-            ParkingPriveList:ClearItems()
-            ParkingPanel(ParkingPriveList, type, garage, indexgarage)
-            ParkingPriveList:Open()
-        end
-    elseif type == "depot" then
-        if ParkingFourriereList.IsOpen then
-            ParkingFourriereList:Close()
-        else
-            ParkingFourriereList:ClearItems()
-            ParkingPanel(ParkingFourriereList, type, garage, indexgarage)
-            ParkingFourriereList:Open()
-        end
-    elseif type == "entreprise" then
-        if ParkingEntrepriseList.IsOpen then
-            ParkingEntrepriseList:Close()
-        else
-            ParkingEntrepriseList:ClearItems()
-            ParkingPanel(ParkingEntrepriseList, type, garage, indexgarage)
-            ParkingEntrepriseList:Open()
-        end
+local function GenerateMenu(type_, garage, indexgarage)
+    local garageType = GarageTypes[type_]
+    if not garageType or not garageType.menu then
+        return
+    end
+
+    local menu = garageType.menu
+    menu:ClearItems()
+    if menu.IsOpen then
+        menu:Close()
+    else
+        ParkingPanel(menu, type_, garage, indexgarage)
+        menu:Open()
     end
 end
 
