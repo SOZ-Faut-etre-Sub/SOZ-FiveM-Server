@@ -138,7 +138,7 @@ Config.BossShop = {
         [4] = {name = "painkiller", metadata = {}, price = 15, amount = 1},
         [5] = {name = "defibrillator", metadata = {}, price = 25, amount = 1},
         [6] = {name = "empty_bloodbag", metadata = {}, price = 5, amount = 1},
-        [7] = {name = "firstaid", metadata = {}, price = 35, amount = 1},
+        [7] = {name = "firstaid", metadata = {}, price = 10, amount = 1},
         [8] = {name = "pommade", metadata = {}, price = 15, amount = 1},
         [9] = {name = "tissue", metadata = {}, price = 5, amount = 1},
     },
