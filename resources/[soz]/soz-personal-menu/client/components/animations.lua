@@ -48,6 +48,7 @@ local PlayWalking = function(animation)
 end
 
 local forceApplyWalkStyle = function()
+    ResetPedMovementClipset(PlayerPedId())
     Wait(1000)
     local walk = PlayerData.metadata.walk
 
