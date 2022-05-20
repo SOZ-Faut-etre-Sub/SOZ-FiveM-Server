@@ -40,7 +40,7 @@ local function GetDead(entity)
     end
 end
 
---exports["qb-target"]:AddGlobalVehicle({
+-- exports["qb-target"]:AddGlobalVehicle({
 --    options = {
 --        {
 --            icon = "c:ems/sortir.png",
@@ -55,7 +55,7 @@ end
 --        },
 --    },
 --    distance = 2.5,
---})
+-- })
 
 RegisterNetEvent("lsmc:client:VehTpDead")
 AddEventHandler("lsmc:client:VehTpDead", function(coords)
