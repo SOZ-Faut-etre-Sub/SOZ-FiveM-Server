@@ -44,7 +44,11 @@ end)
 
 -- LICENSES
 AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
-    TriggerServerEvent("soz-identity:server:request-data", target, "licences", action, {
+    local charinfo = PlayerData.charinfo
+    TriggerServerEvent("soz-identity:server:request-data", target, "licences", action,
+                       {
+        firstName = charinfo.firstname,
+        lastName = charinfo.lastname,
         licences = PlayerData.metadata["licences"],
     })
 end)
