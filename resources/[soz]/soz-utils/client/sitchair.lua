@@ -22,6 +22,9 @@ local sitchair = {
 }
 
 RegisterCommand("unsit", function()
+    if lastCoord == nil then
+        return
+    end
     local player = GetPlayerPed(-1)
     local distance = #(lastCoord - GetEntityCoords(player))
     if sit == true and distance <= 2.5 then
