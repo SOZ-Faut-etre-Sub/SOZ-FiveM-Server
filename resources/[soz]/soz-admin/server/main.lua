@@ -154,3 +154,31 @@ RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)
         TriggerClientEvent("QBCore:Client:OnPlayerLoaded", src)
     end
 end)
+
+RegisterNetEvent("admin:server:effect:alcohol", function(id)
+    if not SozAdmin.Functions.IsPlayerAdmin(source) then
+        return
+    end
+
+    local player = QBCore.Functions.GetPlayer(id or source)
+    player.Functions.SetMetaData("alcohol", 100)
+end)
+
+RegisterNetEvent("admin:server:effect:drug", function(id)
+    if not SozAdmin.Functions.IsPlayerAdmin(source) then
+        return
+    end
+
+    local player = QBCore.Functions.GetPlayer(id or source)
+    player.Functions.SetMetaData("drug", 100)
+end)
+
+RegisterNetEvent("admin:server:effect:normal", function(id)
+    if not SozAdmin.Functions.IsPlayerAdmin(source) then
+        return
+    end
+
+    local player = QBCore.Functions.GetPlayer(id or source)
+    player.Functions.SetMetaData("alcohol", 0)
+    player.Functions.SetMetaData("drug", 0)
+end)

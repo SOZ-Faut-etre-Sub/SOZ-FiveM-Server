@@ -1,6 +1,5 @@
 --- @class TattooShop
 TattooShop = {}
-local confirmMenu, confirmItem, confirmValue = nil, nil, {}
 local cam, camVariationList, camVariationId, camVariationCoord = nil, {}, 1, nil
 
 function TattooShop:new(...)
@@ -59,12 +58,18 @@ function TattooShop:GenerateMenu(skipIntro)
 
     self:PreGenerateMenu(skipIntro)
 
-    if MenuV:IsNamespaceAvailable("shop:tattoo:confirm") then
-        confirmMenu = MenuV:InheritMenu(shopMenu, nil, "shop:tattoo:confirm")
-    end
-
-    confirmMenu:ClearItems()
-    confirmItem = confirmMenu:AddConfirm({label = "Voulez-vous vraiment ce tatouage ?", value = "n"})
+    shopMenu:AddButton({
+        icon = "⚠️",
+        label = "Se faire retirer les tatouages",
+        description = "Suite a une encres de mauvaise qualité vous pouvez retirer tous vos tatouages.",
+        value = nil,
+        select = function(item)
+            local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+            if validation == "oui" then
+                TriggerServerEvent("shops:server:resetTattoos")
+            end
+        end,
+    })
 
     for categoryId, category in pairs(Config.TattooCategories) do
         if MenuV:IsNamespaceAvailable("tattoo:cat:" .. categoryId) then
@@ -93,34 +98,32 @@ function TattooShop:GenerateMenu(skipIntro)
         shopMenu:AddButton({label = category.label, value = Config.TattooCategories[categoryId].menu})
     end
 
+    TriggerScreenblurFadeIn(50)
     for _, tattoo in pairs(self:getShopProducts()) do
         local overlayField = gender == 0 and "HashNameMale" or "HashNameFemale"
 
         if tattoo[overlayField] ~= "" then
-            local entry = Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
+            Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
                 label = GetLabelText(tattoo["Name"]),
                 value = {collection = tattoo["Collection"], overlay = tattoo[overlayField]},
                 rightLabel = "$" .. QBCore.Shared.GroupDigits(tattoo["Price"]),
+                select = function(item)
+                    local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+                    if validation == "oui" then
+                        TriggerServerEvent("shops:server:pay", "tattoo", item:GetValue(), 1)
+                    end
+                end,
             })
 
-            --- @param select Item
-            entry:On("select", function(select)
-                confirmValue = select:GetValue()
-                confirmMenu:Open()
-            end)
+            QBCore.Functions.DrawText(0.4, 0.9, 0.0, 0.0, 0.8, 255, 255, 255, 255, "Chargement en cours...")
+            Citizen.Wait(0)
         end
     end
+    TriggerScreenblurFadeOut(50)
 
-    confirmItem:On("confirm", function()
-        TriggerServerEvent("shops:server:pay", "tattoo", confirmValue, 1)
-
-        MenuV:CloseAll(function()
-            self:GenerateMenu(true)
-        end)
-    end)
-
-    shopMenu:On("close", function()
+    shopMenu:On("close", function(m)
         self:OnMenuClose()
+        m:ClearItems()
     end)
 
     shopMenu:Open()

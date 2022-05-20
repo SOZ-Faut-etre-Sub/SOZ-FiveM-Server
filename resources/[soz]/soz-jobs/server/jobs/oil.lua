@@ -142,9 +142,24 @@ RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
         TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
         TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
-                     {quantity = 10, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})
+                     {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
+    end
+end)
+
+QBCore.Functions.CreateCallback("jobs:server:fueler:ensureInventory", function(source, cb, tankerId, model, class)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+    local inventory = exports["soz-inventory"]:GetOrCreateInventory("tanker", tankerPlate, {
+        model = model,
+        class = class,
+    })
+
+    if inventory ~= nil then
+        cb(true)
+    else
+        cb(false)
     end
 end)
 

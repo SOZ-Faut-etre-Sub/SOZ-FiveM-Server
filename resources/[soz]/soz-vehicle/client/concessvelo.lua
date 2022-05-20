@@ -95,6 +95,10 @@ VeloChoose:On("open", function(menu)
     })
 end)
 
+VeloChoose:On("close", function()
+    VeloChoose:ClearItems()
+end)
+
 VeloModel:On("open", function(menu)
     local RpcCategorie = VeloCategorie[1]
     local RPCBicyclestorage = QBCore.Functions.TriggerRpc("soz-concess:server:getstock", RpcCategorie)
@@ -166,6 +170,10 @@ VeloModel:On("open", function(menu)
     end
 end)
 
+VeloModel:On("close", function()
+    VeloModel:ClearItems()
+end)
+
 VeloList:On("open", function(menu)
     menu:ClearItems()
     menu:AddTitle({label = "Catégories"})
@@ -179,6 +187,10 @@ VeloList:On("open", function(menu)
             end,
         })
     end
+end)
+
+VeloList:On("close", function()
+    VeloList:ClearItems()
 end)
 
 RegisterNetEvent("soz-concessvelo:client:createcam", function()

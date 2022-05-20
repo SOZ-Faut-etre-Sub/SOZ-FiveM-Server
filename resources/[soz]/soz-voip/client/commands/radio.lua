@@ -12,6 +12,10 @@ local function fnRadioTalkPush(module, isPrimary)
         return
     end
 
+    if LocalPlayer.state[module] == nil then
+        return
+    end
+
     local radioChannel = LocalPlayer.state[module][isPrimary and "primaryChannel" or "secondaryChannel"]
     CurrentPlayer.LastRadioButtonPressed = GetGameTimer()
 

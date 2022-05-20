@@ -72,6 +72,10 @@ vehicleModel:On("open", function(m)
     end
 end)
 
+vehicleModel:On("close", function()
+    vehicleModel:ClearItems()
+end)
+
 vehicleChoose:On("open", function(m)
     m:ClearItems()
     local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(selectedModel))
@@ -93,6 +97,10 @@ vehicleChoose:On("open", function(m)
             TakeOutGarage(selectedModel)
         end,
     })
+end)
+
+vehicleChoose:On("close", function()
+    vehicleChoose:ClearItems()
 end)
 
 for _, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
@@ -149,7 +157,6 @@ RegisterNetEvent("soz-concessentreprise:client:buyShowroomVehicle", function(veh
         SetFuel(veh, 100)
         SetVehicleLivery(veh, liverytype.liverytype)
         SetVehicleNumberPlateText(veh, plate)
-        SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
     end, newlocation, true)

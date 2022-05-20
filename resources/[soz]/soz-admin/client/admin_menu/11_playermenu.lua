@@ -68,6 +68,19 @@ function AdminMenuPlayers(menu, permission)
     })
 
     playerMenu:AddSlider({
+        label = "Effet",
+        value = "pos",
+        values = {
+            {label = "Alcolique", value = "alcohol"},
+            {label = "Drogué", value = "drug"},
+            {label = "Normal", value = "normal"},
+        },
+        select = function(_, value)
+            TriggerServerEvent("admin:server:effect:" .. value, CurrentPlayerData.id)
+        end,
+    })
+
+    playerMenu:AddSlider({
         label = "Rendre malade",
         value = "maladie",
         values = {
