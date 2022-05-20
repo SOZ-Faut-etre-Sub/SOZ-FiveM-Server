@@ -11,6 +11,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
                 state = 1,
+                places = PlacesPublic,
             },
             ["private"] = {
                 type = "private",
@@ -19,6 +20,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
                 state = 1,
+                places = PlacesPrives,
             },
             ["depot"] = {
                 type = "depot",
@@ -27,6 +29,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 submenu = nil,
                 excludeVehClass = {},
                 state = 2,
+                places = PlacesFourriere,
             },
             ["entreprise"] = {
                 type = "entreprise",
@@ -35,6 +38,7 @@ AddEventHandler('onClientResourceStart', function(resourceName)
                 submenu = nil,
                 excludeVehClass = {14, 16},
                 state = 3,
+                places  = PlacesEntreprise,
             },
         }
 
@@ -142,10 +146,10 @@ local function SortirMenu(type_, garage, indexgarage)
     end
 end
 
-RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, garage, indexgarage)
+RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type_, garage, indexgarage)
     local spawn = false
 
-    if type == "depot" then
+    if type_ == "depot" then
         local VehExists = DoesEntityExist(OutsideVehicles[vehicle.plate])
         if not VehExists then
             spawn = true
@@ -156,78 +160,28 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type, gara
     else
         spawn = true
     end
+
     if spawn then
+        local garageType = GetGarageType(type_)
+
         local currentFuel = vehicle.fuel
         local location
         local heading
         local placedispo = 0
 
-        if type == "public" then
-            for _, publicpar in pairs(PlacesPublic) do
-                if publicpar.data.indexGarage == indexgarage then
-                    local vehicles2 = GetGamePool("CVehicle")
-                    local inside = false
-                    for _, vehicle2 in ipairs(vehicles2) do
-                        if publicpar:isPointInside(GetEntityCoords(vehicle2)) then
-                            inside = true
-                        end
-                    end
-                    if inside == false then
-                        placedispo = placedispo + 1
-                        location = publicpar:getBoundingBoxCenter()
-                        heading = publicpar:getHeading()
+        for _, place in pairs(garageType.places) do
+            if place.data.indexGarage == indexgarage then
+                local vehicles2 = GetGamePool("CVehicle")
+                local inside = false
+                for _, vehicle2 in ipairs(vehicles2) do
+                    if place:isPointInside(GetEntityCoords(vehicle2)) then
+                        inside = true
                     end
                 end
-            end
-        elseif type == "private" then
-            for _, privepar in pairs(PlacesPrives) do
-                if privepar.data.indexGarage == indexgarage then
-                    local vehicles2 = GetGamePool("CVehicle")
-                    local inside = false
-                    for _, vehicle2 in ipairs(vehicles2) do
-                        if privepar:isPointInside(GetEntityCoords(vehicle2)) then
-                            inside = true
-                        end
-                    end
-                    if inside == false then
-                        placedispo = placedispo + 1
-                        location = privepar:getBoundingBoxCenter()
-                        heading = privepar:getHeading()
-                    end
-                end
-            end
-        elseif type == "depot" then
-            for _, fourrierepar in pairs(PlacesFourriere) do
-                if fourrierepar.data.indexGarage == indexgarage then
-                    local vehicles2 = GetGamePool("CVehicle")
-                    local inside = false
-                    for _, vehicle2 in ipairs(vehicles2) do
-                        if fourrierepar:isPointInside(GetEntityCoords(vehicle2)) then
-                            inside = true
-                        end
-                    end
-                    if inside == false then
-                        placedispo = placedispo + 1
-                        location = fourrierepar:getBoundingBoxCenter()
-                        heading = fourrierepar:getHeading()
-                    end
-                end
-            end
-        elseif type == "entreprise" then
-            for _, entreprisepar in pairs(PlacesEntreprise) do
-                if entreprisepar.data.indexGarage == indexgarage then
-                    local vehicles2 = GetGamePool("CVehicle")
-                    local inside = false
-                    for _, vehicle2 in ipairs(vehicles2) do
-                        if entreprisepar:isPointInside(GetEntityCoords(vehicle2)) then
-                            inside = true
-                        end
-                    end
-                    if inside == false then
-                        placedispo = placedispo + 1
-                        location = entreprisepar:getBoundingBoxCenter()
-                        heading = entreprisepar:getHeading()
-                    end
+                if inside == false then
+                    placedispo = placedispo + 1
+                    location = place:getBoundingBoxCenter()
+                    heading = place:getHeading()
                 end
             end
         end
