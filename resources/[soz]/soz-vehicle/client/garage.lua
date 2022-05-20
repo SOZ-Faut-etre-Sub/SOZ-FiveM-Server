@@ -129,20 +129,19 @@ local function SortirMenu(type, garage, indexgarage)
                     local bodyPercent = round(v.body / 10, 0)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
-                    if v.state == 2 then
-                        VehiculeParkingFourriere:AddButton({
-                            label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
-                            description = Lang:t("menu.text.depot", {
-                                value = currentFuel,
-                                value2 = enginePercent,
-                                value3 = bodyPercent,
-                            }),
-                            select = function()
-                                VehiculeParkingFourriere:Close()
-                                TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
-                            end,
-                        })
-                    end
+
+                    VehiculeParkingFourriere:AddButton({
+                        label = Lang:t("menu.header.depot", {value = vname, value2 = v.plate, value3 = v.depotprice}),
+                        description = Lang:t("menu.text.depot", {
+                            value = currentFuel,
+                            value2 = enginePercent,
+                            value3 = bodyPercent,
+                        }),
+                        select = function()
+                            VehiculeParkingFourriere:Close()
+                            TriggerServerEvent("qb-garage:server:PayDepotPrice", v, type, garage, indexgarage)
+                        end,
+                    })
                 end
             end
         end, indexgarage, type, garage.vehicle)

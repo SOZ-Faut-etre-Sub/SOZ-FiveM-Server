@@ -27,6 +27,7 @@ SozJobCore.JobPermission = {
     SocietyPrivateStorage = "society-private-storage",
     SocietyShop = "society-shop",
     SocietyBankAccount = "society-bank-account",
+    SocietyTakeOutPound = "society-take-out-pound",
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
     Food = {Harvest = "harvest", Craft = "craft"},
 }
@@ -121,6 +122,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.BCSO] = {
@@ -135,6 +137,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.LSMC] = {
@@ -149,6 +152,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.Taxi] = {
@@ -162,6 +166,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.Food] = {
@@ -178,6 +183,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.Food.Harvest] = {label = "Récolter des ingrédients"},
             [SozJobCore.JobPermission.Food.Craft] = {label = "Cuisiner"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
         resell = {
             coords = vector4(-57.01, -2448.4, 7.24, 145.77), -- Must be vec4
@@ -198,6 +204,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.Garbage] = {
@@ -211,6 +218,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.Oil] = {
@@ -224,6 +232,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.CashTransfer] = {
@@ -241,6 +250,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.CashTransfer.ResaleBags] = {label = "Déposer sacs d'argent"},
             [SozJobCore.JobPermission.CashTransfer.FillIn] = {label = "Remplir banque / ATM"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.Bennys] = {
@@ -255,6 +265,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
