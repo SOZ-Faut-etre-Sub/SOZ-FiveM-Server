@@ -79,6 +79,8 @@ function ResetAll()
     StopScreenEffect("DeathFailOut")
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", 0)
+    TriggerServerEvent("QBCore:Server:SetMetaData", "drug", 0)
 end
 
 RegisterNetEvent("soz-ems:client:respawn")
