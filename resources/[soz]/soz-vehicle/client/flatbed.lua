@@ -60,14 +60,13 @@ end
 RegisterNetEvent("soz-flatbed:client:getProp")
 AddEventHandler("soz-flatbed:client:getProp", function(BedInfo)
     if not BedInfo or not DoesEntityExist(NetworkGetEntityFromNetworkId(BedInfo.Prop)) then
-        if NetworkGetEntityOwner(PlayerVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
-            local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
-            local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(LastVehicle), true, false, false)
+        local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
+        local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(LastVehicle), true, false, false)
 
-            AttachEntityToEntity(NewBed, LastVehicle, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
+        AttachEntityToEntity(NewBed, LastVehicle, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
 
-            TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Prop", NetworkGetNetworkIdFromEntity(NewBed))
-        end
+        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Prop", NetworkGetNetworkIdFromEntity(NewBed))
+
         LastStatus = false
         LastAttach = nil
     else
@@ -276,7 +275,9 @@ Citizen.CreateThread(function()
                 for Index, CurrentFlatbed in pairs(Config.Flatbeds) do
                     if VehicleModel == GetHashKey(CurrentFlatbed.Hash) then
                         LastVehicle = PlayerVehicle
-                        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(PlayerVehicle))
+                        if NetworkGetEntityOwner(PlayerVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+                            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(PlayerVehicle))
+                        end
                         break
                     end
                 end
@@ -470,19 +471,6 @@ CreateThread(function()
                         return false
                     end
                     return true
-                end,
-            },
-        },
-        distance = 3,
-    })
-    exports["qb-target"]:AddTargetModel(-669511193, {
-        options = {
-            {
-                type = "client",
-                icon = "fa-solid fa-ban",
-                label = "Supprimer",
-                action = function(entity)
-                    DeleteEntity(entity)
                 end,
             },
         },
