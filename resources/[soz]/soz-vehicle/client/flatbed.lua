@@ -107,9 +107,7 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action, owner)
             exports["soz-hud"]:DrawNotification("Vous avez détaché le véhicule !")
         end
     else
-        if NetworkGetEntityOwner(LastVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
             TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(LastVehicle))
-        end
     end
 
     Busy = false
@@ -221,40 +219,44 @@ RegisterNetEvent("soz-flatbed:client:actiondettach", function(BedInfo)
 end)
 
 RegisterNetEvent("soz-flatbed:client:tpaction")
-AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity)
+AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity, owner)
     if BedInfo and DoesEntityExist(NetworkGetEntityFromNetworkId(BedInfo.Prop)) then
         local VehicleInfo = GetVehicleInfo(GetEntityModel(lastveh))
         local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
         if not BedInfo.Attached then
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
             if DoesEntityExist(entity) and entity ~= lastveh then
-                AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false,
-                                     false, nil, true)
-
+                TriggerServerEvent("soz-flatbed:server:actionownerfalse", AttachCoords, entity, PropID, owner)
                 TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", NetworkGetNetworkIdFromEntity(entity))
                 TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                 exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
             end
             LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
         else
-            local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
-            local AttachedCoords = GetEntityCoords(AttachedVehicle)
-            local FlatCoords = GetEntityCoords(lastveh)
-            DetachEntity(AttachedVehicle, true, true)
-            SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
-                            FlatCoords.z, false, false, false, false)
+            TriggerServerEvent("soz-flatbed:server:actionownertrue", BedInfo, lastveh, owner)
             TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", nil)
             LastAttach = nil
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
             exports["soz-hud"]:DrawNotification("Vous avez enlevé le véhicule du plateau !")
         end
     else
-        if NetworkGetEntityOwner(entity) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
-            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
-        end
+        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
     end
-
     Busy = false
+end)
+
+RegisterNetEvent("soz-flatbed:client:actionownerfalse", function(AttachCoords, entity, PropID)
+    AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false,
+    false, nil, true)
+end)
+
+RegisterNetEvent("soz-flatbed:client:actionownertrue", function(BedInfo, lastveh)
+    local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
+    local AttachedCoords = GetEntityCoords(AttachedVehicle)
+    local FlatCoords = GetEntityCoords(lastveh)
+    DetachEntity(AttachedVehicle, true, true)
+    SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
+                    FlatCoords.z, false, false, false, false)
 end)
 
 Citizen.CreateThread(function()
@@ -338,7 +340,7 @@ local function TpFlatbed(entity, lastveh)
         if LastAttach then
             TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil, GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity, GetPlayerServerId(NetworkGetEntityOwner(lastveh)))
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity, GetPlayerServerId(NetworkGetEntityOwner(entity)))
         end
     end
 end
