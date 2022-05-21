@@ -360,6 +360,7 @@ RegisterNetEvent("soz-flatbed:client:callaction", function(entity)
 end)
 
 CreateThread(function()
+    --[[
     exports["qb-target"]:AddGlobalVehicle({
         options = {
             {
@@ -483,7 +484,7 @@ CreateThread(function()
             },
         },
         distance = 3,
-    })
+    })]]
     exports["qb-target"]:AddTargetModel(-669511193, {
         options = {
             {
