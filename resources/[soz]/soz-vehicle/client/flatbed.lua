@@ -372,11 +372,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return not LastStatus
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -390,11 +391,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return LastStatus
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -408,11 +410,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return not LastAttach
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -426,11 +429,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return LastAttach
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -444,11 +448,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return LastAttach
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -463,7 +468,7 @@ CreateThread(function()
                     if GetEntityModel(entity) == GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(GetVehiclePedIsIn(PlayerPedId(), true)) ~=
+                    if OnDuty == false or NetworkGetEntityOwner(GetVehiclePedIsIn(PlayerPedId(), true)) ~=
                         NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
@@ -473,6 +478,7 @@ CreateThread(function()
                     end
                     return true
                 end,
+                job = "bennys",
             },]]
         },
         distance = 3,
@@ -486,6 +492,7 @@ CreateThread(function()
                 action = function(entity)
                     DeleteEntity(entity)
                 end,
+                job = "bennys",
             },
         },
         distance = 3,
