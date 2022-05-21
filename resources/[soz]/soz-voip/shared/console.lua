@@ -14,7 +14,7 @@ end
 
 
 console.debug = function(msg, ...)
-    if not Config.enableDebug then
+    if not Config.debug then
         return
     end
 
