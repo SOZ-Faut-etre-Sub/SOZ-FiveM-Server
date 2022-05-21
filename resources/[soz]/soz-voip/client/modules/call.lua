@@ -32,5 +32,13 @@ function RegisterCallModule()
     RegisterNetEvent("voip:client:call:start", StartCall)
     RegisterNetEvent("voip:client:call:end", StopCall)
 
+    local filters = {
+        { filterType = "biquad",        type = "highpass",  frequency = 500.0,   q = 1.0,   gain = 0.0 },
+        { filterType = "biquad",        type = "lowpass",   frequency = 10000.0, q = 5.0,   gain = 0.0 },
+        { filterType = "waveshaper",    type = "curve",     distortion = 0,      curve = --[[GetDistortionCurve(0)]]0 },
+    }
+
+    Filter:updateContextFilter("call", filters)
+
     console.debug("Call module registered !")
 end

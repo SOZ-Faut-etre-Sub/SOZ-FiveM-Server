@@ -54,9 +54,9 @@ RegisterNetEvent("voip:client:voice:transmission:state", function(serverID, cont
         MumbleSetVolumeOverrideByServerId(serverID, data.volume)
     end
 
-    --if (Config.enableFilters.phone or Config.enableFilters.radio) and CanUseFilter(transmitting, context) then
-    --    SetTransmissionFilters(serverID, data)
-    --end
+    if Config.filterAllowed[context] and Filter:canUseFilter(context, transmitting) then
+        Filter:setTransmissionFilters(serverID, data)
+    end
 
     console.debug("Transmission for %s in context %s", serverID, context, transmitting)
 end)
