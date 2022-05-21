@@ -22,6 +22,10 @@ Config.voiceRanges = {
     [3] = {name = "shout", range = 12.0},
 }
 
+--- Radio
+Config.radioFrequencies = {min = 10000, max = 99999}
+Config.radioShortRangeDistance = 3000.0
+
 --- Volume
 Config.volumes = {
     ["call"] = 0.8,

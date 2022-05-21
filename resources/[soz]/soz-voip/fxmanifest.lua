@@ -12,7 +12,6 @@ client_scripts {
     "client/main.lua",
     "client/transmission.lua",
     "client/targets.lua",
-    "client/channels.lua",
     "client/modules/*.lua",
     "client/blockscreen.lua",
 }

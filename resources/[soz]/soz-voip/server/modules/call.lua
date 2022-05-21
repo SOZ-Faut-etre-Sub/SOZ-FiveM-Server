@@ -17,16 +17,6 @@ RegisterNetEvent("voip:server:call:end", function(target)
     end
 end)
 
-RegisterNetEvent("voip:server:transmission:state", function(group, context, transmitting, isMult)
-    if isMult then
-        for _, v in pairs(group) do
-            TriggerClientEvent('voip:client:voice:transmission:state', v, source, context, transmitting)
-        end
-    else
-        TriggerClientEvent('voip:client:voice:transmission:state', group, source, context, transmitting)
-    end
-end)
-
 AddEventHandler('playerDropped', function()
     TriggerEvent("voip:server:call:end", source)
 end)

@@ -1,5 +1,6 @@
 local haveItem = false
 local radioOpen, radioEnabled, radioProp = false, false, nil
+local primaryRadio, secondaryRadio = nil, nil
 
 --- Functions
 local function toggleRadioAnimation(pState)
@@ -19,9 +20,11 @@ local function toggleRadioAnimation(pState)
     end
 end
 
-local function leaveRadio()
-    exports["soz-voip"]:setRadioChannel("radio-sr", 0, true)
-    exports["soz-voip"]:setRadioChannel("radio-sr", 0, false)
+local function powerOnRadio()
+    exports["soz-voip"]:SetRadioShortRangePowerState(true)
+end
+local function powerOffRadio()
+    exports["soz-voip"]:SetRadioShortRangePowerState(false)
 end
 
 local function toggleRadio(toggle)
@@ -50,24 +53,37 @@ end)
 
 RegisterNUICallback("radio/enable", function(data, cb)
     radioEnabled = data.state
-    if not radioEnabled then
-        leaveRadio()
+    if radioEnabled then
+        powerOnRadio()
+    else
+        powerOffRadio()
     end
     SoundProvider.toggle()
     cb("ok")
 end)
 
 RegisterNUICallback("radio/change_frequency", function(data, cb)
-    local state = LocalPlayer.state["radio-sr"]
     if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
-        exports["soz-voip"]:setRadioChannel("radio-sr", data.primary, true)
-        SoundProvider.default(state.primaryChannelVolume)
+        if data.primary ~= primaryRadio and primaryRadio ~= nil then
+            TriggerServerEvent("voip:server:radio:disconnect", primaryRadio)
+        end
+
+        TriggerServerEvent("voip:server:radio:connect", "primary", data.primary)
+        SoundProvider.default(0.5)
+
+        primaryRadio = data.primary
         cb("ok")
         return
     end
     if data.secondary and tonumber(data.secondary) >= Config.Radio.min and tonumber(data.secondary) <= Config.Radio.max then
-        exports["soz-voip"]:setRadioChannel("radio-sr", data.secondary, false)
-        SoundProvider.default(state.secondaryChannelVolume)
+        if data.secondary ~= secondaryRadio and secondaryRadio ~= nil then
+            TriggerServerEvent("voip:server:radio:disconnect", secondaryRadio)
+        end
+
+        TriggerServerEvent("voip:server:radio:connect", "secondary", data.secondary)
+        SoundProvider.default(0.5)
+
+        secondaryRadio = data.secondary
         cb("ok")
         return
     end
@@ -122,7 +138,7 @@ end, false)
 RegisterKeyMapping("radio_toggle", "Sortir la radio", "keyboard", "N")
 
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
-    leaveRadio()
+    powerOffRadio()
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
@@ -136,7 +152,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 
     if not haveItem then
-        leaveRadio()
+        powerOffRadio()
     end
 end)
 
