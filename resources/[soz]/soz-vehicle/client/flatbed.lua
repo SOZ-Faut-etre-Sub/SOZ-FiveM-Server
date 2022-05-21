@@ -432,7 +432,6 @@ CreateThread(function()
                     return LastAttach
                 end,
             },
-            --]]
             {
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
@@ -474,7 +473,7 @@ CreateThread(function()
                     end
                     return true
                 end,
-            },
+            },]]
         },
         distance = 3,
     })
