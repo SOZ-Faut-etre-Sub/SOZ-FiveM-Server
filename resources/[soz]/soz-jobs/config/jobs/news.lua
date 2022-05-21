@@ -5,6 +5,69 @@ NewsConfig.SellPrice = 30
 
 NewsConfig.FarmMultiplier = 5
 
+NewsConfig.Cloakroom = {
+    [GetHashKey("mp_m_freemode_01")] = {
+        ["Costume Talk Show"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 1, Texture = 0, Palette = 0},
+                [4] = {Drawable = 10, Texture = 1, Palette = 0},
+                [6] = {Drawable = 10, Texture = 0, Palette = 0},
+                [7] = {Drawable = 38, Texture = 4, Palette = 0},
+                [8] = {Drawable = 31, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 99, Texture = 1, Palette = 0},
+            },
+            Props = {},
+        },
+        ["Costume Terrain"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 11, Texture = 0, Palette = 0},
+                [4] = {Drawable = 22, Texture = 2, Palette = 0},
+                [6] = {Drawable = 1, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 0, Texture = 20, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 95, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
+    },
+    [GetHashKey("mp_f_freemode_01")] = {
+        ["Costume Talk Show"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 6, Texture = 0, Palette = 0},
+                [4] = {Drawable = 133, Texture = 5, Palette = 0},
+                [6] = {Drawable = 42, Texture = 2, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 215, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 25, Texture = 5, Palette = 0},
+            },
+            Props = {},
+        },
+        ["Costume Terrain"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 14, Texture = 0, Palette = 0},
+                [4] = {Drawable = 34, Texture = 0, Palette = 0},
+                [6] = {Drawable = 49, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 0, Texture = 20, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 250, Texture = 1, Palette = 0},
+            },
+            Props = {},
+        },
+    },
+}
+
 NewsConfig.BossShop = {
     [1] = {name = "armor", metadata = {label = "Twitch News", type = "news"}, price = 150, amount = 1},
     [2] = {name = "n_fix_camera", metadata = {}, price = 250, amount = 1},

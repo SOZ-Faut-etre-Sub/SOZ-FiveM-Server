@@ -519,7 +519,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
             if not wasCancelled then
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
                     if success then
-                        exports["soz-hud"]:DrawNotification(string.format("Vous avez préparer ~g~1 %s", item.label))
+                        exports["soz-hud"]:DrawNotification(string.format("Vous avez préparé ~g~1 %s", item.label))
 
                         TriggerServerEvent("monitor:server:event", "job_cm_food_craft", {item_id = itemId},
                                            {

@@ -1,4 +1,5 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local garage_props = GetHashKey("soz_prop_paystation")
 
 CreateThread(function()
@@ -12,51 +13,65 @@ end)
 QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(source, cb, garage, type, category)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
+
     if type == "public" or type == "private" then -- Public garages give player cars in the garage only
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ? AND garage = ? AND state = ?", {
-            pData.PlayerData.citizenid,
-            garage,
-            1,
-        }, function(result)
-            if result[1] then
-                cb(result, os.time())
-            else
-                cb(nil)
+        local vehicles = MySQL.Sync.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ? AND garage = ? AND state = ?",
+                                             {pData.PlayerData.citizenid, garage, 1})
+
+        if #vehicles > 0 then
+            cb(vehicles, os.time())
+        else
+            cb(nil)
+        end
+
+        return
+    end
+
+    if type == "depot" then -- Depot give player cars that are not in garage only
+        local canTakeOutPoundJob = SozJobCore.Functions.HasPermission(pData.PlayerData.job.id, pData.PlayerData.job.id, pData.PlayerData.job.grade,
+                                                                      SozJobCore.JobPermission.SocietyTakeOutPound)
+        local vehicles = {}
+
+        if canTakeOutPoundJob then
+            vehicles = MySQL.Sync.fetchAll("SELECT * FROM player_vehicles WHERE (citizenid = ? OR job = ?) AND state = 2",
+                                           {pData.PlayerData.citizenid, pData.PlayerData.job.id})
+        else
+            vehicles = MySQL.Sync.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ? AND state = 2", {
+                pData.PlayerData.citizenid,
+            })
+        end
+
+        if #vehicles == 0 then
+            cb(nil)
+
+            return
+        end
+
+        local tosend = {}
+
+        for _, vehicle in pairs(vehicles) do
+            if category == "air" and
+                (QBCore.Shared.Vehicles[vehicle.vehicle].category == "helicopters" or QBCore.Shared.Vehicles[vehicle.vehicle].category == "planes") then
+                tosend[#tosend + 1] = vehicle
+            elseif category == "sea" and QBCore.Shared.Vehicles[vehicle.vehicle].category == "boats" then
+                tosend[#tosend + 1] = vehicle
+            elseif category == "car" and QBCore.Shared.Vehicles[vehicle.vehicle].category ~= "helicopters" and QBCore.Shared.Vehicles[vehicle.vehicle].category ~=
+                "planes" and QBCore.Shared.Vehicles[vehicle.vehicle].category ~= "boats" then
+                tosend[#tosend + 1] = vehicle
             end
-        end)
-    elseif type == "depot" then -- Depot give player cars that are not in garage only
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE citizenid = ? AND (state = ? OR state = ?)", {
-            pData.PlayerData.citizenid,
-            0,
-            2,
-        }, function(result)
-            local tosend = {}
-            if result[1] then
-                -- Check vehicle type against depot type
-                for k, vehicle in pairs(result) do
-                    if category == "air" and
-                        (QBCore.Shared.Vehicles[vehicle.vehicle].category == "helicopters" or QBCore.Shared.Vehicles[vehicle.vehicle].category == "planes") then
-                        tosend[#tosend + 1] = vehicle
-                    elseif category == "sea" and QBCore.Shared.Vehicles[vehicle.vehicle].category == "boats" then
-                        tosend[#tosend + 1] = vehicle
-                    elseif category == "car" and QBCore.Shared.Vehicles[vehicle.vehicle].category ~= "helicopters" and
-                        QBCore.Shared.Vehicles[vehicle.vehicle].category ~= "planes" and QBCore.Shared.Vehicles[vehicle.vehicle].category ~= "boats" then
-                        tosend[#tosend + 1] = vehicle
-                    end
-                end
-                cb(tosend)
-            else
-                cb(nil)
-            end
-        end)
-    else -- House, Job and Gang, give all cars in the garage
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE garage = ? AND state = ?", {garage, 1}, function(result)
-            if result[1] then
-                cb(result)
-            else
-                cb(nil)
-            end
-        end)
+        end
+
+        cb(tosend)
+
+        return
+    end
+
+    local vehicles = MySQL.Sync.fetchAll("SELECT * FROM player_vehicles WHERE garage = ? AND state = ?", {garage, 1})
+
+    if #vehicles > 0 then
+        cb(vehicles)
+    else
+        cb(nil)
     end
 end)
 

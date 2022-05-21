@@ -39,6 +39,7 @@ local function LockVehicle()
                 QBCore.Functions.RequestAnimDict("anim@mp_player_intmenu@key_fob@")
                 TaskPlayAnim(ped, "anim@mp_player_intmenu@key_fob@", "fob_click", 3.0, 3.0, -1, 49, 0, false, false, false)
 
+                NetworkRequestControlOfEntity(veh)
                 if vehLockStatus == 1 then
                     Wait(750)
                     ClearPedTasks(ped)

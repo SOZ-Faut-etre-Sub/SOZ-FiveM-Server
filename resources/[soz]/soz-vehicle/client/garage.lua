@@ -89,9 +89,9 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
         local price
         if garageType.type == "private" then
             local timediff = math.floor((time - v.parkingtime) / 3600)
-            price = timediff * 100
-            if price > 1000 then
-                price = 1000
+            price = timediff * 20
+            if price > 200 then
+                price = 200
             end
         elseif garageType.type == "depot" then
             price = v.depotprice
