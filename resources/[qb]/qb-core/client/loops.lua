@@ -9,14 +9,23 @@ CreateThread(function()
 end)
 
 CreateThread(function()
+    local lib, anim = "move_m@_idles@out_of_breath", "idle_c"
+
     while true do
         Wait(QBCore.Config.StatusInterval)
         if LocalPlayer.state.isLoggedIn then
             if QBCore.Functions.GetPlayerData().metadata['hunger'] <= 0 or
                     QBCore.Functions.GetPlayerData().metadata['thirst'] <= 0 then
                 local ped = PlayerPedId()
-                local currentHealth = GetEntityHealth(ped)
-                SetEntityHealth(ped, currentHealth - math.random(7, 15))
+
+                if GetEntityHealth(ped) > 0 then
+                    QBCore.Functions.RequestAnimDict(lib)
+                    ClearPedTasksImmediately(ped)
+                    TaskPlayAnim(ped, lib, anim, 8.0, -8.0, 8000, 0, 0, 0, 0, 0)
+                    Wait(8000)
+
+                    SetEntityHealth(ped, 0)
+                end
             end
         end
     end

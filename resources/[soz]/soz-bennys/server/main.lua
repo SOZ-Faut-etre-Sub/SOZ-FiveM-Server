@@ -10,6 +10,22 @@ RegisterNetEvent("soz-bennys:server:SaveVehicleProps", function(vehicleProps)
     end
 end)
 
+RegisterNetEvent("soz-bennys:server:Repair", function(veh, id)
+    TriggerClientEvent("soz-bennys:client:Repair", id, veh)
+end)
+
+RegisterNetEvent("soz-bennys:server:Clean", function(veh, id)
+    TriggerClientEvent("soz-bennys:client:Clean", id, veh)
+end)
+
+RegisterNetEvent("soz-bennys:server:EngineRepair", function(veh, id, partstatus)
+    TriggerClientEvent("soz-bennys:client:EngineRepair", id, veh, partstatus)
+end)
+
+RegisterNetEvent("soz-bennys:server:BodyRepair", function(veh, id, partstatus, enhealth)
+    TriggerClientEvent("soz-bennys:client:BodyRepair", id, veh, partstatus, enhealth)
+end)
+
 RegisterNetEvent("soz-bennys:server:setupVehicleStatus", function(plate, engineHealth, bodyHealth)
     engineHealth = engineHealth ~= nil and engineHealth or 1000.0
     bodyHealth = bodyHealth ~= nil and bodyHealth or 1000.0
