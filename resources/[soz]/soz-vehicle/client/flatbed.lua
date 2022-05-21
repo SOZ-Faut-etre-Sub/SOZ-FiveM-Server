@@ -336,9 +336,9 @@ local function TpFlatbed(entity, lastveh)
     if not Busy then
         Busy = true
         if LastAttach then
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil)
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil, GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity)
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity, GetPlayerServerId(NetworkGetEntityOwner(lastveh)))
         end
     end
 end
