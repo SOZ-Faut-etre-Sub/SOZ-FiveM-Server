@@ -21,8 +21,8 @@ RegisterNetEvent("soz-bennys:server:EngineRepair", function(veh, id, partstatus)
     TriggerClientEvent("soz-bennys:client:EngineRepair", id, veh, partstatus)
 end)
 
-RegisterNetEvent("soz-bennys:server:BodyRepair", function(veh, id, partstatus, enhealth)
-    TriggerClientEvent("soz-bennys:client:BodyRepair", id, veh, partstatus, enhealth)
+RegisterNetEvent("soz-bennys:server:BodyRepair", function(veh, id, partstatus, enginehealth, fuelhealth)
+    TriggerClientEvent("soz-bennys:client:BodyRepair", id, veh, partstatus, enginehealth, fuelhealth)
 end)
 
 RegisterNetEvent("soz-bennys:server:FuelRepair", function(veh, id, partstatus)
