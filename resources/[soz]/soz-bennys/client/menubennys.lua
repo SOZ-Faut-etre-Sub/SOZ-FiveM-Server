@@ -740,45 +740,78 @@ NoDamage:On("close", function()
 end)
 
 Status:On("open", function(menu)
-    local plate = QBCore.Functions.GetPlate(Config.AttachedVehicle)
     menu:ClearItems()
     menu:AddTitle({label = "Réparation"})
-    if VehicleStatus[plate] ~= nil then
-        menu:AddButton({
-            icon = "◀",
-            label = "Menu Benny's",
-            value = VehiculeOptions,
-            select = function()
-                menu:Close()
-            end,
-        })
-        for k, v in pairs(Config.ValuesLabels) do
-            if math.ceil(VehicleStatus[plate][k]) ~= Config.MaxStatusValues[k] then
-                local percentage = math.ceil(VehicleStatus[plate][k])
-                if percentage > 100 then
-                    percentage = math.ceil(VehicleStatus[plate][k]) / 10
-                elseif percentage == 100 then
-                    percentage = math.round(percentage)
-                end
+    menu:AddButton({
+        icon = "◀",
+        label = "Menu Benny's",
+        value = VehiculeOptions,
+        select = function()
+            menu:Close()
+        end,
+    })
+    for k, v in pairs(Config.ValuesLabels) do
+        if k == "engine" then
+            local enginehealth = GetVehicleEngineHealth(Config.AttachedVehicle)
+            local enginepercentage =  math.round(math.ceil(Config.MaxStatusValues[k]) / 10)
+            if enginehealth == Config.MaxStatusValues[k] then
                 menu:AddButton({
                     label = v,
-                    value = PartMenu,
-                    description = "Etat: " .. percentage .. "% / 100.0%",
+                    value = NoDamage,
+                    description = "Etat: " .. enginepercentage .. "% / 100.0%",
                     select = function()
                         variablePart = {v, k}
                     end,
                 })
             else
-                local percentage = math.ceil(Config.MaxStatusValues[k])
-                if percentage > 100 then
-                    percentage = math.ceil(Config.MaxStatusValues[k]) / 10
-                elseif percentage == 100 then
-                    percentage = math.round(percentage)
-                end
+                menu:AddButton({
+                    label = v,
+                    value = PartMenu,
+                    description = "Etat: " .. enginepercentage .. "% / 100.0%",
+                    select = function()
+                        variablePart = {v, k}
+                    end,
+                })
+            end
+        elseif k == "body" then
+            local bodyhealth = GetVehicleBodyHealth(Config.AttachedVehicle)
+            local bodypercentage =  math.round(math.ceil(Config.MaxStatusValues[k]) / 10)
+            if bodyhealth == Config.MaxStatusValues[k] then
                 menu:AddButton({
                     label = v,
                     value = NoDamage,
-                    description = "Etat: " .. percentage .. "% / 100.0%",
+                    description = "Etat: " .. bodypercentage .. "% / 100.0%",
+                    select = function()
+                        variablePart = {v, k}
+                    end,
+                })
+            else
+                menu:AddButton({
+                    label = v,
+                    value = PartMenu,
+                    description = "Etat: " .. bodypercentage .. "% / 100.0%",
+                    select = function()
+                        variablePart = {v, k}
+                    end,
+                })
+            end
+        elseif k == "fuel" then
+            local tankhealth = GetVehiclePetrolTankHealth(Config.AttachedVehicle)
+            local tankpercentage =  math.round(math.ceil(Config.MaxStatusValues[k]) / 10)
+            if tankhealth == Config.MaxStatusValues[k] then
+                menu:AddButton({
+                    label = v,
+                    value = NoDamage,
+                    description = "Etat: " .. tankpercentage .. "% / 100.0%",
+                    select = function()
+                        variablePart = {v, k}
+                    end,
+                })
+            else
+                menu:AddButton({
+                    label = v,
+                    value = PartMenu,
+                    description = "Etat: " .. tankpercentage .. "% / 100.0%",
                     select = function()
                         variablePart = {v, k}
                     end,
