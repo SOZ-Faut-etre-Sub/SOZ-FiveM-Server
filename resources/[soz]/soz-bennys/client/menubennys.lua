@@ -753,7 +753,7 @@ Status:On("open", function(menu)
     for k, v in pairs(Config.ValuesLabels) do
         if k == "engine" then
             local enginehealth = GetVehicleEngineHealth(Config.AttachedVehicle)
-            local enginepercentage =  math.round(math.ceil(enginehealth) / 10)
+            local enginepercentage = math.round(math.ceil(enginehealth) / 10)
             if enginehealth == Config.MaxStatusValues[k] then
                 menu:AddButton({
                     label = v,
@@ -775,7 +775,7 @@ Status:On("open", function(menu)
             end
         elseif k == "body" then
             local bodyhealth = GetVehicleBodyHealth(Config.AttachedVehicle)
-            local bodypercentage =  math.round(math.ceil(bodyhealth) / 10)
+            local bodypercentage = math.round(math.ceil(bodyhealth) / 10)
             if bodyhealth == Config.MaxStatusValues[k] then
                 menu:AddButton({
                     label = v,
@@ -797,7 +797,7 @@ Status:On("open", function(menu)
             end
         elseif k == "fuel" then
             local tankhealth = GetVehiclePetrolTankHealth(Config.AttachedVehicle)
-            local tankpercentage =  math.round(math.ceil(tankhealth) / 10)
+            local tankpercentage = math.round(math.ceil(tankhealth) / 10)
             if tankhealth == Config.MaxStatusValues[k] then
                 menu:AddButton({
                     label = v,
