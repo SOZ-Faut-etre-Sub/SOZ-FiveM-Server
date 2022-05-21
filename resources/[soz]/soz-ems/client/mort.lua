@@ -37,6 +37,7 @@ local function OnDeath()
             StartScreenEffect("DeathFailOut", 0, false)
 
             TriggerEvent("ems:client:onDeath")
+            TriggerServerEvent("ems:server:onDeath")
 
             local ReasonMort = exports["soz-hud"]:Input("Raison du coma :", 200)
             TriggerServerEvent("lsmc:server:SetMort", ReasonMort)
@@ -138,19 +139,17 @@ CreateThread(function()
 
             if IsPedInAnyVehicle(ped, false) then
                 if not IsEntityPlayingAnim(ped, "veh@low@front_ps@idle_duck", "sit", 3) then
+                    ClearPedTasksImmediately(ped)
                     TaskPlayAnim(ped, "veh@low@front_ps@idle_duck", "sit", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                 end
             else
+                if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
+                    ClearPedTasksImmediately(ped)
+                    TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
+                end
                 if isInHospitalBed then
-                    if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
-                        TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
-                    end
                     DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour vous levez ou attender un médecin", 255, 255, 255,
                             255)
-                else
-                    if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
-                        TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
-                    end
                 end
             end
 
