@@ -55,7 +55,6 @@ end)
 function RegisterModuleContext(context, priority)
     Transmissions:registerContext(context)
     Targets:registerContext(context)
-    Channels:registerContext(context)
     Transmissions:setContextData(context, "priority", priority)
 
     console.debug("Context %s registered with priority %s", context, priority)
@@ -69,6 +68,14 @@ Citizen.CreateThread(function()
 
     RegisterProximityModule()
     RegisterCallModule()
+    RegisterRadioShortRangeModule()
 
     SetVoiceProximity(PlayerData.CurrentProximity)
 end)
+
+function LoadAnimDict(dict)
+    while not HasAnimDictLoaded(dict) do
+        RequestAnimDict(dict)
+        Citizen.Wait(0)
+    end
+end

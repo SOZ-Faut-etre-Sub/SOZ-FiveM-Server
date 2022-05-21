@@ -59,3 +59,33 @@ function RemovePlayerFromTargetList(serverID, context, transmit, refresh)
 
     console.debug("Removed player %s from context %s", serverID, context)
 end
+
+function AddGroupToTargetList(group, context)
+    if not Targets:contextExists(context) then
+        return
+    end
+
+    for serverID, active in pairs(group) do
+        if active then
+            AddPlayerToTargetList(serverID, context, false)
+        end
+    end
+
+    TriggerServerEvent("voip:server:transmission:state", group, context, true, true)
+end
+
+function RemoveGroupToTargetList(group, context)
+    if not Targets:contextExists(context) then
+        return
+    end
+
+    for serverID, active in pairs(group) do
+        if active then
+            RemovePlayerFromTargetList(serverID, context, false, false)
+        end
+    end
+
+    RefreshTargets()
+
+    TriggerServerEvent("voip:server:transmission:state", group, context, false, true)
+end
