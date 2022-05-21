@@ -82,8 +82,9 @@ RegisterNetEvent("soz-bennys:client:RepairPart", function(part)
     if part == "engine" then
         TriggerServerEvent("soz-bennys:server:EngineRepair", VehToNet(veh), serverIDcar, Config.MaxStatusValues[part])
     elseif part == "body" then
-        local enhealth = GetVehicleEngineHealth(veh)
-        TriggerServerEvent("soz-bennys:server:BodyRepair", VehToNet(veh), serverIDcar, Config.MaxStatusValues[part], enhealth)
+        local enginehealth = GetVehicleEngineHealth(veh)
+        local fuelhealth = GetVehiclePetrolTankHealth(veh)
+        TriggerServerEvent("soz-bennys:server:BodyRepair", VehToNet(veh), serverIDcar, Config.MaxStatusValues[part], enginehealth, fuelhealth)
     elseif part == "fuel" then
         TriggerServerEvent("soz-bennys:server:FuelRepair", VehToNet(veh), serverIDcar, Config.MaxStatusValues[part])
     end
@@ -244,16 +245,17 @@ RegisterNetEvent("soz-bennys:client:EngineRepair", function(net, partstatus)
     SetVehicleEngineHealth(veh, partstatus)
 end)
 
-RegisterNetEvent("soz-bennys:client:BodyRepair", function(net, partstatus, enhealth)
+RegisterNetEvent("soz-bennys:client:BodyRepair", function(net, partstatus, enginehealth, fuelhealth)
     local veh = NetworkGetEntityFromNetworkId(net)
     SetVehicleBodyHealth(veh, partstatus)
     SetVehicleFixed(veh)
-    SetVehicleEngineHealth(veh, enhealth)
+    SetVehicleEngineHealth(veh, enginehealth)
+    SetVehiclePetrolTankHealth(veh, fuelhealth)
 end)
 
 RegisterNetEvent("soz-bennys:client:FuelRepair", function(net, partstatus)
     local veh = NetworkGetEntityFromNetworkId(net)
-    GetVehiclePetrolTankHealth(veh, partstatus)
+    SetVehiclePetrolTankHealth(veh, partstatus)
 end)
 
 local function Repairall(entity)
