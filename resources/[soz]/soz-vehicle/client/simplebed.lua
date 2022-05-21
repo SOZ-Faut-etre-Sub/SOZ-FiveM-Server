@@ -11,6 +11,7 @@ Citizen.CreateThread(function()
                 canInteract = function(entity)
                     return GetEntityModel(entity) ~= flatbedModel and Entity(entity).state.towedVehicle == nil
                 end,
+                job = "bennys",
             },
             {
                 label = "Détacher",
@@ -20,6 +21,7 @@ Citizen.CreateThread(function()
                 canInteract = function(entity)
                     return GetEntityModel(entity) == flatbedModel and Entity(entity).state.towedVehicle ~= nil
                 end,
+                job = "bennys",
             },
         },
         distance = 3.0,
@@ -29,8 +31,8 @@ end)
 RegisterNetEvent("vehicle:flatbed:attach", function(data)
     local flatbed = GetLastDrivenVehicle()
 
-    if GetEntityModel(data.entity) == flatbedModel then
-        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas attacher un flatbed à un autre flatbed.", "error")
+    if data.entity == flatbed then
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas vous attacher à vous-même.")
         return
     end
 
@@ -71,11 +73,6 @@ RegisterNetEvent("vehicle:flatbed:detach", function(data)
 
     if IsPedInAnyVehicle(PlayerPedId(), true) then
         exports["soz-hud"]:DrawNotification("Vous ne devez pas être dans un véhicule.", "error")
-        return
-    end
-
-    if GetEntityModel(flatbed) ~= flatbedModel then
-        exports["soz-hud"]:DrawNotification("Vous devez être monté dans un flatbed avant.", "error")
         return
     end
 
