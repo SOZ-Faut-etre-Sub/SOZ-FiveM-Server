@@ -95,9 +95,9 @@ local function SortirMenu(type, garage, indexgarage)
                     local currentFuel = v.fuel
                     local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
                     local timediff = math.floor((time - v.parkingtime) / 3600)
-                    local price = timediff * 100
-                    if price > 1000 then
-                        price = 1000
+                    local price = timediff * 20
+                    if price > 200 then
+                        price = 200
                     end
                     if v.state == 1 then
                         VehiculeParkingPrive:AddButton({
