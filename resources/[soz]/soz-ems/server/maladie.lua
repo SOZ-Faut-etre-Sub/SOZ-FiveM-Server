@@ -38,6 +38,11 @@ QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(id, cb)
     cb(organ)
 end)
 
+RegisterServerEvent("ems:server:onDeath", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    Player.Functions.SetMetaData("isdead", true)
+end)
+
 RegisterServerEvent("lsmc:server:SetMort")
 AddEventHandler("lsmc:server:SetMort", function(ReasonMort)
     local Player = QBCore.Functions.GetPlayer(source)
