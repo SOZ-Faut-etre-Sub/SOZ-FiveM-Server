@@ -278,8 +278,6 @@ local function Repairall(entity)
         local plate = QBCore.Functions.GetPlate(entity)
         local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
         TriggerServerEvent("soz-bennys:server:Repair", VehToNet(entity), serverIDcar)
-        TriggerServerEvent("soz-bennys:server:updatePart", plate, "body", 1000.0)
-        TriggerServerEvent("soz-bennys:server:updatePart", plate, "engine", 1000.0)
         TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle", {}, {
             vehicle_plate = plate,
             vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
