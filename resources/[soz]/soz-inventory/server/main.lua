@@ -448,6 +448,7 @@ RegisterNetEvent("inventory:server:RemoveItem", Inventory.RemoveItem)
 exports("RemoveItem", Inventory.RemoveItem)
 
 function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, slot, cb)
+    local success, reason = false, nil
     if type(invSource) ~= "table" then
         invSource = Inventory(invSource)
     end
@@ -461,68 +462,69 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         metadata = {}
     end
     amount = math.floor(amount + 0.5)
-    local success, reason = false, nil
+    cb = type(cb) == "function" and cb or function()
+    end
 
-    if item then
-        if invSource then
-            if invTarget then
-                local itemSlots, totalAmount
-                if slot then
-                    local it = Inventory.GetItem(invSource, item, metadata)
-                    if it then
-                        itemSlots, totalAmount = it.slot, it.amount
-                    end
-                else
-                    itemSlots, totalAmount = Inventory.GetItemSlots(invSource, item, metadata)
-                end
+    if not item then
+        cb(false, "invalid_item")
+        return
+    end
 
-                if itemSlots ~= nil or totalAmount ~= nil then
-                    if amount > totalAmount then
-                        amount = totalAmount
-                    end
+    if not invSource or not invTarget then
+        cb(false, "invalid_inventory")
+        return
+    end
 
-                    if _G.Container[invTarget.type]:AllowedItems(item) then
-                        if Inventory.CanCarryItem(invTarget, item, amount, metadata) then
-                            Inventory.RemoveItem(invSource, item, amount, metadata, slot)
-                            Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
-                                success, reason = s, r
-                            end)
-
-                            _G.Container[invSource.type]:sync(invSource.id, invSource.items)
-                            _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
-
-                            if invSource.type ~= "player" and #invSource.users > 1 then
-                                for player, _ in pairs(invSource.users) do
-                                    TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invSource)
-                                end
-                            end
-                            if invTarget.type ~= "player" and #invTarget.users > 1 then
-                                for player, _ in pairs(invTarget.users) do
-                                    TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invTarget)
-                                end
-                            end
-                        else
-                            success, reason = false, "inventory_full"
-                        end
-                    else
-                        success, reason = false, "not_allowed_item"
-                    end
-                else
-                    success, reason = false, "nonexistent_item"
-                end
-            else
-                success, reason = false, "invalid_inventory"
-            end
-        else
-            success, reason = false, "invalid_inventory"
+    local itemSlots, totalAmount
+    if slot then
+        local it = Inventory.GetItem(invSource, item, metadata)
+        if it then
+            itemSlots, totalAmount = slot, it.amount
         end
     else
-        success, reason = false, "invalid_item"
+        itemSlots, totalAmount = Inventory.GetItemSlots(invSource, item, metadata)
     end
 
-    if cb then
-        cb(success, reason)
+    if itemSlots == nil or totalAmount == nil then
+        cb(false, "nonexistent_item")
+        return
     end
+
+    if not _G.Container[invTarget.type]:AllowedItems(item) then
+        cb(false, "not_allowed_item")
+        return
+    end
+
+    if amount > totalAmount then
+        amount = totalAmount
+    end
+
+    if not Inventory.CanCarryItem(invTarget, item, amount, metadata) then
+        cb(false, "inventory_full")
+        return
+    end
+
+    if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
+        Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
+            success, reason = s, r
+        end)
+
+        _G.Container[invSource.type]:sync(invSource.id, invSource.items)
+        _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
+    end
+
+    if invSource.type ~= "player" and #invSource.users > 1 then
+        for player, _ in pairs(invSource.users) do
+            TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invSource)
+        end
+    end
+    if invTarget.type ~= "player" and #invTarget.users > 1 then
+        for player, _ in pairs(invTarget.users) do
+            TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invTarget)
+        end
+    end
+
+    cb(success, reason)
 end
 
 --- Slots
