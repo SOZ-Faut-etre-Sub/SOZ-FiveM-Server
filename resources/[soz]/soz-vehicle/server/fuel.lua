@@ -70,6 +70,10 @@ RegisterNetEvent("soz-fuel:server:setFinalFuel", function(id, currentFuelAdd)
     saveStation(id)
 end)
 
+RegisterNetEvent("soz-fuel:server:SetFuel", function(entity, newFuel, serverIDcar)
+    TriggerClientEvent("soz-fuel:client:SetFuel", serverIDcar, entity, newFuel)
+end)
+
 --- Items
 QBCore.Functions.CreateUseableItem("essence_jerrycan", function(source, item)
     TriggerClientEvent("soz-fuel:client:onJerrycanEssence", source)
