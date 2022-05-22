@@ -8,7 +8,7 @@
           <txdName>sheriff3</txdName>
           <handlingId>SHERIFF</handlingId>
           <gameName>sheriff3</gameName>
-          <vehicleMakeName>sheriff3</vehicleMakeName>
+          <vehicleMakeName />
           <expressionDictName>null</expressionDictName>
           <expressionName>null</expressionName>
           <animConvRoofDictName>null</animConvRoofDictName>
