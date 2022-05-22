@@ -135,11 +135,14 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
 
     CreateThread(function()
         local obj = gasentity
-        while CordePompe ~= 0 do
+        while CordePompe ~= 0 and (RopeGetDistanceBetweenEnds(CordePompe) < 5) do
             Citizen.Wait(10)
             local pCoordsUpdated = GetWorldPositionOfEntityBone(PlayerPedId(), GetEntityBoneIndexByName(PlayerPedId(), "BONETAG_L_FINGER2"))
             AttachEntitiesToRope(CordePompe, PlayerPedId(), obj, pCoordsUpdated, vCoords, 1)
         end
+        ClearAnimation()
+        isFueling = false
+        pistoletdansmain = false
     end)
     exports["qb-target"]:AddTargetEntity(vehicle, {
         options = {
