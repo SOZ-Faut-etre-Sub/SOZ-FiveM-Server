@@ -25,7 +25,7 @@ AddEventHandler("soz-identity:client:request-identity-data", function(target, ac
         job = "-",
         address = "-",
         phone = charinfo.phone,
-        pid = PlayerPedId(),
+        pid = PedToNet(PlayerPedId()),
     }
 
     if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
