@@ -65,7 +65,7 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
 
                     TriggerEvent("monitor:server:event", "job_mtp_create_gasoline", {
                         player_source = Player.PlayerData.source,
-                    }, {quantity = 1, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+                    }, {quantity = essenceItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
                 else
                     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
                 end
@@ -121,7 +121,7 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
                 TriggerEvent("monitor:server:event", "job_mtp_refill_station", {
                     player_source = Player.PlayerData.source,
                     station = station,
-                }, {quantity = amount, position = GetEntityCoords(etPlayerPed(Player.PlayerData.source))})
+                }, {quantity = amount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
             else
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
             end
