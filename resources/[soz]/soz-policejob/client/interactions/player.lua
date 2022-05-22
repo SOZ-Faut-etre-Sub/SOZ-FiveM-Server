@@ -158,9 +158,7 @@ end)
 RegisterNetEvent("police:client:GetCuffed", function(playerId, isSoftcuff)
     local ped = PlayerPedId()
     ClearPedTasksImmediately(ped)
-    if GetSelectedPedWeapon(ped) ~= WEAPON_UNARMED then
-        SetCurrentPedWeapon(ped, WEAPON_UNARMED, true)
-    end
+    TriggerEvent("inventory:client:StoreWeapon")
 
     PoliceJob.Animations.GetCuffed(playerId)
     exports["soz-phone"]:setPhoneDisabled(true)

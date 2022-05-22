@@ -37,7 +37,7 @@ RegisterNUICallback("player/giveItem", function(data, cb)
         end
 
         if amount and tonumber(amount) > 0 then
-            SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
+            TriggerEvent("inventory:client:StoreWeapon")
             TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(player), data, tonumber(amount))
         end
     else
@@ -55,7 +55,7 @@ RegisterNUICallback("player/giveMoney", function(data, cb)
         local amount = exports["soz-hud"]:Input("Quantité", 12)
 
         if amount and tonumber(amount) > 0 then
-            SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
+            TriggerEvent("inventory:client:StoreWeapon")
             TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "money", tonumber(amount))
         end
     else
@@ -73,7 +73,7 @@ RegisterNUICallback("player/giveMarkedMoney", function(data, cb)
         local amount = exports["soz-hud"]:Input("Quantité", 12)
 
         if amount and tonumber(amount) > 0 then
-            SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
+            TriggerEvent("inventory:client:StoreWeapon")
             TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "marked_money", tonumber(amount))
         end
     else
@@ -100,7 +100,7 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
         end
 
         if amount and tonumber(amount) > 0 then
-            SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
+            TriggerEvent("inventory:client:StoreWeapon")
             local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
             if playerIdx == -1 then -- Is NPC
                 if currentResellZone ~= nil then

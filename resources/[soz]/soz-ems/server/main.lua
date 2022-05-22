@@ -18,11 +18,12 @@ end)
 
 RegisterServerEvent("lsmc:server:revive")
 AddEventHandler("lsmc:server:revive", function(id)
-    local Player = QBCore.Functions.GetPlayer(tonumber(id))
-    TriggerClientEvent("soz_ems:client:Revive", Player.PlayerData.source)
-    Player.Functions.SetMetaData("hunger", Player.PlayerData.metadata["hunger"] + 30)
-    Player.Functions.SetMetaData("thirst", Player.PlayerData.metadata["thirst"] + 30)
-    Player.Functions.SetMetaData("isdead", false)
+    local player = QBCore.Functions.GetPlayer(tonumber(id))
+    TriggerClientEvent("soz_ems:client:Revive", player.PlayerData.source)
+    player.Functions.SetMetaData("hunger", player.PlayerData.metadata["hunger"] + 30)
+    player.Functions.SetMetaData("thirst", player.PlayerData.metadata["thirst"] + 30)
+    player.Functions.SetMetaData("isdead", false)
+    Player(player.PlayerData.source).state.isdead = false
 end)
 
 RegisterServerEvent("lsmc:server:heal")
