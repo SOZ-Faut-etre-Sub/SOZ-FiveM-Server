@@ -68,10 +68,20 @@ function AdminMenuVehicles(menu, permission)
         value = nil,
         select = function()
             local vehicle = GetVehiclePedIsIn(PlayerPedId())
-
+            SetVehicleBodyHealth(vehicle, 1000.0)
+            SetVehicleEngineHealth(vehicle, 1000.0)
             SetVehicleFixed(vehicle)
             SetVehicleDeformationFixed(vehicle)
-            SetVehicleUndriveable(vehicle, false)
+        end,
+    })
+
+    vehicleMenu:AddButton({
+        label = "Nettoyer le véhicule",
+        value = nil,
+        select = function()
+            local vehicle = GetVehiclePedIsIn(PlayerPedId())
+            SetVehicleDirtLevel(vehicle, 0.1)
+            WashDecalsFromVehicle(vehicle, 1.0)
         end,
     })
 
