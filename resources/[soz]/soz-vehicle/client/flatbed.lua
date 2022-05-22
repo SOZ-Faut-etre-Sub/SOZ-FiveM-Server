@@ -113,8 +113,9 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action, owner)
     Busy = false
 end)
 
-RegisterNetEvent("soz-flatbed:client:actionlower", function(BedInfo)
-    local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
+RegisterNetEvent("soz-flatbed:client:actionlower", function(BedInfo, lastVehicle)
+    local lastVehicleEntity = NetworkGetEntityFromNetworkId(lastVehicle)
+    local VehicleInfo = GetVehicleInfo(GetEntityModel(lastVehicleEntity))
     local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
 
     local BedPos = VehicleInfo.Default.Pos
@@ -129,7 +130,7 @@ RegisterNetEvent("soz-flatbed:client:actionlower", function(BedInfo)
         end
 
         DetachEntity(PropID, false, false)
-        AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
+        AttachEntityToEntity(PropID, lastVehicleEntity, nil, BedPos, BedRot, true, false, true, false, nil, true)
     until BedPos.y == VehicleInfo.Active.Pos.y
 
     repeat
@@ -150,12 +151,13 @@ RegisterNetEvent("soz-flatbed:client:actionlower", function(BedInfo)
         end
 
         DetachEntity(PropID, false, false)
-        AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
+        AttachEntityToEntity(PropID, lastVehicleEntity, nil, BedPos, BedRot, true, false, true, false, nil, true)
     until BedRot.x == VehicleInfo.Active.Rot.x and BedPos.z == VehicleInfo.Active.Pos.z
 end)
 
-RegisterNetEvent("soz-flatbed:client:actionraise", function(BedInfo)
-    local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
+RegisterNetEvent("soz-flatbed:client:actionraise", function(BedInfo, lastVehicle)
+    local lastVehicleEntity = NetworkGetEntityFromNetworkId(lastVehicle)
+    local VehicleInfo = GetVehicleInfo(GetEntityModel(lastVehicleEntity))
     local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
 
     local BedPos = VehicleInfo.Active.Pos
@@ -179,7 +181,7 @@ RegisterNetEvent("soz-flatbed:client:actionraise", function(BedInfo)
         end
 
         DetachEntity(PropID, false, false)
-        AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
+        AttachEntityToEntity(PropID, lastVehicleEntity, nil, BedPos, BedRot, true, false, true, false, nil, true)
     until BedRot.x == VehicleInfo.Default.Rot.x and BedPos.z == VehicleInfo.Default.Pos.z
 
     repeat
@@ -191,31 +193,33 @@ RegisterNetEvent("soz-flatbed:client:actionraise", function(BedInfo)
         end
 
         DetachEntity(PropID, false, false)
-        AttachEntityToEntity(PropID, LastVehicle, nil, BedPos, BedRot, true, false, true, false, nil, true)
+        AttachEntityToEntity(PropID, lastVehicleEntity, nil, BedPos, BedRot, true, false, true, false, nil, true)
     until BedPos.y == VehicleInfo.Default.Pos.y
 end)
 
-RegisterNetEvent("soz-flatbed:client:actionattach", function(BedInfo)
-    local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
+RegisterNetEvent("soz-flatbed:client:actionattach", function(BedInfo, lastVehicle)
+    local lastVehicleEntity = NetworkGetEntityFromNetworkId(lastVehicle)
+    local VehicleInfo = GetVehicleInfo(GetEntityModel(lastVehicleEntity))
     local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
 
     local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.0))
     local ClosestVehicle = GetNearestVehicle(AttachCoords, VehicleInfo.Radius)
 
-    if DoesEntityExist(ClosestVehicle) and ClosestVehicle ~= LastVehicle then
+    if DoesEntityExist(ClosestVehicle) and ClosestVehicle ~= lastVehicleEntity then
         local VehicleCoords = GetEntityCoords(ClosestVehicle)
         AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true, false,
                              false, false, nil, true)
 
-        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached", NetworkGetNetworkIdFromEntity(ClosestVehicle))
+        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastVehicleEntity), "Attached", NetworkGetNetworkIdFromEntity(ClosestVehicle))
     end
 end)
 
-RegisterNetEvent("soz-flatbed:client:actiondettach", function(BedInfo)
+RegisterNetEvent("soz-flatbed:client:actiondettach", function(BedInfo, lastVehicle)
+    local lastVehicleEntity = NetworkGetEntityFromNetworkId(lastVehicle)
     local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
 
     DetachEntity(AttachedVehicle, true, true)
-    TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached", nil)
+    TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastVehicleEntity), "Attached", nil)
 end)
 
 RegisterNetEvent("soz-flatbed:client:tpaction")
@@ -311,10 +315,10 @@ local function ActionFlatbed(entity)
     if not Busy then
         if not LastStatus then
             Busy = true
-            TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "lower", GetPlayerServerId(NetworkGetEntityOwner(entity)))
+            TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "lower", GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
             Busy = true
-            TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "raise", GetPlayerServerId(NetworkGetEntityOwner(entity)))
+            TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "raise", GetPlayerServerId(NetworkGetEntityOwner(entity)))
         end
     end
 end
@@ -324,10 +328,10 @@ local function ChainesFlatbed(entity)
         if LastStatus then
             Busy = true
             if LastAttach then
-                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "detach",
+                TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "detach",
                                    GetPlayerServerId(NetworkGetEntityOwner(entity)))
             else
-                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "attach",
+                TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "attach",
                                    GetPlayerServerId(NetworkGetEntityOwner(entity)))
             end
         end
@@ -338,10 +342,10 @@ local function TpFlatbed(entity, lastveh)
     if not Busy then
         Busy = true
         if LastAttach then
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil,
+            TriggerServerEvent("soz-flatbed:server:tpaction", VehToNet(entity), entity, nil,
                                GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity,
+            TriggerServerEvent("soz-flatbed:server:tpaction", VehToNet(lastveh), lastveh, entity,
                                GetPlayerServerId(NetworkGetEntityOwner(entity)))
         end
     end
