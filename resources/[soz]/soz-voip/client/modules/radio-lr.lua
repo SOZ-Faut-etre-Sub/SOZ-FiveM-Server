@@ -3,15 +3,22 @@ local PrimaryConfiguration, SecondaryConfiguration = {}, {}
 
 --- private functions
 local function ConnectToRadio(context, type_, frequency, consumers)
-    if context ~= "radio-sr" then
+    if context ~= "radio-lr" then
         return
     end
 
-    if RadioFrequencies[frequency] then
+    if RadioFrequencies[frequency] and RadioFrequencies[frequency].module == "radio-lr" then
         return
     end
 
-    local channel = Frequency:new("radio-sr", frequency)
+    if RadioFrequencies[frequency] and RadioFrequencies[frequency].module == "radio-sr" then
+        RadioFrequencies[frequency]:setAvailableOnLongRange(true)
+        console.debug("[Radio] %s is available on long range", frequency)
+
+        return
+    end
+
+    local channel = Frequency:new("radio-lr", frequency)
     for consumer, _ in pairs(consumers) do
         channel:addConsumer(consumer)
     end
@@ -27,11 +34,18 @@ local function ConnectToRadio(context, type_, frequency, consumers)
 end
 
 local function DisconnectFromRadio(context, frequency)
-    if context ~= "radio-sr" then
+    if context ~= "radio-lr" then
         return
     end
 
     if not RadioFrequencies[frequency] then
+        return
+    end
+
+    if RadioFrequencies[frequency].module == "radio-sr" and RadioFrequencies[frequency]:isAvailableOnLongRange() then
+        RadioFrequencies[frequency]:setAvailableOnLongRange(false)
+        console.debug("[Radio] %s is not available on long range", frequency)
+
         return
     end
 
@@ -41,7 +55,7 @@ end
 
 local function AddSubscriber(context, frequency, serverID)
     local channel = RadioFrequencies[frequency]
-    if context ~= "radio-sr" then
+    if context ~= "radio-lr" then
         return
     end
 
@@ -53,7 +67,7 @@ local function AddSubscriber(context, frequency, serverID)
         channel:addConsumer(serverID)
 
         if IsTalkingOnRadio then
-            AddPlayerToTargetList(serverID, "radio-sr", true)
+            AddPlayerToTargetList(serverID, "radio-lr", true)
         end
 
         console.debug("[Radio] Subscriber added to %s: %s", frequency, serverID)
@@ -62,7 +76,7 @@ end
 
 local function RemoveSubscriber(context, frequency, serverID)
     local channel = RadioFrequencies[frequency]
-    if context ~= "radio-sr" then
+    if context ~= "radio-lr" then
         return
     end
 
@@ -74,7 +88,7 @@ local function RemoveSubscriber(context, frequency, serverID)
         channel:removeConsumer(serverID)
 
         if IsTalkingOnRadio then
-            RemovePlayerFromTargetList(serverID, "radio-sr", true, true)
+            RemovePlayerFromTargetList(serverID, "radio-lr", true, true)
         end
 
         console.debug("[Radio] Subscriber removed from %s", frequency)
@@ -86,10 +100,12 @@ local function StartTransmissionPrimary()
         return
     end
 
-    StartTransmission(PrimaryConfiguration.frequency, "radio-sr")
+    console.debug("[Radio] Start transmission primary")
+
+    StartTransmission(PrimaryConfiguration.frequency, "radio-lr")
 end
 local function StopTransmissionPrimary(forced)
-    StopTransmission(PrimaryConfiguration.frequency, "radio-sr", forced)
+    StopTransmission(PrimaryConfiguration.frequency, "radio-lr", forced)
 end
 
 local function StartTransmissionSecondary()
@@ -97,10 +113,10 @@ local function StartTransmissionSecondary()
         return
     end
 
-    StartTransmission(SecondaryConfiguration.frequency, "radio-sr")
+    StartTransmission(SecondaryConfiguration.frequency, "radio-lr")
 end
 local function StopTransmissionSecondary(forced)
-    StopTransmission(SecondaryConfiguration.frequency, "radio-sr", forced)
+    StopTransmission(SecondaryConfiguration.frequency, "radio-lr", forced)
 end
 
 local function SetRadioPowerState(state)
@@ -112,19 +128,19 @@ local function SetRadioPowerState(state)
     end
 end
 
-function RegisterRadioShortRangeModule()
-    console.debug("Registering radio short range module...")
+function RegisterRadioLongRangeModule()
+    console.debug("Registering radio long range module...")
 
-    RegisterModuleContext("radio-sr", 2)
-    UpdateContextVolume("radio-sr", 1.0)
+    RegisterModuleContext("radio-lr", 3)
+    UpdateContextVolume("radio-lr", 1.0)
 
-    RegisterCommand("+radio_sr_primary", StartTransmissionPrimary, false)
-    RegisterCommand("-radio_sr_primary", StopTransmissionPrimary, false)
-    RegisterKeyMapping("+radio_sr_primary", "Parler en courte portée (primaire)", "keyboard", Config.radioShortRangePrimaryHotkey)
+    RegisterCommand("+radio_lr_primary", StartTransmissionPrimary, false)
+    RegisterCommand("-radio_lr_primary", StopTransmissionPrimary, false)
+    RegisterKeyMapping("+radio_lr_primary", "Parler en longue portée (primaire)", "keyboard", Config.radioLongRangePrimaryHotkey)
 
-    RegisterCommand("+radio_sr_secondary", StartTransmissionSecondary, false)
-    RegisterCommand("-radio_sr_secondary", StopTransmissionSecondary, false)
-    RegisterKeyMapping("+radio_sr_secondary", "Parler en courte portée (secondaire)", "keyboard", Config.radioShortRangeSecondaryHotkey)
+    RegisterCommand("+radio_lr_secondary", StartTransmissionSecondary, false)
+    RegisterCommand("-radio_lr_secondary", StopTransmissionSecondary, false)
+    RegisterKeyMapping("+radio_lr_secondary", "Parler en longue portée (secondaire)", "keyboard", Config.radioLongRangeSecondaryHotkey)
 
     RegisterNetEvent("voip:client:radio:connect", ConnectToRadio)
     RegisterNetEvent("voip:client:radio:disconnect", DisconnectFromRadio)
@@ -132,7 +148,7 @@ function RegisterRadioShortRangeModule()
     RegisterNetEvent("voip:client:radio:addConsumer", AddSubscriber)
     RegisterNetEvent("voip:client:radio:removeConsumer", RemoveSubscriber)
 
-    exports("SetRadioShortRangePowerState", SetRadioPowerState)
+    exports("SetRadioLongRangePowerState", SetRadioPowerState)
 
-    console.debug("Radio short range module registered.")
+    console.debug("Radio long range module registered.")
 end

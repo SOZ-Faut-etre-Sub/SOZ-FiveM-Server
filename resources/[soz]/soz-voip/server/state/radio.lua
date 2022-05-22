@@ -25,7 +25,7 @@ function RadioStateManager:broadcastToConsumers(channel, cb)
     end
 end
 
-function RadioStateManager:addConsumer(source, channel)
+function RadioStateManager:addConsumer(source, context, channel)
     source = tonumber(source)
     channel = tonumber(channel)
 
@@ -39,11 +39,11 @@ function RadioStateManager:addConsumer(source, channel)
             return
         end
 
-        TriggerClientEvent("voip:client:radio-sr:addConsumer", consumer, channel, source)
+        TriggerClientEvent("voip:client:radio:addConsumer", consumer, context, channel, tonumber(source))
     end)
 end
 
-function RadioStateManager:removeConsumer(source, channel)
+function RadioStateManager:removeConsumer(source, context, channel)
     source = tonumber(source)
     channel = tonumber(channel)
 
@@ -57,7 +57,7 @@ function RadioStateManager:removeConsumer(source, channel)
             return
         end
 
-        TriggerClientEvent("voip:client:radio-sr:removeConsumer", consumer, channel, source)
+        TriggerClientEvent("voip:client:radio:removeConsumer", consumer, context, channel, source)
     end)
 end
 
@@ -68,7 +68,6 @@ function RadioStateManager:removeConsumerFromAllChannels(source)
         self:removeConsumer(source, channel)
     end
 end
-
 
 --[[
 

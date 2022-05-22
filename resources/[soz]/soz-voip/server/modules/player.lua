@@ -11,15 +11,15 @@ RegisterNetEvent("voip:server:player:mute", function(mute, target)
     MumbleSetPlayerMuted(target or source, mute)
 end)
 
-RegisterNetEvent("voip:server:transmission:state", function(group, context, transmitting, isMult)
+RegisterNetEvent("voip:server:transmission:state", function(group, context, transmitting, isMult, channel)
     local coord = GetEntityCoords(GetPlayerPed(source))
 
     if isMult then
         for player, _ in pairs(group) do
-            TriggerClientEvent('voip:client:voice:transmission:state', player, source, context, transmitting, IsInRangeOfRadio(context, coord, player))
+            TriggerClientEvent('voip:client:voice:transmission:state', player, source, context, transmitting, channel, IsInRangeOfRadio(context, coord, player))
         end
     else
-        TriggerClientEvent('voip:client:voice:transmission:state', group, source, context, transmitting, IsInRangeOfRadio(context, coord, group))
+        TriggerClientEvent('voip:client:voice:transmission:state', group, source, context, transmitting, channel, IsInRangeOfRadio(context, coord, group))
     end
 end)
 

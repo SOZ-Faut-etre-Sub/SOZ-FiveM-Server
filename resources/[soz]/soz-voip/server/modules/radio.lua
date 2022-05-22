@@ -1,16 +1,16 @@
 local RadioState = RadioStateManager:new()
 
-RegisterNetEvent("voip:server:radio:connect", function(type_, channel)
+RegisterNetEvent("voip:server:radio:connect", function(context, type_, channel)
     if channel >= Config.radioFrequencies.min and channel <= Config.radioFrequencies.max then
-        RadioState:addConsumer(source, channel)
+        RadioState:addConsumer(source, context, channel)
 
-        TriggerClientEvent("voip:client:radio-sr:connect", source, type_, channel, RadioState:getConsumers(channel))
+        TriggerClientEvent("voip:client:radio:connect", source, context, type_, channel, RadioState:getConsumers(channel))
     end
 end)
 
-RegisterNetEvent("voip:server:radio:disconnect", function(channel)
-    RadioState:removeConsumer(source, channel)
-    TriggerClientEvent("voip:client:radio-sr:disconnect", source, channel)
+RegisterNetEvent("voip:server:radio:disconnect", function(context, channel)
+    RadioState:removeConsumer(source, context, channel)
+    TriggerClientEvent("voip:client:radio:disconnect", source, context, channel)
 end)
 
 AddEventHandler('playerDropped', function()

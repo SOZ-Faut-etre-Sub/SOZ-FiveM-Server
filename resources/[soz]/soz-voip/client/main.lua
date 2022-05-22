@@ -69,6 +69,7 @@ Citizen.CreateThread(function()
     RegisterProximityModule()
     RegisterCallModule()
     RegisterRadioShortRangeModule()
+    RegisterRadioLongRangeModule()
 
     SetVoiceProximity(PlayerData.CurrentProximity)
 end)
