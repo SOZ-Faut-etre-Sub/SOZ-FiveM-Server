@@ -230,14 +230,14 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
         if not BedInfo.Attached then
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
             if DoesEntityExist(entity) and entity ~= lastveh then
-                TriggerServerEvent("soz-flatbed:server:actionownerfalse", AttachCoords, entity, PropID, owner)
+                TriggerServerEvent("soz-flatbed:server:actionownerfalse", AttachCoords, VehToNet(entity), PropID, owner)
                 TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", NetworkGetNetworkIdFromEntity(entity))
                 TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                 exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
             end
             LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
         else
-            TriggerServerEvent("soz-flatbed:server:actionownertrue", BedInfo, lastveh, owner)
+            TriggerServerEvent("soz-flatbed:server:actionownertrue", BedInfo, VehToNet(lastveh), owner)
             TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", nil)
             LastAttach = nil
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
@@ -344,10 +344,10 @@ local function TpFlatbed(entity, lastveh)
     if not Busy then
         Busy = true
         if LastAttach then
-            TriggerServerEvent("soz-flatbed:server:tpaction", VehToNet(entity), entity, nil,
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil,
                                GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
-            TriggerServerEvent("soz-flatbed:server:tpaction", VehToNet(lastveh), lastveh, entity,
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity,
                                GetPlayerServerId(NetworkGetEntityOwner(entity)))
         end
     end
