@@ -14,8 +14,13 @@ CreateThread(function()
     while true do
         Wait(QBCore.Config.StatusInterval)
         if LocalPlayer.state.isLoggedIn then
-            if QBCore.Functions.GetPlayerData().metadata['hunger'] <= 0 or
-                    QBCore.Functions.GetPlayerData().metadata['thirst'] <= 0 then
+            local PlayerData = QBCore.Functions.GetPlayerData()
+
+            if PlayerData.metadata['isdead'] then
+                goto skip
+            end
+
+            if PlayerData.metadata['hunger'] <= 0 or PlayerData.metadata['thirst'] <= 0 then
                 local ped = PlayerPedId()
 
                 if GetEntityHealth(ped) > 0 then
@@ -27,6 +32,8 @@ CreateThread(function()
                     SetEntityHealth(ped, 0)
                 end
             end
+
+            ::skip::
         end
     end
 end)
