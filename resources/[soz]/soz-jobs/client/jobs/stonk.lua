@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
                 label = "Facturer",
                 color = "cash-transfer",
                 icon = "c:jobs/facture.png",
-                event = "jobs:client:stonk:InvoicePlayer",
+                event = "jobs:client:InvoicePlayer",
                 job = "cash-transfer",
             },
         },
@@ -115,24 +115,6 @@ Citizen.CreateThread(function()
         minZ = 45.02,
         maxZ = 48.02,
     }, {options = SozJobCore.Functions.GetBossShopActions("cash-transfer", "stonk:client:bossShop"), distance = 2.5})
-end)
-
-RegisterNetEvent("jobs:client:stonk:InvoicePlayer", function(data)
-    local player = NetworkGetPlayerIndexFromPed(data.entity)
-
-    local title = exports["soz-hud"]:Input("Titre", 200)
-    if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
-        return
-    end
-
-    local amount = exports["soz-hud"]:Input("Montant", 0)
-    if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
-        return
-    end
-
-    TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
 end)
 
 ---
