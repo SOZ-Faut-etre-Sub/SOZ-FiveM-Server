@@ -39,17 +39,19 @@ QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(id, cb)
 end)
 
 RegisterServerEvent("ems:server:onDeath", function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.SetMetaData("isdead", true)
+    local player = QBCore.Functions.GetPlayer(source)
+    player.Functions.SetMetaData("isdead", true)
+    Player(player.PlayerData.source).state.isdead = true
 end)
 
 RegisterServerEvent("lsmc:server:SetMort")
 AddEventHandler("lsmc:server:SetMort", function(ReasonMort)
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.SetMetaData("mort", ReasonMort)
-    Player.Functions.SetMetaData("isdead", true)
+    local player = QBCore.Functions.GetPlayer(source)
+    player.Functions.SetMetaData("mort", ReasonMort)
+    player.Functions.SetMetaData("isdead", true)
+    Player(player.PlayerData.source).state.isdead = true
 
-    TriggerEvent("monitor:server:event", "player_dead", {player_source = Player.PlayerData.source}, {
+    TriggerEvent("monitor:server:event", "player_dead", {player_source = player.PlayerData.source}, {
         reason = ReasonMort,
     })
 end)
