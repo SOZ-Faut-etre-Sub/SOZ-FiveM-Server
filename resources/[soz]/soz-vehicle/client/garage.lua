@@ -10,7 +10,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
-                state = 1,
+                state = VehicleState.InGarage,
                 places = PlacesPublic,
             },
             ["private"] = {
@@ -19,7 +19,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
-                state = 1,
+                state = VehicleState.InGarage,
                 places = PlacesPrives,
             },
             ["depot"] = {
@@ -28,7 +28,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_pound", "soz", "parkingfourriere:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {},
-                state = 2,
+                state = VehicleState.InPound,
                 places = PlacesFourriere,
             },
             ["entreprise"] = {
@@ -37,7 +37,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 16},
-                state = 3,
+                state = VehicleState.InEntreprise,
                 places = PlacesEntreprise,
             },
         }
@@ -155,7 +155,7 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type_, gar
             QBCore.Functions.SetVehicleProperties(veh, properties)
             SetVehicleNumberPlateText(veh, vehicle.plate)
             SetFuel(veh, currentFuel + 0.0)
-            TriggerServerEvent("qb-garage:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
+            TriggerServerEvent("qb-garage:server:updateVehicleState", VehicleState.Out, vehicle.plate, vehicle.garage)
             TriggerServerEvent("qb-garage:server:updateVehicleCitizen", vehicle.plate)
             TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
             SetVehicleEngineOn(veh, true, true)
@@ -265,9 +265,9 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
         return false
     end
 
-    local state = 1
+    local state = VehicleState.InGarage
     if type_ == "entreprise" then
-        state = 3
+        state = VehicleState.InEntreprise
     end
     return state
 end
