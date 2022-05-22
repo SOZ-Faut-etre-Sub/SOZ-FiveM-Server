@@ -250,14 +250,16 @@ AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity
 end)
 
 RegisterNetEvent("soz-flatbed:client:actionownerfalse", function(AttachCoords, entity, PropID)
-    AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false, false, nil,
+    local veh = NetworkGetEntityFromNetworkId(entity)
+    AttachEntityToEntity(veh, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false, false, nil,
                          true)
 end)
 
 RegisterNetEvent("soz-flatbed:client:actionownertrue", function(BedInfo, lastveh)
+    local veh = NetworkGetEntityFromNetworkId(lastveh)
     local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
     local AttachedCoords = GetEntityCoords(AttachedVehicle)
-    local FlatCoords = GetEntityCoords(lastveh)
+    local FlatCoords = GetEntityCoords(veh)
     DetachEntity(AttachedVehicle, true, true)
     SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
                     FlatCoords.z, false, false, false, false)
