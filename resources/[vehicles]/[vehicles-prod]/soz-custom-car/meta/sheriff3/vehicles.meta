@@ -7,8 +7,8 @@
           <modelName>sheriff3</modelName>
           <txdName>sheriff3</txdName>
           <handlingId>SHERIFF</handlingId>
-          <gameName>POLICE2</gameName>
-          <vehicleMakeName />
+          <gameName>sheriff3</gameName>
+          <vehicleMakeName>sheriff3</vehicleMakeName>
           <expressionDictName>null</expressionDictName>
           <expressionName>null</expressionName>
           <animConvRoofDictName>null</animConvRoofDictName>
