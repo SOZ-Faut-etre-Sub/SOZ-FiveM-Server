@@ -159,7 +159,7 @@ AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, veh
                             local vehicleCoords = GetEntityCoords(vehicle)
                             if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 10.0 then
                                 if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
-                                    if GetVehicleFuelLevel(vehicle) < 95 then
+                                    if GetVehicleFuelLevel(vehicle) < 99 then
                                         if InsideEssence and pistoletdansmain then
                                             return true
                                         else
@@ -261,7 +261,9 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
                 end
                 QBCore.Functions.ShowHelpNotification(text)
             end
-            SetFuel(entity, math.floor(newFuel))
+            local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
+            TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(entity), math.floor(newFuel), serverIDcar)
+            --
             TriggerServerEvent("soz-fuel:server:setFinalFuel", id, (100 - math.floor(currentFuelAdd)))
         else
             QBCore.Functions.ShowHelpNotification("~r~Il ne peut y avoir de conducteur pendant le remplissage du véhicule.")
@@ -333,7 +335,7 @@ Citizen.CreateThread(function()
                                     local vehicleCoords = GetEntityCoords(vehicle)
                                     if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 10.0 then
                                         if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
-                                            if GetVehicleFuelLevel(vehicle) < 95 then
+                                            if GetVehicleFuelLevel(vehicle) < 99 then
                                                 if GetEntityHealth(entity) > 0 then
                                                     return true
                                                 else
@@ -411,6 +413,11 @@ end
 exports("GetFuel", GetFuel)
 exports("SetFuel", SetFuel)
 
+RegisterNetEvent("soz-fuel:client:SetFuel", function(net, newFuel)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetFuel(veh, newFuel)
+end)
+
 RegisterNetEvent("fuel:client:GetFuelLevel", function(data)
     local stationFuelLevel = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", data.station)
 
@@ -443,7 +450,8 @@ RegisterNetEvent("soz-fuel:client:onJerrycanEssence", function()
                 disableCombat = true,
             }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
                 TriggerServerEvent("soz-fuel:server:removeJerrycanEssence")
-                SetFuel(vehicle, fuel + 30.0)
+                local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(vehicle))
+                TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(vehicle), math.floor(fuel + 30.0), serverIDcar)
 
                 exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un Jerrycan d'Essence")
             end)
