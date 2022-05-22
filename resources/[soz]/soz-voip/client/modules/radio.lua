@@ -30,7 +30,7 @@ function StartTransmission(frequency, context)
     if not IsTalkingOnRadio then
         IsTalkingOnRadio = true
 
-        AddGroupToTargetList(channel.consumers, context)
+        AddGroupToTargetList(channel.consumers, context, frequency)
 
         StartRadioAnimationTask()
         PlayLocalRadioClick(context, true)
@@ -52,7 +52,7 @@ function StopTransmission(frequency, context, forced)
 
         IsTalkingOnRadio = false
 
-        RemoveGroupToTargetList(channel.consumers, context)
+        RemoveGroupToTargetList(channel.consumers, context, frequency)
 
         PlayLocalRadioClick(context, false)
 

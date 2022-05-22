@@ -1,8 +1,14 @@
 Frequency = {}
 
-function Frequency:new(register, channel)
+function Frequency:new(register, channel, extra)
     self.__index = self
-    return setmetatable({channel = channel, module = register, serverPlayerId = GetPlayerServerId(PlayerId()), consumers = {}}, self)
+    return setmetatable({
+        channel = channel,
+        module = register,
+        extra = extra or {},
+        serverPlayerId = GetPlayerServerId(PlayerId()),
+        consumers = {}
+    }, self)
 end
 
 function Frequency:consumerExist(serverID)
@@ -19,4 +25,13 @@ function Frequency:removeConsumer(serverId)
     if self:consumerExist(serverId) then
         self.consumers[serverId] = nil
     end
+end
+
+--- Long range
+function Frequency:isAvailableOnLongRange()
+    return self.extra.availableOnLongRange or false
+end
+
+function Frequency:setAvailableOnLongRange(available)
+    self.extra.availableOnLongRange = available
 end
