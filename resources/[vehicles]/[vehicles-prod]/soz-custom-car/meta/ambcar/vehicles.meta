@@ -8,7 +8,7 @@
             <txdName>ambcar</txdName>
             <handlingId>FBI2</handlingId>
             <gameName>ambcar</gameName>
-            <vehicleMakeName>ambcar</vehicleMakeName>
+            <vehicleMakeName />
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
