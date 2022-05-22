@@ -65,7 +65,10 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
 
                     TriggerEvent("monitor:server:event", "job_mtp_create_gasoline", {
                         player_source = Player.PlayerData.source,
-                    }, {quantity = essenceItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+                    }, {
+                        quantity = essenceItemAmount,
+                        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+                    })
                 else
                     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
                 end
