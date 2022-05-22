@@ -22,7 +22,7 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
     SetNuiFocus(false, false)
 
     if hit == 1 and entityType == 1 then
-        SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED", true)
+        TriggerEvent("inventory:client:StoreWeapon")
         TriggerServerEvent("vehiclekeys:server:GiveVehicleKeys", data.plate, GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit)))
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
