@@ -595,7 +595,7 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
     local hasKnife = PlayerHasKnifeEquiped()
 
     if not hasKnife then
-        SetCurrentPedWeapon(ped, "WEAPON_UNARMED")
+        TriggerEvent("inventory:client:StoreWeapon")
     end
     TaskTurnPedToFaceEntity(ped, data.entity, 500)
 
