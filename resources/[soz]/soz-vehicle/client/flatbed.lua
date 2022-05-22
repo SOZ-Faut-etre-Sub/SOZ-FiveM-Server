@@ -360,14 +360,13 @@ RegisterNetEvent("soz-flatbed:client:callaction", function(entity)
 end)
 
 CreateThread(function()
-    --[[
     exports["qb-target"]:AddGlobalVehicle({
         options = {
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
                 event = "soz-flatbed:client:callaction",
-                label = "Descendre",
+                label = "TEST Descendre",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
@@ -386,7 +385,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Desactiver.png",
                 event = "soz-flatbed:client:callaction",
-                label = "Relever",
+                label = "TEST Relever",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
@@ -405,7 +404,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Attacher.png",
                 event = "soz-flatbed:client:callchaines",
-                label = "Attacher",
+                label = "TEST Attacher",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
@@ -424,7 +423,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Detacher.png",
                 event = "soz-flatbed:client:callchaines",
-                label = "Détacher",
+                label = "TEST Détacher",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
@@ -443,7 +442,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
                 event = "soz-flatbed:client:calltp",
-                label = "Démorquer",
+                label = "TEST Démorquer",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
@@ -462,7 +461,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Mettre.png",
                 event = "soz-flatbed:client:calltp",
-                label = "Remorquer",
+                label = "TEST Remorquer",
                 action = function(entity)
                     local lastveh = GetVehiclePedIsIn(PlayerPedId(), true)
                     TriggerEvent("soz-flatbed:client:calltp", entity, lastveh)
@@ -484,7 +483,7 @@ CreateThread(function()
             },
         },
         distance = 3,
-    })]]
+    })
     exports["qb-target"]:AddTargetModel(-669511193, {
         options = {
             {
