@@ -8,7 +8,7 @@ RegisterNetEvent("jobs:server:garbage:processBags", function(item)
 
     local Player = QBCore.Functions.GetPlayer(source)
     local playerGarbageBagAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
-    local bagToProcess = 5
+    local bagToProcess = GarbageConfig.RecycleItem[item]
 
     if playerGarbageBagAmount < 1 then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il vous manque ~r~un " .. QBCore.Shared.Items[item].label, "error")
