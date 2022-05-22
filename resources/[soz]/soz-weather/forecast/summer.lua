@@ -5,7 +5,7 @@ SummerForecast = {
     smog = {},
     foggy = {},
     overcast = {rain = 2, clearing = 3, clouds = 5, extrasunny = 80},
-    clouds = {clearing = 25, overcast = 75},
+    clouds = {clearing = 5, overcast = 95},
     clearing = {rain = 2, clearing = 3, clouds = 5, extrasunny = 80},
     rain = {clearing = 100},
     thunder = {clearing = 100},
