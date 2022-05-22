@@ -13,16 +13,14 @@ local function OnDeath()
             local pos = GetEntityCoords(player)
             local heading = GetEntityHeading(player)
 
-            local ped = PlayerPedId()
-
-            if IsPedInAnyVehicle(ped) then
-                local veh = GetVehiclePedIsIn(ped)
+            if IsPedInAnyVehicle(player) then
+                local veh = GetVehiclePedIsIn(player)
                 local vehseats = GetVehicleModelNumberOfSeats(GetHashKey(GetEntityModel(veh)))
                 for i = -1, vehseats do
                     local occupant = GetPedInVehicleSeat(veh, i)
-                    if occupant == ped then
-                        NetworkResurrectLocalPlayer(pos.x, pos.y, pos.z + 0.5, heading, true, false)
-                        SetPedIntoVehicle(ped, veh, i)
+                    if occupant == player then
+                        NetworkResurrectLocalPlayer(pos.x, pos.y, pos.z, heading, true, false)
+                        SetPedIntoVehicle(player, veh, i)
                     end
                 end
             else
@@ -92,9 +90,7 @@ end
 
 CreateThread(function()
     while true do
-        Wait(10)
-        local player = PlayerId()
-        if NetworkIsPlayerActive(player) then
+        if LocalPlayer.state.isLoggedIn then
             local playerPed = PlayerPedId()
             if IsEntityDead(playerPed) then
                 DeathTime = Config.DeathTime
@@ -102,6 +98,8 @@ CreateThread(function()
                 DeathTimer()
             end
         end
+
+        Wait(10)
     end
 end)
 
@@ -140,11 +138,13 @@ CreateThread(function()
             if IsPedInAnyVehicle(ped, false) then
                 if not IsEntityPlayingAnim(ped, "veh@low@front_ps@idle_duck", "sit", 3) then
                     ClearPedTasksImmediately(ped)
+                    QBCore.Functions.RequestAnimDict("veh@low@front_ps@idle_duck")
                     TaskPlayAnim(ped, "veh@low@front_ps@idle_duck", "sit", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                 end
             else
                 if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
                     ClearPedTasksImmediately(ped)
+                    QBCore.Functions.RequestAnimDict("dead")
                     TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                 end
                 if isInHospitalBed then
@@ -153,7 +153,7 @@ CreateThread(function()
                 end
             end
 
-            SetCurrentPedWeapon(ped, WEAPON_UNARMED, true)
+            TriggerEvent("inventory:client:StoreWeapon")
         end
         Wait(sleep)
     end

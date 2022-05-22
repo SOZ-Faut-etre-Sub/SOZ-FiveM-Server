@@ -10,7 +10,7 @@ local function addCase()
 end
 
 local function removeCase()
-    SetCurrentPedWeapon(PlayerPedId(), "WEAPON_UNARMED")
+    TriggerEvent("inventory:client:StoreWeapon")
     RemoveWeaponFromPed(PlayerPedId(), briefcaseHash)
 end
 
@@ -77,7 +77,7 @@ Citizen.CreateThread(function()
 
         if hasMoneyCase() and (GetVehiclePedIsTryingToEnter(playerPed) ~= 0 or isPhoneVisible) then
             Wait(500)
-            SetCurrentPedWeapon(playerPed, "WEAPON_UNARMED")
+            TriggerEvent("inventory:client:StoreWeapon")
         end
 
         if hasMoneyCase() and LocalPlayer.state.adminDisableMoneyCase then
