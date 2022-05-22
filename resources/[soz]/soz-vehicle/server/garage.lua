@@ -273,3 +273,58 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerEntreprise", function
         end
     end)
 end)
+
+---Return vehicle's data to be stored
+---@param vehNetId number Vehicle Network ID
+---@param extraData table Extra data coming from client (fuel)
+---@return table
+local function GetVehicleData(vehNetId, extraData)
+    local entityId = NetworkGetEntityFromNetworkId(vehNetId)
+
+    local data = {
+        plate = GetVehicleNumberPlateText(entityId),
+        bodyDamage = math.ceil(GetVehicleBodyHealth(entityId)) or 500,
+        engineDamage = math.ceil(GetVehicleEngineHealth(entityId)) or 500,
+    }
+
+    local extra = {fuel = 10, properties = json.encode({})}
+    for attr, default in pairs(extra) do
+        data[attr] = extraData[attr] or default
+    end
+
+    return data
+end
+
+QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", function(source, cb, type_, indexgarage, vehicleNetId, vehicleExtraData)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    local state = 1
+    if type_ == "entreprise" then
+        state = 3
+    end
+
+    local query = [[
+        UPDATE player_vehicles
+        SET state = ?, garage = ?, fuel = ?, engine = ?, body = ?, mods = ?, parkingtime = ?
+        WHERE plate = ?
+    ]]
+
+    local data = GetVehicleData(vehicleNetId, vehicleExtraData)
+    local args = {state, indexgarage, data.fuel, data.engineDamage, data.bodyDamage,  data.properties, os.time(), data.plate}
+
+    if type == "entreprise" then
+        query = query .. " AND job = ?"
+        table.insert(args, player.PlayerData.job.id)
+    else
+        query = query .. " AND citizenid = ?"
+        table.insert(args, player.PlayerData.citizenid)
+    end
+
+    local res = MySQL.Sync.execute(query, args)
+    if res == 1 then
+        DespawnVehicle(vehicleNetId)
+        cb(true)
+    else
+        cb(false)
+    end
+end)
