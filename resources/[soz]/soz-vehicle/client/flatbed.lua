@@ -60,13 +60,14 @@ end
 RegisterNetEvent("soz-flatbed:client:getProp")
 AddEventHandler("soz-flatbed:client:getProp", function(BedInfo)
     if not BedInfo or not DoesEntityExist(NetworkGetEntityFromNetworkId(BedInfo.Prop)) then
-        local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
-        local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(LastVehicle), true, false, false)
+        if NetworkGetEntityOwner(LastVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+            local VehicleInfo = GetVehicleInfo(GetEntityModel(LastVehicle))
+            local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(LastVehicle), true, false, false)
 
-        AttachEntityToEntity(NewBed, LastVehicle, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
+            AttachEntityToEntity(NewBed, LastVehicle, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
 
-        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Prop", NetworkGetNetworkIdFromEntity(NewBed))
-
+            TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Prop", NetworkGetNetworkIdFromEntity(NewBed))
+        end
         LastStatus = false
         LastAttach = nil
     else
@@ -106,9 +107,7 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action, owner)
             exports["soz-hud"]:DrawNotification("Vous avez détaché le véhicule !")
         end
     else
-        if NetworkGetEntityOwner(LastVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
-            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(LastVehicle))
-        end
+        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(LastVehicle))
     end
 
     Busy = false
@@ -220,40 +219,44 @@ RegisterNetEvent("soz-flatbed:client:actiondettach", function(BedInfo)
 end)
 
 RegisterNetEvent("soz-flatbed:client:tpaction")
-AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity)
+AddEventHandler("soz-flatbed:client:tpaction", function(BedInfo, lastveh, entity, owner)
     if BedInfo and DoesEntityExist(NetworkGetEntityFromNetworkId(BedInfo.Prop)) then
         local VehicleInfo = GetVehicleInfo(GetEntityModel(lastveh))
         local PropID = NetworkGetEntityFromNetworkId(BedInfo.Prop)
         if not BedInfo.Attached then
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
             if DoesEntityExist(entity) and entity ~= lastveh then
-                AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false,
-                                     false, nil, true)
-
+                TriggerServerEvent("soz-flatbed:server:actionownerfalse", AttachCoords, entity, PropID, owner)
                 TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", NetworkGetNetworkIdFromEntity(entity))
                 TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                 exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
             end
             LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
         else
-            local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
-            local AttachedCoords = GetEntityCoords(AttachedVehicle)
-            local FlatCoords = GetEntityCoords(lastveh)
-            DetachEntity(AttachedVehicle, true, true)
-            SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
-                            FlatCoords.z, false, false, false, false)
+            TriggerServerEvent("soz-flatbed:server:actionownertrue", BedInfo, lastveh, owner)
             TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Attached", nil)
             LastAttach = nil
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
             exports["soz-hud"]:DrawNotification("Vous avez enlevé le véhicule du plateau !")
         end
     else
-        if NetworkGetEntityOwner(entity) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
-            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
-        end
+        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(entity))
     end
-
     Busy = false
+end)
+
+RegisterNetEvent("soz-flatbed:client:actionownerfalse", function(AttachCoords, entity, PropID)
+    AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false, false, nil,
+                         true)
+end)
+
+RegisterNetEvent("soz-flatbed:client:actionownertrue", function(BedInfo, lastveh)
+    local AttachedVehicle = NetworkGetEntityFromNetworkId(BedInfo.Attached)
+    local AttachedCoords = GetEntityCoords(AttachedVehicle)
+    local FlatCoords = GetEntityCoords(lastveh)
+    DetachEntity(AttachedVehicle, true, true)
+    SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
+                    FlatCoords.z, false, false, false, false)
 end)
 
 Citizen.CreateThread(function()
@@ -275,9 +278,7 @@ Citizen.CreateThread(function()
                 for Index, CurrentFlatbed in pairs(Config.Flatbeds) do
                     if VehicleModel == GetHashKey(CurrentFlatbed.Hash) then
                         LastVehicle = PlayerVehicle
-                        if NetworkGetEntityOwner(PlayerVehicle) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
-                            TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(PlayerVehicle))
-                        end
+                        TriggerServerEvent("soz-flatbed:server:getProp", NetworkGetNetworkIdFromEntity(PlayerVehicle))
                         break
                     end
                 end
@@ -337,9 +338,11 @@ local function TpFlatbed(entity, lastveh)
     if not Busy then
         Busy = true
         if LastAttach then
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil)
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(entity), entity, nil,
+                               GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
-            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity)
+            TriggerServerEvent("soz-flatbed:server:tpaction", NetworkGetNetworkIdFromEntity(lastveh), lastveh, entity,
+                               GetPlayerServerId(NetworkGetEntityOwner(entity)))
         end
     end
 end
@@ -357,9 +360,9 @@ RegisterNetEvent("soz-flatbed:client:callaction", function(entity)
 end)
 
 CreateThread(function()
+    --[[
     exports["qb-target"]:AddGlobalVehicle({
         options = {
-            --[[
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
@@ -372,11 +375,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return not LastStatus
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -390,11 +394,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return LastStatus
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -408,11 +413,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return not LastAttach
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -426,11 +432,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return LastAttach
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -444,11 +451,12 @@ CreateThread(function()
                     if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" then
+                    if OnDuty == false then
                         return false
                     end
                     return LastAttach
                 end,
+                job = "bennys",
             },
             {
                 type = "client",
@@ -463,8 +471,7 @@ CreateThread(function()
                     if GetEntityModel(entity) == GetHashKey("flatbed3") then
                         return false
                     end
-                    if OnDuty == false or PlayerJob.id ~= "bennys" or NetworkGetEntityOwner(GetVehiclePedIsIn(PlayerPedId(), true)) ~=
-                        NetworkGetPlayerIndexFromPed(PlayerPedId()) then
+                    if OnDuty == false or NetworkGetEntityOwner(GetVehiclePedIsIn(PlayerPedId(), true)) ~= NetworkGetPlayerIndexFromPed(PlayerPedId()) then
                         return false
                     end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
@@ -473,10 +480,11 @@ CreateThread(function()
                     end
                     return true
                 end,
-            },]]
+                job = "bennys",
+            },
         },
         distance = 3,
-    })
+    })]]
     exports["qb-target"]:AddTargetModel(-669511193, {
         options = {
             {
@@ -486,6 +494,7 @@ CreateThread(function()
                 action = function(entity)
                     DeleteEntity(entity)
                 end,
+                job = "bennys",
             },
         },
         distance = 3,
