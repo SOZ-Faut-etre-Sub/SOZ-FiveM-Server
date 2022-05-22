@@ -135,15 +135,13 @@ CreateThread(function()
                 end
             end
 
-            if IsPedInAnyVehicle(ped, false) then
+            if IsPedInAnyVehicle(ped, true) then
                 if not IsEntityPlayingAnim(ped, "veh@low@front_ps@idle_duck", "sit", 3) then
-                    ClearPedTasksImmediately(ped)
                     QBCore.Functions.RequestAnimDict("veh@low@front_ps@idle_duck")
                     TaskPlayAnim(ped, "veh@low@front_ps@idle_duck", "sit", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                 end
             else
                 if not IsEntityPlayingAnim(ped, "dead", "dead_a", 3) then
-                    ClearPedTasksImmediately(ped)
                     QBCore.Functions.RequestAnimDict("dead")
                     TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                 end
