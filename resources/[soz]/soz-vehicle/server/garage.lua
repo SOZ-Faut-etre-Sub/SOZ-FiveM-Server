@@ -310,7 +310,16 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     ]]
 
     local data = GetVehicleData(vehicleNetId, vehicleExtraData)
-    local args = {state, indexgarage, data.fuel, data.engineDamage, data.bodyDamage,  data.properties, os.time(), data.plate}
+    local args = {
+        state,
+        indexgarage,
+        data.fuel,
+        data.engineDamage,
+        data.bodyDamage,
+        data.properties,
+        os.time(),
+        data.plate,
+    }
 
     if type == "entreprise" then
         query = query .. " AND job = ?"

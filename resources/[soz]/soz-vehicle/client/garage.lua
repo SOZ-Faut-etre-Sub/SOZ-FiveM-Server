@@ -81,10 +81,7 @@ end
 ---@param veh number Vehicle entity
 ---@return table
 local function GetVehicleClientData(veh)
-    return {
-        fuel = GetVehicleFuelLevel(veh),
-        properties = json.encode(QBCore.Functions.GetVehicleProperties(veh)),
-    }
+    return {fuel = GetVehicleFuelLevel(veh), properties = json.encode(QBCore.Functions.GetVehicleProperties(veh))}
 end
 
 local function round(num, numDecimalPlaces)
