@@ -88,8 +88,6 @@ local function finishAnimation()
     end
 
     FreezeEntityPosition(Gveh, true)
-    SetVehicleFixed(Gvehicle)
-    SetVehicleDeformationFixed(Gvehicle)
     SetVehicleUndriveable(Gvehicle, false)
     SetVehicleEngineOn(Gvehicle, true, true)
     ClearPedTasksImmediately(PlayerPedId())
