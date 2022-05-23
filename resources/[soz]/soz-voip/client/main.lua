@@ -90,3 +90,9 @@ RegisterNetEvent("onPlayerDropped", function(playerId)
     MumbleRemoveVoiceChannelListen(playerId)
     console.debug("Player %s removed from proximity voice channel", playerId)
 end)
+
+--- Commands
+RegisterCommand("voip-debug-mode", function(source, args, rawCommand)
+    Config.debug = not Config.debug
+    console.info("Debug mode : %s", Config.debug and "enabled" or "disabled")
+end, false)
