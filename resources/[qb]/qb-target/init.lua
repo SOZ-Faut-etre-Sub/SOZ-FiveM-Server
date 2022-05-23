@@ -172,7 +172,7 @@ CreateThread(function()
 		FeatureCheck = function(feature)
 			local features = PlayerData.features or {}
 
-			if QBCore.Functions.HasPermission(PlayerData.source, 'admin') then
+			if PlayerData.role == "admin" then
 				return true
 			end
 
