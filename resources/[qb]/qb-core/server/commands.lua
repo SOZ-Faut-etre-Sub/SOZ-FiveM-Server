@@ -103,7 +103,7 @@ end, 'admin')
 
 -- Money
 
-QBCore.Commands.Add('givemoney', 'Give A Player Money (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'moneytype', help = 'Type of money (money, marked_money, bank)' }, { name = 'amount', help = 'Amount of money' } }, true, function(source, args)
+QBCore.Commands.Add('givemoney', 'Give A Player Money (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'moneytype', help = 'Type of money (money, marked_money)' }, { name = 'amount', help = 'Amount of money' } }, true, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if Player then
@@ -113,7 +113,7 @@ QBCore.Commands.Add('givemoney', 'Give A Player Money (Admin Only)', { { name = 
     end
 end, 'admin')
 
-QBCore.Commands.Add('setmoney', 'Set Players Money Amount (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'moneytype', help = 'Type of money (money, marked_money, bank)' }, { name = 'amount', help = 'Amount of money' } }, true, function(source, args)
+QBCore.Commands.Add('setmoney', 'Set Players Money Amount (Admin Only)', { { name = 'id', help = 'Player ID' }, { name = 'moneytype', help = 'Type of money (money, marked_money)' }, { name = 'amount', help = 'Amount of money' } }, true, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if Player then
