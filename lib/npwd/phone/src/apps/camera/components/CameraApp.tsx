@@ -17,7 +17,11 @@ import {ColorSwatchIcon, CubeIcon, EmojiHappyIcon, LightningBoltIcon} from "@her
 import {usePhoneVisibility} from "@os/phone/hooks/usePhoneVisibility";
 
 const ui = new ScreenshotUI();
-ui.initialize();
+try {
+    ui.initialize();
+} catch (e) {
+    console.error('WebGL initialisation ERROR', e);
+}
 
 const CameraApp: React.FC = () => {
     const history = useHistory();
@@ -46,7 +50,9 @@ const CameraApp: React.FC = () => {
     };
 
     useInterval(() => {
-        setImage(ui.generateImage())
+        try {
+            setImage(ui.generateImage())
+        } catch (e) {}
     }, 1)
 
     useEffect(() => {
