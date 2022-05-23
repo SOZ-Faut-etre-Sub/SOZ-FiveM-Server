@@ -356,15 +356,9 @@ local function SortirMenu(type_, garage, indexgarage)
     end
     garageType.submenu:Open()
 
-    if type_ == "entreprise" then
-        QBCore.Functions.TriggerCallback("qb-garage:server:GetPlayerEntreprise", function(result)
-            GenerateVehicleList(result, garage, indexgarage, garageType)
-        end, PlayerJob.id)
-    else
-        QBCore.Functions.TriggerCallback("qb-garage:server:GetGarageVehicles", function(result, time)
-            GenerateVehicleList(result, garage, indexgarage, garageType, time)
-        end, indexgarage, type_, garage.vehicle)
-    end
+    QBCore.Functions.TriggerCallback("soz-garage:server:GetGarageVehicles", function(result, time)
+        GenerateVehicleList(result, garage, indexgarage, garageType, time)
+    end, indexgarage, type_, garage.vehicle)
 end
 
 local function GarageMainMenu(menu, type_, garage, indexgarage)

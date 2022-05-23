@@ -41,7 +41,62 @@ QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateIn
     cb(vehicle)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(source, cb, garage, type, category)
+---List vehicles in specified garage
+---@param garage string Current garage
+---@param type_ string Garage type: public, private, entreprise, depot
+---@param category string Vehicle category: car, air, sea
+QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(source, cb, garage, type_, category)
+    local player = QBCore.Functions.GetPlayer(source)
+    local cid = player.PlayerData.citizenid
+
+    local query = "SELECT * FROM player_vehicles WHERE"
+    local args = {}
+
+    local argsByType = {
+        ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
+        ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
+        ["depot"] = {state = VehicleState.InPound},
+        ["entreprise"] = {state = VehicleState.InEntreprise, job = player.PlayerData.job.id},
+    }
+    local allArgs = argsByType[type_]
+    if not allArgs then
+        error(string.format("Invalid garage type_: %s", type_))
+    end
+
+    local index = 1
+    for field, value in pairs(allArgs) do
+        if index == 1 then
+            query = query .. string.format(" %s = ?", field)
+        else
+            query = query .. string.format(" AND %s = ?", field)
+        end
+        table.insert(args, value)
+        index = index + 1
+    end
+
+    -- Special case for pound and entreprise vehicle
+    if type_ == "depot" then
+        local canTakeOutPoundJob = SozJobCore.Functions.HasPermission(player.PlayerData.job.id, player.PlayerData.job.id, player.PlayerData.job.grade,
+                                                                      SozJobCore.JobPermission.SocietyTakeOutPound)
+        if canTakeOutPoundJob then
+            query = query .. " AND (citizenid = ? OR job = ?)"
+            table.insert(args, cid)
+            table.insert(args, player.PlayerData.job.id)
+        else
+            query = query .. " AND citizenid = ?"
+            table.insert(args, cid)
+        end
+    end
+
+    local vehicles = MySQL.Sync.fetchAll(query, args)
+    if #vehicles > 0 then
+        cb(vehicles, os.time())
+    else
+        cb(nil)
+    end
+end)
+
+QBCore.Functions.CreateCallback("old_qb-garage:server:GetGarageVehicles", function(source, cb, garage, type, category)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 
@@ -59,6 +114,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(s
     end
 
     if type == "depot" then -- Depot give player cars that are not in garage only
+        print("COUCOU")
         local canTakeOutPoundJob = SozJobCore.Functions.HasPermission(pData.PlayerData.job.id, pData.PlayerData.job.id, pData.PlayerData.job.grade,
                                                                       SozJobCore.JobPermission.SocietyTakeOutPound)
         local vehicles = {}
@@ -81,6 +137,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(s
         local tosend = {}
 
         for _, vehicle in pairs(vehicles) do
+            print("IN", vehicle, category)
             if category == "air" and
                 (QBCore.Shared.Vehicles[vehicle.vehicle].category == "helicopters" or QBCore.Shared.Vehicles[vehicle.vehicle].category == "planes") then
                 tosend[#tosend + 1] = vehicle
@@ -92,6 +149,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(s
             end
         end
 
+        print("TOSEND", next(tosend))
         cb(tosend)
 
         return
