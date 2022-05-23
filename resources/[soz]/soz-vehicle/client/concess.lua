@@ -202,16 +202,12 @@ RegisterNetEvent("soz-concess:client:createcam", function()
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
     SetFocusPosAndVel(-53.69, -1094.83, 25.44, 0.0, 0.0, 0.0)
-    DisplayHud(false)
-    DisplayRadar(false)
 end)
 
 RegisterNetEvent("soz-concess:client:deletecam", function()
     RenderScriptCams(false)
     DestroyAllCams(true)
     SetFocusEntity(GetPlayerPed(PlayerId()))
-    DisplayHud(true)
-    DisplayRadar(true)
 end)
 
 for indexConcess, Concess in pairs(ZonesConcessVehicule) do
