@@ -199,8 +199,6 @@ RegisterNetEvent("soz-concessvelo:client:createcam", function()
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
     SetFocusPosAndVel(-1236.72, -1495.94, 4.33, 0.0, 0.0, 0.0)
-    DisplayHud(false)
-    DisplayRadar(false)
 end)
 
 for indexConcessVelo, ConcessVelo in pairs(ZonesConcessVelo) do

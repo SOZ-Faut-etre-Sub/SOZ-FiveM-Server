@@ -199,8 +199,6 @@ RegisterNetEvent("soz-concessmoto:client:createcam", function()
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
     SetFocusPosAndVel(1224.5, 2701.63, 38.01, 0.0, 0.0, 0.0)
-    DisplayHud(false)
-    DisplayRadar(false)
 end)
 
 for indexConcessMoto, ConcessMoto in pairs(ZonesConcessMoto) do
