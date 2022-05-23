@@ -221,18 +221,6 @@ RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, ind
     end
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetPlayerEntreprise", function(source, cb)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE job = ?", {Player.PlayerData.job.id}, function(result)
-        if result[1] then
-            cb(result)
-        else
-            cb(nil)
-        end
-    end)
-end)
-
 ---Return vehicle's data to be stored
 ---@param vehNetId number Vehicle Network ID
 ---@param extraData table Extra data coming from client (fuel)
