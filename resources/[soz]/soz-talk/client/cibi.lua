@@ -5,10 +5,15 @@ local stateBagHandlers = {}
 --- Functions
 local function handleUpdateRadio(data, isPrimary)
     TriggerServerEvent("voip:server:radio:connect", "radio-lr", isPrimary and "primary" or "secondary", data.frequency)
-    --exports["soz-voip"]:setVolume("radio-lr", data.volume, isPrimary)
+    if isPrimary then
+        exports["soz-voip"]:SetRadioLongRangePrimaryVolume(data.volume)
+    else
+        exports["soz-voip"]:SetRadioLongRangeSecondaryVolume(data.volume)
+    end
     --exports["soz-voip"]:setVoiceEar("radio-lr", data.ear, isPrimary)
+
     SendNUIMessage({type = "cibi", action = "frequency_change", frequency = data.frequency, isPrimary = isPrimary})
-    --SendNUIMessage({type = "cibi", action = "volume_change", volume = data.volume, isPrimary = isPrimary})
+    SendNUIMessage({type = "cibi", action = "volume_change", volume = data.volume, isPrimary = isPrimary})
     --SendNUIMessage({type = "cibi", action = "ear_change", ear = data.ear, isPrimary = isPrimary})
 
     if isPrimary then
@@ -129,22 +134,25 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
 end)
 
 RegisterNUICallback("cibi/change_volume", function(data, cb)
-    local state = LocalPlayer.state["radio-lr"]
     if data.primary then
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio",
-                           {frequency = state.primaryChannel, volume = data.primary, ear = state.primaryChannelEar})
-        SoundProvider.default(0.5)
+                           {
+                               frequency = primaryRadio,
+                               volume = data.primary,
+                               -- ear = state.primaryChannelEar
+                           })
+        SoundProvider.default(data.primary)
         cb("ok")
         return
     end
     if data.secondary then
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio",
                            {
-            frequency = state.secondaryChannel,
+            frequency = secondaryRadio,
             volume = data.secondary,
-            ear = state.secondaryChannelEar,
+            -- ear = state.secondaryChannelEar,
         })
-        SoundProvider.default(0.5)
+        SoundProvider.default(data.secondary)
         cb("ok")
         return
     end

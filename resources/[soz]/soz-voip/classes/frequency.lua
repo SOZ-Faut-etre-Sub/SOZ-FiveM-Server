@@ -27,6 +27,23 @@ function Frequency:removeConsumer(serverId)
     end
 end
 
+--- Volume
+function Frequency:getVolume()
+    if self:isAvailableOnLongRange() then
+        return self.extra.longRangeVolume or 1.0
+    end
+
+    return self.extra.volume or 1.0
+end
+
+function Frequency:setVolume(volume)
+    if self:isAvailableOnLongRange() then
+        self.extra.longRangeVolume = volume
+    else
+        self.extra.volume = volume
+    end
+end
+
 --- Long range
 function Frequency:isAvailableOnLongRange()
     return self.extra.availableOnLongRange or false

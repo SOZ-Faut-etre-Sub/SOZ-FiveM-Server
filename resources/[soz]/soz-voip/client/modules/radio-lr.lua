@@ -128,6 +128,30 @@ local function SetRadioPowerState(state)
     end
 end
 
+local function SetRadioPrimaryVolume(volume)
+    if not IsRadioOn then
+        return
+    end
+
+    if not RadioFrequencies[PrimaryConfiguration.frequency] then
+        return
+    end
+
+    RadioFrequencies[PrimaryConfiguration.frequency]:setVolume(volume / 100)
+end
+
+local function SetRadioSecondaryVolume(volume)
+    if not IsRadioOn then
+        return
+    end
+
+    if not RadioFrequencies[SecondaryConfiguration.frequency] then
+        return
+    end
+
+    RadioFrequencies[SecondaryConfiguration.frequency]:setVolume(volume / 100)
+end
+
 function RegisterRadioLongRangeModule()
     console.debug("Registering radio long range module...")
 
@@ -149,6 +173,8 @@ function RegisterRadioLongRangeModule()
     RegisterNetEvent("voip:client:radio:removeConsumer", RemoveSubscriber)
 
     exports("SetRadioLongRangePowerState", SetRadioPowerState)
+    exports("SetRadioLongRangePrimaryVolume", SetRadioPrimaryVolume)
+    exports("SetRadioLongRangeSecondaryVolume", SetRadioSecondaryVolume)
 
     console.debug("Radio long range module registered.")
 end

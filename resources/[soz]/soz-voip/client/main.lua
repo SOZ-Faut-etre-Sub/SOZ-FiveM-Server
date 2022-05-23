@@ -80,3 +80,13 @@ function LoadAnimDict(dict)
         Citizen.Wait(0)
     end
 end
+
+RegisterNetEvent("onPlayerJoining", function(playerId)
+    MumbleAddVoiceChannelListen(playerId)
+    console.debug("Player %s added to proximity voice channel", playerId)
+end)
+
+RegisterNetEvent("onPlayerDropped", function(playerId)
+    MumbleRemoveVoiceChannelListen(playerId)
+    console.debug("Player %s removed from proximity voice channel", playerId)
+end)
