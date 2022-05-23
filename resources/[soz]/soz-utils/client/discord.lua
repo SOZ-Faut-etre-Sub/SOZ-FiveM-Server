@@ -19,7 +19,8 @@ CreateThread(function()
         SetDiscordRichPresenceAssetSmallText("discord.gg/soz-pas-soz")
 
         QBCore.Functions.TriggerCallback("smallresources:server:GetCurrentPlayers", function(result)
-            SetRichPresence(result[1] .. "/" .. result[2])
+            -- SetRichPresence(result[1] .. "/" .. result[2])
+            SetRichPresence(result[1] .. "/100")
         end)
 
         -- (26-02-2021) New Native:

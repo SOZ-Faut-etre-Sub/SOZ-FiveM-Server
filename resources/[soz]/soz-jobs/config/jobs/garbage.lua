@@ -70,16 +70,16 @@ GarbageConfig.Cloakroom = {
 }
 
 GarbageConfig.RecycleItem = {
-    ["plastic"] = true,
-    ["metalscrap"] = true,
-    ["aluminum"] = true,
-    ["rubber"] = true,
-    ["electronickit"] = true,
-    ["rolex"] = true,
-    ["diamond_ring"] = true,
-    ["goldchain"] = true,
-    ["10kgoldchain"] = true,
-    ["goldbar"] = true,
-    ["garbagebag"] = true,
-    ["petroleum_residue"] = true,
+    ["plastic"] = 5,
+    ["metalscrap"] = 5,
+    ["aluminum"] = 5,
+    ["rubber"] = 5,
+    ["electronickit"] = 5,
+    ["rolex"] = 5,
+    ["diamond_ring"] = 5,
+    ["goldchain"] = 5,
+    ["10kgoldchain"] = 5,
+    ["goldbar"] = 5,
+    ["garbagebag"] = 5,
+    ["petroleum_residue"] = 20,
 }

@@ -9,7 +9,7 @@ CreateThread(function()
                 label = "Facturer",
                 color = "news",
                 icon = "c:jobs/facture.png",
-                event = "jobs:client:news:InvoicePlayer",
+                event = "jobs:client:InvoicePlayer",
                 job = "news",
             },
         },
@@ -157,24 +157,6 @@ RegisterNetEvent("jobs:client:news:farmNewspaper", function()
         StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
         TriggerServerEvent("jobs:server:news:newspaperFarm")
     end)
-end)
-
-RegisterNetEvent("jobs:client:news:InvoicePlayer", function(data)
-    local player = NetworkGetPlayerIndexFromPed(data.entity)
-
-    local title = exports["soz-hud"]:Input("Titre", 200)
-    if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
-        return
-    end
-
-    local amount = exports["soz-hud"]:Input("Montant", 10)
-    if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
-        return
-    end
-
-    TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
 end)
 
 RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()

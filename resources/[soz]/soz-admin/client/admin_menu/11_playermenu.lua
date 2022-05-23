@@ -1,5 +1,8 @@
-local playersMenu, playerMenu
+local playersMenu, playerMenu, featureMenu
 local CurrentPlayerData = {}
+
+local function CreateFeatureMenu(player)
+end
 
 function AdminMenuPlayers(menu, permission)
     if playersMenu == nil then
@@ -7,6 +10,10 @@ function AdminMenuPlayers(menu, permission)
     end
     if playerMenu == nil then
         playerMenu = MenuV:InheritMenu(playersMenu)
+    end
+
+    if featureMenu == nil then
+        featureMenu = MenuV:InheritMenu(playerMenu)
     end
 
     playersMenu:ClearItems()
@@ -95,6 +102,43 @@ function AdminMenuPlayers(menu, permission)
         end,
     })
 
+    featureMenu:On("open", function()
+        local playerFeatures = QBCore.Functions.TriggerRpc("soz-admin:feature:GetFeatures", CurrentPlayerData.id)
+
+        for featureId, featureLabel in pairs(Config.Features) do
+            local label = "Feature : " .. featureLabel
+            local value = "n"
+
+            for _, playerFeature in pairs(playerFeatures or {}) do
+                if playerFeature == featureId then
+                    value = "y"
+                    break
+                end
+            end
+
+            local featureConfirm = featureMenu:AddConfirm({
+                label = label,
+                description = "Activer / Désactiver la feature ?",
+                value = value,
+            });
+
+            featureConfirm:On("confirm", function()
+                TriggerServerEvent("soz-admin:feature:AddFeature", CurrentPlayerData.id, featureId)
+            end)
+
+            featureConfirm:On("deny", function()
+                TriggerServerEvent("soz-admin:feature:RemoveFeature", CurrentPlayerData.id, featureId)
+            end)
+        end
+    end)
+
+    featureMenu:On("close", function()
+        featureMenu:ClearItems()
+    end)
+
+    playerMenu:AddButton({label = "Gerer les features", value = featureMenu})
+
     --- Add to main menu
     AdminMenu:AddButton({icon = "👨‍💻‍", label = "Gestion des joueurs", value = playersMenu})
 end
+

@@ -10,9 +10,15 @@ function QBCore.Player.Login(source, citizenid, newData)
     if src then
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
+            local account = exports.oxmysql:singleSync("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", { license })
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
+            local role = GetConvar("soz_anonymous_default_role", "user")
 
-            if PlayerData and license == PlayerData.license then
+            if account then
+                role = account.role:lower()
+            end
+
+            if PlayerData and (license == PlayerData.license or role == 'admin') then
                 PlayerData.money = json.decode(PlayerData.money)
                 PlayerData.job = json.decode(PlayerData.job)
                 PlayerData.position = json.decode(PlayerData.position)
@@ -20,6 +26,8 @@ function QBCore.Player.Login(source, citizenid, newData)
                 PlayerData.charinfo = json.decode(PlayerData.charinfo)
                 PlayerData.skin = json.decode(PlayerData.skin)
                 PlayerData.cloth_config = json.decode(PlayerData.cloth_config)
+                PlayerData.features = json.decode(PlayerData.features)
+                PlayerData.role = role
 
                 if PlayerData.gang then
                     PlayerData.gang = json.decode(PlayerData.gang)
@@ -153,6 +161,9 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Other
     PlayerData.position = PlayerData.position or QBConfig.DefaultSpawn
     PlayerData.LoggedIn = true
+    -- Features
+    PlayerData.features = PlayerData.features or {}
+    PlayerData.role = PlayerData.role or "user"
 
     QBCore.Player.CreatePlayer(PlayerData)
 end
@@ -187,6 +198,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
         if dontUpdateChat == nil then
             QBCore.Commands.Refresh(self.PlayerData.source)
         end
+    end
+
+    self.Functions.SetFeatures = function(features)
+        self.PlayerData.features = features or {}
+        self.Functions.UpdatePlayerData()
     end
 
     self.Functions.SetJob = function(jobId, gradeId)
@@ -448,7 +464,7 @@ function QBCore.Player.Save(source)
         PlayerData.metadata["health"] = GetEntityHealth(ped)
         PlayerData.metadata["armor"] = GetPedArmour(ped)
 
-        exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default', {
+        exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features', {
             citizenid = PlayerData.citizenid,
             cid = tonumber(PlayerData.cid),
             license = PlayerData.license,
@@ -462,6 +478,7 @@ function QBCore.Player.Save(source)
             skin = json.encode(PlayerData.skin),
             cloth_config = json.encode(PlayerData.cloth_config),
             is_default = PlayerData.is_default,
+            features = json.encode(PlayerData.features),
         })
     else
         exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })

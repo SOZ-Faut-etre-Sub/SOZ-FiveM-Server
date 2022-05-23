@@ -82,9 +82,14 @@ RegisterNetEvent("police:client:LockPickVehicle", function(data)
         disableCombat = true,
     }, {task = "WORLD_HUMAN_WELDING"}, {}, {}, function()
         local plate = QBCore.Functions.GetPlate(data.entity)
-
         exports["soz-hud"]:DrawNotification("Porte ~g~ouverte~s~ !")
         exports["soz-vehicle"]:SetLockPicked(plate)
-        SetVehicleDoorsLocked(data.entity, 1)
+        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(data.entity))
+        TriggerServerEvent("police:server:LockPickOwner", VehToNet(data.entity), serverIDcar)
     end)
+end)
+
+RegisterNetEvent("police:client:LockPickOwner", function(net)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetVehicleDoorsLocked(veh, 1)
 end)

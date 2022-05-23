@@ -24,21 +24,31 @@ AddEventHandler("soz-flatbed:server:action", function(VehicleId, Action, owner)
 end)
 
 RegisterServerEvent("soz-flatbed:server:tpaction")
-AddEventHandler("soz-flatbed:server:tpaction", function(VehicleId, lastveh, entity)
-    TriggerClientEvent("soz-flatbed:client:tpaction", source, FlatbedProps[VehicleId], lastveh, entity)
+AddEventHandler("soz-flatbed:server:tpaction", function(VehicleId, lastveh, entity, owner)
+    TriggerClientEvent("soz-flatbed:client:tpaction", source, FlatbedProps[VehicleId], lastveh, entity, owner)
 end)
 
 RegisterServerEvent("soz-flatbed:server:actionowner")
-AddEventHandler("soz-flatbed:server:actionowner", function(BedInfo, Action, LastVehicle, owner)
+AddEventHandler("soz-flatbed:server:actionowner", function(BedInfo, Action, lastVehicle, owner)
     if Action == "lower" then
-        TriggerClientEvent("soz-flatbed:client:actionlower", owner, BedInfo, Action, LastVehicle)
+        TriggerClientEvent("soz-flatbed:client:actionlower", owner, BedInfo, lastVehicle)
     elseif Action == "raise" then
-        TriggerClientEvent("soz-flatbed:client:actionraise", owner, BedInfo, Action, LastVehicle)
+        TriggerClientEvent("soz-flatbed:client:actionraise", owner, BedInfo, lastVehicle)
     elseif Action == "attach" then
-        TriggerClientEvent("soz-flatbed:client:actionattach", owner, BedInfo, Action, LastVehicle)
+        TriggerClientEvent("soz-flatbed:client:actionattach", owner, BedInfo, lastVehicle)
     elseif Action == "detach" then
-        TriggerClientEvent("soz-flatbed:client:actiondettach", owner, BedInfo, Action, LastVehicle)
+        TriggerClientEvent("soz-flatbed:client:actiondettach", owner, BedInfo, lastVehicle)
     end
+end)
+
+RegisterServerEvent("soz-flatbed:server:actionownerfalse")
+AddEventHandler("soz-flatbed:server:actionownerfalse", function(AttachCoords, entity, PropID, owner)
+    TriggerClientEvent("soz-flatbed:client:actionownerfalse", owner, AttachCoords, entity, PropID)
+end)
+
+RegisterServerEvent("soz-flatbed:server:actionownertrue")
+AddEventHandler("soz-flatbed:server:actionownertrue", function(BedInfo, lastveh, owner)
+    TriggerClientEvent("soz-flatbed:client:actionownertrue", owner, BedInfo, lastveh)
 end)
 
 Citizen.CreateThread(function()

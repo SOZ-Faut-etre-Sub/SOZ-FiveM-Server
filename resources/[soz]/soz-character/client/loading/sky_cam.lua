@@ -2,7 +2,6 @@ local UnzoomSkyCam = nil
 local ZoomSkyCam = nil
 
 function StartUnzoomSkyCam()
-    DisplayRadar(false)
     SetCloudHatOpacity(0.0)
     SetWeatherTypePersist("CLEAR")
     SetWeatherTypeNowPersist("CLEAR")
