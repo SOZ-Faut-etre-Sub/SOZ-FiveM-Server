@@ -2,10 +2,31 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local garage_props = GetHashKey("soz_prop_paystation")
 
-CreateThread(function()
-    for _, garage in pairs(Garages) do
-        if garage.type == "entreprise" then
-            exports["soz-utils"]:CreateObject(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, garage.blipcoord.w, 8000.0, true)
+AddEventHandler("onResourceStart", function(resource)
+    if resource == GetCurrentResourceName() then
+        Wait(100)
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL", {})
+
+        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'", {})
+
+        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4", {}, function(result)
+            if result[1] then
+                for k, v in pairs(result) do
+                    local jours = os.difftime(os.time(), v.parkingtime) / (24 * 60 * 60) -- seconds in a day
+                    local joursentiers = math.floor(jours)
+                    if (v.state == 2 and joursentiers > 6) or (v.state == 4 and joursentiers > 2) then
+                        MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE id = ?", {v.id})
+                    end
+                end
+            end
+        end)
+
+        for _, garage in pairs(Garages) do
+            if garage.type == "entreprise" then
+                exports["soz-utils"]:CreateObject(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, garage.blipcoord.w, 8000.0, true)
+            end
         end
     end
 end)
@@ -159,29 +180,6 @@ RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
         cid,
         plate,
     })
-end)
-
-AddEventHandler("onResourceStart", function(resource)
-    if resource == GetCurrentResourceName() then
-        Wait(100)
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL", {})
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL", {})
-
-        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'", {})
-        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'", {})
-
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4", {}, function(result)
-            if result[1] then
-                for k, v in pairs(result) do
-                    local jours = os.difftime(os.time(), v.parkingtime) / (24 * 60 * 60) -- seconds in a day
-                    local joursentiers = math.floor(jours)
-                    if (v.state == 2 and joursentiers > 6) or (v.state == 4 and joursentiers > 2) then
-                        MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE id = ?", {v.id})
-                    end
-                end
-            end
-        end)
-    end
 end)
 
 RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, indexgarage)
