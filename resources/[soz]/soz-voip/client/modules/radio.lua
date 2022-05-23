@@ -27,6 +27,10 @@ function StartTransmission(frequency, context)
         return
     end
 
+    if LocalPlayer.state.isdead or LocalPlayer.state.isEscorted or LocalPlayer.state.ishandcuffed then
+        return
+    end
+
     if not IsTalkingOnRadio then
         IsTalkingOnRadio = true
 
