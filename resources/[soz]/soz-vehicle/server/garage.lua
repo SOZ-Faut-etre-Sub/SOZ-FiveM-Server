@@ -106,68 +106,6 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(s
     end
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:checkOwnership", function(source, cb, plate, type, house, gang)
-    local src = source
-    local pData = QBCore.Functions.GetPlayer(src)
-    if type == "public" or type == "private" then -- Public garages only for player cars
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ? AND citizenid = ?", {
-            plate,
-            pData.PlayerData.citizenid,
-        }, function(result)
-            if result[1] then
-                cb(true)
-            else
-                cb(false)
-            end
-        end)
-    elseif type == "house" then -- House garages only for player cars that have keys of the house
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
-            if result[1] then
-                local hasHouseKey = exports["qb-houses"]:hasKey(result[1].license, result[1].citizenid, house)
-                if hasHouseKey then
-                    cb(true)
-                else
-                    cb(false)
-                end
-            else
-                cb(false)
-            end
-        end)
-    elseif type == "gang" then -- Gang garages only for gang members cars (for sharing)
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
-            if result[1] then
-                -- Check if found owner is part of the gang
-                local resultplayer = MySQL.Sync.fetchSingle("SELECT * FROM player WHERE citizenid = ?", {
-                    result[1].citizenid,
-                })
-                if resultplayer then
-                    local playergang = json.decode(resultplayer.gang)
-                    if playergang.name == gang then
-                        cb(true)
-                    else
-                        cb(false)
-                    end
-                else
-                    cb(false)
-                end
-            else
-                cb(false)
-            end
-        end)
-    elseif type == "entreprise" then -- Job garages only for cars that are owned by someone (for sharing and service)
-        MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ? AND job = ?", {
-            plate,
-            pData.PlayerData.job.id,
-        }, function(result)
-            if result[1] then
-                cb(result[1])
-            else
-                cb(false)
-            end
-        end)
-    end
-end)
-
 QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", function(source, cb, plate)
     local src = source
     local properties = {}
