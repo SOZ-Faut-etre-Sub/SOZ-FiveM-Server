@@ -5,7 +5,6 @@ local function MutePlayer(state)
     else
         PlayerData.Muted = not PlayerData.Muted
     end
-    print("Muted: " .. tostring(PlayerData.Muted))
     TriggerServerEvent("voip:server:player:mute", PlayerData.Muted)
 
     if not PlayerData.Muted then
@@ -13,6 +12,7 @@ local function MutePlayer(state)
     else
         TriggerEvent("hud:client:UpdateVoiceMode", -1)
     end
+    console.debug("Muted: " .. tostring(PlayerData.Muted))
 end
 
 local function ProximityVoiceIncrease()

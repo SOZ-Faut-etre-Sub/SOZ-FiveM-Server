@@ -1,7 +1,7 @@
 Config = {}
 
 --- Settings
-Config.debug = true
+Config.debug = false
 Config.filterAllowed = {["call"] = false, ["radio"] = false}
 
 Config.voiceTargets = {[1] = "proximity", [2] = "phone", [3] = "radio", [4] = "speaker", [5] = "car"}
