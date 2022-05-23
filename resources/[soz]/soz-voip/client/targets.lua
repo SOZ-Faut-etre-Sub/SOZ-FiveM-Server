@@ -22,6 +22,7 @@ function RefreshTargets()
     MumbleClearVoiceTarget(voiceTarget)
     SetVoiceTargets(voiceTarget)
     ChangeVoiceTarget(voiceTarget)
+    MumbleAddVoiceChannelListen(voiceTarget)
 end
 
 function AddPlayerToTargetList(serverID, context, transmit)

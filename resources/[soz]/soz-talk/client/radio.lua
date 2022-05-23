@@ -118,17 +118,15 @@ end)
 
 RegisterNUICallback("radio/change_volume", function(data, cb)
     if data.primary then
-        exports["soz-voip"]:setVolume("radio-sr", data.primary, true)
-
-        SoundProvider.default(0.5)
+        exports["soz-voip"]:SetRadioShortRangePrimaryVolume(data.primary)
+        SoundProvider.default(data.primary)
 
         cb("ok")
         return
     end
     if data.secondary then
-        exports["soz-voip"]:setVolume("radio-sr", data.secondary, false)
-
-        SoundProvider.default(0.5)
+        exports["soz-voip"]:SetRadioShortRangeSecondaryVolume(data.secondary)
+        SoundProvider.default(data.secondary)
 
         cb("ok")
         return

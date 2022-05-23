@@ -46,11 +46,15 @@ RegisterNetEvent("voip:client:voice:transmission:state", function(serverID, cont
     end
 
     if context ~= "radio-sr" or (context == "radio-sr" and (isInRange or RadioFrequencies[frequency]:isAvailableOnLongRange())) then
-        PlayRemoteRadioClick(context, transmitting)
+        PlayRemoteRadioClick(context, transmitting, RadioFrequencies[frequency]:getVolume())
     end
 
     if transmitting and context ~= "radio-sr" or (context == "radio-sr" and (isInRange or RadioFrequencies[frequency]:isAvailableOnLongRange())) then
         Citizen.Wait(0)
+
+        if context == "radio-sr" or context == "radio-lr" then
+            data.volume = RadioFrequencies[frequency]:getVolume()
+        end
         MumbleSetVolumeOverrideByServerId(serverID, data.volume)
     end
 

@@ -112,6 +112,30 @@ local function SetRadioPowerState(state)
     end
 end
 
+local function SetRadioPrimaryVolume(volume)
+    if not IsRadioOn then
+        return
+    end
+
+    if not RadioFrequencies[PrimaryConfiguration.frequency] then
+        return
+    end
+
+    RadioFrequencies[PrimaryConfiguration.frequency]:setVolume(volume / 100)
+end
+
+local function SetRadioSecondaryVolume(volume)
+    if not IsRadioOn then
+        return
+    end
+
+    if not RadioFrequencies[SecondaryConfiguration.frequency] then
+        return
+    end
+
+    RadioFrequencies[SecondaryConfiguration.frequency]:setVolume(volume / 100)
+end
+
 function RegisterRadioShortRangeModule()
     console.debug("Registering radio short range module...")
 
@@ -133,6 +157,8 @@ function RegisterRadioShortRangeModule()
     RegisterNetEvent("voip:client:radio:removeConsumer", RemoveSubscriber)
 
     exports("SetRadioShortRangePowerState", SetRadioPowerState)
+    exports("SetRadioShortRangePrimaryVolume", SetRadioPrimaryVolume)
+    exports("SetRadioShortRangeSecondaryVolume", SetRadioSecondaryVolume)
 
     console.debug("Radio short range module registered.")
 end

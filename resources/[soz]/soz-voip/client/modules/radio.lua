@@ -33,7 +33,7 @@ function StartTransmission(frequency, context)
         AddGroupToTargetList(channel.consumers, context, frequency)
 
         StartRadioAnimationTask()
-        PlayLocalRadioClick(context, true)
+        PlayLocalRadioClick(context, true, RadioFrequencies[frequency]:getVolume())
 
         console.debug("[Radio] Transmission started")
     end
@@ -54,17 +54,17 @@ function StopTransmission(frequency, context, forced)
 
         RemoveGroupToTargetList(channel.consumers, context, frequency)
 
-        PlayLocalRadioClick(context, false)
+        PlayLocalRadioClick(context, false, RadioFrequencies[frequency]:getVolume())
 
         console.debug("[Radio] Transmission stopped")
     end)
 end
 
 --- Radio effect
-function PlayLocalRadioClick(context, transmit)
-    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", 0.5)
+function PlayLocalRadioClick(context, transmit, volume)
+    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", volume / 2)
 end
 
-function PlayRemoteRadioClick(context, transmit)
-    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", 0.5)
+function PlayRemoteRadioClick(context, transmit, volume)
+    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", volume / 2)
 end
