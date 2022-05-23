@@ -3,7 +3,7 @@ Transmissions = Context:new()
 --- Functions
 function GetPriorityContextData(serverID)
     local _, contexts = Transmissions:getTargetContexts(serverID)
-    local context = { volume = -1.0, priority = 0 }
+    local context = {volume = -1.0, priority = 0}
 
     for _, ctx in pairs(contexts) do
         if ctx.priority >= context.priority and (ctx.volume == -1 or ctx.volume >= context.volume) then

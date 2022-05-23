@@ -17,6 +17,6 @@ RegisterNetEvent("voip:server:call:end", function(target)
     end
 end)
 
-AddEventHandler('playerDropped', function()
+AddEventHandler("playerDropped", function()
     TriggerEvent("voip:server:call:end", source)
 end)

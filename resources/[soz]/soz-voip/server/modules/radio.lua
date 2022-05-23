@@ -13,6 +13,6 @@ RegisterNetEvent("voip:server:radio:disconnect", function(context, channel)
     TriggerClientEvent("voip:client:radio:disconnect", source, context, channel)
 end)
 
-AddEventHandler('playerDropped', function()
+AddEventHandler("playerDropped", function()
     RadioState:removeConsumerFromAllChannels(source)
 end)

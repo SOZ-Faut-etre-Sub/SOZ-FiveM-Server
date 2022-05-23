@@ -28,7 +28,7 @@ Citizen.CreateThread(function()
         end
 
         if not PlayerData.VoiceEnabled then
-            TriggerEvent('voip:client:state', true)
+            TriggerEvent("voip:client:state", true)
         end
 
         PlayerData.PlayerPreviousCoords = PlayerData.PlayerCoords
@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-AddEventHandler('voip:client:state', function (state)
+AddEventHandler("voip:client:state", function(state)
     PlayerData.VoiceEnabled = state
 
     TriggerServerEvent("voip:server:connection:state", state)

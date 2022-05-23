@@ -2,18 +2,9 @@ Config = {}
 
 --- Settings
 Config.debug = true
-Config.filterAllowed = {
-    ["call"] = false,
-    ["radio"] = false,
-}
+Config.filterAllowed = {["call"] = false, ["radio"] = false}
 
-Config.voiceTargets = {
-    [1] = "proximity",
-    [2] = "phone",
-    [3] = "radio",
-    [4] = "speaker",
-    [5] = "car",
-}
+Config.voiceTargets = {[1] = "proximity", [2] = "phone", [3] = "radio", [4] = "speaker", [5] = "car"}
 
 --- Voice Proximity
 Config.voiceRanges = {
@@ -27,10 +18,7 @@ Config.radioFrequencies = {min = 10000, max = 99999}
 Config.radioShortRangeDistance = 3000.0
 
 --- Volume
-Config.volumes = {
-    ["call"] = 0.8,
-    ["vehicle"] = 0.5,
-}
+Config.volumes = {["call"] = 0.8, ["vehicle"] = 0.5}
 
 --- Hotkeys
 Config.rangeDecreaseHotkey = "F5"

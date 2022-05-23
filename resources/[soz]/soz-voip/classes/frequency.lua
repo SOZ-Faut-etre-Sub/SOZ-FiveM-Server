@@ -7,7 +7,7 @@ function Frequency:new(register, channel, extra)
         module = register,
         extra = extra or {},
         serverPlayerId = GetPlayerServerId(PlayerId()),
-        consumers = {}
+        consumers = {},
     }, self)
 end
 

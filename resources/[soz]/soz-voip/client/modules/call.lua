@@ -8,7 +8,7 @@ local StartCall = function(serverId, callId)
     PlayerData.CurrentCall = {callId = callId, targetId = serverId}
 
     AddPlayerToTargetList(serverId, "call", true)
-    console.debug('Call %s started with player %s', callId, serverId)
+    console.debug("Call %s started with player %s", callId, serverId)
 end
 
 local StopCall = function(serverId, callId)
@@ -20,7 +20,7 @@ local StopCall = function(serverId, callId)
     PlayerData.CurrentCall = nil
 
     RemovePlayerFromTargetList(serverId, "call", true, true)
-    console.debug('Call %s ended with player %s', callId, serverId)
+    console.debug("Call %s ended with player %s", callId, serverId)
 end
 
 function RegisterCallModule()
