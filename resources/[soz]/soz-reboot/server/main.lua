@@ -26,7 +26,7 @@ local reboot = function()
 
     local parkingtime = os.time()
     print("[soz-reboot] Mise des véhicules dans le void...")
-    MySQL.Async.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE state = 0", {parkingtime})
+    MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE state = 0", {parkingtime})
 
     print("[soz-reboot] Sauvegarde des comptes bancaires...")
     exports["soz-bank"]:saveAccounts()
