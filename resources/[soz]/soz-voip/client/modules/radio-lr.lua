@@ -11,6 +11,12 @@ local function ConnectToRadio(context, type_, frequency, consumers)
         return
     end
 
+    if type_ == "primary" then
+        PrimaryConfiguration.frequency = frequency
+    elseif type_ == "secondary" then
+        SecondaryConfiguration.frequency = frequency
+    end
+
     if RadioFrequencies[frequency] and RadioFrequencies[frequency].module == "radio-sr" then
         RadioFrequencies[frequency]:setAvailableOnLongRange(true)
         console.debug("[Radio] %s is available on long range", frequency)
@@ -21,12 +27,6 @@ local function ConnectToRadio(context, type_, frequency, consumers)
     local channel = Frequency:new("radio-lr", frequency)
     for consumer, _ in pairs(consumers) do
         channel:addConsumer(consumer)
-    end
-
-    if type_ == "primary" then
-        PrimaryConfiguration.frequency = frequency
-    elseif type_ == "secondary" then
-        SecondaryConfiguration.frequency = frequency
     end
 
     RadioFrequencies[frequency] = channel
@@ -44,6 +44,7 @@ local function DisconnectFromRadio(context, frequency)
 
     if RadioFrequencies[frequency].module == "radio-sr" and RadioFrequencies[frequency]:isAvailableOnLongRange() then
         RadioFrequencies[frequency]:setAvailableOnLongRange(false)
+        TriggerServerEvent("voip:server:radio:getConsumers", "radio-sr", frequency)
         console.debug("[Radio] %s is not available on long range", frequency)
 
         return
@@ -99,8 +100,6 @@ local function StartTransmissionPrimary()
     if not IsRadioOn then
         return
     end
-
-    console.debug("[Radio] Start transmission primary")
 
     StartTransmission(PrimaryConfiguration.frequency, "radio-lr")
 end

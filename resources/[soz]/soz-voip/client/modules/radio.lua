@@ -27,7 +27,7 @@ function StartTransmission(frequency, context)
         return
     end
 
-    if LocalPlayer.state.isdead or LocalPlayer.state.isEscorted or LocalPlayer.state.ishandcuffed then
+    if LocalPlayer.state.isdead == true or LocalPlayer.state.isEscorted == true or LocalPlayer.state.ishandcuffed == true then
         return
     end
 

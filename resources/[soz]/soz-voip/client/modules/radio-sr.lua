@@ -81,6 +81,21 @@ local function RemoveSubscriber(context, frequency, serverID)
     end
 end
 
+local function GetConsumersFromRadio(context, frequency, consumers)
+    local channel = RadioFrequencies[frequency]
+    if context ~= "radio-sr" then
+        return
+    end
+
+    if not channel then
+        return
+    end
+
+    for consumer, _ in pairs(consumers) do
+        channel:addConsumer(consumer)
+    end
+end
+
 local function StartTransmissionPrimary()
     if not IsRadioOn then
         return
@@ -152,6 +167,7 @@ function RegisterRadioShortRangeModule()
 
     RegisterNetEvent("voip:client:radio:connect", ConnectToRadio)
     RegisterNetEvent("voip:client:radio:disconnect", DisconnectFromRadio)
+    RegisterNetEvent("voip:client:radio:getConsumers", GetConsumersFromRadio)
 
     RegisterNetEvent("voip:client:radio:addConsumer", AddSubscriber)
     RegisterNetEvent("voip:client:radio:removeConsumer", RemoveSubscriber)
