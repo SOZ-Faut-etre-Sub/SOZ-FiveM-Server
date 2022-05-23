@@ -16,10 +16,10 @@ RegisterNetEvent("voip:server:transmission:state", function(group, context, tran
 
     if isMult then
         for player, _ in pairs(group) do
-            TriggerClientEvent('voip:client:voice:transmission:state', player, source, context, transmitting, channel, IsInRangeOfRadio(context, coord, player))
+            TriggerClientEvent("voip:client:voice:transmission:state", player, source, context, transmitting, channel, IsInRangeOfRadio(context, coord, player))
         end
     else
-        TriggerClientEvent('voip:client:voice:transmission:state', group, source, context, transmitting, channel, IsInRangeOfRadio(context, coord, group))
+        TriggerClientEvent("voip:client:voice:transmission:state", group, source, context, transmitting, channel, IsInRangeOfRadio(context, coord, group))
     end
 end)
 

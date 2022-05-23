@@ -3,5 +3,5 @@ Natives = setmetatable({}, {
         return function(...)
             return Citizen.InvokeNative(GetHashKey(name) & 0xFFFFFFFF, ...)
         end
-    end
+    end,
 })

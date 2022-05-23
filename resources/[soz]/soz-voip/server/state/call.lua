@@ -46,8 +46,8 @@ function CallStateManager:createCall(emitter, receiver)
     }
 
     local call = CallList[callId]
-    TriggerClientEvent('voip:client:call:start', call.callerId, call.receiverId, callId)
-    TriggerClientEvent('voip:client:call:start', call.receiverId, call.callerId, callId)
+    TriggerClientEvent("voip:client:call:start", call.callerId, call.receiverId, callId)
+    TriggerClientEvent("voip:client:call:start", call.receiverId, call.callerId, callId)
 
     TriggerEvent("monitor:server:event", "voip_call", {player_source = source.PlayerData.source, call_type = "emitter"}, call)
     TriggerEvent("monitor:server:event", "voip_call", {player_source = target.PlayerData.source, call_type = "receiver"}, call)
@@ -63,8 +63,8 @@ function CallStateManager:destroyCall(callId)
         return
     end
 
-    TriggerClientEvent('voip:client:call:end', call.callerId, call.receiverId, callId)
-    TriggerClientEvent('voip:client:call:end', call.receiverId, call.callerId, callId)
+    TriggerClientEvent("voip:client:call:end", call.callerId, call.receiverId, callId)
+    TriggerClientEvent("voip:client:call:end", call.receiverId, call.callerId, callId)
 
     TriggerEvent("monitor:server:event", "voip_call", {player_source = call.callerId, type = "ended"}, CallList[callId])
     TriggerEvent("monitor:server:event", "voip_call", {player_source = call.receiverId, type = "ended"}, CallList[callId])

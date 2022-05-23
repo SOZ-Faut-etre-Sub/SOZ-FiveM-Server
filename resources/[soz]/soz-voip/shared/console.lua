@@ -12,13 +12,12 @@ local function format(msg, ...)
     return (msg):format(table.unpack(params))
 end
 
-
 console.debug = function(msg, ...)
     if not Config.debug then
         return
     end
 
-    print('[VoIP DEBUG]', format(msg, ...))
+    print("[VoIP DEBUG]", format(msg, ...))
 end
 
 console.log = function(msg, ...)
@@ -26,13 +25,13 @@ console.log = function(msg, ...)
 end
 
 console.info = function(msg, ...)
-    print('[VoIP INFO]', format(msg, ...))
+    print("[VoIP INFO]", format(msg, ...))
 end
 
 console.warn = function(msg, ...)
-    print('[VoIP WARN]', format(msg, ...))
+    print("[VoIP WARN]", format(msg, ...))
 end
 
 console.error = function(msg, ...)
-    print('[VoIP ERROR]', format(msg, ...))
+    print("[VoIP ERROR]", format(msg, ...))
 end
