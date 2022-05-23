@@ -258,10 +258,8 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
         end
     end
 
-    -- Does player own vehicle?
-    local owned = QBCore.Functions.TriggerRpc("qb-garage:server:checkOwnership", plate, type_, indexgarage, PlayerGang.name)
-    if not owned then
-        exports["soz-hud"]:DrawNotification(Lang:t("error.not_owned"), "error", 3500)
+    -- Extra checks against data in DB
+    if not QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", plate, VehicleState.Out) then
         return false
     end
 
