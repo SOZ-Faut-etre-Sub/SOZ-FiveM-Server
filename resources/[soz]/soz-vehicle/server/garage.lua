@@ -10,9 +10,8 @@ CreateThread(function()
     end
 end)
 
----Precheck data stored in DB (citizenid, garage, plate, state)
+---Precheck data stored in DB (citizenid, plate, state)
 ---Data should strictly match. This is to avoid duplication glitches
----@param indexgarage string Garage where vehicle is supposed to be parked
 ---@param plate string
 ---@param expectedState number State flag vehicle is supposed to have
 QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, plate, expectedState)
