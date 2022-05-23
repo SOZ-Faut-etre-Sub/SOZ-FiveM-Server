@@ -1,6 +1,11 @@
 --- Private functions
-local function MutePlayer()
-    PlayerData.Muted = not PlayerData.Muted
+local function MutePlayer(state)
+    if state and type(state) == "boolean" then
+        PlayerData.Muted = state
+    else
+        PlayerData.Muted = not PlayerData.Muted
+    end
+    print("Muted: " .. tostring(PlayerData.Muted))
     TriggerServerEvent("voip:server:player:mute", PlayerData.Muted)
 
     if not PlayerData.Muted then
@@ -49,6 +54,8 @@ function RegisterProximityModule()
 
     RegisterCommand("voip-voice_mute", MutePlayer, false)
     RegisterKeyMapping("voip-voice_mute", "Ne plus parler", "keyboard", Config.muteHotkey)
+
+    exports("MutePlayer", MutePlayer)
 
     console.debug("Proximity module registered !")
 end
