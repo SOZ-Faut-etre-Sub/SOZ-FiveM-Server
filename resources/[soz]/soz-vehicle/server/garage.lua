@@ -10,6 +10,36 @@ CreateThread(function()
     end
 end)
 
+---Precheck data stored in DB (citizenid, garage, plate, state)
+---Data should strictly match. This is to avoid duplication glitches
+---@param indexgarage string Garage where vehicle is supposed to be parked
+---@param plate string
+---@param expectedState number State flag vehicle is supposed to have
+QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, plate, expectedState)
+    local vehicle = MySQL.Sync.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {plate})
+
+    if vehicle == nil then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Véhicule invalide, ne figure pas dans les registres", "error")
+        return cb(false)
+    else
+        local player = QBCore.Functions.GetPlayer(source)
+        local fields = {
+            -- Check ownership
+            ["citizenid"] = {expectation = player.PlayerData.citizenid, error = "Le véhicule ne vous appartient pas"},
+            -- Check state is the expected value
+            ["state"] = {expectation = expectedState, error = "Le véhicule présente une dualité quantique"},
+        }
+        for field, data in pairs(fields) do
+            if vehicle[field] ~= data.expectation then
+                TriggerClientEvent("hud:client:DrawNotification", source, fields[field].error, "error")
+                return cb(false)
+            end
+        end
+    end
+
+    cb(vehicle)
+end)
+
 QBCore.Functions.CreateCallback("qb-garage:server:GetGarageVehicles", function(source, cb, garage, type, category)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
