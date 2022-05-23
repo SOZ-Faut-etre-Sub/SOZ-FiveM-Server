@@ -210,7 +210,8 @@ RegisterNetEvent("soz-flatbed:client:actionattach", function(BedInfo, lastVehicl
         AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true, false,
                              false, false, nil, true)
 
-        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastVehicleEntity), "Attached", NetworkGetNetworkIdFromEntity(ClosestVehicle))
+        TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastVehicleEntity), "Attached",
+                           NetworkGetNetworkIdFromEntity(ClosestVehicle))
     end
 end)
 
