@@ -549,11 +549,4 @@ Config.CarWash = { -- carwash
     [6] = {["label"] = "Lavage Auto", ["coords"] = vector3(-699.62, -932.7, 19.01)},
 }
 
-VehicleState = {
-    Out = 0,
-    InGarage = 1,
-    InPound = 2,
-    InEntreprise = 3,
-    Missing = 4,
-    Destroyed = 5,
-}
+VehicleState = {Out = 0, InGarage = 1, InPound = 2, InEntreprise = 3, Missing = 4, Destroyed = 5}
