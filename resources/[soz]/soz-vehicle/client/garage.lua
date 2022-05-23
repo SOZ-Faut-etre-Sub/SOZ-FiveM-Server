@@ -242,12 +242,6 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
         end
     end
 
-    -- Is entreprise vehicle?
-    if type_ == "entreprise" and owned.job == nil then
-        exports["soz-hud"]:DrawNotification("Ce n'est pas un véhicule entreprise", "error", 3500)
-        return false
-    end
-
     -- Empty slot availbale?
     if type_ == "private" then
         local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
