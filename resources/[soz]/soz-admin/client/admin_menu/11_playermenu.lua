@@ -104,6 +104,7 @@ function AdminMenuPlayers(menu, permission)
 
     featureMenu:On("open", function()
         local playerFeatures = QBCore.Functions.TriggerRpc("soz-admin:feature:GetFeatures", CurrentPlayerData.id)
+        featureMenu:ClearItems()
 
         for featureId, featureLabel in pairs(Config.Features) do
             local label = "Feature : " .. featureLabel
