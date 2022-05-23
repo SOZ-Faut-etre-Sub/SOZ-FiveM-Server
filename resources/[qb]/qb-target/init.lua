@@ -98,6 +98,8 @@ local function SousMenu() return true end
 local function GangCheck() return true end
 local function ItemCount() return true end
 local function CitizenCheck() return true end
+local function RoleCheck() return true end
+local function FeatureCheck() return true end
 
 CreateThread(function()
 	if not Config.Standalone then
@@ -153,6 +155,36 @@ CreateThread(function()
 			return (citizenid == PlayerData.citizenid or citizenid[PlayerData.citizenid])
 		end
 
+		RoleCheck = function(role)
+			if type(role) == "table" then
+				for _, r in pairs(role) do
+					if PlayerData.role == r then
+						return true
+					end
+				end
+
+				return false
+			end
+
+			return PlayerData.role == role
+		end
+
+		FeatureCheck = function(feature)
+			local features = PlayerData.features or {}
+
+			if PlayerData.role == "admin" then
+				return true
+			end
+
+			for _, playerFeature in pairs(features) do
+				if feature == playerFeature then
+					return true
+				end
+			end
+
+			return false
+		end
+
 		RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
 			PlayerData = QBCore.Functions.GetPlayerData()
 			SpawnPeds()
@@ -191,6 +223,8 @@ function CheckOptions(data, entity, distance)
 	if data.gang and not GangCheck(data.gang) then return false end
 	if data.item and ItemCount(data.item) < 1 then return false end
 	if data.citizenid and not CitizenCheck(data.citizenid) then return false end
+	if data.role and not RoleCheck(data.role) then return false end
+	if data.feature and not FeatureCheck(data.feature) then return false end
 	if data.canInteract and not data.canInteract(entity, distance, data) then return false end
 	return true
 end
