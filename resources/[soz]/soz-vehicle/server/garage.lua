@@ -27,6 +27,8 @@ QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateIn
             ["citizenid"] = {expectation = player.PlayerData.citizenid, error = "Le véhicule ne vous appartient pas"},
             -- Check state is the expected value
             ["state"] = {expectation = expectedState, error = "Le véhicule présente une dualité quantique"},
+            -- Check vehicle is owned by entreprise
+            ["job"] = {expectation = player.PlayerData.job.id, error = "Ce n'est pas un véhicule entreprise"},
         }
         for field, data in pairs(fields) do
             if vehicle[field] ~= data.expectation then
