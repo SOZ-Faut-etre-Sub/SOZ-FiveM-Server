@@ -183,8 +183,8 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action, owner)
                         NetworkRequestControlOfEntity(ClosestVehicle)
                         Citizen.Wait(0)
                     end
-                    AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true, false,
-                                         false, false, nil, true)
+                    AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true,
+                     false, false, false, nil, true)
                     TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(LastVehicle), "Attached",
                                        NetworkGetNetworkIdFromEntity(ClosestVehicle))
                 end
