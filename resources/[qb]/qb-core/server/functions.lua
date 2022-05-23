@@ -288,10 +288,10 @@ end
 
 -- Checking for Permission Level
 
-function QBCore.Functions.HasPermission(source, permission)
+function QBCore.Functions.HasPermission(source, _permission)
     local src = source
     local license = QBCore.Functions.GetSozIdentifier(src)
-    local permission = tostring(permission:lower())
+    local permission = tostring(_permission:lower())
 
     if permission == 'user' then
         return true
