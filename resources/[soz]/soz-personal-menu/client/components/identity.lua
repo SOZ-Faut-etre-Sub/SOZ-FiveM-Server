@@ -4,10 +4,12 @@ local isShowingAround = false
 local showingTo = {}
 
 local function UpdateIdentityMenu(identitySubmenu, checkbox, showingAround)
-    identitySubmenu:Close()
-    identitySubmenu:ClearItems()
-    GenerateIdentityMenu(identitySubmenu, checkbox, showingAround)
-    identitySubmenu:Open()
+    if identitySubmenu and identitySubmenu.IsOpen then
+        identitySubmenu:Close()
+        identitySubmenu:ClearItems()
+        GenerateIdentityMenu(identitySubmenu, checkbox, showingAround)
+        identitySubmenu:Open()
+    end
 end
 
 function GenerateIdentityMenu(identitySubmenu, selectedCheckbox, showingAround)

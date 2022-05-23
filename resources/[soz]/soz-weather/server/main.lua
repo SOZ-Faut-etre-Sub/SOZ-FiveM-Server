@@ -50,7 +50,7 @@ function GetNextWeather(Weather, Forecast)
     end
 
     -- Randomize choice
-    local rnd = math.random(1, totalWeight)
+    local rnd = math.random(totalWeight)
 
     -- Go through again, to select correct transition
     for transition, weight in pairs(transitions) do

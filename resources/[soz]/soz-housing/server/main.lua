@@ -118,7 +118,7 @@ AddEventHandler("soz-housing:server:buy", function(name, price)
             ["@citizenid"] = Player.PlayerData.citizenid,
         })
 
-        TriggerEvent("monitor:server:event", "house_buy", {player_source = player.PlayerData.source}, {
+        TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source}, {
             house_id = name,
             amount = price,
         })

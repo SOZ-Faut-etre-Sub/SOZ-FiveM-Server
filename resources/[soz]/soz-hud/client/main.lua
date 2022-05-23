@@ -205,6 +205,7 @@ end)
 --- Loops
 
 CreateThread(function()
+    DisplayRadar(false)
     while true do
         local player = PlayerPedId()
         local vehicle = GetVehiclePedIsIn(player)

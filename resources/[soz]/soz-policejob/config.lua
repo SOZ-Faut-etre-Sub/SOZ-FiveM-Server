@@ -204,7 +204,7 @@ Config.DutyOutfit = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 9, Texture = 0, Palette = 0},
                     [4] = {Drawable = 34, Texture = 0, Palette = 0},
-                    [5] = {Drawable = 54, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
                     [6] = {Drawable = 52, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 33, Texture = 0, Palette = 0},

@@ -1,6 +1,8 @@
 local Headshots = {}
 
-function GetPedheadshot(ped)
+function GetPedheadshot(playerNetId)
+    local ped = NetToPed(playerNetId)
+
     if Headshots[ped] then
         return Headshots[ped]
     end

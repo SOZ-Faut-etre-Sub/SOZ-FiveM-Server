@@ -10,3 +10,7 @@ QBCore.Functions.CreateCallback("police:server:getVehicleOwner", function(source
         cb("inconnu")
     end
 end)
+
+RegisterNetEvent("police:server:LockPickOwner", function(veh, id)
+    TriggerClientEvent("police:client:LockPickOwner", id, veh)
+end)

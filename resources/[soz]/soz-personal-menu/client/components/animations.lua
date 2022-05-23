@@ -9,7 +9,7 @@ local favoriteAnimationRegister, favoriteAnimationKey = false, 1
 local PlayEmote = function(animation)
     local ped = PlayerPedId()
 
-    if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
+    if IsNuiFocused() or IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
         PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
         return
     end
