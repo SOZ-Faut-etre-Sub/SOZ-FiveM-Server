@@ -1,16 +1,18 @@
 local currentVehicle, radioOpen = 0, false
 local primaryRadio, secondaryRadio = nil, nil
+local primaryRadioVolume, secondaryRadioVolume = 100, 100
 local stateBagHandlers = {}
 
 --- Functions
 local function handleUpdateRadio(data, isPrimary)
     TriggerServerEvent("voip:server:radio:connect", "radio-lr", isPrimary and "primary" or "secondary", data.frequency)
     if isPrimary then
-        exports["soz-voip"]:SetRadioLongRangePrimaryVolume(data.volume)
+        exports["soz-voip"]:SetRadioLongRangePrimaryVolume(data.volume or 100)
     else
-        exports["soz-voip"]:SetRadioLongRangeSecondaryVolume(data.volume)
+        exports["soz-voip"]:SetRadioLongRangeSecondaryVolume(data.volume or 100)
     end
     --exports["soz-voip"]:setVoiceEar("radio-lr", data.ear, isPrimary)
+
 
     SendNUIMessage({type = "cibi", action = "frequency_change", frequency = data.frequency, isPrimary = isPrimary})
     SendNUIMessage({type = "cibi", action = "volume_change", volume = data.volume, isPrimary = isPrimary})
@@ -18,8 +20,10 @@ local function handleUpdateRadio(data, isPrimary)
 
     if isPrimary then
         primaryRadio = data.frequency
+        primaryRadioVolume = data.volume
     else
         secondaryRadio = data.frequency
+        secondaryRadioVolume = data.volume
     end
 end
 
@@ -53,11 +57,6 @@ local function vehicleRegisterHandlers()
     stateBagHandlers[#stateBagHandlers + 1] = AddStateBagChangeHandler("radioEnabled", "entity:" .. VehToNet(currentVehicle), function(_, _, value, _, _)
         if value ~= nil then
             SendNUIMessage({type = "cibi", action = "enabled", isEnabled = value})
-
-            if not value then
-                -- exports["soz-voip"]:setRadioChannel("radio-lr", 0, true)
-                -- exports["soz-voip"]:setRadioChannel("radio-lr", 0, false)
-            end
         end
     end)
 
@@ -112,7 +111,7 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio",
                            {
             frequency = tonumber(data.primary),
-            volume = 1.0,
+            volume = primaryRadioVolume,
             --ear = state.primaryChannelEar,
         })
         SoundProvider.default(0.5)
@@ -123,7 +122,7 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio",
                            {
             frequency = tonumber(data.secondary),
-            volume = 1.0,
+            volume = secondaryRadioVolume,
             --ear = state.secondaryChannelEar,
         })
         SoundProvider.default(0.5)

@@ -13,6 +13,10 @@ RegisterNetEvent("voip:server:radio:disconnect", function(context, channel)
     TriggerClientEvent("voip:client:radio:disconnect", source, context, channel)
 end)
 
+RegisterNetEvent("voip:server:radio:getConsumers", function(context, channel)
+    TriggerClientEvent("voip:client:radio:getConsumers", source, context, channel, RadioState:getConsumers(channel))
+end)
+
 AddEventHandler("playerDropped", function()
     RadioState:removeConsumerFromAllChannels(source)
 end)
