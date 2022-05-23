@@ -24,6 +24,7 @@ RegisterNetEvent("jobs:server:garbage:processBags", function(item)
     TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", bagToProcess * GarbageConfig.SellPrice)
     TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
         player_source = Player.PlayerData.source,
+        item = item,
     }, {quantity = tonumber(bagToProcess), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
 
     if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
