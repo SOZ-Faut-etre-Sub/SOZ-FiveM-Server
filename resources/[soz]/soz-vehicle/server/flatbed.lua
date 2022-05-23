@@ -19,26 +19,13 @@ AddEventHandler("soz-flatbed:server:getProp", function(VehicleId)
 end)
 
 RegisterServerEvent("soz-flatbed:server:action")
-AddEventHandler("soz-flatbed:server:action", function(VehicleId, Action, owner)
-    TriggerClientEvent("soz-flatbed:client:action", source, FlatbedProps[VehicleId], Action, owner)
+AddEventHandler("soz-flatbed:server:action", function(VehicleId, Action)
+    TriggerClientEvent("soz-flatbed:client:action", source, FlatbedProps[VehicleId], Action)
 end)
 
 RegisterServerEvent("soz-flatbed:server:tpaction")
 AddEventHandler("soz-flatbed:server:tpaction", function(VehicleId, lastveh, entity)
     TriggerClientEvent("soz-flatbed:client:tpaction", source, FlatbedProps[VehicleId], lastveh, entity)
-end)
-
-RegisterServerEvent("soz-flatbed:server:actionowner")
-AddEventHandler("soz-flatbed:server:actionowner", function(BedInfo, Action, lastVehicle, owner)
-    if Action == "lower" then
-        TriggerClientEvent("soz-flatbed:client:actionlower", owner, BedInfo, lastVehicle)
-    elseif Action == "raise" then
-        TriggerClientEvent("soz-flatbed:client:actionraise", owner, BedInfo, lastVehicle)
-    elseif Action == "attach" then
-        TriggerClientEvent("soz-flatbed:client:actionattach", owner, BedInfo, lastVehicle)
-    elseif Action == "detach" then
-        TriggerClientEvent("soz-flatbed:client:actiondettach", owner, BedInfo, lastVehicle)
-    end
 end)
 
 Citizen.CreateThread(function()
