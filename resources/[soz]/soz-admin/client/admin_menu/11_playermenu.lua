@@ -4,7 +4,6 @@ local CurrentPlayerData = {}
 local function CreateFeatureMenu(player)
 end
 
-
 function AdminMenuPlayers(menu, permission)
     if playersMenu == nil then
         playersMenu = MenuV:InheritMenu(menu, {subtitle = "Michel ? c'est toi ?"})
@@ -137,10 +136,7 @@ function AdminMenuPlayers(menu, permission)
         featureMenu:ClearItems()
     end)
 
-    playerMenu:AddButton({
-        label = "Gerer les features",
-        value = featureMenu,
-    })
+    playerMenu:AddButton({label = "Gerer les features", value = featureMenu})
 
     --- Add to main menu
     AdminMenu:AddButton({icon = "👨‍💻‍", label = "Gestion des joueurs", value = playersMenu})
