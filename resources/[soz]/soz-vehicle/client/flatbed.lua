@@ -82,25 +82,25 @@ AddEventHandler("soz-flatbed:client:action", function(BedInfo, Action, owner)
         if Action == "lower" then
             if not BedInfo.Status then
                 exports["soz-hud"]:DrawNotification("Le plateau descend !")
-                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, LastVehicle, owner)
+                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, VehToNet(LastVehicle), owner)
             end
             LastStatus = true
         elseif Action == "raise" then
             if not BedInfo.Status then
                 exports["soz-hud"]:DrawNotification("Le plateau remonte !")
-                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, LastVehicle, owner)
+                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, VehToNet(LastVehicle), owner)
             end
             LastStatus = false
         elseif Action == "attach" then
             if not BedInfo.Attached then
-                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, LastVehicle, owner)
+                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, VehToNet(LastVehicle), owner)
             end
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
             exports["soz-hud"]:DrawNotification("Vous avez attaché le véhicule !")
             LastAttach = NetworkGetEntityFromNetworkId(BedInfo.Attached)
         elseif Action == "detach" then
             if BedInfo.Attached then
-                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, LastVehicle, owner)
+                TriggerServerEvent("soz-flatbed:server:actionowner", BedInfo, Action, VehToNet(LastVehicle), owner)
             end
             LastAttach = nil
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
@@ -317,10 +317,10 @@ local function ActionFlatbed(entity)
     if not Busy then
         if not LastStatus then
             Busy = true
-            TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "lower", GetPlayerServerId(NetworkGetEntityOwner(entity)))
+            TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "lower", GetPlayerServerId(NetworkGetEntityOwner(entity)))
         else
             Busy = true
-            TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "raise", GetPlayerServerId(NetworkGetEntityOwner(entity)))
+            TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "raise", GetPlayerServerId(NetworkGetEntityOwner(entity)))
         end
     end
 end
@@ -330,10 +330,10 @@ local function ChainesFlatbed(entity)
         if LastStatus then
             Busy = true
             if LastAttach then
-                TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "detach",
+                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "detach",
                                    GetPlayerServerId(NetworkGetEntityOwner(entity)))
             else
-                TriggerServerEvent("soz-flatbed:server:action", VehToNet(entity), "attach",
+                TriggerServerEvent("soz-flatbed:server:action", NetworkGetNetworkIdFromEntity(entity), "attach",
                                    GetPlayerServerId(NetworkGetEntityOwner(entity)))
             end
         end
