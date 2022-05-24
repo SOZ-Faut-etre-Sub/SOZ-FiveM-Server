@@ -248,6 +248,7 @@ local function HandleVehicleAndPed(instructor, vehicle)
     -- Delete ped and vehicle
     DeletePed(instructor)
     DeleteVehicle(vehicle)
+    TriggerServerEvent("vehiclekeys:server:RemoveVehicleKeys", Config.VehiclePlateText)
 end
 
 local function HandleEntitiesAndTeleportBack(instructor, vehicle)
