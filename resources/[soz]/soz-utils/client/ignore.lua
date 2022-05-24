@@ -38,6 +38,12 @@ CreateThread(function() -- all these should only need to be called once
 end)
 
 CreateThread(function()
+    SetPedPopulationBudget(3)
+    SetVehiclePopulationBudget(3)
+    SetAllVehicleGeneratorsActive()
+end)
+
+CreateThread(function()
     while true do
         DisablePlayerVehicleRewards(PlayerId())
 
