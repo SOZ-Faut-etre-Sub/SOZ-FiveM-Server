@@ -44,7 +44,7 @@ end
 --- @param item table
 --- @return boolean
 function StorageInventory:AllowedItems(item)
-    local typeAllowed = {["item"] = true, ["drug"] = true}
+    local typeAllowed = {["item"] = true, ["drug"] = true, ["oil_and_item"] = true}
     return typeAllowed[item.type or ""] or false
 end
 
