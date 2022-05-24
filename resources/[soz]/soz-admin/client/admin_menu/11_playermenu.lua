@@ -66,31 +66,6 @@ function AdminMenuPlayers(menu, permission)
     })
 
     playerMenu:AddSlider({
-        label = "Vocal en jeu",
-        value = "",
-        values = {
-            {label = "Status", value = "status"},
-            {label = "Muter", value = "mute"},
-            {label = "Démuter", value = "unmute"},
-        },
-        select = function(_, value)
-            if value == "status" then
-                local playerIsMuted = QBCore.Functions.TriggerRpc("voip:server:player:isMuted", CurrentPlayerData.id)
-
-                if playerIsMuted then
-                    exports["soz-hud"]:DrawNotification("Le joueur est ~r~muté", "info")
-                else
-                    exports["soz-hud"]:DrawNotification("Le joueur ~g~n'est pas muté", "info")
-                end
-            elseif value == "mute" then
-                TriggerServerEvent("voip:server:player:mute", true, CurrentPlayerData.id)
-            elseif value == "unmute" then
-                TriggerServerEvent("voip:server:player:mute", false, CurrentPlayerData.id)
-            end
-        end,
-    })
-
-    playerMenu:AddSlider({
         label = "Téléportation",
         value = "pos",
         values = {{label = "vers le joueur", value = "goto"}, {label = "à moi", value = "bring"}},

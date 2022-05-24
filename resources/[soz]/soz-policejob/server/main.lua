@@ -10,7 +10,6 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
         if Player.Functions.GetItemByName("handcuffs") then
             exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "handcuffs", 1)
             Target.Functions.SetMetaData("ishandcuffed", true)
-            Player(Target.PlayerData.source).state:set("ishandcuffed", true, true)
 
             TriggerClientEvent("police:client:HandCuffAnimation", Player.PlayerData.source)
             TriggerClientEvent("police:client:GetCuffed", Target.PlayerData.source, Player.PlayerData.source, isSoftcuff)
@@ -32,7 +31,6 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             Wait(3000)
 
             Target.Functions.SetMetaData("ishandcuffed", false)
-            Player(Target.PlayerData.source).state:set("ishandcuffed", false, true)
             TriggerClientEvent("police:client:GetUnCuffed", Target.PlayerData.source)
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de ~r~clé de menotte", "error")
