@@ -23,6 +23,12 @@ end
 
 local function powerOnRadio()
     exports["soz-voip"]:SetRadioShortRangePowerState(true)
+    if primaryRadio then
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "primary", primaryRadio)
+    end
+    if secondaryRadio then
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "secondary", secondaryRadio)
+    end
 end
 local function powerOffRadio()
     if primaryRadio then
