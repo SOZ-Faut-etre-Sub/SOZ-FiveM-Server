@@ -1,19 +1,28 @@
 const app = document.getElementById('app');
 const musique = app.querySelector('audio');
+const volume = app.querySelector('#volume');
+const VOLUME_MAX_MULT = 0.8;
 
-musique.volume = 0.2;
+function getVolume() {
+    return localStorage.getItem('sozLoadScreenVolume') || 100
+}
+function setVolume(volume) {
+    localStorage.setItem('sozLoadScreenVolume', volume);
+    musique.volume = (volume / 100) * VOLUME_MAX_MULT;
+}
 
-document.querySelector('.info').addEventListener('click', function () {
-    if (musique.paused) {
-        musique.play();
-        app.querySelector('.play').style.display = 'block';
-        app.querySelector('.pause').style.display = 'none';
-    } else {
-        musique.pause();
-        app.querySelector('.play').style.display = 'none';
-        app.querySelector('.pause').style.display = 'block';
-    }
-})
+function bootstrap() {
+    // Load volume from localStorage
+    musique.volume = (getVolume() / 100) * VOLUME_MAX_MULT;
+    volume.value = getVolume();
+
+    // Change volume
+    volume.addEventListener('input', (event) => {
+      setVolume(event.currentTarget.value);
+    });
+
+    musique.play()
+}
 
 window.addEventListener('message', function(e) {
     if (e.data.eventName === 'initFunctionInvoking' && e.data.name === 'FinalizeLoad') {
@@ -26,3 +35,5 @@ window.addEventListener('message', function(e) {
         }, 50);
     }
 });
+
+bootstrap();

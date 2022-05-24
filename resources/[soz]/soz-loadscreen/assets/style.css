@@ -24,24 +24,35 @@ video {
     transition: opacity 1s ease-in-out;
 }
 
-.info {
+.container {
     position: absolute;
-    display: flex;
-    align-items: center;
-    padding: .5rem 1rem;
-    margin: 1vh 1vw;
     bottom: 0;
     left: 0;
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .3rem 1rem;
+    margin: 1vh 1vw;
     background: rgba(0,0,0,.5);
     border-radius: .5rem;
-    cursor: pointer;
     z-index: 1;
 }
 
-.info svg {
+.volume-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.volume-container svg {
+    color: rgba(255,255,255,.8);
+    width: 1.5rem;
     height: 1.5rem;
-    margin-right: .5rem;
+    margin-right: .2rem;
+}
+
+.volume-container input {
+    height: 0.3rem;
 }
 
 @keyframes fadein {
