@@ -215,6 +215,7 @@ RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type_, gar
             end
             QBCore.Functions.SetVehicleProperties(veh, properties)
             SetVehicleNumberPlateText(veh, vehicle.plate)
+            SetEntityAsMissionEntity(veh, true, true)
             SetFuel(veh, currentFuel + 0.0)
             TriggerServerEvent("qb-garage:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
             TriggerServerEvent("qb-garage:server:updateVehicleCitizen", vehicle.plate)
