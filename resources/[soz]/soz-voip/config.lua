@@ -12,6 +12,8 @@ Config.voiceRanges = {
     [2] = {name = "normal", range = 6.0},
     [3] = {name = "shout", range = 12.0},
 }
+Config.megaphoneRange = 32.0
+Config.microphoneRange = 32.0
 
 --- Radio
 Config.radioFrequencies = {min = 10000, max = 99999}

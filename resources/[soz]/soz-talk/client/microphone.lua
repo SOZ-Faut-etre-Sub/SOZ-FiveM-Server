@@ -18,15 +18,11 @@ local function toggleMicrophoneAnimation(pState)
 end
 
 local function useMicrophone()
-    TriggerServerEvent("voip:server:setPlayerWithMicrophone", true)
-    exports["soz-voip"]:overrideProximityRange(Config.Microphone.Range, true)
-    exports["soz-voip"]:setVoiceIntent("music")
+    exports["soz-voip"]:SetPlayerMicrophoneInUse(true)
 end
 
 local function resetMicrophone()
-    TriggerServerEvent("voip:server:setPlayerWithMicrophone", false)
-    exports["soz-voip"]:clearProximityOverride()
-    exports["soz-voip"]:setVoiceIntent("speech")
+    exports["soz-voip"]:SetPlayerMicrophoneInUse(false)
 end
 
 local function toggleMicrophone(toggle)
