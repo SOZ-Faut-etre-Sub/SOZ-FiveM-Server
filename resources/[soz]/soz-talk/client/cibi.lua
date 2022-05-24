@@ -57,6 +57,12 @@ local function vehicleRegisterHandlers()
         if value ~= nil then
             SendNUIMessage({type = "cibi", action = "enabled", isEnabled = value})
         end
+
+        if value then
+            exports["soz-voip"]:SetRadioLongRangePowerState(true)
+        else
+            exports["soz-voip"]:SetRadioLongRangePowerState(false)
+        end
     end)
 
     stateBagHandlers[#stateBagHandlers + 1] = AddStateBagChangeHandler("primaryRadio", "entity:" .. VehToNet(currentVehicle), function(_, _, value, _, _)
