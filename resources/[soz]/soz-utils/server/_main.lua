@@ -41,7 +41,7 @@ RegisterNetEvent("core:server:zoneIntrusion", function(zone)
     end
 
     TriggerEvent("monitor:server:event", "zone_intrusion", {player_source = Player.PlayerData.source, zone = zone},
-                 {position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+                 {position = GetEntityCoords(Player.PlayerData.source)})
 end)
 
 exports("SendHTTPRequest", function(convar, data)
