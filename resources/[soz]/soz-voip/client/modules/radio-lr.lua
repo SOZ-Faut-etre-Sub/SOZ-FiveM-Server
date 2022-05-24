@@ -155,7 +155,7 @@ function RegisterRadioLongRangeModule()
     console.debug("Registering radio long range module...")
 
     RegisterModuleContext("radio-lr", 3)
-    UpdateContextVolume("radio-lr", 1.0)
+    UpdateContextVolume("radio-lr", 0.0)
 
     RegisterCommand("+radio_lr_primary", StartTransmissionPrimary, false)
     RegisterCommand("-radio_lr_primary", StopTransmissionPrimary, false)
