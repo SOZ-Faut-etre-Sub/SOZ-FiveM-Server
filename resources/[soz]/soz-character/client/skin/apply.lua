@@ -126,7 +126,7 @@ local function ApplyPedClothSet(ped, clothSet)
 
     for _, propId in pairs(PropType) do
         local prop = clothSet.Props[tostring(propId)]
-        if prop == nil then
+        if prop == nil or prop.Clear == true then
             ClearPedProp(ped, tonumber(propId))
         else
             SetPedPropIndex(ped, tonumber(propId), prop.Drawable, prop.Texture or 0, prop.Palette or 0);
