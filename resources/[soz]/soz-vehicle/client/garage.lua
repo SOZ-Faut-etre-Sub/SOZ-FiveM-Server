@@ -91,6 +91,33 @@ end
 ---
 --- PARK OUT
 ---
+local function GetEmptyParkingSlots(slots, indexgarage)
+    local emptySlots = {}
+
+    for _, slot in pairs(slots) do
+        if slot.data.indexGarage == indexgarage then
+            local c = slot:getBoundingBoxCenter()
+            local w = slot:getHeading()
+            if not IsPositionOccupied(c.x, c.y, c.z, 0.5, false, true, true, false, false, 0, false) then
+                table.insert(emptySlots, vector4(c.x, c.y, c.z, w))
+            end
+        end
+    end
+
+    return emptySlots
+end
+
+RegisterNetEvent("soz-garage:client:takeOutGarage", function(indexgarage)
+    local garageType = GetGarageType(type_)
+
+    local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage)
+    if #emptySlots == 0 then
+        exports["soz-hud"]:DrawNotification("Parking encombré, le véhicule ne peut pas être sorti", "warning")
+    end
+
+    --TODO
+end)
+
 RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type_, garage, indexgarage)
     local spawn = false
 
