@@ -32,6 +32,9 @@ RegisterNetEvent("voip:client:voice:transmission:state", function(serverID, cont
         return
     end
 
+    console.debug("[Main] Voice Transmission State | Server ID: %s | Context: %s | Transmitting: %s | Frequency: %s | In Range: %s", serverID, context,
+                  tostring(transmitting), tostring(frequency), tostring(isInRange))
+
     if transmitting then
         Transmissions:add(serverID, context)
     else
@@ -45,11 +48,11 @@ RegisterNetEvent("voip:client:voice:transmission:state", function(serverID, cont
         Citizen.Wait(0)
     end
 
-    if context ~= "radio-sr" or (context == "radio-sr" and (isInRange or RadioFrequencies[frequency]:isAvailableOnLongRange())) then
+    if context == "radio-lr" or (context == "radio-sr" and (isInRange or RadioFrequencies[frequency]:isAvailableOnLongRange())) then
         PlayRemoteRadioClick(context, transmitting, RadioFrequencies[frequency]:getVolume())
     end
 
-    if transmitting and context ~= "radio-sr" or (context == "radio-sr" and (isInRange or RadioFrequencies[frequency]:isAvailableOnLongRange())) then
+    if transmitting and (context ~= "radio-sr" or (context == "radio-sr" and (isInRange or RadioFrequencies[frequency]:isAvailableOnLongRange()))) then
         Citizen.Wait(0)
 
         if context == "radio-sr" or context == "radio-lr" then
