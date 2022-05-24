@@ -66,6 +66,12 @@ function SetVoiceChannel(channelID)
     NetworkSetVoiceChannel(channelID)
     console.debug("[Main] Current Channel: %s", channelID)
     PlayerData.CurrentVoiceChannel = channelID
+
+    while MumbleGetVoiceChannelFromServerId(PlayerData.ServerId) ~= channelID do
+        Citizen.Wait(150)
+        NetworkSetVoiceChannel(channelID)
+        RefreshTargets()
+    end
 end
 
 --- Private functions

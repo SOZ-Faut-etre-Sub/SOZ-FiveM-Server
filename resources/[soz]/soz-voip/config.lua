@@ -23,9 +23,6 @@ Config.volumes = {["call"] = 0.8, ["vehicle"] = 0.5}
 -- Grid Module
 Config.gridSize = 512
 Config.gridEdge = 256
-Config.gridMinX = -4600
-Config.gridMaxX = 4600
-Config.gridMaxY = 9200
 
 --- Hotkeys
 Config.rangeDecreaseHotkey = "F5"
