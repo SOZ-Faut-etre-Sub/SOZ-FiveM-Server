@@ -44,6 +44,14 @@ RegisterNetEvent("vehiclekeys:server:SetVehicleOwner", function(plate)
     end
 end)
 
+RegisterNetEvent("vehiclekeys:server:RemoveVehicleKeys", function(plate)
+    local player = QBCore.Functions.GetPlayer(source)
+    local cid = player.PlayerData.citizenid
+    if VehicleList[plate] and VehicleList[plate].owners and VehicleList[plate].owners[cid] then
+        VehicleList[plate].owners[cid] = nil
+    end
+end)
+
 RegisterNetEvent("vehiclekeys:server:GiveVehicleKeys", function(plate, target)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
