@@ -97,6 +97,7 @@ RegisterNetEvent("qb-garageshousing:client:takeOutGarage", function(vehicle, typ
             local properties = QBCore.Functions.TriggerRpc("qb-garagehousing:server:GetVehicleProperties", vehicle.plate)
             QBCore.Functions.SetVehicleProperties(veh, properties)
             SetVehicleNumberPlateText(veh, vehicle.plate)
+            SetEntityAsMissionEntity(veh, true, true)
             SetFuel(veh, currentFuel + 0.0)
             TriggerServerEvent("qb-garagehousing:server:updateVehicleState", 0, vehicle.plate, vehicle.garage)
             TriggerServerEvent("qb-garagehousing:server:updateVehicleCitizen", vehicle.plate)

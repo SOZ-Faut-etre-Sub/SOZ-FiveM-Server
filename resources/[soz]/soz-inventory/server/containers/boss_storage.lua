@@ -44,7 +44,13 @@ end
 --- @param item table
 --- @return boolean
 function BossStorageInventory:AllowedItems(item)
-    local typeAllowed = {["weapon"] = true, ["weapon_ammo"] = true, ["item"] = true, ["drug"] = true}
+    local typeAllowed = {
+        ["weapon"] = true,
+        ["weapon_ammo"] = true,
+        ["item"] = true,
+        ["drug"] = true,
+        ["oil_and_item"] = true,
+    }
     return typeAllowed[item.type or ""] or false
 end
 
