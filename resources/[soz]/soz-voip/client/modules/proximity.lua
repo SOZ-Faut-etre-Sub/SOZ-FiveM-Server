@@ -105,6 +105,24 @@ local function ProximityVoiceDecrease()
     SetVoiceProximity(proximity)
 end
 
+local function SetPlayerMegaphoneInUse(state)
+    if state then
+        MumbleSetAudioInputDistance(Config.megaphoneRange)
+        console.debug("Set megaphone in use with %s range ", Config.megaphoneRange)
+    else
+        SetVoiceProximity(PlayerData.CurrentProximity)
+    end
+end
+
+local function SetPlayerMicrophoneInUse(state)
+    if state then
+        MumbleSetAudioInputDistance(Config.microphoneRange)
+        console.debug("Set microphone in use with %s range ", Config.microphoneRange)
+    else
+        SetVoiceProximity(PlayerData.CurrentProximity)
+    end
+end
+
 --- Public functions
 function SetVoiceProximity(proximity)
     local voiceProximity = Config.voiceRanges[proximity]
@@ -154,6 +172,8 @@ function RegisterProximityModule()
     RegisterKeyMapping("voip-voice_mute", "Ne plus parler", "keyboard", Config.muteHotkey)
 
     exports("MutePlayer", MutePlayer)
+    exports("SetPlayerMegaphoneInUse", SetPlayerMegaphoneInUse)
+    exports("SetPlayerMicrophoneInUse", SetPlayerMicrophoneInUse)
 
     console.debug("Proximity module registered !")
 end
