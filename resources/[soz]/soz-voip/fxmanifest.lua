@@ -2,19 +2,16 @@ fx_version "cerulean"
 lua54 "yes"
 game "common"
 
-shared_scripts {"config.lua", "shared.lua"}
+shared_scripts {"config.lua", "shared/*.lua", "classes/*.lua"}
 
 client_scripts {
     "client/main.lua",
-    "client/submix.lua",
-    "client/voice.lua",
-    "client/voice.lua",
-    "client/module/*.lua",
-    "client/events.lua",
-    "client/commands/*.lua",
-    "client/commands.lua",
+    "client/transmission.lua",
+    "client/targets.lua",
+    "client/modules/*.lua",
+    "client/blockscreen.lua",
 }
 
-server_scripts {"server/main.lua", "server/events.lua", "server/store/*.lua", "server/module/*.lua"}
+server_scripts {"server/main.lua", "server/state/*.lua", "server/modules/*.lua"}
 
-dependencies {"/onesync", "qb-core", "interact-sound"}
+dependencies {"/onesync", "qb-core"}
