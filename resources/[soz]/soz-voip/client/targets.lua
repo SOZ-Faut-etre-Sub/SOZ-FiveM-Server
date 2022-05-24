@@ -1,10 +1,22 @@
 Targets = Context:new()
 
+function IsPlayerInTargetChannel(serverID)
+    local gridChannel = GetGridChannel(GetPlayerCoords(serverID), Config.gridSize)
+    return Channels:targetHasAnyActiveContext(gridChannel) == true
+end
+
 function SetVoiceTargets(targetID)
-    local players = {}
+    local players, channels = {}, {}
+
+    Channels:contextIterator(function(channel)
+        if not channels[channel] then
+            channels[channel] = true
+            MumbleAddVoiceTargetChannel(targetID, channel)
+        end
+    end)
 
     Targets:contextIterator(function(serverID)
-        if not players[serverID] then
+        if not players[serverID] and not IsPlayerInTargetChannel(serverID) then
             players[serverID] = true
             MumbleAddVoiceTargetPlayerByServerId(targetID, serverID)
         end
@@ -22,7 +34,8 @@ function RefreshTargets()
     MumbleClearVoiceTarget(voiceTarget)
     SetVoiceTargets(voiceTarget)
     ChangeVoiceTarget(voiceTarget)
-    MumbleAddVoiceChannelListen(voiceTarget)
+
+    console.debug("[Main] Voice Target Refreshed | ID: %s", voiceTarget)
 end
 
 function AddPlayerToTargetList(serverID, context, transmit)
@@ -86,7 +99,7 @@ function RemoveGroupToTargetList(group, context, channel)
         end
     end
 
-    RefreshTargets()
-
     TriggerServerEvent("voip:server:transmission:state", group, context, false, true, channel)
+
+    RefreshTargets()
 end
