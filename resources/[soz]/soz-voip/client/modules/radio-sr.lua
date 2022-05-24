@@ -155,7 +155,7 @@ function RegisterRadioShortRangeModule()
     console.debug("Registering radio short range module...")
 
     RegisterModuleContext("radio-sr", 2)
-    UpdateContextVolume("radio-sr", 0.0)
+    UpdateContextVolume("radio-sr", 1.0)
 
     RegisterCommand("+radio_sr_primary", StartTransmissionPrimary, false)
     RegisterCommand("-radio_sr_primary", StopTransmissionPrimary, false)

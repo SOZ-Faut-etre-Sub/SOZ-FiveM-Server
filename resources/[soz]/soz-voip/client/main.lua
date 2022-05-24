@@ -3,8 +3,6 @@ PlayerData = {
     PlayerPedId = PlayerPedId(),
     ServerId = GetPlayerServerId(PlayerId()),
 
-    CurrentInstance = 0,
-
     Muted = false,
     CurrentTarget = 1,
 
@@ -57,7 +55,6 @@ end)
 function RegisterModuleContext(context, priority)
     Transmissions:registerContext(context)
     Targets:registerContext(context)
-    Channels:registerContext(context)
     Transmissions:setContextData(context, "priority", priority)
 
     console.debug("Context %s registered with priority %s", context, priority)
@@ -83,6 +80,16 @@ function LoadAnimDict(dict)
         Citizen.Wait(0)
     end
 end
+
+RegisterNetEvent("onPlayerJoining", function(playerId)
+    MumbleAddVoiceChannelListen(playerId)
+    console.debug("Player %s added to proximity voice channel", playerId)
+end)
+
+RegisterNetEvent("onPlayerDropped", function(playerId)
+    MumbleRemoveVoiceChannelListen(playerId)
+    console.debug("Player %s removed from proximity voice channel", playerId)
+end)
 
 --- Commands
 RegisterCommand("voip-debug-mode", function(source, args, rawCommand)
