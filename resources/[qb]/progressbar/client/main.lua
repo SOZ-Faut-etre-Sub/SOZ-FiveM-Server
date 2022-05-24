@@ -89,9 +89,9 @@ function Process(action, start, tick, finish)
                     end
 
                     if Action.canCancel then
-                        AddTextEntry('CancelMsg', 'Appuyez sur ~INPUT_FRONTEND_RRIGHT~ ou ~INPUT_CURSOR_CANCEL~ pour annuler')
-                        BeginTextCommandDisplayHelp('CancelMsg')
-                        EndTextCommandDisplayHelp(0, false, true, -1)
+                        BeginTextCommandDisplayHelp("STRING")
+                        AddTextComponentSubstringPlayerName('Appuyez sur ~INPUT_FRONTEND_RRIGHT~ ou ~INPUT_CURSOR_CANCEL~ pour annuler')
+                        EndTextCommandDisplayHelp(0, false, false, -1)
                         if IsControlJustPressed(0, 194) or IsControlJustPressed(0, 238) then
                             TriggerEvent("progressbar:client:cancel")
                         end
