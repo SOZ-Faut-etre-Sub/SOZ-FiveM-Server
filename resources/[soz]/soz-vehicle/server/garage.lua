@@ -33,32 +33,53 @@ end)
 
 ---Precheck data stored in DB (citizenid, plate, state)
 ---Data should strictly match. This is to avoid duplication glitches
+---@param source number
 ---@param plate string
 ---@param expectedState number State flag vehicle is supposed to have
-QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, plate, expectedState)
+local function PrecheckCurrentVehicleStateInDB(source, plate, expectedState, indexgarage)
     local vehicle = MySQL.Sync.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {plate})
 
     if vehicle == nil then
         TriggerClientEvent("hud:client:DrawNotification", source, "Véhicule invalide, ne figure pas dans les registres", "error")
-        return cb(false)
+        return false
     else
         local player = QBCore.Functions.GetPlayer(source)
+
         local fields = {
             -- Check ownership
             ["citizenid"] = {expectation = player.PlayerData.citizenid, error = "Le véhicule ne vous appartient pas"},
             -- Check state is the expected value
             ["state"] = {expectation = expectedState, error = "Le véhicule présente une dualité quantique"},
             -- Check vehicle is owned by entreprise
-            ["job"] = {expectation = player.PlayerData.job.id, error = "Ce n'est pas un véhicule entreprise"},
+            -- ["job"] = {expectation = player.PlayerData.job.id, error = "Ce n'est pas un véhicule entreprise"},
+            -- Check vehicle is is right garage
+            ["garage"] = {expectation = indexgarage, error = "Le véhicule est doué d'ubiquité"},
         }
+        if not indexgarage then
+            fields.garage = nil
+        end
+
         for field, data in pairs(fields) do
-            if vehicle[field] ~= data.expectation then
+            local expectation = data.expectation
+            local doesMatch = false
+
+            if type(expectation) == "table" then
+                for _, value in ipairs(expectation) do
+                    doesMatch = doesMatch or vehicle[field] == value
+                end
+            else
+                doesMatch = vehicle[field] == data.expectation
+            end
+
+            if not doesMatch then
                 TriggerClientEvent("hud:client:DrawNotification", source, fields[field].error, "error")
-                return cb(false)
+                return false
             end
         end
     end
 
+    return vehicle
+end
     cb(vehicle)
 end)
 
