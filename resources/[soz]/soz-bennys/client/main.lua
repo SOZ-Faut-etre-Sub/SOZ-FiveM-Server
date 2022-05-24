@@ -150,24 +150,6 @@ local function UnattachVehicle()
     TriggerServerEvent("soz-bennys:server:SetAttachedVehicle", false)
 end
 
-local function SpawnListVehicle(model)
-    local coords = {
-        x = Config.Locations["vehicle"].x,
-        y = Config.Locations["vehicle"].y,
-        z = Config.Locations["vehicle"].z,
-        w = Config.Locations["vehicle"].w,
-    }
-
-    QBCore.Functions.SpawnVehicle(model, function(veh)
-        SetVehicleNumberPlateText(veh, "ACBV" .. tostring(math.random(1000, 9999)))
-        SetEntityHeading(veh, coords.w)
-        exports["soz-vehicle"]:SetFuel(veh, 100.0)
-        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-        TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-        SetVehicleEngineOn(veh, true, true)
-    end, coords, true)
-end
-
 local function RepairPart(part)
     QBCore.Functions.Progressbar("repair_part", "Réparation de " .. Config.ValuesLabels[part], 10000, false, true,
                                  {
@@ -182,10 +164,6 @@ end
 
 RegisterNetEvent("soz-bennys:client:UnattachVehicle", function()
     UnattachVehicle()
-end)
-
-RegisterNetEvent("soz-bennys:client:SpawnListVehicle", function(vehicleSpawnName)
-    SpawnListVehicle(vehicleSpawnName)
 end)
 
 RegisterNetEvent("soz-bennys:client:CallRepairPart", function(part)
