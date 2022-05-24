@@ -1,5 +1,6 @@
 local haveItem = false
 local radioOpen, radioEnabled, radioProp = false, false, nil
+local primaryRadio, secondaryRadio = nil, nil
 
 --- Functions
 local function toggleRadioAnimation(pState)
@@ -19,9 +20,23 @@ local function toggleRadioAnimation(pState)
     end
 end
 
-local function leaveRadio()
-    exports["soz-voip"]:setRadioChannel("radio-sr", 0, true)
-    exports["soz-voip"]:setRadioChannel("radio-sr", 0, false)
+local function powerOnRadio()
+    exports["soz-voip"]:SetRadioShortRangePowerState(true)
+    if primaryRadio then
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "primary", primaryRadio)
+    end
+    if secondaryRadio then
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "secondary", secondaryRadio)
+    end
+end
+local function powerOffRadio()
+    if primaryRadio then
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio)
+    end
+    if secondaryRadio then
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio)
+    end
+    exports["soz-voip"]:SetRadioShortRangePowerState(false)
 end
 
 local function toggleRadio(toggle)
@@ -50,24 +65,37 @@ end)
 
 RegisterNUICallback("radio/enable", function(data, cb)
     radioEnabled = data.state
-    if not radioEnabled then
-        leaveRadio()
+    if radioEnabled then
+        powerOnRadio()
+    else
+        powerOffRadio()
     end
     SoundProvider.toggle()
     cb("ok")
 end)
 
 RegisterNUICallback("radio/change_frequency", function(data, cb)
-    local state = LocalPlayer.state["radio-sr"]
     if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
-        exports["soz-voip"]:setRadioChannel("radio-sr", data.primary, true)
-        SoundProvider.default(state.primaryChannelVolume)
+        if data.primary ~= primaryRadio and primaryRadio ~= nil then
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio)
+        end
+
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "primary", data.primary)
+        SoundProvider.default(0.5)
+
+        primaryRadio = data.primary
         cb("ok")
         return
     end
     if data.secondary and tonumber(data.secondary) >= Config.Radio.min and tonumber(data.secondary) <= Config.Radio.max then
-        exports["soz-voip"]:setRadioChannel("radio-sr", data.secondary, false)
-        SoundProvider.default(state.secondaryChannelVolume)
+        if data.secondary ~= secondaryRadio and secondaryRadio ~= nil then
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio)
+        end
+
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "secondary", data.secondary)
+        SoundProvider.default(0.5)
+
+        secondaryRadio = data.secondary
         cb("ok")
         return
     end
@@ -75,32 +103,37 @@ RegisterNUICallback("radio/change_frequency", function(data, cb)
 end)
 
 RegisterNUICallback("radio/change_ear", function(data, cb)
-    local state = LocalPlayer.state["radio-sr"]
-    if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
+    --[[if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
         exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), true)
-        SoundProvider.default(state.primaryChannelVolume)
+
+        SoundProvider.default(0.5)
+
         cb("ok")
         return
     end
     if data.secondary and tonumber(data.secondary) >= 0 and tonumber(data.secondary) <= 2 then
         exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), false)
-        SoundProvider.default(state.secondaryChannelVolume)
+
+        SoundProvider.default(0.5)
+
         cb("ok")
         return
-    end
+    end]]
     cb("nok")
 end)
 
 RegisterNUICallback("radio/change_volume", function(data, cb)
     if data.primary then
-        exports["soz-voip"]:setVolume("radio-sr", data.primary, true)
+        exports["soz-voip"]:SetRadioShortRangePrimaryVolume(data.primary)
         SoundProvider.default(data.primary)
+
         cb("ok")
         return
     end
     if data.secondary then
-        exports["soz-voip"]:setVolume("radio-sr", data.secondary, false)
+        exports["soz-voip"]:SetRadioShortRangeSecondaryVolume(data.secondary)
         SoundProvider.default(data.secondary)
+
         cb("ok")
         return
     end
@@ -122,7 +155,7 @@ end, false)
 RegisterKeyMapping("radio_toggle", "Sortir la radio", "keyboard", "N")
 
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
-    leaveRadio()
+    powerOffRadio()
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
@@ -136,7 +169,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 
     if not haveItem then
-        leaveRadio()
+        powerOffRadio()
     end
 end)
 
