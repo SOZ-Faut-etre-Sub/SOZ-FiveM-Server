@@ -7,6 +7,7 @@ shared_scripts {"config.lua", "shared/*.lua", "classes/*.lua"}
 client_scripts {
     "client/main.lua",
     "client/transmission.lua",
+    "client/channels.lua",
     "client/targets.lua",
     "client/modules/*.lua",
     "client/blockscreen.lua",
