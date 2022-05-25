@@ -280,7 +280,6 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
     --- Create nozzle prop
     if Tanker.nozzle == nil then
         Tanker.nozzle = CreateObject(GetHashKey("hei_prop_hei_hose_nozzle"), pCoords.x, pCoords.y, pCoords.z + 1.2, true, true, true);
-        SetNetworkIdCanMigrate(ObjToNet(Tanker.nozzle), false)
         AttachEntityToEntity(Tanker.nozzle, playerPed, GetPedBoneIndex(playerPed, 60309), 0.10, 0.0, 0.012, 210.0, 90.0, 20.0, 1, 0, 0, 0, 2, 1)
     end
 
