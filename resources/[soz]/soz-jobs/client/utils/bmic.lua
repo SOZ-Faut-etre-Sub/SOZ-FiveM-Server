@@ -13,6 +13,7 @@ local spawnBmicObject = function()
     local plyCoords = GetOffsetFromEntityInWorldCoords(player, 0.0, 0.0, -5.0)
 
     BMicConfig.object = CreateObject(GetHashKey(BMicConfig.prop), plyCoords.x, plyCoords.y, plyCoords.z, true, true, false)
+    SetNetworkIdCanMigrate(ObjToNet(BMicConfig.object), false)
     AttachEntityToEntity(BMicConfig.object, player, GetPedBoneIndex(player, 28422), -0.08, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 1, 0, 1, 0, 1)
 end
 
