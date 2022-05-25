@@ -100,6 +100,7 @@ local spawnCameraObject = function()
     local plyCoords = GetOffsetFromEntityInWorldCoords(player, 0.0, 0.0, -5.0)
 
     CameraConfig.object = CreateObject(GetHashKey(CameraConfig.prop), plyCoords.x, plyCoords.y, plyCoords.z, 1, 1, 1)
+    SetNetworkIdCanMigrate(ObjToNet(CameraConfig.object), false)
     AttachEntityToEntity(CameraConfig.object, player, GetPedBoneIndex(player, 28422), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 1, 0, 1, 0, 1)
     TaskPlayAnim(player, CameraConfig.animDict, CameraConfig.anim, 1.0, -1, -1, 50, 0, 0, 0, 0)
 end

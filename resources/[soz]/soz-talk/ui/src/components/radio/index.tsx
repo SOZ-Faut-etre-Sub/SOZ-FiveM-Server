@@ -78,16 +78,16 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
         if (volume >= 0 && volume <= 100) {
             fetchAPI(`/${props.type}/change_volume`, {[currentFrequency]: volume}, () => {
                 if (currentFrequency === 'primary') {
-                    setPrimaryFrequency(s => ({...s, ...{volume: volume}}))
+                    setPrimaryFrequency(s => ({...s, ...{volume}}))
                 } else {
-                    setSecondaryFrequency(s => ({...s, ...{volume: volume}}))
+                    setSecondaryFrequency(s => ({...s, ...{volume}}))
                 }
             })
         }
     }, [currentFrequency, setPrimaryFrequency, setSecondaryFrequency])
     const handleFrequencyChange = useCallback((data: any) => {
         const input = currentFrequency === 'primary' ? data.primaryFrequency : data.secondaryFrequency
-        const frequency = parseInt(input.replace(/\./g, ''))
+        const frequency = parseInt(input.toString().replace(/\./g, ''))
         if (frequency >= 10000 && frequency <= 99999) {
             fetchAPI(`/${props.type}/change_frequency`, {
                 [currentFrequency]: frequency
@@ -201,10 +201,10 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                                 <VolumeIcon/>
                                 {currentFrequency === 'primary' ? primaryFrequency.volume : secondaryFrequency.volume}%
                             </div>
-                            <div>
+                            {/*<div>
                                 <HeadphoneIcon />
                                 {currentFrequency === 'primary' ? displayEar(primaryFrequency.ear) : displayEar(secondaryFrequency.ear)}
-                            </div>
+                            </div>*/}
                         </span>
                             </>
                         )}
@@ -213,7 +213,7 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                 <div className={style.actions}>
                     <input type="submit" value="" className={style.action_validate}/>
                     <div className={style.action_enable} onClick={toggleRadio}/>
-                    <div className={style.action_mix} onClick={handleMixChange}/>
+                    {/*<div className={style.action_mix} onClick={handleMixChange}/>*/}
                     <CloseIcon className={style.action_close} onClick={handleClose}/>
 
                     <div className={style.action_volume_up}

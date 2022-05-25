@@ -189,6 +189,8 @@ exports("hasPhone", function()
                 return
             end
         end
+
+        p:resolve(false)
     end, "player", PlayerId())
 
     return Citizen.Await(p)
