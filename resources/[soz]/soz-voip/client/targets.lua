@@ -1,7 +1,10 @@
 Targets = Context:new()
 
 function IsPlayerInTargetChannel(serverID)
-    local gridChannel = GetGridChannel(NetworkGetPlayerCoords(serverID or 0), Config.gridSize)
+    if serverID == nil then
+        return false
+    end
+    local gridChannel = GetGridChannel(GetPlayerCoords(serverID or 0), Config.gridSize)
     return Channels:targetHasAnyActiveContext(gridChannel) == true
 end
 

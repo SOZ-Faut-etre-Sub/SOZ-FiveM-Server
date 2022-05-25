@@ -8,12 +8,12 @@ Config.voiceTargets = {[1] = "proximity", [2] = "phone", [3] = "radio", [4] = "s
 
 --- Voice Proximity
 Config.voiceRanges = {
-    [1] = {name = "whisper", range = 1.5},
-    [2] = {name = "normal", range = 3.0},
-    [3] = {name = "shout", range = 7.0},
+    [1] = {name = "whisper", range = 2.0},
+    [2] = {name = "normal", range = 6.0},
+    [3] = {name = "shout", range = 12.0},
 }
-Config.megaphoneRange = 20.0
-Config.microphoneRange = 20.0
+Config.megaphoneRange = 32.0
+Config.microphoneRange = 32.0
 
 --- Radio
 Config.radioFrequencies = {min = 10000, max = 99999}
