@@ -151,19 +151,29 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     end
 end)
 
-QBCore.Functions.CreateCallback("soz-garage:server:TakeOutGarage", function(source, cb, type_, plate, expectedState, emptySlots)
-    if not expectedState.state then
-        expectedState.state = {VehicleState.InGarage, VehicleState.InPound, VehicleState.InEntreprise}
+---Make player pay parking fee (private, pound)
+---@param type_ string Garage type: public, private, entreprise, depot
+---@param vehicle table player_vehicles row representation
+QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle)
+    local player = QBCore.Functions.GetPlayer(source)
+    local moneyBalance = player.PlayerData.money["money"]
+
+    local price = vehicle.depotprice -- Pound
+    if type_ == "private" then
+        local timediff = math.floor((os.time() - vehicle.parkingtime) / 3600)
+        price = timediff * 20
+        if price > 200 then
+            price = 200
+        end
     end
 
-    local vehicle = PrecheckCurrentVehicleStateInDB(source, plate, type_, expectedState)
-    if not vehicle then
-        return
+    if moneyBalance >= price then
+        player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_))
+        cb(true)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, Lang:t("error.not_enough"))
+        cb(false)
     end
-
-    local slot = emptySlots[math.random(#emptySlots)]
-
-    -- TODO Spawn vehicle
 end)
 
 QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", function(source, cb, plate)
@@ -231,40 +241,12 @@ RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
     })
 end)
 
-RegisterNetEvent("qb-garage:server:PayDepotPrice", function(v, type, garage, indexgarage)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local moneyBalance = Player.PlayerData.money["money"]
-    MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE plate = ?", {v.plate}, function(result)
-        if result[1] then
-            if moneyBalance >= result[1].depotprice then
-                Player.Functions.RemoveMoney("money", result[1].depotprice, "paid-depot")
-                TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
-            else
-                TriggerClientEvent("hud:client:DrawNotification", src, Lang:t("error.not_enough"))
-            end
-        end
-    end)
-end)
-
 QBCore.Functions.CreateCallback("qb-garage:server:getstock", function(source, cb, indexgarage)
     local parkingcount = MySQL.Sync.fetchSingle("SELECT COUNT(*) FROM player_vehicles WHERE garage = ? AND state = 1", {
         indexgarage,
     })
     if parkingcount then
         cb(parkingcount)
-    end
-end)
-
-RegisterNetEvent("qb-garage:server:PayPrivePrice", function(v, type, garage, indexgarage, price)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local moneyBalance = Player.PlayerData.money["money"]
-    if moneyBalance >= price then
-        Player.Functions.RemoveMoney("money", price, "paid-prive")
-        TriggerClientEvent("qb-garages:client:takeOutGarage", src, v, type, garage, indexgarage)
-    else
-        TriggerClientEvent("hud:client:DrawNotification", src, Lang:t("error.not_enough"))
     end
 end)
 
