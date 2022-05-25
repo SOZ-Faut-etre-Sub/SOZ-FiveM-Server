@@ -34,9 +34,11 @@ end)
 ---Precheck data stored in DB (citizenid, plate, state)
 ---Data should strictly match. This is to avoid duplication glitches
 ---@param source number
+---@param type_ string Garage type: public, private, entreprise, depot
 ---@param plate string
----@param expectedState number State flag vehicle is supposed to have
-local function PrecheckCurrentVehicleStateInDB(source, plate, expectedState, indexgarage)
+---@param expectedState number current DB record should match data in this table
+---                            { <db_field> = <expected value> }
+local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedState)
     local vehicle = MySQL.Sync.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {plate})
 
     if vehicle == nil then
@@ -47,19 +49,23 @@ local function PrecheckCurrentVehicleStateInDB(source, plate, expectedState, ind
 
         local fields = {
             -- Check ownership
-            ["citizenid"] = {expectation = player.PlayerData.citizenid, error = "Le véhicule ne vous appartient pas"},
+            ["citizenid"] = {expectation = expectedState.citizenid or player.PlayerData.citizenid, error = "Le véhicule ne vous appartient pas"},
             -- Check state is the expected value
-            ["state"] = {expectation = expectedState, error = "Le véhicule présente une dualité quantique"},
+            ["state"] = {expectation = expectedState.state, error = "Le véhicule présente une dualité quantique"},
             -- Check vehicle is owned by entreprise
-            -- ["job"] = {expectation = player.PlayerData.job.id, error = "Ce n'est pas un véhicule entreprise"},
+            ["job"] = {expectation = expectedState.job, error = "Ce n'est pas un véhicule entreprise"},
             -- Check vehicle is is right garage
-            ["garage"] = {expectation = indexgarage, error = "Le véhicule est doué d'ubiquité"},
+            ["garage"] = {expectation = expectedState.garage, error = "Le véhicule est doué d'ubiquité"},
         }
-        if not indexgarage then
-            fields.garage = nil
+        -- Remove checks that are not relevent for current vehicle. `citizenid` and `state` always to be checked
+        local fieldsToTest = {}
+        for field, data in pairs(fields) do
+            if field == "citizenid" or field == "state" or expectedState[field] then
+                fieldsToTest[field] = data
+            end
         end
 
-        for field, data in pairs(fields) do
+        for field, data in pairs(fieldsToTest) do
             local expectation = data.expectation
             local doesMatch = false
 
@@ -80,7 +86,14 @@ local function PrecheckCurrentVehicleStateInDB(source, plate, expectedState, ind
 
     return vehicle
 end
+
+QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, type_, plate, expectedState)
+    local vehicle = PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedState)
+    if vehicle then
     cb(vehicle)
+    else
+        cb(false)
+    end
 end)
 
 ---List vehicles in specified garage
