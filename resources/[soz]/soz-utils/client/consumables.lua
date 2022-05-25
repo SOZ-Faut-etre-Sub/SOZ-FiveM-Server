@@ -120,3 +120,49 @@ end)
 RegisterNetEvent("consumables:client:UseCardBoard", function()
     TriggerServerEvent("job:server:placeProps", "cardbord", "prop_cardbordbox_03a", 90)
 end)
+
+RegisterNetEvent("scuba:client:Toggle", function(scuba)
+    local skin = {
+        Components = {
+            [1] = {Drawable = 46, Texture = 0, Palette = 0},
+            [3] = {Drawable = 101, Texture = 0, Palette = 0},
+            [4] = {Drawable = 40, Texture = 2, Palette = 0},
+            [5] = {Drawable = 0, Texture = 0, Palette = 0},
+            [6] = {Drawable = 25, Texture = 0, Palette = 0},
+            [7] = {Drawable = 0, Texture = 0, Palette = 0},
+            [8] = {Drawable = 123, Texture = 2, Palette = 0},
+            [9] = {Drawable = 0, Texture = 0, Palette = 0},
+            [10] = {Drawable = 0, Texture = 0, Palette = 0},
+            [11] = {Drawable = 61, Texture = 2, Palette = 0},
+        },
+        Props = {},
+    }
+
+    if scuba then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {
+            animDict = "anim@mp_yacht@shower@male@",
+            anim = "male_shower_towel_dry_to_get_dressed",
+            flags = 16,
+        }, {}, {}, function() -- Done
+            SetEnableScuba(PlayerPedId(), true)
+            SetPedMaxTimeUnderwater(PlayerPedId(), 1500.00)
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+        end)
+    else
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+            }, {
+            animDict = "anim@mp_yacht@shower@male@",
+            anim = "male_shower_towel_dry_to_get_dressed",
+            flags = 16,
+            }, {}, {}, function() -- Done
+            SetEnableScuba(PlayerPedId(), false)
+            SetPedMaxTimeUnderwater(PlayerPedId(), 15.00)
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+        end)
+    end
+end)
