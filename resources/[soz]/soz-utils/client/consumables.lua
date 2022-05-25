@@ -143,8 +143,24 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
     PlayerData = QBCore.Functions.GetPlayerData()
 
     local skin = {
-        [GetHashKey("mp_m_freemode_01")] = {Components = {[8] = {Drawable = 151, Texture = 0, Palette = 0}}, Props = {}},
-        [GetHashKey("mp_f_freemode_01")] = {Components = {[8] = {Drawable = 187, Texture = 0, Palette = 0}}, Props = {}},
+        [GetHashKey("mp_m_freemode_01")] = {
+            Components = {
+                [4] = {Drawable = 94, Texture = 0, Palette = 0},
+                [6] = {Drawable = 67, Texture = 0, Palette = 0},
+                [8] = {Drawable = 151, Texture = 0, Palette = 0},
+                [11] = {Drawable = 246, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
+        [GetHashKey("mp_f_freemode_01")] = {
+            Components = {
+                [4] = {Drawable = 97, Texture = 0, Palette = 0},
+                [6] = {Drawable = 70, Texture = 0, Palette = 0},
+                [8] = {Drawable = 187, Texture = 0, Palette = 0},
+                [11] = {Drawable = 251, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
     }
 
     if scuba then
