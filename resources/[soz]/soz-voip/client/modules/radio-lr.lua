@@ -124,6 +124,13 @@ local function SetRadioPowerState(state)
     if not IsRadioOn then
         StopTransmissionPrimary(true)
         StopTransmissionSecondary(true)
+
+        if RadioFrequencies[PrimaryConfiguration.frequency] and RadioFrequencies[PrimaryConfiguration.frequency].module == "radio-lr" then
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", PrimaryConfiguration.frequency)
+        end
+        if RadioFrequencies[SecondaryConfiguration.frequency] and RadioFrequencies[SecondaryConfiguration.frequency].module == "radio-lr" then
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", SecondaryConfiguration.frequency)
+        end
     end
 end
 

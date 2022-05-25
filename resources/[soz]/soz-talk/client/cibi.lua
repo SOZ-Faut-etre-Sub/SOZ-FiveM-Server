@@ -30,12 +30,6 @@ local function vehicleUnregisterHandlers()
     for _, handler in ipairs(stateBagHandlers) do
         RemoveStateBagChangeHandler(handler)
     end
-    if primaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio)
-    end
-    if secondaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio)
-    end
     exports["soz-voip"]:SetRadioLongRangePowerState(false)
 end
 
