@@ -13,7 +13,7 @@ const DialerNavBar: React.FC = () => {
     const [t] = useTranslation();
 
     return (
-        <div className={`grid grid-cols-3 content-start ${theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-white text-black'} h-20`}>
+        <div className={`relative grid grid-cols-3 content-start ${theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-white text-black'} h-20`}>
             <Button
                 className={`flex flex-col items-center py-2 text-sm ${page === '/phone' && 'text-[#347DD9]'}`}
                 onClick={() => {
