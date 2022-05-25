@@ -139,6 +139,16 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 end)
 
+Citizen.CreateThread(function()
+    while true do
+        if IsControlJustReleased(0, 144) then
+            TriggerServerEvent("inventory:server:RemoveItem", PlayerData.source, "parachute", 1)
+        end
+
+        Citizen.Wait(0)
+    end
+end)
+
 RegisterNetEvent("scuba:client:Toggle", function(scuba)
     PlayerData = QBCore.Functions.GetPlayerData()
 
