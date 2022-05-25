@@ -28,7 +28,7 @@ SozJobCore.JobPermission = {
     SocietyShop = "society-shop",
     SocietyBankAccount = "society-bank-account",
     SocietyTakeOutPound = "society-take-out-pound",
-    NewsManageArticle = 'manage-article',
+    NewsManageArticle = "manage-article",
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
     Food = {Harvest = "harvest", Craft = "craft"},
 }
