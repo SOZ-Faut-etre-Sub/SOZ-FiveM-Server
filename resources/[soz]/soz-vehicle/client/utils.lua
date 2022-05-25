@@ -23,5 +23,6 @@ function SetVehicleProperties(veh, mods)
     SetVehicleNumberPlateText(veh, mods.plate)
     QBCore.Functions.SetVehicleProperties(veh, mods)
     SetFuel(veh, mods.fuelLevel)
+    SetEntityAsMissionEntity(veh, true, true)
 end
 exports("SetVehicleProperties", SetVehicleProperties)
