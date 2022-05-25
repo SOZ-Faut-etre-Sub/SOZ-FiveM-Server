@@ -28,6 +28,7 @@ SozJobCore.JobPermission = {
     SocietyShop = "society-shop",
     SocietyBankAccount = "society-bank-account",
     SocietyTakeOutPound = "society-take-out-pound",
+    NewsManageArticle = 'manage-article',
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
     Food = {Harvest = "harvest", Craft = "craft"},
 }
@@ -205,6 +206,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.NewsManageArticle] = {label = "Gérer les articles sur le site"},
         },
     },
     [SozJobCore.JobType.Garbage] = {
