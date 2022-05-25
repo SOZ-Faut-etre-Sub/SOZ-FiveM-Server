@@ -53,7 +53,7 @@ export const APPS: IAppConfig[] = [
         color: DIALER_APP_TEXT_COLOR,
         path: '/phone',
         home: true,
-        Route: () => <AppRoute id="DIALER" path="/phone" component={DialerApp} emitOnOpen={false}/>,
+        Route: () => <AppRoute path="/phone" component={DialerApp} />,
     },
     {
         id: 'MESSAGES',
@@ -62,7 +62,7 @@ export const APPS: IAppConfig[] = [
         path: '/messages',
         home: true,
         Route: () => (
-            <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false}/>
+            <AppRoute path="/messages" component={MessagesApp} />
         ),
     },
     {
@@ -72,7 +72,7 @@ export const APPS: IAppConfig[] = [
         path: '/contacts',
         home: true,
         Route: () => (
-            <AppRoute id="CONTACTS" path="/contacts" component={ContactsApp} emitOnOpen={false}/>
+            <AppRoute path="/contacts" component={ContactsApp} />
         ),
     },
     {
@@ -80,14 +80,14 @@ export const APPS: IAppConfig[] = [
         nameLocale: 'APPS_BANK',
         color: 'common.white',
         path: '/bank',
-        Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} emitOnOpen={false}/>,
+        Route: () => <AppRoute path="/bank" component={BankApp} />,
     },
     {
         id: 'NOTES',
         nameLocale: 'APPS_NOTES',
         color: NOTES_APP_ICON_COLOR,
         path: '/notes',
-        Route: () => <AppRoute id="NOTES" path="/notes" component={NotesApp} emitOnOpen={true}/>,
+        Route: () => <AppRoute path="/notes" component={NotesApp} />,
     },
     {
         id: 'SOCIETY_CONTACTS',
@@ -95,7 +95,7 @@ export const APPS: IAppConfig[] = [
         color: SOCIETY_CONTACTS_APP_TEXT_COLOR,
         path: '/society-contacts',
         Route: () => (
-            <AppRoute id="SOCIETY_CONTACTS" path="/society-contacts" component={SocietyContactsApp} emitOnOpen={false}/>
+            <AppRoute path="/society-contacts" component={SocietyContactsApp} />
         ),
     },
     {
@@ -103,7 +103,7 @@ export const APPS: IAppConfig[] = [
         nameLocale: 'APPS_PHOTO',
         color: 'common.white',
         path: '/photo',
-        Route: () => <AppRoute id="PHOTO" path="/photo" component={PhotoApp} emitOnOpen={true}/>,
+        Route: () => <AppRoute path="/photo" component={PhotoApp} />,
     },
     {
         id: 'SETTINGS',
@@ -111,7 +111,7 @@ export const APPS: IAppConfig[] = [
         color: 'grey[50]',
         path: '/settings',
         Route: () => (
-            <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false}/>
+            <AppRoute path="/settings" component={SettingsApp} />
         ),
     },
     {
@@ -120,7 +120,7 @@ export const APPS: IAppConfig[] = [
         color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
         path: '/society-messages',
         Route: () => (
-            <AppRoute id="SOCIETY_MESSAGES" path="/society-messages" component={SocietyMessagesApp} emitOnOpen={false}/>
+            <AppRoute path="/society-messages" component={SocietyMessagesApp} />
         ),
     },
     {
@@ -129,7 +129,7 @@ export const APPS: IAppConfig[] = [
         color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
         path: '/twitch-news',
         Route: () => (
-            <AppRoute id="TWITCH_NEWS" path="/twitch-news" component={TwitchNewsApp} emitOnOpen={false}/>
+            <AppRoute path="/twitch-news" component={TwitchNewsApp} />
         ),
     },
     {
@@ -138,7 +138,7 @@ export const APPS: IAppConfig[] = [
         color: SOCIETY_MESSAGES_APP_TEXT_COLOR,
         path: '/zutom',
         Route: () => (
-            <AppRoute id="ZUTOM" path="/zutom" component={ZutomApp} emitOnOpen={false}/>
+            <AppRoute path="/zutom" component={ZutomApp} />
         ),
     },
     /*{
@@ -147,7 +147,7 @@ export const APPS: IAppConfig[] = [
       color: MARKETPLACE_APP_ICON_COLOR,
       path: '/marketplace',
       Route: () => (
-        <AppRoute id="MARKETPLACE" path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
+        <AppRoute path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
       ),
     },*/
     {
@@ -156,6 +156,6 @@ export const APPS: IAppConfig[] = [
         color: 'common.white',
         path: '/camera',
         home: true,
-        Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true}/>,
+        Route: () => <AppRoute path="/camera" component={CameraApp} />,
     },
 ];
