@@ -15,6 +15,7 @@ local spawnMicObject = function()
     local coords = GetEntityCoords(player)
 
     MicConfig.object = CreateObject(GetHashKey(MicConfig.prop), coords.x, coords.y, coords.z, 1, 1, 1)
+    SetNetworkIdCanMigrate(ObjToNet(MicConfig.object), false)
     AttachEntityToEntity(MicConfig.object, player, GetPedBoneIndex(player, 60309), 0.1, 0.05, 0.0, 230.0, -30.0, 0.0, 1, 1, 0, 1, 0, 1)
 end
 

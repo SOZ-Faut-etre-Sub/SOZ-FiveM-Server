@@ -1,4 +1,5 @@
 local itemToRefill = 11 -- give 11 item for 24 second
+local tankerLocked = {}
 
 --- Events
 RegisterNetEvent("jobs:server:fueler:refillTanker", function(tankerId)
@@ -172,6 +173,29 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:canRefill", function(source,
     local tankerPlate = GetVehicleNumberPlateText(tanker)
 
     cb(exports["soz-inventory"]:CanCarryItem("trunk_" .. tankerPlate, "petroleum", itemToRefill))
+end)
+
+QBCore.Functions.CreateCallback("jobs:server:fueler:lockTanker", function(source, cb, tankerId)
+    local currentSource = tankerLocked[tankerId]
+
+    if currentSource and currentSource ~= source then
+        -- Check player still connected, otherwise it is unlocked
+        local Player = QBCore.Functions.GetPlayer(currentSource)
+
+        if Player then
+            cb(false)
+
+            return
+        end
+    end
+
+    tankerLocked[tankerId] = source
+    cb(true)
+end)
+
+QBCore.Functions.CreateCallback("jobs:server:fueler:unlockTanker", function(source, cb, tankerId)
+    tankerLocked[tankerId] = nil
+    cb(true)
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:canRefining", function(source, cb, tankerId)

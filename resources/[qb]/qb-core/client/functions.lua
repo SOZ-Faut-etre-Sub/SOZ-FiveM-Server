@@ -47,8 +47,9 @@ end
 -- Utility
 
 function QBCore.Functions.ShowHelpNotification(msg)
-    AddTextEntry('helpNotification', msg)
-    DisplayHelpTextThisFrame('helpNotification', false)
+    BeginTextCommandDisplayHelp("STRING")
+    AddTextComponentSubstringPlayerName(msg)
+    EndTextCommandDisplayHelp(0, false, false, -1)
 end
 
 function QBCore.Functions.DrawText(x, y, width, height, scale, r, g, b, a, text)

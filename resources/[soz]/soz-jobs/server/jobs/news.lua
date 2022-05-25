@@ -41,6 +41,12 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
     TriggerEvent("banking:server:TransferMoney", "farm_news", "safe_news", newspaperAmount * NewsConfig.SellPrice)
     exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "newspaper", newspaperAmount)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
+
+    TriggerEvent("monitor:server:event", "job_news_sell_newspaper", {player_source = Player.PlayerData.source},
+                 {
+        quantity = tonumber(newspaperAmount),
+        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+    })
 end)
 
 RegisterNetEvent("jobs:server:news:newspaperFarm", function()
@@ -52,6 +58,12 @@ RegisterNetEvent("jobs:server:news:newspaperFarm", function()
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
         end
     end)
+
+    TriggerEvent("monitor:server:event", "job_news_print_newspaper", {player_source = Player.PlayerData.source},
+                 {
+        quantity = tonumber(newspaperAmount),
+        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+    })
 end)
 
 RegisterNetEvent("jobs:server:news:UseMobileItem", function(item, event)

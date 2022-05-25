@@ -124,8 +124,9 @@ local function ApplyPedClothSet(ped, clothSet)
         SetPedComponentVariation(ped, tonumber(componentId), component.Drawable, component.Texture or 0, component.Palette or 0);
     end
 
-    for propId, prop in pairs(clothSet.Props) do
-        if nil == prop or prop.Clear then
+    for _, propId in pairs(PropType) do
+        local prop = clothSet.Props[tostring(propId)]
+        if prop == nil or prop.Clear == true then
             ClearPedProp(ped, tonumber(propId))
         else
             SetPedPropIndex(ped, tonumber(propId), prop.Drawable, prop.Texture or 0, prop.Palette or 0);
