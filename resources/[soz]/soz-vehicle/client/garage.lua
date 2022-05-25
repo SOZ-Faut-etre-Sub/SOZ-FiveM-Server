@@ -110,7 +110,8 @@ end
 RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
     local garageType = GetGarageType(type_)
 
-    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, vehicle.plate, {
+    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, vehicle.plate,
+                                            {
         state = {VehicleState.InGarage, VehicleState.InPound, VehicleState.InEntreprise},
         garage = indexgarage,
     })
@@ -132,7 +133,7 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
 
     RequestVehicleModel(veh.vehicle)
 
-    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlots[math.random(#emptySlots)], json.decode(veh.mods), indexgarage)
+    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlots[math.random(#emptySlots)], json.decode(veh.mods))
 
     if vehEntity then
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
@@ -222,7 +223,7 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
 
     -- Empty slot availbale?
     if type_ == "private" then
-        local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
+        local placesstock = QBCore.Functions.TriggerRpc("soz-garage:server:getstock", indexgarage)
         local placesdispo = 38 - placesstock["COUNT(*)"]
         if placesdispo < 1 then
             exports["soz-hud"]:DrawNotification("Le parking est plein", "error", 3500)
@@ -231,7 +232,9 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     end
 
     -- Extra checks against data in DB
-    if not QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, plate, { state = VehicleState.Out }) then
+    if not QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, plate, {
+        state = VehicleState.Out,
+    }) then
         return false
     end
 
@@ -338,7 +341,7 @@ local function GarageMainMenu(menu, type_, garage, indexgarage)
 
     -- Menu
     if type_ == "private" then
-        local placesstock = QBCore.Functions.TriggerRpc("qb-garage:server:getstock", indexgarage)
+        local placesstock = QBCore.Functions.TriggerRpc("soz-garage:server:getstock", indexgarage)
         local placesdispo = 38 - placesstock["COUNT(*)"]
         menu:AddTitle({label = garage.label .. " | Places libre: " .. placesdispo .. " / 38"})
     else

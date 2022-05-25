@@ -49,7 +49,10 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
 
         local fields = {
             -- Check ownership
-            ["citizenid"] = {expectation = expectedState.citizenid or player.PlayerData.citizenid, error = "Le véhicule ne vous appartient pas"},
+            ["citizenid"] = {
+                expectation = expectedState.citizenid or player.PlayerData.citizenid,
+                error = "Le véhicule ne vous appartient pas",
+            },
             -- Check state is the expected value
             ["state"] = {expectation = expectedState.state, error = "Le véhicule présente une dualité quantique"},
             -- Check vehicle is owned by entreprise
@@ -151,14 +154,18 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     end
 end)
 
-QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, garage)
+---Spawn Vehicle out of garage, server-side
+---@param modelName string
+---@param coords vector4 Spawn location
+---@param mods table Vehicle properties
+QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods)
     local veh = SpawnVehicle(modelName, coords, mods)
 
     local res = MySQL.Sync.execute([[
         UPDATE player_vehicles
-        SET state = ?, garage = ?, parkingtime = 0
+        SET state = ?, garage = null, parkingtime = 0
         WHERE plate = ?
-    ]], {VehicleState.Out, garage, mods.plate})
+    ]], {VehicleState.Out, mods.plate})
     if not res == 1 then
         DespawnVehicle(NetworkGetNetworkIdFromEntity(veh))
         return
@@ -194,27 +201,6 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     end
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", function(source, cb, plate)
-    local src = source
-    local properties = {}
-    local result = MySQL.Sync.fetchAll("SELECT mods FROM player_vehicles WHERE plate = ?", {plate})
-    if result[1] then
-        properties = json.decode(result[1].mods)
-    end
-    cb(properties)
-end)
-
-QBCore.Functions.CreateCallback("qb-garage:server:CanTakeOutVehicle", function(source, cb, plate)
-    local vehicle = MySQL.Sync.fetchSingle("SELECT state FROM player_vehicles WHERE plate = ?", {plate})
-
-    if vehicle then
-        -- Only Takeout Vehicle
-        cb(vehicle.state == 1 or vehicle.state == 2 or vehicle.state == 3)
-    else
-        cb(false)
-    end
-end)
-
 RegisterNetEvent("qb-garage:server:updateVehicle", function(state, fuel, engine, body, plate, garage, type)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
@@ -244,7 +230,7 @@ RegisterNetEvent("qb-garage:server:setVehicleDestroy", function(plate)
     MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE plate = ?", {plate})
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:getstock", function(source, cb, indexgarage)
+QBCore.Functions.CreateCallback("soz-garage:server:getstock", function(source, cb, indexgarage)
     local parkingcount = MySQL.Sync.fetchSingle("SELECT COUNT(*) FROM player_vehicles WHERE garage = ? AND state = 1", {
         indexgarage,
     })
