@@ -95,6 +95,19 @@ function AdminMenuVehicles(menu, permission)
     })
 
     vehicleMenu:AddButton({
+        icon = "⚠️",
+        label = "Sauvegarder le véhicule",
+        value = nil,
+        select = function()
+            local vehicle = GetVehiclePedIsIn(PlayerPedId())
+            local mods = QBCore.Functions.GetVehicleProperties(vehicle)
+
+            TriggerServerEvent("admin:vehicle:AddVehicle", GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)), VehToNet(vehicle), mods)
+        end,
+        disabled = permission ~= "admin",
+    })
+
+    vehicleMenu:AddButton({
         label = "Configuration FBI",
         value = nil,
         select = function()

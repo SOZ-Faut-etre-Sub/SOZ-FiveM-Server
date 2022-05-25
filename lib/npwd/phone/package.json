@@ -7,6 +7,7 @@
   "homepage": "/html",
   "dependencies": {
     "@citizenfx/three": "^0.100.0",
+    "@emotion/css": "^11.9.0",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
     "classnames": "^2.3.1",

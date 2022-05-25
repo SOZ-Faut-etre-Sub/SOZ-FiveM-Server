@@ -37,7 +37,6 @@ server_scripts {
 
 dependencies {
     'oxmysql',
-    'progressbar'
 }
 
 lua54 'yes'

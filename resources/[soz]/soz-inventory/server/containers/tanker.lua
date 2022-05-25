@@ -41,7 +41,7 @@ end
 --- @param item table
 --- @return boolean
 function TankerInventory:AllowedItems(item)
-    local typeAllowed = {["oil"] = true}
+    local typeAllowed = {["oil"] = true, ["oil_and_item"] = true}
     return typeAllowed[item.type or ""] or false
 end
 

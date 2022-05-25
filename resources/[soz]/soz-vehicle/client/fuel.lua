@@ -221,7 +221,7 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
         TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
         TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
 
-        while max > newFuel and QBCore.Functions.GetPlayerData().money["money"] > cout and not IsControlJustReleased(0, 194) and
+        while max > newFuel and (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) and not IsControlJustReleased(0, 194) and
             not IsControlJustReleased(0, 225) and GetPedInVehicleSeat(entity, -1) == 0 and GetEntityHealth(gasentity) > 0 do
             currentFuelAdd = currentFuelAdd + 0.02
             newFuel = currentFuel + currentFuelAdd
@@ -244,24 +244,30 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
         RemoveAnimDict("timetable@gardener@filling_can")
         if GetPedInVehicleSeat(entity, -1) == 0 then
             if stockstation > currentFuelAdd then
-                if QBCore.Functions.GetPlayerData().money["money"] > cout then
+                if (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) then
                     local text = "Terminé."
+
                     if stationType ~= "private" then
                         text = text .. " Prix final : ~g~" .. cout .. " $"
                     end
+
                     QBCore.Functions.ShowHelpNotification(text)
                 else
                     local text = "Vous ne pouvez pas payer plus."
+
                     if stationType ~= "private" then
                         text = text .. " Le prix final est de: ~g~" .. cout .. " $"
                     end
+
                     QBCore.Functions.ShowHelpNotification(text)
                 end
             else
                 local text = "Il n'y a plus d'autre stock dans la station."
+
                 if stationType ~= "private" then
                     text = text .. " Le prix final est de: ~g~" .. cout .. " $"
                 end
+
                 QBCore.Functions.ShowHelpNotification(text)
             end
             local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))

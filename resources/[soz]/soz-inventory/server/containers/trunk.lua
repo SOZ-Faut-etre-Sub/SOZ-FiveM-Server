@@ -48,6 +48,7 @@ function TrunkInventory:AllowedItems(item)
         ["drug"] = true,
         ["drink"] = true,
         ["food"] = true,
+        ["oil_and_item"] = true,
     }
     return typeAllowed[item.type or ""] or false
 end
