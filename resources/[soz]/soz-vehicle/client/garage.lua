@@ -107,7 +107,7 @@ local function GetEmptyParkingSlots(slots, indexgarage)
     return emptySlots
 end
 
-RegisterNetEvent("soz-garage:client:takeOutGarage", function(indexgarage)
+RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
     local garageType = GetGarageType(type_)
 
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage)
@@ -115,7 +115,10 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(indexgarage)
         exports["soz-hud"]:DrawNotification("Parking encombré, le véhicule ne peut pas être sorti", "warning")
     end
 
-    --TODO
+    QBCore.Functions.TriggerCallback("soz-garage:server:TakeOutGarage", function()
+        -- TODO
+    end, type_, vehicle.plate, { garage = indexgarage }, emptySlots)
+
 end)
 
 RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type_, garage, indexgarage)
@@ -358,7 +361,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                     elseif garageType.type == "private" then
                         TriggerEvent("qb-garages:client:TakeOutPrive", v, garageType.type, garage, indexgarage, price)
                     else
-                        TriggerEvent("qb-garages:client:takeOutGarage", v, garageType.type, garage, indexgarage)
+                        TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)
                     end
                 end,
             })
