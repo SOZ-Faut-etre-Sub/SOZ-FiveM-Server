@@ -77,6 +77,7 @@ local function AttachWeapon(weaponHash, weaponName)
     end
 
     weaponToAttach[weaponName].handle = CreateObject(GetHashKey(weaponConfig.model), 1.0, 1.0, 1.0, true, true, false)
+    SetNetworkIdCanMigrate(ObjToNet(weaponToAttach[weaponName].handle), false)
     AttachEntityToEntity(weaponToAttach[weaponName].handle, PlayerPedId(), bone, weaponConfig.position.x, weaponConfig.position.y, weaponConfig.position.z,
                          weaponConfig.rotation.x, weaponConfig.rotation.y, weaponConfig.rotation.z, 1, 1, 0, 0, 2, 1)
 end

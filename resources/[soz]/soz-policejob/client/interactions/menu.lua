@@ -57,6 +57,7 @@ local function BadgeEntity(menu)
             local badgeProp = CreateObject(Config.Badge, coords.x, coords.y, coords.z + 0.2, true, true, true)
             local boneIndex = GetPedBoneIndex(ped, 28422)
 
+            SetNetworkIdCanMigrate(ObjToNet(badgeProp), false)
             AttachEntityToEntity(badgeProp, ped, boneIndex, 0.065, 0.029, -0.035, 80.0, -1.90, 75.0, true, true, false, true, 1, true)
             QBCore.Functions.RequestAnimDict("paper_1_rcm_alt1-9")
             TaskPlayAnim(ped, "paper_1_rcm_alt1-9", "player_one_dual-9", 8.0, -8, 10.0, 49, 0, 0, 0, 0)
