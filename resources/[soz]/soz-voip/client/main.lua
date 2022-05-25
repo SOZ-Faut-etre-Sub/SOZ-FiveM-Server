@@ -84,8 +84,31 @@ function LoadAnimDict(dict)
     end
 end
 
+--- Loop
+Citizen.CreateThread(function()
+    while true do
+        RefreshTargets()
+
+        Citizen.Wait(200)
+    end
+end)
+
 --- Commands
 RegisterCommand("voip-debug-mode", function(source, args, rawCommand)
     Config.debug = not Config.debug
     console.info("Debug mode : %s", Config.debug and "enabled" or "disabled")
+end, false)
+
+RegisterCommand("voip-debug-state", function(source, args, rawCommand)
+    Channels:contextIterator(function(target, context)
+        console.info("Channels %s (%s) : %s", context, target, Channels:targetHasAnyActiveContext(target) and "active" or "inactive")
+    end)
+
+    Targets:contextIterator(function(target, context)
+        console.info("Targets %s (%s) : %s", context, target, Targets:targetHasAnyActiveContext(target) and "active" or "inactive")
+    end)
+
+    Transmissions:contextIterator(function(target, context)
+        console.info("Transmissions %s (%s) : %s", context, target, Transmissions:targetHasAnyActiveContext(target) and "active" or "inactive")
+    end)
 end, false)

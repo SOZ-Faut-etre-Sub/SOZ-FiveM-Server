@@ -1,4 +1,5 @@
 Targets = Context:new()
+local debugShow = 1
 
 function IsPlayerInTargetChannel(serverID)
     local gridChannel = GetGridChannel(NetworkGetPlayerCoords(serverID or 0), Config.gridSize)
@@ -12,6 +13,9 @@ function SetVoiceTargets(targetID)
         if not channels[channel] then
             channels[channel] = true
             MumbleAddVoiceTargetChannel(targetID, channel)
+            if debugShow == 50 then
+                console.debug("[Main] MumbleAddVoiceTargetChannel(%s, %s)", targetID, channel)
+            end
         end
     end)
 
@@ -19,6 +23,9 @@ function SetVoiceTargets(targetID)
         if not players[serverID] and not IsPlayerInTargetChannel(serverID) then
             players[serverID] = true
             MumbleAddVoiceTargetPlayerByServerId(targetID, serverID)
+            if debugShow == 50 then
+                console.debug("[Main] MumbleAddVoiceTargetPlayerByServerId(%s, %s)", targetID, serverID)
+            end
         end
     end)
 end
@@ -26,16 +33,29 @@ end
 function ChangeVoiceTarget(targetID)
     PlayerData.CurrentTarget = targetID
     MumbleSetVoiceTarget(targetID)
+    if debugShow == 50 then
+        console.debug("[Main] MumbleSetVoiceTarget(%s)", targetID)
+    end
 end
 
 function RefreshTargets()
     local voiceTarget = PlayerData.CurrentTarget
 
     MumbleClearVoiceTarget(voiceTarget)
+    if debugShow == 50 then
+        console.debug("[Main] MumbleClearVoiceTarget(%s)", voiceTarget)
+    end
+    MumbleClearVoiceTargetPlayers(voiceTarget)
+    if debugShow == 50 then
+        console.debug("[Main] MumbleClearVoiceTargetPlayers(%s)", voiceTarget)
+    end
     SetVoiceTargets(voiceTarget)
     ChangeVoiceTarget(voiceTarget)
 
-    console.debug("[Main] Voice Target Refreshed | ID: %s", voiceTarget)
+    if debugShow == 50 then
+        debugShow = 0
+    end
+    debugShow = debugShow + 1
 end
 
 function AddPlayerToTargetList(serverID, context, transmit)
