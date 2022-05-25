@@ -90,7 +90,7 @@ end
 QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, type_, plate, expectedState)
     local vehicle = PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedState)
     if vehicle then
-    cb(vehicle)
+        cb(vehicle)
     else
         cb(false)
     end
@@ -149,6 +149,21 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     else
         cb(nil)
     end
+end)
+
+QBCore.Functions.CreateCallback("soz-garage:server:TakeOutGarage", function(source, cb, type_, plate, expectedState, emptySlots)
+    if not expectedState.state then
+        expectedState.state = {VehicleState.InGarage, VehicleState.InPound, VehicleState.InEntreprise}
+    end
+
+    local vehicle = PrecheckCurrentVehicleStateInDB(source, plate, type_, expectedState)
+    if not vehicle then
+        return
+    end
+
+    local slot = emptySlots[math.random(#emptySlots)]
+
+    -- TODO Spawn vehicle
 end)
 
 QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", function(source, cb, plate)
