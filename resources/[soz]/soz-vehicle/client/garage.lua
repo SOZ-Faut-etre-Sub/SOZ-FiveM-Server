@@ -356,13 +356,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 }),
                 select = function()
                     garageType.submenu:Close()
-                    if garageType.type == "depot" then
-                        TriggerServerEvent("qb-garage:server:PayDepotPrice", v, garageType.type, garage, indexgarage)
-                    elseif garageType.type == "private" then
-                        TriggerEvent("qb-garages:client:TakeOutPrive", v, garageType.type, garage, indexgarage, price)
-                    else
                         TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)
-                    end
                 end,
             })
         end
