@@ -5,7 +5,6 @@ function DespawnVehicle(vehicleNetId)
 end
 exports("DespawnVehicle", DespawnVehicle)
 
-
 --- Make sure model is loaded on client
 function SpawnVehicle(modelName, coords, mods)
     local veh = CreateVehicle(GetHashKey(modelName), coords, true, true)

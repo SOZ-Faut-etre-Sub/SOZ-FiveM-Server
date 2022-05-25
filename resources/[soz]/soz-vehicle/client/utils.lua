@@ -7,7 +7,7 @@ function RequestVehicleModel(modelName)
         return
     end
     RequestModel(model)
-    local retry =  0
+    local retry = 0
     while not HasModelLoaded(model) or retry < 20 do
         retry = retry + 1
         Citizen.Wait(10)
