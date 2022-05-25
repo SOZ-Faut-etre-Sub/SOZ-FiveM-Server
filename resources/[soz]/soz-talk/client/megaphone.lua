@@ -6,6 +6,7 @@ local function toggleMegaphoneAnimation(pState)
     if pState then
         TaskPlayAnim(PlayerPedId(), "anim@random@shop_clothes@watches", "base", 2.0, 3.0, -1, 49, 0, 0, 0, 0)
         megaphoneProp = CreateObject(GetHashKey("prop_megaphone_01"), 1.0, 1.0, 1.0, 1, 1, 0)
+        SetNetworkIdCanMigrate(ObjToNet(megaphoneProp), false)
         AttachEntityToEntity(megaphoneProp, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 60309), 0.10, 0.05, 0.012, 20.0, 110.0, 70.0, 1, 0, 0, 0, 2, 1)
     else
         StopAnimTask(PlayerPedId(), "anim@random@shop_clothes@watches", "base", 1.0)
@@ -18,13 +19,11 @@ local function toggleMegaphoneAnimation(pState)
 end
 
 local function useMegaphone()
-    TriggerServerEvent("voip:server:setPlayerWithMegaphone", true)
-    exports["soz-voip"]:overrideProximityRange(Config.Megaphone.Range, true)
+    exports["soz-voip"]:SetPlayerMegaphoneInUse(true)
 end
 
 local function resetMegaphone()
-    TriggerServerEvent("voip:server:setPlayerWithMegaphone", false)
-    exports["soz-voip"]:clearProximityOverride()
+    exports["soz-voip"]:SetPlayerMegaphoneInUse(false)
 end
 
 local function toggleMegaphone(toggle)

@@ -72,6 +72,7 @@ local function SetNoClip(val)
             TriggerEvent("instructor:add-instruction", CHANGE_SPEED_KEY, "(hold) fast mode", RESSOURCE_NAME);
             TriggerEvent("instructor:add-instruction", NOCLIP_TOGGLE_KEY, "Toggle No-clip", RESSOURCE_NAME);
             SetEntityAlpha(noClippingEntity, 51, 0)
+            exports["soz-voip"]:MutePlayer(true)
             Citizen.CreateThread(function()
                 local clipped = noClippingEntity
                 local pPed = playerPed;
@@ -103,6 +104,7 @@ local function SetNoClip(val)
                 SetEveryoneIgnorePlayer(pPed, false);
                 SetPoliceIgnorePlayer(pPed, false);
                 ResetEntityAlpha(clipped);
+                exports["soz-voip"]:MutePlayer(false)
                 Citizen.Wait(500);
                 if isClippedVeh then
                     while (not IsVehicleOnAllWheels(clipped)) and not isNoClipping do

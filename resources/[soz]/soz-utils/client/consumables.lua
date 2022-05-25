@@ -121,6 +121,24 @@ RegisterNetEvent("consumables:client:UseCardBoard", function()
     TriggerServerEvent("job:server:placeProps", "cardbord", "prop_cardbordbox_03a", 90)
 end)
 
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
+    local ped = PlayerPedId()
+    local parachuteWeapon = GetHashKey("GADGET_PARACHUTE")
+
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == "parachute" then
+            if not HasPedGotWeapon(ped, parachuteWeapon, false) then
+                GiveWeaponToPed(ped, parachuteWeapon, 1, false)
+            end
+            return
+        end
+    end
+
+    if HasPedGotWeapon(ped, parachuteWeapon, false) then
+        RemoveWeaponFromPed(ped, parachuteWeapon)
+    end
+end)
+
 RegisterNetEvent("scuba:client:Toggle", function(scuba)
     PlayerData = QBCore.Functions.GetPlayerData()
 
