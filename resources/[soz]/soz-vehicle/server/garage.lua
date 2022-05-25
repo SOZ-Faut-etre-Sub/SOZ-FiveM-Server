@@ -151,6 +151,24 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     end
 end)
 
+QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, garage)
+    local veh = SpawnVehicle(modelName, coords, mods)
+
+    local res = MySQL.Sync.execute([[
+        UPDATE player_vehicles
+        SET state = ?, garage = ?, parkingtime = 0
+        WHERE plate = ?
+    ]], {VehicleState.Out, garage, mods.plate})
+    if not res == 1 then
+        DespawnVehicle(NetworkGetNetworkIdFromEntity(veh))
+        return
+    end
+
+    TriggerClientEvent("vehiclekeys:client:SetOwner", source, mods.plate)
+
+    cb(veh)
+end)
+
 ---Make player pay parking fee (private, pound)
 ---@param type_ string Garage type: public, private, entreprise, depot
 ---@param vehicle table player_vehicles row representation
@@ -224,21 +242,6 @@ end)
 
 RegisterNetEvent("qb-garage:server:setVehicleDestroy", function(plate)
     MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE plate = ?", {plate})
-end)
-
-RegisterNetEvent("qb-garage:server:updateVehicleState", function(state, plate, garage)
-    MySQL.Async.execute("UPDATE player_vehicles SET state = ?, garage = ? WHERE plate = ?", {state, garage, plate})
-end)
-
-RegisterNetEvent("qb-garage:server:updateVehicleCitizen", function(plate)
-    local src = source
-    local pData = QBCore.Functions.GetPlayer(src)
-    local cid = pData.PlayerData.citizenid
-    MySQL.Async.execute("UPDATE player_vehicles SET license = ?, citizenid = ? WHERE plate = ?", {
-        pData.PlayerData.license,
-        cid,
-        plate,
-    })
 end)
 
 QBCore.Functions.CreateCallback("qb-garage:server:getstock", function(source, cb, indexgarage)

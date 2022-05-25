@@ -110,89 +110,37 @@ end
 RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
     local garageType = GetGarageType(type_)
 
+    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, vehicle.plate, {
+        state = {VehicleState.InGarage, VehicleState.InPound, VehicleState.InEntreprise},
+        garage = indexgarage,
+    })
+    if not veh then
+        return
+    end
+
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage)
     if #emptySlots == 0 then
         exports["soz-hud"]:DrawNotification("Parking encombré, le véhicule ne peut pas être sorti", "warning")
     end
 
-    QBCore.Functions.TriggerCallback("soz-garage:server:TakeOutGarage", function()
-        -- TODO
-    end, type_, vehicle.plate, { garage = indexgarage }, emptySlots)
+    if type_ == "private" or type_ == "depot" then
+        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, veh)
+        if not success then
+            return
+        end
+    end
 
+    RequestVehicleModel(veh.vehicle)
+
+    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlots[math.random(#emptySlots)], json.decode(veh.mods), indexgarage)
+
+    if vehEntity then
+        exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
+    end
 end)
 
-RegisterNetEvent("qb-garages:client:takeOutGarage", function(vehicle, type_, garage, indexgarage)
-    local spawn = false
-
-    if type_ == "depot" then
-        local VehExists = DoesEntityExist(OutsideVehicles[vehicle.plate])
-        if not VehExists then
-            spawn = true
-        else
-            exports["soz-hud"]:DrawNotification(Lang:t("error.not_impound"), "error")
-            spawn = false
-        end
-    else
-        spawn = true
-    end
-
-    if spawn then
-        local garageType = GetGarageType(type_)
-
-        local currentFuel = vehicle.fuel
-        local location
-        local heading
-        local placedispo = 0
-
-        for _, place in pairs(garageType.places) do
-            if place.data.indexGarage == indexgarage then
-                local vehicles2 = GetGamePool("CVehicle")
-                local inside = false
-                for _, vehicle2 in ipairs(vehicles2) do
-                    if place:isPointInside(GetEntityCoords(vehicle2)) then
-                        inside = true
-                    end
-                end
-                if inside == false then
-                    placedispo = placedispo + 1
-                    location = place:getBoundingBoxCenter()
-                    heading = place:getHeading()
-                end
-            end
-        end
-
-        if placedispo == 0 then
-            exports["soz-hud"]:DrawNotification("Déjà une voiture sur un des parking", "primary", 4500)
-
-            return
-        end
-
-        local canTakeOutVehicle = QBCore.Functions.TriggerRpc("qb-garage:server:CanTakeOutVehicle", vehicle.plate)
-
-        if not canTakeOutVehicle then
-            exports["soz-hud"]:DrawNotification("Le véhicule a déjà été sorti.", "error", 4500)
-
-            return
-        end
-
-        local newlocation = vec4(location.x, location.y, location.z, heading)
-
-        QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-            local properties = QBCore.Functions.TriggerRpc("qb-garage:server:GetVehicleProperties", vehicle.plate)
-            if vehicle.plate then
-                OutsideVehicles[vehicle.plate] = veh
-            end
-            QBCore.Functions.SetVehicleProperties(veh, properties)
-            SetVehicleNumberPlateText(veh, vehicle.plate)
-            SetFuel(veh, currentFuel + 0.0)
-            TriggerServerEvent("qb-garage:server:updateVehicleState", VehicleState.Out, vehicle.plate, vehicle.garage)
-            TriggerServerEvent("qb-garage:server:updateVehicleCitizen", vehicle.plate)
-            TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-            SetVehicleEngineOn(veh, true, true)
-        end, newlocation, true)
-
-        exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary", 4500)
-    end
+RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods)
+    SetVehicleProperties(NetToVeh(vehNetId), mods)
 end)
 
 RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
@@ -356,7 +304,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 }),
                 select = function()
                     garageType.submenu:Close()
-                        TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)
+                    TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)
                 end,
             })
         end
