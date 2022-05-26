@@ -110,11 +110,15 @@ end
 RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
     local garageType = GetGarageType(type_)
 
-    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, vehicle.plate,
-                                            {
+    local expectedState = {
         state = {VehicleState.InGarage, VehicleState.InPound, VehicleState.InEntreprise},
         garage = indexgarage,
-    })
+    }
+    if type_ == "entreprise" then
+        expectedState.job = PlayerData.job.id
+    end
+
+    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, vehicle.plate, expectedState)
     if not veh then
         return
     end
@@ -232,7 +236,7 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     end
 
     -- Extra checks against data in DB
-    local expectedState = { state = VehicleState.Out }
+    local expectedState = {state = VehicleState.Out}
     if type_ == "entreprise" then
         expectedState.job = PlayerData.job.id
     end

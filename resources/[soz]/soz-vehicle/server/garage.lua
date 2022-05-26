@@ -63,7 +63,7 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
         -- Remove checks that are not relevent for current vehicle. `citizenid` and `state` always to be checked
         local fieldsToTest = {}
         for field, data in pairs(fields) do
-            if field == "citizenid" or field == "state" or expectedState[field] then
+            if (field == "citizenid" and not type_ == "entreprise") or field == "state" or expectedState[field] then
                 fieldsToTest[field] = data
             end
         end
@@ -181,7 +181,6 @@ end)
 ---@param vehicle table player_vehicles row representation
 QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle)
     local player = QBCore.Functions.GetPlayer(source)
-    local moneyBalance = player.PlayerData.money["money"]
 
     local price = vehicle.depotprice -- Pound
     if type_ == "private" then
@@ -192,8 +191,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
         end
     end
 
-    if moneyBalance >= price then
-        player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_))
+    if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
         cb(true)
     else
         TriggerClientEvent("hud:client:DrawNotification", source, Lang:t("error.not_enough"))
@@ -286,7 +284,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
         data.plate,
     }
 
-    if type == "entreprise" then
+    if type_ == "entreprise" then
         query = query .. " AND job = ?"
         table.insert(args, player.PlayerData.job.id)
     else
