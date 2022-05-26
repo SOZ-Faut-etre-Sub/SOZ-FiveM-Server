@@ -97,10 +97,7 @@ function AdminMenuDynamicMap(menu, permission)
 
     dynamicMapMenu:ClearItems()
 
-    local confirmowner = dynamicMapMenu:AddConfirm({
-        label = "Afficher l'owner des véhicules",
-        value = nil,
-    })
+    local confirmowner = dynamicMapMenu:AddConfirm({label = "Afficher l'owner des véhicules", value = nil})
 
     confirmowner:On("confirm", function()
         DynamicMapOption.VehicleName = true
