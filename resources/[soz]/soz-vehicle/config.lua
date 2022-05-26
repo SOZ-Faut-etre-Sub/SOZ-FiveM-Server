@@ -281,7 +281,7 @@ Garages = {
     },
     ["lsmc"] = {
         label = "LSMC",
-        blipcoord = vector4(316.49, -1478.42, 28.98, 50.09),
+        blipcoord = vector4(412.22, -1416.05, 28.38, 323.72),
         showBlip = false,
         blipName = "LSMC",
         blipNumber = 357,
