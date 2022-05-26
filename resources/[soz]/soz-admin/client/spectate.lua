@@ -13,6 +13,7 @@ RegisterNetEvent("admin:client:spectate", function(targetPed, coords)
         lastSpectateCoord = GetEntityCoords(myPed)
         SetEntityCoords(myPed, coords)
         NetworkSetInSpectatorMode(true, target)
+        exports["soz-voip"]:MutePlayer(true)
     else
         isSpectating = false
         NetworkSetInSpectatorMode(false, target)
@@ -21,5 +22,6 @@ RegisterNetEvent("admin:client:spectate", function(targetPed, coords)
         SetEntityInvincible(myPed, false)
         SetEntityCollision(myPed, true, true);
         lastSpectateCoord = nil
+        exports["soz-voip"]:MutePlayer(false)
     end
 end)
