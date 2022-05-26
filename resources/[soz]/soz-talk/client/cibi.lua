@@ -205,7 +205,7 @@ CreateThread(function()
             else
                 if currentVehicle ~= 0 and not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or
                     PlayerData.metadata["inlaststand"] then
-                    if Entity(currentVehicle).state.hasRadio then
+                    if Entity(currentVehicle).state.hasRadio or not DoesEntityExist(currentVehicle) then
                         vehicleUnregisterHandlers()
                     end
 
