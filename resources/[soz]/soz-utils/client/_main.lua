@@ -8,3 +8,11 @@ end)
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        InvalidateIdleCam()
+        InvalidateVehicleIdleCam()
+        Wait(1000)
+    end
+end)
