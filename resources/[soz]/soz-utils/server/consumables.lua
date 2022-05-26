@@ -89,3 +89,17 @@ end)
 QBCore.Functions.CreateUseableItem("cardbord", function(source)
     TriggerClientEvent("consumables:client:UseCardBoard", source)
 end)
+
+QBCore.Functions.CreateUseableItem("diving_gear", function(source)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    local scuba = Player.PlayerData.metadata["scuba"]
+    if scuba == nil then
+        scuba = false
+    end
+
+    scuba = not scuba
+    Player.Functions.SetMetaData("scuba", scuba)
+
+    TriggerClientEvent("scuba:client:Toggle", source, scuba)
+end)
