@@ -8,6 +8,7 @@ export const MockMessageConversations: MessageConversation[] = [
         phoneNumber: '215-8139',
         unread: 0,
         display: 'Taso',
+        updatedAt: 1598420000000,
     },
     {
         conversation_id: '4444+7777',
@@ -15,6 +16,7 @@ export const MockMessageConversations: MessageConversation[] = [
         phoneNumber: '603-275-8373',
         unread: 3,
         display: 'Chip',
+        updatedAt: 1598400000000,
     },
 ];
 

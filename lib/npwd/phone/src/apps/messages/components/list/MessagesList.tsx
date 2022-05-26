@@ -6,6 +6,12 @@ import {useFilteredConversationsValue, useFilterValueState} from '../../hooks/st
 import {ThemeContext} from "../../../../styles/themeProvider";
 import {useContactActions} from "../../../contacts/hooks/useContactActions";
 import {useFilteredContacts} from "../../../contacts/hooks/state";
+import cn from 'classnames';
+import dayjs from 'dayjs';
+import relativeTime from "dayjs/plugin/relativeTime";
+import 'dayjs/locale/fr'
+
+dayjs.extend(relativeTime)
 
 const MessagesList = (): any => {
     const [t] = useTranslation();
@@ -31,19 +37,30 @@ const MessagesList = (): any => {
             />
             <nav className="h-[740px] pb-10 my-2 overflow-y-auto" aria-label="Directory">
                 <ul className={`relative divide-y ${theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'}`}>
-                    {filteredConversations.map((conversation) => (
+                    {Array.from(filteredConversations).sort((a, b) => b.updatedAt - a.updatedAt).map((conversation) => (
                         <li key={conversation.conversation_id} className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} w-full cursor-pointer`} onClick={() => goToConversation(conversation)}>
                             <div className={`relative px-6 py-2 flex items-center space-x-3 ${theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-200'}`}>
-                                <div className="flex-shrink-0">
+                                <div className="flex-shrink-0 inline-block relative">
                                     {conversation.avatar ? (
                                         <img className={`h-10 w-10 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'} rounded-full`} src={conversation.avatar} alt=""/>
                                     ) : (
                                         <div className={`h-10 w-10 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'} rounded-full`}/>
                                     )}
+                                    {conversation.unread > 0 && <span className={cn('absolute -top-1 -right-1 block h-4 px-1 w-auto rounded-full ring-2 bg-red-400 text-xs text-white', {
+                                        'ring-gray-700': theme === 'dark',
+                                        'ring-gray-100': theme !== 'dark'
+                                    })}>{conversation.unread}</span>}
                                 </div>
                                 <div className="flex-1 min-w-0 cursor-pointer">
                                     <span className="absolute inset-0" aria-hidden="true"/>
-                                    <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>{getDisplayByNumber(conversation.phoneNumber)}</p>
+                                    <p className={`text-left text-sm font-medium truncate ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>
+                                        {getDisplayByNumber(conversation.phoneNumber)}
+                                    </p>
+                                </div>
+                                <div className="flex-shrink-0">
+                                    <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>
+                                        {dayjs(conversation.updatedAt).locale('fr').fromNow(true)}
+                                    </p>
                                 </div>
                             </div>
                         </li>
