@@ -20,6 +20,15 @@ function CallStateManager:getCallByPhoneNumber(phoneNumber)
     return nil
 end
 
+function CallStateManager:getCallBySourceOrTarget(sourceOrTarget)
+    for callId, consumers in pairs(CallList) do
+        if consumers.callerId == sourceOrTarget or consumers.receiverId == sourceOrTarget then
+            return CallList[callId]
+        end
+    end
+    return nil
+end
+
 function CallStateManager:createCall(emitter, receiver)
     local source = QBCore.Functions.GetPlayerByPhone(emitter)
     local target = QBCore.Functions.GetPlayerByPhone(receiver)
