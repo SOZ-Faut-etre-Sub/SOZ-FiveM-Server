@@ -246,11 +246,10 @@ local function GetVehicleData(vehNetId, extraData)
 
     local data = {
         plate = GetVehicleNumberPlateText(entityId),
-        bodyDamage = math.ceil(GetVehicleBodyHealth(entityId)) or 500,
         engineDamage = math.ceil(GetVehicleEngineHealth(entityId)) or 500,
     }
 
-    local extra = {fuel = 10, properties = json.encode({})}
+    local extra = {fuel = 10, bodyDamage = 1000, properties = json.encode({})}
     for attr, default in pairs(extra) do
         data[attr] = extraData[attr] or default
     end

@@ -269,6 +269,9 @@ local function GetVehicleInGarage(type_, indexgarage)
         return
     end
 
+    -- Set body damage from client, as it always return 1000 on server
+    vehExtraData.bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
+
     SetEntityAsMissionEntity(veh, true, true)
 
     QBCore.Functions.TriggerCallback("soz-garage:server:ParkVehicleInGarage", function(success)
