@@ -54,7 +54,7 @@ local function DisplayVehicleName()
                         textowner = " | ~g~OwnerNet: "
                     end
                     DrawText3Ds(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z + 1,
-                                GetDisplayNameFromVehicleModel(GetEntityModel(vehiclehandle)) .. " | VehiculeNet: "..
+                                GetDisplayNameFromVehicleModel(GetEntityModel(vehiclehandle)) .. " | VehiculeNet: " ..
                                     NetworkGetNetworkIdFromEntity(vehiclehandle) .. textowner .. GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)))
                 end
             end
