@@ -55,6 +55,13 @@ CreateThread(function()
         minZ = 32.3,
         maxZ = 32.6,
     }, {options = callSociety("555-MTP"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:lsmc", vector3(358.71, -1415.06, 32.51), 0.6, 0.4, {
+        name = "bell:LSMC",
+        heading = 0,
+        minZ = 32.41,
+        maxZ = 32.61,
+    }, {options = callSociety("555-LSMC"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)
