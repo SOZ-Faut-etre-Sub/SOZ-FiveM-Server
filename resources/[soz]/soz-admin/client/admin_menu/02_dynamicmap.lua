@@ -1,4 +1,4 @@
-local dynamicMapMenu, DynamicMapOption = nil, {PlayerName = false, BlipsOnMap = false, mpTags = {}, blips = {}}
+local dynamicMapMenu, DynamicMapOption = nil, {VehicleName = false, PlayerName = false, BlipsOnMap = false, mpTags = {}, blips = {}}
 
 --- Functions
 local function DisplayPlayerName()
@@ -17,6 +17,41 @@ local function DisplayPlayerName()
             for _, v in pairs(DynamicMapOption.mpTags) do
                 RemoveMpGamerTag(v)
             end
+        end
+    end)
+end
+
+function DrawText3Ds(x, y, z, text)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+
+    if onScreen then
+        SetTextScale(0.35, 0.35)
+        SetTextFont(4)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 215)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        AddTextComponentString(text)
+        DrawText(_x, _y)
+    end
+end
+local function DisplayVehicleName()
+    CreateThread(function()
+        while DynamicMapOption.VehicleName do
+            local vehicles = GetGamePool("CVehicle")
+            for k, vehiclehandle in pairs(vehicles) do
+                local dist = GetDistanceBetweenCoords(GetEntityCoords(vehiclehandle), GetEntityCoords(PlayerPedId()), false)
+                if dist < 50 then
+                    local vehicleCoords = GetEntityCoords(vehiclehandle)
+                    local textowner = " | OwnerNet: "
+                    if GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)) == GetPlayerServerId(PlayerId()) then
+                        textowner = " | ~g~OwnerNet: "
+                    end
+                    DrawText3Ds(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z + 1, GetDisplayNameFromVehicleModel(GetEntityModel(vehiclehandle)) .. " | VehiculeNet: "..
+                                NetworkGetNetworkIdFromEntity(vehiclehandle) .. textowner .. GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)))
+                end
+            end
+            Wait(0)
         end
     end)
 end
@@ -54,6 +89,15 @@ function AdminMenuDynamicMap(menu, permission)
     end
 
     dynamicMapMenu:ClearItems()
+
+    dynamicMapMenu:AddCheckbox({
+        label = "Afficher l'owner des véhicules",
+        value = nil,
+        change = function(_, checked)
+            DynamicMapOption.VehicleName = checked
+            DisplayVehicleName()
+        end,
+    })
 
     dynamicMapMenu:AddCheckbox({
         label = "Afficher le nom des joueurs",
