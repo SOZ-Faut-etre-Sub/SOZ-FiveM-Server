@@ -18,6 +18,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
         display: conversation.display,
         conversation_id: conversation.conversation_id,
         user_identifier: identifier,
+        updatedAt: conversation.updatedAt,
       };
     }
 
@@ -123,6 +124,7 @@ export async function createMessageGroupsFromPhoneNumber(
     identifiers: [sourcePhoneNumber, tgtPhoneNumber],
     phoneNumber: tgtPhoneNumber,
     participant: tgtIdentifier,
+    updatedAt: new Date().getTime(),
   };
 }
 

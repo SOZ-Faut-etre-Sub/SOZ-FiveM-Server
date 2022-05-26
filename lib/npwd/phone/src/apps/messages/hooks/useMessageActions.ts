@@ -1,7 +1,13 @@
-import {messageState, useSetMessageConversations, useSetMessages} from './state';
+import {
+    messageState,
+    useSetMessageConversations,
+    useSetMessages
+} from './state';
 import {useCallback} from 'react';
-import {Message, MessageConversation} from '@typings/messages';
+import {Message, MessageConversation, MessageEvents} from '@typings/messages';
 import {useRecoilValueLoadable} from 'recoil';
+import {fetchNui} from "@utils/fetchNui";
+import {ServerPromiseResp} from "@typings/common";
 
 interface MessageActionProps {
     updateLocalConversations: (conversation: MessageConversation) => void;
@@ -53,6 +59,10 @@ export const useMessageActions = (): MessageActionProps => {
                     id: messageDto.id,
                 },
             ]);
+
+            fetchNui<ServerPromiseResp<MessageConversation[]>>(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, undefined).then(resp => {
+                setMessageConversation(resp.data);
+            });
         },
         [messageLoading, setMessages],
     );
