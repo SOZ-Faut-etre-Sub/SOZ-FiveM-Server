@@ -96,7 +96,7 @@ function AdminMenuDynamicMap(menu, permission)
     end
 
     dynamicMapMenu:ClearItems()
-    
+
     local confirmowner = dynamicMapMenu:AddConfirm({
         label = "Afficher l'owner des véhicules",
         value = nil,
