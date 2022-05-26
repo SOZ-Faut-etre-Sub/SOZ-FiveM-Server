@@ -94,6 +94,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                 updateLocalConversations({
                     phoneNumber: resp.data.phoneNumber,
                     conversation_id: resp.data.conversation_id,
+                    updatedAt: resp.data.updatedAt,
                     display,
                     unread: 0,
                     avatar,

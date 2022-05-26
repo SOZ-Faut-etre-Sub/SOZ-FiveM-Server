@@ -16,6 +16,7 @@ export interface MessageConversation {
   display: string;
   phoneNumber: string;
   unread: number;
+  updatedAt: number;
 }
 
 export interface FormattedMessageConversation {
@@ -33,7 +34,7 @@ export interface UnformattedMessageConversation {
   phone_number: string;
   avatar?: string;
   display?: string;
-  updatedAt?: string;
+  updatedAt: number;
   unread: number;
 }
 
@@ -62,6 +63,7 @@ export interface CreateMessageGroupResult {
   mine?: boolean;
   participant: string;
   identifiers: string[];
+  updatedAt: number;
   doesExist: UnformattedMessageConversation | null;
 }
 
@@ -78,6 +80,7 @@ export interface SetMessageRead {
 export interface MessageConversationResponse {
   conversation_id: string;
   phoneNumber: string;
+  updatedAt: number;
 }
 
 export enum MessageEvents {

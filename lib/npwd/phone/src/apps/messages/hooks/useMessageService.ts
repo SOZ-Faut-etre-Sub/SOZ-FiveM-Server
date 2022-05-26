@@ -38,6 +38,7 @@ export const useMessagesService = () => {
             updateLocalConversations({
                 phoneNumber: conversation.phoneNumber,
                 conversation_id: conversation.conversation_id,
+                updatedAt: conversation.updatedAt,
                 avatar,
                 unread: 0,
                 display,

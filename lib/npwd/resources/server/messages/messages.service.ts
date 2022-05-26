@@ -53,7 +53,7 @@ class _MessagesService {
             if (result.doesExist) {
                 return resp({
                     status: 'silence',
-                    data: {conversation_id: result.conversationId, phoneNumber: result.phoneNumber},
+                    data: {conversation_id: result.conversationId, phoneNumber: result.phoneNumber, updatedAt: result.updatedAt},
                 });
             }
 
@@ -73,7 +73,7 @@ class _MessagesService {
 
             resp({
                 status: 'ok',
-                data: {conversation_id: result.conversationId, phoneNumber: result.phoneNumber},
+                data: {conversation_id: result.conversationId, phoneNumber: result.phoneNumber, updatedAt: result.updatedAt},
             });
         } catch (e) {
             resp({status: 'error', errorMsg: 'DB_ERROR'});
