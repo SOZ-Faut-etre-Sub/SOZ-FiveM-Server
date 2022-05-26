@@ -144,7 +144,13 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     local mods = json.decode(veh.mods)
     mods.plate = vehicle.plate
 
-    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlots[math.random(#emptySlots)], mods, veh.fuel)
+    local emptySlot = emptySlots[1]
+
+    if #emptySlots > 1 then
+        emptySlot = emptySlots[math.random(#emptySlots)]
+    end
+
+    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel)
 
     if vehEntity then
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
