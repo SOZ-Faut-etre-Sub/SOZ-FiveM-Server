@@ -81,7 +81,10 @@ end
 ---@param veh number Vehicle entity
 ---@return table
 local function GetVehicleClientData(veh)
-    return {fuel = GetVehicleFuelLevel(veh), properties = json.encode(QBCore.Functions.GetVehicleProperties(veh))}
+    return {
+        fuel = exports["soz-vehicle"]:GetFuel(veh),
+        properties = json.encode(QBCore.Functions.GetVehicleProperties(veh)),
+    }
 end
 
 local function round(num, numDecimalPlaces)
@@ -137,22 +140,26 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
 
     RequestVehicleModel(veh.vehicle)
 
-    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlots[math.random(#emptySlots)], json.decode(veh.mods))
+    -- Use vehicle plate instead of mods plate
+    local mods = json.decode(veh.mods)
+    mods.plate = vehicle.plate
+
+    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlots[math.random(#emptySlots)], mods, veh.fuel)
 
     if vehEntity then
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
     end
 end)
 
-RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods)
-    SetVehicleProperties(NetToVeh(vehNetId), mods)
+RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, fuel)
+    SetVehicleProperties(NetToVeh(vehNetId), mods, fuel)
 end)
 
 RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
     local plate = QBCore.Functions.GetPlate(entity)
     local bodyDamage = math.ceil(GetVehicleBodyHealth(entity))
     local engineDamage = math.ceil(GetVehicleEngineHealth(entity))
-    local totalFuel = GetVehicleFuelLevel(entity)
+    local totalFuel = exports["soz-vehicle"]:GetFuel(entity)
     -- EjectAnyPassager(entity)
     TriggerServerEvent("qb-garage:server:updateVehicle", 2, totalFuel, engineDamage, bodyDamage, plate, "fourriere", "depot")
     if plate then

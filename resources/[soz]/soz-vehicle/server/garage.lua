@@ -158,8 +158,8 @@ end)
 ---@param modelName string
 ---@param coords vector4 Spawn location
 ---@param mods table Vehicle properties
-QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods)
-    local veh = SpawnVehicle(modelName, coords, mods)
+QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, fuel)
+    local veh = SpawnVehicle(modelName, coords, mods, fuel)
 
     local res = MySQL.Sync.execute([[
         UPDATE player_vehicles
