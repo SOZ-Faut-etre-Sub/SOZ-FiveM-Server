@@ -96,15 +96,21 @@ function AdminMenuDynamicMap(menu, permission)
     end
 
     dynamicMapMenu:ClearItems()
-
-    dynamicMapMenu:AddCheckbox({
+    
+    local confirmowner = dynamicMapMenu:AddConfirm({
         label = "Afficher l'owner des véhicules",
         value = nil,
-        change = function(_, checked)
-            DynamicMapOption.VehicleName = checked
-            DisplayVehicleName()
-        end,
     })
+
+    confirmowner:On("confirm", function()
+        DynamicMapOption.VehicleName = true
+        DisplayVehicleName()
+    end)
+
+    confirmowner:On("deny", function()
+        DynamicMapOption.VehicleName = false
+        DisplayVehicleName()
+    end)
 
     dynamicMapMenu:AddCheckbox({
         label = "Afficher le nom des joueurs",
