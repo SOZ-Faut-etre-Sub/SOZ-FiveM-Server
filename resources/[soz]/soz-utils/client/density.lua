@@ -6,6 +6,7 @@ CreateThread(function()
         SetVehicleDensityMultiplierThisFrame(density["vehicle"])
         SetRandomVehicleDensityMultiplierThisFrame(density["multiplier"])
         SetPedDensityMultiplierThisFrame(density["peds"])
+        SetAmbientPedRangeMultiplierThisFrame(density["peds"])
         SetScenarioPedDensityMultiplierThisFrame(density["scenario"], density["scenario"]) -- Walking NPC Density
         Wait(0)
     end

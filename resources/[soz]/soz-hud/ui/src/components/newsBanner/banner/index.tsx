@@ -17,7 +17,7 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
     }, [isClosing, onDelete]);
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => setIsClosing(true), 10000);
+        const timeoutId = setTimeout(() => setIsClosing(true), 15000);
 
         return () => clearTimeout(timeoutId)
     }, []);
