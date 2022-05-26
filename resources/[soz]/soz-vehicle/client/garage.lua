@@ -232,9 +232,11 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     end
 
     -- Extra checks against data in DB
-    if not QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, plate, {
-        state = VehicleState.Out,
-    }) then
+    local expectedState = { state = VehicleState.Out }
+    if type_ == "entreprise" then
+        expectedState.job = PlayerData.job.id
+    end
+    if not QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, plate, expectedState) then
         return false
     end
 
