@@ -12,6 +12,7 @@ export const usePhoneService = () => {
   const { addAlert } = useSnackbar();
   const history = useHistory();
 
+  const setAvailability = useSetRecoilState(phoneState.availability);
   const setVisibility = useSetRecoilState(phoneState.visibility);
   const setResourceConfig = useSetRecoilState(phoneState.resourceConfig);
   const setPhoneTime = useSetRecoilState(phoneState.phoneTime);
@@ -29,6 +30,7 @@ export const usePhoneService = () => {
   );
 
   useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);
+  useNuiEvent('PHONE', PhoneEvents.SET_AVAILABILITY, setAvailability);
   useNuiEvent('PHONE', PhoneEvents.SET_VISIBILITY, setVisibility);
   useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, setResourceConfig);
   useNuiEvent('PHONE', PhoneEvents.SET_TIME, setPhoneTime);

@@ -119,6 +119,7 @@ importers:
       luaparse: ^0.3.1
       md5: ^2.3.0
       mysql2: ^2.3.3
+      qbcore.js: ^1.5.1
       remove-files-webpack-plugin: ^1.4.3
       ts-jest: ^26.4.1
       ts-loader: ^8.0.2
@@ -136,6 +137,7 @@ importers:
       luaparse: 0.3.1
       md5: 2.3.0
       mysql2: 2.3.3
+      qbcore.js: 1.5.1
       uuid: 8.3.2
       winston: 3.6.0
     devDependencies:
@@ -10784,6 +10786,10 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     dev: false
 
+  /qbcore.js/1.5.1:
+    resolution: {integrity: sha512-CrF1R5ylx3HE7ueGL2R+ZiZ5NoKHwziYyqD/p5X8fbpbUK/87Mt8chyCk7Bqm0xceENIWC8V7LW8nHLVeAgtXA==}
+    dev: false
+
   /qs/6.10.3:
     resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}
     engines: {node: '>=0.6'}
@@ -12434,7 +12440,7 @@ packages:
       serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.11.0
-      webpack: 5.69.1
+      webpack: 5.69.1_webpack-cli@3.3.12
 
   /terser/4.8.0:
     resolution: {integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==}

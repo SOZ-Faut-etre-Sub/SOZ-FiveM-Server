@@ -2,6 +2,10 @@ import { atom } from 'recoil';
 import { ResourceConfig } from '@typings/config';
 
 export const phoneState = {
+  availability: atom<boolean>({
+    key: 'phoneAvailability',
+    default: false,
+  }),
   visibility: atom<boolean>({
     key: 'phoneVisibility',
     default: false,
