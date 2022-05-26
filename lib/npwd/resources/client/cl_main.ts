@@ -1,5 +1,6 @@
 import { sendMessage } from '../utils/messages';
 import { PhoneEvents } from '../../typings/phone';
+import { PlayerData } from 'qbcore.js';
 import {ClUtils, config} from './client';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
@@ -147,11 +148,22 @@ onNet(PhoneEvents.SEND_CREDENTIALS, (number: string, societyNumber: string|null)
 on('onResourceStop', (resource: string) => {
   if (resource === GetCurrentResourceName()) {
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, false);
     SetNuiFocus(false, false);
     animationService.endPhoneCall();
     animationService.closePhone();
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
   }
+});
+
+onNet('QBCore:Client:OnPlayerLoaded', async () => {
+    const canAccess = await checkExportCanOpen();
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
+});
+
+onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
+    const hasItem = playerData.items.find(item => item.name === 'phone')
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, !!hasItem);
 });
 
 // DO NOT CHANGE THIS EITHER, PLEASE - CHIP
