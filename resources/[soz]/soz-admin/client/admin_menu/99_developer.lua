@@ -99,6 +99,5 @@ function AdminMenuDeveloper(menu, permission)
         icon = "🛠",
         label = "Outils pour développeur",
         value = developerMenu,
-        disabled = permission ~= "admin",
     })
 end
