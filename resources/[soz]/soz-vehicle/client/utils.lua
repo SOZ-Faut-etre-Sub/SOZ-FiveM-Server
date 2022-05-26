@@ -19,10 +19,13 @@ exports("RequestVehicleModel", RequestVehicleModel)
 ---Set vehicle health and modifications
 ---@param veh number Entity ID
 ---@param mods table
-function SetVehicleProperties(veh, mods)
+function SetVehicleProperties(veh, mods, fuel)
     SetVehicleNumberPlateText(veh, mods.plate)
+    mods.fuelLevel = fuel
+
     QBCore.Functions.SetVehicleProperties(veh, mods)
-    SetFuel(veh, mods.fuelLevel)
+
+    exports["soz-vehicle"]:SetFuel(veh, fuel)
     SetEntityAsMissionEntity(veh, true, true)
 end
 exports("SetVehicleProperties", SetVehicleProperties)

@@ -6,7 +6,7 @@ end
 exports("DespawnVehicle", DespawnVehicle)
 
 --- Make sure model is loaded on client
-function SpawnVehicle(modelName, coords, mods)
+function SpawnVehicle(modelName, coords, mods, fuel)
     local veh = CreateVehicle(GetHashKey(modelName), coords, true, true)
     while not DoesEntityExist(veh) do
         Citizen.Wait(0)
@@ -17,7 +17,7 @@ function SpawnVehicle(modelName, coords, mods)
     -- Send event to entity owner (even if this is not the player that is spawning vehicle)
     local owner = NetworkGetEntityOwner(veh)
     local vehNetId = NetworkGetNetworkIdFromEntity(veh)
-    TriggerClientEvent("soz-garage:client:SetVehicleProperties", owner, vehNetId, mods)
+    TriggerClientEvent("soz-garage:client:SetVehicleProperties", owner, vehNetId, mods, fuel)
 
     return veh
 end
