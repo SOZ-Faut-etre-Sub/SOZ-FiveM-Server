@@ -13,7 +13,7 @@ end
 
 function CallStateManager:getCallByPhoneNumber(phoneNumber)
     for callId, consumers in pairs(CallList) do
-        if consumers.emitterPhone == phoneNumber or consumers.receiverPhone then
+        if consumers.emitterPhone == phoneNumber or consumers.receiverPhone == phoneNumber then
             return CallList[callId]
         end
     end

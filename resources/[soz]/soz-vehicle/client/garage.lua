@@ -267,8 +267,10 @@ end
 ---Logic that trigger update in DB and car entity to despawn
 ---@param type_ string Garage type: public, private, entreprise, depot
 ---@param indexgarage string Current garage
-local function GetVehicleInGarage(type_, indexgarage)
-    local veh = GetPlayersLastVehicle()
+local function GetVehicleInGarage(type_, indexgarage, veh)
+    if not veh then
+        veh = GetPlayersLastVehicle()
+    end
     local vehExtraData = GetVehicleClientData(veh)
 
     if not CanVehicleBeParkedInGarage(veh, indexgarage, type_, QBCore.Functions.GetPlate(veh)) then
@@ -398,7 +400,7 @@ local function GarageMainMenu(menu, type_, garage, indexgarage)
                 end
 
                 garageType.menu:Close()
-                GetVehicleInGarage(type_, indexgarage)
+                GetVehicleInGarage(type_, indexgarage, vehicle)
             end,
         })
     end
