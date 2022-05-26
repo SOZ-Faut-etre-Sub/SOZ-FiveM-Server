@@ -1,4 +1,10 @@
-local dynamicMapMenu, DynamicMapOption = nil, {VehicleName = false, PlayerName = false, BlipsOnMap = false, mpTags = {}, blips = {}}
+local dynamicMapMenu, DynamicMapOption = nil, {
+    VehicleName = false,
+    PlayerName = false,
+    BlipsOnMap = false,
+    mpTags = {},
+    blips = {},
+}
 
 --- Functions
 local function DisplayPlayerName()
@@ -47,8 +53,9 @@ local function DisplayVehicleName()
                     if GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)) == GetPlayerServerId(PlayerId()) then
                         textowner = " | ~g~OwnerNet: "
                     end
-                    DrawText3Ds(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z + 1, GetDisplayNameFromVehicleModel(GetEntityModel(vehiclehandle)) .. " | VehiculeNet: "..
-                                NetworkGetNetworkIdFromEntity(vehiclehandle) .. textowner .. GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)))
+                    DrawText3Ds(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z + 1,
+                                GetDisplayNameFromVehicleModel(GetEntityModel(vehiclehandle)) .. " | VehiculeNet: "..
+                                    NetworkGetNetworkIdFromEntity(vehiclehandle) .. textowner .. GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)))
                 end
             end
             Wait(0)
