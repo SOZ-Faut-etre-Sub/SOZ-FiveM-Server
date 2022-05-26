@@ -65,9 +65,19 @@ function RadioStateManager:removeConsumerFromAllChannels(source)
     source = tonumber(source)
 
     for channel, _ in pairs(RadioState) do
-        self:removeConsumer(source, channel)
+        self:removeConsumer(source, nil, channel)
     end
 end
+
+RegisterCommand("voip-debug-store", function(source, args, rawCommand)
+    for channel, _ in pairs(RadioState) do
+        local consumers = {}
+        for consumer, _ in pairs(RadioState[channel]) do
+            consumers[#consumers + 1] = tostring(consumer)
+        end
+        console.info("[Radio] Channel %s: %s", channel, json.encode(consumers))
+    end
+end, false)
 
 --[[
 
