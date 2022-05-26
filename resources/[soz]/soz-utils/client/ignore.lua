@@ -38,8 +38,8 @@ CreateThread(function() -- all these should only need to be called once
 end)
 
 CreateThread(function()
-    SetPedPopulationBudget(3)
-    SetVehiclePopulationBudget(3)
+    SetPedPopulationBudget(3.0)
+    SetVehiclePopulationBudget(3.0)
     SetAllVehicleGeneratorsActive()
 end)
 
