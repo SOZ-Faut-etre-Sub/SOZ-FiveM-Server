@@ -39,14 +39,15 @@ const ContainerInventory = () => {
                 item: event.item.dataset.item,
             })
         }).then(res => res.json()).then(transfert => {
-            if (transfert.sourceInventory.id == transfert.targetInventory.id) return
+            if (transfert.playerInventory === undefined || transfert.targetInventory === undefined) return;
+            if (transfert.sourceInventory.id == transfert.targetInventory.id) return;
 
-            let sourceInventory = transfert.sourceInventory
-            let targetInventory = transfert.targetInventory
+            let sourceInventory = transfert.sourceInventory;
+            let targetInventory = transfert.targetInventory;
 
             if (transfert.targetInventory.type === 'player') {
-                sourceInventory = transfert.targetInventory
-                targetInventory = transfert.sourceInventory
+                sourceInventory = transfert.targetInventory;
+                targetInventory = transfert.sourceInventory;
             }
 
             setPlayerInventory(sourceInventory);
@@ -58,7 +59,7 @@ const ContainerInventory = () => {
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === "openInventory") {
-            if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return
+            if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return;
 
             try {
                 setPlayerInventory(event.data.playerInventory);
@@ -92,7 +93,7 @@ const ContainerInventory = () => {
                 closeNUI(() => {
                     setDisplay(false);
                 }, {
-                    target: targetInventory.id,
+                    target: targetInventory.id ?? '',
                 })
             }
         }
@@ -106,7 +107,7 @@ const ContainerInventory = () => {
                     'Content-Type': 'application/json; charset=UTF-8',
                 },
                 body: JSON.stringify({
-                    target: targetInventory.id,
+                    target: targetInventory.id ?? '',
                 })
             }).then(() => {
                 setDisplay(false);
@@ -115,12 +116,12 @@ const ContainerInventory = () => {
     }, [targetInventory, setDisplay])
 
     useEffect(() => {
-        window.addEventListener('message', onMessageReceived)
-        window.addEventListener('keydown', onKeyDownReceived)
+        window.addEventListener('message', onMessageReceived);
+        window.addEventListener('keydown', onKeyDownReceived);
 
         return () => {
-            window.removeEventListener('message', onMessageReceived)
-            window.removeEventListener('keydown', onKeyDownReceived)
+            window.removeEventListener('message', onMessageReceived);
+            window.removeEventListener('keydown', onKeyDownReceived);
         }
     }, [onMessageReceived, onKeyDownReceived]);
 
