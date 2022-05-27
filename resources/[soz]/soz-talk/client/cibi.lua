@@ -31,13 +31,6 @@ local function handleUpdateRadio(data, isPrimary)
     end
 end
 
-local function vehicleUnregisterHandlers()
-    for _, handler in ipairs(stateBagHandlers) do
-        RemoveStateBagChangeHandler(handler)
-    end
-    exports["soz-voip"]:SetRadioLongRangePowerState(false)
-end
-
 local function vehicleRegisterHandlers()
     local playerPed = PlayerPedId()
     local state = Entity(currentVehicle).state
@@ -96,6 +89,15 @@ local function toggleRadio(toggle)
         SendNUIMessage({type = "cibi", action = "close"})
         TriggerEvent("talk:action:enable")
     end
+end
+
+local function vehicleUnregisterHandlers()
+    for _, handler in ipairs(stateBagHandlers) do
+        RemoveStateBagChangeHandler(handler)
+    end
+    exports["soz-voip"]:SetRadioLongRangePowerState(false)
+    SendNUIMessage({type = "cibi", action = "reset"})
+    toggleRadio(false)
 end
 
 --- NUI
