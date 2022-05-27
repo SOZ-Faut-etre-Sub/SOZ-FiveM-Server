@@ -5,7 +5,7 @@ local HorodateurActive = false
 local lastLocation = nil
 local TotalDistance = 0
 
-HorodateurData = {Tarif = 1.6, TarifActuelle = 0, Distance = 0}
+HorodateurData = {Tarif = 4.6, TarifActuelle = 0, Distance = 0}
 
 NpcData = {
     Active = false,

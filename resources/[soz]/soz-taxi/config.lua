@@ -8,7 +8,7 @@ Config.AllowedVehicleModel = {
 
 Config.vehicule_position = {x = 897.24, y = -152.67, z = 76.56, w = 325.62}
 
-Config.Horodateur = {["defaultPrice"] = 1.60}
+Config.Horodateur = {["defaultPrice"] = 4.6}
 
 Config.Cloakroom = {
     ["taxi"] = {
