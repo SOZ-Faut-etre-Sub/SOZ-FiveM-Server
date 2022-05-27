@@ -6,18 +6,6 @@ local lockpickedPlate = nil
 local usingAdvanced
 
 -- Functions
-
-local function HasVehicleKey(plate)
-    QBCore.Functions.TriggerCallback("vehiclekeys:server:CheckHasKey", function(result)
-        if result then
-            HasVehicleKey = true
-        else
-            HasVehicleKey = false
-        end
-    end, plate)
-    return HasVehicleKey
-end
-
 local function LockVehicle()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
@@ -208,13 +196,6 @@ RegisterNetEvent("vehiclekeys:client:SetOwner", function(plate)
         SetVehicleEngineOn(GetVehiclePedIsIn(PlayerPedId(), true), true, false, true)
     end
     HasVehicleKey = true
-end)
-
-RegisterNetEvent("vehiclekeys:client:ToggleEngine", function(EngineOn)
-    local veh = GetVehiclePedIsIn(PlayerPedId(), true)
-    if HasVehicleKey then
-        SetVehicleEngineOn(veh, EngineOn, false, true)
-    end
 end)
 
 -- command

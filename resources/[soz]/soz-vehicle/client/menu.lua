@@ -1,14 +1,11 @@
 local vehicleMenu = MenuV:CreateMenu(nil, "", "menu_vehicle", "soz", "vehicle")
 local doorName = {"Conducteur avant", "Passager avant", "Conducteur arrière", "Passager arrière", "Capot", "Coffre"}
 
-local function EngineMenu()
-    local engine = vehicleMenu:AddSlider({
-        label = "Contact du moteur",
-        value = nil,
-        values = {{label = "Allumé", value = true}, {label = "Éteint", value = false}},
-    })
-    engine:On("select", function(item, value)
-        TriggerEvent("vehiclekeys:client:ToggleEngine", value)
+local function EngineMenu(vehicle)
+    local engine = vehicleMenu:AddCheckbox({label = "Moteur allumé", value = GetIsVehicleEngineRunning(vehicle)})
+
+    engine:On("change", function(menu, value)
+        SetVehicleEngineOn(vehicle, value, false, true)
     end)
 end
 
@@ -75,7 +72,7 @@ local function GenerateMenu()
         vehicleMenu:ClearItems()
 
         if GetPedInVehicleSeat(vehicle, -1) == player then
-            EngineMenu()
+            EngineMenu(vehicle)
             CibiMenu(vehicle)
             SpeedLimiterMenu(vehicle)
             DoorManagementMenu(vehicle)
