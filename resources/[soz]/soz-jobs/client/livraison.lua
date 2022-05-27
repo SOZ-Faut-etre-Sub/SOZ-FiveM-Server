@@ -154,7 +154,7 @@ AddEventHandler("jobs:livraison:start", function()
     if JobCounter == 0 then
         TriggerServerEvent("job:anounce", "Livrez la fougère")
     else
-        TriggerServerEvent("job:anounce", "Livrez la prochainne fougère")
+        TriggerServerEvent("job:anounce", "Livrez la prochaine fougère")
     end
     local coords = random_coord()
     createblip("livraison", "Livraison", 761, coords)
