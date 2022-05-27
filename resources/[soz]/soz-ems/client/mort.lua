@@ -146,8 +146,8 @@ CreateThread(function()
                     TaskPlayAnim(ped, "dead", "dead_a", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
                 end
                 if isInHospitalBed then
-                    DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour vous levez ou attender un médecin", 255, 255, 255,
-                            255)
+                    DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ Maintenir ~r~[E] (" .. hold .. " sec.)~w~ pour vous relever, ou alors attendez un médecin.", 255,
+                            255, 255, 255)
                 end
             end
 

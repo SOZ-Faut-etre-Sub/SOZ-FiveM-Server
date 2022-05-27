@@ -93,7 +93,7 @@ AddEventHandler("jobs:religion:fix", function(ped)
         FreezeEntityPosition(ped, false)
         if PrayersCount >= PrayersMax then
             exports["soz-hud"]:DrawNotification(string.format("Vous avez prêché %d infos chat dans cette zone", PrayersCount), "warning")
-            exports["soz-hud"]:DrawNotification("Retournez voir le prête", "info")
+            exports["soz-hud"]:DrawNotification("Retournez voir le prêtre", "info")
             exports["qb-target"]:RemoveZone("religion_zone")
             destroyblip(job_blip)
             OnJob = false
