@@ -23,7 +23,7 @@ RegisterServerEvent("inventory:server:openHousingInventory", function(storageTyp
     targetInv.users[Player.PlayerData.source] = true
 
     TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
-        Inventory.FilterItems(targetInv, sourceInv.type))
+                       Inventory.FilterItems(targetInv, sourceInv.type))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem", function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot)
