@@ -63,17 +63,18 @@ end
 RegisterNetEvent("soz-flatbed:client:getProp")
 AddEventHandler("soz-flatbed:client:getProp", function(lastveh)
     if not DoesEntityExist(Entity(lastveh).state.prop) then
-        if NetworkGetEntityOwner(lastveh) == NetworkGetPlayerIndexFromPed(PlayerPedId()) then
-            local VehicleInfo = GetVehicleInfo(GetEntityModel(lastveh))
-            local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(lastveh), true, false, false)
-
-            if Entity(lastveh).state.prop == nil then
-                Entity(lastveh).state.prop = NewBed
-            end
-
-            GetOwnership(lastveh)
-            AttachEntityToEntity(NewBed, lastveh, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
+        if IsVehicleExtraTurnedOn(lastveh, 1) then
+            SetVehicleExtra(lastveh, 1, false)
         end
+        local VehicleInfo = GetVehicleInfo(GetEntityModel(lastveh))
+        local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(lastveh), true, false, false)
+
+        if Entity(lastveh).state.prop == nil then
+            Entity(lastveh).state.prop = NewBed
+        end
+
+        GetOwnership(lastveh)
+        AttachEntityToEntity(NewBed, lastveh, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
         Entity(lastveh).state.busy = false
         Entity(lastveh).state.status = false
         Entity(lastveh).state.towedVehicle = nil
