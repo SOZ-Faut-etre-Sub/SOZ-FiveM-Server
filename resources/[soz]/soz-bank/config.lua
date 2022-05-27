@@ -142,7 +142,7 @@ Config.BankAtmDefault = {
         limit = 600000, -- in ms
     },
     ["small"] = {
-        maxMoney = 5000,
+        maxMoney = 6000,
         maxWithdrawal = 500,
         limit = 600000, -- in ms
     },
