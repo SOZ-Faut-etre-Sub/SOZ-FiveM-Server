@@ -1,5 +1,4 @@
-import {createContext, FunctionalComponent} from "preact";
-import {useCallback, useMemo, useState} from "preact/hooks";
+import {useCallback, useMemo, useState, createContext, FunctionComponent, PropsWithChildren} from "react";
 import {Spawn} from "../types/spawn";
 import SpawnList from "../config/spawn";
 
@@ -8,7 +7,7 @@ export const SpawnContext = createContext({
     updateSpawn: (s: Spawn) => {}
 })
 
-const SpawnProvider: FunctionalComponent = ({children}) => {
+const SpawnProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) => {
     const [spawn, setSpawn] = useState<Spawn>(SpawnList[0])
     const updateSpawn = useCallback((s: Spawn) => setSpawn(s), [setSpawn])
 
