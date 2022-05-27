@@ -1,6 +1,21 @@
 GarbageConfig = {}
 
-GarbageConfig.SellPrice = 30
+GarbageConfig.SellPrice = {["default"] = 15, ["petroleum_residue"] = 40}
+
+GarbageConfig.RecycleItem = {
+    ["plastic"] = 5,
+    ["metalscrap"] = 5,
+    ["aluminum"] = 5,
+    ["rubber"] = 5,
+    ["electronickit"] = 5,
+    ["rolex"] = 5,
+    ["diamond_ring"] = 5,
+    ["goldchain"] = 5,
+    ["10kgoldchain"] = 5,
+    ["goldbar"] = 5,
+    ["garbagebag"] = 5,
+    ["petroleum_residue"] = 20,
+}
 
 GarbageConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
@@ -67,19 +82,4 @@ GarbageConfig.Cloakroom = {
             Props = {},
         },
     },
-}
-
-GarbageConfig.RecycleItem = {
-    ["plastic"] = 5,
-    ["metalscrap"] = 5,
-    ["aluminum"] = 5,
-    ["rubber"] = 5,
-    ["electronickit"] = 5,
-    ["rolex"] = 5,
-    ["diamond_ring"] = 5,
-    ["goldchain"] = 5,
-    ["10kgoldchain"] = 5,
-    ["goldbar"] = 5,
-    ["garbagebag"] = 5,
-    ["petroleum_residue"] = 20,
 }
