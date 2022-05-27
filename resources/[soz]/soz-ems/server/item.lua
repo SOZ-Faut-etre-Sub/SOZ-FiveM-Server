@@ -39,3 +39,16 @@ end)
 QBCore.Functions.CreateUseableItem("defibrillator", function(source)
     TriggerClientEvent("lsmc:client:défibrillateur", source)
 end)
+
+QBCore.Functions.CreateUseableItem("painkiller", function(source)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if player.PlayerData.metadata["disease"] == "backpain" then
+        TriggerEvent("lsmc:maladie:server:SetCurrentDisease", false, source)
+        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un anti-douleur et vous vous sentez mieux !"))
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous utilisez un anti-douleur, mais rien ne change !"))
+    end
+
+    exports["soz-inventory"]:RemoveItem(source, "painkiller", 1, nil)
+end)
