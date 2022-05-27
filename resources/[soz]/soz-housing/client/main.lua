@@ -169,5 +169,5 @@ end)
 
 RegisterNetEvent("soz-housing:client:garage")
 AddEventHandler("soz-housing:client:garage", function(identifier)
-    TriggerEvent("qb-garage:client:Menu", "housing", {}, identifier)
+    TriggerEvent("soz-garage:client:Menu", "housing", {}, identifier)
 end)

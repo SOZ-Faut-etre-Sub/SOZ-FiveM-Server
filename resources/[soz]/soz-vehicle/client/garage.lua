@@ -465,6 +465,6 @@ local function GenerateMenu(type_, garage, indexgarage)
     end
 end
 
-RegisterNetEvent("qb-garage:client:Menu", function(type, garage, indexgarage)
+RegisterNetEvent("soz-garage:client:Menu", function(type, garage, indexgarage)
     GenerateMenu(type, garage, indexgarage)
 end)
