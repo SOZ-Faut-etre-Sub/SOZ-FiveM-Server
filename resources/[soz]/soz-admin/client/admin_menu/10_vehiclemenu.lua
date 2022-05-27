@@ -54,14 +54,9 @@ function AdminMenuVehicles(menu, permission)
                 TriggerServerEvent("QBCore:CallCommand", "car", {model})
             end
         end,
-        disabled = permission ~= "admin",
     })
 
-    vehicleMenu:AddButton({
-        label = "Choisir un véhicule à faire apparaitre",
-        value = vehicleCategories,
-        disabled = permission ~= "admin",
-    })
+    vehicleMenu:AddButton({label = "Choisir un véhicule à faire apparaitre", value = vehicleCategories})
 
     vehicleMenu:AddButton({
         label = "Réparer le véhicule",
