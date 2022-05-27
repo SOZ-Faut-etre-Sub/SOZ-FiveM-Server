@@ -299,7 +299,15 @@ function QBCore.Functions.HasPermission(source, _permission)
 
     if QBCore.Config.Server.PermissionList[license] then
         if QBCore.Config.Server.PermissionList[license].license == license then
-            if QBCore.Config.Server.PermissionList[license].permission == permission or QBCore.Config.Server.PermissionList[license].permission == 'admin' then
+            if QBCore.Config.Server.PermissionList[license].permission == 'admin' then
+                return true
+            end
+
+            if QBCore.Config.Server.PermissionList[license].permission == 'staff' and permission == 'helper' then
+                return true
+            end
+
+            if QBCore.Config.Server.PermissionList[license].permission == permission then
                 return true
             end
         end

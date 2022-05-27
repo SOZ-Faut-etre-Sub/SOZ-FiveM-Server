@@ -85,5 +85,5 @@ function AdminMenuJob(menu, permission)
     end)
 
     --- Add to main menu
-    menu:AddButton({icon = "⛑", label = "Gestion métier", value = jobMenu, disabled = permission ~= "admin"})
+    menu:AddButton({icon = "⛑", label = "Gestion métier", value = jobMenu, disabled = permission == "helper"})
 end
