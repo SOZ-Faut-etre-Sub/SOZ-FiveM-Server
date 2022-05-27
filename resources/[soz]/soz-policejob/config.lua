@@ -474,7 +474,7 @@ Config.Licenses = {
     ["heli"] = {label = "Permis d'aviation"},
     ["boat"] = {label = "Permis maritime"},
     ["weapon"] = {label = "Permis port d'arme"},
-    ["hunting"] = {label = "Permis de chase"},
+    ["hunting"] = {label = "Permis de chasse"},
     ["fishing"] = {label = "Permis de pêche"},
     ["rescuer"] = {label = "Secouriste"},
 }
