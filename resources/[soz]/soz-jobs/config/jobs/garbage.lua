@@ -15,6 +15,9 @@ GarbageConfig.RecycleItem = {
     ["goldbar"] = 5,
     ["garbagebag"] = 5,
     ["petroleum_residue"] = 20,
+    ["peau"] = 5,
+    ["os"] = 5,
+    ["viscere"] = 5,
 }
 
 GarbageConfig.Cloakroom = {

@@ -44,6 +44,9 @@ FoodConfig.Collect = {
     Grape = {
         Duration = 10000, -- in ms
     },
+    Craft = {
+        Duration = 4000, -- in ms
+    },
     Milk = {
         Duration = 10000, -- in ms
         Reward = {min = 1, max = 4},
@@ -52,7 +55,7 @@ FoodConfig.Collect = {
 }
 
 FoodConfig.Process = {
-    Duration = 10000, -- in ms
+    Duration = 2000, -- in ms
     Item = "milk",
     Count = 4,
 }
@@ -242,12 +245,12 @@ FoodConfig.AnimalAllowedToHunt = {
     [GetHashKey("a_c_seagull")] = true,
 }
 FoodConfig.HuntingReward = {
-    ["tripe"] = {min = 1, max = 2},
-    ["peau"] = {min = 0, max = 1},
-    ["os"] = {min = 1, max = 3},
-    ["viscere"] = {min = 0, max = 1},
-    ["viande"] = {min = 1, max = 3},
-    ["langue"] = {min = 0, max = 1},
+    ["peau"] = {min = 0, max = 2},
+    ["os"] = {min = 0, max = 2},
+    ["viscere"] = {min = 0, max = 2},
+    ["tripe"] = {min = 1, max = 4},
+    ["viande"] = {min = 2, max = 5},
+    ["langue"] = {min = 1, max = 3},
     ["abat"] = {min = 1, max = 3},
     ["rognon"] = {min = 1, max = 3},
 }
