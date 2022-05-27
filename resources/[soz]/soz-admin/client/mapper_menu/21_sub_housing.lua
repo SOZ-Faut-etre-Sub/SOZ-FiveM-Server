@@ -168,6 +168,15 @@ ChangeCurrentHousingMenu:On("open", function(menu)
             CurrentZoneData = CurrentHousingData.closet_position
         end,
     })
+
+    menu:AddButton({
+        label = "Zone du garage",
+        value = CurrentHousingItemMenu,
+        select = function()
+            zone_type = "garage_zone"
+            CurrentZoneData = CurrentHousingData.garage_zone
+        end,
+    })
 end)
 
 CurrentHousingMenu:On("open", function(menu)

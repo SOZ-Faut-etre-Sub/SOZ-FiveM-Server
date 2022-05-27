@@ -66,6 +66,12 @@ RegisterNetEvent("soz-admin:server:housing", function(zone, id, zonetype)
             ["@id"] = id,
         })
     end
+    if zonetype == "garage_zone" then
+        MySQL.update.await("UPDATE player_house SET garage_zone = @zone WHERE identifier = @id", {
+            ["@zone"] = endzone,
+            ["@id"] = id,
+        })
+    end
 end)
 
 RegisterNetEvent("soz-admin:server:housing:create", function(name, tp, building)
