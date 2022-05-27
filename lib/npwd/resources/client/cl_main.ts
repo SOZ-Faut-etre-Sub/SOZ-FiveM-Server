@@ -162,7 +162,8 @@ onNet('QBCore:Client:OnPlayerLoaded', async () => {
 });
 
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
-    const hasItem = playerData.items.find(item => item.name === 'phone')
+    if (typeof playerData.items === 'object') playerData.items = Object.values(playerData.items);
+    const hasItem = playerData.items.find(item => item.name === 'phone');
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, !!hasItem);
 });
 
