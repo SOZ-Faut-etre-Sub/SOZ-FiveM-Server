@@ -262,7 +262,7 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
     local lockTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:lockTanker", vehicleNetId)
 
     if not lockTanker then
-        exports["soz-hud"]:DrawNotification("Le tanker est déjà en cours d'utilisation.", "error")
+        exports["soz-hud"]:DrawNotification("Le tanker ne possède que 2 connexions.", "error")
 
         return
     end
