@@ -18,14 +18,17 @@ RegisterNetEvent("jobs:server:garbage:processBags", function(item)
         bagToProcess = playerGarbageBagAmount
     end
 
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, bagToProcess)
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                       ("Vous avez recyclé ~g~%d %s"):format(bagToProcess, QBCore.Shared.Items[item].label))
-    TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", bagToProcess * GarbageConfig.SellPrice)
-    TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
-        player_source = Player.PlayerData.source,
-        item = item,
-    }, {quantity = tonumber(bagToProcess), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, bagToProcess) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                           ("Vous avez recyclé ~g~%d %s"):format(bagToProcess, QBCore.Shared.Items[item].label))
+
+        local resellPrice = GarbageConfig.SellPrice[item] or GarbageConfig.SellPrice["default"]
+        TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", bagToProcess * resellPrice)
+        TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
+            player_source = Player.PlayerData.source,
+            item = item,
+        }, {quantity = tonumber(bagToProcess), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+    end
 
     if exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) >= 1 then
         TriggerClientEvent("jobs:client:garbage:processBags", Player.PlayerData.source, {item = item})
