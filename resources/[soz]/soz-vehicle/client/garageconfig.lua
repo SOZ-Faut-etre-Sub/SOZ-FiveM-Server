@@ -1374,15 +1374,12 @@ exports["qb-target"]:AddGlobalVehicle({
             type = "client",
             icon = "c:mechanic/CarFourriere.png",
             label = "Fourriérer",
-            canInteract = function()
-                return not PlayerData.job.onduty
-            end,
             job = "bennys",
             action = function(entity)
                 TriggerEvent("soz-garage:client:PutInDepot", entity)
             end,
             canInteract = function(entity, distance, data)
-                return InsideFourriere
+                return PlayerData.job.onduty and InsideFourriere
             end,
         },
     },
