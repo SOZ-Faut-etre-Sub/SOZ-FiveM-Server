@@ -158,12 +158,17 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
             }
         }
     }, [])
+    const onKeyDown = useCallback((event: KeyboardEvent) => {
+        if (event.key === 'Tab') event.preventDefault();
+    }, [])
 
     useEffect(() => {
         window.addEventListener('message', onMessageReceived)
+        window.addEventListener('keydown', onKeyDown)
 
         return () => {
             window.removeEventListener('message', onMessageReceived)
+            window.removeEventListener('keydown', onKeyDown)
         }
     }, []);
 
