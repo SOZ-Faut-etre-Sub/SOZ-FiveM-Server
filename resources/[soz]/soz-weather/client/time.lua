@@ -3,7 +3,11 @@ AddStateBagChangeHandler("time", "global", function(_, _, value, _, _)
     NetworkOverrideClockTime(tonumber(hour), tonumber(minute), tonumber(second))
 end)
 
-RegisterNetEvent("onPlayerJoining", function()
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+
     local hour, minute, second = table.unpack(GlobalState.time)
     NetworkOverrideClockTime(tonumber(hour), tonumber(minute), tonumber(second))
 
