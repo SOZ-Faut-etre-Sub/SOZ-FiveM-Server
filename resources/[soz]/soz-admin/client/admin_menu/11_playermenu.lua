@@ -163,7 +163,7 @@ function AdminMenuPlayers(menu, permission)
         featureMenu:ClearItems()
     end)
 
-    playerMenu:AddButton({label = "Gerer les features", value = featureMenu})
+    playerMenu:AddButton({label = "Gérer les features", value = featureMenu})
 
     --- Add to main menu
     AdminMenu:AddButton({icon = "👨‍💻‍", label = "Gestion des joueurs", value = playersMenu})
