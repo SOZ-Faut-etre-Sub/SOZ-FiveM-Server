@@ -205,6 +205,8 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:lockTanker", function(source
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:unlockTanker", function(source, cb, tankerId)
+    cb(true)
+
     local currentSources = tankerLocked[tankerId]
 
     if currentSources then
@@ -215,11 +217,9 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:unlockTanker", function(sour
         end
     end
 
-    if #currentSources == 0 then
+    if not currentSources or #currentSources == 0 then
         tankerLocked[tankerId] = nil
     end
-
-    cb(true)
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:canRefining", function(source, cb, tankerId)

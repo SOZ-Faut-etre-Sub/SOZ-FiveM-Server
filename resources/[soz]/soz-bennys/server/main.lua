@@ -65,11 +65,8 @@ RegisterNetEvent("soz-bennys:server:SetAttachedVehicle", function(veh)
     end
 end)
 
-RegisterNetEvent("updateVehicle", function(myCar)
-    local src = source
-    if IsVehicleOwned(myCar.plate) then
-        MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {json.encode(myCar), myCar.plate})
-    end
+RegisterNetEvent("soz-bennys:server:SaveVehicleMods", function(mods)
+    MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {json.encode(mods), mods.plate})
 end)
 
 function IsVehicleOwned(plate)
