@@ -76,6 +76,10 @@ RegisterNUICallback("radio/enable", function(data, cb)
 end)
 
 RegisterNUICallback("radio/change_frequency", function(data, cb)
+    if not radioEnabled then
+        cb("nok")
+        return
+    end
     if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
         if data.primary ~= primaryRadio and primaryRadio ~= nil then
             TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio)
@@ -104,6 +108,10 @@ RegisterNUICallback("radio/change_frequency", function(data, cb)
 end)
 
 RegisterNUICallback("radio/change_ear", function(data, cb)
+    if not radioEnabled then
+        cb("nok")
+        return
+    end
     --[[if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
         exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), true)
 
@@ -124,6 +132,10 @@ RegisterNUICallback("radio/change_ear", function(data, cb)
 end)
 
 RegisterNUICallback("radio/change_volume", function(data, cb)
+    if not radioEnabled then
+        cb("nok")
+        return
+    end
     if data.primary then
         exports["soz-voip"]:SetRadioShortRangePrimaryVolume(data.primary)
         SoundProvider.default(data.primary)
