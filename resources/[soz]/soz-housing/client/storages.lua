@@ -64,7 +64,7 @@ AddEventHandler("soz-housing:client:SetStorage", function(GlobalZone)
                     },
                     distance = 2.5,
                 })
-                ]]--
+                ]] --
             end
         end
     end)
