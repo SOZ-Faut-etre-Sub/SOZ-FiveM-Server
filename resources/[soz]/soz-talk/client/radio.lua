@@ -38,6 +38,7 @@ local function powerOffRadio()
         TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio)
     end
     exports["soz-voip"]:SetRadioShortRangePowerState(false)
+    SendNUIMessage({type = "radio", action = "reset"})
 end
 
 local function toggleRadio(toggle)
