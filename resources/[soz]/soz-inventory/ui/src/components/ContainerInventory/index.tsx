@@ -27,6 +27,7 @@ const ContainerInventory = () => {
         return headerImage
     }, []);
 
+    // @ts-ignore
     const transfertItem = useCallback((event: any) => {
         fetch(`https://soz-inventory/transfertItem`, {
             method: 'POST',
@@ -39,7 +40,7 @@ const ContainerInventory = () => {
                 item: event.item.dataset.item,
             })
         }).then(res => res.json()).then(transfert => {
-            if (transfert.playerInventory === undefined || transfert.targetInventory === undefined) return;
+            if (transfert.playerInventory === undefined && transfert.targetInventory === undefined) return;
             if (transfert.sourceInventory.id == transfert.targetInventory.id) return;
 
             let sourceInventory = transfert.sourceInventory;
@@ -93,7 +94,7 @@ const ContainerInventory = () => {
                 closeNUI(() => {
                     setDisplay(false);
                 }, {
-                    target: targetInventory.id ?? '',
+                    target: targetInventory.id,
                 })
             }
         }
@@ -107,7 +108,7 @@ const ContainerInventory = () => {
                     'Content-Type': 'application/json; charset=UTF-8',
                 },
                 body: JSON.stringify({
-                    target: targetInventory.id ?? '',
+                    target: targetInventory.id,
                 })
             }).then(() => {
                 setDisplay(false);
