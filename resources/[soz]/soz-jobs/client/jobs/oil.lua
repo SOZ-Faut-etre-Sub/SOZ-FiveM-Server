@@ -516,7 +516,7 @@ RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
 
         if canStationRefill then
             exports["soz-hud"]:DrawNotification("Vous avez ~g~relié~s~ le Tanker à ~g~la station service~s~.", "info")
-            QBCore.Functions.Progressbar("fill", "Vous remplissez...", 30000, false, true, {
+            QBCore.Functions.Progressbar("fill", "Vous remplissez...", 20000, false, true, {
                 disableMovement = true,
                 disableCombat = true,
             }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
@@ -565,7 +565,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
 
     while canResellTanker do
         Wait(500)
-        QBCore.Functions.Progressbar("resell", "Vous remplissez...", 15000, false, true, {
+        QBCore.Functions.Progressbar("resell", "Vous remplissez...", 5000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
@@ -577,7 +577,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
             canResellTanker = false
         end)
 
-        Wait(15000)
+        Wait(5000)
     end
 
     Tanker.using = false
