@@ -438,12 +438,12 @@ end
 
 AddEventHandler("jobs:client:food-process-milk", function()
     local count = FoodJob.Functions.GetItemCountFromInventory(FoodConfig.Collect.Milk.Item)
-    if not count or count < 1 then
+    if not count or count < 4 then
         exports["soz-hud"]:DrawNotification("Vous n'avez pas de bidons de lait sur vous", "error")
         return
     end
 
-    QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 1 bidon de lait", FoodConfig.Process.Duration, false, true,
+    QBCore.Functions.Progressbar("food-process-milk", "Vous transformez 4 bidons de lait", FoodConfig.Process.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -452,7 +452,7 @@ AddEventHandler("jobs:client:food-process-milk", function()
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
         QBCore.Functions.TriggerCallback("soz-jobs:server:food-process-milk", function(success, count)
             if success then
-                exports["soz-hud"]:DrawNotification(string.format("Vous avez transformé ~b~1 bidon de lait~s~ en ~g~%d briques de lait~s~", count))
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez transformé ~b~4 bidons de lait~s~ en ~g~%d briques de lait~s~", count))
                 Citizen.Wait(1000)
                 TriggerEvent("jobs:client:food-process-milk")
 
@@ -491,7 +491,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
     end
 
     Citizen.CreateThread(function()
-        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Grape.Duration, false, true,
+        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Craft.Duration, false, true,
                                      {
             disableMovement = true,
             disableCarMovement = true,
