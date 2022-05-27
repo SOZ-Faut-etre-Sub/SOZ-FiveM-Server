@@ -153,3 +153,10 @@ QBCore.Functions.CreateCallback("soz-housing:server:GetAvailableHousing", functi
 
     cb(AvailableHousing)
 end)
+
+QBCore.Functions.CreateCallback("soz-housing:server:GetPlayerHouse", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
+    cb(MySQL.Sync.fetchSingle("SELECT * FROM player_house WHERE owner = @citizenid", {
+        ["@citizenid"] = Player.PlayerData.citizenid,
+    }))
+end)
