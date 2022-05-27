@@ -8,7 +8,11 @@ AddStateBagChangeHandler("blackout", "global", function(_, _, value, _, _)
     SetArtificialLightsState(value)
 end)
 
-RegisterNetEvent("onPlayerJoining", function()
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+
     SetArtificialLightsState(GlobalState.blackout)
     SetArtificialLightsStateAffectsVehicles(false)
 end)

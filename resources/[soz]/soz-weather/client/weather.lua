@@ -1,9 +1,13 @@
 AddStateBagChangeHandler("weather", "global", function(_, _, value, _, _)
     SetWeatherOwnedByNetwork(false)
-    SetWeatherTypeOvertimePersist(value, 10.0)
+    SetWeatherTypeOvertimePersist(value, 60.0)
 end)
 
-RegisterNetEvent("onPlayerJoining", function()
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+
     SetWeatherOwnedByNetwork(false)
     SetWeatherTypeNowPersist(GlobalState.weather)
 end)
