@@ -106,7 +106,6 @@ function AdminMenuDynamicMap(menu, permission)
 
     confirmowner:On("deny", function()
         DynamicMapOption.VehicleName = false
-        DisplayVehicleName()
     end)
 
     dynamicMapMenu:AddCheckbox({
