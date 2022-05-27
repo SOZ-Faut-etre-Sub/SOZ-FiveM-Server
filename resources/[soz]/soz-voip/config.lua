@@ -20,7 +20,7 @@ Config.radioFrequencies = {min = 10000, max = 99999}
 Config.radioShortRangeDistance = 3000.0
 
 --- Volume
-Config.volumes = {["call"] = 0.8, ["vehicle"] = 0.5}
+Config.volumes = {["call"] = 0.6, ["vehicle"] = 0.5}
 
 -- Grid Module
 Config.gridSize = 512
