@@ -68,15 +68,16 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
                         {
                             label = "Garage",
                             icon = "c:housing/garage.png",
-                            event = "soz-housing:client:garage",
                             canInteract = function()
                                 return isOwner and not isTrailer(name)
+                            end,
+                            action = function()
+                                TriggerEvent("soz-housing:client:garage", zone.identifier)
                             end,
                         },
                         {
                             label = "Vendre",
                             icon = "c:housing/vendre.png",
-                            event = "soz-housing:client:garage",
                             canInteract = function()
                                 return isOwner
                             end,
@@ -167,6 +168,6 @@ AddEventHandler("soz-housing:client:BuildingRentrer", function(point)
 end)
 
 RegisterNetEvent("soz-housing:client:garage")
-AddEventHandler("soz-housing:client:garage", function()
-    print("en attente des garages de dark")
+AddEventHandler("soz-housing:client:garage", function(identifier)
+    TriggerEvent("qb-garage:client:Menu", "housing", {}, identifier)
 end)
