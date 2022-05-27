@@ -1,5 +1,6 @@
 local itemToRefill = 11 -- give 11 item for 24 second
 local tankerLocked = {}
+local MAX_PEOPLE_BY_TANKER = 2
 
 --- Events
 RegisterNetEvent("jobs:server:fueler:refillTanker", function(tankerId)
@@ -176,25 +177,48 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:canRefill", function(source,
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:lockTanker", function(source, cb, tankerId)
-    local currentSource = tankerLocked[tankerId]
+    local currentSources = tankerLocked[tankerId]
 
-    if currentSource and currentSource ~= source then
-        -- Check player still connected, otherwise it is unlocked
-        local Player = QBCore.Functions.GetPlayer(currentSource)
+    if currentSources and #currentSources >= MAX_PEOPLE_BY_TANKER then
+        for index, tankerSource in pairs(currentSources) do
+            -- Check player still connected, otherwise it is unlocked
+            local Player = QBCore.Functions.GetPlayer(tankerSource)
 
-        if Player then
-            cb(false)
-
-            return
+            if not Player then
+                currentSources[index] = nil
+            end
         end
     end
 
-    tankerLocked[tankerId] = source
+    if currentSources and #currentSources >= MAX_PEOPLE_BY_TANKER then
+        cb(false)
+    end
+
+    if currentSources then
+        table.insert(currentSources, source)
+    else
+        currentSources = {source}
+    end
+
+    tankerLocked[tankerId] = currentSources
     cb(true)
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:unlockTanker", function(source, cb, tankerId)
-    tankerLocked[tankerId] = nil
+    local currentSources = tankerLocked[tankerId]
+
+    if currentSources then
+        for index, tankerSource in pairs(currentSources) do
+            if source == tankerSource then
+                currentSources[index] = nil
+            end
+        end
+    end
+
+    if #currentSources == 0 then
+        tankerLocked[tankerId] = nil
+    end
+
     cb(true)
 end)
 
