@@ -51,18 +51,6 @@ AddEventHandler("soz-housing:client:SetEntry", function(GlobalZone)
                             end,
                         },
                         {
-                            label = "Visiter",
-                            icon = "c:housing/visiter.png",
-                            event = "soz-housing:client:visiter",
-                            canInteract = function()
-                                if not isBuilding then
-                                    return not isOwner and isOwned
-                                else
-                                    return not isOwned
-                                end
-                            end,
-                        },
-                        {
                             label = "Rentrer",
                             icon = "c:housing/entrer.png",
                             event = "soz-housing:client:rentrer",
@@ -149,7 +137,7 @@ AddEventHandler("soz-housing:client:rentrer", function()
     IsInside = true
     for item, Coord in pairs(coords) do
         local point = json.decode(Coord.teleport)
-        QBCore.Functions.Progressbar("house_enter", "Ouvre la porte", 5000, false, true,
+        QBCore.Functions.Progressbar("house_enter", "Ouvre la porte", 1000, false, true,
                                      {
             disableMovement = true,
             disableCarMovement = true,
@@ -166,7 +154,7 @@ RegisterNetEvent("soz-housing:client:BuildingRentrer")
 AddEventHandler("soz-housing:client:BuildingRentrer", function(point)
     LastLocation = GetEntityCoords(PlayerPedId())
     IsInside = true
-    QBCore.Functions.Progressbar("Building_enter", "Tape le code", 5000, false, true,
+    QBCore.Functions.Progressbar("Building_enter", "Tape le code", 1000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
