@@ -22,6 +22,10 @@ AddStateBagChangeHandler("weather", "global", function(_, _, value, _, _)
     ApplySnowOnMap(Config.WeatherWithSnowOnGround[value] or false)
 end)
 
-RegisterNetEvent("onPlayerJoining", function()
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+
     ApplySnowOnMap(Config.WeatherWithSnowOnGround[GlobalState.weather] or false)
 end)
