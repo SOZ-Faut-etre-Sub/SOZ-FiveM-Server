@@ -80,7 +80,7 @@ end)
 
 AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
     local house = QBCore.Functions.TriggerRpc("soz-housing:server:GetPlayerHouse")
-    if not house then
+    if not house or (house and not house.garage_zone) then
         return
     end
 
