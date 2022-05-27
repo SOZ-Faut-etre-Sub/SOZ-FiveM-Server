@@ -1,11 +1,6 @@
 Targets = Context:new()
 local debugShow = 1
 
-function IsPlayerInTargetChannel(serverID)
-    local gridChannel = GetGridChannel(NetworkGetPlayerCoords(serverID or 0), Config.gridSize)
-    return Channels:targetHasAnyActiveContext(gridChannel) == true
-end
-
 function SetVoiceTargets(targetID)
     local players, channels = {}, {}
 
@@ -20,7 +15,7 @@ function SetVoiceTargets(targetID)
     end)
 
     Targets:contextIterator(function(serverID)
-        if not players[serverID] and not IsPlayerInTargetChannel(serverID) then
+        if not players[serverID] then
             players[serverID] = true
             MumbleAddVoiceTargetPlayerByServerId(targetID, serverID)
             if debugShow == 50 then

@@ -1,5 +1,4 @@
 local GridSize, EdgeSize = Config.gridSize, Config.gridEdge
-
 local CurrentGrids, PreviousGrid = {}, 0
 
 local deltas = {
