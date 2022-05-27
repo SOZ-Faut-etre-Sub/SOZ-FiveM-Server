@@ -127,8 +127,11 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     end
 
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage)
+
     if #emptySlots == 0 then
         exports["soz-hud"]:DrawNotification("Parking encombré, le véhicule ne peut pas être sorti", "warning")
+
+        return
     end
 
     if type_ == "private" or type_ == "depot" then
