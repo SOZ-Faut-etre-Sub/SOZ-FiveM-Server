@@ -144,7 +144,7 @@ end)
 
 RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)
     local src = source
-    if not SozAdmin.Functions.IsPlayerAdmin(src) then
+    if not SozAdmin.Functions.IsPlayerHelper(src) then
         return
     end
 

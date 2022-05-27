@@ -95,10 +95,5 @@ function AdminMenuDeveloper(menu, permission)
     })
 
     --- Add to main menu
-    AdminMenu:AddButton({
-        icon = "🛠",
-        label = "Outils pour développeur",
-        value = developerMenu,
-        disabled = permission ~= "admin",
-    })
+    AdminMenu:AddButton({icon = "🛠", label = "Outils pour développeur", value = developerMenu})
 end
