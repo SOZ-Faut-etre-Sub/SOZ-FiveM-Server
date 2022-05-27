@@ -1372,19 +1372,16 @@ exports["qb-target"]:AddGlobalVehicle({
     options = {
         {
             type = "client",
-            event = "qb-garages:client:PutInDepot",
             icon = "c:mechanic/CarFourriere.png",
             label = "Fourriérer",
+            canInteract = function()
+                return not PlayerData.job.onduty
+            end,
+            job = "bennys",
             action = function(entity)
-                TriggerEvent("qb-garages:client:PutInDepot", entity)
+                TriggerEvent("soz-garage:client:PutInDepot", entity)
             end,
             canInteract = function(entity, distance, data)
-                if GetEntityModel(entity) == GetHashKey("flatbed3") then
-                    return false
-                end
-                if OnDuty == false or PlayerJob.id ~= "bennys" then
-                    return false
-                end
                 return InsideFourriere
             end,
         },

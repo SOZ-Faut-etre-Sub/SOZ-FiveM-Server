@@ -161,19 +161,6 @@ RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mo
     SetVehicleProperties(NetToVeh(vehNetId), mods, fuel)
 end)
 
-RegisterNetEvent("qb-garages:client:PutInDepot", function(entity)
-    local plate = QBCore.Functions.GetPlate(entity)
-    local bodyDamage = math.ceil(GetVehicleBodyHealth(entity))
-    local engineDamage = math.ceil(GetVehicleEngineHealth(entity))
-    local totalFuel = exports["soz-vehicle"]:GetFuel(entity)
-    -- EjectAnyPassager(entity)
-    TriggerServerEvent("qb-garage:server:updateVehicle", 2, totalFuel, engineDamage, bodyDamage, plate, "fourriere", "depot")
-    if plate then
-        OutsideVehicles[plate] = nil
-    end
-    exports["soz-hud"]:DrawNotification("Le véhicule a été mis à la fourrière")
-end)
-
 RegisterNetEvent("qb-garages:client:TakeOutPrive", function(v, type, garage, indexgarage, price)
     if price ~= 0 then
         TriggerServerEvent("qb-garage:server:PayPrivePrice", v, type, garage, indexgarage, price)
@@ -234,7 +221,7 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
         local pedInSeat = GetPedInVehicleSeat(veh, i)
         if pedInSeat ~= 0 then
             exports["soz-hud"]:DrawNotification("Le véhicule doit être vide de tous passagers", "error")
-            return
+            return false
         end
     end
 
@@ -257,11 +244,15 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
         return false
     end
 
-    local state = VehicleState.InGarage
     if type_ == "entreprise" then
-        state = VehicleState.InEntreprise
+        return VehicleState.InEntreprise
     end
-    return state
+
+    if type_ == "depot" then
+        return VehicleState.InPound
+    end
+
+    return VehicleState.InGarage
 end
 
 ---Logic that trigger update in DB and car entity to despawn
@@ -433,4 +424,35 @@ end
 
 RegisterNetEvent("qb-garage:client:Menu", function(type, garage, indexgarage)
     GenerateMenu(type, garage, indexgarage)
+end)
+
+RegisterNetEvent("soz-garage:client:PutInDepot", function(entity)
+    local plate = QBCore.Functions.GetPlate(entity)
+    local isVehicleOwned = QBCore.Functions.TriggerRpc("soz-garage:server:IsVehicleOwned", plate)
+
+    if isVehicleOwned then
+        local vehExtraData = GetVehicleClientData(entity)
+
+        if not CanVehicleBeParkedInGarage(entity, "fourriere", "depot", plate) then
+            return
+        end
+
+        -- Set body damage from client, as it always return 1000 on server
+        vehExtraData.bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
+        SetEntityAsMissionEntity(veh, true, true)
+
+        QBCore.Functions.TriggerCallback("soz-garage:server:ParkVehicleInDepot", function(success)
+            if success then
+                exports["soz-hud"]:DrawNotification("Le véhicule a été mis en fourrière")
+            else
+                exports["soz-hud"]:DrawNotification("Impossible de mettre le véhicule en fourrière", "error")
+            end
+        end, "fourriere", NetworkGetNetworkIdFromEntity(entity), vehExtraData)
+
+        return
+    end
+
+    -- Not owned only despawn
+    TriggerServerEvent("soz-garage:server:DespawnVehicle", VehToNet(entity))
+    exports["soz-hud"]:DrawNotification("Le véhicule a été mis en fourrière")
 end)
