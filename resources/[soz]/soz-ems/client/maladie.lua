@@ -56,6 +56,18 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
             end
         end)
     end
+    if disease == "backpain" then
+        DiseaseLoop = true
+
+        exports["soz-hud"]:DrawNotification("Vous avez mal au dos")
+
+        Citizen.CreateThread(function()
+            while DiseaseLoop do
+                DisableControlAction(0, 21, true)
+                Wait(5)
+            end
+        end)
+    end
 end)
 
 local function has_value(tab, val)
