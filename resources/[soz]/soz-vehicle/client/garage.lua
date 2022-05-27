@@ -43,7 +43,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
             ["housing"] = {
                 type = "housing",
                 zones = nil,
-                menu = MenuV:CreateMenu(nil, nil, "menu_garage_housing", "soz", "parkinghousing:vehicle:car"),
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_personal", "soz", "parkinghousing:vehicle:car"),
                 submenu = nil,
                 excludeVehClass = {14, 15, 16},
                 state = VehicleState.InGarage,
@@ -91,7 +91,6 @@ AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
         minZ = gData.z - 2.0,
         maxZ = gData.z + 2.0,
         data = {indexGarage = house.identifier},
-        debugPoly = true,
     })
 
     GarageTypes.housing.zones = {[house.identifier] = zone}
