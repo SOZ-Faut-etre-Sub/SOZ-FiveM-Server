@@ -120,6 +120,7 @@ function AdminMenuPlayers(menu, permission)
             {label = "Grippe", value = "grippe"},
             {label = "Intoxication", value = "intoxication"},
             {label = "Rougeur", value = "rougeur"},
+            {label = "Mal au dos", value = "backpain"},
             {label = "Soigner", value = false},
         },
         select = function(_, value)
