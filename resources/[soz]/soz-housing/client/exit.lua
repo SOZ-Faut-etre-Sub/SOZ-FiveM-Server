@@ -33,7 +33,7 @@ end)
 
 RegisterNetEvent("soz-housing:client:Exit")
 AddEventHandler("soz-housing:client:Exit", function()
-    QBCore.Functions.Progressbar("exit", "Ferme la porte", 5000, false, true,
+    QBCore.Functions.Progressbar("exit", "Ferme la porte", 1000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
