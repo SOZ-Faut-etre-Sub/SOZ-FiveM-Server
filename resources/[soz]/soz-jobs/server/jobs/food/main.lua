@@ -81,6 +81,24 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-process-milk", function(so
     local sourceItem = FoodConfig.Collect.Milk.Item
 
     if exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, sourceItem, count, FoodConfig.Process.Item, count * count) then
+        local slots = exports["soz-inventory"]:GetItemSlots(Player.PlayerData.source, {name = sourceItem})
+        local notExpiredItemsCount = 0
+
+        for slot, _ in ipairs(slots) do
+            local item = exports["soz-inventory"]:GetSlot(Player.PlayerData.source, slot)
+            if item then
+                if not exports["soz-utils"]:ItemIsExpired(item) then
+                    notExpiredItemsCount = notExpiredItemsCount + item.amount
+                end
+            end
+        end
+
+        if notExpiredItemsCount ~= count then
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas assez d'ingrédients", "error")
+            cb(false)
+            return
+        end
+
         Player.Functions.RemoveItem(sourceItem, count)
         if AddItem(Player.PlayerData.source, FoodConfig.Process.Item, count * count) then
             cb(true, count)
@@ -117,7 +135,8 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
             cb(false, "invalid_ingredient_item")
             return
         end
-        if exports["soz-inventory"]:GetItem(source, ingId, nil, true) < count then
+        local ingItem = exports["soz-inventory"]:GetItem(source, ingId, nil)
+        if ingItem.amount < count or exports["soz-utils"]:ItemIsExpired(ingItem) then
             cb(false, "invalid_ingredient")
             return
         end

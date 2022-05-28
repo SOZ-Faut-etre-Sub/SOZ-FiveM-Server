@@ -431,13 +431,15 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
 end)
 
 FoodJob.Functions.GetItemCountFromInventory = function(itemName)
-    local count = 0
+    local amount = 0
     for _, item in pairs(PlayerData.items or {}) do
         if item.name == itemName then
-            count = count + item.amount
+            if not exports["soz-utils"]:ItemIsExpired(item) then
+                amount = amount + item.amount
+            end
         end
     end
-    return count
+    return amount
 end
 
 AddEventHandler("jobs:client:food-process-milk", function()
