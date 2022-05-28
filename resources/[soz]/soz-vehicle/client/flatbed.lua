@@ -343,7 +343,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Activer.png",
                 event = "soz-flatbed:client:callaction",
-                label = "Descendre",
+                label = "NEW Descendre",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
@@ -362,7 +362,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Desactiver.png",
                 event = "soz-flatbed:client:callaction",
-                label = "Relever",
+                label = "NEW Relever",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
@@ -381,7 +381,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Attacher.png",
                 event = "soz-flatbed:client:callchaines",
-                label = "Attacher",
+                label = "NEW Attacher",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
@@ -400,7 +400,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Detacher.png",
                 event = "soz-flatbed:client:callchaines",
-                label = "Détacher",
+                label = "NEW Détacher",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
@@ -419,7 +419,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
                 event = "soz-flatbed:client:calltp",
-                label = "Démorquer",
+                label = "NEW Démorquer",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
@@ -438,7 +438,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Mettre.png",
                 event = "soz-flatbed:client:calltp",
-                label = "Remorquer",
+                label = "NEW Remorquer",
                 action = function(entity)
                     local lastveh = GetVehiclePedIsIn(PlayerPedId(), true)
                     TriggerEvent("soz-flatbed:client:calltp", entity, lastveh)
