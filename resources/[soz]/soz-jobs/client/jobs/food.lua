@@ -163,17 +163,19 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
+                type = "server",
                 icon = "fas fa-sign-in-alt",
                 label = "Prise de service",
-                event = "jobs:client:food-toggle-duty",
+                event = "QBCore:ToggleDuty",
                 canInteract = function()
                     return PlayerData.job.id == SozJobCore.JobType.Food and not PlayerData.job.onduty
                 end,
             },
             {
+                type = "server",
                 icon = "fas fa-sign-out-alt",
                 label = "Fin de service",
-                event = "jobs:client:food-toggle-duty",
+                event = "QBCore:ToggleDuty",
                 canInteract = function()
                     return PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty
                 end,
@@ -195,13 +197,13 @@ Citizen.CreateThread(function()
         distance = 1.5,
     })
 end)
-AddEventHandler("jobs:client:food-toggle-duty", function()
-    if not PlayerData.job.onduty then
+
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if duty then
         InitJob()
     else
         DestroyJob()
     end
-    TriggerServerEvent("QBCore:ToggleDuty")
 end)
 
 ---
