@@ -57,11 +57,17 @@ end)
 
 RegisterNetEvent("soz-fuel:server:addStationStock", function(id, amount)
     stations[id].stock = stations[id].stock + tonumber(amount)
+    if stations[id].stock > 2000 then
+        stations[id].stock = 2000
+    end
     saveStation(id)
 end)
 
 RegisterNetEvent("soz-fuel:server:setTempFuel", function(id)
     stations[id].stock = stations[id].stock - 100
+    if stations[id].stock < 0 then
+        stations[id].stock = 0
+    end
     saveStation(id)
 end)
 
