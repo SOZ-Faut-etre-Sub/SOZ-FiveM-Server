@@ -22,6 +22,8 @@ CreateThread(function()
             end
         else
             criticalHealthNotification = false
+
+            ResetPedMovementClipset(playerPed, 1.5)
         end
 
         Wait(0)
