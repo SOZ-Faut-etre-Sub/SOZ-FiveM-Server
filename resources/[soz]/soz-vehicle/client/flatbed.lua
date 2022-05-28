@@ -200,10 +200,10 @@ end)
 
 RegisterNetEvent("soz-flatbed:client:tpaction")
 AddEventHandler("soz-flatbed:client:tpaction", function(flatbed, vehicle)
-    if Entity(flatbed).state.prop then
-        if not Entity(flatbed).state.towedVehicle then
+    if DoesEntityExist(NetworkGetEntityFromNetworkId(Entity(flatbed).state.prop)) then
+        if not DoesEntityExist(NetworkGetEntityFromNetworkId(Entity(flatbed).state.towedVehicle)) then
             local VehicleInfo = GetVehicleInfo(GetEntityModel(flatbed))
-            local PropID = Entity(flatbed).state.prop
+            local PropID = NetworkGetEntityFromNetworkId(Entity(flatbed).state.prop)
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
             if DoesEntityExist(vehicle) and vehicle ~= flatbed then
                 GetOwnership(flatbed)
