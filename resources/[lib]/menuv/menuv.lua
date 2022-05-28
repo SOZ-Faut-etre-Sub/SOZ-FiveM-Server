@@ -104,6 +104,9 @@ local setmetatable = assert(setmetatable)
 local GET_GAME_TIMER = assert(GetGameTimer)
 local GET_CURRENT_RESOURCE_NAME = assert(GetCurrentResourceName)
 
+-- Init randomseed
+randomseed(GET_GAME_TIMER())
+
 --- Utilities for MenuV
 ---@class Utilities
 local Utilities = setmetatable({ __class = 'Utilities' }, {})
@@ -450,8 +453,6 @@ end
 --- Generates a random UUID like: 00000000-0000-0000-0000-000000000000
 ---@return string Random generated UUID
 function Utilities:UUID()
-    randomseed(GET_GAME_TIMER() + random(30720, 92160))
-
     ---@type number[]
     local bytes = {
         random(0, 255),
@@ -503,6 +504,7 @@ end
 
 _G.Utilities = Utilities
 _ENV.Utilities = Utilities
+
 ----------------------- [ MenuV ] -----------------------
 -- GitHub: https://github.com/ThymonA/menuv/
 -- License: GNU General Public License v3.0

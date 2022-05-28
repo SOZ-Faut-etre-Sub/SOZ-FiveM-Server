@@ -63,7 +63,7 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
         -- Remove checks that are not relevent for current vehicle. `citizenid` and `state` always to be checked
         local fieldsToTest = {}
         for field, data in pairs(fields) do
-            if (field == "citizenid" and not type_ == "entreprise") or field == "state" or expectedState[field] then
+            if (field == "citizenid" and type_ ~= "entreprise" and type_ ~= "depot") or field == "state" or expectedState[field] then
                 fieldsToTest[field] = data
             end
         end
@@ -89,6 +89,12 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
 
     return vehicle
 end
+
+QBCore.Functions.CreateCallback("soz-garage:server:IsVehicleOwned", function(source, cb, plate)
+    local vehicle = MySQL.Sync.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {plate})
+
+    cb(vehicle ~= nil)
+end)
 
 QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, type_, plate, expectedState)
     local vehicle = PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedState)
@@ -290,6 +296,25 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
         query = query .. " AND citizenid = ?"
         table.insert(args, player.PlayerData.citizenid)
     end
+
+    local res = MySQL.Sync.execute(query, args)
+    if res == 1 then
+        DespawnVehicle(vehicleNetId)
+        cb(true)
+    else
+        cb(false)
+    end
+end)
+
+QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInDepot", function(source, cb, indexgarage, vehicleNetId, vehicleExtraData)
+    local query = [[
+        UPDATE player_vehicles
+        SET state = 2, garage = ?, fuel = ?, engine = ?, body = ?, mods = ?, parkingtime = ?
+        WHERE plate = ?
+    ]]
+
+    local data = GetVehicleData(vehicleNetId, vehicleExtraData)
+    local args = {indexgarage, data.fuel, data.engineDamage, data.bodyDamage, data.properties, os.time(), data.plate}
 
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then

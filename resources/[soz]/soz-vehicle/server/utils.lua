@@ -4,6 +4,7 @@ function DespawnVehicle(vehicleNetId)
     DeleteEntity(NetworkGetEntityFromNetworkId(vehicleNetId))
 end
 exports("DespawnVehicle", DespawnVehicle)
+RegisterNetEvent("soz-garage:server:DespawnVehicle", DespawnVehicle)
 
 --- Make sure model is loaded on client
 function SpawnVehicle(modelName, coords, mods, fuel)
