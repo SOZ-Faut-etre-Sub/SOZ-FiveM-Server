@@ -2,13 +2,21 @@ import React, {useRef, forwardRef, memo, useState, useEffect, useLayoutEffect, u
 import {IInventoryItem} from "../../types/inventory";
 import styles from "./styles.module.css";
 
+type InventoryItemProps = {
+    item?: IInventoryItem;
+    money?: number;
+    contextMenu?: boolean;
+    interactAction?: any;
+    setInContext?: (inContext: boolean) => void;
+};
 
-const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMenu?: boolean, interactAction?: any }> = memo(({
-                                                                                                                                  item,
-                                                                                                                                  money,
-                                                                                                                                  contextMenu,
-                                                                                                                                  interactAction
-                                                                                                                              }) => {
+const InventoryItem: React.FC<InventoryItemProps> = memo(({
+    item,
+    money,
+    contextMenu,
+    interactAction,
+    setInContext = () => {},
+}) => {
     const [contextData, setContextData] = useState({visible: false, posX: 0, posY: 0});
     const itemRef = useRef<HTMLDivElement>(null);
     const contextRef = useRef<HTMLDivElement>(null);
@@ -16,16 +24,20 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
     const onContextMenuReceived = useCallback((event: MouseEvent) => {
         if (itemRef.current && itemRef.current.contains(event.target as Node)) {
             event.preventDefault();
-            setContextData({visible: true, posX: event.clientX, posY: event.clientY})
+            setContextData({visible: true, posX: event.clientX, posY: event.clientY});
         } else if (contextRef.current && !contextRef.current.contains(event.target as Node)) {
-            setContextData({...contextData, visible: false})
+            setContextData({...contextData, visible: false});
         }
     }, [itemRef, contextRef, setContextData])
     const onClickReceived = useCallback((event: MouseEvent) => {
         if (contextRef.current && !contextRef.current.contains(event.target as Node)) {
-            setContextData({...contextData, visible: false})
+            setContextData({...contextData, visible: false});
         }
     }, [contextRef, setContextData])
+
+    useEffect(() => {
+        setInContext(contextData.visible);
+    }, [contextData])
 
     useEffect(() => {
         window.addEventListener('click', onClickReceived)
@@ -64,6 +76,13 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
         return `${amount} ${item.label} ${extraLabel} ${expiration}`
     }
 
+    const createInteractAction = (action: string) => {
+        return () => {
+            setContextData({...contextData, visible: false});
+            interactAction(action, item)
+        };
+    };
+
     return (
         <div ref={itemRef} className={styles.item} data-item={JSON.stringify(item)}>
             {item && <img className={styles.icon} src={`https://nui-img/soz-items/${item.name}`} alt=""/>}
@@ -83,29 +102,17 @@ const InventoryItem: React.FC<{ item?: IInventoryItem, money?: number, contextMe
                 <div ref={contextRef} className={styles.contextMenu}
                      style={{display: `${contextData.visible ? 'block' : 'none'}`, left: contextData.posX, top: contextData.posY}}>
                     <div className={styles.optionsList}>
-                        {item && (item.useable || item.type === 'weapon') && <li className={styles.optionListItem} onClick={() => {
-                            setContextData({...contextData, visible: false})
-                            interactAction('useItem', item)
-                        }}>
+                        {item && (item.useable || item.type === 'weapon') && <li className={styles.optionListItem} onClick={createInteractAction('useItem')}>
                             {item.type === 'weapon' ? 'Équiper' : 'Utiliser'}
                         </li>}
-                        {item && <li className={styles.optionListItem} onClick={() => {
-                            setContextData({...contextData, visible: false})
-                            interactAction('giveItem', item)
-                        }}>
+                        {item && <li className={styles.optionListItem} onClick={createInteractAction('giveItem')}>
                             Donner
                         </li>}
                         {money ? (<>
-                            <li className={styles.optionListItem} onClick={() => {
-                                setContextData({...contextData, visible: false})
-                                interactAction('giveMoney', item)
-                            }}>
+                            <li className={styles.optionListItem} onClick={createInteractAction('giveMoney')}>
                                 Donner en propre
                             </li>
-                            <li className={styles.optionListItem} onClick={() => {
-                                setContextData({...contextData, visible: false})
-                                interactAction('giveMarkedMoney', item)
-                            }}>
+                            <li className={styles.optionListItem} onClick={createInteractAction('giveMarkedMoney')}>
                                 Donner en sale
                             </li>
                         </>) : null}
