@@ -30,9 +30,6 @@ local reboot = function()
 
     print("[soz-reboot] Sauvegarde des comptes bancaires...")
     exports["soz-bank"]:saveAccounts()
-
-    print("[soz-reboot] Extinction du serveur...")
-    ExecuteCommand("quit")
 end
 
 local thunder = function()
