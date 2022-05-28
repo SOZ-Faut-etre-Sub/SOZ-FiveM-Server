@@ -121,6 +121,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
         ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
         ["depot"] = {state = VehicleState.InPound},
         ["entreprise"] = {state = VehicleState.InEntreprise, job = player.PlayerData.job.id},
+        ["housing"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
     }
     local allArgs = argsByType[type_]
     if not allArgs then
