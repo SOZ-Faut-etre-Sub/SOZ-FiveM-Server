@@ -875,8 +875,10 @@ end)
 
 local function saveVehicle()
     local veh = Config.AttachedVehicle
-    local myCar = QBCore.Functions.GetVehicleProperties(veh)
-    TriggerServerEvent("updateVehicle", myCar)
+    local plate = QBCore.Functions.GetPlate(veh)
+    local properties = QBCore.Functions.GetVehicleProperties(veh)
+
+    TriggerServerEvent("soz-bennys:server:SaveVehicleMods", properties, plate)
 end
 
 VehiculeOptions:On("open", function(menu)
