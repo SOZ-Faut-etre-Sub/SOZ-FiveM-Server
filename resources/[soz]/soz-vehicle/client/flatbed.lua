@@ -91,7 +91,9 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     BedPos = vector3(BedPos.x, VehicleInfo.Active.Pos.y, BedPos.z)
                 end
                 GetOwnership(entity)
-                GetOwnership(AttachedVehicle)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedPos.y == VehicleInfo.Active.Pos.y
@@ -113,7 +115,9 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     end
                 end
                 GetOwnership(entity)
-                GetOwnership(AttachedVehicle)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedRot.x == VehicleInfo.Active.Rot.x and BedPos.z == VehicleInfo.Active.Pos.z
@@ -140,7 +144,9 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     end
                 end
                 GetOwnership(entity)
-                GetOwnership(AttachedVehicle)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedRot.x == VehicleInfo.Default.Rot.x and BedPos.z == VehicleInfo.Default.Pos.z
@@ -153,7 +159,9 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     BedPos = vector3(BedPos.x, VehicleInfo.Default.Pos.y, BedPos.z)
                 end
                 GetOwnership(entity)
-                GetOwnership(AttachedVehicle)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedPos.y == VehicleInfo.Default.Pos.y
@@ -195,13 +203,13 @@ AddEventHandler("soz-flatbed:client:tpaction", function(flatbed, vehicle)
     if Entity(flatbed).state.prop then
         if not Entity(flatbed).state.towedVehicle then
             local VehicleInfo = GetVehicleInfo(GetEntityModel(flatbed))
-            local PropID = NetworkGetEntityFromNetworkId(Entity(flatbed).state.prop)
+            local PropID = Entity(flatbed).state.prop
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
             if DoesEntityExist(vehicle) and vehicle ~= flatbed then
                 GetOwnership(flatbed)
                 GetOwnership(vehicle)
-                AttachEntityToEntity(vehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false,
-                                     false, nil, true)
+                AttachEntityToEntity(vehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false,
+                                     false, false, nil, true)
                 TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(flatbed), "towedVehicle", VehToNet(vehicle))
                 TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                 exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
