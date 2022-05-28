@@ -40,12 +40,23 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 state = VehicleState.InEntreprise,
                 places = PlacesEntreprise,
             },
+            ["housing"] = {
+                type = "housing",
+                zones = nil,
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_personal", "soz", "parkinghousing:vehicle:car"),
+                submenu = nil,
+                excludeVehClass = {14, 15, 16},
+                state = VehicleState.InGarage,
+                places = nil,
+            },
         }
 
+        -- Generate submenus
         GarageTypes.public.submenu = MenuV:InheritMenu(GarageTypes.public.menu, {Title = nil})
         GarageTypes.private.submenu = MenuV:InheritMenu(GarageTypes.private.menu, {Title = nil})
         GarageTypes.depot.submenu = MenuV:InheritMenu(GarageTypes.depot.menu, {Title = nil})
         GarageTypes.entreprise.submenu = MenuV:InheritMenu(GarageTypes.entreprise.menu, {Title = nil})
+        GarageTypes.housing.submenu = MenuV:InheritMenu(GarageTypes.housing.menu, {Title = nil})
     end
 end)
 
@@ -61,7 +72,29 @@ AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
                 })
             end
         end
+
+        -- Generate zone and place for player's house
+        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end)
+end)
+
+AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
+    local house = QBCore.Functions.TriggerRpc("soz-housing:server:GetPlayerHouse")
+    if not house or (house and not house.garage_zone) then
+        return
+    end
+
+    local gData = json.decode(house.garage_zone)
+    local zone = BoxZone:Create(vector3(gData.x, gData.y, gData.z), 8.0, 6.0, {
+        name = "soz-garage:" .. house.identifier,
+        heading = gData.heading,
+        minZ = gData.z - 2.0,
+        maxZ = gData.z + 2.0,
+        data = {indexGarage = house.identifier},
+    })
+
+    GarageTypes.housing.zones = {[house.identifier] = zone}
+    GarageTypes.housing.places = {["p1"] = zone}
 end)
 
 ---
@@ -425,7 +458,7 @@ local function GenerateMenu(type_, garage, indexgarage)
     end
 end
 
-RegisterNetEvent("qb-garage:client:Menu", function(type, garage, indexgarage)
+RegisterNetEvent("soz-garage:client:Menu", function(type, garage, indexgarage)
     GenerateMenu(type, garage, indexgarage)
 end)
 
