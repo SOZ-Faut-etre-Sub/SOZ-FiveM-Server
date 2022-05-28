@@ -25,7 +25,6 @@ RegisterNetEvent("soz-flatbed:server:setupstate", function(entity, name, value)
     local Vehicle = NetworkGetEntityFromNetworkId(entity)
     if name == "prop" then
         Entity(Vehicle).state.prop = value
-        print(Entity(Vehicle).state.prop )
     elseif name == "busy" then
         Entity(Vehicle).state.busy = value
     elseif name == "status" then
