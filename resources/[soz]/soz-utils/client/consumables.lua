@@ -158,7 +158,7 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
                 [4] = {Drawable = 94, Texture = 0, Palette = 0},
                 [6] = {Drawable = 67, Texture = 0, Palette = 0},
                 [8] = {Drawable = 151, Texture = 0, Palette = 0},
-                [11] = {Drawable = 246, Texture = 0, Palette = 0},
+                [11] = {Drawable = 243, Texture = 0, Palette = 0},
             },
             Props = {},
         },
