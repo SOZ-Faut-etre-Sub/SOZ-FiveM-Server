@@ -248,6 +248,7 @@ const HUDColors: { [key: string]: string; } = {
 
 
 const formatText = (text: string) => {
+    if (text === undefined) return '';
     text = text.replace(/~n~/g, '<br />');
     text = text.replace(/~h~/g, '<strong>');
 
