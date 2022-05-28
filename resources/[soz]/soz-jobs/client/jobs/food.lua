@@ -429,11 +429,13 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
 end)
 
 FoodJob.Functions.GetItemCountFromInventory = function(itemName)
+    local count = 0
     for _, item in pairs(PlayerData.items or {}) do
         if item.name == itemName then
-            return item.amount
+            count = count + item.amount
         end
     end
+    return count
 end
 
 AddEventHandler("jobs:client:food-process-milk", function()
