@@ -66,8 +66,8 @@ AddEventHandler("soz-flatbed:client:getProp", function(lastveh)
     local NewBed = CreateObjectNoOffset(GetHashKey(Config.BedProp), GetEntityCoords(lastveh), true, false, false)
     GetOwnership(lastveh)
     AttachEntityToEntity(NewBed, lastveh, nil, VehicleInfo.Default.Pos, VehicleInfo.Default.Rot, true, false, true, false, nil, true)
-    TriggerServerEvent("soz-flatbed:server:editProp", NetworkGetNetworkIdFromEntity(lastveh), "Prop", NetworkGetNetworkIdFromEntity(NewBed))
-    TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "prop", NewBed)
+    TriggerServerEvent("soz-flatbed:server:editProp", VehToNet(lastveh), "Prop", NetworkGetNetworkIdFromEntity(NewBed))
+    TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "prop", NetworkGetNetworkIdFromEntity(NewBed))
     TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "busy", false)
     TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "status", false)
     TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "towedVehicle", nil)
@@ -77,7 +77,8 @@ RegisterNetEvent("soz-flatbed:client:action")
 AddEventHandler("soz-flatbed:client:action", function(entity, Action)
     if Entity(entity).state.prop then
         local VehicleInfo = GetVehicleInfo(GetEntityModel(entity))
-        local PropID = Entity(entity).state.prop
+        local PropID = NetworkGetEntityFromNetworkId(Entity(entity).state.prop)
+        local AttachedVehicle = NetworkGetEntityFromNetworkId(Entity(entity).state.towedVehicle)
         if Action == "lower" then
             exports["soz-hud"]:DrawNotification("Le plateau descend !")
             local BedPos = VehicleInfo.Default.Pos
@@ -90,9 +91,10 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     BedPos = vector3(BedPos.x, VehicleInfo.Active.Pos.y, BedPos.z)
                 end
                 GetOwnership(entity)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
-                GetOwnership(entity)
-                GetOwnership(PropID)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedPos.y == VehicleInfo.Active.Pos.y
 
@@ -113,9 +115,10 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     end
                 end
                 GetOwnership(entity)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
-                GetOwnership(entity)
-                GetOwnership(PropID)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedRot.x == VehicleInfo.Active.Rot.x and BedPos.z == VehicleInfo.Active.Pos.z
             TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(entity), "status", true)
@@ -141,6 +144,9 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     end
                 end
                 GetOwnership(entity)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedRot.x == VehicleInfo.Default.Rot.x and BedPos.z == VehicleInfo.Default.Pos.z
@@ -153,6 +159,9 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                     BedPos = vector3(BedPos.x, VehicleInfo.Default.Pos.y, BedPos.z)
                 end
                 GetOwnership(entity)
+                if DoesEntityExist(AttachedVehicle) then
+                    GetOwnership(AttachedVehicle)
+                end
                 DetachEntity(PropID, false, false)
                 AttachEntityToEntity(PropID, entity, nil, BedPos, BedRot, true, false, true, false, nil, true)
             until BedPos.y == VehicleInfo.Default.Pos.y
@@ -163,17 +172,19 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
                 local ClosestVehicle = GetNearestVehicle(AttachCoords, VehicleInfo.Radius)
                 if DoesEntityExist(ClosestVehicle) and ClosestVehicle ~= entity then
                     local VehicleCoords = GetEntityCoords(ClosestVehicle)
+                    GetOwnership(entity)
                     GetOwnership(ClosestVehicle)
                     AttachEntityToEntity(ClosestVehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, VehicleCoords), vector3(0.0, 0.0, 0.0), true,
                                          false, false, false, nil, true)
-                    TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(entity), "towedVehicle", ClosestVehicle)
+                    TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(entity), "towedVehicle", VehToNet(ClosestVehicle))
                     TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                     exports["soz-hud"]:DrawNotification("Vous avez attaché le véhicule !")
                 end
             end
         elseif Action == "detach" then
             if Entity(entity).state.towedVehicle then
-                local AttachedVehicle = Entity(entity).state.towedVehicle
+                local AttachedVehicle = NetworkGetEntityFromNetworkId(Entity(entity).state.towedVehicle)
+                GetOwnership(entity)
                 GetOwnership(AttachedVehicle)
                 DetachEntity(AttachedVehicle, true, true)
                 TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(entity), "towedVehicle", nil)
@@ -188,38 +199,39 @@ AddEventHandler("soz-flatbed:client:action", function(entity, Action)
 end)
 
 RegisterNetEvent("soz-flatbed:client:tpaction")
-AddEventHandler("soz-flatbed:client:tpaction", function(lastveh, entity)
-    if Entity(lastveh).state.prop then
-        local VehicleInfo = GetVehicleInfo(GetEntityModel(lastveh))
-        local PropID = Entity(lastveh).state.prop
-        if not Entity(lastveh).state.towedVehicle then
+AddEventHandler("soz-flatbed:client:tpaction", function(flatbed, vehicle)
+    if Entity(flatbed).state.prop then
+        if not Entity(flatbed).state.towedVehicle then
+            local VehicleInfo = GetVehicleInfo(GetEntityModel(flatbed))
+            local PropID = Entity(flatbed).state.prop
             local AttachCoords = GetOffsetFromEntityInWorldCoords(PropID, vector3(VehicleInfo.Attach.x, VehicleInfo.Attach.y, 0.6))
-            if DoesEntityExist(entity) and entity ~= lastveh then
-                GetOwnership(lastveh)
-                GetOwnership(entity)
-                AttachEntityToEntity(entity, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false, false,
-                                     false, nil, true)
-                TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "towedVehicle", entity)
+            if DoesEntityExist(vehicle) and vehicle ~= flatbed then
+                GetOwnership(flatbed)
+                GetOwnership(vehicle)
+                AttachEntityToEntity(vehicle, PropID, nil, GetOffsetFromEntityGivenWorldCoords(PropID, AttachCoords), vector3(0.0, 0.0, 0.6), true, false,
+                                     false, false, nil, true)
+                TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(flatbed), "towedVehicle", VehToNet(vehicle))
                 TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
                 exports["soz-hud"]:DrawNotification("Vous avez mis le véhicule sur le plateau !")
             end
         else
-            local AttachedVehicle = Entity(lastveh).state.towedVehicle
+            local AttachedVehicle = NetworkGetEntityFromNetworkId(Entity(flatbed).state.towedVehicle)
             local AttachedCoords = GetEntityCoords(AttachedVehicle)
-            local FlatCoords = GetEntityCoords(lastveh)
-            GetOwnership(lastveh)
+            local FlatCoords = GetEntityCoords(flatbed)
+            GetOwnership(flatbed)
             GetOwnership(AttachedVehicle)
             DetachEntity(AttachedVehicle, true, true)
+            GetOwnership(AttachedVehicle)
             SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
                             FlatCoords.z, false, false, false, false)
-            TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "towedVehicle", nil)
+            TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(flatbed), "towedVehicle", nil)
             TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
             exports["soz-hud"]:DrawNotification("Vous avez enlevé le véhicule du plateau !")
         end
     else
-        TriggerEvent("soz-flatbed:client:getProp", lastveh)
+        TriggerEvent("soz-flatbed:client:getProp", flatbed)
     end
-    TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(lastveh), "busy", false)
+    TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(flatbed), "busy", false)
 end)
 
 Citizen.CreateThread(function()
@@ -246,8 +258,8 @@ Citizen.CreateThread(function()
                     end
                 end
             else
-                if Entity(LastVehicle).state.towedVehicle and DoesEntityExist(Entity(LastVehicle).state.towedVehicle) then
-                    DisableCamCollisionForEntity(Entity(LastVehicle).state.towedVehicle)
+                if Entity(LastVehicle).state.towedVehicle and DoesEntityExist(NetworkGetEntityFromNetworkId(Entity(LastVehicle).state.towedVehicle)) then
+                    DisableCamCollisionForEntity(NetworkGetEntityFromNetworkId(Entity(LastVehicle).state.towedVehicle))
                 end
             end
         else
@@ -325,15 +337,13 @@ RegisterNetEvent("soz-flatbed:client:callaction", function(entity)
 end)
 
 CreateThread(function()
-    --[[
     exports["qb-target"]:AddGlobalVehicle({
         options = {
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
                 event = "soz-flatbed:client:callaction",
-                feature = "flatbed-ramp",
-                label = "TEST Descendre",
+                label = "NEW Descendre",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
@@ -352,8 +362,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Desactiver.png",
                 event = "soz-flatbed:client:callaction",
-                feature = "flatbed-ramp",
-                label = "TEST Relever",
+                label = "NEW Relever",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
@@ -372,8 +381,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Attacher.png",
                 event = "soz-flatbed:client:callchaines",
-                feature = "flatbed-ramp",
-                label = "TEST Attacher",
+                label = "NEW Attacher",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
@@ -392,8 +400,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Detacher.png",
                 event = "soz-flatbed:client:callchaines",
-                feature = "flatbed-ramp",
-                label = "TEST Détacher",
+                label = "NEW Détacher",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
@@ -412,8 +419,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
                 event = "soz-flatbed:client:calltp",
-                feature = "flatbed-ramp",
-                label = "TEST Démorquer",
+                label = "NEW Démorquer",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
@@ -432,8 +438,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Mettre.png",
                 event = "soz-flatbed:client:calltp",
-                feature = "flatbed-ramp",
-                label = "TEST Remorquer",
+                label = "NEW Remorquer",
                 action = function(entity)
                     local lastveh = GetVehiclePedIsIn(PlayerPedId(), true)
                     TriggerEvent("soz-flatbed:client:calltp", entity, lastveh)
@@ -455,7 +460,7 @@ CreateThread(function()
             },
         },
         distance = 3,
-    })]]
+    })
     exports["qb-target"]:AddTargetModel(-669511193, {
         options = {
             {
