@@ -17,6 +17,11 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
         return
     end
 
+    -- Has already a disease do not continue
+    if DiseaseLoop then
+        return
+    end
+
     if disease == "rhume" then
         DiseaseLoop = true
 
