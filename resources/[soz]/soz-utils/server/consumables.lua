@@ -5,35 +5,25 @@ local function removeItemAndSendEvent(source, item, event, extra)
     end
 end
 
-local function itemIsExpired(item)
-    if item.metadata.expiration ~= nil then
-        local year, month, day = string.match(item.metadata.expiration, "(%d+)-(%d+)-(%d+)")
-        return os.time({year = year, month = month, day = day}) < os.time()
-    end
-end
-exports("ItemIsExpired", itemIsExpired)
-
 --- Eat
 for name, _ in pairs(ConsumablesEat) do
     QBCore.Functions.CreateUseableItem(name, function(source, item)
-        removeItemAndSendEvent(source, item, "consumables:client:Eat", itemIsExpired(item))
+        removeItemAndSendEvent(source, item, "consumables:client:Eat", exports["soz-utils"]:ItemIsExpired(item))
     end)
 end
 
 --- Drink
 for name, _ in pairs(ConsumablesDrink) do
     QBCore.Functions.CreateUseableItem(name, function(source, item)
-        removeItemAndSendEvent(source, item, "consumables:client:Drink", itemIsExpired(item))
+        removeItemAndSendEvent(source, item, "consumables:client:Drink", exports["soz-utils"]:ItemIsExpired(item))
     end)
 end
 
 --- Alcohol
 for name, _ in pairs(ConsumablesAlcohol) do
     QBCore.Functions.CreateUseableItem(name, function(source, item)
-        removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol", {
-            model = "prop_amb_beer_bottle",
-            expired = itemIsExpired(item),
-        })
+        removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol",
+                               {model = "prop_amb_beer_bottle", expired = exports["soz-utils"]:ItemIsExpired(item)})
     end)
 end
 

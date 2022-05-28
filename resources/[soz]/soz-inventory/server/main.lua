@@ -573,6 +573,8 @@ function Inventory.GetItemSlots(inv, item, metadata)
     end
     return slots, totalAmount, emptySlots
 end
+RegisterNetEvent("inventory:server:GetItemSlots", Inventory.GetItemSlots)
+exports("GetItemSlots", Inventory.GetItemSlots)
 
 function Inventory.SetSlot(inv, item, amount, metadata, slot)
     inv = Inventory(inv)
@@ -600,6 +602,16 @@ function Inventory.SetSlot(inv, item, amount, metadata, slot)
     end
     inv.changed = true
 end
+
+function Inventory.GetSlot(inv, slot)
+    inv = Inventory(inv)
+    if not slot then
+        return nil
+    end
+
+    return inv.items[slot]
+end
+exports("GetSlot", Inventory.GetSlot)
 
 ---
 --- Create/Drop storage
