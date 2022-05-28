@@ -221,6 +221,7 @@ AddEventHandler("soz-flatbed:client:tpaction", function(flatbed, vehicle)
             GetOwnership(flatbed)
             GetOwnership(AttachedVehicle)
             DetachEntity(AttachedVehicle, true, true)
+            GetOwnership(AttachedVehicle)
             SetEntityCoords(AttachedVehicle, FlatCoords.x - ((FlatCoords.x - AttachedCoords.x) * 4), FlatCoords.y - ((FlatCoords.y - AttachedCoords.y) * 4),
                             FlatCoords.z, false, false, false, false)
             TriggerServerEvent("soz-flatbed:server:setupstate", VehToNet(flatbed), "towedVehicle", nil)
