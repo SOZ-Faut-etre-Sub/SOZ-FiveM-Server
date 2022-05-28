@@ -1,14 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterNetEvent("soz-bennys:server:SaveVehicleProps", function(vehicleProps)
-    if IsVehicleOwned(vehicleProps.plate) then
-        MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {
-            json.encode(vehicleProps),
-            vehicleProps.plate,
-        })
-    end
-end)
-
 RegisterNetEvent("soz-bennys:server:Repair", function(veh, id)
     TriggerClientEvent("soz-bennys:client:Repair", id, veh)
 end)
@@ -65,8 +56,8 @@ RegisterNetEvent("soz-bennys:server:SetAttachedVehicle", function(veh)
     end
 end)
 
-RegisterNetEvent("soz-bennys:server:SaveVehicleMods", function(mods)
-    MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {json.encode(mods), mods.plate})
+RegisterNetEvent("soz-bennys:server:SaveVehicleMods", function(mods, plate)
+    MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {json.encode(mods), plate})
 end)
 
 function IsVehicleOwned(plate)
