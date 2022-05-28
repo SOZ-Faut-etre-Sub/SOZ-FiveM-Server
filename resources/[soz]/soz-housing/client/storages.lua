@@ -53,7 +53,7 @@ AddEventHandler("soz-housing:client:SetStorage", function(GlobalZone)
             if zone.identifier and zone.stash_position then
 
                 local money = json.decode(zone.money_position)
-                
+
                 --[[
                 exports["qb-target"]:AddBoxZone(zone.identifier .. "_money", vector3(money["x"], money["y"], money["z"]), money["sx"], money["sy"], {
                     name = zone.identifier .. "_money",
