@@ -13,6 +13,7 @@ const PlayerInventory = () => {
     const [playerMoney, setPlayerMoney] = useState<number>(0);
     const [playerInventory, setPlayerInventory] = useState<IInventoryEvent>({id: 'source', type: '', weight: 0, maxWeight: 0});
     const [playerInventoryItems, setPlayerInventoryItems] = useState<IInventoryItem[]>([]);
+    const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
     const interactAction = useCallback((action: string, item: IInventoryItem) => {
         fetch(`https://soz-inventory/player/${action}`, {
@@ -29,6 +30,12 @@ const PlayerInventory = () => {
     const transfertItem = useCallback((event: any) => {
         if (event.item.dataset.item === undefined) return
 
+        const item = JSON.parse(event.item.dataset.item);
+
+        if (inContextMenu[item.id]) {
+            return;
+        }
+
         fetch(`https://soz-inventory/player/giveItemToTarget`, {
             method: 'POST',
             headers: {
@@ -38,7 +45,7 @@ const PlayerInventory = () => {
         }).then(() => {
             setDisplay(false);
         });
-    }, [setDisplay]);
+    }, [setDisplay, inContextMenu]);
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === "openPlayerInventory") {
@@ -88,6 +95,12 @@ const PlayerInventory = () => {
 
     if (playerInventory === undefined) return null;
 
+    const createInContext = useCallback((id: string | number) => {
+        return (inContext: boolean) => setInContextMenu((contextMenu) => {
+            return { ...contextMenu, [id]: inContext };
+        });
+    }, [setInContextMenu])
+
     return (
         <main ref={menuRef} className={
             cn(styles.container, {
@@ -110,9 +123,9 @@ const PlayerInventory = () => {
                 animation={150}
                 onEnd={transfertItem}
             >
-                <InventoryItem key="player_money" money={playerMoney} contextMenu={true} interactAction={interactAction} />
+                <InventoryItem setInContext={(inContext) => setInContextMenu({ ...inContextMenu, 'player_money': inContext })} key="player_money" money={playerMoney} contextMenu={true} interactAction={interactAction} />
                 {playerInventoryItems.map(item => (
-                    <InventoryItem key={item.id} item={item} contextMenu={true} interactAction={interactAction} />
+                    <InventoryItem setInContext={createInContext(item.id)} key={item.id} item={item} contextMenu={true} interactAction={interactAction} />
                 ))}
             </ReactSortable>
         </main>
