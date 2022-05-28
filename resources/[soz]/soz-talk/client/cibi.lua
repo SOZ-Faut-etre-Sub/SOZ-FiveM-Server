@@ -111,6 +111,10 @@ RegisterNUICallback("cibi/enable", function(data, cb)
 end)
 
 RegisterNUICallback("cibi/change_frequency", function(data, cb)
+    if not Entity(currentVehicle).state.radioEnabled then
+        cb("nok")
+        return
+    end
     if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", {
             frequency = tonumber(data.primary),
@@ -135,6 +139,10 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
 end)
 
 RegisterNUICallback("cibi/change_volume", function(data, cb)
+    if not Entity(currentVehicle).state.radioEnabled then
+        cb("nok")
+        return
+    end
     if data.primary then
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", {
             frequency = primaryRadio,
@@ -159,6 +167,10 @@ RegisterNUICallback("cibi/change_volume", function(data, cb)
 end)
 
 RegisterNUICallback("cibi/change_ear", function(data, cb)
+    if not Entity(currentVehicle).state.radioEnabled then
+        cb("nok")
+        return
+    end
     --[[local state = LocalPlayer.state["radio-lr"]
     if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio",
