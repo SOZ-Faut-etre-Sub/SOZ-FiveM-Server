@@ -2,6 +2,8 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local garage_props = GetHashKey("soz_prop_paystation")
 
+local spawnLock = {}
+
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(100)
@@ -29,6 +31,31 @@ AddEventHandler("onResourceStart", function(resource)
             end
         end
     end
+end)
+
+--
+-- Spawn Lock
+--
+local function IsSpawnLocked(plate)
+    return spawnLock[plate] ~= nil
+end
+
+local function SetSpawnLock(plate, lockThisPlate)
+    if lockThisPlate and IsSpawnLocked(plate) then
+        return -1
+    end
+
+    if lockThisPlate then
+        spawnLock[plate] = true
+    elseif spawnLock ~= nil then
+        spawnLock[plate] = nil
+    end
+
+    return IsSpawnLocked(plate)
+end
+
+QBCore.Functions.CreateCallback("soz-garage:server:SetSpawnLock", function(source, cb, plate, lockThisPlate)
+    cb(SetSpawnLock(plate, lockThisPlate))
 end)
 
 ---Precheck data stored in DB (citizenid, plate, state)
@@ -180,6 +207,8 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
 
     TriggerClientEvent("vehiclekeys:client:SetOwner", source, mods.plate)
 
+    SetSpawnLock(mods.plate, false)
+
     cb(veh)
 end)
 
@@ -201,7 +230,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
         cb(true)
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, Lang:t("error.not_enough"))
+        TriggerClientEvent("hud:client:DrawNotification", source, Lang:t("error.not_enough"), "error")
         cb(false)
     end
 end)
