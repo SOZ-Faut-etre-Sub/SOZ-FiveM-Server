@@ -113,7 +113,15 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
         const {type, action, frequency, volume, ear, isPrimary, isEnabled} = event.data as TalkMessageData;
 
         if (type === props.type) {
-            if (action === 'open') {
+            if (action === 'reset') {
+                setDisplay(false)
+                setEnabled(false)
+                setCurrentFrequency('primary')
+                setPrimaryFrequency({frequency: 0.0, volume: 100, ear: Ear.Both})
+                setSecondaryFrequency({frequency: 0.0, volume: 100, ear: Ear.Both})
+                setValue('primaryFrequency', null)
+                setValue('secondaryFrequency', null)
+            } else if (action === 'open') {
                 setDisplay(true)
             } else if (action === 'close') {
                 setDisplay(false)
@@ -150,12 +158,17 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
             }
         }
     }, [])
+    const onKeyDown = useCallback((event: KeyboardEvent) => {
+        if (event.key === 'Tab') event.preventDefault();
+    }, [])
 
     useEffect(() => {
         window.addEventListener('message', onMessageReceived)
+        window.addEventListener('keydown', onKeyDown)
 
         return () => {
             window.removeEventListener('message', onMessageReceived)
+            window.removeEventListener('keydown', onKeyDown)
         }
     }, []);
 
