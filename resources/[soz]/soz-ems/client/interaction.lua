@@ -49,6 +49,7 @@ CreateThread(function()
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
                 end,
                 action = function(entity)
+                    TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                     QBCore.Functions.Progressbar("Revive", "Vous réanimez la personne..", 10000, false, true,
                                                  {
                         disableMovement = true,
@@ -58,7 +59,6 @@ CreateThread(function()
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "bloodbag")
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                        TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                         TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {},
                                            {
                             target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
