@@ -6,7 +6,6 @@ const Input= () => {
     const [title, setTitle] = useState<string|null>(null);
     const [maxChar, setMaxChar] = useState<number>(32);
     const [value, setValue] = useState<string>('');
-    const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'draw_input') {
@@ -14,7 +13,7 @@ const Input= () => {
             if (event.data.maxChar) setMaxChar(event.data.maxChar)
             if (event.data.content) setValue(event.data.content)
         }
-    }, [inputRef, setTitle, setMaxChar, setValue])
+    }, [setTitle, setMaxChar, setValue])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         setValue(event.target.value)
@@ -60,23 +59,16 @@ const Input= () => {
             });
         }
     }
-    const onClickReceived = (event: MouseEvent) => {
-        if (title !== null && inputRef.current) inputRef.current.focus()
-    }
 
     useEffect(() => {
         window.addEventListener('message', onMessageReceived)
         window.addEventListener('keyup', onKeyUpReceived)
-        window.addEventListener('click', onClickReceived)
-        window.addEventListener('contextmenu', onClickReceived)
 
         return () => {
             window.removeEventListener('message', onMessageReceived)
             window.removeEventListener('keyup', onKeyUpReceived)
-            window.removeEventListener('click', onClickReceived)
-            window.removeEventListener('contextmenu', onClickReceived)
         }
-    }, [inputRef, onMessageReceived, onKeyUpReceived, onClickReceived]);
+    }, [onMessageReceived, onKeyUpReceived]);
 
     return (
         <div className={cn(styles.container, {
@@ -91,9 +83,9 @@ const Input= () => {
                     <h2>{title}</h2>
 
                     {maxChar <= 64 ? (
-                        <input type="text" ref={inputRef} autoFocus={true} value={value} onChange={handleChange} maxLength={maxChar}/>
+                        <input type="text" autoFocus={true} value={value} onChange={handleChange} maxLength={maxChar}/>
                     ) : (
-                        <textarea ref={inputRef} autoFocus={true} value={value} onChange={handleChange} onKeyDown={onEnterPress} maxLength={maxChar} rows={5}/>
+                        <textarea autoFocus={true} value={value} onChange={handleChange} onKeyDown={onEnterPress} maxLength={maxChar} rows={5}/>
                     )}
                 </>}
             </form>

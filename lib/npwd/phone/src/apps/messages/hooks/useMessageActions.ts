@@ -64,7 +64,7 @@ export const useMessageActions = (): MessageActionProps => {
                 setMessageConversation(resp.data);
             });
         },
-        [messageLoading, setMessages],
+        [messageLoading, setMessages, setMessageConversation],
     );
 
     const deleteLocalMessage = useCallback(
