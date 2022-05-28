@@ -38,7 +38,6 @@ local function powerOffRadio()
         TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio)
     end
     exports["soz-voip"]:SetRadioShortRangePowerState(false)
-    SendNUIMessage({type = "radio", action = "reset"})
 end
 
 local function toggleRadio(toggle)
@@ -184,6 +183,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
 
     if not haveItem then
         powerOffRadio()
+        SendNUIMessage({type = "radio", action = "reset"})
     end
 end)
 
