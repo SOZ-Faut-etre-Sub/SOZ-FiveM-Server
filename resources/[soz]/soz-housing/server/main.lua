@@ -154,6 +154,30 @@ QBCore.Functions.CreateCallback("soz-housing:server:GetAvailableHousing", functi
     cb(AvailableHousing)
 end)
 
+RegisterNetEvent("soz-housing:server:SetCoordExitHousing")
+AddEventHandler("soz-housing:server:SetCoordExitHousing", function(val)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not val then
+        Player.Functions.SetMetaData("savedcoordexithousing", false)
+    else
+        local coord = "{\"x\": " .. val.x .. ", \"y\": " .. val.y .. ", \"z\": " .. val.z .. "}"
+
+        Player.Functions.SetMetaData("savedcoordexithousing", coord)
+    end
+end)
+
+QBCore.Functions.CreateCallback("soz-housing:server:IsInsideHousing", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local IsInsideHousing = Player.PlayerData.metadata["savedcoordexithousing"]
+    print(IsInsideHousing)
+
+    if IsInsideHousing == nil then
+        IsInsideHousing = false
+    end
+
+    cb(IsInsideHousing)
+end)
+
 QBCore.Functions.CreateCallback("soz-housing:server:GetPlayerHouse", function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
     cb(MySQL.Sync.fetchSingle("SELECT * FROM player_house WHERE owner = @citizenid", {

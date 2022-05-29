@@ -1,3 +1,5 @@
+SavedCoordExitHousing = false
+
 RegisterNetEvent("soz-housing:client:SetExit")
 AddEventHandler("soz-housing:client:SetExit", function(GlobalZone)
     Citizen.CreateThread(function()
@@ -17,7 +19,9 @@ AddEventHandler("soz-housing:client:SetExit", function(GlobalZone)
                             label = "sortir",
                             icon = "c:housing/entrer.png",
                             canInteract = function()
-                                return IsInside
+                                SavedCoordExitHousing = QBCore.Functions.TriggerRpc("soz-housing:server:IsInsideHousing", PlayerPedId())
+                                Wait(100)
+                                return SavedCoordExitHousing
                             end,
                             action = function()
                                 TriggerEvent("soz-housing:client:Exit")
@@ -33,6 +37,7 @@ end)
 
 RegisterNetEvent("soz-housing:client:Exit")
 AddEventHandler("soz-housing:client:Exit", function()
+    local exit = json.decode(SavedCoordExitHousing)
     QBCore.Functions.Progressbar("exit", "Ferme la porte", 1000, false, true,
                                  {
         disableMovement = true,
@@ -40,7 +45,8 @@ AddEventHandler("soz-housing:client:Exit", function()
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function() -- Done
-        SetPedCoordsKeepVehicle(PlayerPedId(), LastLocation)
+        SetPedCoordsKeepVehicle(PlayerPedId(), exit["x"], exit["y"], exit["z"])
+        TriggerServerEvent("soz-housing:server:SetCoordExitHousing", false)
     end, function() -- Cancel
     end)
     IsInside = false
