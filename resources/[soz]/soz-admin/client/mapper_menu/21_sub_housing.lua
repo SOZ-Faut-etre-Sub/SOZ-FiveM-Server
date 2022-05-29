@@ -93,6 +93,10 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         value = nil,
         select = function()
             NewName = exports["soz-hud"]:Input("Nom du l'habitation:", 50)
+            if NewName == nil or #NewName == 0 then
+                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                return
+            end
             TriggerServerEvent("soz-admin:server:housing:ChangeName", NewName, CurrentHousingData.identifier)
         end,
     })
