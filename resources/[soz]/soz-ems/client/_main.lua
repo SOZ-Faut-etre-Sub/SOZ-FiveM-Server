@@ -8,6 +8,7 @@ isInHospitalBed = false
 HospitalBedId = nil
 DeathTime = 0
 Callems = false
+IsItt = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()

@@ -996,9 +996,6 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
                     action = function()
                         TriggerEvent("soz-bennys:client:OpenCloakroomMenu")
                     end,
-                    canInteract = function()
-                        return OnDuty
-                    end,
                     job = "bennys",
                 },
             },
