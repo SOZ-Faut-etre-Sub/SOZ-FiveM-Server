@@ -339,6 +339,7 @@ end)
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
+            --[[
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
@@ -414,7 +415,7 @@ CreateThread(function()
                     return Entity(entity).state.towedVehicle
                 end,
                 job = "bennys",
-            },
+            },]]
             {
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
