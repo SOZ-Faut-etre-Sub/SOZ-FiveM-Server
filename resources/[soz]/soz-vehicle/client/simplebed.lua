@@ -1,3 +1,4 @@
+--[[
 local flatbedModel = GetHashKey("flatbed3")
 
 Citizen.CreateThread(function()
@@ -98,3 +99,4 @@ RegisterNetEvent("vehicle:flatbed:detach", function(data)
 
     exports["soz-hud"]:DrawNotification("Véhicule détaché.")
 end)
+]]
