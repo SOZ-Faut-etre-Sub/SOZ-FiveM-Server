@@ -516,7 +516,6 @@ FoodJob.Functions.CraftItem = function(itemId, item)
                             position = GetEntityCoords(PlayerPedId()),
                         }, true)
 
-                        Citizen.Wait(1000)
                         FoodJob.Functions.CraftItem(itemId, item)
                     else
                         if reason == nil then
