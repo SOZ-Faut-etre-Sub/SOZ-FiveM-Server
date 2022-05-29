@@ -123,12 +123,26 @@ CreateThread(function()
                 item = "empty_bloodbag",
             },
             {
-                label = "Itt",
+                label = "Rehabiliter",
                 color = "lsmc",
-                icon = "c:pole/end.png",
+                icon = "c:ems/Rehabiliter.png",
                 job = "lsmc",
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery and InsideHopital
+                    IsItt = QBCore.Functions.TriggerRpc("lsmc:server:IsItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                    Wait(50)
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery and InsideHopital and IsItt
+                end,
+                action = function(entity)
+                    TriggerServerEvent("lsmc:server:SetItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                end,
+            },
+            {
+                label = "Deshabiliter",
+                color = "lsmc",
+                icon = "c:ems/Deshabiliter.png",
+                job = "lsmc",
+                canInteract = function(entity)
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery and InsideHopital and not IsItt
                 end,
                 action = function(entity)
                     TriggerServerEvent("lsmc:server:SetItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
