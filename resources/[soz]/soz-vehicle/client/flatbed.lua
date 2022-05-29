@@ -251,7 +251,8 @@ Citizen.CreateThread(function()
                 for Index, CurrentFlatbed in pairs(Config.Flatbeds) do
                     if VehicleModel == GetHashKey(CurrentFlatbed.Hash) then
                         LastVehicle = PlayerVehicle
-                        if not DoesEntityExist(NetworkGetEntityFromNetworkId(Entity(PlayerVehicle).state.prop)) and (GetPedInVehicleSeat(PlayerVehicle, -1) == PlayerPedId()) then
+                        if not DoesEntityExist(NetworkGetEntityFromNetworkId(Entity(PlayerVehicle).state.prop)) and
+                            (GetPedInVehicleSeat(PlayerVehicle, -1) == PlayerPedId()) then
                             TriggerEvent("soz-flatbed:client:getProp", PlayerVehicle)
                         end
                         break
