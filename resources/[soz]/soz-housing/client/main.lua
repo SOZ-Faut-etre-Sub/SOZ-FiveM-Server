@@ -6,8 +6,6 @@ local isOwned = false
 local isOwner = false
 local isBuilding = false
 local coords = {}
-LastLocation = nil
-IsInside = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     TriggerServerEvent("soz-housing:server:SetZone")
@@ -134,8 +132,8 @@ end)
 
 RegisterNetEvent("soz-housing:client:rentrer")
 AddEventHandler("soz-housing:client:rentrer", function()
-    LastLocation = GetEntityCoords(PlayerPedId())
-    IsInside = true
+    local coord = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent("soz-housing:server:SetCoordExitHousing", coord)
     for item, Coord in pairs(coords) do
         local point = json.decode(Coord.teleport)
         QBCore.Functions.Progressbar("house_enter", "Ouvre la porte", 1000, false, true,
@@ -153,8 +151,8 @@ end)
 
 RegisterNetEvent("soz-housing:client:BuildingRentrer")
 AddEventHandler("soz-housing:client:BuildingRentrer", function(point)
-    LastLocation = GetEntityCoords(PlayerPedId())
-    IsInside = true
+    local coord = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent("soz-housing:server:SetCoordExitHousing", coord)
     QBCore.Functions.Progressbar("Building_enter", "Tape le code", 1000, false, true,
                                  {
         disableMovement = true,
