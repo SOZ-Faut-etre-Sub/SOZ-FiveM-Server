@@ -18,5 +18,5 @@ function ModuleCall:getSpeakers()
         return {}
     end
 
-    return {[self.callerId] = {}}
+    return {[("player_%d"):format(self.callerId)] = { serverId = self.callerId }}
 end

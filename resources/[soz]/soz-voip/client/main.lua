@@ -1,20 +1,22 @@
 local voiceTarget = 1
 
 CallModuleInstance = ModuleCall:new(Config.volumeCall)
-PrimaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "short")
-PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "long")
-SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "short")
-SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "long")
+PrimaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "short", "PrimaryShort")
+PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "long", "PrimaryLong")
+SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "short", "SecondaryShort")
+SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "long", "SecondaryLong")
 CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
 ProximityModuleInstance = ModuleProximityCulling:new(Config.normalRange, Config.gridSize, Config.gridEdge)
 
 local function updateSpeakers(speakers, newSpeakers, context, volume)
-    for serverId, _ in pairs(newSpeakers) do
-        if speakers[serverId] then
-            speakers[serverId].volume = volume,
-            table.insert(speakers[serverId].context, context)
+    for id, config in pairs(newSpeakers) do
+        if speakers[id] then
+            speakers[id].volume = volume
+            speakers[id].serverId = config.serverId,
+            table.insert(speakers[id].context, context)
         else
-            speakers[serverId] = {
+            speakers[id] = {
+                serverId = config.serverId,
                 volume = volume,
                 context = { context },
             }
@@ -24,49 +26,78 @@ local function updateSpeakers(speakers, newSpeakers, context, volume)
     return speakers
 end
 
+local function RefreshStrategy(currentState, nextState)
+    -- clear everything
+    MumbleClearVoiceTarget(voiceTarget)
+
+    -- readd channel
+    for _, channelId in pairs(nextState.channels) do
+        MumbleAddVoiceTargetChannel(voiceTarget, channelId)
+    end
+
+    -- readd players
+    for _, config in pairs(nextState.players) do
+        MumbleAddVoiceTargetPlayerByServerId(voiceTarget, config.serverId)
+        MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
+    end
+
+    return nextState
+end
+
+-- @TODO
+local function DiffStrategy(currentState, nextState)
+    return nextState
+end
+
 Citizen.CreateThread(function()
     CarModuleInstance:init()
     ProximityModuleInstance:init()
+    PrimaryShortRadioModuleInstance:init()
+    PrimaryLongRadioModuleInstance:init()
+    SecondaryShortRadioModuleInstance:init()
+    SecondaryLongRadioModuleInstance:init()
 
     MumbleSetVoiceTarget(voiceTarget)
+
+    local currentState = {
+        players = {},
+        channels = {},
+    }
+
+    local Strategy = RefreshStrategy
 
     while true do
         -- first refresh state of proximity
         ProximityModuleInstance:refresh()
 
         -- get all speakers and channels
-        local channels = ProximityModuleInstance:getChannels()
-        local players = {}
 
-        for serverId, _ in pairs(ProximityModuleInstance:getSpeakers()) do
-            players[serverId] = {
+        local nextState = {
+            players = {},
+            channels = {},
+        }
+
+        nextState.channels = ProximityModuleInstance:getChannels()
+        nextState.players = {}
+
+        for _, data in pairs(ProximityModuleInstance:getSpeakers()) do
+            players[("player_%d"):format(data.serverId)] = {
+                serverId = data.serverId,
                 volume = -1.0,
                 context = { "proximity" }
             }
         end
 
-        players = updateSpeakers(players, CarModuleInstance:getSpeakers(), "car", Config.volumeVehicle)
-        players = updateSpeakers(players, PrimaryShortRadioModuleInstance:getSpeakers(), "radio-primary-sr", Config.volumeRadioPrimaryShort)
-        players = updateSpeakers(players, PrimaryLongRadioModuleInstance:getSpeakers(), "radio-primary-lr", Config.volumeRadioPrimaryLong)
-        players = updateSpeakers(players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio-secondary-sr", Config.volumeRadioSecondaryShort)
-        players = updateSpeakers(players, SecondaryLongRadioModuleInstance:getSpeakers(), "radio-secondary-lr", Config.volumeRadioSecondaryLong)
-        players = updateSpeakers(players, CallModuleInstance:getSpeakers(), "call", Config.volumeCall)
+        nextState.players = updateSpeakers(nextState.players, CarModuleInstance:getSpeakers(), "car", Config.volumeVehicle)
+        nextState.players = updateSpeakers(nextState.players, PrimaryShortRadioModuleInstance:getSpeakers(), "radio-primary-sr", Config.volumeRadioPrimaryShort)
+        nextState.players = updateSpeakers(nextState.players, PrimaryLongRadioModuleInstance:getSpeakers(), "radio-primary-lr", Config.volumeRadioPrimaryLong)
+        nextState.players = updateSpeakers(nextState.players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio-secondary-sr", Config.volumeRadioSecondaryShort)
+        nextState.players = updateSpeakers(nextState.players, SecondaryLongRadioModuleInstance:getSpeakers(), "radio-secondary-lr", Config.volumeRadioSecondaryLong)
+        nextState.players = updateSpeakers(nextState.players, CallModuleInstance:getSpeakers(), "call", Config.volumeCall)
 
-        -- clear everything
-        MumbleClearVoiceTarget(voiceTarget)
+        -- @TODO Filters
 
-        -- readd channel
-        for _, channelId in pairs(channels) do
-            MumbleAddVoiceTargetChannel(voiceTarget, channelId)
-            print("Add Mumble Channel ", voiceTarget, channelId)
-        end
-
-        -- readd players
-        for serverId, config in pairs(players) do
-            MumbleAddVoiceTargetPlayerByServerId(voiceTarget, serverId)
-            MumbleSetVolumeOverrideByServerId(serverId, config.volume)
-            print("Add Mumble Player ", voiceTarget, serverId, config.volume)
-        end
+        currentState = Strategy(currentState, nextState)
 
         -- wait, do this every 200ms
         Citizen.Wait(200)

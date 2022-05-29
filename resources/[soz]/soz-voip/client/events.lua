@@ -6,27 +6,21 @@ RegisterNetEvent("voip:client:call:end", function()
     CallModuleInstance:stopCall()
 end)
 
-RegisterNetEvent("voip:client:radio:transmission:start", function(frequency, serverID, coords, kind)
-    print("Transmission start", frequency, serverID, coords, kind)
-
-    PrimaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverID, coords, kind)
-    SecondaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverID, coords, kind)
-    PrimaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverID, coords, kind)
-    SecondaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverID, coords, kind)
+RegisterNetEvent("voip:client:radio:transmission:start", function(frequency, serverId, coords, kind)
+    PrimaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind)
+    SecondaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind)
+    PrimaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind)
+    SecondaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind)
 end)
 
-RegisterNetEvent("voip:client:radio:transmission:stop", function(frequency, serverID)
-    print("Transmission stop", frequency, serverID)
-
-    PrimaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverID)
-    SecondaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverID)
-    PrimaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverID)
-    SecondaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverID)
+RegisterNetEvent("voip:client:radio:transmission:stop", function(frequency, serverId)
+    PrimaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverId)
+    SecondaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverId)
+    PrimaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverId)
+    SecondaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverId)
 end)
 
 RegisterNetEvent("voip:client:radio:connect", function(kind, instance, frequency)
-    print("Radio connect", frequency, kind, instance)
-
     if kind == "radio-lr" and instance == "primary" then
         PrimaryLongRadioModuleInstance:connect(frequency)
     end
@@ -45,8 +39,6 @@ RegisterNetEvent("voip:client:radio:connect", function(kind, instance, frequency
 end)
 
 RegisterNetEvent("voip:client:radio:disconnect", function(kind, frequency, instance)
-    print("Radio disconnect", frequency, kind, instance)
-
     if kind == "radio-lr" and instance == "primary" then
         PrimaryLongRadioModuleInstance:disconnect()
     end

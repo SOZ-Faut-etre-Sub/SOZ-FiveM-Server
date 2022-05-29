@@ -1,6 +1,6 @@
 ModuleRadio = {}
 
-function ModuleRadio:new(distanceMax, kind)
+function ModuleRadio:new(distanceMax, kind, name)
     self.__index = self
     return setmetatable({
         distanceMax = distanceMax,
@@ -8,8 +8,14 @@ function ModuleRadio:new(distanceMax, kind)
         connected = false,
         frequency = nil,
         transmitting = false,
+        name = name,
         speakers = {},
+        serverId = nil,
     }, self)
+end
+
+function ModuleRadio:init()
+    self.serverId = GetPlayerServerId(PlayerId())
 end
 
 function ModuleRadio:connect(frequency)
@@ -60,11 +66,26 @@ end
 function ModuleRadio:onTransmissionStarted(frequency, serverId, coords, kind)
     local distance = #(GetEntityCoords(PlayerPedId()) - coords)
 
-    if frequency ~= self.frequency then
+    if not self.connected then
+        print(self.name, "Not starting as it's not connected")
         return
     end
 
-    self.speakers[serverId] = {
+    if frequency ~= self.frequency then
+        print(self.name, "Not starting as frequency does not match")
+        return
+    end
+
+    -- do not add self
+    if self.serverId == serverId then
+        print(self.name, "Not starting as same server id")
+        return
+    end
+
+    print(self.name, "Start transmission")
+
+    self.speakers[("player_%d"):format(serverId)] = {
+        serverId = serverId,
         coords = coords,
         kind = kind,
         distance = distance,
@@ -76,17 +97,28 @@ function ModuleRadio:onTransmissionStopped(frequency, serverId)
         return
     end
 
-    self.speakers[serverId] = nil
+    if self.serverId == serverId then
+        return
+    end
+
+    print(self.name, "Stop transmission")
+
+    self.speakers[("player_%d"):format(serverId)] = nil
 end
 
 function ModuleRadio:getSpeakers()
     local speakers = {}
 
-    for serverId, context in pairs(self.speakers) do
+    for _, context in pairs(self.speakers) do
         if context.kind == "long" or (context.distance < self.distanceMax) then
-            speakers[serverId] = {
+            speakers[("player_%d"):format(context.serverId)] = {
+                serverId = context.serverId,
                 distance = context.distance,
             }
+
+            print(self.name, "Can hear !", context.kind, context.distance, self.distanceMax)
+        else
+            print(self.name, "Cannot hear", context.kind, context.distance, self.distanceMax)
         end
     end
 
