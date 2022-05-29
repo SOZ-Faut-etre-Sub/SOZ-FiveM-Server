@@ -86,14 +86,14 @@ AddEventHandler("lsmc:server:SetItt", function(id)
 
     if itt then
         Player.Functions.SetMetaData("itt", false)
-        TriggerClientEvent("hud:client:DrawNotification", Player, "Vous pouvez reprendre le travail")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous pouvez reprendre le travail")
     else
         if Player.PlayerData.job.onduty then
             Player.Functions.SetJobDuty(false)
-            TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
+            TriggerClientEvent('hud:client:DrawNotification', Player.PlayerData.source, 'Vous êtes hors service', "info")
         end
 
         Player.Functions.SetMetaData("itt", true)
-        TriggerClientEvent("hud:client:DrawNotification", Player, "Vous avez été mit en interdiction de travail temporaire")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez été mit en interdiction de travail temporaire")
     end
 end)

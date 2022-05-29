@@ -70,7 +70,7 @@ Citizen.CreateThread(function()
                 label = "Se changer",
                 job = "cash-transfer",
                 canInteract = function()
-                    return PlayerData.job.onduty and playerInsideCloakroomZone
+                    return playerInsideCloakroomZone
                 end,
             },
         },
@@ -88,7 +88,7 @@ Citizen.CreateThread(function()
                 label = "Se changer",
                 job = "cash-transfer",
                 canInteract = function()
-                    return PlayerData.job.onduty and playerInsideCloakroomZone
+                    return playerInsideCloakroomZone
                 end,
             },
         },

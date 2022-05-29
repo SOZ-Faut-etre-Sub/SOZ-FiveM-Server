@@ -40,9 +40,6 @@ exports["qb-target"]:AddBoxZone("lsmc:cloakroom:woman", vector3(368.92, -1430.18
             event = "lsmc:client:OpenCloakroomMenu",
             icon = "fas fa-tshirt",
             label = "Se changer",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
             job = "lsmc",
         },
     },
@@ -57,9 +54,6 @@ exports["qb-target"]:AddBoxZone("lsmc:cloakroom:man", vector3(369.85, -1431.23, 
             event = "lsmc:client:OpenCloakroomMenu",
             icon = "fas fa-tshirt",
             label = "Se changer",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
             job = "lsmc",
         },
     },

@@ -74,9 +74,6 @@ exports["qb-target"]:AddBoxZone("taxi:cloakroom", vector3(889.1, -178.53, 74.7),
             event = "taxi:client:OpenCloakroomMenu",
             icon = "fas fa-tshirt",
             label = "Se changer",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
             job = {["taxi"] = 0},
         },
     },
