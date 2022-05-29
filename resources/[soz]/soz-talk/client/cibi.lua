@@ -6,9 +6,9 @@ local stateBagHandlers = {}
 --- Functions
 local function handleUpdateRadio(data, isPrimary)
     if isPrimary and data.frequency ~= primaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio)
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio, "primary")
     elseif not isPrimary and data.frequency ~= secondaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio)
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio, "secondary")
     end
     TriggerServerEvent("voip:server:radio:connect", "radio-lr", isPrimary and "primary" or "secondary", data.frequency)
     if isPrimary then

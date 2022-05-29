@@ -1,11 +1,12 @@
 ModuleProximityCulling = {}
 
-function ModuleProximityCulling:new(target, range)
+function ModuleProximityCulling:new(range)
     self.__index = self
-    return setmetatable({target = target, range = range}, self)
+    return setmetatable({range = range, serverId = nil}, self)
 end
 
 function ModuleProximityCulling:init()
+    self.serverId = GetPlayerServerId(PlayerId())
     MumbleSetAudioInputDistance(self.range)
 end
 
@@ -14,14 +15,26 @@ function ModuleProximityCulling:updateRange(range)
     MumbleSetAudioInputDistance(self.range)
 end
 
-function ModuleProximityCulling:refresh()
+function ModuleProximityCulling:getSpeakers()
     local players = GetActivePlayers()
+    local speakers = {}
 
     for _, player in pairs(players) do
         -- local coords = GetEntityCoords(player) @TODO Aply effects on distance
         local serverId = GetPlayerServerId(player)
 
-        MumbleAddVoiceTargetPlayerByServerId(self.target, serverId)
-        MumbleSetVolumeOverrideByServerId(serverId, -1.0)
+        if self.serverId ~= serverId then
+            speakers[serverId] = {}
+        end
     end
+
+    return speakers
+end
+
+function ModuleProximityCulling:getChannels()
+    return {}
+end
+
+function ModuleProximityCulling:refresh()
+    return
 end

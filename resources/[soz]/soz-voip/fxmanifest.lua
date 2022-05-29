@@ -2,15 +2,14 @@ fx_version "cerulean"
 lua54 "yes"
 game "common"
 
-shared_scripts {"config.lua", "shared/*.lua", "classes/*.lua"}
+shared_scripts {"config.lua", "shared/*.lua"}
 
 client_scripts {
-    "client/main.lua",
-    "client/transmission.lua",
-    "client/channels.lua",
-    "client/targets.lua",
     "client/modules/*.lua",
+    "client/main.lua",
     "client/blockscreen.lua",
+    "client/events.lua",
+    "client/exports.lua",
 }
 
 server_scripts {"server/main.lua", "server/state/*.lua", "server/modules/*.lua"}
