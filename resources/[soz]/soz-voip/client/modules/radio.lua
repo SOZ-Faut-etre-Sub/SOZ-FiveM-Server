@@ -1,74 +1,94 @@
-IsTalkingOnRadio, RadioFrequencies = false, {}
+ModuleRadio = {}
 
-function StartRadioAnimationTask()
-    Citizen.CreateThread(function()
-        local lib, anim = "random@arrests", "generic_radio_chatter"
+function ModuleRadio:new(distanceMax, kind)
+    self.__index = self
+    return setmetatable({
+        distanceMax = distanceMax,
+        kind = kind,
+        connected = false,
+        frequency = nil,
+        transmitting = false,
+        speakers = {},
+    }, self)
+end
 
-        LoadAnimDict(lib)
+function ModuleRadio:connect(frequency)
+    if self.connected then
+        self:disconnect()
+    end
 
-        while IsTalkingOnRadio do
-            if not IsEntityPlayingAnim(PlayerData.PlayerPedId, lib, anim, 3) then
-                TaskPlayAnim(PlayerData.PlayerPedId, lib, anim, 8.0, -8.0, -1, 49, 0, false, false, false)
-            end
+    self.frequency = frequency
+    self.connected = true
+    self.speakers = {}
+end
 
-            --- Enable Push To Talk input
-            SetControlNormal(0, 249, 1.0)
+function ModuleRadio:getFrequency()
+    if self.connected then
+        return self.frequency
+    end
 
-            Citizen.Wait(0)
+    return nil
+end
+
+function ModuleRadio:disconnect()
+    if self.transmitting then
+        self:stopTransmission()
+    end
+
+    self.connected = false
+    self.speakers = {}
+end
+
+function ModuleRadio:startTransmission()
+    if not self.connected then
+        return
+    end
+
+    self.transmitting = true
+    TriggerServerEvent("voip:server:radio:transmission:start", self.frequency, self.kind)
+end
+
+function ModuleRadio:stopTransmission()
+    if not self.connected then
+        return
+    end
+
+    self.transmitting = false
+    TriggerServerEvent("voip:server:radio:transmission:stop", self.frequency)
+end
+
+function ModuleRadio:onTransmissionStarted(frequency, serverId, coords, kind)
+    local distance = #(GetEntityCoords(PlayerPedId()) - coords)
+
+    if frequency ~= self.frequency then
+        return
+    end
+
+    self.speakers[serverId] = {
+        coords = coords,
+        kind = kind,
+        distance = distance,
+    }
+end
+
+function ModuleRadio:onTransmissionStopped(frequency, serverId)
+    if frequency ~= self.frequency then
+        return
+    end
+
+    self.speakers[serverId] = nil
+end
+
+function ModuleRadio:getSpeakers()
+    local speakers = {}
+
+    for serverId, context in pairs(self.speakers) do
+        if context.kind == "long" or (context.distance < self.distanceMax) then
+            speakers[serverId] = {
+                distance = context.distance,
+            }
         end
-
-        StopAnimTask(PlayerData.PlayerPedId, lib, anim, 3.0)
-    end)
-end
-
-function StartTransmission(frequency, context)
-    local channel = RadioFrequencies[frequency]
-    if not channel then
-        return
     end
 
-    if LocalPlayer.state.isdead == true or LocalPlayer.state.isEscorted == true or LocalPlayer.state.ishandcuffed == true then
-        return
-    end
-
-    if not IsTalkingOnRadio then
-        IsTalkingOnRadio = true
-
-        AddGroupToTargetList(channel.consumers, context, frequency)
-
-        StartRadioAnimationTask()
-        PlayLocalRadioClick(context, true, RadioFrequencies[frequency]:getVolume())
-
-        console.debug("[Radio] Transmission started")
-    end
-end
-
-function StopTransmission(frequency, context, forced)
-    local channel = RadioFrequencies[frequency]
-    if not IsTalkingOnRadio then
-        return
-    end
-
-    promise:timeout(50):next(function(continue)
-        if forced ~= true and not continue then
-            return
-        end
-
-        IsTalkingOnRadio = false
-
-        RemoveGroupToTargetList(channel.consumers, context, frequency)
-
-        PlayLocalRadioClick(context, false, RadioFrequencies[frequency]:getVolume())
-
-        console.debug("[Radio] Transmission stopped")
-    end)
-end
-
---- Radio effect
-function PlayLocalRadioClick(context, transmit, volume)
-    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", volume / 2)
-end
-
-function PlayRemoteRadioClick(context, transmit, volume)
-    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", volume / 2)
+    return speakers
 end

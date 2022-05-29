@@ -1,114 +1,74 @@
-PlayerData = {
-    VoiceEnabled = false,
-    PlayerPedId = PlayerPedId(),
-    ServerId = GetPlayerServerId(PlayerId()),
+local voiceTarget = 1
 
-    CurrentInstance = 0,
+CallModuleInstance = ModuleCall:new(Config.volumeCall)
+PrimaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "short")
+PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "long")
+SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "short")
+SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "long")
+CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
+ProximityModuleInstance = ModuleProximityCulling:new(Config.normalRange, Config.gridSize, Config.gridEdge)
 
-    Muted = false,
-    CurrentTarget = 1,
-
-    IsCalling = false,
-    CurrentCall = nil,
-
-    PlayerCoords = vector3(0.0, 0.0, 0.0),
-    PlayerPreviousCoords = vector3(0.0, 0.0, 0.0),
-
-    CurrentProximity = 2,
-    CurrentVoiceChannel = 1,
-}
-
-Citizen.CreateThread(function()
-    while true do
-        local idle = 100
-
-        PlayerData.PlayerPedId = PlayerPedId()
-        PlayerData.PlayerCoords = GetEntityCoords(PlayerData.PlayerPedId)
-
-        if PlayerData.PlayerCoords ~= PlayerData.PlayerPreviousCoords then
-            idle = 50
+local function updateSpeakers(speakers, newSpeakers, context, volume)
+    for serverId, _ in pairs(newSpeakers) do
+        if speakers[serverId] then
+            speakers[serverId].volume = volume,
+            table.insert(speakers[serverId].context, context)
+        else
+            speakers[serverId] = {
+                volume = volume,
+                context = { context },
+            }
         end
-
-        if not PlayerData.VoiceEnabled then
-            TriggerEvent("voip:client:state", true)
-        end
-
-        PlayerData.PlayerPreviousCoords = PlayerData.PlayerCoords
-
-        Citizen.Wait(idle)
     end
-end)
 
-AddEventHandler("voip:client:state", function(state)
-    PlayerData.VoiceEnabled = state
-
-    TriggerServerEvent("voip:server:connection:state", state)
-
-    if PlayerData.VoiceEnabled then
-        while MumbleGetVoiceChannelFromServerId(PlayerData.ServerId) == 0 do
-            NetworkSetVoiceChannel(PlayerData.CurrentVoiceChannel)
-            Citizen.Wait(100)
-        end
-
-        RefreshTargets()
-    end
-end)
-
-function RegisterModuleContext(context, priority)
-    Transmissions:registerContext(context)
-    Targets:registerContext(context)
-    Channels:registerContext(context)
-    Transmissions:setContextData(context, "priority", priority)
-
-    console.debug("Context %s registered with priority %s", context, priority)
+    return speakers
 end
 
 Citizen.CreateThread(function()
-    for id, _ in pairs(Config.voiceTargets) do
-        MumbleClearVoiceTarget(id)
-        console.debug("Cleared voice target %s", id)
-    end
+    CarModuleInstance:init()
+    ProximityModuleInstance:init()
 
-    RegisterProximityModule()
-    RegisterCallModule()
-    RegisterRadioShortRangeModule()
-    RegisterRadioLongRangeModule()
+    MumbleSetVoiceTarget(voiceTarget)
 
-    SetVoiceProximity(PlayerData.CurrentProximity)
-end)
-
-function LoadAnimDict(dict)
-    while not HasAnimDictLoaded(dict) do
-        RequestAnimDict(dict)
-        Citizen.Wait(0)
-    end
-end
-
---- Loop
-Citizen.CreateThread(function()
     while true do
-        RefreshTargets()
+        -- first refresh state of proximity
+        ProximityModuleInstance:refresh()
 
+        -- get all speakers and channels
+        local channels = ProximityModuleInstance:getChannels()
+        local players = {}
+
+        for serverId, _ in pairs(ProximityModuleInstance:getSpeakers()) do
+            players[serverId] = {
+                volume = -1.0,
+                context = { "proximity" }
+            }
+        end
+
+        players = updateSpeakers(players, CarModuleInstance:getSpeakers(), "car", Config.volumeVehicle)
+        players = updateSpeakers(players, PrimaryShortRadioModuleInstance:getSpeakers(), "radio-primary-sr", Config.volumeRadioPrimaryShort)
+        players = updateSpeakers(players, PrimaryLongRadioModuleInstance:getSpeakers(), "radio-primary-lr", Config.volumeRadioPrimaryLong)
+        players = updateSpeakers(players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio-secondary-sr", Config.volumeRadioSecondaryShort)
+        players = updateSpeakers(players, SecondaryLongRadioModuleInstance:getSpeakers(), "radio-secondary-lr", Config.volumeRadioSecondaryLong)
+        players = updateSpeakers(players, CallModuleInstance:getSpeakers(), "call", Config.volumeCall)
+
+        -- clear everything
+        MumbleClearVoiceTarget(voiceTarget)
+
+        -- readd channel
+        for _, channelId in pairs(channels) do
+            MumbleAddVoiceTargetChannel(voiceTarget, channelId)
+            print("Add Mumble Channel ", voiceTarget, channelId)
+        end
+
+        -- readd players
+        for serverId, config in pairs(players) do
+            MumbleAddVoiceTargetPlayerByServerId(voiceTarget, serverId)
+            MumbleSetVolumeOverrideByServerId(serverId, config.volume)
+            print("Add Mumble Player ", voiceTarget, serverId, config.volume)
+        end
+
+        -- wait, do this every 200ms
         Citizen.Wait(200)
     end
 end)
-
---- Commands
-RegisterCommand("voip-debug-mode", function(source, args, rawCommand)
-    Config.debug = not Config.debug
-    console.info("Debug mode : %s", Config.debug and "enabled" or "disabled")
-end, false)
-
-RegisterCommand("voip-debug-state", function(source, args, rawCommand)
-    Channels:contextIterator(function(target, context)
-        console.info("Channels %s (%s) : %s", context, target, Channels:targetHasAnyActiveContext(target) and "active" or "inactive")
-    end)
-
-    Targets:contextIterator(function(target, context)
-        console.info("Targets %s (%s) : %s", context, target, Targets:targetHasAnyActiveContext(target) and "active" or "inactive")
-    end)
-
-    Transmissions:contextIterator(function(target, context)
-        console.info("Transmissions %s (%s) : %s", context, target, Transmissions:targetHasAnyActiveContext(target) and "active" or "inactive")
-    end)
-end, false)

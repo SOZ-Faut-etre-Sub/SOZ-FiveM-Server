@@ -75,7 +75,7 @@ RegisterCommand("voip-debug-store", function(source, args, rawCommand)
         for consumer, _ in pairs(RadioState[channel]) do
             consumers[#consumers + 1] = tostring(consumer)
         end
-        console.info("[Radio] Channel %s: %s", channel, json.encode(consumers))
+        print("[Radio] Channel %s: %s", channel, json.encode(consumers))
     end
 end, false)
 
