@@ -99,3 +99,14 @@ AddEventHandler("lsmc:server:SetItt", function(id)
         TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez mis la personne en interdiction de travail temporaire")
     end
 end)
+
+QBCore.Functions.CreateCallback("lsmc:server:IsItt", function(source, cb, id)
+    local Player = QBCore.Functions.GetPlayer(id)
+    local itt = Player.PlayerData.metadata["itt"]
+
+    if itt == nil then
+        itt = false
+    end
+
+    cb(itt)
+end)
