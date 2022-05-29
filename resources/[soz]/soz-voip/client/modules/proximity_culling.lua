@@ -24,7 +24,7 @@ function ModuleProximityCulling:getSpeakers()
         local serverId = GetPlayerServerId(player)
 
         if self.serverId ~= serverId then
-            speakers[serverId] = {}
+            speakers[("player_%d"):format(serverId)] = { serverId = serverId }
         end
     end
 

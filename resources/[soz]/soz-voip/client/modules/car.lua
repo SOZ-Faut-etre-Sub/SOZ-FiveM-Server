@@ -24,7 +24,7 @@ function ModuleCar:getSpeakers()
             local pedServerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(vehicle, seat)))
 
             if pedServerId ~= 0 and pedServerId ~= self.serverId then
-                speakers[pedServerId] = {}
+                speakers[(("player_%d"):format(pedServerId))] = { serverId = pedServerId }
             end
         end
     end
