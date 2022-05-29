@@ -122,6 +122,18 @@ CreateThread(function()
                 end,
                 item = "empty_bloodbag",
             },
+            {
+                label = "itt",
+                color = "lsmc",
+                icon = "c:pole/end.png",
+                job = "lsmc",
+                canInteract = function(entity)
+                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery and InsideHopital
+                end,
+                action = function(entity)
+                    TriggerServerEvent("lsmc:server:SetItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                end,
+            },
         },
         distance = 2.5,
     })

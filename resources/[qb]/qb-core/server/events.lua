@@ -204,10 +204,16 @@ end)
 RegisterNetEvent('QBCore:ToggleDuty', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    local itt = Player.PlayerData.metadata["itt"]
+
+    if itt == nil then
+        itt = false
+    end
+
     if Player.PlayerData.job.onduty then
         Player.Functions.SetJobDuty(false)
         TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
-    else
+    elseif not Player.PlayerData.job.onduty and not itt then
         Player.Functions.SetJobDuty(true)
         TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en service', "info")
     end
