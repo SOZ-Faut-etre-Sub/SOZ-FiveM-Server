@@ -469,6 +469,7 @@ CreateThread(function()
                 icon = "fa-solid fa-ban",
                 label = "Supprimer",
                 action = function(entity)
+                    GetOwnership(entity)
                     DeleteEntity(entity)
                 end,
                 job = "bennys",
