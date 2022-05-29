@@ -59,11 +59,12 @@ local function formatLogJson(level, message, extraData)
     return json.encode(logPayload)
 end
 
-local function formatLogLoki(level, message, extraData)
+local function formatLogLoki(level, message, data)
+    local extraData = data or {}
     local logPayload = {}
     -- time is in nano seconds
     local timestamp = tostring(os.time()) .. "000000000"
-    local messageJson = flattenTable("", extraData or {})
+    local messageJson = flattenTable("", extraData)
     messageJson.message = message
 
     logPayload.values = {{timestamp, json.encode(messageJson)}}
