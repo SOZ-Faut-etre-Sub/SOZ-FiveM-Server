@@ -5,7 +5,7 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 100ms ease-in-out;
 }
 
 .container.show {
@@ -22,7 +22,7 @@
     padding: .7rem;
     border-radius: .3rem;
     background-color: rgba(0, 0, 0, .6);
-    transition: all 0.3s ease-in-out;
+    transition: all 100ms ease-in-out;
     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 }
 

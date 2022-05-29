@@ -39,20 +39,16 @@ RegisterNUICallback("transfertItem", function(data, cb)
         SetNuiFocus(true, true)
     end
 
-    if amount and tonumber(amount) then
-        QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
-            cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
-            if not success then
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
-            elseif success and (invSource.type == "bin" or invTarget.type == "bin") then
-                QBCore.Functions.RequestAnimDict("missfbi4prepp1")
-                TaskPlayAnim(PlayerPedId(), "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
-                PlaySoundFrontend(-1, "Collect_Pickup", "DLC_IE_PL_Player_Sounds", true)
-            end
-        end, data.source, data.target, data.item.name, amount, data.item.metadata, data.item.slot)
-    else
-        cb({status = false})
-    end
+    QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
+        cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
+        if not success then
+            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+        elseif success and (invSource.type == "bin" or invTarget.type == "bin") then
+            QBCore.Functions.RequestAnimDict("missfbi4prepp1")
+            TaskPlayAnim(PlayerPedId(), "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 1)
+            PlaySoundFrontend(-1, "Collect_Pickup", "DLC_IE_PL_Player_Sounds", true)
+        end
+    end, data.source, data.target, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot)
 end)
 
 RegisterNUICallback("closeNUI", function(data, cb)
