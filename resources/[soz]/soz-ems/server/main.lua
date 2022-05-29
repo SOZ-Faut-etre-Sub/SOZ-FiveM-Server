@@ -91,7 +91,7 @@ AddEventHandler("lsmc:server:SetItt", function(id)
     else
         if Player.PlayerData.job.onduty then
             Player.Functions.SetJobDuty(false)
-            TriggerClientEvent('hud:client:DrawNotification', Player.PlayerData.source, 'Vous êtes hors service', "info")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous êtes hors service", "info")
         end
 
         Player.Functions.SetMetaData("itt", true)
