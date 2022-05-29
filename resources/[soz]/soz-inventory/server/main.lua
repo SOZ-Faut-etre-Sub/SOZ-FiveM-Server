@@ -652,6 +652,12 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
+    elseif storageType == "fridge" then
+        targetInv = Inventory("fridge_" .. invID)
+
+        if targetInv == nil then
+            targetInv = Inventory.Create("fridge_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
+        end
     end
 
     return targetInv
