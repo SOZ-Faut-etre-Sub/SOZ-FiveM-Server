@@ -74,3 +74,26 @@ AddEventHandler("lsmc:server:tp", function(id, coords)
     local Player = QBCore.Functions.GetPlayer(tonumber(id))
     TriggerClientEvent("lsmc:client:VehTpDead", Player.PlayerData.source, coords)
 end)
+
+RegisterServerEvent("lsmc:server:SetItt")
+AddEventHandler("lsmc:server:SetItt", function(id)
+    local Player = QBCore.Functions.GetPlayer(tonumber(id))
+    local itt = Player.PlayerData.metadata["itt"]
+
+    if itt == nil then
+        itt = false
+    end
+
+    if itt then
+        Player.Functions.SetMetaData("itt", false)
+        TriggerClientEvent("hud:client:DrawNotification", Player, "Vous pouvez reprendre le travail")
+    else
+        if Player.PlayerData.job.onduty then
+            Player.Functions.SetJobDuty(false)
+            TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
+        end
+
+        Player.Functions.SetMetaData("itt", true)
+        TriggerClientEvent("hud:client:DrawNotification", Player, "Vous avez été mit en interdiction de travail temporaire")
+    end
+end)
