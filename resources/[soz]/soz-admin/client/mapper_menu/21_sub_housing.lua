@@ -119,68 +119,24 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         end,
     })
 
-    menu:AddButton({
-        label = "Zone d'entrée",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "entry_zone"
-            CurrentZoneData = CurrentHousingData.entry_zone
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone de sortie",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "exit_zone"
-            CurrentZoneData = CurrentHousingData.exit_zone
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du frigo",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "fridge_position"
-            CurrentZoneData = CurrentHousingData.fridge_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du coffre d'argent",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "money_position"
-            CurrentZoneData = CurrentHousingData.money_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du Coffre d'item",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "stash_position"
-            CurrentZoneData = CurrentHousingData.stash_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du vestiare",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "closet_position"
-            CurrentZoneData = CurrentHousingData.closet_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du garage",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "garage_zone"
-            CurrentZoneData = CurrentHousingData.garage_zone
-        end,
-    })
+    local zones = {
+        {field = "entry_zone", label = "Zone d'entrée"},
+        {field = "exit_zone", label = "Zone de sortie"},
+        {field = "fridge_position", label = "Zone du frigo"},
+        {field = "money_position", label = "Zone du coffre d'argent"},
+        {field = "closet_position", label = "Zone du vestiare"},
+        {field = "garage_zone", label = "Zone du garage"},
+    }
+    for _, zone in ipairs(zones) do
+        menu:AddButton({
+            label = zone.label,
+            value = CurrentHousingItemMenu,
+            select = function()
+                zone_type = zone.field
+                CurrentZoneData = CurrentHousingData[zone.field]
+            end,
+        })
+    end
 end)
 
 CurrentHousingMenu:On("open", function(menu)
