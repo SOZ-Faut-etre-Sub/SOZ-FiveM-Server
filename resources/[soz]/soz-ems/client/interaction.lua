@@ -123,7 +123,7 @@ CreateThread(function()
                 item = "empty_bloodbag",
             },
             {
-                label = "itt",
+                label = "Itt",
                 color = "lsmc",
                 icon = "c:pole/end.png",
                 job = "lsmc",
