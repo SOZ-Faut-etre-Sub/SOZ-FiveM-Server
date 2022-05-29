@@ -5,7 +5,7 @@ FoodJob.Zones = {}
 
 local currentField
 local currentFieldHealth
-local helpTextDisplayed = false
+local inKitchen = false
 
 local function SpawnFieldZones()
     for zoneName, points in pairs(FoodConfig.Zones) do
@@ -98,6 +98,11 @@ local function SpawnJobZones()
         },
     })
 
+    local kitchen = BoxZone:Create(vector2(-1881.59, 2068.93), 7.5, 5.5, {heading = 70.0, minZ = 140.0, maxZ = 142.5})
+    kitchen:onPlayerInOut(function(isInside)
+        inKitchen = isInside
+    end)
+
     -- MILK
     exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
         heading = 133.3,
@@ -163,17 +168,19 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
+                type = "server",
                 icon = "fas fa-sign-in-alt",
                 label = "Prise de service",
-                event = "jobs:client:food-toggle-duty",
+                event = "QBCore:ToggleDuty",
                 canInteract = function()
                     return PlayerData.job.id == SozJobCore.JobType.Food and not PlayerData.job.onduty
                 end,
             },
             {
+                type = "server",
                 icon = "fas fa-sign-out-alt",
                 label = "Fin de service",
-                event = "jobs:client:food-toggle-duty",
+                event = "QBCore:ToggleDuty",
                 canInteract = function()
                     return PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty
                 end,
@@ -195,13 +202,13 @@ Citizen.CreateThread(function()
         distance = 1.5,
     })
 end)
-AddEventHandler("jobs:client:food-toggle-duty", function()
-    if not PlayerData.job.onduty then
+
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if duty then
         InitJob()
     else
         DestroyJob()
     end
-    TriggerServerEvent("QBCore:ToggleDuty")
 end)
 
 ---
@@ -429,11 +436,15 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
 end)
 
 FoodJob.Functions.GetItemCountFromInventory = function(itemName)
+    local amount = 0
     for _, item in pairs(PlayerData.items or {}) do
         if item.name == itemName then
-            return item.amount
+            if not exports["soz-utils"]:ItemIsExpired(item) then
+                amount = amount + item.amount
+            end
         end
     end
+    return amount
 end
 
 AddEventHandler("jobs:client:food-process-milk", function()
@@ -470,6 +481,11 @@ AddEventHandler("jobs:client:food-process-milk", function()
 end)
 
 FoodJob.Functions.CraftItem = function(itemId, item)
+    if not inKitchen then
+        exports["soz-hud"]:DrawNotification("Vous n'êtes pas dans la cuisine", "error")
+        return
+    end
+
     local recipe = FoodConfig.Recipes[itemId]
     if recipe == nil then
         exports["soz-hud"]:DrawNotification("Recette invalide", "error")
@@ -510,7 +526,6 @@ FoodJob.Functions.CraftItem = function(itemId, item)
                             position = GetEntityCoords(PlayerPedId()),
                         }, true)
 
-                        Citizen.Wait(1000)
                         FoodJob.Functions.CraftItem(itemId, item)
                     else
                         if reason == nil then

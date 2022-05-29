@@ -4,7 +4,7 @@ game "gta5"
 description "soz-utils"
 version "1.0.0"
 
-shared_script "config.lua"
+shared_scripts {"config.lua", "shared/items.js"}
 client_script "client/*.lua"
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
 
