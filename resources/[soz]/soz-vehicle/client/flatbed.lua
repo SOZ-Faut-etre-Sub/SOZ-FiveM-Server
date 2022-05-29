@@ -236,7 +236,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1)
+        Citizen.Wait(20)
 
         if not DoesEntityExist(LastVehicle) or NetworkGetEntityOwner(LastVehicle) ~= PlayerId() then
             LastVehicle = nil
@@ -251,7 +251,8 @@ Citizen.CreateThread(function()
                 for Index, CurrentFlatbed in pairs(Config.Flatbeds) do
                     if VehicleModel == GetHashKey(CurrentFlatbed.Hash) then
                         LastVehicle = PlayerVehicle
-                        if not Entity(PlayerVehicle).state.prop then
+                        if not DoesEntityExist(NetworkGetEntityFromNetworkId(Entity(PlayerVehicle).state.prop)) and
+                            (GetPedInVehicleSeat(PlayerVehicle, -1) == PlayerPedId()) then
                             TriggerEvent("soz-flatbed:client:getProp", PlayerVehicle)
                         end
                         break
@@ -339,6 +340,7 @@ end)
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
+            --[[
             {
                 type = "client",
                 icon = "c:mechanic/Activer.png",
@@ -414,12 +416,12 @@ CreateThread(function()
                     return Entity(entity).state.towedVehicle
                 end,
                 job = "bennys",
-            },
+            },]]
             {
                 type = "client",
                 icon = "c:mechanic/Retirer.png",
                 event = "soz-flatbed:client:calltp",
-                label = "NEW Démorquer",
+                label = "Démorquer",
                 action = function(entity)
                     TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
@@ -438,7 +440,7 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Mettre.png",
                 event = "soz-flatbed:client:calltp",
-                label = "NEW Remorquer",
+                label = "Remorquer",
                 action = function(entity)
                     local lastveh = GetVehiclePedIsIn(PlayerPedId(), true)
                     TriggerEvent("soz-flatbed:client:calltp", entity, lastveh)
@@ -468,6 +470,7 @@ CreateThread(function()
                 icon = "fa-solid fa-ban",
                 label = "Supprimer",
                 action = function(entity)
+                    GetOwnership(entity)
                     DeleteEntity(entity)
                 end,
                 job = "bennys",
