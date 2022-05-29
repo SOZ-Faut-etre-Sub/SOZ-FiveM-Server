@@ -93,7 +93,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-process-milk", function(so
             end
         end
 
-        if notExpiredItemsCount ~= count then
+        if notExpiredItemsCount < count then
             TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas assez d'ingrédients", "error")
             cb(false)
             return
