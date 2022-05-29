@@ -39,7 +39,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
     end
 
     local collectedItems = {}
-    for _, item in ipairs(items) do
+    for _, item in pairs(items) do
         if AddItem(Player.PlayerData.source, item) then
             if collectedItems[item] == nil then
                 collectedItems[item] = 1
@@ -84,7 +84,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-process-milk", function(so
         local slots = exports["soz-inventory"]:GetItemSlots(Player.PlayerData.source, {name = sourceItem})
         local notExpiredItemsCount = 0
 
-        for slot, _ in ipairs(slots) do
+        for slot, _ in pairs(slots) do
             local item = exports["soz-inventory"]:GetSlot(Player.PlayerData.source, slot)
             if item then
                 if not exports["soz-utils"]:ItemIsExpired(item) then
