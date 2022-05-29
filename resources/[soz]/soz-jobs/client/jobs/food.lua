@@ -5,7 +5,7 @@ FoodJob.Zones = {}
 
 local currentField
 local currentFieldHealth
-local helpTextDisplayed = false
+local inKitchen = false
 
 local function SpawnFieldZones()
     for zoneName, points in pairs(FoodConfig.Zones) do
@@ -97,6 +97,11 @@ local function SpawnJobZones()
             },
         },
     })
+
+    local kitchen = BoxZone:Create(vector2(-1881.59, 2068.93), 7.5, 5.5, {heading = 70.0, minZ = 140.0, maxZ = 142.5})
+    kitchen:onPlayerInOut(function(isInside)
+        inKitchen = isInside
+    end)
 
     -- MILK
     exports["qb-target"]:AddBoxZone("food:milk_harvest", vector2(2416.83, 4994.29), 1.0, 5.0, {
@@ -476,6 +481,11 @@ AddEventHandler("jobs:client:food-process-milk", function()
 end)
 
 FoodJob.Functions.CraftItem = function(itemId, item)
+    if not inKitchen then
+        exports["soz-hud"]:DrawNotification("Vous n'êtes pas dans la cuisine", "error")
+        return
+    end
+
     local recipe = FoodConfig.Recipes[itemId]
     if recipe == nil then
         exports["soz-hud"]:DrawNotification("Recette invalide", "error")
