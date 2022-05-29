@@ -28,4 +28,4 @@ server_script {
 ui_page "client/nui/index.html"
 files {"client/nui/index.html"}
 
-dependencies {"qb-target"}
+dependencies {"qb-target", "soz-utils"}
