@@ -15,7 +15,8 @@ BennysCloak:On("open", function(menu)
         end,
     })
 
-    for name, skin in pairs(Config.Cloakroom[PlayerJob.id][PlayerData.skin.Model.Hash]) do
+    local gradename = QBCore.Functions.TriggerRpc("soz-bennys:server:CloakroomTenues", PlayerData.job.grade)
+    for name, skin in pairs(Config.Cloakroom[PlayerJob.id][gradename.name][PlayerData.skin.Model.Hash]) do
         menu:AddButton({
             label = name,
             value = nil,

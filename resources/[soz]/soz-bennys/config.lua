@@ -403,36 +403,140 @@ Config.vehicleResprayOptions = {
 
 Config.Cloakroom = {
     ["bennys"] = {
-        [GetHashKey("mp_m_freemode_01")] = {
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 20, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 39, Texture = 1, Palette = 0},
-                    [6] = {Drawable = 12, Texture = 6, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 66, Texture = 1, Palette = 0},
+        ["Patron"] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 98, Texture = 17, Palette = 0},
+                        [6] = {Drawable = 46, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 351, Texture = 9, Palette = 0},
+                    },
+                    Props = {},
                 },
-                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 14, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 101, Texture = 17, Palette = 0},
+                        [6] = {Drawable = 46, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 2, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 377, Texture = 5, Palette = 0},
+                    },
+                    Props = {},
+                },
             },
         },
-        [GetHashKey("mp_f_freemode_01")] = {
-            ["Tenue de service"] = {
-                Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 36, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 39, Texture = 1, Palette = 0},
-                    [6] = {Drawable = 12, Texture = 6, Palette = 0},
-                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 2, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 60, Texture = 1, Palette = 0},
+        ["Chef d'atelier"] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 19, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 98, Texture = 2, Palette = 0},
+                        [6] = {Drawable = 46, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 146, Texture = 2, Palette = 0},
+                    },
+                    Props = {},
                 },
-                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 14, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 101, Texture = 2, Palette = 0},
+                        [6] = {Drawable = 47, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 3, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 338, Texture = 7, Palette = 0},
+                    },
+                    Props = {},
+                },
+            },
+        },
+        ["Mécano confirmé"] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 19, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 98, Texture = 4, Palette = 0},
+                        [6] = {Drawable = 46, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 0, Texture = 3, Palette = 0},
+                    },
+                    Props = {},
+                },
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 14, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 101, Texture = 4, Palette = 0},
+                        [6] = {Drawable = 47, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 3, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 338, Texture = 5, Palette = 0},
+                    },
+                    Props = {},
+                },
+            },
+        },
+        ["Mécano"] = {
+            [GetHashKey("mp_m_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 19, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 98, Texture = 3, Palette = 0},
+                        [6] = {Drawable = 46, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 0, Texture = 2, Palette = 0},
+                    },
+                    Props = {},
+                },
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                ["Tenue de service"] = {
+                    Components = {
+                        [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [3] = {Drawable = 14, Texture = 0, Palette = 0},
+                        [4] = {Drawable = 101, Texture = 3, Palette = 0},
+                        [6] = {Drawable = 47, Texture = 3, Palette = 0},
+                        [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 3, Texture = 0, Palette = 0},
+                        [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                        [11] = {Drawable = 338, Texture = 1, Palette = 0},
+                    },
+                    Props = {},
+                },
             },
         },
     },

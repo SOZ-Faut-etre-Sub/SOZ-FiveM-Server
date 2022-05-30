@@ -29,6 +29,15 @@ QBCore.Functions.CreateCallback("soz-bennys:server:IsVehicleOwned", function(sou
     cb(retval)
 end)
 
+QBCore.Functions.CreateCallback("soz-bennys:server:CloakroomTenues", function(source, cb, grade)
+    local result = MySQL.Sync.fetchAll("SELECT name FROM job_grades WHERE id = ?", {
+        grade,
+    })
+    if result[1] then
+        cb(result[1])
+    end
+end)
+
 QBCore.Functions.CreateCallback("soz-bennys:server:GetAttachedVehicle", function(source, cb)
     cb(Config.AttachedVehicle)
 end)
