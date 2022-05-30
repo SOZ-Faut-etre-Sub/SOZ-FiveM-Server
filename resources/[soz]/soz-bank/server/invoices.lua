@@ -10,7 +10,7 @@ local function PlayerHaveAccessToInvoices(PlayerData, account)
         return true
     end
 
-    return SozJobCore.Functions.HasPermission(account, PlayerData.job.id, PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankAccount)
+    return SozJobCore.Functions.HasPermission(account, PlayerData.job.id, PlayerData.job.grade, SozJobCore.JobPermission.SocietyBankInvoices)
 end
 
 local function GetAllInvoices(PlayerData)
