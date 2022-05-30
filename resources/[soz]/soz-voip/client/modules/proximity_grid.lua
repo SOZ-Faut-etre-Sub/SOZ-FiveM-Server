@@ -70,7 +70,7 @@ function ModuleProximityGrid:getSpeakers()
 end
 
 function ModuleProximityGrid:getChannels()
-    local channels = { self.speakingGrid }
+    local channels = {self.speakingGrid}
 
     for _, channelId in pairs(self.listeningGrids) do
         table.insert(channels, channelId)

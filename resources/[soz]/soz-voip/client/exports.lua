@@ -100,17 +100,17 @@ exports("SetRadioShortRangePowerState", function(state)
 end)
 
 exports("SetRadioLongRangePrimaryVolume", function(volume)
-    Config.volumeRadioPrimaryLong = volume
+    Config.volumeRadioPrimaryLong = volume / 100
 end)
 
 exports("SetRadioLongRangeSecondaryVolume", function(volume)
-    Config.volumeRadioSecondaryLong = volume
+    Config.volumeRadioSecondaryLong = volume / 100
 end)
 
 exports("SetRadioShortRangePrimaryVolume", function(volume)
-    Config.volumeRadioPrimaryShort = volume
+    Config.volumeRadioPrimaryShort = volume / 100
 end)
 
 exports("SetRadioShortRangeSecondaryVolume", function(volume)
-    Config.volumeRadioSecondaryShort = volume
+    Config.volumeRadioSecondaryShort = volume / 100
 end)
