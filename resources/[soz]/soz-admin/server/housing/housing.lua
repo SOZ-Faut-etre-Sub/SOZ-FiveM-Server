@@ -15,7 +15,7 @@ function round(num, numDecimalPlaces)
     return math.floor(num * mult + 0.5) / mult
 end
 
-RegisterNetEvent("soz-admin:server:housing", function(zone, id, zonetype)
+QBCore.Functions.CreateCallback("soz-admin:server:housing", function(source, cb, zone, id, zonetype)
     local endzone = "{\"x\": " .. round(zone.center.x, 2)
     endzone = endzone .. ", \"y\": "
     endzone = endzone .. round(zone.center.y, 2) .. ", \"z\": "
@@ -72,6 +72,7 @@ RegisterNetEvent("soz-admin:server:housing", function(zone, id, zonetype)
             ["@id"] = id,
         })
     end
+    cb(endzone)
 end)
 
 RegisterNetEvent("soz-admin:server:housing:create", function(name, tp, building)

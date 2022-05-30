@@ -1,25 +1,39 @@
 CurrentHousingItemMenu:On("open", function(menu)
     menu:ClearItems()
 
-    if CurrentZoneData ~= nil and CurrentHousingData.building == nil then
-        menu:AddCheckbox({
-            label = "Afficher la zone",
-            value = drawZone,
-            change = function()
-                drawZone = not drawZone
-                zone = json.decode(CurrentZoneData)
-                DisplayZone(zone)
-            end,
-        })
+    local data = CurrentZoneData
+    if type(data) == "string" then
+        data = json.decode(CurrentZoneData)
+    end
 
-        menu:AddButton({
-            label = "Changer la zone",
-            value = EndHousingMenu,
-            select = function()
-                TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
-            end,
-        })
-    elseif CurrentHousingData.building == nil and CurrentZoneData == nil then
+    menu:AddCheckbox({
+        label = "Afficher la zone",
+        value = drawZone,
+        change = function()
+            drawZone = not drawZone
+            if next(data) ~= nil then
+                DisplayZone(data)
+            end
+        end,
+    })
+
+    local label = "Changer la zone"
+    if next(data) == nil then
+        label = "Ajouter la zone"
+    end
+    menu:AddButton({
+        label = label,
+        value = EndHousingMenu,
+        select = function()
+            TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
+        end,
+    })
+end)
+
+CurrentHousingBuildingMenu:On("open", function(menu)
+    menu:ClearItems()
+
+    if CurrentHousingData.building == nil then
         menu:AddButton({
             label = "Ajouter l'habitation à un batiment",
             value = nil,
@@ -51,7 +65,7 @@ CurrentHousingItemMenu:On("open", function(menu)
             end,
         })
 
-    elseif CurrentHousingData.building ~= nil then
+    else
         menu:AddButton({
             label = "Changer l'habitation de batiment",
             value = nil,
@@ -89,6 +103,11 @@ ChangeCurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
 
     menu:AddButton({
+        label = "Gestion du bâtiment de l'habitation",
+        value = CurrentHousingBuildingMenu,
+    })
+
+    menu:AddButton({
         label = "Changer le Nom de l'habitation",
         value = nil,
         select = function()
@@ -124,7 +143,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         {field = "exit_zone", label = "Zone de sortie"},
         {field = "fridge_position", label = "Zone du frigo"},
         {field = "money_position", label = "Zone du coffre d'argent"},
-        {field = "closet_position", label = "Zone du vestiare"},
+        {field = "closet_position", label = "Zone du vestiaire"},
         {field = "garage_zone", label = "Zone du garage"},
     }
     for _, zone in ipairs(zones) do
@@ -133,7 +152,7 @@ ChangeCurrentHousingMenu:On("open", function(menu)
             value = CurrentHousingItemMenu,
             select = function()
                 zone_type = zone.field
-                CurrentZoneData = CurrentHousingData[zone.field]
+                CurrentZoneData = CurrentHousingData[zone.field] or "{}"
             end,
         })
     end
