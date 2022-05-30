@@ -1,9 +1,9 @@
-local function PlayLocalRadioClick(context, transmit, volume)
-    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", volume / 2)
+local function PlayLocalRadioClick(kind, transmit, volume)
+    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and kind .. "/mic_click_on" or kind .. "/mic_click_off", volume / 2)
 end
 
-local function PlayRemoteRadioClick(context, transmit, volume)
-    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and context .. "/mic_click_on" or context .. "/mic_click_off", volume / 2)
+local function PlayRemoteRadioClick(kind, transmit, volume)
+    TriggerEvent("InteractSound_CL:PlayOnOne", transmit and kind .. "/mic_click_on" or kind .. "/mic_click_off", volume / 2)
 end
 
 local IsTalkingOnRadio = false
@@ -45,37 +45,37 @@ end)
 
 RegisterNetEvent("voip:client:radio:transmission:start", function(frequency, serverId, coords, kind)
     if PrimaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick("radio-lr", true, Config.volumeRadioPrimaryLong)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioPrimaryLong)
     end
 
     if SecondaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick("radio-lr", true, Config.volumeRadioSecondaryLong)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioSecondaryLong)
     end
 
     if PrimaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick("radio-sr", true, Config.volumeRadioPrimaryShort)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioPrimaryShort)
     end
 
     if SecondaryShortRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
-        PlayRemoteRadioClick("radio-sr", true, Config.volumeRadioSecondaryShort)
+        PlayRemoteRadioClick(kind, true, Config.volumeRadioSecondaryShort)
     end
 end)
 
-RegisterNetEvent("voip:client:radio:transmission:stop", function(frequency, serverId)
+RegisterNetEvent("voip:client:radio:transmission:stop", function(frequency, serverId, kind)
     if PrimaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick("radio-sr", false, Config.volumeRadioPrimaryLong)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioPrimaryLong)
     end
 
     if SecondaryLongRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick("radio-sr", false, Config.volumeRadioSecondaryLong)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioSecondaryLong)
     end
 
     if PrimaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick("radio-sr", false, Config.volumeRadioPrimaryShort)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioPrimaryShort)
     end
 
     if SecondaryShortRadioModuleInstance:onTransmissionStopped(frequency, serverId) then
-        PlayRemoteRadioClick("radio-sr", false, Config.volumeRadioSecondaryShort)
+        PlayRemoteRadioClick(kind, false, Config.volumeRadioSecondaryShort)
     end
 end)
 

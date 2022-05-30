@@ -1,6 +1,6 @@
-FilterRadio = {}
+FilterRadioContext = {}
 
-function FilterRadio:new(serverId)
+function FilterRadioContext:new(serverId)
     self.__index = self
 
     local filterChain = FilterChain:new(serverId)
@@ -25,18 +25,18 @@ function FilterRadio:new(serverId)
     return setmetatable({filterChain = filterChain}, self)
 end
 
-function FilterRadio:connect()
+function FilterRadioContext:connect()
     self.filterChain:connect()
 end
 
-function FilterRadio:getType()
+function FilterRadioContext:getType()
     return "radio"
 end
 
-function FilterRadio:update()
+function FilterRadioContext:update()
 end
 
-function FilterRadio:delete()
+function FilterRadioContext:disconnect()
     self.filterChain:disconnect()
     self.filterChain:delete()
 end
