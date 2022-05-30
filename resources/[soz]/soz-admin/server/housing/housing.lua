@@ -6,7 +6,7 @@ QBCore.Functions.CreateCallback("soz-admin:housing:server:GetHousing", function(
 end)
 
 QBCore.Functions.CreateCallback("soz-admin:housing:server:GetBuilding", function(source, cb)
-    local Building = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` IS NOT NULL AND `entry_zone` IS NOT NULL")
+    local Building = MySQL.query.await("SELECT DISTINCT building FROM `player_house` WHERE building IS NOT NULL")
     cb(Building)
 end)
 
