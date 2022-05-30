@@ -270,18 +270,27 @@ end
 
 local function CleanVehicle(entity)
     local ped = PlayerPedId()
-    TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
     QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function() -- Done
+    }, {
+        animDict = "amb@world_human_maid_clean@base",
+        anim = "base",
+        flags = 0,
+        task = "WORLD_HUMAN_MAID_CLEAN",
+    }, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
-        ClearAllPedProps(PlayerPedId())
         ClearPedTasks(PlayerPedId())
-        ClearPedTasksImmediately(PlayerPedId())
+        Wait(100)
+        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
+        Wait(50)
+        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
+        Wait(100)
+        ClearPedTasks(PlayerPedId())
+        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
         local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
         TriggerServerEvent("soz-bennys:server:Clean", VehToNet(entity), serverIDcar)
         TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
@@ -291,9 +300,14 @@ local function CleanVehicle(entity)
         }, true)
     end, function() -- Cancel
         exports["soz-hud"]:DrawNotification("Nettoyage échoué")
-        ClearAllPedProps(PlayerPedId())
         ClearPedTasks(PlayerPedId())
-        ClearPedTasksImmediately(PlayerPedId())
+        Wait(100)
+        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
+        Wait(50)
+        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
+        Wait(100)
+        ClearPedTasks(PlayerPedId())
+        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
     end)
 end
 
