@@ -4,7 +4,6 @@ local CollectObjects = {
     [GetHashKey("prop_kino_light_01")] = "n_fix_light",
     [GetHashKey("v_ilev_fos_mic")] = "n_fix_mic",
 }
-local Objects = {}
 local ObjectWithoutFreeze = {[GetHashKey("prop_cardbordbox_03a")] = true}
 
 RegisterNetEvent("job:server:placeProps", function(item, props, rotation, offset)
@@ -18,31 +17,21 @@ end)
 
 --- Events
 RegisterNetEvent("job:server:AddObject", function(object, position)
-    local obj = CreateObjectNoOffset(object, position.x, position.y, position.z, true, true, false)
-    SetEntityHeading(obj, position.w or 0)
-    if ObjectWithoutFreeze[object] ~= true then
-        FreezeEntityPosition(obj, true)
-    end
-
-    Objects[NetworkGetNetworkIdFromEntity(obj)] = position
+    exports["soz-utils"]:CreateObject(object, position.x, position.y, position.z, position.w or 0, 8000.0, ObjectWithoutFreeze[object] ~= true)
 end)
 
-RegisterNetEvent("job:server:RemoveObject", function(objNet)
-    if Objects[objNet] then
-        DeleteEntity(NetworkGetEntityFromNetworkId(objNet))
-        Objects[objNet] = nil
-    end
+RegisterNetEvent("job:server:RemoveObject", function(ref)
+    exports["soz-utils"]:DeleteObject(ref)
 end)
 
-RegisterNetEvent("job:server:CollectObject", function(objNet)
+RegisterNetEvent("job:server:CollectObject", function(ref, model)
     local Player = QBCore.Functions.GetPlayer(source)
-    local object = NetworkGetEntityFromNetworkId(objNet)
-    local item = CollectObjects[GetEntityModel(object)]
+    local item = CollectObjects[model]
 
     if item then
         if exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1) then
             exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1)
-            TriggerEvent("job:server:RemoveObject", objNet)
+            TriggerEvent("job:server:RemoveObject", ref)
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas récupérer cet objet", "error")
         end
