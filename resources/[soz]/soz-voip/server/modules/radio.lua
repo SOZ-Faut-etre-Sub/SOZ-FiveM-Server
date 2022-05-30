@@ -17,7 +17,7 @@ AddEventHandler("playerDropped", function()
     RadioState:removeConsumerFromAllChannels(source)
 end)
 
-RegisterNetEvent("voip:server:radio:transmission:start", function (channel, kind)
+RegisterNetEvent("voip:server:radio:transmission:start", function(channel, kind)
     local emitter = source
     local coord = GetEntityCoords(GetPlayerPed(source))
 
@@ -26,7 +26,7 @@ RegisterNetEvent("voip:server:radio:transmission:start", function (channel, kind
     end)
 end)
 
-RegisterNetEvent("voip:server:radio:transmission:stop", function (channel)
+RegisterNetEvent("voip:server:radio:transmission:stop", function(channel)
     local emitter = source
 
     RadioState:broadcastToConsumers(channel, function(consumer)
