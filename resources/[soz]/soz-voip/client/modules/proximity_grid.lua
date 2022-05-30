@@ -57,12 +57,12 @@ end
 
 function ModuleProximityGrid:init()
     self.serverId = GetPlayerServerId(PlayerId())
-    MumbleSetAudioInputDistance(self.range)
+    MumbleSetTalkerProximity(self.range)
 end
 
 function ModuleProximityGrid:updateRange(range)
     self.range = range
-    MumbleSetAudioInputDistance(self.range)
+    MumbleSetTalkerProximity(self.range)
 end
 
 function ModuleProximityGrid:getSpeakers()

@@ -7,12 +7,12 @@ end
 
 function ModuleProximityCulling:init()
     self.serverId = GetPlayerServerId(PlayerId())
-    MumbleSetAudioInputDistance(self.range)
+    MumbleSetTalkerProximity(self.range)
 end
 
 function ModuleProximityCulling:updateRange(range)
     self.range = range
-    MumbleSetAudioInputDistance(self.range)
+    MumbleSetTalkerProximity(self.range)
 end
 
 function ModuleProximityCulling:getSpeakers()
