@@ -1,11 +1,9 @@
 shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:shop:menu")
 
-RegisterNetEvent("jobs:client:InvoicePlayer", function(data)
-    local player = NetworkGetPlayerIndexFromPed(data.entity)
-
+local function getTitleAndAmountForInvoice()
     local title = exports["soz-hud"]:Input("Titre", 200)
     if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
+        exports["soz-hud"]:DrawNotification("Vous devez spécifier un titre", "error")
         return
     end
 
@@ -15,5 +13,27 @@ RegisterNetEvent("jobs:client:InvoicePlayer", function(data)
         return
     end
 
+    return title, amount
+end
+
+RegisterNetEvent("jobs:client:InvoicePlayer", function(data)
+    local player = NetworkGetPlayerIndexFromPed(data.entity)
+
+    local title, amount = getTitleAndAmountForInvoice()
+    if title == nil or amount == nil then
+        return
+    end
+
     TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, tonumber(amount))
+end)
+
+RegisterNetEvent("jobs:client:InvoiceSociety", function(data)
+    local player = NetworkGetPlayerIndexFromPed(data.entity)
+
+    local title, amount = getTitleAndAmountForInvoice()
+    if title == nil or amount == nil then
+        return
+    end
+
+    TriggerServerEvent("banking:server:sendSocietyInvoice", GetPlayerServerId(player), title, tonumber(amount))
 end)

@@ -198,6 +198,16 @@ Citizen.CreateThread(function()
                 event = "jobs:client:InvoicePlayer",
                 job = "food",
             },
+            {
+                label = "Facturer la société",
+                color = "food",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "food",
+            },
         },
         distance = 1.5,
     })

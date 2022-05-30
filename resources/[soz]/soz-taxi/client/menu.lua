@@ -69,43 +69,6 @@ TaxiJob.Functions.Menu.GenerateJobMenu = function(job)
     end)
 end
 
-TaxiJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
-    local player = NetworkGetPlayerIndexFromPed(targetPlayer)
-
-    TaxiJob.Functions.Menu.GenerateMenu(job, function(menu)
-        menu:AddButton({
-            label = "Factures personnalisée",
-            value = nil,
-            select = function()
-                local title = exports["soz-hud"]:Input("Titre", 200)
-                if title == nil or title == "" then
-                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
-                    return
-                end
-
-                local amount = exports["soz-hud"]:Input("Montant", 10)
-                if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
-                    return
-                end
-
-                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
-            end,
-        })
-
-        menu:AddButton({
-            label = "Factures Horodateur",
-            value = nil,
-            select = function()
-                title = "Facture automatique de l'horodateur"
-                amount = HorodateurData.TarifActuelle
-                TriggerServerEvent("banking:server:sendInvoice", GetPlayerServerId(player), title, amount)
-            end,
-        })
-
-    end)
-end
-
 --- Events
 RegisterNetEvent("taxi:client:OpenSocietyMenu", function()
     TaxiJob.Functions.Menu.GenerateJobMenu(PlayerData.job.id)
