@@ -67,6 +67,11 @@ CurrentHousingBuildingMenu:On("open", function(menu)
 
     else
         menu:AddButton({
+            label = string.format("Bâtiment actuel : %s", CurrentHousingData.building),
+            disabled = true,
+        })
+
+        menu:AddButton({
             label = "Changer l'habitation de batiment",
             value = nil,
             select = function()
@@ -82,6 +87,7 @@ CurrentHousingBuildingMenu:On("open", function(menu)
                             value = ChangeCurrentHousingMenu,
                             select = function()
                                 TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, habitation.building)
+                                exports["soz-hud"]:DrawNotification(string.format('Cette habitation est désormais rattachée au bâtiment "%s"', habitation.building))
                             end,
                         })
                     end
@@ -90,10 +96,12 @@ CurrentHousingBuildingMenu:On("open", function(menu)
         })
 
         menu:AddButton({
-            label = "Supprimer Des Batiments",
+            label = "Retirer cette habitation du bâtiment",
             value = nil,
             select = function()
                 TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, nil)
+                exports["soz-hud"]:DrawNotification(string.format('Cette habitation n\'est plus rattachée au bâtiment "%s"', CurrentHousingData.building))
+                menu:Close()
             end,
         })
     end
