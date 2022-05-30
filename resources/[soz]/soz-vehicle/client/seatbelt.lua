@@ -59,7 +59,7 @@ CreateThread(function()
     while true do
         sleep = 1000
 
-        if IsPedInAnyVehicle( PlayerPedId()) then
+        if IsPedInAnyVehicle(PlayerPedId()) then
             sleep = 10
             if seatbeltOn then
                 DisableControlAction(0, 75, true)
