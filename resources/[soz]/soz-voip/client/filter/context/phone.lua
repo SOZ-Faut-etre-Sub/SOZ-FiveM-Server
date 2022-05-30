@@ -1,6 +1,6 @@
-FilterPhone = {}
+FilterPhoneContext = {}
 
-function FilterPhone:new(serverId)
+function FilterPhoneContext:new(serverId)
     self.__index = self
 
     local filterChain = FilterChain:new(serverId)
@@ -20,18 +20,18 @@ function FilterPhone:new(serverId)
     return setmetatable({filterChain = filterChain}, self)
 end
 
-function FilterPhone:connect()
+function FilterPhoneContext:connect()
     self.filterChain:connect()
 end
 
-function FilterPhone:getType()
+function FilterPhoneContext:getType()
     return "phone"
 end
 
-function FilterPhone:update()
+function FilterPhoneContext:update()
 end
 
-function FilterPhone:delete()
+function FilterPhoneContext:disconnect()
     self.filterChain:disconnect()
     self.filterChain:delete()
 end

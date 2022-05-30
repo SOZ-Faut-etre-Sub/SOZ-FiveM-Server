@@ -62,7 +62,7 @@ function ModuleRadio:stopTransmission()
     end
 
     self.transmitting = false
-    TriggerServerEvent("voip:server:radio:transmission:stop", self.frequency)
+    TriggerServerEvent("voip:server:radio:transmission:stop", self.frequency, self.kind)
     return true
 end
 
@@ -114,7 +114,7 @@ function ModuleRadio:getSpeakers()
     local speakers = {}
 
     for _, context in pairs(self.speakers) do
-        if context.kind == "long" or (context.distance < self.distanceMax) then
+        if context.kind == "radio-lr" or (context.distance < self.distanceMax) then
             speakers[("player_%d"):format(context.serverId)] = {
                 serverId = context.serverId,
                 distance = context.distance,

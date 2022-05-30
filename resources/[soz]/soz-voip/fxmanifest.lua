@@ -5,11 +5,10 @@ game "common"
 shared_scripts {"config.lua", "shared/*.lua"}
 
 client_scripts {
-    "client/filter/bipad.lua",
-    "client/filter/waveshaper.lua",
-    "client/filter/chain.lua",
-    "client/filter/phone.lua",
-    "client/filter/radio.lua",
+    --"client/filter/context/*",
+    "client/filter/submix/*",
+    "client/filter/registry.lua",
+    "client/filter/submix.lua",
     "client/modules/*.lua",
     "client/main.lua",
     "client/blockscreen.lua",
