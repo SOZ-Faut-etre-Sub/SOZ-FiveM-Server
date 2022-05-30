@@ -1,6 +1,7 @@
 local houseMenu = MenuV:InheritMenu(MapperMenu, {subtitle = "Menu pour les habitations"})
 CurrentHousingMenu = MenuV:InheritMenu(houseMenu)
 CurrentHousingItemMenu = MenuV:InheritMenu(houseMenu)
+CurrentHousingBuildingMenu = MenuV:InheritMenu(houseMenu, {subtitle = "Bâtiment de cette habitation"})
 CurrentBuildingMenu = MenuV:InheritMenu(houseMenu, {subtitle = "Menu des batiments"})
 ChangeCurrentHousingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "Modification de l'habitations"})
 ChangeCurrentBuildingMenu = MenuV:InheritMenu(CurrentHousingMenu, {subtitle = "Modification du batiment"})
@@ -27,7 +28,10 @@ EndHousingMenu:On("open", function(menu)
         value = nil,
         select = function()
             local TempZone = exports["PolyZone"]:EndPolyZone()
-            TriggerServerEvent("soz-admin:server:housing", TempZone, CurrentHousingData.identifier, zone_type)
+            local newZone = QBCore.Functions.TriggerRpc("soz-admin:server:housing", TempZone, CurrentHousingData.identifier, zone_type)
+            CurrentHousingData[zone_type] = newZone
+            exports["soz-hud"]:DrawNotification("Zone modifiée")
+            menu:Close()
         end,
     })
 end)
