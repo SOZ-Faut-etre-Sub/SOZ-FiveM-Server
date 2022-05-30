@@ -276,21 +276,16 @@ local function CleanVehicle(entity)
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {
-        animDict = "amb@world_human_maid_clean@base",
-        anim = "base",
-        flags = 0,
-        task = "WORLD_HUMAN_MAID_CLEAN",
-    }, {}, {}, function() -- Done
+    }, {animDict = "amb@world_human_maid_clean@base", anim = "base", flags = 0, task = "WORLD_HUMAN_MAID_CLEAN"}, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
         ClearPedTasks(PlayerPedId())
         Wait(100)
-        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_maid_clean", "base", 1.0)
         Wait(50)
         TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
         Wait(100)
         ClearPedTasks(PlayerPedId())
-        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_maid_clean", "base", 1.0)
         local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
         TriggerServerEvent("soz-bennys:server:Clean", VehToNet(entity), serverIDcar)
         TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
@@ -302,12 +297,12 @@ local function CleanVehicle(entity)
         exports["soz-hud"]:DrawNotification("Nettoyage échoué")
         ClearPedTasks(PlayerPedId())
         Wait(100)
-        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_maid_clean", "base", 1.0)
         Wait(50)
         TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
         Wait(100)
         ClearPedTasks(PlayerPedId())
-        StopAnimTask(PlayerPedId(), 'amb@world_human_maid_clean', 'base', 1.0)
+        StopAnimTask(PlayerPedId(), "amb@world_human_maid_clean", "base", 1.0)
     end)
 end
 
