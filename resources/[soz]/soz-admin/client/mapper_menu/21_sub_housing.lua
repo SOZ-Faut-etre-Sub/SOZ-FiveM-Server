@@ -66,10 +66,7 @@ CurrentHousingBuildingMenu:On("open", function(menu)
         })
 
     else
-        menu:AddButton({
-            label = string.format("Bâtiment actuel : %s", CurrentHousingData.building),
-            disabled = true,
-        })
+        menu:AddButton({label = string.format("Bâtiment actuel : %s", CurrentHousingData.building), disabled = true})
 
         menu:AddButton({
             label = "Changer l'habitation de batiment",
@@ -87,7 +84,8 @@ CurrentHousingBuildingMenu:On("open", function(menu)
                             value = ChangeCurrentHousingMenu,
                             select = function()
                                 TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, habitation.building)
-                                exports["soz-hud"]:DrawNotification(string.format('Cette habitation est désormais rattachée au bâtiment "%s"', habitation.building))
+                                exports["soz-hud"]:DrawNotification(string.format("Cette habitation est désormais rattachée au bâtiment \"%s\"",
+                                                                                  habitation.building))
                             end,
                         })
                     end
@@ -100,7 +98,7 @@ CurrentHousingBuildingMenu:On("open", function(menu)
             value = nil,
             select = function()
                 TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, nil)
-                exports["soz-hud"]:DrawNotification(string.format('Cette habitation n\'est plus rattachée au bâtiment "%s"', CurrentHousingData.building))
+                exports["soz-hud"]:DrawNotification(string.format("Cette habitation n'est plus rattachée au bâtiment \"%s\"", CurrentHousingData.building))
                 menu:Close()
             end,
         })
@@ -110,10 +108,7 @@ end)
 ChangeCurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
 
-    menu:AddButton({
-        label = "Gestion du bâtiment de l'habitation",
-        value = CurrentHousingBuildingMenu,
-    })
+    menu:AddButton({label = "Gestion du bâtiment de l'habitation", value = CurrentHousingBuildingMenu})
 
     menu:AddButton({
         label = "Changer le Nom de l'habitation",
