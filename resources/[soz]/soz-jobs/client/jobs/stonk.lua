@@ -104,6 +104,16 @@ Citizen.CreateThread(function()
                 event = "jobs:client:InvoicePlayer",
                 job = "cash-transfer",
             },
+            {
+                label = "Facturer la société",
+                color = "cash-transfer",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "cash-transfer",
+            },
         },
         distance = 1.5,
     })

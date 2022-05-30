@@ -12,6 +12,16 @@ CreateThread(function()
                 event = "jobs:client:InvoicePlayer",
                 job = "news",
             },
+            {
+                label = "Facturer la société",
+                color = "news",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "news",
+            },
         },
         distance = 1.5,
     })
