@@ -5,9 +5,10 @@ game "common"
 shared_scripts {"config.lua", "shared/*.lua"}
 
 client_scripts {
-    -- "client/filter/context/*",
+    "client/filter/context/*",
     "client/filter/submix/*",
     "client/filter/registry.lua",
+    "client/filter/context.lua",
     "client/filter/submix.lua",
     "client/modules/*.lua",
     "client/main.lua",

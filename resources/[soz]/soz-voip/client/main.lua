@@ -123,6 +123,7 @@ Citizen.CreateThread(function()
 
     MumbleSetVoiceTarget(voiceTarget)
     MumbleClearVoiceTarget(voiceTarget)
+    MumbleSetTalkerProximity(Config.normalRange)
 
     while true do
         -- first refresh state of proximity
@@ -151,7 +152,7 @@ Citizen.CreateThread(function()
 
         RefreshState(state)
 
-        -- ApplyFilters(state.players)
+        ApplyFilters(state.players)
 
         -- wait, do this every 200ms
         Citizen.Wait(200)
