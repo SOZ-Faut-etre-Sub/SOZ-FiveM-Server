@@ -1,12 +1,8 @@
 local Invoices = {}
 
 --- Functions
-local function IsPlayerAccount(account)
-    return string.find(account, "%d%d%d%u%d%d%d%d%u%d%d%d") ~= nil
-end
-
 local function PlayerHaveAccessToInvoices(PlayerData, account)
-    if IsPlayerAccount(account) then
+    if PlayerData.charinfo.account == account then
         return true
     end
 
@@ -44,7 +40,7 @@ local function PayInvoice(PlayerData, account, id)
     local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
-    if IsPlayerAccount(account) then
+    if PlayerData.charinfo.account == account then
         if Player.Functions.RemoveMoney("money", invoice.amount) then
             Account.AddMoney(invoice.emitterSafe, invoice.amount)
 
@@ -103,7 +99,7 @@ local function RejectInvoice(PlayerData, account, id)
     local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
-    if IsPlayerAccount(account) then
+    if PlayerData.charinfo.account == account then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture")
         if Emitter then
             TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
@@ -146,11 +142,11 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
         })
 
     if id then
-        if not Invoices[account] then
-            Invoices[account] = {}
+        if not Invoices[targetAccount] then
+            Invoices[targetAccount] = {}
         end
 
-        Invoices[account][id] = {
+        Invoices[targetAccount][id] = {
             id = id,
             citizenid = Target.PlayerData.citizenid,
             emitter = Emitter.PlayerData.citizenid,
