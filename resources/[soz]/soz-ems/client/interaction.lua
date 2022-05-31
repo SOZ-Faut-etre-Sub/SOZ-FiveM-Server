@@ -12,6 +12,16 @@ CreateThread(function()
                 end,
             },
             {
+                label = "Facturer la société",
+                color = "lsmc",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("lsmc", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "lsmc",
+            },
+            {
                 label = "Soigner",
                 color = "lsmc",
                 icon = "c:ems/heal.png",

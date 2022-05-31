@@ -29,6 +29,16 @@ CreateThread(function()
                 event = "jobs:client:InvoicePlayer",
                 job = "garbage",
             },
+            {
+                label = "Facturer la société",
+                color = "garbage",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("garbage", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "garbage",
+            },
         },
         distance = 1.5,
     })
