@@ -6,14 +6,14 @@ function FilterRadioContext:new(serverId)
     local filterChain = FilterChain:new(serverId)
 
     filterChain:addFilter(FilterBiquad:new(filterChain:getContext(), "highpass", {
-        frequency = 300.0,
+        frequency = 100.0,
         quality = 1.0,
-        gain = 0.0,
+        gain = 1.0,
     }))
     filterChain:addFilter(FilterBiquad:new(filterChain:getContext(), "lowpass", {
-        frequency = 3000.0,
+        frequency = 2000.0,
         quality = 5.0,
-        gain = 0.0,
+        gain = 1.0,
     }))
     filterChain:addFilter(FilterBiquad:new(filterChain:getContext(), "notch", {
         frequency = 3000.0,
