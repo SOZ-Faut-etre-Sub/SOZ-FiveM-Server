@@ -281,7 +281,7 @@ local function CleanVehicle(entity)
         anim = "base",
         flags = 0,
         task = "WORLD_HUMAN_MAID_CLEAN",
-        reset = true
+        reset = true,
     }, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
         local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
