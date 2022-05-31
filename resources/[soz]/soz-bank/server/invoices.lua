@@ -120,11 +120,8 @@ local function RejectInvoice(PlayerData, account, id)
 end
 
 local function CreateInvoice(Emitter, Target, account, targetAccount, label, amount, kind)
-    if not PlayerHaveAccessToInvoices(Emitter.PlayerData, account) then
-        return false
-    end
-
     local dist = #(GetEntityCoords(GetPlayerPed(Emitter.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
+
     if dist > 5 then
         TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, "Personne n'est à portée de vous", "error")
         return false
