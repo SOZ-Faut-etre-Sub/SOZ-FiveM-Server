@@ -84,21 +84,24 @@ CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
-                label = "Facture",
+                label = "Facturer",
                 color = "taxi",
-                icon = "fas fa-file-invoice-dollar",
-                event = "taxi:client:InvoicePlayer",
-                job = {["taxi"] = 0},
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoicePlayer",
+                job = "taxi",
+            },
+            {
+                label = "Facturer la société",
+                color = "taxi",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
                 canInteract = function()
-                    return PlayerData.job.onduty
+                    return SozJobCore.Functions.HasPermission("taxi", SozJobCore.JobPermission.SocietyBankInvoices)
                 end,
+                job = "taxi",
             },
         },
         distance = 2.5,
     })
-end)
-
-RegisterNetEvent("taxi:client:InvoicePlayer", function(data)
-    TaxiJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
 end)
 

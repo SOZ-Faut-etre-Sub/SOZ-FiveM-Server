@@ -29,6 +29,16 @@ CreateThread(function()
                 event = "jobs:client:InvoicePlayer",
                 job = "oil",
             },
+            {
+                label = "Facturer la société",
+                color = "oil",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("oil", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "oil",
+            },
         },
         distance = 1.5,
     })
