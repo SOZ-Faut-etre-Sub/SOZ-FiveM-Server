@@ -31,7 +31,7 @@ function FilterChain:connect()
 
     -- Disconnect first
     AudiocontextDisconnect(self.context, self.destination, self.source, 0, 0)
-    Wait(0)
+    Wait(100)
 
     local currentNode = self.source
 
@@ -39,7 +39,7 @@ function FilterChain:connect()
         local node = filter:getNode()
 
         AudiocontextConnect(self.context, node, currentNode, 0, 0)
-        Wait(0)
+        Wait(100)
         currentNode = node
     end
 
@@ -61,12 +61,12 @@ function FilterChain:disconnect()
         local node = filter:getNode()
 
         AudiocontextDisconnect(self.context, node, currentNode, 0, 0)
-        Wait(0)
+        Wait(100)
         currentNode = node
     end
 
     AudiocontextDisconnect(self.context, self.destination, currentNode, 0, 0)
-    Wait(0)
+    Wait(100)
 
     -- Reconnect destination and source
     AudiocontextConnect(self.context, self.destination, self.source, 0, 0)

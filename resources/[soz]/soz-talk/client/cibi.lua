@@ -51,7 +51,13 @@ local function vehicleRegisterHandlers()
         end
 
         if value then
-            exports["soz-voip"]:SetRadioLongRangePowerState(true)
+            if Entity(currentVehicle).state.primaryRadio then
+                TriggerServerEvent("voip:server:radio:connect", "radio-lr", "primary", Entity(currentVehicle).state.primaryRadio.frequency)
+            end
+
+            if Entity(currentVehicle).state.secondaryRadio then
+                TriggerServerEvent("voip:server:radio:connect", "radio-lr", "secondary", Entity(currentVehicle).state.secondaryRadio.frequency)
+            end
         else
             exports["soz-voip"]:SetRadioLongRangePowerState(false)
         end
@@ -76,6 +82,7 @@ local function toggleRadio(toggle)
 
         return
     end
+
     radioOpen = toggle
     SetNuiFocus(radioOpen, radioOpen)
     SetNuiFocusKeepInput(radioOpen)
@@ -208,23 +215,21 @@ CreateThread(function()
         local ped = PlayerPedId()
 
         if LocalPlayer.state.isLoggedIn then
-            if currentVehicle == 0 and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
-                if IsPedInAnyVehicle(ped, false) then
-                    currentVehicle = GetVehiclePedIsUsing(ped)
+            if currentVehicle == 0 and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] and
+                IsPedInAnyVehicle(ped, false) then
+                currentVehicle = GetVehiclePedIsUsing(ped)
 
-                    if Entity(currentVehicle).state.hasRadio then
-                        vehicleRegisterHandlers()
-                    end
+                if Entity(currentVehicle).state.hasRadio then
+                    vehicleRegisterHandlers()
                 end
-            else
-                if currentVehicle ~= 0 and not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or
-                    PlayerData.metadata["inlaststand"] then
-                    if Entity(currentVehicle).state.hasRadio or not DoesEntityExist(currentVehicle) then
-                        vehicleUnregisterHandlers()
-                    end
+            elseif currentVehicle ~= 0 and (not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"]) or
+                PlayerData.metadata["inlaststand"] then
 
-                    currentVehicle = 0
+                if Entity(currentVehicle).state.hasRadio or not DoesEntityExist(currentVehicle) then
+                    vehicleUnregisterHandlers()
                 end
+
+                currentVehicle = 0
             end
         end
 

@@ -6,7 +6,7 @@ PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance,
 SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "SecondaryShort")
 SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "SecondaryLong")
 CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
-ProximityModuleInstance = ModuleProximityCulling:new(Config.normalRange, Config.gridSize, Config.gridEdge)
+ProximityModuleInstance = ModuleProximityCulling:new(Config.normalRange)
 
 local function updateSpeakers(speakers, newSpeakers, context, volume)
     for id, config in pairs(newSpeakers) do
@@ -45,6 +45,8 @@ local function contains(table, value)
     return false
 end
 
+local LastVolumesSet = {}
+
 local function RefreshState(state)
     -- clear everything
     MumbleClearVoiceTarget(voiceTarget)
@@ -56,8 +58,14 @@ local function RefreshState(state)
 
     -- readd players
     for _, config in pairs(state.players) do
+        local key = ("player_%d"):format(config.serverId)
+
         MumbleAddVoiceTargetPlayerByServerId(voiceTarget, config.serverId)
-        MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
+
+        if not LastVolumesSet[key] or LastVolumesSet[key] ~= config.volume then
+            MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
+            LastVolumesSet[key] = config.volume
+        end
     end
 
     return state
@@ -123,7 +131,6 @@ Citizen.CreateThread(function()
 
     MumbleSetVoiceTarget(voiceTarget)
     MumbleClearVoiceTarget(voiceTarget)
-    MumbleSetTalkerProximity(Config.normalRange)
 
     while true do
         -- first refresh state of proximity
