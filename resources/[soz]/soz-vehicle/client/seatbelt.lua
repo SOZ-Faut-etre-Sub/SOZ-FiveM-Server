@@ -44,6 +44,7 @@ function ToggleSeatbelt()
         TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
     end
     TriggerEvent("hud:client:UpdateSeatbelt", seatbeltOn)
+    SetPedConfigFlag(PlayerPedId(), 184, seatbeltOn)
 end
 
 function ResetHandBrake()
@@ -57,6 +58,7 @@ end
 CreateThread(function()
     while true do
         sleep = 1000
+
         if IsPedInAnyVehicle(PlayerPedId()) then
             sleep = 10
             if seatbeltOn then
