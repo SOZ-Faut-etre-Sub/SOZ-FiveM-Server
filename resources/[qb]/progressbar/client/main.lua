@@ -205,7 +205,7 @@ function ActionStart()
                     end
                 end
 
-                DisableActions(ped)
+                DisableActions()
             end
             Wait(0)
         end
@@ -237,6 +237,16 @@ function ActionCleanup()
             ClearPedTasks(ped)
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
+            if Action.animation.reset == true then
+                ClearPedTasks(ped)
+                Wait(100)
+                StopAnimTask(ped, Action.animation.animDict, Action.animation.anim, 1.0)
+                Wait(50)
+                TaskStartScenarioInPlace(ped, Action.animation.task, 0, true)
+                Wait(100)
+                ClearPedTasks(ped)
+                StopAnimTask(ped, Action.animation.animDict, Action.animation.anim, 1.0)
+            end
         else
             ClearPedTasks(ped)
         end
@@ -258,7 +268,7 @@ function loadAnimDict(dict)
     end
 end
 
-function DisableActions(ped)
+function DisableActions()
     if Action.controlDisables.disableMouse then
         DisableControlAction(0, 1, true) -- LookLeftRight
         DisableControlAction(0, 2, true) -- LookUpDown
