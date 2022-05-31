@@ -75,6 +75,43 @@ function ModuleRadio:stopTransmission()
     return true
 end
 
+function ModuleRadio:onPlayerConnect(frequency, serverId)
+    if not self.connected then
+        return false
+    end
+
+    if frequency ~= self.frequency then
+        return false
+    end
+
+    -- do not add self
+    if self.serverId == serverId then
+        return false
+    end
+
+    self.speakers[("player_%d"):format(serverId)] = {serverId = serverId, transmitting = false}
+
+    return true
+end
+
+function ModuleRadio:onPlayerDisconnect(frequency, serverId)
+    if frequency ~= self.frequency then
+        return false
+    end
+
+    if self.serverId == serverId then
+        return false
+    end
+
+    if not self.speakers[("player_%d"):format(serverId)] then
+        return false
+    end
+
+    self.speakers[("player_%d"):format(serverId)] = nil
+
+    return true
+end
+
 function ModuleRadio:onTransmissionStarted(frequency, serverId, coords, kind)
     local distance = #(GetEntityCoords(PlayerPedId()) - coords)
 
@@ -91,7 +128,12 @@ function ModuleRadio:onTransmissionStarted(frequency, serverId, coords, kind)
         return false
     end
 
+    if kind ~= "radio-lr" and distance > self.distanceMax then
+        return false
+    end
+
     self.speakers[("player_%d"):format(serverId)] = {
+        transmitting = true,
         serverId = serverId,
         coords = coords,
         kind = kind,
@@ -114,7 +156,11 @@ function ModuleRadio:onTransmissionStopped(frequency, serverId)
         return false
     end
 
-    self.speakers[("player_%d"):format(serverId)] = nil
+    if not self.speakers[("player_%d"):format(serverId)].transmitting then
+        return false
+    end
+
+    self.speakers[("player_%d"):format(serverId)].transmitting = false
 
     return true
 end
@@ -123,16 +169,15 @@ function ModuleRadio:getSpeakers()
     local speakers = {}
 
     for _, context in pairs(self.speakers) do
-        if context.kind == "radio-lr" or (context.distance < self.distanceMax) then
-            speakers[("player_%d"):format(context.serverId)] = {
-                serverId = context.serverId,
-                kind = context.kind,
-                distance = context.distance,
-                distanceMax = self.distanceMax,
-                balanceRight = self.balanceRight,
-                balanceLeft = self.balanceLeft,
-            }
-        end
+        speakers[("player_%d"):format(context.serverId)] = {
+            serverId = context.serverId,
+            kind = context.kind,
+            distance = context.distance,
+            distanceMax = self.distanceMax,
+            balanceRight = self.balanceRight,
+            balanceLeft = self.balanceLeft,
+            transmitting = context.transmitting and (context.kind == "radio-lr" or (context.distance < self.distanceMax)),
+        }
     end
 
     return speakers

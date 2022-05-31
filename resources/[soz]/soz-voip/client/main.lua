@@ -10,16 +10,17 @@ ProximityModuleInstance = ModuleProximityCulling:new(Config.normalRange)
 
 local function updateSpeakers(speakers, newSpeakers, context, volume)
     for id, config in pairs(newSpeakers) do
-        if speakers[id] then
+        if speakers[id] and config.transmitting then
             speakers[id].serverId = config.serverId
             speakers[id].volume = volume
             speakers[id].distance = config.distance or speakers[id].distance
             speakers[id].distanceMax = config.distanceMax or speakers[id].distanceMax
             speakers[id].balanceLeft = config.balanceLeft or speakers[id].balanceLeft
             speakers[id].balanceRight = config.balanceRight or speakers[id].balanceRight
+            speakers[id].transmitting = config.transmitting or false
 
             table.insert(speakers[id].context, context)
-        else
+        elseif not speakers[id] then
             speakers[id] = {
                 serverId = config.serverId,
                 volume = volume,
@@ -28,7 +29,12 @@ local function updateSpeakers(speakers, newSpeakers, context, volume)
                 balanceLeft = (config.balanceLeft or 1.0),
                 balanceRight = (config.balanceRight or 1.0),
                 context = {context},
+                transmitting = config.transmitting,
             }
+
+            if not config.transmitting then
+                speakers[id].volume = 0.0
+            end
         end
     end
 
@@ -49,6 +55,7 @@ local LastVolumesSet = {}
 
 local function RefreshState(state)
     -- clear everything
+    MumbleSetVoiceTarget(voiceTarget)
     MumbleClearVoiceTarget(voiceTarget)
 
     -- readd channel
@@ -57,14 +64,20 @@ local function RefreshState(state)
     end
 
     -- readd players
-    for _, config in pairs(state.players) do
-        local key = ("player_%d"):format(config.serverId)
-
+    for id, config in pairs(state.players) do
         MumbleAddVoiceTargetPlayerByServerId(voiceTarget, config.serverId)
+        MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
 
-        if not LastVolumesSet[key] or LastVolumesSet[key] ~= config.volume then
+        if not LastVolumesSet[id] or LastVolumesSet[id].volume ~= config.volume then
             MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
-            LastVolumesSet[key] = config.volume
+            LastVolumesSet[id] = {serverId = config.serverId, volume = config.volume}
+        end
+    end
+
+    for id, config in pairs(LastVolumesSet) do
+        if not state.players[id] then
+            MumbleSetVolumeOverrideByServerId(config.serverId, -1.0)
+            LastVolumesSet[id] = nil
         end
     end
 

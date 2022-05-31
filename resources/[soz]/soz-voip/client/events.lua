@@ -79,39 +79,55 @@ RegisterNetEvent("voip:client:radio:transmission:stop", function(frequency, serv
     end
 end)
 
-RegisterNetEvent("voip:client:radio:connect", function(kind, instance, frequency)
+local function GetRadioForKindAndInstance(kind, instance)
     if kind == "radio-lr" and instance == "primary" then
-        PrimaryLongRadioModuleInstance:connect(frequency)
+        return PrimaryLongRadioModuleInstance
     end
 
     if kind == "radio-lr" and instance == "secondary" then
-        SecondaryLongRadioModuleInstance:connect(frequency)
+        return SecondaryLongRadioModuleInstance
     end
 
     if kind == "radio-sr" and instance == "primary" then
-        PrimaryShortRadioModuleInstance:connect(frequency)
+        return PrimaryShortRadioModuleInstance
     end
 
     if kind == "radio-sr" and instance == "secondary" then
-        SecondaryShortRadioModuleInstance:connect(frequency)
+        return SecondaryShortRadioModuleInstance
+    end
+
+    return nil
+end
+
+RegisterNetEvent("voip:client:radio:player:connect", function(kind, instance, frequency, serverId)
+    local radio = GetRadioForKindAndInstance(kind, instance)
+
+    if radio ~= nil then
+        radio:onPlayerConnect(frequency, serverId)
+    end
+end)
+
+RegisterNetEvent("voip:client:radio:player:disconnect", function(kind, instance, frequency, serverId)
+    local radio = GetRadioForKindAndInstance(kind, instance)
+
+    if radio ~= nil then
+        radio:onPlayerDisconnect(frequency, serverId)
+    end
+end)
+
+RegisterNetEvent("voip:client:radio:connect", function(kind, instance, frequency)
+    local radio = GetRadioForKindAndInstance(kind, instance)
+
+    if radio ~= nil then
+        radio:connect(frequency)
     end
 end)
 
 RegisterNetEvent("voip:client:radio:disconnect", function(kind, frequency, instance)
-    if kind == "radio-lr" and instance == "primary" then
-        PrimaryLongRadioModuleInstance:disconnect()
-    end
+    local radio = GetRadioForKindAndInstance(kind, instance)
 
-    if kind == "radio-lr" and instance == "secondary" then
-        SecondaryLongRadioModuleInstance:disconnect()
-    end
-
-    if kind == "radio-sr" and instance == "primary" then
-        PrimaryShortRadioModuleInstance:disconnect()
-    end
-
-    if kind == "radio-sr" and instance == "secondary" then
-        SecondaryShortRadioModuleInstance:disconnect()
+    if radio ~= nil then
+        radio:disconnect()
     end
 end)
 
