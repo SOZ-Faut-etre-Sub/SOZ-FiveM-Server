@@ -4,22 +4,22 @@ local function CreateRadioSubmix(name)
     local RadioSubmix = FilterSubmix:new(name, 0)
 
     RadioSubmix:setEffectRadioFx()
-    RadioSubmix:setEffectParamInt('default', 1)
-    RadioSubmix:setEffectParamFloat('freq_low', 100.0)
-    RadioSubmix:setEffectParamFloat('freq_hi', 5000.0)
-    RadioSubmix:setEffectParamFloat('rm_mod_freq', 300.0)
-    RadioSubmix:setEffectParamFloat('rm_mix', 0.1)
-    RadioSubmix:setEffectParamFloat('fudge', 50.0)
-    RadioSubmix:setEffectParamFloat('o_freq_lo', 300.0)
-    RadioSubmix:setEffectParamFloat('o_freq_hi', 5000.0)
+    RadioSubmix:setEffectParamInt("default", 1)
+    RadioSubmix:setEffectParamFloat("freq_low", 100.0)
+    RadioSubmix:setEffectParamFloat("freq_hi", 5000.0)
+    RadioSubmix:setEffectParamFloat("rm_mod_freq", 300.0)
+    RadioSubmix:setEffectParamFloat("rm_mix", 0.1)
+    RadioSubmix:setEffectParamFloat("fudge", 50.0)
+    RadioSubmix:setEffectParamFloat("o_freq_lo", 300.0)
+    RadioSubmix:setEffectParamFloat("o_freq_hi", 5000.0)
 
     return RadioSubmix
 end
 
 PhoneSubmix = FilterSubmix:new("phone", 0)
-PhoneSubmix:setEffectParamInt('default', 1)
-PhoneSubmix:setEffectParamFloat('freq_low', 450.0)
-PhoneSubmix:setEffectParamFloat('freq_hi', 5000.0)
+PhoneSubmix:setEffectParamInt("default", 1)
+PhoneSubmix:setEffectParamFloat("freq_low", 450.0)
+PhoneSubmix:setEffectParamFloat("freq_hi", 5000.0)
 
 RadioPrimaryLongSubmix = CreateRadioSubmix("radio_lr_primary")
 RadioSecondaryLongSubmix = CreateRadioSubmix("radio_lr_secondary")
@@ -30,21 +30,29 @@ function FilterSubmixRegistry:new()
     self.__index = self
 
     local registry = FilterRegistry:new()
+    local radioPool = RadioPoolSubmix:new(function(id)
+        local name = ("radio_%s"):format(id)
+        local submix = FilterSubmix:new(name, 0)
 
-    registry:register("radio_lr_primary", function(serverId)
-        return FilterRadioSubmix:new(serverId, RadioPrimaryLongSubmix)
+        submix:setEffectRadioFx()
+        submix:setEffectParamInt("default", 1)
+        submix:setEffectParamFloat("freq_low", 100.0)
+        submix:setEffectParamFloat("freq_hi", 5000.0)
+        submix:setEffectParamFloat("rm_mod_freq", 300.0)
+        submix:setEffectParamFloat("rm_mix", 0.1)
+        submix:setEffectParamFloat("fudge", 50.0)
+        submix:setEffectParamFloat("o_freq_lo", 300.0)
+        submix:setEffectParamFloat("o_freq_hi", 5000.0)
+
+        return submix
+    end, 39)
+
+    registry:register("radio", function(serverId)
+        return FilterRadioSubmix:new(serverId, radioPool:acquire(serverId), radioPool)
     end)
 
-    registry:register("radio_lr_secondary", function(serverId)
-        return FilterRadioSubmix:new(serverId, RadioSecondaryLongSubmix)
-    end)
-
-    registry:register("radio_sr_primary", function(serverId)
-        return FilterRadioSubmix:new(serverId, RadioPrimaryShortSubmix)
-    end)
-
-    registry:register("radio_sr_secondary", function(serverId)
-        return FilterRadioSubmix:new(serverId, RadioSecondaryShortSubmix)
+    registry:register("phone", function()
+        return PhoneSubmix
     end)
 
     return setmetatable({registry = registry}, self)
@@ -54,14 +62,18 @@ function FilterSubmixRegistry:register(name, factory)
     self.factory[name] = factory
 end
 
-function FilterSubmixRegistry:connect(serverId, filterType)
-    self.registry:connect(serverId, filterType)
+function FilterSubmixRegistry:loop(cb)
+    self.registry:loop(cb)
 end
 
-function FilterSubmixRegistry:update(serverId, filterType, params)
-    self.registry:update(serverId, filterType, params)
+function FilterSubmixRegistry:apply(serverId, filterType, params)
+    self.registry:apply(serverId, filterType, params)
 end
 
-function FilterSubmixRegistry:disconnect(serverId)
-    self.registry:disconnect(serverId)
+function FilterSubmixRegistry:remove(serverId)
+    self.registry:remove(serverId)
+end
+
+function FilterSubmixRegistry:removeById(id)
+    self.registry:removeById(id)
 end
