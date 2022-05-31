@@ -33,12 +33,12 @@ Config.balances = {
 }
 
 --- Volume
-Config.volumeRadioPrimaryShort = 0.8
-Config.volumeRadioPrimaryLong = 0.8
-Config.volumeRadioSecondaryShort = 0.8
-Config.volumeRadioSecondaryLong = 0.8
-Config.volumeCall = 0.6
-Config.volumeVehicle = 0.5
+Config.volumeRadioPrimaryShort = 1.0
+Config.volumeRadioPrimaryLong = 1.0
+Config.volumeRadioSecondaryShort = 1.0
+Config.volumeRadioSecondaryLong = 1.0
+Config.volumeCall = 0.9
+Config.volumeVehicle = 0.6
 
 --- Grid Module
 Config.gridSize = 512
