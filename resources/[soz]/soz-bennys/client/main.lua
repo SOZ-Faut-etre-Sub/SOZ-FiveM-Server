@@ -276,7 +276,13 @@ local function CleanVehicle(entity)
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {animDict = "amb@world_human_maid_clean@base", anim = "base", flags = 0, task = "WORLD_HUMAN_MAID_CLEAN", reset = true}, {}, {}, function() -- Done
+    }, {
+        animDict = "amb@world_human_maid_clean@base",
+        anim = "base",
+        flags = 0,
+        task = "WORLD_HUMAN_MAID_CLEAN",
+        reset = true
+    }, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
         local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
         TriggerServerEvent("soz-bennys:server:Clean", VehToNet(entity), serverIDcar)
