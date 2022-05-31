@@ -1,6 +1,7 @@
 local RadioState = RadioStateManager:new()
 
 RegisterNetEvent("voip:server:radio:connect", function(context, kind, channel)
+    print("oip:server:radio:connect", context, kind, channel)
     if channel >= Config.radioFrequencies.min and channel <= Config.radioFrequencies.max then
         RadioState:addConsumer(source, context, channel)
 
@@ -9,6 +10,7 @@ RegisterNetEvent("voip:server:radio:connect", function(context, kind, channel)
 end)
 
 RegisterNetEvent("voip:server:radio:disconnect", function(context, channel, kind)
+    print("oip:server:radio:disconnect", context, kind, channel)
     RadioState:removeConsumer(source, context, channel)
     TriggerClientEvent("voip:client:radio:disconnect", source, context, channel, kind)
 end)

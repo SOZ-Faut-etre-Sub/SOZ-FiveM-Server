@@ -75,13 +75,8 @@ exports("SetRadioLongRangePowerState", function(state)
         local primaryFrequency = PrimaryLongRadioModuleInstance:disconnect()
         local secondaryFrequency = SecondaryLongRadioModuleInstance:disconnect()
 
-        if primaryFrequency ~= nil then
-            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryFrequency, "primary")
-        end
-
-        if secondaryFrequency ~= nil then
-            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryFrequency, "secondary")
-        end
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryFrequency, "primary")
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryFrequency, "secondary")
     end
 end)
 exports("SetRadioShortRangePowerState", function(state)
@@ -89,13 +84,8 @@ exports("SetRadioShortRangePowerState", function(state)
         local primaryFrequency = PrimaryShortRadioModuleInstance:disconnect()
         local secondaryFrequency = SecondaryShortRadioModuleInstance:disconnect()
 
-        if primaryFrequency ~= nil then
-            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryFrequency, "primary")
-        end
-
-        if secondaryFrequency ~= nil then
-            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryFrequency, "secondary")
-        end
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryFrequency, "primary")
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryFrequency, "secondary")
     end
 end)
 

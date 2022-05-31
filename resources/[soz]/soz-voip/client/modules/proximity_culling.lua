@@ -36,5 +36,5 @@ function ModuleProximityCulling:getChannels()
 end
 
 function ModuleProximityCulling:refresh()
-    return
+    MumbleSetTalkerProximity(self.range)
 end

@@ -45,6 +45,8 @@ function ModuleRadio:disconnect()
 
     self.connected = false
     self.speakers = {}
+
+    return self.frequency
 end
 
 function ModuleRadio:setBalance(left, right)
