@@ -11,6 +11,8 @@ function ModuleRadio:new(distanceMax, kind, name)
         name = name,
         speakers = {},
         serverId = nil,
+        balanceLeft = 1.0,
+        balanceRight = 1.0,
     }, self)
 end
 
@@ -43,6 +45,11 @@ function ModuleRadio:disconnect()
 
     self.connected = false
     self.speakers = {}
+end
+
+function ModuleRadio:setBalance(left, right)
+    self.balanceLeft = left
+    self.balanceRight = right
 end
 
 function ModuleRadio:startTransmission()
@@ -117,7 +124,11 @@ function ModuleRadio:getSpeakers()
         if context.kind == "radio-lr" or (context.distance < self.distanceMax) then
             speakers[("player_%d"):format(context.serverId)] = {
                 serverId = context.serverId,
+                kind = context.kind,
                 distance = context.distance,
+                distanceMax = self.distanceMax,
+                balanceRight = self.balanceRight,
+                balanceLeft = self.balanceLeft,
             }
         end
     end

@@ -27,9 +27,9 @@ Config.volumeRadioSecondaryShort = "center"
 Config.volumeRadioSecondaryLong = "center"
 
 Config.balances = {
-    ["center"] = { left = 1.0, right = 1.0 },
-    ["left"] = { left = 1.0, right = 0.0 },
-    ["right"] = { left = 0.0, right = 1.0 },
+    ["center"] = {left = 1.0, right = 1.0},
+    ["left"] = {left = 1.0, right = 0.0},
+    ["right"] = {left = 0.0, right = 1.0},
 }
 
 --- Volume

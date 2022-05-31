@@ -20,14 +20,18 @@ function FilterAudiocontextRegistry:register(name, factory)
     self.factory[name] = factory
 end
 
-function FilterAudiocontextRegistry:connect(serverId, filterType)
-    self.registry:connect(serverId, filterType)
+function FilterAudiocontextRegistry:loop(cb)
+    self.registry:loop(cb)
 end
 
-function FilterAudiocontextRegistry:update(serverId, filterType, params)
-    self.registry:update(serverId, filterType, params)
+function FilterAudiocontextRegistry:apply(serverId, filterType, params)
+    self.registry:apply(serverId, filterType, params)
 end
 
-function FilterAudiocontextRegistry:disconnect(serverId)
-    self.registry:disconnect(serverId)
+function FilterAudiocontextRegistry:remove(serverId)
+    self.registry:remove(serverId)
+end
+
+function FilterAudiocontextRegistry:removeById(id)
+    self.registry:removeById(id)
 end

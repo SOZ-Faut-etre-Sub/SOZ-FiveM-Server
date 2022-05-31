@@ -10,22 +10,13 @@ function FilterRegistry:register(name, factory)
     self.factory[name] = factory
 end
 
-function FilterRegistry:connect(serverId, filterType)
-    local key = ("player_%d"):format(serverId)
-
-    if self.players[key] then
-        self.players[key]:disconnect()
+function FilterRegistry:loop(cb)
+    for id, player in pairs(self.players) do
+        cb(id, player)
     end
-
-    if not self.factory[filterType] then
-        return
-    end
-
-    self.players[key] = self.factory[filterType](serverId)
-    self.players[key]:connect()
 end
 
-function FilterRegistry:update(serverId, filterType, params)
+function FilterRegistry:apply(serverId, filterType, params)
     local key = ("player_%d"):format(serverId)
 
     if self.players[key] and self.players[key]:getType() ~= filterType then
@@ -39,16 +30,29 @@ function FilterRegistry:update(serverId, filterType, params)
         end
 
         self.players[key] = self.factory[filterType](serverId)
+
+        if not self.players[key] then
+            return
+        end
+
         self.players[key]:connect()
     end
 
     self.players[key]:update(params)
 end
 
-function FilterRegistry:disconnect(serverId)
+function FilterRegistry:remove(serverId)
     local key = ("player_%d"):format(serverId)
 
     if self.players[key] then
         self.players[key]:disconnect()
+        self.players[key] = nil
+    end
+end
+
+function FilterRegistry:removeById(id)
+    if self.players[id] then
+        self.players[id]:disconnect()
+        self.players[id] = nil
     end
 end

@@ -3,7 +3,7 @@ RadioStateManager = {}
 
 function RadioStateManager:new()
     self.__index = self
-    return setmetatable({ state = {} }, self)
+    return setmetatable({state = {}}, self)
 end
 
 function RadioStateManager:getConsumers(channel)
