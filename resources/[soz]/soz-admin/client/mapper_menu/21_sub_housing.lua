@@ -1,25 +1,39 @@
 CurrentHousingItemMenu:On("open", function(menu)
     menu:ClearItems()
 
-    if CurrentZoneData ~= nil and CurrentHousingData.building == nil then
-        menu:AddCheckbox({
-            label = "Afficher la zone",
-            value = drawZone,
-            change = function()
-                drawZone = not drawZone
-                zone = json.decode(CurrentZoneData)
-                DisplayZone(zone)
-            end,
-        })
+    local data = CurrentZoneData
+    if type(data) == "string" then
+        data = json.decode(CurrentZoneData)
+    end
 
-        menu:AddButton({
-            label = "Changer la zone",
-            value = EndHousingMenu,
-            select = function()
-                TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
-            end,
-        })
-    elseif CurrentHousingData.building == nil and CurrentZoneData == nil then
+    menu:AddCheckbox({
+        label = "Afficher la zone",
+        value = drawZone,
+        change = function()
+            drawZone = not drawZone
+            if next(data) ~= nil then
+                DisplayZone(data)
+            end
+        end,
+    })
+
+    local label = "Changer la zone"
+    if next(data) == nil then
+        label = "Ajouter la zone"
+    end
+    menu:AddButton({
+        label = label,
+        value = EndHousingMenu,
+        select = function()
+            TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
+        end,
+    })
+end)
+
+CurrentHousingBuildingMenu:On("open", function(menu)
+    menu:ClearItems()
+
+    if CurrentHousingData.building == nil then
         menu:AddButton({
             label = "Ajouter l'habitation à un batiment",
             value = nil,
@@ -51,7 +65,9 @@ CurrentHousingItemMenu:On("open", function(menu)
             end,
         })
 
-    elseif CurrentHousingData.building ~= nil then
+    else
+        menu:AddButton({label = string.format("Bâtiment actuel : %s", CurrentHousingData.building), disabled = true})
+
         menu:AddButton({
             label = "Changer l'habitation de batiment",
             value = nil,
@@ -68,6 +84,8 @@ CurrentHousingItemMenu:On("open", function(menu)
                             value = ChangeCurrentHousingMenu,
                             select = function()
                                 TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, habitation.building)
+                                exports["soz-hud"]:DrawNotification(string.format("Cette habitation est désormais rattachée au bâtiment \"%s\"",
+                                                                                  habitation.building))
                             end,
                         })
                     end
@@ -76,10 +94,12 @@ CurrentHousingItemMenu:On("open", function(menu)
         })
 
         menu:AddButton({
-            label = "Supprimer Des Batiments",
+            label = "Retirer cette habitation du bâtiment",
             value = nil,
             select = function()
                 TriggerServerEvent("soz-admin:server:housing:ChangeBuilding", CurrentHousingData.identifier, nil)
+                exports["soz-hud"]:DrawNotification(string.format("Cette habitation n'est plus rattachée au bâtiment \"%s\"", CurrentHousingData.building))
+                menu:Close()
             end,
         })
     end
@@ -88,11 +108,17 @@ end)
 ChangeCurrentHousingMenu:On("open", function(menu)
     menu:ClearItems()
 
+    menu:AddButton({label = "Gestion du bâtiment de l'habitation", value = CurrentHousingBuildingMenu})
+
     menu:AddButton({
         label = "Changer le Nom de l'habitation",
         value = nil,
         select = function()
             NewName = exports["soz-hud"]:Input("Nom du l'habitation:", 50)
+            if NewName == nil or #NewName == 0 then
+                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                return
+            end
             TriggerServerEvent("soz-admin:server:housing:ChangeName", NewName, CurrentHousingData.identifier)
         end,
     })
@@ -115,68 +141,24 @@ ChangeCurrentHousingMenu:On("open", function(menu)
         end,
     })
 
-    menu:AddButton({
-        label = "Zone d'entrée",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "entry_zone"
-            CurrentZoneData = CurrentHousingData.entry_zone
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone de sortie",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "exit_zone"
-            CurrentZoneData = CurrentHousingData.exit_zone
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du frigo",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "fridge_position"
-            CurrentZoneData = CurrentHousingData.fridge_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du coffre d'argent",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "money_position"
-            CurrentZoneData = CurrentHousingData.money_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du Coffre d'item",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "stash_position"
-            CurrentZoneData = CurrentHousingData.stash_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du vestiare",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "closet_position"
-            CurrentZoneData = CurrentHousingData.closet_position
-        end,
-    })
-
-    menu:AddButton({
-        label = "Zone du garage",
-        value = CurrentHousingItemMenu,
-        select = function()
-            zone_type = "garage_zone"
-            CurrentZoneData = CurrentHousingData.garage_zone
-        end,
-    })
+    local zones = {
+        {field = "entry_zone", label = "Zone d'entrée"},
+        {field = "exit_zone", label = "Zone de sortie"},
+        {field = "fridge_position", label = "Zone du frigo"},
+        {field = "money_position", label = "Zone du coffre d'argent"},
+        {field = "closet_position", label = "Zone du vestiaire"},
+        {field = "garage_zone", label = "Zone du garage"},
+    }
+    for _, zone in ipairs(zones) do
+        menu:AddButton({
+            label = zone.label,
+            value = CurrentHousingItemMenu,
+            select = function()
+                zone_type = zone.field
+                CurrentZoneData = CurrentHousingData[zone.field] or "{}"
+            end,
+        })
+    end
 end)
 
 CurrentHousingMenu:On("open", function(menu)
