@@ -57,18 +57,19 @@ local function loadAnimDict(dict)
 end
 
 function ScrapAnim(time)
-    local time = time / 1000
+    local timevar = time / 1000
+    local ped = PlayerPedId()
     loadAnimDict("mp_car_bomb")
-    TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 3.0, 3.0, -1, 16, 0, false, false, false)
-    openingDoor = true
+    TaskPlayAnim(ped, "mp_car_bomb", "car_bomb_mechanic", 3.0, 3.0, -1, 16, 0, false, false, false)
+    local openingDoor = true
     CreateThread(function()
         while openingDoor do
-            TaskPlayAnim(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
+            TaskPlayAnim(ped, "mp_car_bomb", "car_bomb_mechanic", 3.0, 3.0, -1, 16, 0, 0, 0, 0)
             Wait(2000)
-            time = time - 2
-            if time <= 0 then
+            timevar = timevar - 2
+            if timevar <= 0 then
                 openingDoor = false
-                StopAnimTask(PlayerPedId(), "mp_car_bomb", "car_bomb_mechanic", 1.0)
+                StopAnimTask(ped, "mp_car_bomb", "car_bomb_mechanic", 1.0)
             end
         end
     end)
@@ -269,7 +270,6 @@ local function Repairall(entity)
 end
 
 local function CleanVehicle(entity)
-    local ped = PlayerPedId()
     QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", 10000, false, true,
                                  {
         disableMovement = true,
