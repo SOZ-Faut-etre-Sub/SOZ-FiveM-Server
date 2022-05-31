@@ -88,7 +88,7 @@ local FilterRegistryInstance = FilterAudiocontextRegistry:new()
 
 local function GetFilterForPlayer(player)
     if contains(player.context, "call") then
-        return "call"
+        return "phone"
     end
 
     if contains(player.context, "radio_lr_primary") then
