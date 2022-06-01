@@ -19,7 +19,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 99, Texture = 1, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
         ["Costume Terrain"] = {
             Components = {
@@ -33,7 +33,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 95, Texture = 0, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
@@ -49,7 +49,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 25, Texture = 5, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
         ["Costume Terrain"] = {
             Components = {
@@ -63,7 +63,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 250, Texture = 1, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
     },
 }
