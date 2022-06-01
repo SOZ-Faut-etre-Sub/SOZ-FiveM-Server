@@ -11,6 +11,6 @@ local function GetPollutionLevel()
     end
 end
 
-QBCore.Functions.CreateCallback("soz-upw:server:GetPollutionLevel", function (source, cb)
+QBCore.Functions.CreateCallback("soz-upw:server:GetPollutionLevel", function(source, cb)
     return cb(GetPollutionLevel())
 end)
