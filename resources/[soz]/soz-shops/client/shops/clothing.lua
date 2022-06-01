@@ -125,7 +125,7 @@ function ClothingShop:GenerateMenu(skipIntro)
                     end,
                     select = function(_, value)
                         local ped = PlayerPedId()
-                        local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
+                        local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
 
                         TriggerServerEvent("shops:server:pay", self.brand, {
                             category = categoryID,
