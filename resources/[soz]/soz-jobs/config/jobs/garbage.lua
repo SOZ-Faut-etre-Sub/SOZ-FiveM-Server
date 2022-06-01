@@ -35,7 +35,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 251, Texture = 11, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
         ["Employé"] = {
             Components = {
@@ -50,7 +50,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 251, Texture = 8, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
@@ -67,7 +67,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 259, Texture = 11, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
         ["Employé"] = {
             Components = {
@@ -82,7 +82,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 259, Texture = 8, Palette = 0},
             },
-            Props = {},
+            Props = {[0] = {Clear = true}},
         },
     },
 }
