@@ -14,3 +14,8 @@ QBShared.Pollution.Threshold = {
     [QBShared.Pollution.Level.High] = { min = 70, max = 100 },
 }
 
+QBShared.Pollution.Multiplier = {
+    [QBShared.Pollution.Level.Low] = 0.8,
+    [QBShared.Pollution.Level.Neutral] = 1.0,
+    [QBShared.Pollution.Level.High] = 1.25,
+}
