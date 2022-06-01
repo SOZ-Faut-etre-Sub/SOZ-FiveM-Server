@@ -1,12 +1,12 @@
 local function GetPollutionLevel()
     local currentPollution = 50 -- TEMP set to Neutral level for now
     if currentPollution >= 100 then
-        return QBShared.Pollution.Level.High
+        return QBCore.Shared.Pollution.Level.High
     end
 
-    for level, range in pairs(QBShared.Pollution.Threshold) do
+    for level, range in pairs(QBCore.Shared.Pollution.Threshold) do
         if currentPollution >= range.min and currentPollution < range.max then
-            return QBShared.Pollution.Level[level]
+            return QBCore.Shared.Pollution.Level[level]
         end
     end
 end
