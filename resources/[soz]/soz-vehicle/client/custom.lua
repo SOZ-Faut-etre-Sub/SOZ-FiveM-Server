@@ -122,10 +122,8 @@ local function finishAnimation()
     FreezeEntityPosition(Gveh, false)
     Citizen.Wait(100)
     DetachEntity(Gvehjack, true, false)
-    SetEntityCollision(Gvehjack, false, false)
     DeleteEntity(Gvehjack)
 
-    SetEntityCollision(Gveh, true, true)
     Gfinishready = false
     exports["soz-hud"]:DrawNotification("Véhicule libéré")
 end
@@ -390,7 +388,6 @@ local function startAnimation()
     SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.4, true, true, true)
     TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1000, 1, 0.25, 1, 1)
     SetEntityCoordsNoOffset(veh, vehpos.x, vehpos.y, vehpos.z + 0.5, true, true, true)
-    SetEntityCollision(veh, false, false)
     TaskPedSlideToCoord(ped, offset, headin, 1000)
     Citizen.Wait(1000)
 
@@ -475,11 +472,7 @@ Insidecustom = false
 for int = 1, 5 do
     lszones[int]:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
-            if Config.AttachedCustomVehicle == nil then
-                Insidecustom = true
-            else
-                exports["soz-hud"]:DrawNotification("Il y a déjà une voiture en cours de modification", "error")
-            end
+            Insidecustom = true
         else
             Insidecustom = false
             VehiculeOptions:Close()
@@ -496,9 +489,14 @@ CreateThread(function()
                 icon = "c:mechanic/Ameliorer.png",
                 label = "Améliorer",
                 action = function(entity)
-                    Config.AttachedCustomVehicle = entity
-                    SetVehicleDoorsLocked(entity, 2)
-                    startAnimation()
+                    if Config.AttachedCustomVehicle == nil then
+                        Config.AttachedCustomVehicle = entity
+                        SetVehicleDoorsLocked(entity, 2)
+                        startAnimation()
+                    else
+                        SetVehicleDoorsLocked(entity, 2)
+                        VehiculeOptions:Open()
+                    end
                 end,
                 canInteract = function(entity, distance, data)
                     return Insidecustom
