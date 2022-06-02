@@ -183,7 +183,7 @@ Config.Cloakroom = {
 
 Config.DutyOutfit = {
     ["lspd"] = {
-        [0] = {
+        [0] = { -- Cadet
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -215,7 +215,7 @@ Config.DutyOutfit = {
                 Props = {},
             },
         },
-        [37] = {
+        [78] = { -- Officier
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {[10] = {Drawable = 15, Texture = 0, Palette = 0}},
                 Props = {},
@@ -225,17 +225,7 @@ Config.DutyOutfit = {
                 Props = {},
             },
         },
-        [36] = {
-            [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 1, Palette = 0}},
-                Props = {},
-            },
-            [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 1, Palette = 0}},
-                Props = {},
-            },
-        },
-        [35] = {
+        [77] = { -- Sergeant
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {[10] = {Drawable = 15, Texture = 2, Palette = 0}},
                 Props = {},
@@ -245,59 +235,59 @@ Config.DutyOutfit = {
                 Props = {},
             },
         },
-        [34] = {
+        [76] = { -- Lieutenant
             [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 4, Palette = 0}},
+                Components = {[10] = {Drawable = 44, Texture = 0, Palette = 0}},
                 Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 4, Palette = 0}},
+                Components = {[10] = {Drawable = 52, Texture = 0, Palette = 0}},
                 Props = {},
             },
         },
-        [33] = {
+        [75] = { -- Captain
             [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 5, Palette = 0}},
+                Components = {[10] = {Drawable = 44, Texture = 1, Palette = 0}},
                 Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 5, Palette = 0}},
+                Components = {[10] = {Drawable = 52, Texture = 1, Palette = 0}},
                 Props = {},
             },
         },
-        [32] = {
+        [74] = { -- Commander
             [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 6, Palette = 0}},
+                Components = {[10] = {Drawable = 44, Texture = 2, Palette = 0}},
                 Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 6, Palette = 0}},
+                Components = {[10] = {Drawable = 52, Texture = 2, Palette = 0}},
                 Props = {},
             },
         },
-        [31] = {
+        [73] = { -- Deputy Chief
             [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 7, Palette = 0}},
+                Components = {[10] = {Drawable = 44, Texture = 3, Palette = 0}},
                 Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 7, Palette = 0}},
+                Components = {[10] = {Drawable = 52, Texture = 3, Palette = 0}},
                 Props = {},
             },
         },
-        [30] = {
+        [30] = { -- Chief of Police
             [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 8, Palette = 0}},
+                Components = {[10] = {Drawable = 44, Texture = 5, Palette = 0}},
                 Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 8, Palette = 0}},
+                Components = {[10] = {Drawable = 52, Texture = 5, Palette = 0}},
                 Props = {},
             },
         },
     },
     ["bcso"] = {
-        [0] = {
+        [0] = { -- Junior
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -329,47 +319,7 @@ Config.DutyOutfit = {
                 Props = {[0] = {Drawable = 32, Texture = 1, Palette = 0}},
             },
         },
-        [43] = {
-            [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 0, Palette = 0}},
-                Props = {},
-            },
-            [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 0, Palette = 0}},
-                Props = {},
-            },
-        },
-        [42] = {
-            [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 1, Palette = 0}},
-                Props = {},
-            },
-            [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 1, Palette = 0}},
-                Props = {},
-            },
-        },
-        [41] = {
-            [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 5, Palette = 0}},
-                Props = {},
-            },
-            [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 5, Palette = 0}},
-                Props = {},
-            },
-        },
-        [40] = {
-            [GetHashKey("mp_m_freemode_01")] = {
-                Components = {[10] = {Drawable = 15, Texture = 6, Palette = 0}},
-                Props = {},
-            },
-            [GetHashKey("mp_f_freemode_01")] = {
-                Components = {[10] = {Drawable = 14, Texture = 6, Palette = 0}},
-                Props = {},
-            },
-        },
-        [39] = {
+        [70] = { -- Senior
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {[10] = {Drawable = 15, Texture = 7, Palette = 0}},
                 Props = {},
@@ -379,13 +329,53 @@ Config.DutyOutfit = {
                 Props = {},
             },
         },
-        [38] = {
+        [69] = { -- Major
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {[10] = {Drawable = 15, Texture = 8, Palette = 0}},
                 Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
                 Components = {[10] = {Drawable = 14, Texture = 8, Palette = 0}},
+                Props = {},
+            },
+        },
+        [68] = { -- Major Chief
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 44, Texture = 6, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 52, Texture = 6, Palette = 0}},
+                Props = {},
+            },
+        },
+        [67] = { -- Assistant Sheriff
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 44, Texture = 7, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 52, Texture = 7, Palette = 0}},
+                Props = {},
+            },
+        },
+        [66] = { -- Undersheriff
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 44, Texture = 9, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 52, Texture = 9, Palette = 0}},
+                Props = {},
+            },
+        },
+        [38] = { -- Sheriff
+            [GetHashKey("mp_m_freemode_01")] = {
+                Components = {[10] = {Drawable = 43, Texture = 0, Palette = 0}},
+                Props = {},
+            },
+            [GetHashKey("mp_f_freemode_01")] = {
+                Components = {[10] = {Drawable = 51, Texture = 0, Palette = 0}},
                 Props = {},
             },
         },
