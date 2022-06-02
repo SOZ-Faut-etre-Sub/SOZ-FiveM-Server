@@ -225,35 +225,7 @@ end)
 --- MENUS
 ---
 RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
-    FoodJob.Menu:ClearItems()
-
-    FoodJob.Menu:AddButton({
-        label = "Tenue civile",
-        value = nil,
-        select = function()
-            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                disableMovement = true,
-                disableCombat = true,
-            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
-            end)
-        end,
-    })
-
-    FoodJob.Menu:AddButton({
-        label = "Tenue de travail",
-        value = nil,
-        select = function()
-            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                disableMovement = true,
-                disableCombat = true,
-            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", FoodConfig.Cloakroom[PlayerData.skin.Model.Hash])
-            end)
-        end,
-    })
-
-    FoodJob.Menu:Open()
+    SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom)
 end)
 
 local function GetRecipesByCat()
