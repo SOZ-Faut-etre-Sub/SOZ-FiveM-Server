@@ -1,25 +1,27 @@
 --- @class RadioStateManager
 RadioStateManager = {}
 
+local RadioState = {}
+
 function RadioStateManager:new()
     self.__index = self
-    return setmetatable({state = {}}, self)
+    return setmetatable({}, self)
 end
 
 function RadioStateManager:getConsumers(channel)
     channel = tonumber(channel)
-    return self.state[channel] or {}
+    return RadioState[channel] or {}
 end
 
 function RadioStateManager:broadcastToConsumers(channel, cb)
     channel = tonumber(channel)
 
-    if self.state[channel] == nil then
-        self.state[channel] = {}
+    if RadioState[channel] == nil then
+        RadioState[channel] = {}
     end
 
-    for consumer, contexts in pairs(self.state[channel]) do
-        cb(consumer, contexts)
+    for consumer, _ in pairs(RadioState[channel]) do
+        cb(consumer)
     end
 end
 
@@ -27,58 +29,55 @@ function RadioStateManager:addConsumer(source, context, channel)
     source = tonumber(source)
     channel = tonumber(channel)
 
-    if self.state[channel] == nil then
-        self.state[channel] = {}
+    if RadioState[channel] == nil then
+        RadioState[channel] = {}
     end
 
-    if self.state[channel][source] == nil then
-        self.state[channel][source] = {}
-    end
+    RadioState[channel][source] = true
+    self:broadcastToConsumers(channel, function(consumer)
+        if consumer == source then
+            return
+        end
 
-    table.insert(self.state[channel][source], context)
+        TriggerClientEvent("voip:client:radio:addConsumer", consumer, context, channel, tonumber(source))
+    end)
 end
 
 function RadioStateManager:removeConsumer(source, context, channel)
     source = tonumber(source)
     channel = tonumber(channel)
 
-    if self.state[channel] == nil then
+    if RadioState[channel] == nil then
         return
     end
 
-    if self.state[channel][source] == nil then
-        return
-    end
-
-    -- null context remove all context
-    if context == nil then
-        self.state[channel][source] = nil
-
-        return
-    end
-
-    local newContext = {}
-
-    for _, sourceContext in pairs(self.state[channel][source]) do
-        if context ~= sourceContext then
-            table.insert(newContext, sourceContext)
+    RadioState[channel][source] = nil
+    self:broadcastToConsumers(channel, function(consumer)
+        if consumer == source then
+            return
         end
-    end
 
-    if #newContext > 0 then
-        self.state[channel][source] = newContext
-    else
-        self.state[channel][source] = nil
-    end
+        TriggerClientEvent("voip:client:radio:removeConsumer", consumer, context, channel, source)
+    end)
 end
 
 function RadioStateManager:removeConsumerFromAllChannels(source)
     source = tonumber(source)
 
-    for channel, _ in pairs(self.state) do
+    for channel, _ in pairs(RadioState) do
         self:removeConsumer(source, nil, channel)
     end
 end
+
+RegisterCommand("voip-debug-store", function(source, args, rawCommand)
+    for channel, _ in pairs(RadioState) do
+        local consumers = {}
+        for consumer, _ in pairs(RadioState[channel]) do
+            consumers[#consumers + 1] = tostring(consumer)
+        end
+        console.info("[Radio] Channel %s: %s", channel, json.encode(consumers))
+    end
+end, false)
 
 --[[
 
