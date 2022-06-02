@@ -197,6 +197,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
     if not veh then
         SetSpawnLock(mods.plate, false)
         cb(nil)
+        return
     end
 
     local res = MySQL.Sync.execute([[
