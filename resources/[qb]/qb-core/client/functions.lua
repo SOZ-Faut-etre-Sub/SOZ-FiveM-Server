@@ -181,7 +181,7 @@ function QBCore.Functions.TriggerRpc(name, ...)
         event = event,
     }
 
-    Citizen.SetTimeout(1000, function()
+    Citizen.SetTimeout(2000, function()
         if QBCore.ServerRPC[eventResponseId] then
             p:reject('RPC timed out for event: ' .. QBCore.ServerRPC[eventResponseId].name)
             RemoveEventHandler(QBCore.ServerRPC[eventResponseId].event)
