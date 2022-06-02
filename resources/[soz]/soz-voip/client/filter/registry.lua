@@ -38,7 +38,9 @@ function FilterRegistry:apply(serverId, filterType, params)
         self.players[key]:connect()
     end
 
-    self.players[key]:update(params)
+    if self.players[key] then
+        self.players[key]:update(params)
+    end
 end
 
 function FilterRegistry:remove(serverId)

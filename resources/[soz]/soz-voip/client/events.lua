@@ -115,11 +115,11 @@ RegisterNetEvent("voip:client:radio:player:disconnect", function(kind, instance,
     end
 end)
 
-RegisterNetEvent("voip:client:radio:connect", function(kind, instance, frequency)
+RegisterNetEvent("voip:client:radio:connect", function(kind, instance, frequency, consumers)
     local radio = GetRadioForKindAndInstance(kind, instance)
 
     if radio ~= nil then
-        radio:connect(frequency)
+        radio:connect(frequency, consumers)
     end
 end)
 

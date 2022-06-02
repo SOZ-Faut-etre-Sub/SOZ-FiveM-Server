@@ -1,12 +1,24 @@
 local voiceTarget = 1
 
+-- Call module
 CallModuleInstance = ModuleCall:new(Config.volumeCall)
+
+-- Radio modules
 PrimaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "PrimaryShort")
 PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "PrimaryLong")
 SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "SecondaryShort")
 SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "SecondaryLong")
+
+-- Car module
 CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
-ProximityModuleInstance = ModuleProximityCulling:new(Config.normalRange)
+
+-- Proximity modules
+ProximityModuleCullingInstance = ModuleProximityCulling:new(Config.normalRange)
+ProximityModuleGridInstance = ModuleProximityGrid:new(Config.normalRange, Config.gridSize, Config.gridEdge)
+ProximityModuleInstance = ProximityModuleGridInstance
+
+-- Filter module
+local FilterRegistryInstance = FilterSubmixRegistry:new()
 
 local function updateSpeakers(speakers, newSpeakers, context, volume)
     for id, config in pairs(newSpeakers) do
@@ -33,7 +45,7 @@ local function updateSpeakers(speakers, newSpeakers, context, volume)
             }
 
             if not config.transmitting then
-                speakers[id].volume = 0.0
+                speakers[id].volume = -1.0
             end
         end
     end
@@ -84,8 +96,6 @@ local function RefreshState(state)
     return state
 end
 
-local FilterRegistryInstance = FilterAudiocontextRegistry:new()
-
 local function GetFilterForPlayer(player)
     if contains(player.context, "call") then
         return "phone"
@@ -114,7 +124,7 @@ local function ApplyFilters(players)
     local toRemove = {}
 
     FilterRegistryInstance:loop(function(id)
-        if not players[id] then
+        if not players[id] or players[id].transmitting == false then
             table.insert(toRemove, id)
         end
     end)
@@ -124,12 +134,14 @@ local function ApplyFilters(players)
     end
 
     for _, player in pairs(players) do
-        local filterType = GetFilterForPlayer(player)
+        if player.transmitting then
+            local filterType = GetFilterForPlayer(player)
 
-        if filterType == nil then
-            FilterRegistryInstance:remove(player.serverId)
-        else
-            FilterRegistryInstance:apply(player.serverId, filterType, player)
+            if filterType == nil then
+                FilterRegistryInstance:remove(player.serverId)
+            else
+                FilterRegistryInstance:apply(player.serverId, filterType, player)
+            end
         end
     end
 end
