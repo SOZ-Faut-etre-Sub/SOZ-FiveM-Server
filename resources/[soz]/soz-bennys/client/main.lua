@@ -251,7 +251,7 @@ local function Repairall(entity)
     if engineHealth > bodyHealth then
         engineHealth = bodyHealth
     end
-    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 25
+    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 30
 
     ScrapAnim(repairTime)
     QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
