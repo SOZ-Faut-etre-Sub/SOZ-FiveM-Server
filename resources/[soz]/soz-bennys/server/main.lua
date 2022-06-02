@@ -8,16 +8,16 @@ RegisterNetEvent("soz-bennys:server:Clean", function(veh, id)
     TriggerClientEvent("soz-bennys:client:Clean", id, veh)
 end)
 
-RegisterNetEvent("soz-bennys:server:EngineRepair", function(veh, id, partstatus)
-    TriggerClientEvent("soz-bennys:client:EngineRepair", id, veh, partstatus)
+RegisterNetEvent("soz-bennys:server:EngineRepair", function(veh, id)
+    TriggerClientEvent("soz-bennys:client:EngineRepair", id, veh)
 end)
 
-RegisterNetEvent("soz-bennys:server:BodyRepair", function(veh, id, partstatus, enginehealth, fuelhealth)
-    TriggerClientEvent("soz-bennys:client:BodyRepair", id, veh, partstatus, enginehealth, fuelhealth)
+RegisterNetEvent("soz-bennys:server:BodyRepair", function(veh, id)
+    TriggerClientEvent("soz-bennys:client:BodyRepair", id, veh)
 end)
 
-RegisterNetEvent("soz-bennys:server:FuelRepair", function(veh, id, partstatus)
-    TriggerClientEvent("soz-bennys:client:FuelRepair", id, veh, partstatus)
+RegisterNetEvent("soz-bennys:server:FuelRepair", function(veh, id)
+    TriggerClientEvent("soz-bennys:client:FuelRepair", id, veh)
 end)
 
 QBCore.Functions.CreateCallback("soz-bennys:server:IsVehicleOwned", function(source, cb, plate)

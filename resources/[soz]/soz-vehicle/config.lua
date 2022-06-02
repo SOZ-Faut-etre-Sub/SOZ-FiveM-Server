@@ -476,16 +476,6 @@ Config.lscustom = {
     [5] = {coords = vector3(110.99, 6626.39, 30.792), blip = true},
 }
 
-Config.MaxStatusValues = {
-    ["engine"] = 1000.0,
-    ["body"] = 1000.0,
-    ["radiator"] = 100,
-    ["axle"] = 100,
-    ["brakes"] = 100,
-    ["clutch"] = 100,
-    ["fuel"] = 100,
-}
-
 Config.ValuesLabels = {
     ["engine"] = "Moteur",
     ["body"] = "Carrosserie",
