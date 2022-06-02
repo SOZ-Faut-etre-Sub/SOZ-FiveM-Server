@@ -15,7 +15,7 @@ FuelerConfig.Cloakroom = {
             [10] = {Drawable = 0, Texture = 0, Palette = 0},
             [11] = {Drawable = 244, Texture = 18, Palette = 0},
         },
-        Props = {},
+        Props = {[0] = {Clear = true}},
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
@@ -29,6 +29,6 @@ FuelerConfig.Cloakroom = {
             [10] = {Drawable = 0, Texture = 0, Palette = 0},
             [11] = {Drawable = 259, Texture = 16, Palette = 0},
         },
-        Props = {},
+        Props = {[0] = {Clear = true}},
     },
 }
