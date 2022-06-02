@@ -321,7 +321,7 @@ Garages = {
     },
     ["garbage"] = {
         label = "Blue Bird",
-        blipcoord = vector4(-581.97, -1584.41, 25.75, 323.46),
+        blipcoord = vector4(-589.74, -1568.28, 25.75, 318.84),
         showBlip = false,
         blipName = "Blue Bird",
         blipNumber = 357,
