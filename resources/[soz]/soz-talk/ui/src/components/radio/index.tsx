@@ -214,10 +214,10 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                                 <VolumeIcon/>
                                 {currentFrequency === 'primary' ? primaryFrequency.volume : secondaryFrequency.volume}%
                             </div>
-                            {/*<div>
+                            <div>
                                 <HeadphoneIcon />
                                 {currentFrequency === 'primary' ? displayEar(primaryFrequency.ear) : displayEar(secondaryFrequency.ear)}
-                            </div>*/}
+                            </div>
                         </span>
                             </>
                         )}
@@ -226,7 +226,7 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                 <div className={style.actions}>
                     <input type="submit" value="" className={style.action_validate}/>
                     <div className={style.action_enable} onClick={toggleRadio}/>
-                    {/*<div className={style.action_mix} onClick={handleMixChange}/>*/}
+                    <div className={style.action_mix} onClick={handleMixChange}/>
                     <CloseIcon className={style.action_close} onClick={handleClose}/>
 
                     <div className={style.action_volume_up}

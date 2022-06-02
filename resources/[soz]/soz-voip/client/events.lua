@@ -131,6 +131,23 @@ RegisterNetEvent("voip:client:radio:disconnect", function(kind, frequency, insta
     end
 end)
 
+RegisterNetEvent("voip:client:radio:set-balance", function(kind, instance, ear)
+    local radio = GetRadioForKindAndInstance(kind, instance)
+    local balance = "center"
+
+    if ear == 0 then
+        balance = "left"
+    end
+
+    if ear == 2 then
+        balance = "right"
+    end
+
+    if radio ~= nil then
+        radio:setBalance(balance)
+    end
+end)
+
 local function CreateTransmissionToggle(command, context, volumeKey, module)
     RegisterCommand("+" .. command, function()
         if module:startTransmission() then

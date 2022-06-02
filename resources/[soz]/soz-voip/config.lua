@@ -22,9 +22,9 @@ Config.radioShortRangeDistance = 3000.0
 
 --- Balance
 Config.balanceRadioPrimaryShort = "center"
-Config.volumeRadioPrimaryLong = "center"
-Config.volumeRadioSecondaryShort = "center"
-Config.volumeRadioSecondaryLong = "center"
+Config.balanceRadioPrimaryLong = "center"
+Config.balanceRadioSecondaryShort = "center"
+Config.balanceRadioSecondaryLong = "center"
 
 Config.balances = {
     ["center"] = {left = 1.0, right = 1.0},

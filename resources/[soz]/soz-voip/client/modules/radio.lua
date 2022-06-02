@@ -1,6 +1,6 @@
 ModuleRadio = {}
 
-function ModuleRadio:new(distanceMax, kind, name)
+function ModuleRadio:new(distanceMax, kind, name, balance)
     self.__index = self
     return setmetatable({
         distanceMax = distanceMax,
@@ -11,8 +11,9 @@ function ModuleRadio:new(distanceMax, kind, name)
         name = name,
         speakers = {},
         serverId = nil,
-        balanceLeft = 1.0,
-        balanceRight = 1.0,
+        balance = balance,
+        balanceLeft = Config.balances[balance].left,
+        balanceRight = Config.balances[balance].right,
     }, self)
 end
 
@@ -55,9 +56,14 @@ function ModuleRadio:disconnect()
     return self.frequency
 end
 
-function ModuleRadio:setBalance(left, right)
-    self.balanceLeft = left
-    self.balanceRight = right
+function ModuleRadio:setBalance(balance)
+    if not Config.balances[balance] then
+        return
+    end
+
+    self.balance = balance
+    self.balanceLeft = Config.balances[self.balance].left
+    self.balanceRight = Config.balances[self.balance].right
 end
 
 function ModuleRadio:startTransmission()
