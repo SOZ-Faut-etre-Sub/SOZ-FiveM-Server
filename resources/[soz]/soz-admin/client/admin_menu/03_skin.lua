@@ -45,11 +45,6 @@ local function ApplyPedComponent()
     for prop, value in pairs(PlayerProp) do
         SetPedPropIndex(ped, prop, value, PlayerPropVariation[prop] or 0, 2)
     end
-
-    local torsoDrawable, torsoTexture = GetProperTorso(ped, PlayerComponent[11], PlayerComponentVariation[11])
-    if torsoDrawable ~= -1 and torsoTexture ~= -1 then
-        SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
-    end
 end
 
 local function GenerateDrawableList(menu, ped, i)
