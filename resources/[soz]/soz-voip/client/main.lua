@@ -30,6 +30,7 @@ local function updateSpeakers(speakers, newSpeakers, context, volume)
             speakers[id].balanceLeft = config.balanceLeft or speakers[id].balanceLeft
             speakers[id].balanceRight = config.balanceRight or speakers[id].balanceRight
             speakers[id].transmitting = config.transmitting or false
+            speakers[id].kind = config.kind or speakers[id].kind or ""
 
             table.insert(speakers[id].context, context)
         elseif not speakers[id] then
@@ -42,6 +43,7 @@ local function updateSpeakers(speakers, newSpeakers, context, volume)
                 balanceRight = (config.balanceRight or 1.0),
                 context = {context},
                 transmitting = config.transmitting,
+                kind = config.kind or "",
             }
 
             if not config.transmitting then
