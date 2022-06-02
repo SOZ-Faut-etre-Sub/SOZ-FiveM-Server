@@ -5,11 +5,9 @@ const exp = global.exports;
 
 export class CallService {
   private currentCall: number;
-  private currentCallData: ActiveCall | null;
 
   constructor() {
     this.currentCall = 0;
-    this.currentCallData = null;
   }
 
   static sendCallAction<T>(method: CallEvents, data: T): void {
@@ -63,18 +61,13 @@ export class CallService {
 
   handleCallAccepted(callData: ActiveCall) {
     this.currentCall = callData.channelId;
-    this.currentCallData = callData;
     emitNet("voip:server:call:start", callData.transmitter, callData.receiver);
     CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALLER, callData);
   }
 
   handleEndCall() {
-    if (this.currentCallData?.is_accepted) {
-       emitNet("voip:server:call:end");
-    }
-
     this.currentCall = 0;
-    this.currentCallData = null;
+    emitNet("voip:server:call:end");
     this.openCallModal(false);
 
     CallService.sendCallAction<null>(CallEvents.SET_CALLER, null);

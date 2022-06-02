@@ -24,18 +24,18 @@ end
 local function powerOnRadio()
     exports["soz-voip"]:SetRadioShortRangePowerState(true)
     if primaryRadio then
-        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "primary", primaryRadio, "primary")
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "primary", primaryRadio)
     end
     if secondaryRadio then
-        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "secondary", secondaryRadio, "secondary")
+        TriggerServerEvent("voip:server:radio:connect", "radio-sr", "secondary", secondaryRadio)
     end
 end
 local function powerOffRadio()
     if primaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio, "primary")
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio)
     end
     if secondaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio, "secondary")
+        TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio)
     end
     exports["soz-voip"]:SetRadioShortRangePowerState(false)
 end
@@ -82,7 +82,7 @@ RegisterNUICallback("radio/change_frequency", function(data, cb)
     end
     if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
         if data.primary ~= primaryRadio and primaryRadio ~= nil then
-            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio, "primary")
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", primaryRadio)
         end
 
         TriggerServerEvent("voip:server:radio:connect", "radio-sr", "primary", data.primary)
@@ -94,7 +94,7 @@ RegisterNUICallback("radio/change_frequency", function(data, cb)
     end
     if data.secondary and tonumber(data.secondary) >= Config.Radio.min and tonumber(data.secondary) <= Config.Radio.max then
         if data.secondary ~= secondaryRadio and secondaryRadio ~= nil then
-            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio, "secondary")
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-sr", secondaryRadio)
         end
 
         TriggerServerEvent("voip:server:radio:connect", "radio-sr", "secondary", data.secondary)
