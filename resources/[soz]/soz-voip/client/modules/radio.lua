@@ -20,7 +20,7 @@ function ModuleRadio:init()
     self.serverId = GetPlayerServerId(PlayerId())
 end
 
-function ModuleRadio:connect(frequency)
+function ModuleRadio:connect(frequency, consumers)
     if self.connected then
         self:disconnect()
     end
@@ -28,6 +28,12 @@ function ModuleRadio:connect(frequency)
     self.frequency = frequency
     self.connected = true
     self.speakers = {}
+
+    for _, consumer in pairs(consumers) do
+        if consumer ~= self.serverId then
+            self.speakers[("player_%d"):format(consumer)] = {serverId = consumer, transmitting = false}
+        end
+    end
 end
 
 function ModuleRadio:getFrequency()

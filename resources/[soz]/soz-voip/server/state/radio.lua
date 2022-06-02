@@ -8,7 +8,18 @@ end
 
 function RadioStateManager:getConsumers(channel)
     channel = tonumber(channel)
-    return self.state[channel] or {}
+
+    if not self.state[channel] then
+        return {}
+    end
+
+    local consumers = {}
+
+    for consumer, _ in pairs(self.state[channel]) do
+        table.insert(consumers, consumer)
+    end
+
+    return consumers
 end
 
 function RadioStateManager:broadcastToConsumers(channel, cb)

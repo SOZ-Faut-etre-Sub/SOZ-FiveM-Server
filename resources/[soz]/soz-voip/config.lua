@@ -4,9 +4,9 @@ Config = {}
 Config.debug = false
 
 --- Voice Proximity
-Config.whisperRange = 2.0
-Config.normalRange = 5.0
-Config.shoutRange = 8.0
+Config.whisperRange = 1.5
+Config.normalRange = 4.0
+Config.shoutRange = 7.5
 Config.megaphoneRange = 24.0
 Config.microphoneRange = 24.0
 
@@ -37,8 +37,8 @@ Config.volumeRadioPrimaryShort = 1.0
 Config.volumeRadioPrimaryLong = 1.0
 Config.volumeRadioSecondaryShort = 1.0
 Config.volumeRadioSecondaryLong = 1.0
-Config.volumeCall = 0.9
-Config.volumeVehicle = 0.6
+Config.volumeCall = 0.8
+Config.volumeVehicle = 0.5
 
 --- Grid Module
 Config.gridSize = 512

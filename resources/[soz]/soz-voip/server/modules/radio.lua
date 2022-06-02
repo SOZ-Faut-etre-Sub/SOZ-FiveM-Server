@@ -7,8 +7,8 @@ RegisterNetEvent("voip:server:radio:connect", function(context, kind, channel)
         RadioState:broadcastToConsumers(channel, function(consumer)
             TriggerClientEvent("voip:client:radio:player:connect", consumer, context, kind, channel, connected)
         end)
-        RadioState:addConsumer(connected, context, channel)
 
+        RadioState:addConsumer(connected, context, channel)
         TriggerClientEvent("voip:client:radio:connect", source, context, kind, channel, RadioState:getConsumers(channel))
     end
 end)
