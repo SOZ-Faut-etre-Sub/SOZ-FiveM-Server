@@ -134,7 +134,7 @@ RegisterNetEvent("soz-housing:server:sell")
 AddEventHandler("soz-housing:server:sell", function(name, price)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if Player.Functions.AddMoney("money", price / 2) then
+    if Player.Functions.AddMoney("money", price) then
         MySQL.update.await("UPDATE player_house SET OWNER = NULL WHERE identifier = @id", {["@id"] = name})
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous avez vendu l'habitation.")
         TriggerEvent("soz-housing:server:SyncAvailableHousing")
