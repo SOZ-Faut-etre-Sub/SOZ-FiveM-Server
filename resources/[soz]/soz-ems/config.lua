@@ -111,7 +111,7 @@ Config.DutyOutfit = {
                     [8] = {Drawable = 6, Texture = 0, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 219, Texture = 6, Palette = 0},
+                    [11] = {Drawable = 217, Texture = 6, Palette = 0},
                 },
                 Props = {[0] = {Clear = true}},
             },
