@@ -491,6 +491,8 @@ CreateThread(function()
                 action = function(entity)
                     if Config.AttachedCustomVehicle == nil then
                         Config.AttachedCustomVehicle = entity
+                        Gfinishready = false
+                        Gready = false
                         SetVehicleDoorsLocked(entity, 2)
                         startAnimation()
                     else
