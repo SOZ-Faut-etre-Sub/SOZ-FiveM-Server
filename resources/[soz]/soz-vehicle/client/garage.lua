@@ -195,11 +195,11 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         emptySlot = emptySlots[math.random(#emptySlots)]
     end
 
-    local vehEntity = QBCore.Functions.TriggerRpc("soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel)
-
-    if vehEntity then
+    local success, vehEntity = pcall(QBCore.Functions.TriggerRpc, "soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel)
+    if success and vehEntity then
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
     else
+        exports["soz-hud"]:DrawNotification("Livraison impossible, réessayez plus tard", "error")
         QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
     end
 end)

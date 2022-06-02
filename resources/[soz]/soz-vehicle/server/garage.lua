@@ -194,6 +194,10 @@ end)
 ---@param mods table Vehicle properties
 QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, fuel)
     local veh = SpawnVehicle(modelName, coords, mods, fuel)
+    if not veh then
+        SetSpawnLock(mods.plate, false)
+        cb(nil)
+    end
 
     local res = MySQL.Sync.execute([[
         UPDATE player_vehicles
