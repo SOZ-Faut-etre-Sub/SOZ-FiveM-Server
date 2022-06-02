@@ -12,7 +12,7 @@ function SpawnVehicle(modelName, coords, mods, fuel)
 
     local start = os.time()
     while not DoesEntityExist(veh) do
-        if os.time() > start + 10000 then
+        if os.time() > start + 10 then
             exports["soz-monitor"]:Log("ERROR", "Vehicle spawn timed out", {model = modelName, plate = mods.plate})
             return nil
         end
