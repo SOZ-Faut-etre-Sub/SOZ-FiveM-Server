@@ -119,6 +119,39 @@ Config.DutyOutfit = {
     },
 }
 
+Config.PatientClothes = {
+    [GetHashKey("mp_m_freemode_01")] = {
+        Components = {
+            [1] = {Drawable = 0, Texture = 0, Palette = 0},
+            [3] = {Drawable = 15, Texture = 0, Palette = 0},
+            [4] = {Drawable = 29, Texture = 0, Palette = 0},
+            [5] = {Drawable = 0, Texture = 0, Palette = 0},
+            [6] = {Drawable = 34, Texture = 0, Palette = 0},
+            [7] = {Drawable = 0, Texture = 0, Palette = 0},
+            [8] = {Drawable = 15, Texture = 0, Palette = 0},
+            [9] = {Drawable = 0, Texture = 0, Palette = 0},
+            [10] = {Drawable = 0, Texture = 0, Palette = 0},
+            [11] = {Drawable = 104, Texture = 0, Palette = 0},
+        },
+        Props = {[0] = {Clear = true}},
+    },
+    [GetHashKey("mp_f_freemode_01")] = {
+        Components = {
+            [1] = {Drawable = 0, Texture = 0, Palette = 0},
+            [3] = {Drawable = 0, Texture = 0, Palette = 0},
+            [4] = {Drawable = 21, Texture = 0, Palette = 0},
+            [6] = {Drawable = 35, Texture = 0, Palette = 0},
+            [5] = {Drawable = 0, Texture = 0, Palette = 0},
+            [7] = {Drawable = 0, Texture = 0, Palette = 0},
+            [8] = {Drawable = 14, Texture = 0, Palette = 0},
+            [9] = {Drawable = 0, Texture = 0, Palette = 0},
+            [10] = {Drawable = 0, Texture = 0, Palette = 0},
+            [11] = {Drawable = 95, Texture = 0, Palette = 0},
+        },
+        Props = {[0] = {Clear = true}},
+    },
+}
+
 Config.Fines = {
     [1] = {
         label = "Factures basique",
