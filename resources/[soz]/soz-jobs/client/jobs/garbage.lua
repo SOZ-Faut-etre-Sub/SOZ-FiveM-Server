@@ -144,37 +144,7 @@ RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
 end)
 
 RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
-    societyMenu:ClearItems()
-
-    societyMenu:AddButton({
-        label = "Tenue civile",
-        value = nil,
-        select = function()
-            QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                disableMovement = true,
-                disableCombat = true,
-            }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
-            end)
-        end,
-    })
-
-    for name, skin in pairs(GarbageConfig.Cloakroom[PlayerData.skin.Model.Hash]) do
-        societyMenu:AddButton({
-            label = name,
-            value = nil,
-            select = function()
-                QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
-                    disableMovement = true,
-                    disableCombat = true,
-                }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
-                end)
-            end,
-        })
-    end
-
-    societyMenu:Open()
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, GarbageConfig.Cloakroom)
 end)
 
 --- Threads
