@@ -47,7 +47,7 @@ Config.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 67, Texture = 2, Palette = 0},
                 },
-                Props = {},
+                Props = {[0] = {Clear = true}},
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
@@ -78,7 +78,7 @@ Config.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 61, Texture = 2, Palette = 0},
                 },
-                Props = {},
+                Props = {[0] = {Clear = true}},
             },
         },
     },
@@ -99,7 +99,7 @@ Config.DutyOutfit = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 213, Texture = 6, Palette = 0},
                 },
-                Props = {},
+                Props = {[0] = {Clear = true}},
             },
             [GetHashKey("mp_f_freemode_01")] = {
                 Components = {
@@ -113,7 +113,7 @@ Config.DutyOutfit = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 219, Texture = 6, Palette = 0},
                 },
-                Props = {},
+                Props = {[0] = {Clear = true}},
             },
         },
     },
