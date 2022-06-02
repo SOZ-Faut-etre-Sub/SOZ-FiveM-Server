@@ -27,12 +27,16 @@ function FilterRadioSubmix:update(params)
         end
 
         self.submix:setEffectParamFloat("fudge", fudge)
+    else
+        self.submix:setEffectParamFloat("fudge", 4.0)
     end
 
-    if params.balanceLeft and params.balanceRight then
-        local volume = params.volume or 1.0
+    local volume = params.volume or 1.0
 
+    if params.balanceLeft and params.balanceRight then
         self.submix:setBalance(volume * params.balanceLeft * volumeCorrection, volume * params.balanceRight * volumeCorrection)
+    else
+        self.submix:setBalance(volume * volumeCorrection, volume * volumeCorrection)
     end
 end
 
