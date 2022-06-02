@@ -2,27 +2,45 @@ Config = {}
 
 --- Settings
 Config.debug = false
-Config.filterAllowed = {["call"] = false, ["radio"] = false}
-
-Config.voiceTargets = {[1] = "proximity", [2] = "phone", [3] = "radio", [4] = "speaker", [5] = "car"}
 
 --- Voice Proximity
+Config.whisperRange = 2.0
+Config.normalRange = 5.0
+Config.shoutRange = 8.0
+Config.megaphoneRange = 24.0
+Config.microphoneRange = 24.0
+
 Config.voiceRanges = {
-    [1] = {name = "whisper", range = 1.5},
-    [2] = {name = "normal", range = 3.0},
-    [3] = {name = "shout", range = 7.0},
+    [1] = {name = "whisper", range = Config.whisperRange},
+    [2] = {name = "normal", range = Config.normalRange},
+    [3] = {name = "shout", range = Config.shoutRange},
 }
-Config.megaphoneRange = 20.0
-Config.microphoneRange = 20.0
 
 --- Radio
 Config.radioFrequencies = {min = 10000, max = 99999}
 Config.radioShortRangeDistance = 3000.0
 
---- Volume
-Config.volumes = {["call"] = 0.6, ["vehicle"] = 0.5}
+--- Balance
+Config.balanceRadioPrimaryShort = "center"
+Config.volumeRadioPrimaryLong = "center"
+Config.volumeRadioSecondaryShort = "center"
+Config.volumeRadioSecondaryLong = "center"
 
--- Grid Module
+Config.balances = {
+    ["center"] = {left = 1.0, right = 1.0},
+    ["left"] = {left = 1.0, right = 0.0},
+    ["right"] = {left = 0.0, right = 1.0},
+}
+
+--- Volume
+Config.volumeRadioPrimaryShort = 1.0
+Config.volumeRadioPrimaryLong = 1.0
+Config.volumeRadioSecondaryShort = 1.0
+Config.volumeRadioSecondaryLong = 1.0
+Config.volumeCall = 0.9
+Config.volumeVehicle = 0.6
+
+--- Grid Module
 Config.gridSize = 512
 Config.gridEdge = 256
 

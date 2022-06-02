@@ -61,7 +61,6 @@ function CallStateManager:createCall(emitter, receiver)
     TriggerEvent("monitor:server:event", "voip_call", {player_source = source.PlayerData.source, call_type = "emitter"}, call)
     TriggerEvent("monitor:server:event", "voip_call", {player_source = target.PlayerData.source, call_type = "receiver"}, call)
 
-    console.debug("CallStateManager:createCall between %s and %s", call.callerPhone, call.receiverPhone)
     return callId
 end
 
@@ -79,5 +78,4 @@ function CallStateManager:destroyCall(callId)
     TriggerEvent("monitor:server:event", "voip_call", {player_source = call.receiverId, type = "ended"}, CallList[callId])
 
     CallList[callId] = nil
-    console.debug("CallStateManager:destroyCall %s", callId)
 end
