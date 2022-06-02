@@ -92,6 +92,8 @@ function ModuleProximityGrid:refresh()
         self.speakingGrid = currentGrid
     end
 
+    MumbleSetTalkerProximity(self.range)
+
     while MumbleGetVoiceChannelFromServerId(self.serverId) ~= self.speakingGrid do
         NetworkSetVoiceChannel(self.speakingGrid)
         Citizen.Wait(0)
