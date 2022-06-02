@@ -46,9 +46,9 @@ Housing.Functions.Menu.SellHousing = function(Data)
         for _, house in pairs(Data) do
             menu:AddButton({
                 label = house.identifier,
-                rightLabel = "$" .. house.price,
+                rightLabel = "$" .. (house.price / 2),
                 select = function()
-                    TriggerServerEvent("soz-housing:server:sell", house.identifier, house.price)
+                    TriggerServerEvent("soz-housing:server:sell", house.identifier, (house.price / 2))
                     menu:Close()
                 end,
             })
