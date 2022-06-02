@@ -4,10 +4,10 @@ local voiceTarget = 1
 CallModuleInstance = ModuleCall:new(Config.volumeCall)
 
 -- Radio modules
-PrimaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "PrimaryShort")
-PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "PrimaryLong")
-SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "SecondaryShort")
-SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "SecondaryLong")
+PrimaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "PrimaryShort", Config.balanceRadioPrimaryShort)
+PrimaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "PrimaryLong", Config.balanceRadioPrimaryLong)
+SecondaryShortRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-sr", "SecondaryShort", Config.balanceRadioSecondaryShort)
+SecondaryLongRadioModuleInstance = ModuleRadio:new(Config.radioShortRangeDistance, "radio-lr", "SecondaryLong", Config.balanceRadioSecondaryLong)
 
 -- Car module
 CarModuleInstance = ModuleCar:new(Config.volumeVehicle)

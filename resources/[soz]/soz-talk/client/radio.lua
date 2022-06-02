@@ -112,22 +112,20 @@ RegisterNUICallback("radio/change_ear", function(data, cb)
         cb("nok")
         return
     end
-    --[[if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
-        exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), true)
-
+    if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
+        TriggerEvent("voip:client:radio:set-balance", "radio-sr", "primary", data.primary)
         SoundProvider.default(0.5)
 
         cb("ok")
         return
     end
     if data.secondary and tonumber(data.secondary) >= 0 and tonumber(data.secondary) <= 2 then
-        exports["soz-voip"]:setVoiceEar("radio-sr", tonumber(data.primary), false)
-
+        TriggerEvent("voip:client:radio:set-balance", "radio-sr", "secondary", data.secondary)
         SoundProvider.default(0.5)
 
         cb("ok")
         return
-    end]]
+    end
     cb("nok")
 end)
 

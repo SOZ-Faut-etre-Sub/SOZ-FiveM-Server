@@ -20,7 +20,6 @@ function ModuleProximityCulling:getSpeakers()
     local speakers = {}
 
     for _, player in pairs(players) do
-        -- local coords = GetEntityCoords(player) @TODO Aply effects on distance
         local serverId = GetPlayerServerId(player)
 
         if self.serverId ~= serverId then
