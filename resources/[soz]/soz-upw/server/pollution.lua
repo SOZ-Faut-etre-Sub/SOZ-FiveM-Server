@@ -6,7 +6,7 @@ local function GetPollutionLevel()
 
     for level, range in pairs(QBCore.Shared.Pollution.Threshold) do
         if currentPollution >= range.min and currentPollution < range.max then
-            return QBCore.Shared.Pollution.Level[level]
+            return level
         end
     end
 end
