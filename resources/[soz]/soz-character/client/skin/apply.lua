@@ -163,6 +163,8 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
+    SetPedConfigFlag(PlayerPedId(), 35, clothConfig.Config.ShowHelmet)
+
     if clothConfig.Config.HideHead then
         local override = {Props = {[PropType.Head] = {Clear = true}}}
 
