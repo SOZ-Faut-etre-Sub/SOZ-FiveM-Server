@@ -1,7 +1,7 @@
-import React from 'react';
-import {INotification} from '../providers/NotificationsProvider';
-import {ChevronRightIcon} from "@heroicons/react/outline";
-import {Button} from "@ui/components/Button";
+import React from "react";
+import { INotification } from "../providers/NotificationsProvider";
+import { ChevronRightIcon } from "@heroicons/react/outline";
+import { Button } from "@ui/components/Button";
 
 export const NotificationItem = ({
     onClose,
@@ -11,7 +11,11 @@ export const NotificationItem = ({
     onClose: (e: any) => void;
     onClickClose: (e: any) => void;
 }) => {
-    const {title, notificationIcon, content, cantClose, onClick} = notification;
+    const { title, notificationIcon, content, cantClose, onClick } = notification;
+
+    const isImage = (url) => {
+        return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
+    };
 
     return (
         <li
@@ -22,16 +26,15 @@ export const NotificationItem = ({
                     onClickClose(e);
                 }
             }}
-
         >
             {notificationIcon && <div className={`text-white h-8 w-8 p-1 rounded-md`}>{notificationIcon}</div>}
             <div className="flex flex-col">
                 <p className="flex-grow ml-4 font-light normal-case">{title}</p>
-                <p className="flex-grow ml-4 font-light normal-case">{content}</p>
+                <p className="flex-grow ml-4 font-light normal-case">{isImage(content) ? "Vous avez reçu une image" : content}</p>
             </div>
             {!cantClose && (
                 <Button className="mx-2" onClick={onClose}>
-                    <ChevronRightIcon className="h-4 w-4 text-gray-400"/>
+                    <ChevronRightIcon className="h-4 w-4 text-gray-400" />
                 </Button>
             )}
         </li>
