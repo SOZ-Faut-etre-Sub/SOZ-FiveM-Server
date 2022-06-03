@@ -546,7 +546,7 @@ Config.Cloakroom = {
                         [4] = {Drawable = 39, Texture = 1, Palette = 0},
                         [6] = {Drawable = 46, Texture = 3, Palette = 0},
                         [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                        [8] = {Drawable = 16, Texture = 0, Palette = 0},
+                        [8] = {Drawable = 15, Texture = 0, Palette = 0},
                         [9] = {Drawable = 0, Texture = 0, Palette = 0},
                         [10] = {Drawable = 0, Texture = 0, Palette = 0},
                         [11] = {Drawable = 66, Texture = 1, Palette = 0},
