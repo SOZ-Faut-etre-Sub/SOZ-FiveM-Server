@@ -1,4 +1,4 @@
-local BaseClothSet, NakedClothSet
+local PlayerHasHelmet, BaseClothSet, NakedClothSet = false
 local components = {
     [1] = {label = "Chapeau", propId = 0, value = "HideHead"},
     [2] = {label = "Masque", componentId = 1, value = "HideMask"},
@@ -60,6 +60,14 @@ function TenueEntry(menu)
         BaseClothSet = GetFemaleDefaultBaseClothSet()
         NakedClothSet = GetFemaleDefaultNakedClothSet()
     end
+
+    componentsMenu:AddCheckbox({
+        label = "Casque",
+        value = PlayerHasHelmet,
+        change = function(_, value)
+            TriggerServerEvent("soz-character:server:UpdateClothConfig", "ShowHelmet", value)
+        end,
+    })
 
     for _, component in ipairs(components) do
         componentsMenu:AddCheckbox({

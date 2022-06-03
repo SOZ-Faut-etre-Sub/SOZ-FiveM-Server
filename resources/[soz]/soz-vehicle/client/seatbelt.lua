@@ -81,7 +81,6 @@ CreateThread(function()
         local currentVehicle = GetVehiclePedIsIn(playerPed, false)
         local driverPed = GetPedInVehicleSeat(currentVehicle, -1)
         if currentVehicle ~= nil and currentVehicle ~= false and currentVehicle ~= 0 then
-            SetPedHelmet(playerPed, false)
             lastVehicle = GetVehiclePedIsIn(playerPed, false)
             if GetVehicleEngineHealth(currentVehicle) < 0.0 then
                 SetVehicleEngineHealth(currentVehicle, 0.0)
@@ -172,7 +171,6 @@ CreateThread(function()
             veloc = GetEntityVelocity(currentVehicle)
         else
             if lastVehicle ~= nil then
-                SetPedHelmet(playerPed, true)
                 Wait(200)
                 newvehicleBodyHealth = GetVehicleBodyHealth(lastVehicle)
                 if not damagedone and newvehicleBodyHealth < currentvehicleBodyHealth then

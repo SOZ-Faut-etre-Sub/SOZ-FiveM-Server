@@ -29,6 +29,7 @@ function StartGame()
     local playerPed = PlayerPedId()
 
     SetPedMaxHealth(playerPed, 200)
+    SetPedConfigFlag(playerPed, 35, false)
     SetPedSuffersCriticalHits(playerPed, false)
 end
 
