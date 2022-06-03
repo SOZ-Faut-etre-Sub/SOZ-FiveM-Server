@@ -79,7 +79,7 @@ end)
 RegisterNetEvent("soz-housing:server:BuildingShowAcheter")
 AddEventHandler("soz-housing:server:BuildingShowAcheter", function(name)
     local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` IS null", {
+    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` IS null AND `price` IS NOT NULL", {
         ["@id"] = name,
     })
     TriggerClientEvent("soz-housing:client:Acheter", Player.PlayerData.source, HouseData)
