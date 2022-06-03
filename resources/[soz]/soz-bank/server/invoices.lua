@@ -53,6 +53,17 @@ local function PayInvoice(PlayerData, account, id)
                 TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
             end
 
+            TriggerEvent("monitor:server:event", "invoice_pay", {
+                player_source = Player.PlayerData.source,
+                invoice_kind = "invoice",
+                invoice_job = "",
+            }, {
+                target_source = Emitter.PlayerData.source,
+                id = id,
+                amount = tonumber(invoice.amount),
+                targetAccount = invoice.emitterSafe,
+            })
+
             Invoices[account][id] = nil
             return true
         end
@@ -71,6 +82,18 @@ local function PayInvoice(PlayerData, account, id)
                     TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
                 end
+
+                TriggerEvent("monitor:server:event", "invoice_pay", {
+                    player_source = Player.PlayerData.source,
+                    invoice_kind = "invoice",
+                    invoice_job = Player.PlayerData.job.id,
+                    source_account = invoice.targetAccount,
+                }, {
+                    target_source = Emitter.PlayerData.source,
+                    id = id,
+                    amount = tonumber(invoice.amount),
+                    targetAccount = invoice.emitterSafe,
+                })
 
                 Invoices[account][id] = nil
             end
