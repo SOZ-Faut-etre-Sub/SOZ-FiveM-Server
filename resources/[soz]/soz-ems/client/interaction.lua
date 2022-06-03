@@ -158,6 +158,24 @@ CreateThread(function()
                     TriggerServerEvent("lsmc:server:SetItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                 end,
             },
+            {
+                label = "Désabhiller",
+                color = "lsmc",
+                icon = "c:ems/desabhiller.png",
+                job = "lsmc",
+                action = function(entity)
+                    TriggerServerEvent("lsmc:server:SetPatientOutfit", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)), true)
+                end,
+            },
+            {
+                label = "Rhabiller",
+                color = "lsmc",
+                icon = "c:ems/rhabiller.png",
+                job = "lsmc",
+                action = function(entity)
+                    TriggerServerEvent("lsmc:server:SetPatientOutfit", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)), false)
+                end,
+            },
         },
         distance = 2.5,
     })
