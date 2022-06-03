@@ -98,7 +98,7 @@ RegisterNetEvent("soz-bennys:client:RepairPart", function(part)
 end)
 
 function ApplyEffects(vehicle)
-    if (GetVehicleClass(vehicle) >= 0 and GetVehicleClass(vehicle) <= 13) or GetVehicleClass(vehicle) == 18 then
+    if (GetVehicleClass(vehicle) >= 0 and GetVehicleClass(vehicle) <= 13) or GetVehicleClass(vehicle) == 18 or GetVehicleClass(vehicle) == 20 then
         if SpeedLimiter ~= 0 and ((GetVehicleEstimatedMaxSpeed(vehicle) * 3.6) >= SpeedLimiter) then
             SetVehicleMaxSpeed(vehicle, SpeedLimiter / 3.6 - 0.25)
         else
