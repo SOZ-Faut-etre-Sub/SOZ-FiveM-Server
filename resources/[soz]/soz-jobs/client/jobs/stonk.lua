@@ -218,7 +218,7 @@ StonkJob.Permissions.CanBagsBeCollected = function(shopId)
         local lastCollect = StonkJob.CollectedShops[shopId]
         if lastCollect then
             local now = GetGameTimer()
-            return lastCollect + StonkConfig.Collection.Cooldown < now
+            return isOnDuty() and lastCollect + StonkConfig.Collection.Cooldown < now
         end
     end
 
