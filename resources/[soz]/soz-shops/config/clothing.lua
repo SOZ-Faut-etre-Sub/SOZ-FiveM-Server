@@ -9850,7 +9850,6 @@ Config.Locations["ponsonbys"] = {
 
 Config.Locations["suburban"] = {
     vector4(127.21, -224.29, 54.56, 71.99),
-    vector4(612.77, 2762.72, 42.09, 273.74),
     vector4(-1193.98, -766.84, 17.32, 216.9),
     vector4(-3169.27, 1043.23, 20.86, 70.68),
 }
