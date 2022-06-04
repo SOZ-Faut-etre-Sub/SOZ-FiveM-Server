@@ -159,7 +159,7 @@ CreateThread(function()
                 end,
             },
             {
-                label = "Désabhiller",
+                label = "Déshabiller",
                 color = "lsmc",
                 icon = "c:ems/desabhiller.png",
                 job = "lsmc",
