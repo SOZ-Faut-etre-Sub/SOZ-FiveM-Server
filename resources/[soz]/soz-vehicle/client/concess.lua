@@ -93,7 +93,8 @@ VehiculeChoose:On("open", function(menu)
             menu:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"])
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"],
+                               GetDisplayNameFromVehicleModel(GetHashKey(voiture["model"])):lower())
         end,
     })
 end)
