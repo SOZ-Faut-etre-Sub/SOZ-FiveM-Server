@@ -35,6 +35,10 @@ RegisterNetEvent("soz-character:server:UpdateClothConfig", function(key, value)
     if key ~= nil and value ~= nil then
         clothConfig.Config[key] = value
 
+        if key == "HideBulletproof" then
+            Player.Functions.SetArmour(not clothConfig.Config[key])
+        end
+
         Player.Functions.SetClothConfig(clothConfig, false)
     end
 end)

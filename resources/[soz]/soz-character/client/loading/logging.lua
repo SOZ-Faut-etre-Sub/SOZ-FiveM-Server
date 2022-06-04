@@ -58,6 +58,7 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
 
     SetEntityHealth(playerPed, playerObject.PlayerData.metadata["health"])
+    SetPedArmour(playerPed, playerObject.PlayerData.metadata["armor"].current)
 
     while not HasCollisionLoadedAroundEntity(playerPed) do
         Wait(0)
