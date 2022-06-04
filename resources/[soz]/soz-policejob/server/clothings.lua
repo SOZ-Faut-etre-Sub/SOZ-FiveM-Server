@@ -22,6 +22,8 @@ QBCore.Functions.CreateUseableItem("outfit", function(source, item)
             TriggerClientEvent("ems:client:applyDutyClothing", source, item.metadata["type"])
         elseif item.metadata["type"] == "stonk" then
             TriggerClientEvent("stonk:client:applyDutyClothing", source)
+        elseif item.metadata["type"] == "patient" then
+            TriggerClientEvent("ems:client:applyPatientClothing", source)
         end
     end
 end)
