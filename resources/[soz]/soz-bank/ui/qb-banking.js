@@ -5,6 +5,7 @@ const Config = {
 const playerAccountReg = /^[0-9]{3}Z[0-9]{4}T[0-9]{3}$/
 
 let bankAtmAccount
+let widthdrawTimeout
 
 window.addEventListener("message", function (event) {
     if(event.data.status === "openbank") {
@@ -164,6 +165,13 @@ $(function() {
     });
 
     $("[data-action=withdraw]").click(function() {
+        // Temporarily disable the withdraw button to avoid spam clicking
+        if (!widthdrawTimeout) {
+            widthdrawTimeout = setTimeout(() => {
+                widthdrawTimeout = null;
+            }, 500);
+        } else return;
+
         var amount = $(this).attr('data-amount');
         if(amount > 0) {
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
