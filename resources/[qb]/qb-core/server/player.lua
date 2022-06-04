@@ -86,7 +86,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] or 0
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
-    PlayerData.metadata['armor'] = PlayerData.metadata['armor'] or 0
+    PlayerData.metadata['armor'] = PlayerData.metadata['armor'] or {current = 0, hidden = false}
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
     PlayerData.metadata['ishandcuffed'] = PlayerData.metadata['ishandcuffed'] or false
     PlayerData.metadata['tracker'] = PlayerData.metadata['tracker'] or false
@@ -380,6 +380,20 @@ function QBCore.Player.CreatePlayer(PlayerData)
         end
     end
 
+    self.Functions.SetArmour = function(applyArmor)
+        local ped = GetPlayerPed(self.PlayerData.source)
+        self.PlayerData.metadata["armor"].hidden = not applyArmor
+
+        if self.PlayerData.metadata["armor"].hidden then
+            self.PlayerData.metadata["armor"].current = GetPedArmour(ped)
+            SetPedArmour(ped, 0)
+        else
+            SetPedArmour(ped, self.PlayerData.metadata["armor"].current)
+        end
+
+        self.Functions.UpdatePlayerData()
+    end
+
     self.Functions.SetClothConfig = function(config, skipApply)
         self.PlayerData.cloth_config = config
         self.Functions.UpdatePlayerData(true)
@@ -462,7 +476,9 @@ function QBCore.Player.Save(source)
     local PlayerData = QBCore.Players[src].PlayerData
     if PlayerData then
         PlayerData.metadata["health"] = GetEntityHealth(ped)
-        PlayerData.metadata["armor"] = GetPedArmour(ped)
+        if not PlayerData.metadata["armor"].hidden then
+            PlayerData.metadata["armor"].current = GetPedArmour(ped)
+        end
 
         exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features', {
             citizenid = PlayerData.citizenid,
