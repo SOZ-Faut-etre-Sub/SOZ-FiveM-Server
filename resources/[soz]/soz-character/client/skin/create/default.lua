@@ -75,6 +75,7 @@ function GetDefaultClothConfig(baseClothSet, nakedClothSet)
         TemporaryClothSet = nil, -- Temporary clothing (by using an item), override job cloth, only one can be set
         Config = {
             Naked = false,
+            ShowHelmet = false,
             HideHead = false,
             HideMask = false,
             HideGlasses = false,
