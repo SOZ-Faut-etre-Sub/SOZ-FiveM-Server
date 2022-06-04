@@ -5,7 +5,7 @@ QBCore.Functions.CreateUseableItem("armor", function(source, item)
     local armorType = item.metadata["type"] or "unmark"
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1, item.metadata) then
-        Player.Functions.SetMetaData("armor", 100)
+        Player.Functions.SetMetaData("armor", {current = 100, hidden = false})
         SetPedArmour(ped, 100)
 
         TriggerClientEvent("police:client:setupArmor", source, armorType)
