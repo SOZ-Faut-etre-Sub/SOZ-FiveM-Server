@@ -164,13 +164,9 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             thirst = data.metadata["thirst"],
             alcohol = data.metadata["alcohol"],
             drug = data.metadata["drug"],
-            armor = data.metadata["armor"],
+            armor = data.metadata["armor"].current,
         })
     end)
-end)
-
-RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
-    setPlayerData({armor = PlayerData.metadata["armor"]})
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
@@ -212,7 +208,7 @@ CreateThread(function()
 
         if LocalPlayer.state.isLoggedIn then
             setHudDisplay(not IsPauseMenuActive())
-            setPlayerData({health = GetEntityHealth(player)})
+            setPlayerData({health = GetEntityHealth(player), armor = GetPedArmour(player)})
             if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
                 local class = GetVehicleClass(vehicle)
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
