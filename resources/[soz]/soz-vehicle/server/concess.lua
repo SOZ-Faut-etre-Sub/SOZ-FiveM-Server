@@ -17,12 +17,11 @@ QBCore.Functions.CreateCallback("soz-concess:server:getstock", function(source, 
     end
 end)
 
-RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehicle)
+RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehicle, displayname)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
-    local money = pData.PlayerData.money["money"]
-    local vehiclePrice = QBCore.Shared.Vehicles[vehicle]["price"]
+    local vehiclePrice = QBCore.Shared.Vehicles[displayname]["price"]
     local plate = GeneratePlate()
     local depotprice = math.ceil(vehiclePrice / 100)
     if depotprice < 100 then
