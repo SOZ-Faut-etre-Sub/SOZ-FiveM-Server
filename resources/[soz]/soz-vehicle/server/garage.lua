@@ -82,8 +82,6 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
             },
             -- Check state is the expected value
             ["state"] = {expectation = expectedState.state, error = "Le véhicule présente une dualité quantique"},
-            -- Check vehicle is owned by entreprise
-            ["job"] = {expectation = expectedState.job, error = "Ce n'est pas un véhicule entreprise"},
             -- Check vehicle is is right garage
             ["garage"] = {expectation = expectedState.garage, error = "Le véhicule est doué d'ubiquité"},
         }
@@ -95,6 +93,15 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
             end
         end
 
+        -- Special case for entreprise garage (only check if player is in entreprise, vehicle does not have to be owned by entreprise)
+        if type_ == "entreprise" then
+            if player.PlayerData.job == nil or player.PlayerData.job.id ~= expectedState.job then
+                TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas accès à ce garage entreprise", "error")
+                return false
+            end
+        end
+
+        -- Test all fields
         for field, data in pairs(fieldsToTest) do
             local expectation = data.expectation
             local doesMatch = false
@@ -147,7 +154,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
         ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
         ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
         ["depot"] = {state = VehicleState.InPound},
-        ["entreprise"] = {state = VehicleState.InEntreprise, job = player.PlayerData.job.id},
+        ["entreprise"] = {state = VehicleState.InEntreprise, garage = garage},
         ["housing"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
     }
     local allArgs = argsByType[type_]
@@ -324,10 +331,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
         data.plate,
     }
 
-    if type_ == "entreprise" then
-        query = query .. " AND job = ?"
-        table.insert(args, player.PlayerData.job.id)
-    else
+    if type_ ~= "entreprise" then
         query = query .. " AND citizenid = ?"
         table.insert(args, player.PlayerData.citizenid)
     end
