@@ -7,17 +7,17 @@ QBShared.Trunks = {
     [2] = { slot = 10, weight = 80000 }, -- SUVs
     [3] = { slot = 10, weight = 40000 }, -- Coupes
     [4] = { slot = 10, weight = 30000 }, -- Muscle
-    [5] = { slot = 10, weight = 0 }, -- Sports Classics
-    [6] = { slot = 10, weight = 0 }, -- Sports
-    [7] = { slot = 10, weight = 0 }, -- Super
+    [5] = { slot = 10, weight = 20000 }, -- Sports Classics
+    [6] = { slot = 10, weight = 20000 }, -- Sports
+    [7] = { slot = 10, weight = 20000 }, -- Super
     [8] = { slot = 10, weight = 10000 }, -- Motorcycles
     [9] = { slot = 10, weight = 100000 }, -- Off-road
     [10] = { slot = 10, weight = 0 }, -- Industrial
     [11] = { slot = 10, weight = 0 }, -- Utility
     [12] = { slot = 10, weight = 200000 }, -- Vans
     [13] = { slot = 10, weight = 2000 }, -- Cycles
-    [14] = { slot = 10, weight = 0 }, -- Boats
-    [15] = { slot = 10, weight = 0 }, -- Helicopters
+    [14] = { slot = 10, weight = 100000 }, -- Boats
+    [15] = { slot = 10, weight = 100000 }, -- Helicopters
     [16] = { slot = 10, weight = 0 }, -- Planes
     [17] = { slot = 10, weight = 0 }, -- Service
     [18] = { slot = 10, weight = 0 }, -- Emergency
