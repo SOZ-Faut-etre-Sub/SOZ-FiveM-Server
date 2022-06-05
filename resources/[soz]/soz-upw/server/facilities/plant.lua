@@ -33,7 +33,7 @@ end
 
 function Plant:Produce()
     -- Energy production is altered by the waste level
-    local wasteMulitplier = self.GetWasteMultiplier(self.waste)
+    local wasteMulitplier = self:GetWasteMultiplier(self.waste)
 
     -- Produce energy
     local prod = self.productionPerMinute
@@ -56,7 +56,7 @@ end
 function Plant:GetWasteMultiplier(w)
     local waste = (w or self.waste) / self.maxWaste
 
-    for wasteMultiplier, wasteRange in pairs(self.Config.WasteMultiplier) do
+    for wasteMultiplier, wasteRange in pairs(Config.WasteMultiplier) do
         if wasteRange.min == nil and waste < wasteRange.max then
             return wasteMultiplier
 
