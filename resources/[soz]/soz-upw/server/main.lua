@@ -2,7 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 -- UPW Objects
 Plants = {}
-Pm = nil -- PollutionManager instance
+Pm = {} -- PollutionManager instance
 
 -- Initiate Plants
 local function InitiatePlants()
@@ -14,8 +14,7 @@ local function InitiatePlants()
 end
 
 local function InitiatePollutionManager()
-    Pm = PollutionManager:new("pollution-manager", {
-        type = "pollution-manager",
+    Pm = PollutionManager:new("pm1", {
         loopRunning = false,
         currentPollution = 0, -- Current pollution percent (0-100+)
         units = {},

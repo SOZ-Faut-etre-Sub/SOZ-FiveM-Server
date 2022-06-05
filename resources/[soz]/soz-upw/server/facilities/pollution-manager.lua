@@ -1,7 +1,9 @@
 PollutionManager = InheritsFrom(Facility)
 
 function PollutionManager:new(identifier, options)
-    local self = Plant:Super():new(identifier, options)
+    options.type = "pollution-manager"
+
+    local self = PollutionManager:Super():new(identifier, options)
 
     setmetatable(self, {__index = PollutionManager})
 
@@ -53,6 +55,7 @@ function PollutionManager:StartPollutionLoop()
 
             if count >= 5 then
                 self:Save()
+                count = 0
             end
 
             Citizen.Wait(Config.Pollution.Tick)
