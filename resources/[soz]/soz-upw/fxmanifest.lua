@@ -10,9 +10,11 @@ server_scripts {
     "@oxmysql/lib/MySQL.lua",
     "server/facilities/oop.lua",
     "server/facilities/facility.lua",
-    "server/facilities/*.lua",
+    "server/facilities/plant.lua",
+    "server/facilities/pollution-manager.lua",
     "server/main.lua",
-    "server/*.lua",
+    "server/pollution.lua",
+    "server/production.lua",
 }
 
 dependencies {"oxmysql", "qb-core"}
