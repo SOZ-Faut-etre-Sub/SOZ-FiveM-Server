@@ -5,7 +5,7 @@ function Plant:new(identifier, options)
 
     local self = Plant:Super():new(identifier, options)
 
-    self.fields_to_save = {"type", "active", "capacity", "maxCapacity", "productionPerMinute", "pollutionPerMinute"}
+    self.fields_to_save = {"type", "active", "capacity", "maxCapacity", "productionPerMinute", "waste", "maxWaste", "wastePerMinute", "pollutionPerUnit"}
 
     setmetatable(self, {__index = Plant})
 
@@ -47,14 +47,14 @@ end
 function Plant:GetWasteMultiplier(w)
     local waste = (w or self.waste) / self.maxWaste
 
-    for wasteMultiplier, wasteRange in pairs(Config.WasteMultiplier) do
-        if wasteRange.min == nil and waste < wasteRange.max then
+    for wasteMultiplier, range in pairs(Config.WasteMultiplier) do
+        if range.max and range.min == nil and waste < range.max then
             return wasteMultiplier
 
-        elseif wasteRange.max == nil and waste >= wasteRange.min then
+        elseif range.min and  range.max == nil and waste >= range.min then
             return wasteMultiplier
 
-        elseif waste >= wasteRange.min and waste < wasteRange.max then
+        elseif range.min and range.max and waste >= range.min and waste < range.max then
             return wasteMultiplier
         end
     end
