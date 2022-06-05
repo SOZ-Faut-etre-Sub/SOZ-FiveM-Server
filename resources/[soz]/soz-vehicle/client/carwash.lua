@@ -2,26 +2,19 @@ GlobalVehicle = nil
 
 RegisterNetEvent("qb-carwash:client:washCar", function()
     local ped = PlayerPedId()
-    TaskStartScenarioInPlace(ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
     QBCore.Functions.Progressbar("cleaning_vehicle", "Lavage du véhicule...", 10000, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {}, {}, {}, function() -- Done
+    }, {task = "WORLD_HUMAN_MAID_CLEAN"}, {}, {}, function() -- Done
         exports["soz-hud"]:DrawNotification("Vehicule lavé!")
         SetVehicleDirtLevel(GlobalVehicle)
         SetVehicleUndriveable(GlobalVehicle, false)
         WashDecalsFromVehicle(GlobalVehicle, 1.0)
-        ClearAllPedProps(PlayerPedId())
-        ClearPedTasks(PlayerPedId())
-        ClearPedTasksImmediately(PlayerPedId())
     end, function() -- Cancel
         exports["soz-hud"]:DrawNotification("Lavage échoué")
-        ClearAllPedProps(PlayerPedId())
-        ClearPedTasks(PlayerPedId())
-        ClearPedTasksImmediately(PlayerPedId())
     end)
 end)
 

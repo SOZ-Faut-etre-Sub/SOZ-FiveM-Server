@@ -237,16 +237,7 @@ function ActionCleanup()
             ClearPedTasks(ped)
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
-            if Action.animation.reset == true then
-                ClearPedTasks(ped)
-                Wait(100)
-                StopAnimTask(ped, Action.animation.animDict, Action.animation.anim, 1.0)
-                Wait(50)
-                TaskStartScenarioInPlace(ped, Action.animation.task, 0, true)
-                Wait(100)
-                ClearPedTasks(ped)
-                StopAnimTask(ped, Action.animation.animDict, Action.animation.anim, 1.0)
-            end
+            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         else
             ClearPedTasks(ped)
         end
