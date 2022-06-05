@@ -11,7 +11,7 @@ server_scripts {
     "server/facilities/oop.lua",
     "server/facilities/facility.lua",
     "server/facilities/*.lua",
-    "server/*.lua"
+    "server/*.lua",
 }
 
 dependencies {"oxmysql", "qb-core"}
