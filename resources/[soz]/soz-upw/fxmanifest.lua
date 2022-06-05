@@ -11,6 +11,7 @@ server_scripts {
     "server/facilities/oop.lua",
     "server/facilities/facility.lua",
     "server/facilities/*.lua",
+    "server/main.lua",
     "server/*.lua",
 }
 
