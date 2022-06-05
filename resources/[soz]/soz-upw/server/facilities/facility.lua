@@ -20,7 +20,7 @@ end
 function Facility:init(identifier, data)
     local res = self:select(identifier)
     if res then
-        self:load(res)
+        self:load(res.data)
     else
         self:insert(data)
     end
@@ -43,16 +43,23 @@ function Facility:select(identifier)
 end
 
 function Facility:insert(data)
-    local res = MySQL.Sync.execute("INSERT INTO upw_facility (type, identifier, data) VALUES(@type, @identifier, @data) RETURNING *",
-                                   {["@type"] = data.type, ["@identifier"] = self.identifier, ["@data"] = json.encode(data)})
+    local res = MySQL.Sync.execute("INSERT INTO upw_facility (type, identifier, data) VALUES(@type, @identifier, @data)",
+                                   {
+        ["@type"] = data.type,
+        ["@identifier"] = self.identifier,
+        ["@data"] = json.encode(data),
+    })
+
     if res then
-        self:load(res)
+        local facility = self:select(self.identifier)
+        self:load(facility.data)
     end
 end
 
 function Facility:save(identifier, data)
     local res = MySQL.Sync.execute("UPDATE upw_facility SET `data` = @data WHERE identifier = @identifier",
                                    {["@identifier"] = identifier, ["@data"] = json.encode(data)})
+
     if res == 1 then
         self:load(data)
     end

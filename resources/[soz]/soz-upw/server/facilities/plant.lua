@@ -2,5 +2,37 @@ Plant = InheritsFrom(Facility)
 
 function Plant:new(identifier, options)
     options.type = "plant"
-    return Plant:Super():new(identifier, options)
+
+    local self = Plant:Super():new(identifier, options)
+
+    setmetatable(self, {__index = Plant})
+
+    return self
+end
+
+--
+-- DATABASE
+--
+function Plant:Save()
+    local fields = {"active", "capacity", "maxCapacity", "productionPerMinute", "pollutionPerMinute"}
+
+    local data = {}
+    for _, field in ipairs(fields) do
+        data[field] = self[field]
+    end
+
+    return self:save(self.identifier, data)
+end
+
+--
+-- PRODUCTION
+--
+function Plant:CanProduce()
+    return self.active and self.capacity < self.maxCapacity
+end
+
+function Plant:Produce()
+    local prod = self.productionPerMinute
+    self.capacity = self.capacity + prod
+    return prod
 end
