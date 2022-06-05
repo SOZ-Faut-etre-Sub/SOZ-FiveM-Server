@@ -5,20 +5,11 @@ function PollutionManager:new(identifier, options)
 
     local self = PollutionManager:Super():new(identifier, options)
 
+    self.fields_to_save = {"type", "loopRunning", "currentPollution", "units", "buffer"}
+
     setmetatable(self, {__index = PollutionManager})
 
     return self
-end
-
-function PollutionManager:Save()
-    local fields = {"loopRunning", "currentPollution", "units", "buffer"}
-
-    local data = {}
-    for _, field in ipairs(fields) do
-        data[field] = self[field]
-    end
-
-    return self:save(self.identifier, data)
 end
 
 function PollutionManager:AddPollution(units)
@@ -54,7 +45,7 @@ function PollutionManager:StartPollutionLoop()
             self:UpdatePollution()
 
             if count >= 5 then
-                self:Save()
+                self:save()
                 count = 0
             end
 

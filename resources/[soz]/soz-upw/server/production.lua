@@ -18,7 +18,7 @@ function StartProductionLoop()
 
                 -- Persist to DB every 5 iterations
                 if count >= 5 then
-                    plant:Save()
+                    plant:save()
                 end
             end
 
