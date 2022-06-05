@@ -35,8 +35,9 @@ local PlayEmote = function(animation)
     else
         if IsPedUsingScenario(ped, animation[2]) then
             ClearPedTasks(ped)
+            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         else
-            TaskStartScenarioInPlace(ped, animation[2], 0, true)
+            TaskStartScenarioInPlace(ped, animation[2], -1, true)
         end
     end
 end
