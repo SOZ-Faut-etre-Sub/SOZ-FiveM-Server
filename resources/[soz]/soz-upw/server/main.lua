@@ -28,10 +28,10 @@ AddEventHandler("onResourceStart", function(resourceName)
         -- TO BE REMOVED
         MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
 
-        InitiatePlants()
         InitiatePollutionManager()
-
-        StartProductionLoop()
         Pm:StartPollutionLoop()
+
+        InitiatePlants()
+        StartProductionLoop()
     end
 end)
