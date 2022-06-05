@@ -56,9 +56,25 @@ function Facility:insert(data)
     end
 end
 
-function Facility:save(identifier, data)
+function Facility:get_data()
+    if not self.fields_to_save then
+        error("self.fields_to_save is not defined")
+    end
+
+    local data = {}
+
+    for _, field in ipairs(self.fields_to_save) do
+        data[field] = self[field]
+    end
+
+    return data
+end
+
+function Facility:save()
+    local data = self:get_data()
+
     local res = MySQL.Sync.execute("UPDATE upw_facility SET `data` = @data WHERE identifier = @identifier",
-                                   {["@identifier"] = identifier, ["@data"] = json.encode(data)})
+                                   {["@identifier"] = self.identifier, ["@data"] = json.encode(data)})
 
     if res == 1 then
         self:load(data)

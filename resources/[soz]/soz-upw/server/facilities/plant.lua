@@ -5,23 +5,11 @@ function Plant:new(identifier, options)
 
     local self = Plant:Super():new(identifier, options)
 
+    self.fields_to_save = {"type", "active", "capacity", "maxCapacity", "productionPerMinute", "pollutionPerMinute"}
+
     setmetatable(self, {__index = Plant})
 
     return self
-end
-
---
--- DATABASE
---
-function Plant:Save()
-    local fields = {"active", "capacity", "maxCapacity", "productionPerMinute", "pollutionPerMinute"}
-
-    local data = {}
-    for _, field in ipairs(fields) do
-        data[field] = self[field]
-    end
-
-    return self:save(self.identifier, data)
 end
 
 --
