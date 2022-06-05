@@ -33,6 +33,11 @@ end
 
 function Plant:Produce()
     local prod = self.productionPerMinute
+    if type(self.productionPerMinute) == "table" then
+        prod = math.random(self.productionPerMinute.min, self.productionPerMinute.max)
+    end
+
     self.capacity = self.capacity + prod
+
     return prod
 end
