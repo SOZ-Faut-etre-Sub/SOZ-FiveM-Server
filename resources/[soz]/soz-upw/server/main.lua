@@ -2,6 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 -- UPW Objects
 Plants = {}
+Pm = nil -- PollutionManager instance
 
 -- Initiate Plants
 local function InitiatePlants()
@@ -12,6 +13,16 @@ local function InitiatePlants()
     end
 end
 
+local function InitiatePollutionManager()
+    Pm = PollutionManager:new("pollution-manager", {
+        type = "pollution-manager",
+        loopRunning = false,
+        currentPollution = 0, -- Current pollution percent (0-100+)
+        units = {},
+        buffer = {},
+    })
+end
+
 -- Init
 AddEventHandler("onResourceStart", function(resourceName)
     if resourceName == GetCurrentResourceName() then
@@ -19,7 +30,9 @@ AddEventHandler("onResourceStart", function(resourceName)
         MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
 
         InitiatePlants()
+        InitiatePollutionManager()
 
         StartProductionLoop()
+        Pm:StartPollutionLoop()
     end
 end)
