@@ -104,7 +104,7 @@ function GetPlayerMetrics()
     end)
 
     metricsString = metricsString .. CreateMetrics("soz_player_armor", "gauge", "Armor of a player", labels, function(player)
-        return player.metadata.armor
+        return player.metadata.armor.current
     end)
 
     metricsString = metricsString .. CreateMetrics("soz_player_hunger", "gauge", "Hunger of a player", labels, function(player)
