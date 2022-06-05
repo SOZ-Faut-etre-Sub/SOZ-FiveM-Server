@@ -32,6 +32,9 @@ function Plant:CanProduce()
 end
 
 function Plant:Produce()
+    -- Energy production is altered by the waste level
+    local wasteMulitplier = self.GetWasteMultiplier(self.waste)
+
     -- Produce energy
     local prod = self.productionPerMinute
 
@@ -39,11 +42,10 @@ function Plant:Produce()
         prod = math.random(self.productionPerMinute.min, self.productionPerMinute.max)
     end
 
-    self.capacity = self.capacity + prod
+    self.capacity = self.capacity + prod * wasteMulitplier
 
     -- Produce waste
-    local wasteMulitplier = self.GetWasteMultiplier(self.waste)
-    self:ProduceWaste(wasteMulitplier)
+    self:ProduceWaste()
 
     return prod
 end
@@ -67,12 +69,12 @@ function Plant:GetWasteMultiplier(w)
     end
 end
 
-function Plant:ProduceWaste(wasteMultiplier)
+function Plant:ProduceWaste()
     local waste = self.wastePerMinute
 
     if type(self.wastePerMinute) == "table" then
         waste = math.random(self.wastePerMinute.min, self.wastePerMinute.max)
     end
 
-    self.waste = self.waste + waste * wasteMultiplier
+    self.waste = self.waste + waste
 end
