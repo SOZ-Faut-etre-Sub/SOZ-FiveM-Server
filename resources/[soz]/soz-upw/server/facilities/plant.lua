@@ -32,6 +32,9 @@ function Plant:Produce()
 
     self.capacity = self.capacity + prod * wasteMulitplier
 
+    -- Add pollution
+    Pm:AddPollution(5)  -- TEMP Placeholder value
+
     -- Produce waste
     self:ProduceWaste()
 

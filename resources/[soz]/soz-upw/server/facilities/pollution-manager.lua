@@ -1,11 +1,13 @@
 PollutionManager = InheritsFrom(Facility)
 
+local pollutionLoopRunning = false
+
 function PollutionManager:new(identifier, options)
     options.type = "pollution-manager"
 
     local self = PollutionManager:Super():new(identifier, options)
 
-    self.fields_to_save = {"type", "loopRunning", "currentPollution", "units", "buffer"}
+    self.fields_to_save = {"type", "currentPollution", "units", "buffer"}
 
     setmetatable(self, {__index = PollutionManager})
 
@@ -13,31 +15,36 @@ function PollutionManager:new(identifier, options)
 end
 
 function PollutionManager:AddPollution(units)
-    table.insert(PollutionManager.buffer, units)
+    table.insert(self.buffer, units)
 end
 
 function PollutionManager:UpdatePollution()
-    local pollutionThisTick = QBCore.Shared.Sum(self.buffer)
+    local pollutionThisTick = math.ceil(QBCore.Shared.Sum(self.buffer))
 
-    local maxNumberOfUnits = Config.Pollution.MaxUnitsPerHour * Config.Pollution.Persistence / (Config.Pollution.Tick / 1000)
+    local maxNumberOfUnits = Config.Pollution.Persistence * (60 / (Config.Pollution.Tick / 60000))
     if #self.units >= maxNumberOfUnits then
         table.remove(self.units, 1)
     end
 
     table.insert(self.units, pollutionThisTick)
+
+    self.currentPollution = math.ceil(QBCore.Shared.Sum(self.units) / (Config.Pollution.Persistence * 60))
+
+    -- Reset buffer
+    self.buffer = {}
 end
 
 function PollutionManager:StartPollutionLoop()
-    if self.loopRunning then
+    if pollutionLoopRunning then
         return
     end
 
-    self.loopRunning = true
+    pollutionLoopRunning = true
 
     Citizen.CreateThread(function()
         local count = 0
 
-        while self.loopRunning do
+        while pollutionLoopRunning do
             print("##### POLLUTION TICK #####")
 
             count = count + 1
@@ -55,8 +62,8 @@ function PollutionManager:StartPollutionLoop()
 end
 
 function PollutionManager:GetPollutionLevel()
-    -- local currentPollution = currentPollution
-    local currentPollution = 50 -- TEMP set to Neutral level for now
+    local currentPollution = self.currentPollution
+    -- local currentPollution = 50 -- TEMP set to Neutral level for now
 
     if currentPollution >= 100 then
         return QBCore.Shared.Pollution.Level.High
