@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 local Inventory = {}
 local Inventories = {}
@@ -76,7 +77,7 @@ function Inventory.Create(id, label, invType, slots, maxWeight, owner, items)
         end
 
         Inventories[self.id] = self
-        _G.Container[self.type]:sync(self.id, self.items)
+        _G.Container[self.type]:SyncInventory(self.id, self.items)
 
         return Inventories[self.id]
     end
@@ -87,7 +88,7 @@ function Inventory.Load(id, invType, owner)
 
     if (id or owner) and invType then
         datastore = _G.Container[invType]:IsDatastore()
-        result = _G.Container[invType]:load(id, owner)
+        result = _G.Container[invType]:LoadInventory(id, owner)
     end
 
     local returnData, weight = {}, 0
@@ -120,7 +121,7 @@ end
 function Inventory.AccessGranted(inv, playerId)
     inv = Inventory(inv)
 
-    return _G.Container[inv.type]:AccessAllowed(inv.owner, playerId)
+    return _G.Container[inv.type]:CanPlayerUseInventory(inv.owner, playerId)
 end
 
 function Inventory.Clear(inv, keep)
@@ -129,7 +130,7 @@ function Inventory.Clear(inv, keep)
         if not keep then
             table.wipe(inv.items)
             inv.weight = 0
-            _G.Container[inv.type]:sync(inv.id, inv.items)
+            _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         end
     end
 end
@@ -234,7 +235,7 @@ function Inventory.FilterItems(inv, invType)
     if invType then
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                if _G.Container[invType]:AllowedItems(v) then
+                if _G.Container[invType]:ItemIsAllowed(v) then
                     items[#items + 1] = v
                 end
             end
@@ -344,7 +345,7 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                     success = true
 
                     inv.changed = true
-                    _G.Container[inv.type]:sync(inv.id, inv.items)
+                    _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
                 else
                     success, reason = false, "invalid_weight"
                 end
@@ -373,7 +374,7 @@ function Inventory.SetMetadata(inv, slot, metadata)
             for k, v in pairs(metadata) do
                 slot.metadata[k] = v
             end
-            _G.Container[inv.type]:sync(inv.id, inv.items)
+            _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         end
     end
 end
@@ -439,7 +440,7 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
             end
 
             inv.changed = true
-            _G.Container[inv.type]:sync(inv.id, inv.items)
+            _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         end
     end
     return inv.changed
@@ -490,7 +491,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         return
     end
 
-    if not _G.Container[invTarget.type]:AllowedItems(item) then
+    if not _G.Container[invTarget.type]:ItemIsAllowed(item) then
         cb(false, "not_allowed_item")
         return
     end
@@ -509,8 +510,8 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
             success, reason = s, r
         end)
 
-        _G.Container[invSource.type]:sync(invSource.id, invSource.items)
-        _G.Container[invTarget.type]:sync(invTarget.id, invTarget.items)
+        _G.Container[invSource.type]:SyncInventory(invSource.id, invSource.items)
+        _G.Container[invTarget.type]:SyncInventory(invTarget.id, invTarget.items)
     end
 
     if invSource.type ~= "player" and #invSource.users > 1 then
@@ -670,7 +671,7 @@ exports("CreatePlayerInventory", CreatePlayerInventory)
 RegisterNetEvent("inventory:DropPlayerInventory", function(playerID --[[PlayerData]] )
     local inv = Inventory(playerID)
 
-    _G.Container[inv.type]:save(inv.id, inv.owner, inv.items)
+    _G.Container[inv.type]:SaveInventory(inv.id, inv.owner, inv.items)
     Inventory.Remove(playerID)
 end)
 
@@ -688,7 +689,7 @@ end
 local function saveInventories(loop)
     for _, inv in pairs(Inventories) do
         if not inv.datastore and inv.changed then
-            if _G.Container[inv.type]:save(inv.id, inv.owner, inv.items) then
+            if _G.Container[inv.type]:SaveInventory(inv.id, inv.owner, inv.items) then
                 inv.changed = false
             end
         end

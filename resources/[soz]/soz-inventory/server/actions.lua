@@ -6,7 +6,7 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
     local ply = Player(source)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if not ply.state.inv_busy then
+    if Player and not ply.state.inv_busy then
         cb(Inventory(Player.PlayerData.source))
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Inventaire en cours d'utilisation", "warning")
