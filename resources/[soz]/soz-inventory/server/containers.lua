@@ -96,3 +96,7 @@ Container["bin"] = InventoryDatastore:new("bin", {"item"}, function()
 
     return inventory
 end)
+
+--- Housing
+Container["house_stash"] = InventoryContainer:new("stash", {"item"})
+Container["house_fridge"] = InventoryContainer:new("fridge", {"food", "drink"})
