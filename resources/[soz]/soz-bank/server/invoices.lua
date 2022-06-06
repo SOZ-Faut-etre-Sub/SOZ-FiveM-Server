@@ -53,6 +53,18 @@ local function PayInvoice(PlayerData, account, id)
                 TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
             end
 
+            TriggerEvent("monitor:server:event", "invoice_pay", {
+                player_source = Player.PlayerData.source,
+                invoice_kind = "invoice",
+                invoice_job = "",
+            }, {
+                target_source = Emitter.PlayerData.source,
+                id = id,
+                amount = tonumber(invoice.amount),
+                target_account = invoice.emitterSafe,
+                source_account = invoice.targetAccount,
+            })
+
             Invoices[account][id] = nil
             return true
         end
@@ -71,6 +83,19 @@ local function PayInvoice(PlayerData, account, id)
                     TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
                 end
+
+                TriggerEvent("monitor:server:event", "invoice_pay",
+                             {
+                    player_source = Player.PlayerData.source,
+                    invoice_kind = "invoice",
+                    invoice_job = Player.PlayerData.job.id,
+                }, {
+                    target_source = Emitter.PlayerData.source,
+                    id = id,
+                    amount = tonumber(invoice.amount),
+                    target_account = invoice.emitterSafe,
+                    source_account = invoice.targetAccount,
+                })
 
                 Invoices[account][id] = nil
             end
@@ -101,14 +126,43 @@ local function RejectInvoice(PlayerData, account, id)
 
     if PlayerData.charinfo.account == account then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture")
+
         if Emitter then
             TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
+
+        TriggerEvent("monitor:server:event", "invoice_refuse", {
+            player_source = Player.PlayerData.source,
+            invoice_kind = "invoice",
+            invoice_job = "",
+        }, {
+            target_source = Emitter.PlayerData.source,
+            id = id,
+            amount = tonumber(invoice.amount),
+            target_account = invoice.emitterSafe,
+            source_account = invoice.targetAccount,
+            title = invoice.label,
+        })
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error")
+
         if Emitter then
             TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
+
+        TriggerEvent("monitor:server:event", "invoice_refuse",
+                     {
+            player_source = Player.PlayerData.source,
+            invoice_kind = "invoice",
+            invoice_job = Player.PlayerData.job.id,
+        }, {
+            target_source = Emitter.PlayerData.source,
+            id = id,
+            amount = tonumber(invoice.amount),
+            target_account = invoice.emitterSafe,
+            source_account = invoice.targetAccount,
+            title = invoice.label,
+        })
     end
 
     MySQL.update.await("UPDATE invoices SET refused = true WHERE id = ? AND payed = false AND refused = false", {
@@ -154,19 +208,28 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             amount = amount,
         }
 
-        TriggerEvent("monitor:server:event", "invoice_emit", {
+        TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount)
+
+        local invoiceJob = ""
+
+        if targetAccount ~= Target.PlayerData.charinfo.account then
+            invoiceJob = Target.PlayerData.job.id
+        end
+
+        TriggerEvent("monitor:server:event", "invoice_emit",
+                     {
             player_source = Emitter.PlayerData.source,
             invoice_kind = kind or "invoice",
+            invoice_job = invoiceJob,
         }, {
             target_source = Target.PlayerData.source,
             position = GetEntityCoords(GetPlayerPed(Emitter.PlayerData.source)),
             title = label,
             id = id,
             amount = tonumber(amount),
-            targetAccount = targetAccount,
+            target_account = targetAccount,
         })
 
-        TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount)
         return true
     end
 
