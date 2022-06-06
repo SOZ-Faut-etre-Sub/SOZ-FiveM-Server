@@ -28,6 +28,7 @@ server_scripts {
     "server/accounts/player.lua",
     "server/accounts/business.lua",
     "server/accounts/farm.lua",
+    "server/accounts/house_safe.lua",
     "server/accounts/offshore.lua",
     "server/accounts/safestorages.lua",
     "server/accounts/bank-atm.lua",
