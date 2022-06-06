@@ -1,6 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-local ConfigKeyToReset = {"Naked", "HideHead", "HideChain", "HideBulletproof", "HideTop", "HidePants", "HideShoes"}
+local ConfigKeyToReset = {"Naked", "HideChain", "HideBulletproof", "HideTop", "HidePants", "HideShoes"}
 
 RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
     local Player = QBCore.Functions.GetPlayer(source)
