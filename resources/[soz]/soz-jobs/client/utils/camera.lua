@@ -122,10 +122,6 @@ local createCameraThread = function()
         QBCore.Functions.RequestAnimDict(CameraConfig.animDict)
         local player = PlayerPedId()
 
-        if not IsEntityPlayingAnim(player, CameraConfig.animDict, CameraConfig.anim, 3) then
-            TaskPlayAnim(player, CameraConfig.animDict, CameraConfig.anim, 1.0, -1, -1, 50, 0, 0, 0, 0)
-        end
-
         local scaleform = RequestScaleformMovie("breaking_news")
         while not HasScaleformMovieLoaded(scaleform) do
             Wait(10)
@@ -139,7 +135,15 @@ local createCameraThread = function()
         PopScaleformMovieFunctionVoid()
 
         while CameraConfig.enabled do
-            SetEntityRotation(player, 0, 0, new_z, 2, true)
+            SetEntityHeading(player, new_z)
+
+            DisableControlAction(2, 30, true)
+            DisableControlAction(2, 33, true)
+
+            if not IsEntityPlayingAnim(player, CameraConfig.animDict, CameraConfig.anim, 3) then
+                TaskPlayAnim(player, CameraConfig.animDict, CameraConfig.anim, 1.0, -1, -1, 50, 0, 0, 0, 0)
+            end
+
             local zoomvalue = (1.0 / (fov_max - fov_min)) * (fov - fov_min)
             CheckInputRotation(cam, zoomvalue)
             HandleZoom(cam)
