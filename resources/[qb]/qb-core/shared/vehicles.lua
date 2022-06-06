@@ -1803,7 +1803,7 @@ QBShared.Vehicles = {
         ['shop']     = 'pdm',
     },
     ['baller2']      = {
-        ['name']     = 'Baller',
+        ['name']     = 'Baller II',
         ['brand']    = 'Gallivanter',
         ['model']    = 'baller2',
         ['price']    = 131100,
