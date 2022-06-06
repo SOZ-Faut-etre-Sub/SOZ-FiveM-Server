@@ -176,6 +176,19 @@ QBCore.Functions.CreateCallback("banking:server:openSafeStorage", function(sourc
         cb(false)
     end
 end)
+QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(source, cb, safeStorage)
+    local account = Account(safeStorage)
+
+    if account == nil then
+        account = Account.Create(safeStorage, safeStorage, "house_safe", safeStorage)
+    end
+
+    if Account.AccessGranted(account, source) then
+        cb(true, account.money, account.marked_money)
+    else
+        cb(false)
+    end
+end)
 
 RegisterNetEvent("banking:server:updatePhoneBalance", function()
     local Player = QBCore.Functions.GetPlayer(source)
