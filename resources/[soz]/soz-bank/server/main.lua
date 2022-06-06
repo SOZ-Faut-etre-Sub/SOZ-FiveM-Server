@@ -1,6 +1,17 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
+MySQL.ready(function()
+    local weekday = os.date("%w")
+    local hour = os.date("%H")
+
+    if not weekday == 1 or hour > 14 then
+        return
+    end
+
+    exports.oxmysql:update_async("UPDATE bank_accounts SET money = money + 700000 WHERE account_type = 'business' AND businessid IN ('lspd', 'bcso')")
+end)
+
 QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source, cb, account)
     local Player = QBCore.Functions.GetPlayer(source)
 
