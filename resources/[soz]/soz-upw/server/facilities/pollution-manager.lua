@@ -45,6 +45,8 @@ function PollutionManager:UpdatePollution()
 
     self.currentPollution = pastUnits / totalMaxUnits
 
+    exports["soz-monitor"]:Log("INFO", "Pollution level updated: " .. self.currentPollution * 100 .. "%")
+
     -- Reset buffer
     self.buffer = {}
 end
