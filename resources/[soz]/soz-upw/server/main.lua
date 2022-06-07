@@ -4,6 +4,9 @@ QBCore = exports["qb-core"]:GetCoreObject()
 Plants = {}
 Pm = {} -- PollutionManager instance
 
+--
+-- ON RESOURCE START
+--
 -- Initiate Plants
 local function InitiatePlants()
     for identifier, data in pairs(Config.Plants) do
@@ -33,5 +36,18 @@ AddEventHandler("onResourceStart", function(resourceName)
 
         InitiatePlants()
         StartProductionLoop()
+    end
+end)
+
+--
+-- ON RESOURCE STOP
+--
+AddEventHandler("onResourceStop", function(resourceName)
+    if resourceName == GetCurrentResourceName() then
+        Pm:save()
+
+        for _, plant in pairs(Plants) do
+            plant:save()
+        end
     end
 end)
