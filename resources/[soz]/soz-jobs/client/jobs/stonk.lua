@@ -372,7 +372,7 @@ AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
 end)
 
 RegisterNetEvent("stonk:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.ManageGrade) then
+    if not SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.SocietyShop) then
         return
     end
 

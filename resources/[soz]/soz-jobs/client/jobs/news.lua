@@ -204,7 +204,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
 end)
 
 RegisterNetEvent("news:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.ManageGrade) then
+    if not SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.SocietyShop) then
         return
     end
 
