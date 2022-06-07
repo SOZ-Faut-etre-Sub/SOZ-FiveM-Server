@@ -602,7 +602,7 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
 end)
 
 RegisterNetEvent("food:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.ManageGrade) then
+    if not SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.SocietyShop) then
         return
     end
 
