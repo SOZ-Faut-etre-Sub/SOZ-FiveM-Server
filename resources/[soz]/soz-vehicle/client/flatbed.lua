@@ -350,9 +350,6 @@ CreateThread(function()
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
-                        return false
-                    end
                     if OnDuty == false then
                         return false
                     end
@@ -369,9 +366,6 @@ CreateThread(function()
                     TriggerEvent("soz-flatbed:client:callaction", entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
-                        return false
-                    end
                     if OnDuty == false then
                         return false
                     end
@@ -388,9 +382,6 @@ CreateThread(function()
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
-                        return false
-                    end
                     if OnDuty == false then
                         return false
                     end
@@ -407,9 +398,6 @@ CreateThread(function()
                     TriggerEvent("soz-flatbed:client:callchaines", entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
-                        return false
-                    end
                     if OnDuty == false then
                         return false
                     end
@@ -426,9 +414,6 @@ CreateThread(function()
                     TriggerEvent("soz-flatbed:client:calltp", entity)
                 end,
                 canInteract = function(entity, distance, data)
-                    if GetEntityModel(entity) ~= GetHashKey("flatbed3") then
-                        return false
-                    end
                     if OnDuty == false then
                         return false
                     end
@@ -446,32 +431,14 @@ CreateThread(function()
                     TriggerEvent("soz-flatbed:client:calltp", entity, lastveh)
                 end,
                 canInteract = function(entity, distance, data)
-                    if GetEntityModel(entity) == GetHashKey("flatbed3") then
-                        return false
-                    end
                     if OnDuty == false then
                         return false
                     end
                     if (GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("flatbed3")) or
-                        (#(GetEntityCoords(GetVehiclePedIsIn(PlayerPedId(), true)) - GetEntityCoords(PlayerPedId())) >= 50) then
+                        (#(GetEntityCoords(GetVehiclePedIsIn(PlayerPedId(), true)) - GetEntityCoords(PlayerPedId())) >= 70) then
                         return false
                     end
                     return true
-                end,
-                job = "bennys",
-            },
-        },
-        distance = 3,
-    })
-    exports["qb-target"]:AddTargetModel(-669511193, {
-        options = {
-            {
-                type = "client",
-                icon = "fa-solid fa-ban",
-                label = "Supprimer",
-                action = function(entity)
-                    GetOwnership(entity)
-                    DeleteEntity(entity)
                 end,
                 job = "bennys",
             },
