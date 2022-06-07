@@ -43,7 +43,13 @@ function Plant:Produce()
     self.capacity = self.capacity + prod * wasteMulitplier
 
     -- Add pollution
-    Pm:AddPollution(5) -- TEMP Placeholder value
+    local ppu = self.pollutionPerUnit
+    if type(ppu) == "table" then
+        ppu = math.random(ppu.min, ppu.max)
+    end
+
+    -- Pm:AddPollution(prod * ppu)
+    Pm:AddPollution(1) -- TEMP Placeholder value
 
     -- Produce waste
     self:ProduceWaste()
