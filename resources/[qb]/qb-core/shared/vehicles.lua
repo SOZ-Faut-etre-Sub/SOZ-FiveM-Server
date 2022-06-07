@@ -4176,7 +4176,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('polmav'),
         ['shop']     = 'na',
     },
-    ['ambulance']    = {
+    ['ambulan']    = {
         ['name']     = 'Ambulance',
         ['brand']    = 'Los Santos',
         ['model']    = 'ambulance',
