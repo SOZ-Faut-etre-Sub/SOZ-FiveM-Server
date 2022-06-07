@@ -7,7 +7,7 @@ function StartProductionLoop()
 
     Citizen.CreateThread(function()
         while productionLoopIsRunning do
-            print("##### PRODUCTION TICK #####")
+            -- print("##### PRODUCTION TICK #####")
 
             count = count + 1
 
