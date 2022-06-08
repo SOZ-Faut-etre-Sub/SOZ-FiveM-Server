@@ -2,6 +2,24 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 local ConfigKeyToReset = {"Naked", "HideChain", "HideBulletproof", "HideTop", "HidePants", "HideShoes"}
 
+RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local clothConfig = Player.PlayerData.cloth_config
+
+    if clothes == nil then
+        return
+    end
+
+    for componentId, component in pairs(clothes.Components or {}) do
+        clothConfig["BaseClothSet"].Components[tostring(componentId)] = component
+    end
+    for propId, prop in pairs(clothes.Props or {}) do
+        clothConfig["BaseClothSet"].Props[tostring(propId)] = prop
+    end
+
+    Player.Functions.SetClothConfig(clothConfig, false)
+end)
+
 RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
     local Player = QBCore.Functions.GetPlayer(source)
     local clothConfig = Player.PlayerData.cloth_config
