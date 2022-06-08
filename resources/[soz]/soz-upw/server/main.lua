@@ -18,7 +18,6 @@ end
 
 local function InitiatePollutionManager()
     Pm = PollutionManager:new("pm1", {
-        loopRunning = false,
         currentPollution = 0, -- Current pollution percent (0-100+)
         units = {},
         buffer = {},
