@@ -7,22 +7,6 @@ for i = 48,  57 do NumberCharset[#NumberCharset+1] = string.char(i) end
 for i = 65,  90 do StringCharset[#StringCharset+1] = string.char(i) end
 for i = 97, 122 do StringCharset[#StringCharset+1] = string.char(i) end
 
-QBShared.Reduce = function(tbl, cb, init)
-    local acc = init
-    for k, v in ipairs(tbl) do
-        if k == 1 and not init then
-            acc = v
-        else
-            acc = cb(acc, v)
-        end
-    end
-    return acc
-end
-
-QBShared.Sum = function(tbl)
-    return QBShared.Reduce(tbl, function(a, b) return a + b end, 0)
-end
-
 QBShared.RandomStr = function(length)
     if length <= 0 then return '' end
     return QBShared.RandomStr(length - 1) .. StringCharset[math.random(1, #StringCharset)]
