@@ -97,11 +97,11 @@ RegisterNetEvent("soz-bennys:server:buy", function(itemID)
 end)
 
 QBCore.Functions.CreateUseableItem("repairkit", function(source)
-    TriggerClientEvent('soz-bennys:client:repairkit', source)
+    TriggerClientEvent("soz-bennys:client:repairkit", source)
     exports["soz-inventory"]:RemoveItem(source, "repairkit", 1, nil)
 end)
 
 QBCore.Functions.CreateUseableItem("cleaningkit", function(source)
-    TriggerClientEvent('soz-bennys:client:cleaningkit', source)
+    TriggerClientEvent("soz-bennys:client:cleaningkit", source)
     exports["soz-inventory"]:RemoveItem(source, "cleaningkit", 1, nil)
 end)
