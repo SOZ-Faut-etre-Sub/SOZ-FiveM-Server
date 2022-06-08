@@ -23,6 +23,14 @@ function Plant:new(identifier, options)
 end
 
 --
+-- SETTERS
+--
+function Plant:ToggleActive()
+    self.active = not self.active
+    return self.active
+end
+
+--
 -- ENERGY PRODUCTION
 --
 function Plant:CanProduce()
