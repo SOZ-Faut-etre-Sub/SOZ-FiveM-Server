@@ -30,3 +30,24 @@ function StartProductionLoop()
         end
     end)
 end
+
+--
+-- EVENTS
+--
+QBCore.Functions.CreateCallback("soz-upw:server:GetPlantActive", function(source, cb, identifier)
+    local plant = GetPlant(identifier)
+
+    if plant then
+        cb(plant.active)
+    else
+        cb(nil)
+    end
+end)
+
+RegisterNetEvent("soz-upw:server:TooglePlantActive", function()
+    local plant = GetPlant(source)
+
+    if plant then
+        plant:ToogleActive()
+    end
+end)
