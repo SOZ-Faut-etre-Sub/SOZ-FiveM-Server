@@ -26,17 +26,27 @@ local function InitiatePollutionManager()
 end
 
 -- Init
-AddEventHandler("onResourceStart", function(resourceName)
-    if resourceName == GetCurrentResourceName() then
-        -- TO BE REMOVED
-        MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
+MySQL.ready(function()
+    local timeout = 0
 
-        InitiatePollutionManager()
-        Pm:StartPollutionLoop()
+    while MySQL.Sync.fetchSingle("SELECT Count(*) AS count FROM migrations WHERE name = 'add-upw-facility'").count == 0 do
+        timeout = timeout + 1
 
-        InitiatePlants()
-        StartProductionLoop()
+        if timeout >= 10 then
+            error("Migration 'add-upw-facility' is missing")
+        end
+
+        Citizen.Wait(1000)
     end
+
+    -- TO BE REMOVED (DEV PURPOSE)
+    -- MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
+
+    InitiatePollutionManager()
+    Pm:StartPollutionLoop()
+
+    InitiatePlants()
+    StartProductionLoop()
 end)
 
 --
