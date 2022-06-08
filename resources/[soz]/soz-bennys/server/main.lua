@@ -95,3 +95,13 @@ RegisterNetEvent("soz-bennys:server:buy", function(itemID)
         TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
+
+QBCore.Functions.CreateUseableItem("repairkit", function(source)
+    TriggerClientEvent('soz-bennys:client:repairkit', source)
+    exports["soz-inventory"]:RemoveItem(source, "repairkit", 1, nil)
+end)
+
+QBCore.Functions.CreateUseableItem("cleaningkit", function(source)
+    TriggerClientEvent('soz-bennys:client:cleaningkit', source)
+    exports["soz-inventory"]:RemoveItem(source, "cleaningkit", 1, nil)
+end)
