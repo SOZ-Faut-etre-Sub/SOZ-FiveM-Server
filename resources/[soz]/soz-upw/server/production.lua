@@ -91,7 +91,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
     local Player = QBCore.Functions.GetPlayer(source)
 
     local item = GetItem(identifier, "energy")
-    exports['soz-inventory']:AddItem(Player.PlayerData.source, item, 1)
+    exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1)
 
     local plant = GetPlant(identifier)
 
