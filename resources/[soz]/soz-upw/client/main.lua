@@ -28,5 +28,5 @@ end
 -- UTILS
 --
 function OnDuty()
-    return PlayerData.job.id == "upw" and PlayerData.job.duty
+    return PlayerData.job.id == "upw" and PlayerData.job.onduty
 end
