@@ -1,0 +1,87 @@
+Plant = InheritsFrom(Facility)
+
+function Plant:new(identifier, options)
+    options.type = "plant"
+
+    local self = Plant:Super():new(identifier, options)
+
+    self.fields_to_save = {
+        "type",
+        "active",
+        "capacity",
+        "maxCapacity",
+        "productionPerMinute",
+        "waste",
+        "maxWaste",
+        "wastePerMinute",
+        "pollutionPerUnit",
+    }
+
+    setmetatable(self, {__index = Plant})
+
+    return self
+end
+
+--
+-- ENERGY PRODUCTION
+--
+function Plant:CanProduce()
+    return self.active and self.capacity < self.maxCapacity
+end
+
+function Plant:Produce()
+    -- Energy production is altered by the waste level
+    local wasteMulitplier = self:GetWasteMultiplier(self.waste)
+
+    -- Produce energy
+    local prod = self.productionPerMinute
+
+    if type(self.productionPerMinute) == "table" then
+        prod = math.random(self.productionPerMinute.min, self.productionPerMinute.max)
+    end
+
+    self.capacity = self.capacity + prod * wasteMulitplier
+
+    -- Add pollution
+    local ppu = self.pollutionPerUnit
+    if type(ppu) == "table" then
+        ppu = math.random(ppu.min, ppu.max)
+    end
+
+    -- Pm:AddPollution(prod * ppu)
+    Pm:AddPollution(1) -- TEMP Placeholder value
+
+    -- Produce waste
+    self:ProduceWaste()
+
+    return prod
+end
+
+--
+-- WASTE PRODUCTION
+--
+function Plant:GetWasteMultiplier(w)
+    local waste = (w or self.waste) / self.maxWaste
+
+    for wasteMultiplier, range in pairs(Config.WasteMultiplier) do
+        if range.max and range.min == nil and waste < range.max then
+            return wasteMultiplier
+
+        elseif range.min and range.max == nil and waste >= range.min then
+            return wasteMultiplier
+
+        elseif range.min and range.max and waste >= range.min and waste < range.max then
+            return wasteMultiplier
+        end
+    end
+end
+
+function Plant:ProduceWaste()
+    local waste = self.wastePerMinute
+
+    if type(self.wastePerMinute) == "table" then
+        waste = math.random(self.wastePerMinute.min, self.wastePerMinute.max)
+    end
+
+    self.waste = self.waste + waste
+end
