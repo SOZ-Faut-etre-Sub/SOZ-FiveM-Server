@@ -5,7 +5,7 @@ local function CreateEnergyZone(identifier, data)
             type = "server",
             event = "soz-upw:server:TooglePlantActive",
             canInteract = function()
-                return not QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
+                return OnDuty() and not QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
             end,
         },
         {
@@ -13,7 +13,7 @@ local function CreateEnergyZone(identifier, data)
             type = "server",
             event = "soz-upw:server:TooglePlantActive",
             canInteract = function()
-                return QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
+                return OnDuty() and QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
             end,
         },
         {
@@ -21,7 +21,7 @@ local function CreateEnergyZone(identifier, data)
             event = "soz-upw:client:HarvestEnergy",
             identifier = identifier,
             canInteract = function()
-                return QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
+                return OnDuty() and QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
             end,
         },
         {
@@ -29,6 +29,9 @@ local function CreateEnergyZone(identifier, data)
             action = function()
                 local pollution = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionPercent", true)
                 exports["soz-hud"]:DrawNotification("Niveau de pollution : " .. pollution, "info")
+            end,
+            canInteract = function()
+                return OnDuty()
             end,
         },
     }
@@ -69,7 +72,7 @@ local function Harvest(identifier)
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
 
     if success then
-        QBConfig.Functions.TriggerServerEvent("soz-upw:server:Harvest", identifier)
+        QBCore.Functions.TriggerServerEvent("soz-upw:server:Harvest", identifier)
     end
 end
 
