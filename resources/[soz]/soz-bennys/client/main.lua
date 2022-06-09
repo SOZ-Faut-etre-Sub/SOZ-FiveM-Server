@@ -75,6 +75,60 @@ function ScrapAnim(time)
     end)
 end
 
+local function Repairall(entity)
+    local engineHealth = GetVehicleEngineHealth(entity)
+    local bodyHealth = GetVehicleBodyHealth(entity)
+    if engineHealth > bodyHealth then
+        engineHealth = bodyHealth
+    end
+    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 30
+
+    ScrapAnim(repairTime)
+    QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
+        exports["soz-hud"]:DrawNotification("Le véhicule est réparé!")
+        ClearPedTasks(PlayerPedId())
+        local plate = QBCore.Functions.GetPlate(entity)
+        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
+        TriggerServerEvent("soz-bennys:server:Repair", VehToNet(entity), serverIDcar)
+        TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle", {}, {
+            vehicle_plate = plate,
+            vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
+            position = GetEntityCoords(PlayerPedId()),
+        }, true)
+    end, function() -- Cancel
+        exports["soz-hud"]:DrawNotification("Réparation échoué")
+        ClearPedTasks(PlayerPedId())
+    end)
+end
+
+local function CleanVehicle(entity)
+    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", 10000, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {task = "WORLD_HUMAN_MAID_CLEAN"}, {}, {}, function() -- Done
+        exports["soz-hud"]:DrawNotification("Le véhicule est nettoyé!")
+        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
+        TriggerServerEvent("soz-bennys:server:Clean", VehToNet(entity), serverIDcar)
+        TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
+            vehicle_plate = QBCore.Functions.GetPlate(entity),
+            vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
+            position = GetEntityCoords(PlayerPedId()),
+        }, true)
+    end, function() -- Cancel
+        exports["soz-hud"]:DrawNotification("Nettoyage échoué")
+        ClearPedTasks(PlayerPedId())
+    end)
+end
+
 RegisterNetEvent("soz-bennys:client:RepairPart", function(part)
     local veh = Config.AttachedVehicle
     local plate = QBCore.Functions.GetPlate(veh)
@@ -95,6 +149,16 @@ RegisterNetEvent("soz-bennys:client:RepairPart", function(part)
     }, true)
 
     exports["soz-hud"]:DrawNotification("Le " .. Config.ValuesLabels[part] .. " est réparé!")
+end)
+
+RegisterNetEvent("soz-bennys:client:repairkit", function()
+    local vehicle = QBCore.Functions.GetClosestVehicle()
+    Repairall(vehicle)
+end)
+
+RegisterNetEvent("soz-bennys:client:cleaningkit", function()
+    local vehicle = QBCore.Functions.GetClosestVehicle()
+    CleanVehicle(vehicle)
 end)
 
 function ApplyEffects(vehicle)
@@ -244,63 +308,6 @@ RegisterNetEvent("soz-bennys:client:FuelRepair", function(net)
     local veh = NetworkGetEntityFromNetworkId(net)
     SetVehiclePetrolTankHealth(veh, 1000.0)
 end)
-
-local function Repairall(entity)
-    local engineHealth = GetVehicleEngineHealth(entity)
-    local bodyHealth = GetVehicleBodyHealth(entity)
-    if engineHealth > bodyHealth then
-        engineHealth = bodyHealth
-    end
-    local repairTime = ((1000 - engineHealth) + (1000 - bodyHealth)) * 30
-
-    ScrapAnim(repairTime)
-    QBCore.Functions.Progressbar("repair_advanced", "Réparation du véhicule", repairTime, false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "mp_car_bomb", anim = "car_bomb_mechanic", flags = 16}, {}, {}, function() -- Done
-        ClearPedTasks(PlayerPedId())
-        local plate = QBCore.Functions.GetPlate(entity)
-        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
-        TriggerServerEvent("soz-bennys:server:Repair", VehToNet(entity), serverIDcar)
-        TriggerServerEvent("monitor:server:event", "job_bennys_repair_vehicle", {}, {
-            vehicle_plate = plate,
-            vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
-            position = GetEntityCoords(PlayerPedId()),
-        }, true)
-    end, function() -- Cancel
-        ClearPedTasks(PlayerPedId())
-    end)
-end
-
-local function CleanVehicle(entity)
-    QBCore.Functions.Progressbar("cleaning_vehicle", "Nettoyage du véhicule...", 10000, false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {
-        animDict = "amb@world_human_maid_clean@base",
-        anim = "base",
-        flags = 0,
-        task = "WORLD_HUMAN_MAID_CLEAN",
-        reset = true,
-    }, {}, {}, function() -- Done
-        exports["soz-hud"]:DrawNotification("Vehicule néttoyé!")
-        local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
-        TriggerServerEvent("soz-bennys:server:Clean", VehToNet(entity), serverIDcar)
-        TriggerServerEvent("monitor:server:event", "job_bennys_clean_vehicle", {}, {
-            vehicle_plate = QBCore.Functions.GetPlate(entity),
-            vehicle_model = GetDisplayNameFromVehicleModel(GetEntityModel(entity)),
-            position = GetEntityCoords(PlayerPedId()),
-        }, true)
-    end, function() -- Cancel
-        exports["soz-hud"]:DrawNotification("Nettoyage échoué")
-    end)
-end
 
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({

@@ -15,6 +15,11 @@ RegisterCommand("inventory", function()
                 playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"],
             })
             SetNuiFocus(true, true)
+
+            --- Force player to stop using weapon if input is pressed while inventory is open
+            SetNuiFocusKeepInput(true)
+            Wait(50)
+            SetNuiFocusKeepInput(false)
         end
     end, "player", source)
 end, false)

@@ -24,6 +24,13 @@ MySQL.ready(function()
     local BankNotLoaded = table.clone(Config.BankPedLocations)
     local AtmNotLoaded = table.clone(Config.AtmLocations)
 
+    local weekday = os.date("%w")
+    local hour = os.date("%H")
+
+    if tonumber(weekday) == 1 and tonumber(hour) < 14 then
+        exports.oxmysql:update_async("UPDATE bank_accounts SET money = money + 700000 WHERE account_type = 'business' AND businessid IN ('lspd', 'bcso')")
+    end
+
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
             for _, v in pairs(result) do
@@ -34,9 +41,13 @@ MySQL.ready(function()
                                    v.money)
                     EnterpriseAccountNotLoaded[v.businessid] = nil
                 elseif v.account_type == "safestorages" then
-                    Account.Create(v.businessid, Config.SafeStorages[v.businessid] and Config.SafeStorages[v.businessid].label or v.name, v.account_type,
-                                   v.businessid, v.money, v.marked_money)
-                    EnterpriseSafeNotLoaded[v.businessid] = nil
+                    if v.houseid then
+                        Account.Create(v.houseid, v.houseid, "house_safe", v.houseid, v.money, v.marked_money)
+                    else
+                        Account.Create(v.businessid, Config.SafeStorages[v.businessid] and Config.SafeStorages[v.businessid].label or v.name, v.account_type,
+                                       v.businessid, v.money, v.marked_money)
+                        EnterpriseSafeNotLoaded[v.businessid] = nil
+                    end
                 elseif v.account_type == "offshore" then
                     Account.Create(v.businessid, v.businessid, v.account_type, v.businessid, v.money, v.marked_money)
                 elseif v.account_type == "bank-atm" then

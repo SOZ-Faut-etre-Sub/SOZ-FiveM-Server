@@ -14,6 +14,8 @@ AddEventHandler("soz-housing:server:SetZone", function()
     local GlobalZone = MySQL.query.await("SELECT * FROM `player_house` WHERE price IS NOT NULL")
     TriggerClientEvent("soz-housing:client:SetEntry", Player.PlayerData.source, GlobalZone)
     TriggerClientEvent("soz-housing:client:SetExit", Player.PlayerData.source, GlobalZone)
+    TriggerClientEvent("soz-housing:client:SetStorage", Player.PlayerData.source, GlobalZone)
+    TriggerClientEvent("soz-housing:client:SetCloakroom", Player.PlayerData.source, GlobalZone)
 end)
 
 RegisterNetEvent("soz-housing:server:isOwned")

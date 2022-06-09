@@ -380,6 +380,15 @@ function QBCore.Player.CreatePlayer(PlayerData)
         end
     end
 
+    self.Functions.UpdateArmour = function()
+        local jobClothSet = self.PlayerData.cloth_config["JobClothSet"]
+        if jobClothSet and jobClothSet.Components["9"] and jobClothSet.Components["9"].Drawable ~= 0 then
+            self.Functions.SetArmour(true)
+        else
+            self.Functions.SetArmour(false)
+        end
+    end
+
     self.Functions.SetArmour = function(applyArmor)
         local ped = GetPlayerPed(self.PlayerData.source)
         self.PlayerData.metadata["armor"].hidden = not applyArmor
@@ -399,6 +408,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         self.Functions.UpdatePlayerData(true)
 
         self.Functions.UpdateMaxWeight()
+        self.Functions.UpdateArmour()
 
         if not skipApply then
             TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
@@ -465,6 +475,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     TriggerEvent('QBCore:Server:PlayerLoaded', self)
     self.Functions.UpdatePlayerData()
     self.Functions.UpdateMaxWeight()
+    self.Functions.UpdateArmour()
 end
 
 -- Save player info to database (make sure citizenid is the primary key in your database)

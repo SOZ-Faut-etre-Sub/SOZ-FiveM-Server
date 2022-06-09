@@ -100,6 +100,7 @@ local function ItemCount() return true end
 local function CitizenCheck() return true end
 local function RoleCheck() return true end
 local function FeatureCheck() return true end
+local function GlobalCheck() return true end
 
 CreateThread(function()
 	if not Config.Standalone then
@@ -185,6 +186,14 @@ CreateThread(function()
 			return false
 		end
 
+		GlobalCheck = function()
+			if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] then
+				return false
+			end
+
+			return true
+		end
+
 		RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
 			PlayerData = QBCore.Functions.GetPlayerData()
 			SpawnPeds()
@@ -217,6 +226,7 @@ CreateThread(function()
 end)
 
 function CheckOptions(data, entity, distance)
+	if not GlobalCheck() then return false end
 	if distance and data.distance and distance > data.distance then return false end
 	if data.job and not JobCheck(data.job) then return false end
 	if data.menu and SousMenu(data.menu) then return false end

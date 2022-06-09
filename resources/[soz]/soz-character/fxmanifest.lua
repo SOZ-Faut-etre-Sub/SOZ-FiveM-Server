@@ -36,7 +36,13 @@ client_script {
     "client/skin/sync.lua",
 }
 
-server_script {"@oxmysql/lib/MySQL.lua", "server/main.lua", "server/loading.lua", "server/create.lua"}
+server_script {
+    "@oxmysql/lib/MySQL.lua",
+    "server/main.lua",
+    "server/loading.lua",
+    "server/create.lua",
+    "server/cloakroom.lua",
+}
 
 dependencies {"qb-core"}
 

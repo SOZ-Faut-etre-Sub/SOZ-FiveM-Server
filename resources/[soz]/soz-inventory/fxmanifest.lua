@@ -8,27 +8,12 @@ client_scripts {"client/main.lua", "client/player.lua", "client/keys.lua", "clie
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",
+    "server/classes/*.lua",
     "server/main.lua",
-
-    "server/containers/base.lua",
-    "server/containers/ammo.lua",
-    "server/containers/armory.lua",
-    "server/containers/bin.lua",
-    "server/containers/boss_storage.lua",
-    "server/containers/fridge.lua",
-    "server/containers/organ.lua",
-    "server/containers/player.lua",
-    "server/containers/seizure.lua",
-    "server/containers/stash.lua",
-    "server/containers/storage.lua",
-    "server/containers/storage_tank.lua",
-    "server/containers/tanker.lua",
-    "server/containers/trunk.lua",
-
+    "server/containers.lua",
     "server/command.lua",
     "server/actions.lua",
     "server/events.lua",
-    "server/props.lua",
 }
 
 ui_page("html/index.html")
