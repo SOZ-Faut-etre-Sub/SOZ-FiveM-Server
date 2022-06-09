@@ -1,4 +1,6 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+PlayerData = QBCore.Functions.GetPlayerData()
+SozCoreJobs = exports["soz-jobs"]:GetCoreObject()
 
 Citizen.CreateThread(function()
     -- Blip
@@ -20,4 +22,11 @@ function CreateZone(identifier, zoneType, data)
         maxZ = data.maxZ,
         debugPoly = true,
     }, {options = data.options})
+end
+
+--
+-- UTILS
+--
+function OnDuty()
+    return PlayerData.job.id == "upw" and PlayerData.job.duty
 end
