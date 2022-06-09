@@ -60,7 +60,8 @@ end)
 -- FARM
 --
 local function Harvest(identifier)
-    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true, {
+    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true,
+                                                              {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
