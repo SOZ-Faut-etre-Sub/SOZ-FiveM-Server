@@ -17,6 +17,14 @@ local function CreateEnergyZone(identifier, data)
             end,
         },
         {
+            label = "Récolter",
+            event = "soz-upw:client:HarvestEnergy",
+            identifier = identifier,
+            canInteract = function()
+                return QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
+            end,
+        },
+        {
             label = "Pollution",
             action = function()
                 local pollution = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionPercent", true)
@@ -45,5 +53,31 @@ Citizen.CreateThread(function()
                 CreateWasteZone(identifier, data)
             end
         end
+    end
+end)
+
+--
+-- FARM
+--
+local function Harvest(identifier)
+    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
+
+    if success then
+        QBConfig.Functions.TriggerServerEvent("soz-upw:server:Harvest", identifier)
+    end
+end
+
+AddEventHandler("soz-upw:client:HarvestEnergy", function(data)
+    local isOk, reason = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", data.identifier)
+
+    if isOk then
+        Harvest(data.identifier)
+    else
+        exports["soz-hud"]:DrawNotification(reason, "error")
     end
 end)
