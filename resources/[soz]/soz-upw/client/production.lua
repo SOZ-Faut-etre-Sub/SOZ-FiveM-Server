@@ -19,9 +19,10 @@ local function CreateEnergyZone(identifier, data)
             end,
         },
         {
-            label = "Récolter",
-            event = "soz-upw:client:HarvestEnergy",
+            label = "Collecter l'énergie",
+            event = "soz-upw:client:HarvestLoop",
             identifier = identifier,
+            harvest = "energy",
             canInteract = function()
                 return OnDuty()
             end,
@@ -64,14 +65,14 @@ end)
 --
 -- FARM
 --
-local function HarvestPrecheck(identifier)
-    local result = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", identifier)
+local function HarvestPrecheck(identifier, harvest)
+    local result = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", identifier, harvest)
 
     -- success, reason
     return result[1], result[2]
 end
 
-local function Harvest(identifier)
+local function Harvest(identifier, harvest)
     local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true,
                                                               {
         disableMovement = true,
@@ -81,7 +82,7 @@ local function Harvest(identifier)
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
 
     if success then
-        local harvested, reason = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier)
+        local harvested, reason = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier, harvest)
 
         if not harvested then
             exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. reason, "error")
@@ -91,17 +92,17 @@ local function Harvest(identifier)
     end
 end
 
-local function HarvestEnergy(data)
-    local isOk, reason = HarvestPrecheck(data.identifier)
+local function HarvestLoop(data)
+    local isOk, reason = HarvestPrecheck(data.identifier, data.harvest)
 
     if isOk then
-        local harvested = Harvest(data.identifier)
+        local harvested = Harvest(data.identifier, data.harvest)
 
         if harvested then
-            HarvestEnergy(data)
+            HarvestLoop(data)
         end
     else
         exports["soz-hud"]:DrawNotification(reason, "error")
     end
 end
-AddEventHandler("soz-upw:client:HarvestEnergy", HarvestEnergy)
+AddEventHandler("soz-upw:client:HarvestLoop", HarvestLoop)

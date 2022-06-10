@@ -62,10 +62,10 @@ local function GetItem(identifier, type)
     return nil
 end
 
-QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier)
+QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier, harvestType)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local item = GetItem(identifier, "energy")
+    local item = GetItem(identifier, harvestType)
     if not item then
         cb({false, "invalid item"})
         return
@@ -79,7 +79,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
 
     local plant = GetPlant(identifier)
 
-    if not plant:CanEnergyBeHarvested() then
+    if harvestType == "energy" and not plant:CanEnergyBeHarvested() then
         cb({false, "Pénurie d'énergie"})
         return
     end
@@ -87,10 +87,10 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
     cb({true})
 end)
 
-QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, identifier)
+QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, identifier, harvestType)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local item = GetItem(identifier, "energy")
+    local item = GetItem(identifier, harvestType)
 
     local p = promise:new()
 
@@ -106,7 +106,10 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
     end
 
     local plant = GetPlant(identifier)
-    plant:HarvestEnergy()
+
+    if harvestType == "energy" then
+        plant:HarvestEnergy()
+    end
 
     cb(true)
 end)
