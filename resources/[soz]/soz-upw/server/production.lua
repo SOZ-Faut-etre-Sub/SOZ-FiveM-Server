@@ -87,11 +87,23 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
     cb(true)
 end)
 
-QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier)
+QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, identifier)
     local Player = QBCore.Functions.GetPlayer(source)
 
     local item = GetItem(identifier, "energy")
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1)
+
+    local p = promise:new()
+
+    exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
+        p:resolve(success, reason)
+    end)
+
+    local success, reason = Citizen.Await(p)
+
+    if not success then
+        cb(false, reason)
+        return
+    end
 
     local plant = GetPlant(identifier)
 
