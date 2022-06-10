@@ -75,6 +75,20 @@ function Plant:HarvestEnergy()
     return self.capacity
 end
 
+function Plant:CanWasteBeHarvested()
+    return self.waste >= Config.Production.WastePerHarvest
+end
+
+function Plant:HarvestWaste()
+    self.waste = self.waste - Config.Production.WastePerHarvest
+
+    if self.waste < 0 then
+        self.waste = 0
+    end
+
+    return self.waste
+end
+
 --
 -- WASTE PRODUCTION
 --
