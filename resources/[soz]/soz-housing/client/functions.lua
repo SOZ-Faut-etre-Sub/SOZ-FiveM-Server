@@ -7,7 +7,7 @@ Housing.Functions = {}
 --- @param property Property
 Housing.Functions.SetupBlips = function(property)
     local blipCategory = property:IsBuilding() and "building" or "house"
-    local blipType = property:HasAvailableApartment() and "free" or "owned"
+    local blipType = property:HasRentedApartment(PlayerData.citizenid) and "owned" or "free"
     local entryZone = property:GetEntryZone()
 
     QBCore.Functions.RemoveBlip(property.identifier)
