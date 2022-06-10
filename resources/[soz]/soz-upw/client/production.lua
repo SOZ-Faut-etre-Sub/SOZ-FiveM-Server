@@ -75,6 +75,17 @@ end)
 --
 -- FARM
 --
+local function GetItem(identifier, type)
+    local itemId
+    if type == "energy" then
+        itemId = Config.Plants[identifier].items.energy
+    elseif type == "waste" then
+        itemId = Config.Plants[identifier].items.waste
+    end
+
+    return QBCore.Shared.Items[itemId]
+end
+
 local function HarvestPrecheck(identifier, harvest)
     local result = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", identifier, harvest)
 
@@ -94,7 +105,9 @@ local function Harvest(identifier, harvest)
     if success then
         local harvested, reason = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier, harvest)
 
-        if not harvested then
+        if harvested then
+            exports["soz-hud"]:DrawNotification(string.format("Vous avez récolté 1 %s", GetItem(identifier, harvest).label), "success")
+        else
             exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. reason, "error")
         end
 
