@@ -2,8 +2,6 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-description "soz-housing"
-
 shared_scripts {"config.lua", "classes/*.lua", "shared/*.lua"}
 
 client_script {

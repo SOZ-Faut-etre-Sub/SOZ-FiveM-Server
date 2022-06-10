@@ -6,7 +6,7 @@ Housing.Functions.Components.SetupCloakroomInteraction = function(propertyId, ap
         {
             label = "Penderie",
             icon = "c:jobs/habiller.png",
-            event = "soz-housing:client:cloakroom",
+            event = "housing:client:cloakroom",
             canInteract = function()
                 return not apartment:IsAvailable() and Housing.Functions.IsInsideApartment()
             end,
@@ -14,7 +14,7 @@ Housing.Functions.Components.SetupCloakroomInteraction = function(propertyId, ap
     })
 end
 
-RegisterNetEvent("soz-housing:client:cloakroom", function()
+RegisterNetEvent("housing:client:cloakroom", function()
     local clothes = QBCore.Functions.TriggerRpc("soz-character:server:GetPlayerCloakroom")
 
     Housing.Functions.GenerateMenu(function(menu)

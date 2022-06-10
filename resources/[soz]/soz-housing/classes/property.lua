@@ -57,7 +57,16 @@ function Property:HasAvailableApartment()
     return false
 end
 
-function Property:HasRentedApartment(citizenid)
+function Property:HasRentedApartment()
+    for _, apartment in pairs(self.apartments) do
+        if apartment:IsRented() then
+            return true
+        end
+    end
+    return false
+end
+
+function Property:HasRentedApartmentForCitizenId(citizenid)
     for _, apartment in pairs(self.apartments) do
         if apartment:IsOwner(citizenid) then
             return true
@@ -76,7 +85,17 @@ function Property:GetAvailableApartments()
     return apartments
 end
 
-function Property:GetRentedApartments(citizenid)
+function Property:GetRentedApartments()
+    local apartments = {}
+    for apartmentId, apartment in pairs(self.apartments) do
+        if not apartment:IsAvailable() then
+            apartments[apartmentId] = apartment
+        end
+    end
+    return apartments
+end
+
+function Property:GetRentedApartmentsForCitizenId(citizenid)
     local apartments = {}
     for apartmentId, apartment in pairs(self.apartments) do
         if apartment:IsOwner(citizenid) then

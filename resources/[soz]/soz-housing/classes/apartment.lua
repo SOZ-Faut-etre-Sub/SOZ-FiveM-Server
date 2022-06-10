@@ -27,8 +27,16 @@ function Apartment:IsAvailable()
     return self.owner == nil
 end
 
+function Apartment:IsRented()
+    return self.owner ~= nil
+end
+
 function Apartment:IsOwner(citizenid)
     return self.owner == citizenid
+end
+
+function Apartment:GetOwner()
+    return self.owner
 end
 
 function Apartment:GetIdentifier()
