@@ -72,7 +72,13 @@ local function Harvest(identifier)
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
 
     if success then
-        QBCore.Functions.TriggerServerEvent("soz-upw:server:Harvest", identifier)
+        local harvested, reason = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier)
+
+        if harvested then
+            Harvest(identifier)
+        else
+            exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. reason, "error")
+        end
     end
 end
 
