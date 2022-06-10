@@ -3,7 +3,14 @@ Housing.Functions.Components.SetupCloakroomInteraction = function(propertyId, ap
     local zoneName = "apartment_" .. apartmentId .. "_closet"
 
     Housing.Functions.TargetInteraction(zoneName, closetZone, {
-        {label = "Penderie", icon = "c:jobs/habiller.png", event = "soz-housing:client:cloakroom"},
+        {
+            label = "Penderie",
+            icon = "c:jobs/habiller.png",
+            event = "soz-housing:client:cloakroom",
+            canInteract = function()
+                return Housing.Functions.IsInsideApartment()
+            end,
+        },
     })
 end
 
