@@ -106,6 +106,28 @@ RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId
     Player.Functions.SetMetaData("inside", inside)
 end)
 
+RegisterNetEvent("housing:server:InspectProperty", function(propertyId, apartmentId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local inside = Player.PlayerData.metadata["inside"]
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsAvailable() then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
+        return
+    end
+
+    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord())
+
+    inside.apartment = apartmentId
+    inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
+    Player.Functions.SetMetaData("inside", inside)
+end)
+
 RegisterNetEvent("housing:server:BuyProperty", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 

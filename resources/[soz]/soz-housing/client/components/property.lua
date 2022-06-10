@@ -5,7 +5,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
     Housing.Functions.TargetInteraction(zoneName, entryZone, {
         {
             label = "Acheter",
-            icon = "c:housing/acheter.png",
+            icon = "c:housing/buy.png",
             canInteract = function()
                 return property:HasAvailableApartment() and not Housing.Functions.IsInsideApartment()
             end,
@@ -15,7 +15,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
         },
         {
             label = "Vendre",
-            icon = "c:housing/vendre.png",
+            icon = "c:housing/sell.png",
             canInteract = function()
                 return property:HasRentedApartment(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
@@ -24,8 +24,18 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             end,
         },
         {
-            label = "Rentrer",
-            icon = "c:housing/entrer.png",
+            label = "Visiter",
+            icon = "c:housing/inspect.png",
+            canInteract = function()
+                return property:HasAvailableApartment() and not Housing.Functions.IsInsideApartment()
+            end,
+            action = function()
+                TriggerEvent("housing:client:ShowInspectMenu", propertyId)
+            end,
+        },
+        {
+            label = "Entrer",
+            icon = "c:housing/enter.png",
             event = "soz-housing:client:rentrer",
             canInteract = function()
                 return property:HasRentedApartment(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
@@ -54,7 +64,7 @@ Housing.Functions.Components.SetupExitInteraction = function(propertyId, apartme
     Housing.Functions.TargetInteraction(zoneName, exitZone, {
         {
             label = "Sortir",
-            icon = "c:housing/entrer.png",
+            icon = "c:housing/enter.png",
             canInteract = function()
                 return Housing.Functions.IsInsideApartment()
             end,

@@ -39,10 +39,16 @@ end)
 RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmentId, data)
     local property = Properties[propertyId]
     if property then
-        local newApartment = Apartment:new(data.label, data.owner, data.price, data.fridge_zone, data.stash_zone, data.closet_zone, data.money_zone)
-
+        local newApartment = Apartment:new(data.label, data.owner, data.price, data.inside_coord, data.exit_zone, data.fridge_zone, data.stash_zone,
+                                           data.closet_zone, data.money_zone)
         property:UpdateApartment(apartmentId, newApartment)
+
         Housing.Functions.SetupBlips(property)
+        Housing.Functions.Components.SetupExitInteraction(propertyId, apartmentId, newApartment)
+        Housing.Functions.Components.SetupCloakroomInteraction(propertyId, apartmentId, newApartment)
+        Housing.Functions.Components.SetupFridgeInteraction(propertyId, apartmentId, newApartment)
+        Housing.Functions.Components.SetupStashInteraction(propertyId, apartmentId, newApartment)
+        Housing.Functions.Components.SetupMoneyInteraction(propertyId, apartmentId, newApartment)
     end
 end)
 

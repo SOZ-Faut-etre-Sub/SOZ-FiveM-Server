@@ -57,3 +57,27 @@ RegisterNetEvent("housing:client:ShowSellMenu", function(propertyId)
         end
     end)
 end)
+
+RegisterNetEvent("housing:client:ShowInspectMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetAvailableApartments()
+
+    if not property:IsBuilding() then
+        for apartmentId, _ in pairs(apartments) do
+            TriggerServerEvent("housing:server:InspectProperty", propertyId, apartmentId)
+            return
+        end
+    end
+
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
+            menu:AddButton({
+                label = apartment.label,
+                select = function()
+                    TriggerServerEvent("housing:server:InspectProperty", propertyId, apartmentId)
+                    menu:Close()
+                end,
+            })
+        end
+    end)
+end)
