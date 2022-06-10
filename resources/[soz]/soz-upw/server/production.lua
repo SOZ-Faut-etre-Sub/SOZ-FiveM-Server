@@ -67,24 +67,24 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
 
     local item = GetItem(identifier, "energy")
     if not item then
-        cb(false, "invalid item")
+        cb({false, "invalid item"})
         return
     end
 
     local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
     if not canCarry then
-        cb(false, "Vos poches sont pleines...")
+        cb({false, "Vos poches sont pleines..."})
         return
     end
 
     local plant = GetPlant(identifier)
 
-    if plant.capacity < Config.Production.EnergyPerCell then
-        cb(false, "Pénurie d'énergie")
+    if not plant:CanEnergyBeHarvested() then
+        cb({false, "Pénurie d'énergie"})
         return
     end
 
-    cb(true)
+    cb({true})
 end)
 
 QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, identifier)
@@ -106,8 +106,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
     end
 
     local plant = GetPlant(identifier)
-
-    plant.capacity = plant.capacity - Config.Production.EnergyPerCell
+    plant:HarvestEnergy()
 
     cb(true)
 end)

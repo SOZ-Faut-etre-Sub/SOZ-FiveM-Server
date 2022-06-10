@@ -23,7 +23,7 @@ local function CreateEnergyZone(identifier, data)
             event = "soz-upw:client:HarvestEnergy",
             identifier = identifier,
             canInteract = function()
-                return OnDuty() and QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
+                return OnDuty()
             end,
         },
         {
@@ -64,6 +64,13 @@ end)
 --
 -- FARM
 --
+local function HarvestPrecheck(identifier)
+    local result = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", identifier)
+
+    -- success, reason
+    return result[1], result[2]
+end
+
 local function Harvest(identifier)
     local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true,
                                                               {
@@ -76,20 +83,25 @@ local function Harvest(identifier)
     if success then
         local harvested, reason = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier)
 
-        if harvested then
-            Harvest(identifier)
-        else
+        if not harvested then
             exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. reason, "error")
         end
+
+        return harvested
     end
 end
 
-AddEventHandler("soz-upw:client:HarvestEnergy", function(data)
-    local isOk, reason = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", data.identifier)
+local function HarvestEnergy(data)
+    local isOk, reason = HarvestPrecheck(data.identifier)
 
     if isOk then
-        Harvest(data.identifier)
+        local harvested = Harvest(data.identifier)
+
+        if harvested then
+            HarvestEnergy(data)
+        end
     else
         exports["soz-hud"]:DrawNotification(reason, "error")
     end
-end)
+end
+AddEventHandler("soz-upw:client:HarvestEnergy", HarvestEnergy)
