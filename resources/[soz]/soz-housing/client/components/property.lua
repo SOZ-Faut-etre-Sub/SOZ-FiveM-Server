@@ -1,4 +1,4 @@
-local function SetupEntryInteraction(propertyId, property)
+Housing.Functions.Components.SetupEntryInteraction = function(propertyId, property)
     local entryZone = property:GetEntryZone()
     local zoneName = "property_" .. propertyId .. "_entry"
 
@@ -47,7 +47,7 @@ local function SetupEntryInteraction(propertyId, property)
     })
 end
 
-local function SetupExitInteraction(propertyId, apartmentId, apartment)
+Housing.Functions.Components.SetupExitInteraction = function(propertyId, apartmentId, apartment)
     local exitZone = apartment:GetExitCoord()
     local zoneName = "apartment_" .. apartmentId .. "_exit"
 
@@ -64,21 +64,3 @@ local function SetupExitInteraction(propertyId, apartmentId, apartment)
         },
     })
 end
-
-RegisterNetEvent("housing:client:SyncProperties", function()
-    local properties = QBCore.Functions.TriggerRpc("housing:server:GetAllProperties")
-    for propertyId, property in pairs(properties or {}) do
-        Properties[propertyId] = Property:new(property.identifier, property.entry_zone, property.garage_zone)
-
-        for apartmentId, apartment in pairs(property.apartments) do
-            Properties[propertyId]:AddApartment(apartmentId,
-                                                Apartment:new(apartment.label, apartment.owner, apartment.price, apartment.inside_coord, apartment.exit_zone,
-                                                              apartment.fridge_zone, apartment.stash_zone, apartment.closet_zone, apartment.money_zone))
-
-            SetupExitInteraction(propertyId, apartmentId, Properties[propertyId]:GetApartment(apartmentId))
-        end
-
-        Housing.Functions.SetupBlips(Properties[propertyId])
-        SetupEntryInteraction(propertyId, Properties[propertyId])
-    end
-end)

@@ -43,10 +43,27 @@ function Apartment:GetResellPrice()
     return self.price / 2
 end
 
+--- Get Zones
 function Apartment:GetInsideCoord()
     return self.inside_coord
 end
 
 function Apartment:GetExitCoord()
     return self.exit_zone
+end
+
+function Apartment:GetFridgeCoord()
+    return self.fridge_zone
+end
+
+function Apartment:GetStashCoord()
+    return self.stash_zone
+end
+
+function Apartment:GetClosetCoord()
+    return self.closet_zone
+end
+
+function Apartment:GetMoneyCoord()
+    return self.money_zone
 end

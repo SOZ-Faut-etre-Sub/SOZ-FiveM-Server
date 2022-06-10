@@ -66,6 +66,16 @@ function Property:HasRentedApartment(citizenid)
     return false
 end
 
+function Property:GetAvailableApartments()
+    local apartments = {}
+    for apartmentId, apartment in pairs(self.apartments) do
+        if apartment:IsAvailable() then
+            apartments[apartmentId] = apartment
+        end
+    end
+    return apartments
+end
+
 function Property:GetRentedApartments(citizenid)
     local apartments = {}
     for apartmentId, apartment in pairs(self.apartments) do

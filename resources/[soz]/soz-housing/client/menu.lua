@@ -24,7 +24,7 @@ end)
 
 RegisterNetEvent("housing:client:ShowBuyMenu", function(propertyId)
     local property = Properties[propertyId]
-    local apartments = property:GetApartments()
+    local apartments = property:GetAvailableApartments()
 
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
