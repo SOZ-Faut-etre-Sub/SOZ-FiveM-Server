@@ -2,6 +2,10 @@ QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 SozCoreJobs = exports["soz-jobs"]:GetCoreObject()
 
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+end)
+
 Citizen.CreateThread(function()
     -- Blip
     if not QBCore.Functions.GetBlip("job_upw") then
