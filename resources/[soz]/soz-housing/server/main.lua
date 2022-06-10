@@ -1,188 +1,167 @@
-QBCore = exports["qb-core"]:GetCoreObject()
+local QBCore = exports["qb-core"]:GetCoreObject()
 
-function tablelenght(table)
-    local count = 0
-    for _ in pairs(table) do
-        count = count + 1
+--- @type Property[]
+Properties = {}
+
+local function IsPropertyValid(house)
+    if house.identifier == nil then
+        exports["soz-monitor"]:Log("ERROR", ("Entry #%s skipped because it has no identifier"):format(house.id))
+        return false
     end
-    return count
+    if house.entry_zone == nil then
+        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no entry_zone"):format(house.identifier))
+        return false
+    end
+    return true
 end
 
-RegisterNetEvent("soz-housing:server:SetZone")
-AddEventHandler("soz-housing:server:SetZone", function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    local GlobalZone = MySQL.query.await("SELECT * FROM `player_house` WHERE price IS NOT NULL")
-    TriggerClientEvent("soz-housing:client:SetEntry", Player.PlayerData.source, GlobalZone)
-    TriggerClientEvent("soz-housing:client:SetExit", Player.PlayerData.source, GlobalZone)
-    TriggerClientEvent("soz-housing:client:SetStorage", Player.PlayerData.source, GlobalZone)
-    TriggerClientEvent("soz-housing:client:SetCloakroom", Player.PlayerData.source, GlobalZone)
+local function IsApartmentValid(house)
+    if house.price == nil then
+        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no price"):format(house.label))
+        return false
+    end
+    if house.property_id == nil then
+        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no property_id"):format(house.label))
+        return false
+    end
+    if house.inside_coord == nil then
+        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no inside_coord"):format(house.label))
+        return false
+    end
+    if house.exit_zone == nil then
+        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no exit_zone"):format(house.label))
+        return false
+    end
+    return true
+end
+
+MySQL.ready(function()
+    local properties = MySQL.query.await("SELECT * FROM housing_property")
+    for _, property in pairs(properties or {}) do
+        if not IsPropertyValid(property) then
+            goto continue
+        end
+
+        Properties[property.id] = Property:new(property.identifier, property.entry_zone, property.garage_zone)
+
+        ::continue::
+    end
+
+    local apartments = MySQL.query.await("SELECT * FROM housing_apartment")
+    for _, apartment in pairs(apartments or {}) do
+        if not IsApartmentValid(apartment) then
+            goto continue
+        end
+
+        Properties[apartment.property_id]:AddApartment(apartment.id,
+                                                       Apartment:new(apartment.label, apartment.owner, apartment.price, apartment.inside_coord,
+                                                                     apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone, apartment.closet_zone,
+                                                                     apartment.money_zone))
+
+        ::continue::
+    end
 end)
 
-RegisterNetEvent("soz-housing:server:isOwned")
-AddEventHandler("soz-housing:server:isOwned", function(name)
+--- Functions
+QBCore.Functions.CreateCallback("housing:server:GetAllProperties", function(source, cb)
+    cb(Properties)
+end)
+
+RegisterNetEvent("housing:server:EnterProperty", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
-    local HouseOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
-    if tablelenght(HouseOwner) == 1 then
-        local Coords = MySQL.query.await("SELECT `teleport` FROM `player_house` WHERE `identifier` = @id", {
-            ["@id"] = name,
+    local inside = Player.PlayerData.metadata["inside"]
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsOwner(Player.PlayerData.citizenid) then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not owner"):format(propertyId, apartmentId))
+        return
+    end
+
+    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord())
+
+    inside.apartment = apartmentId
+    inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
+    Player.Functions.SetMetaData("inside", inside)
+end)
+
+RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local inside = Player.PlayerData.metadata["inside"]
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, inside.exitCoord)
+
+    inside.apartment = false
+    inside.exitCoord = false
+    Player.Functions.SetMetaData("inside", inside)
+end)
+
+RegisterNetEvent("housing:server:BuyProperty", function(propertyId, apartmentId)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsAvailable() then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
+        return
+    end
+
+    if Player.Functions.RemoveMoney("money", apartment:GetPrice()) then
+        MySQL.update.await("UPDATE housing_apartment SET owner = ? WHERE id = ?", {
+            Player.PlayerData.citizenid,
+            apartmentId,
         })
-        for _, v in pairs(HouseOwner) do
-            if v.owner ~= nil then
-                if v.owner == Player.PlayerData.citizenid then
-                    TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, true, false, Coords)
-                else
-                    TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, true, false, Coords)
-                end
-            else
-                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, false, false)
-            end
-        end
+        apartment:SetOwner(Player.PlayerData.citizenid)
+
+        TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source},
+                     {house_id = apartment:GetIdentifier(), amount = apartment:GetPrice()})
+
+        TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
     else
-        local BuildingOwner = MySQL.query.await("SELECT `owner` FROM `player_house` WHERE `building` = @id", {
-            ["@id"] = name,
-        })
-        local isOwned = false
-        local isOwner = false
-        local count = 0
-        for _, v in pairs(BuildingOwner) do
-            if v.owner ~= nil then
-                count = count + 1
-            end
-            if v.owner == Player.PlayerData.citizenid then
-                isOwner = true
-            end
-        end
-        if count == tablelenght(BuildingOwner) then
-            isOwned = true
-        end
-        if isOwner then
-            if isOwned then
-                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, true, true, nil)
-            else
-                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, true, false, true, nil)
-            end
-        else
-            if isOwned then
-                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, true, true, nil)
-            else
-                TriggerClientEvent("soz-housing:client:setData", Player.PlayerData.source, false, false, true, nil)
-            end
-        end
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 
-RegisterNetEvent("soz-housing:server:ShowAcheter")
-AddEventHandler("soz-housing:server:ShowAcheter", function(name)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
-    TriggerClientEvent("soz-housing:client:Acheter", Player.PlayerData.source, HouseData)
-end)
-
-RegisterNetEvent("soz-housing:server:BuildingShowAcheter")
-AddEventHandler("soz-housing:server:BuildingShowAcheter", function(name)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` IS null AND `price` IS NOT NULL", {
-        ["@id"] = name,
-    })
-    TriggerClientEvent("soz-housing:client:Acheter", Player.PlayerData.source, HouseData)
-end)
-
-RegisterNetEvent("soz-housing:server:ShowVendre")
-AddEventHandler("soz-housing:server:ShowVendre", function(name)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `identifier` = @id", {["@id"] = name})
-    TriggerClientEvent("soz-housing:client:Vendre", Player.PlayerData.source, HouseData)
-end)
-
-RegisterNetEvent("soz-housing:server:BuildingShowVendre")
-AddEventHandler("soz-housing:server:BuildingShowVendre", function(name)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid",
-                                        {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
-    TriggerClientEvent("soz-housing:client:Vendre", Player.PlayerData.source, HouseData)
-end)
-
-RegisterNetEvent("soz-housing:server:BuildingShowRentrer")
-AddEventHandler("soz-housing:server:BuildingShowRentrer", function(name)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local HouseData = MySQL.query.await("SELECT * FROM `player_house` WHERE `building` = @id AND `owner` = @citizenid",
-                                        {["@id"] = name, ["@citizenid"] = Player.PlayerData.citizenid})
-    TriggerClientEvent("soz-housing:client:Rentrer", Player.PlayerData.source, HouseData)
-end)
-
-RegisterNetEvent("soz-housing:server:buy")
-AddEventHandler("soz-housing:server:buy", function(name, price)
+RegisterNetEvent("housing:server:SellProperty", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if Player.Functions.RemoveMoney("money", price) then
-        MySQL.update.await("UPDATE player_house SET OWNER = @citizenid WHERE identifier = @id", {
-            ["@id"] = name,
-            ["@citizenid"] = Player.PlayerData.citizenid,
-        })
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
 
-        TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source}, {
-            house_id = name,
-            amount = price,
-        })
+    if apartment:IsAvailable() then
+        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        return
+    end
 
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous venez d'acheter l'habitation.")
-        TriggerEvent("soz-housing:server:SyncAvailableHousing")
+    if Player.Functions.AddMoney("money", apartment:GetResellPrice()) then
+        MySQL.update.await("UPDATE housing_apartment SET owner = NULL WHERE id = ?", {apartmentId})
+        apartment:SetOwner(nil)
+
+        TriggerEvent("monitor:server:event", "house_sell", {player_source = Player.PlayerData.source},
+                     {house_id = apartment:GetIdentifier(), amount = apartment:GetResellPrice()})
+
+        TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                           "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. apartment:GetResellPrice())
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent sur vous.", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
-end)
-
-RegisterNetEvent("soz-housing:server:sell")
-AddEventHandler("soz-housing:server:sell", function(name, price)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    if Player.Functions.AddMoney("money", price) then
-        MySQL.update.await("UPDATE player_house SET OWNER = NULL WHERE identifier = @id", {["@id"] = name})
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Bravo vous avez vendu l'habitation.")
-        TriggerEvent("soz-housing:server:SyncAvailableHousing")
-    end
-end)
-
-RegisterNetEvent("soz-housing:server:SyncAvailableHousing")
-AddEventHandler("soz-housing:server:SyncAvailableHousing", function()
-    local AvailableHousing = MySQL.query.await("SELECT identifier, entry_zone FROM player_house WHERE owner IS NULL")
-
-    TriggerClientEvent("soz-housing:client:SyncAvailableHousing", -1, AvailableHousing)
-end)
-
-QBCore.Functions.CreateCallback("soz-housing:server:GetAvailableHousing", function(source, cb)
-    local AvailableHousing = MySQL.query.await("SELECT identifier, entry_zone FROM player_house WHERE owner IS NULL")
-
-    cb(AvailableHousing)
-end)
-
-RegisterNetEvent("soz-housing:server:SetCoordExitHousing")
-AddEventHandler("soz-housing:server:SetCoordExitHousing", function(val)
-    local Player = QBCore.Functions.GetPlayer(source)
-    if not val then
-        Player.Functions.SetMetaData("savedcoordexithousing", false)
-    else
-        local coord = "{\"x\": " .. val.x .. ", \"y\": " .. val.y .. ", \"z\": " .. val.z .. "}"
-
-        Player.Functions.SetMetaData("savedcoordexithousing", coord)
-    end
-end)
-
-QBCore.Functions.CreateCallback("soz-housing:server:IsInsideHousing", function(source, cb)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local IsInsideHousing = Player.PlayerData.metadata["savedcoordexithousing"]
-    print(IsInsideHousing)
-
-    if IsInsideHousing == nil then
-        IsInsideHousing = false
-    end
-
-    cb(IsInsideHousing)
-end)
-
-QBCore.Functions.CreateCallback("soz-housing:server:GetPlayerHouse", function(source, cb)
-    local Player = QBCore.Functions.GetPlayer(source)
-    cb(MySQL.Sync.fetchSingle("SELECT * FROM player_house WHERE owner = @citizenid", {
-        ["@citizenid"] = Player.PlayerData.citizenid,
-    }))
 end)
