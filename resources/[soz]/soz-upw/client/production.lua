@@ -43,7 +43,17 @@ local function CreateEnergyZone(identifier, data)
 end
 
 local function CreateWasteZone(identifier, data)
-    data.options = {}
+    data.options = {
+        {
+            label = "Collecter les déchets",
+            event = "soz-upw:client:HarvestLoop",
+            identifier = identifier,
+            harvest = "waste",
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
+    }
 
     return CreateZone(identifier, "waste", data)
 end

@@ -56,7 +56,7 @@ local function GetItem(identifier, type)
     if type == "energy" then
         return Config.Plants[identifier].items.energy
     elseif type == "waste" then
-        return Config.Plants[identifier].items.energy
+        return Config.Plants[identifier].items.waste
     end
 
     return nil
@@ -81,6 +81,9 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
 
     if harvestType == "energy" and not plant:CanEnergyBeHarvested() then
         cb({false, "Pénurie d'énergie"})
+        return
+    elseif harvestType == "waste" and not plant:CanWasteBeHarvested() then
+        cb({false, "Pas de déchets à collecter"})
         return
     end
 
@@ -109,6 +112,8 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     if harvestType == "energy" then
         plant:HarvestEnergy()
+    elseif harvestType == "waste" then
+        plant:HarvestWaste()
     end
 
     cb(true)
