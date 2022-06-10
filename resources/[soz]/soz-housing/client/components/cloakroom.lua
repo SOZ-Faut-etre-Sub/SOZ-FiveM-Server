@@ -8,7 +8,7 @@ Housing.Functions.Components.SetupCloakroomInteraction = function(propertyId, ap
             icon = "c:jobs/habiller.png",
             event = "soz-housing:client:cloakroom",
             canInteract = function()
-                return Housing.Functions.IsInsideApartment()
+                return not apartment:IsAvailable() and Housing.Functions.IsInsideApartment()
             end,
         },
     })
