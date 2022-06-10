@@ -6,6 +6,9 @@ Housing.Functions.Components.SetupFridgeInteraction = function(propertyId, apart
         {
             label = "Frigo",
             icon = "c:inventory/ouvrir_le_stockage.png",
+            canInteract = function()
+                return Housing.Functions.IsInsideApartment()
+            end,
             action = function()
                 TriggerServerEvent("inventory:server:openInventory", "house_fridge", apartment:GetIdentifier())
             end,
@@ -21,6 +24,9 @@ Housing.Functions.Components.SetupStashInteraction = function(propertyId, apartm
         {
             label = "Coffre",
             icon = "c:inventory/ouvrir_le_stockage.png",
+            canInteract = function()
+                return Housing.Functions.IsInsideApartment()
+            end,
             action = function()
                 TriggerServerEvent("inventory:server:openInventory", "house_stash", apartment:GetIdentifier())
             end,
@@ -36,6 +42,9 @@ Housing.Functions.Components.SetupMoneyInteraction = function(propertyId, apartm
         {
             label = "Coffre d'argent",
             icon = "c:housing/entrer.png",
+            canInteract = function()
+                return Housing.Functions.IsInsideApartment()
+            end,
             action = function()
                 TriggerEvent("banking:client:openHouseSafe", apartment:GetIdentifier())
             end,
