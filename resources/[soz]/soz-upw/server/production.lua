@@ -44,11 +44,11 @@ QBCore.Functions.CreateCallback("soz-upw:server:GetPlantActive", function(source
     end
 end)
 
-RegisterNetEvent("soz-upw:server:TooglePlantActive", function()
-    local plant = GetPlant(source)
+RegisterNetEvent("soz-upw:server:TogglePlantActive", function(data)
+    local plant = GetPlant(data.identifier)
 
     if plant then
-        plant:ToogleActive()
+        plant:ToggleActive()
     end
 end)
 

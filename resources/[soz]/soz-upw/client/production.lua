@@ -3,7 +3,8 @@ local function CreateEnergyZone(identifier, data)
         {
             label = "Activer",
             type = "server",
-            event = "soz-upw:server:TooglePlantActive",
+            event = "soz-upw:server:TogglePlantActive",
+            identifier = identifier,
             canInteract = function()
                 return OnDuty() and not QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
             end,
@@ -11,7 +12,8 @@ local function CreateEnergyZone(identifier, data)
         {
             label = "Désactiver",
             type = "server",
-            event = "soz-upw:server:TooglePlantActive",
+            event = "soz-upw:server:TogglePlantActive",
+            identifier = identifier,
             canInteract = function()
                 return OnDuty() and QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
             end,
