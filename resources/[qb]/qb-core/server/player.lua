@@ -126,12 +126,8 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ['rescuer'] = false,
     }
     PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
--- use only house and then house type for villa appart or house?
-        house = nil,
-        apartment = {
-            apartmentType = nil,
-            apartmentId = nil,
-        }
+        ['exitCoord'] = false,
+        ['apartment'] = false,
     }
     PlayerData.metadata['phonedata'] = PlayerData.metadata['phonedata'] or {
         SerialNumber = QBCore.Player.CreateSerialNumber(),
