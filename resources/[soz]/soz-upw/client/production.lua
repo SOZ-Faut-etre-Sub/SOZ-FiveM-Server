@@ -58,7 +58,33 @@ local function CreateWasteZone(identifier, data)
     return CreateZone(identifier, "waste", data)
 end
 
+local function CreateInverterZone(identifier, data)
+    data.options = {
+        {
+            label = "Stocker l'énergie",
+            event = "soz-upw:client:HarvestLoop",
+            identifier = identifier,
+            harvest = "inverter-in",
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
+        {
+            label = "Collecter l'énergie",
+            event = "soz-upw:client:HarvestLoop",
+            identifier = identifier,
+            harvest = "inverter-out",
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
+    }
+
+    return CreateZone(identifier, "inverter", data)
+end
+
 Citizen.CreateThread(function()
+    -- Energy Plants
     for identifier, plantData in pairs(Config.Plants) do
         for key, data in pairs(plantData.client) do
             if key == "energyZone" then
@@ -69,6 +95,11 @@ Citizen.CreateThread(function()
                 CreateWasteZone(identifier, data)
             end
         end
+    end
+
+    -- Inverters
+    for identifier, inverterData in pairs(Config.Inverters) do
+        CreateInverterZone(identifier, inverterData.zone)
     end
 end)
 
