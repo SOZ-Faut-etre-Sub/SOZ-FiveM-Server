@@ -79,12 +79,12 @@ AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
 end)
 
 AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
-    local house = QBCore.Functions.TriggerRpc("soz-housing:server:GetPlayerHouse")
+    local house = QBCore.Functions.TriggerRpc("housing:server:GetPlayerProperties")
     if not house or (house and not house.garage_zone) then
         return
     end
 
-    local gData = json.decode(house.garage_zone)
+    local gData = house.garage_zone
     local zone = BoxZone:Create(vector3(gData.x, gData.y, gData.z), 8.0, 6.0, {
         name = "soz-garage:" .. house.identifier,
         heading = gData.heading,

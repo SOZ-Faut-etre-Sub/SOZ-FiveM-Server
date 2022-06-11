@@ -12,7 +12,7 @@ Housing.Functions.SetupBlips = function(property)
 
     QBCore.Functions.RemoveBlip(property.identifier)
 
-    if property:HasAvailableApartment() or property:HasRentedApartmentForCitizenId(PlayerData.citizenid) then
+    if HousingMap and (property:HasAvailableApartment() or property:HasRentedApartmentForCitizenId(PlayerData.citizenid)) then
         QBCore.Functions.CreateBlip(property.identifier, {
             name = "Habitation",
             coords = vector3(entryZone.x, entryZone.y, entryZone.z),
