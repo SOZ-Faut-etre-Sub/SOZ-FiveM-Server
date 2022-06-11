@@ -2715,31 +2715,9 @@ QBShared.Items = {
     },
 
     -- UPW
-    ['energy_cell_fossil'] = {
-        ['name'] = 'energy_cell_fossil',
-        ['label'] = "Cellule d'énergie fossile",
-        ['weight'] = 1000,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = false,
-        ['shouldClose'] = false,
-        ['combinable'] = nil,
-        ['description'] = ''
-    },
-    ['energy_cell_hydro'] = {
-        ['name'] = 'energy_cell_hydro',
-        ['label'] = "Cellule d'énergie hydraulique",
-        ['weight'] = 1000,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = false,
-        ['shouldClose'] = false,
-        ['combinable'] = nil,
-        ['description'] = ''
-    },
-    ['energy_cell_wind'] = {
-        ['name'] = 'energy_cell_wind',
-        ['label'] = "Cellule d'énergie éolienne",
+    ['energy_cell'] = {
+        ['name'] = 'energy_cell',
+        ['label'] = "Cellule d'énergie",
         ['weight'] = 1000,
         ['type'] = 'item',
         ['unique'] = false,
