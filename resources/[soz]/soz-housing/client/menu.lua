@@ -12,7 +12,7 @@ RegisterNetEvent("housing:client:ShowEnterMenu", function(propertyId)
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = apartment.label,
+                label = apartment:GetLabel(),
                 select = function()
                     TriggerServerEvent("housing:server:EnterProperty", propertyId, apartmentId)
                     menu:Close()
@@ -29,7 +29,7 @@ RegisterNetEvent("housing:client:ShowBuyMenu", function(propertyId)
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = apartment.label,
+                label = apartment:GetLabel(),
                 rightLabel = "$" .. QBCore.Shared.Round(apartment:GetPrice()),
                 select = function()
                     TriggerServerEvent("housing:server:BuyProperty", propertyId, apartmentId)
@@ -47,7 +47,7 @@ RegisterNetEvent("housing:client:ShowSellMenu", function(propertyId)
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = apartment.label,
+                label = apartment:GetLabel(),
                 rightLabel = "$" .. QBCore.Shared.Round(apartment:GetResellPrice()),
                 select = function()
                     TriggerServerEvent("housing:server:SellProperty", propertyId, apartmentId)
@@ -72,7 +72,7 @@ RegisterNetEvent("housing:client:ShowInspectMenu", function(propertyId)
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = apartment.label,
+                label = apartment:GetLabel(),
                 select = function()
                     TriggerServerEvent("housing:server:InspectProperty", propertyId, apartmentId)
                     menu:Close()
@@ -96,7 +96,7 @@ RegisterNetEvent("housing:client:ShowBellMenu", function(propertyId)
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = apartment.label,
+                label = apartment:GetLabel(),
                 select = function()
                     TriggerServerEvent("housing:server:BellProperty", propertyId, apartmentId)
                     menu:Close()

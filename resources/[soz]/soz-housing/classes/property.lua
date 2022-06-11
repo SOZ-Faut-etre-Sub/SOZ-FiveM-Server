@@ -21,7 +21,9 @@ function Property:new(identifier, entry_zone, garage_zone)
     }, self)
 end
 
---- Apartments
+---
+--- GETTERS
+---
 function Property:GetApartments()
     return self.apartments
 end
@@ -29,23 +31,6 @@ end
 --- @return Apartment
 function Property:GetApartment(id)
     return self.apartments[tostring(id)]
-end
-
-function Property:AddApartment(id, apartment)
-    self.apartments[tostring(id)] = apartment
-end
-
-function Property:UpdateApartment(id, apartment)
-    self.apartments[tostring(id)] = apartment
-end
-
---- Getters
-function Property:IsBuilding()
-    return table.length(self.apartments) > 1
-end
-
-function Property:HasGarage()
-    return self.garage_zone ~= nil
 end
 
 function Property:HasAvailableApartment()
@@ -68,7 +53,7 @@ end
 
 function Property:HasRentedApartmentForCitizenId(citizenid)
     for _, apartment in pairs(self.apartments) do
-        if apartment:IsOwner(citizenid) then
+        if apartment:OwnerIs(citizenid) then
             return true
         end
     end
@@ -98,13 +83,36 @@ end
 function Property:GetRentedApartmentsForCitizenId(citizenid)
     local apartments = {}
     for apartmentId, apartment in pairs(self.apartments) do
-        if apartment:IsOwner(citizenid) then
+        if apartment:OwnerIs(citizenid) then
             apartments[apartmentId] = apartment
         end
     end
     return apartments
 end
 
+function Property:IsBuilding()
+    return table.length(self.apartments) > 1
+end
+
+function Property:HasGarage()
+    return self.garage_zone ~= nil
+end
+
 function Property:GetEntryZone()
     return self.entry_zone
+end
+
+function Property:GetGarageZone()
+    return self.garage_zone
+end
+
+---
+--- SETTERS
+---
+function Property:AddApartment(id, apartment)
+    self.apartments[tostring(id)] = apartment
+end
+
+function Property:UpdateApartment(id, apartment)
+    self.apartments[tostring(id)] = apartment
 end

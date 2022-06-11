@@ -6,6 +6,7 @@ table.insert(migrations, {
             (
                 id           int auto_increment primary key,
                 property_id  int                          not null,
+                identifier   varchar(50)                  null,
                 label        varchar(50)                  null,
                 price        int                          null,
                 owner        varchar(50)                  null,
@@ -28,8 +29,8 @@ table.insert(migrations, {
             );
         ]],
         [[
-            INSERT INTO housing_apartment (property_id, label, price, owner, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
-            SELECT (SELECT id from housing_property WHERE housing_property.identifier = player_house.identifier OR housing_property.identifier = player_house.building), identifier, price, owner, teleport, exit_zone, fridge_position, stash_position, closet_position, money_position
+            INSERT INTO housing_apartment (property_id, identifier, label, price, owner, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
+            SELECT (SELECT id from housing_property WHERE housing_property.identifier = player_house.identifier OR housing_property.identifier = player_house.building), identifier, identifier, price, owner, teleport, exit_zone, fridge_position, stash_position, closet_position, money_position
             FROM player_house WHERE identifier IS NOT NULL;
         ]],
     },

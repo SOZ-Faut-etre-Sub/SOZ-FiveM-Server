@@ -1,10 +1,11 @@
 --- @class Apartment
 Apartment = {}
 
-function Apartment:new(label, owner, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
+function Apartment:new(identifier, label, owner, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
     self.__index = self
 
     return setmetatable({
+        identifier = identifier,
         label = label,
         owner = owner,
         price = price,
@@ -17,12 +18,9 @@ function Apartment:new(label, owner, price, inside_coord, exit_zone, fridge_zone
     }, self)
 end
 
---- Core Functions
-function Apartment:SetOwner(owner)
-    self.owner = owner
-end
-
---- Functions
+---
+--- GETTERS
+---
 function Apartment:IsAvailable()
     return self.owner == nil
 end
@@ -31,16 +29,20 @@ function Apartment:IsRented()
     return self.owner ~= nil
 end
 
-function Apartment:IsOwner(citizenid)
+function Apartment:OwnerIs(citizenid)
     return self.owner == citizenid
+end
+
+function Apartment:GetIdentifier()
+    return self.identifier
+end
+
+function Apartment:GetLabel()
+    return self.label
 end
 
 function Apartment:GetOwner()
     return self.owner
-end
-
-function Apartment:GetIdentifier()
-    return self.label
 end
 
 function Apartment:GetPrice()
@@ -51,7 +53,6 @@ function Apartment:GetResellPrice()
     return self.price / 2
 end
 
---- Get Zones
 function Apartment:GetInsideCoord()
     return self.inside_coord
 end
@@ -74,4 +75,11 @@ end
 
 function Apartment:GetMoneyCoord()
     return self.money_zone
+end
+
+---
+--- SETTERS
+---
+function Apartment:SetOwner(owner)
+    self.owner = owner
 end

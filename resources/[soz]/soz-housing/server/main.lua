@@ -54,9 +54,9 @@ MySQL.ready(function()
         end
 
         Properties[apartment.property_id]:AddApartment(apartment.id,
-                                                       Apartment:new(apartment.label, apartment.owner, apartment.price, apartment.inside_coord,
-                                                                     apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone, apartment.closet_zone,
-                                                                     apartment.money_zone))
+                                                       Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.price,
+                                                                     apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone,
+                                                                     apartment.closet_zone, apartment.money_zone))
 
         ::continue::
     end
@@ -65,6 +65,22 @@ end)
 --- Functions
 QBCore.Functions.CreateCallback("housing:server:GetAllProperties", function(source, cb)
     cb(Properties)
+end)
+
+QBCore.Functions.CreateCallback("housing:server:GetPlayerProperties", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then
+        return
+    end
+
+    local properties = {}
+    for propertyId, property in pairs(Properties) do
+        if property:HasRentedApartmentForCitizenId(Player.PlayerData.citizenid) then
+            properties[propertyId] = property
+        end
+    end
+
+    cb(properties)
 end)
 
 RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apartmentId, target)
@@ -100,7 +116,7 @@ RegisterNetEvent("housing:server:EnterProperty", function(propertyId, apartmentI
         return
     end
 
-    if not apartment:IsOwner(Player.PlayerData.citizenid) then
+    if not apartment:OwnerIs(Player.PlayerData.citizenid) then
         exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not owner"):format(propertyId, apartmentId))
         return
     end
