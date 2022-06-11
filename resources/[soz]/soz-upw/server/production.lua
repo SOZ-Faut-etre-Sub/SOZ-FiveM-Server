@@ -77,13 +77,21 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    local plant = GetPlant(identifier)
+    local facilities = {
+        ["energy"] = {getFacility = GetPlant, precheck = "CanEnergyBeHarvested", message = "Pénurie d'énergie"},
+        ["watse"] = {getFacility = GetPlant, precheck = "CanWasteBeHarvested", message = "Pas de déchets à collecter"},
+        ["inverter-in"] = {getFacility = GetInverter, precheck = "CanHarvestEnergy", message = "Onduleur plein"},
+        ["inverter-out"] = {getFacility = GetInverter, precheck = "CanStoreEnergy", message = "Pas assez d'énergie"},
+    }
 
-    if harvestType == "energy" and not plant:CanEnergyBeHarvested() then
-        cb({false, "Pénurie d'énergie"})
-        return
-    elseif harvestType == "waste" and not plant:CanWasteBeHarvested() then
-        cb({false, "Pas de déchets à collecter"})
+    local facilityData = facilities[harvestType]
+    if not facilityData then
+        error("Invalid harvest type: " .. harvestType)
+    end
+
+    local facility = facilityData.getFacility(identifier)
+    if not facility[facilityData.precheck](facility) then
+        cb({false, facilityData.message})
         return
     end
 

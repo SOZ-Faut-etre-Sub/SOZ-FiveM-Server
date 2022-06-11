@@ -16,6 +16,10 @@ function Inverter:CanStoreEnergy()
     return self.capacity < self.maxCapacity
 end
 
+function Inverter:CanHarvestEnergy()
+    return self.capacity >= Config.Production.EnergyPerCell
+end
+
 function Inverter:StoreEnergy()
     self.capacity = self.capacity + Config.Production.EnergyPerCell
 
