@@ -210,7 +210,6 @@ end)
 local function UnattachVehicle()
     FreezeEntityPosition(Config.AttachedVehicle, false)
     Config.AttachedVehicle = nil
-    TriggerServerEvent("soz-bennys:server:SetAttachedVehicle", false)
 end
 
 local function RepairPart(part)
@@ -243,11 +242,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             end
         end
     end)
-    Config.AttachedVehicle = QBCore.Functions.TriggerRpc("soz-bennys:server:GetAttachedVehicle")
-
-    QBCore.Functions.TriggerCallback("soz-bennys:server:GetDrivingDistances", function(retval)
-        DrivingDistance = retval
-    end)
 end)
 
 RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
@@ -257,14 +251,6 @@ end)
 
 RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
     OnDuty = duty
-end)
-
-RegisterNetEvent("soz-bennys:client:SetAttachedVehicle", function(veh)
-    if veh ~= false then
-        Config.AttachedVehicle = veh
-    else
-        Config.AttachedVehicle = nil
-    end
 end)
 
 RegisterNetEvent("soz-bennys:client:Repair", function(net)

@@ -36,10 +36,6 @@ QBCore.Functions.CreateCallback("soz-bennys:server:CloakroomTenues", function(so
     end
 end)
 
-QBCore.Functions.CreateCallback("soz-bennys:server:GetAttachedVehicle", function(source, cb)
-    cb(Config.AttachedVehicle)
-end)
-
 QBCore.Functions.CreateCallback("soz-bennys:server:IsMechanicAvailable", function(source, cb)
     local amount = 0
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
@@ -51,16 +47,6 @@ QBCore.Functions.CreateCallback("soz-bennys:server:IsMechanicAvailable", functio
         end
     end
     cb(amount)
-end)
-
-RegisterNetEvent("soz-bennys:server:SetAttachedVehicle", function(veh)
-    if veh ~= false then
-        Config.AttachedVehicle = veh
-        TriggerClientEvent("soz-bennys:client:SetAttachedVehicle", -1, veh)
-    else
-        Config.AttachedVehicle = nil
-        TriggerClientEvent("soz-bennys:client:SetAttachedVehicle", -1, false)
-    end
 end)
 
 RegisterNetEvent("soz-bennys:server:SaveVehicleMods", function(mods, plate)
