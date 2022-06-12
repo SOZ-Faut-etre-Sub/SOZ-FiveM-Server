@@ -69,8 +69,8 @@ QBCore.Functions.CreateCallback("housing:server:GetAllProperties", function(sour
             properties[propertyId] = property
 
             for apartmentId, apartment in pairs(property.apartments) do
-                if IsApartmentValid(apartment) then
-                    properties[propertyId].apartments[apartmentId] = apartment
+                if not IsApartmentValid(apartment) then
+                    properties[propertyId].apartments[apartmentId] = nil
                 end
             end
         end
