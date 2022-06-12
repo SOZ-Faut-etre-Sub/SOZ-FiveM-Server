@@ -44,7 +44,7 @@ Housing.Functions.GenerateMenu = function(cb)
 end
 
 Housing.Functions.Teleport = function(title, coords)
-    QBCore.Functions.Progressbar("housing_action", title, 1000, false, true,
+    QBCore.Functions.Progressbar("housing_action", title, 1000, false, false,
                                  {
         disableMovement = true,
         disableCarMovement = true,
