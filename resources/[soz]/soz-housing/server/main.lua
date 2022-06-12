@@ -36,11 +36,11 @@ end
 MySQL.ready(function()
     local timeout = 0
 
-    while MySQL.Sync.fetchSingle("SELECT Count(*) AS count FROM migrations WHERE name = 'create-housing-apartment-table'").count == 0 do
+    while MySQL.Sync.fetchSingle("SELECT Count(*) AS count FROM migrations WHERE name = 'clean-apartments-zone'").count == 0 do
         timeout = timeout + 1
 
         if timeout >= 10 then
-            error("Migration 'create-housing-apartment-table' is missing")
+            error("Migration 'clean-apartments-zone' is missing")
         end
 
         Citizen.Wait(1000)
@@ -66,7 +66,7 @@ QBCore.Functions.CreateCallback("housing:server:GetAllProperties", function(sour
 
     for propertyId, property in pairs(Properties) do
         if IsPropertyValid(property) then
-           properties[propertyId] = property
+            properties[propertyId] = property
 
             for apartmentId, apartment in pairs(property.apartments) do
                 if IsApartmentValid(apartment) then
@@ -258,8 +258,8 @@ end)
 exports("UpdatePropertyZone", function(propertyId, zone_type, zone_config)
     local property = Properties[propertyId]
     if property == nil then
-        exports["soz-monitor"]:Log("ERROR", ("UpdatePropertyZone %s | skipped because it no exist"):format(propertyId))
-        return
+        local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
+        Properties[propertyId] = Property:new(propertyBd.identifier)
     end
 
     property:SetZone(zone_type, zone_config)

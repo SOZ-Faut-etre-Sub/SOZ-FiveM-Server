@@ -48,6 +48,7 @@ houseMenu:On("open", function(menu)
                 return
             end
             QBCore.Functions.TriggerRpc("admin:server:housing:CreateProperty", identifier)
+            exports["soz-hud"]:DrawNotification("Bâtiment ajouté", "success")
             menu:Close()
             menu:Open()
         end,
@@ -98,6 +99,7 @@ currentPropertyMenu:On("open", function(menu)
             end
 
             QBCore.Functions.TriggerRpc("admin:server:housing:CreateApartment", HouseOption.CurrentPropertyData.id, identifier, label)
+            exports["soz-hud"]:DrawNotification("Intérieur ajouté", "success")
             menu:Close()
             menu:Open()
         end,
@@ -146,6 +148,7 @@ currentPropertyMenu:On("open", function(menu)
                     HouseOption.DrawZone:SetZone(type, zoneConfig)
                     HouseOption.CurrentPropertyData[type] = zoneConfig
                     TriggerServerEvent("admin:server:housing:UpdatePropertyZone", HouseOption.CurrentPropertyData.id, type, zoneConfig)
+                    exports["soz-hud"]:DrawNotification("La zone a été modifiée", "success")
                 end
             end,
         })
@@ -202,6 +205,7 @@ currentApartmentMenu:On("open", function(menu)
 
             QBCore.Functions.TriggerRpc("admin:server:housing:SetApartmentIdentifier", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id,
                                         identifier)
+            exports["soz-hud"]:DrawNotification("Identifiant de l'intérieur modifié", "success")
             HouseOption.CurrentApartmentData.identifier = identifier
             menu:Close()
             menu:Open()
@@ -220,6 +224,7 @@ currentApartmentMenu:On("open", function(menu)
 
             QBCore.Functions
                 .TriggerRpc("admin:server:housing:SetApartmentLabel", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, label)
+            exports["soz-hud"]:DrawNotification("Le nom a été modifié", "success")
             HouseOption.CurrentApartmentData.label = label
             menu:Close()
             menu:Open()
@@ -233,7 +238,9 @@ currentApartmentMenu:On("open", function(menu)
             local playerCoord = GetEntityCoords(ped, true)
             local coord = {x = playerCoord.x, y = playerCoord.y, z = playerCoord.z - 1.0, w = GetEntityHeading(ped)}
 
-            TriggerServerEvent("admin:server:housing:SetApartmentInsideCoord", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, coord)
+            QBCore.Functions.TriggerRpc("admin:server:housing:SetApartmentInsideCoord", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id,
+                                        coord)
+            exports["soz-hud"]:DrawNotification("La position d'apparition a été modifiée", "success")
         end,
     })
 
@@ -281,6 +288,7 @@ currentApartmentMenu:On("open", function(menu)
                     HouseOption.CurrentApartmentData[type] = zoneConfig
                     TriggerServerEvent("admin:server:housing:UpdateApartmentZone", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id,
                                        type, zoneConfig)
+                    exports["soz-hud"]:DrawNotification("La zone a été modifiée", "success")
                 end
             end,
         })
