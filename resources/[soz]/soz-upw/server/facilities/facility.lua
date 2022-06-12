@@ -80,3 +80,16 @@ function Facility:save()
         self:load(data)
     end
 end
+
+--
+-- ENERGY HARVEST
+--
+function Facility:CanEnergyBeHarvested()
+    return self.capacity >= Config.Production.EnergyPerCell
+end
+
+function Facility:HarvestEnergy()
+    self.capacity = self.capacity - Config.Production.EnergyPerCell
+
+    return self.capacity
+end
