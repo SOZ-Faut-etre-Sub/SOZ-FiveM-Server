@@ -54,9 +54,9 @@ MySQL.ready(function()
     local apartments = MySQL.query.await("SELECT * FROM housing_apartment")
     for _, apartment in pairs(apartments or {}) do
         Properties[apartment.property_id]:AddApartment(apartment.id,
-                                                       Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.price,
-                                                                     apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone,
-                                                                     apartment.closet_zone, apartment.money_zone))
+                                                       Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate,
+                                                                     apartment.price, apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone,
+                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone))
     end
 end)
 
@@ -105,7 +105,7 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
@@ -116,7 +116,7 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
     Player.Functions.SetMetaData("inside", inside)
 end)
 
-RegisterNetEvent("housing:server:EnterProperty", function(propertyId, apartmentId)
+RegisterNetEvent("housing:server:EnterApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -124,12 +124,12 @@ RegisterNetEvent("housing:server:EnterProperty", function(propertyId, apartmentI
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
-    if not apartment:OwnerIs(Player.PlayerData.citizenid) then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not owner"):format(propertyId, apartmentId))
+    if not apartment:HasAccess(Player.PlayerData.citizenid) then
+        exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
@@ -142,7 +142,7 @@ RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("ExitProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
@@ -153,7 +153,7 @@ RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId
     Player.Functions.SetMetaData("inside", inside)
 end)
 
-RegisterNetEvent("housing:server:InspectProperty", function(propertyId, apartmentId)
+RegisterNetEvent("housing:server:InspectApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -161,12 +161,12 @@ RegisterNetEvent("housing:server:InspectProperty", function(propertyId, apartmen
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("InspectApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("InspectApartment %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
         return
     end
 
@@ -178,12 +178,12 @@ RegisterNetEvent("housing:server:BellProperty", function(propertyId, apartmentId
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("BellProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("BellProperty %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
         return
     end
 
@@ -192,17 +192,17 @@ RegisterNetEvent("housing:server:BellProperty", function(propertyId, apartmentId
     TriggerClientEvent("housing:client:PlayerRequestEnter", Owner.PlayerData.source, propertyId, apartmentId, Player.PlayerData.citizenid)
 end)
 
-RegisterNetEvent("housing:server:BuyProperty", function(propertyId, apartmentId)
+RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
         return
     end
 
@@ -223,17 +223,22 @@ RegisterNetEvent("housing:server:BuyProperty", function(propertyId, apartmentId)
     end
 end)
 
-RegisterNetEvent("housing:server:SellProperty", function(propertyId, apartmentId)
+RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("EnterProperty %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsOwner(Player.PlayerData.citizenid) then
+        exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
@@ -250,6 +255,90 @@ RegisterNetEvent("housing:server:SellProperty", function(propertyId, apartmentId
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
+end)
+
+RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apartmentId, targetId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local Target = QBCore.Functions.GetPlayer(targetId)
+
+    local dist = #(GetEntityCoords(GetPlayerPed(Player.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
+
+    if Player.PlayerData.source == Target.PlayerData.source then
+        return
+    end
+    if dist > 2.0 then
+        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
+    end
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if apartment:IsAvailable() then
+        exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsOwner(Player.PlayerData.citizenid) then
+        exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        return
+    end
+
+    if apartment:GetRoomMate() then
+        exports["soz-monitor"]:Log("ERROR",
+                                   ("AddRoommateApartment %s - Apartment %s | skipped because it already has a roommate"):format(propertyId, apartmentId))
+        return
+    end
+
+    MySQL.update.await("UPDATE housing_apartment SET roommate = ? WHERE id = ?", {
+        Target.PlayerData.citizenid,
+        apartmentId,
+    })
+    apartment:SetRoommate(Target.PlayerData.citizenid)
+
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ajouté un partenaire à votre maison")
+    TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été ajouté à votre maison")
+
+    TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+end)
+
+RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, apartmentId)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if apartment:IsAvailable() then
+        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsOwner(Player.PlayerData.citizenid) then
+        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:GetRoomMate() then
+        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no roommate"):format(propertyId, apartmentId))
+        return
+    end
+
+    local Target = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+
+    MySQL.update.await("UPDATE housing_apartment SET roommate = NULL WHERE id = ?", {apartmentId})
+    apartment:SetRoommate(nil)
+
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
+    if Target then
+        TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+    end
+
+    TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
 end)
 
 ---

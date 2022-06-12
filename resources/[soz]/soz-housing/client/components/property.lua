@@ -17,7 +17,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Vendre",
             icon = "c:housing/sell.png",
             canInteract = function()
-                return property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowSellMenu", propertyId)
@@ -37,7 +37,8 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Sonner",
             icon = "c:housing/bell.png",
             canInteract = function()
-                return property:HasRentedApartment() and not Housing.Functions.IsInsideApartment()
+                return property:HasRentedApartment() and not property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and
+                           not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowBellMenu", propertyId)
@@ -60,7 +61,27 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
                 return property:HasGarage() and property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
             action = function()
-                TriggerEvent("housing:client:ShowGarage", property:GetIdentifier())
+                TriggerEvent("housing:client:ShowGarageMenu", property:GetIdentifier())
+            end,
+        },
+        {
+            label = "Ajouter Colocataire",
+            icon = "c:jobs/enroll.png",
+            canInteract = function()
+                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+            end,
+            action = function()
+                TriggerEvent("housing:client:ShowAddRoommateMenu", propertyId)
+            end,
+        },
+        {
+            label = "Retirer Colocataire",
+            icon = "c:jobs/fire.png",
+            canInteract = function()
+                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+            end,
+            action = function()
+                TriggerEvent("housing:client:ShowRemoveRoommateMenu", propertyId)
             end,
         },
     })

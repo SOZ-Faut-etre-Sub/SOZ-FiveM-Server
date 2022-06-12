@@ -1,13 +1,14 @@
 --- @class Apartment
 Apartment = {}
 
-function Apartment:new(identifier, label, owner, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
+function Apartment:new(identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
     self.__index = self
 
     return setmetatable({
         identifier = identifier,
         label = label,
         owner = owner,
+        roommate = roommate,
         price = price,
         inside_coord = decode_json(inside_coord),
         exit_zone = decode_json(exit_zone),
@@ -29,8 +30,16 @@ function Apartment:IsRented()
     return self.owner ~= nil
 end
 
-function Apartment:OwnerIs(citizenid)
+function Apartment:IsOwner(citizenid)
     return self.owner == citizenid
+end
+
+function Apartment:HasAccess(citizenid)
+    return self.owner == citizenid or self.roommate == citizenid
+end
+
+function Apartment:HasRoommate()
+    return self.roommate ~= nil
 end
 
 function Apartment:GetIdentifier()
@@ -43,6 +52,10 @@ end
 
 function Apartment:GetOwner()
     return self.owner
+end
+
+function Apartment:GetRoomMate()
+    return self.roommate
 end
 
 function Apartment:GetPrice()
@@ -94,6 +107,10 @@ end
 
 function Apartment:SetOwner(owner)
     self.owner = owner
+end
+
+function Apartment:SetRoommate(roommate)
+    self.roommate = roommate
 end
 
 function Apartment:SetInsideCoord(inside_coord)

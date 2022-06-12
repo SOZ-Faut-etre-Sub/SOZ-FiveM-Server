@@ -46,7 +46,16 @@ end
 
 function Property:HasRentedApartmentForCitizenId(citizenid)
     for _, apartment in pairs(self.apartments) do
-        if apartment:OwnerIs(citizenid) then
+        if apartment:HasAccess(citizenid) then
+            return true
+        end
+    end
+    return false
+end
+
+function Property:HasOwnedApartmentForCitizenId(citizenid)
+    for _, apartment in pairs(self.apartments) do
+        if apartment:IsOwner(citizenid) then
             return true
         end
     end
@@ -76,7 +85,17 @@ end
 function Property:GetRentedApartmentsForCitizenId(citizenid)
     local apartments = {}
     for apartmentId, apartment in pairs(self.apartments) do
-        if apartment:OwnerIs(citizenid) then
+        if apartment:HasAccess(citizenid) then
+            apartments[apartmentId] = apartment
+        end
+    end
+    return apartments
+end
+
+function Property:GetOwnedApartmentsForCitizenId(citizenid)
+    local apartments = {}
+    for apartmentId, apartment in pairs(self.apartments) do
+        if apartment:IsOwner(citizenid) then
             apartments[apartmentId] = apartment
         end
     end
