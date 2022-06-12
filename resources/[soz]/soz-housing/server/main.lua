@@ -36,6 +36,18 @@ local function IsApartmentValid(house)
 end
 
 MySQL.ready(function()
+    local timeout = 0
+
+    while MySQL.Sync.fetchSingle("SELECT Count(*) AS count FROM migrations WHERE name = 'create-housing-apartment-table'").count == 0 do
+        timeout = timeout + 1
+
+        if timeout >= 10 then
+            error("Migration 'create-housing-apartment-table' is missing")
+        end
+
+        Citizen.Wait(1000)
+    end
+
     local properties = MySQL.query.await("SELECT * FROM housing_property")
     for _, property in pairs(properties or {}) do
         if not IsPropertyValid(property) then
@@ -238,4 +250,126 @@ RegisterNetEvent("housing:server:SellProperty", function(propertyId, apartmentId
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
+end)
+
+---
+--- Exports
+---
+exports("UpdatePropertyZone", function(propertyId, zone_type, zone_config)
+    local property = Properties[propertyId]
+    if property == nil then
+        exports["soz-monitor"]:Log("ERROR", ("UpdatePropertyZone %s | skipped because it no exist"):format(propertyId))
+        return
+    end
+
+    property:SetZone(zone_type, zone_config)
+
+    if zone_type == "entry_zone" then
+        MySQL.update.await("UPDATE housing_property SET entry_zone = ? WHERE id = ?", {
+            json.encode(zone_config),
+            propertyId,
+        })
+    elseif zone_type == "garage_zone" then
+        MySQL.update.await("UPDATE housing_property SET garage_zone = ? WHERE id = ?", {
+            json.encode(zone_config),
+            propertyId,
+        })
+    end
+
+    TriggerClientEvent("housing:client:UpdatePropertyZone", -1, propertyId, zone_type, property:GetZone(zone_type))
+end)
+
+exports("SetApartmentIdentifier", function(propertyId, apartmentId, identifier)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentIdentifier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    apartment:SetIdentifier(identifier)
+
+    MySQL.update.await("UPDATE housing_apartment SET identifier = ? WHERE id = ? AND property_id = ?", {
+        identifier,
+        apartmentId,
+        propertyId,
+    })
+    TriggerClientEvent("housing:client:SetApartmentIdentifier", -1, propertyId, apartmentId, identifier)
+end)
+
+exports("SetApartmentLabel", function(propertyId, apartmentId, label)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentIdentifier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    apartment:SetLabel(label)
+
+    MySQL.update.await("UPDATE housing_apartment SET label = ? WHERE id = ? AND property_id = ?", {
+        label,
+        apartmentId,
+        propertyId,
+    })
+    TriggerClientEvent("housing:client:SetApartmentLabel", -1, propertyId, apartmentId, label)
+end)
+
+exports("SetApartmentInsideCoord", function(propertyId, apartmentId, coord)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentInsideCoord %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    apartment:SetInsideCoord(coord)
+
+    MySQL.update.await("UPDATE housing_apartment SET inside_coord = ? WHERE id = ? AND property_id = ?", {
+        json.encode(coord),
+        apartmentId,
+        propertyId,
+    })
+    TriggerClientEvent("housing:client:SetApartmentInsideCoord", -1, propertyId, apartmentId, coord)
+end)
+
+exports("UpdateApartmentZone", function(propertyId, apartmentId, zone_type, zone_config)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentInsideCoord %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    apartment:SetZone(zone_type, zone_config)
+
+    if zone_type == "exit_zone" then
+        MySQL.update.await("UPDATE housing_apartment SET exit_zone = ? WHERE id = ? AND property_id = ?", {
+            json.encode(zone_config),
+            apartmentId,
+            propertyId,
+        })
+    elseif zone_type == "fridge_zone" then
+        MySQL.update.await("UPDATE housing_apartment SET fridge_zone = ? WHERE id = ? AND property_id = ?", {
+            json.encode(zone_config),
+            apartmentId,
+            propertyId,
+        })
+    elseif zone_type == "stash_zone" then
+        MySQL.update.await("UPDATE housing_apartment SET stash_zone = ? WHERE id = ? AND property_id = ?", {
+            json.encode(zone_config),
+            apartmentId,
+            propertyId,
+        })
+    elseif zone_type == "closet_zone" then
+        MySQL.update.await("UPDATE housing_apartment SET closet_zone = ? WHERE id = ? AND property_id = ?", {
+            json.encode(zone_config),
+            apartmentId,
+            propertyId,
+        })
+    elseif zone_type == "money_zone" then
+        MySQL.update.await("UPDATE housing_apartment SET money_zone = ? WHERE id = ? AND property_id = ?", {
+            json.encode(zone_config),
+            apartmentId,
+            propertyId,
+        })
+    end
+
+    TriggerClientEvent("housing:client:UpdateApartmentZone", -1, propertyId, apartmentId, zone_type, apartment:GetZone(zone_type))
 end)

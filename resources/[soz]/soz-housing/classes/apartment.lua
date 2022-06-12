@@ -53,6 +53,10 @@ function Apartment:GetResellPrice()
     return self.price / 2
 end
 
+function Apartment:GetZone(zone)
+    return self[zone]
+end
+
 function Apartment:GetInsideCoord()
     return self.inside_coord
 end
@@ -80,6 +84,26 @@ end
 ---
 --- SETTERS
 ---
+function Apartment:SetIdentifier(identifier)
+    self.identifier = identifier
+end
+
+function Apartment:SetLabel(label)
+    self.label = label
+end
+
 function Apartment:SetOwner(owner)
     self.owner = owner
+end
+
+function Apartment:SetInsideCoord(inside_coord)
+    self.inside_coord = decode_json(inside_coord)
+end
+
+function Apartment:SetZone(name, config)
+    if name ~= "exit_zone" and name ~= "fridge_zone" and name ~= "stash_zone" and name ~= "closet_zone" and name ~= "money_zone" then
+        return
+    end
+
+    self[name] = decode_json(config)
 end
