@@ -4,13 +4,6 @@ Property = {}
 function Property:new(identifier, entry_zone, garage_zone)
     self.__index = self
 
-    if not identifier then
-        error("Property:new() - identifier is required")
-    end
-    if not entry_zone then
-        error("Property:new() - entry_zone is required")
-    end
-
     return setmetatable({
         identifier = identifier,
         entry_zone = decode_json(entry_zone),
