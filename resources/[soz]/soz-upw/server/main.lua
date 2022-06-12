@@ -2,17 +2,22 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 -- UPW Objects
 Plants = {}
+Inverters = {}
 Pm = {} -- PollutionManager instance
 
 --
 -- ON RESOURCE START
 --
--- Initiate Plants
-local function InitiatePlants()
-    for identifier, data in pairs(Config.Plants) do
-        local plant = Plant:new(identifier, data.attributes)
+local facilities = {["Plants"] = {class = Plant, arr = Plants}, ["Inverters"] = {class = Inverter, arr = Inverters}}
 
-        Plants[identifier] = plant
+-- Initialize Plants, Inverters
+local function InitiateFacilities()
+    for configKey, data in pairs(facilities) do
+        for identifier, fData in pairs(Config[configKey]) do
+            local facility = data.class:new(identifier, fData.attributes)
+
+            data.arr[identifier] = facility
+        end
     end
 end
 
@@ -44,7 +49,7 @@ MySQL.ready(function()
     InitiatePollutionManager()
     Pm:StartPollutionLoop()
 
-    InitiatePlants()
+    InitiateFacilities()
     StartProductionLoop()
 end)
 
@@ -66,4 +71,8 @@ end)
 --
 function GetPlant(identifier)
     return Plants[identifier]
+end
+
+function GetInverter(identifier)
+    return Inverters[identifier]
 end

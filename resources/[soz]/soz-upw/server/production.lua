@@ -52,14 +52,65 @@ RegisterNetEvent("soz-upw:server:TogglePlantActive", function(data)
     end
 end)
 
-local function GetItem(identifier, type)
-    if type == "energy" then
-        return Config.Plants[identifier].items.energy
-    elseif type == "waste" then
-        return Config.Plants[identifier].items.waste
+local facilities = {
+    ["energy"] = {
+        config = "Plants",
+        getFacility = GetPlant,
+        precheck = "CanEnergyBeHarvested",
+        message = "Pénurie d'énergie",
+        action = "HarvestEnergy",
+        item = "energy",
+    },
+    ["waste"] = {
+        config = "Plants",
+        getFacility = GetPlant,
+        precheck = "CanWasteBeHarvested",
+        message = "Pas de déchets à collecter",
+        action = "HarvestWaste",
+        item = "waste",
+    },
+    ["inverter-in"] = {
+        config = "Inverters",
+        getFacility = GetInverter,
+        precheck = "CanStoreEnergy",
+        message = "Onduleur plein",
+        action = "StoreEnergy",
+        item = "energy",
+    },
+    ["inverter-out"] = {
+        config = "Inverters",
+        getFacility = GetInverter,
+        precheck = "CanHarvestEnergy",
+        message = "Pas assez d'énergie",
+        action = "HarvestEnergy",
+        item = "energy",
+    },
+}
+
+local function GetFacilityData(harvestType)
+    local facilityData = facilities[harvestType]
+    if not facilityData then
+        error("Invalid harvest type: " .. harvestType)
     end
 
-    return nil
+    return facilityData
+end
+
+local function GetFacilityConfig(identifier, harvestType)
+    local facilityData = GetFacilityData(harvestType)
+
+    if Config[facilityData.config] and Config[facilityData.config][identifier] then
+        return Config[facilityData.config][identifier]
+    end
+
+    error("Invalid facility config: " .. identifier .. " - " .. harvestType)
+end
+
+local function GetItem(identifier, harvestType)
+    local facilityData = GetFacilityData(harvestType)
+    local config = GetFacilityConfig(identifier, harvestType)
+
+    return config.items[facilityData.item]
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier, harvestType)
@@ -71,26 +122,33 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
-    if not canCarry then
-        cb({false, "Vos poches sont pleines..."})
-        return
+    if harvestType == "inverter-in" then
+        -- Does player have item?
+        local count = 0
+        for _, i in pairs(Player.PlayerData.items or {}) do
+            if i.name == item then
+                count = i.amount
+            end
+        end
+
+        if count == 0 then
+            cb({false, string.format("Vous n'avez pas de l'item requis")})
+            return
+        end
+
+    else
+        -- Can item be stored in inventory
+        local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
+
+        if not canCarry then
+            cb({false, "Vos poches sont pleines..."})
+            return
+        end
     end
 
-    local facilities = {
-        ["energy"] = {getFacility = GetPlant, precheck = "CanEnergyBeHarvested", message = "Pénurie d'énergie"},
-        ["watse"] = {getFacility = GetPlant, precheck = "CanWasteBeHarvested", message = "Pas de déchets à collecter"},
-        ["inverter-in"] = {getFacility = GetInverter, precheck = "CanHarvestEnergy", message = "Onduleur plein"},
-        ["inverter-out"] = {getFacility = GetInverter, precheck = "CanStoreEnergy", message = "Pas assez d'énergie"},
-    }
-
-    local facilityData = facilities[harvestType]
-    if not facilityData then
-        error("Invalid harvest type: " .. harvestType)
-    end
-
+    local facilityData = GetFacilityData(harvestType)
     local facility = facilityData.getFacility(identifier)
-    if not facility[facilityData.precheck](facility) then
+    if not facility and not facility[facilityData.precheck](facility) then
         cb({false, facilityData.message})
         return
     end
@@ -105,9 +163,16 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     local p = promise:new()
 
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
-        p:resolve(success, reason)
-    end)
+    if harvestType == "inverter-in" then
+        -- Remove energy cell from inventory
+        Player.Functions.RemoveItem(item, 1)
+
+    else
+        -- Add energy cell to inventory
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
+            p:resolve(success, reason)
+        end)
+    end
 
     local success, reason = Citizen.Await(p)
 
@@ -116,13 +181,14 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         return
     end
 
-    local plant = GetPlant(identifier)
-
-    if harvestType == "energy" then
-        plant:HarvestEnergy()
-    elseif harvestType == "waste" then
-        plant:HarvestWaste()
+    local facilityData = GetFacilityData(harvestType)
+    local facility = facilityData.getFacility(identifier)
+    if not facility then
+        cb(false, "invalid facility")
+        return
     end
 
-    cb(true)
+    facility[facilityData.action](facility)
+
+    cb({true, string.format("Vous avez récolté ~g~1 %s", QBCore.Shared.Items[item].label)})
 end)
