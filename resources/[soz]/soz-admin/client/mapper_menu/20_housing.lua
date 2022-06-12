@@ -2,10 +2,12 @@
 local houseMenu = MenuV:InheritMenu(MapperMenu, {subtitle = "Gestion des propriétés"})
 local currentPropertyMenu = MenuV:InheritMenu(houseMenu)
 local currentApartmentMenu = MenuV:InheritMenu(houseMenu)
+local currentEditingMenu = MenuV:InheritMenu(houseMenu)
 
 local HouseOption = {
     CurrentPropertyData = nil,
     CurrentApartmentData = nil,
+    CurrentEditingType = nil,
     CurrentEditingZone = nil,
 
     --- @type DrawPolyZone
@@ -151,26 +153,10 @@ currentPropertyMenu:On("open", function(menu)
 
         menu:AddButton({
             label = "Modifier la zone",
+            value = currentEditingMenu,
             select = function()
+                HouseOption.CurrentEditingType = "property"
                 HouseOption.CurrentEditingZone = type
-                TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
-            end,
-        })
-
-        menu:AddSlider({
-            label = "Action sur la zone",
-            value = "cancel",
-            values = {{label = "Valider", value = "update"}, {label = "Annuler", value = "cancel"}},
-            select = function(_, value)
-                local zone = exports["PolyZone"]:EndPolyZone()
-                if value == "update" then
-                    local zoneConfig = DrawPolyZone:ConvertToDto(zone)
-
-                    HouseOption.DrawZone:SetZone(type, zoneConfig)
-                    HouseOption.CurrentPropertyData[type] = zoneConfig
-                    TriggerServerEvent("admin:server:housing:UpdatePropertyZone", HouseOption.CurrentPropertyData.id, type, zoneConfig)
-                    exports["soz-hud"]:DrawNotification("La zone a été modifiée", "success")
-                end
             end,
         })
     end
@@ -290,27 +276,10 @@ currentApartmentMenu:On("open", function(menu)
 
         menu:AddButton({
             label = "Modifier la zone",
+            value = currentEditingMenu,
             select = function()
+                HouseOption.CurrentEditingType = "apartment"
                 HouseOption.CurrentEditingZone = type
-                TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
-            end,
-        })
-
-        menu:AddSlider({
-            label = "Action sur la zone",
-            value = "cancel",
-            values = {{label = "Valider", value = "update"}, {label = "Annuler", value = "cancel"}},
-            select = function(_, value)
-                local zone = exports["PolyZone"]:EndPolyZone()
-                if value == "update" then
-                    local zoneConfig = DrawPolyZone:ConvertToDto(zone)
-
-                    HouseOption.DrawZone:SetZone(type, zoneConfig)
-                    HouseOption.CurrentApartmentData[type] = zoneConfig
-                    TriggerServerEvent("admin:server:housing:UpdateApartmentZone", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id,
-                                       type, zoneConfig)
-                    exports["soz-hud"]:DrawNotification("La zone a été modifiée", "success")
-                end
             end,
         })
     end
@@ -318,6 +287,44 @@ end)
 
 currentApartmentMenu:On("close", function(menu)
     menu:ClearItems()
+end)
+
+---
+--- Editing menu
+---
+currentEditingMenu:On("open", function(menu)
+    menu:ClearItems()
+
+    menu.Subtitle = string.format("Zone : %s", HouseOption.CurrentEditingZone)
+    TriggerEvent("polyzone:pzcreate", "box", "custom_housing", {"box", "custom_housing"})
+
+    menu:AddButton({
+        label = "Valider la zone",
+        description = "🔙 pour annuler",
+        select = function()
+            local zone = exports["PolyZone"]:EndPolyZone()
+            local type = HouseOption.CurrentEditingZone
+            local zoneConfig = DrawPolyZone:ConvertToDto(zone)
+
+            HouseOption.DrawZone:SetZone(type, zoneConfig)
+
+            if HouseOption.CurrentEditingType == "apartment" then
+                HouseOption.CurrentApartmentData[type] = zoneConfig
+                TriggerServerEvent("admin:server:housing:UpdateApartmentZone", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, type,
+                                   zoneConfig)
+            elseif HouseOption.CurrentEditingType == "property" then
+                HouseOption.CurrentPropertyData[type] = zoneConfig
+                TriggerServerEvent("admin:server:housing:UpdatePropertyZone", HouseOption.CurrentPropertyData.id, type, zoneConfig)
+            end
+            exports["soz-hud"]:DrawNotification("La zone a été modifiée", "success")
+            menu:Close()
+        end,
+    })
+end)
+
+currentEditingMenu:On("close", function(menu)
+    menu:ClearItems()
+    exports["PolyZone"]:EndPolyZone()
 end)
 
 --- Loops
