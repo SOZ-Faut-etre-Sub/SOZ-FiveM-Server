@@ -76,6 +76,51 @@ RegisterNetEvent("housing:client:SyncProperties", function()
     end
 end)
 
+RegisterNetEvent("housing:client:UpdatePropertyZone", function(propertyId, zone_name, config)
+    local property = Properties[propertyId]
+    if property then
+        property:SetZone(zone_name, config)
+
+        Housing.Functions.SetupBlips(property)
+        Housing.Functions.Components.SetupEntryInteraction(propertyId, Properties[propertyId])
+    end
+end)
+
+RegisterNetEvent("housing:client:SetApartmentIdentifier", function(propertyId, apartmentId, identifier)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment then
+        apartment:SetIdentifier(identifier)
+    end
+end)
+
+RegisterNetEvent("housing:client:SetApartmentLabel", function(propertyId, apartmentId, label)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment then
+        apartment:SetLabel(label)
+    end
+end)
+
+RegisterNetEvent("housing:client:SetApartmentInsideCoord", function(propertyId, apartmentId, coord)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment then
+        apartment:SetInsideCoord(coord)
+    end
+end)
+
+RegisterNetEvent("housing:client:UpdateApartmentZone", function(propertyId, apartmentId, zone_name, config)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment then
+        apartment:SetZone(zone_name, config)
+
+        local apartmentData = Properties[propertyId]:GetApartment(apartmentId)
+        Housing.Functions.Components.SetupExitInteraction(propertyId, apartmentId, apartmentData)
+        Housing.Functions.Components.SetupCloakroomInteraction(propertyId, apartmentId, apartmentData)
+        Housing.Functions.Components.SetupFridgeInteraction(propertyId, apartmentId, apartmentData)
+        Housing.Functions.Components.SetupStashInteraction(propertyId, apartmentId, apartmentData)
+        Housing.Functions.Components.SetupMoneyInteraction(propertyId, apartmentId, apartmentData)
+    end
+end)
+
 AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Citizen.Wait(3000)

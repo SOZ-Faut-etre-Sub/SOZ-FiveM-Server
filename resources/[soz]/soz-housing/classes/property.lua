@@ -98,6 +98,10 @@ function Property:HasGarage()
     return self.garage_zone ~= nil
 end
 
+function Property:GetZone(zone)
+    return self[zone]
+end
+
 function Property:GetEntryZone()
     return self.entry_zone
 end
@@ -115,4 +119,12 @@ end
 
 function Property:UpdateApartment(id, apartment)
     self.apartments[tostring(id)] = apartment
+end
+
+function Property:SetZone(name, config)
+    if name ~= "entry_zone" and name ~= "garage_zone" then
+        return
+    end
+
+    self[name] = decode_json(config)
 end
