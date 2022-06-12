@@ -4,7 +4,7 @@ function KeysEntry(menu)
         value = nil,
         select = function()
             menu:Close()
-            TriggerEvent("inventory:client:openPlayerKeyInventory", "vehicle")
+            TriggerEvent("inventory:client:openPlayerKeyInventory")
         end,
     })
 end

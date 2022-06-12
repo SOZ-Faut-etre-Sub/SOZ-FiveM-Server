@@ -1,20 +1,33 @@
 RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(keyType)
-    if keyType == "vehicle" then
-        local keys = QBCore.Functions.TriggerRpc("vehiclekeys:server:GetPlayerKeys")
-        local vehicleItems = {}
+    local playerKeys = {}
 
-        for _, plate in pairs(keys) do
-            vehicleItems[#vehicleItems + 1] = {
+    local vehicleKeys = QBCore.Functions.TriggerRpc("vehiclekeys:server:GetPlayerKeys")
+    for _, plate in pairs(vehicleKeys) do
+        playerKeys[#playerKeys + 1] = {
+            type = "key",
+            name = "handcuffs_key", -- Used for icon
+            label = "Véhicule " .. plate,
+            target = "vehicle_key",
+            plate = plate,
+        }
+    end
+
+    local apartmentKeys = QBCore.Functions.TriggerRpc("housing:server:GetPlayerAccess")
+    for propertyId, properties in pairs(apartmentKeys) do
+        for apartmentId, apartment in pairs(properties) do
+            playerKeys[#playerKeys + 1] = {
                 type = "key",
                 name = "handcuffs_key", -- Used for icon
-                label = "Véhicule " .. plate,
-                plate = plate,
+                label = "Appartement " .. apartment.label,
+                target = "apartment_access",
+                propertyId = propertyId,
+                apartmentId = apartmentId,
             }
         end
-
-        SendNUIMessage({action = "openPlayerKeyInventory", keys = vehicleItems})
-        SetNuiFocus(true, true)
     end
+
+    SendNUIMessage({action = "openPlayerKeyInventory", keys = playerKeys})
+    SetNuiFocus(true, true)
 end)
 
 RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
@@ -22,8 +35,14 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
     SetNuiFocus(false, false)
 
     if hit == 1 and entityType == 1 then
+        local playerHit = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit))
         TriggerEvent("inventory:client:StoreWeapon")
-        TriggerServerEvent("vehiclekeys:server:GiveVehicleKeys", data.plate, GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit)))
+
+        if data.target == "vehicle_key" then
+            TriggerServerEvent("vehiclekeys:server:GiveVehicleKeys", data.plate, playerHit)
+        elseif data.target == "apartment_access" then
+            TriggerServerEvent("housing:server:GiveTemporaryAccess", data.propertyId, data.apartmentId, playerHit)
+        end
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
     end

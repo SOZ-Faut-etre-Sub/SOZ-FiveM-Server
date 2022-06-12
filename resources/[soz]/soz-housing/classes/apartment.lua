@@ -1,7 +1,7 @@
 --- @class Apartment
 Apartment = {}
 
-function Apartment:new(identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone)
+function Apartment:new(identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone, temporary_access)
     self.__index = self
 
     return setmetatable({
@@ -11,11 +11,14 @@ function Apartment:new(identifier, label, owner, roommate, price, inside_coord, 
         roommate = roommate,
         price = price,
         inside_coord = decode_json(inside_coord),
+        --- Zones
         exit_zone = decode_json(exit_zone),
         fridge_zone = decode_json(fridge_zone),
         stash_zone = decode_json(stash_zone),
         closet_zone = decode_json(closet_zone),
         money_zone = decode_json(money_zone),
+        --- Keys
+        temporary_access = temporary_access or {},
     }, self)
 end
 
@@ -34,8 +37,12 @@ function Apartment:IsOwner(citizenid)
     return self.owner == citizenid
 end
 
+function Apartment:IsRoommate(citizenid)
+    return self.roommate == citizenid
+end
+
 function Apartment:HasAccess(citizenid)
-    return self.owner == citizenid or self.roommate == citizenid
+    return self.owner == citizenid or self.roommate == citizenid or self.temporary_access[citizenid] == true
 end
 
 function Apartment:HasRoommate()
@@ -111,6 +118,10 @@ end
 
 function Apartment:SetRoommate(roommate)
     self.roommate = roommate
+end
+
+function Apartment:AddTemporaryAccess(citizenid)
+    self.temporary_access[citizenid] = true
 end
 
 function Apartment:SetInsideCoord(inside_coord)

@@ -341,6 +341,50 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
 end)
 
+QBCore.Functions.CreateCallback("housing:server:GetPlayerAccess", function(source, cb)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local access = {}
+
+    for propertyId, property in pairs(Properties) do
+        for apartmentId, apartment in pairs(property:GetRentedApartmentsForCitizenId(Player.PlayerData.citizenid)) do
+            if access[propertyId] == nil then
+                access[propertyId] = {}
+            end
+            access[propertyId][apartmentId] = apartment
+        end
+    end
+
+    cb(access)
+end)
+
+RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apartmentId, target)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local Target = QBCore.Functions.GetPlayer(target)
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if apartment:IsAvailable() then
+        exports["soz-monitor"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        return
+    end
+
+    if not apartment:IsOwner(Player.PlayerData.citizenid) and not apartment:IsRoommate(Player.PlayerData.citizenid) then
+        exports["soz-monitor"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        return
+    end
+
+    apartment:AddTemporaryAccess(Target.PlayerData.citizenid)
+
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez donné un accès à votre maison")
+    TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez reçu un accès à une maison")
+
+    TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+end)
+
 ---
 --- Exports
 ---
