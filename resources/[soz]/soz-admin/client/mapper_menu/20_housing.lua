@@ -10,6 +10,7 @@ local HouseOption = {
 
     --- @type DrawPolyZone
     DrawZone = DrawPolyZone:new(),
+    DisplayAllZones = false,
     DisplayZone = {
         ["entry_zone"] = false,
         ["garage_zone"] = false,
@@ -37,6 +38,26 @@ local HouseOption = {
 houseMenu:On("open", function(menu)
     menu:ClearItems()
     local properties = QBCore.Functions.TriggerRpc("admin:housing:server:GetProperties")
+
+    menu:AddCheckbox({
+        label = "Afficher tous les bâtiments",
+        value = HouseOption.DisplayAllZones,
+        change = function(_, checked)
+            for _, property in pairs(properties) do
+                if checked then
+                    if property.entry_zone then
+                        HouseOption.DrawZone:AddZone(property.identifier, property.entry_zone)
+                        HouseOption.DisplayZone[property.identifier] = true
+                        CreateDrawZone(property.identifier)
+                    end
+                else
+                    HouseOption.DrawZone:RemoveZone(property.identifier)
+                    HouseOption.DisplayZone[property.identifier] = false
+                end
+                HouseOption.DrawZone:SetDisplayLabel(checked)
+            end
+        end,
+    })
 
     menu:AddButton({
         icon = "➕",

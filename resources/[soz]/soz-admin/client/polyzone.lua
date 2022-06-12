@@ -4,7 +4,7 @@ DrawPolyZone = {}
 function DrawPolyZone:new()
     self.__index = self
 
-    return setmetatable({zones = {}}, self)
+    return setmetatable({zones = {}, displayLabel = false}, self)
 end
 
 ---
@@ -27,7 +27,23 @@ function DrawPolyZone:CalculatePoints(center, length, width)
 end
 
 --- @private
-function DrawPolyZone:Draw(zone)
+function DrawPolyZone:DrawText3D(x, y, z, text)
+    local onScreen, x, y = World3dToScreen2d(x, y, z)
+
+    if onScreen then
+        SetTextScale(0.35, 0.35)
+        SetTextFont(4)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 215)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
+        AddTextComponentString(text)
+        DrawText(x, y)
+    end
+end
+
+--- @private
+function DrawPolyZone:Draw(zone, extra)
     if type(zone) ~= "table" then
         zone = json.decode(zone)
     end
@@ -110,6 +126,10 @@ function DrawPolyZone:Draw(zone)
     DrawPoly(wall4.topLeft, wall4.topRight, wall4.bottomRight, 93, 173, 226, 75)
     DrawPoly(wall4.bottomRight, wall4.topRight, wall4.topLeft, 93, 173, 226, 75)
     DrawPoly(wall4.bottomRight, wall4.topLeft, wall4.bottomLeft, 93, 173, 226, 75)
+
+    if self.displayLabel then
+        self:DrawText3D(zone.x, zone.y, zone.z, "Zone " .. extra)
+    end
 end
 
 function DrawPolyZone:ConvertToDto(polyZone)
@@ -155,6 +175,10 @@ function DrawPolyZone:RemoveZone(name)
     self.zones[name] = nil
 end
 
+function DrawPolyZone:SetDisplayLabel(value)
+    self.displayLabel = value
+end
+
 function DrawPolyZone:DrawZone(zone)
-    self:Draw(self.zones[zone])
+    self:Draw(self.zones[zone], zone)
 end
