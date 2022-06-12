@@ -79,22 +79,27 @@ AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
 end)
 
 AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
-    local house = QBCore.Functions.TriggerRpc("housing:server:GetPlayerProperties")
-    if not house or (house and not house.garage_zone) then
+    local houses = QBCore.Functions.TriggerRpc("housing:server:GetPlayerProperties")
+    if not houses then
         return
     end
 
-    local gData = house.garage_zone
-    local zone = BoxZone:Create(vector3(gData.x, gData.y, gData.z), 8.0, 6.0, {
-        name = "soz-garage:" .. house.identifier,
-        heading = gData.heading,
-        minZ = gData.z - 2.0,
-        maxZ = gData.z + 2.0,
-        data = {indexGarage = house.identifier},
-    })
+    for _, house in pairs(houses) do
+        local gData = house.garage_zone
 
-    GarageTypes.housing.zones = {[house.identifier] = zone}
-    GarageTypes.housing.places = {["p1"] = zone}
+        if gData then
+            local zone = BoxZone:Create(vector3(gData.x, gData.y, gData.z), 8.0, 6.0, {
+                name = "soz-garage:" .. "property_" .. house.identifier,
+                heading = gData.heading,
+                minZ = gData.z - 2.0,
+                maxZ = gData.z + 2.0,
+                data = {indexGarage = "property_" .. house.identifier},
+            })
+
+            GarageTypes.housing.zones = {["property_" .. house.identifier] = zone}
+            GarageTypes.housing.places = {["property_" .. house.identifier .. "p1"] = zone}
+        end
+    end
 end)
 
 ---

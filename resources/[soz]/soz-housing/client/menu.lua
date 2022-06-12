@@ -105,3 +105,7 @@ RegisterNetEvent("housing:client:ShowBellMenu", function(propertyId)
         end
     end)
 end)
+
+AddEventHandler("housing:client:ShowGarage", function(property)
+    TriggerEvent("soz-garage:client:Menu", "housing", {}, 'property_' .. property)
+end)

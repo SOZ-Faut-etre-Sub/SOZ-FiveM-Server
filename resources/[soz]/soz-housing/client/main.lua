@@ -49,6 +49,8 @@ RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmen
         Housing.Functions.Components.SetupFridgeInteraction(propertyId, apartmentId, newApartment)
         Housing.Functions.Components.SetupStashInteraction(propertyId, apartmentId, newApartment)
         Housing.Functions.Components.SetupMoneyInteraction(propertyId, apartmentId, newApartment)
+
+        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
 
@@ -126,5 +128,6 @@ AddEventHandler("onResourceStart", function(resource)
         Citizen.Wait(3000)
 
         TriggerEvent("housing:client:SyncProperties")
+        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
