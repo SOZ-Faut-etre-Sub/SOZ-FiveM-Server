@@ -64,6 +64,9 @@ Housing.Functions.Teleport = function(title, coords)
 end
 
 Housing.Functions.TargetInteraction = function(name, config, interactions)
+    if not config then
+        return
+    end
     exports["qb-target"]:RemoveZone(name)
     exports["qb-target"]:AddBoxZone(name, vector3(config.x, config.y, config.z), config.sx, config.sy,
                                     {

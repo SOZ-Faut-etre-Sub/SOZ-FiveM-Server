@@ -4,32 +4,30 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 Properties = {}
 
 local function IsPropertyValid(house)
+    house = decode_json(house)
     if house.identifier == nil then
-        exports["soz-monitor"]:Log("ERROR", ("Entry #%s skipped because it has no identifier"):format(house.id))
+        exports["soz-monitor"]:Log("DEBUG", ("Entry #%s skipped because it has no identifier"):format(house.id))
         return false
     end
     if house.entry_zone == nil then
-        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no entry_zone"):format(house.identifier))
+        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no entry_zone"):format(house.identifier))
         return false
     end
     return true
 end
 
 local function IsApartmentValid(house)
+    house = decode_json(house)
     if house.price == nil then
-        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no price"):format(house.label))
-        return false
-    end
-    if house.property_id == nil then
-        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no property_id"):format(house.label))
+        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no price"):format(house.label))
         return false
     end
     if house.inside_coord == nil then
-        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no inside_coord"):format(house.label))
+        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no inside_coord"):format(house.label))
         return false
     end
     if house.exit_zone == nil then
-        exports["soz-monitor"]:Log("ERROR", ("Entry %s skipped because it has no exit_zone"):format(house.label))
+        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no exit_zone"):format(house.label))
         return false
     end
     return true
@@ -50,33 +48,35 @@ MySQL.ready(function()
 
     local properties = MySQL.query.await("SELECT * FROM housing_property")
     for _, property in pairs(properties or {}) do
-        if not IsPropertyValid(property) then
-            goto continue
-        end
-
         Properties[property.id] = Property:new(property.identifier, property.entry_zone, property.garage_zone)
-
-        ::continue::
     end
 
     local apartments = MySQL.query.await("SELECT * FROM housing_apartment")
     for _, apartment in pairs(apartments or {}) do
-        if not IsApartmentValid(apartment) then
-            goto continue
-        end
-
         Properties[apartment.property_id]:AddApartment(apartment.id,
                                                        Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.price,
                                                                      apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone,
                                                                      apartment.closet_zone, apartment.money_zone))
-
-        ::continue::
     end
 end)
 
 --- Functions
 QBCore.Functions.CreateCallback("housing:server:GetAllProperties", function(source, cb)
-    cb(Properties)
+    local properties = {}
+
+    for propertyId, property in pairs(Properties) do
+        if IsPropertyValid(property) then
+           properties[propertyId] = property
+
+            for apartmentId, apartment in pairs(property.apartments) do
+                if IsApartmentValid(apartment) then
+                    properties[propertyId].apartments[apartmentId] = apartment
+                end
+            end
+        end
+    end
+
+    cb(properties)
 end)
 
 QBCore.Functions.CreateCallback("housing:server:GetPlayerProperties", function(source, cb)
