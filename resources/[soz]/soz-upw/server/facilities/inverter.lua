@@ -1,4 +1,4 @@
-Inverter = InheritFrom(Facility)
+Inverter = InheritsFrom(Facility)
 
 function Inverter:new(identifier, options)
     options.type = "inverter"
@@ -14,10 +14,6 @@ end
 
 function Inverter:CanStoreEnergy()
     return self.capacity < self.maxCapacity
-end
-
-function Inverter:CanHarvestEnergy()
-    return self.capacity >= Config.Production.EnergyPerCell
 end
 
 function Inverter:StoreEnergy()
