@@ -91,6 +91,10 @@ function Property:HasGarage()
     return self.garage_zone ~= nil
 end
 
+function Property:GetIdentifier()
+    return self.identifier
+end
+
 function Property:GetZone(zone)
     return self[zone]
 end
