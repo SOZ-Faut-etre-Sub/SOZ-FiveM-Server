@@ -60,3 +60,10 @@ AddEventHandler("onResourceStop", function(resourceName)
         end
     end
 end)
+
+--
+-- UTILS
+--
+function GetPlant(identifier)
+    return Plants[identifier]
+end

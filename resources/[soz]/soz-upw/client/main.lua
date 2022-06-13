@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozCoreJobs = exports["soz-jobs"]:GetCoreObject()
 
 Citizen.CreateThread(function()
     -- Blip
@@ -10,3 +11,22 @@ Citizen.CreateThread(function()
         })
     end
 end)
+
+function CreateZone(identifier, zoneType, data)
+    local zoneName = string.format("%s_%s", identifier, zoneType)
+
+    exports["qb-target"]:AddBoxZone(zoneName, data.coords, data.sx, data.sy, {
+        heading = data.heading,
+        minZ = data.minZ,
+        maxZ = data.maxZ,
+        debugPoly = false,
+    }, {options = data.options})
+end
+
+--
+-- UTILS
+--
+function OnDuty()
+    local PlayerData = QBCore.Functions.GetPlayerData()
+    return PlayerData.job.id == "upw" and PlayerData.job.onduty
+end
