@@ -70,11 +70,19 @@ function Facility:get_data()
     return data
 end
 
-function Facility:save()
+function Facility:save(isAsync)
     local data = self:get_data()
 
-    local res = MySQL.Sync.execute("UPDATE upw_facility SET `data` = @data WHERE identifier = @identifier",
-                                   {["@identifier"] = self.identifier, ["@data"] = json.encode(data)})
+    local query = "UPDATE upw_facility SET `data` = @data WHERE identifier = @identifier"
+    local args = {["@identifier"] = self.identifier, ["@data"] = json.encode(data)}
+
+    local res
+    if isAsync then
+        MySQL.Async.execute(query, args)
+        return
+    else
+        res = MySQL.Sync.execute(query, args)
+    end
 
     if res == 1 then
         self:load(data)
