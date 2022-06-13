@@ -203,3 +203,15 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
 end)
+
+--
+-- Events Inverter related
+--
+RegisterNetEvent("soz-upw:client:InverterCapacity", function(data)
+    local inverter = GetInverter(data.identifier)
+
+    if inverter then
+        TriggerClientEvent("hud:client:DrawNotification", source,
+                           string.format("Remplissage : %s%%", math.floor(inverter.capacity / inverter.maxCapacity * 100)))
+    end
+end)
