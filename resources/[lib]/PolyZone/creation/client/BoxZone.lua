@@ -17,7 +17,7 @@ local function handleInput(useZ, heading, length, width, center)
       end
       return (heading - headingDelta) % 360, length, width, center
     end
-    
+
     DisableControlAction(0, 99, true)
     if IsDisabledControlJustPressed(0, 99) then
       if IsControlPressed(0, 19) then -- alt held down
@@ -54,7 +54,7 @@ function handleZ(minZ, maxZ)
     end
     return minZ - delta, maxZ - delta
   end
-  
+
   DisableControlAction(0, 99, true)
   if IsDisabledControlJustPressed(0, 99) then
     if IsControlPressed(0, 19) then -- alt held down
@@ -111,6 +111,10 @@ function boxFinish()
 end
 
 local function EndZone()
+    if createdZone == nil then
+        return
+    end
+
   TempZone = {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}
   lastCreatedZoneType = createdZoneType
   lastCreatedZone = createdZone
