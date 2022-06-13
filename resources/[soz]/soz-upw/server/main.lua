@@ -60,8 +60,10 @@ AddEventHandler("onResourceStop", function(resourceName)
     if resourceName == GetCurrentResourceName() then
         Pm:save()
 
-        for _, plant in pairs(Plants) do
-            plant:save()
+        for _, data in pairs(facilities) do
+            for _, facility in pairs(data.arr) do
+                facility:save()
+            end
         end
     end
 end)
