@@ -114,7 +114,12 @@ local function HarvestPrecheck(identifier, harvest)
 end
 
 local function Harvest(identifier, harvest)
-    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true,
+    local message = "Vous collectez..."
+    if harvest == "inverter-in" then
+        message = "Vous déposez..."
+    end
+
+    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", message, Config.Harvest.Duration, false, true,
                                                               {
         disableMovement = true,
         disableCarMovement = true,
