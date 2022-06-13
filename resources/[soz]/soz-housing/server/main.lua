@@ -397,6 +397,7 @@ exports("UpdatePropertyZone", function(propertyId, zone_type, zone_config)
     if property == nil then
         local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
         Properties[propertyId] = Property:new(propertyBd.identifier)
+        property = Properties[propertyId]
     end
 
     property:SetZone(zone_type, zone_config)
@@ -419,8 +420,10 @@ end)
 exports("SetApartmentIdentifier", function(propertyId, apartmentId, identifier)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentIdentifier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
-        return
+        local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
+        local apartmentData = Apartment:new(propertyBd.identifier, propertyBd.label)
+        Properties[propertyId]:UpdateApartment(apartmentId, apartmentData)
+        apartment = Properties[propertyId]:GetApartment(apartmentId)
     end
 
     apartment:SetIdentifier(identifier)
@@ -436,8 +439,10 @@ end)
 exports("SetApartmentLabel", function(propertyId, apartmentId, label)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentIdentifier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
-        return
+        local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
+        local apartmentData = Apartment:new(propertyBd.identifier, propertyBd.label)
+        Properties[propertyId]:UpdateApartment(apartmentId, apartmentData)
+        apartment = Properties[propertyId]:GetApartment(apartmentId)
     end
 
     apartment:SetLabel(label)
@@ -453,8 +458,10 @@ end)
 exports("SetApartmentInsideCoord", function(propertyId, apartmentId, coord)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentInsideCoord %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
-        return
+        local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
+        local apartmentData = Apartment:new(propertyBd.identifier, propertyBd.label)
+        Properties[propertyId]:UpdateApartment(apartmentId, apartmentData)
+        apartment = Properties[propertyId]:GetApartment(apartmentId)
     end
 
     apartment:SetInsideCoord(coord)
@@ -470,8 +477,10 @@ end)
 exports("UpdateApartmentZone", function(propertyId, apartmentId, zone_type, zone_config)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentInsideCoord %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
-        return
+        local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
+        local apartmentData = Apartment:new(propertyBd.identifier, propertyBd.label)
+        Properties[propertyId]:UpdateApartment(apartmentId, apartmentData)
+        apartment = Properties[propertyId]:GetApartment(apartmentId)
     end
 
     apartment:SetZone(zone_type, zone_config)
