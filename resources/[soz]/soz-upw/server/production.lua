@@ -132,7 +132,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         end
 
         if count == 0 then
-            cb({false, string.format("Vous n'avez pas de l'item requis")})
+            cb({false, string.format("Vous n'avez pas l'item requis")})
             return
         end
 
@@ -172,6 +172,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         -- Remove energy cell from inventory
         Player.Functions.RemoveItem(item, 1)
 
+        p:resolve(true, nil)
     else
         -- Add energy cell to inventory
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
