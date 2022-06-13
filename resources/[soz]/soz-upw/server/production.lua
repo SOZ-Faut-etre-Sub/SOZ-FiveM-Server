@@ -22,6 +22,12 @@ function StartProductionLoop()
                 end
             end
 
+            for _, inverter in pairs(Inverters) do
+                if count >= 5 then
+                    inverter:save()
+                end
+            end
+
             if count >= 5 then
                 count = 0
             end
