@@ -1,83 +1,179 @@
-Housing.Functions = {}
-Housing.Functions.Menu = {}
-Housing.Menus = {}
+RegisterNetEvent("housing:client:ShowEnterMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetRentedApartmentsForCitizenId(PlayerData.citizenid)
 
-CreateThread(function()
-    Housing.Menus["housing"] = {
-        menu = MenuV:CreateMenu(nil, "Les habitations !", "menu_habitation", "soz", "housing:menu"),
-    }
+    if not property:IsBuilding() then
+        for apartmentId, _ in pairs(apartments) do
+            TriggerServerEvent("housing:server:EnterApartment", propertyId, apartmentId)
+            return
+        end
+    end
+
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
+            menu:AddButton({
+                label = apartment:GetLabel(),
+                select = function()
+                    TriggerServerEvent("housing:server:EnterApartment", propertyId, apartmentId)
+                    menu:Close()
+                end,
+            })
+        end
+    end)
 end)
 
-Housing.Functions.Menu.GenerateMenu = function(cb)
-    --- @type Menu
-    local menu = Housing.Menus["housing"].menu
-    menu:ClearItems()
+RegisterNetEvent("housing:client:ShowBuyMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetAvailableApartments()
 
-    cb(menu)
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
+            menu:AddButton({
+                label = apartment:GetLabel(),
+                rightLabel = "$" .. QBCore.Shared.Round(apartment:GetPrice()),
+                select = function()
+                    TriggerServerEvent("housing:server:BuyApartment", propertyId, apartmentId)
+                    menu:Close()
+                end,
+            })
+        end
+    end)
+end)
 
-    if menu.IsOpen then
-        MenuV:CloseAll(function()
-            menu:Close()
-        end)
-    else
-        MenuV:CloseAll(function()
-            menu:Open()
-        end)
+RegisterNetEvent("housing:client:ShowSellMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetOwnedApartmentsForCitizenId(PlayerData.citizenid)
+
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
+            menu:AddButton({
+                label = apartment:GetLabel(),
+                rightLabel = "$" .. QBCore.Shared.Round(apartment:GetResellPrice()),
+                select = function()
+                    TriggerServerEvent("housing:server:SellApartment", propertyId, apartmentId)
+                    menu:Close()
+                end,
+            })
+        end
+    end)
+end)
+
+RegisterNetEvent("housing:client:ShowInspectMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetAvailableApartments()
+
+    if not property:IsBuilding() then
+        for apartmentId, _ in pairs(apartments) do
+            TriggerServerEvent("housing:server:InspectApartment", propertyId, apartmentId)
+            return
+        end
     end
-end
 
-Housing.Functions.Menu.BuyHousing = function(Data)
-    Housing.Functions.Menu.GenerateMenu(function(menu)
-        for _, house in pairs(Data) do
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = house.identifier,
-                rightLabel = "$" .. house.price,
+                label = apartment:GetLabel(),
                 select = function()
-                    TriggerServerEvent("soz-housing:server:buy", house.identifier, house.price)
+                    TriggerServerEvent("housing:server:InspectApartment", propertyId, apartmentId)
                     menu:Close()
                 end,
             })
         end
     end)
-end
+end)
 
-Housing.Functions.Menu.SellHousing = function(Data)
-    Housing.Functions.Menu.GenerateMenu(function(menu)
-        for _, house in pairs(Data) do
+RegisterNetEvent("housing:client:ShowBellMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetRentedApartments()
+
+    if not property:IsBuilding() then
+        for apartmentId, _ in pairs(apartments) do
+            TriggerServerEvent("housing:server:BellProperty", propertyId, apartmentId)
+            return
+        end
+    end
+
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
-                label = house.identifier,
-                rightLabel = "$" .. (house.price / 2),
+                label = apartment:GetLabel(),
                 select = function()
-                    TriggerServerEvent("soz-housing:server:sell", house.identifier, (house.price / 2))
+                    TriggerServerEvent("housing:server:BellProperty", propertyId, apartmentId)
                     menu:Close()
                 end,
             })
         end
     end)
-end
+end)
 
-Housing.Functions.Menu.ShowRentrer = function(Data)
-    Housing.Functions.Menu.GenerateMenu(function(menu)
-        for id, house in pairs(Data) do
-            local point = json.decode(house.teleport)
-            menu:AddButton({
-                label = house.identifier,
-                select = function()
-                    TriggerEvent("soz-housing:client:BuildingRentrer", point)
-                    menu:Close()
-                end,
-            })
+AddEventHandler("housing:client:ShowGarageMenu", function(property)
+    TriggerEvent("soz-garage:client:Menu", "housing", {}, "property_" .. property)
+end)
+
+RegisterNetEvent("housing:client:ShowAddRoommateMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetOwnedApartmentsForCitizenId(PlayerData.citizenid)
+
+    local player, distance = QBCore.Functions.GetClosestPlayer()
+    if player == -1 or distance > 2.0 then
+        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+        return
+    end
+
+    if not property:IsBuilding() then
+        for apartmentId, _ in pairs(apartments) do
+            if not apartment:HasRoommate() then
+                TriggerServerEvent("housing:server:AddRoommateApartment", propertyId, apartmentId, GetPlayerServerId(player))
+                return
+            end
+        end
+    end
+
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
+            if not apartment:HasRoommate() then
+                menu:AddButton({
+                    label = apartment:GetLabel(),
+                    select = function()
+                        local player, distance = QBCore.Functions.GetClosestPlayer()
+                        if player == -1 or distance > 2.0 then
+                            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                            return
+                        end
+
+                        TriggerServerEvent("housing:server:AddRoommateApartment", propertyId, apartmentId, GetPlayerServerId(player))
+                        menu:Close()
+                    end,
+                })
+            end
         end
     end)
-end
+end)
 
-Housing.Functions.Menu.zkea = function()
-    Housing.Functions.Menu.GenerateMenu(function(menu)
-        menu:AddButton({
-            label = "Carte des habitations",
-            select = function()
-                TriggerServerEvent("shops:server:pay", "house_map", nil, 1)
-            end,
-        })
+RegisterNetEvent("housing:client:ShowRemoveRoommateMenu", function(propertyId)
+    local property = Properties[propertyId]
+    local apartments = property:GetOwnedApartmentsForCitizenId(PlayerData.citizenid)
+
+    if not property:IsBuilding() then
+        for apartmentId, apartment in pairs(apartments) do
+            if apartment:HasRoommate() then
+                TriggerServerEvent("housing:server:RemoveRoommateApartment", propertyId, apartmentId)
+                return
+            end
+        end
+    end
+
+    Housing.Functions.GenerateMenu(function(menu)
+        for apartmentId, apartment in pairs(apartments) do
+            if apartment:HasRoommate() then
+                menu:AddButton({
+                    label = apartment:GetLabel(),
+                    select = function()
+                        TriggerServerEvent("housing:server:RemoveRoommateApartment", propertyId, apartmentId)
+                        menu:Close()
+                    end,
+                })
+            end
+        end
     end)
-end
+end)
