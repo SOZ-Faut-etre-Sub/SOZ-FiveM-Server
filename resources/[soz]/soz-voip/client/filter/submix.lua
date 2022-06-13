@@ -14,7 +14,7 @@ local function CreateRadioSubmix(name)
     return RadioSubmix
 end
 
-PhoneSubmix = FilterSubmix:new("phone", 0)
+PhoneSubmix = FilterSubmix:new("phone", 1)
 PhoneSubmix:setEffectParamInt("default", 1)
 PhoneSubmix:setEffectParamFloat("freq_low", 1000.0)
 PhoneSubmix:setEffectParamFloat("freq_hi", 4000.0)
@@ -30,7 +30,7 @@ function FilterSubmixRegistry:new()
     local registry = FilterRegistry:new()
     local radioPool = RadioPoolSubmix:new(function(id)
         local name = ("radio_%s"):format(id)
-        local submix = FilterSubmix:new(name, 0)
+        local submix = FilterSubmix:new(name, 1)
 
         submix:setEffectRadioFx()
         submix:setEffectParamInt("default", 1)
