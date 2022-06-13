@@ -23,6 +23,14 @@ function Plant:new(identifier, options)
 end
 
 --
+-- SETTERS
+--
+function Plant:ToggleActive()
+    self.active = not self.active
+    return self.active
+end
+
+--
 -- ENERGY PRODUCTION
 --
 function Plant:CanProduce()
@@ -55,6 +63,30 @@ function Plant:Produce()
     self:ProduceWaste()
 
     return prod
+end
+
+function Plant:CanEnergyBeHarvested()
+    return self.capacity >= Config.Production.EnergyPerCell
+end
+
+function Plant:HarvestEnergy()
+    self.capacity = self.capacity - Config.Production.EnergyPerCell
+
+    return self.capacity
+end
+
+function Plant:CanWasteBeHarvested()
+    return self.waste >= Config.Production.WastePerHarvest
+end
+
+function Plant:HarvestWaste()
+    self.waste = self.waste - Config.Production.WastePerHarvest
+
+    if self.waste < 0 then
+        self.waste = 0
+    end
+
+    return self.waste
 end
 
 --

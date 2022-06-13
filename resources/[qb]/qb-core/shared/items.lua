@@ -2714,6 +2714,52 @@ QBShared.Items = {
         ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
     },
 
+    -- UPW
+    ['energy_cell_fossil'] = {
+        ['name'] = 'energy_cell_fossil',
+        ['label'] = "Cellule d'énergie fossile",
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['energy_cell_hydro'] = {
+        ['name'] = 'energy_cell_hydro',
+        ['label'] = "Cellule d'énergie hydraulique",
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['energy_cell_wind'] = {
+        ['name'] = 'energy_cell_wind',
+        ['label'] = "Cellule d'énergie éolienne",
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['seeweed_acid'] = {
+        ['name'] = 'seeweed_acid',
+        ['label'] = "Acide d’algue conditionnée",
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+
     -- zkea
     ['house_map'] = {
         ['name'] = 'house_map',
