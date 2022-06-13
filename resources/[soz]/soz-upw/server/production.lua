@@ -80,7 +80,7 @@ local facilities = {
     ["inverter-out"] = {
         config = "Inverters",
         getFacility = GetInverter,
-        precheck = "CanHarvestEnergy",
+        precheck = "CanEnergyBeHarvested",
         message = "Pas assez d'énergie",
         action = "HarvestEnergy",
         item = "energy",
@@ -148,7 +148,12 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
 
     local facilityData = GetFacilityData(harvestType)
     local facility = facilityData.getFacility(identifier)
-    if not facility and not facility[facilityData.precheck](facility) then
+    if not facility then
+        cb({false, "invalid facility"})
+        return
+    end
+
+    if not facility[facilityData.precheck](facility) then
         cb({false, facilityData.message})
         return
     end
