@@ -12,6 +12,7 @@ server_scripts {
     "server/facilities/facility.lua",
     "server/facilities/plant.lua",
     "server/facilities/inverter.lua",
+    "server/facilities/terminal.lua",
     "server/facilities/pollution-manager.lua",
     "server/main.lua",
     "server/pollution.lua",
