@@ -78,6 +78,15 @@ local function CreateInverterZone(identifier, data)
                 return OnDuty()
             end,
         },
+        {
+            label = "Remplissage",
+            type = "server",
+            event = "soz-upw:client:InverterCapacity",
+            identifier = identifier,
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
     }
 
     return CreateZone(identifier, "inverter", data)
