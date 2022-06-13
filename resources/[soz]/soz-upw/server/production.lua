@@ -62,7 +62,7 @@ local facilities = {
         config = "Plants",
         getFacility = GetPlant,
         precheck = "CanEnergyBeHarvested",
-        message = "Pénurie d'énergie",
+        messages = {precheckError = "Pénurie d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
         action = "HarvestEnergy",
         item = "energy",
     },
@@ -70,7 +70,7 @@ local facilities = {
         config = "Plants",
         getFacility = GetPlant,
         precheck = "CanWasteBeHarvested",
-        message = "Pas de déchets à collecter",
+        messages = {precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~1 %s"},
         action = "HarvestWaste",
         item = "waste",
     },
@@ -78,7 +78,7 @@ local facilities = {
         config = "Inverters",
         getFacility = GetInverter,
         precheck = "CanStoreEnergy",
-        message = "Onduleur plein",
+        messages = {precheckError = "Onduleur plein", harvestSuccess = "Vous avez déposé ~g~1 %s"},
         action = "StoreEnergy",
         item = "energy",
     },
@@ -86,7 +86,7 @@ local facilities = {
         config = "Inverters",
         getFacility = GetInverter,
         precheck = "CanEnergyBeHarvested",
-        message = "Pas assez d'énergie",
+        messages = {precheckError = "Pas assez d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
         action = "HarvestEnergy",
         item = "energy",
     },
@@ -159,7 +159,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
     end
 
     if not facility[facilityData.precheck](facility) then
-        cb({false, facilityData.message})
+        cb({false, facilityData.messages.precheckError})
         return
     end
 
@@ -201,5 +201,5 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     facility[facilityData.action](facility)
 
-    cb({true, string.format("Vous avez récolté ~g~1 %s", QBCore.Shared.Items[item].label)})
+    cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
 end)
