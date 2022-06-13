@@ -58,13 +58,13 @@ end)
 --
 AddEventHandler("onResourceStop", function(resourceName)
     if resourceName == GetCurrentResourceName() then
-        Pm:save()
-
         for _, data in pairs(facilities) do
-            for _, facility in pairs(data.arr) do
-                facility:save()
+            for __, facility in pairs(data.arr) do
+                facility:save(true) -- Save Async
             end
         end
+
+        Pm:save(true) -- Save Async
     end
 end)
 
