@@ -4,7 +4,7 @@ table.insert(migrations, {
         [[
             UPDATE housing_apartment SET
             inside_coord = '{"y":6199.10498046875,"x":-464.2026062011719,"w":105.63994598388672,"z":32.63825988769531}',
-            exit_zone = '{"y":6199.03,"z":33.64,"maxZ":35.14,"heading":2,"sy":0.4,"minZ":32.64,"x":-463.27,"sx":1.6}',
+            exit_zone = '{"y":6199.03,"z":33.64,"maxZ":35.14,"heading":2,"sy":0.4,"minZ":32.64,"x":-463.27,"sx":1.6}'
             WHERE identifier = 'north_house_mid_01';
         ]],
         [[
