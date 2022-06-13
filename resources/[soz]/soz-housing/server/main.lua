@@ -189,6 +189,10 @@ RegisterNetEvent("housing:server:BellProperty", function(propertyId, apartmentId
 
     local Owner = QBCore.Functions.GetPlayerByCitizenId(apartment:GetOwner())
 
+    if not Owner then
+        return
+    end
+
     TriggerClientEvent("housing:client:PlayerRequestEnter", Owner.PlayerData.source, propertyId, apartmentId, Player.PlayerData.citizenid)
 end)
 
