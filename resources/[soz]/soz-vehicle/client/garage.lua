@@ -122,6 +122,7 @@ local function GetVehicleClientData(veh)
     return {
         fuel = exports["soz-vehicle"]:GetFuel(veh),
         properties = json.encode(QBCore.Functions.GetVehicleProperties(veh)),
+        bodyDamage = math.floor(GetVehicleBodyHealth(veh) + 0.5),
     }
 end
 
@@ -320,9 +321,6 @@ local function GetVehicleInGarage(type_, indexgarage, veh)
         return
     end
 
-    -- Set body damage from client, as it always return 1000 on server
-    vehExtraData.bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
-
     SetEntityAsMissionEntity(veh, true, true)
 
     QBCore.Functions.TriggerCallback("soz-garage:server:ParkVehicleInGarage", function(success)
@@ -490,7 +488,6 @@ RegisterNetEvent("soz-garage:client:PutInDepot", function(entity)
         end
 
         -- Set body damage from client, as it always return 1000 on server
-        vehExtraData.bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
         SetEntityAsMissionEntity(veh, true, true)
 
         QBCore.Functions.TriggerCallback("soz-garage:server:ParkVehicleInDepot", function(success)
