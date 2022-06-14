@@ -92,6 +92,14 @@ local facilities = {
         action = "HarvestEnergy",
         item = "energy",
     },
+    ["terminal-in"] = {
+        config = "Terminals",
+        getFacility = GetTerminal,
+        precheck = "CanStoreEnergy",
+        messages = {precheckError = "Borne pleine", harvestSuccess = "Vous avez déposé ~g~1 %s"},
+        action = "StoreEnergy",
+        item = "energy",
+    },
 }
 
 local function GetFacilityData(harvestType)
@@ -129,7 +137,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    if harvestType == "inverter-in" then
+    if harvestType == "inverter-in" or harvestType == "terminal-in" then
         -- Does player have item?
         local count = 0
         for _, i in pairs(Player.PlayerData.items or {}) do
@@ -175,7 +183,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     local p = promise:new()
 
-    if harvestType == "inverter-in" then
+    if harvestType == "inverter-in" or harvestType == "terminal-in" then
         -- Remove energy cell from inventory
         Player.Functions.RemoveItem(item, 1)
 

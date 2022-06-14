@@ -70,7 +70,7 @@ end
 
 local function Harvest(identifier, harvest)
     local message = "Vous collectez..."
-    if harvest == "inverter-in" then
+    if harvest == "inverter-in" or harvest == "terminal-in" then
         message = "Vous déposez..."
     end
 
