@@ -121,7 +121,7 @@ RegisterNetEvent("housing:client:ShowAddRoommateMenu", function(propertyId)
     end
 
     if not property:IsBuilding() then
-        for apartmentId, _ in pairs(apartments) do
+        for apartmentId, apartment in pairs(apartments) do
             if not apartment:HasRoommate() then
                 TriggerServerEvent("housing:server:AddRoommateApartment", propertyId, apartmentId, GetPlayerServerId(player))
                 return
