@@ -415,6 +415,24 @@ local function GarageMainMenu(menu, type_, garage, indexgarage)
         menu:AddTitle({label = garage.label})
     end
 
+    -- Housing
+    if type_ == "housing" then
+        menu:AddButton({
+            label = "Voir la place de parking",
+            select = function()
+                Citizen.CreateThread(function()
+                    local timeout = 15000
+                    while timeout > 0 do
+                        timeout = timeout - 1
+
+                        DrawLightWithRange(garage.x, garage.y, garage.z, 54, 193, 110, 3.0, (80.0 * (timeout / 15000)))
+                        Wait(1)
+                    end
+                end)
+            end,
+        })
+    end
+
     -- Ranger véhicule: public, private, entreprise
     if type_ ~= "depot" then
         menu:AddButton({
