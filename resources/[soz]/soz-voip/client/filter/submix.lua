@@ -16,6 +16,7 @@ function FilterSubmixRegistry:new()
         submix:setEffectRadioFx()
         submix:setEffectParamInt("default", 1)
         submix:setEffectParamFloat("fudge", 4.0)
+        submix:setEffectParamInt("enabled", 0)
 
         return submix
     end, 7)
