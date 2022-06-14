@@ -21,9 +21,11 @@ function StartProductionLoop()
                 end
             end
 
-            for _, inverter in pairs(Inverters) do
-                if count >= 5 then
-                    inverter:save()
+            for _, facilities in ipairs({Inverters, Terminals}) do
+                for _, facility in pairs(facilities) do
+                    if count >= 5 then
+                        facility:save()
+                    end
                 end
             end
 
