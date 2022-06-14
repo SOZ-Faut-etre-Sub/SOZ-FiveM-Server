@@ -58,28 +58,26 @@ Citizen.CreateThread(function()
 end)
 
 local function CreateMetrics(name, type, description, labels, getValue)
-    local metricsString = ([[
-
+    local lines = {
+        ([[
 # HELP %s %s
-# TYPE %s %s
-]]):format(name, description, name, type)
+# TYPE %s %s]]):format(name, description, name, type),
+    }
 
     for id, player in pairs(playerList) do
         if playerListConnected[id] then
             player = playerListConnected[id]
         end
 
-        metricsString = metricsString .. string.format([[
-%s{%s} %s
-]], name, labels[id], getValue(player))
+        table.insert(lines, string.format("%s{%s} %s", name, labels[id], getValue(player)))
     end
 
-    return metricsString
+    return table.concat(lines, "\n")
 end
 
 -- Get all metrics about player
 function GetPlayerMetrics()
-    local metricsString = ""
+    local lines = {}
     local labels = {}
 
     for id, player in pairs(playerList) do
@@ -91,38 +89,38 @@ function GetPlayerMetrics()
                                    player.charinfo.lastname, player.license, player.job.id, player.job.grade or 0, player.connection_status)
     end
 
-    metricsString = metricsString .. CreateMetrics("soz_player_connected", "gauge", "Is player connected", labels, function(player)
+    table.insert(lines, CreateMetrics("soz_player_connected", "gauge", "Is player connected", labels, function(player)
         if player.connection_status == "connected" then
             return 1
         end
 
         return 0
-    end)
+    end))
 
-    metricsString = metricsString .. CreateMetrics("soz_player_health", "gauge", "Health of a player", labels, function(player)
+    table.insert(lines, CreateMetrics("soz_player_health", "gauge", "Health of a player", labels, function(player)
         return player.metadata.health or 200
-    end)
+    end))
 
-    metricsString = metricsString .. CreateMetrics("soz_player_armor", "gauge", "Armor of a player", labels, function(player)
+    table.insert(lines, CreateMetrics("soz_player_armor", "gauge", "Armor of a player", labels, function(player)
         return player.metadata.armor.current
-    end)
+    end))
 
-    metricsString = metricsString .. CreateMetrics("soz_player_hunger", "gauge", "Hunger of a player", labels, function(player)
+    table.insert(lines, CreateMetrics("soz_player_hunger", "gauge", "Hunger of a player", labels, function(player)
         return player.metadata.hunger
-    end)
+    end))
 
-    metricsString = metricsString .. CreateMetrics("soz_player_thirst", "gauge", "Thirst of a player", labels, function(player)
+    table.insert(lines, CreateMetrics("soz_player_thirst", "gauge", "Thirst of a player", labels, function(player)
         return player.metadata.thirst
-    end)
+    end))
 
-    metricsString = metricsString .. CreateMetrics("soz_player_onduty", "gauge", "Is player on duty", labels, function(player)
+    table.insert(lines, CreateMetrics("soz_player_onduty", "gauge", "Is player on duty", labels, function(player)
         if player.connection_status == "connected" and player.job.onduty then
             return 1
         end
 
         return 0
-    end)
+    end))
 
-    return metricsString
+    return table.concat(lines, "\n")
 end
 
