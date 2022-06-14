@@ -75,6 +75,7 @@ RegisterNetEvent("housing:client:SyncProperties", function()
 
         Housing.Functions.SetupBlips(Properties[propertyId])
         Housing.Functions.Components.SetupEntryInteraction(propertyId, Properties[propertyId])
+        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
 
@@ -85,6 +86,7 @@ RegisterNetEvent("housing:client:UpdatePropertyZone", function(propertyId, zone_
 
         Housing.Functions.SetupBlips(property)
         Housing.Functions.Components.SetupEntryInteraction(propertyId, Properties[propertyId])
+        TriggerEvent("soz-garage:client:GenerateHousingZoneAndPlace")
     end
 end)
 
