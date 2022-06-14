@@ -61,7 +61,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
                 return property:HasGarage() and property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
             action = function()
-                TriggerEvent("housing:client:ShowGarageMenu", property:GetIdentifier())
+                TriggerEvent("housing:client:ShowGarageMenu", propertyId)
             end,
         },
         {
