@@ -24,9 +24,14 @@ Citizen.CreateThread(function()
         end
     end
 
-    -- Inverters
-    for identifier, inverterData in pairs(Config.Inverters) do
-        CreateInverterZone(identifier, inverterData.zone)
+    local facilities = {
+        {arr = Config.Inverters, create = CreateInverterZone},
+        {arr = Config.Terminals, create = CreateTerminalZone},
+    }
+    for _, conf in ipairs(facilities) do
+        for identifier, data in pairs(conf.arr) do
+            conf.create(identifier, data.zone)
+        end
     end
 end)
 
