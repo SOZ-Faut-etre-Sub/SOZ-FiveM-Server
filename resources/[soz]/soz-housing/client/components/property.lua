@@ -68,7 +68,8 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Ajouter Colocataire",
             icon = "c:jobs/enroll.png",
             canInteract = function()
-                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and property:CanAddRoommate(PlayerData.citizenid) and
+                           not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowAddRoommateMenu", propertyId)
@@ -78,7 +79,8 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Retirer Colocataire",
             icon = "c:jobs/fire.png",
             canInteract = function()
-                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+                return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and property:CanRemoveRoommate(PlayerData.citizenid) and
+                           not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowRemoveRoommateMenu", propertyId)

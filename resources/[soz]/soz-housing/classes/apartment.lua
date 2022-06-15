@@ -37,6 +37,10 @@ function Apartment:IsOwner(citizenid)
     return self.owner == citizenid
 end
 
+function Apartment:IsCitizen(citizenid)
+    return self.owner == citizenid or self.roommate == citizenid
+end
+
 function Apartment:IsRoommate(citizenid)
     return self.roommate == citizenid
 end
