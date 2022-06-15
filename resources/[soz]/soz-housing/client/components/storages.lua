@@ -41,7 +41,7 @@ Housing.Functions.Components.SetupMoneyInteraction = function(propertyId, apartm
     Housing.Functions.TargetInteraction(zoneName, moneyZone, {
         {
             label = "Coffre d'argent",
-            icon = "c:housing/entrer.png",
+            icon = "c:bank/compte_safe.png",
             canInteract = function()
                 return not apartment:IsAvailable() and Housing.Functions.IsInsideApartment()
             end,
