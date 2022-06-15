@@ -4,7 +4,7 @@ FuelerConfig.SellPrice = 8
 
 FuelerConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
-        ["Tenue de travail"] = {
+        ["Tenue de travail d'hiver"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 1, Texture = 0, Palette = 0},
@@ -32,7 +32,7 @@ FuelerConfig.Cloakroom = {
             },
             Props = {[0] = {Clear = true}},
         },
-        ["Tenue été"] = {
+        ["Tenue de travail d'été"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -46,9 +46,23 @@ FuelerConfig.Cloakroom = {
             },
             Props = {[0] = {Clear = true}},
         },
+        ["Tenue Formateur"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 0, Texture = 0, Palette = 0},
+                [4] = {Drawable = 98, Texture = 16, Palette = 0},
+                [6] = {Drawable = 82, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 248, Texture = 14, Palette = 0},
+            },
+            Props = {[0] = {Clear = true}},
+        },
     },
     [GetHashKey("mp_f_freemode_01")] = {
-        ["Tenue de travail"] = {
+        ["Tenue de travail d'hiver"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 1, Texture = 0, Palette = 0},
@@ -66,7 +80,7 @@ FuelerConfig.Cloakroom = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
-                [4] = {Drawable = 34, Texture = 0, Palette = 0},
+                [4] = {Drawable = 37, Texture = 5, Palette = 0},
                 [6] = {Drawable = 29, Texture = 1, Palette = 0},
                 [7] = {Drawable = 0, Texture = 0, Palette = 0},
                 [8] = {Drawable = 0, Texture = 20, Palette = 0},
@@ -76,7 +90,7 @@ FuelerConfig.Cloakroom = {
             },
             Props = {[0] = {Clear = true}},
         },
-        ["Tenue été"] = {
+        ["Tenue de travail d'été"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 14, Texture = 0, Palette = 0},
@@ -86,7 +100,21 @@ FuelerConfig.Cloakroom = {
                 [8] = {Drawable = 15, Texture = 0, Palette = 0},
                 [9] = {Drawable = 0, Texture = 0, Palette = 0},
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 141, Texture = 5, Palette = 0},
+                [11] = {Drawable = 141, Texture = 2, Palette = 0},
+            },
+            Props = {[0] = {Clear = true}},
+        },
+        ["Tenue Formateur"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 0, Texture = 0, Palette = 0},
+                [4] = {Drawable = 101, Texture = 16, Palette = 0},
+                [6] = {Drawable = 25, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 256, Texture = 14, Palette = 0},
             },
             Props = {[0] = {Clear = true}},
         },
