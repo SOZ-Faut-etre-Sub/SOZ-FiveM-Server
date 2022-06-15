@@ -43,7 +43,7 @@ RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmen
                                            data.fridge_zone, data.stash_zone, data.closet_zone, data.money_zone, data.temporary_access)
         property:UpdateApartment(apartmentId, newApartment)
 
-        Housing.Functions.SetupBlips(property)
+        Housing.Functions.SetupBlips(Properties[propertyId])
         Housing.Functions.Components.SetupExitInteraction(propertyId, apartmentId, newApartment)
         Housing.Functions.Components.SetupCloakroomInteraction(propertyId, apartmentId, newApartment)
         Housing.Functions.Components.SetupFridgeInteraction(propertyId, apartmentId, newApartment)
