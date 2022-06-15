@@ -369,7 +369,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
-        if baseBag == 0 and jobBag == 0 then
+        if (baseBag == 0 and jobBag == 0) or self.PlayerData.cloth_config.Config.HideBag then
             exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000)
         else
             exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000)
