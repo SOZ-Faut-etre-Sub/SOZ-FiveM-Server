@@ -1,3 +1,5 @@
+local currentBlackoutLevel = QBCore.Shared.Blackout.Level.Zero
+local consumptionLoopRunning = false
 local facilities = {["inverter"] = GetInverter, ["terminal"] = GetTerminal}
 
 RegisterNetEvent("soz-upw:server:FacilityCapacity", function(data)
@@ -13,14 +15,26 @@ RegisterNetEvent("soz-upw:server:FacilityCapacity", function(data)
     end
 end)
 
-local function GetTerminalCapacities(scope)
+local function GetTerminals(scope)
     if not scope then
         scope = "default"
     end
 
+    local terminals = {}
+
+    for identifier, terminal in pairs(Terminals) do
+        if terminal.scope == "default" then
+            terminals[identifier] = terminal
+        end
+    end
+
+    return terminals
+end
+
+local function GetTerminalCapacities(scope)
     local capacity, maxCapacity = 0, 0
 
-    for _, terminal in pairs(Terminals) do
+    for _, terminal in pairs(GetTerminals(scope)) do
         if terminal.scope == scope then
             capacity = capacity + terminal.capacity
             maxCapacity = maxCapacity + terminal.maxCapacity
@@ -28,18 +42,57 @@ local function GetTerminalCapacities(scope)
     end
 end
 
-QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
+local function GetBlackoutLevel()
     local capacity, maxCapacity = GetTerminalCapacities("default")
     local percent = math.ceil(capacity / maxCapacity * 100)
 
     if percent >= 100 then
-        cb(QBCore.Shared.Blackout.Level.Zero)
-        return
+        return QBCore.Shared.Blackout.Level.Zero
     end
 
     for level, range in pairs(Config.Blackout.Threshold) do
         if percent >= range.min and percent < range.max then
-            cb(level)
+            return level
         end
     end
+end
+
+QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
+    cb(GetBlackoutLevel())
 end)
+
+--
+-- ENERGY CONSUMPTION
+--
+function StartConsumptionLoop()
+    Citizen.CreateThread(function()
+        local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
+
+        local consumptionThisTick = Config.Consumption.EnergyPerTick * connectedPlayers
+
+        local identifiers = {}
+        for identifier, _ in pairs(GetTerminals("default")) do
+            table.insert(identifiers, identifier)
+        end
+
+        for i = 1, consumptionThisTick, 1 do
+            local n = math.random(1, #identifiers)
+            local terminal = GetTerminal(identifiers[n])
+
+            if terminal then
+                terminal:Consume(1)
+            end
+        end
+
+        local newBlackoutLevel = GetBlackoutLevel()
+
+        -- Blackout level has changed
+        if currentBlackoutLevel ~= newBlackoutLevel then
+            currentBlackoutLevel = newBlackoutLevel
+            TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", currentBlackoutLevel)
+            TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, currentBlackoutLevel)
+        end
+
+        Citizen.Wait(Config.Production.Tick)
+    end)
+end
