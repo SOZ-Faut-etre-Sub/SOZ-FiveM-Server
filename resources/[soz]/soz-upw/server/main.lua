@@ -56,6 +56,8 @@ MySQL.ready(function()
 
     InitiateFacilities()
     StartProductionLoop()
+
+    StartConsumptionLoop()
 end)
 
 --

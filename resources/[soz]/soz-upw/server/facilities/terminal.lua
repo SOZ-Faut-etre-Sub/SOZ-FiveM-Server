@@ -11,3 +11,13 @@ function Terminal:new(identifier, options)
 
     return self
 end
+
+function Terminal:Consume(energy)
+    self.capacity = self.capacity - energy
+
+    if self.capacity < 0 then
+        self.capacity = 0
+    end
+
+    return self.capacity
+end
