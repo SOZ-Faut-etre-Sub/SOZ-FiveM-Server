@@ -27,6 +27,11 @@ QBShared.Trunks = {
 
     --- Override for specific vehicle
 
+    --- Vans
+    [GetHashKey('moonbeam')] = { slot = 10, weight = 200000 },
+    [GetHashKey('moonbeam2')] = { slot = 10, weight = 200000 },
+
+
     --- LSPD
     [GetHashKey('police5')] = { slot = 5, weight = 80000 },
     [GetHashKey('police6')] = { slot = 5, weight = 80000 },
