@@ -5,7 +5,7 @@ function Terminal:new(identifier, options)
 
     local self = Terminal:Super():new(identifier, options)
 
-    self.fields_to_save = {"type", "scope", "capacity", "maxCapacity"}
+    self.fields_to_save = {"type", "scope", "job", "capacity", "maxCapacity"}
 
     setmetatable(self, {__index = Terminal})
 
