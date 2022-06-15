@@ -102,6 +102,24 @@ function Property:GetOwnedApartmentsForCitizenId(citizenid)
     return apartments
 end
 
+function Property:CanAddRoommate(citizenid)
+    for _, apartment in pairs(self.apartments) do
+        if apartment:IsCitizen(citizenid) and not apartment:HasRoommate() then
+            return true
+        end
+    end
+    return false
+end
+
+function Property:CanRemoveRoommate(citizenid)
+    for _, apartment in pairs(self.apartments) do
+        if apartment:IsCitizen(citizenid) and apartment:HasRoommate() then
+            return true
+        end
+    end
+    return false
+end
+
 function Property:IsBuilding()
     return table.length(self.apartments) > 1
 end
