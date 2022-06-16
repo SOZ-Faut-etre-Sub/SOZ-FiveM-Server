@@ -65,7 +65,7 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
 
     -- Ensure player is on ground
     SetEntityCoordsNoOffset(playerPed, playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, false, false,
-        false, true)
+                            false, true)
 
     -- Make player visible
     SetFocusEntity(PlayerPedId())
