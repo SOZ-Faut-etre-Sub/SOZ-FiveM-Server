@@ -31,7 +31,6 @@ QBShared.Trunks = {
     [GetHashKey('moonbeam')] = { slot = 10, weight = 200000 },
     [GetHashKey('moonbeam2')] = { slot = 10, weight = 200000 },
 
-
     --- LSPD
     [GetHashKey('police5')] = { slot = 5, weight = 80000 },
     [GetHashKey('police6')] = { slot = 5, weight = 80000 },
@@ -47,6 +46,7 @@ QBShared.Trunks = {
     --- LSMC
     [GetHashKey('ambulance')] = { slot = 5, weight = 100000 },
     [GetHashKey('ambcar')] = { slot = 5, weight = 80000 },
+    [GetHashKey('firetruk')] = { slot = 5, weight = 80000 },
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
 
     -- STONKS

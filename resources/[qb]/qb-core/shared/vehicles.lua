@@ -4023,6 +4023,15 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('ambcar'),
         ['shop']     = 'na',
     },
+    ['firetruk']        = {
+        ['name']     = 'LSMC',
+        ['brand']    = 'Granger',
+        ['model']    = 'firetruk',
+        ['price']    = 35000,
+        ['category'] = 'suvs',
+        ['hash']     = GetHashKey('firetruk'),
+        ['shop']     = 'na',
+    },
     ['police5']      = {
         ['name']     = 'STX',
         ['brand']    = 'Bravado',
