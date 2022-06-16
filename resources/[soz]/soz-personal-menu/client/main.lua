@@ -32,7 +32,6 @@ local function GenerateMenu()
         end)
     else
         MenuV:CloseAll(function()
-            MenuV.CurrentMenu = nil
             personalMenu:Close()
         end)
     end
