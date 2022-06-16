@@ -30,8 +30,6 @@ EmsJob.Functions.Menu.GenerateMenu = function(job, cb)
     local menu = EmsJob.Menus[job].menu
     menu:ClearItems()
 
-    cb(menu)
-
     if menu.IsOpen then
         MenuV:CloseAll(function()
             menu:Close()
@@ -41,6 +39,8 @@ EmsJob.Functions.Menu.GenerateMenu = function(job, cb)
             menu:Open()
         end)
     end
+
+    cb(menu)
 end
 
 EmsJob.Functions.Menu.GenerateJobMenu = function(job)
