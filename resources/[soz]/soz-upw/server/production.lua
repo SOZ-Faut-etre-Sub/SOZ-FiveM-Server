@@ -213,5 +213,7 @@ RegisterNetEvent("soz-upw:client:InverterCapacity", function(data)
     if inverter then
         TriggerClientEvent("hud:client:DrawNotification", source,
                            string.format("Remplissage : %s%%", math.floor(inverter.capacity / inverter.maxCapacity * 100)))
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, "Onduleur introuvable : " .. data.identifier, "error")
     end
 end)
