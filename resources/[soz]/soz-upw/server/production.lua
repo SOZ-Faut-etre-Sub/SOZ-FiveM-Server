@@ -129,12 +129,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
 
     if harvestType == "inverter-in" then
         -- Does player have item?
-        local count = 0
-        for _, i in pairs(Player.PlayerData.items or {}) do
-            if i.name == item then
-                count = i.amount
-            end
-        end
+        local count = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
 
         if count == 0 then
             cb({false, string.format("Vous n'avez pas l'item requis")})
@@ -175,7 +170,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     if harvestType == "inverter-in" then
         -- Remove energy cell from inventory
-        Player.Functions.RemoveItem(item, 1)
+        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
 
         p:resolve(true, nil)
     else
