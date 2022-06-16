@@ -30,6 +30,9 @@ local reboot = function()
 
     print("[soz-reboot] Sauvegarde des comptes bancaires...")
     exports["soz-bank"]:saveAccounts()
+
+    print("[soz-reboot] Sauvegarde d'Unexpected Power & Water...")
+    exports["soz-upw"]:saveUpw()
 end
 
 local thunder = function()
