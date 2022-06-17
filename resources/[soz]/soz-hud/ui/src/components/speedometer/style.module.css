@@ -95,6 +95,10 @@
     font-variant-numeric: tabular-nums;
 }
 
+.speedDisplay.noFuel {
+    margin-right: 15px;
+}
+
 .speedText {
     color: white;
     font-size: 1.8rem;

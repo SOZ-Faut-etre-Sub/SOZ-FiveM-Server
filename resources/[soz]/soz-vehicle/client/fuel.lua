@@ -17,7 +17,7 @@ function ManageFuelUsage(vehicle)
         SetFuel(vehicle, GetFuel(vehicle))
         fuelSynced = true
     end
-    if IsVehicleEngineOn(vehicle) then
+    if IsVehicleEngineOn(vehicle) and Config.Classes[GetVehicleClass(vehicle)] > 0 then
         SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - Config.FuelUsage[Round(GetVehicleCurrentRpm(vehicle), 1)] *
                     (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10)
     end
@@ -408,6 +408,10 @@ Citizen.CreateThread(function()
     end
 end)
 
+function HasFuel(vehicle)
+    return Config.Classes[GetVehicleClass(vehicle)] > 0
+end
+
 function GetFuel(vehicle)
     return DecorGetFloat(vehicle, Config.FuelDecor)
 end
@@ -419,6 +423,7 @@ function SetFuel(vehicle, fuel)
     end
 end
 
+exports("HasFuel", HasFuel)
 exports("GetFuel", GetFuel)
 exports("SetFuel", SetFuel)
 
