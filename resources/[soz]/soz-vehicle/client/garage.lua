@@ -79,22 +79,27 @@ AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
 end)
 
 AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
-    local house = QBCore.Functions.TriggerRpc("soz-housing:server:GetPlayerHouse")
-    if not house or (house and not house.garage_zone) then
+    local houses = QBCore.Functions.TriggerRpc("housing:server:GetPlayerProperties")
+    if not houses then
         return
     end
 
-    local gData = json.decode(house.garage_zone)
-    local zone = BoxZone:Create(vector3(gData.x, gData.y, gData.z), 8.0, 6.0, {
-        name = "soz-garage:" .. house.identifier,
-        heading = gData.heading,
-        minZ = gData.z - 2.0,
-        maxZ = gData.z + 2.0,
-        data = {indexGarage = house.identifier},
-    })
+    for _, house in pairs(houses) do
+        local gData = house.garage_zone
 
-    GarageTypes.housing.zones = {[house.identifier] = zone}
-    GarageTypes.housing.places = {["p1"] = zone}
+        if gData then
+            local zone = BoxZone:Create(vector3(gData.x, gData.y, gData.z), 8.0, 6.0, {
+                name = "soz-garage:" .. "property_" .. house.identifier,
+                heading = gData.heading,
+                minZ = gData.z - 2.0,
+                maxZ = gData.z + 2.0,
+                data = {indexGarage = "property_" .. house.identifier},
+            })
+
+            GarageTypes.housing.zones = {["property_" .. house.identifier] = zone}
+            GarageTypes.housing.places = {["property_" .. house.identifier .. "p1"] = zone}
+        end
+    end
 end)
 
 ---
@@ -117,6 +122,7 @@ local function GetVehicleClientData(veh)
     return {
         fuel = exports["soz-vehicle"]:GetFuel(veh),
         properties = json.encode(QBCore.Functions.GetVehicleProperties(veh)),
+        bodyDamage = math.floor(GetVehicleBodyHealth(veh) + 0.5),
     }
 end
 
@@ -315,9 +321,6 @@ local function GetVehicleInGarage(type_, indexgarage, veh)
         return
     end
 
-    -- Set body damage from client, as it always return 1000 on server
-    vehExtraData.bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
-
     SetEntityAsMissionEntity(veh, true, true)
 
     QBCore.Functions.TriggerCallback("soz-garage:server:ParkVehicleInGarage", function(success)
@@ -410,6 +413,24 @@ local function GarageMainMenu(menu, type_, garage, indexgarage)
         menu:AddTitle({label = garage.label})
     end
 
+    -- Housing
+    if type_ == "housing" then
+        menu:AddButton({
+            label = "Voir la place de parking",
+            select = function()
+                Citizen.CreateThread(function()
+                    local timeout = 15000
+                    while timeout > 0 do
+                        timeout = timeout - 1
+
+                        DrawLightWithRange(garage.x, garage.y, garage.z, 54, 193, 110, 3.0, (80.0 * (timeout / 15000)))
+                        Wait(1)
+                    end
+                end)
+            end,
+        })
+    end
+
     -- Ranger véhicule: public, private, entreprise
     if type_ ~= "depot" then
         menu:AddButton({
@@ -485,7 +506,6 @@ RegisterNetEvent("soz-garage:client:PutInDepot", function(entity)
         end
 
         -- Set body damage from client, as it always return 1000 on server
-        vehExtraData.bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
         SetEntityAsMissionEntity(veh, true, true)
 
         QBCore.Functions.TriggerCallback("soz-garage:server:ParkVehicleInDepot", function(success)

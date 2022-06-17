@@ -1,4 +1,4 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
+QBCore = exports["qb-core"]:GetCoreObject()
 
 local HudForcedStateDisplay = true
 PlayerInVehicle, PlayerHaveGPS, PlayerHaveCompass = false, false, false

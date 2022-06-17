@@ -35,3 +35,29 @@ RegisterNetEvent("jobs:server:garbage:processBags", function(item)
     end
 end)
 
+RegisterNetEvent("jobs:server:garbage:processExpired", function(slot)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local playerGarbageExpired = exports["soz-inventory"]:GetSlot(Player.PlayerData.source, slot)
+
+    if not playerGarbageExpired then
+        return
+    end
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, playerGarbageExpired.name, playerGarbageExpired.amount, playerGarbageExpired.metadata,
+                                           playerGarbageExpired.slot) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                           ("Vous avez recyclé ~g~%d %s"):format(playerGarbageExpired.amount, playerGarbageExpired.label))
+
+        TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", playerGarbageExpired.amount * GarbageConfig.SellPrice["default"])
+        TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
+            player_source = Player.PlayerData.source,
+            item = playerGarbageExpired.name,
+        }, {
+            quantity = tonumber(playerGarbageExpired.amount),
+            position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+        })
+    end
+
+    TriggerClientEvent("jobs:client:garbage:processExpired", Player.PlayerData.source, {})
+end)
+

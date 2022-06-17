@@ -33,6 +33,16 @@ local relationshipTypes = {
     "MEDIC",
 }
 
+--[[
+Relationship types:
+0 = Companion
+1 = Respect
+2 = Like
+3 = Neutral
+4 = Dislike
+5 = Hate
+255 = Pedestrians
+]]
 for _, group in ipairs(relationshipTypes) do
-    SetRelationshipBetweenGroups(3, GetHashKey(group), GetHashKey("PLAYER"))
+    SetRelationshipBetweenGroups(2, GetHashKey(group), GetHashKey("PLAYER"))
 end

@@ -126,12 +126,8 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ['rescuer'] = false,
     }
     PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
--- use only house and then house type for villa appart or house?
-        house = nil,
-        apartment = {
-            apartmentType = nil,
-            apartmentId = nil,
-        }
+        ['exitCoord'] = false,
+        ['apartment'] = false,
     }
     PlayerData.metadata['phonedata'] = PlayerData.metadata['phonedata'] or {
         SerialNumber = QBCore.Player.CreateSerialNumber(),
@@ -373,7 +369,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
-        if baseBag == 0 and jobBag == 0 then
+        if (baseBag == 0 and jobBag == 0) or self.PlayerData.cloth_config.Config.HideBag then
             exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000)
         else
             exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000)

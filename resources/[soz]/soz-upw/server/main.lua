@@ -61,18 +61,16 @@ MySQL.ready(function()
 end)
 
 --
--- ON RESOURCE STOP
+-- Save all objects upon reboot
 --
-AddEventHandler("onResourceStop", function(resourceName)
-    if resourceName == GetCurrentResourceName() then
-        for _, data in pairs(facilities) do
-            for __, facility in pairs(data.arr) do
-                facility:save(true) -- Save Async
-            end
+exports("saveUpw", function()
+    for _, data in pairs(facilities) do
+        for __, facility in pairs(data.arr) do
+            facility:save()
         end
-
-        Pm:save(true) -- Save Async
     end
+
+    Pm:save()
 end)
 
 --
