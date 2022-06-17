@@ -1,4 +1,4 @@
-local bins = {GetHashKey("prop_cs_bin_01_skinned")}
+local bins = {GetHashKey("soz_prop_bb_bin")}
 
 exports["qb-target"]:AddTargetModel(bins, {
     options = {
@@ -10,5 +10,5 @@ exports["qb-target"]:AddTargetModel(bins, {
             invID = "666",
         },
     },
-    distance = 1.0,
+    distance = 1.3,
 })
