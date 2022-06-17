@@ -128,6 +128,7 @@ Config.InstructorStartSpeech = {
     {
         ["car"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
         ["truck"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
+        ["heli"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
     },
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
