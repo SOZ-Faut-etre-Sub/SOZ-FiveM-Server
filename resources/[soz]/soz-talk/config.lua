@@ -6,6 +6,7 @@ Config.AllowedRadioInVehicle = {
     --- AMBULANCE
     [GetHashKey("ambulance")] = true,
     [GetHashKey("ambcar")] = true,
+    [GetHashKey("firetruk")] = true,
     --- Chateau Marius
     [GetHashKey("mule6")] = true,
     --- CarlJr Service

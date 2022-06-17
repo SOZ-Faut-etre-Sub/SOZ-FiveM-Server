@@ -89,10 +89,6 @@ exports("SetRadioShortRangePowerState", function(state)
     end
 end)
 
-exports("ToggleRadioLongRangePrimaryMix", function()
-
-end)
-
 exports("SetRadioLongRangePrimaryVolume", function(volume)
     Config.volumeRadioPrimaryLong = volume / 100
 end)

@@ -185,13 +185,17 @@ PoliceJob.Functions.Menu.GenerateMenu = function(job, cb)
 
     cb(menu)
 
-    if menu.IsOpen then
+    --- Interaction menu can be a submenu, so we need to ensure that something is different.
+    --- If it's the case, then we can open the new menu, if not then we want to close it.
+    --- The best solution could be to not use a submenu or at least change the UUID for a submenu.
+    if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= menu.UUID or MenuV.CurrentMenu.Subtitle ~= menu.Subtitle or MenuV.CurrentMenu.Items ~= menu.Items or
+        not menu.IsOpen then
         MenuV:CloseAll(function()
-            menu:Close()
+            menu:Open()
         end)
     else
         MenuV:CloseAll(function()
-            menu:Open()
+            menu:Close()
         end)
     end
 end

@@ -10,6 +10,7 @@ client_scripts {
 
     "client/main.lua",
     "client/noclip.lua",
+    "client/polyzone.lua",
     "client/admin_menu/*.lua",
     "client/mapper_menu/*.lua",
     "client/spectate.lua",
@@ -20,7 +21,7 @@ server_scripts {
     "@oxmysql/lib/MySQL.lua",
     "server/main.lua",
     "server/module/*.lua",
-    "server/housing/*.lua",
+    "server/housing.lua",
     "server/feature.lua",
 }
 
