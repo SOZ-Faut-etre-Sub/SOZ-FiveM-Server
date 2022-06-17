@@ -24,18 +24,26 @@ end
 ---Draw random checkpoints from a list of checkpoints
 ---@param allCheckpoints table
 ---@param count number Number of checkpoints that are to be drawn
-local function GetRandomCheckpoints(allCheckpoints, count)
+local function GetRandomCheckpoints(licenceType, allCheckpoints, count)
     if count > #allCheckpoints then
         count = #allCheckpoints
     end
 
-    local allCpCopy = {table.unpack(allCheckpoints)}
+    local eligibleCheckpoints = {}
+    for _, checkpoint in ipairs(allCheckpoints) do
+        for _, license in ipairs(checkpoint.licenses) do
+            if license == licenceType then
+                table.insert(eligibleCheckpoints, checkpoint)
+            end
+        end
+    end
+
     local checkpoints = {}
     repeat
-        local idx = math.random(1, #allCpCopy)
-        local cp = allCpCopy[idx]
+        local idx = math.random(1, #eligibleCheckpoints)
+        local cp = eligibleCheckpoints[idx]
         table.insert(checkpoints, cp)
-        table.remove(allCpCopy, idx)
+        table.remove(eligibleCheckpoints, idx)
     until #checkpoints == count - 1 -- Remove final checkpoints
     return checkpoints
 end
@@ -113,7 +121,7 @@ local function startExamLoop(licenseType, context)
         end
 
         -- Checkpoints
-        local checkpoints = GetRandomCheckpoints(Config.Checkpoints, Config.CheckpointCount)
+        local checkpoints = GetRandomCheckpoints(licenseType, Config.Checkpoints, Config.CheckpointCount)
         if not checkpoints then
             return
         end
