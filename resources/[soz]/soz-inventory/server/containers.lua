@@ -100,3 +100,7 @@ end)
 --- Housing
 Container["house_stash"] = InventoryContainer:new("stash", {"item"})
 Container["house_fridge"] = InventoryContainer:new("fridge", {"food", "drink"})
+
+--- Jobs
+Container["log_storage"] = InventoryContainer:new("storage", {"log"})
+Container["sawdust_storage"] = InventoryContainer:new("storage", {"sawdust"})

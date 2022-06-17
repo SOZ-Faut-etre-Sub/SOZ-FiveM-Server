@@ -2763,4 +2763,61 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Bienvenue sur SOZ !'
     },
+
+    -- PAWL
+    ['tree_trunk'] = {
+        ['name'] = 'tree_trunk',
+        ['label'] = "Tronc d'arbre",
+        ['weight'] = 40000,
+        ['type'] = 'log',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['wood_plank'] = {
+        ['name'] = 'wood_plank',
+        ['label'] = "Planche de bois",
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['sawdust'] = {
+        ['name'] = 'sawdust',
+        ['label'] = "Sciure de bois",
+        ['weight'] = 1000,
+        ['type'] = 'sawdust',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['paper'] = {
+        ['name'] = 'paper',
+        ['label'] = "Feuille de papier",
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['cabinet_zkea'] = {
+        ['name'] = 'cabinet_zkea',
+        ['label'] = "Meuble ZKEA",
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
 }
