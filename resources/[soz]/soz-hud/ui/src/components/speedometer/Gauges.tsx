@@ -1,7 +1,7 @@
 import style from "./style.module.css"
 import FuelIcon from "../../assets/vehicle/fuel";
 
-function SpeedGauge(props: {speed: number}) {
+function SpeedGauge(props: {speed: number, hasFuel: boolean}) {
     return (
         <>
             <svg width="100" height="100">
@@ -21,7 +21,7 @@ function SpeedGauge(props: {speed: number}) {
                     strokeDasharray="185"
                     style={{strokeDashoffset: -(185 - (props.speed/250*185))}}/>
             </svg>
-            <div className={style.speedDisplay}>
+            <div className={[style.speedDisplay, props.hasFuel ? "" : style.noFuel].join(' ')}>
                 <span className={style.speedText}>{props.speed}</span>
                 <span>km/h</span>
             </div>
