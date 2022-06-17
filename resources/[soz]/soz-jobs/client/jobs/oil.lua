@@ -353,18 +353,19 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
 
     while canFillTanker do
         Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous remplissez...", 24000, false, true, {
+
+        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous remplissez...", 24000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+
+        if success then
             TriggerServerEvent("jobs:server:fueler:refillTanker", Tanker.vehicle)
-
+            Wait(1000)
             canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
-        end, function()
+        else
             canFillTanker = false
-        end)
-
-        Wait(24000)
+        end
     end
 
     Tanker.using = false
@@ -401,19 +402,19 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
 
     while canRefiningTanker do
         Wait(500)
-        QBCore.Functions.Progressbar("fill", "Vous raffinez...", 24000, false, true, {
+
+        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous raffinez...", 24000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+
+        if success then
             TriggerServerEvent("jobs:server:fueler:refiningTanker", Tanker.vehicle)
             Wait(1000)
-
             canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
-        end, function()
+        else
             canRefiningTanker = false
-        end)
-
-        Wait(24000)
+        end
     end
 
     Tanker.using = false
@@ -547,19 +548,20 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
 
     while canResellTanker do
         Wait(500)
-        QBCore.Functions.Progressbar("resell", "Vous remplissez...", 5000, false, true, {
+
+        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 5000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+
+        if success then
             TriggerServerEvent("jobs:server:fueler:resellTanker", Tanker.vehicle)
             Wait(1000)
 
             canResellTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canResell", Tanker.vehicle)
-        end, function()
+        else
             canResellTanker = false
-        end)
-
-        Wait(5000)
+        end
     end
 
     Tanker.using = false

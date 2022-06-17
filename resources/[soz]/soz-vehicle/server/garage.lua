@@ -294,7 +294,7 @@ local function GetVehicleData(vehNetId, extraData)
 
     local data = {
         plate = GetVehicleNumberPlateText(entityId),
-        engineDamage = math.ceil(GetVehicleEngineHealth(entityId)) or 500,
+        engineDamage = math.floor(GetVehicleEngineHealth(entityId) + 0.5) or 500,
     }
 
     local extra = {fuel = 10, bodyDamage = 1000, properties = json.encode({})}

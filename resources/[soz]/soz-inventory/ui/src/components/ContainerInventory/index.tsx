@@ -1,143 +1,174 @@
-import {useCallback, useEffect, useState} from "react";
-import {InventoryItem, SortableContainer} from "../InventoryItem";
-import {IInventoryEvent, IInventoryItem} from "../../types/inventory";
+import { useCallback, useEffect, useState } from "react";
+import { InventoryItem, SortableContainer } from "../InventoryItem";
+import { IInventoryEvent, IInventoryItem } from "../../types/inventory";
 import { ReactSortable } from "react-sortablejs";
 import styles from "./styles.module.css";
 import cn from "classnames";
-import {closeNUI} from "../../hooks/nui";
+import { closeNUI } from "../../hooks/nui";
 
 const ContainerInventory = () => {
     const [display, setDisplay] = useState<boolean>(false);
 
-    const [playerInventory, setPlayerInventory] = useState<IInventoryEvent>({id: 'source', type: '', weight: 0, maxWeight: 0});
+    const [playerInventory, setPlayerInventory] = useState<IInventoryEvent>({ id: "source", type: "", weight: 0, maxWeight: 0 });
     const [playerInventoryItems, setPlayerInventoryItems] = useState<IInventoryItem[]>([]);
 
-    const [targetInventory, setTargetInventory] = useState<IInventoryEvent>({id: 'target', type: '', weight: 0, maxWeight: 0});
+    const [targetInventory, setTargetInventory] = useState<IInventoryEvent>({ id: "target", type: "", weight: 0, maxWeight: 0 });
     const [targetInventoryItems, setTargetInventoryItems] = useState<IInventoryItem[]>([]);
 
     const getBanner = useCallback((type: string) => {
-        let headerImage = type
+        let headerImage = type;
 
-        if (type === 'stash') headerImage = 'storage'
-        if (type === 'ammo') headerImage = 'armory'
-        if (type === 'tanker') headerImage = 'trunk'
-        if (type === 'storage') headerImage = 'default'
-        if (type === 'storage_tank') headerImage = 'default'
+        if (type === "stash") headerImage = "storage";
+        if (type === "ammo") headerImage = "armory";
+        if (type === "tanker") headerImage = "trunk";
+        if (type === "storage") headerImage = "default";
+        if (type === "storage_tank") headerImage = "default";
 
-        return headerImage
+        return headerImage;
     }, []);
 
     // @ts-ignore
     const transfertItem = useCallback((event: any) => {
         fetch(`https://soz-inventory/transfertItem`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
+                "Content-Type": "application/json; charset=UTF-8",
             },
             body: JSON.stringify({
                 source: event.from.dataset.inventory,
                 target: event.to.dataset.inventory,
                 item: event.item.dataset.item,
-            })
-        }).then(res => res.json()).then(transfert => {
-            if (transfert.playerInventory === undefined && transfert.targetInventory === undefined) return;
-            if (transfert.sourceInventory.id == transfert.targetInventory.id) return;
+            }),
+        })
+            .then((res) => res.json())
+            .then((transfert) => {
+                if (transfert.playerInventory === undefined && transfert.targetInventory === undefined) return;
+                if (transfert.sourceInventory.id == transfert.targetInventory.id) return;
 
-            let sourceInventory = transfert.sourceInventory;
-            let targetInventory = transfert.targetInventory;
+                let sourceInventory = transfert.sourceInventory;
+                let targetInventory = transfert.targetInventory;
 
-            if (transfert.targetInventory.type === 'player') {
-                sourceInventory = transfert.targetInventory;
-                targetInventory = transfert.sourceInventory;
-            }
+                if (transfert.targetInventory.type === "player") {
+                    sourceInventory = transfert.targetInventory;
+                    targetInventory = transfert.sourceInventory;
+                }
 
-            setPlayerInventory(sourceInventory);
-            setTargetInventory(targetInventory);
-            setPlayerInventoryItems(sourceInventory.items.map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
-            setTargetInventoryItems(targetInventory.items.map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
-        });
+                setPlayerInventory(sourceInventory);
+                setTargetInventory(targetInventory);
+                setPlayerInventoryItems(sourceInventory.items.map((item: IInventoryItem) => ({ ...item, id: `source_${item.slot}` })));
+                setTargetInventoryItems(targetInventory.items.map((item: IInventoryItem) => ({ ...item, id: `target_${item.slot}` })));
+            });
     }, []);
 
-    const onMessageReceived = useCallback((event: MessageEvent) => {
-        if (event.data.action === "openInventory") {
-            if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return;
+    const onMessageReceived = useCallback(
+        (event: MessageEvent) => {
+            if (event.data.action === "openInventory") {
+                if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return;
 
-            try {
-                setPlayerInventory(event.data.playerInventory);
-                setTargetInventory(event.data.targetInventory);
-
-                setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
-                setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
-
-                setDisplay(true);
-            } catch (e: any) {
-                console.error(e, event.data.playerInventory, event.data.targetInventory);
-                closeNUI(() => {
-                    setDisplay(false);
-                }, {
-                    target: targetInventory.id,
-                })
-            }
-
-        } else if (event.data.action === "updateInventory") {
-            try {
-                if (event.data.playerInventory !== undefined){
+                try {
                     setPlayerInventory(event.data.playerInventory);
-                    setPlayerInventoryItems(event.data.playerInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `source_${item.slot}`})));
-                }
-                if (event.data.targetInventory !== undefined) {
                     setTargetInventory(event.data.targetInventory);
-                    setTargetInventoryItems(event.data.targetInventory.items.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `target_${item.slot}`})));
-                }
-            } catch (e: any) {
-                console.error(e, event.data.playerInventory, event.data.targetInventory);
-                closeNUI(() => {
-                    setDisplay(false);
-                }, {
-                    target: targetInventory.id,
-                })
-            }
-        }
-    }, [setDisplay, setPlayerInventory, setTargetInventory, setPlayerInventoryItems, setTargetInventoryItems]);
 
-    const onKeyDownReceived = useCallback((event: KeyboardEvent) => {
-        if (!event.repeat && event.key === 'Escape') {
-            fetch(`https://soz-inventory/closeNUI`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: JSON.stringify({
-                    target: targetInventory.id,
-                })
-            }).then(() => {
-                setDisplay(false);
-            });
-        }
-    }, [targetInventory, setDisplay])
+                    setPlayerInventoryItems(
+                        event.data.playerInventory.items
+                            .filter((i: IInventoryEvent) => i !== null)
+                            .map((item: IInventoryItem) => ({ ...item, id: `source_${item.slot}` }))
+                    );
+                    setTargetInventoryItems(
+                        event.data.targetInventory.items
+                            .filter((i: IInventoryEvent) => i !== null)
+                            .map((item: IInventoryItem) => ({ ...item, id: `target_${item.slot}` }))
+                    );
+
+                    setDisplay(true);
+                } catch (e: any) {
+                    console.error(e, event.data.playerInventory, event.data.targetInventory);
+                    closeNUI(
+                        () => {
+                            setDisplay(false);
+                        },
+                        {
+                            target: targetInventory.id,
+                        }
+                    );
+                }
+            } else if (event.data.action === "updateInventory") {
+                try {
+                    if (event.data.playerInventory !== undefined) {
+                        setPlayerInventory(event.data.playerInventory);
+                        setPlayerInventoryItems(
+                            event.data.playerInventory.items
+                                .filter((i: IInventoryEvent) => i !== null)
+                                .map((item: IInventoryItem) => ({ ...item, id: `source_${item.slot}` }))
+                        );
+                    }
+                    if (event.data.targetInventory !== undefined) {
+                        setTargetInventory(event.data.targetInventory);
+                        setTargetInventoryItems(
+                            event.data.targetInventory.items
+                                .filter((i: IInventoryEvent) => i !== null)
+                                .map((item: IInventoryItem) => ({ ...item, id: `target_${item.slot}` }))
+                        );
+                    }
+                } catch (e: any) {
+                    console.error(e, event.data.playerInventory, event.data.targetInventory);
+                    closeNUI(
+                        () => {
+                            setDisplay(false);
+                        },
+                        {
+                            target: targetInventory.id,
+                        }
+                    );
+                }
+            }
+        },
+        [setDisplay, setPlayerInventory, setTargetInventory, setPlayerInventoryItems, setTargetInventoryItems]
+    );
+
+    const onKeyDownReceived = useCallback(
+        (event: KeyboardEvent) => {
+            if (!event.repeat && event.key === "Escape") {
+                fetch(`https://soz-inventory/closeNUI`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                    },
+                    body: JSON.stringify({
+                        target: targetInventory.id,
+                    }),
+                }).then(() => {
+                    setDisplay(false);
+                });
+            }
+        },
+        [targetInventory, setDisplay]
+    );
 
     useEffect(() => {
-        window.addEventListener('message', onMessageReceived);
-        window.addEventListener('keydown', onKeyDownReceived);
+        window.addEventListener("message", onMessageReceived);
+        window.addEventListener("keydown", onKeyDownReceived);
 
         return () => {
-            window.removeEventListener('message', onMessageReceived);
-            window.removeEventListener('keydown', onKeyDownReceived);
-        }
+            window.removeEventListener("message", onMessageReceived);
+            window.removeEventListener("keydown", onKeyDownReceived);
+        };
     }, [onMessageReceived, onKeyDownReceived]);
 
     if (playerInventory === undefined || targetInventory === undefined) return null;
 
     return (
-        <main className={
-            cn(styles.container, {
+        <main
+            className={cn(styles.container, {
                 [styles.container_show]: display,
                 [styles.container_hide]: !display,
-            })
-        }>
+            })}
+        >
             <section>
                 <header className={cn(styles.banner, styles[getBanner(playerInventory.type)])}>
-                    <span>{playerInventory.weight / 1000}/{playerInventory.maxWeight / 1000} Kg</span>
+                    <span>
+                        {playerInventory.weight / 1000}/{playerInventory.maxWeight / 1000} Kg
+                    </span>
                 </header>
 
                 {/* @ts-ignore */}
@@ -152,15 +183,19 @@ const ContainerInventory = () => {
                     animation={150}
                     onEnd={transfertItem}
                 >
-                    {playerInventoryItems.map(item => (
-                        <InventoryItem key={item.id} item={item} />
-                    ))}
+                    {playerInventoryItems
+                        .sort((a, b) => a.label.localeCompare(b.label))
+                        .map((item) => (
+                            <InventoryItem key={item.id} item={item} />
+                        ))}
                 </ReactSortable>
             </section>
 
             <section>
                 <header className={cn(styles.banner, styles[getBanner(targetInventory.type)])}>
-                    <span>{targetInventory.weight / 1000}/{targetInventory.maxWeight / 1000} Kg</span>
+                    <span>
+                        {targetInventory.weight / 1000}/{targetInventory.maxWeight / 1000} Kg
+                    </span>
                 </header>
 
                 {/* @ts-ignore */}
@@ -175,13 +210,15 @@ const ContainerInventory = () => {
                     animation={150}
                     onEnd={transfertItem}
                 >
-                    {targetInventoryItems.map(item => (
-                        <InventoryItem key={item.id} item={item} />
-                    ))}
+                    {targetInventoryItems
+                        .sort((a, b) => a.label.localeCompare(b.label))
+                        .map((item) => (
+                            <InventoryItem key={item.id} item={item} />
+                        ))}
                 </ReactSortable>
             </section>
         </main>
     );
-}
+};
 
-export default ContainerInventory
+export default ContainerInventory;

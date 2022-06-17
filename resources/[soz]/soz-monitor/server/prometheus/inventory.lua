@@ -56,17 +56,17 @@ Citizen.CreateThread(function()
 end)
 
 local function BuildInventoryMetrics(inventoryMetrics, name, description, type, getValue)
-    local metricsString = ([[
-
+    local lines = {}
+    table.insert(lines, ([[
 # HELP %s %s
 # TYPE %s %s
-]]):format(name, description, name, type)
+]]):format(name, description, name, type))
 
     for _, inventoryMetric in pairs(inventoryMetrics) do
         if inventoryMetric.type ~= "player" then
-            metricsString = metricsString .. string.format([[
-%s{id="%s",type="%s",label="%s",owner="%s"} %d
-]], name, inventoryMetric.id, inventoryMetric.type, inventoryMetric.label, inventoryMetric.owner, getValue(inventoryMetric))
+            table.insert(lines,
+                         string.format("%s{id=\"%s\",type=\"%s\",label=\"%s\",owner=\"%s\"} %d", name, inventoryMetric.id, inventoryMetric.type,
+                                       inventoryMetric.label, inventoryMetric.owner, getValue(inventoryMetric)))
         end
     end
 
@@ -75,61 +75,57 @@ local function BuildInventoryMetrics(inventoryMetrics, name, description, type, 
             inventoryPlayer = playerInventoryListConnected[id]
         end
 
-        metricsString = metricsString .. string.format([[
-%s{id="%s",type="player",label="%s",owner="%s"} %d
-]], name, id, inventoryPlayer.name, id, getValue(inventoryPlayer))
+        table.insert(lines,
+                     string.format("%s{id=\"%s\",type=\"player\",label=\"%s\",owner=\"%s\"} %d", name, id, inventoryPlayer.name, id, getValue(inventoryPlayer)))
     end
 
-    return metricsString
+    return table.concat(lines, "\n")
 end
 
 function GetInventoryMetrics()
     local inventoryMetrics = exports["soz-inventory"]:GetMetrics()
-    local metricsString = BuildInventoryMetrics(inventoryMetrics, "soz_inventory_slots", "Inventory slots", "gauge", function(inventoryMetric)
-        return inventoryMetric.slots
-    end)
 
-    metricsString = metricsString ..
-                        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_total_item_count", "Total number of items in inventory", "gauge",
-                                              function(inventoryMetric)
+    local lines = {
+        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_slots", "Inventory slots", "gauge", function(inventoryMetric)
+            return inventoryMetric.slots
+        end),
+        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_total_item_count", "Total number of items in inventory", "gauge", function(inventoryMetric)
             return #inventoryMetric.items
-        end)
-
-    metricsString = metricsString .. BuildInventoryMetrics(inventoryMetrics, "soz_inventory_weight", "Inventory weight", "gauge", function(inventoryMetric)
-        if inventoryMetric.type ~= "player" then
-            return inventoryMetric.weight
-        end
-
-        local weight = 0
-
-        for _, item in pairs(inventoryMetric.items) do
-            local itemDef = QBCore.Shared.Items[item.name]
-
-            if itemDef then
-                weight = weight + (itemDef.weight * item.amount)
+        end),
+        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_weight", "Inventory weight", "gauge", function(inventoryMetric)
+            if inventoryMetric.type ~= "player" then
+                return inventoryMetric.weight
             end
-        end
 
-        return weight
-    end)
+            local weight = 0
 
-    metricsString = metricsString ..
-                        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_max_weight", "Max inventory weight", "gauge", function(inventoryMetric)
+            for _, item in pairs(inventoryMetric.items) do
+                local itemDef = QBCore.Shared.Items[item.name]
+
+                if itemDef then
+                    weight = weight + (itemDef.weight * item.amount)
+                end
+            end
+
+            return weight
+        end),
+        BuildInventoryMetrics(inventoryMetrics, "soz_inventory_max_weight", "Max inventory weight", "gauge", function(inventoryMetric)
             return inventoryMetric.maxWeight
-        end)
-
-    metricsString = metricsString .. [[
-
+        end),
+        [[
 # HELP soz_inventory_item_count Count item by inventory
 # TYPE soz_inventory_item_count gauge
-]]
+]],
+    }
 
     for _, inventoryMetric in pairs(inventoryMetrics) do
         if inventoryMetric.type ~= "player" then
             for _, item in pairs(inventoryMetric.items) do
-                metricsString = metricsString .. string.format([[
-soz_inventory_item_count{id="%s",type="%s",label="%s",owner="%s",item_type="%s",item_name="%s",item_label="%s"} %d
-]], inventoryMetric.id, inventoryMetric.type, inventoryMetric.label, inventoryMetric.owner, item.type, item.name, item.label, item.amount)
+                table.insert(lines,
+                             string.format(
+                                 "soz_inventory_item_count{id=\"%s\",type=\"%s\",label=\"%s\",owner=\"%s\",item_type=\"%s\",item_name=\"%s\",item_label=\"%s\"} %d",
+                                 inventoryMetric.id, inventoryMetric.type, inventoryMetric.label, inventoryMetric.owner, item.type, item.name, item.label,
+                                 item.amount))
             end
         end
     end
@@ -143,12 +139,13 @@ soz_inventory_item_count{id="%s",type="%s",label="%s",owner="%s",item_type="%s",
             for _, item in pairs(inventoryPlayer.items) do
                 local itemDef = QBCore.Shared.Items[item.name]
 
-                metricsString = metricsString .. string.format([[
-    soz_inventory_item_count{id="%s",type="player",label="%s",owner="%s",item_type="%s",item_name="%s",item_label="%s"} %d
-    ]], id, inventoryPlayer.name, id, item.type, item.name, itemDef.label, item.amount)
+                table.insert(lines,
+                             string.format(
+                                 "soz_inventory_item_count{id=\"%s\",type=\"player\",label=\"%s\",owner=\"%s\",item_type=\"%s\",item_name=\"%s\",item_label=\"%s\"} %d",
+                                 id, inventoryPlayer.name, id, item.type, item.name, itemDef.label, item.amount))
             end
         end
     end
 
-    return metricsString
+    return table.concat(lines, "\n")
 end

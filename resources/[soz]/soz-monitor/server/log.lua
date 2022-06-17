@@ -44,6 +44,8 @@ local function formatLogString(level, message, playerData)
         end
     end
 
+    logMessage = logMessage .. "^7"
+
     return logMessage
 end
 

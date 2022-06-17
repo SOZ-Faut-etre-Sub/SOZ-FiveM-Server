@@ -4,9 +4,9 @@ function FilterSubmix:new(name, output)
     self.__index = self
 
     local submix = CreateAudioSubmix(name)
-    AddAudioSubmixOutput(submix, output or 0)
+    AddAudioSubmixOutput(submix, output)
 
-    return setmetatable({submix = submix, output = output or 0}, self)
+    return setmetatable({submix = submix, output = output}, self)
 end
 
 function FilterSubmix:setEffectParamInt(param, value)
@@ -22,7 +22,7 @@ function FilterSubmix:setEffectRadioFx()
 end
 
 function FilterSubmix:setBalance(left, right)
-    SetAudioSubmixOutputVolumes(self.submix, self.output, left, right, left, right, left, right)
+    SetAudioSubmixOutputVolumes(self.submix, 0, left, right, left, right, left, right)
 end
 
 function FilterSubmix:connect(serverId)

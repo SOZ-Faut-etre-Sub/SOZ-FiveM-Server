@@ -95,6 +95,15 @@ RegisterNetEvent("admin:server:bring", function(player)
     local coords = GetEntityCoords(admin)
     local target = GetPlayerPed(player.id)
     SetEntityCoords(target, coords)
+
+    local Target = QBCore.Functions.GetPlayer(player.id)
+    if Target then
+        local inside = Target.PlayerData.metadata["inside"]
+
+        inside.apartment = false
+        inside.exitCoord = false
+        Target.Functions.SetMetaData("inside", inside)
+    end
 end)
 
 RegisterNetEvent("admin:server:spectate", function(player)
