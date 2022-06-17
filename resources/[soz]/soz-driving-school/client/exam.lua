@@ -70,15 +70,20 @@ local CurrentBlip
 ---@param checkpoint table Checkpoint to be displayed
 ---@param nextCheckpoint table Following checkpoint
 ---@return number
-local function DisplayCheckpoint(checkpoint, nextCheckpoint)
-    local cpType = Config.CheckpointType
-    if not nextCheckpoint then -- Last check point
-        nextCheckpoint = {}
-        cpType = 4 -- Chequered flag
+local function DisplayCheckpoint(licenseType, checkpoint, nextCheckpoint)
+    local marker = Config.Markers[licenseType]
+    if not marker then
+        error("Invalid marker for " .. licenseType)
     end
 
-    local cpColor = Config.CheckpointColor
-    local cpSize = Config.CheckpointSize
+    local cpType = marker.type
+    if not nextCheckpoint then -- Last check point
+        nextCheckpoint = {}
+        cpType = marker.typeFinal
+    end
+
+    local cpColor = marker.color
+    local cpSize = marker.size
 
     -- Draw Checkpoint
     local cpId = CreateCheckpoint(cpType, checkpoint.x, checkpoint.y, checkpoint.z, nextCheckpoint.x or 0.0, nextCheckpoint.y or 0.0, nextCheckpoint.z or 0.0,
@@ -139,7 +144,7 @@ local function startExamLoop(licenseType, context)
         local prevCheckpoint = nil
         local checkpoint = getNextCheckpoint(checkpoints, true)
         local nextCheckpoint = getNextCheckpoint(checkpoints, false)
-        local cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
+        local cpId = DisplayCheckpoint(licenseType, checkpoint, nextCheckpoint)
 
         -- Checkpoint loop
         while passingExam do -- Exam loop
@@ -180,7 +185,7 @@ local function startExamLoop(licenseType, context)
                 checkpoint = getNextCheckpoint(checkpoints, true)
                 nextCheckpoint = getNextCheckpoint(checkpoints, false)
                 if checkpoint then
-                    cpId = DisplayCheckpoint(checkpoint, nextCheckpoint)
+                    cpId = DisplayCheckpoint(licenseType, checkpoint, nextCheckpoint)
                 else
                     TerminateExam(true, licenseType)
                 end

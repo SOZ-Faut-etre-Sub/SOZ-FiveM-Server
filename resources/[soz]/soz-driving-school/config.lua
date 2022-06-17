@@ -122,7 +122,17 @@ Config.NotificationDelay = Config.PenaltyMaxDuration -- in ms
 
 Config.CheckpointType = 0
 Config.CheckpointSize = 3.0
-Config.CheckpointColor = {r = 12, g = 123, b = 86, a = 150}
+Config.MarkerColor = {r = 12, g = 123, b = 86, a = 150}
+
+Config.MarkerLandVehicle = {type = 0, typeFinal = 4, size = 3.0, color = Config.MarkerColor}
+Config.MarkerAirVehicle = {type = 42, typeFinal = 4, size = 10.0, color = Config.MarkerColor}
+
+Config.Markers = {
+    ["car"] = Config.MarkerLandVehicle,
+    ["truck"] = Config.MarkerLandVehicle,
+    ["motorcycle"] = Config.MarkerLandVehicle,
+    ["heli"] = Config.MarkerAirVehicle,
+}
 
 Config.InstructorStartSpeech = {
     {
