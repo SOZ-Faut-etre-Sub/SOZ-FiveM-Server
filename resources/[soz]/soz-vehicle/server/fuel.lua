@@ -9,13 +9,13 @@ local function saveStation(id)
     })
 end
 
-RegisterNetEvent("fuel:pay", function(price, source)
+local function pay(price, source)
     local xPlayer = QBCore.Functions.GetPlayer(source)
     local amount = math.floor(price + 0.5)
     if price > 0 then
         xPlayer.Functions.RemoveMoney("money", amount)
     end
-end)
+end
 
 MySQL.ready(function()
     local data = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage")
@@ -76,8 +76,18 @@ RegisterNetEvent("soz-fuel:server:setFinalFuel", function(id, currentFuelAdd)
     saveStation(id)
 end)
 
-RegisterNetEvent("soz-fuel:server:SetFuel", function(entity, newFuel, serverIDcar)
+RegisterNetEvent("soz-fuel:server:BeginFueling", function(currentFuel, playerId)
+    playerFueling[playerId] = currentFuel
+end)
+
+RegisterNetEvent("soz-fuel:server:SetFuel", function(entity, newFuel, serverIDcar, stationType, playerId)
     TriggerClientEvent("soz-fuel:client:SetFuel", serverIDcar, entity, newFuel)
+
+    if stationType ~= "private" then
+        local price = ((newFuel - playerFueling[playerId])/ 100) * Config.RefillCost
+        pay(tonumber(math.ceil(price)), playerId)
+        playerFueling[playerId] = nil;
+    end
 end)
 
 --- Items
