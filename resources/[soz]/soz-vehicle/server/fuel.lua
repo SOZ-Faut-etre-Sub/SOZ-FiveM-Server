@@ -84,7 +84,7 @@ RegisterNetEvent("soz-fuel:server:SetFuel", function(entity, newFuel, serverIDca
     TriggerClientEvent("soz-fuel:client:SetFuel", serverIDcar, entity, newFuel)
 
     if stationType ~= "private" then
-        local price = ((newFuel - playerFueling[playerId])/ 100) * Config.RefillCost
+        local price = ((newFuel - playerFueling[playerId]) / 100) * Config.RefillCost
         pay(tonumber(math.ceil(price)), playerId)
         playerFueling[playerId] = nil;
     end
