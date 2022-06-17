@@ -201,7 +201,7 @@ local function GetDeliveryLocation()
                     TaskLeaveVehicle(NpcData.Npc, veh, 0)
                     SetPedRelationshipGroupHash(NpcData.Npc, taxiGroupHash)
                     SetRelationshipBetweenGroups(0, taxiGroupHash, GetHashKey("PLAYER"))
-                    SetRelationshipBetweenGroups(0,  GetHashKey("PLAYER"), taxiGroupHash)
+                    SetRelationshipBetweenGroups(0, GetHashKey("PLAYER"), taxiGroupHash)
                     SetEntityAsMissionEntity(NpcData.Npc, false, true)
                     SetEntityAsNoLongerNeeded(NpcData.Npc)
                     local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
