@@ -4,6 +4,7 @@ local HorodateurOpen = false
 local HorodateurActive = false
 local lastLocation = nil
 local TotalDistance = 0
+local retval, taxiGroupHash = AddRelationshipGroup("TAXI")
 
 HorodateurData = {Tarif = 4.6, TarifActuelle = 0, Distance = 0}
 
@@ -198,6 +199,9 @@ local function GetDeliveryLocation()
                         return
                     end
                     TaskLeaveVehicle(NpcData.Npc, veh, 0)
+                    SetPedRelationshipGroupHash(NpcData.Npc, taxiGroupHash)
+                    SetRelationshipBetweenGroups(0, taxiGroupHash, GetHashKey("PLAYER"))
+                    SetRelationshipBetweenGroups(0,  GetHashKey("PLAYER"), taxiGroupHash)
                     SetEntityAsMissionEntity(NpcData.Npc, false, true)
                     SetEntityAsNoLongerNeeded(NpcData.Npc)
                     local targetCoords = Config.NPCLocations.TakeLocations[NpcData.LastNpc]
