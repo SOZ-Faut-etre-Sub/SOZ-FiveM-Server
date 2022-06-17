@@ -72,6 +72,15 @@ CreateThread(function()
     end
 end)
 
+-- Reset Belt state on Enter Vehicle
+
+AddEventHandler("gameEventTriggered", function(name, args)
+    if name == "CEventNetworkPlayerEnteredVehicle" and args[1] == PlayerId() then
+        TriggerEvent("hud:client:UpdateSeatbelt", false)
+        SetPedConfigFlag(PlayerPedId(), 184, false)
+    end
+end)
+
 -- Ejection Logic
 
 CreateThread(function()
