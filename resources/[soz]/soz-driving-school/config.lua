@@ -94,6 +94,24 @@ Config.Licenses = {
         label = "Permis moto ($%s)",
         points = 12,
     },
+    ["heli"] = {
+        vehicle = {
+            modelHash = "seasparrow2",
+            spawnPoints = {
+                vector4(-744.84, -1434.05, 5.0, 234.75),
+                vector4(-762.31, -1453.83, 5.0, 234.75),
+                vector4(-724.99, -1444.38, 5.0, 134.21),
+                vector4(-700.73, -1447.2, 5.0, 49.75),
+                vector4(-722.72, -1473.04, 5.0, 58.68),
+                vector4(-744.15, -1495.75, 5.0, 4.52),
+            },
+            networkSync = true
+        },
+        price = 50,
+        icon = "",
+        label = "Permis hélicoptère ($%s)",
+        points = 12,
+    }
 }
 
 Config.VehiclePlateText = "P3RM15"
@@ -186,8 +204,15 @@ Config.FinalCheckpointLandVehicle = {
     z = 3.42,
     message = "Tu es arrivé au bout. Bien joué !",
 }
+Config.FinalCheckpointHeli = {
+    x = -745.25,
+    y = -1468.67,
+    z = 5.0,
+    message = "Très beau vol. Bien joué !",
+}
 Config.FinalCheckpoints = {
     ["car"] = Config.FinalCheckpointLandVehicle,
     ["truck"] = Config.FinalCheckpointLandVehicle,
     ["motorcycle"] = Config.FinalCheckpointLandVehicle,
+    ["heli"] = Config.FinalCheckpointHeli,
 }
