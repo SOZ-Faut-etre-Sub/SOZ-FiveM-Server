@@ -362,17 +362,10 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
 
             local desc;
 
-            if GetVehicleClassFromName(GetHashKey(v.vehicle)) == 13  then
-                desc = Lang:t("menu.text.garageBike", {
-                    value2 = enginePercent,
-                    value3 = bodyPercent,
-                })
+            if GetVehicleClassFromName(GetHashKey(v.vehicle)) == 13 then
+                desc = Lang:t("menu.text.garageBike", {value2 = enginePercent, value3 = bodyPercent})
             else
-                desc = Lang:t("menu.text.garage", {
-                    value = currentFuel,
-                    value2 = enginePercent,
-                    value3 = bodyPercent,
-                })
+                desc = Lang:t("menu.text.garage", {value = currentFuel, value2 = enginePercent, value3 = bodyPercent})
             end
 
             garageType.submenu:AddButton({
