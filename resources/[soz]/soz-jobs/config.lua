@@ -18,6 +18,7 @@ SozJobCore.JobType = {
     CashTransfer = "cash-transfer",
     Bennys = "bennys",
     Upw = "upw",
+    Pawl = "pawl",
     Debug = "debug",
 }
 
@@ -285,6 +286,21 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Upw] = {
         label = "Unexpected Power & Water",
         platePrefix = "UPW",
+        grades = {},
+        menuCallback = "",
+        permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+        },
+    },
+    [SozJobCore.JobType.Pawl] = {
+        label = "Pipe And Wooden Leg",
+        platePrefix = "PAWL",
         grades = {},
         menuCallback = "",
         permissions = {
