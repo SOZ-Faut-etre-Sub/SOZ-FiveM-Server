@@ -57,6 +57,16 @@ CreateThread(function()
             job = "garbage",
         }
     end
+    garbageActions[#garbageActions + 1] = {
+        label = "Recycler nourriture périmée",
+        color = "garbage",
+        icon = "c:bluebird/recycler.png",
+        event = "jobs:client:garbage:processExpired",
+        canInteract = function()
+            return PlayerData.job.onduty and HasExpiredItems()
+        end,
+        job = "garbage",
+    }
 
     exports["qb-target"]:AddBoxZone("garbage:process", vector3(-601.26, -1602.99, 30.41), 2.2, 3.4,
                                     {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
@@ -75,6 +85,15 @@ end)
 --- Functions
 local function isPlayingGarbageAnim(ped)
     return IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_pickup_garbage_man", 3) or IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_throw_garbage_man", 3)
+end
+
+HasExpiredItems = function()
+    for _, item in pairs(PlayerData.items or {}) do
+        if exports["soz-utils"]:ItemIsExpired(item) then
+            return true
+        end
+    end
+    return false
 end
 
 local attachBag = function()
@@ -104,6 +123,32 @@ RegisterNetEvent("jobs:client:garbage:processBags", function(data)
         disableCombat = true,
     }, {animDict = "missfbi4prepp1", anim = "_bag_throw_garbage_man", flags = 49}, {}, {}, function() -- Done
         TriggerServerEvent("jobs:server:garbage:processBags", data.item)
+    end)
+end)
+
+RegisterNetEvent("jobs:client:garbage:processExpired", function(data)
+    if data.slot == nil then
+        for _, item in pairs(PlayerData.items or {}) do
+            if exports["soz-utils"]:ItemIsExpired(item) then
+                data.slot = item.slot
+                goto continue
+            end
+        end
+    end
+    ::continue::
+
+    if data.slot == nil then
+        return
+    end
+
+    QBCore.Functions.Progressbar("Recyclage du sac", "Recyclage en cours...", math.random(4000, 8000), false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "missfbi4prepp1", anim = "_bag_throw_garbage_man", flags = 49}, {}, {}, function() -- Done
+        TriggerServerEvent("jobs:server:garbage:processExpired", data.slot)
     end)
 end)
 

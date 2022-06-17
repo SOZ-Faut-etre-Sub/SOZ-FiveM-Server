@@ -472,6 +472,7 @@ Config.Licenses = {
 Config.RadarAllowedVehicle = {
     [GetHashKey("ambulance")] = true,
     [GetHashKey("ambcar")] = true,
+    [GetHashKey("firetruk")] = true,
     --- LSPD
     [GetHashKey("police")] = true,
     [GetHashKey("police2")] = true,

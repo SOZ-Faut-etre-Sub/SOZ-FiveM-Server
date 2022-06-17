@@ -46,7 +46,17 @@ function RadioStateManager:addConsumer(source, context, channel)
         self.state[channel][source] = {}
     end
 
-    table.insert(self.state[channel][source], context)
+    local newContext = {}
+
+    for _, sourceContext in pairs(self.state[channel][source]) do
+        if context ~= sourceContext then
+            table.insert(newContext, sourceContext)
+        end
+    end
+
+    table.insert(newContext, context)
+
+    self.state[channel][source] = newContext
 end
 
 function RadioStateManager:removeConsumer(source, context, channel)

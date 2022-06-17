@@ -155,6 +155,7 @@ Citizen.CreateThread(function()
     PrimaryLongRadioModuleInstance:init()
     SecondaryShortRadioModuleInstance:init()
     SecondaryLongRadioModuleInstance:init()
+    FilterRegistryInstance:init()
 
     MumbleSetVoiceTarget(voiceTarget)
     MumbleClearVoiceTarget(voiceTarget)

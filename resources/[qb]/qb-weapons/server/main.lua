@@ -171,6 +171,20 @@ RegisterNetEvent("weapons:server:SetWeaponQuality", function(data, hp)
     exports['soz-inventory']:SetMetadata(Player.PlayerData.source, data.slot, {quality = hp})
 end)
 
+RegisterNetEvent("weapons:server:RemoveFireExtinguisher", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    local slots = exports["soz-inventory"]:GetItemSlots(Player.PlayerData.source, {name = "weapon_fireextinguisher"})
+    for slot, _ in pairs(slots) do
+        local item = exports["soz-inventory"]:GetSlot(Player.PlayerData.source, slot)
+
+        if item then
+            exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1, item.metadata, slot)
+            return
+        end
+    end
+end)
+
 RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)

@@ -50,10 +50,9 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     local playerPed = PlayerPedId()
 
     -- Default player state
-    SetEntityCoordsNoOffset(playerPed, playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z + 1.0, false,
-                            false, false, true)
-    NetworkResurrectLocalPlayer(playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z + 1.0, 0, true, true,
-                                false)
+    SetEntityCoordsNoOffset(playerPed, playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, false, false,
+                            false, true)
+    NetworkResurrectLocalPlayer(playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, 0, true, true, false)
     ClearPedTasksImmediately(playerPed)
     SetBlockingOfNonTemporaryEvents(playerPed, true)
 
@@ -63,6 +62,10 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     while not HasCollisionLoadedAroundEntity(playerPed) do
         Wait(0)
     end
+
+    -- Ensure player is on ground
+    SetEntityCoordsNoOffset(playerPed, playerObject.PlayerData.position.x, playerObject.PlayerData.position.y, playerObject.PlayerData.position.z, false, false,
+                            false, true)
 
     -- Make player visible
     SetFocusEntity(PlayerPedId())

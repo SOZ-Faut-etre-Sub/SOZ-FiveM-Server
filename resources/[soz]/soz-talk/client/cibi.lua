@@ -1,16 +1,34 @@
 local currentVehicle, radioOpen = 0, false
-local primaryRadio, secondaryRadio = nil, nil
-local primaryRadioVolume, secondaryRadioVolume = 100, 100
+local primaryRadio, secondaryRadio = {}, {}
+local isRegistered = false
 local stateBagHandlers = {}
 
 --- Functions
 local function handleUpdateRadio(data, isPrimary)
     if isPrimary and data.frequency ~= primaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio, "primary")
-    elseif not isPrimary and data.frequency ~= secondaryRadio then
-        TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio, "secondary")
+        if primaryRadio ~= nil and primaryRadio ~= secondaryRadio then
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio, "primary")
+        end
+
+        if data.frequency ~= nil then
+            TriggerServerEvent("voip:server:radio:connect", "radio-lr", "primary", data.frequency)
+        end
+
+        primaryRadio = data.frequency
     end
-    TriggerServerEvent("voip:server:radio:connect", "radio-lr", isPrimary and "primary" or "secondary", data.frequency)
+
+    if not isPrimary and data.frequency ~= secondaryRadio then
+        if secondaryRadio ~= nil and secondaryRadio ~= primaryRadio then
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio, "secondary")
+        end
+
+        if data.frequency ~= nil then
+            TriggerServerEvent("voip:server:radio:connect", "radio-lr", "secondary", data.frequency)
+        end
+
+        secondaryRadio = data.frequency
+    end
+
     if isPrimary then
         exports["soz-voip"]:SetRadioLongRangePrimaryVolume(data.volume or 100)
         TriggerEvent("voip:client:radio:set-balance", "radio-lr", "primary", data.ear)
@@ -19,19 +37,9 @@ local function handleUpdateRadio(data, isPrimary)
         TriggerEvent("voip:client:radio:set-balance", "radio-lr", "secondary", data.ear)
     end
 
-    -- exports["soz-voip"]:setVoiceEar("radio-lr", data.ear, isPrimary)
-
     SendNUIMessage({type = "cibi", action = "frequency_change", frequency = data.frequency, isPrimary = isPrimary})
     SendNUIMessage({type = "cibi", action = "volume_change", volume = data.volume, isPrimary = isPrimary})
     SendNUIMessage({type = "cibi", action = "ear_change", ear = data.ear, isPrimary = isPrimary})
-
-    if isPrimary then
-        primaryRadio = data.frequency
-        primaryRadioVolume = data.volume
-    else
-        secondaryRadio = data.frequency
-        secondaryRadioVolume = data.volume
-    end
 end
 
 local function vehicleRegisterHandlers()
@@ -39,13 +47,14 @@ local function vehicleRegisterHandlers()
     local state = Entity(currentVehicle).state
 
     if GetPedInVehicleSeat(currentVehicle, -1) ~= playerPed and GetPedInVehicleSeat(currentVehicle, 0) ~= playerPed then
-        return
+        return false
     end
 
-    exports["soz-voip"]:SetRadioLongRangePowerState(true)
+    if state.radioEnabled then
+        handleUpdateRadio(state.primaryRadio, true)
+        handleUpdateRadio(state.secondaryRadio, false)
+    end
 
-    handleUpdateRadio(state.primaryRadio, true)
-    handleUpdateRadio(state.secondaryRadio, false)
     SendNUIMessage({type = "cibi", action = "enabled", isEnabled = state.radioEnabled})
 
     stateBagHandlers[#stateBagHandlers + 1] = AddStateBagChangeHandler("radioEnabled", "entity:" .. VehToNet(currentVehicle), function(_, _, value, _, _)
@@ -54,29 +63,38 @@ local function vehicleRegisterHandlers()
         end
 
         if value then
-            if Entity(currentVehicle).state.primaryRadio then
-                TriggerServerEvent("voip:server:radio:connect", "radio-lr", "primary", Entity(currentVehicle).state.primaryRadio.frequency)
+            local statePrimary = Entity(currentVehicle).state.primaryRadio
+            local stateSecondary = Entity(currentVehicle).state.secondaryRadio
+
+            if statePrimary then
+                handleUpdateRadio(statePrimary, true)
             end
 
-            if Entity(currentVehicle).state.secondaryRadio then
-                TriggerServerEvent("voip:server:radio:connect", "radio-lr", "secondary", Entity(currentVehicle).state.secondaryRadio.frequency)
+            if stateSecondary then
+                handleUpdateRadio(stateSecondary, false)
             end
         else
-            exports["soz-voip"]:SetRadioLongRangePowerState(false)
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio, "primary")
+            TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio, "secondary")
+
+            primaryRadio = nil
+            secondaryRadio = nil
         end
     end)
 
     stateBagHandlers[#stateBagHandlers + 1] = AddStateBagChangeHandler("primaryRadio", "entity:" .. VehToNet(currentVehicle), function(_, _, value, _, _)
-        if value ~= nil and value.frequency > 0.0 then
+        if value ~= nil then
             handleUpdateRadio(value, true)
         end
     end)
 
     stateBagHandlers[#stateBagHandlers + 1] = AddStateBagChangeHandler("secondaryRadio", "entity:" .. VehToNet(currentVehicle), function(_, _, value, _, _)
-        if value ~= nil and value.frequency > 0.0 then
+        if value ~= nil then
             handleUpdateRadio(value, false)
         end
     end)
+
+    return true
 end
 
 local function toggleRadio(toggle)
@@ -105,7 +123,12 @@ local function vehicleUnregisterHandlers()
     for _, handler in ipairs(stateBagHandlers) do
         RemoveStateBagChangeHandler(handler)
     end
-    exports["soz-voip"]:SetRadioLongRangePowerState(false)
+
+    TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", primaryRadio, "primary")
+    TriggerServerEvent("voip:server:radio:disconnect", "radio-lr", secondaryRadio, "secondary")
+    primaryRadio = nil
+    secondaryRadio = nil
+
     SendNUIMessage({type = "cibi", action = "reset"})
     toggleRadio(false)
 end
@@ -128,24 +151,26 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
         return
     end
 
-    if data.primary and tonumber(data.primary) >= Config.Radio.min and tonumber(data.primary) <= Config.Radio.max then
+    if data.primary then
         local state = Entity(currentVehicle).state.primaryRadio
+        state.frequency = tonumber(data.primary)
 
-        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio",
-                           {frequency = tonumber(data.primary), volume = primaryRadioVolume, ear = state.ear})
-
+        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", state)
         SoundProvider.default(0.5)
+
         cb("ok")
+
         return
     end
-    if data.secondary and tonumber(data.secondary) >= Config.Radio.min and tonumber(data.secondary) <= Config.Radio.max then
+    if data.secondary then
         local state = Entity(currentVehicle).state.secondaryRadio
+        state.frequency = tonumber(data.secondary)
 
-        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio",
-                           {frequency = tonumber(data.secondary), volume = secondaryRadioVolume, ear = state.ear})
-
+        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio", state)
         SoundProvider.default(0.5)
+
         cb("ok")
+
         return
     end
     cb("nok")
@@ -157,25 +182,19 @@ RegisterNUICallback("cibi/change_volume", function(data, cb)
         return
     end
     if data.primary then
-        local state = Entity(currentVehicle).state.secondaryRadio
+        local state = Entity(currentVehicle).state.primaryRadio
+        state.volume = data.primary
 
-        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", {
-            frequency = primaryRadio,
-            volume = data.primary,
-            ear = state.ear,
-        })
+        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", state)
         SoundProvider.default(data.primary)
         cb("ok")
         return
     end
     if data.secondary then
         local state = Entity(currentVehicle).state.secondaryRadio
+        state.volume = data.secondary
 
-        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio", {
-            frequency = secondaryRadio,
-            volume = data.secondary,
-            ear = state.ear,
-        })
+        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio", state)
         SoundProvider.default(data.secondary)
         cb("ok")
         return
@@ -190,25 +209,24 @@ RegisterNUICallback("cibi/change_ear", function(data, cb)
     end
     if data.primary and tonumber(data.primary) >= 0 and tonumber(data.primary) <= 2 then
         local state = Entity(currentVehicle).state.primaryRadio
+        state.ear = data.primary
 
-        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", {
-            frequency = state.frequency,
-            volume = state.volume,
-            ear = data.primary,
-        })
-
+        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", state)
         SoundProvider.default(state.volume)
+
         cb("ok")
+
         return
     end
     if data.secondary and tonumber(data.secondary) >= 0 and tonumber(data.secondary) <= 2 then
         local state = Entity(currentVehicle).state.secondaryRadio
+        state.ear = data.secondary
 
-        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio",
-                           {frequency = state.frequency, volume = state.volume, ear = data.primary})
-
+        TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio", state)
         SoundProvider.default(state.volume)
+
         cb("ok")
+
         return
     end
     cb("nok")
@@ -232,13 +250,16 @@ CreateThread(function()
                 currentVehicle = GetVehiclePedIsUsing(ped)
 
                 if Entity(currentVehicle).state.hasRadio then
-                    vehicleRegisterHandlers()
+                    isRegistered = vehicleRegisterHandlers()
                 end
-            elseif currentVehicle ~= 0 and (not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"]) or
-                PlayerData.metadata["inlaststand"] then
+            end
 
-                if Entity(currentVehicle).state.hasRadio or not DoesEntityExist(currentVehicle) then
+            if currentVehicle ~= 0 and
+                (not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"]) then
+
+                if isRegistered then
                     vehicleUnregisterHandlers()
+                    isRegistered = false
                 end
 
                 currentVehicle = 0
