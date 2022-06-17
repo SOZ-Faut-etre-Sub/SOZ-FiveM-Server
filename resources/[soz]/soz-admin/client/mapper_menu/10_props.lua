@@ -30,7 +30,7 @@ end
 propsMenu:AddSlider({
     label = "Choisir un modèle",
     value = nil,
-    values = {{label = "poubelle", value = "prop_cs_bin_01_skinned"}},
+    values = {{label = "poubelle", value = "soz_prop_bb_bin"}},
     select = function(_, value)
         selectModel(value)
     end,
