@@ -1,7 +1,7 @@
 --- @class Field
 Field = {}
 
-function Field:new(identifier, fieldModel, fieldPositions, fieldCapacity, refillDelay)
+function Field:new(identifier, fieldModel, fieldPositions, refillDelay)
     self.__index = self
 
     --- Build empty harvest history for initializing the field
@@ -15,7 +15,6 @@ function Field:new(identifier, fieldModel, fieldPositions, fieldCapacity, refill
         field = {},
         model = fieldModel,
         positions = fieldPositions,
-        maxCapacity = fieldCapacity,
         refill = refillDelay,
         harvestHistory = harvestHistory,
     }, self)
