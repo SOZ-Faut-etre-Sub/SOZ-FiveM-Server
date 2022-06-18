@@ -143,7 +143,7 @@ Config.InstructorStartSpeech = {
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
 
-Config.CheckpointCount = 2 -- Number of checkpoints during exam (including final checkpoint)
+Config.CheckpointCount = 6 -- Number of checkpoints during exam (including final checkpoint)
 Config.Checkpoints = {
     {
         x = -606.1,
@@ -259,9 +259,13 @@ Config.Checkpoints = {
         licenses = {"car", "truck", "motorcycle"},
     },
     {x = -340.44, y = -2357.59, z = 30.65, licenses = {"heli"}},
-    {x = -934.18, y = -1280.37, z = 28.13, licenses = {"heli"}},
-    {x = -1511.35, y = -555.54, z = 52.55, licenses = {"heli"}},
+    {x = -934.18, y = -1280.37, z = 28.13, message = "Olé !", licenses = {"heli"}},
+    {x = -1511.35, y = -555.54, z = 52.55, message = "Belle manoeuvre !", licenses = {"heli"}},
     {x = -913.59, y = -382.14, z = 154.54, licenses = {"heli"}},
+    {x = -75.35, y = -819.17, z = 326.79, message = "Je suis le roi du monde !", licenses = {"heli"}},
+    {x = -7.21, y = 682.43, z = 197.93, message = "Redresse ! On va se noyer !", licenses = {"heli"}},
+    {x = 722.25, y = 1198.04, z = 350.88, message = "Vinewood, baby !", licenses = {"heli"}},
+    {x = 592.46, y = -1021.0, z = 21.91, licenses = {"heli"}},
 }
 
 Config.FinalCheckpointLandVehicle = {
