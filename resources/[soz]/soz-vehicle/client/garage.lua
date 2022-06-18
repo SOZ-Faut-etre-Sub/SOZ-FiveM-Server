@@ -150,6 +150,12 @@ local function GetEmptyParkingSlots(slots, indexgarage)
 end
 
 RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
+    if not IsModelInCdimage(GetHashKey(vehicle.vehicle)) then
+        exports["soz-monitor"]:Log("ERROR", "Invalid vehicle model", {model = vehicle.vehicle, plate = vehicle.plate})
+        exports["soz-hud"]:DrawNotification("Véhicule invalide : " .. vehicle.vehicle, "error")
+        return
+    end
+
     local newLockState = QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, true)
     if newLockState == -1 then
         exports["soz-hud"]:DrawNotification("Véhicule en cours de livraison", "warning")
