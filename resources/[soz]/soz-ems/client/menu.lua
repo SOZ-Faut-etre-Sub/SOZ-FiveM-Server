@@ -11,10 +11,7 @@ local function PropsEntity(menu)
         icon = "🚧",
         label = "Poser un objet",
         value = nil,
-        values = {
-            {label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}},
-            {label = "Barrière", value = {item = "police_barrier", props = "prop_barrier_work05"}},
-        },
+        values = {{label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}}},
         select = function(_, value)
             TriggerServerEvent("job:server:placeProps", value.item, value.props)
         end,
