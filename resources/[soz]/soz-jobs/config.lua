@@ -302,7 +302,7 @@ SozJobCore.Jobs = {
         label = "Pipe And Wooden Leg",
         platePrefix = "PAWL",
         grades = {},
-        menuCallback = "",
+        menuCallback = "pawl:client:OpenSocietyMenu",
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
