@@ -84,8 +84,9 @@ VehiculeChoose:On("open", function(menu)
             menu:Close()
         end,
     })
+    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(voiture["hash"]))
     menu:AddButton({
-        label = "Acheter " .. voiture["name"],
+        label = "Acheter " .. vehicleName,
         rightLabel = "💸 " .. voiture["price"] .. "$",
         value = voiture,
         description = "Confirmer l'achat",
@@ -125,27 +126,25 @@ VehiculeModel:On("open", function(menu)
         end,
     })
     for k, voiture in pairs(vehicules) do
-        local newlabel = voiture["name"]
+        local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(voiture["hash"]))
         for _, y in pairs(RPCVehiclestorage) do
             if voiture.model == y.model then
                 if y.stock == 0 then
-                    newlabel = "^9" .. voiture["name"]
                     menu:AddButton({
-                        label = newlabel,
+                        label = "^9" .. vehicleName,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
-                        description = "❌ HORS STOCK de " .. voiture["name"],
+                        description = "❌ HORS STOCK de " .. vehicleName,
                         enter = function()
                             clean()
                             CarModels(voiture)
                         end,
                     })
                 elseif y.stock == 1 then
-                    newlabel = "~o~" .. voiture["name"]
                     menu:AddButton({
-                        label = newlabel,
+                        label = "~o~" .. vehicleName,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
                         value = VehiculeChoose,
-                        description = "⚠ Stock limité de  " .. voiture["name"],
+                        description = "⚠ Stock limité de  " .. vehicleName,
                         select = function()
                             GlobalVehicle = voiture
                         end,
@@ -156,10 +155,10 @@ VehiculeModel:On("open", function(menu)
                     })
                 else
                     menu:AddButton({
-                        label = newlabel,
+                        label = vehicleName,
                         rightLabel = "💸 " .. voiture["price"] .. "$",
                         value = VehiculeChoose,
-                        description = "Acheter  " .. voiture["name"],
+                        description = "Acheter  " .. vehicleName,
                         select = function()
                             GlobalVehicle = voiture
                         end,
