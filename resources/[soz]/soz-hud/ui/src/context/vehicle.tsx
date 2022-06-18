@@ -7,12 +7,14 @@ export const VehicleDataContext = createContext({
     lock: 0,
     seatbelt: false,
     lightState: 0,
+    hasFuel: false,
     updateSpeed: (s: number) => {},
     updateFuel: (f: number) => {},
     updateEngine: (e: number) => {},
     updateLock: (l: number) => {},
     updateSeatbelt: (s: boolean) => {},
-    updateLightState: (l: number) => {}
+    updateLightState: (l: number) => {},
+    updateHasFuel: (f: boolean) => {}
 })
 
 const VehicleDataProvider: FunctionComponent<PropsWithChildren<{}>> = ({children}) => {
@@ -22,6 +24,7 @@ const VehicleDataProvider: FunctionComponent<PropsWithChildren<{}>> = ({children
     const [lock, setLock] = useState<number>(1)
     const [seatbelt, setSeatbelt] = useState<boolean>(false)
     const [lightState, setLightState] = useState<number>(0)
+    const [hasFuel, setHasFuel] = useState<boolean>(false)
 
     const updateSpeed = useCallback((s: number) => setSpeed(s), [setSpeed])
     const updateFuel = useCallback((f: number) => setFuel(f), [setFuel])
@@ -29,13 +32,14 @@ const VehicleDataProvider: FunctionComponent<PropsWithChildren<{}>> = ({children
     const updateLock = useCallback((l: number) => setLock(l), [setLock])
     const updateSeatbelt = useCallback((s: boolean) => setSeatbelt(s), [setSeatbelt])
     const updateLightState = useCallback((l: number) => setLightState(l), [setLightState])
+    const updateHasFuel = useCallback((s: boolean) => setHasFuel(s), [setHasFuel])
 
     const value = useMemo(function () {
         return {
-            speed, fuel, engine, lock, seatbelt, lightState,
-            updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState
+            speed, fuel, engine, lock, seatbelt, lightState, hasFuel,
+            updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState, updateHasFuel
         }
-    }, [speed, fuel, engine, lock, seatbelt, lightState, updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState])
+    }, [speed, fuel, engine, lock, seatbelt, lightState, hasFuel, updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState, updateHasFuel])
 
     return (
         <VehicleDataContext.Provider value={value} >
