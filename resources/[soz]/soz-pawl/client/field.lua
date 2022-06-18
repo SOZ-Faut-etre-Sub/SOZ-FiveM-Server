@@ -27,7 +27,25 @@ local function TreeInteraction(identifier, position)
     })
 end
 
+local function CanHarvestField(identifier)
+    local hit, maxHit = 0, Config.Fields[identifier].capacity
+    for _, time in pairs(FieldHarvest[identifier] or {}) do
+        if GetGameTimer() - time <= Config.Fields[identifier].refillDelay then
+            hit = hit + 1
+            if hit >= maxHit then
+                return false
+            end
+        end
+    end
+    return true
+end
+
 RegisterNetEvent("pawl:client:harvestTree", function(data)
+    if not CanHarvestField(data.identifier) then
+        exports["soz-hud"]:DrawNotification("Vous avez ~r~dépassé~s~ le quota de coupe d’arbre.", "error")
+        return
+    end
+
     exports["soz-hud"]:DrawNotification("Vous êtes en train de ~g~couper l’arbre~s~.")
     local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.Duration, false, true,
                                                         {disableMovement = true, disableCombat = true},
@@ -40,6 +58,11 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
     if success then
         local cutTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTree", data.identifier, data.position)
         if cutTree then
+            if FieldHarvest[data.identifier] == nil then
+                FieldHarvest[data.identifier] = {}
+            end
+            table.insert(FieldHarvest[data.identifier], GetGameTimer())
+
             exports["soz-hud"]:DrawNotification("Vous avez ~g~découpé~s~ l’arbre.")
         else
             exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
@@ -48,10 +71,10 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
 end)
 
 RegisterNetEvent("pawl:client:syncField", function(identifier, data)
-    local field = Fields[identifier]
+    local field = FieldTrees[identifier]
     if field == nil then
-        Fields[identifier] = {}
-        field = Fields[identifier]
+        FieldTrees[identifier] = {}
+        field = FieldTrees[identifier]
     end
     local model = Config.Fields[identifier].model
 

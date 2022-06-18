@@ -3,7 +3,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 Fields = {}
 
 for k, v in pairs(Config.Fields) do
-    Fields[k] = Field:new(k, v.model, v.positions, v.capacity, v.refillDelay)
+    Fields[k] = Field:new(k, v.model, v.positions, v.refillDelay)
 
     Fields[k]:FullRefillField()
     Fields[k]:RunBackgroundTasks()
