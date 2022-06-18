@@ -102,5 +102,5 @@ Container["house_stash"] = InventoryContainer:new("stash", {"item"})
 Container["house_fridge"] = InventoryContainer:new("fridge", {"food", "drink"})
 
 --- Jobs
-Container["log_storage"] = InventoryContainer:new("storage", {"log"})
-Container["sawdust_storage"] = InventoryContainer:new("storage", {"sawdust"})
+Container["log_storage"] = InventoryContainer:new("log_storage", {"log"})
+Container["sawdust_storage"] = InventoryContainer:new("sawdust_storage", {"sawdust"})
