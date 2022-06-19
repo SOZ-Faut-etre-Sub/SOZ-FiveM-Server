@@ -10,16 +10,20 @@ Pm = {} -- PollutionManager instance
 -- ON RESOURCE START
 --
 local facilities = {
-    ["Plants"] = {class = Plant, arr = Plants},
-    ["Inverters"] = {class = Inverter, arr = Inverters},
-    ["Terminals"] = {class = Terminal, arr = Terminals},
+    ["plant"] = {class = Plant, arr = Plants},
+    ["inverter"] = {class = Inverter, arr = Inverters},
+    ["terminal"] = {class = Terminal, arr = Terminals},
 }
 
 -- Initialize Plants, Inverters
 local function InitiateFacilities()
-    for configKey, data in pairs(facilities) do
-        for identifier, fData in pairs(Config[configKey]) do
-            local facility = data.class:new(identifier, fData.attributes)
+    local upwFacilities = MySQL.Sync.fetchAll("SELECT type, identifier FROM upw_facility WHERE type <> 'pollution-manager'")
+
+    for _, res in ipairs(upwFacilities) do
+        local data = facilities[res.type]
+
+        if data then
+            local facility = data.class:new(identifier)
 
             data.arr[identifier] = facility
         end
