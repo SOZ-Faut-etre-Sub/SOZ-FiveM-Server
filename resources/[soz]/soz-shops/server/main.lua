@@ -106,7 +106,7 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
                                            ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(amount, QBCore.Shared.Items[item.name].label, price))
                     else
                         Player.Functions.AddMoney("money", price)
-                        local message = "Vous ne pouvez porter cette quantité..."
+                        local message = "Vous ne pouvez pas porter cette quantité..."
                         if reason ~= "invalid_weight" then
                             message = string.format("Il y a eu une erreur : `%s`", reason)
                         end
