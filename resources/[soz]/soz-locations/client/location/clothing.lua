@@ -11,8 +11,8 @@ Locations["ponsonbys"] = {
 Locations["suburban"] = {
     [1] = BoxZone:Create(vector3(123.08, -223.55, 54.56), 25.0, 10.8,
                          {name = "suburban1", heading = 340, minZ = 53.56, maxZ = 56.56, debugPoly = LocationDebugPoly}),
-    [2] = BoxZone:Create(vector3(617.17, 2763.63, 42.09), 25.0, 10.8,
-                         {name = "suburban2", heading = 5, minZ = 41.09, maxZ = 44.09, debugPoly = LocationDebugPoly}),
+    -- [2] = BoxZone:Create(vector3(617.17, 2763.63, 42.09), 25.0, 10.8,
+    --                     {name = "suburban2", heading = 5, minZ = 41.09, maxZ = 44.09, debugPoly = LocationDebugPoly}),
     [3] = BoxZone:Create(vector3(-1190.71, -770.15, 17.32), 25.0, 10.8,
                          {name = "suburban3", heading = 306, minZ = 16.32, maxZ = 19.32, debugPoly = LocationDebugPoly}),
     [4] = BoxZone:Create(vector3(-3173.42, 1044.33, 20.86), 25.0, 10.8,
