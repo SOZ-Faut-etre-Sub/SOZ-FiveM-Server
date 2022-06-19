@@ -82,8 +82,9 @@ VeloChoose:On("open", function(menu)
             menu:Close()
         end,
     })
+    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(cycle["hash"]))
     menu:AddButton({
-        label = "Acheter " .. cycle["name"],
+        label = "Acheter " .. vehicleName,
         rightLabel = "💸 " .. cycle["price"] .. "$",
         description = "Confirmer l'achat",
         select = function()
@@ -122,27 +123,25 @@ VeloModel:On("open", function(menu)
         end,
     })
     for k, cycle in pairs(bicycles) do
-        local newlabel = cycle["name"]
+        local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(cycle["hash"]))
         for _, y in pairs(RPCBicyclestorage) do
             if cycle.model == y.model then
                 if y.stock == 0 then
-                    newlabel = "^9" .. cycle["name"]
                     menu:AddButton({
-                        label = newlabel,
+                        label = "^9" .. vehicleName,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
-                        description = "❌ HORS STOCK de " .. cycle["name"],
+                        description = "❌ HORS STOCK de " .. vehicleName,
                         enter = function()
                             clean()
                             VeloModels(cycle)
                         end,
                     })
                 elseif y.stock == 1 then
-                    newlabel = "~o~" .. cycle["name"]
                     menu:AddButton({
-                        label = newlabel,
+                        label = "~o~" .. vehicleName,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         value = VeloChoose,
-                        description = "⚠ Stock limité de  " .. cycle["name"],
+                        description = "⚠ Stock limité de  " .. vehicleName,
                         select = function()
                             GlobalCycle = cycle
                         end,
@@ -153,10 +152,10 @@ VeloModel:On("open", function(menu)
                     })
                 else
                     menu:AddButton({
-                        label = newlabel,
+                        label = vehicleName,
                         rightLabel = "💸 " .. cycle["price"] .. "$",
                         value = VeloChoose,
-                        description = "Acheter  " .. cycle["name"],
+                        description = "Acheter  " .. vehicleName,
                         select = function()
                             GlobalCycle = cycle
                         end,
