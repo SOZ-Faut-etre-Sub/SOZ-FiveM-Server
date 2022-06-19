@@ -107,7 +107,7 @@ function TattooShop:GenerateMenu(skipIntro)
             if label == "NULL" then
                 if tattoo["LocalizedName"] == nil then
                     print(tattoo["Name"])
-                    label = '???'
+                    label = "???"
                 else
                     label = tattoo["LocalizedName"]
                 end
