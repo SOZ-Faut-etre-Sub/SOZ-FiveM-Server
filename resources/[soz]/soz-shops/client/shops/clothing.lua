@@ -16,16 +16,19 @@ end
 function ClothingShop:setupCam()
     if not DoesCamExist(cam) then
         local ped = PlayerPedId()
-        SetEntityHeading(ped, 199.156)
+        local pedX, pedY, pedZ, pedW = table.unpack(Config.ClothingLocationsInShop[currentShop])
+
+        SetPedCoordsKeepVehicle(ped, pedX, pedY, pedZ - 1.0)
+        SetEntityHeading(ped, pedW)
         FreezeEntityPosition(ped, true)
-        local x, y, z = table.unpack(GetEntityCoords(ped))
+
         cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 
-        SetCamCoord(cam, GetEntityCoords(ped))
-        SetCamRot(cam, -20.0, 0.0, 0.0)
+        local x, y, z, _ = table.unpack(Config.ClothingCameraPositionInShop[currentShop])
+        SetCamCoord(cam, x, y, z)
+        PointCamAtCoord(cam, pedX, pedY, pedZ)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 0, true, true)
-        SetCamCoord(cam, x, y - 2.0, z + 1.0)
 
         self:playIdleAnimation()
     end
@@ -73,8 +76,8 @@ function ClothingShop:GenerateMenu(skipIntro)
     shopMenu:SetSubtitle(self.label)
 
     if skipIntro ~= true and Config.ClothingLocationsInShop[currentShop] then
-        TaskGoStraightToCoord(PlayerPedId(), Config.ClothingLocationsInShop[currentShop].x, Config.ClothingLocationsInShop[currentShop].y,
-                              Config.ClothingLocationsInShop[currentShop].z, 1.0, 1000, Config.ClothingLocationsInShop[currentShop].w, 0.0)
+        local x, y, z, w = table.unpack(Config.ClothingLocationsInShop[currentShop])
+        TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 4000, w, 0.0)
         Wait(4000)
     end
 
