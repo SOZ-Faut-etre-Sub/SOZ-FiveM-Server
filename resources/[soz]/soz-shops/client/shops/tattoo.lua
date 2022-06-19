@@ -103,8 +103,17 @@ function TattooShop:GenerateMenu(skipIntro)
         local overlayField = gender == 0 and "HashNameMale" or "HashNameFemale"
 
         if tattoo[overlayField] ~= "" then
+            local label = GetLabelText(tattoo["Name"])
+            if label == 'NULL' then
+                if tattoo["LocalizedName"] == nil then
+                    print(tattoo["Name"])
+                    label = '???'
+                else
+                    label = tattoo["LocalizedName"]
+                end
+            end
             Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
-                label = GetLabelText(tattoo["Name"]),
+                label = label,
                 value = {collection = tattoo["Collection"], overlay = tattoo[overlayField]},
                 rightLabel = "$" .. QBCore.Shared.GroupDigits(tattoo["Price"]),
                 select = function(item)
