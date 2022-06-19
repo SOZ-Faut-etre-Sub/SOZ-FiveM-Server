@@ -218,8 +218,12 @@ CreateThread(function()
 
                 PlayerInVehicle = true
                 setHudRadar(true)
+                local actualspeed = GetEntitySpeed(vehicle);
+                if actualspeed < 0.09 then
+                    actualspeed = 0
+                end
                 setVehicleData({
-                    speed = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
+                    speed = math.ceil(actualspeed * Config.SpeedMultiplier),
                     fuel = exports["soz-vehicle"]:GetFuel(vehicle),
                     hasFuel = exports["soz-vehicle"]:HasFuel(vehicle),
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
