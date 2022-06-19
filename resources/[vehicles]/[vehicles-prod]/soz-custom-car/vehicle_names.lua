@@ -1,13 +1,22 @@
 Citizen.CreateThread(function()
     --- Vehicles
-    -- AddTextEntryByHash(0x9C32EB57, "Buffalo STX") -- police5
-    -- AddTextEntryByHash(0xB2FF98F0, "Vapid Scout") -- police6
-    -- AddTextEntryByHash(0xF0DFD0A3, "Buffalo Charger") -- sheriff3
-    -- AddTextEntryByHash(0xD0368F51, "Albany Tahoe") -- sheriff4
-    -- AddTextEntryByHash(0x8B6605B9, "Moto Sheriff") -- sheriffb
-    -- AddTextEntryByHash(0x292DC34B, "Granger 3600LX du LSMC") -- ambcar
-    -- AddTextEntryByHash(0xD6016754, "Cognoscenti 55 du FIB") -- cogfbi
-    -- AddTextEntryByHash(0x4DC04683, "Paragon R du FIB") -- paragonfbi
+    AddTextEntryByHash(GetHashKey("ambcar"), "Granger du LSMC")
+    AddTextEntryByHash(GetHashKey("police5"), "Buffalo STX")
+    AddTextEntryByHash(GetHashKey("police6"), "Vapid Scout")
+    AddTextEntryByHash(GetHashKey("sheriff3"), "Buffalo Charger")
+    AddTextEntryByHash(GetHashKey("sheriff4"), "Albany Tahoe")
+    AddTextEntryByHash(GetHashKey("sheriffb"), "Moto Sheriff")
+    AddTextEntryByHash(GetHashKey("paragonfbi"), "Paragon FBI")
+    AddTextEntryByHash(GetHashKey("cogfbi"), "Cognoscenti FBI")
+    AddTextEntryByHash(GetHashKey("dynasty2"), "Dynasty")
+    AddTextEntryByHash(GetHashKey("burrito6"), "Burrito")
+    AddTextEntryByHash(GetHashKey("baller8"), "Baller ST")
+    AddTextEntryByHash(GetHashKey("flatbed3"), "Flatbed")
+    AddTextEntryByHash(GetHashKey("mule6"), "Mule")
+    AddTextEntryByHash(GetHashKey("newsvan"), "Rumpo")
+    AddTextEntryByHash(GetHashKey("packer2"), "Packer")
+    AddTextEntryByHash(GetHashKey("stockade"), "Securicar")
+    AddTextEntryByHash(GetHashKey("utillitruck4"), "Utility Truck")
 
     AddTextEntry('0xA4849CEF','Numéro - 0')   -- POLICE5_A0
     AddTextEntry('0xD083F4ED','Numéro - 1')   -- POLICE5_A1
