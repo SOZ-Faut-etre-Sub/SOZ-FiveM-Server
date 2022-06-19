@@ -30,13 +30,6 @@ local function InitiateFacilities()
     end
 end
 
-local function InitiatePollutionManager()
-    Pm = PollutionManager:new("pm1", {
-        currentPollution = 0, -- Current pollution percent (0-100+)
-        units = {},
-        buffer = {},
-    })
-end
 
 -- Init
 MySQL.ready(function()
@@ -56,7 +49,7 @@ MySQL.ready(function()
     -- MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
 
     InitiatePollutionManager()
-    Pm:StartPollutionLoop()
+    Pm = PollutionManager:new("pm1")
 
     InitiateFacilities()
     StartProductionLoop()
