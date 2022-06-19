@@ -4130,7 +4130,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('flatbed3'),
         ['shop']     = 'na',
     },
-    ['mule']         = {
+    ['mule6']         = {
         ['name']     = 'Mule',
         ['brand']    = 'Box Truck',
         ['model']    = 'mule6',
@@ -4166,7 +4166,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('stockade'),
         ['shop']     = 'na',
     },
-    ['utiltruc']     = {
+    ['utillitruck4']     = {
         ['name']     = 'Utility Truck',
         ['brand']    = 'Brute',
         ['model']    = 'utillitruck4',
@@ -4184,7 +4184,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('polmav'),
         ['shop']     = 'na',
     },
-    ['ambulan']      = {
+    ['ambulance']      = {
         ['name']     = 'Ambulance',
         ['brand']    = 'Los Santos',
         ['model']    = 'ambulance',
