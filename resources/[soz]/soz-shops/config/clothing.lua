@@ -9816,7 +9816,7 @@ Config.ClothingLocationsInShop = {
     ["binco7"] = vector4(-1099.84, 2717.69, 19.11, 135.67),
 }
 
-Config.ClothingCameraPositionInShop = {
+Config.ClothingCameraPositionsInShop = {
     ["ponsonbys1"] = vector4(-703.22, -152.0, 37.42, 91.85),
     ["ponsonbys2"] = vector4(-168.39, -298.7, 39.73, 218.13),
     ["ponsonbys3"] = vector4(-1447.43, -243.13, 49.82, 24.69),

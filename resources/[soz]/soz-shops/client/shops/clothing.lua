@@ -24,7 +24,7 @@ function ClothingShop:setupCam()
 
         cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 
-        local x, y, z, _ = table.unpack(Config.ClothingCameraPositionInShop[currentShop])
+        local x, y, z, _ = table.unpack(Config.ClothingCameraPositionsInShop[currentShop])
         SetCamCoord(cam, x, y, z)
         PointCamAtCoord(cam, pedX, pedY, pedZ)
         SetCamActive(cam, true)
