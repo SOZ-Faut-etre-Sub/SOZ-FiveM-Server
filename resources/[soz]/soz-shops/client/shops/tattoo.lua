@@ -105,24 +105,23 @@ function TattooShop:GenerateMenu(skipIntro)
         if tattoo[overlayField] ~= "" then
             local label = GetLabelText(tattoo["Name"])
             if label == "NULL" then
-                if tattoo["LocalizedName"] == nil then
-                    print(tattoo["Name"])
-                    label = "???"
-                else
-                    label = tattoo["LocalizedName"]
-                end
+                label = tattoo["LocalizedName"]
             end
-            Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
-                label = label,
-                value = {collection = tattoo["Collection"], overlay = tattoo[overlayField]},
-                rightLabel = "$" .. QBCore.Shared.GroupDigits(tattoo["Price"]),
-                select = function(item)
-                    local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
-                    if validation == "oui" then
-                        TriggerServerEvent("shops:server:pay", "tattoo", item:GetValue(), 1)
-                    end
-                end,
-            })
+            if label == nil then
+                print(tattoo["Name"])
+            else
+                Config.TattooCategories[tattoo["Zone"]].menu:AddButton({
+                    label = label,
+                    value = {collection = tattoo["Collection"], overlay = tattoo[overlayField]},
+                    rightLabel = "$" .. QBCore.Shared.GroupDigits(tattoo["Price"]),
+                    select = function(item)
+                        local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+                        if validation == "oui" then
+                            TriggerServerEvent("shops:server:pay", "tattoo", item:GetValue(), 1)
+                        end
+                    end,
+                })
+            end
 
             QBCore.Functions.DrawText(0.4, 0.9, 0.0, 0.0, 0.8, 255, 255, 255, 255, "Chargement en cours...")
             Citizen.Wait(0)
