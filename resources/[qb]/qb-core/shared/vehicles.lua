@@ -4121,7 +4121,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('baller8'),
         ['shop']     = 'na',
     },
-    ['flatbed']      = {
+    ['flatbed3']      = {
         ['name']     = 'Flatbed',
         ['brand']    = 'MTL',
         ['model']    = 'flatbed3',
@@ -4148,7 +4148,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('newsvan'),
         ['shop']     = 'na',
     },
-    ['packer']       = {
+    ['packer2']       = {
         ['name']     = 'Packer',
         ['brand']    = 'MTL',
         ['model']    = 'packer2',
