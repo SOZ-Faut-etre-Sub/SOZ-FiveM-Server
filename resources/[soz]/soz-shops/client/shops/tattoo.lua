@@ -104,7 +104,7 @@ function TattooShop:GenerateMenu(skipIntro)
 
         if tattoo[overlayField] ~= "" then
             local label = GetLabelText(tattoo["Name"])
-            if label == 'NULL' then
+            if label == "NULL" then
                 if tattoo["LocalizedName"] == nil then
                     print(tattoo["Name"])
                     label = '???'
