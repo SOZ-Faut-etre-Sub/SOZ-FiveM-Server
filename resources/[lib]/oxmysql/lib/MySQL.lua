@@ -23,8 +23,8 @@ local MySQL = {
 		CreateThread(function()
 			repeat
 				Wait(50)
-			until GetResourceState('oxmysql') == 'started'
-			cb()
+			until GetResourceState('oxmysql') == 'started' and GetResourceState('mysql-migration') == 'started' and exports["mysql-migration"]:IsReady()
+            cb()
 		end)
 	end
 }
