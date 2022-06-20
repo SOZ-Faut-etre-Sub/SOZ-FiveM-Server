@@ -312,6 +312,15 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
+        resell = {
+            primary = {
+                coords = vector4(-272.22, -2496.57, 7.3, 186.72), -- Must be vec4
+                ZoneName = "Resell:LSPort:Pawl",
+                SourceAccount = "farm_pawl",
+                TargetAccount = "safe_pawl",
+            },
+            secondary = {ZoneName = "Resell:Zkea", SourceAccount = "farm_pawl", TargetAccount = "safe_pawl"},
+        },
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
 }
