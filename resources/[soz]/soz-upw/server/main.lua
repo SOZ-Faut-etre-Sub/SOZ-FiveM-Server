@@ -15,17 +15,38 @@ local facilities = {
     ["terminal"] = {class = Terminal, arr = Terminals},
 }
 
+local function GetFacilitiesFromDb(types)
+    local query, args = "SELECT * FROM upw_facility", nil
+
+    if types then
+        query = query .. " WHERE type IN (@types)"
+        args = {["@types"] = types}
+    end
+
+    local res = MySQL.Sync.fetchAll(query, args)
+
+    if not res then
+        error("Failed to get facilities from database")
+    end
+
+    return res
+end
+
+QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", function(source, cb, types)
+    cb(GetFacilitiesFromDb(types))
+end)
+
 -- Initialize Plants, Inverters
 local function InitiateFacilities()
-    local upwFacilities = MySQL.Sync.fetchAll("SELECT type, identifier FROM upw_facility WHERE type <> 'pollution-manager'")
+    local upwFacilities = GetFacilitiesFromDb({"plant", "inverter", "terminal"})
 
     for _, res in ipairs(upwFacilities) do
         local data = facilities[res.type]
 
         if data then
-            local facility = data.class:new(identifier)
+            local facility = data.class:new(res.identifier)
 
-            data.arr[identifier] = facility
+            data.arr[res.identifier] = facility
         end
     end
 end
@@ -36,8 +57,8 @@ MySQL.ready(function()
     -- TO BE REMOVED (DEV PURPOSE)
     -- MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
 
-    InitiatePollutionManager()
     Pm = PollutionManager:new("pm1")
+    Pm:StartPollutionLoop()
 
     InitiateFacilities()
     StartProductionLoop()
