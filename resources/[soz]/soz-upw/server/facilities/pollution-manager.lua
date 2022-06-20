@@ -62,7 +62,6 @@ function PollutionManager:StartPollutionLoop()
         local count = 0
 
         while pollutionLoopRunning do
-            -- print("##### POLLUTION TICK #####")
 
             count = count + 1
 
