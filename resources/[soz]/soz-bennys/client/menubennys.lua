@@ -985,8 +985,8 @@ Vehiclemecha2 = BoxZone:Create(vector3(-222.62, -1330.24, 30.89), 9, 6, {
 })
 
 StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
-    name="staff_bennys",
-    heading=240,
+    name = "staff_bennys",
+    heading = 240,
     minZ = 12.3,
     maxZ = 27,
 })
