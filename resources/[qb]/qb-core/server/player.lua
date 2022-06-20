@@ -86,7 +86,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] or 0
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
-    PlayerData.metadata['armor'] = PlayerData.metadata['armor'] or {current = 0, hidden = false}
+    PlayerData.metadata['armor'] = {current = 0, hidden = false}
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
     PlayerData.metadata['ishandcuffed'] = PlayerData.metadata['ishandcuffed'] or false
     PlayerData.metadata['tracker'] = PlayerData.metadata['tracker'] or false
@@ -137,6 +137,9 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     -- Skin
     PlayerData.skin = PlayerData.skin or {}
     PlayerData.cloth_config = PlayerData.cloth_config or {}
+    if PlayerData.cloth_config["JobClothSet"] and PlayerData.cloth_config["JobClothSet"].Components and PlayerData.cloth_config["JobClothSet"].Components["9"] then
+        PlayerData.cloth_config["JobClothSet"].Components["9"] = nil
+    end
 
     -- Job
     if not PlayerData.job or type(PlayerData.job) ~= 'table' then
