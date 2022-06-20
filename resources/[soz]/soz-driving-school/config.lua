@@ -94,6 +94,24 @@ Config.Licenses = {
         label = "Permis moto ($%s)",
         points = 12,
     },
+    ["heli"] = {
+        vehicle = {
+            modelHash = "seasparrow2",
+            spawnPoints = {
+                vector4(-744.84, -1434.05, 4.0, 234.75),
+                vector4(-762.31, -1453.83, 4.0, 234.75),
+                vector4(-724.99, -1444.38, 4.0, 134.21),
+                vector4(-700.73, -1447.2, 4.0, 49.75),
+                vector4(-722.72, -1473.04, 4.0, 58.68),
+                vector4(-744.15, -1495.75, 4.0, 4.52),
+            },
+            networkSync = true,
+        },
+        price = 50,
+        icon = "",
+        label = "Permis hélicoptère ($%s)",
+        points = 12,
+    },
 }
 
 Config.VehiclePlateText = "P3RM15"
@@ -104,12 +122,23 @@ Config.NotificationDelay = Config.PenaltyMaxDuration -- in ms
 
 Config.CheckpointType = 0
 Config.CheckpointSize = 3.0
-Config.CheckpointColor = {r = 12, g = 123, b = 86, a = 150}
+Config.MarkerColor = {r = 12, g = 123, b = 86, a = 150}
+
+Config.MarkerLandVehicle = {type = 0, typeFinal = 4, size = 3.0, color = Config.MarkerColor}
+Config.MarkerAirVehicle = {type = 42, typeFinal = 4, size = 10.0, color = Config.MarkerColor}
+
+Config.Markers = {
+    ["car"] = Config.MarkerLandVehicle,
+    ["truck"] = Config.MarkerLandVehicle,
+    ["motorcycle"] = Config.MarkerLandVehicle,
+    ["heli"] = Config.MarkerAirVehicle,
+}
 
 Config.InstructorStartSpeech = {
     {
         ["car"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
         ["truck"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
+        ["heli"] = "Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.",
     },
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
@@ -121,63 +150,122 @@ Config.Checkpoints = {
         y = -957.79,
         z = 20.39,
         message = "Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades…",
+        licenses = {"car", "truck", "motorcycle"},
     },
-    {x = 31.24, y = -767.01, z = 42.67, message = "Connaissez-vous Stonks Depository ?"},
+    {
+        x = 31.24,
+        y = -767.01,
+        z = 42.67,
+        message = "Connaissez-vous Stonks Depository ?",
+        licenses = {"car", "truck", "motorcycle"},
+    },
     {
         x = 248.3,
         y = -369.19,
         z = 42.89,
         message = "T'auras besoin de ton permis si tu veux un job du Pole emploi, alors concentre-toi !",
+        licenses = {"car", "truck", "motorcycle"},
     },
-    {x = 667.22, y = -27.01, z = 80.96, message = "LSPD Vinewood. Au premier excès de vitesse, tu finis ici !"},
-    {x = 204.08, y = 195.72, z = 104.01, message = "La Pacific Bank. Je crois que c'est ici qu'ils rendent l'argent."},
+    {
+        x = 667.22,
+        y = -27.01,
+        z = 80.96,
+        message = "LSPD Vinewood. Au premier excès de vitesse, tu finis ici !",
+        licenses = {"car", "truck", "motorcycle"},
+    },
+    {
+        x = 204.08,
+        y = 195.72,
+        z = 104.01,
+        message = "La Pacific Bank. Je crois que c'est ici qu'ils rendent l'argent.",
+        licenses = {"car", "truck", "motorcycle"},
+    },
     {
         x = 807.06,
         y = -1290.38,
         z = 24.72,
         message = "LSPD, La Mesa. C'est cette patrouille autoroutière qui te coinceras si tu fais n'importe quoi…",
+        licenses = {"car", "truck", "motorcycle"},
     },
-    {x = 305.58, y = -1367.15, z = 30.44, message = "Les mauvais conducteurs finissent souvent ici, à l'Hôpital !"},
+    {
+        x = 305.58,
+        y = -1367.15,
+        z = 30.44,
+        message = "Les mauvais conducteurs finissent souvent ici, à l'Hôpital !",
+        licenses = {"car", "truck", "motorcycle"},
+    },
     {
         x = 506.42,
         y = -1306.97,
         z = 27.76,
         message = "Ta maman ne sera pas fière si tu dois venir chercher ta voiture à cette fourrière…",
+        licenses = {"car", "truck", "motorcycle"},
     },
-    {x = -222.02, y = -2053.33, z = 26.06, message = "L'affiche dit : \"Maze Bank Arena, le 4 juin 2022\""},
-    {x = -1028.3, y = -871.1, z = 5.83, message = "Los Santos Police Department ! De chouettes types !"},
-    {x = -696.01, y = 40.51, z = 41.56, message = "Kifflom !"},
+    {
+        x = -222.02,
+        y = -2053.33,
+        z = 26.06,
+        message = "L'affiche dit : \"Maze Bank Arena, le 4 juin 2022\"",
+        licenses = {"car", "truck", "motorcycle"},
+    },
+    {
+        x = -1028.3,
+        y = -871.1,
+        z = 5.83,
+        message = "Los Santos Police Department ! De chouettes types !",
+        licenses = {"car", "truck", "motorcycle"},
+    },
+    {x = -696.01, y = 40.51, z = 41.56, message = "Kifflom !", licenses = {"car", "truck", "motorcycle"}},
     {
         x = -1379.76,
         y = 55.13,
         z = 52.04,
         message = "Tu essayes de m'acheter avec une partie de golf ?! Dommage je n'ai pas mes clubs…",
+        licenses = {"car", "truck", "motorcycle"},
     },
-    {x = 399.83, y = -981.8, z = 27.77, message = "Le LSPD surveille tous les conducteurs. Regarde la route !"},
+    {
+        x = 399.83,
+        y = -981.8,
+        z = 27.77,
+        message = "Le LSPD surveille tous les conducteurs. Regarde la route !",
+        licenses = {"car", "truck", "motorcycle"},
+    },
     {
         x = -262.13,
         y = -1310.05,
         z = 29.65,
         message = "Benny's ! J'ai le sentiment que tu vas passer beaucoup de temps ici !",
+        licenses = {"car", "truck", "motorcycle"},
     },
     {
         x = -1601.2,
         y = 156.95,
         z = 58.05,
         message = "Pfff! Regarde-moi tous ces étudiants qui passent leur vie sur les jeux-vidéos…",
+        licenses = {"car", "truck", "motorcycle"},
     },
     {
         x = -86.89,
         y = -1101.69,
         z = 24.46,
         message = "Termine cet examen avant de lorgner sur le concessionnaire. Chaque chose en son temps.",
+        licenses = {"car", "truck", "motorcycle"},
     },
     {
         x = -552.76,
         y = -151.6,
         z = 36.62,
         message = "Il paraît que c'est dans ce commisariat qu'il y a les meilleurs donuts.",
+        licenses = {"car", "truck", "motorcycle"},
     },
+    {x = -340.44, y = -2357.59, z = 30.65, licenses = {"heli"}},
+    {x = -934.18, y = -1280.37, z = 28.13, message = "Olé !", licenses = {"heli"}},
+    {x = -1511.35, y = -555.54, z = 52.55, message = "Belle manoeuvre !", licenses = {"heli"}},
+    {x = -913.59, y = -382.14, z = 154.54, licenses = {"heli"}},
+    {x = -75.35, y = -819.17, z = 326.79, message = "Je suis le roi du monde !", licenses = {"heli"}},
+    {x = -7.21, y = 682.43, z = 197.93, message = "Redresse ! On va se noyer !", licenses = {"heli"}},
+    {x = 722.25, y = 1198.04, z = 350.88, message = "Vinewood, baby !", licenses = {"heli"}},
+    {x = 592.46, y = -1021.0, z = 21.91, licenses = {"heli"}},
 }
 
 Config.FinalCheckpointLandVehicle = {
@@ -186,8 +274,10 @@ Config.FinalCheckpointLandVehicle = {
     z = 3.42,
     message = "Tu es arrivé au bout. Bien joué !",
 }
+Config.FinalCheckpointHeli = {x = -745.25, y = -1468.67, z = 4.0, message = "Très beau vol. Bien joué !"}
 Config.FinalCheckpoints = {
     ["car"] = Config.FinalCheckpointLandVehicle,
     ["truck"] = Config.FinalCheckpointLandVehicle,
     ["motorcycle"] = Config.FinalCheckpointLandVehicle,
+    ["heli"] = Config.FinalCheckpointHeli,
 }
