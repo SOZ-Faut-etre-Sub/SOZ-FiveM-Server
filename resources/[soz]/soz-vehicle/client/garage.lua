@@ -150,6 +150,12 @@ local function GetEmptyParkingSlots(slots, indexgarage)
 end
 
 RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
+    if not IsModelInCdimage(GetHashKey(vehicle.vehicle)) then
+        exports["soz-monitor"]:Log("ERROR", "Invalid vehicle model", {model = vehicle.vehicle, plate = vehicle.plate})
+        exports["soz-hud"]:DrawNotification("Véhicule invalide : " .. vehicle.vehicle, "error")
+        return
+    end
+
     local newLockState = QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, true)
     if newLockState == -1 then
         exports["soz-hud"]:DrawNotification("Véhicule en cours de livraison", "warning")
@@ -359,17 +365,22 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
         end
 
         if v.state == garageType.state then
+
+            local desc;
+
+            if GetVehicleClassFromName(GetHashKey(v.vehicle)) == 13 then
+                desc = Lang:t("menu.text.garageBike", {value2 = enginePercent, value3 = bodyPercent})
+            else
+                desc = Lang:t("menu.text.garage", {value = currentFuel, value2 = enginePercent, value3 = bodyPercent})
+            end
+
             garageType.submenu:AddButton({
                 label = Lang:t(string.format("menu.header.%s", garageType.type), {
                     value = vname,
                     value2 = v.plate,
                     value3 = price,
                 }),
-                description = Lang:t("menu.text.garage", {
-                    value = currentFuel,
-                    value2 = enginePercent,
-                    value3 = bodyPercent,
-                }),
+                description = desc,
                 select = function()
                     garageType.submenu:Close()
                     TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)

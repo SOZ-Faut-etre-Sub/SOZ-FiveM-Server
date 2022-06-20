@@ -28,6 +28,8 @@ local HudVehicleStatus = {
     speed = 0,
     --- @type number
     fuel = 100,
+    --- @type boolean
+    hasFuel = true,
     --- @type number
     engine = 1000,
     --- @type number
@@ -124,6 +126,7 @@ local function setVehicleData(data)
             action = "update_vehicle",
             speed = HudVehicleStatus.speed,
             fuel = HudVehicleStatus.fuel,
+            hasFuel = HudVehicleStatus.hasFuel,
             engine = HudVehicleStatus.engine,
             lock = HudVehicleStatus.lock,
             haveSeatbelt = HudVehicleStatus.haveSeatbelt,
@@ -215,9 +218,14 @@ CreateThread(function()
 
                 PlayerInVehicle = true
                 setHudRadar(true)
+                local actualspeed = GetEntitySpeed(vehicle);
+                if actualspeed < 0.09 then
+                    actualspeed = 0
+                end
                 setVehicleData({
-                    speed = math.ceil(GetEntitySpeed(vehicle) * Config.SpeedMultiplier),
+                    speed = math.ceil(actualspeed * Config.SpeedMultiplier),
                     fuel = exports["soz-vehicle"]:GetFuel(vehicle),
+                    hasFuel = exports["soz-vehicle"]:HasFuel(vehicle),
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
                     lock = GetVehicleDoorLockStatus(vehicle),
                     haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
