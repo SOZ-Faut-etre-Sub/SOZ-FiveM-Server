@@ -31,8 +31,8 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
         local item = Config.Products[brand][productID]
         local price = getItemPrice(brand, productID, Player) * amount
 
-        if brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco" and
-            item.amount < amount then
+        if brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco" and item.amount <
+            amount then
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
             return
         end
