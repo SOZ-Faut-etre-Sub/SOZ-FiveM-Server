@@ -96,8 +96,14 @@ function AdminMenuVehicles(menu, permission)
         select = function()
             local vehicle = GetVehiclePedIsIn(PlayerPedId())
             local mods = QBCore.Functions.GetVehicleProperties(vehicle)
+            local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)):lower()
 
-            TriggerServerEvent("admin:vehicle:AddVehicle", GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)), VehToNet(vehicle), mods)
+            if IsModelValid(GetHashKey(modelName)) then
+                TriggerServerEvent("admin:vehicle:AddVehicle", modelName, VehToNet(vehicle), mods)
+                exports["soz-hud"]:DrawNotification("Véhicule sauvegardé !")
+            else
+                exports["soz-hud"]:DrawNotification("Ce modèle n'est pas disponible à la sauvegarde !", "error")
+            end
         end,
         disabled = permission ~= "admin",
     })

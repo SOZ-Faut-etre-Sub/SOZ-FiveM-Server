@@ -40,6 +40,8 @@ local function GetTerminalCapacities(scope)
             maxCapacity = maxCapacity + terminal.maxCapacity
         end
     end
+
+    return capacity, maxCapacity
 end
 
 local function GetBlackoutLevel()
@@ -66,33 +68,38 @@ end)
 --
 function StartConsumptionLoop()
     Citizen.CreateThread(function()
-        local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
+        consumptionLoopRunning = true
 
-        local consumptionThisTick = Config.Consumption.EnergyPerTick * connectedPlayers
+        while consumptionLoopRunning do
+            local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
 
-        local identifiers = {}
-        for identifier, _ in pairs(GetTerminals("default")) do
-            table.insert(identifiers, identifier)
-        end
+            local consumptionThisTick = Config.Consumption.EnergyPerTick * connectedPlayers
 
-        for i = 1, consumptionThisTick, 1 do
-            local n = math.random(1, #identifiers)
-            local terminal = GetTerminal(identifiers[n])
-
-            if terminal then
-                terminal:Consume(1)
+            local identifiers = {}
+            for identifier, _ in pairs(GetTerminals("default")) do
+                table.insert(identifiers, identifier)
             end
+
+            for i = 1, consumptionThisTick, 1 do
+                local n = math.random(1, #identifiers)
+                local terminal = GetTerminal(identifiers[n])
+
+                if terminal then
+                    terminal:Consume(1)
+                end
+            end
+
+            local newBlackoutLevel = GetBlackoutLevel()
+            exports["soz-monitor"]:Log("INFO", "Blackout level updated: " .. newBlackoutLevel)
+
+            -- Blackout level has changed
+            if currentBlackoutLevel ~= newBlackoutLevel then
+                currentBlackoutLevel = newBlackoutLevel
+                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", currentBlackoutLevel)
+                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, currentBlackoutLevel)
+            end
+
+            Citizen.Wait(Config.Production.Tick)
         end
-
-        local newBlackoutLevel = GetBlackoutLevel()
-
-        -- Blackout level has changed
-        if currentBlackoutLevel ~= newBlackoutLevel then
-            currentBlackoutLevel = newBlackoutLevel
-            TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", currentBlackoutLevel)
-            TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, currentBlackoutLevel)
-        end
-
-        Citizen.Wait(Config.Production.Tick)
     end)
 end

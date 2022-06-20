@@ -6,6 +6,11 @@ local personalAnimationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Anima
 local animationCatalogMenu, walkCatalogMenu = {}, {}
 local favoriteAnimationRegister, favoriteAnimationKey = false, 1
 
+-- animation parameters:
+-- [1] = 0 if scenario, the dict name otherwise
+-- [2] = anim name
+-- [3] = flag (see https://wiki.rage.mp/index.php?title=Player::taskPlayAnim) only for animation and not scenario
+-- [4] = boolean for the loop (TODO: Remove this flag and use the third argument instead)
 local PlayEmote = function(animation)
     local ped = PlayerPedId()
 
@@ -16,7 +21,7 @@ local PlayEmote = function(animation)
 
     if animation[1] ~= "0" then
         QBCore.Functions.RequestAnimDict(animation[1])
-        local canMove = animation[4] or false
+        local lockPosition = false
         local flag = animation[3]
         if animation[4] == true then
             flag = 1
@@ -24,12 +29,12 @@ local PlayEmote = function(animation)
         if IsEntityPlayingAnim(ped, animation[1], animation[2], 3) then
             StopAnimTask(ped, animation[1], animation[2], 1.0)
         else
-            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, flag, 0, canMove, canMove, canMove)
+            TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, flag, 0, lockPosition, lockPosition, lockPosition)
 
             if animation[6] then
                 local animDuration = GetAnimDuration(animation[1], animation[2])
                 Wait(animDuration * 1000)
-                TaskPlayAnim(ped, animation[1], animation[6], 8.0, -8.0, -1, flag, 0, canMove, canMove, canMove)
+                TaskPlayAnim(ped, animation[1], animation[6], 8.0, -8.0, -1, flag, 0, lockPosition, lockPosition, lockPosition)
             end
         end
     else
