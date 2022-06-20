@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 FieldTrees = {}
 FieldHarvest = {}
@@ -45,12 +46,14 @@ Citizen.CreateThread(function()
         options = {
             {
                 type = "server",
+                color = "pawl",
                 label = "Transformer",
                 icon = "c:inventory/ouvrir_le_stockage.png",
                 event = "pawl:server:processingTree",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
+                job = "pawl",
             },
         },
         distance = 2.5,
@@ -60,6 +63,7 @@ Citizen.CreateThread(function()
     local craftOptions = {}
     for craftId, craft in pairs(Config.Craft) do
         craftOptions[#craftOptions + 1] = {
+            color = "pawl",
             label = craft.Name,
             icon = "c:inventory/ouvrir_le_stockage.png",
             event = "pawl:client:craft",
@@ -67,6 +71,7 @@ Citizen.CreateThread(function()
                 return PlayerData.job.onduty
             end,
             identifier = craftId,
+            job = "pawl",
         }
     end
 
@@ -75,6 +80,30 @@ Citizen.CreateThread(function()
                                     {name = "pawl:crafting", heading = 0, minZ = 73.2, maxZ = 76.0, debugPoly = false}, {
         options = craftOptions,
         distance = 2.5,
+    })
+
+    -- Target
+    exports["qb-target"]:AddGlobalPlayer({
+        options = {
+            {
+                label = "Facturer",
+                color = "pawl",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoicePlayer",
+                job = "pawl",
+            },
+            {
+                label = "Facturer la société",
+                color = "pawl",
+                icon = "c:jobs/facture.png",
+                event = "jobs:client:InvoiceSociety",
+                canInteract = function()
+                    return SozJobCore.Functions.HasPermission("pawl", SozJobCore.JobPermission.SocietyBankInvoices)
+                end,
+                job = "pawl",
+            },
+        },
+        distance = 1.5,
     })
 end)
 

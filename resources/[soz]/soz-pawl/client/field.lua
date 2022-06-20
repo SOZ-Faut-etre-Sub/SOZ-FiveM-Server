@@ -11,6 +11,7 @@ local function TreeInteraction(identifier, position)
     }, {
         options = {
             {
+                color = "pawl",
                 label = "Récolter",
                 icon = "c:inventory/ouvrir_le_stockage.png",
                 event = "pawl:client:harvestTree",
@@ -18,6 +19,7 @@ local function TreeInteraction(identifier, position)
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
+                job = "pawl",
                 --- metadata
                 identifier = identifier,
                 position = position,
