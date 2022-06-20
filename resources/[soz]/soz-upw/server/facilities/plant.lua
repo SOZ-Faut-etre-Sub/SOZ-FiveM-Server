@@ -65,16 +65,6 @@ function Plant:Produce()
     return prod
 end
 
-function Plant:CanEnergyBeHarvested()
-    return self.capacity >= Config.Production.EnergyPerCell
-end
-
-function Plant:HarvestEnergy()
-    self.capacity = self.capacity - Config.Production.EnergyPerCell
-
-    return self.capacity
-end
-
 function Plant:CanWasteBeHarvested()
     return self.waste >= Config.Production.WastePerHarvest
 end

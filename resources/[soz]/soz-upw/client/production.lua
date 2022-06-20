@@ -58,7 +58,42 @@ local function CreateWasteZone(identifier, data)
     return CreateZone(identifier, "waste", data)
 end
 
+local function CreateInverterZone(identifier, data)
+    data.options = {
+        {
+            label = "Stocker l'énergie",
+            event = "soz-upw:client:HarvestLoop",
+            identifier = identifier,
+            harvest = "inverter-in",
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
+        {
+            label = "Collecter l'énergie",
+            event = "soz-upw:client:HarvestLoop",
+            identifier = identifier,
+            harvest = "inverter-out",
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
+        {
+            label = "Remplissage",
+            type = "server",
+            event = "soz-upw:client:InverterCapacity",
+            identifier = identifier,
+            canInteract = function()
+                return OnDuty()
+            end,
+        },
+    }
+
+    return CreateZone(identifier, "inverter", data)
+end
+
 Citizen.CreateThread(function()
+    -- Energy Plants
     for identifier, plantData in pairs(Config.Plants) do
         for key, data in pairs(plantData.client) do
             if key == "energyZone" then
@@ -70,22 +105,16 @@ Citizen.CreateThread(function()
             end
         end
     end
+
+    -- Inverters
+    for identifier, inverterData in pairs(Config.Inverters) do
+        CreateInverterZone(identifier, inverterData.zone)
+    end
 end)
 
 --
 -- FARM
 --
-local function GetItem(identifier, type)
-    local itemId
-    if type == "energy" then
-        itemId = Config.Plants[identifier].items.energy
-    elseif type == "waste" then
-        itemId = Config.Plants[identifier].items.waste
-    end
-
-    return QBCore.Shared.Items[itemId]
-end
-
 local function HarvestPrecheck(identifier, harvest)
     local result = QBCore.Functions.TriggerRpc("soz-upw:server:PrecheckHarvest", identifier, harvest)
 
@@ -94,7 +123,12 @@ local function HarvestPrecheck(identifier, harvest)
 end
 
 local function Harvest(identifier, harvest)
-    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", "Vous récoltez...", Config.Harvest.Duration, false, true,
+    local message = "Vous collectez..."
+    if harvest == "inverter-in" then
+        message = "Vous déposez..."
+    end
+
+    local success, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:harvest", message, Config.Harvest.Duration, false, true,
                                                               {
         disableMovement = true,
         disableCarMovement = true,
@@ -103,12 +137,13 @@ local function Harvest(identifier, harvest)
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
 
     if success then
-        local harvested, reason = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier, harvest)
+        local result = QBCore.Functions.TriggerRpc("soz-upw:server:Harvest", identifier, harvest)
+        local harvested, message = table.unpack(result)
 
         if harvested then
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez récolté 1 %s", GetItem(identifier, harvest).label), "success")
+            exports["soz-hud"]:DrawNotification(message, "success")
         else
-            exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. reason, "error")
+            exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. message, "error")
         end
 
         return harvested

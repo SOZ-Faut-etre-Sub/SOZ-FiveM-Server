@@ -7,7 +7,6 @@ function StartProductionLoop()
 
     Citizen.CreateThread(function()
         while productionLoopIsRunning do
-            -- print("##### PRODUCTION TICK #####")
 
             count = count + 1
 
@@ -19,6 +18,12 @@ function StartProductionLoop()
                 -- Persist to DB every 5 iterations
                 if count >= 5 then
                     plant:save()
+                end
+            end
+
+            for _, inverter in pairs(Inverters) do
+                if count >= 5 then
+                    inverter:save()
                 end
             end
 
@@ -52,14 +57,65 @@ RegisterNetEvent("soz-upw:server:TogglePlantActive", function(data)
     end
 end)
 
-local function GetItem(identifier, type)
-    if type == "energy" then
-        return Config.Plants[identifier].items.energy
-    elseif type == "waste" then
-        return Config.Plants[identifier].items.waste
+local facilities = {
+    ["energy"] = {
+        config = "Plants",
+        getFacility = GetPlant,
+        precheck = "CanEnergyBeHarvested",
+        messages = {precheckError = "Pénurie d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
+        action = "HarvestEnergy",
+        item = "energy",
+    },
+    ["waste"] = {
+        config = "Plants",
+        getFacility = GetPlant,
+        precheck = "CanWasteBeHarvested",
+        messages = {precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~1 %s"},
+        action = "HarvestWaste",
+        item = "waste",
+    },
+    ["inverter-in"] = {
+        config = "Inverters",
+        getFacility = GetInverter,
+        precheck = "CanStoreEnergy",
+        messages = {precheckError = "Onduleur plein", harvestSuccess = "Vous avez déposé ~g~1 %s"},
+        action = "StoreEnergy",
+        item = "energy",
+    },
+    ["inverter-out"] = {
+        config = "Inverters",
+        getFacility = GetInverter,
+        precheck = "CanEnergyBeHarvested",
+        messages = {precheckError = "Pas assez d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
+        action = "HarvestEnergy",
+        item = "energy",
+    },
+}
+
+local function GetFacilityData(harvestType)
+    local facilityData = facilities[harvestType]
+    if not facilityData then
+        error("Invalid harvest type: " .. harvestType)
     end
 
-    return nil
+    return facilityData
+end
+
+local function GetFacilityConfig(identifier, harvestType)
+    local facilityData = GetFacilityData(harvestType)
+
+    if Config[facilityData.config] and Config[facilityData.config][identifier] then
+        return Config[facilityData.config][identifier]
+    end
+
+    error("Invalid facility config: " .. identifier .. " - " .. harvestType)
+end
+
+local function GetItem(identifier, harvestType)
+    local facilityData = GetFacilityData(harvestType)
+    local config = GetFacilityConfig(identifier, harvestType)
+
+    return config.items[facilityData.item]
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier, harvestType)
@@ -71,19 +127,34 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
-    if not canCarry then
-        cb({false, "Vos poches sont pleines..."})
+    if harvestType == "inverter-in" then
+        -- Does player have item?
+        local count = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
+
+        if count == 0 then
+            cb({false, string.format("Vous n'avez pas l'item requis")})
+            return
+        end
+
+    else
+        -- Can item be stored in inventory
+        local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
+
+        if not canCarry then
+            cb({false, "Vos poches sont pleines..."})
+            return
+        end
+    end
+
+    local facilityData = GetFacilityData(harvestType)
+    local facility = facilityData.getFacility(identifier)
+    if not facility then
+        cb({false, "invalid facility"})
         return
     end
 
-    local plant = GetPlant(identifier)
-
-    if harvestType == "energy" and not plant:CanEnergyBeHarvested() then
-        cb({false, "Pénurie d'énergie"})
-        return
-    elseif harvestType == "waste" and not plant:CanWasteBeHarvested() then
-        cb({false, "Pas de déchets à collecter"})
+    if not facility[facilityData.precheck](facility) then
+        cb({false, facilityData.messages.precheckError})
         return
     end
 
@@ -97,9 +168,17 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     local p = promise:new()
 
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
-        p:resolve(success, reason)
-    end)
+    if harvestType == "inverter-in" then
+        -- Remove energy cell from inventory
+        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
+
+        p:resolve(true, nil)
+    else
+        -- Add energy cell to inventory
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
+            p:resolve(success, reason)
+        end)
+    end
 
     local success, reason = Citizen.Await(p)
 
@@ -108,13 +187,28 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         return
     end
 
-    local plant = GetPlant(identifier)
-
-    if harvestType == "energy" then
-        plant:HarvestEnergy()
-    elseif harvestType == "waste" then
-        plant:HarvestWaste()
+    local facilityData = GetFacilityData(harvestType)
+    local facility = facilityData.getFacility(identifier)
+    if not facility then
+        cb(false, "invalid facility")
+        return
     end
 
-    cb(true)
+    facility[facilityData.action](facility)
+
+    cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
+end)
+
+--
+-- Events Inverter related
+--
+RegisterNetEvent("soz-upw:client:InverterCapacity", function(data)
+    local inverter = GetInverter(data.identifier)
+
+    if inverter then
+        TriggerClientEvent("hud:client:DrawNotification", source,
+                           string.format("Remplissage : %s%%", math.floor(inverter.capacity / inverter.maxCapacity * 100)))
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, "Onduleur introuvable : " .. data.identifier, "error")
+    end
 end)
