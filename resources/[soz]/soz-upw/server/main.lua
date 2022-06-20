@@ -31,18 +31,6 @@ end
 
 -- Init
 MySQL.ready(function()
-    local timeout = 0
-
-    while MySQL.Sync.fetchSingle("SELECT Count(*) AS count FROM migrations WHERE name = 'add-upw-facility'").count == 0 do
-        timeout = timeout + 1
-
-        if timeout >= 10 then
-            error("Migration 'add-upw-facility' is missing")
-        end
-
-        Citizen.Wait(1000)
-    end
-
     -- TO BE REMOVED (DEV PURPOSE)
     -- MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
 
