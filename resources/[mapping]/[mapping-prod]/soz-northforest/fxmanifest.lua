@@ -6,8 +6,7 @@ game "gta5"
 
 author 'Larcius'
 description 'Forests of San Andreas: Revised'
-version '3.2'
+version '3.3'
 
-data_file('DLC_ITYP_REQUEST')('stream/forest_lod.ytyp')
-data_file('DLC_ITYP_REQUEST')('stream/forest_n_slod.ytyp')
-data_file('DLC_ITYP_REQUEST')('stream/forest_s_slod.ytyp')
+data_file('DLC_ITYP_REQUEST')('stream/ForestsOfSA_N/metadata/forest_n_slod.ytyp')
+data_file('DLC_ITYP_REQUEST')('stream/ForestsOfSA_S/metadata/forest_s_slod.ytyp')

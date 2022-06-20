@@ -34,18 +34,6 @@ local function IsApartmentValid(house)
 end
 
 MySQL.ready(function()
-    local timeout = 0
-
-    while MySQL.Sync.fetchSingle("SELECT Count(*) AS count FROM migrations WHERE name = 'clean-apartments-zone'").count == 0 do
-        timeout = timeout + 1
-
-        if timeout >= 10 then
-            error("Migration 'clean-apartments-zone' is missing")
-        end
-
-        Citizen.Wait(1000)
-    end
-
     local properties = MySQL.query.await("SELECT * FROM housing_property")
     for _, property in pairs(properties or {}) do
         Properties[property.id] = Property:new(property.identifier, property.entry_zone, property.garage_zone)
@@ -190,6 +178,16 @@ RegisterNetEvent("housing:server:BellProperty", function(propertyId, apartmentId
     local Owner = QBCore.Functions.GetPlayerByCitizenId(apartment:GetOwner())
 
     if not Owner then
+        if not apartment:HasRoommate() then
+            return
+        end
+
+        local Roommate = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+        if not Roommate then
+            return
+        end
+
+        TriggerClientEvent("housing:client:PlayerRequestEnter", Roommate.PlayerData.source, propertyId, apartmentId, Player.PlayerData.citizenid)
         return
     end
 

@@ -4489,6 +4489,7 @@
     },
     {
         "Name": "TAT_FM_008",
+        "LocalizedName": "Crâne",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_000",
         "HashNameFemale": "FM_Tat_Award_F_000",
@@ -4497,6 +4498,7 @@
     },
     {
         "Name": "TAT_FM_009",
+        "LocalizedName": "Coeur brûlant",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_001",
         "HashNameFemale": "FM_Tat_Award_F_001",
@@ -4505,6 +4507,7 @@
     },
     {
         "Name": "TAT_FM_010",
+        "LocalizedName": "Grim Reaper Smoking Gun",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_002",
         "HashNameFemale": "FM_Tat_Award_F_002",
@@ -4513,6 +4516,7 @@
     },
     {
         "Name": "TAT_FM_011",
+        "LocalizedName": "Blackjack",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_003",
         "HashNameFemale": "FM_Tat_Award_F_003",
@@ -4521,6 +4525,7 @@
     },
     {
         "Name": "TAT_FM_012",
+        "LocalizedName": "Arnaqueur",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_004",
         "HashNameFemale": "FM_Tat_Award_F_004",
@@ -4529,6 +4534,7 @@
     },
     {
         "Name": "TAT_FM_013",
+        "LocalizedName": "Ange",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_005",
         "HashNameFemale": "FM_Tat_Award_F_005",
@@ -4537,6 +4543,7 @@
     },
     {
         "Name": "TAT_FM_014",
+        "LocalizedName": "Crâne et Épée",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_006",
         "HashNameFemale": "FM_Tat_Award_F_006",
@@ -4545,6 +4552,7 @@
     },
     {
         "Name": "TAT_FM_015",
+        "LocalizedName": "Blonde de course",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_007",
         "HashNameFemale": "FM_Tat_Award_F_007",
@@ -4553,6 +4561,7 @@
     },
     {
         "Name": "TAT_FM_016",
+        "LocalizedName": "Los Santos Customs",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_008",
         "HashNameFemale": "FM_Tat_Award_F_008",
@@ -4561,6 +4570,7 @@
     },
     {
         "Name": "TAT_FM_017",
+        "LocalizedName": "Dague et Dragon",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_009",
         "HashNameFemale": "FM_Tat_Award_F_009",
@@ -4569,6 +4579,7 @@
     },
     {
         "Name": "TAT_FM_018",
+        "LocalizedName": "Conduire ou mourir",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_010",
         "HashNameFemale": "FM_Tat_Award_F_010",
@@ -4577,6 +4588,7 @@
     },
     {
         "Name": "TAT_FM_019",
+        "LocalizedName": "Parchemin vierge",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_011",
         "HashNameFemale": "FM_Tat_Award_F_011",
@@ -4585,6 +4597,7 @@
     },
     {
         "Name": "TAT_FM_020",
+        "LocalizedName": "Parchemin embelli",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_012",
         "HashNameFemale": "FM_Tat_Award_F_012",
@@ -4593,6 +4606,7 @@
     },
     {
         "Name": "TAT_FM_021",
+        "LocalizedName": "Sept Péchés Capitaux",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_013",
         "HashNameFemale": "FM_Tat_Award_F_013",
@@ -4601,6 +4615,7 @@
     },
     {
         "Name": "TAT_FM_022",
+        "LocalizedName": "Ne Crois Personne",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_014",
         "HashNameFemale": "FM_Tat_Award_F_014",
@@ -4609,6 +4624,7 @@
     },
     {
         "Name": "TAT_FM_023",
+        "LocalizedName": "Brunette de course",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_015",
         "HashNameFemale": "FM_Tat_Award_F_015",
@@ -4617,6 +4633,7 @@
     },
     {
         "Name": "TAT_FM_024",
+        "LocalizedName": "Clown",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_016",
         "HashNameFemale": "FM_Tat_Award_F_016",
@@ -4625,6 +4642,7 @@
     },
     {
         "Name": "TAT_FM_025",
+        "LocalizedName": "Clown et Flingue",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_017",
         "HashNameFemale": "FM_Tat_Award_F_017",
@@ -4633,6 +4651,7 @@
     },
     {
         "Name": "TAT_FM_026",
+        "LocalizedName": "Clown à Double Usage",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_018",
         "HashNameFemale": "FM_Tat_Award_F_018",
@@ -4641,6 +4660,7 @@
     },
     {
         "Name": "TAT_FM_027",
+        "LocalizedName": "Clown à Double Usage (Dollars)",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_Award_M_019",
         "HashNameFemale": "FM_Tat_Award_F_019",
@@ -4649,6 +4669,7 @@
     },
     {
         "Name": "TAT_FM_204",
+        "LocalizedName": "Confrérie",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_000",
         "HashNameFemale": "FM_Tat_F_000",
@@ -4657,6 +4678,7 @@
     },
     {
         "Name": "TAT_FM_205",
+        "LocalizedName": "Dragons",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_001",
         "HashNameFemale": "FM_Tat_F_001",
@@ -4665,6 +4687,7 @@
     },
     {
         "Name": "TAT_FM_209",
+        "LocalizedName": "Crâne fondant",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_002",
         "HashNameFemale": "FM_Tat_F_002",
@@ -4673,6 +4696,7 @@
     },
     {
         "Name": "TAT_FM_206",
+        "LocalizedName": "Dragons et Crânes",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_003",
         "HashNameFemale": "FM_Tat_F_003",
@@ -4681,6 +4705,7 @@
     },
     {
         "Name": "TAT_FM_219",
+        "LocalizedName": "Foi",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_004",
         "HashNameFemale": "FM_Tat_F_004",
@@ -4689,6 +4714,7 @@
     },
     {
         "Name": "TAT_FM_201",
+        "LocalizedName": "Serpents",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_005",
         "HashNameFemale": "FM_Tat_F_005",
@@ -4697,6 +4723,7 @@
     },
     {
         "Name": "TAT_FM_202",
+        "LocalizedName": "Fresque orientale",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_006",
         "HashNameFemale": "FM_Tat_F_006",
@@ -4705,6 +4732,7 @@
     },
     {
         "Name": "TAT_FM_210",
+        "LocalizedName": "Le Guerrier",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_007",
         "HashNameFemale": "FM_Tat_F_007",
@@ -4713,6 +4741,7 @@
     },
     {
         "Name": "TAT_FM_211",
+        "LocalizedName": "Fresque de dragons",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_008",
         "HashNameFemale": "FM_Tat_F_008",
@@ -4721,6 +4750,7 @@
     },
     {
         "Name": "TAT_FM_213",
+        "LocalizedName": "Crâne sur la croix",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_009",
         "HashNameFemale": "FM_Tat_F_009",
@@ -4729,6 +4759,7 @@
     },
     {
         "Name": "TAT_FM_218",
+        "LocalizedName": "LS Flames",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_010",
         "HashNameFemale": "FM_Tat_F_010",
@@ -4737,6 +4768,7 @@
     },
     {
         "Name": "TAT_FM_214",
+        "LocalizedName": "LS Script",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_011",
         "HashNameFemale": "FM_Tat_F_011",
@@ -4745,6 +4777,7 @@
     },
     {
         "Name": "TAT_FM_220",
+        "LocalizedName": "Los Santos Bills",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_012",
         "HashNameFemale": "FM_Tat_F_012",
@@ -4753,6 +4786,7 @@
     },
     {
         "Name": "TAT_FM_215",
+        "LocalizedName": "Aigle et Serpent",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_013",
         "HashNameFemale": "FM_Tat_F_013",
@@ -4761,6 +4795,7 @@
     },
     {
         "Name": "TAT_FM_207",
+        "LocalizedName": "Fresque de fleurs",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_014",
         "HashNameFemale": "FM_Tat_F_014",
@@ -4769,6 +4804,7 @@
     },
     {
         "Name": "TAT_FM_203",
+        "LocalizedName": "Crâne du Zodiaque",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_015",
         "HashNameFemale": "FM_Tat_F_015",
@@ -4777,6 +4813,7 @@
     },
     {
         "Name": "TAT_FM_216",
+        "LocalizedName": "Clown Maléfique",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_016",
         "HashNameFemale": "FM_Tat_F_016",
@@ -4785,6 +4822,7 @@
     },
     {
         "Name": "TAT_FM_212",
+        "LocalizedName": "Tribal",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_017",
         "HashNameFemale": "FM_Tat_F_017",
@@ -4793,6 +4831,7 @@
     },
     {
         "Name": "TAT_FM_208",
+        "LocalizedName": "Crâne de Serpent",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_018",
         "HashNameFemale": "FM_Tat_F_018",
@@ -4801,6 +4840,7 @@
     },
     {
         "Name": "TAT_FM_217",
+        "LocalizedName": "Le Salaire du Péché",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_019",
         "HashNameFemale": "FM_Tat_F_019",
@@ -4809,6 +4849,7 @@
     },
     {
         "Name": "TAT_FM_221",
+        "LocalizedName": "Dragon",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_020",
         "HashNameFemale": "FM_Tat_F_020",
@@ -4817,6 +4858,7 @@
     },
     {
         "Name": "TAT_FM_222",
+        "LocalizedName": "Crâne de serpent",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_021",
         "HashNameFemale": "FM_Tat_F_021",
@@ -4825,6 +4867,7 @@
     },
     {
         "Name": "TAT_FM_223",
+        "LocalizedName": "Dragon Ardent",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_022",
         "HashNameFemale": "FM_Tat_F_022",
@@ -4833,6 +4876,7 @@
     },
     {
         "Name": "TAT_FM_224",
+        "LocalizedName": "Bombasse",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_023",
         "HashNameFemale": "FM_Tat_F_023",
@@ -4841,6 +4885,7 @@
     },
     {
         "Name": "TAT_FM_225",
+        "LocalizedName": "Croix enflammée",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_024",
         "HashNameFemale": "FM_Tat_F_024",
@@ -4849,6 +4894,7 @@
     },
     {
         "Name": "TAT_FM_226",
+        "LocalizedName": "LS Bold",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_025",
         "HashNameFemale": "FM_Tat_F_025",
@@ -4857,6 +4903,7 @@
     },
     {
         "Name": "TAT_FM_227",
+        "LocalizedName": "Dague Fumante",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_026",
         "HashNameFemale": "FM_Tat_F_026",
@@ -4865,6 +4912,7 @@
     },
     {
         "Name": "TAT_FM_228",
+        "LocalizedName": "Vierge Marie",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_027",
         "HashNameFemale": "FM_Tat_F_027",
@@ -4873,6 +4921,7 @@
     },
     {
         "Name": "TAT_FM_229",
+        "LocalizedName": "Sirène",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_028",
         "HashNameFemale": "FM_Tat_F_028",
@@ -4881,6 +4930,7 @@
     },
     {
         "Name": "TAT_FM_230",
+        "LocalizedName": "Noeud de la Trinité",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_029",
         "HashNameFemale": "FM_Tat_F_029",
@@ -4889,6 +4939,7 @@
     },
     {
         "Name": "TAT_FM_231",
+        "LocalizedName": "Chiens Celtiques Chanceux",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_030",
         "HashNameFemale": "FM_Tat_F_030",
@@ -4897,6 +4948,7 @@
     },
     {
         "Name": "TAT_FM_232",
+        "LocalizedName": "Lady M",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_031",
         "HashNameFemale": "FM_Tat_F_031",
@@ -4905,6 +4957,7 @@
     },
     {
         "Name": "TAT_FM_233",
+        "LocalizedName": "Foi",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_032",
         "HashNameFemale": "FM_Tat_F_032",
@@ -4913,6 +4966,7 @@
     },
     {
         "Name": "TAT_FM_234",
+        "LocalizedName": "Dragon Chinois",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_033",
         "HashNameFemale": "FM_Tat_F_033",
@@ -4921,6 +4975,7 @@
     },
     {
         "Name": "TAT_FM_235",
+        "LocalizedName": "Trèfle Enflammé",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_034",
         "HashNameFemale": "FM_Tat_F_034",
@@ -4929,6 +4984,7 @@
     },
     {
         "Name": "TAT_FM_236",
+        "LocalizedName": "Dragon",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_035",
         "HashNameFemale": "FM_Tat_F_035",
@@ -4937,6 +4993,7 @@
     },
     {
         "Name": "TAT_FM_237",
+        "LocalizedName": "Voie du Pistolet",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_036",
         "HashNameFemale": "FM_Tat_F_036",
@@ -4945,6 +5002,7 @@
     },
     {
         "Name": "TAT_FM_238",
+        "LocalizedName": "Faucheuse",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_037",
         "HashNameFemale": "FM_Tat_F_037",
@@ -4953,6 +5011,7 @@
     },
     {
         "Name": "TAT_FM_239",
+        "LocalizedName": "Dague",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_038",
         "HashNameFemale": "FM_Tat_F_038",
@@ -4961,6 +5020,7 @@
     },
     {
         "Name": "TAT_FM_240",
+        "LocalizedName": "Crâne brisé",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_039",
         "HashNameFemale": "FM_Tat_F_039",
@@ -4969,6 +5029,7 @@
     },
     {
         "Name": "TAT_FM_241",
+        "LocalizedName": "Crâne enflammé",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_040",
         "HashNameFemale": "FM_Tat_F_040",
@@ -4977,6 +5038,7 @@
     },
     {
         "Name": "TAT_FM_242",
+        "LocalizedName": "Crâne de drogue (?)",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_041",
         "HashNameFemale": "FM_Tat_F_041",
@@ -4985,6 +5047,7 @@
     },
     {
         "Name": "TAT_FM_243",
+        "LocalizedName": "Scorpion Enflammé",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_042",
         "HashNameFemale": "FM_Tat_F_042",
@@ -4993,6 +5056,7 @@
     },
     {
         "Name": "TAT_FM_244",
+        "LocalizedName": "Bélier Indien",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_043",
         "HashNameFemale": "FM_Tat_F_043",
@@ -5001,6 +5065,7 @@
     },
     {
         "Name": "TAT_FM_245",
+        "LocalizedName": "Croix de Pierre",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_044",
         "HashNameFemale": "FM_Tat_F_044",
@@ -5009,6 +5074,7 @@
     },
     {
         "Name": "TAT_FM_246",
+        "LocalizedName": "Crânes et Rose",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_045",
         "HashNameFemale": "FM_Tat_F_045",
@@ -5017,6 +5083,7 @@
     },
     {
         "Name": "TAT_FM_247",
+        "LocalizedName": "Lion",
         "Collection": "multiplayer_overlays",
         "HashNameMale": "FM_Tat_M_047",
         "HashNameFemale": "FM_Tat_F_047",

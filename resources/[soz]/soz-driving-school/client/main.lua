@@ -24,6 +24,18 @@ Citizen.CreateThread(function()
             icon = data.icon,
             label = string.format(data.label, data.price),
             canInteract = function()
+                if licenseType == "heli" then
+                    local features = QBCore.Functions.TriggerRpc("soz-admin:feature:GetFeatures", GetPlayerServerId(PlayerId()))
+
+                    for _, feat in ipairs(features) do
+                        if feat == "heli-license" then
+                            return playerInsideZone
+                        end
+                    end
+
+                    return false
+                end
+
                 return playerInsideZone
             end,
         })

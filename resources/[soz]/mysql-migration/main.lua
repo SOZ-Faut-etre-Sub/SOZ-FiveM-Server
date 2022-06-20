@@ -1,3 +1,4 @@
+local migrationsFinished = false
 migrations = {};
 
 CreateThread(function()
@@ -26,4 +27,10 @@ CreateThread(function()
             print("Executed migration " .. migration.name)
         end
     end
+
+    migrationsFinished = true
+end)
+
+exports("IsReady", function()
+    return migrationsFinished
 end)

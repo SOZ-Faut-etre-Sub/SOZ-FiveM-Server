@@ -17,7 +17,7 @@ function ManageFuelUsage(vehicle)
         SetFuel(vehicle, GetFuel(vehicle))
         fuelSynced = true
     end
-    if IsVehicleEngineOn(vehicle) then
+    if IsVehicleEngineOn(vehicle) and Config.Classes[GetVehicleClass(vehicle)] > 0 then
         SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - Config.FuelUsage[Round(GetVehicleCurrentRpm(vehicle), 1)] *
                     (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10)
     end
@@ -220,6 +220,7 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
         QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
         TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
         TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
+        TriggerServerEvent("soz-fuel:server:BeginFueling", currentFuel, GetPlayerServerId(PlayerId()))
 
         while max > newFuel and (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) and not IsControlJustReleased(0, 194) and
             not IsControlJustReleased(0, 225) and GetPedInVehicleSeat(entity, -1) == 0 and GetEntityHealth(gasentity) > 0 do
@@ -271,7 +272,7 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
                 QBCore.Functions.ShowHelpNotification(text)
             end
             local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
-            TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(entity), math.floor(newFuel), serverIDcar)
+            TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(entity), math.floor(newFuel), serverIDcar, stationType, GetPlayerServerId(PlayerId()))
             --
             TriggerServerEvent("soz-fuel:server:setFinalFuel", id, (100 - math.floor(currentFuelAdd)))
         else
@@ -282,9 +283,6 @@ AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, st
         SetVehicleEngineOn(entity, true, false, false)
         ClearAnimation()
         pistoletdansmain = false
-        if stationType ~= "private" then
-            TriggerServerEvent("fuel:pay", tonumber(math.ceil(cout)), GetPlayerServerId(PlayerId()))
-        end
     else
         QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
         ClearAnimation()
@@ -408,6 +406,10 @@ Citizen.CreateThread(function()
     end
 end)
 
+function HasFuel(vehicle)
+    return Config.Classes[GetVehicleClass(vehicle)] > 0
+end
+
 function GetFuel(vehicle)
     return DecorGetFloat(vehicle, Config.FuelDecor)
 end
@@ -419,6 +421,7 @@ function SetFuel(vehicle, fuel)
     end
 end
 
+exports("HasFuel", HasFuel)
 exports("GetFuel", GetFuel)
 exports("SetFuel", SetFuel)
 
@@ -460,7 +463,7 @@ RegisterNetEvent("soz-fuel:client:onJerrycanEssence", function()
             }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
                 TriggerServerEvent("soz-fuel:server:removeJerrycanEssence")
                 local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(vehicle))
-                TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(vehicle), math.floor(fuel + 30.0), serverIDcar)
+                TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(vehicle), math.floor(fuel + 30.0), serverIDcar, "private", GetPlayerServerId(PlayerId()))
 
                 exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un Jerrycan d'Essence")
             end)
