@@ -2785,7 +2785,9 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['resellPrice'] = 5,
+        ['resellZone'] = 'Resell:LSPort:Pawl',
     },
     ['sawdust'] = {
         ['name'] = 'sawdust',
@@ -2818,6 +2820,13 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['resellPrice'] = {
+            [1] = 5,
+            [2] = 5,
+            [3] = 5,
+            [4] = 5,
+        },
+        ['resellZone'] = 'Resell:Zkea',
     },
 }
