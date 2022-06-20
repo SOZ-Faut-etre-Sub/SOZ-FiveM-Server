@@ -6,6 +6,7 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB } from './cl_utils';
 import {SettingsEvents} from "../../typings/settings";
 import {Delay} from "../utils/fivem";
+import {removePhoneProp} from "./functions";
 
 // All main globals that are set and used across files
 global.isPhoneOpen = false;
@@ -153,6 +154,7 @@ on('onResourceStop', (resource: string) => {
     animationService.endPhoneCall();
     animationService.closePhone();
     ClearPedTasks(PlayerPedId()); //Leave here until launch as it'll fix any stuck animations.
+    removePhoneProp();
   }
 });
 
