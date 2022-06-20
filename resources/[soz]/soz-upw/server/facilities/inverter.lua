@@ -1,8 +1,6 @@
 Inverter = InheritsFrom(Facility)
 
 function Inverter:new(identifier, options)
-    options.type = "inverter"
-
     local self = Inverter:Super():new(identifier, options)
 
     self.fields_to_save = {"type", "capacity", "maxCapacity"}
