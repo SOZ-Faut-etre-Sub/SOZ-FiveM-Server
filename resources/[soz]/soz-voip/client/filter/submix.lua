@@ -6,7 +6,7 @@ PhoneSubmix:setEffectParamInt("default", 1)
 PhoneSubmix:setEffectParamInt("enabled", 1)
 PhoneSubmix:setEffectParamFloat("freq_low", 100.0)
 PhoneSubmix:setEffectParamFloat("freq_hi", 6000.0)
-PhoneSubmix:setEffectParamFloat("fudge",  0.0)
+PhoneSubmix:setEffectParamFloat("fudge", 0.0)
 
 function FilterSubmixRegistry:new()
     self.__index = self
