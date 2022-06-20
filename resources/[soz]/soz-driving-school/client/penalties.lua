@@ -26,6 +26,7 @@ local function GetPenalties(licenseType)
         },
 
         ["overspeed"] = {
+            exclude = {"heli"},
             duration = 0,
             warning = false,
             warningMsg = "Attention à ta vitesse ! Ne dépasse pas les 90 km/h.",

@@ -1,5 +1,3 @@
-local binProps = GetHashKey("prop_cs_bin_01_skinned")
-
 --- Events
 RegisterNetEvent("jobs:server:garbage:processBags", function(item)
     if QBCore.Shared.Items[item] == nil then

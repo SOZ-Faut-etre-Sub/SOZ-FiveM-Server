@@ -1,6 +1,6 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_garbage", "soz", "garbage:menu")
 local haveGarbageBag, garbageBagProp = false, nil
-local binLocation = {}
+local binModel, binLocation = GetHashKey("soz_prop_bb_bin"), {}
 
 CreateThread(function()
     exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
@@ -76,7 +76,7 @@ CreateThread(function()
 
     local props = QBCore.Functions.TriggerRpc("core:server:getProps")
     for _, prop in pairs(props) do
-        if prop.model == 1010534896 then
+        if prop.model == binModel then
             binLocation[prop.id] = prop
         end
     end

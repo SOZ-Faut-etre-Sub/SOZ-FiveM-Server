@@ -7,7 +7,7 @@ import {FuelGauge, SpeedGauge} from "./Gauges";
 
 const SpeedoMeter: FunctionComponent<any> = () => {
     const {inVehicle, seatbelt: haveSeatbelt, updateInVehicle, updateSeatbelt: updatePlayerSeatbelt} = useContext(PlayerContext)
-    const {speed, fuel, engine, lock, seatbelt, lightState, updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState} = useContext(VehicleDataContext)
+    const {speed, fuel, engine, lock, hasFuel, seatbelt, lightState, updateSpeed, updateFuel, updateEngine, updateLock, updateSeatbelt, updateLightState, updateHasFuel} = useContext(VehicleDataContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'speedometer') {
@@ -17,6 +17,7 @@ const SpeedoMeter: FunctionComponent<any> = () => {
         } else if (event.data.action === 'update_vehicle') {
             if (event.data.speed !== undefined) updateSpeed(event.data.speed)
             if (event.data.fuel !== undefined) updateFuel(event.data.fuel)
+            if (event.data.hasFuel !== undefined) updateHasFuel(event.data.hasFuel)
             if (event.data.engine !== undefined) updateEngine(event.data.engine)
             if (event.data.lock !== undefined) updateLock(event.data.lock)
             if (event.data.haveSeatbelt !== undefined) updateSeatbelt(event.data.haveSeatbelt)
@@ -45,8 +46,8 @@ const SpeedoMeter: FunctionComponent<any> = () => {
                 <LockIndicator state={lock} />
             </div>
             <div className={style.centerContainer}>
-                <SpeedGauge speed={speed} />
-                <FuelGauge value={fuel} />
+                <SpeedGauge speed={speed} hasFuel={hasFuel} />
+                {hasFuel && <FuelGauge value={fuel} />}
                 <MotorIndicator state={engine} />
             </div>
             <div className={style.rightContainer}>

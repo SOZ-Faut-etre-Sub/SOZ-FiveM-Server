@@ -71,6 +71,22 @@ function JewelryShop:GenerateMenu()
     local ped = PlayerPedId()
     local PlayerData = QBCore.Functions.GetPlayerData()
 
+    self:deleteCam()
+    self:setupCam()
+
+    shopMenu:AddCheckbox({
+        label = "Libérer la caméra",
+        value = cam,
+        change = function(_, value)
+            if value then
+                self:deleteCam()
+                FreezeEntityPosition(PlayerPedId(), true)
+            else
+                self:setupCam()
+            end
+        end,
+    })
+
     for _, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
         shopMenu:AddButton({label = content.label, value = content.menu})
 
@@ -84,11 +100,6 @@ function JewelryShop:GenerateMenu()
             SetPedPropIndex(ped, tonumber(item.Value[1]), tonumber(item.Value[2]), tonumber(item.Value[3]), 2)
         end)
     end
-
-    shopMenu:On("open", function()
-        self:deleteCam()
-        self:setupCam()
-    end)
 
     shopMenu:On("close", function()
         TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
