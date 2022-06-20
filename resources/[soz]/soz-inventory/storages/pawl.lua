@@ -8,6 +8,15 @@ Config.Storages["pawl_log_storage"] = {
     offsetUpZ = 3.0,
 }
 
+Config.Storages["pawl_plank_storage"] = {
+    label = "Stockage Pipe And Wooden Leg",
+    type = "plank_storage",
+    owner = "pawl",
+    position = vector3(-500.79, 5269.62, 80.61),
+    size = vec2(35.0, 6.2),
+    heading = 340,
+    offsetUpZ = 2.0,
+}
 Config.Storages["pawl_sawdust_storage"] = {
     label = "Stockage Pipe And Wooden Leg",
     type = "sawdust_storage",

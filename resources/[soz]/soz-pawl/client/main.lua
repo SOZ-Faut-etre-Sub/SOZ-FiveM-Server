@@ -31,4 +31,25 @@ Citizen.CreateThread(function()
         local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
         TriggerEvent("pawl:client:syncField", identifier, field)
     end
+
+    -- Processing
+    exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
+    exports["qb-target"]:AddBoxZone("pawl:processing:tree_trunk", vector3(-552.14, 5347.94, 74.74), 0.5, 2.2,
+                                    {
+        name = "pawl:processing:tree_trunk",
+        heading = 72,
+        minZ = 73.74,
+        maxZ = 76.54,
+        debugPoly = true,
+    }, {
+        options = {
+            {
+                type = "server",
+                label = "Transformer",
+                icon = "c:inventory/ouvrir_le_stockage.png",
+                event = "pawl:server:processingTree",
+            },
+        },
+        distance = 2.5,
+    })
 end)
