@@ -2,7 +2,7 @@ Config = {}
 
 Config.AllowedRole = {"admin"}
 
-Config.Features = {["flatbed-ramp"] = "Rampe Flatbed"}
+Config.Features = {["flatbed-ramp"] = "Rampe Flatbed", ["heli-license"] = "Permis Hélico"}
 
 Config.ComponentName = {
     [0] = "Visage",
