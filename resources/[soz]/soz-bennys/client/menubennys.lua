@@ -984,6 +984,13 @@ Vehiclemecha2 = BoxZone:Create(vector3(-222.62, -1330.24, 30.89), 9, 6, {
     maxZ = 33.89,
 })
 
+StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
+    name = "staff_bennys",
+    heading = 240,
+    minZ = 12.3,
+    maxZ = 27,
+})
+
 Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
         exports["qb-target"]:AddTargetModel(-2094907124, {
@@ -1093,6 +1100,33 @@ Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, p
             VehiculeOptions:Close()
             Config.AttachedVehicle = nil
         end
+    end
+end)
+
+StaffBennys:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+    if isPointInside then
+        QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed, permission)
+            if isAllowed then
+                if Config.AttachedVehicle == nil then
+                    if IsPedInAnyVehicle(PlayerPedId()) then
+                        local veh = GetVehiclePedIsIn(PlayerPedId())
+                        if not IsThisModelABicycle(GetEntityModel(veh)) then
+                            Insidemecha = true
+                        else
+                            exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mettre de vélos", "error")
+                        end
+                    end
+                end
+            end
+        end)
+    else
+        QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed, permission)
+            if isAllowed then
+                Insidemecha = false
+                VehiculeOptions:Close()
+                Config.AttachedVehicle = nil
+            end
+        end)
     end
 end)
 
