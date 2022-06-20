@@ -10,6 +10,29 @@ Citizen.CreateThread(function()
             sprite = Config.Blip.Sprite,
         })
     end
+
+    -- Energy Plants
+    for identifier, plantData in pairs(Config.Plants) do
+        for key, data in pairs(plantData.client) do
+            if key == "energyZone" then
+                CreateEnergyZone(identifier, data)
+            end
+
+            if key == "wasteZone" then
+                CreateWasteZone(identifier, data)
+            end
+        end
+    end
+
+    local facilities = {
+        {arr = Config.Inverters, create = CreateInverterZone},
+        {arr = Config.Terminals, create = CreateTerminalZone},
+    }
+    for _, conf in ipairs(facilities) do
+        for identifier, data in pairs(conf.arr) do
+            conf.create(identifier, data.zone)
+        end
+    end
 end)
 
 function CreateZone(identifier, zoneType, data)

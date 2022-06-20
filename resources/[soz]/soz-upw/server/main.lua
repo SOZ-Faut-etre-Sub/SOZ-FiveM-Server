@@ -3,12 +3,17 @@ QBCore = exports["qb-core"]:GetCoreObject()
 -- UPW Objects
 Plants = {}
 Inverters = {}
+Terminals = {}
 Pm = {} -- PollutionManager instance
 
 --
 -- ON RESOURCE START
 --
-local facilities = {["Plants"] = {class = Plant, arr = Plants}, ["Inverters"] = {class = Inverter, arr = Inverters}}
+local facilities = {
+    ["Plants"] = {class = Plant, arr = Plants},
+    ["Inverters"] = {class = Inverter, arr = Inverters},
+    ["Terminals"] = {class = Terminal, arr = Terminals},
+}
 
 -- Initialize Plants, Inverters
 local function InitiateFacilities()
@@ -39,6 +44,8 @@ MySQL.ready(function()
 
     InitiateFacilities()
     StartProductionLoop()
+
+    StartConsumptionLoop()
 end)
 
 --
@@ -63,4 +70,8 @@ end
 
 function GetInverter(identifier)
     return Inverters[identifier]
+end
+
+function GetTerminal(identifier)
+    return Terminals[identifier]
 end

@@ -12,10 +12,12 @@ server_scripts {
     "server/facilities/facility.lua",
     "server/facilities/plant.lua",
     "server/facilities/inverter.lua",
+    "server/facilities/terminal.lua",
     "server/facilities/pollution-manager.lua",
     "server/main.lua",
     "server/pollution.lua",
     "server/production.lua",
+    "server/storage.lua",
 }
 
 dependencies {"oxmysql", "qb-core"}
