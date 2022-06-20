@@ -29,6 +29,9 @@ Container["trunk"] = InventoryContainer:new("trunk", {
     "drink",
     "food",
     "oil_and_item",
+    "log",
+    "plank",
+    "sawdust",
 })
 Container["tanker"] = InventoryContainer:new("trunk", {"oil", "oil_and_item"})
 

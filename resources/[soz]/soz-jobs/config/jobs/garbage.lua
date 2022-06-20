@@ -18,6 +18,7 @@ GarbageConfig.RecycleItem = {
     ["peau"] = 5,
     ["os"] = 5,
     ["viscere"] = 5,
+    ["sawdust"] = 1,
 }
 
 GarbageConfig.Cloakroom = {
