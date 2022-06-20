@@ -19,26 +19,34 @@ local function getItemPrice(product, productID, Player)
     end
 end
 
-RegisterNetEvent("shops:server:pay", function(product, productID, amount)
+RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     amount = tonumber(amount) or 1
 
-    if Config.Products[product] == nil then
+    if Config.Products[brand] == nil then
         return
     end
 
     if Player then
-        local item = Config.Products[product][productID]
-        local price = getItemPrice(product, productID, Player) * amount
+        local item = Config.Products[brand][productID]
+        local price = getItemPrice(brand, productID, Player) * amount
 
-        if product ~= "tattoo" and product ~= "barber" and product ~= "jewelry" and product ~= "ponsonbys" and product ~= "suburban" and product ~= "binco" and
+        if brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco" and
             item.amount < amount then
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
             return
         end
 
+        local qbItem = QBCore.Shared.Items[item.name]
+        local canCarryItem = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, qbItem, amount)
+
+        if not canCarryItem then
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")
+            return
+        end
+
         if Player.Functions.RemoveMoney("money", price) then
-            if product == "tattoo" then
+            if brand == "tattoo" then
                 local skin = Player.PlayerData.skin
                 skin.Tattoos = skin.Tattoos or {}
 
@@ -49,8 +57,8 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
 
                 Player.Functions.SetSkin(skin, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
-            elseif product == "barber" then
-                local barberShop = Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category]
+            elseif brand == "barber" then
+                local barberShop = Config.Products[brand][Player.PlayerData.skin.Model.Hash][productID.category]
                 local skin = Player.PlayerData.skin
 
                 for componentID, component in pairs(productID.data) do
@@ -61,7 +69,7 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
 
                 Player.Functions.SetSkin(skin, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez changé de coupe pour ~g~$%s"):format(price))
-            elseif product == "jewelry" then
+            elseif brand == "jewelry" then
                 local clothConfig = Player.PlayerData.cloth_config
 
                 clothConfig["BaseClothSet"].Props[tostring(productID.category)] = {
@@ -71,10 +79,10 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
 
                 Player.Functions.SetClothConfig(clothConfig, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
-            elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
+            elseif brand == "ponsonbys" or brand == "suburban" or brand == "binco" then
                 local clothConfig = Player.PlayerData.cloth_config
                 local clothItem =
-                    Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Items[productID.item]
+                    Config.Products[brand][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Items[productID.item]
 
                 for componentId, component in pairs(clothItem.ApplyComponents or {}) do
                     clothConfig["BaseClothSet"].Components[tostring(componentId)] = {}
@@ -96,21 +104,14 @@ RegisterNetEvent("shops:server:pay", function(product, productID, amount)
             else
                 exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
                     if success then
-                        Config.Products[product][productID].amount = Config.Products[product][productID].amount - amount
-                        if Config.Products[product][productID].amount <= 0 then
-                            Config.Products[product][productID].amount = 0
+                        Config.Products[brand][productID].amount = Config.Products[brand][productID].amount - amount
+                        if Config.Products[brand][productID].amount <= 0 then
+                            Config.Products[brand][productID].amount = 0
                         end
-                        TriggerClientEvent("shops:client:SetShopItems", -1, product, Config.Products[product])
+                        TriggerClientEvent("shops:client:SetShopItems", -1, brand, Config.Products[brand])
 
                         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
                                            ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(amount, QBCore.Shared.Items[item.name].label, price))
-                    else
-                        Player.Functions.AddMoney("money", price)
-                        local message = "Vous ne pouvez pas porter cette quantité..."
-                        if reason ~= "invalid_weight" then
-                            message = string.format("Il y a eu une erreur : `%s`", reason)
-                        end
-                        TriggerClientEvent("hud:client:DrawNotification", source, message, "error")
                     end
                 end)
             end
