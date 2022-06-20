@@ -83,7 +83,7 @@ local function RefreshState(state)
 
         if not LastVolumesSet[id] or LastVolumesSet[id].volume ~= config.volume then
             MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
-            LastVolumesSet[id] = {serverId = config.serverId, volume = config.volume}
+            LastVolumesSet[id] = {serverId = config.serverId, volume = config.volume, time = GetGameTimer()}
         end
 
         local currentTime = GetGameTimer()
@@ -91,7 +91,6 @@ local function RefreshState(state)
         -- Reset every 1 second
         if currentTime - LastVolumesSet[id].time > (1000 * 1) then
             MumbleSetVolumeOverrideByServerId(config.serverId, -1.0)
-            Wait(0)
             MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
 
             LastVolumesSet[id].time = GetGameTimer()
@@ -107,6 +106,18 @@ local function RefreshState(state)
 
     return state
 end
+local lastState = {}
+
+RegisterCommand("voip-show-state", function ()
+    for _, channelId in pairs(lastState.channels) do
+        print("Listen to channel: " .. channelId)
+    end
+
+    -- readd players
+    for _, config in pairs(lastState.players) do
+        print("Listen to player: " .. config.serverId .. ", volume: " .. config.volume)
+    end
+end, false)
 
 local function GetFilterForPlayer(player)
     if contains(player.context, "call") then
@@ -196,8 +207,9 @@ Citizen.CreateThread(function()
         state.players = updateSpeakers(state.players, CallModuleInstance:getSpeakers(), "call", Config.volumeCall)
 
         RefreshState(state)
-
         ApplyFilters(state.players)
+
+        lastState = state
 
         -- wait, do this every 200ms
         Citizen.Wait(200)
