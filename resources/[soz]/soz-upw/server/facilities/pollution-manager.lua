@@ -3,8 +3,6 @@ PollutionManager = InheritsFrom(Facility)
 local pollutionLoopRunning = false
 
 function PollutionManager:new(identifier, options)
-    options.type = "pollution-manager"
-
     local self = PollutionManager:Super():new(identifier, options)
 
     self.fields_to_save = {"type", "currentPollution", "units", "buffer"}
