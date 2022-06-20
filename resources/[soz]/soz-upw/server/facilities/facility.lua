@@ -20,16 +20,18 @@ end
 function Facility:init(identifier, data)
     local res = self:select(identifier)
     if res then
-        self:load(res.data)
+        self:load(res.type, res.data)
     else
         self:insert(data)
     end
 end
 
-function Facility:load(data)
+function Facility:load(type_, data)
     if type(data) == "string" then
         data = json.decode(data)
     end
+
+    self.type = type_
 
     for key, value in pairs(data) do
         self[key] = value
@@ -52,7 +54,7 @@ function Facility:insert(data)
 
     if res then
         local facility = self:select(self.identifier)
-        self:load(facility.data)
+        self:load(facility.type, facility.data)
     end
 end
 
@@ -85,7 +87,7 @@ function Facility:save(isAsync)
     end
 
     if res == 1 then
-        self:load(data)
+        self:load(self.type, data)
     end
 end
 
