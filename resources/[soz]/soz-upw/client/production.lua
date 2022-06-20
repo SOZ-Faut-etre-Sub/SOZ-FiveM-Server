@@ -1,4 +1,4 @@
-local function CreateEnergyZone(identifier, data)
+function CreateEnergyZone(identifier, data)
     data.options = {
         {
             label = "Activer",
@@ -42,7 +42,7 @@ local function CreateEnergyZone(identifier, data)
     return CreateZone(identifier, "energy", data)
 end
 
-local function CreateWasteZone(identifier, data)
+function CreateWasteZone(identifier, data)
     data.options = {
         {
             label = "Collecter les déchets",
@@ -58,60 +58,6 @@ local function CreateWasteZone(identifier, data)
     return CreateZone(identifier, "waste", data)
 end
 
-local function CreateInverterZone(identifier, data)
-    data.options = {
-        {
-            label = "Stocker l'énergie",
-            event = "soz-upw:client:HarvestLoop",
-            identifier = identifier,
-            harvest = "inverter-in",
-            canInteract = function()
-                return OnDuty()
-            end,
-        },
-        {
-            label = "Collecter l'énergie",
-            event = "soz-upw:client:HarvestLoop",
-            identifier = identifier,
-            harvest = "inverter-out",
-            canInteract = function()
-                return OnDuty()
-            end,
-        },
-        {
-            label = "Remplissage",
-            type = "server",
-            event = "soz-upw:client:InverterCapacity",
-            identifier = identifier,
-            canInteract = function()
-                return OnDuty()
-            end,
-        },
-    }
-
-    return CreateZone(identifier, "inverter", data)
-end
-
-Citizen.CreateThread(function()
-    -- Energy Plants
-    for identifier, plantData in pairs(Config.Plants) do
-        for key, data in pairs(plantData.client) do
-            if key == "energyZone" then
-                CreateEnergyZone(identifier, data)
-            end
-
-            if key == "wasteZone" then
-                CreateWasteZone(identifier, data)
-            end
-        end
-    end
-
-    -- Inverters
-    for identifier, inverterData in pairs(Config.Inverters) do
-        CreateInverterZone(identifier, inverterData.zone)
-    end
-end)
-
 --
 -- FARM
 --
@@ -124,7 +70,7 @@ end
 
 local function Harvest(identifier, harvest)
     local message = "Vous collectez..."
-    if harvest == "inverter-in" then
+    if harvest == "inverter-in" or harvest == "terminal-in" then
         message = "Vous déposez..."
     end
 

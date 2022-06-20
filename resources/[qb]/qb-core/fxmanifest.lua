@@ -16,7 +16,7 @@ shared_scripts {
     'shared/weapons.lua',
     'shared/uuid.lua',
     'shared/trunks.lua',
-    'shared/pollution.lua',
+    'shared/upw.lua',
 }
 
 client_scripts {

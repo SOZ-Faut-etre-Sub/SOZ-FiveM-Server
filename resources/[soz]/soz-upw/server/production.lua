@@ -21,9 +21,11 @@ function StartProductionLoop()
                 end
             end
 
-            for _, inverter in pairs(Inverters) do
-                if count >= 5 then
-                    inverter:save()
+            for _, facilities in ipairs({Inverters, Terminals}) do
+                for _, facility in pairs(facilities) do
+                    if count >= 5 then
+                        facility:save()
+                    end
                 end
             end
 
@@ -90,6 +92,14 @@ local facilities = {
         action = "HarvestEnergy",
         item = "energy",
     },
+    ["terminal-in"] = {
+        config = "Terminals",
+        getFacility = GetTerminal,
+        precheck = "CanStoreEnergy",
+        messages = {precheckError = "Borne pleine", harvestSuccess = "Vous avez déposé ~g~1 %s"},
+        action = "StoreEnergy",
+        item = "energy",
+    },
 }
 
 local function GetFacilityData(harvestType)
@@ -127,7 +137,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    if harvestType == "inverter-in" then
+    if harvestType == "inverter-in" or harvestType == "terminal-in" then
         -- Does player have item?
         local count = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
 
@@ -168,7 +178,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     local p = promise:new()
 
-    if harvestType == "inverter-in" then
+    if harvestType == "inverter-in" or harvestType == "terminal-in" then
         -- Remove energy cell from inventory
         exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
 
@@ -197,18 +207,4 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
     facility[facilityData.action](facility)
 
     cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
-end)
-
---
--- Events Inverter related
---
-RegisterNetEvent("soz-upw:client:InverterCapacity", function(data)
-    local inverter = GetInverter(data.identifier)
-
-    if inverter then
-        TriggerClientEvent("hud:client:DrawNotification", source,
-                           string.format("Remplissage : %s%%", math.floor(inverter.capacity / inverter.maxCapacity * 100)))
-    else
-        TriggerClientEvent("hud:client:DrawNotification", source, "Onduleur introuvable : " .. data.identifier, "error")
-    end
 end)

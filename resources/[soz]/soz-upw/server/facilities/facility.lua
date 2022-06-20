@@ -101,3 +101,20 @@ function Facility:HarvestEnergy()
 
     return self.capacity
 end
+
+--
+-- ENERGY STORAGE
+--
+function Facility:CanStoreEnergy()
+    return self.capacity < self.maxCapacity
+end
+
+function Facility:StoreEnergy()
+    self.capacity = self.capacity + Config.Production.EnergyPerCell
+
+    if self.capacity > self.maxCapacity then
+        self.capacity = self.maxCapacity
+    end
+
+    return self.capacity
+end
