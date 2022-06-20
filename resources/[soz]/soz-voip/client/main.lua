@@ -108,7 +108,7 @@ local function RefreshState(state)
 end
 local lastState = {}
 
-RegisterCommand("voip-show-state", function ()
+RegisterCommand("voip-show-state", function()
     for _, channelId in pairs(lastState.channels) do
         print("Listen to channel: " .. channelId)
     end
