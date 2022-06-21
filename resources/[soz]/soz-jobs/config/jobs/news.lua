@@ -49,17 +49,17 @@ NewsConfig.Cloakroom = {
             },
             Props = {[0] = {Clear = true}},
         },
-        ["Costume hélico"] = {
+        ["Costume Hélico"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 18, Texture = 0, Palette = 0},
-                [4] = {Drawable = 42, Texture = 8, Palette = 0},
+                [3] = {Drawable = 17, Texture = 0, Palette = 0},
+                [4] = {Drawable = 41, Texture = 0, Palette = 0},
                 [6] = {Drawable = 25, Texture = 0, Palette = 0},
                 [7] = {Drawable = 0, Texture = 0, Palette = 0},
                 [8] = {Drawable = 15, Texture = 0, Palette = 0},
                 [9] = {Drawable = 0, Texture = 0, Palette = 0},
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 47, Texture = 0, Palette = 0},
+                [11] = {Drawable = 54, Texture = 0, Palette = 0},
             },
             Props = {[0] = {Clear = true}},
         },
