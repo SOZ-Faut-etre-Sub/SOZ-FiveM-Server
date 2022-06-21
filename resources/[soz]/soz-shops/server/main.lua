@@ -19,6 +19,10 @@ local function getItemPrice(product, productID, Player)
     end
 end
 
+local function shouldCheckAmount(brand)
+    return brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco"
+end
+
 RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     amount = tonumber(amount) or 1
@@ -37,12 +41,14 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
             return
         end
 
-        local qbItem = QBCore.Shared.Items[item.name]
-        local canCarryItem = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, qbItem, amount)
+        if shouldCheckAmount(brand) then
+            local qbItem = QBCore.Shared.Items[item.name]
+            local canCarryItem = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, qbItem, amount)
 
-        if not canCarryItem then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")
-            return
+            if not canCarryItem then
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")
+                return
+            end
         end
 
         if Player.Functions.RemoveMoney("money", price) then
