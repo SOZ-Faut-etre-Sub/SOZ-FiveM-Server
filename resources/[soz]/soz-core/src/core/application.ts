@@ -1,0 +1,82 @@
+import { Container } from './container';
+import { Inject, Injectable } from './decorators/injectable';
+import { ModuleLoader } from './loader/ModuleLoader';
+
+@Injectable()
+export class Application {
+    private running: Promise<boolean> | null = null;
+    private resolve: (boolean) => void | null = null;
+    private onStopCallback = null;
+    private container = Container;
+    private modules = [];
+
+    @Inject(ModuleLoader)
+    private moduleLoader: ModuleLoader;
+
+    static create(...modules: any[]): Application {
+        const app = Container.get(Application);
+
+        for (const module of modules) {
+            app.addModule(module);
+        }
+
+        app.start();
+
+        return app;
+    }
+
+    start() {
+        if (this.running !== null && this.resolve !== null) {
+            console.error('soz core applicasion already running');
+
+            return;
+        }
+
+        this.running = new Promise<boolean>(resolve => {
+            this.resolve = resolve;
+        });
+
+        for (const module of this.modules) {
+            this.moduleLoader.load(module);
+        }
+
+        this.onStopCallback = this.onStop.bind(this);
+        addEventListener('soz_core.__internal__.stop_application', this.onStopCallback, false);
+
+        console.log('[soz-core] starting application');
+    }
+
+    async stop() {
+        if (this.running === null || this.resolve === null) {
+            console.error('soz core application is not running');
+            return;
+        }
+
+        const stopped = await this.running;
+        console.log('[soz-core] stopping application');
+
+        this.moduleLoader.unload();
+
+        this.running = null;
+        this.resolve = null;
+
+        return stopped;
+    }
+
+    private addModule(module: any) {
+        const moduleService = this.container.get(module);
+
+        this.modules.push(moduleService);
+    }
+
+    private onStop() {
+        if (this.running === null || this.resolve === null) {
+            console.error('soz core application is not running');
+            return;
+        }
+
+        this.resolve(true);
+
+        removeEventListener('soz_core.__internal__.stop_application', this.onStopCallback);
+    }
+}

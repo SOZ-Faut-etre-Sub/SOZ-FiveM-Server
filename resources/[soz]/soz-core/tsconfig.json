@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "types": ["@citizenfx/server", "@citizenfx/client", "@types/node", "reflect-metadata"],
+        "moduleResolution": "node",
+        "module": "CommonJS",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
+}
