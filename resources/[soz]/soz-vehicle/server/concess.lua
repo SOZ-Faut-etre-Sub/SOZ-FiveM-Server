@@ -23,7 +23,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local cid = pData.PlayerData.citizenid
     local qbVehicle = QBCore.Shared.Vehicles[displayname]
     if qbVehicle == nil then
-        exports['soz-monitor']:Log('WARN', 'Vehicle with display name \'' .. displayname .. '\' is not in the config. Model name: ' .. vehicle)
+        exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
     end
     local vehiclePrice = qbVehicle["price"]
     local plate = GeneratePlate()
