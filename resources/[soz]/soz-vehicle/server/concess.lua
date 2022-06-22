@@ -21,9 +21,13 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
-    local vehiclePrice = QBCore.Shared.Vehicles[displayname]["price"]
+
+    local vehiclePrice = QBCore.Shared.Vehicles[vehicle]["price"]
     local plate = GeneratePlate()
-    local depotprice = math.ceil(vehiclePrice / 100)
+
+    -- For the new vehicles the depot price is correctly generated to 15% of the original value.
+    -- However the present vehicles are not synced, not we don't use this value to pay the depot
+    local depotprice = math.ceil(vehiclePrice * (15 / 100))
     if depotprice < 100 then
         depotprice = 100
     end

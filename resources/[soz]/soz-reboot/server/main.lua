@@ -25,8 +25,11 @@ local reboot = function()
     exports["soz-inventory"]:saveInventories()
 
     local parkingtime = os.time()
+    print("[soz-reboot] Mise des véhicules à la fourrière")
+    MySQL.Sync.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ?, life_counter = life_counter - 1 WHERE state = 0", {parkingtime})
+
     print("[soz-reboot] Mise des véhicules dans le void...")
-    MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE state = 0", {parkingtime})
+    MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE life_counter = -1 AND state != 4", {parkingtime})
 
     print("[soz-reboot] Sauvegarde des comptes bancaires...")
     exports["soz-bank"]:saveAccounts()
