@@ -25,7 +25,6 @@ local reboot = function()
     exports["soz-inventory"]:saveInventories()
 
     local parkingtime = os.time()
-
     print("[soz-reboot] Mise des véhicules dans le void...")
     MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE life_counter = 0", {parkingtime})
 
