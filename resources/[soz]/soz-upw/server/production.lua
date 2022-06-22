@@ -170,7 +170,11 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     if harvestType == "inverter-in" or harvestType == "terminal-in" then
         -- Remove energy cell from inventory
-        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
+        local invChanged = exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
+
+        if invChanged and harvestType == "terminal-in" then
+            TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount, Config.Upw)
+        end
 
         p:resolve(true, nil)
     else
