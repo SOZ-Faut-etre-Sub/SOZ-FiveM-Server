@@ -164,6 +164,13 @@ end)
 QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, identifier, harvestType)
     local Player = QBCore.Functions.GetPlayer(source)
 
+    local facilityData = GetFacilityData(harvestType)
+    local facility = facilityData.getFacility(identifier)
+    if not facility then
+        cb(false, "invalid facility")
+        return
+    end
+
     local item = GetItem(identifier, harvestType)
 
     local p = promise:new()
@@ -172,8 +179,9 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         -- Remove energy cell from inventory
         local invChanged = exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
 
-        if invChanged and harvestType == "terminal-in" then
-            TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount, Config.Upw)
+        if invChanged and harvestType == "terminal-in" and facility.scope == "default" then
+            -- Add payment from San Andreas State on default terminals only
+            TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount, Config.Upw.Resale.EnergyCellPrice)
         end
 
         p:resolve(true, nil)
@@ -188,13 +196,6 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     if not success then
         cb(false, reason)
-        return
-    end
-
-    local facilityData = GetFacilityData(harvestType)
-    local facility = facilityData.getFacility(identifier)
-    if not facility then
-        cb(false, "invalid facility")
         return
     end
 
