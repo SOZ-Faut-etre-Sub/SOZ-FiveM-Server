@@ -5,6 +5,7 @@
         "moduleResolution": "node",
         "module": "CommonJS",
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "jsx": "react-jsx",
     }
 }

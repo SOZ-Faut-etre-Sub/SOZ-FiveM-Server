@@ -4,15 +4,23 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --mode production",
-        "dev": "webpack --watch --mode development"
+        "build-module": "webpack --mode production --config webpack.config.watch.js",
+        "build-nui": "webpack --mode production --config webpack.config.dev_server.js",
+        "build": "concurrently \"yarn run build-module\" \"yarn run build-nui\"",
+        "dev-module": "webpack --config webpack.config.watch.js --watch --mode development",
+        "dev-nui": "webpack-dev-server --config webpack.config.dev_server.js --mode development --hot",
+        "dev": "concurrently \"yarn run dev-module\" \"yarn run dev-nui\""
     },
     "devDependencies": {
+        "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
         "@swc/core": "^1.2.204",
         "@types/node": "^18.0.0",
+        "@types/react": "^18.0.14",
+        "@types/react-dom": "^18.0.5",
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
         "chokidar": "^3.5.3",
+        "concurrently": "^7.2.2",
         "eslint": "^8.18.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -22,15 +30,19 @@
         "eslint-plugin-simple-import-sort": "^7.0.0",
         "eslint-webpack-plugin": "^3.1.1",
         "prettier": "^2.7.1",
+        "react-refresh": "^0.14.0",
         "swc-loader": "^0.2.3",
         "typescript": "^4.7.4",
         "webpack": "^5.73.0",
-        "webpack-cli": "^4.10.0"
+        "webpack-cli": "^4.10.0",
+        "webpack-dev-server": "^4.9.2"
     },
     "dependencies": {
         "@citizenfx/client": "^2.0.5659-1",
         "@citizenfx/server": "^2.0.5659-1",
         "inversify": "^6.0.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "reflect-metadata": "^0.1.13"
     }
 }
