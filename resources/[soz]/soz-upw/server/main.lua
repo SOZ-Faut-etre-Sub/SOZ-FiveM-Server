@@ -51,7 +51,6 @@ local function InitiateFacilities()
     end
 end
 
-
 -- Init
 MySQL.ready(function()
     -- TO BE REMOVED (DEV PURPOSE)

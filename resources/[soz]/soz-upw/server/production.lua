@@ -107,12 +107,7 @@ local function GetFacilityData(harvestType)
 end
 
 local function GetItem(identifier, harvestType)
-    local items = {
-        ["energy"] = Config.Items.Energy,
-        ["waste"] = {
-            ["hydro1"] = Config.Items.Waste.Hydro
-        },
-    }
+    local items = {["energy"] = Config.Items.Energy, ["waste"] = {["hydro1"] = Config.Items.Waste.Hydro}}
 
     local facilityData = GetFacilityData(harvestType)
 
