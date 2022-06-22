@@ -22,7 +22,11 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
 
-    local vehiclePrice = QBCore.Shared.Vehicles[vehicle]["price"]
+    local qbVehicle = QBCore.Shared.Vehicles[displayname]
+    if qbVehicle == nil then
+        exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
+    end
+    local vehiclePrice = qbVehicle["price"]
     local plate = GeneratePlate()
 
     -- For the new vehicles the depot price is correctly generated to 15% of the original value.
