@@ -29,12 +29,6 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
 
     local plate = GeneratePlate()
 
-    -- For the new vehicles the depot price is correctly generated to 15% of the original value.
-    -- However the present vehicles are not synced, now we don't use this value to pay the depot
-    local depotprice = math.ceil(vehiclePrice * (15 / 100))
-    if depotprice < 100 then
-        depotprice = 100
-    end
     local vehiclestock = MySQL.Sync.fetchAll("SELECT stock FROM concess_storage WHERE model = @model", {
         ["@model"] = vehicle,
     })
@@ -52,7 +46,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             end
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, life_counter, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 {
                     pData.PlayerData.license,
                     cid,
@@ -62,7 +56,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                     plate,
                     garage,
                     1,
-                    depotprice,
+                    3,
                     os.time(),
                 })
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
