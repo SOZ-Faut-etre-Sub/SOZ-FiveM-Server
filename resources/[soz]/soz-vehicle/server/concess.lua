@@ -30,7 +30,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local plate = GeneratePlate()
 
     -- For the new vehicles the depot price is correctly generated to 15% of the original value.
-    -- However the present vehicles are not synced, not we don't use this value to pay the depot
+    -- However the present vehicles are not synced, now we don't use this value to pay the depot
     local depotprice = math.ceil(vehiclePrice * (15 / 100))
     if depotprice < 100 then
         depotprice = 100
