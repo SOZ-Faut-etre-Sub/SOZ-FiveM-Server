@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
             zoneData = zoneData[attr]
 
             if zoneData == nil then
-                return  -- Skip is zone not exists
+                return -- Skip is zone not exists
             end
         end
 
@@ -48,7 +48,11 @@ Citizen.CreateThread(function()
     end
 
     -- Fetch facilities from database
-    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {"plant", "inverter", "terminal"})
+    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {
+        "plant",
+        "inverter",
+        "terminal",
+    })
 
     for _, facility in ipairs(facilities) do
         local conf = config[facility.type]
@@ -73,7 +77,7 @@ function CreateZone(identifier, zoneType, data)
         heading = data.heading,
         minZ = data.minZ,
         maxZ = data.maxZ,
-        debugPoly = true,
+        debugPoly = false,
     }, {options = data.options})
 end
 
