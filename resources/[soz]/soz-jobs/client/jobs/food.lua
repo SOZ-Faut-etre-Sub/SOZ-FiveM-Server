@@ -24,7 +24,7 @@ local function SpawnFieldZones()
             minZ = minZ - 2.0,
             maxZ = maxZ + 2.0,
             onPlayerInOut = function(isIn)
-                if isIn  and PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty then
+                if isIn and PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty then
                     currentField = zoneName
                     QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
                         currentFieldHealth = health
