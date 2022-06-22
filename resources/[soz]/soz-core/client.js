@@ -8,4 +8,22 @@ if (hotReload) {
 
         eval(content);
     });
+
+    setTimeout(() => {
+        SendNuiMessage(
+            JSON.stringify({
+                type: 'soz-core-nui-load',
+                mode: 'dev',
+            })
+        );
+    }, 100);
+} else {
+    setTimeout(() => {
+        SendNuiMessage(
+            JSON.stringify({
+                type: 'soz-core-nui-load',
+                mode: 'production',
+            })
+        );
+    }, 100);
 }
