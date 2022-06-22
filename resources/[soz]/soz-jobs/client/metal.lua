@@ -61,8 +61,8 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
 
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
-    TriggerEvent("jobs:metal:start")
     DrawInteractionMarker(ObjectifCoord, false)
+    TriggerEvent("jobs:metal:start")
     QBCore.Functions.Progressbar("adsl_fix", "Vous cherchez de la ferraille...", 10000, false, false,
                                  {
         disableMovement = true,
