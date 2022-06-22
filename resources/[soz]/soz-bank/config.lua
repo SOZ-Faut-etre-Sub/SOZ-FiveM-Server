@@ -28,6 +28,7 @@ Config.FarmAccountMoney = {
     ["farm_garbage"] = {money = 100000, marked_money = 0},
     ["farm_taxi"] = {money = 100000, marked_money = 0},
     ["farm_food"] = {money = 100000, marked_money = 0},
+    ["farm_upw"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
@@ -102,6 +103,13 @@ Config.SafeStorages = {
         position = vector3(-1898.62, 2065.6, 141.0),
         size = vec2(0.8, 2.2),
         heading = 340,
+    },
+    ["safe_upw"] = {
+        label = "Coffre Unexpected Water & Power",
+        owner = "upw",
+        position = vector3(0.0, 0.0, 0.0),
+        size = vec2(1.0, 1.0),
+        heading = 0,
     },
 }
 
