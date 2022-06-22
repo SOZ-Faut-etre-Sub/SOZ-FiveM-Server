@@ -80,7 +80,7 @@ function CreateZone(identifier, zoneType, data)
         heading = data.heading,
         minZ = data.minZ,
         maxZ = data.maxZ,
-        debugPoly = true,
+        debugPoly = false,
     }, {options = data.options})
 end
 
