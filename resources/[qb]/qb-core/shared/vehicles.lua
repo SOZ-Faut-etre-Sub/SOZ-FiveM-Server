@@ -183,7 +183,7 @@ QBShared.Vehicles = {
         ['shop']     = 'pdm',
     },
     --- Coupes
-    ['cogcabrio']    = {
+    ['cogcabri']    = {
         ['name']     = 'Cognoscenti Cabrio',
         ['brand']    = 'Enus',
         ['model']    = 'cogcabrio',
@@ -475,7 +475,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('bf400'),
         ['shop']     = 'pdm',
     },
-    ['carbonrs']     = {
+    ['carbon']     = {
         ['name']     = 'Carbon RS',
         ['brand']    = 'Nagasaki',
         ['model']    = 'carbonrs',
@@ -601,7 +601,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('esskey'),
         ['shop']     = 'pdm',
     },
-    ['faggio']       = {
+    ['faggion']       = {
         ['name']     = 'Faggio Sport',
         ['brand']    = 'Pegassi',
         ['model']    = 'faggio',
@@ -917,7 +917,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('blade'),
         ['shop']     = 'pdm',
     },
-    ['buccaneer']    = {
+    ['buccanee']    = {
         ['name']     = 'Buccaneer',
         ['brand']    = 'Albany',
         ['model']    = 'buccaneer',
@@ -926,7 +926,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('buccaneer'),
         ['shop']     = 'pdm',
     },
-    ['buccaneer2']   = {
+    ['buccanee2']   = {
         ['name']     = 'Buccaneer Rider',
         ['brand']    = 'Albany',
         ['model']    = 'buccaneer2',
@@ -980,7 +980,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('deviant'),
         ['shop']     = 'pdm',
     },
-    ['dominator']    = {
+    ['dominato']    = {
         ['name']     = 'Dominator',
         ['brand']    = 'Vapid',
         ['model']    = 'dominator',
@@ -989,7 +989,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('dominator'),
         ['shop']     = 'pdm',
     },
-    ['dominator2']   = {
+    ['dominato2']   = {
         ['name']     = 'Pißwasser Dominator',
         ['brand']    = 'Vapid',
         ['model']    = 'dominator2',
@@ -998,7 +998,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('dominator2'),
         ['shop']     = 'pdm',
     },
-    ['dominator3']   = {
+    ['dominato3']   = {
         ['name']     = 'Dominator GTX',
         ['brand']    = 'Vapid',
         ['model']    = 'dominator3',
@@ -1277,7 +1277,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('moonbeam2'),
         ['shop']     = 'pdm',
     },
-    ['nightshade']   = {
+    ['niteshad']   = {
         ['name']     = 'Nightshade',
         ['brand']    = 'Imponte',
         ['model']    = 'nightshade',
@@ -1484,7 +1484,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('virgo3'),
         ['shop']     = 'pdm',
     },
-    ['voodoo']       = {
+    ['voodoo2']       = {
         ['name']     = 'Voodoo',
         ['brand']    = 'Declasse',
         ['model']    = 'voodoo',
@@ -1530,7 +1530,7 @@ QBShared.Vehicles = {
         ['shop']     = 'pdm',
     },
     --- Off-Road
-    ['bfinjection']  = {
+    ['bfinject']  = {
         ['name']     = 'Bf Injection',
         ['brand']    = 'Annis',
         ['model']    = 'bfinjection',
@@ -1864,7 +1864,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('cavalcade'),
         ['shop']     = 'pdm',
     },
-    ['cavalcade2']   = {
+    ['cavcade']   = {
         ['name']     = 'Cavalcade',
         ['brand']    = 'Albany',
         ['model']    = 'cavalcade2',
@@ -1945,7 +1945,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('huntley'),
         ['shop']     = 'pdm',
     },
-    ['landstalker']  = {
+    ['landstal']  = {
         ['name']     = 'Landstalker',
         ['brand']    = 'Dundreary',
         ['model']    = 'landstalker',
@@ -2099,7 +2099,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('cog55'),
         ['shop']     = 'pdm',
     },
-    ['cognoscenti']  = {
+    ['cognosc']  = {
         ['name']     = 'Cognoscenti',
         ['brand']    = 'Enus',
         ['model']    = 'cognoscenti',
@@ -2270,7 +2270,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('warrener'),
         ['shop']     = 'pdm',
     },
-    ['washington']   = {
+    ['washingt']   = {
         ['name']     = 'Washington',
         ['brand']    = 'Albany',
         ['model']    = 'washington',
@@ -2802,7 +2802,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('ruston'),
         ['shop']     = 'luxury',
     },
-    ['schafter2']    = {
+    ['schafter']    = {
         ['name']     = 'Schafter',
         ['brand']    = 'Benefactor',
         ['model']    = 'schafter2',
@@ -4121,7 +4121,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('baller8'),
         ['shop']     = 'na',
     },
-    ['flatbed3']      = {
+    ['flatbed']      = {
         ['name']     = 'Flatbed',
         ['brand']    = 'MTL',
         ['model']    = 'flatbed3',
@@ -4130,7 +4130,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('flatbed3'),
         ['shop']     = 'na',
     },
-    ['mule6']         = {
+    ['mule']         = {
         ['name']     = 'Mule',
         ['brand']    = 'Box Truck',
         ['model']    = 'mule6',
@@ -4148,7 +4148,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('newsvan'),
         ['shop']     = 'na',
     },
-    ['packer2']       = {
+    ['packer']       = {
         ['name']     = 'Packer',
         ['brand']    = 'MTL',
         ['model']    = 'packer2',
@@ -4166,7 +4166,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('stockade'),
         ['shop']     = 'na',
     },
-    ['utillitruck4']     = {
+    ['utiltruc']     = {
         ['name']     = 'Utility Truck',
         ['brand']    = 'Brute',
         ['model']    = 'utillitruck4',
@@ -4184,7 +4184,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('polmav'),
         ['shop']     = 'na',
     },
-    ['ambulance']      = {
+    ['ambulan']      = {
         ['name']     = 'Ambulance',
         ['brand']    = 'Los Santos',
         ['model']    = 'ambulance',
