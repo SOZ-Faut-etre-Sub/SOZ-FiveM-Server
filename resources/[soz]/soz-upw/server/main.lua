@@ -32,7 +32,7 @@ local function GetFacilitiesFromDb(types)
     return res
 end
 
-QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", function(source, cb, types)
+QBCore.Functions.CreateCallback("soz-upw:server:GetFacilitiesFromDb", function(source, cb, types)
     cb(GetFacilitiesFromDb(types))
 end)
 

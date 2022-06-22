@@ -13,6 +13,7 @@ function Plant:new(identifier, options)
         "maxWaste",
         "wastePerMinute",
         "pollutionPerUnit",
+        "zones",
     }
 
     setmetatable(self, {__index = Plant})
