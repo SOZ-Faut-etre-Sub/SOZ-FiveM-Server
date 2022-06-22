@@ -114,11 +114,13 @@ local function GetItem(identifier, harvestType)
         },
     }
 
+    local facilityData = GetFacilityData(harvestType)
+
     if type(items[harvestType]) == "table" then
-        return items[harvestType][identifier]
+        return items[facilityData.item][identifier]
     end
 
-    return items[harvestType]
+    return items[facilityData.item]
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier, harvestType)
