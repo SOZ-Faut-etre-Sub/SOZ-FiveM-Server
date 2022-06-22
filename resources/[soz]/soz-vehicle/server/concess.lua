@@ -26,8 +26,12 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
         exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
     end
     local vehiclePrice = qbVehicle["price"]
+
     local plate = GeneratePlate()
-    local depotprice = math.ceil(vehiclePrice / 100)
+
+    -- For the new vehicles the depot price is correctly generated to 15% of the original value.
+    -- However the present vehicles are not synced, not we don't use this value to pay the depot
+    local depotprice = math.ceil(vehiclePrice * (15 / 100))
     if depotprice < 100 then
         depotprice = 100
     end

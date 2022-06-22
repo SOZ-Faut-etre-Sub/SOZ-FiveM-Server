@@ -230,7 +230,7 @@ end)
 QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle)
     local player = QBCore.Functions.GetPlayer(source)
 
-    local price = vehicle.depotprice -- Pound
+    local price = math.ceil(QBCore.Shared.Vehicles[vehicle.vehicle]["price"] * (15 / 100))
     if type_ == "private" then
         local timediff = math.floor((os.time() - vehicle.parkingtime) / 3600)
         price = timediff * 20
