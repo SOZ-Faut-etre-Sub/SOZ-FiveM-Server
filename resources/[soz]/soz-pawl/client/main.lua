@@ -1,8 +1,10 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
+
 FieldTrees = {}
 FieldHarvest = {}
+DegradationLevel = Config.Degradation.Level.Green
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -32,6 +34,9 @@ Citizen.CreateThread(function()
         local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
         TriggerEvent("pawl:client:syncField", identifier, field)
     end
+
+    -- Degradation
+    DegradationLevel = QBCore.Functions.TriggerRpc("pawl:server:getDegradationLevel")
 
     -- Processing
     exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
@@ -115,5 +120,19 @@ RegisterNetEvent("pawl:client:craft", function(data)
 
     if success then
         TriggerServerEvent("pawl:server:craft", data.identifier)
+    end
+end)
+
+--- Degradation
+RegisterNetEvent("pawl:client:OnDegradationLevelChanged", function(level)
+    DegradationLevel = level
+end)
+
+AddEventHandler("populationPedCreating", function(_, _, _, model, _)
+    if Config.Degradation.Peds[model] then
+        local random = math.random(0, 100)
+        if random >= Config.Degradation.Multiplier[DegradationLevel] then
+            CancelEvent()
+        end
     end
 end)
