@@ -763,7 +763,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('ruffian'),
         ['shop']     = 'pdm',
     },
-    ['sanchez']      = {
+    ['sanchez01']      = {
         ['name']     = 'Sanchez Livery',
         ['brand']    = 'Maibatsu',
         ['model']    = 'sanchez',
@@ -772,7 +772,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('sanchez'),
         ['shop']     = 'pdm',
     },
-    ['sanchez2']     = {
+    ['sanchez02']     = {
         ['name']     = 'Sanchez',
         ['brand']    = 'Maibatsu',
         ['model']    = 'sanchez2',
