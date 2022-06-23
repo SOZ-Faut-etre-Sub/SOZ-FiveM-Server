@@ -24,6 +24,10 @@ function Field:GetField()
     return self.field
 end
 
+function Field:GetFieldStats()
+    return #self.field, #self.positions
+end
+
 function Field:GetCuttedTrees()
     return #self.positions - #self.field
 end

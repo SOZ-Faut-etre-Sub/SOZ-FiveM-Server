@@ -14,6 +14,6 @@ client_scripts {
     "client/resell.lua",
 }
 
-server_scripts {"@oxmysql/lib/MySQL.lua", "server/field.lua", "server/main.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "server/field.lua", "server/main.lua", "server/degradation.lua"}
 
 dependencies {"oxmysql", "qb-core", "menuv"}
