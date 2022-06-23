@@ -149,7 +149,7 @@ local function GetEmptyParkingSlots(slots, indexgarage)
     return emptySlots
 end
 
-RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
+RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage, qbVehicleKey)
     if not IsModelInCdimage(GetHashKey(vehicle.vehicle)) then
         exports["soz-monitor"]:Log("ERROR", "Invalid vehicle model", {model = vehicle.vehicle, plate = vehicle.plate})
         exports["soz-hud"]:DrawNotification("Véhicule invalide : " .. vehicle.vehicle, "error")
@@ -188,7 +188,7 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     end
 
     if type_ == "private" or type_ == "depot" then
-        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, veh)
+        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, veh, qbVehicleKey)
         if not success then
             QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
             return
@@ -352,6 +352,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
         local bodyPercent = round(v.body / 10, 0)
         local currentFuel = v.fuel
         local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
+        local displayName = GetDisplayNameFromVehicleModel(v.vehicle):lower()
 
         local price
         if garageType.type == "private" then
@@ -361,12 +362,17 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 price = 200
             end
         elseif garageType.type == "depot" then
-            local displayName = GetDisplayNameFromVehicleModel(v.vehicle):lower()
             local qbVehicle = QBCore.Shared.Vehicles[displayName]
             if qbVehicle == nil then
                 print("Can't retrieve the price of vehicle with display name: '" .. displayName .. "' and model name '" .. v.vehicle .. "'.")
             end
-            price = qbVehicle["price"]
+            local feePercentage = (1.0 / 100)
+
+            local feature = QBCore.Functions.TriggerRpc("soz:GetFeature", "dlc1_impound")
+            if tonumber(feature) == 1 then
+                feePercentage = (15.0 / 100)
+            end
+            price = math.ceil(qbVehicle["price"] * feePercentage)
         end
 
         if v.state == garageType.state then
@@ -388,7 +394,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 description = desc,
                 select = function()
                     garageType.submenu:Close()
-                    TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)
+                    TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage, displayName)
                 end,
             })
         end
