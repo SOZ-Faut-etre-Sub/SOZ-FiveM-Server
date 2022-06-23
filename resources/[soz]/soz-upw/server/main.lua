@@ -10,28 +10,45 @@ Pm = {} -- PollutionManager instance
 -- ON RESOURCE START
 --
 local facilities = {
-    ["Plants"] = {class = Plant, arr = Plants},
-    ["Inverters"] = {class = Inverter, arr = Inverters},
-    ["Terminals"] = {class = Terminal, arr = Terminals},
+    ["plant"] = {class = Plant, arr = Plants},
+    ["inverter"] = {class = Inverter, arr = Inverters},
+    ["terminal"] = {class = Terminal, arr = Terminals},
 }
+
+local function GetFacilitiesFromDb(types)
+    local query, args = "SELECT * FROM upw_facility", nil
+
+    if types then
+        query = query .. " WHERE type IN (@types)"
+        args = {["@types"] = types}
+    end
+
+    local res = MySQL.Sync.fetchAll(query, args)
+
+    if not res then
+        error("Failed to get facilities from database")
+    end
+
+    return res
+end
+
+QBCore.Functions.CreateCallback("soz-upw:server:GetFacilitiesFromDb", function(source, cb, types)
+    cb(GetFacilitiesFromDb(types))
+end)
 
 -- Initialize Plants, Inverters
 local function InitiateFacilities()
-    for configKey, data in pairs(facilities) do
-        for identifier, fData in pairs(Config[configKey]) do
-            local facility = data.class:new(identifier, fData.attributes)
+    local upwFacilities = GetFacilitiesFromDb({"plant", "inverter", "terminal"})
 
-            data.arr[identifier] = facility
+    for _, res in ipairs(upwFacilities) do
+        local data = facilities[res.type]
+
+        if data then
+            local facility = data.class:new(res.identifier)
+
+            data.arr[res.identifier] = facility
         end
     end
-end
-
-local function InitiatePollutionManager()
-    Pm = PollutionManager:new("pm1", {
-        currentPollution = 0, -- Current pollution percent (0-100+)
-        units = {},
-        buffer = {},
-    })
 end
 
 -- Init
@@ -39,7 +56,7 @@ MySQL.ready(function()
     -- TO BE REMOVED (DEV PURPOSE)
     -- MySQL.Sync.execute("DELETE FROM upw_facility WHERE type = 'plant'")
 
-    InitiatePollutionManager()
+    Pm = PollutionManager:new("pm1")
     Pm:StartPollutionLoop()
 
     InitiateFacilities()

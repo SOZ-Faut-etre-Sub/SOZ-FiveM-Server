@@ -11,26 +11,61 @@ Citizen.CreateThread(function()
         })
     end
 
-    -- Energy Plants
-    for identifier, plantData in pairs(Config.Plants) do
-        for key, data in pairs(plantData.client) do
-            if key == "energyZone" then
-                CreateEnergyZone(identifier, data)
-            end
+    local config = {
+        ["plant"] = {
+            {create = CreateEnergyZone, zone = "zones.energyZone"},
+            {create = CreateWasteZone, zone = "zones.wasteZone"},
+        },
+        ["inverter"] = {create = CreateInverterZone, zone = "zone"},
+        ["terminal"] = {create = CreateTerminalZone, zone = "zone"},
+    }
 
-            if key == "wasteZone" then
-                CreateWasteZone(identifier, data)
+    local function PrepareZoneData(data, path)
+        local zoneData = data
+
+        local attrs = QBCore.Shared.SplitStr(path, "%.")
+
+        for _, attr in ipairs(attrs) do
+            zoneData = zoneData[attr]
+
+            if zoneData == nil then
+                return -- Skip is zone not exists
             end
+        end
+
+        zoneData.coords = vector3(zoneData.coords.x, zoneData.coords.y, zoneData.coords.z)
+
+        return zoneData
+    end
+
+    local function createZone(facility, createFunc, zonePath)
+        local data = json.decode(facility.data)
+        local zone = PrepareZoneData(data, zonePath)
+
+        if zone then
+            createFunc(facility.identifier, zone)
         end
     end
 
-    local facilities = {
-        {arr = Config.Inverters, create = CreateInverterZone},
-        {arr = Config.Terminals, create = CreateTerminalZone},
-    }
-    for _, conf in ipairs(facilities) do
-        for identifier, data in pairs(conf.arr) do
-            conf.create(identifier, data.zone)
+    -- Fetch facilities from database
+    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {
+        "plant",
+        "inverter",
+        "terminal",
+    })
+
+    for _, facility in ipairs(facilities) do
+        local conf = config[facility.type]
+        if not conf then
+            error("Invalid config or facility type: " .. facility.type)
+        end
+
+        if conf.create == nil then
+            for _, c in ipairs(conf) do
+                createZone(facility, c.create, c.zone)
+            end
+        else
+            createZone(facility, conf.create, conf.zone)
         end
     end
 end)

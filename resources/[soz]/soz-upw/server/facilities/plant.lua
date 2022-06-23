@@ -1,8 +1,6 @@
 Plant = InheritsFrom(Facility)
 
 function Plant:new(identifier, options)
-    options.type = "plant"
-
     local self = Plant:Super():new(identifier, options)
 
     self.fields_to_save = {
@@ -15,6 +13,7 @@ function Plant:new(identifier, options)
         "maxWaste",
         "wastePerMinute",
         "pollutionPerUnit",
+        "zones",
     }
 
     setmetatable(self, {__index = Plant})
