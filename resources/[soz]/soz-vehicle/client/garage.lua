@@ -361,10 +361,10 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 price = 200
             end
         elseif garageType.type == "depot" then
-            local qbVehicle = QBCore.Shared.Vehicles[GetDisplayNameFromVehicleModel(v.vehicle)]
+            local displayName = GetDisplayNameFromVehicleModel(v.vehicle):lower()
+            local qbVehicle = QBCore.Shared.Vehicles[displayName]
             if qbVehicle == nil then
-                exports["soz-monitor"]:Log("WARN",
-                                           "Can't retrieve the price of vehicle with display name: '" .. qbVehicle .. "' and model name '" .. v.vehicle .. "'.")
+                print("Can't retrieve the price of vehicle with display name: '" .. displayName .. "' and model name '" .. v.vehicle .. "'.")
             end
             price = qbVehicle["price"]
         end
