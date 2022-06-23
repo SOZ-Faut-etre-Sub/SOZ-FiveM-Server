@@ -18,6 +18,7 @@ server_scripts {
     "server/pollution.lua",
     "server/production.lua",
     "server/storage.lua",
+    "server/resale.lua",
 }
 
 dependencies {"oxmysql", "qb-core"}
