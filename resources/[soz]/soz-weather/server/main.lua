@@ -34,6 +34,70 @@ function AdvanceTime()
     GlobalState.time = {currentHour, currentMinute, currentSecond}
 end
 
+---Apply multiplier to forecast weight based on Pollution level
+function WeightForecast(forecast)
+    local pollutionLevel = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionLevel", nil)
+
+    -- Awful forecast on Pollution level High
+    if pollutionLevel == QBCore.Shared.Pollution.Level.Neutral then
+        local weathers = {
+            "extrasunny",
+            "clear",
+            "neutral",
+            "smog",
+            "foggy",
+            "overcast",
+            "clouds",
+            "clearing",
+            "rain",
+            "thunder",
+            "snow",
+            "blizzard",
+            "snowlight",
+            "xmas",
+            "halloween",
+        }
+
+        local awfulForecast = {}
+
+        for _, weather in ipairs(weathers) do
+            awfulForecast[weather] = {["smog"] = 80, ["foggy"] = 20}
+        end
+
+        return awfulForecast
+    end
+
+    -- Weighted forecast
+    local AllMultipliers = {
+        [QBCore.Shared.Pollution.Level.Low] = {["extrasunny"] = 2, ["smog"] = 0, ["foggy"] = 0, ["any"] = 0.75},
+        [QBCore.Shared.Pollution.Level.Neutral] = {["any"] = 1},
+    }
+
+    local multipliers = AllMultipliers[pollutionLevel]
+    if not multipliers then
+        return forecast
+    end
+
+    local weightedForecast = {}
+    for weather, transitions in pairs(forecast) do
+        if type(weightedForecast[weather]) ~= "table" then
+            weightedForecast[weather] = {}
+        end
+
+        for nextWeather, weight in pairs(transitions) do
+            local multiplier = multipliers["any"] or 1
+
+            if multipliers[nextWeather] then
+                multiplier = multipliers[nextWeather]
+            end
+
+            weightedForecast[weather][nextWeather] = math.ceil(weight * multiplier)
+        end
+    end
+
+    return weightedForecast
+end
+
 function GetNextWeather(Weather, Forecast)
     local transitions = Forecast[Weather]
 
@@ -119,7 +183,7 @@ end)
 
 CreateThread(function()
     -- Change this to switch between seasons
-    Forecast = SummerForecast
+    Forecast = WeightForecast(SummerForecast)
 
     while true do
         -- Change weather in 10 to 15 minutes
