@@ -68,6 +68,9 @@ Citizen.CreateThread(function()
             createZone(facility, conf.create, conf.zone)
         end
     end
+
+    -- Resale zone
+    CreateResaleZone(Config.Upw.Resale.Zone)
 end)
 
 function CreateZone(identifier, zoneType, data)
