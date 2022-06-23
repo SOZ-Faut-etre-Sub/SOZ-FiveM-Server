@@ -1,11 +1,9 @@
 Inverter = InheritsFrom(Facility)
 
 function Inverter:new(identifier, options)
-    options.type = "inverter"
-
     local self = Inverter:Super():new(identifier, options)
 
-    self.fields_to_save = {"type", "capacity", "maxCapacity"}
+    self.fields_to_save = {"type", "capacity", "maxCapacity", "zone"}
 
     setmetatable(self, {__index = Inverter})
 

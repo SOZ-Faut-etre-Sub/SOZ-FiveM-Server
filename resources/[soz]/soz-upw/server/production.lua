@@ -61,7 +61,6 @@ end)
 
 local facilities = {
     ["energy"] = {
-        config = "Plants",
         getFacility = GetPlant,
         precheck = "CanEnergyBeHarvested",
         messages = {precheckError = "Pénurie d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
@@ -69,7 +68,6 @@ local facilities = {
         item = "energy",
     },
     ["waste"] = {
-        config = "Plants",
         getFacility = GetPlant,
         precheck = "CanWasteBeHarvested",
         messages = {precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~1 %s"},
@@ -77,7 +75,6 @@ local facilities = {
         item = "waste",
     },
     ["inverter-in"] = {
-        config = "Inverters",
         getFacility = GetInverter,
         precheck = "CanStoreEnergy",
         messages = {precheckError = "Onduleur plein", harvestSuccess = "Vous avez déposé ~g~1 %s"},
@@ -85,7 +82,6 @@ local facilities = {
         item = "energy",
     },
     ["inverter-out"] = {
-        config = "Inverters",
         getFacility = GetInverter,
         precheck = "CanEnergyBeHarvested",
         messages = {precheckError = "Pas assez d'énergie", harvestSuccess = "Vous avez récolté ~g~1 %s"},
@@ -93,7 +89,6 @@ local facilities = {
         item = "energy",
     },
     ["terminal-in"] = {
-        config = "Terminals",
         getFacility = GetTerminal,
         precheck = "CanStoreEnergy",
         messages = {precheckError = "Borne pleine", harvestSuccess = "Vous avez déposé ~g~1 %s"},
@@ -111,21 +106,16 @@ local function GetFacilityData(harvestType)
     return facilityData
 end
 
-local function GetFacilityConfig(identifier, harvestType)
+local function GetItem(identifier, harvestType)
+    local items = {["energy"] = Config.Items.Energy, ["waste"] = {["hydro1"] = Config.Items.Waste.Hydro}}
+
     local facilityData = GetFacilityData(harvestType)
 
-    if Config[facilityData.config] and Config[facilityData.config][identifier] then
-        return Config[facilityData.config][identifier]
+    if type(items[harvestType]) == "table" then
+        return items[facilityData.item][identifier]
     end
 
-    error("Invalid facility config: " .. identifier .. " - " .. harvestType)
-end
-
-local function GetItem(identifier, harvestType)
-    local facilityData = GetFacilityData(harvestType)
-    local config = GetFacilityConfig(identifier, harvestType)
-
-    return config.items[facilityData.item]
+    return items[facilityData.item]
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(source, cb, identifier, harvestType)
