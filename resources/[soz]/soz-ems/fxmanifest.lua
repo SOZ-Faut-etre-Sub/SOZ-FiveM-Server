@@ -9,3 +9,5 @@ shared_script "config.lua"
 client_script {"@menuv/menuv.lua", "@PolyZone/client.lua", "@PolyZone/BoxZone.lua", "client/*.lua"}
 
 server_script {"server/*.lua", "@oxmysql/lib/MySQL.lua"}
+
+dependencies {"qb-core"}
