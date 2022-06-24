@@ -29,8 +29,11 @@ function JobEntry(menu)
         menu:Close()
     end)
 
+    table.sort(job.grades, function(a, b)
+        return a.weight > b.weight
+    end)
     for gradeId, grade in pairs(job.grades) do
-        local label = "Grade : " .. grade.name
+        local label = "[" .. grade.weight .. "] " .. grade.name
 
         if grade.is_default == 1 then
             label = label .. " (Défaut)"
@@ -79,6 +82,24 @@ function JobEntry(menu)
             end
 
             TriggerServerEvent("job:grade:set-salary", gradeId, salary)
+            gradeItemMenu:Close()
+            gradeMenu:Close()
+            jobMenu:Close()
+            menu:Close()
+        end)
+
+        gradeItemMenu:AddButton({label = "Changer l'importance (" .. grade.weight .. ")", value = "set_weight"}):On("select", function()
+            local weight = exports["soz-hud"]:Input("Nouveau salaire :", 32)
+            if weight == "" or weight == nil then
+                return
+            end
+
+            weight = tonumber(weight)
+            if weight < 0 then
+                return
+            end
+
+            TriggerServerEvent("job:grade:set-weight", gradeId, weight)
             gradeItemMenu:Close()
             gradeMenu:Close()
             jobMenu:Close()

@@ -37,18 +37,21 @@ local function BuildPromoteMenu(target)
     PromoteMenu:SetSubtitle("Promouvoir un joueur")
 
     local job = SozJobCore.Jobs[PlayerData.job.id]
+    local playerGradeWeight = job.grades[PlayerData.job.grade].weight
 
     if not job then
         return
     end
 
     for gradeId, grade in pairs(job.grades) do
-        local label = "Grade : " .. grade.name
+        if grade.weight <= playerGradeWeight then
+            local label = "Grade : " .. grade.name
 
-        PromoteMenu:AddButton({label = label, value = "set_grade"}):On("select", function()
-            TriggerServerEvent("job:promote", target, gradeId)
-            PromoteMenu:Close()
-        end)
+            PromoteMenu:AddButton({label = label, value = "set_grade"}):On("select", function()
+                TriggerServerEvent("job:promote", target, gradeId)
+                PromoteMenu:Close()
+            end)
+        end
     end
 
     PromoteMenu:Open()
@@ -82,7 +85,8 @@ CreateThread(function()
                     TriggerServerEvent("job:fire", targetSource)
                 end,
                 canInteract = function(entity)
-                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+                        not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
                         return false
                     end
 
@@ -100,7 +104,8 @@ CreateThread(function()
                     BuildPromoteMenu(targetSource)
                 end,
                 canInteract = function(entity)
-                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+                    if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+                        not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
                         return false
                     end
 
