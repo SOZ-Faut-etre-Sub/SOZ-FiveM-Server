@@ -86,6 +86,8 @@ RegisterNetEvent("housing:client:ShowBellMenu", function(propertyId)
     local property = Properties[propertyId]
     local apartments = property:GetRentedApartments()
 
+    local citizenid = PlayerData.citizenid
+
     if not property:IsBuilding() then
         for apartmentId, _ in pairs(apartments) do
             TriggerServerEvent("housing:server:BellProperty", propertyId, apartmentId)
@@ -95,13 +97,15 @@ RegisterNetEvent("housing:client:ShowBellMenu", function(propertyId)
 
     Housing.Functions.GenerateMenu(function(menu)
         for apartmentId, apartment in pairs(apartments) do
-            menu:AddButton({
-                label = apartment:GetLabel(),
-                select = function()
-                    TriggerServerEvent("housing:server:BellProperty", propertyId, apartmentId)
-                    menu:Close()
-                end,
-            })
+            if not apartment:HasAccess(citizenid) then
+                menu:AddButton({
+                    label = apartment:GetLabel(),
+                    select = function()
+                        TriggerServerEvent("housing:server:BellProperty", propertyId, apartmentId)
+                        menu:Close()
+                    end,
+                })
+            end
         end
     end)
 end)

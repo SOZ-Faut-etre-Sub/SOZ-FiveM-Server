@@ -53,6 +53,15 @@ function Property:HasRentedApartmentForCitizenId(citizenid)
     return false
 end
 
+function Property:HasRentedApartmentBesidesForCitizenId(citizenid)
+    for _, apartment in pairs(self.apartments) do
+        if not apartment:HasAccess(citizenid) then
+            return true
+        end
+    end
+    return false
+end
+
 function Property:HasOwnedApartmentForCitizenId(citizenid)
     for _, apartment in pairs(self.apartments) do
         if apartment:IsOwner(citizenid) then

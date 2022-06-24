@@ -37,8 +37,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Sonner",
             icon = "c:housing/bell.png",
             canInteract = function()
-                return property:HasRentedApartment() and not property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and
-                           not Housing.Functions.IsInsideApartment()
+                return property:HasRentedApartmentBesidesForCitizenId() and not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowBellMenu", propertyId)
