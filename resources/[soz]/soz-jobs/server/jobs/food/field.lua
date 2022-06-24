@@ -38,11 +38,22 @@ Field._parseFieldType = function(self, name)
 end
 
 Field.Harvest = function(self)
-    local quantity = math.random(self.harvestRange.min, self.harvestRange.max)
+    local min, max = self.harvestRange.min, self.harvestRange.max
+
+    -- Production is boosted on LOW pollution level
+    local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
+    if pollutionLevel == QBCore.Shared.Pollution.Level.Low then
+        min = min + 1
+        max = max + 2
+    end
+
+    local quantity = math.random(min, max)
     if quantity > self.quantity then
         quantity = self.quantity
     end
+
     self.quantity = self.quantity - quantity
+
     return quantity, self.item, self:GetHealth()
 end
 
