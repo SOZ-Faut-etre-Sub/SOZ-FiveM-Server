@@ -107,7 +107,7 @@ CreateThread(function()
         Wait(1000 * 60 * 15)
 
         if LocalPlayer.state.isLoggedIn then
-            local pollutionLevel = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionLevel")
+            local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
             local max = Config.DiseaseRange[pollutionLevel] or 1000
 
             Random = math.random(1, max)
