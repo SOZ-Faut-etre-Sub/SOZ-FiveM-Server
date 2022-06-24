@@ -1,4 +1,5 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+local weatherLoopRunning = false
 
 --- Setup global state values
 GlobalState.blackout = GlobalState.blackout or false
@@ -182,16 +183,24 @@ CreateThread(function()
     end
 end)
 
-CreateThread(function()
-    -- Change this to switch between seasons
-    Forecast = WeightForecast(SummerForecast)
-
-    while true do
-        -- Change weather in 10 to 15 minutes
-        Wait(math.random(10 * 60 * 1000, 15 * 60 * 1000))
-
-        if weatherUpdate then
-            GlobalState.weather = GetNextWeather(GlobalState.weather, Forecast)
-        end
+AddEventHandler("soz-upw:server:onPollutionManagerReady", function()
+    if weatherLoopRunning then
+        return
     end
+
+    weatherLoopRunning = true
+
+    CreateThread(function()
+        -- Change this to switch between seasons
+        Forecast = WeightForecast(SummerForecast)
+
+        while weatherLoopRunning do
+            -- Change weather in 10 to 15 minutes
+            Wait(math.random(10 * 60 * 1000, 15 * 60 * 1000))
+
+            if weatherUpdate then
+                GlobalState.weather = GetNextWeather(GlobalState.weather, Forecast)
+            end
+        end
+    end)
 end)
