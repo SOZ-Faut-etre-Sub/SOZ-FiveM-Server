@@ -10,6 +10,7 @@ import Minimap from "./hud/minimap";
 import Notifications from "./hud/notifications";
 import NewsBanner from "./newsBanner";
 import Input from "./hud/input";
+import TwitchNewsOverlay from "./twitchNews";
 
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
                             <VoiceIndicator />
                             <PlayerNeeds />
                             <SpeedoMeter />
+                            <TwitchNewsOverlay />
                         </main>
                     </VehicleDataProvider>
                 </VoiceModeProvider>
