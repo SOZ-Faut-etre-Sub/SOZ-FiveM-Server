@@ -62,7 +62,16 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-milk", function(so
     end
 
     local reward = FoodConfig.Collect.Milk.Reward
-    local count = math.random(reward.min, reward.max)
+    local min, max = reward.min, reward.max
+
+    -- Production is boosted on LOW pollution level
+    local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
+    if pollutionLevel == QBCore.Shared.Pollution.Level.Low then
+        min = min + 1
+        max = max + 1
+    end
+
+    local count = math.random(min, max)
 
     if AddItem(Player.PlayerData.source, FoodConfig.Collect.Milk.Item, count) then
         cb(true, count)
