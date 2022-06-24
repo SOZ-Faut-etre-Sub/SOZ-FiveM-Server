@@ -36,7 +36,7 @@ end
 
 ---Apply multiplier to forecast weight based on Pollution level
 function WeightForecast(forecast)
-    local pollutionLevel = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionLevel", nil)
+    local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
 
     -- NEUTRAL pollution : no effects on weather
     if pollutionLevel == QBCore.Shared.Pollution.Level.Neutral then
