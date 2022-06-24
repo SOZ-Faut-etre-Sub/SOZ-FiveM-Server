@@ -38,8 +38,13 @@ end
 function WeightForecast(forecast)
     local pollutionLevel = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionLevel", nil)
 
-    -- Awful forecast on Pollution level High
+    -- NEUTRAL pollution : no effects on weather
     if pollutionLevel == QBCore.Shared.Pollution.Level.Neutral then
+        return forecast
+    end
+
+    -- HIGH pollution : Smog and fog
+    if pollutionLevel == QBCore.Shared.Pollution.Level.High then
         local weathers = {
             "extrasunny",
             "clear",
@@ -67,35 +72,31 @@ function WeightForecast(forecast)
         return awfulForecast
     end
 
-    -- Weighted forecast
-    local AllMultipliers = {
-        [QBCore.Shared.Pollution.Level.Low] = {["extrasunny"] = 2, ["smog"] = 0, ["foggy"] = 0, ["any"] = 0.75},
-        [QBCore.Shared.Pollution.Level.Neutral] = {["any"] = 1},
-    }
+    -- LOW Pollution : good weather is boosted
+    if pollutionLevel == QBCore.Shared.Pollution.Level.Low then
+        local multipliers = {["extrasunny"] = 2, ["smog"] = 0, ["foggy"] = 0, ["any"] = 0.75}
 
-    local multipliers = AllMultipliers[pollutionLevel]
-    if not multipliers then
-        return forecast
-    end
-
-    local weightedForecast = {}
-    for weather, transitions in pairs(forecast) do
-        if type(weightedForecast[weather]) ~= "table" then
-            weightedForecast[weather] = {}
-        end
-
-        for nextWeather, weight in pairs(transitions) do
-            local multiplier = multipliers["any"] or 1
-
-            if multipliers[nextWeather] then
-                multiplier = multipliers[nextWeather]
+        local weightedForecast = {}
+        for weather, transitions in pairs(forecast) do
+            if type(weightedForecast[weather]) ~= "table" then
+                weightedForecast[weather] = {}
             end
 
-            weightedForecast[weather][nextWeather] = math.ceil(weight * multiplier)
+            for nextWeather, weight in pairs(transitions) do
+                local multiplier = multipliers["any"] or 1
+
+                if multipliers[nextWeather] then
+                    multiplier = multipliers[nextWeather]
+                end
+
+                weightedForecast[weather][nextWeather] = math.ceil(weight * multiplier)
+            end
         end
+
+        return weightedForecast
     end
 
-    return weightedForecast
+    return forecast -- fallback
 end
 
 function GetNextWeather(Weather, Forecast)
