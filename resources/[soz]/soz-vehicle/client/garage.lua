@@ -368,8 +368,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
             end
             local feePercentage = (1.0 / 100)
 
-            local feature = QBCore.Functions.TriggerRpc("soz:GetFeature", "dlc1_impound")
-            if tonumber(feature) == 1 then
+            if GetConvarInt("feature_dlc1_impound", 0) == 1 then
                 feePercentage = (15.0 / 100)
             end
             price = math.ceil(qbVehicle["price"] * feePercentage)
