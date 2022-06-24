@@ -227,10 +227,15 @@ end)
 ---Make player pay parking fee (private, pound)
 ---@param type_ string Garage type: public, private, entreprise, depot
 ---@param vehicle table player_vehicles row representation
-QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle)
+QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle, qbVehicleKey)
     local player = QBCore.Functions.GetPlayer(source)
 
-    local price = vehicle.depotprice -- Pound
+    local qbVehicle = QBCore.Shared.Vehicles[qbVehicleKey]
+    local feePercentage = (1.0 / 100)
+    if GetConvarInt("feature_dlc1_impound", 0) == 1 then
+        feePercentage = (15.0 / 100)
+    end
+    local price = qbVehicle["price"] * feePercentage
     if type_ == "private" then
         local timediff = math.floor((os.time() - vehicle.parkingtime) / 3600)
         price = timediff * 20
