@@ -1,9 +1,16 @@
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const webpack = require('webpack');
 
-const createConfig = (entry, isProduction, port, target) => {
-    const plugins = [new ESLintPlugin()];
+const createConfig = (entry, isProduction, variables = {}, port = undefined, target = undefined) => {
+    const plugins = [
+        new ESLintPlugin(),
+        new webpack.DefinePlugin({
+            ...variables,
+            SOZ_CORE_IS_PRODUCTION: isProduction,
+        }),
+    ];
 
     if (!isProduction) {
         plugins.push(new ReactRefreshWebpackPlugin());

@@ -1,6 +1,9 @@
 import { Container } from './container';
+import { OnceStep } from './decorators/event';
 import { Inject, Injectable } from './decorators/injectable';
-import { ModuleLoader } from './loader/ModuleLoader';
+import { ModuleLoader } from './loader/module.loader';
+import { OnceLoader } from './loader/once.loader';
+import { Logger } from './logger';
 
 @Injectable()
 export class Application {
@@ -12,6 +15,12 @@ export class Application {
 
     @Inject(ModuleLoader)
     private moduleLoader: ModuleLoader;
+
+    @Inject(OnceLoader)
+    private onceLoader: OnceLoader;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     static create(...modules: any[]): Application {
         const app = Container.get(Application);
@@ -27,7 +36,7 @@ export class Application {
 
     start() {
         if (this.running !== null && this.resolve !== null) {
-            console.error('soz core applicasion already running');
+            this.logger.error('soz core applicasion already running');
 
             return;
         }
@@ -43,17 +52,20 @@ export class Application {
         this.onStopCallback = this.onStop.bind(this);
         addEventListener('soz_core.__internal__.stop_application', this.onStopCallback, false);
 
-        console.log('[soz-core] starting application');
+        this.logger.debug('[soz-core] starting application');
+
+        this.onceLoader.trigger(OnceStep.Start);
     }
 
     async stop() {
         if (this.running === null || this.resolve === null) {
-            console.error('soz core application is not running');
+            this.logger.error('soz core application is not running');
+
             return;
         }
 
         const stopped = await this.running;
-        console.log('[soz-core] stopping application');
+        this.logger.debug('[soz-core] stopping application');
 
         this.moduleLoader.unload();
 
@@ -71,7 +83,8 @@ export class Application {
 
     private onStop() {
         if (this.running === null || this.resolve === null) {
-            console.error('soz core application is not running');
+            this.logger.error('soz core application is not running');
+
             return;
         }
 
