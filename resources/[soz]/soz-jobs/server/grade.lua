@@ -26,7 +26,8 @@ RegisterServerEvent("job:fire", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
 
-    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+        not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
         return
     end
 
@@ -183,6 +184,34 @@ RegisterServerEvent("job:grade:set-salary", function(id, salary)
 
     MySQL.execute.await("UPDATE `job_grades` SET salary = @salary WHERE id = @id", {["@id"] = id, ["@salary"] = salary})
     TriggerClientEvent("hud:client:DrawNotification", source, "Le salaire a bien été défini !")
+    SynchroniseJob()
+end)
+
+RegisterServerEvent("job:grade:set-weight", function(id, weight)
+    local source = source
+    local player = QBCore.Functions.GetPlayer(tonumber(source))
+
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+        return
+    end
+
+    local job = SozJobCore.Jobs[player.PlayerData.job.id]
+    if not job then
+        return
+    end
+
+    local grade = job.grades[id]
+    if not grade then
+        return
+    end
+
+    weight = tonumber(weight)
+    if weight == nil or weight < 0 then
+        return
+    end
+
+    MySQL.execute.await("UPDATE `job_grades` SET weight = @weight WHERE id = @id", {["@id"] = id, ["@weight"] = weight})
+    TriggerClientEvent("hud:client:DrawNotification", source, "Le poids a bien été défini !")
     SynchroniseJob()
 end)
 
