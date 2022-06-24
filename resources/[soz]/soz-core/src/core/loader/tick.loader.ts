@@ -1,6 +1,7 @@
 import { Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
 import { TickMetadataKey } from '../decorators/tick';
+import { wait } from '../utils';
 
 @Injectable()
 export class TickLoader {
@@ -21,7 +22,9 @@ export class TickLoader {
                     return;
                 }
 
-                await new Promise(resolve => setTimeout(resolve, interval));
+                if (interval > 0) {
+                    await wait(interval);
+                }
             });
 
             this.ticks.push(tick);

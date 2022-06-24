@@ -1,4 +1,4 @@
-import { On } from '../core/decorators/event';
+import { On, Once, OnceStep } from '../core/decorators/event';
 import { Inject } from '../core/decorators/injectable';
 import { Provider } from '../core/decorators/provider';
 import { Tick } from '../core/decorators/tick';
@@ -14,17 +14,18 @@ export class TestProvider {
     @Tick(300)
     loop(): boolean {
         emit('soz-core:printCount', this.counter);
-        emitNet('soz-core:printCount', this.counter);
         this.counter += 1;
 
         return this.counter <= 10;
     }
 
     @On('soz-core:printCount')
-    printCount(param): void {
-        this.logger.info('client count is', param);
-        this.logger.debug('client count is', param);
-        this.logger.warn('client count is', param);
-        this.logger.error('client count is', param);
+    printCount(source, count): void {
+        this.logger.info('server count is', count, source);
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    onStart(): void {
+        this.logger.error('player loaded');
     }
 }

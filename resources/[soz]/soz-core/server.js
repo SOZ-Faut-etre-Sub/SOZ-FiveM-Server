@@ -6,6 +6,7 @@ if (hotReload) {
 
     hmr.hmr('build/server.js', newContent => {
         console.log('[soz-core] hmr: reloading dist/server.js');
+        emit('soz_core.__internal__.stop_application');
 
         eval(newContent);
     });

@@ -1,10 +1,14 @@
 import { EventMetadata, EventMetadataKey } from '../decorators/event';
-import { Injectable } from '../decorators/injectable';
+import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
+import { ChaineMiddlewareFactory } from '../middleware/middleware';
 
 @Injectable()
 export class EventLoader {
     private events: Record<string, any[]> = {};
+
+    @Inject(ChaineMiddlewareFactory)
+    private middlewareFactory: ChaineMiddlewareFactory;
 
     public load(provider): void {
         const eventMethodList = getMethodMetadata<EventMetadata[]>(EventMetadataKey, provider);
@@ -18,9 +22,11 @@ export class EventLoader {
                     this.events[eventMetadata.name] = [];
                 }
 
+                const methodWithMiddleware = this.middlewareFactory.create(eventMetadata, method);
+
                 // @TODO: Add middleware system for event
-                addEventListener(eventMetadata.name, method, eventMetadata.net);
-                this.events[eventMetadata.name].push(method);
+                addEventListener(eventMetadata.name, methodWithMiddleware, eventMetadata.net);
+                this.events[eventMetadata.name].push(methodWithMiddleware);
             }
         }
     }
