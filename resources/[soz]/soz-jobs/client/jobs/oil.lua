@@ -63,6 +63,26 @@ CreateThread(function()
                 end,
                 job = "oil",
             },
+            {
+                event = "jobs:client:fueler:StartCraftKerosene",
+                icon = "c:fuel/pistolet.png",
+                label = "Kérosène conditionné",
+                color = "oil",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "oil",
+            },
+            {
+                event = "jobs:client:fueler:StartCraftKeroseneJerryCan",
+                icon = "c:fuel/pistolet.png",
+                label = "Bidon de kérosène",
+                color = "oil",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "oil",
+            },
         },
         distance = 2.0,
     })
@@ -442,6 +462,48 @@ RegisterNetEvent("jobs:client:fueler:StartCraftEssenceJerryCan", function(data)
     end)
 end)
 
+RegisterNetEvent("jobs:client:fueler:StartCraftKerosene", function(data)
+    local playerPed = PlayerPedId()
+    local canCraft = playerHasItem("petroleum_refined", 2)
+    if not canCraft then
+        return
+    end
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    exports["soz-hud"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
+    QBCore.Functions.Progressbar("fill", "Vous transformez...", 2 * 60 * 1000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
+        TriggerServerEvent("jobs:server:fueler:craftKerosene")
+        Wait(1000)
+
+        canCraft = playerHasItem("petroleum_refined", 2)
+    end)
+end)
+
+RegisterNetEvent("jobs:client:fueler:StartCraftKeroseneJerryCan", function(data)
+    local playerPed = PlayerPedId()
+    local canCraft = playerHasItem("kerosene", 3)
+
+    if not canCraft then
+        return
+    end
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    exports["soz-hud"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
+    QBCore.Functions.Progressbar("fill", "Vous transformez...", 60 * 1000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
+        TriggerServerEvent("jobs:server:fueler:craftKeroseneJerryCan")
+    end)
+end)
+
 RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
     local playerPed = PlayerPedId()
     if CurrentStation == nil then
@@ -532,9 +594,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
 
         if success then
-            TriggerServerEvent("jobs:server:fueler:resellTanker", Tanker.vehicle)
-            Wait(1000)
-
+            QBCore.Functions.TriggerRpc("jobs:server:fueler:resellTanker", Tanker.vehicle)
             canResellTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canResell", Tanker.vehicle)
         else
             canResellTanker = false
