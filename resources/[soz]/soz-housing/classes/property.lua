@@ -101,6 +101,16 @@ function Property:GetRentedApartmentsForCitizenId(citizenid)
     return apartments
 end
 
+function Property:GetRentedApartmentBesidesForCitizenId(citizenid)
+    local apartments = {}
+    for apartmentId, apartment in pairs(self.apartments) do
+        if not apartment:HasAccess(citizenid) then
+            apartments[apartmentId] = apartment
+        end
+    end
+    return apartments
+end
+
 function Property:GetOwnedApartmentsForCitizenId(citizenid)
     local apartments = {}
     for apartmentId, apartment in pairs(self.apartments) do
