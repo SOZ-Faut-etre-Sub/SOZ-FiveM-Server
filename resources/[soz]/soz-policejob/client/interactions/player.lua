@@ -3,26 +3,6 @@ Citizen.CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
-                label = "Facturer",
-                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                canInteract = function(player)
-                    return PlayerData.job.onduty
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
-            },
-            {
-                label = "Facturer la société",
-                color = "lspd",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
-            },
-            {
                 label = "Amender",
                 color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
                 icon = "c:police/amender.png",

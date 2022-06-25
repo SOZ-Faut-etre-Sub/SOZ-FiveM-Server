@@ -20,29 +20,6 @@ end
 
 --- Targets
 CreateThread(function()
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "oil",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "oil",
-            },
-            {
-                label = "Facturer la société",
-                color = "oil",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("oil", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "oil",
-            },
-        },
-        distance = 1.5,
-    })
-
     exports["qb-target"]:AddBoxZone("mtp:duty", vector3(-246.62, 6090.77, 32.25), 0.15, 1.2, {
         name = "mtp:duty",
         heading = 45,
