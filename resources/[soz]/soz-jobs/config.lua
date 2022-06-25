@@ -118,6 +118,7 @@ SozJobCore.Jobs = {
         platePrefix = "LSPD",
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -134,6 +135,7 @@ SozJobCore.Jobs = {
         platePrefix = "BCSO",
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -150,6 +152,7 @@ SozJobCore.Jobs = {
         platePrefix = "LSMC",
         grades = {},
         menuCallback = "lsmc:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -166,6 +169,7 @@ SozJobCore.Jobs = {
         platePrefix = "CARL",
         grades = {},
         menuCallback = "taxi:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -181,6 +185,7 @@ SozJobCore.Jobs = {
         platePrefix = "CHAT",
         grades = {},
         menuCallback = "jobs:client:food:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -205,6 +210,7 @@ SozJobCore.Jobs = {
         platePrefix = "NEWS",
         grades = {},
         menuCallback = "jobs:client:news:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -222,6 +228,7 @@ SozJobCore.Jobs = {
         platePrefix = "BLUE",
         grades = {},
         menuCallback = "jobs:client:garbage:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -237,6 +244,7 @@ SozJobCore.Jobs = {
         platePrefix = "MITP",
         grades = {},
         menuCallback = "jobs:client:fueler:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -252,6 +260,7 @@ SozJobCore.Jobs = {
         platePrefix = "STNK",
         grades = {},
         menuCallback = "stonk:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -271,6 +280,7 @@ SozJobCore.Jobs = {
         platePrefix = "BENY",
         grades = {},
         menuCallback = "bennys:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
@@ -287,6 +297,7 @@ SozJobCore.Jobs = {
         platePrefix = "UPW",
         grades = {},
         menuCallback = "",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},

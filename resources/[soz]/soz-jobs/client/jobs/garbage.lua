@@ -20,29 +20,6 @@ CreateThread(function()
         distance = 2.5,
     })
 
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "garbage",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "garbage",
-            },
-            {
-                label = "Facturer la société",
-                color = "garbage",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("garbage", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "garbage",
-            },
-        },
-        distance = 1.5,
-    })
-
     local garbageActions = {}
     for item, _ in pairs(GarbageConfig.RecycleItem) do
         garbageActions[#garbageActions + 1] = {
