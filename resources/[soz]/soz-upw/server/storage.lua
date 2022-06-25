@@ -94,9 +94,10 @@ function StartConsumptionLoop()
 
             -- Blackout level has changed
             if currentBlackoutLevel ~= newBlackoutLevel then
+                local previousBlackoutLevel = currentBlackoutLevel
                 currentBlackoutLevel = newBlackoutLevel
-                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", currentBlackoutLevel)
-                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, currentBlackoutLevel)
+                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", newBlackoutLevel, previousBlackoutLevel)
+                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, newBlackoutLevel, previousBlackoutLevel)
             end
 
             Citizen.Wait(Config.Production.Tick)
