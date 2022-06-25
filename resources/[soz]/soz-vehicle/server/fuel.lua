@@ -1,5 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local stations = {}
+local playerFueling = {}
 
 --- Functions
 local function saveStation(id)
