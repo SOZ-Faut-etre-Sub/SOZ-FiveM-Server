@@ -37,7 +37,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Sonner",
             icon = "c:housing/bell.png",
             canInteract = function()
-                return property:HasRentedApartment() and property:HasRentedApartmentBesidesForCitizenId(PlayerData.citizenid) and
+                return property:HasRentedApartment() and property:HasRentedApartmentsBesidesForCitizenId(PlayerData.citizenid) and
                            not Housing.Functions.IsInsideApartment()
             end,
             action = function()

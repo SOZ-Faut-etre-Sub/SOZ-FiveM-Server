@@ -84,7 +84,7 @@ end)
 
 RegisterNetEvent("housing:client:ShowBellMenu", function(propertyId)
     local property = Properties[propertyId]
-    local apartments = property:GetRentedApartmentBesidesForCitizenId(PlayerData.citizenid)
+    local apartments = property:GetRentedApartmentsBesidesForCitizenId(PlayerData.citizenid)
 
     if not property:IsBuilding() then
         for apartmentId, _ in pairs(apartments) do
