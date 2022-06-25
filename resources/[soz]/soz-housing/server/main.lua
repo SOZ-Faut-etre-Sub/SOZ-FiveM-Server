@@ -226,6 +226,9 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source},
                      {house_id = apartment:GetIdentifier(), amount = apartment:GetPrice()})
 
+        Player.PlayerData.apartment = apartment:GetLabel()
+        TriggerClientEvent('QBCore:Player:UpdatePlayerData', Player.PlayerData)
+
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
     else
