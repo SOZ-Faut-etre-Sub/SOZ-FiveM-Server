@@ -197,6 +197,14 @@ end)
 RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
+    local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM housing_apartment WHERE ? IN (owner, roommate)", {
+        Player.PlayerData.citizenid,
+    })
+    if result[1].count ~= 0 then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez acheter plus d'une propriété.", "error")
+        return
+    end
+
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
@@ -217,6 +225,9 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
 
         TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source},
                      {house_id = apartment:GetIdentifier(), amount = apartment:GetPrice()})
+
+        Player.PlayerData.apartment = apartment:GetLabel()
+        TriggerClientEvent("QBCore:Player:UpdatePlayerData", Player.PlayerData)
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
