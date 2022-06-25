@@ -19,11 +19,12 @@ end)
 -- ID CARD
 AddEventHandler("soz-identity:client:request-identity-data", function(target, action)
     local charinfo = PlayerData.charinfo
+    local address = PlayerData.address or "-"
     local data = {
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         job = "-",
-        address = "-",
+        address = address,
         phone = charinfo.phone,
         pid = PedToNet(PlayerPedId()),
     }
