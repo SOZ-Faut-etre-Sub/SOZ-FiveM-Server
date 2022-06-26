@@ -3,6 +3,7 @@ import { ProviderMetadata, ProviderMetadataKey } from '../decorators/provider';
 import { Logger } from '../logger';
 import { EventLoader } from './event.loader';
 import { OnceLoader } from './once.loader';
+import { RpcLoader } from './rpc.loader';
 import { TickLoader } from './tick.loader';
 
 @Injectable()
@@ -16,6 +17,9 @@ export class ProviderLoader {
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
+    @Inject(RpcLoader)
+    private rpcLoader: RpcLoader;
+
     @Inject(Logger)
     private logger: Logger;
 
@@ -26,10 +30,13 @@ export class ProviderLoader {
         this.tickLoader.load(provider);
         this.eventLoader.load(provider);
         this.onceLoader.load(provider);
+        this.rpcLoader.load(provider);
     }
 
     public unload(): void {
         this.tickLoader.unload();
         this.eventLoader.unload();
+        this.onceLoader.unload();
+        this.rpcLoader.unload();
     }
 }
