@@ -338,8 +338,6 @@ local function GetVehicleData(vehNetId, extraData)
 end
 
 QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(source, cb, vehicleNetId, vehicleExtraData)
-    local player = QBCore.Functions.GetPlayer(source)
-
     vehicleExtraData.engineHealth = nil
     vehicleExtraData.tireHealth = nil
     vehicleExtraData.tankHealth = nil
@@ -358,8 +356,8 @@ QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(
         WHERE plate = ?
     ]]
 
-    local data = GetVehicleData(vehicleNetId, vehicleExtraData)
-    local args = {data.properties, data.plate}
+    local plate = GetVehicleNumberPlateText( NetworkGetEntityFromNetworkId(vehicleNetId))
+    local args = {json.encode(vehicleExtraData), plate}
 
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then
