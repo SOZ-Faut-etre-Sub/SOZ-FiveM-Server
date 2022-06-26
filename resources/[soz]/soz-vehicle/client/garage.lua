@@ -126,6 +126,8 @@ local function GetVehicleClientData(veh)
     }
 end
 
+exports("GetVehicleClientData", GetVehicleClientData)
+
 local function round(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end
@@ -207,7 +209,7 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         emptySlot = emptySlots[math.random(#emptySlots)]
     end
 
-    local success, vehEntity = pcall(QBCore.Functions.TriggerRpc, "soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel)
+    local success, vehEntity = pcall(QBCore.Functions.TriggerRpc, "soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel, veh.condition)
     if success and vehEntity then
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
     else
@@ -216,8 +218,12 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     end
 end)
 
-RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, fuel)
-    SetVehicleProperties(NetToVeh(vehNetId), mods, fuel)
+RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, condition, fuel)
+    SetVehicleProperties(NetToVeh(vehNetId), mods, condition, fuel)
+end)
+
+RegisterNetEvent("soz-garage:client:UpdateVehicleMods", function(vehNetId, mods)
+    QBCore.Functions.SetVehicleProperties(NetToVeh(vehNetId), mods)
 end)
 
 RegisterNetEvent("qb-garages:client:TakeOutPrive", function(v, type, garage, indexgarage, price)
