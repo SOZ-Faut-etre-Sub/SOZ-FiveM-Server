@@ -23,6 +23,7 @@ export const On = (name?: string, net = true): MethodDecorator => {
 
 export enum OnceStep {
     Start = 'start',
+    DatabaseConnected = 'databaseConnected',
     PlayerLoaded = 'playerLoaded',
 }
 
