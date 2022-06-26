@@ -878,7 +878,6 @@ local function saveVehicle()
     local netID = NetworkGetNetworkIdFromEntity(veh)
     local properties = QBCore.Functions.GetVehicleProperties(veh)
 
-
     QBCore.Functions.TriggerRpc("soz-garage:server:UpdateVehicleMods", netID, properties)
 end
 
