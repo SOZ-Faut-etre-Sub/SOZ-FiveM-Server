@@ -1,4 +1,16 @@
-Config.Products["ammunation"] = {[1] = {name = "parachute", type = "item", price = 250, amount = 250}}
+if GetConvarInt("feature_dlc1_weapon", 0) == 1 then
+    Config.Products["ammunation"] = {
+        [1] = {name = "parachute", type = "item", price = 250, amount = 250},
+        [2] = {name = "weapon_bat", type = "item", price = 180, amount = 250},
+        [3] = {name = "weapon_golfclub", type = "item", price = 450, amount = 250},
+        [4] = {name = "weapon_knuckle", type = "item", price = 100, amount = 250},
+        [5] = {name = "weapon_poolcue", type = "item", price = 200, amount = 250}
+    }
+else
+    Config.Products["ammunation"] = {
+        [1] = {name = "parachute", type = "item", price = 250, amount = 250}
+    }
+end
 
 Config.Locations["ammunation"] = {
     vector4(-661.61, -933.49, 21.83, 176.46),
