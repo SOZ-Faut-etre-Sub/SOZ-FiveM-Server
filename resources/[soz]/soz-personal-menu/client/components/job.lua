@@ -89,7 +89,7 @@ function JobEntry(menu)
         end)
 
         gradeItemMenu:AddButton({label = "Changer l'importance (" .. grade.weight .. ")", value = "set_weight"}):On("select", function()
-            local weight = exports["soz-hud"]:Input("Nouveau salaire :", 32)
+            local weight = exports["soz-hud"]:Input("Importance (le patron doit être le plus élevé) :", 32)
             if weight == "" or weight == nil then
                 return
             end
