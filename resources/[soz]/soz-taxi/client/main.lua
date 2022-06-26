@@ -79,29 +79,3 @@ exports["qb-target"]:AddBoxZone("taxi:cloakroom", vector3(889.1, -178.53, 74.7),
     },
     distance = 2.5,
 })
-
-CreateThread(function()
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "taxi",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "taxi",
-            },
-            {
-                label = "Facturer la société",
-                color = "taxi",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("taxi", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "taxi",
-            },
-        },
-        distance = 2.5,
-    })
-end)
-
