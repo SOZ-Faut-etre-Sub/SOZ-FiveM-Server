@@ -104,7 +104,7 @@ end
 function Property:GetRentedApartmentsBesidesForCitizenId(citizenid)
     local apartments = {}
     for apartmentId, apartment in pairs(self.apartments) do
-        if not apartment:HasAccess(citizenid) then
+        if apartment:IsRented() and not apartment:HasAccess(citizenid) then
             apartments[apartmentId] = apartment
         end
     end
