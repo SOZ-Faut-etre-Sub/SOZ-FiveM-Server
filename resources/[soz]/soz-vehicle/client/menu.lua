@@ -1,6 +1,8 @@
 local vehicleMenu = MenuV:CreateMenu(nil, "", "menu_vehicle", "soz", "vehicle")
 local doorName = {"Conducteur avant", "Passager avant", "Conducteur arrière", "Passager arrière", "Capot", "Coffre"}
 
+local doorMenu
+
 local function EngineMenu(vehicle)
     local engine = vehicleMenu:AddCheckbox({label = "Moteur allumé", value = GetIsVehicleEngineRunning(vehicle)})
 
@@ -44,7 +46,7 @@ local function SpeedLimiterMenu(vehicle)
 end
 
 local function DoorManagementMenu(vehicle)
-    local doorMenu = MenuV:InheritMenu(vehicleMenu, {Subtitle = "Portes"})
+    doorMenu = MenuV:InheritMenu(vehicleMenu, {Subtitle = "Portes"})
     vehicleMenu:AddButton({label = "Gestion des portes", value = doorMenu})
 
     for i = 0, 5 do
@@ -89,6 +91,9 @@ local function GenerateMenu()
         else
             MenuV:CloseAll(function()
                 vehicleMenu:Close()
+                if doorMenu ~= nil then
+                    doorMenu:Close()
+                end
             end)
         end
     end
@@ -100,6 +105,11 @@ RegisterCommand("vehmenu", GenerateMenu, false)
 Citizen.CreateThread(function()
     while true do
         if vehicleMenu.IsOpen and not IsPedInAnyVehicle(PlayerPedId(), false) then
+            vehicleMenu:Close()
+        end
+
+        if doorMenu ~= nil and doorMenu.IsOpen and not IsPedInAnyVehicle(PlayerPedId(), false) then
+            doorMenu:Close()
             vehicleMenu:Close()
         end
 
