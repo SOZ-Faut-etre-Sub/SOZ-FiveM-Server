@@ -356,7 +356,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(
         WHERE plate = ?
     ]]
 
-    local plate = GetVehicleNumberPlateText( NetworkGetEntityFromNetworkId(vehicleNetId))
+    local plate = GetVehicleNumberPlateText(NetworkGetEntityFromNetworkId(vehicleNetId))
     local args = {json.encode(vehicleExtraData), plate}
 
     local res = MySQL.Sync.execute(query, args)
