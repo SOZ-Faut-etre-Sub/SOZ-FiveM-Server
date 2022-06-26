@@ -44,12 +44,13 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             end
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 {
                     pData.PlayerData.license,
                     cid,
                     vehicle,
                     GetHashKey(vehicle),
+                    "{}",
                     "{}",
                     plate,
                     garage,
