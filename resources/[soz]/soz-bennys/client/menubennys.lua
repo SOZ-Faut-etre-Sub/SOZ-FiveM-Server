@@ -875,10 +875,10 @@ end)
 
 local function saveVehicle()
     local veh = Config.AttachedVehicle
-    local plate = QBCore.Functions.GetPlate(veh)
+    local netID = NetworkGetNetworkIdFromEntity(veh)
     local properties = QBCore.Functions.GetVehicleProperties(veh)
 
-    TriggerServerEvent("soz-bennys:server:SaveVehicleMods", properties, plate)
+    QBCore.Functions.TriggerRpc("soz-garage:server:UpdateVehicleMods", netID, properties)
 end
 
 VehiculeOptions:On("open", function(menu)

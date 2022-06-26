@@ -21,16 +21,15 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
+
     local qbVehicle = QBCore.Shared.Vehicles[displayname]
     if qbVehicle == nil then
         exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
     end
     local vehiclePrice = qbVehicle["price"]
+
     local plate = GeneratePlate()
-    local depotprice = math.ceil(vehiclePrice / 100)
-    if depotprice < 100 then
-        depotprice = 100
-    end
+
     local vehiclestock = MySQL.Sync.fetchAll("SELECT stock FROM concess_storage WHERE model = @model", {
         ["@model"] = vehicle,
     })
@@ -48,16 +47,18 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             end
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, state, life_counter, depotprice, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 {
                     pData.PlayerData.license,
                     cid,
                     vehicle,
                     GetHashKey(vehicle),
                     "{}",
+                    "{}",
                     plate,
                     garage,
                     1,
+                    3,
                     depotprice,
                     os.time(),
                 })
