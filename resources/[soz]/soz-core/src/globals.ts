@@ -5,5 +5,5 @@ export declare const SOZ_CORE_DIRNAME: string;
 export declare let __dirname: string;
 export declare let __filename: string;
 
-global.__dirname = __dirname;
-global.__filename = __filename;
+global.__dirname = process.cwd() + '/resources/[soz]/soz-core/build';
+global.__filename = global.__dirname + '/server.js';

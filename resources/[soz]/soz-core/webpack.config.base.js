@@ -9,8 +9,6 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
         new webpack.DefinePlugin({
             ...variables,
             SOZ_CORE_IS_PRODUCTION: isProduction,
-            __dirname: JSON.stringify(__dirname),
-            __filename: JSON.stringify(path.resolve(__dirname, './build/server.js')),
         }),
     ];
 
