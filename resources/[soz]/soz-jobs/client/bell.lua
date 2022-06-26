@@ -62,6 +62,13 @@ CreateThread(function()
         minZ = 32.41,
         maxZ = 32.61,
     }, {options = callSociety("555-LSMC"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:stonk", vector3(7.18, -692.90, 46.22), 0.4, 0.4, {
+        name = "bell:STONK",
+        heading = 0,
+        minZ = 46.12,
+        maxZ = 46.32,
+    }, {options = callSociety("555-STONK"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)
