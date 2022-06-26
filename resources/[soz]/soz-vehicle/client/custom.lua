@@ -70,6 +70,13 @@ RegisterNetEvent("soz-custom:client:applymod", function(categoryID, modID)
     else
         SetVehicleMod(Config.AttachedCustomVehicle, categoryID, modID)
     end
+    if (Config.AttachedCustomVehicle ~= nil) then
+        local vehExtraData = exports["soz-vehicle"]:GetVehicleClientData(Config.AttachedCustomVehicle)
+        QBCore.Functions.TriggerCallback("soz-garage:server:UpdateVehicleMods",
+        function(success)
+        end,
+        NetworkGetNetworkIdFromEntity(Config.AttachedCustomVehicle),vehExtraData)
+    end
 end)
 
 local function finishAnimation()
@@ -490,14 +497,18 @@ CreateThread(function()
                 label = "Améliorer",
                 action = function(entity)
                     if Config.AttachedCustomVehicle == nil then
-                        Config.AttachedCustomVehicle = entity
-                        Gfinishready = false
-                        Gready = false
-                        SetVehicleDoorsLocked(entity, 2)
-                        startAnimation()
+                        QBCore.Functions.TriggerCallback("soz-garage:server:UpdateVehicleProperties", function(success)
+                            Config.AttachedCustomVehicle = entity
+                            Gfinishready = false
+                            Gready = false
+                            SetVehicleDoorsLocked(entity, 2)
+                            startAnimation()
+                        end, NetworkGetNetworkIdFromEntity(entity))
                     else
-                        SetVehicleDoorsLocked(entity, 2)
-                        VehiculeOptions:Open()
+                        QBCore.Functions.TriggerCallback("soz-garage:server:UpdateVehicleProperties", function(success)
+                            SetVehicleDoorsLocked(entity, 2)
+                            VehiculeOptions:Open()
+                        end, NetworkGetNetworkIdFromEntity(entity))
                     end
                 end,
                 canInteract = function(entity, distance, data)
