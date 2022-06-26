@@ -12,6 +12,7 @@ function QBCore.Player.Login(source, citizenid, newData)
             local license = QBCore.Functions.GetSozIdentifier(src)
             local account = exports.oxmysql:singleSync("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", { license })
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
+            local apartment = exports.oxmysql:singleSync('SELECT label FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
 
             if account then
@@ -28,6 +29,9 @@ function QBCore.Player.Login(source, citizenid, newData)
                 PlayerData.cloth_config = json.decode(PlayerData.cloth_config)
                 PlayerData.features = json.decode(PlayerData.features)
                 PlayerData.role = role
+                if apartment then
+                    PlayerData.address = apartment.label
+                end
 
                 if PlayerData.gang then
                     PlayerData.gang = json.decode(PlayerData.gang)

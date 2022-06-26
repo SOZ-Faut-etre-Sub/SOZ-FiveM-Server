@@ -25,15 +25,24 @@ end)
 RegisterServerEvent("job:fire", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
+    local playerGradeWeight = SozJobCore.Jobs[player.PlayerData.job.id].grades[player.PlayerData.job.grade].weight
 
-    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+        not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
         return
     end
 
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+    local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[targetPlayer.PlayerData.job.grade].weight
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
         TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
+
+        return
+    end
+
+    if targetGradeWeight > playerGradeWeight then
+        TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne peut pas être viré !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
@@ -48,8 +57,10 @@ end)
 RegisterServerEvent("job:promote", function(target, gradeId)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
+    local playerGradeWeight = SozJobCore.Jobs[player.PlayerData.job.id].grades[player.PlayerData.job.grade].weight
 
-    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
+        not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
         return
     end
 
@@ -61,11 +72,17 @@ RegisterServerEvent("job:promote", function(target, gradeId)
         return
     end
 
-    local gradeLabel = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[gradeId].name
-    targetPlayer.Functions.SetJob(targetPlayer.PlayerData.job.id, gradeId)
+    local grade = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[gradeId]
 
-    TriggerClientEvent("hud:client:DrawNotification", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), gradeLabel), "info")
-    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, ("Vous avez été promu ~b~%s~s~ !"):format(gradeLabel), "info")
+    if grade.weight > playerGradeWeight then
+        TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne peut pas être promu !"):format(targetPlayer.Functions.GetName()), "error")
+
+        return
+    end
+
+    targetPlayer.Functions.SetJob(targetPlayer.PlayerData.job.id, gradeId)
+    TriggerClientEvent("hud:client:DrawNotification", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), grade.name), "info")
+    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, ("Vous avez été promu ~b~%s~s~ !"):format(grade.name), "info")
 end)
 
 RegisterServerEvent("job:grade:add", function(name)
@@ -183,6 +200,34 @@ RegisterServerEvent("job:grade:set-salary", function(id, salary)
 
     MySQL.execute.await("UPDATE `job_grades` SET salary = @salary WHERE id = @id", {["@id"] = id, ["@salary"] = salary})
     TriggerClientEvent("hud:client:DrawNotification", source, "Le salaire a bien été défini !")
+    SynchroniseJob()
+end)
+
+RegisterServerEvent("job:grade:set-weight", function(id, weight)
+    local source = source
+    local player = QBCore.Functions.GetPlayer(tonumber(source))
+
+    if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) then
+        return
+    end
+
+    local job = SozJobCore.Jobs[player.PlayerData.job.id]
+    if not job then
+        return
+    end
+
+    local grade = job.grades[id]
+    if not grade then
+        return
+    end
+
+    weight = tonumber(weight)
+    if weight == nil or weight < 0 then
+        return
+    end
+
+    MySQL.execute.await("UPDATE `job_grades` SET weight = @weight WHERE id = @id", {["@id"] = id, ["@weight"] = weight})
+    TriggerClientEvent("hud:client:DrawNotification", source, "Le poids a bien été défini !")
     SynchroniseJob()
 end)
 

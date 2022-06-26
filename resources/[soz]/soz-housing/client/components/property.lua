@@ -7,7 +7,8 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Acheter",
             icon = "c:housing/buy.png",
             canInteract = function()
-                return property:HasAvailableApartment() and not Housing.Functions.IsInsideApartment()
+                return not property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and property:HasAvailableApartment() and
+                           not Housing.Functions.IsInsideApartment()
             end,
             action = function()
                 TriggerEvent("housing:client:ShowBuyMenu", propertyId)
@@ -37,7 +38,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             label = "Sonner",
             icon = "c:housing/bell.png",
             canInteract = function()
-                return property:HasRentedApartment() and not property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and
+                return property:HasRentedApartment() and property:HasRentedApartmentsBesidesForCitizenId(PlayerData.citizenid) and
                            not Housing.Functions.IsInsideApartment()
             end,
             action = function()

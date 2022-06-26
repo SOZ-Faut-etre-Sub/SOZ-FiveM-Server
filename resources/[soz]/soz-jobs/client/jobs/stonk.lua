@@ -94,30 +94,6 @@ Citizen.CreateThread(function()
         },
     })
 
-    -- TARGET
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "cash-transfer",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "cash-transfer",
-            },
-            {
-                label = "Facturer la société",
-                color = "cash-transfer",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "cash-transfer",
-            },
-        },
-        distance = 1.5,
-    })
-
     -- BOSS STORAGE
     exports["qb-target"]:AddBoxZone("stonk:shop", vector2(-15.5, -708.83), 0.6, 2.6, {
         name = "food:shop",

@@ -1,6 +1,8 @@
 local vehicleMenu = MenuV:CreateMenu(nil, "", "menu_vehicle", "soz", "vehicle")
 local doorName = {"Conducteur avant", "Passager avant", "Conducteur arrière", "Passager arrière", "Capot", "Coffre"}
 
+local doorMenu
+
 local function EngineMenu(vehicle)
     local engine = vehicleMenu:AddCheckbox({label = "Moteur allumé", value = GetIsVehicleEngineRunning(vehicle)})
 
@@ -26,9 +28,10 @@ local function SpeedLimiterMenu(vehicle)
         value = nil,
         values = {
             {label = "Aucune limite de vitesse", value = 0},
-            {label = "Limiter la vitesse à 50km/h", value = 50},
-            {label = "Limiter la vitesse à 90km/h", value = 90},
-            {label = "Limiter la vitesse à 120km/h", value = 120},
+            {label = "Limiter la vitesse à 50/h", value = 50},
+            {label = "Limiter la vitesse à 90/h", value = 90},
+            {label = "Limiter la vitesse à 110km/h", value = 110},
+            {label = "Limiter la vitesse à 130km/h", value = 130},
         },
     })
     speed:On("select", function(item, value)
@@ -43,7 +46,7 @@ local function SpeedLimiterMenu(vehicle)
 end
 
 local function DoorManagementMenu(vehicle)
-    local doorMenu = MenuV:InheritMenu(vehicleMenu, {Subtitle = "Portes"})
+    doorMenu = MenuV:InheritMenu(vehicleMenu, {Subtitle = "Portes"})
     vehicleMenu:AddButton({label = "Gestion des portes", value = doorMenu})
 
     for i = 0, 5 do
@@ -88,6 +91,9 @@ local function GenerateMenu()
         else
             MenuV:CloseAll(function()
                 vehicleMenu:Close()
+                if doorMenu ~= nil then
+                    doorMenu:Close()
+                end
             end)
         end
     end
@@ -99,6 +105,11 @@ RegisterCommand("vehmenu", GenerateMenu, false)
 Citizen.CreateThread(function()
     while true do
         if vehicleMenu.IsOpen and not IsPedInAnyVehicle(PlayerPedId(), false) then
+            vehicleMenu:Close()
+        end
+
+        if doorMenu ~= nil and doorMenu.IsOpen and not IsPedInAnyVehicle(PlayerPedId(), false) then
+            doorMenu:Close()
             vehicleMenu:Close()
         end
 

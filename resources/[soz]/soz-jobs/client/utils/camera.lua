@@ -74,19 +74,6 @@ local function HandleZoom(cam)
         SetCamFov(cam, current_fov + (fov - current_fov) * 0.05)
     end
 end
-
-local function Breaking(text)
-    SetTextColour(255, 255, 255, 255)
-    SetTextFont(8)
-    SetTextScale(1.2, 1.2)
-    SetTextWrap(0.0, 1.0)
-    SetTextCentre(false)
-    SetTextDropshadow(0, 0, 0, 0, 255)
-    SetTextEdge(1, 0, 0, 0, 205)
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawText(0.2, 0.85)
-end
 -- @TODO REWORK
 
 --- Camera
@@ -122,18 +109,13 @@ local createCameraThread = function()
         QBCore.Functions.RequestAnimDict(CameraConfig.animDict)
         local player = PlayerPedId()
 
-        local scaleform = RequestScaleformMovie("breaking_news")
-        while not HasScaleformMovieLoaded(scaleform) do
-            Wait(10)
-        end
         local cam = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
         AttachCamToEntity(cam, player, 0.05, 0.5, 0.7, true)
         SetCamRot(cam, 2.0, 1.0, GetEntityHeading(player))
         SetCamFov(cam, fov)
         RenderScriptCams(true, false, 0, 1, 0)
-        PushScaleformMovieFunction(scaleform, "breaking_news")
-        PopScaleformMovieFunctionVoid()
 
+        exports["soz-hud"]:EnableTwitchNewsOverlay()
         while CameraConfig.enabled do
             SetEntityHeading(player, new_z)
 
@@ -148,8 +130,6 @@ local createCameraThread = function()
             CheckInputRotation(cam, zoomvalue)
             HandleZoom(cam)
             HideHUDThisFrame()
-            DrawScaleformMovie(scaleform, 0.5, 0.63, 1.0, 1.0, 255, 255, 255, 255)
-            Breaking("BREAKING NEWS")
             local camHeading = GetGameplayCamRelativeHeading()
             local camPitch = GetGameplayCamRelativePitch()
             if camPitch < -70.0 then
@@ -169,6 +149,7 @@ local createCameraThread = function()
 
             Wait(1)
         end
+        exports["soz-hud"]:DisableTwitchNewsOverlay()
 
         fov = (fov_max + fov_min) * 0.5
         RenderScriptCams(false, false, 0, 1, 0)
