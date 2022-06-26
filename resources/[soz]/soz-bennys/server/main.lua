@@ -49,10 +49,6 @@ QBCore.Functions.CreateCallback("soz-bennys:server:IsMechanicAvailable", functio
     cb(amount)
 end)
 
-RegisterNetEvent("soz-bennys:server:SaveVehicleMods", function(mods, plate)
-    MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {json.encode(mods), plate})
-end)
-
 function IsVehicleOwned(plate)
     local retval = false
     local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {plate})
