@@ -200,7 +200,7 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
     local result = exports.oxmysql:executeSync("SELECT COUNT(*) as count FROM housing_apartment WHERE ? IN (owner, roommate)", {
         Player.PlayerData.citizenid,
     })
-    if result[1].count ~= 0 then
+    if result[1].count > 0 then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez acheter plus d'une propriété.", "error")
         return
     end
