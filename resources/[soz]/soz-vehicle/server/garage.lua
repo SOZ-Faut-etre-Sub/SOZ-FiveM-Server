@@ -228,6 +228,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
     local veh = SpawnVehicle(modelName, coords, mods, fuel, condition)
     if not veh then
         SetSpawnLock(mods.plate, false)
+        exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (Vehicle is nil)"):format(mods.plate))
         cb(nil)
         return
     end
@@ -239,6 +240,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
     ]], {VehicleState.Out, mods.plate})
     if not res == 1 then
         DespawnVehicle(NetworkGetNetworkIdFromEntity(veh))
+        exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (MYSQL query fail)"):format(mods.plate))
         return
     end
 
