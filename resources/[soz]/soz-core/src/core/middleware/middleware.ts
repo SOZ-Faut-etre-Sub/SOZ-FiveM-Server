@@ -21,10 +21,10 @@ export class ChaineMiddlewareFactory implements MiddlewareFactory {
     @Inject(SourceMiddlewareFactory)
     private sourceMiddlewareFactory: SourceMiddlewareFactory;
 
-    create(eventName: EventMetadata, next: Middleware): Middleware {
+    create(event: EventMetadata, next: Middleware): Middleware {
         return this.logMiddlewareFactory.create(
-            eventName,
-            this.metricMiddlewareFactory.create(eventName, this.sourceMiddlewareFactory.create(eventName, next))
+            event,
+            this.metricMiddlewareFactory.create(event, this.sourceMiddlewareFactory.create(event, next))
         );
     }
 }
