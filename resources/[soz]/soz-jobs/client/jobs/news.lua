@@ -3,29 +3,6 @@ local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_li
 
 --- Targets
 CreateThread(function()
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "news",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "news",
-            },
-            {
-                label = "Facturer la société",
-                color = "news",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "news",
-            },
-        },
-        distance = 1.5,
-    })
-
     exports["qb-target"]:AddBoxZone("news:duty", vector3(-587.75, -934.67, 23.82), 0.4, 0.8, {
         name = "news:duty",
         heading = 32,

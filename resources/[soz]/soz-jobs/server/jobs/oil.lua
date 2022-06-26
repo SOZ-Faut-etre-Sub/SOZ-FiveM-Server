@@ -107,6 +107,62 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
     end
 end)
 
+RegisterNetEvent("jobs:server:fueler:craftKerosene", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    local keroseneItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "petroleum_refined", nil, true) / 2)
+    local petrolItemAmount = math.ceil(keroseneItemAmount * 2)
+
+    if petrolItemAmount <= 1 then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez de pétrole pour transformer en kérosène.", "error")
+        return
+    end
+
+    if not exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "petroleum_refined", petrolItemAmount, "kerosene", keroseneItemAmount) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~transformer~s~ autant d'essence.", "error")
+        return
+    end
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "petroleum_refined", petrolItemAmount) then
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, "kerosene", keroseneItemAmount, nil, nil, function(success, _)
+            if success then
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                                   ("Vous avez ~g~transformé~s~ %dL en kérosène"):format(keroseneItemAmount))
+
+                TriggerEvent("monitor:server:event", "job_mtp_create_gasoline", {
+                    player_source = Player.PlayerData.source,
+                }, {quantity = keroseneItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+            else
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le kérosène.", "error")
+            end
+        end)
+    end
+end)
+
+RegisterNetEvent("jobs:server:fueler:craftKeroseneJerryCan", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    local jerrycanItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "kerosene", nil, true) / 3)
+    local keroseneItemAmount = jerrycanItemAmount * 3
+
+    if not exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "kerosene", keroseneItemAmount, "kerosene_jerrycan", jerrycanItemAmount) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~transformer~s~ autant de kérosène.", "error")
+        return
+    end
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene", keroseneItemAmount) then
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, "kerosene_jerrycan", jerrycanItemAmount, nil, nil, function(success, _)
+            if success then
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                                   ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(jerrycanItemAmount))
+                TriggerEvent("monitor:server:event", "job_mtp_create_jerrycan", {
+                    player_source = Player.PlayerData.source,
+                }, {quantity = jerrycanItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+            else
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
+            end
+        end)
+    end
+end)
+
 RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     local tanker = NetworkGetEntityFromNetworkId(tankerId)
@@ -137,20 +193,40 @@ RegisterNetEvent("jobs:server:fueler:refillStation", function(tankerId, station,
     end, station)
 end)
 
-RegisterNetEvent("jobs:server:fueler:resellTanker", function(tankerId)
+QBCore.Functions.CreateCallback("jobs:server:fueler:resellTanker", function(source, cb, tankerId)
     local Player = QBCore.Functions.GetPlayer(source)
     local tanker = NetworkGetEntityFromNetworkId(tankerId)
     local tankerPlate = GetVehicleNumberPlateText(tanker)
     local tankerInv = "trunk_" .. tankerPlate
 
-    if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
-        TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
-        TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
-                     {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
-    else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le tanker n'a plus ~r~assez~s~ de stock.", "error")
+    local essenceItemAmount = exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "essence", nil, true)
+    local keroseneItemAmount = exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "kerosene", nil, true)
+
+    if essenceItemAmount >= 10 then
+        if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
+            TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
+            TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
+                         {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+
+            cb(true)
+            return
+        end
     end
+
+    if keroseneItemAmount >= 10 then
+        if exports["soz-inventory"]:RemoveItem(tankerInv, "kerosene", 10) then
+            TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L de kérosène")
+            TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
+                         {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+
+            cb(true)
+            return
+        end
+    end
+
+    cb(false)
 end)
 
 QBCore.Functions.CreateCallback("jobs:server:fueler:ensureInventory", function(source, cb, tankerId, model, class)
@@ -244,5 +320,8 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:canResell", function(source,
     local tanker = NetworkGetEntityFromNetworkId(tankerId)
     local tankerPlate = GetVehicleNumberPlateText(tanker)
 
-    cb(exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "essence", nil, true) >= 10)
+    local essenceItemAmount = exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "essence", nil, true)
+    local keroseneItemAmount = exports["soz-inventory"]:GetItem("trunk_" .. tankerPlate, "kerosene", nil, true)
+
+    cb(essenceItemAmount >= 10 or keroseneItemAmount >= 10)
 end)

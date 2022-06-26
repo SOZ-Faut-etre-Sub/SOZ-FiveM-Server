@@ -187,30 +187,6 @@ Citizen.CreateThread(function()
             },
         },
     })
-
-    -- TARGET
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "food",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "food",
-            },
-            {
-                label = "Facturer la société",
-                color = "food",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "food",
-            },
-        },
-        distance = 1.5,
-    })
 end)
 
 RegisterNetEvent("QBCore:Client:SetDuty", function(duty)

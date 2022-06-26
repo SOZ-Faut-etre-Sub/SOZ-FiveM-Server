@@ -118,4 +118,34 @@ CreateThread(function()
         },
         distance = 2.5,
     })
+
+    for jobId, job in pairs(SozJobCore.Jobs) do
+        if job.canInvoice then
+            exports["qb-target"]:AddGlobalPlayer({
+                options = {
+                    {
+                        label = "Facturer",
+                        color = jobId,
+                        icon = "c:jobs/facture.png",
+                        event = "jobs:client:InvoicePlayer",
+                        canInteract = function(player)
+                            return PlayerData.job.onduty
+                        end,
+                        job = jobId,
+                    },
+                    {
+                        label = "Facturer la société",
+                        color = jobId,
+                        icon = "c:jobs/facture.png",
+                        event = "jobs:client:InvoiceSociety",
+                        canInteract = function()
+                            return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices)
+                        end,
+                        job = jobId,
+                    },
+                },
+                distance = 1.5,
+            })
+        end
+    end
 end)

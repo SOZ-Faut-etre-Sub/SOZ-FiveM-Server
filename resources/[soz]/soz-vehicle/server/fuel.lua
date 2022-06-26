@@ -96,7 +96,11 @@ QBCore.Functions.CreateUseableItem("essence_jerrycan", function(source, item)
     TriggerClientEvent("soz-fuel:client:onJerrycanEssence", source)
 end)
 
-RegisterNetEvent("soz-fuel:server:removeJerrycanEssence", function()
+QBCore.Functions.CreateUseableItem("kerosene_jerrycan", function(source, item)
+    TriggerClientEvent("soz-fuel:client:onJerrycanKerosene", source)
+end)
+
+RegisterNetEvent("soz-fuel:server:removeJerrycanKerosene", function()
     local Player = QBCore.Functions.GetPlayer(source)
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence_jerrycan", 1)
+    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene_jerrycan", 1)
 end)

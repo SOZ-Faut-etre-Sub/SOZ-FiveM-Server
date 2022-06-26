@@ -2713,6 +2713,28 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
     },
+    ['kerosene'] = {
+        ['name'] = 'kerosene',
+        ['label'] = 'Kérosène conditionné',
+        ['weight'] = 1000,
+        ['type'] = 'oil',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+    },
+    ['kerosene_jerrycan'] = {
+        ['name'] = 'kerosene_jerrycan',
+        ['label'] = 'Bidon de kérosène conditionné',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+    },
 
     -- UPW
     ['energy_cell'] = {
