@@ -30,7 +30,25 @@ local function OpenTrunk()
                     exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
                 end
             else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas les clés..", "error")
+                QBCore.Functions.TriggerCallback("vehiclekeys:server:CheckOwnership", function(result)
+                    if not result then -- if not player owned
+                        local driver = GetPedInVehicleSeat(vehicle, -1)
+                        if driver ~= 0 and not IsPedAPlayer(driver) then
+                            SetVehicleDoorsLocked(vehicle, 2)
+                            exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "error")
+                        else
+                            if GetVehicleDoorLockStatus(vehicle) == 1 then
+                                local model = GetEntityModel(vehicle)
+                                local class = GetVehicleClass(vehicle)
+
+                                TriggerServerEvent("inventory:server:openInventory", tankers[model] and "tanker" or "trunk", plate,
+                                                   {model = model, class = class})
+                            else
+                                exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
+                            end
+                        end
+                    end
+                end, plate)
             end
         end, plate)
     end
