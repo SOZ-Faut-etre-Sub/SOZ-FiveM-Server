@@ -1,0 +1,383 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["filterJson"]
+  engineType      = "binary"
+  binaryTargets   = ["native", "linux-musl", "windows"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model bank_accounts {
+  id           BigInt                     @id @default(autoincrement())
+  accountid    String?                    @unique(map: "accountid") @db.VarChar(50)
+  citizenid    String?                    @unique(map: "citizenid") @db.VarChar(50)
+  businessid   String?                    @db.VarChar(50)
+  houseid      String?                    @db.VarChar(50)
+  gangid       String?                    @db.VarChar(50)
+  money        BigInt                     @default(0)
+  marked_money BigInt                     @default(0)
+  account_type bank_accounts_account_type @default(player)
+  coords       String?                    @db.Text
+
+  @@index([businessid], map: "businessid")
+  @@index([gangid], map: "gangid")
+}
+
+model bank_statements {
+  id         BigInt  @id @default(autoincrement())
+  citizenid  String? @db.VarChar(50)
+  account    String? @db.VarChar(50)
+  businessid String? @db.VarChar(50)
+  gangid     String? @db.VarChar(50)
+  deposited  Int?
+  withdraw   Int?
+  balance    Int?
+  date       String? @db.VarChar(50)
+  reason     String? @db.VarChar(255)
+
+  @@index([businessid], map: "businessid")
+  @@index([gangid], map: "gangid")
+}
+
+model bans {
+  id       Int     @id @default(autoincrement())
+  name     String? @db.VarChar(50)
+  license  String? @db.VarChar(50)
+  discord  String? @db.VarChar(50)
+  ip       String? @db.VarChar(50)
+  reason   String? @db.Text
+  expire   Int?
+  bannedby String  @default("LeBanhammer") @db.VarChar(255)
+
+  @@index([discord], map: "discord")
+  @@index([ip], map: "ip")
+  @@index([license], map: "license")
+}
+
+model concess_entreprise {
+  id         Int    @id @default(autoincrement())
+  job        String @db.VarChar(15)
+  vehicle    String @db.VarChar(15)
+  price      Int
+  liverytype Int
+}
+
+model concess_storage {
+  model    String  @id @db.VarChar(50)
+  stock    Int
+  category String? @db.VarChar(60)
+}
+
+model fuel_storage {
+  id       Int     @id @default(autoincrement())
+  station  String  @db.VarChar(15)
+  fuel     String  @db.VarChar(15)
+  type     String  @default("public") @db.VarChar(20)
+  owner    String? @db.VarChar(32)
+  stock    Int
+  position String  @db.Text
+  model    Int
+  zone     String  @db.Text
+}
+
+model housing_apartment {
+  id               Int              @id @default(autoincrement())
+  property_id      Int
+  identifier       String?          @db.VarChar(50)
+  label            String?          @db.VarChar(50)
+  price            Int?
+  owner            String?          @db.VarChar(50)
+  roommate         String?          @db.VarChar(50)
+  inside_coord     String?          @db.LongText
+  exit_zone        String?          @db.LongText
+  fridge_zone      String?          @db.LongText
+  stash_zone       String?          @db.LongText
+  closet_zone      String?          @db.LongText
+  money_zone       String?          @db.LongText
+  housing_property housing_property @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
+
+  @@index([property_id], map: "housing_apartment_housing_property_id_fk")
+}
+
+model housing_property {
+  id                Int                 @id @default(autoincrement())
+  identifier        String              @unique(map: "housing_property_identifier_uindex") @db.VarChar(32)
+  entry_zone        String?             @db.LongText
+  garage_zone       String?             @db.LongText
+  housing_apartment housing_apartment[]
+}
+
+model invoices {
+  id            Int      @id @default(autoincrement())
+  citizenid     String   @db.VarChar(50)
+  emitter       String   @db.VarChar(50)
+  emitterName   String   @db.VarChar(50)
+  emitterSafe   String   @db.VarChar(50)
+  targetAccount String?  @db.VarChar(20)
+  label         String   @db.VarChar(200)
+  amount        Int
+  payed         Boolean  @default(false)
+  refused       Boolean  @default(false)
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  updated_at    DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([citizenid], map: "citizenid")
+  @@index([emitter], map: "emitter")
+  @@index([payed], map: "payed")
+}
+
+model job_grades {
+  id          Int     @id @default(autoincrement())
+  jobId       String  @db.VarChar(50)
+  name        String  @db.VarChar(50)
+  salary      Int?    @default(0)
+  owner       Int?    @default(0)
+  is_default  Int?    @default(0)
+  permissions String? @db.Text
+
+  @@index([jobId], map: "jobId")
+}
+
+model migrations {
+  name String @id @db.VarChar(255)
+}
+
+model persistent_prop {
+  id       BigInt  @id @default(autoincrement())
+  model    Int
+  event    String? @db.VarChar(20)
+  position String  @db.LongText
+}
+
+model phone_calls {
+  id          Int      @id @default(autoincrement())
+  identifier  String?  @db.VarChar(48)
+  transmitter String   @db.VarChar(8)
+  receiver    String   @db.VarChar(8)
+  is_accepted Int?     @default(0) @db.TinyInt
+  start       DateTime @default(now()) @db.Timestamp(0)
+  end         DateTime @default(dbgenerated("('0000-00-00 00:00:00')")) @db.Timestamp(0)
+
+  @@index([identifier], map: "identifier")
+}
+
+model phone_contacts {
+  id         Int     @id @default(autoincrement())
+  identifier String? @db.VarChar(48)
+  number     String? @db.VarChar(8)
+  display    String  @default("") @db.VarChar(255)
+
+  @@index([identifier], map: "identifier")
+}
+
+model phone_gallery {
+  id         Int     @id @default(autoincrement())
+  identifier String? @db.VarChar(48)
+  image      String  @db.VarChar(255)
+
+  @@index([identifier], map: "identifier")
+}
+
+model phone_messages {
+  id              Int      @id @default(autoincrement())
+  message         String   @db.VarChar(512)
+  user_identifier String   @db.VarChar(48)
+  conversation_id String   @db.VarChar(128)
+  isRead          Int      @default(0) @db.TinyInt
+  visible         Int      @default(1) @db.TinyInt
+  author          String   @db.VarChar(8)
+  createdAt       DateTime @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([user_identifier], map: "user_identifier")
+}
+
+model phone_messages_conversations {
+  id                     Int      @id @default(autoincrement())
+  user_identifier        String   @db.VarChar(8)
+  conversation_id        String   @db.VarChar(128)
+  participant_identifier String   @db.VarChar(8)
+  label                  String?  @default("") @db.VarChar(60)
+  unreadCount            Int      @default(0)
+  unread                 Int?
+  createdAt              DateTime @default(now()) @db.Timestamp(0)
+  updatedAt              DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([user_identifier], map: "user_identifier")
+}
+
+model phone_notes {
+  id         Int    @id @default(autoincrement())
+  identifier String @db.VarChar(48)
+  title      String @db.VarChar(255)
+  content    String @db.VarChar(255)
+
+  @@index([identifier], map: "identifier")
+}
+
+model phone_profile {
+  number String  @id @db.VarChar(8)
+  avatar String? @db.VarChar(255)
+}
+
+model phone_society_messages {
+  id              Int      @id @default(autoincrement())
+  conversation_id String   @db.VarChar(512)
+  source_phone    String   @db.VarChar(8)
+  message         String   @db.VarChar(512)
+  position        String?  @db.LongText
+  isTaken         Int      @default(0) @db.TinyInt
+  takenBy         String?  @db.VarChar(70)
+  takenByUsername String?  @db.VarChar(70)
+  isDone          Int      @default(0) @db.TinyInt
+  createdAt       DateTime @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([conversation_id], map: "conversation_id")
+}
+
+model phone_twitch_news {
+  id         Int      @id @default(autoincrement())
+  type       String   @db.VarChar(512)
+  reporter   String?  @db.VarChar(150)
+  reporterId String?  @db.VarChar(70)
+  image      String?  @db.VarChar(256)
+  message    String   @db.VarChar(512)
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([type], map: "type")
+}
+
+model player {
+  id               Int                @default(autoincrement())
+  citizenid        String             @id @db.VarChar(50)
+  cid              Int?
+  license          String             @db.VarChar(255)
+  name             String             @db.VarChar(255)
+  money            String             @db.Text
+  charinfo         String?            @db.Text
+  job              String             @db.Text
+  gang             String?            @db.Text
+  position         String             @db.Text
+  metadata         String             @db.Text
+  inventory        String?            @db.LongText
+  last_updated     DateTime           @default(now()) @db.Timestamp(0)
+  is_default       Int                @default(0)
+  skin             String?            @db.Text
+  cloth_config     String?            @db.Text
+  features         String?            @default("[]") @db.Text
+  player_cloth_set player_cloth_set[]
+  player_vehicles  player_vehicles[]
+
+  @@index([id], map: "id")
+  @@index([last_updated], map: "last_updated")
+  @@index([license], map: "license")
+}
+
+model player_cloth_set {
+  id        Int    @id @default(autoincrement())
+  citizenid String @db.VarChar(255)
+  name      String @db.VarChar(255)
+  cloth_set String @db.Text
+  player    player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_player_cloth_set_player")
+
+  @@index([citizenid], map: "FK_player_cloth_set_player")
+}
+
+model player_house {
+  id              Int     @id @default(autoincrement())
+  identifier      String? @db.VarChar(50)
+  building        String? @db.VarChar(50)
+  owner           String? @db.VarChar(50)
+  price           Int?
+  entry_zone      String? @db.LongText
+  exit_zone       String? @db.LongText
+  teleport        String? @db.LongText
+  fridge_position String? @db.LongText
+  closet_position String? @db.LongText
+  stash_position  String? @db.LongText
+  money_position  String? @db.LongText
+  garage_zone     String? @db.LongText
+}
+
+model player_outfits {
+  id         Int     @id @default(autoincrement())
+  citizenid  String? @db.VarChar(50)
+  outfitname String  @db.VarChar(50)
+  model      String? @db.VarChar(50)
+  skin       String? @db.Text
+  outfitId   String  @db.VarChar(50)
+
+  @@index([citizenid], map: "citizenid")
+  @@index([outfitId], map: "outfitId")
+}
+
+model player_vehicles {
+  id              Int     @id @default(autoincrement())
+  license         String? @db.VarChar(50)
+  citizenid       String? @db.VarChar(50)
+  vehicle         String? @db.VarChar(50)
+  hash            String? @db.VarChar(50)
+  mods            String? @db.LongText
+  plate           String  @unique(map: "UK_playervehicles_plate") @db.VarChar(15)
+  fakeplate       String? @db.VarChar(50)
+  garage          String? @db.VarChar(50)
+  job             String? @db.VarChar(15)
+  fuel            Int?    @default(100)
+  engine          Float?  @default(1000) @db.Float
+  body            Float?  @default(1000) @db.Float
+  state           Int?    @default(1)
+  depotprice      Int     @default(0)
+  drivingdistance Int?
+  status          String? @db.Text
+  boughttime      Int     @default(0)
+  parkingtime     Int     @default(0)
+  player          player? @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playervehicles_players")
+
+  @@index([citizenid], map: "citizenid")
+  @@index([license], map: "license")
+  @@index([plate], map: "plate")
+}
+
+model storages {
+  name       String         @id @db.VarChar(50)
+  type       storages_type?
+  owner      String?        @db.VarChar(64)
+  max_slots  Int?           @default(10)
+  max_weight Int?           @default(250000)
+  inventory  String?        @db.LongText
+
+  @@index([owner], map: "owner")
+  @@index([type], map: "type")
+}
+
+model upw_facility {
+  id         Int     @id @default(autoincrement())
+  type       String  @db.VarChar(50)
+  identifier String  @db.VarChar(50)
+  data       String? @db.LongText
+}
+
+enum bank_accounts_account_type {
+  player
+  business
+  safestorages
+  offshore
+  bank_atm @map("bank-atm")
+}
+
+enum storages_type {
+  fridge
+  storage
+  storage_tank
+  boss_storage
+  stash
+  armory
+  seizure
+  trunk
+  ammo
+  organ
+}
