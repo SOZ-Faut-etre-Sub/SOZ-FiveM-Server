@@ -1,8 +1,8 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["filterJson"]
-  engineType      = "binary"
   binaryTargets   = ["native", "linux-musl", "windows"]
+  engineType      = "binary"
 }
 
 datasource db {
@@ -133,6 +133,7 @@ model job_grades {
   id          Int     @id @default(autoincrement())
   jobId       String  @db.VarChar(50)
   name        String  @db.VarChar(50)
+  weight      Int     @default(0)
   salary      Int?    @default(0)
   owner       Int?    @default(0)
   is_default  Int?    @default(0)
@@ -322,6 +323,7 @@ model player_vehicles {
   vehicle         String? @db.VarChar(50)
   hash            String? @db.VarChar(50)
   mods            String? @db.LongText
+  condition       String? @db.LongText
   plate           String  @unique(map: "UK_playervehicles_plate") @db.VarChar(15)
   fakeplate       String? @db.VarChar(50)
   garage          String? @db.VarChar(50)
@@ -330,7 +332,7 @@ model player_vehicles {
   engine          Float?  @default(1000) @db.Float
   body            Float?  @default(1000) @db.Float
   state           Int?    @default(1)
-  depotprice      Int     @default(0)
+  life_counter    Int     @default(3)
   drivingdistance Int?
   status          String? @db.Text
   boughttime      Int     @default(0)
