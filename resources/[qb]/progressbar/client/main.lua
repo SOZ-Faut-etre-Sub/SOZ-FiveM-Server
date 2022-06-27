@@ -325,3 +325,7 @@ end)
 RegisterNUICallback('FinishAction', function(data, cb)
     Finish()
 end)
+
+exports("IsDoingAction", function()
+    return isDoingAction
+end)
