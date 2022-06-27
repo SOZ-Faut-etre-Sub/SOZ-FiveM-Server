@@ -86,6 +86,10 @@ function PollutionManager:StartPollutionLoop()
 end
 
 function PollutionManager:GetPollutionLevel()
+    -- Force Neutral pollution for now
+    return QBCore.Shared.Pollution.Level.Neutral
+
+    --[[
     local currentPollution = self.currentPollution * 100
 
     if currentPollution >= 100 then
@@ -97,4 +101,5 @@ function PollutionManager:GetPollutionLevel()
             return level
         end
     end
+    ]]
 end

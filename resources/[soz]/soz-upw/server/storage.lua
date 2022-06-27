@@ -45,6 +45,10 @@ local function GetTerminalCapacities(scope)
 end
 
 local function GetBlackoutLevel()
+    -- Force to Blackout level Zero for now
+    return QBCore.Shared.Blackout.Level.Zero
+
+    --[[
     local capacity, maxCapacity = GetTerminalCapacities("default")
     local percent = math.ceil(capacity / maxCapacity * 100)
 
@@ -57,6 +61,7 @@ local function GetBlackoutLevel()
             return level
         end
     end
+    ]]
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
