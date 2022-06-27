@@ -28,6 +28,10 @@ export class OnceLoader {
     }
 
     public unload(): void {
-        this.methods = { [OnceStep.Start]: [], [OnceStep.PlayerLoaded]: [] };
+        this.methods = {
+            [OnceStep.Start]: [],
+            [OnceStep.DatabaseConnected]: [],
+            [OnceStep.PlayerLoaded]: [],
+        };
     }
 }
