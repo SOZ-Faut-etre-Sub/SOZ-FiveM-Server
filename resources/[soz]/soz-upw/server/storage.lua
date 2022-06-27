@@ -44,7 +44,7 @@ local function GetTerminalCapacities(scope)
     return capacity, maxCapacity
 end
 
-local function GetBlackoutLevel()
+function GetBlackoutLevel()
     -- Force to Blackout level Zero for now
     return QBCore.Shared.Blackout.Level.Zero
 
