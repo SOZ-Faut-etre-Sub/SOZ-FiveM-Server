@@ -81,7 +81,7 @@ export const DialerHistory: React.FC = () => {
                                             <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>{getDisplay(call.transmitter === myNumber ? call.receiver : call.transmitter)}</p>
                                         </div>
                                         <div className="text-gray-500 text-sm">
-                                            {dayjs(call.start).locale('fr').fromNow(true)}
+                                            {dayjs(call.start).locale('fr').from(dayjs(new Date().getTime()), true)}
                                         </div>
                                     </div>
                                 </Menu.Button>
