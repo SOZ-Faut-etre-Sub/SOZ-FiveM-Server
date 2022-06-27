@@ -95,7 +95,6 @@ function StartConsumptionLoop()
             end
 
             local newBlackoutLevel = GetBlackoutLevel()
-            exports["soz-monitor"]:Log("INFO", "Blackout level updated: " .. newBlackoutLevel)
 
             -- Blackout level has changed
             if currentBlackoutLevel ~= newBlackoutLevel then
