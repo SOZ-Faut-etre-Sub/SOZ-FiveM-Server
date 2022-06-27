@@ -199,9 +199,11 @@ setTick(async () => {
     global.isPhoneDisabled = true;
     global.isPhoneDrowned = true;
     if (global.isPhoneOpen) await hidePhone();
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, false);
   } else if (!isSwimming && global.isPhoneDrowned) {
     global.isPhoneDisabled = false;
     global.isPhoneDrowned = false;
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
   }
   await Delay(1000);
 });
