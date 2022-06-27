@@ -65,6 +65,7 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     end
 
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+    local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[targetPlayer.PlayerData.job.grade].weight
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
         TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
@@ -74,7 +75,7 @@ RegisterServerEvent("job:promote", function(target, gradeId)
 
     local grade = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[gradeId]
 
-    if grade.weight > playerGradeWeight then
+    if grade.weight > playerGradeWeight or targetGradeWeight > playerGradeWeight then
         TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne peut pas être promu !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
