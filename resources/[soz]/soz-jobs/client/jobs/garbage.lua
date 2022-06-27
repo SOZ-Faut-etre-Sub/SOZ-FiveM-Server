@@ -209,3 +209,15 @@ CreateThread(function()
         Wait(1000)
     end
 end)
+
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    PlayerData.job.onduty = duty
+    if not PlayerData.job.onduty then
+        for binId, bin in pairs(binLocation) do
+            local blip = QBCore.Functions.GetBlip("garbage_bin_" .. binId)
+            if blip ~= nil then
+                QBCore.Functions.RemoveBlip("garbage_bin_" .. binId)
+            end
+        end
+    end
+end)
