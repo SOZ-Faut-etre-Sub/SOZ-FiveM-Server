@@ -71,7 +71,7 @@ RegisterNetEvent("soz-custom:client:applymod", function(categoryID, modID)
         SetVehicleMod(Config.AttachedCustomVehicle, categoryID, modID)
     end
     if (Config.AttachedCustomVehicle ~= nil) then
-        local vehExtraData = exports["soz-vehicle"]:GetVehicleClientData(Config.AttachedCustomVehicle)
+        local vehExtraData = QBCore.Functions.GetVehicleProperties(Config.AttachedCustomVehicle)
         QBCore.Functions.TriggerRpc("soz-garage:server:UpdateVehicleMods", NetworkGetNetworkIdFromEntity(Config.AttachedCustomVehicle), vehExtraData)
     end
 end)
