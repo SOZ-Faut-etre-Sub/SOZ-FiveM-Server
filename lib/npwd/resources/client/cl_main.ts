@@ -205,6 +205,11 @@ setTick(async () => {
     global.isPhoneDrowned = false;
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
   }
+
+  if (global.isPhoneOpen && exps['progressbar'].IsDoingAction()) {
+      await hidePhone();
+  }
+
   await Delay(1000);
 });
 
