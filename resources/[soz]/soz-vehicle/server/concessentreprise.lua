@@ -51,7 +51,7 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
 
     if Player.Functions.RemoveMoney("money", price, "vehicle-bought-in-showroom") then
         MySQL.Async.insert(
-            "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, state, life_counter, depotprice, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, state, life_counter, job, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             {
                 Player.PlayerData.license,
                 Player.PlayerData.citizenid,
