@@ -59,7 +59,7 @@ const MessagesList = (): any => {
                                 </div>
                                 <div className="flex-shrink-0">
                                     <p className={`text-left text-sm font-medium ${theme === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}>
-                                        {dayjs(conversation.updatedAt).locale('fr').fromNow(true)}
+                                        {dayjs(conversation.updatedAt).locale('fr').from(dayjs(new Date().getTime()), true)}
                                     </p>
                                 </div>
                             </div>
