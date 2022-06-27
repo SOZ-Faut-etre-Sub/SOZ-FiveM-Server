@@ -4,7 +4,11 @@ import { getMethodMetadata } from '../decorators/reflect';
 
 @Injectable()
 export class OnceLoader {
-    private methods: Record<OnceStep, any[]> = { [OnceStep.Start]: [], [OnceStep.PlayerLoaded]: [] };
+    private methods: Record<OnceStep, any[]> = {
+        [OnceStep.Start]: [],
+        [OnceStep.DatabaseConnected]: [],
+        [OnceStep.PlayerLoaded]: [],
+    };
 
     public trigger(step: OnceStep, ...args): void {
         for (const method of this.methods[step]) {
