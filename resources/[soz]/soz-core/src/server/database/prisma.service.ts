@@ -1,10 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 
-import { Once } from '../../core/decorators/event';
+import { Once, OnceStep } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { OnceLoader } from '../../core/loader/once.loader';
 
 @Provider()
 export class PrismaService extends PrismaClient {
+    @Inject(OnceLoader)
+    private onceLoader: OnceLoader;
+
     constructor() {
         super({
             log: ['warn', 'error', 'query', 'info'],
@@ -19,5 +24,7 @@ export class PrismaService extends PrismaClient {
     @Once()
     async onStart() {
         await this.$connect();
+
+        this.onceLoader.trigger(OnceStep.DatabaseConnected);
     }
 }
