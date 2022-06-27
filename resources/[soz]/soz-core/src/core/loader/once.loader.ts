@@ -8,12 +8,17 @@ export class OnceLoader {
         [OnceStep.Start]: [],
         [OnceStep.DatabaseConnected]: [],
         [OnceStep.PlayerLoaded]: [],
+        [OnceStep.Stop]: [],
     };
 
-    public trigger(step: OnceStep, ...args): void {
+    public async trigger(step: OnceStep, ...args): Promise<void> {
+        const promises = [];
+
         for (const method of this.methods[step]) {
-            method(...args);
+            promises.push(method(...args));
         }
+
+        await Promise.all(promises);
     }
 
     public load(provider): void {
@@ -32,6 +37,7 @@ export class OnceLoader {
             [OnceStep.Start]: [],
             [OnceStep.DatabaseConnected]: [],
             [OnceStep.PlayerLoaded]: [],
+            [OnceStep.Stop]: [],
         };
     }
 }

@@ -6,10 +6,12 @@ function hmr(file, callback) {
     const filePath = path.resolve(__dirname, '..', file);
     const watcher = chokidar.watch(filePath);
 
-    watcher.on('change', file => {
-        const content = fs.readFileSync(file, 'utf8');
-
-        callback(content);
+    watcher.on('change', () => {
+        setTimeout(() => {
+            fs.readFile(filePath, 'utf8', (err, data) => {
+                callback(data);
+            });
+        }, 200);
     });
 }
 
