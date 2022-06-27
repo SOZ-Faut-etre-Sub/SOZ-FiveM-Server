@@ -47,8 +47,6 @@ function PollutionManager:UpdatePollution()
 
     self.currentPollution = pastUnits / totalMaxUnits
 
-    exports["soz-monitor"]:Log("INFO", "Pollution level updated: " .. self.currentPollution * 100 .. "%")
-
     local newPollutionLevel = self:GetPollutionLevel()
     if newPollutionLevel ~= previousPollutionLevel then
         TriggerEvent("soz-upw:server:onPollutionLevelChanged", newPollutionLevel, previousPollutionLevel)
