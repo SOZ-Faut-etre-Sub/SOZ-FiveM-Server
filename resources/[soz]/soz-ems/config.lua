@@ -152,17 +152,6 @@ Config.PatientClothes = {
     },
 }
 
-Config.Fines = {
-    [1] = {
-        label = "Factures basique",
-        items = {
-            {label = "Bandage", price = 3000},
-            {label = "Premier secours", price = 4000},
-            {label = "Réanimation", price = 8000},
-        },
-    },
-}
-
 Config.BossShop = {
     ["lsmc"] = {
         [1] = {name = "outfit", metadata = {label = "LSMC", type = "lsmc"}, price = 100, amount = 1},

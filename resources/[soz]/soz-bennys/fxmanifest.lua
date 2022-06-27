@@ -19,7 +19,6 @@ client_scripts {
     "client/menugarage.lua",
     "client/menuf3.lua",
     "client/menucloakroom.lua",
-    "client/menufacture.lua",
     "client/shop.lua",
 }
 

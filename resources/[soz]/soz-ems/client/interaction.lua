@@ -2,26 +2,6 @@ CreateThread(function()
     exports["qb-target"]:AddGlobalPlayer({
         options = {
             {
-                label = "Facture",
-                color = "lsmc",
-                icon = "fas fa-file-invoice-dollar",
-                event = "lsmc:client:InvoicePlayer",
-                job = "lsmc",
-                canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
-                end,
-            },
-            {
-                label = "Facturer la société",
-                color = "lsmc",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("lsmc", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "lsmc",
-            },
-            {
                 label = "Soigner",
                 color = "lsmc",
                 icon = "c:ems/heal.png",
@@ -179,8 +159,4 @@ CreateThread(function()
         },
         distance = 2.5,
     })
-end)
-
-RegisterNetEvent("lsmc:client:InvoicePlayer", function(data)
-    EmsJob.Functions.Menu.GenerateInvoiceMenu(PlayerData.job.id, data.entity)
 end)
