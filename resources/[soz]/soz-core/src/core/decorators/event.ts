@@ -25,6 +25,7 @@ export enum OnceStep {
     Start = 'start',
     DatabaseConnected = 'databaseConnected',
     PlayerLoaded = 'playerLoaded',
+    Stop = 'stop',
 }
 
 export const OnceMetadataKey = 'soz_core.decorator.once';

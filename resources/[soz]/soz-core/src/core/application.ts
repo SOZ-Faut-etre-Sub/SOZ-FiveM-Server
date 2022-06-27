@@ -22,19 +22,19 @@ export class Application {
     @Inject(Logger)
     private logger: Logger;
 
-    static create(...modules: any[]): Application {
+    static async create(...modules: any[]): Promise<Application> {
         const app = Container.get(Application);
 
         for (const module of modules) {
             app.addModule(module);
         }
 
-        app.start();
+        await app.start();
 
         return app;
     }
 
-    start() {
+    async start() {
         if (this.running !== null && this.resolve !== null) {
             this.logger.error('soz core applicasion already running');
 
@@ -53,8 +53,7 @@ export class Application {
         addEventListener('soz_core.__internal__.stop_application', this.onStopCallback, false);
 
         this.logger.debug('[soz-core] starting application');
-
-        this.onceLoader.trigger(OnceStep.Start);
+        await this.onceLoader.trigger(OnceStep.Start);
     }
 
     async stop() {
@@ -63,6 +62,8 @@ export class Application {
 
             return;
         }
+
+        await this.onceLoader.trigger(OnceStep.Stop);
 
         const stopped = await this.running;
         this.logger.debug('[soz-core] stopping application');
