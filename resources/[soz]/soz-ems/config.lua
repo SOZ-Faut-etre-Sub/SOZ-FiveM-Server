@@ -164,5 +164,6 @@ Config.BossShop = {
         [8] = {name = "pommade", metadata = {}, price = 15, amount = 1},
         [9] = {name = "tissue", metadata = {}, price = 5, amount = 1},
         [10] = {name = "weapon_fireextinguisher", metadata = {ammo = 50}, price = 5, amount = 1},
+        [11] = {name = "walkstick", metadata = {}, price = 15, amount = 1},
     },
 }

@@ -50,7 +50,7 @@ end)
 
 --- Tools
 QBCore.Functions.CreateUseableItem("binoculars", function(source, item)
-    TriggerClientEvent("binoculars:Toggle", source)
+    TriggerClientEvent("items:binoculars:toggle", source)
 end)
 
 --- Firework
@@ -92,4 +92,10 @@ QBCore.Functions.CreateUseableItem("diving_gear", function(source)
     Player.Functions.SetMetaData("scuba", scuba)
 
     TriggerClientEvent("scuba:client:Toggle", source, scuba)
+end)
+
+--- LSMC
+
+QBCore.Functions.CreateUseableItem("walkstick", function (source, item)
+    TriggerClientEvent("items:walkstick:toggle", source)
 end)
