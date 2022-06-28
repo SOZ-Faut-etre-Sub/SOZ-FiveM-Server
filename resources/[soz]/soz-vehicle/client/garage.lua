@@ -371,6 +371,8 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
             local qbVehicle = QBCore.Shared.Vehicles[displayName]
             if qbVehicle == nil then
                 print("Can't retrieve the price of vehicle with display name: '" .. displayName .. "' and model name '" .. v.vehicle .. "'.")
+                -- Fallback value
+                qbVehicle = {price = 10000}
             end
             local feePercentage = (1.0 / 100)
 
