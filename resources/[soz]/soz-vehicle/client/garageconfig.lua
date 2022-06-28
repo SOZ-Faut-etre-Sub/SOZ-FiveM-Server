@@ -1101,6 +1101,16 @@ PlacesFourriere = {
         maxZ = 32.33,
         data = {
             indexGarage = "fourriere",
+            capacity = 2, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fourriere4"] = BoxZone:Create(vector3(488.13, -1366.4, 29.25), 6, 4, {
+        name="fourriere4",
+        heading = 180,
+        minZ = 28.25,
+        maxZ = 32.25,
+        data = {
+            indexGarage = "fourriere",
             capacity = 3, -- 1 = S, 2 = M, 3 = L
         },
     }),
