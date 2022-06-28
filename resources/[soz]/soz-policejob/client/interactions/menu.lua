@@ -14,14 +14,15 @@ local function RedAlertEntity(menu, societyNumber)
             local ped = PlayerPedId()
             local coords = GetEntityCoords(ped)
             local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
-
-            TriggerEvent("police:client:RedCall")
-            TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
-                anonymous = false,
-                number = societyNumber,
-                message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
-                position = true,
-            })
+            if not (IsWarningMessageActive() and tonumber(GetWarningMessageTitleHash()) == 1246147334) then
+                TriggerEvent("police:client:RedCall")
+                TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+                    anonymous = false,
+                    number = societyNumber,
+                    message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
+                    position = true,
+                })
+            end
         end,
     })
 end
