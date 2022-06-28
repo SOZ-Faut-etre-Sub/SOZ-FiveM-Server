@@ -148,6 +148,17 @@ function ApplyPlayerBodySkin(playerId, bodySkin)
     ApplyPedProps(ped, bodySkin)
 end
 
+function CanApplyBaseHeadProp(clothConfig)
+    -- Tl;dr: You can use the base head if the job set is not forbidding it with Clear = true.
+    if clothConfig.JobClothSet ~= nil and #clothConfig.JobClothSet.Props > 0 then
+        local jobHeadProp = clothConfig.JobClothSet.Props[tostring(PropType.Head)]
+        if jobHeadProp ~= nil and jobHeadProp.Clear ~= true and #clothConfig["BaseClothSet"].Props > 0 then
+            return true
+        end
+    end
+    return false
+end
+
 function ClothConfigComputeToClothSet(clothConfig)
     local clothSet = Clone(clothConfig.BaseClothSet)
 
@@ -169,6 +180,12 @@ function ClothConfigComputeToClothSet(clothConfig)
         local override = {Props = {[PropType.Head] = {Clear = true}}}
 
         clothSet = MergeClothSet(clothSet, override)
+    else
+        if CanApplyBaseHeadProp(clothConfig) then
+            local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[tostring(PropType.Head)] }}
+
+            clothSet = MergeClothSet(clothSet, override)
+        end
     end
 
     if clothConfig.Config.HideMask then

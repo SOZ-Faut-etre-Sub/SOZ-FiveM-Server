@@ -16,7 +16,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 244, Texture = 18, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Tenue Direction"] = {
             Components = {
@@ -30,7 +30,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 139, Texture = 3, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Tenue de travail d'été"] = {
             Components = {
@@ -44,7 +44,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 146, Texture = 7, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Tenue Formateur"] = {
             Components = {
@@ -58,7 +58,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 248, Texture = 14, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
@@ -74,7 +74,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 259, Texture = 16, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Tenue Direction"] = {
             Components = {
@@ -88,7 +88,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 103, Texture = 3, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Tenue de travail d'été"] = {
             Components = {
@@ -102,7 +102,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 141, Texture = 2, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Tenue Formateur"] = {
             Components = {
@@ -116,7 +116,7 @@ FuelerConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 256, Texture = 14, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
 }

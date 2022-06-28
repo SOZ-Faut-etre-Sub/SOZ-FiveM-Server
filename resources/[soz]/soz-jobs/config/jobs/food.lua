@@ -22,7 +22,7 @@ FoodConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 0, Texture = 2, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
 
@@ -39,7 +39,7 @@ FoodConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 73, Texture = 1, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
 }
