@@ -22,7 +22,21 @@ exports("RequestVehicleModel", RequestVehicleModel)
 function SetVehicleProperties(veh, mods, condition, fuel)
     SetVehicleNumberPlateText(veh, mods.plate)
 
-    QBCore.Functions.SetVehicleProperties(veh, mods)
+    if mods.properties ~= nil then
+        if type(mods.properties) == "string" then
+            QBCore.Functions.SetVehicleProperties(veh, json.decode(mods.properties))
+        else
+            QBCore.Functions.SetVehicleProperties(veh, mods.properties)
+        end
+
+    else
+        if type(mods) == "string" then
+            QBCore.Functions.SetVehicleProperties(veh, json.decode(mods))
+        else
+            QBCore.Functions.SetVehicleProperties(veh, mods)
+        end
+    end
+
     if condition ~= nil then
         QBCore.Functions.SetVehicleProperties(veh, json.decode(condition))
     end
