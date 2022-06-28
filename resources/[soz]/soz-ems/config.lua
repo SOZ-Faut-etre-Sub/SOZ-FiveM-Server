@@ -99,7 +99,7 @@ Config.DutyOutfit = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 213, Texture = 6, Palette = 0},
                 },
-                Props = {[0] = {Clear = true}},
+                Props = {},
             },
             [GetHashKey("mp_f_freemode_01")] = {
                 Components = {
@@ -113,7 +113,7 @@ Config.DutyOutfit = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 217, Texture = 6, Palette = 0},
                 },
-                Props = {[0] = {Clear = true}},
+                Props = {},
             },
         },
     },
