@@ -30,7 +30,12 @@ end
 propsMenu:AddSlider({
     label = "Choisir un modèle",
     value = nil,
-    values = {{label = "poubelle", value = "soz_prop_bb_bin"}},
+    values = {
+        {label = "poubelle", value = "soz_prop_bb_bin"},
+        {label = "borne civile", value = "prop_gnome1"},
+        {label = "borne entreprise", value = "prop_gnome2"},
+        {label = "onduleur", value = "prop_gnome3"},
+    },
     select = function(_, value)
         selectModel(value)
     end,
@@ -51,6 +56,18 @@ propsMenu:AddSlider({
     select = function(_, value)
         PropOption.event = value
     end,
+})
+
+propsMenu:AddSlider({
+    label = "Choisir une entreprise",
+    description = "Lier la prop à une entreprise (borne entreprise)",
+    value = nil,
+    values = BuildJobList(),
+    select = function(_, value)
+        if value and value.jobID ~= nill then
+            PropOption.job = value.jobID
+        end
+    end
 })
 
 propsMenu:AddSlider({
@@ -136,7 +153,12 @@ propsMenu:AddButton({
             return
         end
 
-        TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
+        if PropOption.model == "soz_prop_bb_bin" then
+            TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
+        elseif PropOption.model == "prop_gnome1" or PropOption.model == "prop_gnome2" or PropOption.model == "prop_gnome3" then
+            TriggerServerEvent("soz-upw:server:AddFacility", PropOption.model, PropOption.propCoord, PropOption.job)
+        end
+
         DeleteEntity(PropOption.prop)
 
         PropOption.prop = nil
