@@ -284,6 +284,7 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
 
                             HorodateurOpen = true
                             HorodateurActive = true
+                            TotalDistance = 0
                             lastLocation = GetEntityCoords(PlayerPedId())
                             ClearPedTasksImmediately(NpcData.Npc)
                             FreezeEntityPosition(NpcData.Npc, false)
