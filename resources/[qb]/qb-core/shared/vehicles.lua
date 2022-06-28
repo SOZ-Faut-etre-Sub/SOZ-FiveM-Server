@@ -4157,6 +4157,15 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('packer2'),
         ['shop']     = 'na',
     },
+    ['trailer']       = {
+        ['name']     = 'Trailer',
+        ['brand']    = 'MTL',
+        ['model']    = 'tanker',
+        ['price']    = 10000,
+        ['category'] = 'Industrial',
+        ['hash']     = GetHashKey('tanker'),
+        ['shop']     = 'na',
+    },
     ['stockade']     = {
         ['name']     = 'Securicar',
         ['brand']    = 'MTL',
