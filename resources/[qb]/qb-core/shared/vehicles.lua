@@ -4165,6 +4165,7 @@ QBShared.Vehicles = {
         ['category'] = 'Industrial',
         ['hash']     = GetHashKey('tanker'),
         ['shop']     = 'na',
+        ['size']     = 3, -- 1 = S, 2 = M, 3 = L
     },
     ['stockade']     = {
         ['name']     = 'Securicar',

@@ -135,11 +135,12 @@ end
 ---
 --- PARK OUT
 ---
-local function GetEmptyParkingSlots(slots, indexgarage)
+local function GetEmptyParkingSlots(slots, indexgarage, size)
+    size = size or 1
     local emptySlots = {}
 
     for _, slot in pairs(slots) do
-        if slot.data.indexGarage == indexgarage then
+        if slot.data.indexGarage == indexgarage and slot.data.capacity >= size then
             local c = slot:getBoundingBoxCenter()
             local w = slot:getHeading()
             if not IsPositionOccupied(c.x, c.y, c.z, 0.5, false, true, true, false, false, 0, false) then
@@ -180,7 +181,8 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         return
     end
 
-    local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage)
+    local size = (QBCore.Shared.Vehicles[qbVehicleKey] or {size = 1}).size
+    local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage, size)
 
     if #emptySlots == 0 then
         QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)

@@ -1074,29 +1074,35 @@ PlacesPublic = {
 }
 
 PlacesFourriere = {
-    ["fourriere1"] = BoxZone:Create(vector3(502.05, -1336.41, 29.33), 6, 4,
-                                    {
+    ["fourriere1"] = BoxZone:Create(vector3(502.05, -1336.41, 29.33), 6, 4, {
         name = "fourriere1",
         heading = 0,
         minZ = 28.33,
         maxZ = 32.33,
-        data = {indexGarage = "fourriere"},
+        data = {
+            indexGarage = "fourriere",
+            capacity = 2, -- 1 = S, 2 = M, 3 = L
+        },
     }),
-    ["fourriere2"] = BoxZone:Create(vector3(497.44, -1336.5, 29.34), 6, 4,
-                                    {
+    ["fourriere2"] = BoxZone:Create(vector3(497.44, -1336.5, 29.34), 6, 4, {
         name = "fourriere2",
         heading = 0,
         minZ = 28.34,
         maxZ = 32.34,
-        data = {indexGarage = "fourriere"},
+        data = {
+            indexGarage = "fourriere",
+            capacity = 2, -- 1 = S, 2 = M, 3 = L
+        },
     }),
-    ["fourriere3"] = BoxZone:Create(vector3(481.31, -1334.2, 29.33), 6, 4,
-                                    {
+    ["fourriere3"] = BoxZone:Create(vector3(481.31, -1334.2, 29.33), 6, 4, {
         name = "fourriere3",
         heading = 230,
         minZ = 28.33,
         maxZ = 32.33,
-        data = {indexGarage = "fourriere"},
+        data = {
+            indexGarage = "fourriere",
+            capacity = 3, -- 1 = S, 2 = M, 3 = L
+        },
     }),
 }
 
