@@ -55,6 +55,7 @@ Config.Shops = {
         ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
         ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
     },
+    ["helico"] = {}
 }
 
 Config.RefillCost = 50
@@ -260,6 +261,24 @@ Garages = {
         type = "public", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
     },
+    ["private:air:vespucci"] = {
+        label = "Vespucci Air Parking",
+        blipcoord = vector4(-713.87, -1416.37, 4.0, 4.18),
+        showBlip = true,
+        blipName = "Parking Aérien Privé",
+        blipNumber = 360,
+        type = "private", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
+    ["public:air:sandy"] = {
+        label = "Sandy Shores Air Parking",
+        blipcoord = vector4(1760.42, 3231.41, 41.25, 191.13),
+        showBlip = true,
+        blipName = "Parking Aérien Public",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
     ["fourriere"] = {
         label = "Fourrière",
         blipcoord = vector3(491.0, -1314.69, 29.25),
@@ -279,6 +298,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "lspd",
     },
+    ["lspd:air"] = {
+        label = "LSPD",
+        blipcoord = vector4(585.1, 2.81, 102.23, 211.84),
+        showBlip = false,
+        blipName = "LSPD",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+        job = "lspd",
+    },
     ["lsmc"] = {
         label = "LSMC",
         blipcoord = vector4(412.22, -1416.05, 28.38, 323.72),
@@ -289,6 +318,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "lsmc",
     },
+    ["lsmc:air"] = {
+        label = "LSMC",
+        blipcoord = vector4(311.98, -1451.68, 45.51, 319.69),
+        showBlip = false,
+        blipName = "LSMC",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+        job = "lsmc",
+    },
     ["bcso"] = {
         label = "BCSO",
         blipcoord = vector4(1854.63, 3679.58, 32.83, 29.91),
@@ -297,6 +336,16 @@ Garages = {
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
+        job = "bcso",
+    },
+    ["bcso:air"] = {
+        label = "BCSO",
+        blipcoord = vector4(1814.08, 3724.05, 33.67, 26.91),
+        showBlip = false,
+        blipName = "BCSO",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
         job = "bcso",
     },
     ["bennys"] = {
