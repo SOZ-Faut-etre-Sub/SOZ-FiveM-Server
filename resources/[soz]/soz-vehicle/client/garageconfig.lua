@@ -934,16 +934,16 @@ PlacesPrives = {
         maxZ = 16.19,
         data = {indexGarage = "greatoceanp"},
     }),
-    --["private:air:vespucci1"] = BoxZone:Create(vector3(-724.67, -1444.06, 5.0), 15.2, 15.2, {
-    --    name="private:air:vespucci:slot1",
-    --    heading = 140,
-    --    minZ = 4.0,
-    --    maxZ = 8.0,
-    --    data = {
-    --        indexGarage = "private:air:vespucci",
-    --        capacity = 3
-    --    }
-    --}),
+    ["private:air:vespucci1"] = BoxZone:Create(vector3(-724.67, -1444.06, 5.0), 15.2, 15.2, {
+        name="private:air:vespucci:slot1",
+        heading = 140,
+        minZ = 4.0,
+        maxZ = 8.0,
+        data = {
+            indexGarage = "private:air:vespucci",
+            capacity = 3
+        }
+    }),
     ["private:air:vespucci2"] = BoxZone:Create(vector3(-745.47, -1468.82, 5.0), 15.2, 15.2, {
         name="private:air:vespucci:slot2",
         heading = 320,
@@ -954,47 +954,46 @@ PlacesPrives = {
             capacity = 3
         }
     }),
-    --["private:air:vespucci3"] = BoxZone:Create(vector3(-746.75, -1432.73, 5.0), 19.2, 17.6, {
-    --    name="private:air:vespucci:slot3",
-    --    heading = 230,
-    --    minZ = 4.0,
-    --    maxZ = 8.0,
-    --    data = {
-    --        indexGarage = "private:air:vespucci",
-    --        capacity = 2
-    --    }
-    --}),
-    --["private:air:vespucci4"] = BoxZone:Create(vector3(-763.48, -1453.35, 5.0), 19.2, 17.6, {
-    --    name="private:air:vespucci:slot4",
-    --    heading = 230,
-    --    minZ = 4.0,
-    --    maxZ = 8.0,
-    --    data = {
-    --        indexGarage = "private:air:vespucci",
-    --        capacity = 2
-    --    }
-    --}),
-    --["private:air:vespucci5"] = BoxZone:Create(vector3(-721.41, -1473.46, 5.0), 19.2, 17.6, {
-    --    name="private:air:vespucci:slot5",
-    --    heading = 50,
-    --    minZ = 4.0,
-    --    maxZ = 8.0,
-    --    data = {
-    --        indexGarage = "private:air:vespucci",
-    --        capacity = 2
-    --    }
-    --}),
-    --["private:air:vespucci6"] = BoxZone:Create(vector3(-699.93, -1447.88, 5.0), 19.2, 17.6, {
-    --    name="private:air:vespucci:slot6",
-    --    heading = 50,
-    --    minZ = 4.0,
-    --    maxZ = 8.0,
-    --    debugPoly=true,
-    --    data = {
-    --        indexGarage = "private:air:vespucci",
-    --        capacity = 2
-    --    }
-    --}),
+    ["private:air:vespucci3"] = BoxZone:Create(vector3(-746.75, -1432.73, 5.0), 19.2, 17.6, {
+        name="private:air:vespucci:slot3",
+        heading = 230,
+        minZ = 4.0,
+        maxZ = 8.0,
+        data = {
+            indexGarage = "private:air:vespucci",
+            capacity = 2
+        }
+    }),
+    ["private:air:vespucci4"] = BoxZone:Create(vector3(-763.48, -1453.35, 5.0), 19.2, 17.6, {
+        name="private:air:vespucci:slot4",
+        heading = 230,
+        minZ = 4.0,
+        maxZ = 8.0,
+        data = {
+            indexGarage = "private:air:vespucci",
+            capacity = 2
+        }
+    }),
+    ["private:air:vespucci5"] = BoxZone:Create(vector3(-721.41, -1473.46, 5.0), 19.2, 17.6, {
+        name="private:air:vespucci:slot5",
+        heading = 50,
+        minZ = 4.0,
+        maxZ = 8.0,
+        data = {
+            indexGarage = "private:air:vespucci",
+            capacity = 2
+        }
+    }),
+    ["private:air:vespucci6"] = BoxZone:Create(vector3(-699.93, -1447.88, 5.0), 19.2, 17.6, {
+        name="private:air:vespucci:slot6",
+        heading = 50,
+        minZ = 4.0,
+        maxZ = 8.0,
+        data = {
+            indexGarage = "private:air:vespucci",
+            capacity = 2
+        }
+    }),
 }
 
 PlacesPublic = {
