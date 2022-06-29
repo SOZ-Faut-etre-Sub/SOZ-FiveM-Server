@@ -26,7 +26,7 @@ AddEventHandler("onResourceStart", function(resource)
         end)
 
         for _, garage in pairs(Garages) do
-            if garage.type == "entreprise" then
+            if garage.type == "entreprise" or garage.showProp then
                 exports["soz-utils"]:CreateObject(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, garage.blipcoord.w, 8000.0, true)
             end
         end
@@ -151,11 +151,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     local args = {}
 
     local argsByType = {
-        ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
-        ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
+        ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
+        ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
         ["depot"] = {state = VehicleState.InPound},
-        ["entreprise"] = {state = VehicleState.InEntreprise, garage = garage},
-        ["housing"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
+        ["entreprise"] = {state = VehicleState.InEntreprise, garage = garage, category = category},
+        ["housing"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
     }
     local allArgs = argsByType[type_]
     if not allArgs then
@@ -186,6 +186,9 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
             table.insert(args, cid)
         end
     end
+
+    print("Query: " .. query)
+    print("Args: " .. json.encode(args))
 
     local vehicles = MySQL.Sync.fetchAll(query, args)
     if #vehicles > 0 then
