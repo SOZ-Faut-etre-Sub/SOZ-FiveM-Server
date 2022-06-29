@@ -12,7 +12,6 @@ export class EventLoader {
 
     public load(provider): void {
         const eventMethodList = getMethodMetadata<EventMetadata[]>(EventMetadataKey, provider);
-
         for (const methodName of Object.keys(eventMethodList)) {
             const eventMetadataList = eventMethodList[methodName];
             const method = provider[methodName].bind(provider);
