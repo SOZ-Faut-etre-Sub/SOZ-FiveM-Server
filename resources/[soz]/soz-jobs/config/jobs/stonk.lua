@@ -69,7 +69,7 @@ StonkConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 31, Texture = 0, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
@@ -85,7 +85,7 @@ StonkConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 7, Texture = 0, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
 }

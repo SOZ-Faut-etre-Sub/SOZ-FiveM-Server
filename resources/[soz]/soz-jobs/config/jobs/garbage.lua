@@ -36,7 +36,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 251, Texture = 11, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Employé"] = {
             Components = {
@@ -51,7 +51,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 251, Texture = 8, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Direction"] = {
             Components = {
@@ -66,7 +66,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 248, Texture = 4, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
@@ -83,7 +83,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 259, Texture = 11, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Employé"] = {
             Components = {
@@ -98,7 +98,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 259, Texture = 8, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Direction"] = {
             Components = {
@@ -113,7 +113,7 @@ GarbageConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 256, Texture = 4, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
     },
 }

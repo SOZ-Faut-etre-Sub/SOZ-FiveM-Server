@@ -19,7 +19,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 99, Texture = 1, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Costume Terrain"] = {
             Components = {
@@ -33,7 +33,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 348, Texture = 0, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Costume Terrain d'été"] = {
             Components = {
@@ -47,7 +47,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 234, Texture = 4, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Costume Hélico"] = {
             Components = {
@@ -77,7 +77,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 25, Texture = 5, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Costume Terrain"] = {
             Components = {
@@ -91,7 +91,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 8, Texture = 2, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Costume Terrain d'été"] = {
             Components = {
@@ -105,7 +105,7 @@ NewsConfig.Cloakroom = {
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 26, Texture = 4, Palette = 0},
             },
-            Props = {[0] = {Clear = true}},
+            Props = {},
         },
         ["Costume Hélico"] = {
             Components = {
