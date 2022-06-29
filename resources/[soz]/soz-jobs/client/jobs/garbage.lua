@@ -49,6 +49,10 @@ CreateThread(function()
                                     {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
         options = garbageActions,
         distance = 2.5,
+        job = "garbage",
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
     })
 
     local props = QBCore.Functions.TriggerRpc("core:server:getProps")
