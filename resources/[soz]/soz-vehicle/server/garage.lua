@@ -187,9 +187,6 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
         end
     end
 
-    print("Query: " .. query)
-    print("Args: " .. json.encode(args))
-
     local vehicles = MySQL.Sync.fetchAll(query, args)
     if #vehicles > 0 then
         cb(vehicles, os.time())
