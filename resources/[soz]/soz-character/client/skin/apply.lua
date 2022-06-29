@@ -182,7 +182,7 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, override)
     else
         if CanApplyBaseHeadProp(clothConfig) then
-            local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[tostring(PropType.Head)] }}
+            local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[tostring(PropType.Head)]}}
 
             clothSet = MergeClothSet(clothSet, override)
         end
