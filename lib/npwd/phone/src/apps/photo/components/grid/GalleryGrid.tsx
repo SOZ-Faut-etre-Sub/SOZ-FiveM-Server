@@ -40,7 +40,7 @@ export const GalleryGrid = () => {
                 leaveTo="translate-x-0"
             >
                 <AppTitle app={photosApp} isBigHeader={true}/>
-                <AppContent className="mt-14 h-[52%] overflow-y-scroll">
+                <AppContent className="mt-14 h-[40%] overflow-y-auto">
                     {photos.length === 0 && (
                         <div className={`flex flex-col justify-center items-center ${theme === 'dark' ? 'text-white' : 'text-black'} h-[600px]`}>
                             {t('PHOTO.FEEDBACK.NO_PHOTOS')}
