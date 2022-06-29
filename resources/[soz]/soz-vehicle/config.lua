@@ -161,6 +161,15 @@ Garages = {
         type = "private", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
     },
+    ["airport_air"] = {
+        label = "Airport Public Air Parking",
+        blipcoord = vector3(-1138.35, -2850.65, 13.95),
+        showBlip = true,
+        blipName = "Parking Public",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
     ["chumashp"] = {
         label = "Chumash Parking",
         blipcoord = vector3(-3135.51, 1105.58, 20.64),
