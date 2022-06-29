@@ -19,9 +19,15 @@ AddEventHandler("onResourceStart", function(resource)
                     local jours = os.difftime(os.time(), v.parkingtime) / (24 * 60 * 60) -- seconds in a day
                     local joursentiers = math.floor(jours)
                     if (v.state == 1 and joursentiers > 21) then
-                        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, parkingtime = ? WHERE id = ?", {os.time(), v.id})
+                        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, parkingtime = ? WHERE id = ?", {
+                            os.time(),
+                            v.id,
+                        })
                     elseif (v.state == 2 and joursentiers > 7) then
-                        MySQL.Async.execute("UPDATE player_vehicles SET state = 5, parkingtime = ? WHERE id = ?", {os.time(), v.id})
+                        MySQL.Async.execute("UPDATE player_vehicles SET state = 5, parkingtime = ? WHERE id = ?", {
+                            os.time(),
+                            v.id,
+                        })
                         MySQL.Async.execute("UPDATE concess_storage SET stock = stock + 1 WHERE model = ?", {v.vehicle})
                     elseif (v.state == 4 and joursentiers > 2) then
                         MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE id = ?", {v.id})
