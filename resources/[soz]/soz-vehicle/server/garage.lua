@@ -26,7 +26,7 @@ AddEventHandler("onResourceStart", function(resource)
         end)
 
         for _, garage in pairs(Garages) do
-            if garage.type == "entreprise" or garage.showProp then
+            if garage.type == "entreprise" then
                 exports["soz-utils"]:CreateObject(garage_props, garage.blipcoord.x, garage.blipcoord.y, garage.blipcoord.z, garage.blipcoord.w, 8000.0, true)
             end
         end
