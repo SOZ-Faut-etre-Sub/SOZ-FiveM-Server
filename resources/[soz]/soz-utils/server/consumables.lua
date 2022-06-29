@@ -96,6 +96,6 @@ end)
 
 --- LSMC
 
-QBCore.Functions.CreateUseableItem("walkstick", function (source, item)
+QBCore.Functions.CreateUseableItem("walkstick", function(source, item)
     TriggerClientEvent("items:walkstick:toggle", source)
 end)
