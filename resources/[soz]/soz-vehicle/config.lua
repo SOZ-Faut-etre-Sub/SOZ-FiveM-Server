@@ -260,7 +260,7 @@ Garages = {
         type = "public", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
     },
-    ["private:air:vespucci"] = {
+    ["marina_air"] = {
         label = "Vespucci Air Parking",
         blipcoord = vector4(-713.87, -1416.37, 4.0, 4.18),
         showBlip = true,
@@ -269,13 +269,13 @@ Garages = {
         type = "private", -- public, job, gang, depot
         vehicle = "air", -- car, air, sea
     },
-    ["public:air:sandy"] = {
+    ["sandy_air"] = {
         label = "Sandy Shores Air Parking",
         blipcoord = vector4(1760.42, 3231.41, 41.25, 191.13),
         showBlip = true,
-        blipName = "Parking Aérien Public",
+        blipName = "Parking Aérien Privé",
         blipNumber = 360,
-        type = "public", -- public, job, gang, depot
+        type = "private", -- public, job, gang, depot
         vehicle = "air", -- car, air, sea
     },
     ["fourriere"] = {
@@ -297,7 +297,7 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "lspd",
     },
-    ["lspd:air"] = {
+    ["lspd_air"] = {
         label = "LSPD",
         blipcoord = vector4(585.1, 2.81, 102.23, 211.84),
         showBlip = false,
@@ -317,7 +317,7 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "lsmc",
     },
-    ["lsmc:air"] = {
+    ["lsmc_air"] = {
         label = "LSMC",
         blipcoord = vector4(311.98, -1451.68, 45.51, 319.69),
         showBlip = false,
@@ -337,7 +337,7 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "bcso",
     },
-    ["bcso:air"] = {
+    ["bcso_air"] = {
         label = "BCSO",
         blipcoord = vector4(1814.08, 3724.05, 33.67, 26.91),
         showBlip = false,
@@ -395,6 +395,16 @@ Garages = {
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
+        job = "news",
+    },
+    ["news_air"] = {
+        label = "Twitch News",
+        blipcoord = vector4(-592.72, -928.48, 36.83, 93.08),
+        showBlip = false,
+        blipName = "Twitch News",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
         job = "news",
     },
     ["mtp"] = {
