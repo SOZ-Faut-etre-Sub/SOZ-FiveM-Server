@@ -92,3 +92,31 @@ end
 function GetTerminal(identifier)
     return Terminals[identifier]
 end
+
+--
+-- METRICS
+--
+exports("GetUpwMetrics", function()
+    local metrics = {}
+
+    -- Pollution Level
+    metrics["pollution-level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
+
+    -- Blackout Level
+    metrics["blackout-level"] = {{identifier = "blackout", value = GetBlackoutLevel()}}
+
+    -- Facilities
+    for type_, data in pairs(facilities) do
+        for identifier, facility in pairs(data.arr) do
+            local metric = {["identifier"] = identifier, value = facility.capacity}
+
+            if type(metrics[type_]) == "table" then
+                table.insert(metrics[type_], metric)
+            else
+                metrics[type_] = {metric}
+            end
+        end
+    end
+
+    return metrics
+end)

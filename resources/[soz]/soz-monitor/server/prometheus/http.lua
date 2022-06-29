@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(1000)
 
     while true do
-        local newMetrics = {GetBankMetrics(), GetPlayerMetrics(), GetInventoryMetrics()}
+        local newMetrics = {GetBankMetrics(), GetPlayerMetrics(), GetInventoryMetrics(), GetUpwMetrics()}
         metrics = table.concat(newMetrics, "\n")
 
         Citizen.Wait(3000)

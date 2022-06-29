@@ -9,6 +9,8 @@ function PollutionManager:new(identifier, options)
 
     setmetatable(self, {__index = PollutionManager})
 
+    TriggerEvent("soz-upw:server:onPollutionManagerReady")
+
     return self
 end
 
@@ -17,6 +19,8 @@ function PollutionManager:AddPollution(units)
 end
 
 function PollutionManager:UpdatePollution()
+    local previousPollutionLevel = self:GetPollutionLevel()
+
     -- Handle pollution buffer
     local pollutionThisTick = math.ceil(QBCore.Shared.Sum(self.buffer))
     table.insert(self.units, pollutionThisTick)
@@ -43,7 +47,11 @@ function PollutionManager:UpdatePollution()
 
     self.currentPollution = pastUnits / totalMaxUnits
 
-    exports["soz-monitor"]:Log("INFO", "Pollution level updated: " .. self.currentPollution * 100 .. "%")
+    local newPollutionLevel = self:GetPollutionLevel()
+    if newPollutionLevel ~= previousPollutionLevel then
+        TriggerEvent("soz-upw:server:onPollutionLevelChanged", newPollutionLevel, previousPollutionLevel)
+        TriggerClientEvent("soz-upw:client:onPollutionLevelChanged", -1, newPollutionLevel, previousPollutionLevel)
+    end
 
     -- Reset buffer
     self.buffer = {}
@@ -76,6 +84,10 @@ function PollutionManager:StartPollutionLoop()
 end
 
 function PollutionManager:GetPollutionLevel()
+    -- Force Neutral pollution for now
+    return QBCore.Shared.Pollution.Level.Neutral
+
+    --[[
     local currentPollution = self.currentPollution * 100
 
     if currentPollution >= 100 then
@@ -87,4 +99,5 @@ function PollutionManager:GetPollutionLevel()
             return level
         end
     end
+    ]]
 end
