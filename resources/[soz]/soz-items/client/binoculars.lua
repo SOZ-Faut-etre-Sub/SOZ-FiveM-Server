@@ -1,8 +1,5 @@
 --- Copy pasta from the camera script
-
-local binocularsConfig = {
-    enabled = false
-}
+local binocularsConfig = {enabled = false}
 
 local fov_max = 70.0
 local fov_min = 5.0
@@ -88,7 +85,7 @@ local createCameraThread = function()
         TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_BINOCULARS", 0, 1)
         PlayAmbientSpeech1(GetPlayerPed(-1), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
 
-        --exports["soz-hud"]:EnableTwitchNewsOverlay()
+        -- exports["soz-hud"]:EnableTwitchNewsOverlay()
         while binocularsConfig.enabled do
 
             SetEntityHeading(player, new_z)
@@ -126,7 +123,7 @@ local createCameraThread = function()
 
             Wait(1)
         end
-        --exports["soz-hud"]:DisableTwitchNewsOverlay()
+        -- exports["soz-hud"]:DisableTwitchNewsOverlay()
 
         ClearPedTasks(GetPlayerPed(-1))
         RenderScriptCams(false, false, 0, 1, 0)
