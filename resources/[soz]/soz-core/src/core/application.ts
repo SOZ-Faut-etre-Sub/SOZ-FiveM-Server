@@ -22,7 +22,8 @@ export class Application {
     @Inject(Logger)
     private logger: Logger;
 
-    static async create(...modules: any[]): Promise<Application> {
+    static async create(providerTarget: any, ...modules: any[]): Promise<Application> {
+        Container.bind(providerTarget).to(providerTarget).inSingletonScope();
         const app = Container.get(Application);
 
         for (const module of modules) {
