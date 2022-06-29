@@ -79,7 +79,14 @@ local function SpawnJobZones()
         heading = 70.0,
         minZ = 140.0,
         maxZ = 143.0,
-    }, {options = SozJobCore.Functions.GetBossShopActions("food", "food:client:bossShop"), distance = 2.5})
+    }, {
+        options = SozJobCore.Functions.GetBossShopActions("food", "food:client:bossShop"),
+        distance = 2.5,
+        job = "food",
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+    })
 
     -- CRAFTING
     CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
@@ -94,6 +101,10 @@ local function SpawnJobZones()
                 color = "food",
                 event = "jobs:client:food:OpenCraftingMenu",
                 label = "Cuisiner",
+                job = "food",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
             },
         },
     })
@@ -115,6 +126,10 @@ local function SpawnJobZones()
                 color = "food",
                 event = "jobs:client:food-harvest-milk",
                 label = "Récupérer",
+                job = "food",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
             },
         },
     })
@@ -125,7 +140,16 @@ local function SpawnJobZones()
         maxZ = 142.5,
     }, {
         options = {
-            {icon = "c:food/echanger.png", color = "food", event = "jobs:client:food-process-milk", label = "Echanger"},
+            {
+                icon = "c:food/echanger.png",
+                color = "food",
+                event = "jobs:client:food-process-milk",
+                label = "Echanger",
+                job = "food",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+            },
         },
     })
 end
