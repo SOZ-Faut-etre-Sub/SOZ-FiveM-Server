@@ -1,3 +1,5 @@
+QBCore = exports["qb-core"]:GetCoreObject()
+
 Config = {}
 
 Config.AllowedJobInteraction = {"lsmc"}
@@ -165,4 +167,10 @@ Config.BossShop = {
         [9] = {name = "tissue", metadata = {}, price = 5, amount = 1},
         [10] = {name = "weapon_fireextinguisher", metadata = {ammo = 50}, price = 5, amount = 1},
     },
+}
+
+Config.DiseaseRange = {
+    [QBCore.Shared.Pollution.Level.Low] = 2000,
+    [QBCore.Shared.Pollution.Level.Neutral] = 1000,
+    [QBCore.Shared.Pollution.Level.High] = 500,
 }

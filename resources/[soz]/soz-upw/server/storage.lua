@@ -44,7 +44,11 @@ local function GetTerminalCapacities(scope)
     return capacity, maxCapacity
 end
 
-local function GetBlackoutLevel()
+function GetBlackoutLevel()
+    -- Force to Blackout level Zero for now
+    return QBCore.Shared.Blackout.Level.Zero
+
+    --[[
     local capacity, maxCapacity = GetTerminalCapacities("default")
     local percent = math.ceil(capacity / maxCapacity * 100)
 
@@ -57,6 +61,7 @@ local function GetBlackoutLevel()
             return level
         end
     end
+    ]]
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
@@ -90,13 +95,13 @@ function StartConsumptionLoop()
             end
 
             local newBlackoutLevel = GetBlackoutLevel()
-            exports["soz-monitor"]:Log("INFO", "Blackout level updated: " .. newBlackoutLevel)
 
             -- Blackout level has changed
             if currentBlackoutLevel ~= newBlackoutLevel then
+                local previousBlackoutLevel = currentBlackoutLevel
                 currentBlackoutLevel = newBlackoutLevel
-                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", currentBlackoutLevel)
-                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, currentBlackoutLevel)
+                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", newBlackoutLevel, previousBlackoutLevel)
+                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, newBlackoutLevel, previousBlackoutLevel)
             end
 
             Citizen.Wait(Config.Production.Tick)

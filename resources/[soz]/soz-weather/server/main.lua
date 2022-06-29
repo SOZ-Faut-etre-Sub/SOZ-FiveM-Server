@@ -1,4 +1,5 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+local weatherLoopRunning = false
 
 --- Setup global state values
 GlobalState.blackout = GlobalState.blackout or false
@@ -32,6 +33,71 @@ function AdvanceTime()
     end
 
     GlobalState.time = {currentHour, currentMinute, currentSecond}
+end
+
+---Apply multiplier to forecast weight based on Pollution level
+function WeightForecast(forecast)
+    local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
+
+    -- NEUTRAL pollution : no effects on weather
+    if pollutionLevel == QBCore.Shared.Pollution.Level.Neutral then
+        return forecast
+    end
+
+    -- HIGH pollution : Smog and fog
+    if pollutionLevel == QBCore.Shared.Pollution.Level.High then
+        local weathers = {
+            "extrasunny",
+            "clear",
+            "neutral",
+            "smog",
+            "foggy",
+            "overcast",
+            "clouds",
+            "clearing",
+            "rain",
+            "thunder",
+            "snow",
+            "blizzard",
+            "snowlight",
+            "xmas",
+            "halloween",
+        }
+
+        local awfulForecast = {}
+
+        for _, weather in ipairs(weathers) do
+            awfulForecast[weather] = {["smog"] = 80, ["foggy"] = 20}
+        end
+
+        return awfulForecast
+    end
+
+    -- LOW Pollution : good weather is boosted
+    if pollutionLevel == QBCore.Shared.Pollution.Level.Low then
+        local multipliers = {["extrasunny"] = 2, ["smog"] = 0, ["foggy"] = 0, ["any"] = 0.75}
+
+        local weightedForecast = {}
+        for weather, transitions in pairs(forecast) do
+            if type(weightedForecast[weather]) ~= "table" then
+                weightedForecast[weather] = {}
+            end
+
+            for nextWeather, weight in pairs(transitions) do
+                local multiplier = multipliers["any"] or 1
+
+                if multipliers[nextWeather] then
+                    multiplier = multipliers[nextWeather]
+                end
+
+                weightedForecast[weather][nextWeather] = math.ceil(weight * multiplier)
+            end
+        end
+
+        return weightedForecast
+    end
+
+    return forecast -- fallback
 end
 
 function GetNextWeather(Weather, Forecast)
@@ -117,16 +183,24 @@ CreateThread(function()
     end
 end)
 
-CreateThread(function()
-    -- Change this to switch between seasons
-    Forecast = SummerForecast
-
-    while true do
-        -- Change weather in 10 to 15 minutes
-        Wait(math.random(10 * 60 * 1000, 15 * 60 * 1000))
-
-        if weatherUpdate then
-            GlobalState.weather = GetNextWeather(GlobalState.weather, Forecast)
-        end
+AddEventHandler("soz-upw:server:onPollutionManagerReady", function()
+    if weatherLoopRunning then
+        return
     end
+
+    weatherLoopRunning = true
+
+    CreateThread(function()
+        -- Change this to switch between seasons
+        Forecast = WeightForecast(SummerForecast)
+
+        while weatherLoopRunning do
+            -- Change weather in 10 to 15 minutes
+            Wait(math.random(10 * 60 * 1000, 15 * 60 * 1000))
+
+            if weatherUpdate then
+                GlobalState.weather = GetNextWeather(GlobalState.weather, Forecast)
+            end
+        end
+    end)
 end)

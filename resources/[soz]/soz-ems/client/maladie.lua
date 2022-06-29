@@ -105,8 +105,13 @@ end)
 CreateThread(function()
     while true do
         Wait(1000 * 60 * 15)
+
         if LocalPlayer.state.isLoggedIn then
-            Random = math.random(1, 1000)
+            local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
+            local max = Config.DiseaseRange[pollutionLevel] or 1000
+
+            Random = math.random(1, max)
+
             if not IsDead and not PlayerData.metadata.godmode then
                 -- maladie
                 if Random == 1 then
