@@ -1410,8 +1410,7 @@ PlacesEntreprise = {
 for indexpriv, prive in pairs(Zonesprives) do
     prive:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
         if isPointInside then
-            --exports["qb-target"]:AddTargetModel(346573975, {
-            exports["qb-target"]:AddTargetModel(GetHashKey("soz_prop_paystation"), {
+            exports["qb-target"]:AddTargetModel(346573975, {
                 options = {
                     {
                         type = "client",

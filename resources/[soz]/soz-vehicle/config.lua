@@ -55,7 +55,6 @@ Config.Shops = {
         ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
         ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
     },
-    ["helico"] = {}
 }
 
 Config.RefillCost = 50
