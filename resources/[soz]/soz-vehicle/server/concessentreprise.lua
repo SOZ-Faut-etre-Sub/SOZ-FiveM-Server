@@ -49,7 +49,7 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
 
     local qbVehicle = Vehicles[Player.PlayerData.job.id][vehicle]
     local price = qbVehicle.price
-    local category = qbVehicle.category or 'car'
+    local category = qbVehicle.category or "car"
 
     if Player.Functions.RemoveMoney("money", price, "vehicle-bought-in-showroom") then
         MySQL.Async.insert(
