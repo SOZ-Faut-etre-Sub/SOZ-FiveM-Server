@@ -100,10 +100,10 @@ exports("GetUpwMetrics", function()
     local metrics = {}
 
     -- Pollution Level
-    metrics["pollution-level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
+    metrics["pollution_level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
 
     -- Blackout Level
-    metrics["blackout-level"] = {{identifier = "blackout", value = GetBlackoutLevel()}}
+    metrics["blackout_level"] = {{identifier = "blackout", value = GetBlackoutLevel()}}
 
     -- Facilities
     for type_, data in pairs(facilities) do
