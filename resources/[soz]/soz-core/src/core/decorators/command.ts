@@ -1,9 +1,10 @@
+import { SozRole } from '../permissions';
 import { setMethodMetadata } from './reflect';
 
 export type CommandMetadata = {
     name: string;
     description: string;
-    role?: 'admin' | 'staff' | 'helper' | 'user';
+    role?: SozRole;
 };
 
 export const CommandMetadataKey = 'soz_core.decorator.command';

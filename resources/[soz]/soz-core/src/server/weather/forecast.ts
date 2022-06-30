@@ -1,6 +1,6 @@
 import { Forecast } from '../../shared/weather';
 
-export const SpringAutumnForecast: Forecast = {
+export const SpringAutumn: Forecast = {
     EXTRASUNNY: { CLEARING: 15, OVERCAST: 15 },
     CLEAR: { CLEARING: 15, OVERCAST: 15, SMOG: 100, FOGGY: 100 },
     NEUTRAL: {},
@@ -55,4 +55,23 @@ export const Summer: Forecast = {
     XMAS: {},
     HALLOWEEN: {},
     LIGHT_SNOW: {},
+};
+
+export const Polluted: Forecast = {
+    EXTRASUNNY: { SMOG: 80, FOGGY: 20 },
+    CLEAR: { SMOG: 80, FOGGY: 20 },
+    NEUTRAL: { SMOG: 80, FOGGY: 20 },
+    SMOG: { SMOG: 80, FOGGY: 20 },
+    FOGGY: { SMOG: 80, FOGGY: 20 },
+    OVERCAST: { SMOG: 80, FOGGY: 20 },
+    CLOUDS: { SMOG: 80, FOGGY: 20 },
+    CLEARING: { SMOG: 80, FOGGY: 20 },
+    RAIN: { SMOG: 80, FOGGY: 20 },
+    THUNDER: { SMOG: 80, FOGGY: 20 },
+    SNOW: { SMOG: 80, FOGGY: 20 },
+    BLIZZARD: { SMOG: 80, FOGGY: 20 },
+    SNOWLIGHT: { SMOG: 80, FOGGY: 20 },
+    XMAS: { SMOG: 80, FOGGY: 20 },
+    HALLOWEEN: { SMOG: 80, FOGGY: 20 },
+    LIGHT_SNOW: { SMOG: 80, FOGGY: 20 },
 };

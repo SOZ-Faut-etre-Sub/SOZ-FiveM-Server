@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '../decorators/injectable';
 import { CommandLoader } from './command.loader';
+import { ExportLoader } from './exports.loader';
 import { ProviderLoader } from './provider.loader';
 import { RpcLoader } from './rpc.loader';
 
