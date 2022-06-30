@@ -160,11 +160,6 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
-    local price = itemSpec.resellPrice
-    if type(itemSpec.resellPrice) == "table" then
-        price = itemSpec.resellPrice[item.metadata.tier] or 1
-    end
-
-    TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, price * amount)
+    TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, itemSpec.resellPrice * amount)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
 end)
