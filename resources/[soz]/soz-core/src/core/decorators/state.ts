@@ -1,4 +1,4 @@
-import { addMethodMetadata, setMethodMetadata } from './reflect';
+import { addMethodMetadata } from './reflect';
 
 export type StateBagHandlerMetadata = {
     key: string;
