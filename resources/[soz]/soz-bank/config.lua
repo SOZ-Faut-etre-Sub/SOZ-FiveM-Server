@@ -29,7 +29,6 @@ Config.FarmAccountMoney = {
     ["farm_taxi"] = {money = 100000, marked_money = 0},
     ["farm_food"] = {money = 100000, marked_money = 0},
     ["farm_upw"] = {money = 100000, marked_money = 0},
-    ["farm_pawl"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
@@ -110,13 +109,6 @@ Config.SafeStorages = {
         owner = "upw",
         position = vector3(0.0, 0.0, 0.0),
         size = vec2(1.0, 1.0),
-        heading = 0,
-    },
-    ["safe_pawl"] = {
-        label = "Coffre Pipe And Wooden Leg",
-        owner = "pawl",
-        position = vector3(0, 0, 0),
-        size = vec2(0, 0),
         heading = 0,
     },
 }

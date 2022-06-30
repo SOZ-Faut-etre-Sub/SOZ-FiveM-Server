@@ -16,10 +16,6 @@ Config.StorageCapacity = {
     --- houses
     ["house_stash"] = {slot = 10, weight = 100000},
     ["house_fridge"] = {slot = 10, weight = 100000},
-    --- Jobs
-    ["log_storage"] = {slot = 10, weight = 20000000},
-    ["plank_storage"] = {slot = 10, weight = 100000},
-    ["sawdust_storage"] = {slot = 10, weight = 100000},
 }
 
 Config.ErrorMessage = {

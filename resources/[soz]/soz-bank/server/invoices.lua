@@ -276,12 +276,8 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
         return
     end
 
-    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "paper", 1) then
-        if CreateInvoice(Player, Target, Player.PlayerData.job.id, Target.PlayerData.charinfo.account, label, tonumber(amount), kind) then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
-        end
-    else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de papier", "error")
+    if CreateInvoice(Player, Target, Player.PlayerData.job.id, Target.PlayerData.charinfo.account, label, tonumber(amount), kind) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
     end
 end)
 

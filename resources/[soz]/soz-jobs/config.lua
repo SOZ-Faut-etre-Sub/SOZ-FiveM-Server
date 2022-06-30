@@ -18,7 +18,6 @@ SozJobCore.JobType = {
     CashTransfer = "cash-transfer",
     Bennys = "bennys",
     Upw = "upw",
-    Pawl = "pawl",
     Debug = "debug",
 }
 
@@ -307,30 +306,6 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
-        },
-    },
-    [SozJobCore.JobType.Pawl] = {
-        label = "Pipe And Wooden Leg",
-        platePrefix = "PAWL",
-        grades = {},
-        menuCallback = "pawl:client:OpenSocietyMenu",
-        permissions = {
-            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
-            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
-            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
-            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
-            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
-            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
-            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
-        },
-        resell = {
-            primary = {
-                coords = vector4(-272.22, -2496.57, 7.3, 186.72), -- Must be vec4
-                ZoneName = "Resell:LSPort:Pawl",
-                SourceAccount = "farm_pawl",
-                TargetAccount = "safe_pawl",
-            },
-            secondary = {ZoneName = "Resell:Zkea", SourceAccount = "farm_pawl", TargetAccount = "safe_pawl"},
         },
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},

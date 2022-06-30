@@ -96,9 +96,6 @@ body {
 .target-item.fbi {
   --item-color: 207;
 }
-.target-item.pawl {
-  --item-color: 15;
-}
 
 .target-item .tooltip {
   position: absolute;
