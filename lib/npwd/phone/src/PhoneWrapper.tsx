@@ -18,7 +18,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
       <div className={cn('transition-any ease-in-out duration-500', {
           'translate-y-0': visibility,
           'translate-y-[38rem]': !visibility && notifVisibility,
-          'translate-y-full': !visibility && !notifVisibility,
+          'translate-y-[1000px]': !visibility && !notifVisibility,
       })}>
       <div className="PhoneWrapper" onClick={() => {
           if (isCameraPath && isCameraPath.isExact) {
