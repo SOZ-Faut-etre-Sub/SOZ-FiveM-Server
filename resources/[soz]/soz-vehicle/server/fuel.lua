@@ -1,6 +1,5 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local StationsList = {}
-local playerFueling = {}
 
 --- Main
 MySQL.ready(function()
