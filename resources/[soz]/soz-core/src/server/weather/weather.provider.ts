@@ -1,16 +1,24 @@
 import { Command } from '../../core/decorators/command';
 import { Once } from '../../core/decorators/event';
+import { Exportable } from '../../core/decorators/exports';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { Forecast, Time, Weather } from '../../shared/weather';
-import { Summer } from './forecast';
+import { Pollution, PollutionLevel } from '../pollution';
+import { Polluted, Summer } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
 @Provider()
 export class WeatherProvider {
     private forecast: Forecast = Summer;
+
+    private shouldUpdateWeather = true;
+
+    @Inject(Pollution)
+    private pollution: Pollution;
 
     @Once()
     onStart(): void {
@@ -47,7 +55,33 @@ export class WeatherProvider {
     }
 
     private getNextForecast(currentWeather: Weather): Weather {
-        const transitions = this.forecast[currentWeather];
+        let currentForecast = this.forecast;
+        const pollutionLevel = this.pollution.getPollutionLevel();
+
+        if (pollutionLevel === PollutionLevel.High) {
+            currentForecast = Polluted;
+        } else if (pollutionLevel === PollutionLevel.Low) {
+            const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 2, SMOG: 0, FOGGY: 0 };
+            const any = 0.75;
+
+            for (const weather of Object.keys(currentForecast)) {
+                for (const nextWeather of Object.keys(currentForecast[weather])) {
+                    const multiplier = multipliers[nextWeather] || any;
+
+                    currentForecast[weather][nextWeather] = Math.round(
+                        multiplier * currentForecast[weather][nextWeather]
+                    );
+                }
+            }
+        }
+
+        let transitions = currentForecast[currentWeather];
+
+        if (!transitions) {
+            console.error('no transitions for, bad weather ' + currentWeather);
+
+            transitions = {};
+        }
 
         if (Object.keys(transitions).length === 0) {
             return 'OVERCAST';
@@ -76,7 +110,14 @@ export class WeatherProvider {
     async updateWeather() {
         await wait((Math.random() * 5 + 10) * 60 * 1000);
 
-        GlobalState.weather = this.getNextForecast(GlobalState.weather || ('OVERCAST' as Weather));
+        if (this.shouldUpdateWeather) {
+            GlobalState.weather = this.getNextForecast(GlobalState.weather || 'OVERCAST');
+        }
+    }
+
+    @Exportable('setWeatherUpdate')
+    setWeatherUpdate(update: boolean): void {
+        this.shouldUpdateWeather = update;
     }
 
     @Command('weather', { role: 'admin' })
@@ -84,6 +125,8 @@ export class WeatherProvider {
         const weatherString = weather.toUpperCase() as Weather;
 
         if (!this.forecast[weatherString]) {
+            console.error('bad weather ' + weatherString);
+
             return;
         }
 

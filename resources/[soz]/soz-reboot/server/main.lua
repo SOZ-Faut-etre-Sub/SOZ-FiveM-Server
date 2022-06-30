@@ -44,7 +44,7 @@ local reboot = function()
 end
 
 local thunder = function()
-    exports["soz-weather"]:setWeatherUpdate(false)
+    exports["soz-core"]:setWeatherUpdate(false)
 
     GlobalState.weather = "clearing"
     Wait(5 * 60 * 1000)
