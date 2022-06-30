@@ -1,94 +1,133 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
-local stations = {}
+local StationsList = {}
 local playerFueling = {}
+
+--- Main
+MySQL.ready(function()
+    local stations = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage")
+
+    for _, station in pairs(stations) do
+        StationsList[station.id] = FuelStation:new(
+            station.id,
+            station.station,
+            station.fuel,
+            station.type,
+            station.owner,
+            station.stock,
+            station.position,
+            station.model,
+            station.zone
+        )
+
+        StationsList[station.id]:SpawnStation()
+    end
+end)
 
 --- Functions
 local function saveStation(id)
     MySQL.Async.execute("UPDATE fuel_storage SET stock = :stock WHERE id = :id", {
         ["id"] = id,
-        ["stock"] = stations[id].stock,
+        ["stock"] = StationsList[id].stock,
     })
 end
 
-local function pay(price, source)
-    local xPlayer = QBCore.Functions.GetPlayer(source)
-    local amount = math.floor(price + 0.5)
-    if price > 0 then
-        xPlayer.Functions.RemoveMoney("money", amount)
-    end
-end
-
-MySQL.ready(function()
-    local data = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage")
-
-    for _, station in pairs(data) do
-        stations[station.id] = {
-            id = station.id,
-            station = station.station,
-            fuel = station.fuel,
-            type = station.type,
-            owner = station.owner,
-            stock = station.stock,
-            position = json.decode(station.position),
-            model = station.model,
-            zone = json.decode(station.zone),
-        }
-
-        if station.type == "private" then
-            local stationCoord = stations[station.id].position
-
-            exports["soz-utils"]:CreateObject(station.model, stationCoord.x, stationCoord.y, stationCoord.z, stationCoord.w, 8000.0, true)
-        end
-    end
-end)
-
 --- Callbacks
-QBCore.Functions.CreateCallback("soz-fuel:server:getStations", function(source, cb)
-    cb(stations)
+QBCore.Functions.CreateCallback("fuel:server:GetStations", function(source, cb)
+    cb(StationsList)
 end)
 
-QBCore.Functions.CreateCallback("soz-fuel:server:getfuelstock", function(source, cb, id)
-    cb(stations[id].stock or 0)
+QBCore.Functions.CreateCallback("fuel:server:GetStation", function(source, cb, id)
+    cb(StationsList[id])
+end)
+
+QBCore.Functions.CreateCallback("fuel:server:RequestRefuel", function(source, cb, id, maxRefueling)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local station = StationsList[id]
+    if station == nil then
+        cb(0)
+        return
+    end
+
+    if not station:HasSufficientStock() then
+        cb(0)
+        return
+    end
+
+    station:RequestRefueling(Player.PlayerData.citizenid, maxRefueling)
+    cb(station:GetAvailableStock())
+end)
+
+QBCore.Functions.CreateCallback("fuel:server:FinishRefuel", function(source, cb, id, refueling, netVehicle)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local station = StationsList[id]
+    if station == nil then
+        cb(false)
+        return
+    end
+
+    local vehicle = NetworkGetEntityFromNetworkId(netVehicle)
+    if vehicle == 0 then
+        cb(false)
+        return
+    end
+
+    if not station:VehicleAccessFuel(vehicle) then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas accès à ce type de carburant.", "error")
+        cb(false)
+        return
+    end
+
+    refueling = math.floor(refueling)
+    if station:GetRefueling(Player.PlayerData.citizenid) < refueling then
+        cb(false)
+        return
+    end
+
+    local cost = math.ceil((refueling * station:GetPrice()))
+
+    if Player.Functions.RemoveMoney("money", cost) then
+        Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + refueling
+        station:FinishedRefueling(Player.PlayerData.citizenid, refueling)
+        saveStation(id)
+
+        if station:IsPublic() then
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous venez de faire le plein de votre véhicule pour ~r~$" .. cost .. "~s~ (~g~" .. refueling .. "L~s~).")
+        elseif station:IsPrivate() then
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous venez de faire le plein de votre véhicule (~g~" .. refueling .. "L~s~).")
+        end
+
+        cb(true)
+    else
+        cb(false)
+    end
 end)
 
 --- Events
-RegisterNetEvent("soz-fuel:server:getStationStock", function(cb, id)
-    cb(stations[id].stock or 0)
+RegisterNetEvent("fuel:server:GetStation", function(cb, id)
+    cb(StationsList[id])
 end)
 
-RegisterNetEvent("soz-fuel:server:addStationStock", function(id, amount)
-    stations[id].stock = stations[id].stock + tonumber(amount)
-    if stations[id].stock > 2000 then
-        stations[id].stock = 2000
+RegisterNetEvent("fuel:server:AddStationStock", function(id, amount)
+    local station = StationsList[id]
+    if station == nil then
+        return
+    end
+
+    station.stock = station.stock + tonumber(amount)
+    if station.stock > 2000 then
+        station.stock = 2000
     end
     saveStation(id)
-end)
-
-RegisterNetEvent("soz-fuel:server:setTempFuel", function(id)
-    stations[id].stock = stations[id].stock - 100
-    if stations[id].stock < 0 then
-        stations[id].stock = 0
-    end
-    saveStation(id)
-end)
-
-RegisterNetEvent("soz-fuel:server:setFinalFuel", function(id, currentFuelAdd)
-    stations[id].stock = stations[id].stock + tonumber(currentFuelAdd)
-    saveStation(id)
-end)
-
-RegisterNetEvent("soz-fuel:server:BeginFueling", function(currentFuel, playerId)
-    playerFueling[playerId] = currentFuel
-end)
-
-RegisterNetEvent("soz-fuel:server:SetFuel", function(entity, newFuel, serverIDcar, stationType, playerId)
-    TriggerClientEvent("soz-fuel:client:SetFuel", serverIDcar, entity, newFuel)
-
-    if stationType ~= "private" then
-        local price = ((newFuel - playerFueling[playerId]) / 100) * Config.RefillCost
-        pay(tonumber(math.ceil(price)), playerId)
-        playerFueling[playerId] = nil;
-    end
 end)
 
 --- Items
@@ -96,16 +135,46 @@ QBCore.Functions.CreateUseableItem("essence_jerrycan", function(source, item)
     TriggerClientEvent("soz-fuel:client:onJerrycanEssence", source)
 end)
 
+QBCore.Functions.CreateCallback("fuel:server:useJerrycanEssence", function(source, cb, netVehicle)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local vehicle = NetworkGetEntityFromNetworkId(netVehicle)
+    if vehicle == 0 then
+        cb(false)
+        return
+    end
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence_jerrycan", 1) then
+        Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + Config.JerryCanRefill
+    end
+
+    cb(true)
+end)
+
 QBCore.Functions.CreateUseableItem("kerosene_jerrycan", function(source, item)
     TriggerClientEvent("soz-fuel:client:onJerrycanKerosene", source)
 end)
 
-RegisterNetEvent("soz-fuel:server:removeJerrycanEssence", function()
+QBCore.Functions.CreateCallback("fuel:server:useJerrycanKerosene", function(source, cb, netVehicle)
     local Player = QBCore.Functions.GetPlayer(source)
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence_jerrycan", 1, nil)
-end)
+    if Player == nil then
+        cb(false)
+        return
+    end
 
-RegisterNetEvent("soz-fuel:server:removeJerrycanKerosene", function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene_jerrycan", 1, nil)
+    local vehicle = NetworkGetEntityFromNetworkId(netVehicle)
+    if vehicle == 0 then
+        cb(false)
+        return
+    end
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene_jerrycan", 1) then
+        Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + Config.JerryCanRefill
+    end
+
+    cb(true)
 end)
