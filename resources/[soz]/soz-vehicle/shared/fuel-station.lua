@@ -113,12 +113,12 @@ function FuelStation:VehicleAccessFuel(vehicle)
 end
 
 function FuelStation:GetRefuelCapacity()
-    if self.fuel <= 0 then
+    if self.stock <= 0 then
         return 0
-    elseif self.fuel >= 100 then
+    elseif self.stock >= 100 then
         return 100
     else
-        return self.fuel
+        return self.stock
     end
 end
 
@@ -134,7 +134,7 @@ end
 --- Utils
 ---
 function FuelStation:SpawnStation()
-    if self:IsPrivate() then
+    if self:IsPrivate() or (self:IsPublic() and self.fuel == "kerosene") then
         exports["soz-utils"]:CreateObject(self.model, self.position.x, self.position.y, self.position.z, self.position.w, 8000.0, true)
     end
 end
