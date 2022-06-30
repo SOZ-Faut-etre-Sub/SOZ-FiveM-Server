@@ -100,6 +100,17 @@ Citizen.CreateThread(function()
                             job = "oil",
                         },
                         {
+                            label = "Remplir la station",
+                            color = "oil",
+                            icon = "c:fuel/pistolet.png",
+                            event = "jobs:client:fueler:StartKeroseneStationRefill",
+                            canInteract = function()
+                                return PlayerData.job.onduty
+                            end,
+                            item = "kerosene",
+                            job = "oil",
+                        },
+                        {
                             label = "État de la station",
                             icon = "c:fuel/pistolet.png",
                             event = "fuel:client:GetFuelLevel",
