@@ -86,19 +86,6 @@ Zonesprives = {
         minZ = 28.7,
         maxZ = 32.7,
     }),
-    ["marina_air"] = BoxZone:Create(vector3(-729.75, -1448.64, 5.0), 73.2, 76.0, {
-        name = "marina_air",
-        heading = 320,
-        minZ = 4.0,
-        maxZ = 15.0,
-    }),
-    ["sandy_air"] = BoxZone:Create(vector3(1769.25, 3239.45, 41.73), 24.8, 26.4, {
-        name = "sandy_air",
-        heading = 13,
-        minZ = 40.73,
-        maxZ = 51.73,
-    }),
-
 }
 
 Zonespublic = {
@@ -119,6 +106,18 @@ Zonespublic = {
         heading = 330,
         minZ = 12.95,
         maxZ = 16.95,
+    }),
+    ["marina_air"] = BoxZone:Create(vector3(-729.75, -1448.64, 5.0), 73.2, 76.0, {
+        name = "marina_air",
+        heading = 320,
+        minZ = 4.0,
+        maxZ = 15.0,
+    }),
+    ["sandy_air"] = BoxZone:Create(vector3(1769.25, 3239.45, 41.73), 24.8, 26.4, {
+        name = "sandy_air",
+        heading = 13,
+        minZ = 40.73,
+        maxZ = 51.73,
     }),
 }
 
