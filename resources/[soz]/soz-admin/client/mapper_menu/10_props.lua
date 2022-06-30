@@ -64,7 +64,7 @@ propsMenu:AddSlider({
     value = nil,
     values = BuildJobList(),
     select = function(_, value)
-        if value and value.jobID ~= nill then
+        if value and value.jobID ~= nil then
             PropOption.job = value.jobID
         end
     end

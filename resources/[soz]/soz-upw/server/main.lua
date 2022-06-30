@@ -79,6 +79,58 @@ exports("saveUpw", function()
 end)
 
 --
+-- Add new facility from menu F10
+--
+local props = {
+    ["prop_gnome1"] = {
+        model = "prop_gnome1",
+        facility = "terminal",
+        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}, scope = "default"},
+    },
+    ["prop_gnome2"] = {
+        model = "prop_gnome2",
+        facility = "terminal",
+        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}, scope = "entreprise"},
+    },
+    ["prop_gnome3"] = {
+        model = "prop_gnome3",
+        facility = "inverter",
+        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}},
+    },
+}
+RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, job)
+    local propData = props[model]
+    if not propData then
+        error("Invalid prop : " .. model)
+    end
+
+    local facilityData = facilities[propData.facility]
+    if not facilityData then
+        error("Invalid facility : " .. propData.facility)
+    end
+
+    local identifier = string.format("%s%d", propData.facility, os.time())
+
+    local zone = {
+        coords = {x = coords.x, y = coords.y, z = coords.z},
+        heading = coords.w,
+        sx = propData.defaults.zone.sx,
+        sy = propData.defaults.zone.sy,
+        minZ = coords.z - propData.defaults.zone.deltaZ,
+        maxZ = coords.z + propData.defaults.zone.deltaZ,
+    }
+
+    local data = {type = propData.facility, zone = zone}
+    for key, value in pairs(propData.defaults) do
+        if key ~= "zone" then
+            data[key] = value
+        end
+    end
+
+    local facility = facilityData.class:new(identifier, data)
+end)
+
+--
 -- UTILS
 --
 function GetPlant(identifier)
