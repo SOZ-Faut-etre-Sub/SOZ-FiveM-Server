@@ -57,10 +57,7 @@ Config.Shops = {
     },
 }
 
-Config.RefillCost = 50
-
--- Fuel decor - No need to change this, just leave it.
-Config.FuelDecor = "_FUEL_LEVEL"
+Config.JerryCanRefill = 30.0
 
 Config.PumpModels = {
     [-2007231801] = true,
@@ -91,7 +88,7 @@ Config.Classes = {
     [12] = 0.6, -- Vans
     [13] = 0.0, -- Cycles
     [14] = 0.6, -- Boats
-    [15] = 0.0, -- Helicopters
+    [15] = 0.6, -- Helicopters
     [16] = 0.6, -- Planes
     [17] = 0.6, -- Service
     [18] = 0.6, -- Emergency
@@ -532,6 +529,15 @@ Garages = {
 }
 
 HouseGarages = {}
+
+Config.FuelStations = {
+    Blip = {Name = "Station essence", Sprite = 361, Color = 4, Alpha = 100},
+    Vehicle = {
+        ElectricModel = {
+            [GetHashKey("neon")] = true,
+        }
+    }
+}
 
 -- All chances are 0-1 <= so lower == less chance, higher == higher chance
 Config.RemoveLockpickNormal = 0.5 -- Chance to remove lockpick on fail
