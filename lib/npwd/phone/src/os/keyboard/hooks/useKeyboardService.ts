@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useSetRecoilState, useRecoilValue } from 'recoil';
 import { usePhone } from '@os/phone/hooks/usePhone';
+import {fetchNui} from "@utils/fetchNui";
+import {PhoneEvents} from "@typings/phone";
+import {isEnvBrowser} from "@utils/misc";
 
 const keyboardState = {
   ArrowRight: atom({
@@ -101,7 +104,6 @@ export const useKeyboardService = () => {
 
   useEffect(
     function registerDefaultHandlers() {
-      handlers.current.set('Escape', () => closePhone());
       handlers.current.set('Backspace', backspaceHandler);
     },
     [setEscape, setBackspace, history, backspaceHandler, closePhone],
