@@ -366,6 +366,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "bennys",
     },
+    ["bennys_air"] = {
+        label = "Bennys",
+        blipcoord = vector4(-147.64, -1282.43, 46.9, 356.22),
+        showBlip = false,
+        blipName = "Bennys",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+        job = "bennys",
+    },
     ["stonk"] = {
         label = "STONK Depository",
         blipcoord = vector4(-6.51, -662.66, 32.48, 185.00),
