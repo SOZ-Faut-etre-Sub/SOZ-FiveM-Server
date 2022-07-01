@@ -8,7 +8,8 @@ AddEventHandler("onResourceStart", function(resource)
     if resource == GetCurrentResourceName() then
         Wait(100)
         MySQL.Async.execute("UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL", {})
-        MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car'", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air'", {})
 
         MySQL.Async.execute("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'", {})
         MySQL.Async.execute("UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'", {})
@@ -162,11 +163,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     local args = {}
 
     local argsByType = {
-        ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
-        ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
+        ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
+        ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
         ["depot"] = {state = VehicleState.InPound},
-        ["entreprise"] = {state = VehicleState.InEntreprise, garage = garage},
-        ["housing"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage},
+        ["entreprise"] = {state = VehicleState.InEntreprise, garage = garage, category = category},
+        ["housing"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
     }
     local allArgs = argsByType[type_]
     if not allArgs then

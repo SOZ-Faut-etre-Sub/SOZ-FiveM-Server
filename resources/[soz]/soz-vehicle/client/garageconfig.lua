@@ -101,6 +101,24 @@ Zonespublic = {
         minZ = 5.0,
         maxZ = 9.0,
     }),
+    ["airport_air"] = BoxZone:Create(vector3(-1146.19, -2867.52, 13.95), 22.6, 95.2, {
+        name = "airport_air",
+        heading = 330,
+        minZ = 12.95,
+        maxZ = 16.95,
+    }),
+    ["marina_air"] = BoxZone:Create(vector3(-729.75, -1448.64, 5.0), 73.2, 76.0, {
+        name = "marina_air",
+        heading = 320,
+        minZ = 4.0,
+        maxZ = 15.0,
+    }),
+    ["sandy_air"] = BoxZone:Create(vector3(1769.25, 3239.45, 41.73), 24.8, 26.4, {
+        name = "sandy_air",
+        heading = 13,
+        minZ = 40.73,
+        maxZ = 51.73,
+    }),
 }
 
 Zonesfourriere = {
@@ -113,47 +131,29 @@ Zonesfourriere = {
 }
 
 Zonesentreprise = {
-    ["bennys"] = BoxZone:Create(vector3(-163.47, -1301.73, 31.3), 20, 18, {
-        name = "bennys_z",
-        heading = 90,
-        minZ = 30.3,
-        maxZ = 34.3,
-    }),
-    ["stonk"] = BoxZone:Create(vector3(-8.17, -671.17, 31.94), 30, 25, {
-        name = "stonk_z",
-        heading = 95,
-        minZ = 30.94,
-        maxZ = 34.94,
-    }),
-    ["lspd"] = BoxZone:Create(vector3(576.68, -11.22, 70.63), 42.4, 42.4, {
-        name = "lspd:garage:car",
-        heading = 350,
-        minZ = 69.63,
-        maxZ = 73.63,
-    }),
-    ["lsmc"] = BoxZone:Create(vector3(405.69, -1431.89, 29.45), 33.8, 25.2, {
-        name = "lsmc:garage:car",
-        heading = 320,
-        minZ = 28.12,
-        maxZ = 32.12,
-    }),
     ["bcso"] = BoxZone:Create(vector3(1858.13, 3677.16, 33.76), 8.4, 28.8, {
         name = "bcso:garage:car",
         heading = 30,
         minZ = 32.76,
         maxZ = 35.76,
     }),
-    ["news"] = BoxZone:Create(vector3(-538.68, -881.44, 25.29), 8.4, 17.2, {
-        name = "news_z",
-        heading = 0,
-        minZ = 24.29,
-        maxZ = 27.29,
+    ["bcso_air"] = BoxZone:Create(vector3(1804.82, 3720.44, 33.72), 18.4, 23.8, {
+        name = "bcso:garage:air",
+        heading = 30,
+        minZ = 32.72,
+        maxZ = 43.72,
     }),
-    ["garbage"] = BoxZone:Create(vector3(-596.9, -1575.05, 26.75), 16.6, 20.4, {
-        name = "garbage:garage:car",
-        heading = 355,
-        minZ = 25.75,
-        maxZ = 29.75,
+    ["bennys"] = BoxZone:Create(vector3(-163.47, -1301.73, 31.3), 20, 18, {
+        name = "bennys_z",
+        heading = 90,
+        minZ = 30.3,
+        maxZ = 34.3,
+    }),
+    ["bennys_air"] = BoxZone:Create(vector3(-149.04, -1273.76, 49.57), 34.0, 49.2, {
+        name = "bennys_air",
+        heading = 0,
+        minZ = 46.57,
+        maxZ = 55.57,
     }),
     ["food"] = BoxZone:Create(vector3(-1919.75, 2050.64, 140.64), 12, 25, {
         name = "food:garage:car",
@@ -161,11 +161,56 @@ Zonesentreprise = {
         minZ = 139.64,
         maxZ = 143.64,
     }),
+    ["garbage"] = BoxZone:Create(vector3(-596.9, -1575.05, 26.75), 16.6, 20.4, {
+        name = "garbage:garage:car",
+        heading = 355,
+        minZ = 25.75,
+        maxZ = 29.75,
+    }),
+    ["lspd"] = BoxZone:Create(vector3(576.68, -11.22, 70.63), 42.4, 42.4, {
+        name = "lspd:garage:car",
+        heading = 350,
+        minZ = 69.63,
+        maxZ = 73.63,
+    }),
+    ["lspd_air"] = BoxZone:Create(vector3(581.55, 10.81, 103.23), 21.2, 21.6, {
+        name = "lspd:garage:air",
+        heading = 359,
+        minZ = 102.23,
+        maxZ = 113.23,
+    }),
+    ["lsmc"] = BoxZone:Create(vector3(405.69, -1431.89, 29.45), 33.8, 25.2, {
+        name = "lsmc:garage:car",
+        heading = 320,
+        minZ = 28.12,
+        maxZ = 32.12,
+        job = "lsmc",
+    }),
+    ["lsmc_air"] = BoxZone:Create(vector3(306.27, -1457.44, 46.51), 20, 41.2,
+                                  {name = "lsmc:garage:air", heading = 320, minZ = 45.51, maxZ = 56.51, job = "lsmc"}),
     ["mtp"] = BoxZone:Create(vector3(-285.28, 6022.52, 31.49), 24.4, 19.6, {
         name = "mtp_z",
         heading = 315,
         minZ = 29.49,
         maxZ = 35.49,
+    }),
+    ["news"] = BoxZone:Create(vector3(-538.68, -881.44, 25.29), 8.4, 17.2, {
+        name = "news_z",
+        heading = 0,
+        minZ = 24.29,
+        maxZ = 27.29,
+    }),
+    ["news_air"] = BoxZone:Create(vector3(-581.88, -928.12, 36.83), 20.6, 30, {
+        name = "news_air",
+        heading = 0,
+        minZ = 35.83,
+        maxZ = 46.83,
+    }),
+    ["stonk"] = BoxZone:Create(vector3(-8.17, -671.17, 31.94), 30, 25, {
+        name = "stonk_z",
+        heading = 95,
+        minZ = 30.94,
+        maxZ = 34.94,
     }),
     ["taxi"] = BoxZone:Create(vector3(908.34, -174.12, 74.23), 17, 37.2, {
         name = "taxi_z",
@@ -908,6 +953,62 @@ PlacesPrives = {
         maxZ = 16.19,
         data = {indexGarage = "greatoceanp"},
     }),
+    ["marina_air1"] = BoxZone:Create(vector3(-724.67, -1444.06, 5.0), 15.2, 15.2,
+                                     {
+        name = "marina_air_slot1",
+        heading = 140,
+        minZ = 4.0,
+        maxZ = 15.0,
+        data = {indexGarage = "marina_air", capacity = 3},
+    }),
+    ["marina_air2"] = BoxZone:Create(vector3(-745.47, -1468.82, 5.0), 15.2, 15.2,
+                                     {
+        name = "marina_air_slot2",
+        heading = 320,
+        minZ = 4.0,
+        maxZ = 15.0,
+        data = {indexGarage = "marina_air", capacity = 3},
+    }),
+    ["marina_air3"] = BoxZone:Create(vector3(-746.75, -1432.73, 5.0), 19.2, 17.6,
+                                     {
+        name = "marina_air_slot3",
+        heading = 230,
+        minZ = 4.0,
+        maxZ = 15.0,
+        data = {indexGarage = "marina_air", capacity = 1},
+    }),
+    ["marina_air4"] = BoxZone:Create(vector3(-763.48, -1453.35, 5.0), 19.2, 17.6,
+                                     {
+        name = "marina_air_slot4",
+        heading = 230,
+        minZ = 4.0,
+        maxZ = 15.0,
+        data = {indexGarage = "marina_air", capacity = 1},
+    }),
+    ["marina_air5"] = BoxZone:Create(vector3(-721.41, -1473.46, 5.0), 19.2, 17.6,
+                                     {
+        name = "marina_air_slot5",
+        heading = 50,
+        minZ = 4.0,
+        maxZ = 15.0,
+        data = {indexGarage = "marina_air", capacity = 1},
+    }),
+    ["marina_air6"] = BoxZone:Create(vector3(-699.93, -1447.88, 5.0), 19.2, 17.6,
+                                     {
+        name = "marina_air_slot6",
+        heading = 50,
+        minZ = 4.0,
+        maxZ = 15.0,
+        data = {indexGarage = "marina_air", capacity = 1},
+    }),
+    ["sandy_air_slot1"] = BoxZone:Create(vector3(1770.23, 3239.53, 42.06), 11.6, 12.0,
+                                         {
+        name = "sandy_air_slot1",
+        heading = 15,
+        minZ = 41.06,
+        maxZ = 52.06,
+        data = {indexGarage = "sandy_air"},
+    }),
 }
 
 PlacesPublic = {
@@ -1071,6 +1172,30 @@ PlacesPublic = {
         maxZ = 34.23,
         data = {indexGarage = "haanparking"},
     }),
+    ["airport_air_slot1"] = BoxZone:Create(vector3(-1178.3, -2845.74, 13.95), 14.0, 13.8,
+                                           {
+        name = "airport_air_slot1",
+        heading = 330,
+        minZ = 12.95,
+        maxZ = 23.95,
+        data = {indexGarage = "airport_air"},
+    }),
+    ["airport_air_slot2"] = BoxZone:Create(vector3(-1145.94, -2864.44, 13.95), 13.8, 13.8,
+                                           {
+        name = "airport_air_slot2",
+        heading = 330,
+        minZ = 12.95,
+        maxZ = 23.95,
+        data = {indexGarage = "airport_air"},
+    }),
+    ["airport_air_slot3"] = BoxZone:Create(vector3(-1112.61, -2883.89, 13.95), 13.8, 13.8,
+                                           {
+        name = "airport_air_slot3",
+        heading = 330,
+        minZ = 12.95,
+        maxZ = 23.95,
+        data = {indexGarage = "airport_air"},
+    }),
 }
 
 PlacesFourriere = {
@@ -1132,6 +1257,14 @@ PlacesEntreprise = {
         minZ = 30.3,
         maxZ = 34.3,
         data = {indexGarage = "bennys"},
+    }),
+    ["bennys_air_slot1"] = BoxZone:Create(vector3(-145.89, -1272.41, 49.57), 14.8, 14.4,
+                                          {
+        name = "bennys_air_slot1",
+        heading = 0,
+        minZ = 48.57,
+        maxZ = 54.57,
+        data = {indexGarage = "bennys_air"},
     }),
     ["stonk1"] = BoxZone:Create(vector3(-4.85, -670.38, 31.94), 12, 6,
                                 {
@@ -1221,6 +1354,14 @@ PlacesEntreprise = {
         maxZ = 73.20,
         data = {indexGarage = "lspd"},
     }),
+    ["lspd_air1"] = BoxZone:Create(vector3(579.96, 12.19, 103.23), 11.0, 10.6,
+                                   {
+        name = "lspd_air1",
+        heading = 0,
+        minZ = 102.23,
+        maxZ = 106.23,
+        data = {indexGarage = "lspd_air"},
+    }),
     ["lsmc1"] = BoxZone:Create(vector3(404.68, -1438.12, 29.43), 9.2, 3.4,
                                {name = "lsmc1", heading = 30, minZ = 28.33, maxZ = 32.53, data = {indexGarage = "lsmc"}}),
     ["lsmc2"] = BoxZone:Create(vector3(408.44, -1435.93, 29.44), 9.2, 3.4,
@@ -1235,6 +1376,22 @@ PlacesEntreprise = {
                                {name = "lsmc6", heading = 50, minZ = 28.21, maxZ = 32.53, data = {indexGarage = "lsmc"}}),
     ["lsmc7"] = BoxZone:Create(vector3(404.3, -1423.21, 29.44), 9.2, 3.4,
                                {name = "lsmc7", heading = 50, minZ = 28.21, maxZ = 32.53, data = {indexGarage = "lsmc"}}),
+    ["lsmc_air1"] = BoxZone:Create(vector3(313.29, -1464.94, 46.51), 10.8, 10.8,
+                                   {
+        name = "lsmc_air1",
+        heading = 320,
+        minZ = 45.51,
+        maxZ = 49.51,
+        data = {indexGarage = "lsmc_air"},
+    }),
+    ["lsmc_air2"] = BoxZone:Create(vector3(299.61, -1453.48, 46.51), 10.8, 10.4,
+                                   {
+        name = "lsmc_air2",
+        heading = 50,
+        minZ = 45.51,
+        maxZ = 49.51,
+        data = {indexGarage = "lsmc_air"},
+    }),
     ["bcso1"] = BoxZone:Create(vector3(1847.36, 3672.06, 33.72), 6.2, 3.8,
                                {name = "bcso1", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
     ["bcso2"] = BoxZone:Create(vector3(1850.38, 3673.92, 33.76), 6.2, 3.8,
@@ -1245,6 +1402,12 @@ PlacesEntreprise = {
                                {name = "news1", heading = 0, minZ = 24.29, maxZ = 27.29, data = {indexGarage = "news"}}),
     ["news2"] = BoxZone:Create(vector3(-543.81, -881.39, 25.24), 8.2, 4.0,
                                {name = "news2", heading = 0, minZ = 24.29, maxZ = 27.29, data = {indexGarage = "news"}}),
+    ["news_air1"] = BoxZone:Create(vector3(-583.27, -930.71, 36.83), 10.2, 10, {
+        name = "news_air:slot1",
+        heading = 0,
+        data = {indexGarage = "news_air"},
+    }),
+
     ["garbage1"] = BoxZone:Create(vector3(-594.71, -1574.21, 26.75), 12.0, 5.0,
                                   {
         name = "garbage1",
