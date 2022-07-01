@@ -1,5 +1,12 @@
 const { createConfig } = require('./webpack.config.base.js');
 
 module.exports = (env, argv) => {
-    return createConfig({ nui: './src/nui.tsx' }, argv.mode === 'production', {}, 9000);
+    const config = createConfig({ nui: './src/nui.tsx' }, argv.mode === 'production', {}, 9000);
+
+    config.module.rules.push({
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+    });
+
+    return config;
 };
