@@ -62,7 +62,7 @@ Config.Shops = {
         ["Location"] = vector3(1734.18, 3313.44, 41.22), -- Blip Location
         ["CameraPosition"] = vector4(1733.07, 3303.82, 41.22, 13.55),
         ["VehicleSpawn"] = vector4(1730.47, 3314.38, 40.22, 153.64), -- Spawn location when vehicle is bought
-        ["PedPosition"] = vector4(1743.13, 3307.23, 40.22, 148.91)
+        ["PedPosition"] = vector4(1743.13, 3307.23, 40.22, 148.91),
     },
 }
 
@@ -172,7 +172,7 @@ Garages = {
     },
     ["airport_air"] = {
         label = "Airport Public Air Parking",
-        blipcoord = vector3(-1138.35, -2850.65, 13.95),
+        blipcoord = vector3(-1140.28, -2853.35, 12.95),
         showBlip = false,
         blipName = "Parking Public",
         blipNumber = 360,
@@ -279,7 +279,7 @@ Garages = {
         vehicle = "car", -- car, air, sea
     },
     ["marina_air"] = {
-        label = "Vespucci Air Parking",
+        label = "Marina Drive Air Parking",
         blipcoord = vector4(-713.87, -1416.37, 4.0, 4.18),
         showBlip = false,
         blipName = "Parking Aérien Public",

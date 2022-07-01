@@ -4211,7 +4211,7 @@ QBShared.Vehicles = {
         ['model']    = 'frogger3',
         ['price']    = 65000,
         ['category'] = 'Emergency',
-        ['hash']     = GetHashKey('frogger'),
+        ['hash']     = GetHashKey('frogger3'),
         ['shop']     = 'na',
         ['type']     = 'air',
     },
