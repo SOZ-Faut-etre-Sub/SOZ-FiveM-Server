@@ -55,6 +55,15 @@ Config.Shops = {
         ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
         ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
     },
+    ["air"] = {
+        ["ShopLabel"] = "Concess Aérien", -- Blip name
+        ["showBlip"] = true,
+        ["Categories"] = {["Helicopters"] = "Hélicoptères"},
+        ["Location"] = vector3(1734.18, 3313.44, 41.22), -- Blip Location
+        ["CameraPosition"] = vector4(1733.07, 3303.82, 41.22, 13.55),
+        ["VehicleSpawn"] = vector4(1730.47, 3314.38, 40.22, 153.64), -- Spawn location when vehicle is bought
+        ["PedPosition"] = vector4(1743.13, 3307.23, 40.22, 148.91)
+    },
 }
 
 Config.RefillCost = 50
