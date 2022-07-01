@@ -17,8 +17,8 @@ RegisterNetEvent("admin:vehicle:AddVehicle", function(model, vehicle, mods)
     vehicle = NetworkGetEntityFromNetworkId(vehicle)
 
     MySQL.Async.insert([[
-        INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, boughttime)
-        VALUES (:license, :citizenid, :vehicle, :hash, :mods, :plate, :garage, :state, :boughttime)
+        INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, boughttime, parkingtime)
+        VALUES (:license, :citizenid, :vehicle, :hash, :mods, :plate, :garage, :state, :boughttime, :parkingtime)
         ]], {
         ["license"] = Player.PlayerData.license,
         ["citizenid"] = Player.PlayerData.citizenid,
@@ -29,6 +29,7 @@ RegisterNetEvent("admin:vehicle:AddVehicle", function(model, vehicle, mods)
         ["garage"] = "airportpublic",
         ["state"] = 1,
         ["boughttime"] = os.time(),
+        ["parkingtime"] = os.time(),
     })
 
     TriggerClientEvent("hud:client:DrawNotification", source, "Véhicule sauvegardé")
