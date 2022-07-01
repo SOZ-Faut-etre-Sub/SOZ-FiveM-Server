@@ -16,6 +16,15 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 state = VehicleState.InGarage,
                 places = PlacesPublic,
             },
+            ["public_air"] = {
+                type = "public_air",
+                zones = AerialPublicZone,
+                menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
+                submenu = nil,
+                excludeVehClass = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22},
+                state = VehicleState.InGarage,
+                places = AerialPublicSpaces,
+            },
             ["private"] = {
                 type = "private",
                 zones = Zonesprives,
