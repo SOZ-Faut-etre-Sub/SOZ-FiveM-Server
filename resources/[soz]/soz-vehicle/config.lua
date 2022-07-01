@@ -161,6 +161,15 @@ Garages = {
         type = "private", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
     },
+    ["airport_air"] = {
+        label = "Airport Public Air Parking",
+        blipcoord = vector3(-1138.35, -2850.65, 13.95),
+        showBlip = false,
+        blipName = "Parking Public",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
     ["chumashp"] = {
         label = "Chumash Parking",
         blipcoord = vector3(-3135.51, 1105.58, 20.64),
@@ -260,6 +269,24 @@ Garages = {
         type = "public", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
     },
+    ["marina_air"] = {
+        label = "Vespucci Air Parking",
+        blipcoord = vector4(-713.87, -1416.37, 4.0, 4.18),
+        showBlip = false,
+        blipName = "Parking Aérien Public",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
+    ["sandy_air"] = {
+        label = "Sandy Shores Air Parking",
+        blipcoord = vector4(1760.42, 3231.41, 41.25, 191.13),
+        showBlip = false,
+        blipName = "Parking Aérien Public",
+        blipNumber = 360,
+        type = "public", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+    },
     ["fourriere"] = {
         label = "Fourrière",
         blipcoord = vector3(491.0, -1314.69, 29.25),
@@ -279,6 +306,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "lspd",
     },
+    ["lspd_air"] = {
+        label = "LSPD",
+        blipcoord = vector4(585.1, 2.81, 102.23, 211.84),
+        showBlip = false,
+        blipName = "LSPD",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+        job = "lspd",
+    },
     ["lsmc"] = {
         label = "LSMC",
         blipcoord = vector4(412.22, -1416.05, 28.38, 323.72),
@@ -287,6 +324,16 @@ Garages = {
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
+        job = "lsmc",
+    },
+    ["lsmc_air"] = {
+        label = "LSMC",
+        blipcoord = vector4(311.98, -1451.68, 45.51, 319.69),
+        showBlip = false,
+        blipName = "LSMC",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
         job = "lsmc",
     },
     ["bcso"] = {
@@ -299,6 +346,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "bcso",
     },
+    ["bcso_air"] = {
+        label = "BCSO",
+        blipcoord = vector4(1814.08, 3724.05, 33.67, 26.91),
+        showBlip = false,
+        blipName = "BCSO",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
+        job = "bcso",
+    },
     ["bennys"] = {
         label = "Bennys",
         blipcoord = vector4(-172.5, -1295.65, 30.13, 0.0),
@@ -307,6 +364,16 @@ Garages = {
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
+        job = "bennys",
+    },
+    ["bennys_air"] = {
+        label = "Bennys",
+        blipcoord = vector4(-147.64, -1282.43, 46.9, 356.22),
+        showBlip = false,
+        blipName = "Bennys",
+        blipNumber = 360,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
         job = "bennys",
     },
     ["stonk"] = {
@@ -347,6 +414,16 @@ Garages = {
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
+        job = "news",
+    },
+    ["news_air"] = {
+        label = "Twitch News",
+        blipcoord = vector4(-592.72, -928.48, 36.83, 93.08),
+        showBlip = false,
+        blipName = "Twitch News",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "air", -- car, air, sea
         job = "news",
     },
     ["mtp"] = {

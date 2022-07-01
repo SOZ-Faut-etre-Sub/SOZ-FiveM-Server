@@ -4030,6 +4030,7 @@ QBShared.Vehicles = {
         ['category'] = 'suvs',
         ['hash']     = GetHashKey('firetruk'),
         ['shop']     = 'na',
+        ['size']     = 3,
     },
     ['police5']      = {
         ['name']     = 'STX',
@@ -4193,6 +4194,7 @@ QBShared.Vehicles = {
         ['category'] = 'Emergency',
         ['hash']     = GetHashKey('polmav'),
         ['shop']     = 'na',
+        ['type']     = 'air',
     },
     ['ambulan']      = {
         ['name']     = 'Ambulance',
@@ -4211,6 +4213,7 @@ QBShared.Vehicles = {
         ['category'] = 'Emergency',
         ['hash']     = GetHashKey('frogger'),
         ['shop']     = 'na',
+        ['type']     = 'air',
     },
     ['trash']        = {
         ['name']     = 'Trashmaster',
@@ -4229,6 +4232,7 @@ QBShared.Vehicles = {
         ['category'] = 'Emergency',
         ['hash']     = GetHashKey('maverick2'),
         ['shop']     = 'na',
+        ['type']     = 'air',
     },
     ['policeb']      = {
         ['name']     = 'Moto de police',
