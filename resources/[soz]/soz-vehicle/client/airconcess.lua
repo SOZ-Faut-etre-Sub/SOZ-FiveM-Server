@@ -1,11 +1,6 @@
 local VehicleCategoriesMenu = MenuV:CreateMenu(nil, "Veuillez choisir un hélicoptère", "menu_shop_vehicle_car", "soz", "shop:vehicle:helicopter")
-<<<<<<< HEAD
-local VehiclesMenu = MenuV:InheritMenu(VehicleCategoriesMenu, {Title = nil})
-local ChooseVehicleMenu = MenuV:InheritMenu(VehiclesMenu, {Title = nil})
-=======
 local VehiclesMenu = MenuV:InheritMenu(VehicleCategoriesMenu, { Title = nil})
 local ChooseVehicleMenu = MenuV:InheritMenu(VehiclesMenu, { Title = nil})
->>>>>>> feat: add civil helicopters
 
 local selectedCategory = {}
 local selectedVehicle = {}
@@ -118,11 +113,7 @@ VehiclesMenu:On("open", function(menu)
     table.sort(vehicles, function(vehA, vehB)
         return vehA["price"] < vehB["price"]
     end)
-<<<<<<< HEAD
-    menu:AddTitle({label = currentCategory})
-=======
     menu:AddTitle({label = currentCategory })
->>>>>>> feat: add civil helicopters
     menu:AddButton({
         icon = "◀",
         label = "Catégories",
@@ -193,11 +184,7 @@ VehicleCategoriesMenu:On("open", function(menu)
             value = VehiclesMenu,
             description = "Nom de catégorie",
             select = function()
-<<<<<<< HEAD
                 selectedCategory = {categoryKey, vehicleList}
-=======
-                selectedCategory = { categoryKey, vehicleList }
->>>>>>> feat: add civil helicopters
             end,
         })
     end
@@ -214,10 +201,6 @@ RegisterNetEvent("soz-dealer:air:client:createcam", function()
     PointCamAtCoord(cam, dealerSpawnPos.x, dealerSpawnPos.y, dealerSpawnPos.z)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
-<<<<<<< HEAD
-=======
-    --SetFocusPosAndVel(1224.5, 2701.63, 38.01, 0.0, 0.0, 0.0)
->>>>>>> feat: add civil helicopters
 end)
 
 for dealerIndex, dealerZone in pairs(dealerZones) do

@@ -1117,6 +1117,10 @@ PlacesPublic = {
         maxZ = 34.23,
         data = {indexGarage = "haanparking"},
     }),
+
+}
+
+AerialPublicSpaces = {
     ["airport_air_slot1"] = BoxZone:Create(vector3(-1178.3, -2845.74, 13.95), 14.0, 13.8,
                                            {
         name = "airport_air_slot1",
@@ -1527,6 +1531,32 @@ for indexpublic, public in pairs(Zonespublic) do
             })
         else
             exports["qb-target"]:RemoveTargetModel(-9379002, "Accéder au parking public")
+        end
+    end)
+end
+
+for indexpublic, public in pairs(AerialPublicZones) do
+    public:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+        if isPointInside then
+            exports["qb-target"]:AddTargetModel(-9379002, {
+                options = {
+                    {
+                        type = "client",
+                        icon = "c:garage/ParkingPublic.png",
+                        label = "Accéder à l'héliport public",
+                        action = function(entity)
+                            for indexgarage, garage in pairs(Garages) do
+                                if indexgarage == indexpublic then
+                                    TriggerEvent("soz-garage:client:Menu", garage.type, garage, indexgarage)
+                                end
+                            end
+                        end,
+                    },
+                },
+                distance = 2.5,
+            })
+        else
+            exports["qb-target"]:RemoveTargetModel(-9379002, "Accéder à l'héliport public")
         end
     end)
 end
