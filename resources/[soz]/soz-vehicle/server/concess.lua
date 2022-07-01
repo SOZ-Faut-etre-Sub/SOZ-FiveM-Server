@@ -35,6 +35,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     })
     if vehiclestock[1].stock > 0 then
         if pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom") then
+            local category = "car"
             local garage
             if concess == "pdm" then
                 garage = "airportpublic"
@@ -44,13 +45,15 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
             elseif concess == "air" then
                 garage = "airport_air"
+                category = "air"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Aérien Public Sud")
             else
                 garage = "haanparking"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             end
+
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, state, life_counter, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 {
                     pData.PlayerData.license,
                     cid,
@@ -60,6 +63,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                     "{}",
                     plate,
                     garage,
+                    category,
                     1,
                     3,
                     os.time(),

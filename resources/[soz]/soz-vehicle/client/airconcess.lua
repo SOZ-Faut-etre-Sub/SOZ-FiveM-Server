@@ -1,6 +1,6 @@
 local VehicleCategoriesMenu = MenuV:CreateMenu(nil, "Veuillez choisir un hélicoptère", "menu_shop_vehicle_car", "soz", "shop:vehicle:helicopter")
-local VehiclesMenu = MenuV:InheritMenu(VehicleCategoriesMenu, { Title = nil})
-local ChooseVehicleMenu = MenuV:InheritMenu(VehiclesMenu, { Title = nil})
+local VehiclesMenu = MenuV:InheritMenu(VehicleCategoriesMenu, {Title = nil})
+local ChooseVehicleMenu = MenuV:InheritMenu(VehiclesMenu, {Title = nil})
 
 local selectedCategory = {}
 local selectedVehicle = {}
@@ -113,7 +113,7 @@ VehiclesMenu:On("open", function(menu)
     table.sort(vehicles, function(vehA, vehB)
         return vehA["price"] < vehB["price"]
     end)
-    menu:AddTitle({label = currentCategory })
+    menu:AddTitle({label = currentCategory})
     menu:AddButton({
         icon = "◀",
         label = "Catégories",
@@ -184,7 +184,7 @@ VehicleCategoriesMenu:On("open", function(menu)
             value = VehiclesMenu,
             description = "Nom de catégorie",
             select = function()
-                selectedCategory = { categoryKey, vehicleList }
+                selectedCategory = {categoryKey, vehicleList}
             end,
         })
     end
@@ -201,7 +201,6 @@ RegisterNetEvent("soz-dealer:air:client:createcam", function()
     PointCamAtCoord(cam, dealerSpawnPos.x, dealerSpawnPos.y, dealerSpawnPos.z)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
-    --SetFocusPosAndVel(1224.5, 2701.63, 38.01, 0.0, 0.0, 0.0)
 end)
 
 for dealerIndex, dealerZone in pairs(dealerZones) do
@@ -231,7 +230,7 @@ exports["qb-target"]:SpawnPed({
                 type = "client",
                 event = "soz-dealer:air:client:Menu",
                 icon = "c:concess/lister.png",
-                label = "Liste Hélicoptères",
+                label = "Liste Véhicules",
                 action = function()
                     TriggerEvent("soz-dealer:air:client:Menu", "")
                 end,
