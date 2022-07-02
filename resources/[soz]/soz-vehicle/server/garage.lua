@@ -268,7 +268,7 @@ end)
 QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle, qbVehicleKey)
     local player = QBCore.Functions.GetPlayer(source)
 
-    local qbVehicle = QBCore.Shared.Vehicles[qbVehicleKey]
+    local qbVehicle = exports["soz-vehicle"]:GetVehiclesByModels()[vehicle.vehicle]
     local feePercentage = (1.0 / 100)
     if GetConvarInt("feature_dlc1_impound", 0) == 1 then
         feePercentage = (15.0 / 100)
