@@ -9,25 +9,21 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 zones = Zonespublic,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
                 submenu = nil,
-                excludeVehClass = {14, 15, 16},
+                excludeVehClass = {
+                    car = {14, 15, 16},
+                    air = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22}
+                },
                 state = VehicleState.InGarage,
                 places = PlacesPublic,
-            },
-            ["public_air"] = {
-                type = "public_air",
-                zones = AerialPublicZone,
-                menu = MenuV:CreateMenu(nil, nil, "menu_garage_public", "soz", "parkingpublic:vehicle:car"),
-                submenu = nil,
-                excludeVehClass = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22},
-                state = VehicleState.InGarage,
-                places = AerialPublicSpaces,
             },
             ["private"] = {
                 type = "private",
                 zones = Zonesprives,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car"),
                 submenu = nil,
-                excludeVehClass = {14, 15, 16},
+                excludeVehClass = {
+                    car = {14, 15, 16},
+                },
                 state = VehicleState.InGarage,
                 places = PlacesPrives,
             },
@@ -45,7 +41,10 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 zones = Zonesentreprise,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_entreprise", "soz", "parkingentreprise:vehicle:car"),
                 submenu = nil,
-                excludeVehClass = {14, 16},
+                excludeVehClass = {
+                    car = {14, 15, 16},
+                    air = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22},
+                },
                 state = VehicleState.InEntreprise,
                 places = PlacesEntreprise,
             },
@@ -54,7 +53,9 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 zones = nil,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_personal", "soz", "parkinghousing:vehicle:car"),
                 submenu = nil,
-                excludeVehClass = {14, 15, 16},
+                excludeVehClass = {
+                    car = {14, 15, 16},
+                },
                 state = VehicleState.InGarage,
                 places = nil,
             },
@@ -283,8 +284,9 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     -- Is vehicle class allowed?
     local vehClass = GetVehicleClass(veh)
     local garageType = GetGarageType(type_)
-    if type(garageType.excludeVehClass) == "table" then
-        for _, class in ipairs(garageType.excludeVehClass) do
+    local garageCategory = Garages[indexgarage].vehicle
+    if type(garageType.excludeVehClass) == "table" and type(garageType.excludeVehClass[garageCategory]) == "table" then
+        for _, class in ipairs(garageType.excludeVehClass[garageCategory]) do
             if class == vehClass then
                 exports["soz-hud"]:DrawNotification(Lang:t("error.not_correct_type"), "error", 3500)
                 return false

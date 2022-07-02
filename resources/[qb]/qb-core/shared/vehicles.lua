@@ -4252,7 +4252,7 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('buzzard2'),
         ['shop']     = 'air',
     },
-    ['seasparrow']      = {
+    ['sparrow']      = {
         ['name']     = 'Sea Sparrow',
         ['brand']    = 'Los Santos',
         ['model']    = 'seasparrow',
