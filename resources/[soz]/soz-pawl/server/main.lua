@@ -132,7 +132,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
         return
     end
 
-    local craftItemInventory = exports["soz-inventory"]:GetItem(Config.CraftStorage, craft.SourceItem, nil, true)
+    local craftItemInventory = exports["soz-inventory"]:GetItem(Player.PlayerData.source, craft.SourceItem, nil, true)
 
     if craftItemInventory < (craft.SourceItemAmount or 1) then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage n'a pas assez de planche !", "error")
@@ -152,7 +152,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
         end
     end
 
-    if exports["soz-inventory"]:RemoveItem(Config.CraftStorage, craft.SourceItem, craft.SourceItemAmount or 1) then
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, craft.SourceItem, craft.SourceItemAmount or 1) then
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil, function(success, reason)
             if success then
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !", "success")

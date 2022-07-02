@@ -116,7 +116,7 @@ RegisterNetEvent("pawl:client:craft", function(data)
     local success, _ = exports["soz-utils"]:Progressbar("craft", "", Config.CraftDuration, false, true, {
         disableMovement = true,
         disableCombat = true,
-    }, {}, {}, {})
+    }, {animDict = "mp_arresting", anim = "a_uncuff", flags = 17}, {}, {})
 
     if success then
         TriggerServerEvent("pawl:server:craft", data.identifier)
