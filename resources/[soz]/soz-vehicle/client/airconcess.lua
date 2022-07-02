@@ -213,35 +213,37 @@ for dealerIndex, dealerZone in pairs(dealerZones) do
     end)
 end
 
-exports["qb-target"]:SpawnPed({
-    model = "s_m_m_autoshop_02",
-    coords = dealer.PedPosition,
-    minusOne = false,
-    freeze = true,
-    invincible = true,
-    blockevents = true,
-    animDict = "abigail_mcs_1_concat-0",
-    anim = "csb_abigail_dual-0",
-    flag = 1,
-    scenario = "WORLD_HUMAN_CLIPBOARD",
-    target = {
-        options = {
-            {
-                type = "client",
-                event = "soz-dealer:air:client:Menu",
-                icon = "c:concess/lister.png",
-                label = "Liste Véhicules",
-                action = function()
-                    TriggerEvent("soz-dealer:air:client:Menu", "")
-                end,
-                canInteract = function()
-                    return isInsideConcess
-                end,
+if GetConvarInt("feature_dlc1_helicopters", 0) == 1 then
+    exports["qb-target"]:SpawnPed({
+        model = "s_m_m_autoshop_02",
+        coords = dealer.PedPosition,
+        minusOne = false,
+        freeze = true,
+        invincible = true,
+        blockevents = true,
+        animDict = "abigail_mcs_1_concat-0",
+        anim = "csb_abigail_dual-0",
+        flag = 1,
+        scenario = "WORLD_HUMAN_CLIPBOARD",
+        target = {
+            options = {
+                {
+                    type = "client",
+                    event = "soz-dealer:air:client:Menu",
+                    icon = "c:concess/lister.png",
+                    label = "Liste Véhicules",
+                    action = function()
+                        TriggerEvent("soz-dealer:air:client:Menu", "")
+                    end,
+                    canInteract = function()
+                        return isInsideConcess
+                    end,
+                },
             },
+            distance = 2.5,
         },
-        distance = 2.5,
-    },
-})
+    })
+end
 
 RegisterNetEvent("soz-dealer:air:client:Menu", function()
     VehicleCategoriesMenu:Open()

@@ -41,7 +41,6 @@ PlacesConcessEntreprise = {
 
 local function TakeOutGarage(vehicle)
     local location, heading, availableSlots = nil, nil, 0
-    print("Vehicle " .. json.encode(vehicle))
     for _, jobDealerSlot in pairs(PlacesConcessEntreprise) do
         if vehicle.data.category == jobDealerSlot.data.vehicleType then
             local vehiclesPool = GetGamePool("CVehicle")
