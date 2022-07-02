@@ -128,6 +128,11 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, job)
     end
 
     local facility = facilityData.class:new(identifier, data)
+    if facility then
+        facilityData.arr[identifier] = facility
+    end
+
+    TriggerClientEvent("soz-upw:client:CreateZone", -1, identifier, propData.facility, zone)
 end)
 
 --
