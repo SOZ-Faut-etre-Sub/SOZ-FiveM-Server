@@ -12,7 +12,7 @@ AddEventHandler("onResourceStart", function(resource)
 
         MySQL.Async.execute("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'", {})
         MySQL.Async.execute("UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'", {})
-        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'fourriere' WHERE state = 3 AND garage != 'fourriere'", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'fourriere' WHERE state = 2 AND garage != 'fourriere'", {})
 
         MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4 OR state = 1", {}, function(result)
             if result[1] then
