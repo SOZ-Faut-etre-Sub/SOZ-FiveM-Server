@@ -92,7 +92,7 @@ VeloChoose:On("open", function(menu)
             VeloModel:Close()
             VeloList:Close()
             TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "velo", cycle["model"],
-                               GetDisplayNameFromVehicleModel(GetHashKey(cycle["model"])):lower())
+                               cycle["model"]:lower())
         end,
     })
 end)
