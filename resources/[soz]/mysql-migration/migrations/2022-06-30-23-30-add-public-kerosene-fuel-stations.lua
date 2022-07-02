@@ -17,15 +17,15 @@ table.insert(migrations, {
         ]],
         [[
             INSERT INTO `fuel_storage` (station, fuel, type, stock, position, model, zone)
-            VALUES ('Station41', 'kerosene', 'public', 2000, '{"x": 1719.24, "y": 3268.15, "z": 41.15, "w": 239.47}', 1339433404, '{
-                    "position": {"x": -1146.8, "y": -2863.52, "z": 13.95},
-                    "length": 21.2,
-                    "width": 30.8,
+            VALUES ('Station41', 'kerosene', 'public', 2000, '{"x": 1719.24, "y": 3268.15, "z": 40.15, "w": 239.47}', 1339433404, '{
+                    "position": {"x": 1720.76, "y": 3262.3, "z": 41.15},
+                    "length": 33.2,
+                    "width": 32.6,
                     "options": {
                         "name": "Station41",
-                        "heading": 15.0,
-                        "minZ": 12.95,
-                        "maxZ": 15.95
+                        "heading": 16.0,
+                        "minZ": 40.15,
+                        "maxZ": 43.15
                     }
                 }');
         ]],
