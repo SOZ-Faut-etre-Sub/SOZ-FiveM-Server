@@ -6,17 +6,8 @@ MySQL.ready(function()
     local stations = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage")
 
     for _, station in pairs(stations) do
-        StationsList[station.id] = FuelStation:new(
-            station.id,
-            station.station,
-            station.fuel,
-            station.type,
-            station.owner,
-            station.stock,
-            station.position,
-            station.model,
-            station.zone
-        )
+        StationsList[station.id] = FuelStation:new(station.id, station.station, station.fuel, station.type, station.owner, station.stock, station.position,
+                                                   station.model, station.zone)
 
         StationsList[station.id]:SpawnStation()
     end
@@ -100,7 +91,8 @@ QBCore.Functions.CreateCallback("fuel:server:FinishRefuel", function(source, cb,
         saveStation(id)
 
         if station:IsPublic() then
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vous venez de faire le plein de votre véhicule pour ~r~$" .. cost .. "~s~ (~g~" .. refueling .. "L~s~).")
+            TriggerClientEvent("hud:client:DrawNotification", source,
+                               "Vous venez de faire le plein de votre véhicule pour ~r~$" .. cost .. "~s~ (~g~" .. refueling .. "L~s~).")
         elseif station:IsPrivate() then
             TriggerClientEvent("hud:client:DrawNotification", source, "Vous venez de faire le plein de votre véhicule (~g~" .. refueling .. "L~s~).")
         end
