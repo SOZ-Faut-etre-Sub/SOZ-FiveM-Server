@@ -1081,7 +1081,7 @@ PlacesFourriere = {
         maxZ = 32.33,
         data = {
             indexGarage = "fourriere",
-            capacity = { 1,2, }, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["fourriere2"] = BoxZone:Create(vector3(497.44, -1336.5, 29.34), 6, 4, {
@@ -1091,7 +1091,7 @@ PlacesFourriere = {
         maxZ = 32.34,
         data = {
             indexGarage = "fourriere",
-            capacity = { 1, 2, }, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["fourriere3"] = BoxZone:Create(vector3(481.31, -1334.2, 29.33), 6, 4, {
@@ -1101,7 +1101,7 @@ PlacesFourriere = {
         maxZ = 32.33,
         data = {
             indexGarage = "fourriere",
-            capacity = { 1, 2 }, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["fourriere4"] = BoxZone:Create(vector3(488.13, -1366.4, 29.25), 6, 4, {
@@ -1111,11 +1111,7 @@ PlacesFourriere = {
         maxZ = 32.25,
         data = {
             indexGarage = "fourriere",
-            capacity = { 2,3, }
-                --[[ [1] = nil,
-                [2] = true,
-                [3] = true
-            }, -- 1 = S, 2 = M, 3 = L ]]
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }
@@ -1297,7 +1293,7 @@ PlacesEntreprise = {
         maxZ = 33.47,
         data = {
             indexGarage = "mtp",
-            capacity = {1,2,3}, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6,
@@ -1308,7 +1304,7 @@ PlacesEntreprise = {
         maxZ = 33.47,
         data = {
             indexGarage = "mtp",
-            capacity = {1,2,3}, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["taxi1"] = BoxZone:Create(vector3(911.33, -162.69, 74.13), 6.2, 3.2,
