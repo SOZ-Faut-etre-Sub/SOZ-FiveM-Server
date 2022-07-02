@@ -11,7 +11,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 submenu = nil,
                 excludeVehClass = {
                     car = {14, 15, 16},
-                    air = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22}
+                    air = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22},
                 },
                 state = VehicleState.InGarage,
                 places = PlacesPublic,
@@ -21,9 +21,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 zones = Zonesprives,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_private", "soz", "parkingprive:vehicle:car"),
                 submenu = nil,
-                excludeVehClass = {
-                    car = {14, 15, 16},
-                },
+                excludeVehClass = {car = {14, 15, 16}},
                 state = VehicleState.InGarage,
                 places = PlacesPrives,
             },
@@ -53,9 +51,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 zones = nil,
                 menu = MenuV:CreateMenu(nil, nil, "menu_garage_personal", "soz", "parkinghousing:vehicle:car"),
                 submenu = nil,
-                excludeVehClass = {
-                    car = {14, 15, 16},
-                },
+                excludeVehClass = {car = {14, 15, 16}},
                 state = VehicleState.InGarage,
                 places = nil,
             },
