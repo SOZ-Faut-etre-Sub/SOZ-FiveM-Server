@@ -91,8 +91,7 @@ VeloChoose:On("open", function(menu)
             menu:Close()
             VeloModel:Close()
             VeloList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "velo", cycle["model"],
-                               cycle["model"]:lower())
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "velo", cycle["model"], cycle["model"]:lower())
         end,
     })
 end)
