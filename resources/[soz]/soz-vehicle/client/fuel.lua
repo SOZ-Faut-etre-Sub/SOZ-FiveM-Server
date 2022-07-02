@@ -252,7 +252,7 @@ RegisterNetEvent("fuel:client:ActivateStationPistol", function(data)
             local ropeCoords = GetOffsetFromEntityInWorldCoords(stationEntity, 0.0, 0.0, 1.0)
             local hCoord = GetWorldPositionOfEntityBone(ped, GetEntityBoneIndexByName(ped, "BONETAG_L_FINGER2"))
             AttachEntitiesToRope(pistol.rope, stationEntity, ped, ropeCoords.x, ropeCoords.y, ropeCoords.z, hCoord.x, hCoord.y, hCoord.z, 1, 1, 1, 0,
-                "BONETAG_L_FINGER2")
+                                 "BONETAG_L_FINGER2")
 
             Citizen.Wait(10)
         end
@@ -299,12 +299,19 @@ RegisterNetEvent("fuel:client:UseStationPistol", function(vehicle, stationId)
 
     QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
     TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
-    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
 
     local currentFuelAdd = 0
     local newFuel = vehicleFuel
     local cout = 0
     local max = 99.8
+
+    Citizen.CreateThread(function()
+        while isFueling do
+            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
+            Citizen.Wait(1000)
+        end
+    end)
+
     while max > newFuel and (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) and not IsControlJustReleased(0, 194) and
         not IsControlJustReleased(0, 225) and GetPedInVehicleSeat(vehicle, -1) == 0 do
         currentFuelAdd = currentFuelAdd + 0.02
@@ -364,7 +371,6 @@ RegisterNetEvent("fuel:client:UseStationPistol", function(vehicle, stationId)
     ClearFuelingProps()
     stationPistolInUse = false
 end)
-
 
 ---
 --- Display

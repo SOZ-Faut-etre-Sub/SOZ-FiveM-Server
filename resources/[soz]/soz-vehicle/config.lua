@@ -532,11 +532,7 @@ HouseGarages = {}
 
 Config.FuelStations = {
     Blip = {Name = "Station essence", Sprite = 361, Color = 4, Alpha = 100},
-    Vehicle = {
-        ElectricModel = {
-            [GetHashKey("neon")] = true,
-        }
-    }
+    Vehicle = {ElectricModel = {[GetHashKey("neon")] = true}},
 }
 
 -- All chances are 0-1 <= so lower == less chance, higher == higher chance
