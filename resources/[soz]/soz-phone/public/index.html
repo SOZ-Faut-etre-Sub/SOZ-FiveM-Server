@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SOZ Phone</title>
+        <script type="text/javascript">
+            window.addEventListener('message', (event) => {
+                if (event.data.type === 'soz-phone-nui-load') {
+                    const url = event.data.mode === 'dev' ? 'http://localhost:9001/nui.js' : 'https://cfx-nui-soz-phone/build/nui/nui.js';
+                    const script = document.createElement('script');
+                    script.setAttribute('src', url);
+
+                    document.head.appendChild(script);
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <div id="app"></div>
+    </body>
+</html>

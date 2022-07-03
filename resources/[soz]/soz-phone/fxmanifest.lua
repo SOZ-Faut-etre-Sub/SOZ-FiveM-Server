@@ -1,12 +1,13 @@
 fx_version "cerulean"
 game "gta5"
 
-client_scripts {"dist/client/client.js", "client/*.lua"}
+description "soz phone"
 
-server_script {"dist/server/server.js"}
+ui_page "public/index.html"
 
-ui_page "html/index.html"
+client_script {"client.js", "build/client.js", "client/*.lua"}
+server_script {"server.js", "build/server.js"}
 
-files {"config.json", "html/index.html", "html/**/*"}
+files {"config.json", "public/index.html", "public/**/*", "build/nui/*"}
 
 dependency {"screenshot-basic", "soz-props-phone"}
