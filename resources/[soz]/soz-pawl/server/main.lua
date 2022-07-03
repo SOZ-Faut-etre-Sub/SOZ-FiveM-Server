@@ -1,14 +1,15 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
 Fields = {}
-Processing = {Enabled = false, StartedAt = 0}
 
-for k, v in pairs(Config.Fields) do
-    Fields[k] = Field:new(k, v.model, v.positions, v.refillDelay)
+Citizen.CreateThread(function()
+    for k, v in pairs(Config.Fields) do
+        Fields[k] = Field:new(k, v.model, v.positions, v.refillDelay)
 
-    Fields[k]:FullRefillField()
-    Fields[k]:RunBackgroundTasks()
-end
+        Fields[k]:FullRefillField()
+        Fields[k]:RunBackgroundTasks()
+    end
+end)
 
 QBCore.Functions.CreateCallback("pawl:server:getFieldData", function(source, cb, identifier)
     local field = Fields[identifier]
@@ -46,55 +47,29 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
     end
 end)
 
-local function millisecondToMinuteDisplay(time)
-    local minutes = math.floor(time / 60000)
-    local seconds = math.floor((time % 60000) / 1000)
-    return minutes .. "m " .. seconds .. "s"
-end
-
 --- Processing
-RegisterNetEvent("pawl:server:processingTree", function(data)
-    local Player = QBCore.Functions.GetPlayer(source)
-    if Player == nil then
-        return
-    end
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(60 * 1000)
 
-    if Processing.Enabled then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas traiter d'arbre en ce moment.", "error")
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           "Il vous reste " .. millisecondToMinuteDisplay(Processing.StartedAt + Config.Processing.Duration - GetGameTimer()) ..
-                               " secondes avant de pouvoir traiter d'autre arbre.", "info")
-        return
-    end
-
-    if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
-        return
-    end
-
-    if not exports["soz-inventory"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de sciure est plein !", "error")
-        return
-    end
-
-    Processing.Enabled = true
-    Processing.StartedAt = GetGameTimer()
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~commencé~s~ à traiter un arbre.")
-
-    Citizen.CreateThread(function()
-        while Processing.Enabled do
-            if GetGameTimer() - Processing.StartedAt >= Config.Processing.Duration then
-                --- Voluntary skip error handling, if storage is updated by player and it's not possible to add items, it will consume log.
-                exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
-                exports["soz-inventory"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
-
-                Processing.Enabled = false
-                break
-            end
-
-            Citizen.Wait(1000)
+        if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
+            goto wait_next_processing
+            return
         end
-    end)
+
+        if not exports["soz-inventory"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
+            goto wait_next_processing
+            return
+        end
+
+        --- Voluntary skip error handling, if storage is updated by player and it's not possible to add items, it will consume log.
+        if exports["soz-inventory"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
+            exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
+            exports["soz-inventory"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
+        end
+
+        ::wait_next_processing::
+    end
 end)
 
 --- Crafting
@@ -132,7 +107,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
         return
     end
 
-    local craftItemInventory = exports["soz-inventory"]:GetItem(Config.CraftStorage, craft.SourceItem, nil, true)
+    local craftItemInventory = exports["soz-inventory"]:GetItem(Player.PlayerData.source, craft.SourceItem, nil, true)
 
     if craftItemInventory < (craft.SourceItemAmount or 1) then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage n'a pas assez de planche !", "error")
@@ -152,7 +127,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
         end
     end
 
-    if exports["soz-inventory"]:RemoveItem(Config.CraftStorage, craft.SourceItem, craft.SourceItemAmount or 1) then
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, craft.SourceItem, craft.SourceItemAmount or 1) then
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil, function(success, reason)
             if success then
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !", "success")

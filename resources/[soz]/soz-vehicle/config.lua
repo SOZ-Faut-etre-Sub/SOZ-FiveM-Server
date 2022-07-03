@@ -443,6 +443,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "taxi",
     },
+    ["pawl"] = {
+        label = "Pipe And Wooden Legs",
+        blipcoord = vector4(-567.48, 5241.92, 69.47, 248.11),
+        showBlip = false,
+        blipName = "Pipe And Wooden Legs",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "pawl",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",

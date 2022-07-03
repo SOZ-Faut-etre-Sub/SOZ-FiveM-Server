@@ -38,32 +38,6 @@ Citizen.CreateThread(function()
     -- Degradation
     DegradationLevel = QBCore.Functions.TriggerRpc("pawl:server:getDegradationLevel")
 
-    -- Processing
-    exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
-    exports["qb-target"]:AddBoxZone("pawl:processing:tree_trunk", vector3(-552.14, 5347.94, 74.74), 0.5, 2.2,
-                                    {
-        name = "pawl:processing:tree_trunk",
-        heading = 72,
-        minZ = 73.74,
-        maxZ = 76.54,
-        debugPoly = false,
-    }, {
-        options = {
-            {
-                type = "server",
-                color = "pawl",
-                label = "Transformer",
-                icon = "c:inventory/ouvrir_le_stockage.png",
-                event = "pawl:server:processingTree",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = "pawl",
-            },
-        },
-        distance = 2.5,
-    })
-
     -- Craft
     local craftOptions = {}
     for craftId, craft in pairs(Config.Craft) do
@@ -110,13 +84,55 @@ Citizen.CreateThread(function()
         },
         distance = 1.5,
     })
+
+    exports["qb-target"]:AddBoxZone("pawl:duty", vector3(-539.36, 5305.28, 76.37), 0.4, 1.2, {
+        name = "pawl:duty",
+        heading = 340,
+        minZ = 76.12,
+        maxZ = 76.77,
+    }, {options = SozJobCore.Functions.GetDutyActions("pawl"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("pawl:shop", vector3(-534.49, 5301.55, 76.37), 0.4, 2.55, {
+        name = "pawl:shop",
+        heading = 70,
+        minZ = 75.37,
+        maxZ = 77.47,
+    }, {
+        options = {
+            label = "Récupérer du matériel",
+            icon = "fas fa-briefcase",
+            action = function()
+                TriggerEvent("jobs:client:bossShop", "PawlConfig")
+            end,
+            canInteract = function()
+                return SozJobCore.Functions.HasPermission("pawl", SozJobCore.JobPermission.SocietyShop)
+            end,
+            job = "pawl",
+        },
+        distance = 2.5,
+    })
+
+    exports["qb-target"]:AddBoxZone("pawl:cloakroom1", vector3(-532.21, 5308.37, 76.37), 0.6, 7.2,
+                                    {name = "pawl:cloakroom1", heading = 250, minZ = 75.37, maxZ = 78.37}, {
+        options = {
+            {label = "S'habiller", icon = "c:jobs/habiller.png", event = "pawl:client:OpenCloakroomMenu", job = "pawl"},
+        },
+        distance = 2.5,
+    })
+    exports["qb-target"]:AddBoxZone("pawl:cloakroom2", vector3(-541.12, 5311.85, 76.37), 0.6, 7.2,
+                                    {name = "pawl:cloakroom2", heading = 70, minZ = 75.37, maxZ = 78.37}, {
+        options = {
+            {label = "S'habiller", icon = "c:jobs/habiller.png", event = "pawl:client:OpenCloakroomMenu", job = "pawl"},
+        },
+        distance = 2.5,
+    })
 end)
 
 RegisterNetEvent("pawl:client:craft", function(data)
     local success, _ = exports["soz-utils"]:Progressbar("craft", "", Config.CraftDuration, false, true, {
         disableMovement = true,
         disableCombat = true,
-    }, {}, {}, {})
+    }, {animDict = "mp_arresting", anim = "a_uncuff", flags = 17}, {}, {})
 
     if success then
         TriggerServerEvent("pawl:server:craft", data.identifier)

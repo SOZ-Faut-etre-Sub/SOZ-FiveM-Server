@@ -29,8 +29,6 @@ MySQL.ready(function()
                     local st = Config.Storages[v.name]
                     Inventory.Create(v.name, st.label, v.type, v.max_slots, v.max_weight, v.owner)
                     StorageNotLoaded[v.name] = nil
-                elseif v.type ~= "trunk" and v.type ~= "tanker" and v.type ~= "stash" then
-                    exports["soz-monitor"]:Log("ERROR", ("Storage %s (%s) is not present in configuration !"):format(v.name, v.type))
                 end
             end
         end
@@ -491,6 +489,16 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         return
     end
 
+    if not _G.Container[invSource.type]:CanGetContentInInventory(item) then
+        cb(false, "get_not_allowed")
+        return
+    end
+
+    if not _G.Container[invTarget.type]:CanPutContentInInventory(item) then
+        cb(false, "put_not_allowed")
+        return
+    end
+
     if not _G.Container[invTarget.type]:ItemIsAllowed(item) then
         cb(false, "not_allowed_item")
         return
@@ -632,7 +640,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "trunk" or storageType == "tanker" then
+    elseif storageType == "trunk" or storageType == "tanker" or storageType == "trailerlogs" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
