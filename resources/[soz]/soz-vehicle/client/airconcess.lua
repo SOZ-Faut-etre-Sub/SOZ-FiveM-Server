@@ -1,6 +1,6 @@
 local VehicleCategoriesMenu = MenuV:CreateMenu(nil, "Veuillez choisir un hélicoptère", "menu_shop_vehicle_car", "soz", "shop:vehicle:helicopter")
-local VehiclesMenu = MenuV:InheritMenu(VehicleCategoriesMenu, { Title = nil})
-local ChooseVehicleMenu = MenuV:InheritMenu(VehiclesMenu, { Title = nil})
+local VehiclesMenu = MenuV:InheritMenu(VehicleCategoriesMenu, {Title = nil})
+local ChooseVehicleMenu = MenuV:InheritMenu(VehiclesMenu, {Title = nil})
 
 local selectedCategory = {}
 local selectedVehicle = {}
