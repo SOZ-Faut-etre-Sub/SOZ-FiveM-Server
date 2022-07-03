@@ -1117,90 +1117,86 @@ PlacesPublic = {
         maxZ = 34.23,
         data = {indexGarage = "haanparking"},
     }),
-
-}
-
-AerialPublicSpaces = {
     ["airport_air_slot1"] = BoxZone:Create(vector3(-1178.3, -2845.74, 13.95), 14.0, 13.8,
-                                           {
-        name = "airport_air_slot1",
-        heading = 330,
-        minZ = 12.95,
-        maxZ = 23.95,
-        data = {indexGarage = "airport_air"},
-    }),
+        {
+            name = "airport_air_slot1",
+            heading = 330,
+            minZ = 12.95,
+            maxZ = 23.95,
+            data = {indexGarage = "airport_air"},
+        }),
     ["airport_air_slot2"] = BoxZone:Create(vector3(-1145.94, -2864.44, 13.95), 13.8, 13.8,
-                                           {
-        name = "airport_air_slot2",
-        heading = 330,
-        minZ = 12.95,
-        maxZ = 23.95,
-        data = {indexGarage = "airport_air"},
-    }),
+        {
+            name = "airport_air_slot2",
+            heading = 330,
+            minZ = 12.95,
+            maxZ = 23.95,
+            data = {indexGarage = "airport_air"},
+        }),
     ["airport_air_slot3"] = BoxZone:Create(vector3(-1112.61, -2883.89, 13.95), 13.8, 13.8,
-                                           {
-        name = "airport_air_slot3",
-        heading = 330,
-        minZ = 12.95,
-        maxZ = 23.95,
-        data = {indexGarage = "airport_air"},
-    }),
+        {
+            name = "airport_air_slot3",
+            heading = 330,
+            minZ = 12.95,
+            maxZ = 23.95,
+            data = {indexGarage = "airport_air"},
+        }),
     ["marina_air1"] = BoxZone:Create(vector3(-724.67, -1444.06, 5.0), 15.2, 15.2,
-                                     {
-        name = "marina_air_slot1",
-        heading = 140,
-        minZ = 4.0,
-        maxZ = 15.0,
-        data = {indexGarage = "marina_air"},
-    }),
+        {
+            name = "marina_air_slot1",
+            heading = 140,
+            minZ = 4.0,
+            maxZ = 15.0,
+            data = {indexGarage = "marina_air"},
+        }),
     ["marina_air2"] = BoxZone:Create(vector3(-745.47, -1468.82, 5.0), 15.2, 15.2,
-                                     {
-        name = "marina_air_slot2",
-        heading = 320,
-        minZ = 4.0,
-        maxZ = 15.0,
-        data = {indexGarage = "marina_air"},
-    }),
+        {
+            name = "marina_air_slot2",
+            heading = 320,
+            minZ = 4.0,
+            maxZ = 15.0,
+            data = {indexGarage = "marina_air"},
+        }),
     ["marina_air3"] = BoxZone:Create(vector3(-746.75, -1432.73, 5.0), 19.2, 17.6,
-                                     {
-        name = "marina_air_slot3",
-        heading = 230,
-        minZ = 4.0,
-        maxZ = 15.0,
-        data = {indexGarage = "marina_air"},
-    }),
+        {
+            name = "marina_air_slot3",
+            heading = 230,
+            minZ = 4.0,
+            maxZ = 15.0,
+            data = {indexGarage = "marina_air"},
+        }),
     ["marina_air4"] = BoxZone:Create(vector3(-763.48, -1453.35, 5.0), 19.2, 17.6,
-                                     {
-        name = "marina_air_slot4",
-        heading = 230,
-        minZ = 4.0,
-        maxZ = 15.0,
-        data = {indexGarage = "marina_air"},
-    }),
+        {
+            name = "marina_air_slot4",
+            heading = 230,
+            minZ = 4.0,
+            maxZ = 15.0,
+            data = {indexGarage = "marina_air"},
+        }),
     ["marina_air5"] = BoxZone:Create(vector3(-721.41, -1473.46, 5.0), 19.2, 17.6,
-                                     {
-        name = "marina_air_slot5",
-        heading = 50,
-        minZ = 4.0,
-        maxZ = 15.0,
-        data = {indexGarage = "marina_air"},
-    }),
+        {
+            name = "marina_air_slot5",
+            heading = 50,
+            minZ = 4.0,
+            maxZ = 15.0,
+            data = {indexGarage = "marina_air"},
+        }),
     ["marina_air6"] = BoxZone:Create(vector3(-699.93, -1447.88, 5.0), 19.2, 17.6,
-                                     {
-        name = "marina_air_slot6",
-        heading = 50,
-        minZ = 4.0,
-        maxZ = 15.0,
-        data = {indexGarage = "marina_air"},
-    }),
+        {
+            name = "marina_air_slot6",
+            heading = 50,
+            minZ = 4.0,
+            maxZ = 15.0,
+            data = {indexGarage = "marina_air"},
+        }),
     ["sandy_air_slot1"] = BoxZone:Create(vector3(1770.23, 3239.53, 42.06), 11.6, 12.0,
-                                         {
-        name = "sandy_air_slot1",
-        heading = 15,
-        minZ = 41.06,
-        maxZ = 52.06,
-        data = {indexGarage = "sandy_air"},
-    }),
+        {
+            name = "sandy_air_slot1",
+            heading = 15,
+            minZ = 41.06,
+            maxZ = 52.06,
+            data = {indexGarage = "sandy_air"},
+        }),
 }
 
 PlacesFourriere = {
@@ -1531,32 +1527,6 @@ for indexpublic, public in pairs(Zonespublic) do
             })
         else
             exports["qb-target"]:RemoveTargetModel(-9379002, "Accéder au parking public")
-        end
-    end)
-end
-
-for indexpublic, public in pairs(AerialPublicZones) do
-    public:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-        if isPointInside then
-            exports["qb-target"]:AddTargetModel(-9379002, {
-                options = {
-                    {
-                        type = "client",
-                        icon = "c:garage/ParkingPublic.png",
-                        label = "Accéder à l'héliport public",
-                        action = function(entity)
-                            for indexgarage, garage in pairs(Garages) do
-                                if indexgarage == indexpublic then
-                                    TriggerEvent("soz-garage:client:Menu", garage.type, garage, indexgarage)
-                                end
-                            end
-                        end,
-                    },
-                },
-                distance = 2.5,
-            })
-        else
-            exports["qb-target"]:RemoveTargetModel(-9379002, "Accéder à l'héliport public")
         end
     end)
 end
