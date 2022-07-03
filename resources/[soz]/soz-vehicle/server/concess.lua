@@ -33,9 +33,9 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
 
-    local qbVehicle = vehicles[displayname]
+    local qbVehicle = vehicles[vehicle]
     if qbVehicle == nil then
-        exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
+        exports["soz-monitor"]:Log("WARN", "Vehicle with model name '" .. vehicle .. "' is not in the config.")
     end
     local vehiclePrice = qbVehicle["price"]
 

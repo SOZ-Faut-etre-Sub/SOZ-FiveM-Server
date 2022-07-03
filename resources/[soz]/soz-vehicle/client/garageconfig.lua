@@ -1399,6 +1399,13 @@ PlacesEntreprise = {
                                {name = "bcso2", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
     ["bcso3"] = BoxZone:Create(vector3(1853.76, 3675.65, 33.75), 6.2, 3.8,
                                {name = "bcso3", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
+    ["bcso_air1"] = BoxZone:Create(vector3(1802.57, 3719.3, 35.65), 10.6, 10.6, {
+        name="bcso_air1",
+        heading=0,
+        minZ = 34.65,
+        maxZ = 38.65,
+        data = {indexGarage = "bcso_air"}
+    }),
     ["news1"] = BoxZone:Create(vector3(-532.88, -881.37, 25.31), 8.4, 4.2,
                                {name = "news1", heading = 0, minZ = 24.29, maxZ = 27.29, data = {indexGarage = "news"}}),
     ["news2"] = BoxZone:Create(vector3(-543.81, -881.39, 25.24), 8.2, 4.0,
