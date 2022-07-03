@@ -11,8 +11,8 @@ StonkConfig.Resale = {
     TargetEntities = {-2018598162, -735318549},
     Quantity = 5,
     Duration = 5000, -- in ms
-    Price = 100,
-    BankPrice = 200,
+    Price = 80,
+    BankPrice = 160,
 }
 
 StonkConfig.FillIn = {
