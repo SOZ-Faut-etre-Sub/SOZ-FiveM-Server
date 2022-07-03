@@ -46,3 +46,13 @@ Config.Storages["pawl_log_processing"] = {
     heading = 72,
     offsetUpZ = 1.5,
 }
+
+Config.Storages["pawl_fridge"] = {
+    label = "Frigo Pipe And Wooden Leg",
+    type = "fridge",
+    owner = "pawl",
+    position = vector3(-545.98, 5299.32, 76.37),
+    size = vec2(1.6, 1.0),
+    heading = 340,
+    offsetUpZ = 1.5,
+}
