@@ -1206,7 +1206,7 @@ PlacesFourriere = {
         maxZ = 32.33,
         data = {
             indexGarage = "fourriere",
-            capacity = 2, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["fourriere2"] = BoxZone:Create(vector3(497.44, -1336.5, 29.34), 6, 4, {
@@ -1216,7 +1216,7 @@ PlacesFourriere = {
         maxZ = 32.34,
         data = {
             indexGarage = "fourriere",
-            capacity = 2, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["fourriere3"] = BoxZone:Create(vector3(481.31, -1334.2, 29.33), 6, 4, {
@@ -1226,7 +1226,7 @@ PlacesFourriere = {
         maxZ = 32.33,
         data = {
             indexGarage = "fourriere",
-            capacity = 2, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
     ["fourriere4"] = BoxZone:Create(vector3(488.13, -1366.4, 29.25), 6, 4, {
@@ -1236,7 +1236,7 @@ PlacesFourriere = {
         maxZ = 32.25,
         data = {
             indexGarage = "fourriere",
-            capacity = 3, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }
@@ -1448,10 +1448,26 @@ PlacesEntreprise = {
         maxZ = 143.64,
         data = {indexGarage = "food"},
     }),
-    ["mtp1"] = BoxZone:Create(vector3(-285.17, 6018.65, 31.47), 18.0, 6.6,
-                              {name = "mtp1", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
-    ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6,
-                              {name = "mtp2", heading = 315, minZ = 30.47, maxZ = 33.47, data = {indexGarage = "mtp"}}),
+    ["mtp1"] = BoxZone:Create(vector3(-285.17, 6018.65, 31.47), 18.0, 6.6, {
+        name = "mtp1",
+        heading = 315,
+        minZ = 30.47,
+        maxZ = 33.47,
+        data = {
+            indexGarage = "mtp",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["mtp2"] = BoxZone:Create(vector3(-289.91, 6024.54, 31.47), 18.0, 6.6, {
+        name = "mtp2",
+        heading = 315,
+        minZ = 30.47,
+        maxZ = 33.47,
+        data = {
+            indexGarage = "mtp",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
     ["taxi1"] = BoxZone:Create(vector3(911.33, -162.69, 74.13), 6.2, 3.2,
                                {name = "taxi1", heading = 15, minZ = 72.69, maxZ = 76.53, data = {indexGarage = "taxi"}}),
     ["taxi2"] = BoxZone:Create(vector3(913.54, -159.2, 74.69), 6.6, 3.2,
