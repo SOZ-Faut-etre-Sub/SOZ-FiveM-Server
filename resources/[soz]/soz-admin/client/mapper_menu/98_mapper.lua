@@ -43,4 +43,6 @@ mapperMenu:AddCheckbox({
 })
 
 --- Add to main menu
-MapperMenu:AddButton({icon = "🚧", label = "Outils pour mappeur", value = mapperMenu})
+function MapperMenuMapper(menu)
+    menu:AddButton({icon = "🚧", label = "Outils pour mappeur", value = mapperMenu})
+end

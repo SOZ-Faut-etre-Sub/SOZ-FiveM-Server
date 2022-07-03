@@ -34,6 +34,12 @@ local function OpenMapperMenu()
     if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= MapperMenu.UUID then
         QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed, permission)
             if isAllowed then
+                MapperMenu:ClearItems()
+
+                MapperMenuProps(MapperMenu)
+                MapperMenuHousing(MapperMenu)
+                MapperMenuMapper(MapperMenu)
+
                 MenuV:CloseAll(function()
                     MapperMenu:Open()
                 end)
