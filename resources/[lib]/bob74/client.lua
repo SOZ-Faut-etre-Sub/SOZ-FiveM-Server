@@ -90,10 +90,10 @@ Citizen.CreateThread(function()
     -- ====================================================================
     -- =-------------------- [DLC: Finance  & Felony] --------------------=
     -- ====================================================================
-    -- FinanceOffice1.LoadDefault() -- -141.1987, -620.913, 168.8205 (Arcadius Business Centre)
-    -- FinanceOffice2.LoadDefault() -- -75.8466, -826.9893, 243.3859 (Maze Bank Building)
-    -- FinanceOffice3.LoadDefault() -- -1579.756, -565.0661, 108.523 (Lom Bank)
-    -- FinanceOffice4.LoadDefault() -- -1392.667, -480.4736, 72.04217 (Maze Bank West)
+    FinanceOffice1.LoadDefault() -- -141.1987, -620.913, 168.8205 (Arcadius Business Centre)
+    FinanceOffice2.LoadDefault() -- -75.8466, -826.9893, 243.3859 (Maze Bank Building)
+    FinanceOffice3.LoadDefault() -- -1579.756, -565.0661, 108.523 (Lom Bank)
+    FinanceOffice4.LoadDefault() -- -1392.667, -480.4736, 72.04217 (Maze Bank West)
 
     -- ====================================================================
     -- =-------------------------- [DLC: Bikers] -------------------------=
