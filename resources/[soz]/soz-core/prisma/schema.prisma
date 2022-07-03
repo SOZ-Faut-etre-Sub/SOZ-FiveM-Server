@@ -328,6 +328,7 @@ model player_vehicles {
   fakeplate       String? @db.VarChar(50)
   garage          String? @db.VarChar(50)
   job             String? @db.VarChar(15)
+  category        String  @default("car") @db.VarChar(50)
   fuel            Int?    @default(100)
   engine          Float?  @default(1000) @db.Float
   body            Float?  @default(1000) @db.Float
@@ -345,12 +346,12 @@ model player_vehicles {
 }
 
 model storages {
-  name       String         @id @db.VarChar(50)
-  type       storages_type?
-  owner      String?        @db.VarChar(64)
-  max_slots  Int?           @default(10)
-  max_weight Int?           @default(250000)
-  inventory  String?        @db.LongText
+  name       String  @id @db.VarChar(50)
+  type       String? @db.VarChar(50)
+  owner      String? @db.VarChar(64)
+  max_slots  Int?    @default(10)
+  max_weight Int?    @default(250000)
+  inventory  String? @db.LongText
 
   @@index([owner], map: "owner")
   @@index([type], map: "type")
@@ -368,18 +369,5 @@ enum bank_accounts_account_type {
   business
   safestorages
   offshore
-  bank_atm @map("bank-atm")
-}
-
-enum storages_type {
-  fridge
-  storage
-  storage_tank
-  boss_storage
-  stash
-  armory
-  seizure
-  trunk
-  ammo
-  organ
+  bank_atm      @map("bank-atm")
 }
