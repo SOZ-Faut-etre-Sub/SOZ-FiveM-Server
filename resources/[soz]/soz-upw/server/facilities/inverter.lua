@@ -5,7 +5,7 @@ function Inverter:new(identifier, options)
 
     self.fields_to_save = {"type", "capacity", "maxCapacity", "zone"}
 
-    self.prop = "prop_gnome3"
+    self.prop = "upwpile"
     self:placeProp()
 
     setmetatable(self, {__index = Inverter})
