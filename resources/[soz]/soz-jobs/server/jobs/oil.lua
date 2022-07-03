@@ -109,8 +109,8 @@ end)
 
 RegisterNetEvent("jobs:server:fueler:craftKerosene", function()
     local Player = QBCore.Functions.GetPlayer(source)
-    local keroseneItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "petroleum_refined", nil, true) / 2)
-    local petrolItemAmount = math.ceil(keroseneItemAmount * 2)
+    local keroseneItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "petroleum_refined", nil, true) / 4)
+    local petrolItemAmount = math.ceil(keroseneItemAmount * 4)
 
     if petrolItemAmount <= 1 then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez de pétrole pour transformer en kérosène.", "error")
