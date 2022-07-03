@@ -55,6 +55,15 @@ Config.Shops = {
         ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
         ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
     },
+    ["air"] = {
+        ["ShopLabel"] = "Concess Aérien", -- Blip name
+        ["showBlip"] = true,
+        ["Categories"] = {["Helicopters"] = "Hélicoptères"},
+        ["Location"] = vector3(1734.18, 3313.44, 41.22), -- Blip Location
+        ["CameraPosition"] = vector4(1733.07, 3303.82, 41.22, 13.55),
+        ["VehicleSpawn"] = vector4(1730.47, 3314.38, 40.22, 153.64), -- Spawn location when vehicle is bought
+        ["PedPosition"] = vector4(1743.13, 3307.23, 40.22, 148.91),
+    },
 }
 
 Config.JerryCanRefill = 30.0
@@ -160,8 +169,8 @@ Garages = {
     },
     ["airport_air"] = {
         label = "Airport Public Air Parking",
-        blipcoord = vector3(-1138.35, -2850.65, 13.95),
-        showBlip = false,
+        blipcoord = vector3(-1140.28, -2853.35, 12.95),
+        showBlip = true,
         blipName = "Parking Public",
         blipNumber = 360,
         type = "public", -- public, job, gang, depot
@@ -267,9 +276,9 @@ Garages = {
         vehicle = "car", -- car, air, sea
     },
     ["marina_air"] = {
-        label = "Vespucci Air Parking",
+        label = "Marina Drive Air Parking",
         blipcoord = vector4(-713.87, -1416.37, 4.0, 4.18),
-        showBlip = false,
+        showBlip = true,
         blipName = "Parking Aérien Public",
         blipNumber = 360,
         type = "public", -- public, job, gang, depot
@@ -278,7 +287,7 @@ Garages = {
     ["sandy_air"] = {
         label = "Sandy Shores Air Parking",
         blipcoord = vector4(1760.42, 3231.41, 41.25, 191.13),
-        showBlip = false,
+        showBlip = true,
         blipName = "Parking Aérien Public",
         blipNumber = 360,
         type = "public", -- public, job, gang, depot
@@ -345,7 +354,7 @@ Garages = {
     },
     ["bcso_air"] = {
         label = "BCSO",
-        blipcoord = vector4(1814.08, 3724.05, 33.67, 26.91),
+        blipcoord = vector4(1814.08, 3724.05, 32.67, 26.91),
         showBlip = false,
         blipName = "BCSO",
         blipNumber = 360,
@@ -415,7 +424,7 @@ Garages = {
     },
     ["news_air"] = {
         label = "Twitch News",
-        blipcoord = vector4(-592.72, -928.48, 36.83, 93.08),
+        blipcoord = vector4(-592.72, -928.48, 35.83, 93.08),
         showBlip = false,
         blipName = "Twitch News",
         blipNumber = 357,

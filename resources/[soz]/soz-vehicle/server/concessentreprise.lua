@@ -11,7 +11,7 @@ MySQL.ready(function()
                 Vehicles[v.job] = {}
             end
 
-            Vehicles[v.job][v.vehicle] = {price = v.price}
+            Vehicles[v.job][v.vehicle] = {price = v.price, category = v.category or "car"}
         end
     end)
 end)
