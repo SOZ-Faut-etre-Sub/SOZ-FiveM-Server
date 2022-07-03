@@ -1314,7 +1314,7 @@ QBShared.Items = {
         ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin rouge avec une légère note sucrée !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['wine2'] = {
@@ -1328,7 +1328,7 @@ QBShared.Items = {
         ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin blanc assez sucré !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['wine3'] = {
@@ -1342,7 +1342,7 @@ QBShared.Items = {
         ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin blanc avec une note d\'acidité !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['wine4'] = {
@@ -1356,7 +1356,7 @@ QBShared.Items = {
         ['durability'] = 3650,
         ['combinable'] = nil,
         ['description'] = 'Vin blanc sirupeux au petit goût de miel !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['grapejuice1'] = {
@@ -1370,7 +1370,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus de raisins rouges !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['grapejuice2'] = {
@@ -1384,7 +1384,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus très sucré !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['grapejuice3'] = {
@@ -1398,7 +1398,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus de fruit légèrement acide !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['grapejuice4'] = {
@@ -1412,7 +1412,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus multifruits, pleins de vitamines !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['grapejuice5'] = {
@@ -1426,7 +1426,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Jus de fruit au miel !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['tripe'] = {
@@ -1535,7 +1535,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un gout inimaginable !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['sausage2'] = {
@@ -1549,7 +1549,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Le saucisson le plus long jamais vu !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['sausage3'] = {
@@ -1563,7 +1563,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un peu plus gras que la moyenne !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['sausage4'] = {
@@ -1577,7 +1577,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Pour un apéro réussi entre amis !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['sausage5'] = {
@@ -1591,7 +1591,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un gout très prononcé !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['milkbucket'] = {
@@ -1629,7 +1629,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Idéal en tranche ou rapé !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese2'] = {
@@ -1643,7 +1643,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un amour du fromage !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese3'] = {
@@ -1657,7 +1657,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Parait que c\'est bon avec du café !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese4'] = {
@@ -1671,7 +1671,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un fromage légèrement salé !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese5'] = {
@@ -1685,7 +1685,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Très bon avec une confiture !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese6'] = {
@@ -1699,7 +1699,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Le fromage des touts petits !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese7'] = {
@@ -1713,7 +1713,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Dans une bonne baguette !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese8'] = {
@@ -1727,7 +1727,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Idéal pour les burgers !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
     ['cheese9'] = {
@@ -1741,7 +1741,7 @@ QBShared.Items = {
         ['durability'] = 14,
         ['combinable'] = nil,
         ['description'] = 'Un très bon fromage fondu en sauce !',
-        ['resellPrice'] = 50,
+        ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
     },
 
