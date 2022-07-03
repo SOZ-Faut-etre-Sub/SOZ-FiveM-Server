@@ -18,5 +18,5 @@ table.insert(migrations, {
                     }
                 }' WHERE station = 'Station13';
         ]],
-    }
+    },
 })
