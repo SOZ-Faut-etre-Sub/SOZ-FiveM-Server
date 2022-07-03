@@ -1,5 +1,4 @@
---- @type Menu
-local propsMenu = MenuV:InheritMenu(MapperMenu, {subtitle = "Un poteau, une borne, des poubelles !"})
+local propsMenu
 
 local PropOption = {model = nil, event = nil, setupMode = false, prop = nil, propCoord = vec4(0, 0, 0, 0)}
 
@@ -27,122 +26,171 @@ local function selectModel(model)
 end
 
 --- Menu
-propsMenu:AddSlider({
-    label = "Choisir un modèle",
-    value = nil,
-    values = {{label = "poubelle", value = "soz_prop_bb_bin"}},
-    select = function(_, value)
-        selectModel(value)
-    end,
-})
-propsMenu:AddButton({
-    label = "Choisir un autre modèle",
-    value = nil,
-    select = function()
-        selectModel()
-    end,
-})
+function MapperMenuProps(menu)
 
-propsMenu:AddSlider({
-    label = "Choisir un évènement",
-    description = "Permet de filtrer les objets a afficher",
-    value = nil,
-    values = {{label = "Tout le temps", value = nil}, {label = "Noël", value = "xmas"}},
-    select = function(_, value)
-        PropOption.event = value
-    end,
-})
+    if propsMenu == nil then
+        propsMenu = MenuV:InheritMenu(menu, {subtitle = "Un poteau, une borne, des poubelles !"})
+    end
 
-propsMenu:AddSlider({
-    label = "Installation mode",
-    value = nil,
-    values = {{label = "Activer", value = "installOn"}, {label = "Désactiver", value = "installOff"}},
-    select = function(_, value)
-        if value == "installOn" then
-            PropOption.setupMode = true
+    propsMenu:ClearItems()
 
-            CreateThread(function()
-                local delta = 0.01
-                setupGhostProp()
-                SetEntityAlpha(PropOption.prop, 204, false)
+    propsMenu:AddSlider({
+        label = "Choisir un modèle",
+        value = nil,
+        values = {
+            {label = "poubelle", value = "soz_prop_bb_bin"},
+            {label = "borne civile", value = "prop_elecbox_02a___default"},
+            {label = "borne entreprise", value = "prop_elecbox_02a___entreprise"},
+            {label = "onduleur", value = "upwpile"},
+        },
+        select = function(_, value)
+            local names = QBCore.Shared.SplitStr(value, "___")
+            local val, scope = names[1], names[2]
 
-                while PropOption.setupMode do
-                    DisableControlAction(0, 27, true)
-                    DisableControlAction(0, 36, true)
-                    DisableControlAction(0, 207, true)
-                    DisableControlAction(0, 208, true)
-                    DisableControlAction(0, 261, true)
-                    DisableControlAction(0, 262, true)
+            selectModel(val)
+            PropOption.scope = scope
+        end,
+    })
 
-                    if IsDisabledControlPressed(0, 36) then -- ctrl
-                        if IsDisabledControlPressed(0, 27) then -- arrow up
-                            PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y + delta, PropOption.propCoord.z, PropOption.propCoord.w)
-                        end
-                        if IsControlPressed(0, 173) then -- arrow down
-                            PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y - delta, PropOption.propCoord.z, PropOption.propCoord.w)
-                        end
-                        if IsControlPressed(0, 174) then -- arrow left
-                            PropOption.propCoord = vec4(PropOption.propCoord.x - delta, PropOption.propCoord.y, PropOption.propCoord.z, PropOption.propCoord.w)
-                        end
-                        if IsControlPressed(0, 175) then -- arrow right
-                            PropOption.propCoord = vec4(PropOption.propCoord.x + delta, PropOption.propCoord.y, PropOption.propCoord.z, PropOption.propCoord.w)
+    propsMenu:AddButton({
+        label = "Choisir un autre modèle",
+        value = nil,
+        select = function()
+            selectModel()
+        end,
+    })
+
+    propsMenu:AddSlider({
+        label = "Choisir un évènement",
+        description = "Permet de filtrer les objets a afficher",
+        value = nil,
+        values = {{label = "Tout le temps", value = nil}, {label = "Noël", value = "xmas"}},
+        select = function(_, value)
+            PropOption.event = value
+        end,
+    })
+
+    propsMenu:AddSlider({
+        label = "Choisir une entreprise",
+        description = "Lier la prop à une entreprise (borne entreprise)",
+        value = nil,
+        values = BuildJobList(),
+        select = function(_, value)
+            if value and value.jobID ~= nil then
+                PropOption.job = value.jobID
+            end
+        end,
+    })
+
+    propsMenu:AddSlider({
+        label = "Installation mode",
+        value = nil,
+        values = {{label = "Activer", value = "installOn"}, {label = "Désactiver", value = "installOff"}},
+        select = function(_, value)
+            if value == "installOn" then
+                PropOption.setupMode = true
+
+                CreateThread(function()
+                    local delta = 0.01
+                    setupGhostProp()
+                    SetEntityAlpha(PropOption.prop, 204, false)
+
+                    while PropOption.setupMode do
+                        DisableControlAction(0, 27, true)
+                        DisableControlAction(0, 36, true)
+                        DisableControlAction(0, 207, true)
+                        DisableControlAction(0, 208, true)
+                        DisableControlAction(0, 261, true)
+                        DisableControlAction(0, 262, true)
+
+                        if IsDisabledControlPressed(0, 36) then -- ctrl
+                            if IsDisabledControlPressed(0, 27) then -- arrow up
+                                PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y + delta, PropOption.propCoord.z,
+                                                            PropOption.propCoord.w)
+                            end
+                            if IsControlPressed(0, 173) then -- arrow down
+                                PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y - delta, PropOption.propCoord.z,
+                                                            PropOption.propCoord.w)
+                            end
+                            if IsControlPressed(0, 174) then -- arrow left
+                                PropOption.propCoord = vec4(PropOption.propCoord.x - delta, PropOption.propCoord.y, PropOption.propCoord.z,
+                                                            PropOption.propCoord.w)
+                            end
+                            if IsControlPressed(0, 175) then -- arrow right
+                                PropOption.propCoord = vec4(PropOption.propCoord.x + delta, PropOption.propCoord.y, PropOption.propCoord.z,
+                                                            PropOption.propCoord.w)
+                            end
+
+                            if IsDisabledControlPressed(0, 208) then -- arrow right
+                                PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z + delta,
+                                                            PropOption.propCoord.w)
+                            end
+                            if IsDisabledControlPressed(0, 207) then -- arrow right
+                                PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z - delta,
+                                                            PropOption.propCoord.w)
+                            end
+
+                            if IsDisabledControlPressed(0, 261) then -- arrow right
+                                PropOption.propCoord =
+                                    vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z, PropOption.propCoord.w + 1.0)
+                            end
+                            if IsDisabledControlPressed(0, 262) then -- arrow right
+                                PropOption.propCoord =
+                                    vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z, PropOption.propCoord.w - 1.0)
+                            end
+
+                            SetEntityCoords(PropOption.prop, PropOption.propCoord)
+                            SetEntityHeading(PropOption.prop, PropOption.propCoord.w)
                         end
 
-                        if IsDisabledControlPressed(0, 208) then -- arrow right
-                            PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z + delta, PropOption.propCoord.w)
-                        end
-                        if IsDisabledControlPressed(0, 207) then -- arrow right
-                            PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z - delta, PropOption.propCoord.w)
-                        end
-
-                        if IsDisabledControlPressed(0, 261) then -- arrow right
-                            PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z, PropOption.propCoord.w + 1.0)
-                        end
-                        if IsDisabledControlPressed(0, 262) then -- arrow right
-                            PropOption.propCoord = vec4(PropOption.propCoord.x, PropOption.propCoord.y, PropOption.propCoord.z, PropOption.propCoord.w - 1.0)
-                        end
-
-                        SetEntityCoords(PropOption.prop, PropOption.propCoord)
-                        SetEntityHeading(PropOption.prop, PropOption.propCoord.w)
+                        Wait(0)
                     end
+                end)
+            elseif value == "installOff" then
+                PropOption.setupMode = false
+                SetEntityAlpha(PropOption.prop, 255, false)
+            end
+        end,
+    })
 
-                    Wait(0)
-                end
-            end)
-        elseif value == "installOff" then
-            PropOption.setupMode = false
-            SetEntityAlpha(PropOption.prop, 255, false)
-        end
-    end,
-})
+    propsMenu:AddButton({
+        label = "~r~Annuler~s~ la position de l'objet",
+        value = nil,
+        select = function()
+            if PropOption.prop ~= nil then
+                DeleteEntity(PropOption.prop)
+            end
 
-propsMenu:AddButton({
-    label = "~r~Annuler~s~ la position de l'objet",
-    value = nil,
-    select = function()
-        if PropOption.prop ~= nil then
+            PropOption.setupMode = nil
+            PropOption.prop = nil
+            PropOption.scope = nil
+            PropOption.job = nil
+        end,
+    })
+
+    propsMenu:AddButton({
+        label = "~g~Valider~s~ la position de l'objet",
+        value = nil,
+        select = function()
+            if PropOption.prop == nil or PropOption.model == nil then
+                return
+            end
+
+            if PropOption.model == "soz_prop_bb_bin" then
+                TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
+            elseif PropOption.model == "prop_elecbox_02a" or PropOption.model == "upwpile" then
+                TriggerServerEvent("soz-upw:server:AddFacility", PropOption.model, PropOption.propCoord, PropOption.scope, PropOption.job)
+            end
+
             DeleteEntity(PropOption.prop)
-        end
 
-        PropOption.setupMode = nil
-        PropOption.prop = nil
-    end,
-})
-propsMenu:AddButton({
-    label = "~g~Valider~s~ la position de l'objet",
-    value = nil,
-    select = function()
-        if PropOption.prop == nil or PropOption.model == nil then
-            return
-        end
+            PropOption.prop = nil
+            PropOption.model = nil
+            PropOption.scope = nil
+            PropOption.job = nil
+        end,
+    })
 
-        TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
-        DeleteEntity(PropOption.prop)
-
-        PropOption.prop = nil
-        PropOption.model = nil
-    end,
-})
-
---- Add to main menu
-MapperMenu:AddButton({icon = "🚏", label = "Gestion des objets", value = propsMenu})
+    --- Add to main menu
+    menu:AddButton({icon = "🚏", label = "Gestion des objets", value = propsMenu})
+end
