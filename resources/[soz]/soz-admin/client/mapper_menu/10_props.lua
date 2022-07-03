@@ -41,7 +41,7 @@ function MapperMenuProps(menu)
             {label = "poubelle", value = "soz_prop_bb_bin"},
             {label = "borne civile", value = "prop_elecbox_02a___default"},
             {label = "borne entreprise", value = "prop_elecbox_02a___entreprise"},
-            {label = "onduleur", value = "prop_gnome3"},
+            {label = "onduleur", value = "upwpile"},
         },
         select = function(_, value)
             local names = QBCore.Shared.SplitStr(value, "___")
@@ -178,7 +178,7 @@ function MapperMenuProps(menu)
 
             if PropOption.model == "soz_prop_bb_bin" then
                 TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
-            elseif PropOption.model == "prop_elecbox_02a" or PropOption.model == "prop_gnome3" then
+            elseif PropOption.model == "prop_elecbox_02a" or PropOption.model == "upwpile" then
                 TriggerServerEvent("soz-upw:server:AddFacility", PropOption.model, PropOption.propCoord, PropOption.scope, PropOption.job)
             end
 
