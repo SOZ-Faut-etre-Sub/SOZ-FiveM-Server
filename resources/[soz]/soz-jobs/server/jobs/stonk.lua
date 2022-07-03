@@ -79,12 +79,12 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
 
     if data.bank ~= nil then
         TriggerEvent("monitor:server:event", "job_stonk_fill_account",
-                     {player_source = Player.PlayerData.source, account_type = "bank", account_id = result.accountId},
-                     {amount = tonumber(amount), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))}, true)
+                     {player_source = source, account_type = "bank", account_id = result.accountId},
+                     {amount = tonumber(amount), position = GetEntityCoords(GetPlayerPed(source))}, true)
     else
         TriggerEvent("monitor:server:event", "job_stonk_fill_account",
-                     {player_source = Player.PlayerData.source, account_type = "atm", account_id = result.accountId},
-                     {amount = tonumber(amount), position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))}, true)
+                     {player_source = source, account_type = "atm", account_id = result.accountId},
+                     {amount = tonumber(amount), position = GetEntityCoords(GetPlayerPed(source))}, true)
     end
 
     cb({success = true})
