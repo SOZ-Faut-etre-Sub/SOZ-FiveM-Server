@@ -96,8 +96,7 @@ function Facility:placeProp()
         return
     end
 
-    local obj = CreateObject(GetHashKey(self.prop), self.zone.coords.x, self.zone.coords.y, self.zone.coords.z, true, true)
-    SetEntityRotation(obj, 0.0, 0.0, self.zone.heading)
+    exports["soz-utils"]:CreateObject(GetHashKey(self.prop), self.zone.coords.x, self.zone.coords.y, self.zone.coords.z, self.zone.heading, 8000.0, true)
 end
 
 --
