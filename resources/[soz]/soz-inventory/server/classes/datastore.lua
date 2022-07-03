@@ -1,22 +1,30 @@
 InventoryDatastore = {}
 
-function InventoryDatastore:new(type, allowedTypes, populateDatastoreCallback)
+function InventoryDatastore:new(options)
     self.__index = self
+    local inventoryOptions = {type = nil, allowedTypes = {}, populateDatastoreCallback = nil}
 
-    if not type then
+    if not options.type then
         error("InventoryDatastore:new() - type is required")
     end
 
-    if not allowedTypes then
+    if not options.allowedTypes then
         error("InventoryDatastore:new() - allowedTypes is required")
     end
 
-    local itemsType = {}
-    for _, v in pairs(allowedTypes) do
-        itemsType[v] = true
+    for key, value in pairs(options) do
+        if key == "allowedTypes" then
+            local itemsType = {}
+            for _, v in pairs(value) do
+                itemsType[v] = true
+            end
+            value = itemsType
+        end
+
+        inventoryOptions[key] = value
     end
 
-    return setmetatable({type = type, allowedTypes = itemsType, populateDatastoreCallback = populateDatastoreCallback}, self)
+    return setmetatable(inventoryOptions, self)
 end
 
 function InventoryDatastore:GetCapacity()

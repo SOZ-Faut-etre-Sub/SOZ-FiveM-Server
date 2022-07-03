@@ -1,27 +1,37 @@
 InventoryContainer = {}
 
-function InventoryContainer:new(type, allowedTypes, inventoryPermissionCallback, syncCallback)
+function InventoryContainer:new(options)
     self.__index = self
+    local inventoryOptions = {
+        type = nil,
+        allowedTypes = {},
+        inventoryPermissionCallback = nil,
+        syncCallback = nil,
+        inventoryGetContentCallback = nil,
+        inventoryPutContentCallback = nil,
+    }
 
-    if not type then
+    if not options.type then
         error("InventoryContainer:new() - type is required")
     end
 
-    if not allowedTypes then
+    if not options.allowedTypes then
         error("InventoryContainer:new() - allowedTypes is required")
     end
 
-    local itemsType = {}
-    for _, v in pairs(allowedTypes) do
-        itemsType[v] = true
+    for key, value in pairs(options) do
+        if key == "allowedTypes" then
+            local itemsType = {}
+            for _, v in pairs(value) do
+                itemsType[v] = true
+            end
+            value = itemsType
+        end
+
+        inventoryOptions[key] = value
     end
 
-    return setmetatable({
-        type = type,
-        allowedTypes = itemsType,
-        inventoryCheckPlayerPermission = inventoryPermissionCallback,
-        inventorySync = syncCallback,
-    }, self)
+    return setmetatable(inventoryOptions, self)
 end
 
 function InventoryContainer:CompactInventory(inv)
@@ -83,8 +93,8 @@ function InventoryContainer:SaveInventory(id, owner, inventory)
 end
 
 function InventoryContainer:SyncInventory(id, items)
-    if self.inventorySync then
-        self.inventorySync(id, items)
+    if self.syncCallback then
+        self.syncCallback(id, items)
     end
 end
 
@@ -99,12 +109,39 @@ end
 function InventoryContainer:CanPlayerUseInventory(owner, playerId)
     local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
 
-    if not self.inventoryCheckPlayerPermission then
+    if not self.inventoryPermissionCallback then
         return true
     end
 
     if Player then
-        return self.inventoryCheckPlayerPermission(Player, owner)
+        return self.inventoryPermissionCallback(Player, owner)
+    else
+        return false
+    end
+end
+
+function InventoryContainer:CanPlayerGetContentInInventory(owner, playerId)
+    local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
+
+    if not self.inventoryGetContentCallback then
+        return true
+    end
+
+    if Player then
+        return self.inventoryGetContentCallback(Player, owner)
+    else
+        return false
+    end
+end
+function InventoryContainer:CanPlayerPutContentInInventory(owner, playerId)
+    local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
+
+    if not self.inventoryPutContentCallback then
+        return true
+    end
+
+    if Player then
+        return self.inventoryPutContentCallback(Player, owner)
     else
         return false
     end
