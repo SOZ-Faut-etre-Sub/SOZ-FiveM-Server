@@ -91,6 +91,14 @@ function Facility:save(isAsync)
     end
 end
 
+function Facility:placeProp()
+    if not self.prop or not self.zone then
+        return
+    end
+
+    local obj = CreateObject(GetHashKey(self.prop), self.zone.coords.x, self.zone.coords.y, self.zone.coords.z, self.zone.heading, 8000.0, true)
+end
+
 --
 -- ENERGY HARVEST
 --
