@@ -354,7 +354,7 @@ Garages = {
     },
     ["bcso_air"] = {
         label = "BCSO",
-        blipcoord = vector4(1814.08, 3724.05, 33.67, 26.91),
+        blipcoord = vector4(1814.08, 3724.05, 32.67, 26.91),
         showBlip = false,
         blipName = "BCSO",
         blipNumber = 360,
@@ -424,7 +424,7 @@ Garages = {
     },
     ["news_air"] = {
         label = "Twitch News",
-        blipcoord = vector4(-592.72, -928.48, 36.83, 93.08),
+        blipcoord = vector4(-592.72, -928.48, 35.83, 93.08),
         showBlip = false,
         blipName = "Twitch News",
         blipNumber = 357,
