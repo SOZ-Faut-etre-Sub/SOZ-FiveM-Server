@@ -46,9 +46,10 @@ Container["fridge"] = InventoryContainer:new({
 
 Container["trunk"] = InventoryContainer:new({
     type = "trunk",
-    allowedTypes = {"weapon", "weapon_ammo", "item", "drug", "drink", "food", "oil_and_item", "log", "plank", "sawdust"},
+    allowedTypes = {"weapon", "weapon_ammo", "item", "drug", "drink", "food", "oil_and_item", "plank", "sawdust"},
 })
 Container["tanker"] = InventoryContainer:new({type = "trunk", allowedTypes = {"oil", "oil_and_item"}})
+Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes = {"log"}})
 
 Container["storage"] = InventoryContainer:new({
     type = "storage",
