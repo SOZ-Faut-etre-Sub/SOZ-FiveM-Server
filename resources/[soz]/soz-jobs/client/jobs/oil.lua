@@ -513,8 +513,12 @@ RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
     TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
     Wait(500)
 
-    local stationStock = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", CurrentStation)
-    local refillRequest = exports["soz-hud"]:Input("Quantité a ajouter (en Litre) :", 4, MaxFuelInStation - stationStock)
+    local station = QBCore.Functions.TriggerRpc("fuel:server:GetStation", CurrentStation)
+    if station == nil then
+        return
+    end
+
+    local refillRequest = exports["soz-hud"]:Input("Quantité a ajouter (en Litre) :", 4, MaxFuelInStation - station.stock)
     local model = GetEntityModel(Tanker.vehicle)
     local class = GetVehicleClass(Tanker.vehicle)
     local hasInventory = QBCore.Functions.TriggerRpc("jobs:server:fueler:ensureInventory", Tanker.vehicle, model, class)
@@ -533,7 +537,7 @@ RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
 
     Tanker.using = true
 
-    if refillRequest and tonumber(refillRequest) >= 10 and tonumber(refillRequest) <= (MaxFuelInStation - stationStock) then
+    if refillRequest and tonumber(refillRequest) >= 10 and tonumber(refillRequest) <= (MaxFuelInStation - station.stock) then
         local canStationRefill = QBCore.Functions.TriggerRpc("jobs:server:fueler:canStationRefill", Tanker.vehicle, tonumber(refillRequest))
 
         if canStationRefill then
@@ -556,6 +560,41 @@ RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
     end
 
     Tanker.using = false
+end)
+
+RegisterNetEvent("jobs:client:fueler:StartKeroseneStationRefill", function(data)
+    local playerPed = PlayerPedId()
+    if CurrentStation == nil then
+        return
+    end
+
+    TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
+    Wait(500)
+
+    local station = QBCore.Functions.TriggerRpc("fuel:server:GetStation", CurrentStation)
+    if station == nil then
+        return
+    end
+
+    local refillRequest = exports["soz-hud"]:Input("Quantité a ajouter (en Litre) :", 4, MaxFuelInStation - station.stock)
+
+    if refillRequest and tonumber(refillRequest) >= 10 and tonumber(refillRequest) <= (MaxFuelInStation - station.stock) then
+        local canStationRefill = QBCore.Functions.TriggerRpc("jobs:server:fueler:canKeroseneStationRefill", tonumber(refillRequest))
+
+        if canStationRefill then
+            QBCore.Functions.Progressbar("fill", "Vous remplissez...", 20000, false, true, {
+                disableMovement = true,
+                disableCombat = true,
+            }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {}, function() -- Done
+                TriggerServerEvent("jobs:server:fueler:refillKeroseneStation", CurrentStation, tonumber(refillRequest))
+                exports["soz-hud"]:DrawNotification("La station service a été ~g~remplie~s~ !", "info")
+            end)
+        else
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas ~r~assez~s~ de bidon.", "error")
+        end
+    else
+        exports["soz-hud"]:DrawNotification("Valeur de remplissage ~r~incorrecte~s~.", "error")
+    end
 end)
 
 RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
