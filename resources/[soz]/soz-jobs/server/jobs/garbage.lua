@@ -46,7 +46,8 @@ RegisterNetEvent("jobs:server:garbage:processExpired", function(slot)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
                            ("Vous avez recyclé ~g~%d %s"):format(playerGarbageExpired.amount, playerGarbageExpired.label))
 
-        TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", playerGarbageExpired.amount * GarbageConfig.SellPrice["default"])
+        TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage",
+                     math.floor(playerGarbageExpired.amount * GarbageConfig.SellPrice["default"]))
         TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
             player_source = Player.PlayerData.source,
             item = playerGarbageExpired.name,
