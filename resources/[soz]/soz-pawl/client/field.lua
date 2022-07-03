@@ -7,7 +7,7 @@ local function TreeInteraction(identifier, position)
         heading = position.w or 0.0,
         minZ = position.z,
         maxZ = position.z + 5.0,
-        debugPoly = true,
+        debugPoly = false,
     }, {
         options = {
             {
@@ -48,12 +48,20 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
         return
     end
 
+    local ped = PlayerPedId()
+
+    local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)
+    GiveWeaponToPed(ped, HatchetWeapon, 1, false, true)
+    SetCurrentPedWeapon(ped, HatchetWeapon, true)
+
+    Wait(3000)
+
     exports["soz-hud"]:DrawNotification("Vous êtes en train de ~g~couper l’arbre~s~.")
     local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.Duration, false, true,
                                                         {disableMovement = true, disableCombat = true},
                                                         {
-        animDict = "melee@hatchet@streamed_core",
-        anim = "plyr_front_takedown",
+        animDict = "melee@large_wpn@streamed_core",
+        anim = "plyr_rear_takedown_bat_r_facehit",
         flags = 17,
     }, {}, {})
 
@@ -70,6 +78,8 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
             exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
         end
     end
+
+    RemoveWeaponFromPed(ped, HatchetWeapon)
 end)
 
 RegisterNetEvent("pawl:client:syncField", function(identifier, data)

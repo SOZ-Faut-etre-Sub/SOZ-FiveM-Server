@@ -1,4 +1,15 @@
 local tankers = {[GetHashKey("tanker")] = true, [GetHashKey("tanker2")] = true}
+local trailerlogs = {[GetHashKey("trailerlogs")] = true}
+
+local vehicleTrunkType = function(model)
+    if tankers[model] then
+        return "tanker"
+    elseif trailerlogs[model] then
+        return "trailerlogs"
+    else
+        return "trunk"
+    end
+end
 
 -- TODO: implement key management
 local function OpenTrunk()
@@ -22,7 +33,7 @@ local function OpenTrunk()
                     local model = GetEntityModel(vehicle)
                     local class = GetVehicleClass(vehicle)
 
-                    TriggerServerEvent("inventory:server:openInventory", tankers[model] and "tanker" or "trunk", plate, {
+                    TriggerServerEvent("inventory:server:openInventory", vehicleTrunkType(model), plate, {
                         model = model,
                         class = class,
                     })
@@ -41,8 +52,10 @@ local function OpenTrunk()
                                 local model = GetEntityModel(vehicle)
                                 local class = GetVehicleClass(vehicle)
 
-                                TriggerServerEvent("inventory:server:openInventory", tankers[model] and "tanker" or "trunk", plate,
-                                                   {model = model, class = class})
+                                TriggerServerEvent("inventory:server:openInventory", vehicleTrunkType(model), plate, {
+                                    model = model,
+                                    class = class,
+                                })
                             else
                                 exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
                             end
