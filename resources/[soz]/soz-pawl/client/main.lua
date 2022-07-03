@@ -84,6 +84,53 @@ Citizen.CreateThread(function()
         },
         distance = 1.5,
     })
+
+    exports["qb-target"]:AddBoxZone("pawl:duty", vector3(-539.36, 5305.28, 76.37), 0.4, 1.2,
+        {name = "pawl:duty", heading = 340, minZ=76.12,
+         maxZ=76.77},
+        {options = SozJobCore.Functions.GetDutyActions("pawl"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("pawl:shop", vector3(-534.49, 5301.55, 76.37), 0.4, 2.55, {
+        name = "pawl:shop",
+        heading = 70,
+        minZ = 75.37,
+        maxZ = 77.47,
+    }, {options = {
+        label = "Récupérer du matériel",
+        icon = "fas fa-briefcase",
+        action = function()
+            TriggerEvent("jobs:client:bossShop", "PawlConfig")
+        end,
+        canInteract = function()
+            return SozJobCore.Functions.HasPermission("pawl", SozJobCore.JobPermission.SocietyShop)
+        end,
+        job = "pawl",
+    }, distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("pawl:cloakroom1", vector3(-532.21, 5308.37, 76.37), 0.6, 7.2,
+        {name = "pawl:cloakroom1", heading = 250, minZ = 75.37, maxZ = 78.37}, {
+            options = {
+                {
+                    label = "S'habiller",
+                    icon = "c:jobs/habiller.png",
+                    event = "pawl:client:OpenCloakroomMenu",
+                    job = "pawl",
+                },
+            },
+            distance = 2.5,
+        })
+    exports["qb-target"]:AddBoxZone("pawl:cloakroom2", vector3(-541.12, 5311.85, 76.37), 0.6, 7.2,
+        {name = "pawl:cloakroom2", heading = 70, minZ = 75.37, maxZ = 78.37}, {
+            options = {
+                {
+                    label = "S'habiller",
+                    icon = "c:jobs/habiller.png",
+                    event = "pawl:client:OpenCloakroomMenu",
+                    job = "pawl",
+                },
+            },
+            distance = 2.5,
+        })
 end)
 
 RegisterNetEvent("pawl:client:craft", function(data)

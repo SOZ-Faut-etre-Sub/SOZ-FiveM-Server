@@ -14,6 +14,8 @@ RegisterNetEvent("jobs:shop:server:buy", function(itemID)
         item = FoodConfig.BossShop[itemID]
     elseif player.PlayerData.job.id == SozJobCore.JobType.CashTransfer then
         item = StonkConfig.BossShop[itemID]
+    elseif player.PlayerData.job.id == SozJobCore.JobType.Pawl then
+        item = PawlConfig.BossShop[itemID]
     end
 
     if item == nil then
