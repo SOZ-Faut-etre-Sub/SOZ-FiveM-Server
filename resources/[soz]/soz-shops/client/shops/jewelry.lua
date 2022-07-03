@@ -137,8 +137,6 @@ CreateThread(function()
                                 }, 1)
                             end,
                         })
-
-                        Wait(5)
                     end
                 end
             end

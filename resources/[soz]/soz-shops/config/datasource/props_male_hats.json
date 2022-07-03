@@ -75,10 +75,6 @@
             }
         },
         "3": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
             "1": {
                 "GXT": "HT_FMM_3_1",
                 "Localized": "Black Canvas Hat"
@@ -86,26 +82,6 @@
             "2": {
                 "GXT": "HT_FMM_3_2",
                 "Localized": "Tan Canvas Hat"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "4": {
@@ -116,30 +92,6 @@
             "1": {
                 "GXT": "HT_FMM_4_1",
                 "Localized": "Gray LS Fitted Cap"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "5": {
@@ -150,30 +102,6 @@
             "1": {
                 "GXT": "HT_FMM_5_1",
                 "Localized": "Gray Saggy Beanie"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "6": {
@@ -244,68 +172,10 @@
                 "Localized": "Yellow Flat Cap"
             }
         },
-        "8": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
         "9": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
             "5": {
                 "GXT": "HT_FMM_9_5",
                 "Localized": "Fruntalot Green Cap"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             },
             "7": {
                 "GXT": "HT_FMM_9_7",
@@ -313,71 +183,13 @@
             }
         },
         "10": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
             "5": {
                 "GXT": "HT_FMM_10_5",
                 "Localized": "Fruntalot Green Cap"
             },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
             "7": {
                 "GXT": "HT_FMM_10_7",
                 "Localized": "Stank Purple Cap"
-            }
-        },
-        "11": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "HT_FMM_11_1",
-                "Localized": "Black Pork Pie"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "HT_FMM_11_3",
-                "Localized": "Olive Pork Pie"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "HT_FMM_11_6",
-                "Localized": "Blue Pork Pie"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "12": {
@@ -389,21 +201,9 @@
                 "GXT": "HT_FMM_12_1",
                 "Localized": "White Fedora"
             },
-            "2": {
-                "GXT": "HT_FMM_12_2",
-                "Localized": "Ash Fedora"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
             "4": {
                 "GXT": "HT_FMM_12_4",
                 "Localized": "Brown Fedora"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             },
             "6": {
                 "GXT": "HT_FMM_12_6",
@@ -551,17 +351,9 @@
             }
         },
         "17": {
-            "0": {
-                "GXT": "HE_FMM_17_0",
-                "Localized": "Blue Open-Face Helmet"
-            },
             "1": {
                 "GXT": "HE_FMM_17_1",
                 "Localized": "Orange Open-Face Helmet"
-            },
-            "2": {
-                "GXT": "HE_FMM_17_2",
-                "Localized": "Pale Blue Open-Face Helmet"
             },
             "3": {
                 "GXT": "HE_FMM_17_3",
@@ -922,10 +714,6 @@
             "0": {
                 "GXT": "CLO_INDM_HT_2_0",
                 "Localized": "Red Top Foam Hat"
-            },
-            "1": {
-                "GXT": "CLO_INDM_HT_2_1",
-                "Localized": "Blue Top Foam Hat"
             }
         },
         "34": {
@@ -970,34 +758,6 @@
             "5": {
                 "GXT": "CLO_INDM_HT_6_5",
                 "Localized": "Supa Wet Beer Hat"
-            }
-        },
-        "38": {
-            "0": {
-                "GXT": "CLO_PIM_HT_0_0",
-                "Localized": "Flight Helmet"
-            }
-        },
-        "39": {
-            "0": {
-                "GXT": "CLO_LTSMH_0_0",
-                "Localized": "Black Bulletproof"
-            },
-            "1": {
-                "GXT": "CLO_LTSMH_0_1",
-                "Localized": "Gray Bulletproof"
-            },
-            "2": {
-                "GXT": "CLO_LTSMH_0_2",
-                "Localized": "Charcoal Bulletproof"
-            },
-            "3": {
-                "GXT": "CLO_LTSMH_0_3",
-                "Localized": "Tan Bulletproof"
-            },
-            "4": {
-                "GXT": "CLO_LTSMH_0_4",
-                "Localized": "Forest Bulletproof"
             }
         },
         "40": {
@@ -1142,18 +902,6 @@
             "7": {
                 "GXT": "CLO_X2M_HT_5_7",
                 "Localized": "Bah Humbug Flipped Cap"
-            }
-        },
-        "46": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "47": {
-            "0": {
-                "GXT": "CLO_HST_HT_1_0",
-                "Localized": "Black Flight Helmet"
             }
         },
         "48": {
@@ -1350,12 +1098,6 @@
                 "Localized": "Davis Fitted Cap"
             }
         },
-        "57": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
         "58": {
             "0": {
                 "GXT": "CLO_EXM_AH_1_0",
@@ -1368,48 +1110,6 @@
             "2": {
                 "GXT": "CLO_EXM_AH_1_2",
                 "Localized": "Black Cap"
-            }
-        },
-        "59": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "9": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "60": {
@@ -1630,18 +1330,6 @@
                 "Localized": "Royal Suit Fedora"
             }
         },
-        "65": {
-            "0": {
-                "GXT": "CLO_EXM_H_0_0",
-                "Localized": "SecuroServ Cap"
-            }
-        },
-        "66": {
-            "0": {
-                "GXT": "CLO_EXM_H_1_0",
-                "Localized": "SecuroServ Backwards Cap"
-            }
-        },
         "67": {
             "0": {
                 "GXT": "HE_FMM_18_0",
@@ -1726,18 +1414,6 @@
             "20": {
                 "GXT": "CLO_STM_HT1520",
                 "Localized": "Snakeskin Helmet"
-            },
-            "21": {
-                "GXT": "CLO_STM_HT1521",
-                "Localized": "Boost Helmet"
-            },
-            "22": {
-                "GXT": "CLO_STM_HT1522",
-                "Localized": "Tropic Helmet"
-            },
-            "23": {
-                "GXT": "CLO_STM_HT1523",
-                "Localized": "Atomic Helmet"
             }
         },
         "68": {
@@ -2152,28 +1828,6 @@
                 "Localized": "Xero Gas Cap"
             }
         },
-        "78": {
-            "0": {
-                "GXT": "CLO_STM_HT11_0",
-                "Localized": "White JC Helmet"
-            },
-            "1": {
-                "GXT": "CLO_STM_HT11_1",
-                "Localized": "Blue JC Helmet"
-            },
-            "2": {
-                "GXT": "CLO_STM_HT11_2",
-                "Localized": "Red JC Helmet"
-            },
-            "3": {
-                "GXT": "CLO_STM_HT11_3",
-                "Localized": "Black JC Helmet"
-            },
-            "4": {
-                "GXT": "CLO_STM_HT11_4",
-                "Localized": "Pink JC Helmet"
-            }
-        },
         "79": {
             "0": {
                 "GXT": "CLO_STM_HT11_0",
@@ -2316,18 +1970,6 @@
             "20": {
                 "GXT": "CLO_STM_HT1520",
                 "Localized": "Snakeskin Helmet"
-            },
-            "21": {
-                "GXT": "CLO_STM_HT1521",
-                "Localized": "Boost Helmet"
-            },
-            "22": {
-                "GXT": "CLO_STM_HT1522",
-                "Localized": "Tropic Helmet"
-            },
-            "23": {
-                "GXT": "CLO_STM_HT1523",
-                "Localized": "Atomic Helmet"
             }
         },
         "83": {
@@ -2776,48 +2418,6 @@
                 "Localized": "Glow Reindeer Antlers"
             }
         },
-        "102": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "9": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
         "103": {
             "0": {
                 "GXT": "CLO_GRM_PH_0_0",
@@ -2984,26 +2584,6 @@
             "20": {
                 "GXT": "CLO_GRM_PH_1_20",
                 "Localized": "Black Boonie Down"
-            },
-            "21": {
-                "GXT": "CLO_GRM_PH_1_21",
-                "Localized": "Slate Boonie Down"
-            },
-            "22": {
-                "GXT": "CLO_GRM_PH_1_22",
-                "Localized": "White Boonie Down"
-            },
-            "23": {
-                "GXT": "CLO_GRM_PH_1_23",
-                "Localized": "Chocolate Boonie Down"
-            },
-            "24": {
-                "GXT": "CLO_GRM_PH_1_24",
-                "Localized": "Olive Boonie Down"
-            },
-            "25": {
-                "GXT": "CLO_GRM_PH_1_25",
-                "Localized": "Light Brown Boonie Down"
             }
         },
         "105": {
@@ -3090,26 +2670,6 @@
             "20": {
                 "GXT": "CLO_GRM_PH_2_20",
                 "Localized": "Black Boonie Up"
-            },
-            "21": {
-                "GXT": "CLO_GRM_PH_2_21",
-                "Localized": "Slate Boonie Up"
-            },
-            "22": {
-                "GXT": "CLO_GRM_PH_2_22",
-                "Localized": "White Boonie Up"
-            },
-            "23": {
-                "GXT": "CLO_GRM_PH_2_23",
-                "Localized": "Chocolate Boonie Up"
-            },
-            "24": {
-                "GXT": "CLO_GRM_PH_2_24",
-                "Localized": "Olive Boonie Up"
-            },
-            "25": {
-                "GXT": "CLO_GRM_PH_2_25",
-                "Localized": "Light Brown Boonie Up"
             }
         },
         "106": {
@@ -3196,26 +2756,6 @@
             "20": {
                 "GXT": "CLO_GRM_PH_3_20",
                 "Localized": "Midnight Beret"
-            },
-            "21": {
-                "GXT": "CLO_GRM_PH_3_21",
-                "Localized": "Slate Beret"
-            },
-            "22": {
-                "GXT": "CLO_GRM_PH_3_22",
-                "Localized": "Ice Beret"
-            },
-            "23": {
-                "GXT": "CLO_GRM_PH_3_23",
-                "Localized": "Chocolate Beret"
-            },
-            "24": {
-                "GXT": "CLO_GRM_PH_3_24",
-                "Localized": "Olive Beret"
-            },
-            "25": {
-                "GXT": "CLO_GRM_PH_3_25",
-                "Localized": "Light Brown Beret"
             }
         },
         "107": {
@@ -3302,26 +2842,6 @@
             "20": {
                 "GXT": "CLO_GRM_PH_4_20",
                 "Localized": "Black Utility Cap"
-            },
-            "21": {
-                "GXT": "CLO_GRM_PH_4_21",
-                "Localized": "Slate Utility Cap"
-            },
-            "22": {
-                "GXT": "CLO_GRM_PH_4_22",
-                "Localized": "White Utility Cap"
-            },
-            "23": {
-                "GXT": "CLO_GRM_PH_4_23",
-                "Localized": "Chocolate Utility Cap"
-            },
-            "24": {
-                "GXT": "CLO_GRM_PH_4_24",
-                "Localized": "Olive Utility Cap"
-            },
-            "25": {
-                "GXT": "CLO_GRM_PH_4_25",
-                "Localized": "Light Brown Utility Cap"
             }
         },
         "108": {
@@ -3408,26 +2928,6 @@
             "20": {
                 "GXT": "CLO_GRM_PH_5_20",
                 "Localized": "Black Beanie Cap"
-            },
-            "21": {
-                "GXT": "CLO_GRM_PH_5_21",
-                "Localized": "Slate Beanie Cap"
-            },
-            "22": {
-                "GXT": "CLO_GRM_PH_5_22",
-                "Localized": "White Beanie Cap"
-            },
-            "23": {
-                "GXT": "CLO_GRM_PH_5_23",
-                "Localized": "Chocolate Beanie Cap"
-            },
-            "24": {
-                "GXT": "CLO_GRM_PH_5_24",
-                "Localized": "Olive Beanie Cap"
-            },
-            "25": {
-                "GXT": "CLO_GRM_PH_5_25",
-                "Localized": "Light Brown Beanie Cap"
             }
         },
         "109": {
@@ -3522,112 +3022,6 @@
                 "Localized": "Warstock Cap"
             }
         },
-        "111": {
-            "0": {
-                "GXT": "CLO_ARM_PH_0_0",
-                "Localized": "Orange Flight Helmet"
-            },
-            "1": {
-                "GXT": "CLO_ARM_PH_0_1",
-                "Localized": "Green Flight Helmet"
-            },
-            "2": {
-                "GXT": "CLO_ARM_PH_0_2",
-                "Localized": "Brown Flight Helmet"
-            },
-            "3": {
-                "GXT": "CLO_ARM_PH_0_3",
-                "Localized": "White Flight Helmet"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_ARM_PH_0_8",
-                "Localized": "Lime & Black Flight Helmet"
-            },
-            "9": {
-                "GXT": "CLO_ARM_PH_0_9",
-                "Localized": "51st Squad Flight Helmet"
-            },
-            "10": {
-                "GXT": "CLO_ARM_PH_0_10",
-                "Localized": "Orange & Black Flight Helmet"
-            },
-            "11": {
-                "GXT": "CLO_ARM_PH_0_11",
-                "Localized": "Zeus Flight Helmet"
-            },
-            "12": {
-                "GXT": "CLO_ARM_PH_0_12",
-                "Localized": "Green & Yellow Flight Helmet"
-            },
-            "13": {
-                "GXT": "CLO_ARM_PH_0_13",
-                "Localized": "Blue & Orange Flight Helmet"
-            },
-            "14": {
-                "GXT": "CLO_ARM_PH_0_14",
-                "Localized": "DFA Flight Helmet"
-            },
-            "15": {
-                "GXT": "CLO_ARM_PH_0_15",
-                "Localized": "Snake Killers Flight Helmet"
-            },
-            "16": {
-                "GXT": "CLO_ARM_PH_0_16",
-                "Localized": "Mind Over Matter Flight Helmet"
-            },
-            "17": {
-                "GXT": "CLO_ARM_PH_0_17",
-                "Localized": "Red & White Flight Helmet"
-            },
-            "18": {
-                "GXT": "CLO_ARM_PH_0_18",
-                "Localized": "Other Side Flight Helmet"
-            },
-            "19": {
-                "GXT": "CLO_ARM_PH_0_19",
-                "Localized": "STFU Flight Helmet"
-            },
-            "20": {
-                "GXT": "CLO_ARM_PH_0_20",
-                "Localized": "Patriot Flight Helmet"
-            },
-            "21": {
-                "GXT": "CLO_ARM_PH_0_21",
-                "Localized": "Zebra Flight Helmet"
-            },
-            "22": {
-                "GXT": "CLO_ARM_PH_0_22",
-                "Localized": "Tiger Flight Helmet"
-            },
-            "23": {
-                "GXT": "CLO_ARM_PH_0_23",
-                "Localized": "Leopard Flight Helmet"
-            },
-            "24": {
-                "GXT": "CLO_ARM_PH_0_24",
-                "Localized": "Shark Mouth Flight Helmet"
-            },
-            "25": {
-                "GXT": "CLO_ARM_PH_0_25",
-                "Localized": "Yellow & Black Flight Helmet"
-            }
-        },
         "112": {
             "0": {
                 "GXT": "CLO_SMM_PH_0_0",
@@ -3716,728 +3110,6 @@
             "21": {
                 "GXT": "CLO_SMM_PH_0_21",
                 "Localized": "Peace Combat Helmet"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "23": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "24": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "25": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "113": {
-            "0": {
-                "GXT": "CLO_SMM_PH_1_0",
-                "Localized": "Blue & Red Peaked Cap"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_1_1",
-                "Localized": "Black Peaked Cap"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_1_2",
-                "Localized": "Blue Peaked Cap"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_1_3",
-                "Localized": "Navy Peaked Cap"
-            },
-            "4": {
-                "GXT": "CLO_SMM_PH_1_4",
-                "Localized": "Aqua Camo Peaked Cap"
-            },
-            "5": {
-                "GXT": "CLO_SMM_PH_1_5",
-                "Localized": "White Peaked Cap"
-            },
-            "6": {
-                "GXT": "CLO_SMM_PH_1_6",
-                "Localized": "White & Red Peaked Cap"
-            },
-            "7": {
-                "GXT": "CLO_SMM_PH_1_7",
-                "Localized": "Gray Peaked Cap"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_1_8",
-                "Localized": "Green & Red Peaked Cap"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_1_9",
-                "Localized": "Brown & Red Peaked Cap"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_1_10",
-                "Localized": "Light Brown Peaked Cap"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_1_11",
-                "Localized": "Moss Peaked Cap"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_1_12",
-                "Localized": "Gray Digital Peaked Cap"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_1_13",
-                "Localized": "Dark Woodland Peaked Cap"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_1_14",
-                "Localized": "Red Peaked Cap"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_1_15",
-                "Localized": "Chocolate Peaked Cap"
-            },
-            "16": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "17": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "18": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "19": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "114": {
-            "0": {
-                "GXT": "CLO_SMM_PH_2_0",
-                "Localized": "White & Gold Garrison Cap"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_2_1",
-                "Localized": "White & Blue Garrison Cap"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_2_2",
-                "Localized": "Gray Leopard Garrison Cap"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_2_3",
-                "Localized": "Navy Garrison Cap"
-            },
-            "4": {
-                "GXT": "CLO_SMM_PH_2_4",
-                "Localized": "Blue Garrison Cap"
-            },
-            "5": {
-                "GXT": "CLO_SMM_PH_2_5",
-                "Localized": "Teal Garrison Cap"
-            },
-            "6": {
-                "GXT": "CLO_SMM_PH_2_6",
-                "Localized": "Aqua Camo Garrison Cap"
-            },
-            "7": {
-                "GXT": "CLO_SMM_PH_2_7",
-                "Localized": "Black Garrison Cap"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_2_8",
-                "Localized": "Chocolate Garrison Cap"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_2_9",
-                "Localized": "Red Garrison Cap"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_2_10",
-                "Localized": "Red & Navy Garrison Cap"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_2_11",
-                "Localized": "Red Camo Garrison Cap"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_2_12",
-                "Localized": "Brushstroke Garrison Cap"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_2_13",
-                "Localized": "Moss Garrison Cap"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_2_14",
-                "Localized": "Brown Digital Garrison Cap"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_2_15",
-                "Localized": "Beige Garrison Cap"
-            },
-            "16": {
-                "GXT": "CLO_SMM_PH_2_16",
-                "Localized": "White Camo Garrison Cap"
-            },
-            "17": {
-                "GXT": "CLO_SMM_PH_2_17",
-                "Localized": "Gray Garrison Cap"
-            },
-            "18": {
-                "GXT": "CLO_SMM_PH_2_18",
-                "Localized": "Zebra Garrison Cap"
-            },
-            "19": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "20": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "21": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "115": {
-            "0": {
-                "GXT": "CLO_SMM_PH_3_0",
-                "Localized": "Black Full Face"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_3_1",
-                "Localized": "Moss Full Face"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_3_2",
-                "Localized": "Brown Full Face"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_3_3",
-                "Localized": "White Full Face"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_3_8",
-                "Localized": "Leopard Full Face"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_3_9",
-                "Localized": "Brown Digital Full Face"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_3_10",
-                "Localized": "Tiger Full Face"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_3_11",
-                "Localized": "Pink Pattern Full Face"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_3_12",
-                "Localized": "Peach Digital Full Face"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_3_13",
-                "Localized": "Fall Full Face"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_3_14",
-                "Localized": "Dark Woodland Full Face"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_3_15",
-                "Localized": "Crosshatch Full Face"
-            },
-            "16": {
-                "GXT": "CLO_SMM_PH_3_16",
-                "Localized": "Green Pattern Full Face"
-            },
-            "17": {
-                "GXT": "CLO_SMM_PH_3_17",
-                "Localized": "Gray Woodland Full Face"
-            },
-            "18": {
-                "GXT": "CLO_SMM_PH_3_18",
-                "Localized": "Aqua Camo Full Face"
-            },
-            "19": {
-                "GXT": "CLO_SMM_PH_3_19",
-                "Localized": "Splinter Full Face"
-            },
-            "20": {
-                "GXT": "CLO_SMM_PH_3_20",
-                "Localized": "Contrast Camo Full Face"
-            },
-            "21": {
-                "GXT": "CLO_SMM_PH_3_21",
-                "Localized": "Cobble Full Face"
-            },
-            "22": {
-                "GXT": "CLO_SMM_PH_3_22",
-                "Localized": "Brushstroke Full Face"
-            },
-            "23": {
-                "GXT": "CLO_SMM_PH_3_23",
-                "Localized": "Flecktarn Full Face"
-            },
-            "24": {
-                "GXT": "CLO_SMM_PH_3_24",
-                "Localized": "Black & Red Full Face"
-            },
-            "25": {
-                "GXT": "CLO_SMM_PH_3_25",
-                "Localized": "Zebra Full Face"
-            }
-        },
-        "116": {
-            "0": {
-                "GXT": "CLO_SMM_PH_4_0",
-                "Localized": "Black Dual Lens"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_4_1",
-                "Localized": "Moss Dual Lens"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_4_2",
-                "Localized": "Brown Dual Lens"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_4_3",
-                "Localized": "White Dual Lens"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_4_8",
-                "Localized": "Leopard Dual Lens"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_4_9",
-                "Localized": "Brown Digital Dual Lens"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_4_10",
-                "Localized": "Tiger Dual Lens"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_4_11",
-                "Localized": "Pink Pattern Dual Lens"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_4_12",
-                "Localized": "Peach Digital Dual Lens"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_4_13",
-                "Localized": "Fall Dual Lens"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_4_14",
-                "Localized": "Dark Woodland Dual Lens"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_4_15",
-                "Localized": "Crosshatch Dual Lens"
-            },
-            "16": {
-                "GXT": "CLO_SMM_PH_4_16",
-                "Localized": "Green Pattern Dual Lens"
-            },
-            "17": {
-                "GXT": "CLO_SMM_PH_4_17",
-                "Localized": "Gray Woodland Dual Lens"
-            },
-            "18": {
-                "GXT": "CLO_SMM_PH_4_18",
-                "Localized": "Aqua Camo Dual Lens"
-            },
-            "19": {
-                "GXT": "CLO_SMM_PH_4_19",
-                "Localized": "Splinter Dual Lens"
-            },
-            "20": {
-                "GXT": "CLO_SMM_PH_4_20",
-                "Localized": "Contrast Camo Dual Lens"
-            },
-            "21": {
-                "GXT": "CLO_SMM_PH_4_21",
-                "Localized": "Cobble Dual Lens"
-            },
-            "22": {
-                "GXT": "CLO_SMM_PH_4_22",
-                "Localized": "Brushstroke Dual Lens"
-            },
-            "23": {
-                "GXT": "CLO_SMM_PH_4_23",
-                "Localized": "Flecktarn Dual Lens"
-            },
-            "24": {
-                "GXT": "CLO_SMM_PH_4_24",
-                "Localized": "Black & Red Dual Lens"
-            },
-            "25": {
-                "GXT": "CLO_SMM_PH_4_25",
-                "Localized": "Zebra Dual Lens"
-            }
-        },
-        "117": {
-            "0": {
-                "GXT": "CLO_SMM_PH_4_0",
-                "Localized": "Black Dual Lens"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_4_1",
-                "Localized": "Moss Dual Lens"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_4_2",
-                "Localized": "Brown Dual Lens"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_4_3",
-                "Localized": "White Dual Lens"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_4_8",
-                "Localized": "Leopard Dual Lens"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_4_9",
-                "Localized": "Brown Digital Dual Lens"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_4_10",
-                "Localized": "Tiger Dual Lens"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_4_11",
-                "Localized": "Pink Pattern Dual Lens"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_4_12",
-                "Localized": "Peach Digital Dual Lens"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_4_13",
-                "Localized": "Fall Dual Lens"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_4_14",
-                "Localized": "Dark Woodland Dual Lens"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_4_15",
-                "Localized": "Crosshatch Dual Lens"
-            },
-            "16": {
-                "GXT": "CLO_SMM_PH_4_16",
-                "Localized": "Green Pattern Dual Lens"
-            },
-            "17": {
-                "GXT": "CLO_SMM_PH_4_17",
-                "Localized": "Gray Woodland Dual Lens"
-            },
-            "18": {
-                "GXT": "CLO_SMM_PH_4_18",
-                "Localized": "Aqua Camo Dual Lens"
-            },
-            "19": {
-                "GXT": "CLO_SMM_PH_4_19",
-                "Localized": "Splinter Dual Lens"
-            },
-            "20": {
-                "GXT": "CLO_SMM_PH_4_20",
-                "Localized": "Contrast Camo Dual Lens"
-            },
-            "21": {
-                "GXT": "CLO_SMM_PH_4_21",
-                "Localized": "Cobble Dual Lens"
-            },
-            "22": {
-                "GXT": "CLO_SMM_PH_4_22",
-                "Localized": "Brushstroke Dual Lens"
-            },
-            "23": {
-                "GXT": "CLO_SMM_PH_4_23",
-                "Localized": "Flecktarn Dual Lens"
-            },
-            "24": {
-                "GXT": "CLO_SMM_PH_4_24",
-                "Localized": "Black & Red Dual Lens"
-            },
-            "25": {
-                "GXT": "CLO_SMM_PH_4_25",
-                "Localized": "Zebra Dual Lens"
-            }
-        },
-        "118": {
-            "0": {
-                "GXT": "CLO_SMM_PH_6_0",
-                "Localized": "Black Quad Lens"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_6_1",
-                "Localized": "Moss Quad Lens"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_6_2",
-                "Localized": "Brown Quad Lens"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_6_3",
-                "Localized": "White Quad Lens"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_6_8",
-                "Localized": "Leopard Quad Lens"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_6_9",
-                "Localized": "Brown Digital Quad Lens"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_6_10",
-                "Localized": "Tiger Quad Lens"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_6_11",
-                "Localized": "Pink Pattern Quad Lens"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_6_12",
-                "Localized": "Peach Digital Quad Lens"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_6_13",
-                "Localized": "Fall Quad Lens"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_6_14",
-                "Localized": "Dark Woodland Quad Lens"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_6_15",
-                "Localized": "Crosshatch Quad Lens"
-            },
-            "16": {
-                "GXT": "CLO_SMM_PH_6_16",
-                "Localized": "Green Pattern Quad Lens"
-            },
-            "17": {
-                "GXT": "CLO_SMM_PH_6_17",
-                "Localized": "Gray Woodland Quad Lens"
-            },
-            "18": {
-                "GXT": "CLO_SMM_PH_6_18",
-                "Localized": "Aqua Camo Quad Lens"
-            },
-            "19": {
-                "GXT": "CLO_SMM_PH_6_19",
-                "Localized": "Splinter Quad Lens"
-            },
-            "20": {
-                "GXT": "CLO_SMM_PH_6_20",
-                "Localized": "Contrast Camo Quad Lens"
-            },
-            "21": {
-                "GXT": "CLO_SMM_PH_6_21",
-                "Localized": "Cobble Quad Lens"
-            },
-            "22": {
-                "GXT": "CLO_SMM_PH_6_22",
-                "Localized": "Brushstroke Quad Lens"
-            },
-            "23": {
-                "GXT": "CLO_SMM_PH_6_23",
-                "Localized": "Flecktarn Quad Lens"
-            },
-            "24": {
-                "GXT": "CLO_SMM_PH_6_24",
-                "Localized": "Black & Red Quad Lens"
-            },
-            "25": {
-                "GXT": "CLO_SMM_PH_6_25",
-                "Localized": "Zebra Quad Lens"
-            }
-        },
-        "119": {
-            "0": {
-                "GXT": "CLO_SMM_PH_6_0",
-                "Localized": "Black Quad Lens"
-            },
-            "1": {
-                "GXT": "CLO_SMM_PH_6_1",
-                "Localized": "Moss Quad Lens"
-            },
-            "2": {
-                "GXT": "CLO_SMM_PH_6_2",
-                "Localized": "Brown Quad Lens"
-            },
-            "3": {
-                "GXT": "CLO_SMM_PH_6_3",
-                "Localized": "White Quad Lens"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_SMM_PH_6_8",
-                "Localized": "Leopard Quad Lens"
-            },
-            "9": {
-                "GXT": "CLO_SMM_PH_6_9",
-                "Localized": "Brown Digital Quad Lens"
-            },
-            "10": {
-                "GXT": "CLO_SMM_PH_6_10",
-                "Localized": "Tiger Quad Lens"
-            },
-            "11": {
-                "GXT": "CLO_SMM_PH_6_11",
-                "Localized": "Pink Pattern Quad Lens"
-            },
-            "12": {
-                "GXT": "CLO_SMM_PH_6_12",
-                "Localized": "Peach Digital Quad Lens"
-            },
-            "13": {
-                "GXT": "CLO_SMM_PH_6_13",
-                "Localized": "Fall Quad Lens"
-            },
-            "14": {
-                "GXT": "CLO_SMM_PH_6_14",
-                "Localized": "Dark Woodland Quad Lens"
-            },
-            "15": {
-                "GXT": "CLO_SMM_PH_6_15",
-                "Localized": "Crosshatch Quad Lens"
-            },
-            "16": {
-                "GXT": "CLO_SMM_PH_6_16",
-                "Localized": "Green Pattern Quad Lens"
-            },
-            "17": {
-                "GXT": "CLO_SMM_PH_6_17",
-                "Localized": "Gray Woodland Quad Lens"
-            },
-            "18": {
-                "GXT": "CLO_SMM_PH_6_18",
-                "Localized": "Aqua Camo Quad Lens"
-            },
-            "19": {
-                "GXT": "CLO_SMM_PH_6_19",
-                "Localized": "Splinter Quad Lens"
-            },
-            "20": {
-                "GXT": "CLO_SMM_PH_6_20",
-                "Localized": "Contrast Camo Quad Lens"
-            },
-            "21": {
-                "GXT": "CLO_SMM_PH_6_21",
-                "Localized": "Cobble Quad Lens"
-            },
-            "22": {
-                "GXT": "CLO_SMM_PH_6_22",
-                "Localized": "Brushstroke Quad Lens"
-            },
-            "23": {
-                "GXT": "CLO_SMM_PH_6_23",
-                "Localized": "Flecktarn Quad Lens"
-            },
-            "24": {
-                "GXT": "CLO_SMM_PH_6_24",
-                "Localized": "Black & Red Quad Lens"
-            },
-            "25": {
-                "GXT": "CLO_SMM_PH_6_25",
-                "Localized": "Zebra Quad Lens"
             }
         },
         "120": {
@@ -4528,484 +3200,6 @@
             "21": {
                 "GXT": "CLO_SMM_PH_8_21",
                 "Localized": "Beige Houndstooth Low Beanie"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "23": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "24": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "25": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "121": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "122": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "123": {
-            "0": {
-                "GXT": "CLO_H2M_PH_2_0",
-                "Localized": "Black Riot"
-            },
-            "1": {
-                "GXT": "CLO_H2M_PH_2_1",
-                "Localized": "White Riot"
-            },
-            "2": {
-                "GXT": "CLO_H2M_PH_2_2",
-                "Localized": "Gray Riot"
-            },
-            "3": {
-                "GXT": "CLO_H2M_PH_2_3",
-                "Localized": "Moss Riot"
-            },
-            "4": {
-                "GXT": "CLO_H2M_PH_2_4",
-                "Localized": "Brown Digital Riot"
-            },
-            "5": {
-                "GXT": "CLO_H2M_PH_2_5",
-                "Localized": "Gray Digital Riot"
-            },
-            "6": {
-                "GXT": "CLO_H2M_PH_2_6",
-                "Localized": "Crosshatch Riot"
-            },
-            "7": {
-                "GXT": "CLO_H2M_PH_2_7",
-                "Localized": "Blue Digital Riot"
-            },
-            "8": {
-                "GXT": "CLO_H2M_PH_2_8",
-                "Localized": "Fall Riot"
-            },
-            "9": {
-                "GXT": "CLO_H2M_PH_2_9",
-                "Localized": "Aqua Camo Riot"
-            },
-            "10": {
-                "GXT": "CLO_H2M_PH_210",
-                "Localized": "Splinter Riot"
-            },
-            "11": {
-                "GXT": "CLO_H2M_PH_211",
-                "Localized": "Gray Woodland Riot"
-            },
-            "12": {
-                "GXT": "CLO_H2M_PH_212",
-                "Localized": "Brushstroke Riot"
-            },
-            "13": {
-                "GXT": "CLO_H2M_PH_213",
-                "Localized": "Moss Digital Riot"
-            },
-            "14": {
-                "GXT": "CLO_H2M_PH_214",
-                "Localized": "MP Riot"
-            },
-            "15": {
-                "GXT": "CLO_H2M_PH_215",
-                "Localized": "LSPD Riot"
-            },
-            "16": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "17": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "18": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "19": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "124": {
-            "0": {
-                "GXT": "CLO_H2M_PH_2_0",
-                "Localized": "Black Riot"
-            },
-            "1": {
-                "GXT": "CLO_H2M_PH_2_1",
-                "Localized": "White Riot"
-            },
-            "2": {
-                "GXT": "CLO_H2M_PH_2_2",
-                "Localized": "Gray Riot"
-            },
-            "3": {
-                "GXT": "CLO_H2M_PH_2_3",
-                "Localized": "Moss Riot"
-            },
-            "4": {
-                "GXT": "CLO_H2M_PH_2_4",
-                "Localized": "Brown Digital Riot"
-            },
-            "5": {
-                "GXT": "CLO_H2M_PH_2_5",
-                "Localized": "Gray Digital Riot"
-            },
-            "6": {
-                "GXT": "CLO_H2M_PH_2_6",
-                "Localized": "Crosshatch Riot"
-            },
-            "7": {
-                "GXT": "CLO_H2M_PH_2_7",
-                "Localized": "Blue Digital Riot"
-            },
-            "8": {
-                "GXT": "CLO_H2M_PH_2_8",
-                "Localized": "Fall Riot"
-            },
-            "9": {
-                "GXT": "CLO_H2M_PH_2_9",
-                "Localized": "Aqua Camo Riot"
-            },
-            "10": {
-                "GXT": "CLO_H2M_PH_210",
-                "Localized": "Splinter Riot"
-            },
-            "11": {
-                "GXT": "CLO_H2M_PH_211",
-                "Localized": "Gray Woodland Riot"
-            },
-            "12": {
-                "GXT": "CLO_H2M_PH_212",
-                "Localized": "Brushstroke Riot"
-            },
-            "13": {
-                "GXT": "CLO_H2M_PH_213",
-                "Localized": "Moss Digital Riot"
-            },
-            "14": {
-                "GXT": "CLO_H2M_PH_214",
-                "Localized": "MP Riot"
-            },
-            "15": {
-                "GXT": "CLO_H2M_PH_215",
-                "Localized": "LSPD Riot"
-            },
-            "16": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "17": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "18": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "19": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "125": {
-            "0": {
-                "GXT": "CLO_H2M_PH_4_0",
-                "Localized": "Black Shielded Riot"
-            },
-            "1": {
-                "GXT": "CLO_H2M_PH_4_1",
-                "Localized": "Cream Shielded Riot"
-            },
-            "2": {
-                "GXT": "CLO_H2M_PH_4_2",
-                "Localized": "Stone Gray Shielded Riot"
-            },
-            "3": {
-                "GXT": "CLO_H2M_PH_4_3",
-                "Localized": "Brown Shielded Riot"
-            },
-            "4": {
-                "GXT": "CLO_H2M_PH_4_4",
-                "Localized": "Ox Blood Shielded Riot"
-            },
-            "5": {
-                "GXT": "CLO_H2M_PH_4_5",
-                "Localized": "Blue Shielded Riot"
-            },
-            "6": {
-                "GXT": "CLO_H2M_PH_4_6",
-                "Localized": "Brown Digital Shielded Riot"
-            },
-            "7": {
-                "GXT": "CLO_H2M_PH_4_7",
-                "Localized": "Gray Digital Shielded Riot"
-            },
-            "8": {
-                "GXT": "CLO_H2M_PH_4_8",
-                "Localized": "Contrast Camo Shielded Riot"
-            },
-            "9": {
-                "GXT": "CLO_H2M_PH_4_9",
-                "Localized": "Blue Digital Shielded Riot"
-            },
-            "10": {
-                "GXT": "CLO_H2M_PH_410",
-                "Localized": "Fall Shielded Riot"
-            },
-            "11": {
-                "GXT": "CLO_H2M_PH_411",
-                "Localized": "Aqua Camo Shielded Riot"
-            },
-            "12": {
-                "GXT": "CLO_H2M_PH_412",
-                "Localized": "Light Woodland Shielded Riot"
-            },
-            "13": {
-                "GXT": "CLO_H2M_PH_413",
-                "Localized": "Splinter Shielded Riot"
-            },
-            "14": {
-                "GXT": "CLO_H2M_PH_414",
-                "Localized": "Gray Woodland Shielded Riot"
-            },
-            "15": {
-                "GXT": "CLO_H2M_PH_415",
-                "Localized": "Moss Digital Shielded Riot"
-            },
-            "16": {
-                "GXT": "CLO_H2M_PH_416",
-                "Localized": "Crosshatch Shielded Riot"
-            },
-            "17": {
-                "GXT": "CLO_H2M_PH_417",
-                "Localized": "No Master Shielded Riot"
-            },
-            "18": {
-                "GXT": "CLO_H2M_PH_418",
-                "Localized": "Police Shielded Riot"
-            },
-            "19": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "20": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "21": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "126": {
-            "0": {
-                "GXT": "CLO_H2M_PH_4_0",
-                "Localized": "Black Shielded Riot"
-            },
-            "1": {
-                "GXT": "CLO_H2M_PH_4_1",
-                "Localized": "Cream Shielded Riot"
-            },
-            "2": {
-                "GXT": "CLO_H2M_PH_4_2",
-                "Localized": "Stone Gray Shielded Riot"
-            },
-            "3": {
-                "GXT": "CLO_H2M_PH_4_3",
-                "Localized": "Brown Shielded Riot"
-            },
-            "4": {
-                "GXT": "CLO_H2M_PH_4_4",
-                "Localized": "Ox Blood Shielded Riot"
-            },
-            "5": {
-                "GXT": "CLO_H2M_PH_4_5",
-                "Localized": "Blue Shielded Riot"
-            },
-            "6": {
-                "GXT": "CLO_H2M_PH_4_6",
-                "Localized": "Brown Digital Shielded Riot"
-            },
-            "7": {
-                "GXT": "CLO_H2M_PH_4_7",
-                "Localized": "Gray Digital Shielded Riot"
-            },
-            "8": {
-                "GXT": "CLO_H2M_PH_4_8",
-                "Localized": "Contrast Camo Shielded Riot"
-            },
-            "9": {
-                "GXT": "CLO_H2M_PH_4_9",
-                "Localized": "Blue Digital Shielded Riot"
-            },
-            "10": {
-                "GXT": "CLO_H2M_PH_410",
-                "Localized": "Fall Shielded Riot"
-            },
-            "11": {
-                "GXT": "CLO_H2M_PH_411",
-                "Localized": "Aqua Camo Shielded Riot"
-            },
-            "12": {
-                "GXT": "CLO_H2M_PH_412",
-                "Localized": "Light Woodland Shielded Riot"
-            },
-            "13": {
-                "GXT": "CLO_H2M_PH_413",
-                "Localized": "Splinter Shielded Riot"
-            },
-            "14": {
-                "GXT": "CLO_H2M_PH_414",
-                "Localized": "Gray Woodland Shielded Riot"
-            },
-            "15": {
-                "GXT": "CLO_H2M_PH_415",
-                "Localized": "Moss Digital Shielded Riot"
-            },
-            "16": {
-                "GXT": "CLO_H2M_PH_416",
-                "Localized": "Crosshatch Shielded Riot"
-            },
-            "17": {
-                "GXT": "CLO_H2M_PH_417",
-                "Localized": "No Master Shielded Riot"
-            },
-            "18": {
-                "GXT": "CLO_H2M_PH_418",
-                "Localized": "Police Shielded Riot"
-            },
-            "19": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "20": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "21": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "127": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "128": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "129": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "9": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "10": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "11": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "12": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "13": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "14": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "15": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "16": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "17": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "130": {
@@ -5182,62 +3376,6 @@
                 "Localized": "Hotdogs Canvas Hat"
             }
         },
-        "133": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "1": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "2": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "3": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "9": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "10": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "11": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
-        "134": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            }
-        },
         "135": {
             "0": {
                 "GXT": "CLO_VWM_PH_0_0",
@@ -5322,18 +3460,6 @@
             "20": {
                 "GXT": "CLO_VWM_PH_0_20",
                 "Localized": "White SC Broker Cap"
-            },
-            "21": {
-                "GXT": "CLO_VWM_PH_0_21",
-                "Localized": "Gray Yeti Cap"
-            },
-            "22": {
-                "GXT": "CLO_VWM_PH_0_22",
-                "Localized": "Colors Yeti Cap"
-            },
-            "23": {
-                "GXT": "CLO_VWM_PH_0_23",
-                "Localized": "Woodland Yeti Cap"
             }
         },
         "136": {
@@ -5420,46 +3546,6 @@
             "20": {
                 "GXT": "CLO_VWM_PH_1_20",
                 "Localized": "White SC Broker Cap"
-            },
-            "21": {
-                "GXT": "CLO_VWM_PH_1_21",
-                "Localized": "Gray Yeti Cap"
-            },
-            "22": {
-                "GXT": "CLO_VWM_PH_1_22",
-                "Localized": "Colors Yeti Cap"
-            },
-            "23": {
-                "GXT": "CLO_VWM_PH_1_23",
-                "Localized": "Woodland Yeti Cap"
-            }
-        },
-        "137": {
-            "0": {
-                "GXT": "CLO_H3M_PH_0_0",
-                "Localized": "Yellow Firefighter"
-            },
-            "1": {
-                "GXT": "CLO_H3M_PH_0_1",
-                "Localized": "Orange Firefighter"
-            },
-            "2": {
-                "GXT": "CLO_H3M_PH_0_2",
-                "Localized": "White Firefighter"
-            }
-        },
-        "138": {
-            "0": {
-                "GXT": "CLO_H3M_PH_1_0",
-                "Localized": "Yellow Firefighter & Goggles"
-            },
-            "1": {
-                "GXT": "CLO_H3M_PH_1_1",
-                "Localized": "Orange Firefighter & Goggles"
-            },
-            "2": {
-                "GXT": "CLO_H3M_PH_1_2",
-                "Localized": "White Firefighter & Goggles"
             }
         },
         "139": {
@@ -5488,12 +3574,6 @@
             "2": {
                 "GXT": "CLO_H3M_PH_3_2",
                 "Localized": "Yung Ancestor Backwards Cap"
-            }
-        },
-        "141": {
-            "0": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "142": {
@@ -5580,26 +3660,6 @@
             "20": {
                 "GXT": "CLO_H3M_PH_5_20",
                 "Localized": "Green Snakeskin Forwards Cap"
-            },
-            "21": {
-                "GXT": "CLO_H3M_PH_5_21",
-                "Localized": "Purple Snakeskin Forwards Cap"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "23": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "24": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "25": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "143": {
@@ -5686,26 +3746,6 @@
             "20": {
                 "GXT": "CLO_H3M_PH_6_20",
                 "Localized": "Green Snakeskin Backwards Cap"
-            },
-            "21": {
-                "GXT": "CLO_H3M_PH_6_21",
-                "Localized": "Purple Snakeskin Backwards Cap"
-            },
-            "22": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "23": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "24": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "25": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
             }
         },
         "144": {
@@ -5790,184 +3830,10 @@
                 "Localized": "White Undertaker Hat"
             }
         },
-        "147": {
-            "0": {
-                "GXT": "CLO_H3M_PH_10_0",
-                "Localized": "Black Scope Night Vision"
-            },
-            "1": {
-                "GXT": "CLO_H3M_PH_10_1",
-                "Localized": "Sage Scope Night Vision"
-            },
-            "2": {
-                "GXT": "CLO_H3M_PH_10_2",
-                "Localized": "Beige Scope Night Vision"
-            },
-            "3": {
-                "GXT": "CLO_H3M_PH_10_3",
-                "Localized": "Stone Scope Night Vision"
-            },
-            "4": {
-                "GXT": "CLO_H3M_PH_10_4",
-                "Localized": "White Scope Night Vision"
-            },
-            "5": {
-                "GXT": "CLO_H3M_PH_10_5",
-                "Localized": "Beige Digital Scope Night Vision"
-            },
-            "6": {
-                "GXT": "CLO_H3M_PH_10_6",
-                "Localized": "Green Digital Scope Night Vision"
-            },
-            "7": {
-                "GXT": "CLO_H3M_PH_10_7",
-                "Localized": "Desert Digital Scope Night Vision"
-            }
-        },
-        "148": {
-            "0": {
-                "GXT": "CLO_H3M_PH_11_0",
-                "Localized": "Black Scope Night Vision"
-            },
-            "1": {
-                "GXT": "CLO_H3M_PH_11_1",
-                "Localized": "Sage Scope Night Vision"
-            },
-            "2": {
-                "GXT": "CLO_H3M_PH_11_2",
-                "Localized": "Beige Scope Night Vision"
-            },
-            "3": {
-                "GXT": "CLO_H3M_PH_11_3",
-                "Localized": "Stone Scope Night Vision"
-            },
-            "4": {
-                "GXT": "CLO_H3M_PH_11_4",
-                "Localized": "White Scope Night Vision"
-            },
-            "5": {
-                "GXT": "CLO_H3M_PH_11_5",
-                "Localized": "Beige Digital Scope Night Vision"
-            },
-            "6": {
-                "GXT": "CLO_H3M_PH_11_6",
-                "Localized": "Green Digital Scope Night Vision"
-            },
-            "7": {
-                "GXT": "CLO_H3M_PH_11_7",
-                "Localized": "Desert Digital Scope Night Vision"
-            }
-        },
         "149": {
             "0": {
                 "GXT": "CLO_SUM_PH_0_0",
                 "Localized": "Captain Peaked Cap"
-            }
-        },
-        "150": {
-            "0": {
-                "GXT": "CLO_H4M_PH_0_0",
-                "Localized": "Black Advanced"
-            },
-            "1": {
-                "GXT": "CLO_H4M_PH_0_1",
-                "Localized": "Moss Advanced"
-            },
-            "2": {
-                "GXT": "CLO_H4M_PH_0_2",
-                "Localized": "Brown Advanced"
-            },
-            "3": {
-                "GXT": "CLO_H4M_PH_0_3",
-                "Localized": "White Advanced"
-            },
-            "4": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "5": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "6": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "7": {
-                "GXT": "NO_LABEL",
-                "Localized": "NULL"
-            },
-            "8": {
-                "GXT": "CLO_H4M_PH_0_8",
-                "Localized": "Leopard Advanced"
-            },
-            "9": {
-                "GXT": "CLO_H4M_PH_0_9",
-                "Localized": "Brown Digital Advanced"
-            },
-            "10": {
-                "GXT": "CLO_H4M_PH_0_10",
-                "Localized": "Tiger Advanced"
-            },
-            "11": {
-                "GXT": "CLO_H4M_PH_0_11",
-                "Localized": "Pink Pattern Advanced"
-            },
-            "12": {
-                "GXT": "CLO_H4M_PH_0_12",
-                "Localized": "Peach Digital Advanced"
-            },
-            "13": {
-                "GXT": "CLO_H4M_PH_0_13",
-                "Localized": "Fall Advanced"
-            },
-            "14": {
-                "GXT": "CLO_H4M_PH_0_14",
-                "Localized": "Dark Woodland Advanced"
-            },
-            "15": {
-                "GXT": "CLO_H4M_PH_0_15",
-                "Localized": "Crosshatch Advanced"
-            },
-            "16": {
-                "GXT": "CLO_H4M_PH_0_16",
-                "Localized": "Green Pattern Advanced"
-            },
-            "17": {
-                "GXT": "CLO_H4M_PH_0_17",
-                "Localized": "Gray Woodland Advanced"
-            },
-            "18": {
-                "GXT": "CLO_H4M_PH_0_18",
-                "Localized": "Aqua Camo Advanced"
-            },
-            "19": {
-                "GXT": "CLO_H4M_PH_0_19",
-                "Localized": "Splinter Advanced"
-            },
-            "20": {
-                "GXT": "CLO_H4M_PH_0_20",
-                "Localized": "Contrast Camo Advanced"
-            },
-            "21": {
-                "GXT": "CLO_H4M_PH_0_21",
-                "Localized": "Cobble Advanced"
-            },
-            "22": {
-                "GXT": "CLO_H4M_PH_0_22",
-                "Localized": "Brushstroke Advanced"
-            },
-            "23": {
-                "GXT": "CLO_H4M_PH_0_23",
-                "Localized": "Flecktarn Advanced"
-            },
-            "24": {
-                "GXT": "CLO_H4M_PH_0_24",
-                "Localized": "Black & Red Advanced"
-            },
-            "25": {
-                "GXT": "CLO_H4M_PH_0_25",
-                "Localized": "Zebra Advanced"
             }
         },
         "151": {
@@ -6252,18 +4118,6 @@
             "22": {
                 "GXT": "CLO_FXM_PH_0_22",
                 "Localized": "Brown Digital Curved Forwards"
-            },
-            "23": {
-                "GXT": "CLO_FXM_PH_0_23",
-                "Localized": "Gray Woodland Curved Forwards"
-            },
-            "24": {
-                "GXT": "CLO_FXM_PH_0_24",
-                "Localized": "Vibrant Heat Curved Forwards"
-            },
-            "25": {
-                "GXT": "CLO_FXM_PH_0_25",
-                "Localized": "Navy Prolaps Curved Forwards"
             }
         },
         "157": {
@@ -6350,26 +4204,6 @@
             "20": {
                 "GXT": "CLO_FXM_PH_1_20",
                 "Localized": "Aqua Camo Curved Backwards"
-            },
-            "21": {
-                "GXT": "CLO_FXM_PH_1_21",
-                "Localized": "Brushstroke Curved Backwards"
-            },
-            "22": {
-                "GXT": "CLO_FXM_PH_1_22",
-                "Localized": "Brown Digital Curved Backwards"
-            },
-            "23": {
-                "GXT": "CLO_FXM_PH_1_23",
-                "Localized": "Gray Woodland Curved Backwards"
-            },
-            "24": {
-                "GXT": "CLO_FXM_PH_1_24",
-                "Localized": "Vibrant Heat Curved Backwards"
-            },
-            "25": {
-                "GXT": "CLO_FXM_PH_1_25",
-                "Localized": "Navy Prolaps Curved Backwards"
             }
         },
         "158": {
@@ -6456,26 +4290,6 @@
             "20": {
                 "GXT": "CLO_FXM_PH_2_20",
                 "Localized": "Aqua Camo Flat Forwards"
-            },
-            "21": {
-                "GXT": "CLO_FXM_PH_2_21",
-                "Localized": "Brushstroke Flat Forwards"
-            },
-            "22": {
-                "GXT": "CLO_FXM_PH_2_22",
-                "Localized": "Brown Digital Flat Forwards"
-            },
-            "23": {
-                "GXT": "CLO_FXM_PH_2_23",
-                "Localized": "Gray Woodland Flat Forwards"
-            },
-            "24": {
-                "GXT": "CLO_FXM_PH_2_24",
-                "Localized": "Vibrant Heat Flat Forwards"
-            },
-            "25": {
-                "GXT": "CLO_FXM_PH_2_25",
-                "Localized": "White Prolaps Flat Forwards"
             }
         },
         "159": {
@@ -6572,26 +4386,6 @@
             "20": {
                 "GXT": "CLO_FXM_PH_4_20",
                 "Localized": "Aqua Camo Flat Backwards"
-            },
-            "21": {
-                "GXT": "CLO_FXM_PH_4_21",
-                "Localized": "Brushstroke Flat Backwards"
-            },
-            "22": {
-                "GXT": "CLO_FXM_PH_4_22",
-                "Localized": "Brown Digital Flat Backwards"
-            },
-            "23": {
-                "GXT": "CLO_FXM_PH_4_23",
-                "Localized": "Gray Woodland Flat Backwards"
-            },
-            "24": {
-                "GXT": "CLO_FXM_PH_4_24",
-                "Localized": "Vibrant Heat Flat Backwards"
-            },
-            "25": {
-                "GXT": "CLO_FXM_PH_4_25",
-                "Localized": "White Prolaps Flat Backwards"
             }
         },
         "161": {
