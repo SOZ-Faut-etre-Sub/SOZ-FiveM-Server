@@ -18,8 +18,9 @@ Config.StorageCapacity = {
     ["house_fridge"] = {slot = 10, weight = 100000},
     --- Jobs
     ["log_storage"] = {slot = 10, weight = 20000000},
-    ["plank_storage"] = {slot = 10, weight = 100000},
-    ["sawdust_storage"] = {slot = 10, weight = 100000},
+    ["plank_storage"] = {slot = 10, weight = 1000000},
+    ["sawdust_storage"] = {slot = 10, weight = 1000000},
+    ["log_processing"] = {slot = 10, weight = 400000},
 }
 
 Config.ErrorMessage = {
@@ -29,6 +30,8 @@ Config.ErrorMessage = {
     ["nonexistent_item"] = "L'objet a transférer est invalide !",
     ["inventory_full"] = "L'inventaire n'a plus de place !",
     ["not_allowed_item"] = "L'objet ne peut aller dans ce stockage !",
+    ["get_not_allowed"] = "Ce stockage ne peut pas vous donner cet objet !",
+    ["put_not_allowed"] = "Ce stockage ne peut pas accepter votre objet !",
 }
 
 Config.Storages = {}

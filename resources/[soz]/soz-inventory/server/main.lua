@@ -491,6 +491,16 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         return
     end
 
+    if not _G.Container[invSource.type]:CanGetContentInInventory(item) then
+        cb(false, "get_not_allowed")
+        return
+    end
+
+    if not _G.Container[invTarget.type]:CanPutContentInInventory(item) then
+        cb(false, "put_not_allowed")
+        return
+    end
+
     if not _G.Container[invTarget.type]:ItemIsAllowed(item) then
         cb(false, "not_allowed_item")
         return

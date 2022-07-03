@@ -38,32 +38,6 @@ Citizen.CreateThread(function()
     -- Degradation
     DegradationLevel = QBCore.Functions.TriggerRpc("pawl:server:getDegradationLevel")
 
-    -- Processing
-    exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
-    exports["qb-target"]:AddBoxZone("pawl:processing:tree_trunk", vector3(-552.14, 5347.94, 74.74), 0.5, 2.2,
-                                    {
-        name = "pawl:processing:tree_trunk",
-        heading = 72,
-        minZ = 73.74,
-        maxZ = 76.54,
-        debugPoly = false,
-    }, {
-        options = {
-            {
-                type = "server",
-                color = "pawl",
-                label = "Transformer",
-                icon = "c:inventory/ouvrir_le_stockage.png",
-                event = "pawl:server:processingTree",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = "pawl",
-            },
-        },
-        distance = 2.5,
-    })
-
     -- Craft
     local craftOptions = {}
     for craftId, craft in pairs(Config.Craft) do
