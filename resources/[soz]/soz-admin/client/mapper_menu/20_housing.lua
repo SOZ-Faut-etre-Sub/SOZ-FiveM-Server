@@ -338,4 +338,6 @@ function CreateDrawZone(type)
 end
 
 --- Add to main menu
-MapperMenu:AddButton({icon = "🏠", label = "Gestion des propriétés", value = houseMenu})
+function MapperMenuHousing(menu)
+    menu:AddButton({icon = "🏠", label = "Gestion des propriétés", value = houseMenu})
+end
