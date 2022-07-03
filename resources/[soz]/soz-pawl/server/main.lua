@@ -2,12 +2,14 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 Fields = {}
 
-for k, v in pairs(Config.Fields) do
-    Fields[k] = Field:new(k, v.model, v.positions, v.refillDelay)
+Citizen.CreateThread(function()
+    for k, v in pairs(Config.Fields) do
+        Fields[k] = Field:new(k, v.model, v.positions, v.refillDelay)
 
-    Fields[k]:FullRefillField()
-    Fields[k]:RunBackgroundTasks()
-end
+        Fields[k]:FullRefillField()
+        Fields[k]:RunBackgroundTasks()
+    end
+end)
 
 QBCore.Functions.CreateCallback("pawl:server:getFieldData", function(source, cb, identifier)
     local field = Fields[identifier]
@@ -48,6 +50,8 @@ end)
 --- Processing
 Citizen.CreateThread(function()
     while true do
+        Citizen.Wait(60 * 1000)
+
         if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
             goto wait_next_processing
             return
@@ -65,10 +69,8 @@ Citizen.CreateThread(function()
         end
 
         ::wait_next_processing::
-        Citizen.Wait(60 * 1000)
     end
 end)
-
 
 --- Crafting
 local function pairsByKeys(t)
