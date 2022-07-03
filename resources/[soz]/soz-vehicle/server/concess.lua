@@ -33,9 +33,9 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
 
-    local qbVehicle = vehicles[displayname]
+    local qbVehicle = vehicles[vehicle]
     if qbVehicle == nil then
-        exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
+        exports["soz-monitor"]:Log("WARN", "Vehicle with model name '" .. vehicle .. "' is not in the config.")
     end
     local vehiclePrice = qbVehicle["price"]
 
@@ -46,6 +46,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     })
     if vehiclestock[1].stock > 0 then
         if pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom") then
+            local category = "car"
             local garage
             if concess == "pdm" then
                 garage = "airportpublic"
@@ -53,12 +54,17 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
             elseif concess == "velo" then
                 garage = "airportpublic"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
+            elseif concess == "air" then
+                garage = "airport_air"
+                category = "air"
+                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Aérien Public Sud")
             else
                 garage = "haanparking"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             end
+
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 {
                     pData.PlayerData.license,
                     cid,
@@ -68,6 +74,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                     "{}",
                     plate,
                     garage,
+                    category,
                     1,
                     3,
                     os.time(),
