@@ -113,7 +113,7 @@ VehiclesMenu:On("open", function(menu)
     table.sort(vehicles, function(vehA, vehB)
         return vehA["price"] < vehB["price"]
     end)
-    menu:AddTitle({label = currentCategory })
+    menu:AddTitle({label = currentCategory})
     menu:AddButton({
         icon = "◀",
         label = "Catégories",
