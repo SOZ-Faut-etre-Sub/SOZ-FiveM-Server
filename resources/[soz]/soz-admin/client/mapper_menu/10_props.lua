@@ -71,7 +71,7 @@ propsMenu:AddSlider({
         if value and value.jobID ~= nil then
             PropOption.job = value.jobID
         end
-    end
+    end,
 })
 
 propsMenu:AddSlider({
