@@ -82,15 +82,10 @@ end)
 -- Add new facility from menu F10
 --
 local props = {
-    ["prop_gnome1"] = {
-        model = "prop_gnome1",
+    ["prop_elecbox_02a"] = {
+        model = "prop_elecbox_02a",
         facility = "terminal",
-        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}, scope = "default"},
-    },
-    ["prop_gnome2"] = {
-        model = "prop_gnome2",
-        facility = "terminal",
-        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}, scope = "entreprise"},
+        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}},
     },
     ["prop_gnome3"] = {
         model = "prop_gnome3",
@@ -98,7 +93,7 @@ local props = {
         defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}},
     },
 }
-RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, job)
+RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, job)
     local propData = props[model]
     if not propData then
         error("Invalid prop : " .. model)
@@ -107,6 +102,12 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, job)
     local facilityData = facilities[propData.facility]
     if not facilityData then
         error("Invalid facility : " .. propData.facility)
+    end
+
+    if scope and scope == "entreprise" then
+        if job == nil then
+            error("Job must be provided")
+        end
     end
 
     local identifier = string.format("%s%d", propData.facility, os.time())
@@ -125,6 +126,9 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, job)
         if key ~= "zone" then
             data[key] = value
         end
+    end
+    if scope ~= nil then
+        data.scope = scope
     end
 
     local facility = facilityData.class:new(identifier, data)

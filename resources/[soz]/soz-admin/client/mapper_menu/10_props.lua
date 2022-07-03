@@ -32,12 +32,16 @@ propsMenu:AddSlider({
     value = nil,
     values = {
         {label = "poubelle", value = "soz_prop_bb_bin"},
-        {label = "borne civile", value = "prop_gnome1"},
-        {label = "borne entreprise", value = "prop_gnome2"},
+        {label = "borne civile", value = "prop_elecbox_02a___default"},
+        {label = "borne entreprise", value = "prop_elecbox_02a___entreprise"},
         {label = "onduleur", value = "prop_gnome3"},
     },
     select = function(_, value)
-        selectModel(value)
+        local names = QBCore.Shared.SplitStr(value, "___")
+        local val, scope = names[1], names[2]
+
+        selectModel(val)
+        PropOption.scope = scope
     end,
 })
 propsMenu:AddButton({
@@ -143,6 +147,8 @@ propsMenu:AddButton({
 
         PropOption.setupMode = nil
         PropOption.prop = nil
+        PropOption.scope = nil
+        PropOption.job = nil
     end,
 })
 propsMenu:AddButton({
@@ -155,14 +161,16 @@ propsMenu:AddButton({
 
         if PropOption.model == "soz_prop_bb_bin" then
             TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
-        elseif PropOption.model == "prop_gnome1" or PropOption.model == "prop_gnome2" or PropOption.model == "prop_gnome3" then
-            TriggerServerEvent("soz-upw:server:AddFacility", PropOption.model, PropOption.propCoord, PropOption.job)
+        elseif PropOption.model == "prop_elecbox_02a" or PropOption.model == "prop_gnome3" then
+            TriggerServerEvent("soz-upw:server:AddFacility", PropOption.model, PropOption.propCoord, PropOption.scope, PropOption.job)
         end
 
         DeleteEntity(PropOption.prop)
 
         PropOption.prop = nil
         PropOption.model = nil
+        PropOption.scope = nil
+        PropOption.job = nil
     end,
 })
 
