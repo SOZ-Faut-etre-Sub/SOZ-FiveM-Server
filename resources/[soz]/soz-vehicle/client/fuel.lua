@@ -1,30 +1,27 @@
 local isFueling = false
 local fuelSynced = false
-local ObjectToHand
-local CordePompe = 0
-local pistoletdansmain = false
-InsideEssence = false
 
-function Round(num, numDecimalPlaces)
-    local mult = 10 ^ (numDecimalPlaces or 0)
-    return math.floor(num * mult + 0.5) / mult
-end
+local pistol = {model = "prop_cs_fuel_nozle", pistolObject = nil, rope = nil}
+local stationPistolInUse = false
+local playerIsInsideStationZone = false
 
+---
+--- Vehicle Fuel
+---
 function ManageFuelUsage(vehicle)
-    if not DecorExistOn(vehicle, Config.FuelDecor) then
+    if Entity(vehicle).state.fuel == nil then
         SetFuel(vehicle, math.random(200, 800) / 10)
     elseif not fuelSynced then
         SetFuel(vehicle, GetFuel(vehicle))
         fuelSynced = true
     end
     if IsVehicleEngineOn(vehicle) and Config.Classes[GetVehicleClass(vehicle)] > 0 then
-        SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - Config.FuelUsage[Round(GetVehicleCurrentRpm(vehicle), 1)] *
+        SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] *
                     (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10)
     end
 end
 
 CreateThread(function()
-    DecorRegister(Config.FuelDecor, 1)
     while true do
         Wait(1000)
         local ped = PlayerPedId()
@@ -41,37 +38,343 @@ CreateThread(function()
     end
 end)
 
-function ObjItemAdv(hash, x, y, z, rot1, rot2, rot3)
-    local ObjectID = GetHashKey(hash)
-    RequestModel(ObjectID)
-    while not HasModelLoaded(ObjectID) do
-        Citizen.Wait(10)
-    end
-    local ped = PlayerPedId()
-    local playerCoords = GetEntityCoords(ped)
-    playerCoords = playerCoords + vector3(0, 0, -1)
-    local obj = CreateObject(ObjectID, playerCoords["x"], playerCoords["y"], playerCoords["z"], true, true, true)
-    ObjectToHand = obj
-    AttachEntityToEntity(ObjectToHand, ped, GetPedBoneIndex(ped, 58866), x, y, z, rot1, rot2, rot3, true, true, false, true, 1, true)
-    GiveWeaponToPed(ped, 0xA2719263, 0, 0, 1)
-    return ObjectToHand
+function HasFuel(vehicle)
+    return Config.Classes[GetVehicleClass(vehicle)] > 0
 end
 
-function StopObj()
-    if ObjectToHand ~= nil then
-        DeleteEntity(ObjectToHand)
-        SetEntityAsMissionEntity(ObjectToHand, true, true)
-        ObjectToHand = nil
+function GetFuel(vehicle)
+    return Entity(vehicle).state.fuel
+end
+
+function SetFuel(vehicle, fuel)
+    if type(fuel) == "number" and fuel >= 0 and fuel <= 100 then
+        SetVehicleFuelLevel(vehicle, fuel + 0.0)
+        Entity(vehicle).state:set("fuel", GetVehicleFuelLevel(vehicle), true)
     end
 end
 
-function ClearAnimation()
+RegisterNetEvent("soz-fuel:client:SetFuel", function(net, newFuel)
+    local veh = NetworkGetEntityFromNetworkId(net)
+    SetFuel(veh, newFuel)
+end)
+
+exports("HasFuel", HasFuel)
+exports("GetFuel", GetFuel)
+exports("SetFuel", SetFuel)
+
+---
+--- Fuel Stations
+---
+Citizen.CreateThread(function()
+    local stations = QBCore.Functions.TriggerRpc("fuel:server:GetStations")
+
+    for _, s in pairs(stations) do
+        --- @type FuelStation
+        local station = FuelStation:new(s.id, s.station, s.fuel, s.type, s.owner, s.stock, s.position, s.model, s.zone)
+
+        if station:IsPublic() then
+            QBCore.Functions.CreateBlip("station_" .. station.id, {
+                name = Config.FuelStations.Blip.Name,
+                coords = station:GetCoordinates(),
+                sprite = Config.FuelStations.Blip.Sprite,
+                color = Config.FuelStations.Blip.Color,
+                alpha = Config.FuelStations.Blip.Alpha,
+            })
+        end
+
+        BoxZone:Create(station:GetPolyZoneConfiguration()):onPlayerInOut(function(isPointInside, _)
+            playerIsInsideStationZone = isPointInside
+            if isPointInside then
+                TriggerEvent("locations:zone:enter", "fueler_petrol_station", station:GetIdentifier())
+
+                exports["qb-target"]:AddTargetModel(station:GetModel(), {
+                    options = {
+                        {
+                            label = "Remplir la station",
+                            color = "oil",
+                            icon = "c:fuel/pistolet.png",
+                            event = "jobs:client:fueler:StartStationRefill",
+                            canInteract = function()
+                                return LocalPlayer.state.hasTankerPipe and PlayerData.job.onduty
+                            end,
+                            job = "oil",
+                        },
+                        {
+                            label = "Remplir la station",
+                            color = "oil",
+                            icon = "c:fuel/pistolet.png",
+                            event = "jobs:client:fueler:StartKeroseneStationRefill",
+                            canInteract = function()
+                                return PlayerData.job.onduty
+                            end,
+                            item = "kerosene",
+                            job = "oil",
+                        },
+                        {
+                            label = "État de la station",
+                            icon = "c:fuel/pistolet.png",
+                            event = "fuel:client:GetFuelLevel",
+                            action = function(entity)
+                                TriggerEvent("fuel:client:GetFuelLevel", entity, station.id)
+                            end,
+                            canInteract = function()
+                                return station:IsPrivate() or (station:CitizenIsOwner(PlayerData.job.id) or PlayerData.job.id == "oil")
+                            end,
+                        },
+                        {
+                            icon = "c:fuel/pistolet.png",
+                            label = "Pistolet",
+                            event = "fuel:client:ActivateStationPistol",
+                            canInteract = function(entity)
+                                if GetEntityHealth(entity) <= 0 then
+                                    return false
+                                end
+
+                                if isFueling then
+                                    return false
+                                end
+
+                                local ped = PlayerPedId()
+                                if IsPedInAnyVehicle(ped) then
+                                    return false
+                                end
+
+                                return station:CitizenHasAccess(PlayerData.job.id)
+                            end,
+                        },
+                    },
+                    distance = 3.0,
+                })
+
+                ---
+                --- Setup vehicle fuel actions
+                ---
+                exports["qb-target"]:AddGlobalVehicle({
+                    options = {
+                        {
+                            icon = "c:fuel/remplir.png",
+                            label = "Remplir",
+                            action = function(entity)
+                                TriggerEvent("fuel:client:UseStationPistol", entity, station:GetIdentifier())
+                            end,
+                            canInteract = function(entity)
+                                if GetEntityHealth(entity) <= 0 then
+                                    return false
+                                end
+
+                                if isFueling then
+                                    return false
+                                end
+
+                                local ped = PlayerPedId()
+                                if IsPedInAnyVehicle(ped) then
+                                    return false
+                                end
+
+                                local vehicle = GetPlayersLastVehicle()
+                                if DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
+                                    return false
+                                end
+
+                                return playerIsInsideStationZone and stationPistolInUse
+                            end,
+                        },
+                    },
+                    distance = 3.0,
+                })
+            else
+                TriggerEvent("locations:zone:exit", "fueler_petrol_station")
+                exports["qb-target"]:RemoveTargetEntity(GetPlayersLastVehicle(), "Remplir")
+            end
+        end)
+
+    end
+end)
+
+local function StopObj()
+    if pistol.pistolObject ~= nil then
+        SetEntityAsMissionEntity(pistol.pistolObject, true, true)
+        DeleteEntity(pistol.pistolObject)
+        pistol.pistolObject = nil
+    end
+end
+
+local function ClearFuelingProps()
     RopeUnloadTextures()
-    DeleteRope(CordePompe)
+    DeleteRope(pistol.rope)
     StopObj()
-    CordePompe = 0
+    pistol.rope = nil
 end
 
+RegisterNetEvent("fuel:client:ActivateStationPistol", function(data)
+    if stationPistolInUse then
+        stationPistolInUse = false
+        ClearFuelingProps()
+        TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
+        return
+    end
+
+    stationPistolInUse = true
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+    local stationEntity = data.entity
+
+    QBCore.Functions.RequestAnimDict("anim@mp_atm@enter")
+
+    TaskTurnPedToFaceEntity(ped, stationEntity, 500)
+    Wait(500)
+
+    TaskPlayAnim(ped, "anim@mp_atm@enter", "enter", 8.0, -8.0, -1, 0, 0.0, true, true, true)
+    Wait(3000)
+
+    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/start_fuel", 0.3)
+
+    if pistol.pistolObject == nil then
+        pistol.pistolObject = CreateObject(GetHashKey(pistol.model), coords.x, coords.y, coords.z - 1.0, true, true, true);
+        SetNetworkIdCanMigrate(ObjToNet(pistol.pistolObject), false)
+        AttachEntityToEntity(pistol.pistolObject, ped, GetPedBoneIndex(ped, 26610), 0.04, -0.04, 0.02, 305.0, 270.0, -40.0, 1, 1, 0, 1, 0, 1)
+    end
+
+    RopeLoadTextures()
+
+    if pistol.rope == nil then
+        pistol.rope = AddRope(coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 15.0, 1, 10.0, 1.0, 0, false, true, false, 1.0, false, 0)
+        local ropeCoords = GetOffsetFromEntityInWorldCoords(stationEntity, 0.0, 0.0, 1.0)
+        AttachRopeToEntity(pistol.rope, stationEntity, ropeCoords, 1)
+    end
+
+    CreateThread(function()
+        if pistol.rope == nil then
+            return
+        end
+
+        while pistol.rope ~= nil do
+            local ropeCoords = GetOffsetFromEntityInWorldCoords(stationEntity, 0.0, 0.0, 1.0)
+            local hCoord = GetWorldPositionOfEntityBone(ped, GetEntityBoneIndexByName(ped, "BONETAG_L_FINGER2"))
+            AttachEntitiesToRope(pistol.rope, stationEntity, ped, ropeCoords.x, ropeCoords.y, ropeCoords.z, hCoord.x, hCoord.y, hCoord.z, 1, 1, 1, 0,
+                                 "BONETAG_L_FINGER2")
+
+            Citizen.Wait(10)
+        end
+
+        ClearFuelingProps()
+        isFueling = false
+        stationPistolInUse = false
+    end)
+end)
+
+RegisterNetEvent("fuel:client:UseStationPistol", function(vehicle, stationId)
+    local s = QBCore.Functions.TriggerRpc("fuel:server:GetStation", stationId)
+    if s == nil then
+        return
+    end
+
+    local station = FuelStation:new(s.id, s.station, s.fuel, s.type, s.owner, s.stock, s.position, s.model, s.zone)
+
+    if not station:HasSufficientStock() then
+        QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
+        ClearFuelingProps()
+        return
+    end
+
+    if not station:VehicleAccessFuel(vehicle) then
+        QBCore.Functions.ShowHelpNotification("~r~Vous n'avez pas accès à cette station.")
+        ClearFuelingProps()
+        return
+    end
+
+    local vehicleFuel = GetFuel(vehicle)
+    local vehicleMaxFuel = math.floor(100 - vehicleFuel)
+
+    local maxQuantity = QBCore.Functions.TriggerRpc("fuel:server:RequestRefuel", stationId, vehicleMaxFuel)
+    if maxQuantity <= 0 then
+        exports["soz-hud"]:DrawNotification("La station ne contient pas assez d'essence.", "error")
+        return
+    end
+
+    local ped = PlayerPedId()
+    isFueling = true
+
+    TaskTurnPedToFaceEntity(ped, vehicle, 1000)
+
+    QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
+    TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
+
+    local currentFuelAdd = 0
+    local newFuel = vehicleFuel
+    local cout = 0
+    local max = 99.8
+
+    Citizen.CreateThread(function()
+        while isFueling do
+            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
+            Citizen.Wait(1000)
+        end
+    end)
+
+    while max > newFuel and (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) and not IsControlJustReleased(0, 194) and
+        not IsControlJustReleased(0, 225) and GetPedInVehicleSeat(vehicle, -1) == 0 do
+        currentFuelAdd = currentFuelAdd + 0.02
+        newFuel = vehicleFuel + currentFuelAdd
+
+        if station:IsPublic() then
+            cout = math.ceil(currentFuelAdd * station:GetPrice())
+        end
+
+        DisplayText(newFuel, cout, station.type)
+        SetVehicleUndriveable(vehicle, true)
+        SetVehicleEngineOn(vehicle, false, false, false)
+        DisableAction()
+        Wait(0)
+    end
+
+    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
+    ClearPedTasks(ped)
+    RemoveAnimDict("timetable@gardener@filling_can")
+    if GetPedInVehicleSeat(vehicle, -1) == 0 then
+        if station.stock > currentFuelAdd then
+            if (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) then
+                local text = "Terminé."
+
+                if station:IsPublic() then
+                    text = text .. " Prix final : ~g~" .. cout .. " $"
+                end
+
+                QBCore.Functions.ShowHelpNotification(text)
+            else
+                local text = "Vous ne pouvez pas payer plus."
+
+                if station:IsPublic() then
+                    text = text .. " Le prix final est de: ~g~" .. cout .. " $"
+                end
+
+                QBCore.Functions.ShowHelpNotification(text)
+            end
+        else
+            local text = "Il n'y a plus d'autre stock dans la station."
+
+            if station:IsPublic() then
+                text = text .. " Le prix final est de: ~g~" .. cout .. " $"
+            end
+
+            QBCore.Functions.ShowHelpNotification(text)
+        end
+
+        QBCore.Functions.TriggerRpc("fuel:server:FinishRefuel", stationId, currentFuelAdd, VehToNet(vehicle))
+    else
+        QBCore.Functions.ShowHelpNotification("~r~Il ne peut y avoir de conducteur pendant le remplissage du véhicule.")
+    end
+
+    isFueling = false
+    SetVehicleUndriveable(vehicle, false)
+    SetVehicleEngineOn(vehicle, true, false, false)
+    ClearFuelingProps()
+    stationPistolInUse = false
+end)
+
+---
+--- Display
+---
 function DisableAction()
     -- Mouvements
     DisableControlAction(0, 22, true) -- disable spacebar
@@ -106,94 +409,8 @@ function DisableAction()
     DisableControlAction(0, 257, true) -- disable melee
 end
 
-RegisterNetEvent("fuel:client:GetFuelPomp")
-AddEventHandler("fuel:client:GetFuelPomp", function(id, gas, ped, gasentity, vehicle, stationType)
-    TaskTurnPedToFaceEntity(ped, gasentity, 500)
-    Wait(500)
-    QBCore.Functions.RequestAnimDict("anim@mp_atm@enter")
-    TaskPlayAnim(ped, "anim@mp_atm@enter", "enter", 8.0, -8.0, -1, 0, 0.0, true, true, true)
-    Wait(3000)
-    ClearPedTasks(ped)
-    RemoveAnimDict("anim@mp_atm@enter")
-    TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/start_fuel", 0.3)
-    local ropeSize = 4.5
-    local propsName = "prop_cs_fuel_nozle"
-
-    if propsName then
-        ObjItemAdv(propsName, 0.06, 0.0, 0.0, 0.0, 0.0, 90.0)
-        AttachEntityToEntity(ObjectToHand, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 26610), 0.04, -0.04, 0.02, 305.0, 270.0, -40.0, 1, 1, 0, 1, 0, 1)
-    end
-
-    local pCoords = GetWorldPositionOfEntityBone(PlayerPedId(), GetEntityBoneIndexByName(PlayerPedId(), "BONETAG_L_FINGER2"))
-    local vCoords = GetEntityCoords(gasentity)
-    vCoords = vector3(vCoords.x, vCoords.y, vCoords.z + 1.0)
-    RopeLoadTextures()
-    local maxL = ropeSize
-    local minL = 0.5
-    local initL = ropeSize * 2
-    CordePompe = AddRope(pCoords, 0.0, 0.0, 0.0, maxL, 1, initL, minL, 2.0, false, false, false, 1.0, false, 0)
-
-    CreateThread(function()
-        local obj = gasentity
-        while CordePompe ~= 0 and (RopeGetDistanceBetweenEnds(CordePompe) < 5) do
-            Citizen.Wait(10)
-            local pCoordsUpdated = GetWorldPositionOfEntityBone(PlayerPedId(), GetEntityBoneIndexByName(PlayerPedId(), "BONETAG_L_FINGER2"))
-            AttachEntitiesToRope(CordePompe, PlayerPedId(), obj, pCoordsUpdated, vCoords, 1)
-        end
-        ClearAnimation()
-        isFueling = false
-        pistoletdansmain = false
-    end)
-    exports["qb-target"]:AddTargetEntity(vehicle, {
-        options = {
-            {
-                type = "client",
-                icon = "c:fuel/remplir.png",
-                label = "Remplir",
-                action = function(entity)
-                    local ped = PlayerPedId()
-                    TriggerEvent("fuel:client:PumpToCar", id, gasentity, ped, entity, stationType)
-                end,
-                canInteract = function(entity)
-                    local ped = PlayerPedId()
-                    if not isFueling then
-                        if not IsPedInAnyVehicle(ped) then
-                            local vehicle = GetPlayersLastVehicle()
-                            local vehicleCoords = GetEntityCoords(vehicle)
-                            if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 10.0 then
-                                if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
-                                    if GetVehicleFuelLevel(vehicle) < 99 then
-                                        if InsideEssence and pistoletdansmain then
-                                            return true
-                                        else
-                                            return false
-                                        end
-                                    else
-                                        TriggerEvent("hud:client:DrawNotification", "Le réservoir est plein", "error")
-                                        Citizen.Wait(5000)
-                                        return false
-                                    end
-                                else
-                                    return false
-                                end
-                            else
-                                return false
-                            end
-                        else
-                            return false
-                        end
-                    else
-                        return false
-                    end
-                end,
-            },
-        },
-        distance = 3.0,
-    })
-end)
-
 function DisplayText(newFuel, cout, stationType)
-    local text = "~INPUT_FRONTEND_RRIGHT~ Arrêter la pompe. Flux: ~g~" .. Round(newFuel, 1) .. "L / 100L"
+    local text = "~INPUT_FRONTEND_RRIGHT~ Arrêter la pompe. Flux: ~g~" .. QBCore.Shared.Round(newFuel, 1) .. "L / 100L"
     if stationType ~= "private" then
         text = text .. " ~w~Coût: ~g~" .. cout .. " $"
     end
@@ -203,244 +420,23 @@ function DisplayText(newFuel, cout, stationType)
     EndTextCommandDisplayHelp(false, false, false, -1)
 end
 
-RegisterNetEvent("fuel:client:PumpToCar")
-AddEventHandler("fuel:client:PumpToCar", function(id, gasentity, ped, entity, stationType)
-    local stockstation = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", id)
-    if stockstation > 100 then
-        isFueling = true
-        TriggerServerEvent("soz-fuel:server:setTempFuel", id)
-        local currentFuel = GetVehicleFuelLevel(entity)
-        local currentFuelAdd = 0
-        local newFuel = currentFuel
-        local fueldiff = 0
-        local cout = 0
-        local max = 99.8
-
-        TaskTurnPedToFaceEntity(ped, entity, 1000)
-        QBCore.Functions.RequestAnimDict("timetable@gardener@filling_can")
-        TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
-        TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/refueling", 0.3)
-        TriggerServerEvent("soz-fuel:server:BeginFueling", currentFuel, GetPlayerServerId(PlayerId()))
-
-        while max > newFuel and (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) and not IsControlJustReleased(0, 194) and
-            not IsControlJustReleased(0, 225) and GetPedInVehicleSeat(entity, -1) == 0 and GetEntityHealth(gasentity) > 0 do
-            currentFuelAdd = currentFuelAdd + 0.02
-            newFuel = currentFuel + currentFuelAdd
-
-            fueldiff = currentFuelAdd / 100
-
-            if stationType ~= "private" then
-                cout = math.ceil(fueldiff * Config.RefillCost)
-            end
-
-            DisplayText(newFuel, cout, stationType)
-            SetVehicleUndriveable(entity, true)
-            SetVehicleEngineOn(entity, false, false, false)
-            DisableAction()
-            Wait(0)
-        end
-        -- voir pk le son continue quand on fait pas E et ne joue pas celui ci-dessous, mais s'arrête quand on fait E et joue celui ci-dessous
-        TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
-        ClearPedTasks(ped)
-        RemoveAnimDict("timetable@gardener@filling_can")
-        if GetPedInVehicleSeat(entity, -1) == 0 then
-            if stockstation > currentFuelAdd then
-                if (cout == 0 or QBCore.Functions.GetPlayerData().money["money"] > cout) then
-                    local text = "Terminé."
-
-                    if stationType ~= "private" then
-                        text = text .. " Prix final : ~g~" .. cout .. " $"
-                    end
-
-                    QBCore.Functions.ShowHelpNotification(text)
-                else
-                    local text = "Vous ne pouvez pas payer plus."
-
-                    if stationType ~= "private" then
-                        text = text .. " Le prix final est de: ~g~" .. cout .. " $"
-                    end
-
-                    QBCore.Functions.ShowHelpNotification(text)
-                end
-            else
-                local text = "Il n'y a plus d'autre stock dans la station."
-
-                if stationType ~= "private" then
-                    text = text .. " Le prix final est de: ~g~" .. cout .. " $"
-                end
-
-                QBCore.Functions.ShowHelpNotification(text)
-            end
-            local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(entity))
-            TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(entity), math.floor(newFuel), serverIDcar, stationType, GetPlayerServerId(PlayerId()))
-            --
-            TriggerServerEvent("soz-fuel:server:setFinalFuel", id, (100 - math.floor(currentFuelAdd)))
-        else
-            QBCore.Functions.ShowHelpNotification("~r~Il ne peut y avoir de conducteur pendant le remplissage du véhicule.")
-        end
-        isFueling = false
-        SetVehicleUndriveable(entity, false)
-        SetVehicleEngineOn(entity, true, false, false)
-        ClearAnimation()
-        pistoletdansmain = false
-    else
-        QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
-        ClearAnimation()
+---
+--- Utils
+---
+RegisterNetEvent("fuel:client:GetFuelLevel", function(entity, stationId)
+    local station = QBCore.Functions.TriggerRpc("fuel:server:GetStation", stationId)
+    if station == nil then
+        return
     end
-end)
 
-Citizen.CreateThread(function()
-    local stations = QBCore.Functions.TriggerRpc("soz-fuel:server:getStations")
-
-    for _, station in pairs(stations) do
-        if station.type == "public" then
-            QBCore.Functions.CreateBlip("station_" .. station.id, {
-                name = "Station essence",
-                coords = vector3(station.position.x, station.position.y, station.position.z),
-                sprite = 361,
-                color = 4,
-                alpha = 100,
-            })
-        end
-
-        local zone = BoxZone:Create(vector3(station.zone.position.x, station.zone.position.y, station.zone.position.z), station.zone.length, station.zone.width,
-                                    station.zone.options)
-
-        zone:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-            if isPointInside then
-                InsideEssence = true
-                TriggerEvent("locations:zone:enter", "fueler_petrol_station", station.id)
-
-                local StationStateJobLimiter = {["oil"] = 0}
-                if station.type == "private" and PlayerData.job.id == station.owner then
-                    StationStateJobLimiter[station.owner] = 0
-                end
-
-                local StationAction = nil
-                if station.type == "public" or (station.type == "private" and PlayerData.job.id == station.owner) then
-                    StationAction = {
-                        type = "client",
-                        icon = "c:fuel/pistolet.png",
-                        label = "Pistolet",
-                        action = function(entity)
-                            if pistoletdansmain then
-                                pistoletdansmain = false
-                                ClearAnimation()
-                                TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5, "fuel/end_fuel", 0.3)
-                            else
-                                pistoletdansmain = true
-                                local ped = PlayerPedId()
-                                local vehicle = GetPlayersLastVehicle()
-                                TriggerEvent("fuel:client:GetFuelPomp", station.id, zone, ped, entity, vehicle, station.type)
-                            end
-                        end,
-                        canInteract = function(entity)
-                            local ped = PlayerPedId()
-                            if not isFueling then
-                                if not IsPedInAnyVehicle(ped) then
-                                    local vehicle = GetPlayersLastVehicle()
-                                    local vehicleCoords = GetEntityCoords(vehicle)
-                                    if DoesEntityExist(vehicle) and #(GetEntityCoords(ped) - vehicleCoords) < 10.0 then
-                                        if not DoesEntityExist(GetPedInVehicleSeat(vehicle, -1)) then
-                                            if GetVehicleFuelLevel(vehicle) < 99 then
-                                                if GetEntityHealth(entity) > 0 then
-                                                    return true
-                                                else
-                                                    exports["soz-hud"]:DrawNotification("La pompe est explosée", "error")
-                                                    Citizen.Wait(1000)
-                                                end
-                                            else
-                                                exports["soz-hud"]:DrawNotification("Le réservoir est plein", "error")
-                                                Citizen.Wait(1000)
-                                                return false
-                                            end
-                                        else
-                                            return false
-                                        end
-                                    else
-                                        return false
-                                    end
-                                else
-                                    return false
-                                end
-                            else
-                                return false
-                            end
-                        end,
-                    }
-                end
-
-                exports["qb-target"]:AddTargetModel(station.model, {
-                    options = {
-                        {
-                            label = "Remplir la station",
-                            color = "oil",
-                            icon = "c:fuel/pistolet.png",
-                            event = "jobs:client:fueler:StartStationRefill",
-                            canInteract = function()
-                                return LocalPlayer.state.hasTankerPipe and PlayerData.job.onduty
-                            end,
-                            job = "oil",
-                        },
-                        {
-                            label = "État de la station",
-                            icon = "c:fuel/pistolet.png",
-                            event = "fuel:client:GetFuelLevel",
-                            station = station.id,
-                            canInteract = function()
-                                return station.type == "private"
-                            end,
-                            job = StationStateJobLimiter,
-                        },
-                        StationAction,
-                    },
-                    distance = 3.0,
-                })
-            else
-                InsideEssence = false
-                TriggerEvent("locations:zone:exit", "fueler_petrol_station")
-                exports["qb-target"]:RemoveTargetEntity(GetPlayersLastVehicle(), "Remplir")
-                exports["qb-target"]:RemoveTargetModel(station.model, "Pistolet")
-            end
-        end)
-    end
-end)
-
-function HasFuel(vehicle)
-    return Config.Classes[GetVehicleClass(vehicle)] > 0
-end
-
-function GetFuel(vehicle)
-    return DecorGetFloat(vehicle, Config.FuelDecor)
-end
-
-function SetFuel(vehicle, fuel)
-    if type(fuel) == "number" and fuel >= 0 and fuel <= 100 then
-        SetVehicleFuelLevel(vehicle, fuel + 0.0)
-        DecorSetFloat(vehicle, Config.FuelDecor, GetVehicleFuelLevel(vehicle))
-    end
-end
-
-exports("HasFuel", HasFuel)
-exports("GetFuel", GetFuel)
-exports("SetFuel", SetFuel)
-
-RegisterNetEvent("soz-fuel:client:SetFuel", function(net, newFuel)
-    local veh = NetworkGetEntityFromNetworkId(net)
-    SetFuel(veh, newFuel)
-end)
-
-RegisterNetEvent("fuel:client:GetFuelLevel", function(data)
-    local stationFuelLevel = QBCore.Functions.TriggerRpc("soz-fuel:server:getfuelstock", data.station)
-
-    TaskTurnPedToFaceEntity(PlayerPedId(), data.entity, 500)
+    TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500)
     Wait(500)
 
     QBCore.Functions.Progressbar("inspect", "Vous vérifiez le niveau...", 5000, false, true, {
         disableMovement = true,
         disableCombat = true,
     }, {task = "PROP_HUMAN_PARKING_METER"}, {}, {}, function() -- Done
-        exports["soz-hud"]:DrawNotification(("Status de la cuve : ~b~%dL"):format(stationFuelLevel), "info")
+        exports["soz-hud"]:DrawNotification(("Status de la cuve : ~b~%dL"):format(station.stock), "info")
     end)
 end)
 
@@ -467,9 +463,7 @@ RegisterNetEvent("soz-fuel:client:onJerrycanEssence", function()
                 disableCarMovement = true,
                 disableCombat = true,
             }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
-                TriggerServerEvent("soz-fuel:server:removeJerrycanEssence")
-                local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(vehicle))
-                TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(vehicle), math.floor(fuel + 30.0), serverIDcar, "private", GetPlayerServerId(PlayerId()))
+                QBCore.Functions.TriggerRpc("fuel:server:useJerrycanEssence", VehToNet(vehicle))
 
                 exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un Jerrycan d'Essence")
             end)
@@ -504,9 +498,7 @@ RegisterNetEvent("soz-fuel:client:onJerrycanKerosene", function()
                 disableCarMovement = true,
                 disableCombat = true,
             }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
-                TriggerServerEvent("soz-fuel:server:removeJerrycanKerosene")
-                local serverIDcar = GetPlayerServerId(NetworkGetEntityOwner(vehicle))
-                TriggerServerEvent("soz-fuel:server:SetFuel", VehToNet(vehicle), math.floor(fuel + 30.0), serverIDcar, "private", GetPlayerServerId(PlayerId()))
+                QBCore.Functions.TriggerRpc("fuel:server:useJerrycanKerosene", VehToNet(vehicle))
 
                 exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un Jerrycan de Kérosène")
             end)
