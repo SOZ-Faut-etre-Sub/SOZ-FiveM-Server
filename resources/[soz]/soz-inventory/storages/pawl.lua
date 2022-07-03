@@ -36,3 +36,13 @@ Config.Storages["pawl_storage"] = {
     heading = 70,
     offsetUpZ = 4.0,
 }
+
+Config.Storages["pawl_log_processing"] = {
+    label = "Process Pipe And Wooden Leg",
+    type = "log_processing",
+    owner = "pawl",
+    position = vector3(-552.14, 5347.94, 74.74),
+    size = vec2(0.5, 2.2),
+    heading = 72,
+    offsetUpZ = 1.5,
+}

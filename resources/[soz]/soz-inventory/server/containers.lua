@@ -15,7 +15,7 @@ end
 Container["player"] = InventoryContainer:new({
     type = "player",
     allowedTypes = {},
-    inventoryPermissionCallback = function(id, items)
+    syncCallback = function(id, items)
         local Player = QBCore.Functions.GetPlayer(tonumber(id))
 
         if Player then
@@ -136,4 +136,12 @@ Container["sawdust_storage"] = InventoryContainer:new({
     type = "sawdust_storage",
     allowedTypes = {"sawdust"},
     inventoryPermissionCallback = playerHaveJob,
+})
+Container["log_processing"] = InventoryContainer:new({
+    type = "log_processing",
+    allowedTypes = {"log"},
+    inventoryPermissionCallback = playerHaveJob,
+    inventoryGetContentCallback = function()
+        return false
+    end,
 })

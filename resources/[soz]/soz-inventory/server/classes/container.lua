@@ -120,31 +120,19 @@ function InventoryContainer:CanPlayerUseInventory(owner, playerId)
     end
 end
 
-function InventoryContainer:CanPlayerGetContentInInventory(owner, playerId)
-    local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
-
+function InventoryContainer:CanGetContentInInventory()
     if not self.inventoryGetContentCallback then
         return true
     end
 
-    if Player then
-        return self.inventoryGetContentCallback(Player, owner)
-    else
-        return false
-    end
+    return self.inventoryGetContentCallback()
 end
-function InventoryContainer:CanPlayerPutContentInInventory(owner, playerId)
-    local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
-
+function InventoryContainer:CanPutContentInInventory()
     if not self.inventoryPutContentCallback then
         return true
     end
 
-    if Player then
-        return self.inventoryPutContentCallback(Player, owner)
-    else
-        return false
-    end
+    return self.inventoryPutContentCallback()
 end
 
 function InventoryContainer:IsDatastore()
