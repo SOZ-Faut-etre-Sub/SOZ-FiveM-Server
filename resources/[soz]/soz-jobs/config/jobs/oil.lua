@@ -1,6 +1,6 @@
 FuelerConfig = {}
 
-FuelerConfig.SellPrice = 8
+FuelerConfig.SellPrice = 5
 
 FuelerConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
