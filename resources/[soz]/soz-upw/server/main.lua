@@ -85,7 +85,7 @@ local props = {
     ["prop_elecbox_02a"] = {
         model = "prop_elecbox_02a",
         facility = "terminal",
-        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}},
+        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 0.8, sy = 0.9, deltaZ = 2.0}},
     },
     ["prop_gnome3"] = {
         model = "prop_gnome3",
