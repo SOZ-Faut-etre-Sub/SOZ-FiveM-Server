@@ -91,7 +91,7 @@ MotoChoose:On("open", function(menu)
             menu:Close()
             MotoModel:Close()
             MotoList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "moto", moto["model"], GetDisplayNameFromVehicleModel(GetHashKey(moto["model"])):lower())
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "moto", moto["model"], moto["model"]:lower())
         end,
     })
 end)

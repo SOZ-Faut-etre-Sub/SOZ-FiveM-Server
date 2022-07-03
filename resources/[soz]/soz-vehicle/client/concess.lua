@@ -71,7 +71,6 @@ local function CarModels(vehicule)
 end
 
 VehiculeChoose:On("open", function(menu)
-    clean()
     menu:ClearItems()
     local voiture = GlobalVehicle
     menu:AddTitle({label = voiture.name})
@@ -81,6 +80,7 @@ VehiculeChoose:On("open", function(menu)
         value = VehiculeModel,
         description = "Choisir un autre modèle",
         select = function()
+            clean()
             menu:Close()
         end,
     })
@@ -94,8 +94,7 @@ VehiculeChoose:On("open", function(menu)
             menu:Close()
             VehiculeModel:Close()
             VehiculeList:Close()
-            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"],
-                               GetDisplayNameFromVehicleModel(GetHashKey(voiture["model"])):lower())
+            TriggerServerEvent("soz-concess:server:buyShowroomVehicle", "pdm", voiture["model"], voiture["model"]:lower())
         end,
     })
 end)
