@@ -14,6 +14,7 @@ AddEventHandler("onResourceStart", function(resource)
 
         MySQL.Async.execute("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'", {})
         MySQL.Async.execute("UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'", {})
+        MySQL.Async.execute("UPDATE player_vehicles SET garage = 'fourriere' WHERE state = 2 AND garage != 'fourriere'", {})
 
         MySQL.Async.fetchAll("SELECT * FROM player_vehicles WHERE state = 2 OR state = 4 OR state = 1", {}, function(result)
             if result[1] then
@@ -21,7 +22,7 @@ AddEventHandler("onResourceStart", function(resource)
                     local jours = os.difftime(os.time(), v.parkingtime) / (24 * 60 * 60) -- seconds in a day
                     local joursentiers = math.floor(jours)
                     if (v.state == 1 and joursentiers > 21) then
-                        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, parkingtime = ? WHERE id = ?", {
+                        MySQL.Async.execute("UPDATE player_vehicles SET state = 2, parkingtime = ?, garage = 'fourriere' WHERE id = ?", {
                             os.time(),
                             v.id,
                         })
@@ -270,7 +271,7 @@ end)
 QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle, qbVehicleKey)
     local player = QBCore.Functions.GetPlayer(source)
 
-    local qbVehicle = QBCore.Shared.Vehicles[qbVehicleKey]
+    local qbVehicle = exports["soz-vehicle"]:GetVehiclesByModels()[vehicle.vehicle]
     local feePercentage = (1.0 / 100)
     if GetConvarInt("feature_dlc1_impound", 0) == 1 then
         feePercentage = (15.0 / 100)

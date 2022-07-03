@@ -146,7 +146,7 @@ local function GetEmptyParkingSlots(slots, indexgarage, size)
     local emptySlots = {}
 
     for _, slot in pairs(slots) do
-        if slot.data.indexGarage == indexgarage and (slot.data.capacity or 3) >= size then
+        if slot.data.indexGarage == indexgarage and (slot.data.capacity == nil or slot.data.capacity[size] ~= nil) then
             local c = slot:getBoundingBoxCenter()
             local w = slot:getHeading()
             if not IsPositionOccupied(c.x, c.y, c.z, 0.5, false, true, true, false, false, 0, false) then

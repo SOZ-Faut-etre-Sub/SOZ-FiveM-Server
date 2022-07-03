@@ -1,5 +1,16 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
+local vehicles = {}
+for k, voiture in pairs(QBCore.Shared.Vehicles) do
+    vehicles[voiture["model"]] = voiture;
+end
+
+local function GetVehiclesByModels()
+    return vehicles
+end
+
+exports("GetVehiclesByModels", GetVehiclesByModels)
+
 local function GeneratePlate()
     local plate = QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(2)
     local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {plate})
@@ -22,7 +33,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
 
-    local qbVehicle = QBCore.Shared.Vehicles[displayname]
+    local qbVehicle = vehicles[displayname]
     if qbVehicle == nil then
         exports["soz-monitor"]:Log("WARN", "Vehicle with display name '" .. displayname .. "' is not in the config. Model name: " .. vehicle)
     end
@@ -53,7 +64,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
             end
 
             MySQL.Async.insert(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 {
                     pData.PlayerData.license,
                     cid,
@@ -66,6 +77,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                     category,
                     1,
                     3,
+                    os.time(),
                     os.time(),
                 })
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})

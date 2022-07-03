@@ -73,6 +73,13 @@ local createCameraThread = function()
     CreateThread(function()
         local player = PlayerPedId()
 
+        if not IsPedSittingInAnyVehicle(player) then
+            TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_BINOCULARS", 0, 1)
+            PlayAmbientSpeech1(GetPlayerPed(-1), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
+
+            Citizen.Wait(2000)
+        end
+
         local cam = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
         AttachCamToEntity(cam, player, 0.05, 0.5, 0.7, true)
         SetCamRot(cam, 2.0, 1.0, GetEntityHeading(player))
@@ -81,9 +88,6 @@ local createCameraThread = function()
         PushScaleformMovieFunction(scaleform, "SET_CAM_LOGO")
         PushScaleformMovieFunctionParameterInt(0) -- 0 for nothing, 1 for LSPD logo
         PopScaleformMovieFunctionVoid()
-
-        TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_BINOCULARS", 0, 1)
-        PlayAmbientSpeech1(GetPlayerPed(-1), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
 
         -- exports["soz-hud"]:EnableTwitchNewsOverlay()
         while binocularsConfig.enabled do
@@ -121,7 +125,7 @@ local createCameraThread = function()
             SetTaskMoveNetworkSignalFloat(player, "Pitch", camPitch)
             SetTaskMoveNetworkSignalFloat(player, "Heading", camHeading * -1.0 + 1.0)
 
-            Wait(1)
+            Wait(10)
         end
         -- exports["soz-hud"]:DisableTwitchNewsOverlay()
 
