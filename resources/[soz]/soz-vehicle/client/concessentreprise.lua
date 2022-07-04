@@ -76,9 +76,9 @@ vehicleListMenu:On("open", function(m)
     m:ClearItems()
     for vehicleModel, model in pairs(listVehicles) do
         local qbVehicle = vehicles[vehicleModel]
-        local vehicleName = qbVehicle['name']
-        if qbVehicle['job_name'] then
-            vehicleName = qbVehicle['job_name'][PlayerData.job.id]
+        local vehicleName = qbVehicle["name"]
+        if qbVehicle["job_name"] then
+            vehicleName = qbVehicle["job_name"][PlayerData.job.id]
         end
 
         m:AddButton({
@@ -99,15 +99,15 @@ end)
 
 local function HasLicenceForThisModel(model)
     local qbVehicle = vehicles[model]
-    local licenseTypeToCheck = 'car'
+    local licenseTypeToCheck = "car"
     if qbVehicle.type then
         licenseTypeToCheck = qbVehicle.type
         -- Quick workaround as the air category should be named heli category when it will be rework.
-        if qbVehicle.type == 'air' then
-            licenseTypeToCheck = 'heli'
+        if qbVehicle.type == "air" then
+            licenseTypeToCheck = "heli"
         end
     end
-    local licences = PlayerData.metadata['licences']
+    local licences = PlayerData.metadata["licences"]
     return licences ~= nil and licences[licenseTypeToCheck] > 0
 end
 
