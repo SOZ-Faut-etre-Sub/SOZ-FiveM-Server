@@ -464,7 +464,7 @@ end)
 
 RegisterNetEvent("jobs:client:fueler:StartCraftKerosene", function(data)
     local playerPed = PlayerPedId()
-    local canCraft = playerHasItem("petroleum_refined", 2)
+    local canCraft = playerHasItem("petroleum_refined", 4)
     if not canCraft then
         return
     end
@@ -480,7 +480,7 @@ RegisterNetEvent("jobs:client:fueler:StartCraftKerosene", function(data)
         TriggerServerEvent("jobs:server:fueler:craftKerosene")
         Wait(1000)
 
-        canCraft = playerHasItem("petroleum_refined", 2)
+        canCraft = playerHasItem("petroleum_refined", 4)
     end)
 end)
 
