@@ -6,6 +6,11 @@ local vehicleChooseMenu = MenuV:InheritMenu(vehicleListMenu)
 local InsideConcessEntreprise = false
 local selectedModel = {}
 
+local vehicles = {}
+for _, vehicle in pairs(QBCore.Shared.Vehicles) do
+    vehicles[vehicle["model"]] = vehicle
+end
+
 ZonesConcessEntreprise = {
     ["ConcessEntreprise"] = BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
         name = "ConcessEntreprise_z",
@@ -70,7 +75,12 @@ vehicleListMenu:On("open", function(m)
 
     m:ClearItems()
     for vehicleModel, model in pairs(listVehicles) do
-        local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(vehicleModel))
+        local qbVehicle = vehicles[vehicleModel]
+        local vehicleName = qbVehicle['name']
+        if qbVehicle['job_name'] then
+            vehicleName = qbVehicle['job_name'][PlayerData.job.id]
+        end
+
         m:AddButton({
             label = vehicleName,
             rightLabel = "💸 " .. model.price .. "$",
@@ -86,6 +96,20 @@ end)
 vehicleListMenu:On("close", function()
     vehicleListMenu:ClearItems()
 end)
+
+local function HasLicenceForThisModel(model)
+    local qbVehicle = vehicles[model]
+    local licenseTypeToCheck = 'car'
+    if qbVehicle.type then
+        licenseTypeToCheck = qbVehicle.type
+        -- Quick workaround as the air category should be named heli category when it will be rework.
+        if qbVehicle.type == 'air' then
+            licenseTypeToCheck = 'heli'
+        end
+    end
+    local licences = PlayerData.metadata['licences']
+    return licences ~= nil and licences[licenseTypeToCheck] > 0
+end
 
 vehicleChooseMenu:On("open", function(m)
     m:ClearItems()
@@ -103,9 +127,13 @@ vehicleChooseMenu:On("open", function(m)
         label = "Acheter " .. vehicleName,
         description = "Confirmer l'achat",
         select = function()
-            vehicleChooseMenu:Close()
-            vehicleListMenu:Close()
-            TakeOutGarage(selectedModel)
+            if HasLicenceForThisModel(selectedModel.model) then
+                vehicleChooseMenu:Close()
+                vehicleListMenu:Close()
+                TakeOutGarage(selectedModel)
+            else
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas le permis pour ce véhicule.", "error")
+            end
         end,
     })
 end)
