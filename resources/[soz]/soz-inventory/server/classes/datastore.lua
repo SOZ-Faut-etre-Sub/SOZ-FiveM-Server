@@ -2,7 +2,13 @@ InventoryDatastore = {}
 
 function InventoryDatastore:new(options)
     self.__index = self
-    local inventoryOptions = {type = nil, allowedTypes = {}, populateDatastoreCallback = nil}
+    local inventoryOptions = {
+        type = nil,
+        allowedTypes = {},
+        populateDatastoreCallback = nil,
+        inventoryGetContentCallback = nil,
+        inventoryPutContentCallback = nil,
+    }
 
     if not options.type then
         error("InventoryDatastore:new() - type is required")
@@ -60,6 +66,21 @@ end
 
 function InventoryDatastore:CanPlayerUseInventory(owner, playerId)
     return true
+end
+
+function InventoryDatastore:CanGetContentInInventory()
+    if not self.inventoryGetContentCallback then
+        return true
+    end
+
+    return self.inventoryGetContentCallback()
+end
+function InventoryDatastore:CanPutContentInInventory()
+    if not self.inventoryPutContentCallback then
+        return true
+    end
+
+    return self.inventoryPutContentCallback()
 end
 
 function InventoryDatastore:IsDatastore()

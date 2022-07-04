@@ -91,7 +91,7 @@ Container["stash"] = InventoryContainer:new({
 
 Container["bin"] = InventoryDatastore:new({
     type = "bin",
-    allowedTypes = {"item"},
+    allowedTypes = {"item", "item_illegal"},
     populateDatastoreCallback = function()
         local inventory = {}
         local items = {
