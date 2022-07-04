@@ -15,10 +15,6 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
 end)
 
 Citizen.CreateThread(function()
-    if GetConvar("feature_dlc1_pawl", "0") == "0" then
-        return
-    end
-
     -- Blip
     if not QBCore.Functions.GetBlip("job_pawl") then
         QBCore.Functions.CreateBlip("job_pawl", {
@@ -27,6 +23,10 @@ Citizen.CreateThread(function()
             sprite = Config.Blip.Sprite,
             scale = Config.Blip.Scale,
         })
+    end
+
+    if GetConvar("feature_dlc1_pawl", "0") == "0" then
+        return
     end
 
     -- Fields
