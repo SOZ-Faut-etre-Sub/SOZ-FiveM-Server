@@ -73,7 +73,7 @@ const MessagesList = (): any => {
                                             <span></span>
                                         )
                                     )}
-                                    <span>{dayjs().to(message.updatedAt)}</span>
+                                    <span>{dayjs().to(message.createdAt)}</span>
                                 </p>
                             </div>
                         </div>
