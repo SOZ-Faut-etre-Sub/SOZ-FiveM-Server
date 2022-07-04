@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
                 exports["qb-target"]:AddTargetModel(station:GetModel(), {
                     options = {
                         {
-                            label = "Remplir la station",
+                            label = "Remplir la station d'essence",
                             color = "oil",
                             icon = "c:fuel/pistolet.png",
                             event = "jobs:client:fueler:StartStationRefill",
@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
                             job = "oil",
                         },
                         {
-                            label = "Remplir la station",
+                            label = "Remplir la station de kérosène",
                             color = "oil",
                             icon = "c:fuel/pistolet.png",
                             event = "jobs:client:fueler:StartKeroseneStationRefill",
