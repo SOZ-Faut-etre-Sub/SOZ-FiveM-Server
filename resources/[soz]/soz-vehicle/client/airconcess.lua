@@ -6,6 +6,7 @@ local selectedCategory = {}
 local selectedVehicle = {}
 local isInsideConcess = false
 local dealerId = "air"
+local licenseTypeRequired = "heli"
 local dealer = Config.Shops[dealerId]
 
 local dealerZones = {
@@ -84,7 +85,7 @@ ChooseVehicleMenu:On("open", function(menu)
         end,
     })
     local displayName = GetDisplayNameFromVehicleModel(selectedVehicle["hash"])
-    local vehicleLabelText = GetLabelText(displayName)
+    local vehicleLabelText = selectedVehicle["name"]
     menu:AddButton({
         label = "Acheter " .. vehicleLabelText,
         rightLabel = "💸 " .. selectedVehicle["price"] .. "$",
@@ -236,7 +237,8 @@ if GetConvarInt("feature_dlc1_helicopters", 0) == 1 then
                         TriggerEvent("soz-dealer:air:client:Menu", "")
                     end,
                     canInteract = function()
-                        return isInsideConcess
+                        local licenses = PlayerData.metadata["licences"]
+                        return isInsideConcess and licenses ~= nil and licenses[licenseTypeRequired] > 0
                     end,
                 },
             },
