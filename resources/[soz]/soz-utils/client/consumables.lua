@@ -145,7 +145,7 @@ Citizen.CreateThread(function()
         if not hasConsumedParachute and GetPedParachuteState(PlayerPedId()) == 1 then
             TriggerServerEvent("inventory:server:RemoveItem", PlayerData.source, "parachute", 1)
             hasConsumedParachute = true
-        elseif hasConsumedParachute and GetPedParachuteState(PlayerPedId()) == 3 then
+        elseif hasConsumedParachute and (GetPedParachuteState(PlayerPedId()) == 3 or GetPedParachuteState(PlayerPedId()) == 0) then
             hasConsumedParachute = false
         end
         Citizen.Wait(100)
