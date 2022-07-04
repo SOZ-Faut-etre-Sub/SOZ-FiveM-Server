@@ -92,6 +92,6 @@ export async function reportListingToDiscord(listing: MarketplaceListing, report
     try {
         await postToWebhook(msgObj);
     } catch (e) {
-        discordLogger.error(e.message);
+        discordLogger.error(e.toString());
     }
 }

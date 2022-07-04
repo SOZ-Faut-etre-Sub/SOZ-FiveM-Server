@@ -1,5 +1,5 @@
 import React from 'react';
 
-const ExampleIcon: React.FC = props => <div />;
+const ExampleIcon: React.FC = () => <div />;
 
 export default ExampleIcon;

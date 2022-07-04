@@ -1,5 +1,4 @@
 import { usePhone } from '@os/phone/hooks/usePhone';
-import { usePhoneTheme } from '@os/phone/hooks/usePhoneTheme';
 import React from 'react';
 
 interface NotificationProps {
@@ -7,14 +6,10 @@ interface NotificationProps {
     handleClose: () => void;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ children, handleClose, open }) => {
+export const Notification: React.FC<NotificationProps> = ({ children }) => {
     const { ResourceConfig } = usePhone();
 
-    const currentTheme = usePhoneTheme();
-
     if (!ResourceConfig) return null;
-
-    const { horizontal, vertical } = ResourceConfig.notificationPosition;
 
     return (
         <div>

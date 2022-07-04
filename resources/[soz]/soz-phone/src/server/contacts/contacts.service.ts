@@ -24,7 +24,7 @@ class _ContactService {
             await this.contactsDB.updateContact(reqObj.data, identifier);
             resp({ status: 'ok' });
         } catch (e) {
-            contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.message}`);
+            contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -35,7 +35,7 @@ class _ContactService {
             resp({ status: 'ok' });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
-            contactsLogger.error(`Error in handleDeleteContact (${identifier}), ${e.message}`);
+            contactsLogger.error(`Error in handleDeleteContact (${identifier}), ${e.toString()}`);
         }
     }
     async handleAddContact(reqObj: PromiseRequest<PreDBContact>, resp: PromiseEventResp<Contact>): Promise<void> {
@@ -46,7 +46,7 @@ class _ContactService {
 
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            contactsLogger.error(`Error in handleAddContact, ${e.message}`);
+            contactsLogger.error(`Error in handleAddContact, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -57,7 +57,7 @@ class _ContactService {
             resp({ status: 'ok', data: contacts });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
-            contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.message}`);
+            contactsLogger.error(`Error in handleFetchContact (${identifier}), ${e.toString()}`);
         }
     }
 }

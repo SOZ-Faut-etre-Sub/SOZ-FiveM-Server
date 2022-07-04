@@ -1,3 +1,3 @@
 export interface QBJob {
-  id: string;
+    id: string;
 }

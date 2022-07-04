@@ -2,12 +2,11 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/components/Button';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useFilteredContacts } from '../../../contacts/hooks/state';
-import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {

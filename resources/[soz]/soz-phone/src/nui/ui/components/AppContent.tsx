@@ -1,14 +1,7 @@
 import { LoadingSpinner } from '@ui/components/LoadingSpinner';
 import React from 'react';
 
-export const AppContent: React.FC<any> = ({
-    children,
-    paperStyle,
-    backdrop,
-    disableSuspenseHandler,
-    onClickBackdrop,
-    ...props
-}) => {
+export const AppContent: React.FC<any> = ({ children, disableSuspenseHandler, ...props }) => {
     return (
         <div className="mt-4" {...props}>
             {!disableSuspenseHandler ? (

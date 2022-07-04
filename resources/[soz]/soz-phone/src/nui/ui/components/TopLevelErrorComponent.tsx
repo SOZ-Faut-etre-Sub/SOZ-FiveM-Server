@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface TopLevelErrorCompProps {
@@ -46,7 +46,7 @@ export class TopLevelErrorComponent extends React.Component<any, TopLevelErrorCo
         return { hasError: true, errorMsg: error.message };
     }
 
-    render() {
+    render(): ReactNode {
         if (this.state.hasError) {
             return <ErrorDialogComp isOpen={this.state.hasError} errorMsg={this.state.errorMsg} />;
         }

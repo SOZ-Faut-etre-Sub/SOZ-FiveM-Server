@@ -25,7 +25,7 @@ class _NotesService {
                 data: { id: noteId, content: reqObj.data.content, title: reqObj.data.title },
             });
         } catch (e) {
-            notesLogger.error(`Error in handleAddNote, ${e.message}`);
+            notesLogger.error(`Error in handleAddNote, ${e.toString()}`);
 
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
@@ -37,7 +37,7 @@ class _NotesService {
             const notes = await this.notesDB.fetchNotes(identifier);
             resp({ status: 'ok', data: notes });
         } catch (e) {
-            notesLogger.error(`Error in handleFetchNote, ${e.message}`);
+            notesLogger.error(`Error in handleFetchNote, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -48,7 +48,7 @@ class _NotesService {
             await this.notesDB.updateNote(reqObj.data, identifier);
             resp({ status: 'ok' });
         } catch (e) {
-            notesLogger.error(`Error in handleUpdateNote, ${e.message}`);
+            notesLogger.error(`Error in handleUpdateNote, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -63,7 +63,7 @@ class _NotesService {
             await this.notesDB.deleteNote(reqObj.data.id, identifier);
             resp({ status: 'ok', data: reqObj.data });
         } catch (e) {
-            notesLogger.error(`Error in handleDeleteNote, ${e.message}`);
+            notesLogger.error(`Error in handleDeleteNote, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }

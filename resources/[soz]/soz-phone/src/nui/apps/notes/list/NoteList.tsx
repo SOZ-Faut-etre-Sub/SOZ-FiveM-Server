@@ -24,7 +24,7 @@ const NoteList = () => {
     if (notes && notes.length)
         return (
             <List>
-                {notes.map((note, id) => (
+                {notes.map(note => (
                     <ListItem key={note.id} onClick={() => handleNoteModal(note)}>
                         <p className="flex-grow ml-4 py-2">{note.title}</p>
                         <Button className="flex items-center">

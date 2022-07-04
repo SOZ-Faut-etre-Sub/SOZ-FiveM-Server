@@ -16,7 +16,7 @@ function CellFrontCamActivate(activate: boolean) {
     return Citizen.invokeNative('0x2491A93618B7D838', activate);
 }
 
-RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async (_, cb) => {
+RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async () => {
     await animationService.openCamera();
     emit('npwd:disableControlActions', false);
 
@@ -50,7 +50,7 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
     SetNuiFocus(true, true);
 });
 
-RegisterNuiCB<void>(PhotoEvents.TOGGLE_CAMERA, async (_, cb) => {
+RegisterNuiCB<void>(PhotoEvents.TOGGLE_CAMERA, async () => {
     frontCam = !frontCam;
     CellFrontCamActivate(frontCam);
 
@@ -58,12 +58,12 @@ RegisterNuiCB<void>(PhotoEvents.TOGGLE_CAMERA, async (_, cb) => {
     SetNuiFocus(true, true);
 });
 
-RegisterNuiCB<void>(PhotoEvents.TOGGLE_CONTROL_CAMERA, async (_, cb) => {
+RegisterNuiCB<void>(PhotoEvents.TOGGLE_CONTROL_CAMERA, async () => {
     disableMouseControl = !disableMouseControl;
     SetNuiFocus(disableMouseControl, disableMouseControl);
 });
 
-RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async (_, cb) => {
+RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async () => {
     frontCam = false;
     disableMouseControl = true;
     inCameraMode = false;
@@ -121,7 +121,7 @@ const takePhoto = () =>
                     );
                     res(resp);
                 } catch (e) {
-                    rej(e.message);
+                    rej(e.toString());
                 }
             }
         );

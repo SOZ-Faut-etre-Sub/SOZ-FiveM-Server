@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ListingActions } from './ListingActions';
 
-export const MarketplaceItem: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
+export const MarketplaceItem: React.FC<MarketplaceListing> = ({ ...listing }) => {
     const [t] = useTranslation();
 
     return (

@@ -50,7 +50,7 @@ const ContactsInfoPage: React.FC = () => {
         setMessage(e.target.value);
     };
 
-    const handleAnonymousChange: React.MouseEventHandler<HTMLInputElement> = e => {
+    const handleAnonymousChange: React.MouseEventHandler<HTMLInputElement> = () => {
         setAnonymous(s => !s);
     };
 

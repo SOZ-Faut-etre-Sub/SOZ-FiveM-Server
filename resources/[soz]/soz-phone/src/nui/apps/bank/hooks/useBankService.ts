@@ -16,7 +16,6 @@ export const useBankService = () => {
 
     const handleAddAlert = ({ message, type }: IAlert) => {
         addAlert({
-            // @ts-ignore
             message: t(`APPS_${message}`),
             type,
         });

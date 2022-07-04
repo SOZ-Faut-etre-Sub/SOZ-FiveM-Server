@@ -6,21 +6,12 @@ import { useTransactions } from '../../hooks/useTransactions';
 export const TransactionList = () => {
     const transactionList = useTransactions();
     const [t] = useTranslation();
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page] = useState(0);
+    const [rowsPerPage] = useState(5);
 
     const TransactionTypes = {
         // Deposit: classes.depositType,
         // Withdraw: classes.withdrawType,
-    };
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = event => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
     };
 
     return (

@@ -13,7 +13,7 @@ export interface AppIconProps {
     notification: INotificationIcon;
 }
 
-export const AppIcon: React.FC<AppIconProps> = ({ id, nameLocale, Icon, color, icon, notification }) => {
+export const AppIcon: React.FC<AppIconProps> = ({ nameLocale, icon }) => {
     const [t] = useTranslation();
 
     return (

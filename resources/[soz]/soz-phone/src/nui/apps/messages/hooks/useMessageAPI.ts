@@ -22,8 +22,7 @@ type UseMessageAPIProps = {
 export const useMessageAPI = (): UseMessageAPIProps => {
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
-    const { updateLocalMessages, deleteLocalMessage, updateLocalConversations, removeLocalConversation } =
-        useMessageActions();
+    const { updateLocalMessages, updateLocalConversations, removeLocalConversation } = useMessageActions();
     const history = useHistory();
     const { state: messageConversationsState, contents: messageConversationsContents } = useRecoilValueLoadable(
         messageState.messageCoversations

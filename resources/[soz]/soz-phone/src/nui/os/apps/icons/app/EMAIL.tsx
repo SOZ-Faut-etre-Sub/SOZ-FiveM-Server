@@ -1,5 +1,5 @@
 import React from 'react';
 
-const EmailIcon: React.FC = props => <div />;
+const EmailIcon: React.FC = () => <div />;
 
 export default EmailIcon;

@@ -27,7 +27,7 @@ const WallpaperModal: React.FC = () => {
     const [config] = usePhoneConfig();
 
     const isImageAndUrl = url => {
-        return /^(http(s?):)([\/|.|\w|\s|-]).*/g.test(url);
+        return /^(http(s?):)([/|.|\w|\s|-]).*/g.test(url);
     };
 
     const handleSettingChange = (key: string | number, value: unknown) => {
@@ -106,7 +106,6 @@ const WallpaperModal: React.FC = () => {
                 leaveTo="scale-0"
             >
                 <DialogForm
-                    open={wallpaperModal}
                     handleClose={() => setWallpaperModal(false)}
                     onSubmit={handleNewWallpaper}
                     title={t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE')}

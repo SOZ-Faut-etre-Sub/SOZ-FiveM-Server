@@ -248,7 +248,7 @@ class _PlayerService {
         try {
             await MarketplaceService.handleDeleteListingsOnDrop(identifier);
         } catch (e) {
-            playerLogger.error(`Failed to clear player data when dropped, Error: ${e.message}`);
+            playerLogger.error(`Failed to clear player data when dropped, Error: ${e.toString()}`);
         }
     }
 

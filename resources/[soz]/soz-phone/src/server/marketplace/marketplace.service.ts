@@ -57,7 +57,7 @@ class _MarketplaceService {
             // Broadcast to everyone we are adding a listing
             emitNet(MarketplaceEvents.BROADCAST_ADD, -1, { type: 'ADD', listing: returnObj });
         } catch (e) {
-            marketplaceLogger.error(`Failed to add listing ${e.message}`, {
+            marketplaceLogger.error(`Failed to add listing ${e.toString()}`, {
                 source: reqObj.source,
             });
 
@@ -71,7 +71,7 @@ class _MarketplaceService {
 
             resp({ data: listings, status: 'ok' });
         } catch (e) {
-            marketplaceLogger.error(`Failed to fetch listings, ${e.message}`, {
+            marketplaceLogger.error(`Failed to fetch listings, ${e.toString()}`, {
                 source: req.source,
             });
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -92,7 +92,7 @@ class _MarketplaceService {
 
             emitNet(MarketplaceEvents.BROADCAST_DELETE, -1, [returnObj]);
         } catch (e) {
-            marketplaceLogger.error(`Error in handleDeleteListing, ${e.message}`);
+            marketplaceLogger.error(`Error in handleDeleteListing, ${e.toString()}`);
 
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
@@ -106,7 +106,7 @@ class _MarketplaceService {
 
             await this.marketplaceDB.deleteListingsOnDrop(identifier);
         } catch (e) {
-            marketplaceLogger.error(`Error when deleting listings on player drop, ${e.message}`);
+            marketplaceLogger.error(`Error when deleting listings on player drop, ${e.toString()}`);
         }
     }
 
@@ -129,7 +129,7 @@ class _MarketplaceService {
             await this.marketplaceDB.reportListing(rListing);
             await reportListingToDiscord(rListing, reportingPlayer);
         } catch (e) {
-            marketplaceLogger.error(`Failed to report listing ${e.message}`, {
+            marketplaceLogger.error(`Failed to report listing ${e.toString()}`, {
                 source: reqObj.source,
             });
             resp({ status: 'error', errorMsg: 'DB_ERROR' });

@@ -5,14 +5,13 @@ import { Button } from './Button';
 
 interface DialogFormProps {
     children: React.ReactNode;
-    open: boolean;
     handleClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // No idea what those types are
     onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     title: string;
     content: string;
 }
 
-const DialogForm: React.FC<DialogFormProps> = ({ children, open, handleClose, onSubmit, title, content }) => {
+const DialogForm: React.FC<DialogFormProps> = ({ children, handleClose, onSubmit, title, content }) => {
     const { theme } = useContext(ThemeContext);
 
     return (

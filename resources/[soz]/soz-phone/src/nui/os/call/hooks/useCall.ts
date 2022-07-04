@@ -4,7 +4,6 @@ import { ActiveCall } from '@typings/call';
 import { CallEvents } from '@typings/call';
 import { ServerPromiseResp } from '@typings/common';
 import { PhoneEvents } from '@typings/phone';
-import { isEnvBrowser } from '@utils/misc';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 

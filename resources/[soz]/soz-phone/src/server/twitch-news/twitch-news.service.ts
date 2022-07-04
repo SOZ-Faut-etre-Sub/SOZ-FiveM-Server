@@ -36,7 +36,7 @@ class _TwitchNewsService {
 
             emitNet('hud:client:DrawNewsBanner', -1, reqObj.data.type, reqObj.data.message, reqObj.data.reporter);
         } catch (e) {
-            twitchNewsLogger.error(`Error in handleAddSociety, ${e.message}`);
+            twitchNewsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -46,7 +46,7 @@ class _TwitchNewsService {
             const contact = await this.twitchNewsDB.getNews();
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            twitchNewsLogger.error(`Error in handleAddSociety, ${e.message}`);
+            twitchNewsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }

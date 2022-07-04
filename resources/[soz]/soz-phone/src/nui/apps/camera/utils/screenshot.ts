@@ -24,7 +24,7 @@ export class ScreenshotUI {
     height = 540;
 
     initialize() {
-        window.addEventListener('resize', event => {
+        window.addEventListener('resize', () => {
             this.resize();
         });
 
