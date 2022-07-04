@@ -64,11 +64,34 @@ local Elevators = {
         name = "LSMC:Elevator1",
         label = "Toit",
         buttons = vector2(337.45, -1433.03),
-        heading = 50,
+        heading = 140,
         z = {min = 46.52, max = 47.52},
         upTo = nil,
         downTo = "lsmc:0",
         spawnPoint = vector4(336.3, -1431.05, 46.52, 140.67),
+    },
+    --- LSPD
+    ["lspd:0"] = {
+        name = "LSPD:Elevator0",
+        label = "Rez de chaussez",
+        buttons = vector2(609.72, -0.13),
+        size = vector2(0.9, 0.1),
+        heading = 350,
+        z = {min = 69.63, max = 72.08},
+        upTo = "lspd:1",
+        downTo = nil,
+        spawnPoint = vector4(611.07, -1.55, 70.63, 86.33),
+    },
+    ["lspd:1"] = {
+        name = "LSPD:Elevator1",
+        label = "Toit",
+        buttons = vector2(565.19, 4.88),
+        size = vector2(1.45, 0.4),
+        heading = 0,
+        z = {min = 102.23, max = 104.63},
+        upTo = nil,
+        downTo = "lspd:0",
+        spawnPoint = vector4(565.96, 4.89, 103.23, 271.47),
     },
 }
 
@@ -108,11 +131,11 @@ end
 -- Initiate all elevators
 Citizen.CreateThread(function()
     for _, data in pairs(Elevators) do
-        exports["qb-target"]:AddBoxZone(data.name, data.buttons, 0.1, 0.35, {
+        data.size = data.size or vector2(0.1, 0.35)
+        exports["qb-target"]:AddBoxZone(data.name, data.buttons, data.size.x, data.size.y, {
             heading = data.heading,
             minZ = data.z.min,
             maxZ = data.z.max,
-            debugPoly = false,
         }, {options = CreateTargetOptions(data)})
     end
 end)
