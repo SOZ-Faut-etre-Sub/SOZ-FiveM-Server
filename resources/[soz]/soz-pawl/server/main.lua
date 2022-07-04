@@ -1,6 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
 Fields = {}
+Processing = {Enabled = false, StartedAt = 0}
 
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Fields) do
@@ -48,28 +49,89 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
 end)
 
 --- Processing
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(60 * 1000)
+local function millisecondToMinuteDisplay(time)
+    local minutes = math.floor(time / 60000)
+    local seconds = math.floor((time % 60000) / 1000)
+    return minutes .. "m " .. seconds .. "s"
+end
 
-        if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
-            goto wait_next_processing
-            return
-        end
+QBCore.Functions.CreateCallback("pawl:server:processingTreeIsEnabled", function(source, cb)
+    cb(Processing.Enabled)
+end)
 
-        if not exports["soz-inventory"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
-            goto wait_next_processing
-            return
-        end
-
-        --- Voluntary skip error handling, if storage is updated by player and it's not possible to add items, it will consume log.
-        if exports["soz-inventory"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
-            exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
-            exports["soz-inventory"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
-        end
-
-        ::wait_next_processing::
+RegisterNetEvent("pawl:server:statusProcessingTree", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
     end
+
+    if Processing.Enabled then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il reste " ..
+                               millisecondToMinuteDisplay(Processing.StartedAt + Config.Processing.Duration - GetGameTimer()) ..
+                               " avant la fin du traitement de l'arbre.", "info")
+        return
+    end
+
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Aucun traitement est en cours.", "info")
+end)
+
+RegisterNetEvent("pawl:server:stopProcessingTree", function()
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    if Processing.Enabled then
+        Processing = {Enabled = false, StartedAt = 0}
+
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le traitement est arrêté.", "info")
+        return
+    end
+
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Aucun traitement est en cours.", "info")
+end)
+
+RegisterNetEvent("pawl:server:startProcessingTree", function(data)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        return
+    end
+
+    if Processing.Enabled then
+        return
+    end
+
+    if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
+        return
+    end
+
+    if not exports["soz-inventory"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de sciure est plein !", "error")
+        return
+    end
+
+    Processing.Enabled = true
+    Processing.StartedAt = GetGameTimer()
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le traitement ~g~commence~s~.")
+
+    Citizen.CreateThread(function()
+        while Processing.Enabled do
+            if GetGameTimer() - Processing.StartedAt >= Config.Processing.Duration then
+                if exports["soz-inventory"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
+                    exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
+                    exports["soz-inventory"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
+
+                    Processing.StartedAt = GetGameTimer()
+                else
+                    Processing.Enabled = false
+                    break
+                end
+            end
+
+            Citizen.Wait(1000)
+        end
+    end)
 end)
 
 --- Crafting

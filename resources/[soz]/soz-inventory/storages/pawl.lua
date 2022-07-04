@@ -41,8 +41,8 @@ Config.Storages["pawl_log_processing"] = {
     label = "Process Pipe And Wooden Leg",
     type = "log_processing",
     owner = "pawl",
-    position = vector3(-552.14, 5347.94, 74.74),
-    size = vec2(0.5, 2.2),
+    position = vector3(-551.98, 5348.3, 74.74),
+    size = vec2(0.35, 1.4),
     heading = 72,
     offsetUpZ = 1.5,
 }
