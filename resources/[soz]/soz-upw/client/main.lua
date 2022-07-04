@@ -36,16 +36,19 @@ local function PrepareZoneData(data, path)
     return zoneData
 end
 
-Citizen.CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     -- Blip
     if not QBCore.Functions.GetBlip("job_upw") then
         QBCore.Functions.CreateBlip("job_upw", {
             name = Config.Blip.Name,
             coords = Config.Blip.Coords,
             sprite = Config.Blip.Sprite,
+            scale = Config.Blip.Scale,
         })
     end
+end)
 
+Citizen.CreateThread(function()
     local function createZone(facility, createFunc, zonePath)
         local data = json.decode(facility.data)
         local zone = PrepareZoneData(data, zonePath)
