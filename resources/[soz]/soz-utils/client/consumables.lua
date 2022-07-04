@@ -140,12 +140,15 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
 end)
 
 Citizen.CreateThread(function()
+    local hasConsumedParachute = false
     while true do
-        if IsControlJustReleased(0, 144) then
+        if not hasConsumedParachute and GetPedParachuteState(PlayerPedId()) == 1 then
             TriggerServerEvent("inventory:server:RemoveItem", PlayerData.source, "parachute", 1)
+            hasConsumedParachute = true
+        elseif hasConsumedParachute and GetPedParachuteState(PlayerPedId()) == 3 then
+            hasConsumedParachute = false
         end
-
-        Citizen.Wait(0)
+        Citizen.Wait(100)
     end
 end)
 
