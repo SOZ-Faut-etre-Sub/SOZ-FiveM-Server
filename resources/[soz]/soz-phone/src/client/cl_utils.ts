@@ -53,7 +53,7 @@ export default class ClientUtils {
     }
 }
 
-type CallbackFn<T> = (data: T, cb: Function) => void;
+type CallbackFn<T> = (data: T, cb: (data?: any) => void) => void;
 
 /**
  * A wrapper for handling NUI Callbacks
@@ -84,7 +84,7 @@ export const playerLoaded = () => {
  */
 export const RegisterNuiProxy = (event: string) => {
     RegisterNuiCallbackType(event);
-    on(`__cfx_nui:${event}`, async (data: unknown, cb: Function) => {
+    on(`__cfx_nui:${event}`, async (data: unknown, cb: (data: any) => void) => {
         if (!global.isPlayerLoaded) await playerLoaded();
         try {
             const res = await ClUtils.emitNetPromise(event, data);

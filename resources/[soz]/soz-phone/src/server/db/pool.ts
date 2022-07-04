@@ -7,7 +7,7 @@ import { CONNECTION_STRING, parseSemiColonFormat } from './db_utils';
 const mysqlConnectionString = GetConvar(CONNECTION_STRING, 'none');
 if (mysqlConnectionString === 'none') {
     const error = new Error(`No connection string provided. make sure "${CONNECTION_STRING}" is set in your config.`);
-    mainLogger.error(error.message);
+    mainLogger.error(error.toString());
     throw error;
 }
 
@@ -30,7 +30,7 @@ export function generateConnectionPool() {
             ...config,
         });
     } catch (e) {
-        mainLogger.error(`SQL Connection Pool Error: ${e.message}`, {
+        mainLogger.error(`SQL Connection Pool Error: ${e.toString()}`, {
             connection: mysqlConnectionString,
         });
     }
@@ -48,7 +48,7 @@ export async function withTransaction(queries: Promise<any>[]): Promise<any[]> {
         await connection.release();
         return results;
     } catch (err) {
-        mainLogger.warn(`Error when submitting queries in transaction, ${err.message}`);
+        mainLogger.warn(`Error when submitting queries in transaction, ${err.toString()}`);
         await connection.rollback();
         await connection.release();
         return Promise.reject(err);

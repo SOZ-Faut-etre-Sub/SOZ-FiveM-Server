@@ -1,5 +1,5 @@
 export interface ServerPromiseResp<T = undefined> {
-  errorMsg?: string;
-  status: 'ok' | 'error' | 'silence';
-  data?: T;
+    errorMsg?: string;
+    status: 'ok' | 'error' | 'silence';
+    data?: T;
 }

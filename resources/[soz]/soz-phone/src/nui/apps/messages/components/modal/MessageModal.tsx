@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { PhoneIcon, TrashIcon, UserAddIcon } from '@heroicons/react/solid';
+import { PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
@@ -24,7 +24,7 @@ export const MessageModal = () => {
     const { pathname } = useLocation();
     const { groupId } = useParams<{ groupId: string }>();
     const { activeMessageConversation, setActiveMessageConversation } = useMessages();
-    const { fetchMessages, deleteConversation } = useMessageAPI();
+    const { fetchMessages } = useMessageAPI();
     const { initializeCall } = useCall();
 
     const { getContactByNumber, getDisplayByNumber } = useContactActions();

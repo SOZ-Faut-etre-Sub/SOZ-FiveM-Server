@@ -25,7 +25,7 @@ class _MessagesService {
             resp({ status: 'ok', data: messageConversations });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
-            messagesLogger.error(`Failed to fetch messages groups, ${e.message}`);
+            messagesLogger.error(`Failed to fetch messages groups, ${e.toString()}`);
         }
     }
 
@@ -66,8 +66,8 @@ class _MessagesService {
                     });
                 }
             } catch (e) {
-                resp({ status: 'error', errorMsg: e.message });
-                messagesLogger.error(e.message);
+                resp({ status: 'error', errorMsg: e.toString() });
+                messagesLogger.error(e.toString());
             }
 
             resp({
@@ -81,7 +81,7 @@ class _MessagesService {
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
 
-            messagesLogger.error(`Failed to create message group, ${e.message}`, {
+            messagesLogger.error(`Failed to create message group, ${e.toString()}`, {
                 source: reqObj.source,
                 e,
             });
@@ -100,7 +100,7 @@ class _MessagesService {
             resp({ status: 'ok', data: messages });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
-            messagesLogger.error(`Failed to fetch messages, ${e.message}`, {
+            messagesLogger.error(`Failed to fetch messages, ${e.toString()}`, {
                 source: reqObj.source,
             });
         }
@@ -148,8 +148,8 @@ class _MessagesService {
                 }
             }
         } catch (e) {
-            resp({ status: 'error', errorMsg: e.message });
-            messagesLogger.error(`Failed to send message, ${e.message}`, {
+            resp({ status: 'error', errorMsg: e.toString() });
+            messagesLogger.error(`Failed to send message, ${e.toString()}`, {
                 source: reqObj.source,
             });
         }
@@ -161,7 +161,7 @@ class _MessagesService {
             await this.messagesDB.setMessageRead(groupId, identifier);
             emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, src);
         } catch (e) {
-            messagesLogger.error(`Failed to set message as read, ${e.message}`, {
+            messagesLogger.error(`Failed to set message as read, ${e.toString()}`, {
                 source: src,
             });
         }
@@ -180,7 +180,7 @@ class _MessagesService {
             resp({ status: 'ok' });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
-            messagesLogger.error(`Failed to delete conversation, ${e.message}`, {
+            messagesLogger.error(`Failed to delete conversation, ${e.toString()}`, {
                 source: reqObj.source,
             });
         }

@@ -2,9 +2,14 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { useSettings } from '../apps/settings/hooks/useSettings';
 
-export const ThemeContext = React.createContext({
+type Theme = {
+    theme: string;
+    updateTheme: (theme: string) => void;
+};
+
+export const ThemeContext = React.createContext<Theme>({
     theme: 'light',
-    updateTheme: t => {},
+    updateTheme: () => {},
 });
 
 const ThemeProvider: React.FC = ({ children }) => {

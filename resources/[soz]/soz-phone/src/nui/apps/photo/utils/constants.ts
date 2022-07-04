@@ -87,7 +87,6 @@ export const MockPhotoData = [
         id: 22,
         image: 'https://placekitten.com/1280/720',
     },
-    ,
     {
         id: 23,
         image: 'https://placekitten.com/1280/720',

@@ -2,13 +2,13 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "*": ["@types/**/*"],
-      "@os/*": ["./os/*"],
-      "@ui/*": ["./ui/*"],
-      "@apps/*": ["./apps"],
-      "@utils/*": ["./utils/*"],
-      "@common/*": ["./common/*"],
-      "@typings/*": ["../../typings/*"]
+      "*": ["@types/*"],
+      "@os/*": ["./nui/os/*"],
+      "@ui/*": ["./nui/ui/*"],
+      "@apps/*": ["./nui/apps"],
+      "@utils/*": ["./nui/utils/*"],
+      "@common/*": ["./nui/common/*"],
+      "@typings/*": ["../typings/*"]
     }
   }
 }

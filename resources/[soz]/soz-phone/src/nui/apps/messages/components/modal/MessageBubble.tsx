@@ -4,7 +4,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageEvents } from '@typings/messages';
 import { PictureReveal } from '@ui/components/PictureReveal';
 import { fetchNui } from '@utils/fetchNui';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 

@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 import { fetchNui } from '../../../../utils/fetchNui';
 
-export const ListingActions: React.FC<MarketplaceListing> = ({ children, ...listing }) => {
+export const ListingActions: React.FC<MarketplaceListing> = ({ ...listing }) => {
     const myNumber = useMyPhoneNumber();
     const [t] = useTranslation();
     const history = useHistory();

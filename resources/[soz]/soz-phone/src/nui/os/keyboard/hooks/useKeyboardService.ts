@@ -1,7 +1,4 @@
 import { usePhone } from '@os/phone/hooks/usePhone';
-import { PhoneEvents } from '@typings/phone';
-import { fetchNui } from '@utils/fetchNui';
-import { isEnvBrowser } from '@utils/misc';
 import { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';

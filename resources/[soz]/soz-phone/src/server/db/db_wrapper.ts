@@ -18,7 +18,7 @@ class _DbInterface {
             ScheduleResourceTick(RESOURCE_NAME);
             return await pool.query(query, values);
         } catch (e) {
-            this.logger.error(`Error executing ${query} with error message ${e.message}`);
+            this.logger.error(`Error executing ${query} with error message ${e.toString()}`);
         }
     }
 

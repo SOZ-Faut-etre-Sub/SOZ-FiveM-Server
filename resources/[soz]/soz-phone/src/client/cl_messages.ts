@@ -14,19 +14,19 @@ RegisterNuiProxy(MessageEvents.DELETE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 /*RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);*/
 
-RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any, cb) => {
+RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any) => {
     if (position['x'] !== 0 && position['y'] !== 0) {
         SetNewWaypoint(parseInt(position['x']), parseInt(position['y']));
     }
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_POSITION, async (position: any, cb) => {
-    const [posX, posY, posZ] = GetEntityCoords(PlayerPedId(), true);
+    const [posX, posY] = GetEntityCoords(PlayerPedId(), true);
     cb({ data: { x: posX, y: posY } });
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_DESTINATION, async (position: any, cb) => {
-    const [posX, posY, posZ] = GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
+    const [posX, posY] = GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
     cb({ data: { x: posX, y: posY } });
 });
 

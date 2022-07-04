@@ -1,4 +1,10 @@
-import { Message, MessageConversation, MessageEvents, PreDBMessage } from '../../../typings/messages';
+import {
+    Message,
+    MessageConversation,
+    MessageConversationResponse,
+    MessageEvents,
+    PreDBMessage,
+} from '../../../typings/messages';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import { getSource } from '../utils/miscUtils';
 import MessagesService from './messages.service';
@@ -11,7 +17,7 @@ onNetPromise<void, MessageConversation[]>(MessageEvents.FETCH_MESSAGE_CONVERSATI
     });
 });
 
-onNetPromise<{ targetNumber: string }, MessageConversation>(
+onNetPromise<{ targetNumber: string }, MessageConversationResponse>(
     MessageEvents.CREATE_MESSAGE_CONVERSATION,
     async (reqObj, resp) => {
         MessagesService.handleCreateMessageConversation(reqObj, resp).catch(e => {

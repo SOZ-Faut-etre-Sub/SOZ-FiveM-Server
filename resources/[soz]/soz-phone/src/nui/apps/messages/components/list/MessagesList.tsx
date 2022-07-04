@@ -22,7 +22,7 @@ const MessagesList = (): any => {
     const { conversations, goToConversation } = useMessages();
 
     // Fix to force load contacts state. Todo: rework and use global state instead
-    const _ = useFilteredContacts();
+    useFilteredContacts();
     const { getDisplayByNumber } = useContactActions();
 
     const filteredConversations = useFilteredConversationsValue();

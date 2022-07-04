@@ -51,11 +51,10 @@ export const SettingsApp = () => {
     const resetSettings = useResetSettings();
     const { theme, updateTheme } = useContext(ThemeContext);
 
-    const handleSettingChange = (key: string | number, value: unknown) => {
+    const handleSettingChange = (key: string | number, value: any) => {
         setSettings({ ...settings, [key]: value });
 
         if (key === 'theme') {
-            // @ts-ignore
             updateTheme(value.value);
         }
     };

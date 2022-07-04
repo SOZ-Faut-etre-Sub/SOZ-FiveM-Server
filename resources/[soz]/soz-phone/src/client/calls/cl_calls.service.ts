@@ -1,8 +1,6 @@
 import { IAlertProps } from '../../../typings/alerts';
 import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
 
-const exp = global.exports;
-
 export class CallService {
   private currentCall: number;
   private currentCallData: ActiveCall | null;

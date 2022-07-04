@@ -1,6 +1,6 @@
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '@os/notifications/notifications.constants';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { phoneState } from './state';

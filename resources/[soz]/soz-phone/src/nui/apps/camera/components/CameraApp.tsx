@@ -53,7 +53,9 @@ const CameraApp: React.FC = () => {
     useInterval(() => {
         try {
             setImage(ui.generateImage());
-        } catch (e) {}
+        } catch (e) {
+            console.error('WebGL generation ERROR', e);
+        }
     }, 1);
 
     useEffect(() => {

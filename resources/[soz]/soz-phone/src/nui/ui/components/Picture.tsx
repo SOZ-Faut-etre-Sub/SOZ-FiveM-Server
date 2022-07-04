@@ -11,14 +11,14 @@ interface PictureProps {
     size?: string;
 }
 
-export const Picture: React.FC<PictureProps> = ({ src, alt, size }) => {
-    const [visible, setVisible] = useState<boolean>(false);
+export const Picture: React.FC<PictureProps> = ({ src, alt }) => {
+    const [, setVisible] = useState<boolean>(false);
     return (
         <>
             <Button onClick={() => setVisible(true)}>
-                <PictureThumbnail size={size} src={src} alt={alt} />
+                <PictureThumbnail src={src} alt={alt} />
             </Button>
-            <Modal visible={visible} handleClose={() => setVisible(false)}>
+            <Modal handleClose={() => setVisible(false)}>
                 <PictureResponsive src={src} alt={alt} />
             </Modal>
         </>

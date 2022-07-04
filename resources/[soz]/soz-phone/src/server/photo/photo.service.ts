@@ -21,7 +21,7 @@ class _PhotoService {
 
             resp({ status: 'ok', data: photo });
         } catch (e) {
-            photoLogger.error(`Failed to upload photo, ${e.message}`, {
+            photoLogger.error(`Failed to upload photo, ${e.toString()}`, {
                 source: reqObj.source,
             });
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -35,7 +35,7 @@ class _PhotoService {
 
             resp({ status: 'ok', data: photos });
         } catch (e) {
-            photoLogger.error(`Failed to fetch photos, ${e.message}`, {
+            photoLogger.error(`Failed to fetch photos, ${e.toString()}`, {
                 source: reqObj.source,
             });
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -49,7 +49,7 @@ class _PhotoService {
 
             resp({ status: 'ok' });
         } catch (e) {
-            photoLogger.error(`Failed to delete photo, ${e.message}`, {
+            photoLogger.error(`Failed to delete photo, ${e.toString()}`, {
                 source: reqObj.source,
             });
             resp({ status: 'error', errorMsg: 'DB_ERROR' });

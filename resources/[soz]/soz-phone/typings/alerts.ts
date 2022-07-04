@@ -1,4 +1,4 @@
 export interface IAlertProps {
-  message: string;
-  type: 'success' | 'error' | 'info' | 'warning';
+    message: string;
+    type: 'success' | 'error' | 'info' | 'warning';
 }

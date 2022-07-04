@@ -130,7 +130,7 @@ class _SocietyService {
                     });
             }
         } catch (e) {
-            societiesLogger.error(`Error in handleAddSociety, ${e.message}`);
+            societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -166,7 +166,7 @@ class _SocietyService {
                 emitNet(SocietyEvents.RESET_SOCIETY_MESSAGES, player.source, null);
             });
         } catch (e) {
-            societiesLogger.error(`Error in handleAddSociety, ${e.message}`);
+            societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -182,7 +182,7 @@ class _SocietyService {
 
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            societiesLogger.error(`Error in handleAddSociety, ${e.message}`);
+            societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }

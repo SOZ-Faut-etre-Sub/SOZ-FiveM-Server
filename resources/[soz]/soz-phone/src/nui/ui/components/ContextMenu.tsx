@@ -50,7 +50,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
                 </AppTitle>
                 <AppContent className="mt-10 mb-4">
                     <List>
-                        {options.map((option, id) => (
+                        {options.map(option => (
                             <ListItem
                                 selected={option.selected}
                                 key={option.key || option.label}

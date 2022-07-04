@@ -97,7 +97,7 @@ class CallsService {
             await this.callsDB.saveCall(callObj);
         } catch (e) {
             callLogger.error(
-                `Unable to save call object for transmitter number ${transmitterNumber}. Error: ${e.message}`
+                `Unable to save call object for transmitter number ${transmitterNumber}. Error: ${e.toString()}`
             );
             resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
         }
@@ -134,7 +134,7 @@ class CallsService {
 
         const channelId = src;
 
-        await this.callsDB.updateCall(targetCallItem, true, null);
+        await this.callsDB.updateCall(targetCallItem, true);
         callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
 
         // player who is being called
@@ -179,14 +179,12 @@ class CallsService {
             resp({ status: 'ok', data: callsObj });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
-            console.error(`Error while fetching calls, ${e.message}`);
+            console.error(`Error while fetching calls, ${e.toString()}`);
         }
     }
 
     async handleRejectCall(src: number, transmitterNumber: string): Promise<void> {
         const currentCall = this.callMap.get(transmitterNumber);
-
-        const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
 
         if (!currentCall) {
             callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map!`);
@@ -198,7 +196,7 @@ class CallsService {
         emitNet(CallEvents.WAS_REJECTED, currentCall.receiverSource);
 
         // Update our database
-        await this.callsDB.updateCall(currentCall, false, endCallTimeUnix);
+        await this.callsDB.updateCall(currentCall, false);
 
         // Remove from active memory map
         this.callMap.delete(transmitterNumber);
@@ -206,7 +204,6 @@ class CallsService {
 
     async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
         const transmitterNumber = reqObj.data.transmitterNumber;
-        const endCallTimeUnix = Math.floor(new Date().getTime() / 1000);
 
         const currentCall = this.callMap.get(transmitterNumber);
 
@@ -224,7 +221,7 @@ class CallsService {
         // player who is calling (transmitter)
         resp({ status: 'ok' });
 
-        await this.callsDB.updateCall(currentCall, currentCall?.is_accepted, endCallTimeUnix);
+        await this.callsDB.updateCall(currentCall, currentCall?.is_accepted);
         // Clear from memory
         this.callMap.delete(transmitterNumber);
     }

@@ -23,7 +23,7 @@ class _SettingsService {
 
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            settingsLogger.error(`Error in handleAddSociety, ${e.message}`);
+            settingsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -36,7 +36,7 @@ class _SettingsService {
 
             resp({ status: 'ok', data: avatar });
         } catch (e) {
-            settingsLogger.error(`Error in getProfilePicture, ${e.message}`);
+            settingsLogger.error(`Error in getProfilePicture, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }

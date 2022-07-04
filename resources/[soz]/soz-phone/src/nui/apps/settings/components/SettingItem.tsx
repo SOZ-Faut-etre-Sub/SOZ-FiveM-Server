@@ -58,15 +58,6 @@ export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit }: ISett
     );
 };
 
-interface ISettingItemIconAction {
-    icon: JSX.Element;
-    actionIcon: JSX.Element;
-    label: string;
-    labelSecondary: string;
-    handleAction: () => void;
-    actionLabel: string;
-}
-
 interface ISettingSwitch {
     label: string;
     color?: string;
@@ -100,18 +91,3 @@ export const SettingSwitch = ({ label, color, value, onClick, icon }: ISettingSw
         </ListItem>
     );
 };
-
-export const SettingItemIconAction = ({
-    icon,
-    label,
-    handleAction,
-    actionIcon,
-    labelSecondary,
-    actionLabel,
-}: ISettingItemIconAction) => (
-    <ListItem>
-        <div>{icon}</div>
-
-        <div onClick={handleAction}>{actionIcon}</div>
-    </ListItem>
-);
