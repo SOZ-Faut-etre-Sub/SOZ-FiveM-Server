@@ -119,7 +119,10 @@ Container["bin"] = InventoryDatastore:new({
 })
 
 --- Housing
-Container["house_stash"] = InventoryContainer:new({type = "stash", allowedTypes = {"item"}})
+Container["house_stash"] = InventoryContainer:new({
+    type = "stash",
+    allowedTypes = {"item", "item_illegal", "weapon", "weapon_ammo"},
+})
 Container["house_fridge"] = InventoryContainer:new({type = "fridge", allowedTypes = {"food", "drink"}})
 
 --- Jobs
