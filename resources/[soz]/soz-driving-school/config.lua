@@ -108,7 +108,7 @@ Config.Licenses = {
             networkSync = true,
         },
         price = 600,
-        icon = "",
+        icon = "c:driving-school/heli.png",
         label = "Permis hélicoptère ($%s)",
         points = 12,
     },
