@@ -4014,8 +4014,8 @@ QBShared.Vehicles = {
     },
     --- Custom
     ['ambcar']       = {
-        ['name']     = 'LSMC',
-        ['brand']    = 'Granger',
+        ['name']     = 'Granger',
+        ['brand']    = 'LSMC',
         ['model']    = 'ambcar',
         ['price']    = 35000,
         ['category'] = 'suvs',
@@ -4023,8 +4023,8 @@ QBShared.Vehicles = {
         ['shop']     = 'na',
     },
     ['firetruk']     = {
-        ['name']     = 'LSMC',
-        ['brand']    = 'Granger',
+        ['name']     = 'Camion de pompier',
+        ['brand']    = 'LSMC',
         ['model']    = 'firetruk',
         ['price']    = 35000,
         ['category'] = 'suvs',
@@ -4195,6 +4195,10 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('polmav'),
         ['shop']     = 'na',
         ['type']     = 'air',
+        ['job_name'] = {
+            ['lspd'] = 'Police Polmav',
+            ['lsmc'] = 'Ambulance Polmav',
+        }
     },
     ['ambulan']      = {
         ['name']     = 'Ambulance',
@@ -4233,6 +4237,9 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('maverick2'),
         ['shop']     = 'na',
         ['type']     = 'air',
+        ['job_name'] = {
+            ['bcso'] = 'Police Maverick',
+        }
     },
     ['policeb']      = {
         ['name']     = 'Moto de police',
@@ -4251,6 +4258,7 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('buzzard2'),
         ['shop']     = 'air',
+        ['type']     = 'air',
     },
     ['sparrow']      = {
         ['name']     = 'Sea Sparrow',
@@ -4260,6 +4268,7 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('seasparrow'),
         ['shop']     = 'air',
+        ['type']     = 'air',
     },
     ['svolito']      = {
         ['name']     = 'SuperVolito',
@@ -4269,6 +4278,7 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('supervolito'),
         ['shop']     = 'air',
+        ['type']     = 'air',
     },
     ['svolito2']      = {
         ['name']     = 'SuperVolito Carbon',
@@ -4278,6 +4288,7 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('supervolito2'),
         ['shop']     = 'air',
+        ['type']     = 'air',
     },
     ['swift']      = {
         ['name']     = 'Swift',
@@ -4287,6 +4298,7 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('swift'),
         ['shop']     = 'air',
+        ['type']     = 'air',
     },
     ['swift2']      = {
         ['name']     = 'Swift Deluxe',
@@ -4296,6 +4308,7 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('swift2'),
         ['shop']     = 'air',
+        ['type']     = 'air',
     },
     ['volatus']      = {
         ['name']     = 'Volatus',
@@ -4305,5 +4318,16 @@ QBShared.Vehicles = {
         ['category'] = 'Helicopters',
         ['hash']     = GetHashKey('volatus'),
         ['shop']     = 'air',
+        ['type']     = 'air',
+    },
+    ['cargobob']      = {
+        ['name']     = 'Cargobob',
+        ['brand']    = 'Jetsam',
+        ['model']    = 'cargobob2',
+        ['price']    = 65000,
+        ['category'] = 'Helicopters',
+        ['hash']     = GetHashKey('cargobob2'),
+        ['shop']     = 'na',
+        ['type']     = 'air'
     },
 }
