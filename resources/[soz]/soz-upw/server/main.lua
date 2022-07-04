@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 -- UPW Objects
 Plants = {}
@@ -129,6 +130,10 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, jo
     end
     if scope ~= nil then
         data.scope = scope
+
+        if scope == "entreprise" then
+            data.job = job
+        end
     end
 
     local facility = facilityData.class:new(identifier, data)
