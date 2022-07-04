@@ -67,4 +67,16 @@ export const SocietyContactsState: Society[] = [
         number: '555-BENNYS',
         avatar: 'media/society_icon/bennys.webp',
     },
+    {
+        id: 12,
+        display: 'UPW',
+        number: '555-UPW',
+        avatar: 'media/society_icon/upw.webp',
+    },
+    {
+        id: 13,
+        display: 'PAWL',
+        number: '555-PAWL',
+        avatar: 'media/society_icon/pawl.webp',
+    },
 ];
