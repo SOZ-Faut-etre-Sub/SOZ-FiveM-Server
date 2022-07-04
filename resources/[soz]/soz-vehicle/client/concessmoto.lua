@@ -5,6 +5,7 @@ local MotoChoose = MenuV:InheritMenu(MotoModel, {Title = nil})
 MotoCategorie = {}
 GlobalMoto = {}
 InsideConcessMoto = false
+local licenseTypeRequired = "motorcycle"
 
 ZonesConcessMoto = {
     ["Concessmoto"] = BoxZone:Create(vector3(1224.99, 2725.22, 38.0), 8, 10, {
@@ -232,7 +233,8 @@ exports["qb-target"]:SpawnPed({
                     TriggerEvent("soz-concessmoto:client:Menu", "")
                 end,
                 canInteract = function()
-                    return InsideConcessMoto
+                    local licenses = PlayerData.metadata["licences"]
+                    return InsideConcessMoto and licenses ~= nil and licenses[licenseTypeRequired] > 0
                 end,
             },
         },

@@ -186,7 +186,7 @@ Zonesentreprise = {
         maxZ = 32.12,
         job = "lsmc",
     }),
-    ["lsmc_air"] = BoxZone:Create(vector3(306.27, -1457.44, 46.51), 20, 41.2,
+    ["lsmc_air"] = BoxZone:Create(vector3(306.27, -1457.44, 46.51), 25, 41.2,
                                   {name = "lsmc:garage:air", heading = 320, minZ = 45.51, maxZ = 56.51, job = "lsmc"}),
     ["mtp"] = BoxZone:Create(vector3(-285.28, 6022.52, 31.49), 24.4, 19.6, {
         name = "mtp_z",

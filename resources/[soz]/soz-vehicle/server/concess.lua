@@ -55,9 +55,9 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
                 garage = "airportpublic"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
             elseif concess == "air" then
-                garage = "airport_air"
+                garage = "sandy_air"
                 category = "air"
-                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Aérien Public Sud")
+                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! L'hélicoptère a été envoyé au Parking Public en face")
             else
                 garage = "haanparking"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
