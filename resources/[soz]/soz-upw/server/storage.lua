@@ -31,6 +31,16 @@ local function GetTerminals(scope)
     return terminals
 end
 
+local function GetTerminalJob(jobId)
+    for identifier, terminal in pairs(Terminals) do
+        if terminal.scope == "entreprise" and terminal.job == jobId then
+            return terminal
+        end
+    end
+
+    return nil
+end
+
 local function GetTerminalCapacities(scope)
     local capacity, maxCapacity = 0, 0
 
@@ -45,10 +55,6 @@ local function GetTerminalCapacities(scope)
 end
 
 function GetBlackoutLevel()
-    -- Force to Blackout level Zero for now
-    return QBCore.Shared.Blackout.Level.Zero
-
-    --[[
     local capacity, maxCapacity = GetTerminalCapacities("default")
     local percent = math.ceil(capacity / maxCapacity * 100)
 
@@ -61,11 +67,26 @@ function GetBlackoutLevel()
             return level
         end
     end
-    ]]
+
+    return QBCore.Shared.Blackout.Level.Zero
+end
+
+function GetJobBlackoutLevel(job)
+    local terminal = GetTerminalJob(job)
+
+    if terminal then
+        return terminal:GetBlackoutLevel()
+    end
+
+    return QBCore.Shared.Blackout.Level.Zero
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
     cb(GetBlackoutLevel())
+end)
+
+QBCore.Functions.CreateCallback("soz-upw:server:GetJobBlackoutLevel", function(source, cb, jobId)
+    cb(GetJobBlackoutLevel(jobId))
 end)
 
 --
@@ -87,10 +108,20 @@ function StartConsumptionLoop()
 
             for i = 1, consumptionThisTick, 1 do
                 local n = math.random(1, #identifiers)
-                local terminal = GetTerminal(identifiers[n])
 
-                if terminal then
-                    terminal:Consume(1)
+                for j = 0, #identifiers - 1, 1 do
+                    local index = j + n
+
+                    if index > #identifiers then
+                        index = index - #identifiers
+                    end
+
+                    local terminal = GetTerminal(identifiers[index])
+
+                    if terminal and terminal:CanConsume() then
+                        terminal:Consume(1)
+                        break
+                    end
                 end
             end
 
@@ -102,6 +133,22 @@ function StartConsumptionLoop()
                 currentBlackoutLevel = newBlackoutLevel
                 TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", newBlackoutLevel, previousBlackoutLevel)
                 TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, newBlackoutLevel, previousBlackoutLevel)
+            end
+
+            -- Handle job terminal consumption
+            for jobId, v in pairs(SozJobCore.Jobs) do
+                local terminal = GetTerminalJob(jobId)
+
+                if terminal ~= nil then
+                    local _, count = QBCore.Functions.GetPlayersOnDuty(jobId)
+                    local consumptionJobThisTick = Config.Consumption.EnergyJobPerTick * count
+
+                    if terminal:CanConsume() then
+                        terminal:Consume(consumptionJobThisTick)
+                    end
+                else
+                    print("[SOZ-UPW] No terminal for job " .. jobId)
+                end
             end
 
             Citizen.Wait(Config.Production.Tick)

@@ -55,8 +55,8 @@ function Plant:Produce()
         ppu = math.random(ppu.min, ppu.max)
     end
 
-    -- Pm:AddPollution(prod * ppu)
-    Pm:AddPollution(1) -- TEMP Placeholder value
+    -- Add pollution
+    Pm:AddPollution(prod * ppu)
 
     -- Produce waste
     self:ProduceWaste()
