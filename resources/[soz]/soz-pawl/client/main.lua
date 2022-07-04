@@ -38,6 +38,56 @@ Citizen.CreateThread(function()
     -- Degradation
     DegradationLevel = QBCore.Functions.TriggerRpc("pawl:server:getDegradationLevel")
 
+    -- Processing
+    exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
+    exports["qb-target"]:AddBoxZone("pawl:processing:tree_trunk", vector3(-552.46, 5347.36, 74.74), 0.3, 0.8,
+                                    {
+        name = "pawl:processing:tree_trunk",
+        heading = 70,
+        minZ = 73.74,
+        maxZ = 76.34,
+        debugPoly = false,
+    }, {
+        options = {
+            {
+                type = "server",
+                color = "pawl",
+                label = "Démarrer production",
+                icon = "c:inventory/ouvrir_le_stockage.png",
+                event = "pawl:server:startProcessingTree",
+                canInteract = function()
+                    local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
+                    return not enabled and PlayerData.job.onduty
+                end,
+                job = "pawl",
+            },
+            {
+                type = "server",
+                color = "pawl",
+                label = "Arrêter production",
+                icon = "c:inventory/ouvrir_le_stockage.png",
+                event = "pawl:server:stopProcessingTree",
+                canInteract = function()
+                    local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
+                    return enabled and PlayerData.job.onduty
+                end,
+                job = "pawl",
+            },
+            {
+                type = "server",
+                color = "pawl",
+                label = "État production",
+                icon = "c:inventory/ouvrir_le_stockage.png",
+                event = "pawl:server:statusProcessingTree",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "pawl",
+            },
+        },
+        distance = 2.5,
+    })
+
     -- Craft
     local craftOptions = {}
     for craftId, craft in pairs(Config.Craft) do
