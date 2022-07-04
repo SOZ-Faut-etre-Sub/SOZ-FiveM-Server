@@ -4,7 +4,6 @@ OnDuty = false
 PlayerJob = {}
 PlayerData = {}
 local effectTimer = 0
-local SpeedLimiter = 0
 
 OriginalCategory = nil
 OriginalMod = nil
@@ -164,8 +163,9 @@ end)
 function ApplyEffects(vehicle)
     if (GetVehicleClass(vehicle) >= 0 and GetVehicleClass(vehicle) <= 13) or GetVehicleClass(vehicle) == 18 or GetVehicleClass(vehicle) == 20 or
         GetVehicleClass(vehicle) == 17 then
-        if SpeedLimiter ~= 0 then
-            SetVehicleMaxSpeed(vehicle, SpeedLimiter / 3.6 - 0.25)
+        local speedLimit = Entity(vehicle).state.speedLimit or 0
+        if speedLimit ~= 0 then
+            SetVehicleMaxSpeed(vehicle, speedLimit / 3.6 - 0.25)
         else
             local maxSpeed = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fInitialDriveMaxFlatVel")
             SetVehicleMaxSpeed(vehicle, maxSpeed)
@@ -182,7 +182,8 @@ end
 
 RegisterNetEvent("soz-bennys:client:UpdateLimiter")
 AddEventHandler("soz-bennys:client:UpdateLimiter", function(speed)
-    SpeedLimiter = speed
+    local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+    Entity(vehicle).state.speedLimit = speed
     ApplyEffects(GetVehiclePedIsIn(PlayerPedId(), false))
 end)
 
