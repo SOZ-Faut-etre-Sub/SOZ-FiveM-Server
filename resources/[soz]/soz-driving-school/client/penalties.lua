@@ -187,7 +187,7 @@ function StartPenaltyLoop(playerCoords, context)
     if not penaltyLoopIsRunning then
         local coords = context.spawnPoint
         local vehicleCoords = vector3(coords.x, coords.y, coords.z)
-        if #(playerCoords - vehicleCoords) > 1.0 then
+        if #(playerCoords - vehicleCoords) > 2.0 then
             PenaltyCheckingLoop(context)
         end
     end
