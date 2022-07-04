@@ -280,7 +280,10 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     -- Is vehicle class allowed?
     local vehClass = GetVehicleClass(veh)
     local garageType = GetGarageType(type_)
-    local garageCategory = Garages[indexgarage].vehicle
+    local garageCategory = "car"
+    if Garages[indexgarage] and Garages[indexgarage].vehicle then
+        garageCategory = Garages[indexgarage].vehicle
+    end
     if type(garageType.excludeVehClass) == "table" and type(garageType.excludeVehClass[garageCategory]) == "table" then
         for _, class in ipairs(garageType.excludeVehClass[garageCategory]) do
             if class == vehClass then
