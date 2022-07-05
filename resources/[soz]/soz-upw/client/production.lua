@@ -1,24 +1,6 @@
 function CreateEnergyZone(identifier, data)
     data.options = {
         {
-            label = "Activer",
-            type = "server",
-            event = "soz-upw:server:TogglePlantActive",
-            identifier = identifier,
-            canInteract = function()
-                return OnDuty() and not QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
-            end,
-        },
-        {
-            label = "Désactiver",
-            type = "server",
-            event = "soz-upw:server:TogglePlantActive",
-            identifier = identifier,
-            canInteract = function()
-                return OnDuty() and QBCore.Functions.TriggerRpc("soz-upw:server:GetPlantActive", identifier)
-            end,
-        },
-        {
             label = "Collecter l'énergie",
             event = "soz-upw:client:HarvestLoop",
             identifier = identifier,
