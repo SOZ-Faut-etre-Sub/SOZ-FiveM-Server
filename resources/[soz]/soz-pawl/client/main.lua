@@ -101,6 +101,8 @@ Citizen.CreateThread(function()
             end,
             identifier = craftId,
             job = "pawl",
+            blackoutGlobal = true,
+            blackoutJob = "pawl",
         }
     end
 
@@ -132,6 +134,7 @@ Citizen.CreateThread(function()
                     return SozJobCore.Functions.HasPermission("pawl", SozJobCore.JobPermission.SocietyShop)
                 end,
                 job = "pawl",
+                blackoutGlobal = true,
             },
         },
         distance = 2.5,

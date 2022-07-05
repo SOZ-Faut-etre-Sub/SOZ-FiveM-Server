@@ -25,12 +25,12 @@ function Terminal:CanConsume()
     return self.capacity > 0
 end
 
-function Terminal:GetConsumption()
-    return math.ceil(self.capacity * 100 / self.maxCapacity)
+function Terminal:GetEnergyPercent()
+    return math.floor(self.capacity * 100 / self.maxCapacity)
 end
 
 function Terminal:GetBlackoutLevel()
-    local percent = self:GetConsumption()
+    local percent = self:GetEnergyPercent()
 
     if percent >= 100 then
         return QBCore.Shared.Blackout.Level.Zero

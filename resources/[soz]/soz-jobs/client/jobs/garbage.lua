@@ -34,6 +34,8 @@ CreateThread(function()
                 return PlayerData.job.onduty
             end,
             job = "garbage",
+            blackoutGlobal = true,
+            blackoutJob = "garbage",
         }
     end
     garbageActions[#garbageActions + 1] = {
@@ -45,6 +47,8 @@ CreateThread(function()
             return PlayerData.job.onduty and HasExpiredItems()
         end,
         job = "garbage",
+        blackoutGlobal = true,
+        blackoutJob = "garbage",
     }
 
     exports["qb-target"]:AddBoxZone("garbage:process", vector3(-601.26, -1602.99, 30.41), 2.2, 3.4,
@@ -55,6 +59,8 @@ CreateThread(function()
         canInteract = function()
             return PlayerData.job.onduty
         end,
+        blackoutGlobal = true,
+        blackoutJob = "garbage",
     })
 
     local props = QBCore.Functions.TriggerRpc("core:server:getProps")

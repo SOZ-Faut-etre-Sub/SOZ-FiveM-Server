@@ -28,6 +28,8 @@ Citizen.CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/remove_poumon.png",
                 job = {["lsmc"] = 0},
+                blackoutGlobal = true,
+                blackoutJob = "lsmc",
                 canInteract = function(entity)
                     Organe = QBCore.Functions.TriggerRpc("lsmc:server:GetCurrentOrgan", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                     Wait(100)
@@ -52,6 +54,8 @@ Citizen.CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/remove_rein.png",
                 job = {["lsmc"] = 0},
+                blackoutGlobal = true,
+                blackoutJob = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
                                false
@@ -74,6 +78,8 @@ Citizen.CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/remove_foie.png",
                 job = {["lsmc"] = 0},
+                blackoutGlobal = true,
+                blackoutJob = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
                                false
@@ -96,6 +102,8 @@ Citizen.CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/greffer.png",
                 job = {["lsmc"] = 0},
+                blackoutGlobal = true,
+                blackoutJob = "lsmc",
                 canInteract = function(entity)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ~=
                                false and playerHasItem(Organe)

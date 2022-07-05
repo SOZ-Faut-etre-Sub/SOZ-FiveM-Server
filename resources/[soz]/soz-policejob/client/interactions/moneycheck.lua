@@ -17,6 +17,8 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                     return PlayerData.job.onduty and player ~= -1 and distance <= 2.0
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
+                blackoutGlobal = true,
+                blackoutJob = true,
             },
         },
         distance = 2.5,
