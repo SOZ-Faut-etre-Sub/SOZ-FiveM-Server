@@ -1,4 +1,6 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_garbage", "soz", "garbage:menu")
+local societyMenuState = {["displayCollect"] = false}
+
 local haveGarbageBag, garbageBagProp = false, nil
 local binModel, binLocation = GetHashKey("soz_prop_bb_bin"), {}
 
@@ -139,7 +141,9 @@ RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
     if PlayerData.job.onduty then
         societyMenu:AddCheckbox({
             label = "Afficher les points de collecte",
+            value = societyMenuState.displayCollect,
             change = function(_, checked)
+                societyMenuState.displayCollect = checked
                 for binId, bin in pairs(binLocation) do
                     if not QBCore.Functions.GetBlip("garbage_bin_" .. binId) then
                         QBCore.Functions.CreateBlip("garbage_bin_" .. binId, {
