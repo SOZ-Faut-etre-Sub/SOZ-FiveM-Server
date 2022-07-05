@@ -128,7 +128,7 @@ CreateThread(function()
                         color = jobId,
                         icon = "c:jobs/facture.png",
                         event = "jobs:client:InvoicePlayer",
-                        canInteract = function(player)
+                        canInteract = function()
                             return PlayerData.job.onduty
                         end,
                         job = jobId,
