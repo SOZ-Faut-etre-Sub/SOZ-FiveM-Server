@@ -1,4 +1,9 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_fueler", "soz", "fueler:menu")
+local societyMenuState = {
+    ['displayHarvestArea'] = false,
+    ['displayRefiningArea'] = false,
+    ['displayResaleArea'] = false
+}
 
 local Tanker = {hasPipe = false, vehicle = nil, entity = nil, rope = nil, nozzle = nil, using = false}
 local MaxFuelInStation, CurrentStation = 2000, nil
@@ -651,7 +656,9 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
     if PlayerData.job.onduty then
         societyMenu:AddCheckbox({
             label = "Afficher la zone de récolte sur le GPS",
+            value = societyMenuState.displayHarvestArea,
             change = function(_, value)
+                societyMenuState.displayHarvestArea = value
                 if not QBCore.Functions.GetBlip("mtp_farm") then
                     QBCore.Functions.CreateBlip("mtp_farm", {
                         name = "Point de récolte",
@@ -667,7 +674,9 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
 
         societyMenu:AddCheckbox({
             label = "Afficher la zone de raffinage sur le GPS",
+            value = societyMenuState.displayRefiningArea,
             change = function(_, value)
+                societyMenuState.displayRefiningArea = value
                 if not QBCore.Functions.GetBlip("mtp_refinery") then
                     QBCore.Functions.CreateBlip("mtp_refinery",
                                                 {
@@ -684,7 +693,9 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
 
         societyMenu:AddCheckbox({
             label = "Afficher la zone de revente sur le GPS",
+            value = societyMenuState.displayResaleArea,
             change = function(_, value)
+                societyMenuState.displayResaleArea = value
                 if not QBCore.Functions.GetBlip("mtp_resell") then
                     QBCore.Functions.CreateBlip("mtp_resell", {
                         name = "Point de vente",
