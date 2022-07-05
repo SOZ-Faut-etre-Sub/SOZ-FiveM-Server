@@ -126,7 +126,7 @@ local function startExamLoop(licenseType, context)
         end
 
         -- Checkpoints
-        local checkpoints = GetRandomCheckpoints(licenseType, Config.Checkpoints, Config.CheckpointCount)
+        local checkpoints = GetRandomCheckpoints(licenseType, Config.Checkpoints, Config.CheckpointCount[licenseType])
         if not checkpoints then
             return
         end
