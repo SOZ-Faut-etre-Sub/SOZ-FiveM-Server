@@ -48,6 +48,7 @@ CreateThread(function()
                         disableCombat = true,
                     }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
                         TriggerServerEvent("lsmc:server:remove", "bloodbag")
+                        TriggerServerEvent("lsmc:server:add", "used_bloodbag")
                         TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                         TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {},
                                            {

@@ -2107,6 +2107,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Utile pour faire une prise de sang'
     },
+    ['used_bloodbag'] = {
+        ['name'] = 'used_bloodbag',
+        ['label'] = 'Poche de sang usagé',
+        ['weight'] = 300,
+        ['type'] = 'item',
+        ['image'] = 'used_bloodbag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pas très utile pour réanimer.'
+    },
     ['tissue'] = {
         ['name'] = 'tissue',
         ['label'] = 'Mouchoirs',
