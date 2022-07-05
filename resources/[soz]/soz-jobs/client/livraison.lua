@@ -19,6 +19,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             icon = "c:pole/start.png",
             label = "Job Livraison",
             job = SozJobCore.JobType.Unemployed,
+            blackoutGlobal = true,
         },
         {
             type = "client",
@@ -26,6 +27,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             icon = "c:pole/equip.png",
             label = "S'équiper",
             job = SozJobCore.JobType.Delivery,
+            blackoutGlobal = true,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -36,6 +38,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             icon = "c:pole/vehicle.png",
             label = "Sortir",
             job = SozJobCore.JobType.Delivery,
+            blackoutGlobal = true,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -48,6 +51,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             icon = "c:pole/restart.png",
             label = "Relancer",
             job = SozJobCore.JobType.Delivery,
+            blackoutGlobal = true,
             canInteract = function()
                 return OnJob == false
             end,
@@ -58,6 +62,7 @@ exports["qb-target"]:AddBoxZone("job livraison", vector3(-424.18, -2789.71, 6.0)
             icon = "c:pole/end.png",
             label = "Terminer",
             job = SozJobCore.JobType.Delivery,
+            blackoutGlobal = true,
         },
     },
     distance = 2.5,

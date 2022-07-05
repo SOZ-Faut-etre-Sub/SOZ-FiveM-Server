@@ -15,6 +15,8 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                     return PlayerData.job.onduty
                 end,
                 job = {["lspd"] = 0, ["bcso"] = 0},
+                blackoutGlobal = true,
+                blackoutJob = true,
             },
             {
                 label = "Fouiller",

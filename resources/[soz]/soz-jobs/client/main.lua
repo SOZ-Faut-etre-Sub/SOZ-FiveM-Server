@@ -68,6 +68,7 @@ CreateThread(function()
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:recruit", targetSource)
                 end,
+                blackoutGlobal = true,
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
@@ -94,6 +95,7 @@ CreateThread(function()
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:fire", targetSource)
                 end,
+                blackoutGlobal = true,
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
@@ -116,6 +118,7 @@ CreateThread(function()
             {
                 label = "Promouvoir",
                 icon = "c:jobs/promote.png",
+                blackoutGlobal = true,
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -157,6 +160,8 @@ CreateThread(function()
                             return PlayerData.job.onduty
                         end,
                         job = jobId,
+                        blackoutGlobal = true,
+                        blackoutJob = jobId,
                     },
                     {
                         label = "Facturer la société",
@@ -167,6 +172,8 @@ CreateThread(function()
                             return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices)
                         end,
                         job = jobId,
+                        blackoutGlobal = true,
+                        blackoutJob = jobId,
                     },
                 },
                 distance = 1.5,

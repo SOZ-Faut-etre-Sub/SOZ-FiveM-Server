@@ -183,6 +183,7 @@ exports["qb-target"]:SpawnPed({
                     end
                     return InsideConcessEntreprise
                 end,
+                blackoutGlobal = true,
             },
         },
         distance = 2.5,

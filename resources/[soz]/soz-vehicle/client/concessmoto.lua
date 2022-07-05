@@ -236,6 +236,7 @@ exports["qb-target"]:SpawnPed({
                     local licenses = PlayerData.metadata["licences"]
                     return InsideConcessMoto and licenses ~= nil and licenses[licenseTypeRequired] > 0
                 end,
+                blackoutGlobal = true,
             },
         },
         distance = 2.5,

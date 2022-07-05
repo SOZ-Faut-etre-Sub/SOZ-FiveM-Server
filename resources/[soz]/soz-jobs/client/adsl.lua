@@ -18,6 +18,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:begin",
             icon = "c:pole/start.png",
             label = "Job ADSL",
+            blackoutGlobal = true,
             job = SozJobCore.JobType.Unemployed,
         },
         {
@@ -25,6 +26,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:tenue",
             icon = "c:pole/equip.png",
             label = "S'équiper",
+            blackoutGlobal = true,
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 return JobOutfit == false
@@ -35,6 +37,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:vehicle",
             icon = "c:pole/vehicle.png",
             label = "Sortir",
+            blackoutGlobal = true,
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 if JobOutfit == true then
@@ -47,6 +50,7 @@ exports["qb-target"]:AddBoxZone("job adsl", vector3(479.13, -107.45, 62.71), 1, 
             event = "jobs:adsl:restart",
             icon = "c:pole/restart.png",
             label = "Relancer",
+            blackoutGlobal = true,
             job = SozJobCore.JobType.Adsl,
             canInteract = function()
                 return OnJob == false

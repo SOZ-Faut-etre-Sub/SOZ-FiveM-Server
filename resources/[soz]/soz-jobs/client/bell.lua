@@ -7,6 +7,7 @@ CreateThread(function()
                 label = "Biper",
                 icon = "c:jobs/biper.png",
                 event = "jobs:client:callSociety",
+                blackoutGlobal = true,
                 canInteract = function()
                     return lastSocietyCall + 15000 < GetGameTimer()
                 end,

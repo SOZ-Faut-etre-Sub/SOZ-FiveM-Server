@@ -98,6 +98,8 @@ Citizen.CreateThread(function()
                                 return LocalPlayer.state.hasTankerPipe and PlayerData.job.onduty
                             end,
                             job = "oil",
+                            blackoutGlobal = true,
+                            blackoutJob = true,
                         },
                         {
                             label = "Remplir la station de kérosène",
@@ -109,6 +111,8 @@ Citizen.CreateThread(function()
                             end,
                             item = "kerosene",
                             job = "oil",
+                            blackoutGlobal = true,
+                            blackoutJob = true,
                         },
                         {
                             label = "État de la station",
@@ -120,6 +124,7 @@ Citizen.CreateThread(function()
                             canInteract = function()
                                 return station:IsPrivate() or (station:CitizenIsOwner(PlayerData.job.id) or PlayerData.job.id == "oil")
                             end,
+                            blackoutGlobal = true,
                         },
                         {
                             icon = "c:fuel/pistolet.png",
@@ -141,6 +146,7 @@ Citizen.CreateThread(function()
 
                                 return station:CitizenHasAccess(PlayerData.job.id)
                             end,
+                            blackoutGlobal = true,
                         },
                     },
                     distance = 3.0,
@@ -178,6 +184,7 @@ Citizen.CreateThread(function()
 
                                 return playerIsInsideStationZone and stationPistolInUse
                             end,
+                            blackoutGlobal = true,
                         },
                     },
                     distance = 3.0,

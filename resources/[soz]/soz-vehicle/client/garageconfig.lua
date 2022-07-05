@@ -1619,6 +1619,8 @@ exports["qb-target"]:AddGlobalVehicle({
             canInteract = function(entity, distance, data)
                 return PlayerData.job.onduty and InsideFourriere
             end,
+            blackoutGlobal = true,
+            blackoutJob = true,
         },
     },
     distance = 3.0,

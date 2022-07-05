@@ -34,6 +34,7 @@ SozJobCore.Functions.GetBossShopActions = function(job, event)
         {
             label = "Récupérer du matériel",
             icon = "fas fa-briefcase",
+            blackoutGlobal = true,
             event = event,
             canInteract = function()
                 return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.SocietyShop)

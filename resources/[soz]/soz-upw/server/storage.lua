@@ -71,22 +71,22 @@ function GetBlackoutLevel()
     return QBCore.Shared.Blackout.Level.Zero
 end
 
-function GetJobBlackoutLevel(job)
+function IsJobBlackout(job)
     local terminal = GetTerminalJob(job)
 
     if terminal then
-        return terminal:GetBlackoutLevel()
+        return terminal:GetEnergyPercent() <= 1
     end
 
-    return QBCore.Shared.Blackout.Level.Zero
+    return false
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
     cb(GetBlackoutLevel())
 end)
 
-QBCore.Functions.CreateCallback("soz-upw:server:GetJobBlackoutLevel", function(source, cb, jobId)
-    cb(GetJobBlackoutLevel(jobId))
+QBCore.Functions.CreateCallback("soz-upw:server:IsJobBlackout", function(source, cb, jobId)
+    cb(IsJobBlackout(jobId))
 end)
 
 --
@@ -131,6 +131,7 @@ function StartConsumptionLoop()
             if currentBlackoutLevel ~= newBlackoutLevel then
                 local previousBlackoutLevel = currentBlackoutLevel
                 currentBlackoutLevel = newBlackoutLevel
+                GlobalState.blackout_level = currentBlackoutLevel
                 TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", newBlackoutLevel, previousBlackoutLevel)
                 TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, newBlackoutLevel, previousBlackoutLevel)
             end
@@ -146,8 +147,10 @@ function StartConsumptionLoop()
                     if terminal:CanConsume() then
                         terminal:Consume(consumptionJobThisTick)
                     end
+
+                    GlobalState.job_energy[jobId] = terminal:GetEnergyPercent()
                 else
-                    print("[SOZ-UPW] No terminal for job " .. jobId)
+                    GlobalState.job_energy[jobId] = 100
                 end
             end
 
