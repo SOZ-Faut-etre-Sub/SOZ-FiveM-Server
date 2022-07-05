@@ -2109,7 +2109,7 @@ QBShared.Items = {
     },
     ['used_bloodbag'] = {
         ['name'] = 'used_bloodbag',
-        ['label'] = 'Poche de sang usagé',
+        ['label'] = 'Poche de sang usagée',
         ['weight'] = 300,
         ['type'] = 'item',
         ['image'] = 'used_bloodbag.png',
