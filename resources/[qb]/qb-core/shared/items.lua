@@ -2000,7 +2000,6 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'L\'outil parfait pour faire infecter un ordinateur'
     },
-
     -- Vehicle Tools
     ['repairkit'] = {
         ['name'] = 'repairkit',
@@ -2024,7 +2023,6 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !'
     },
-
     -- Medication
     ['firstaid'] = {
         ['name'] = 'firstaid',
@@ -2114,8 +2112,8 @@ QBShared.Items = {
         ['type'] = 'item',
         ['image'] = 'used_bloodbag.png',
         ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = 'Pas très utile pour réanimer.'
     },
