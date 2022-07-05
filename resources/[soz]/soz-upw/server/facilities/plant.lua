@@ -33,7 +33,7 @@ end
 -- ENERGY PRODUCTION
 --
 function Plant:CanProduce()
-    return self.active and self.capacity < self.maxCapacity
+    return self.capacity < self.maxCapacity
 end
 
 function Plant:Produce()
@@ -54,6 +54,9 @@ function Plant:Produce()
     if type(ppu) == "table" then
         ppu = math.random(ppu.min, ppu.max)
     end
+
+    -- Add capacity
+    self.capacity = self.capacity + prod
 
     -- Add pollution
     Pm:AddPollution(prod * ppu)
