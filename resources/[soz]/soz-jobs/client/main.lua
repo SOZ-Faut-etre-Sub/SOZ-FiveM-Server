@@ -1,6 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 local PromoteMenu = MenuV:CreateMenu(nil, "", "menu_job_poleemploi", "soz", "job-promote")
 PlayerData = QBCore.Functions.GetPlayerData()
+local bossZones = {}
 
 CreateThread(function()
     while true do
@@ -62,6 +63,7 @@ CreateThread(function()
         options = {
             {
                 label = "Recruter dans l'entreprise",
+                icon = 'c:jobs/enroll.png',
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:recruit", targetSource)
@@ -69,6 +71,13 @@ CreateThread(function()
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
+                        return false
+                    end
+
+                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local targetPosition = GetEntityCoords(entity)
+                    local bossZone = bossZones[PlayerData.job.id]
+                    if bossZone ~= nil and (not bossZone:isPointInside(playerPosition) or not bossZone:isPointInside(targetPosition)) then
                         return false
                     end
 
@@ -80,6 +89,7 @@ CreateThread(function()
             },
             {
                 label = "Virer de l'entreprise",
+                icon = 'c:jobs/fire.png',
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:fire", targetSource)
@@ -87,6 +97,13 @@ CreateThread(function()
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
+                        return false
+                    end
+
+                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local targetPosition = GetEntityCoords(entity)
+                    local bossZone = bossZones[PlayerData.job.id]
+                    if bossZone ~= nil and (not bossZone:isPointInside(playerPosition) or not bossZone:isPointInside(targetPosition)) then
                         return false
                     end
 
@@ -98,6 +115,7 @@ CreateThread(function()
             },
             {
                 label = "Promouvoir",
+                icon = 'c:jobs/promote.png',
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -106,6 +124,13 @@ CreateThread(function()
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
+                        return false
+                    end
+
+                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local targetPosition = GetEntityCoords(entity)
+                    local bossZone = bossZones[PlayerData.job.id]
+                    if bossZone ~= nil and (not bossZone:isPointInside(playerPosition) or not bossZone:isPointInside(targetPosition)) then
                         return false
                     end
 
@@ -146,6 +171,19 @@ CreateThread(function()
                 },
                 distance = 1.5,
             })
+        end
+        if job.bossZone then
+            bossZones[jobId] = BoxZone:Create(
+                vector3(job.bossZone.x,job.bossZone.y,job.bossZone.z),
+                job.bossZone.sx,
+                job.bossZone.sy, {
+                    name = jobId .. ":boss",
+                    heading = job.bossZone.heading,
+                    minZ = job.bossZone.minZ,
+                    maxZ = job.bossZone.maxZ,
+                    debugPoly = job.bossZone.debugPoly or false
+                }
+            )
         end
     end
 end)
