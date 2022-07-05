@@ -143,7 +143,13 @@ Config.InstructorStartSpeech = {
     "Suis ton GPS à allure modérée, et respecte les autres usagers de la route.",
 }
 
-Config.CheckpointCount = 6 -- Number of checkpoints during exam (including final checkpoint)
+-- Number of checkpoints during exam (including final checkpoint)
+Config.CheckpointCount = {
+    ["car"] = 6,
+    ["truck"] = 6,
+    ["motorcycle"] = 6,
+    ["heli"] = 5
+}
 Config.Checkpoints = {
     {
         x = -606.1,
@@ -156,7 +162,7 @@ Config.Checkpoints = {
         x = 31.24,
         y = -767.01,
         z = 42.67,
-        message = "Connaissez-vous Stonks Depository ?",
+        message = "Connaissez-vous Stonk Depository ?",
         licenses = {"car", "truck", "motorcycle"},
     },
     {
@@ -255,7 +261,7 @@ Config.Checkpoints = {
         x = -552.76,
         y = -151.6,
         z = 36.62,
-        message = "Il paraît que c'est dans ce commisariat qu'il y a les meilleurs donuts.",
+        message = "Il paraît que c'est dans ce commissariat qu'il y a les meilleurs donuts.",
         licenses = {"car", "truck", "motorcycle"},
     },
     {x = -340.44, y = -2357.59, z = 30.65, licenses = {"heli"}},
