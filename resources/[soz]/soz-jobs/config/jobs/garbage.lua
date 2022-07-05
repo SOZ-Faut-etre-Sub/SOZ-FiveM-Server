@@ -19,6 +19,7 @@ GarbageConfig.RecycleItem = {
     ["os"] = 5,
     ["viscere"] = 5,
     ["sawdust"] = 10,
+    ["used_bloodbag"] = 5,
 }
 
 GarbageConfig.Cloakroom = {
