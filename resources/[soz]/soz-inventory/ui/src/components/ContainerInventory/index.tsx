@@ -22,6 +22,7 @@ const ContainerInventory = () => {
         if (type === "ammo") headerImage = "armory";
         if (type === "tanker") headerImage = "trunk";
         if (type === "trailerlogs") headerImage = "trunk";
+        if (type === "brickade") headerImage = "trunk";
         if (type === "storage") headerImage = "default";
         if (type === "storage_tank") headerImage = "default";
 
