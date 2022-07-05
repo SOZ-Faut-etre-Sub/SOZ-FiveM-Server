@@ -106,7 +106,7 @@ RegisterServerEvent("lsmc:server:SetPatientOutfit", function(target, useOutfit)
         return
     end
 
-    Player(player).state.isWearingPatientOutfit = useOutfit
+    Player(player.PlayerData.source).state.isWearingPatientOutfit = useOutfit
 
     if useOutfit then
         TriggerClientEvent("ems:client:applyPatientClothing", player.PlayerData.source)

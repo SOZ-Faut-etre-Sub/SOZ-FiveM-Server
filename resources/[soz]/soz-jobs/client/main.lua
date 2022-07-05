@@ -63,7 +63,7 @@ CreateThread(function()
         options = {
             {
                 label = "Recruter dans l'entreprise",
-                icon = 'c:jobs/enroll.png',
+                icon = "c:jobs/enroll.png",
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:recruit", targetSource)
@@ -89,7 +89,7 @@ CreateThread(function()
             },
             {
                 label = "Virer de l'entreprise",
-                icon = 'c:jobs/fire.png',
+                icon = "c:jobs/fire.png",
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:fire", targetSource)
@@ -115,7 +115,7 @@ CreateThread(function()
             },
             {
                 label = "Promouvoir",
-                icon = 'c:jobs/promote.png',
+                icon = "c:jobs/promote.png",
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -173,17 +173,13 @@ CreateThread(function()
             })
         end
         if job.bossZone then
-            bossZones[jobId] = BoxZone:Create(
-                vector3(job.bossZone.x,job.bossZone.y,job.bossZone.z),
-                job.bossZone.sx,
-                job.bossZone.sy, {
-                    name = jobId .. ":boss",
-                    heading = job.bossZone.heading,
-                    minZ = job.bossZone.minZ,
-                    maxZ = job.bossZone.maxZ,
-                    debugPoly = job.bossZone.debugPoly or false
-                }
-            )
+            bossZones[jobId] = BoxZone:Create(vector3(job.bossZone.x, job.bossZone.y, job.bossZone.z), job.bossZone.sx, job.bossZone.sy, {
+                name = jobId .. ":boss",
+                heading = job.bossZone.heading,
+                minZ = job.bossZone.minZ,
+                maxZ = job.bossZone.maxZ,
+                debugPoly = job.bossZone.debugPoly or false,
+            })
         end
     end
 end)
