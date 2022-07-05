@@ -1,6 +1,10 @@
 PoliceJob.Functions.Menu = {}
 PoliceJob.Menus = {}
 
+local menuState = {
+    ['radar'] = false
+}
+
 --- Menu item
 
 --- @param menu Menu
@@ -96,9 +100,13 @@ end
 
 --- @param menu Menu
 local function RadarEntity(menu, job)
-    local radarItem = menu:AddCheckbox({label = "Afficher les radars sur le GPS"})
+    local radarItem = menu:AddCheckbox({
+        label = "Afficher les radars sur le GPS",
+        value = menuState['radar']
+    })
 
     radarItem:On("change", function(menu, value)
+        menuState['radar'] = value
         for radarID, radar in pairs(Config.Radars) do
             if radar.station == job then
                 if not QBCore.Functions.GetBlip("police_radar_" .. radarID) then
