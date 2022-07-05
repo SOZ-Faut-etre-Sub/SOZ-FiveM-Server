@@ -8,3 +8,5 @@ data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_radar.ytyp'
 data_file 'DLC_ITYP_REQUEST' "stream/soz_prop_paystation.ytyp"
 data_file 'DLC_ITYP_REQUEST' "stream/ytyp/barrier.ytyp"
 data_file 'DLC_ITYP_REQUEST' "stream/soz_prop_bb_bin.ytyp"
+data_file 'DLC_ITYP_REQUEST' "stream/soz_prop_elec.ytyp"
+data_file 'DLC_ITYP_REQUEST' "stream/sozupwpile.ytyp"
