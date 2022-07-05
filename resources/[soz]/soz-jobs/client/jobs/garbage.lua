@@ -1,7 +1,5 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_garbage", "soz", "garbage:menu")
-local societyMenuState = {
-    ['displayCollect'] = false
-}
+local societyMenuState = {["displayCollect"] = false}
 
 local haveGarbageBag, garbageBagProp = false, nil
 local binModel, binLocation = GetHashKey("soz_prop_bb_bin"), {}

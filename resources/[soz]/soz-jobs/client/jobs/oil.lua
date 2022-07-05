@@ -1,8 +1,8 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_fueler", "soz", "fueler:menu")
 local societyMenuState = {
-    ['displayHarvestArea'] = false,
-    ['displayRefiningArea'] = false,
-    ['displayResaleArea'] = false
+    ["displayHarvestArea"] = false,
+    ["displayRefiningArea"] = false,
+    ["displayResaleArea"] = false,
 }
 
 local Tanker = {hasPipe = false, vehicle = nil, entity = nil, rope = nil, nozzle = nil, using = false}
