@@ -2758,6 +2758,39 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = ''
     },
+    ['energy_cell_hydro'] = {
+        ['name'] = 'energy_cell_hydro',
+        ['label'] = "Cellule d'énergie hydraulique",
+        ['weight'] = 5000,
+        ['type'] = 'energy',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['energy_cell_fossil'] = {
+        ['name'] = 'energy_cell_fossil',
+        ['label'] = "Cellule d'énergie fossile",
+        ['weight'] = 5000,
+        ['type'] = 'energy',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['energy_cell_wind'] = {
+        ['name'] = 'energy_cell_wind',
+        ['label'] = "Cellule d'énergie éolienne",
+        ['weight'] = 5000,
+        ['type'] = 'energy',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
     ['seeweed_acid'] = {
         ['name'] = 'seeweed_acid',
         ['label'] = "Acide d’algue conditionnée",
