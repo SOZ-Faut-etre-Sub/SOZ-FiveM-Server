@@ -7,7 +7,8 @@ CreateThread(function()
                 icon = "c:ems/heal.png",
                 job = "lsmc",
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Appliquer un bandage..", 10000, false, true,
@@ -36,7 +37,8 @@ CreateThread(function()
                 icon = "c:ems/revive.png",
                 job = "lsmc",
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return PlayerData.job.onduty and Player(target).state.isdead and not InsideSurgery
                 end,
                 action = function(entity)
                     TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
@@ -64,7 +66,8 @@ CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/revive.png",
                 canInteract = function(entity)
-                    return IsEntityPlayingAnim(entity, "dead", "dead_a", 3)
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return Player(target).state.isdead
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Revive", "Vous réanimez la personne..", 10000, false, true,
@@ -91,7 +94,8 @@ CreateThread(function()
                 icon = "c:ems/take_blood.png",
                 job = "lsmc",
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Take_Blood", "Vous faites une prise de sang...", 10000, false, true,
@@ -119,9 +123,10 @@ CreateThread(function()
                 icon = "c:ems/Rehabiliter.png",
                 job = "lsmc",
                 canInteract = function(entity)
-                    IsItt = QBCore.Functions.TriggerRpc("lsmc:server:IsItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    IsItt = QBCore.Functions.TriggerRpc("lsmc:server:IsItt", target)
                     Wait(50)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery and InsideHopital and IsItt
+                    return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery and InsideHopital and IsItt
                 end,
                 action = function(entity)
                     TriggerServerEvent("lsmc:server:SetItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
@@ -133,7 +138,8 @@ CreateThread(function()
                 icon = "c:ems/Deshabiliter.png",
                 job = "lsmc",
                 canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "dead", "dead_a", 3) and not InsideSurgery and InsideHopital and not IsItt
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery and InsideHopital and not IsItt
                 end,
                 action = function(entity)
                     TriggerServerEvent("lsmc:server:SetItt", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
