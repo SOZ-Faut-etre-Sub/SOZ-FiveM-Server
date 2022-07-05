@@ -144,12 +144,7 @@ Config.InstructorStartSpeech = {
 }
 
 -- Number of checkpoints during exam (including final checkpoint)
-Config.CheckpointCount = {
-    ["car"] = 6,
-    ["truck"] = 6,
-    ["motorcycle"] = 6,
-    ["heli"] = 5
-}
+Config.CheckpointCount = {["car"] = 6, ["truck"] = 6, ["motorcycle"] = 6, ["heli"] = 5}
 Config.Checkpoints = {
     {
         x = -606.1,
