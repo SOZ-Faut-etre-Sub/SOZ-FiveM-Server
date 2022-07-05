@@ -101,15 +101,17 @@ AddEventHandler("lsmc:server:SetItt", function(id)
 end)
 
 RegisterServerEvent("lsmc:server:SetPatientOutfit", function(target, useOutfit)
-    local Player = QBCore.Functions.GetPlayer(tonumber(target))
-    if not Player then
+    local player = QBCore.Functions.GetPlayer(tonumber(target))
+    if not player then
         return
     end
 
+    Player(player.PlayerData.source).state.isWearingPatientOutfit = useOutfit
+
     if useOutfit then
-        TriggerClientEvent("ems:client:applyPatientClothing", Player.PlayerData.source)
+        TriggerClientEvent("ems:client:applyPatientClothing", player.PlayerData.source)
     else
-        TriggerClientEvent("ems:client:removePatientClothing", Player.PlayerData.source)
+        TriggerClientEvent("ems:client:removePatientClothing", player.PlayerData.source)
     end
 end)
 
