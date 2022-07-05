@@ -150,6 +150,10 @@ CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/desabhiller.png",
                 job = "lsmc",
+                canInteract = function(entity)
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return InsideHopital and not Player(target).state.isWearingPatientOutfit
+                end,
                 action = function(entity)
                     TriggerServerEvent("lsmc:server:SetPatientOutfit", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)), true)
                 end,
@@ -159,6 +163,10 @@ CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/rhabiller.png",
                 job = "lsmc",
+                canInteract = function(entity)
+                    local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    return InsideHopital and Player(target).state.isWearingPatientOutfit
+                end,
                 action = function(entity)
                     TriggerServerEvent("lsmc:server:SetPatientOutfit", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)), false)
                 end,
