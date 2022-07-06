@@ -115,9 +115,9 @@ Config.SafeStorages = {
     ["safe_pawl"] = {
         label = "Coffre Pipe And Wooden Leg",
         owner = "pawl",
-        position = vector3(0, 0, 0),
-        size = vec2(0, 0),
-        heading = 0,
+        position = vector3(-543.77, 5306.63, 76.37),
+        size = vec2(0.75, 0.3),
+        heading = 340,
     },
 }
 
