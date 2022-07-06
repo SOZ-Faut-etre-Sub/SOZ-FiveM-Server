@@ -85,6 +85,6 @@ QBShared.Trunks = {
     [GetHashKey('trailerlogs')] = { slot = 10, weight = 200000 },
 
     -- UPW
-    [GetHashKey('boxville')] = { slot = 10, weight = 80000 },
-    [GetHashKey('brickade')] = { slot = 10, weight = 200000 },
+    [GetHashKey('boxville')] = { slot = 10, weight = 50000 },
+    [GetHashKey('brickade')] = { slot = 10, weight = 100000 },
 }
