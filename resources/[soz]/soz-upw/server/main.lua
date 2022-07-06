@@ -91,7 +91,7 @@ local props = {
     ["upwpile"] = {
         model = "upwpile",
         facility = "inverter",
-        defaults = {capacity = 0, maxCapacity = 5000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}},
+        defaults = {capacity = 0, maxCapacity = 5000, zone = {sx = 5.0, sy = 5.0, deltaZ = 3.0}},
     },
 }
 RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, job)

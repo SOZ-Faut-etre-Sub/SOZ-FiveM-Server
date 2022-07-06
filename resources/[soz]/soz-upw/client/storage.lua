@@ -1,29 +1,11 @@
 function CreateInverterZone(identifier, data)
     data.options = {
         {
-            label = "Stocker l'énergie",
-            event = "soz-upw:client:HarvestLoop",
-            identifier = identifier,
-            harvest = "inverter-in",
-            canInteract = function()
-                return OnDuty()
-            end,
-        },
-        {
-            label = "Collecter l'énergie",
-            event = "soz-upw:client:HarvestLoop",
-            identifier = identifier,
-            harvest = "inverter-out",
-            canInteract = function()
-                return OnDuty()
-            end,
-        },
-        {
-            label = "Remplissage",
-            type = "server",
-            event = "soz-upw:server:FacilityCapacity",
-            identifier = identifier,
-            facility = "inverter",
+            label = "Accéder à l'onduleur",
+            icon = "c:inventory/ouvrir_le_stockage.png",
+            event = "inventory:client:qTargetOpenInventory",
+            storageID = identifier,
+            storage = {type = "inverter"},
             canInteract = function()
                 return OnDuty()
             end,
