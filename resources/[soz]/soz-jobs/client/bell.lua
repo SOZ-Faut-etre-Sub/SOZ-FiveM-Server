@@ -81,7 +81,7 @@ CreateThread(function()
         name = "bell:pawl",
         heading = 55,
         minZ = 76.05,
-        maxZ = 76.30
+        maxZ = 76.30,
     }, {options = callSociety("555-PAWL"), distance = 2.5})
 end)
 
