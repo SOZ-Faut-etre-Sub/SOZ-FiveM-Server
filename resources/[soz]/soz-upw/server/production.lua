@@ -127,15 +127,18 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    if harvestType == "inverter-in" or harvestType == "terminal-in" then
-        -- Does player have item?
-        local count = exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true)
+    if harvestType == "terminal-in" then
+        local items = exports["soz-inventory"]:GetItemsByType(Player.PlayerData.source, "energy")
+        local amount = 0
 
-        if count == 0 then
+        for _, itemSlot in pairs(items) do
+            amount = amount + itemSlot.amount
+        end
+
+        if amount == 0 then
             cb({false, string.format("Vous n'avez pas l'item requis")})
             return
         end
-
     else
         -- Can item be stored in inventory
         local canCarry = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1)
@@ -153,7 +156,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:PrecheckHarvest", function(sourc
         return
     end
 
-    if not facility[facilityData.precheck](facility) then
+    if not facility[facilityData.precheck](facility, item) then
         cb({false, facilityData.messages.precheckError})
         return
     end
@@ -175,11 +178,21 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     local p = promise:new()
 
-    if harvestType == "inverter-in" or harvestType == "terminal-in" then
-        -- Remove energy cell from inventory
-        local invChanged = exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
+    if harvestType == "terminal-in" then
+        local items = exports["soz-inventory"]:GetItemsByType(Player.PlayerData.source, "energy")
+        local firstItem = items[1]
 
-        if invChanged and harvestType == "terminal-in" and facility.scope == "default" then
+        if not firstItem then
+            cb({false, string.format("Vous n'avez pas l'item requis")})
+            return
+        end
+
+        item = firstItem.item.name
+
+        -- Remove energy cell from inventory
+        local invChanged = exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, firstItem.item.name, 1)
+
+        if invChanged and facility.scope == "default" then
             -- Add payment from San Andreas State on default terminals only
             TriggerEvent("banking:server:TransferMoney", Config.Upw.Accounts.FarmAccount, Config.Upw.Accounts.SafeAccount, Config.Upw.Resale.EnergyCellPrice)
         end
@@ -199,7 +212,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
         return
     end
 
-    facility[facilityData.action](facility)
+    facility[facilityData.action](facility, item)
 
     cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
 end)

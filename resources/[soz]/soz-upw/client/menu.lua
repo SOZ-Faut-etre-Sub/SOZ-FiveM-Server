@@ -7,9 +7,7 @@ local societyMenuState = {
 }
 
 local function SetBlipVisibility(type, visible, entreprise)
-    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {
-        type
-    })
+    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {type})
 
     for _, facility in ipairs(facilities) do
         local data = json.decode(facility.data)

@@ -536,6 +536,26 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
     cb(success, reason)
 end
 
+--- Items By Type
+function Inventory.GetItemsByType(inv, type)
+    inv = Inventory(inv)
+    local items = {}
+
+    if inv then
+        for _, v in pairs(inv.items) do
+            local item = QBCore.Shared.Items[v.name]
+
+            if item and item.type == type then
+                table.insert(items, {item = item, amount = v.amount, metadata = v.metadata})
+            end
+        end
+    end
+
+    return items
+end
+RegisterNetEvent("inventory:server:GetItemsByType", Inventory.GetItemsByType)
+exports("GetItemsByType", Inventory.GetItemsByType)
+
 --- Slots
 function Inventory.GetItem(inv, item, metadata, returnsAmount)
     item = type(item) == "table" and item or QBCore.Shared.Items[item]
