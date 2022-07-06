@@ -89,18 +89,20 @@ local createCameraThread = function()
         PushScaleformMovieFunctionParameterInt(0) -- 0 for nothing, 1 for LSPD logo
         PopScaleformMovieFunctionVoid()
 
-        -- exports["soz-hud"]:EnableTwitchNewsOverlay()
-        while binocularsConfig.enabled do
 
-            SetEntityHeading(player, new_z)
+        local scaleform = RequestScaleformMovie("BINOCULARS")
+        while not HasScaleformMovieLoaded(scaleform) do
+            Citizen.Wait(5)
+        end
+
+        while binocularsConfig.enabled do
+            SetPauseMenuActive(false)
+            if not IsPedSittingInAnyVehicle(player) then
+                SetEntityHeading(player, new_z)
+            end
 
             DisableControlAction(2, 30, true)
             DisableControlAction(2, 33, true)
-
-            local scaleform = RequestScaleformMovie("BINOCULARS")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(10)
-            end
 
             local zoomvalue = (1.0 / (fov_max - fov_min)) * (fov - fov_min)
             CheckInputRotation(cam, zoomvalue)
@@ -125,7 +127,7 @@ local createCameraThread = function()
             SetTaskMoveNetworkSignalFloat(player, "Pitch", camPitch)
             SetTaskMoveNetworkSignalFloat(player, "Heading", camHeading * -1.0 + 1.0)
 
-            Wait(10)
+            Wait(5)
         end
         -- exports["soz-hud"]:DisableTwitchNewsOverlay()
 
