@@ -95,7 +95,7 @@ Citizen.CreateThread(function()
                             icon = "c:fuel/pistolet.png",
                             event = "jobs:client:fueler:StartStationRefill",
                             canInteract = function()
-                                return LocalPlayer.state.hasTankerPipe and PlayerData.job.onduty
+                                return LocalPlayer.state.hasTankerPipe and PlayerData.job.onduty and stationm:IsEssence()
                             end,
                             job = "oil",
                             blackoutGlobal = true,
@@ -107,7 +107,7 @@ Citizen.CreateThread(function()
                             icon = "c:fuel/pistolet.png",
                             event = "jobs:client:fueler:StartKeroseneStationRefill",
                             canInteract = function()
-                                return PlayerData.job.onduty
+                                return PlayerData.job.onduty and station:IsKerosene()
                             end,
                             item = "kerosene",
                             job = "oil",
