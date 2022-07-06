@@ -4349,4 +4349,23 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('trailerlogs'),
         ['shop']     = 'na',
     },
+    -- UPW
+    ['brickade']     = {
+        ['name']     = 'Brickade',
+        ['brand']    = '',
+        ['model']    = 'brickade',
+        ['price']    = 35000,
+        ['category'] = 'Utility',
+        ['hash']     = GetHashKey('brickade'),
+        ['shop']     = 'na',
+    },
+    ['boxville']     = {
+        ['name']     = 'Boxville',
+        ['brand']    = '',
+        ['model']    = 'boxville',
+        ['price']    = 24000,
+        ['category'] = 'Utility',
+        ['hash']     = GetHashKey('boxville'),
+        ['shop']     = 'na',
+    },
 }

@@ -224,6 +224,12 @@ Zonesentreprise = {
         minZ = 69.47,
         maxZ = 72.47,
     }),
+    ["upw"] = BoxZone:Create(vector3(597.42, 2734.61, 42.06), 25.4, 30.0, {
+        name = "upw_z",
+        heading = 4,
+        minZ = 40.06,
+        maxZ = 45.06,
+    }),
 }
 
 ------------------------
@@ -1519,6 +1525,27 @@ PlacesEntreprise = {
         maxZ = 72.19,
         data = {
             indexGarage = "pawl",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    -- UPW
+    ["upw1"] = BoxZone:Create(vector3(589.85, 2733.99, 41.95), 12.4, 3.6, {
+        name = "upw1",
+        heading = 4,
+        minZ = 40.95,
+        maxZ = 43.95,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw2"] = BoxZone:Create(vector3(595.72, 2734.67, 42.08), 12.4, 3.6, {
+        name = "upw2",
+        heading = 2,
+        minZ = 41.08,
+        maxZ = 44.08,
+        data = {
+            indexGarage = "upw",
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
