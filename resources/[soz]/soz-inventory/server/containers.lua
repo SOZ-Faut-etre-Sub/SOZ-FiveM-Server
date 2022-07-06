@@ -126,7 +126,7 @@ Container["house_stash"] = InventoryContainer:new({
 })
 Container["house_fridge"] = InventoryContainer:new({type = "fridge", allowedTypes = {"food", "drink"}})
 
---- Jobs
+--- Jobs PAWL
 Container["log_storage"] = InventoryContainer:new({
     type = "log_storage",
     allowedTypes = {"log"},
@@ -149,4 +149,11 @@ Container["log_processing"] = InventoryContainer:new({
     inventoryGetContentCallback = function()
         return false
     end,
+})
+
+--- Jobs UPW
+Container["inverter"] = InventoryContainer:new({
+    type = "inverter",
+    allowedTypes = {"energy"},
+    inventoryPermissionCallback = playerHaveJob,
 })

@@ -693,6 +693,12 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("house_fridge_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
+    elseif storageType == "inverter" then
+        targetInv = Inventory("inverter_" .. invID)
+
+        if targetInv == nil then
+            targetInv = Inventory.Create("inverter_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, "upw")
+        end
     end
 
     return targetInv
