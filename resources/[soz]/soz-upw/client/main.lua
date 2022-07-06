@@ -40,10 +40,10 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     -- Blip
     if not QBCore.Functions.GetBlip("job_upw") then
         QBCore.Functions.CreateBlip("job_upw", {
-            name = Config.Blip.Name,
-            coords = Config.Blip.Coords,
-            sprite = Config.Blip.Sprite,
-            scale = Config.Blip.Scale,
+            name = Config.Blip.station.Name,
+            coords = Config.Blip.station.Coords,
+            sprite = Config.Blip.station.Sprite,
+            scale = Config.Blip.station.Scale,
         })
     end
 end)
@@ -81,35 +81,40 @@ Citizen.CreateThread(function()
         local blip_id = ("job_upw_%s"):format(facility.identifier)
 
         if not QBCore.Functions.GetBlip(blip_id) then
-            local name = "Usine"
+            local blipConfig
             local coords
 
             if facility.type == "plant" then
                 coords = data.zones.energyZone.coords
+                blipConfig = Config.Blip.plant
             end
 
             if facility.type == "inverter" then
-                name = "Onduleur"
+                blipConfig = Config.Blip.inverter
                 coords = data.zone.coords
             end
 
             if facility.type == "terminal" then
                 coords = data.zone.coords
+
                 if data.scope == "entreprise" then
-                    name = ("Borne entreprise %s"):format(data.job)
+                    blipConfig = Config.Blip.terminal_job
                 else
-                    name = "Borne civile"
+                    blipConfig = Config.Blip.terminal_global
                 end
             end
 
-            local blipCoords = vector3(coords.x, coords.y, coords.z)
+            if blipConfig then
+                local blipCoords = vector3(coords.x, coords.y, coords.z)
 
-            QBCore.Functions.CreateBlip(blip_id, {
-                name = name,
-                coords = blipCoords,
-                sprite = Config.Blip.Sprite,
-                scale = Config.Blip.Scale,
-            })
+                QBCore.Functions.CreateBlip(blip_id, {
+                    name = blipConfig.Name,
+                    coords = blipCoords,
+                    sprite = blipConfig.Sprite,
+                    scale = blipConfig.Scale,
+                    color = blipConfig.Color,
+                })
+            end
         end
 
         QBCore.Functions.HideBlip(blip_id, true)
@@ -143,7 +148,8 @@ end)
 --
 -- UTILS
 --
-function OnDuty()
+function OnDuty(job)
+    local job = job or "upw"
     local PlayerData = QBCore.Functions.GetPlayerData()
-    return PlayerData.job.id == "upw" and PlayerData.job.onduty
+    return PlayerData.job.id == job and PlayerData.job.onduty
 end
