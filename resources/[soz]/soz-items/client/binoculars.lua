@@ -89,7 +89,6 @@ local createCameraThread = function()
         PushScaleformMovieFunctionParameterInt(0) -- 0 for nothing, 1 for LSPD logo
         PopScaleformMovieFunctionVoid()
 
-
         local scaleform = RequestScaleformMovie("BINOCULARS")
         while not HasScaleformMovieLoaded(scaleform) do
             Citizen.Wait(5)
