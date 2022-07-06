@@ -4330,4 +4330,23 @@ QBShared.Vehicles = {
         ['shop']     = 'na',
         ['type']     = 'air'
     },
+    --- PAWL
+    ['hauler']     = {
+        ['name']     = 'Hauler',
+        ['brand']    = 'Jobuilt',
+        ['model']    = 'hauler',
+        ['price']    = 25000,
+        ['category'] = 'Emergency',
+        ['hash']     = GetHashKey('hauler'),
+        ['shop']     = 'na',
+    },
+    ['trailerlogs']     = {
+        ['name']     = 'Remorque',
+        ['brand']    = '',
+        ['model']    = 'trailerlogs',
+        ['price']    = 25000,
+        ['category'] = 'Emergency',
+        ['hash']     = GetHashKey('trailerlogs'),
+        ['shop']     = 'na',
+    },
 }
