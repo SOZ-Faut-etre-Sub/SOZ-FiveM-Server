@@ -67,6 +67,7 @@ Citizen.CreateThread(function()
 
     for _, facility in ipairs(facilities) do
         local conf = GetZoneConfig(facility.type)
+        local data = json.decode(facility.data)
 
         if conf.create == nil then
             for _, c in ipairs(conf) do
@@ -75,6 +76,43 @@ Citizen.CreateThread(function()
         else
             createZone(facility, conf.create, conf.zone)
         end
+
+        -- Blip
+        local blip_id = ("job_upw_%s"):format(facility.identifier)
+
+        if not QBCore.Functions.GetBlip(blip_id) then
+            local name = "Usine"
+            local coords
+
+            if facility.type == "plant" then
+                coords = data.zones.energyZone.coords
+            end
+
+            if facility.type == "inverter" then
+                name = "Onduleur"
+                coords = data.zone.coords
+            end
+
+            if facility.type == "terminal" then
+                coords = data.zone.coords
+                if data.scope == "entreprise" then
+                    name = ("Borne entreprise %s"):format(data.job)
+                else
+                    name = "Borne civile"
+                end
+            end
+
+            local blipCoords = vector3(coords.x, coords.y, coords.z)
+
+            QBCore.Functions.CreateBlip(blip_id, {
+                name = name,
+                coords = blipCoords,
+                sprite = Config.Blip.Sprite,
+                scale = Config.Blip.Scale,
+            })
+        end
+
+        QBCore.Functions.HideBlip(blip_id, true)
     end
 
     -- Resale zone

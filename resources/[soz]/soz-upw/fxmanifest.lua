@@ -4,7 +4,10 @@ lua54 "yes"
 
 shared_scripts {"config.lua"}
 
-client_scripts {"client/*.lua"}
+client_scripts {
+    "@menuv/menuv.lua",
+    "client/*.lua",
+}
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",

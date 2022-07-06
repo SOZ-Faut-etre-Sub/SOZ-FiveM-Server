@@ -686,7 +686,7 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
                     })
                 end
 
-                QBCore.Functions.HideBlip("mtp_resell", not value)
+                QBCore.Functions.HideBlip("mtp_farm", not value)
             end,
         })
 
@@ -705,7 +705,7 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
                     })
                 end
 
-                QBCore.Functions.HideBlip("mtp_resell", not value)
+                QBCore.Functions.HideBlip("mtp_refinery", not value)
             end,
         })
 
