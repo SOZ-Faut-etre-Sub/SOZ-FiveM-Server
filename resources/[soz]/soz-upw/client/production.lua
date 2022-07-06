@@ -32,7 +32,7 @@ function CreateWasteZone(identifier, data)
             identifier = identifier,
             harvest = "waste",
             canInteract = function()
-                return OnDuty()
+                return OnDuty("garbage")
             end,
         },
     }
