@@ -218,9 +218,9 @@ Zonesentreprise = {
         minZ = 72.23,
         maxZ = 77.63,
     }),
-    ["pawl"] = BoxZone:Create(vector3(-575.99, 5249.13, 70.47), 26.6, 22.6, {
+    ["pawl"] = BoxZone:Create(vector3(-595.89, 5295.04, 70.21), 43.8, 37.2, {
         name = "pawl_z",
-        heading = 332,
+        heading = 340,
         minZ = 69.47,
         maxZ = 72.47,
     }),
@@ -1492,9 +1492,9 @@ PlacesEntreprise = {
     ["taxi4"] = BoxZone:Create(vector3(916.75, -170.56, 74.23), 3.2, 7.0,
                                {name = "taxi4", heading = 10, minZ = 73.03, maxZ = 77.03, data = {indexGarage = "taxi"}}),
 
-    ["pawl1"] = BoxZone:Create(vector3(-576.74, 5250.62, 70.47), 17.2, 5.0, {
+    ["pawl1"] = BoxZone:Create(vector3(-598.99, 5295.01, 70.21), 17.2, 5.0, {
         name = "pawl1",
-        heading = 16,
+        heading = 277,
         minZ = 69.19,
         maxZ = 72.19,
         data = {
@@ -1502,9 +1502,9 @@ PlacesEntreprise = {
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["pawl2"] = BoxZone:Create(vector3(-581.47, 5247.61, 70.19), 17.2, 5.0, {
+    ["pawl2"] = BoxZone:Create(vector3(-599.52, 5300.08, 70.21), 17.2, 5.0, {
         name = "pawl2",
-        heading = 16,
+        heading = 276,
         minZ = 69.19,
         maxZ = 72.19,
         data = {
@@ -1512,14 +1512,14 @@ PlacesEntreprise = {
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["pawl3"] = BoxZone:Create(vector3(-586.79, 5241.37, 70.19), 10.2, 5.0, {
+    ["pawl3"] = BoxZone:Create(vector3(-600.02, 5305.58, 70.21), 17.2, 5.0, {
         name = "pawl3",
-        heading = 175,
+        heading = 274,
         minZ = 69.19,
         maxZ = 72.19,
         data = {
             indexGarage = "pawl",
-            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }
