@@ -27,7 +27,6 @@ end
 
 --- Menu
 function MapperMenuProps(menu)
-
     if propsMenu == nil then
         propsMenu = MenuV:InheritMenu(menu, {subtitle = "Un poteau, une borne, des poubelles !"})
     end
@@ -39,8 +38,8 @@ function MapperMenuProps(menu)
         value = nil,
         values = {
             {label = "poubelle", value = "soz_prop_bb_bin"},
-            {label = "borne civile", value = "prop_elecbox_02a___default"},
-            {label = "borne entreprise", value = "prop_elecbox_02a___entreprise"},
+            {label = "borne civile", value = "soz_prop_elec01___default"},
+            {label = "borne entreprise", value = "soz_prop_elec02___entreprise"},
             {label = "onduleur", value = "upwpile"},
         },
         select = function(_, value)
@@ -176,10 +175,10 @@ function MapperMenuProps(menu)
                 return
             end
 
-            if PropOption.model == "soz_prop_bb_bin" then
-                TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
-            elseif PropOption.model == "prop_elecbox_02a" or PropOption.model == "upwpile" then
+            if PropOption.model == "soz_prop_elec01" or PropOption.model == "soz_prop_elec02" or PropOption.model == "upwpile" then
                 TriggerServerEvent("soz-upw:server:AddFacility", PropOption.model, PropOption.propCoord, PropOption.scope, PropOption.job)
+            else
+                TriggerServerEvent("admin:server:addPersistentProp", GetHashKey(PropOption.model), PropOption.event, PropOption.propCoord)
             end
 
             DeleteEntity(PropOption.prop)

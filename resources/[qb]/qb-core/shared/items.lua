@@ -2747,17 +2747,6 @@ QBShared.Items = {
     },
 
     -- UPW
-    ['energy_cell'] = {
-        ['name'] = 'energy_cell',
-        ['label'] = "Cellule d'énergie",
-        ['weight'] = 5000,
-        ['type'] = 'item',
-        ['unique'] = false,
-        ['useable'] = false,
-        ['shouldClose'] = false,
-        ['combinable'] = nil,
-        ['description'] = ''
-    },
     ['energy_cell_hydro'] = {
         ['name'] = 'energy_cell_hydro',
         ['label'] = "Cellule d'énergie hydraulique",
