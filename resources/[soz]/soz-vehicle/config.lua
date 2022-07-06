@@ -462,6 +462,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "pawl",
     },
+    ["upw"] = {
+        label = "Unexpected Power and Water",
+        blipcoord = vector4(608.92, 2745.08, 40.98, 7.91),
+        showBlip = false,
+        blipName = "Unexpected Power and Water",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "upw",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",

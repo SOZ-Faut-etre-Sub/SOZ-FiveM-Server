@@ -122,6 +122,9 @@ Citizen.CreateThread(function()
 
     -- Resale zone
     CreateResaleZone(Config.Upw.Resale.Zone)
+
+    -- Cloakroom zone
+    CreateCloakroomZone()
 end)
 
 function CreateZone(identifier, zoneType, data)

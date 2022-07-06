@@ -1,4 +1,4 @@
-local currentBlackoutLevel = QBCore.Shared.Blackout.Level.Zero
+GlobalState.blackout_level = QBCore.Shared.Blackout.Level.Zero
 local consumptionLoopRunning = false
 local facilities = {["inverter"] = GetInverter, ["terminal"] = GetTerminal}
 
@@ -55,30 +55,34 @@ local function GetTerminalCapacities(scope)
 end
 
 function GetBlackoutLevel()
-    local capacity, maxCapacity = GetTerminalCapacities("default")
-    local percent = math.ceil(capacity / maxCapacity * 100)
-
-    if percent >= 100 then
-        return QBCore.Shared.Blackout.Level.Zero
-    end
-
-    for level, range in pairs(Config.Blackout.Threshold) do
-        if percent >= range.min and percent < range.max then
-            return level
-        end
-    end
-
     return QBCore.Shared.Blackout.Level.Zero
+    -- @TODO
+    -- local capacity, maxCapacity = GetTerminalCapacities("default")
+    -- local percent = math.ceil(capacity / maxCapacity * 100)
+    --
+    -- if percent >= 100 then
+    --    return QBCore.Shared.Blackout.Level.Zero
+    -- end
+    --
+    -- for level, range in pairs(Config.Blackout.Threshold) do
+    --    if percent >= range.min and percent < range.max then
+    --        return level
+    --    end
+    -- end
+    --
+    -- return QBCore.Shared.Blackout.Level.Zero
 end
 
 function IsJobBlackout(job)
-    local terminal = GetTerminalJob(job)
-
-    if terminal then
-        return terminal:GetEnergyPercent() <= 1
-    end
-
     return false
+    -- @TODO
+    -- local terminal = GetTerminalJob(job)
+    --
+    -- if terminal then
+    --    return terminal:GetEnergyPercent() <= 1
+    -- end
+    --
+    -- return false
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
@@ -129,12 +133,8 @@ function StartConsumptionLoop()
             local newBlackoutLevel = GetBlackoutLevel()
 
             -- Blackout level has changed
-            if currentBlackoutLevel ~= newBlackoutLevel then
-                local previousBlackoutLevel = currentBlackoutLevel
-                currentBlackoutLevel = newBlackoutLevel
-                GlobalState.blackout_level = currentBlackoutLevel
-                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", newBlackoutLevel, previousBlackoutLevel)
-                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, newBlackoutLevel, previousBlackoutLevel)
+            if GlobalState.blackout_level ~= newBlackoutLevel then
+                GlobalState.blackout_level = newBlackoutLevel
             end
 
             -- Handle job terminal consumption
@@ -149,7 +149,7 @@ function StartConsumptionLoop()
                         terminal:Consume(consumptionJobThisTick)
                     end
 
-                    GlobalState.job_energy[jobId] = terminal:GetEnergyPercent()
+                    GlobalState.job_energy[jobId] = 100 -- @TODO terminal:GetEnergyPercent()
                 else
                     GlobalState.job_energy[jobId] = 100
                 end
