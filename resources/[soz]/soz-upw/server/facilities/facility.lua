@@ -102,12 +102,12 @@ end
 --
 -- ENERGY HARVEST
 --
-function Facility:CanEnergyBeHarvested()
-    return self.capacity >= Config.Production.EnergyPerCell
+function Facility:CanEnergyBeHarvested(item)
+    return self.capacity >= Config.Production.EnergyPerCell[item]
 end
 
-function Facility:HarvestEnergy()
-    self.capacity = self.capacity - Config.Production.EnergyPerCell
+function Facility:HarvestEnergy(item)
+    self.capacity = self.capacity - Config.Production.EnergyPerCell[item]
 
     return self.capacity
 end
@@ -119,8 +119,8 @@ function Facility:CanStoreEnergy()
     return self.capacity < self.maxCapacity
 end
 
-function Facility:StoreEnergy()
-    self.capacity = self.capacity + Config.Production.EnergyPerCell
+function Facility:StoreEnergy(item)
+    self.capacity = self.capacity + Config.Production.EnergyPerCell[item]
 
     if self.capacity > self.maxCapacity then
         self.capacity = self.maxCapacity
