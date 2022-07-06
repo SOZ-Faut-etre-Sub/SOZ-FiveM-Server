@@ -112,29 +112,6 @@ Citizen.CreateThread(function()
     })
 
     -- Target
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Facturer",
-                color = "pawl",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoicePlayer",
-                job = "pawl",
-            },
-            {
-                label = "Facturer la société",
-                color = "pawl",
-                icon = "c:jobs/facture.png",
-                event = "jobs:client:InvoiceSociety",
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("pawl", SozJobCore.JobPermission.SocietyBankInvoices)
-                end,
-                job = "pawl",
-            },
-        },
-        distance = 1.5,
-    })
-
     exports["qb-target"]:AddBoxZone("pawl:duty", vector3(-539.36, 5305.28, 76.37), 0.4, 1.2, {
         name = "pawl:duty",
         heading = 340,
