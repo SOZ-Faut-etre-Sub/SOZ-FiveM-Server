@@ -57,32 +57,32 @@ end
 function GetBlackoutLevel()
     return QBCore.Shared.Blackout.Level.Zero
     -- @TODO
-    --local capacity, maxCapacity = GetTerminalCapacities("default")
-    --local percent = math.ceil(capacity / maxCapacity * 100)
+    -- local capacity, maxCapacity = GetTerminalCapacities("default")
+    -- local percent = math.ceil(capacity / maxCapacity * 100)
     --
-    --if percent >= 100 then
+    -- if percent >= 100 then
     --    return QBCore.Shared.Blackout.Level.Zero
-    --end
+    -- end
     --
-    --for level, range in pairs(Config.Blackout.Threshold) do
+    -- for level, range in pairs(Config.Blackout.Threshold) do
     --    if percent >= range.min and percent < range.max then
     --        return level
     --    end
-    --end
+    -- end
     --
-    --return QBCore.Shared.Blackout.Level.Zero
+    -- return QBCore.Shared.Blackout.Level.Zero
 end
 
 function IsJobBlackout(job)
     return false
     -- @TODO
-    --local terminal = GetTerminalJob(job)
+    -- local terminal = GetTerminalJob(job)
     --
-    --if terminal then
+    -- if terminal then
     --    return terminal:GetEnergyPercent() <= 1
-    --end
+    -- end
     --
-    --return false
+    -- return false
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
