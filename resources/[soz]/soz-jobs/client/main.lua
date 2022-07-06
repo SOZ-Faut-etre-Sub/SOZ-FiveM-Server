@@ -38,7 +38,7 @@ local function BuildPromoteMenu(target)
     PromoteMenu:SetSubtitle("Promouvoir un joueur")
 
     local job = SozJobCore.Jobs[PlayerData.job.id]
-    local playerGradeWeight = job.grades[PlayerData.job.grade].weight
+    local playerGradeWeight = job.grades[PlayerData.job.grade or 0] and job.grades[PlayerData.job.grade].weight or 0
 
     if not job then
         return
