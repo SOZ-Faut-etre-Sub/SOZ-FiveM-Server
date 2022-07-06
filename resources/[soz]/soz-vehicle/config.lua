@@ -454,7 +454,7 @@ Garages = {
     },
     ["pawl"] = {
         label = "Pipe And Wooden Legs",
-        blipcoord = vector4(-567.48, 5241.92, 69.47, 248.11),
+        blipcoord = vector4(-605.01, 5289.27, 69.46, 136.16),
         showBlip = false,
         blipName = "Pipe And Wooden Legs",
         blipNumber = 357,
