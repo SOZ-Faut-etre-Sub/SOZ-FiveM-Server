@@ -4,7 +4,7 @@ Config.Products["jewelry"] = {
             label = "Chapeaux",
             overlay = "Head",
             price = 50,
-            items = json.decode(LoadResourceFile(GetCurrentResourceName(), "config/datasource/props_male_hats.json"))[1],
+            items = json.decode(LoadResourceFile(GetCurrentResourceName(), "config/datasource/props_male_hats2.json"))[1],
         },
         [1] = {
             label = "Lunettes",

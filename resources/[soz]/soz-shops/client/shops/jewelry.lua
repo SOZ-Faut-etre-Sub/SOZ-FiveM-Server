@@ -97,7 +97,12 @@ function JewelryShop:GenerateMenu()
         end
 
         content.menu:On("switch", function(_, item)
-            SetPedPropIndex(ped, tonumber(item.Value[1]), tonumber(item.Value[2]), tonumber(item.Value[3]), 2)
+            local v1 = item.Value[1]
+            local v2 = item.Value[2]
+            local v3 = item.Value[3]
+            if v1 ~= nil and v2 ~= nil and v3 ~= nil then
+                SetPedPropIndex(ped, tonumber(item.Value[1]), tonumber(item.Value[2]), tonumber(item.Value[3]), 2)
+            end
         end)
     end
 
@@ -110,33 +115,78 @@ function JewelryShop:GenerateMenu()
     shopMenu:Open()
 end
 
+function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, subCategoryName, subCategory, items)
+    local subMenu = MenuV:CreateMenu(nil, subCategoryName, "menu_shop_jewelry", "soz", "jewelry:cat:" .. model .. ":" .. categoryPropIndex .. ":" .. subCategoryName)
+
+    table.sort(items)
+    for component, drawables in pairs(items) do
+        table.sort(drawables)
+        for drawable, labels in pairs(drawables) do
+            if GetLabelText(labels.GXT) == "NULL" then
+                print("Delete labels: " .. labels.GXT .. " - " .. categoryPropIndex .. ", " .. component .. ", " .. drawable)
+            end
+            subMenu:AddButton({
+                label = GetLabelText(labels.GXT),
+                rightLabel = "$" .. subCategory.price,
+                value = { categoryPropIndex, component, drawable},
+                select = function()
+                    TriggerServerEvent("shops:server:pay", "jewelry",
+                        {
+                            overlay = subCategory.overlay,
+                            category = categoryPropIndex,
+                            component = component,
+                            drawable = drawable,
+                        }, 1)
+                end,
+            })
+        end
+    end
+
+    subMenu:On("switch", function(_, item)
+        SetPedPropIndex(PlayerPedId(), tonumber(item.Value[1]), tonumber(item.Value[2]), tonumber(item.Value[3]), 2)
+    end)
+
+    parentMenu:AddButton({
+        label = subCategoryName,
+        value = subMenu,
+    })
+end
+
 --- Init
 CreateThread(function()
-    for model, products in pairs(JewelryShop:getShopProducts()) do
-        for category, content in pairs(products) do
-            local categoryEntry = JewelryShop:getShopProducts()[model][category]
+    for pedModel, products in pairs(JewelryShop:getShopProducts()) do
+        for categoryPropIndex, content in pairs(products) do
+            local categoryEntry = JewelryShop:getShopProducts()[pedModel][categoryPropIndex]
 
-            if MenuV:IsNamespaceAvailable("jewelry:cat:" .. model .. ":" .. category) then
-                categoryEntry.menu = MenuV:CreateMenu(nil, content.label, "menu_shop_jewelry", "soz", "jewelry:cat:" .. model .. ":" .. category)
+            if MenuV:IsNamespaceAvailable("jewelry:cat:" .. pedModel .. ":" .. categoryPropIndex) then
+                categoryEntry.menu = MenuV:CreateMenu(nil, content.label, "menu_shop_jewelry", "soz", "jewelry:cat:" .. pedModel .. ":" .. categoryPropIndex)
 
                 table.sort(content.items)
-                for component, drawables in pairs(content.items) do
-                    table.sort(drawables)
-                    for drawable, labels in pairs(drawables) do
-                        categoryEntry.menu:AddButton({
-                            label = GetLabelText(labels.GXT),
-                            rightLabel = "$" .. content.price,
-                            value = {category, component, drawable},
-                            select = function()
-                                TriggerServerEvent("shops:server:pay", "jewelry",
-                                                   {
-                                    overlay = content.overlay,
-                                    category = category,
-                                    component = component,
-                                    drawable = drawable,
-                                }, 1)
-                            end,
-                        })
+                for itemKey, drawables in pairs(content.items) do
+                    if tonumber(itemKey) == nil then
+                        JewelryShop:GenerateSubMenu(categoryEntry.menu, pedModel, categoryPropIndex, itemKey, categoryEntry, drawables)
+                    else
+                        local component = itemKey
+                        table.sort(drawables)
+                        for drawable, labels in pairs(drawables) do
+                            if GetLabelText(labels.GXT) == "NULL" then
+                                print("Delete labels: " .. labels.GXT .. " - " .. categoryPropIndex .. ", " .. component .. ", " .. drawable)
+                            end
+                            categoryEntry.menu:AddButton({
+                                label = GetLabelText(labels.GXT),
+                                rightLabel = "$" .. content.price,
+                                value = { categoryPropIndex, component, drawable},
+                                select = function()
+                                    TriggerServerEvent("shops:server:pay", "jewelry",
+                                        {
+                                            overlay = content.overlay,
+                                            category = categoryPropIndex,
+                                            component = component,
+                                            drawable = drawable,
+                                        }, 1)
+                                end,
+                            })
+                        end
                     end
                 end
             end
