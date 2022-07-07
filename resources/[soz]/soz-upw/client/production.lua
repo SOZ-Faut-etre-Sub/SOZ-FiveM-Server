@@ -10,7 +10,7 @@ function CreateEnergyZone(identifier, data)
             end,
         },
         {
-            label = "Pollution",
+            label = "Taux de pollution",
             action = function()
                 local pollution = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionPercent", true)
                 exports["soz-hud"]:DrawNotification("Niveau de pollution : " .. pollution, "info")

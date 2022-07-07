@@ -27,7 +27,7 @@ function CreateTerminalZone(identifier, data)
             end,
         },
         {
-            label = "Remplissage",
+            label = "État d'énergie",
             type = "server",
             event = "soz-upw:server:FacilityCapacity",
             identifier = identifier,
