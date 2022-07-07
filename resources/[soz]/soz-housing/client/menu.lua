@@ -180,3 +180,13 @@ RegisterNetEvent("housing:client:ShowRemoveRoommateMenu", function(propertyId)
         end
     end)
 end)
+
+RegisterNetEvent("housing:client:QuitColocation", function(propertyId)
+    local property = Properties[propertyId]
+    local apartmentId, apartment = property:GetApartmentAsRoommate(PlayerData.citizenid)
+
+    if apartmentId ~= nil then
+        TriggerServerEvent("housing:server:RemoveRoommateApartment", propertyId, apartmentId)
+    end
+end)
+
