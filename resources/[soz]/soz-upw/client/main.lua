@@ -137,10 +137,12 @@ end)
 function CreateZone(identifier, zoneType, data)
     local zoneName = string.format("%s_%s", identifier, zoneType)
 
-    exports["qb-target"]:AddBoxZone(zoneName, data.coords, data.sx, data.sy, {
+    exports["qb-target"]:AddBoxZone(zoneName, data.coords, data.sx, data.sy,
+                                    {
         heading = data.heading,
         minZ = data.minZ,
         maxZ = data.maxZ,
+        onPlayerInOut = data.onPlayerInOut,
         debugPoly = false,
     }, {options = data.options})
 end
