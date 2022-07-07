@@ -25,7 +25,7 @@ end)
 RegisterServerEvent("job:fire", function(target)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
-    local playerGradeWeight = SozJobCore.Jobs[player.PlayerData.job.id].grades[player.PlayerData.job.grade].weight
+    local playerGradeWeight = SozJobCore.Jobs[player.PlayerData.job.id].grades[tostring(player.PlayerData.job.grade)].weight
 
     if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
         not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
@@ -33,7 +33,7 @@ RegisterServerEvent("job:fire", function(target)
     end
 
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
-    local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[targetPlayer.PlayerData.job.grade].weight
+    local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[tostring(targetPlayer.PlayerData.job.grade)].weight
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
         TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
@@ -57,7 +57,7 @@ end)
 RegisterServerEvent("job:promote", function(target, gradeId)
     local source = source
     local player = QBCore.Functions.GetPlayer(tonumber(source))
-    local playerGradeWeight = SozJobCore.Jobs[player.PlayerData.job.id].grades[player.PlayerData.job.grade].weight
+    local playerGradeWeight = SozJobCore.Jobs[player.PlayerData.job.id].grades[tostring(player.PlayerData.job.grade)].weight
 
     if not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
         not CheckPlayerJobPermission(player.PlayerData, player.PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
@@ -65,7 +65,7 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     end
 
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
-    local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[targetPlayer.PlayerData.job.grade].weight
+    local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[tostring(targetPlayer.PlayerData.job.grade)].weight
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
         TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
@@ -73,7 +73,7 @@ RegisterServerEvent("job:promote", function(target, gradeId)
         return
     end
 
-    local grade = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[gradeId]
+    local grade = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[tostring(gradeId)]
 
     if grade.weight > playerGradeWeight or targetGradeWeight > playerGradeWeight then
         TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne peut pas être promu !"):format(targetPlayer.Functions.GetName()), "error")
@@ -123,7 +123,7 @@ RegisterServerEvent("job:grade:remove", function(id)
         return
     end
 
-    local grade = job.grades[id]
+    local grade = job.grades[tostring(id)]
 
     if not grade then
         return
@@ -161,7 +161,7 @@ RegisterServerEvent("job:grade:set-default", function(id)
         return
     end
 
-    local grade = job.grades[id]
+    local grade = job.grades[tostring(id)]
 
     if not grade then
         return
@@ -187,7 +187,7 @@ RegisterServerEvent("job:grade:set-salary", function(id, salary)
         return
     end
 
-    local grade = job.grades[id]
+    local grade = job.grades[tostring(id)]
 
     if not grade then
         return
@@ -217,7 +217,7 @@ RegisterServerEvent("job:grade:set-weight", function(id, weight)
         return
     end
 
-    local grade = job.grades[id]
+    local grade = job.grades[tostring(id)]
     if not grade then
         return
     end
@@ -246,7 +246,7 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
         return
     end
 
-    local grade = job.grades[id]
+    local grade = job.grades[tostring(id)]
 
     if not grade then
         return
@@ -288,7 +288,7 @@ RegisterServerEvent("job:grade:remove-permission", function(id, permission)
         return
     end
 
-    local grade = job.grades[id]
+    local grade = job.grades[tostring(id)]
 
     if not grade then
         return
