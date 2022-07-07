@@ -81,10 +81,11 @@ QBShared.Trunks = {
     [GetHashKey('fixter')] = { slot = 10, weight = 5000 },
 
     -- Pawl
-    [GetHashKey('sadler')] = { slot = 10, weight = 80000 },
+    [GetHashKey('hauler1')] = { slot = 10, weight = 40000 },
+    [GetHashKey('sadler1')] = { slot = 10, weight = 80000 },
     [GetHashKey('trailerlogs')] = { slot = 10, weight = 200000 },
 
     -- UPW
     [GetHashKey('boxville')] = { slot = 10, weight = 50000 },
-    [GetHashKey('brickade')] = { slot = 10, weight = 100000 },
+    [GetHashKey('brickade1')] = { slot = 10, weight = 100000 },
 }
