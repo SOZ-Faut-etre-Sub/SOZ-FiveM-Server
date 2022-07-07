@@ -101,7 +101,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             action = function()
                 TriggerEvent("housing:client:QuitColocation", propertyId)
             end,
-        }
+        },
     })
 end
 
