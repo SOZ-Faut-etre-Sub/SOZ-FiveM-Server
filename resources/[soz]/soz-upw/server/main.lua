@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 -- UPW Objects
 Plants = {}
@@ -82,15 +83,20 @@ end)
 -- Add new facility from menu F10
 --
 local props = {
-    ["prop_elecbox_02a"] = {
-        model = "prop_elecbox_02a",
+    ["soz_prop_elec01"] = {
+        model = "soz_prop_elec01",
         facility = "terminal",
-        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 0.8, sy = 0.9, deltaZ = 2.0}},
+        defaults = {capacity = 1000, maxCapacity = 1000, zone = {sx = 0.8, sy = 0.9, deltaZ = 2.0}},
+    },
+    ["soz_prop_elec02"] = {
+        model = "soz_prop_elec02",
+        facility = "terminal",
+        defaults = {capacity = 1000, maxCapacity = 1000, zone = {sx = 0.8, sy = 0.9, deltaZ = 2.0}},
     },
     ["upwpile"] = {
         model = "upwpile",
         facility = "inverter",
-        defaults = {capacity = 0, maxCapacity = 1000, zone = {sx = 1.0, sy = 1.0, deltaZ = 2.0}},
+        defaults = {capacity = 0, maxCapacity = 5000, zone = {sx = 5.0, sy = 5.0, deltaZ = 3.0}},
     },
 }
 RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, job)
@@ -129,6 +135,10 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, jo
     end
     if scope ~= nil then
         data.scope = scope
+
+        if scope == "entreprise" then
+            data.job = job
+        end
     end
 
     local facility = facilityData.class:new(identifier, data)

@@ -49,6 +49,7 @@ Container["trunk"] = InventoryContainer:new({
     allowedTypes = {"weapon", "weapon_ammo", "item", "drug", "drink", "food", "oil_and_item", "plank", "sawdust"},
 })
 Container["tanker"] = InventoryContainer:new({type = "trunk", allowedTypes = {"oil", "oil_and_item"}})
+Container["brickade"] = InventoryContainer:new({type = "trunk", allowedTypes = {"energy"}})
 Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes = {"log"}})
 
 Container["storage"] = InventoryContainer:new({
@@ -125,7 +126,7 @@ Container["house_stash"] = InventoryContainer:new({
 })
 Container["house_fridge"] = InventoryContainer:new({type = "fridge", allowedTypes = {"food", "drink"}})
 
---- Jobs
+--- Jobs PAWL
 Container["log_storage"] = InventoryContainer:new({
     type = "log_storage",
     allowedTypes = {"log"},
@@ -148,4 +149,11 @@ Container["log_processing"] = InventoryContainer:new({
     inventoryGetContentCallback = function()
         return false
     end,
+})
+
+--- Jobs UPW
+Container["inverter"] = InventoryContainer:new({
+    type = "inverter",
+    allowedTypes = {"energy"},
+    inventoryPermissionCallback = playerHaveJob,
 })

@@ -4,3 +4,4 @@ cache
 ![local]/.gitkeep
 imgui.ini
 /db
+polyzone_created_zones.txt*

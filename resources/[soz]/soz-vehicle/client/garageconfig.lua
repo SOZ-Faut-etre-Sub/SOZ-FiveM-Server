@@ -218,11 +218,17 @@ Zonesentreprise = {
         minZ = 72.23,
         maxZ = 77.63,
     }),
-    ["pawl"] = BoxZone:Create(vector3(-575.99, 5249.13, 70.47), 26.6, 22.6, {
+    ["pawl"] = BoxZone:Create(vector3(-595.89, 5295.04, 70.21), 43.8, 37.2, {
         name = "pawl_z",
-        heading = 332,
+        heading = 340,
         minZ = 69.47,
         maxZ = 72.47,
+    }),
+    ["upw"] = BoxZone:Create(vector3(567.6, 2813.77, 42.23), 42.4, 41.8, {
+        name = "upw_z",
+        heading = 4,
+        minZ = 41.43,
+        maxZ = 45.63,
     }),
 }
 
@@ -1492,9 +1498,9 @@ PlacesEntreprise = {
     ["taxi4"] = BoxZone:Create(vector3(916.75, -170.56, 74.23), 3.2, 7.0,
                                {name = "taxi4", heading = 10, minZ = 73.03, maxZ = 77.03, data = {indexGarage = "taxi"}}),
 
-    ["pawl1"] = BoxZone:Create(vector3(-576.74, 5250.62, 70.47), 17.2, 5.0, {
+    ["pawl1"] = BoxZone:Create(vector3(-598.99, 5295.01, 70.21), 17.2, 5.0, {
         name = "pawl1",
-        heading = 16,
+        heading = 277,
         minZ = 69.19,
         maxZ = 72.19,
         data = {
@@ -1502,9 +1508,9 @@ PlacesEntreprise = {
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["pawl2"] = BoxZone:Create(vector3(-581.47, 5247.61, 70.19), 17.2, 5.0, {
+    ["pawl2"] = BoxZone:Create(vector3(-599.52, 5300.08, 70.21), 17.2, 5.0, {
         name = "pawl2",
-        heading = 16,
+        heading = 276,
         minZ = 69.19,
         maxZ = 72.19,
         data = {
@@ -1512,14 +1518,147 @@ PlacesEntreprise = {
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["pawl3"] = BoxZone:Create(vector3(-586.79, 5241.37, 70.19), 10.2, 5.0, {
+    ["pawl3"] = BoxZone:Create(vector3(-600.02, 5305.58, 70.21), 17.2, 5.0, {
         name = "pawl3",
-        heading = 175,
+        heading = 274,
         minZ = 69.19,
         maxZ = 72.19,
         data = {
             indexGarage = "pawl",
-            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    -- UPW
+    ["upw1"] = BoxZone:Create(vector3(580.15, 2827.72, 42.05), 12.2, 4, {
+        name = "upw1",
+        heading = 274,
+        minZ = 41.22,
+        maxZ = 45.22,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw2"] = BoxZone:Create(vector3(566.95, 2827.27, 42.19), 12.2, 4, {
+        name = "upw2",
+        heading = 274,
+        minZ = 41.19,
+        maxZ = 45.19,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw3"] = BoxZone:Create(vector3(552.81, 2825.97, 42.08), 12.2, 4, {
+        name = "upw3",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw4"] = BoxZone:Create(vector3(581.35, 2818.73, 42.13), 12.2, 4, {
+        name = "upw4",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw5"] = BoxZone:Create(vector3(567.37, 2817.81, 42.15), 12.2, 4, {
+        name = "upw5",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw6"] = BoxZone:Create(vector3(553.78, 2816.89, 42.33), 12.2, 4, {
+        name = "upw6",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw7"] = BoxZone:Create(vector3(581.66, 2812.22, 42.23), 12.2, 4, {
+        name = "upw7",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw8"] = BoxZone:Create(vector3(568.21, 2811.46, 42.04), 12.2, 4, {
+        name = "upw8",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw9"] = BoxZone:Create(vector3(554.1, 2810.54, 42.33), 12.2, 4, {
+        name = "upw9",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw10"] = BoxZone:Create(vector3(581.39, 2802.48, 42.12), 12.2, 4, {
+        name = "upw10",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw11"] = BoxZone:Create(vector3(567.78, 2801.79, 42.26), 12.2, 4, {
+        name = "upw11",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw12"] = BoxZone:Create(vector3(553.79, 2800.9, 42.31), 12.2, 4, {
+        name = "upw12",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }
@@ -1619,6 +1758,8 @@ exports["qb-target"]:AddGlobalVehicle({
             canInteract = function(entity, distance, data)
                 return PlayerData.job.onduty and InsideFourriere
             end,
+            blackoutGlobal = true,
+            blackoutJob = true,
         },
     },
     distance = 3.0,

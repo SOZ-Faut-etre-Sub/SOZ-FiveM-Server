@@ -1137,6 +1137,8 @@ CreateThread(function()
                 type = "client",
                 icon = "c:mechanic/Modifier.png",
                 label = "Modifier",
+                blackoutGlobal = true,
+                blackoutJob = "bennys",
                 action = function(entity)
                     Config.AttachedVehicle = entity
                     startAnimation()

@@ -62,6 +62,15 @@ function Property:HasRentedApartmentsBesidesForCitizenId(citizenid)
     return false
 end
 
+function Property:HasApartmentAsRoommate(citizenId)
+    for _, apartment in pairs(self.apartments) do
+        if apartment:IsRoommate(citizenId) then
+            return true
+        end
+    end
+    return false
+end
+
 function Property:HasOwnedApartmentForCitizenId(citizenid)
     for _, apartment in pairs(self.apartments) do
         if apartment:IsOwner(citizenid) then
@@ -109,6 +118,15 @@ function Property:GetRentedApartmentsBesidesForCitizenId(citizenid)
         end
     end
     return apartments
+end
+
+function Property:GetApartmentAsRoommate(citizenId)
+    for apartmentId, apartment in pairs(self.apartments) do
+        if apartment:IsRoommate(citizenId) then
+            return apartmentId, apartment
+        end
+    end
+    return nil, nil
 end
 
 function Property:GetOwnedApartmentsForCitizenId(citizenid)

@@ -64,6 +64,12 @@ function CallStateManager:createCall(emitter, receiver)
     return callId
 end
 
+function CallStateManager:DestroyAll()
+    for callId, _ in pairs(CallList) do
+        self:destroyCall(callId)
+    end
+end
+
 function CallStateManager:destroyCall(callId)
     local call = CallList[callId]
 

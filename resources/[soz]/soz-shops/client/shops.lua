@@ -5,6 +5,8 @@ local stonkAction = {
     canInteract = function()
         return exports["soz-jobs"]:CanBagsBeCollected(currentShop)
     end,
+    blackoutGlobal = true,
+    blackoutJob = true,
 }
 
 CreateThread(function()
