@@ -81,6 +81,10 @@
     background: url("../../assets/plank_storage.jpg") left no-repeat;
     background-size: cover;
 }
+.inverter {
+    background: url("../../assets/inverter.jpg") left no-repeat;
+    background-size: cover;
+}
 
 .banner > span {
     float: right;

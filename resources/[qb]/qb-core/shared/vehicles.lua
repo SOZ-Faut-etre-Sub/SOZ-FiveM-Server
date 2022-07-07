@@ -4331,22 +4331,55 @@ QBShared.Vehicles = {
         ['type']     = 'air'
     },
     --- PAWL
-    ['hauler']     = {
+    ['sadler1']     = {
+        ['name']     = 'Sadler',
+        ['brand']    = 'Vapid',
+        ['model']    = 'sadler1',
+        ['price']    = 25000,
+        ['category'] = 'Utility',
+        ['hash']     = GetHashKey('sadler1'),
+        ['shop']     = 'na',
+        ['type']     = 'truck'
+    },
+    ['hauler1']     = {
         ['name']     = 'Hauler',
         ['brand']    = 'Jobuilt',
-        ['model']    = 'hauler',
+        ['model']    = 'hauler1',
         ['price']    = 25000,
-        ['category'] = 'Emergency',
-        ['hash']     = GetHashKey('hauler'),
+        ['category'] = 'Commercial',
+        ['hash']     = GetHashKey('hauler1'),
         ['shop']     = 'na',
+        ['type']     = 'truck'
     },
     ['trailerlogs']     = {
         ['name']     = 'Remorque',
         ['brand']    = '',
         ['model']    = 'trailerlogs',
         ['price']    = 25000,
-        ['category'] = 'Emergency',
+        ['category'] = 'Utility',
         ['hash']     = GetHashKey('trailerlogs'),
         ['shop']     = 'na',
+        ['type']     = 'truck'
+    },
+    -- UPW
+    ['brickade1']     = {
+        ['name']     = 'Brickade',
+        ['brand']    = '',
+        ['model']    = 'brickade1',
+        ['price']    = 35000,
+        ['category'] = 'Utility',
+        ['hash']     = GetHashKey('brickade1'),
+        ['shop']     = 'na',
+        ['type']     = 'truck'
+    },
+    ['boxville']     = {
+        ['name']     = 'Boxville',
+        ['brand']    = '',
+        ['model']    = 'boxville',
+        ['price']    = 24000,
+        ['category'] = 'Utility',
+        ['hash']     = GetHashKey('boxville'),
+        ['shop']     = 'na',
+        ['type']     = 'truck'
     },
 }

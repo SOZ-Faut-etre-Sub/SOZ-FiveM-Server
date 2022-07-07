@@ -6,6 +6,7 @@ function CreateResaleZone(data)
             canInteract = function()
                 return OnDuty()
             end,
+            blackoutGlobal = true,
         },
     }
 

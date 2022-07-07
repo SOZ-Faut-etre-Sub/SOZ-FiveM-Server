@@ -122,8 +122,15 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
                     exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
                     exports["soz-inventory"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
 
-                    Processing.StartedAt = GetGameTimer()
+                    if exports["soz-inventory"]:GetItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, nil, true) >= 1 then
+                        Processing.StartedAt = GetGameTimer()
+                    else
+                        Processing.StartedAt = 0
+                        Processing.Enabled = false
+                        break
+                    end
                 else
+                    Processing.StartedAt = 0
                     Processing.Enabled = false
                     break
                 end

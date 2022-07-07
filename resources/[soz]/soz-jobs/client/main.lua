@@ -37,8 +37,21 @@ local function BuildPromoteMenu(target)
     PromoteMenu:ClearItems()
     PromoteMenu:SetSubtitle("Promouvoir un joueur")
 
+    if PlayerData.job.id == nil then
+        return
+    end
     local job = SozJobCore.Jobs[PlayerData.job.id]
-    local playerGradeWeight = job.grades[PlayerData.job.grade].weight
+    if job == nil then
+        print("Couldn't find job with id " .. PlayerData.job.id .. ".")
+        return
+    end
+
+    local jobGrade = job.grades[tostring(PlayerData.job.grade)]
+    if jobGrade == nil then
+        print("Couldn't find grade " .. PlayerData.job.grade .. " of job " .. PlayerData.job.id .. ". Will use default value.")
+        return
+    end
+    local playerGradeWeight = jobGrade.weight or 0
 
     if not job then
         return
@@ -68,6 +81,7 @@ CreateThread(function()
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:recruit", targetSource)
                 end,
+                blackoutGlobal = true,
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
@@ -94,6 +108,7 @@ CreateThread(function()
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     TriggerServerEvent("job:fire", targetSource)
                 end,
+                blackoutGlobal = true,
                 canInteract = function(entity)
                     if not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.ManageGrade) and
                         not SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.Enrollment) then
@@ -116,6 +131,7 @@ CreateThread(function()
             {
                 label = "Promouvoir",
                 icon = "c:jobs/promote.png",
+                blackoutGlobal = true,
                 action = function(entity)
                     local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -157,6 +173,8 @@ CreateThread(function()
                             return PlayerData.job.onduty
                         end,
                         job = jobId,
+                        blackoutGlobal = true,
+                        blackoutJob = jobId,
                     },
                     {
                         label = "Facturer la société",
@@ -167,6 +185,8 @@ CreateThread(function()
                             return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices)
                         end,
                         job = jobId,
+                        blackoutGlobal = true,
+                        blackoutJob = jobId,
                     },
                 },
                 distance = 1.5,

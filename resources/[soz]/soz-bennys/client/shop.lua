@@ -9,6 +9,7 @@ CreateThread(function()
                 label = "Récupérer du matériel",
                 icon = "fas fa-briefcase",
                 event = "bennts:client:weaponShop",
+                blackoutGlobal = true,
                 canInteract = function()
                     return SozJobCore.Functions.HasPermission("bennys", SozJobCore.JobPermission.SocietyShop)
                 end,

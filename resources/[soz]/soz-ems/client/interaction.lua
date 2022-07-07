@@ -122,6 +122,8 @@ CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/Rehabiliter.png",
                 job = "lsmc",
+                blackoutGlobal = true,
+                blackoutJob = "lsmc",
                 canInteract = function(entity)
                     local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                     IsItt = QBCore.Functions.TriggerRpc("lsmc:server:IsItt", target)
@@ -137,6 +139,8 @@ CreateThread(function()
                 color = "lsmc",
                 icon = "c:ems/Deshabiliter.png",
                 job = "lsmc",
+                blackoutGlobal = true,
+                blackoutJob = "lsmc",
                 canInteract = function(entity)
                     local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                     return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery and InsideHopital and not IsItt

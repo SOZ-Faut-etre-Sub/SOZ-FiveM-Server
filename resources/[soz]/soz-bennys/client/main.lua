@@ -308,6 +308,8 @@ CreateThread(function()
                 action = function(entity)
                     Repairall(entity)
                 end,
+                blackoutGlobal = true,
+                blackoutJob = "bennys",
                 canInteract = function(entity, distance, data)
                     if OnDuty == false or PlayerJob.id ~= "bennys" then
                         return false
@@ -320,6 +322,8 @@ CreateThread(function()
                 icon = "c:mechanic/nettoyer.png",
                 label = "Laver",
                 color = "bennys",
+                blackoutGlobal = true,
+                blackoutJob = "bennys",
                 action = function(entity)
                     CleanVehicle(entity)
                 end,

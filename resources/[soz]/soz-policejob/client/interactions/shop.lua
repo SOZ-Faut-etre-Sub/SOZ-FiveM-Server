@@ -12,6 +12,7 @@ CreateThread(function()
                     return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.SocietyShop)
                 end,
                 job = job,
+                blackoutGlobal = true,
             },
         }
     end
