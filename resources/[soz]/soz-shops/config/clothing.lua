@@ -244,7 +244,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_H4M_U_3_23"), Id = 23},
                             {Name = GetLabelText("CLO_H4M_U_3_24"), Id = 24},
                             {Name = GetLabelText("CLO_H4M_U_3_25"), Id = 25},
-                        }),
+                        }, 15, 15),
                         CreateItemsWithTextures(11, 382, {
                             {Name = GetLabelText("CLO_FXM_U_0_0"), Id = 0},
                             {Name = GetLabelText("CLO_FXM_U_0_1"), Id = 1},
@@ -336,7 +336,7 @@ Config.Products["ponsonbys"] = {
                             {Name = "(DEBUG) 258_13", Id = 13},
                             {Name = "(DEBUG) 258_14", Id = 14},
                         }),
-                        CreateItemsWithTextures(11, 290, {{Name = "GILET ROUGE SIMPLE", Id = 0}}),
+                        CreateItemsWithTextures(11, 290, {{Name = "GILET ROUGE SIMPLE", Id = 0}}, 15, 15),
                         CreateItemsWithTextures(11, 306, {
                             {Name = GetLabelText("CLO_VWM_U_15_0"), Id = 0},
                             {Name = GetLabelText("CLO_VWM_U_15_1"), Id = 1},
@@ -642,7 +642,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_FXM_U_7_0"), Id = 0},
                             {Name = GetLabelText("CLO_FXM_U_7_1"), Id = 1},
                             {Name = GetLabelText("CLO_FXM_U_7_2"), Id = 2},
-                        }),
+                        }, 14, nil),
                     }),
                 },
             },
