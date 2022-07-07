@@ -1,6 +1,6 @@
 local tankers = {[GetHashKey("tanker")] = true, [GetHashKey("tanker2")] = true}
 local trailerlogs = {[GetHashKey("trailerlogs")] = true}
-local brickade = {[GetHashKey("brickade")] = true}
+local brickade = {[GetHashKey("brickade")] = true, [GetHashKey("brickade1")] = true}
 
 local vehicleTrunkType = function(model)
     if tankers[model] then

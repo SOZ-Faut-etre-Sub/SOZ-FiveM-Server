@@ -3,34 +3,12 @@ local productionLoopIsRunning = false
 function StartProductionLoop()
     productionLoopIsRunning = true
 
-    local count = 0
-
     Citizen.CreateThread(function()
         while productionLoopIsRunning do
-
-            count = count + 1
-
             for _, plant in pairs(Plants) do
                 if plant:CanProduce() then
                     plant:Produce()
                 end
-
-                -- Persist to DB every 5 iterations
-                if count >= 5 then
-                    plant:save()
-                end
-            end
-
-            for _, facilities in ipairs({Inverters, Terminals}) do
-                for _, facility in pairs(facilities) do
-                    if count >= 5 then
-                        facility:save()
-                    end
-                end
-            end
-
-            if count >= 5 then
-                count = 0
             end
 
             Citizen.Wait(Config.Production.Tick)

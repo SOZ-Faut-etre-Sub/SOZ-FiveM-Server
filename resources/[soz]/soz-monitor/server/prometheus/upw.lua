@@ -28,7 +28,15 @@ function GetUpwMetrics()
         table.insert(lines, GetHeader(type_))
 
         for _, data in ipairs(metrics) do
-            table.insert(lines, string.format("%s{type=\"%s\",identifier=\"%s\"} %d", GetKey(type_), type_, data.identifier, data.value))
+            local fields = {string.format("type=\"%s\"", type_)}
+
+            for key, value in pairs(data) do
+                if key ~= "value" then
+                    table.insert(fields, string.format("%s=\"%s\"", key, value))
+                end
+            end
+
+            table.insert(lines, string.format("%s{%s} %f", GetKey(type_), table.concat(fields, ","), data.value))
         end
     end
 
