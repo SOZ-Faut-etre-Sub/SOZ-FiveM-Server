@@ -23,6 +23,7 @@ export class WeatherProvider {
     @Once()
     onStart(): void {
         GlobalState.blackout ||= false;
+        GlobalState.blackout_level ||= 0;
         GlobalState.weather ||= 'OVERCAST' as Weather;
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
@@ -147,8 +148,11 @@ export class WeatherProvider {
 
     @Command('blackout', { role: 'admin' })
     setBlackout(source: number, status?: string): void {
-        const blackout = status === 'on' || status === 'true';
+        GlobalState.blackout = status === 'on' || status === 'true';
+    }
 
-        GlobalState.blackout = blackout;
+    @Command('blackout_level', { role: 'admin' })
+    setBlackoutLevel(source: number, level?: string): void {
+        GlobalState.blackout_level = parseInt(level, 10) || 0;
     }
 }

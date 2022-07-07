@@ -1,4 +1,4 @@
-local currentBlackoutLevel = QBCore.Shared.Blackout.Level.Zero
+GlobalState.blackout_level = QBCore.Shared.Blackout.Level.Zero
 local consumptionLoopRunning = false
 local facilities = {["inverter"] = GetInverter, ["terminal"] = GetTerminal}
 
@@ -31,6 +31,16 @@ local function GetTerminals(scope)
     return terminals
 end
 
+local function GetTerminalJob(jobId)
+    for identifier, terminal in pairs(Terminals) do
+        if terminal.scope == "entreprise" and terminal.job == jobId then
+            return terminal
+        end
+    end
+
+    return nil
+end
+
 local function GetTerminalCapacities(scope)
     local capacity, maxCapacity = 0, 0
 
@@ -45,27 +55,42 @@ local function GetTerminalCapacities(scope)
 end
 
 function GetBlackoutLevel()
-    -- Force to Blackout level Zero for now
     return QBCore.Shared.Blackout.Level.Zero
+    -- @TODO
+    -- local capacity, maxCapacity = GetTerminalCapacities("default")
+    -- local percent = math.ceil(capacity / maxCapacity * 100)
+    --
+    -- if percent >= 100 then
+    --    return QBCore.Shared.Blackout.Level.Zero
+    -- end
+    --
+    -- for level, range in pairs(Config.Blackout.Threshold) do
+    --    if percent >= range.min and percent < range.max then
+    --        return level
+    --    end
+    -- end
+    --
+    -- return QBCore.Shared.Blackout.Level.Zero
+end
 
-    --[[
-    local capacity, maxCapacity = GetTerminalCapacities("default")
-    local percent = math.ceil(capacity / maxCapacity * 100)
-
-    if percent >= 100 then
-        return QBCore.Shared.Blackout.Level.Zero
-    end
-
-    for level, range in pairs(Config.Blackout.Threshold) do
-        if percent >= range.min and percent < range.max then
-            return level
-        end
-    end
-    ]]
+function IsJobBlackout(job)
+    return false
+    -- @TODO
+    -- local terminal = GetTerminalJob(job)
+    --
+    -- if terminal then
+    --    return terminal:GetEnergyPercent() <= 1
+    -- end
+    --
+    -- return false
 end
 
 QBCore.Functions.CreateCallback("soz-upw:server:GetBlackoutLevel", function(source, cb)
     cb(GetBlackoutLevel())
+end)
+
+QBCore.Functions.CreateCallback("soz-upw:server:IsJobBlackout", function(source, cb, jobId)
+    cb(IsJobBlackout(jobId))
 end)
 
 --
@@ -74,6 +99,7 @@ end)
 function StartConsumptionLoop()
     Citizen.CreateThread(function()
         consumptionLoopRunning = true
+        GlobalState.job_energy = GlobalState.job_energy or {}
 
         while consumptionLoopRunning do
             local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
@@ -87,21 +113,46 @@ function StartConsumptionLoop()
 
             for i = 1, consumptionThisTick, 1 do
                 local n = math.random(1, #identifiers)
-                local terminal = GetTerminal(identifiers[n])
 
-                if terminal then
-                    terminal:Consume(1)
+                for j = 0, #identifiers - 1, 1 do
+                    local index = j + n
+
+                    if index > #identifiers then
+                        index = index - #identifiers
+                    end
+
+                    local terminal = GetTerminal(identifiers[index])
+
+                    if terminal and terminal:CanConsume() then
+                        terminal:Consume(1)
+                        break
+                    end
                 end
             end
 
             local newBlackoutLevel = GetBlackoutLevel()
 
             -- Blackout level has changed
-            if currentBlackoutLevel ~= newBlackoutLevel then
-                local previousBlackoutLevel = currentBlackoutLevel
-                currentBlackoutLevel = newBlackoutLevel
-                TriggerEvent("soz-upw:server:OnBlackoutLevelChanged", newBlackoutLevel, previousBlackoutLevel)
-                TriggerClientEvent("soz-upw:client:OnBlackoutLevelChanged", -1, newBlackoutLevel, previousBlackoutLevel)
+            if GlobalState.blackout_level ~= newBlackoutLevel then
+                GlobalState.blackout_level = newBlackoutLevel
+            end
+
+            -- Handle job terminal consumption
+            for jobId, v in pairs(SozJobCore.Jobs) do
+                local terminal = GetTerminalJob(jobId)
+
+                if terminal ~= nil then
+                    local _, count = QBCore.Functions.GetPlayersOnDuty(jobId)
+                    local consumptionJobThisTick = Config.Consumption.EnergyJobPerTick * count
+
+                    if terminal:CanConsume() then
+                        terminal:Consume(consumptionJobThisTick)
+                    end
+
+                    GlobalState.job_energy[jobId] = 100 -- @TODO terminal:GetEnergyPercent()
+                else
+                    GlobalState.job_energy[jobId] = 100
+                end
             end
 
             Citizen.Wait(Config.Production.Tick)

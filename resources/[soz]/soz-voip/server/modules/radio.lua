@@ -35,6 +35,10 @@ RegisterNetEvent("voip:server:radio:transmission:start", function(channel, kind)
     local emitter = source
     local coord = GetEntityCoords(GetPlayerPed(emitter))
 
+    if GlobalState.blackout_level > 1 then
+        return
+    end
+
     RadioState:broadcastToConsumers(channel, function(consumer, contexts)
         TriggerClientEvent("voip:client:radio:transmission:start", consumer, channel, emitter, coord, kind, contexts)
     end)

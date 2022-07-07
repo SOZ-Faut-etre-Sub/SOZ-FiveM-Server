@@ -331,7 +331,7 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
         return
     end
 
-    if not apartment:IsOwner(Player.PlayerData.citizenid) then
+    if not apartment:IsOwner(Player.PlayerData.citizenid) and not apartment:IsRoommate(Player.PlayerData.citizenid) then
         exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
@@ -346,9 +346,15 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
     MySQL.update.await("UPDATE housing_apartment SET roommate = NULL WHERE id = ?", {apartmentId})
     apartment:SetRoommate(nil)
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
+    if apartment:IsOwner(Player.PlayerData.citizenid) then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
+    end
     if Target then
-        TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+        if Target.PlayerData.citizenid == Player.PlayerData.citizenid then
+            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez quitté la colocation")
+        else
+            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+        end
     end
 
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)

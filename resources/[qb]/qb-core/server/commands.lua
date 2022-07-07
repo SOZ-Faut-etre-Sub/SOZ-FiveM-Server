@@ -135,7 +135,7 @@ QBCore.Commands.Add('setjob', 'Set A Players Job (Admin Only)', { { name = 'id',
     local src = source
     local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if Player then
-        Player.Functions.SetJob(tostring(args[2]), tonumber(args[3]))
+        Player.Functions.SetJob(tostring(args[2]), tostring(args[3]))
     else
         TriggerClientEvent('hud:client:DrawNotification', src, 'Joueur non trouvé', "error")
     end

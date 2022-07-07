@@ -29,6 +29,14 @@ function FuelStation:IsPrivate()
     return self.type == "private"
 end
 
+function FuelStation:IsKerosene()
+    return self.fuel == "kerosene"
+end
+
+function FuelStation:IsEssence()
+    return self.fuel == "essence"
+end
+
 function FuelStation:CitizenIsOwner(citizenJobId)
     return self.owner == citizenJobId
 end

@@ -1,6 +1,12 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_pawl", "soz", "pawl:menu")
 
-local displayBlips, Blips = false, {}
+local displayBlips, displayResellBlip, Blips = false, false, {}
+
+RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
+    if not duty then
+        QBCore.Functions.HideBlip("pawl_resell", true)
+    end
+end)
 
 RegisterNetEvent("pawl:client:OpenSocietyMenu", function()
     societyMenu:ClearItems()
@@ -26,6 +32,25 @@ RegisterNetEvent("pawl:client:OpenSocietyMenu", function()
                         SetBlipAlpha(Blips[zoneName], value and 128 or 0)
                     end
                 end
+            end,
+        })
+
+        societyMenu:AddCheckbox({
+            label = "Afficher la zone de revente sur le GPS",
+            value = displayResellBlip,
+            change = function(_, value)
+                displayResellBlip = value
+
+                if not QBCore.Functions.GetBlip("pawl_resell") then
+                    QBCore.Functions.CreateBlip("pawl_resell", {
+                        name = "Zone de rente",
+                        coords = SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.primary.coords,
+                        sprite = Config.Blip.Sprite,
+                        scale = 0.8,
+                    })
+                end
+
+                QBCore.Functions.HideBlip("pawl_resell", not value)
             end,
         })
     else

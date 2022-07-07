@@ -70,11 +70,13 @@ CreateThread(function()
                             label = "Compte Personnel",
                             icon = "c:bank/compte_personal.png",
                             event = "banking:openBankScreen",
+                            blackoutGlobal = true,
                         },
                         {
                             label = "Compte Société",
                             icon = "c:bank/compte_societe.png",
                             event = "banking:openSocietyBankScreen",
+                            blackoutGlobal = true,
                             canInteract = function(entity, distance, data)
                                 return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
                                            isInsideEntrepriseBankZone
@@ -84,6 +86,8 @@ CreateThread(function()
                             label = "Vendre",
                             icon = "c:stonk/vendre.png",
                             event = "soz-jobs:client:stonk-resale-bag",
+                            blackoutGlobal = true,
+                            blackoutJob = "cash-transfer",
                             canInteract = function()
                                 return isInsideEntrepriseBankZone and exports["soz-jobs"]:CanBagsBeResold()
                             end,
@@ -92,6 +96,8 @@ CreateThread(function()
                             label = "Remplir",
                             icon = "c:stonk/remplir.png",
                             event = "soz-jobs:client:stonk-fill-in",
+                            blackoutGlobal = true,
+                            blackoutJob = "cash-transfer",
                             isBank = true,
                             canInteract = function()
                                 local hasJobPermission = exports["soz-jobs"]:CanFillIn()

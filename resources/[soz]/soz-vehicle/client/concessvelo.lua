@@ -234,6 +234,7 @@ exports["qb-target"]:SpawnPed({
                 canInteract = function()
                     return InsideConcessVelo
                 end,
+                blackoutGlobal = true,
             },
         },
         distance = 2.5,

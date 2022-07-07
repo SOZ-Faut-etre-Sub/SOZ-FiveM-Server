@@ -7,6 +7,7 @@ CreateThread(function()
                 label = "Biper",
                 icon = "c:jobs/biper.png",
                 event = "jobs:client:callSociety",
+                blackoutGlobal = true,
                 canInteract = function()
                     return lastSocietyCall + 15000 < GetGameTimer()
                 end,
@@ -70,9 +71,19 @@ CreateThread(function()
         maxZ = 46.32,
     }, {options = callSociety("555-STONK"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:upw", vector3(598.27, 2772.33, 41.86), 0.4, 0.3,
-                                    {name = "bell:STONK", heading = 0, minZ = 41.12, maxZ = 42.02, debugPoly = true},
-                                    {options = callSociety("555-UPW"), distance = 2.5})
+    exports["qb-target"]:AddBoxZone("bell:upw", vector3(598.25, 2772.34, 41.86), 0.3, 0.2, {
+        name = "bell:upw",
+        heading = 64,
+        minZ = 41.64,
+        maxZ = 41.80,
+    }, {options = callSociety("555-UPW"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:pawl", vector3(619.76, 2728.02, 41.86), 0.2, 0.3, {
+        name = "bell:pawl",
+        heading = 4,
+        minZ = 41.71,
+        maxZ = 41.91,
+    }, {options = callSociety("555-PAWL"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

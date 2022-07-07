@@ -240,6 +240,7 @@ if GetConvarInt("feature_dlc1_helicopters", 0) == 1 then
                         local licenses = PlayerData.metadata["licences"]
                         return isInsideConcess and licenses ~= nil and licenses[licenseTypeRequired] > 0
                     end,
+                    blackoutGlobal = true,
                 },
             },
             distance = 2.5,

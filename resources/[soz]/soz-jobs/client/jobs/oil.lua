@@ -57,6 +57,8 @@ CreateThread(function()
                     return PlayerData.job.onduty
                 end,
                 job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
             },
             {
                 event = "jobs:client:fueler:StartCraftEssenceJerryCan",
@@ -67,6 +69,8 @@ CreateThread(function()
                     return PlayerData.job.onduty
                 end,
                 job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
             },
             {
                 event = "jobs:client:fueler:StartCraftKerosene",
@@ -77,6 +81,8 @@ CreateThread(function()
                     return PlayerData.job.onduty
                 end,
                 job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
             },
             {
                 event = "jobs:client:fueler:StartCraftKeroseneJerryCan",
@@ -87,6 +93,8 @@ CreateThread(function()
                     return PlayerData.job.onduty
                 end,
                 job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
             },
         },
         distance = 2.0,
@@ -104,6 +112,8 @@ CreateThread(function()
                     return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                 end,
                 job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
             },
         },
         distance = 2.0,
@@ -124,6 +134,8 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                         return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
+                    blackoutGlobal = true,
+                    blackoutJob = "oil",
                 },
                 {
                     event = "jobs:client:fueler:CancelTankerRefill",
@@ -151,6 +163,8 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                         return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
+                    blackoutGlobal = true,
+                    blackoutJob = "oil",
                 },
             },
             distance = 4.0,
@@ -167,6 +181,8 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                     return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                 end,
                 job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
             },
         }
 
@@ -202,6 +218,8 @@ AddEventHandler("locations:zone:enter", function(zone, station)
                         return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                     end,
                     job = "oil",
+                    blackoutGlobal = true,
+                    blackoutJob = "oil",
                 },
             },
             distance = 4.0,
@@ -668,7 +686,7 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
                     })
                 end
 
-                QBCore.Functions.HideBlip("mtp_resell", not value)
+                QBCore.Functions.HideBlip("mtp_farm", not value)
             end,
         })
 
@@ -687,7 +705,7 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
                     })
                 end
 
-                QBCore.Functions.HideBlip("mtp_resell", not value)
+                QBCore.Functions.HideBlip("mtp_refinery", not value)
             end,
         })
 

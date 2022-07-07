@@ -6,6 +6,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
         {
             label = "Acheter",
             icon = "c:housing/buy.png",
+            blackoutGlobal = true,
             canInteract = function()
                 return not property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and property:HasAvailableApartment() and
                            not Housing.Functions.IsInsideApartment()
@@ -17,6 +18,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
         {
             label = "Vendre",
             icon = "c:housing/sell.png",
+            blackoutGlobal = true,
             canInteract = function()
                 return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
             end,
@@ -67,6 +69,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
         },
         {
             label = "Ajouter Colocataire",
+            blackoutGlobal = true,
             icon = "c:jobs/enroll.png",
             canInteract = function()
                 return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and property:CanAddRoommate(PlayerData.citizenid) and
@@ -78,6 +81,7 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
         },
         {
             label = "Retirer Colocataire",
+            blackoutGlobal = true,
             icon = "c:jobs/fire.png",
             canInteract = function()
                 return property:HasOwnedApartmentForCitizenId(PlayerData.citizenid) and property:CanRemoveRoommate(PlayerData.citizenid) and
@@ -85,6 +89,17 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             end,
             action = function()
                 TriggerEvent("housing:client:ShowRemoveRoommateMenu", propertyId)
+            end,
+        },
+        {
+            label = "Partir de la colocation",
+            blackoutGlobal = true,
+            icon = "c:jobs/fire.png",
+            canInteract = function()
+                return property:HasApartmentAsRoommate(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+            end,
+            action = function()
+                TriggerEvent("housing:client:QuitColocation", propertyId)
             end,
         },
     })

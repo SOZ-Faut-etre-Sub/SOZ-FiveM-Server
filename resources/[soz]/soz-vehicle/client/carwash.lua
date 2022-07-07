@@ -89,6 +89,7 @@ CreateThread(function()
                 canInteract = function(entity, distance, data)
                     return InsideCarwash
                 end,
+                blackoutGlobal = true,
             },
         },
         distance = 3.0,
