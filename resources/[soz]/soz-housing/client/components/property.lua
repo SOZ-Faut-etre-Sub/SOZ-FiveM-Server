@@ -91,6 +91,17 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
                 TriggerEvent("housing:client:ShowRemoveRoommateMenu", propertyId)
             end,
         },
+        {
+            label = "Partir de la colocation",
+            blackoutGlobal = true,
+            icon = "c:jobs/fire.png",
+            canInteract = function()
+                return property:HasApartmentAsRoommate(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+            end,
+            action = function()
+                TriggerEvent("housing:client:QuitColocation", propertyId)
+            end,
+        },
     })
 end
 
