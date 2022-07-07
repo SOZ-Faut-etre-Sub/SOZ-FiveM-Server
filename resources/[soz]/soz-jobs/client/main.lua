@@ -46,12 +46,12 @@ local function BuildPromoteMenu(target)
         return
     end
 
-    local jobGrade = job.grades[PlayerData.job.grade]
+    local jobGrade = job.grades[tostring(PlayerData.job.grade)]
     if jobGrade == nil then
         print("Couldn't find grade " .. PlayerData.job.grade .. " of job " .. PlayerData.job.id .. ". Will use default value.")
         return
     end
-    local playerGradeWeight = job.grades[PlayerData.job.grade or 0] and job.grades[PlayerData.job.grade].weight or 0
+    local playerGradeWeight = jobGrade.weight or 0
 
     if not job then
         return
