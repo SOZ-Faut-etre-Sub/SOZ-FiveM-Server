@@ -37,6 +37,15 @@ function CreateWasteZone(identifier, data)
         },
     }
 
+    data.onPlayerInOut = function(isIn)
+        if isIn and OnDuty("garbage") then
+            local waste = QBCore.Functions.TriggerRpc("soz-upw:server:GetWaste", identifier, "waste")
+            SendNUIMessage({action = "show", health = Config.FieldHealthStates[waste]})
+        else
+            SendNUIMessage({action = "hide"})
+        end
+    end
+
     return CreateZone(identifier, "waste", data)
 end
 
@@ -83,6 +92,11 @@ local function HarvestLoop(data)
 
     if isOk then
         local harvested = Harvest(data.identifier, data.harvest)
+        if data.harvest == "waste" then
+            local waste = QBCore.Functions.TriggerRpc("soz-upw:server:GetWaste", data.identifier, data.harvest)
+
+            SendNUIMessage({action = "show", health = Config.FieldHealthStates[waste]})
+        end
 
         if harvested then
             HarvestLoop(data)

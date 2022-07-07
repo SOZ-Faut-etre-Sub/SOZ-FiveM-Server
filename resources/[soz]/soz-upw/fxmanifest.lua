@@ -21,4 +21,7 @@ server_scripts {
     "server/resale.lua",
 }
 
+ui_page "nui/index.html"
+files {"nui/index.html"}
+
 dependencies {"oxmysql", "qb-core"}

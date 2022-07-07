@@ -216,3 +216,14 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
     cb({true, string.format(facilityData.messages.harvestSuccess, QBCore.Shared.Items[item].label)})
 end)
+
+QBCore.Functions.CreateCallback("soz-upw:server:GetWaste", function(source, cb, identifier, harvestType)
+    local facilityData = GetFacilityData(harvestType)
+    local facility = facilityData.getFacility(identifier)
+    if not facility then
+        cb(false, "invalid facility")
+        return
+    end
+
+    cb(math.ceil(facility.waste * #Config.FieldHealthStates / facility.maxWaste))
+end)
