@@ -1,0 +1,93 @@
+--Name: upw:garage | 2022-07-07T12:20:59Z
+BoxZone:Create(vector3(567.6, 2813.77, 42.23), 42.4, 41.8, {
+  name="upw:garage",
+  heading=4,
+  --debugPoly=true,
+  minZ=41.43,
+  maxZ=45.63
+})
+
+--Name: upw:garage:slot1 | 2022-07-07T12:22:04Z
+BoxZone:Create(vector3(580.45, 2827.71, 42.22), 3.8, 11.6, {
+  name="upw:garage:slot1",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot2 | 2022-07-07T12:23:26Z
+BoxZone:Create(vector3(566.95, 2827.27, 42.19), 4, 12.2, {
+  name="upw:garage:slot2",
+  heading=5,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot3 | 2022-07-07T12:24:46Z
+BoxZone:Create(vector3(552.81, 2825.97, 42.08), 4, 12.2, {
+  name="upw:garage:slot3",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot4 | 2022-07-07T12:25:39Z
+BoxZone:Create(vector3(581.35, 2818.73, 42.13), 4, 12.2, {
+  name="upw:garage:slot4",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot5 | 2022-07-07T12:26:24Z
+BoxZone:Create(vector3(567.37, 2817.81, 42.15), 4, 12.2, {
+  name="upw:garage:slot5",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot6 | 2022-07-07T12:27:04Z
+BoxZone:Create(vector3(551.83, 2817.17, 42.33), 4, 12.2, {
+  name="upw:garage:slot6",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot7 | 2022-07-07T12:27:51Z
+BoxZone:Create(vector3(581.66, 2812.22, 42.23), 4, 12.2, {
+  name="upw:garage:slot7",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot8 | 2022-07-07T12:28:20Z
+BoxZone:Create(vector3(568.21, 2811.46, 42.04), 4, 12.2, {
+  name="upw:garage:slot8",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot9 | 2022-07-07T12:28:57Z
+BoxZone:Create(vector3(552.96, 2810.97, 42.23), 4, 12.2, {
+  name="upw:garage:slot9",
+  heading=4,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot10 | 2022-07-07T12:29:28Z
+BoxZone:Create(vector3(581.39, 2802.48, 42.12), 4, 12.2, {
+  name="upw:garage:slot10",
+  heading=5,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot11 | 2022-07-07T12:29:55Z
+BoxZone:Create(vector3(567.78, 2801.79, 42.26), 4, 12.2, {
+  name="upw:garage:slot11",
+  heading=5,
+  --debugPoly=true
+})
+
+--Name: upw:garage:slot12 | 2022-07-07T12:30:28Z
+BoxZone:Create(vector3(553.79, 2800.9, 42.31), 4, 12.2, {
+  name="upw:garage:slot12",
+  heading=5,
+  --debugPoly=true
+})
+

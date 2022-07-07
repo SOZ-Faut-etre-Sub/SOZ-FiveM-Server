@@ -224,11 +224,11 @@ Zonesentreprise = {
         minZ = 69.47,
         maxZ = 72.47,
     }),
-    ["upw"] = BoxZone:Create(vector3(597.42, 2734.61, 42.06), 25.4, 30.0, {
+    ["upw"] = BoxZone:Create(vector3(567.6, 2813.77, 42.23), 42.4, 41.8, {
         name = "upw_z",
         heading = 4,
-        minZ = 40.06,
-        maxZ = 45.06,
+        minZ = 41.43,
+        maxZ = 45.63,
     }),
 }
 
@@ -1529,21 +1529,133 @@ PlacesEntreprise = {
         },
     }),
     -- UPW
-    ["upw1"] = BoxZone:Create(vector3(589.85, 2733.99, 41.95), 12.4, 3.6, {
+    ["upw1"] = BoxZone:Create(vector3(580.15, 2827.72, 42.05), 12.2, 4, {
         name = "upw1",
-        heading = 4,
-        minZ = 40.95,
-        maxZ = 43.95,
+        heading = 274,
+        minZ = 41.22,
+        maxZ = 45.22,
+        -- debugPoly = true,
         data = {
             indexGarage = "upw",
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["upw2"] = BoxZone:Create(vector3(595.72, 2734.67, 42.08), 12.4, 3.6, {
+    ["upw2"] = BoxZone:Create(vector3(566.95, 2827.27, 42.19), 12.2, 4, {
         name = "upw2",
-        heading = 2,
-        minZ = 41.08,
-        maxZ = 44.08,
+        heading = 274,
+        minZ = 41.19,
+        maxZ = 45.19,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw3"] = BoxZone:Create(vector3(552.81, 2825.97, 42.08), 12.2, 4, {
+        name = "upw3",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw4"] = BoxZone:Create(vector3(581.35, 2818.73, 42.13), 12.2, 4, {
+        name = "upw4",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw5"] = BoxZone:Create(vector3(567.37, 2817.81, 42.15), 12.2, 4, {
+        name = "upw5",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw6"] = BoxZone:Create(vector3(553.78, 2816.89, 42.33), 12.2, 4, {
+        name = "upw6",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw7"] = BoxZone:Create(vector3(581.66, 2812.22, 42.23), 12.2, 4, {
+        name = "upw7",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw8"] = BoxZone:Create(vector3(568.21, 2811.46, 42.04), 12.2, 4, {
+        name = "upw8",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw9"] = BoxZone:Create(vector3(554.1, 2810.54, 42.33), 12.2, 4, {
+        name = "upw9",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw10"] = BoxZone:Create(vector3(581.39, 2802.48, 42.12), 12.2, 4, {
+        name = "upw10",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw11"] = BoxZone:Create(vector3(567.78, 2801.79, 42.26), 12.2, 4, {
+        name = "upw11",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
+        data = {
+            indexGarage = "upw",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["upw12"] = BoxZone:Create(vector3(553.79, 2800.9, 42.31), 12.2, 4, {
+        name = "upw12",
+        heading = 274,
+        minZ = 41,
+        maxZ = 45,
+        -- debugPoly = true,
         data = {
             indexGarage = "upw",
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
