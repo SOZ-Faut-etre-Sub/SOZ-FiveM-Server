@@ -115,7 +115,7 @@ function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, subCa
         table.sort(drawables)
         for drawable, labels in pairs(drawables) do
             local label = GetLabelText(labels.GXT)
-            if label  == "NULL" then
+            if label == "NULL" then
                 label = labels.Localized
             end
             if label == "NULL" then
@@ -164,7 +164,7 @@ CreateThread(function()
                         table.sort(drawables)
                         for drawable, labels in pairs(drawables) do
                             local label = GetLabelText(labels.GXT)
-                            if label  == "NULL" then
+                            if label == "NULL" then
                                 label = labels.Localized
                             end
                             if label == "NULL" then
