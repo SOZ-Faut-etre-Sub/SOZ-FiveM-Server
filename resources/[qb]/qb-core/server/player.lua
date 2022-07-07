@@ -152,7 +152,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
 
     PlayerData.job.id = PlayerData.job.id or 'unemployed'
     PlayerData.job.onduty = false
-    PlayerData.job.grade = PlayerData.job.grade or 1
+    PlayerData.job.grade = tostring(PlayerData.job.grade) or "1"
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
     PlayerData.gang.name = PlayerData.gang.name or 'none'
@@ -211,7 +211,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     self.Functions.SetJob = function(jobId, gradeId)
         self.PlayerData.job = {
             id = jobId,
-            grade = gradeId,
+            grade = tostring(gradeId),
             onduty = self.PlayerData.job.onduty or false,
         }
         self.Functions.UpdatePlayerData()
