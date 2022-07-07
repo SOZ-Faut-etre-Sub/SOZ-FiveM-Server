@@ -78,11 +78,11 @@ CreateThread(function()
         maxZ = 41.80,
     }, {options = callSociety("555-UPW"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:pawl", vector3(-540.28, 5299.96, 76.37), 0.3, 0.2, {
+    exports["qb-target"]:AddBoxZone("bell:pawl", vector3(619.76, 2728.02, 41.86), 0.2, 0.3, {
         name = "bell:pawl",
-        heading = 55,
-        minZ = 76.05,
-        maxZ = 76.30,
+        heading = 4,
+        minZ = 41.71,
+        maxZ = 41.91,
     }, {options = callSociety("555-PAWL"), distance = 2.5})
 end)
 
