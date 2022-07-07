@@ -54,6 +54,13 @@ local function GetTerminalCapacities(scope)
     return capacity, maxCapacity
 end
 
+function GetBlackoutPercent()
+    local capacity, maxCapacity = GetTerminalCapacities("default")
+    local percent = math.ceil(capacity / maxCapacity * 100)
+
+    return percent
+end
+
 function GetBlackoutLevel()
     return QBCore.Shared.Blackout.Level.Zero
     -- @TODO
@@ -103,8 +110,7 @@ function StartConsumptionLoop()
 
         while consumptionLoopRunning do
             local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
-
-            local consumptionThisTick = Config.Consumption.EnergyPerTick * connectedPlayers
+            local consumptionThisTick = math.ceil(Config.Consumption.EnergyPerTick * connectedPlayers)
 
             local identifiers = {}
             for identifier, _ in pairs(GetTerminals("default")) do

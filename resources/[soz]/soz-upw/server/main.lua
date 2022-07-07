@@ -52,6 +52,26 @@ local function InitiateFacilities()
     end
 end
 
+local function Save()
+    print("save")
+    for _, data in pairs(facilities) do
+        for __, facility in pairs(data.arr) do
+            facility:save()
+        end
+    end
+
+    Pm:save()
+end
+
+local function StartSaveLoop()
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(60000)
+            Save()
+        end
+    end)
+end
+
 -- Init
 MySQL.ready(function()
     -- TO BE REMOVED (DEV PURPOSE)
@@ -62,22 +82,14 @@ MySQL.ready(function()
 
     InitiateFacilities()
     StartProductionLoop()
-
     StartConsumptionLoop()
+    StartSaveLoop()
 end)
 
 --
 -- Save all objects upon reboot
 --
-exports("saveUpw", function()
-    for _, data in pairs(facilities) do
-        for __, facility in pairs(data.arr) do
-            facility:save()
-        end
-    end
-
-    Pm:save()
-end)
+exports("saveUpw", Save)
 
 --
 -- Add new facility from menu F10
@@ -172,14 +184,21 @@ exports("GetUpwMetrics", function()
 
     -- Pollution Level
     metrics["pollution_level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
+    metrics["pollution_percent"] = {{identifier = Pm.identifier, value = Pm:GetPollutionPercent()}}
 
     -- Blackout Level
     metrics["blackout_level"] = {{identifier = "blackout", value = GetBlackoutLevel()}}
+    metrics["blackout_percent"] = {{identifier = "blackout", value = GetBlackoutPercent()}}
 
     -- Facilities
     for type_, data in pairs(facilities) do
         for identifier, facility in pairs(data.arr) do
             local metric = {["identifier"] = identifier, value = facility.capacity}
+
+            if type_ == "terminal" then
+                metric.scope = facility.scope
+                metric.job = facility.job or nil
+            end
 
             if type(metrics[type_]) == "table" then
                 table.insert(metrics[type_], metric)
@@ -190,4 +209,8 @@ exports("GetUpwMetrics", function()
     end
 
     return metrics
+end)
+
+exports("GetUpwFacilities", function()
+    return facilities
 end)
