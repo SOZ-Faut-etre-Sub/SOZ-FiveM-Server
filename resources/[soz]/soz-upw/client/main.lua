@@ -1,5 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-SozCoreJobs = exports["soz-jobs"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 local function GetZoneConfig(zone)
     local config = {
@@ -46,6 +46,13 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
             scale = Config.Blip.station.Scale,
         })
     end
+
+    exports["qb-target"]:AddBoxZone("upw:duty", vector3(582.72, 2756.97, 41.86), 0.4, 0.3, {
+        name = "upw:duty",
+        heading = 4,
+        minZ = 42.10,
+        maxZ = 42.60,
+    }, {options = SozJobCore.Functions.GetDutyActions("upw"), distance = 2.5})
 end)
 
 Citizen.CreateThread(function()
