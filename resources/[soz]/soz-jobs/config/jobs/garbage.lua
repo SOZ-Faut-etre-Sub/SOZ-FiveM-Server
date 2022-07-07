@@ -18,7 +18,7 @@ GarbageConfig.RecycleItem = {
     ["peau"] = 5,
     ["os"] = 5,
     ["viscere"] = 5,
-    ["sawdust"] = 10,
+    ["sawdust"] = 100,
     ["used_bloodbag"] = 5,
 }
 
