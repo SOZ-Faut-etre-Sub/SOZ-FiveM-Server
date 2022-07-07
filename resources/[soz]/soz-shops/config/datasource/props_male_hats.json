@@ -834,43 +834,43 @@
             "62": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Vert"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Orange"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Violet"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Rose"
                 },
                 "4": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Rouge"
                 },
                 "5": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Bleu"
                 },
                 "6": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Gris Foncé"
                 },
                 "7": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Gris"
                 },
                 "8": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Blanc"
                 },
                 "9": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Noir"
                 }
             },
             "67": {
@@ -986,43 +986,43 @@
             "72": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Vert Ouvert"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Orange Ouvert"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Violet Ouvert"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Rose Ouvert"
                 },
                 "4": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Rouge Ouvert"
                 },
                 "5": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Bleu Ouvert"
                 },
                 "6": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Gris Foncé Ouvert"
                 },
                 "7": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Gris Ouvert"
                 },
                 "8": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Blanc Ouvert"
                 },
                 "9": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque intégral Noir Ouvert"
                 }
             },
             "73": {
@@ -1043,20 +1043,20 @@
                     "Localized": "Pale Blue Retro Bubble"
                 },
                 "4": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_4",
+                    "Localized": "Casque Retro Vert"
                 },
                 "5": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_5",
+                    "Localized": "Casque Retro Orange Pale"
                 },
                 "6": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_6",
+                    "Localized": "Casque Retro Violet"
                 },
                 "7": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_7",
+                    "Localized": "Casque Retro Rose Noir"
                 },
                 "8": {
                     "GXT": "CLO_STM_HT6_8",
@@ -1097,20 +1097,20 @@
                     "Localized": "Pale Blue Retro Bubble"
                 },
                 "4": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_4",
+                    "Localized": "Casque Retro Vert Ouvert"
                 },
                 "5": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_5",
+                    "Localized": "Casque Retro Orange Pale Ouvert"
                 },
                 "6": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_6",
+                    "Localized": "Casque Retro Violet Ouvert"
                 },
                 "7": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_STM_HT6_7",
+                    "Localized": "Casque Retro Rose Noir Ouvert"
                 },
                 "8": {
                     "GXT": "CLO_STM_HT6_8",
@@ -1136,19 +1136,19 @@
             "75": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque Bob Vert"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque Bob Orange"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque Bob Violet"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque Bob Panthère Rose"
                 },
                 "4": {
                     "GXT": "CLO_STM_HT8_4",
@@ -1487,20 +1487,20 @@
                     "Localized": "Deadline Blue"
                 },
                 "7": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_BIM_HT_8_7",
+                    "Localized": "Casque néon Cendre"
                 },
                 "8": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_BIM_HT_8_8",
+                    "Localized": "Casque néon Gris"
                 },
                 "9": {
                     "GXT": "CLO_BIM_HT_8_9",
                     "Localized": "Deadline White"
                 },
                 "10": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_BIM_HT_8_10",
+                    "Localized": "Casque néon Bleu Clair"
                 }
             },
             "92": {
@@ -1533,20 +1533,20 @@
                     "Localized": "Deadline Blue"
                 },
                 "7": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_BIM_HT_8_7",
+                    "Localized": "Casque néon Cendre Ouvert"
                 },
                 "8": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_BIM_HT_8_8",
+                    "Localized": "Casque néon Gris Ouvert"
                 },
                 "9": {
                     "GXT": "CLO_BIM_HT_8_9",
                     "Localized": "Deadline White"
                 },
                 "10": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "GXT": "CLO_BIM_HT_8_10",
+                    "Localized": "Casque néon Bleu Clair Ouvert"
                 }
             },
             "93": {
@@ -1760,11 +1760,11 @@
             "54": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Families"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Ballas"
                 }
             },
             "55": {
@@ -1932,85 +1932,85 @@
             "60": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Verte"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Orange"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Violette"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Rose"
                 },
                 "4": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Rouge"
                 },
                 "5": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Bleu"
                 },
                 "6": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Gris Foncé"
                 },
                 "7": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Gris"
                 },
                 "8": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Blanc"
                 },
                 "9": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette Militaire Noir"
                 }
             },
             "63": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Vert"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Orange"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Violet"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Rose"
                 },
                 "4": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Rouge"
                 },
                 "5": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Bleu"
                 },
                 "6": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Gris Foncé"
                 },
                 "7": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Gris"
                 },
                 "8": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Blanc"
                 },
                 "9": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casquette neutre Noir"
                 }
             },
             "76": {
@@ -3774,7 +3774,7 @@
             "19": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Casque d'aviateur"
                 }
             },
             "22": {
@@ -4260,43 +4260,43 @@
             "61": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Vert"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Orange"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Violet"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Rose"
                 },
                 "4": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Rouge"
                 },
                 "5": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Bleu"
                 },
                 "6": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Gris Foncé"
                 },
                 "7": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Gris"
                 },
                 "8": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Blanc"
                 },
                 "9": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Chapeau Borsalino Noir"
                 }
             },
             "64": {
