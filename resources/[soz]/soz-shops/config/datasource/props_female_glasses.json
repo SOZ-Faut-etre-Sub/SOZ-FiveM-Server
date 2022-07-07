@@ -352,31 +352,31 @@
             "17": {
                 "0": {
                     "GXT": "CLO_BBF_P1_0",
-                    "Localized": "Purple Tint Squared"
+                    "Localized": "Violet au carré"
                 },
                 "1": {
                     "GXT": "CLO_BBF_P1_1",
-                    "Localized": "Blue Leopard Squared"
+                    "Localized": "Bleu léopard au carré"
                 },
                 "2": {
                     "GXT": "CLO_BBF_P1_2",
-                    "Localized": "Purple Squared"
+                    "Localized": "Violet au carré"
                 },
                 "3": {
                     "GXT": "CLO_BBF_P1_3",
-                    "Localized": "Teal Squared"
+                    "Localized": "Bleu sarcelle au carré"
                 },
                 "4": {
                     "GXT": "CLO_BBF_P1_4",
-                    "Localized": "Tan Squared"
+                    "Localized": "Beige au carré"
                 },
                 "5": {
                     "GXT": "CLO_BBF_P1_5",
-                    "Localized": "Pink Striped Squared"
+                    "Localized": "Rose au carré"
                 },
                 "6": {
                     "GXT": "CLO_BBF_P1_6",
-                    "Localized": "White Squared"
+                    "Localized": "Blanc au carré"
                 }
             },
             "18": {
@@ -411,18 +411,6 @@
                 "7": {
                     "GXT": "CLO_BUSF_G0_7",
                     "Localized": "Silver Stem Slim Glasses"
-                },
-                "8": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
-                },
-                "9": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
-                },
-                "10": {
-                    "GXT": "NO_LABEL",
-                    "Localized": "NULL"
                 }
             },
             "19": {
@@ -496,43 +484,43 @@
             "25": {
                 "0": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir vertes"
                 },
                 "1": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir oranges"
                 },
                 "2": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir violettes"
                 },
                 "3": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir roses"
                 },
                 "4": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir rouges sombre"
                 },
                 "5": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir bleues"
                 },
                 "6": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir gris"
                 },
                 "7": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir cendres"
                 },
                 "8": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir blanches"
                 },
                 "9": {
                     "GXT": "NO_LABEL",
-                    "Localized": "NULL"
+                    "Localized": "Lunettes de tir noires"
                 }
             },
             "30": {

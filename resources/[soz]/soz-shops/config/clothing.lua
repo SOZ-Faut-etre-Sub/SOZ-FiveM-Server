@@ -1,12 +1,14 @@
 local function flatten(values)
     local result = {}
     for _, item in pairs(values) do
-        result[#result + 1] = item[1]
+        for _, cloth in pairs(item) do
+            result[#result + 1] = cloth
+        end
     end
     return result
 end
 
-local function CreateItemsWithTextures(componentType, drawableId, textures, torso)
+local function CreateItemsWithTextures(componentType, drawableId, textures, torso, underShirt)
     local items = {}
     for _, texture in pairs(textures) do
         local item = {
@@ -15,7 +17,7 @@ local function CreateItemsWithTextures(componentType, drawableId, textures, tors
         }
 
         if componentType == 11 then
-            item.ApplyComponents[8] = {Drawable = 15, Texture = 0, Palette = 0}
+            item.ApplyComponents[8] = {Drawable = underShirt or 15, Texture = 0, Palette = 0}
         end
 
         if torso then
@@ -1382,7 +1384,7 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("CLO_H4F_U_2_18"), Id = 18},
                             {Name = GetLabelText("CLO_H4F_U_2_19"), Id = 19},
                             {Name = GetLabelText("CLO_H4F_U_2_20"), Id = 20},
-                        }),
+                        }, 15, 15),
                         CreateItemsWithTextures(11, 404, {
                             {Name = GetLabelText("CLO_FXF_U_4_0"), Id = 0},
                             {Name = GetLabelText("CLO_FXF_U_4_1"), Id = 1},
@@ -1697,6 +1699,58 @@ Config.Products["ponsonbys"] = {
                             {Name = GetLabelText("U_FMF_0_19"), Id = 19},
                             {Name = GetLabelText("U_FMF_0_20"), Id = 20},
                         }),
+                    }),
+                },
+                [5] = {
+                    Name = "Robes",
+                    Price = 50,
+                    Items = flatten({
+                        CreateItemsWithTextures(11, 322, {
+                            {Name = GetLabelText("CLO_VWF_U_19_0"), Id = 0},
+                            {Name = GetLabelText("CLO_VWF_U_19_1"), Id = 1},
+                            {Name = GetLabelText("CLO_VWF_U_19_2"), Id = 2},
+                            {Name = GetLabelText("CLO_VWF_U_19_3"), Id = 3},
+                            {Name = GetLabelText("CLO_VWF_U_19_4"), Id = 4},
+                            {Name = GetLabelText("CLO_VWF_U_19_5"), Id = 5},
+                            {Name = GetLabelText("CLO_VWF_U_19_6"), Id = 6},
+                            {Name = GetLabelText("CLO_VWF_U_19_7"), Id = 7},
+                            {Name = GetLabelText("CLO_VWF_U_19_8"), Id = 8},
+                            {Name = GetLabelText("CLO_VWF_U_19_9"), Id = 9},
+                            {Name = GetLabelText("CLO_VWF_U_19_10"), Id = 10},
+                            {Name = GetLabelText("CLO_VWF_U_19_11"), Id = 11},
+                            {Name = GetLabelText("CLO_VWF_U_19_12"), Id = 12},
+                            {Name = GetLabelText("CLO_VWF_U_19_13"), Id = 13},
+                            {Name = GetLabelText("CLO_VWF_U_19_14"), Id = 14},
+                            {Name = GetLabelText("CLO_VWF_U_19_15"), Id = 15},
+                            {Name = GetLabelText("CLO_VWF_U_19_16"), Id = 16},
+                            {Name = GetLabelText("CLO_VWF_U_19_17"), Id = 17},
+                            {Name = GetLabelText("CLO_VWF_U_19_18"), Id = 18},
+                            {Name = GetLabelText("CLO_VWF_U_19_19"), Id = 19},
+                            {Name = GetLabelText("CLO_VWF_U_19_20"), Id = 20},
+                        }, nil, 2),
+                        CreateItemsWithTextures(11, 323, {
+                            {Name = GetLabelText("CLO_VWF_U_20_0"), Id = 0},
+                            {Name = GetLabelText("CLO_VWF_U_20_1"), Id = 1},
+                            {Name = GetLabelText("CLO_VWF_U_20_2"), Id = 2},
+                            {Name = GetLabelText("CLO_VWF_U_20_3"), Id = 3},
+                            {Name = GetLabelText("CLO_VWF_U_20_4"), Id = 4},
+                            {Name = GetLabelText("CLO_VWF_U_20_5"), Id = 5},
+                            {Name = GetLabelText("CLO_VWF_U_20_6"), Id = 6},
+                            {Name = GetLabelText("CLO_VWF_U_20_7"), Id = 7},
+                            {Name = GetLabelText("CLO_VWF_U_20_8"), Id = 8},
+                            {Name = GetLabelText("CLO_VWF_U_20_9"), Id = 9},
+                            {Name = GetLabelText("CLO_VWF_U_20_10"), Id = 10},
+                            {Name = GetLabelText("CLO_VWF_U_20_11"), Id = 11},
+                            {Name = GetLabelText("CLO_VWF_U_20_12"), Id = 12},
+                            {Name = GetLabelText("CLO_VWF_U_20_13"), Id = 13},
+                            {Name = GetLabelText("CLO_VWF_U_20_14"), Id = 14},
+                            {Name = GetLabelText("CLO_VWF_U_20_15"), Id = 15},
+                            {Name = GetLabelText("CLO_VWF_U_20_16"), Id = 16},
+                            {Name = GetLabelText("CLO_VWF_U_20_17"), Id = 17},
+                            {Name = GetLabelText("CLO_VWF_U_20_18"), Id = 18},
+                            {Name = GetLabelText("CLO_VWF_U_20_19"), Id = 19},
+                            {Name = GetLabelText("CLO_VWF_U_20_20"), Id = 20},
+                        }, nil, 2),
                     }),
                 },
             },
@@ -7996,6 +8050,53 @@ Config.Products["suburban"] = {
                         }),
                     }),
                 },
+                [5] = {
+                    Name = "Robes",
+                    Price = 50,
+                    Items = flatten({
+                        CreateItemsWithTextures(11, 21, {
+                            { Name = GetLabelText("CLO_VALF_U_0_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_VALF_U_0_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_VALF_U_0_2"), Id = 2 },
+                            { Name = GetLabelText("CLO_VALF_U_0_3"), Id = 3 },
+                            { Name = GetLabelText("CLO_VALF_U_0_4"), Id = 4 },
+                            { Name = GetLabelText("CLO_VALF_U_0_5"), Id = 5 },
+                        }),
+                        CreateItemsWithTextures(11, 37, {
+                            { Name = GetLabelText("CLO_HP_F_U_6_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_HP_F_U_6_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_HP_F_U_6_2"), Id = 2 },
+                            { Name = GetLabelText("CLO_HP_F_U_6_3"), Id = 3 },
+                            { Name = GetLabelText("CLO_HP_F_U_6_4"), Id = 4 },
+                            { Name = GetLabelText("CLO_HP_F_U_6_5"), Id = 5 },
+                        }),
+                        CreateItemsWithTextures(11, 112, {
+                            { Name = GetLabelText("CLO_V2F_U_1_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_V2F_U_1_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_V2F_U_1_2"), Id = 2 },
+                        }),
+                        CreateItemsWithTextures(11, 113, {
+                            { Name = GetLabelText("CLO_V2F_U_2_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_V2F_U_2_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_V2F_U_2_2"), Id = 2 },
+                        }),
+                        CreateItemsWithTextures(11, 114, {
+                            { Name = GetLabelText("CLO_V2F_U_3_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_V2F_U_3_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_V2F_U_3_2"), Id = 2 },
+                        }),
+                        CreateItemsWithTextures(11, 115, {
+                            { Name = GetLabelText("CLO_V2F_U_4_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_V2F_U_4_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_V2F_U_4_2"), Id = 2 },
+                        }),
+                        CreateItemsWithTextures(11, 116, {
+                            { Name = GetLabelText("CLO_V2F_U_5_0"), Id = 0 },
+                            { Name = GetLabelText("CLO_V2F_U_5_1"), Id = 1 },
+                            { Name = GetLabelText("CLO_V2F_U_5_2"), Id = 2 },
+                        })
+                    })
+                }
             },
         },
         [2] = {
