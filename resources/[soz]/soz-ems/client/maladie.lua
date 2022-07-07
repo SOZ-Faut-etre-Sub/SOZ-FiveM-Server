@@ -68,7 +68,8 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
 
         Citizen.CreateThread(function()
             while DiseaseLoop do
-                DisableControlAction(0, 21, true)
+                DisableControlAction(0, 21, true) -- disable sprint
+                DisableControlAction(0, 22, true) -- disable jump
                 Wait(5)
             end
         end)
