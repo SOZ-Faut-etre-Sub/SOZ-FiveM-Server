@@ -55,8 +55,8 @@ local function GetTerminalCapacities(scope)
 end
 
 function GetBlackoutPercent()
-     local capacity, maxCapacity = GetTerminalCapacities("default")
-     local percent = math.ceil(capacity / maxCapacity * 100)
+    local capacity, maxCapacity = GetTerminalCapacities("default")
+    local percent = math.ceil(capacity / maxCapacity * 100)
 
     return percent
 end
