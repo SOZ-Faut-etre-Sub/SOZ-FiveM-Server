@@ -83,6 +83,10 @@ function PollutionManager:StartPollutionLoop()
     end)
 end
 
+function PollutionManager:GetPollutionPercent()
+    return self.currentPollution * 100
+end
+
 function PollutionManager:GetPollutionLevel()
     local currentPollution = self.currentPollution * 100
 
