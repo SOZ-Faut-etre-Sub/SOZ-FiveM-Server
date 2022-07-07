@@ -37,7 +37,20 @@ local function BuildPromoteMenu(target)
     PromoteMenu:ClearItems()
     PromoteMenu:SetSubtitle("Promouvoir un joueur")
 
+    if PlayerData.job.id == nil then
+        return
+    end
     local job = SozJobCore.Jobs[PlayerData.job.id]
+    if job == nil then
+        print("Couldn't find job with id " .. PlayerData.job.id .. ".")
+        return
+    end
+
+    local jobGrade = job.grades[PlayerData.job.grade]
+    if jobGrade == nil then
+        print("Couldn't find grade " .. PlayerData.job.grade .. " of job " .. PlayerData.job.id .. ". Will use default value.")
+        return
+    end
     local playerGradeWeight = job.grades[PlayerData.job.grade or 0] and job.grades[PlayerData.job.grade].weight or 0
 
     if not job then
