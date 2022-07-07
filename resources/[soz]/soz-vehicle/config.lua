@@ -464,7 +464,7 @@ Garages = {
     },
     ["upw"] = {
         label = "Unexpected Power and Water",
-        blipcoord = vector4(608.92, 2745.08, 40.98, 7.91),
+        blipcoord = vector4(585.89, 2835.33, 41.16, 3.67),
         showBlip = false,
         blipName = "Unexpected Power and Water",
         blipNumber = 357,
