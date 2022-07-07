@@ -1,6 +1,16 @@
 local CallState = CallStateManager:new()
 
+AddStateBagChangeHandler("blackout_level", "global", function(_, _, value, _, _)
+    if value > 2 then
+        CallState:DestroyAll()
+    end
+end)
+
 RegisterNetEvent("voip:server:call:start", function(caller, receiver)
+    if GlobalState.blackout_level > 2 then
+        return
+    end
+
     local call = CallState:getCallByPhoneNumber(receiver)
 
     if call == nil then

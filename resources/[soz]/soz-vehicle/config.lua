@@ -454,13 +454,23 @@ Garages = {
     },
     ["pawl"] = {
         label = "Pipe And Wooden Legs",
-        blipcoord = vector4(-567.48, 5241.92, 69.47, 248.11),
+        blipcoord = vector4(-605.01, 5289.27, 69.46, 136.16),
         showBlip = false,
         blipName = "Pipe And Wooden Legs",
         blipNumber = 357,
         type = "entreprise", -- public, job, gang, depot
         vehicle = "car", -- car, air, sea
         job = "pawl",
+    },
+    ["upw"] = {
+        label = "Unexpected Power and Water",
+        blipcoord = vector4(585.89, 2835.33, 41.16, 3.67),
+        showBlip = false,
+        blipName = "Unexpected Power and Water",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "upw",
     },
     --[[
     ["intairport"] = {

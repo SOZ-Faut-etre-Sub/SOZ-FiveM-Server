@@ -43,6 +43,8 @@ local function SpawnFieldZones()
                     color = "food",
                     icon = "c:food/collecter.png",
                     event = "soz-jobs:client:food-collect-ingredients",
+                    blackoutGlobal = true,
+                    blackoutJob = "food",
                     canInteract = function()
                         local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
                         return hasPermission and PlayerData.job.onduty and currentField
@@ -83,6 +85,8 @@ local function SpawnJobZones()
         options = SozJobCore.Functions.GetBossShopActions("food", "food:client:bossShop"),
         distance = 2.5,
         job = "food",
+        blackoutGlobal = true,
+        blackoutJob = "food",
         canInteract = function()
             return PlayerData.job.onduty
         end,
@@ -102,6 +106,8 @@ local function SpawnJobZones()
                 event = "jobs:client:food:OpenCraftingMenu",
                 label = "Cuisiner",
                 job = "food",
+                blackoutGlobal = true,
+                blackoutJob = "food",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -127,6 +133,8 @@ local function SpawnJobZones()
                 event = "jobs:client:food-harvest-milk",
                 label = "Récupérer",
                 job = "food",
+                blackoutGlobal = true,
+                blackoutJob = "food",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -146,6 +154,8 @@ local function SpawnJobZones()
                 event = "jobs:client:food-process-milk",
                 label = "Echanger",
                 job = "food",
+                blackoutGlobal = true,
+                blackoutJob = "food",
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
@@ -551,6 +561,8 @@ for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
                 label = "Dépecer",
                 icon = "c:food/depecer.png",
                 event = "jobs:client:food:hunting",
+                blackoutGlobal = true,
+                blackoutJob = "food",
                 canInteract = function(entity)
                     return not IsPedAPlayer(entity) and IsEntityDead(entity) and PlayerHasKnifeEquiped()
                 end,

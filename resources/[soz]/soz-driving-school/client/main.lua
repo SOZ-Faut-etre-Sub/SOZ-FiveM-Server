@@ -23,6 +23,7 @@ Citizen.CreateThread(function()
             event = "soz-driving-license:client:start_exam",
             icon = data.icon,
             label = string.format(data.label, data.price),
+            blackoutGlobal = true,
             canInteract = function()
                 if licenseType == "heli" then
                     return GetConvarInt("feature_dlc1_heli", 0) == 1 and playerInsideZone

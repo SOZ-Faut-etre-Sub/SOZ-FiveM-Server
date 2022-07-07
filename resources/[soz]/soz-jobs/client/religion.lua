@@ -27,6 +27,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             icon = "c:pole/start.png",
             label = "Job InfoChat",
             job = SozJobCore.JobType.Unemployed,
+            blackoutGlobal = true,
         },
         {
             type = "client",
@@ -34,6 +35,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             icon = "c:pole/equip.png",
             label = "S'équiper",
             job = SozJobCore.JobType.Religious,
+            blackoutGlobal = true,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -44,6 +46,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             icon = "c:pole/vehicle.png",
             label = "Sortir",
             job = SozJobCore.JobType.Religious,
+            blackoutGlobal = true,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -56,6 +59,7 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
             icon = "c:pole/restart.png",
             label = "Relancer",
             job = SozJobCore.JobType.Religious,
+            blackoutGlobal = true,
             canInteract = function()
                 return OnJob == false
             end,

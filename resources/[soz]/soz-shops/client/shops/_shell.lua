@@ -14,6 +14,7 @@ function ShopShell:GetPedAction()
         canInteract = function()
             return currentShop ~= nil and currentShopBrand == self.brand
         end,
+        blackoutGlobal = true,
     }
 end
 

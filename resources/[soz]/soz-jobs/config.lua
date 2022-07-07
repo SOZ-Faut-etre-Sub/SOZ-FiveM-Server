@@ -407,7 +407,7 @@ SozJobCore.Jobs = {
         label = "Unexpected Power & Water",
         platePrefix = "UPW",
         grades = {},
-        menuCallback = "",
+        menuCallback = "jobs:client:upw:OpenSocietyMenu",
         canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
@@ -435,6 +435,7 @@ SozJobCore.Jobs = {
         platePrefix = "PAWL",
         grades = {},
         menuCallback = "pawl:client:OpenSocietyMenu",
+        canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
             [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},

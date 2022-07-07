@@ -20,6 +20,8 @@ local function TreeInteraction(identifier, position)
                     return PlayerData.job.onduty
                 end,
                 job = "pawl",
+                blackoutGlobal = true,
+                blackoutJob = "pawl",
                 --- metadata
                 identifier = identifier,
                 position = position,

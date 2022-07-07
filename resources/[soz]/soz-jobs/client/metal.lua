@@ -17,6 +17,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             icon = "c:pole/start.png",
             label = "Job DeMetal",
             job = SozJobCore.JobType.Unemployed,
+            blackoutGlobal = true,
         },
         {
             type = "client",
@@ -24,6 +25,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             icon = "c:pole/equip.png",
             label = "S'équiper",
             job = SozJobCore.JobType.Scrapper,
+            blackoutGlobal = true,
             canInteract = function()
                 return JobOutfit == false
             end,
@@ -34,6 +36,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             icon = "c:pole/vehicle.png",
             label = "Sortir",
             job = SozJobCore.JobType.Scrapper,
+            blackoutGlobal = true,
             canInteract = function()
                 if JobOutfit == true then
                     return JobVehicle == false
@@ -46,6 +49,7 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
             icon = "fas fa-sign-in-alt",
             label = "Vendre de la ferraille",
             job = SozJobCore.JobType.Scrapper,
+            blackoutGlobal = true,
             item = "metalscrap",
         },
         {

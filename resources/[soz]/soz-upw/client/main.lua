@@ -1,5 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
-SozCoreJobs = exports["soz-jobs"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 local function GetZoneConfig(zone)
     local config = {
@@ -40,12 +40,19 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     -- Blip
     if not QBCore.Functions.GetBlip("job_upw") then
         QBCore.Functions.CreateBlip("job_upw", {
-            name = Config.Blip.Name,
-            coords = Config.Blip.Coords,
-            sprite = Config.Blip.Sprite,
-            scale = Config.Blip.Scale,
+            name = Config.Blip.station.Name,
+            coords = Config.Blip.station.Coords,
+            sprite = Config.Blip.station.Sprite,
+            scale = Config.Blip.station.Scale,
         })
     end
+
+    exports["qb-target"]:AddBoxZone("upw:duty", vector3(582.72, 2756.97, 41.86), 0.4, 0.3, {
+        name = "upw:duty",
+        heading = 4,
+        minZ = 42.10,
+        maxZ = 42.60,
+    }, {options = SozJobCore.Functions.GetDutyActions("upw"), distance = 2.5})
 end)
 
 Citizen.CreateThread(function()
@@ -67,6 +74,7 @@ Citizen.CreateThread(function()
 
     for _, facility in ipairs(facilities) do
         local conf = GetZoneConfig(facility.type)
+        local data = json.decode(facility.data)
 
         if conf.create == nil then
             for _, c in ipairs(conf) do
@@ -75,10 +83,55 @@ Citizen.CreateThread(function()
         else
             createZone(facility, conf.create, conf.zone)
         end
+
+        -- Blip
+        local blip_id = ("job_upw_%s"):format(facility.identifier)
+
+        if not QBCore.Functions.GetBlip(blip_id) then
+            local blipConfig
+            local coords
+
+            if facility.type == "plant" then
+                coords = data.zones.energyZone.coords
+                blipConfig = Config.Blip.plant
+            end
+
+            if facility.type == "inverter" then
+                blipConfig = Config.Blip.inverter
+                coords = data.zone.coords
+            end
+
+            if facility.type == "terminal" then
+                coords = data.zone.coords
+
+                if data.scope == "entreprise" then
+                    blipConfig = Config.Blip.terminal_job
+                else
+                    blipConfig = Config.Blip.terminal_global
+                end
+            end
+
+            if blipConfig then
+                local blipCoords = vector3(coords.x, coords.y, coords.z)
+
+                QBCore.Functions.CreateBlip(blip_id, {
+                    name = blipConfig.Name,
+                    coords = blipCoords,
+                    sprite = blipConfig.Sprite,
+                    scale = blipConfig.Scale,
+                    color = blipConfig.Color,
+                })
+            end
+        end
+
+        QBCore.Functions.HideBlip(blip_id, true)
     end
 
     -- Resale zone
     CreateResaleZone(Config.Upw.Resale.Zone)
+
+    -- Cloakroom zone
+    CreateCloakroomZone()
 end)
 
 function CreateZone(identifier, zoneType, data)
@@ -105,7 +158,8 @@ end)
 --
 -- UTILS
 --
-function OnDuty()
+function OnDuty(job)
+    local job = job or "upw"
     local PlayerData = QBCore.Functions.GetPlayerData()
-    return PlayerData.job.id == "upw" and PlayerData.job.onduty
+    return PlayerData.job.id == job and PlayerData.job.onduty
 end

@@ -101,6 +101,8 @@ local function CitizenCheck() return true end
 local function RoleCheck() return true end
 local function FeatureCheck() return true end
 local function GlobalCheck() return true end
+local function BlackoutGlobalCheck() return true end
+local function BlackoutJobCheck() return true end
 
 CreateThread(function()
 	if not Config.Standalone then
@@ -194,6 +196,24 @@ CreateThread(function()
 			return true
 		end
 
+		BlackoutGlobalCheck = function()
+			if GlobalState.blackout_level > 3 then
+				return false
+			end
+
+			return true
+		end
+
+		BlackoutJobCheck = function()
+			local jobEnergy = GlobalState.job_energy[PlayerData.job.id] or 100;
+
+			if jobEnergy <= 1 then
+				return false
+			end
+
+			return true
+		end
+
 		RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
 			PlayerData = QBCore.Functions.GetPlayerData()
 			SpawnPeds()
@@ -235,6 +255,8 @@ function CheckOptions(data, entity, distance)
 	if data.citizenid and not CitizenCheck(data.citizenid) then return false end
 	if data.role and not RoleCheck(data.role) then return false end
 	if data.feature and not FeatureCheck(data.feature) then return false end
+	if data.blackoutGlobal and not BlackoutGlobalCheck() then return false end
+	if data.blackoutJob and not BlackoutJobCheck() then return false end
 	if data.canInteract and not data.canInteract(entity, distance, data) then return false end
 	return true
 end

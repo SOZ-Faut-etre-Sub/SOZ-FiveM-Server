@@ -76,6 +76,9 @@ vehicleListMenu:On("open", function(m)
     m:ClearItems()
     for vehicleModel, model in pairs(listVehicles) do
         local qbVehicle = vehicles[vehicleModel]
+        if qbVehicle == nil then
+            print("Could not find vehicle " .. vehicleModel .. " in our referential. Ask a dev to add it.")
+        end
         local vehicleName = qbVehicle["name"]
         if qbVehicle["job_name"] then
             vehicleName = qbVehicle["job_name"][PlayerData.job.id]
@@ -183,6 +186,7 @@ exports["qb-target"]:SpawnPed({
                     end
                     return InsideConcessEntreprise
                 end,
+                blackoutGlobal = true,
             },
         },
         distance = 2.5,
