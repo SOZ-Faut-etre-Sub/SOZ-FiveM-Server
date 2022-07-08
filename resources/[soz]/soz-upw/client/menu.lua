@@ -4,6 +4,7 @@ local societyMenuState = {
     ["displayJobTerminal"] = false,
     ["displayGlobalTerminal"] = false,
     ["displayPlant"] = false,
+    ["displayResell"] = false,
 }
 
 local function SetBlipVisibility(type, visible, entreprise)
@@ -24,6 +25,10 @@ local function SetBlipVisibility(type, visible, entreprise)
         if type == "terminal" and not entreprise and data.scope ~= "entreprise" then
             QBCore.Functions.HideBlip(blip_id, not visible)
         end
+    end
+
+    if type == "resell" then
+        QBCore.Functions.HideBlip("job_upw_resell", not visible)
     end
 end
 
@@ -56,11 +61,19 @@ RegisterNetEvent("jobs:client:upw:OpenSocietyMenu", function()
             end,
         })
         societyMenu:AddCheckbox({
-            label = "Afficher les Installations éléctriques",
+            label = "Afficher les Installations électriques",
             value = societyMenuState.displayPlant,
             change = function(_, value)
                 societyMenuState.displayPlant = value
                 SetBlipVisibility("plant", value, false)
+            end,
+        })
+        societyMenu:AddCheckbox({
+            label = "Afficher le Stockage de revente",
+            value = societyMenuState.displayResell,
+            change = function(_, value)
+                societyMenuState.displayResell = value
+                SetBlipVisibility("resell", value)
             end,
         })
     else
