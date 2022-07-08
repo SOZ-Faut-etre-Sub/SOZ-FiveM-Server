@@ -36,6 +36,10 @@ SozJobCore.JobPermission = {
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
     Food = {Harvest = "harvest", Craft = "craft"},
     Fueler = {ChangePrice = "fueler-change-price"},
+    CriminalRecord = "criminal-record",
+    VehicleRegistrar = "vehicle-registrar",
+    Investigation = "investigation",
+    ManageInvestigation = "investigation-manage",
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
 }
 
@@ -132,6 +136,10 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaire"},
+            [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès aux registre des véhicules"},
+            [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
+            [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
         },
         bossZones = {
             {
@@ -162,6 +170,10 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaire"},
+            [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès aux registre des véhicules"},
+            [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
+            [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
         },
         bossZones = {
             {
