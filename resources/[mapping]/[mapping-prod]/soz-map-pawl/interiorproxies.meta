@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SInteriorOrderData>
-  <startFrom value="14800" />
+  <startFrom value="6678" />
   <proxies>
-	<Item>cs1_15b_strm_1</Item>
-	<Item>hei_cs1_15b_strm_1</Item>
 	<Item>pawl</Item>
   </proxies>
 </SInteriorOrderData>
