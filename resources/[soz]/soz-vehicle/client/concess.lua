@@ -212,6 +212,7 @@ RegisterNetEvent("soz-concess:client:deletecam", function()
     RenderScriptCams(false)
     DestroyAllCams(true)
     SetFocusEntity(GetPlayerPed(PlayerId()))
+    camActivated = false
 end)
 
 for indexConcess, Concess in pairs(ZonesConcessVehicule) do
