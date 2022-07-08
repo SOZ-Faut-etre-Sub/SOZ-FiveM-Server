@@ -17,7 +17,7 @@ const CallContactContainer = () => {
                         ? getPictureByNumber(call.receiver)
                         : getPictureByNumber(call?.transmitter)
                 })`}} />
-            <div className="text-3xl font-light">{getDisplayOrNumber()}</div>
+            <div className="text-3xl font-light max-w-[90%] truncate">{getDisplayOrNumber()}</div>
         </div>
     );
 };
