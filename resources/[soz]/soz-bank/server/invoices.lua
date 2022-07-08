@@ -182,7 +182,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
     end
 
     local id = MySQL.insert.await(
-                   "INSERT INTO invoices (citizenid, emitter, emitterName, emitterSafe, targetAccount, label, amount) VALUES (?, ?, ?, ?, ?, ?, ?)", {
+                   "INSERT INTO invoices (citizenid, emitter, emitterName, emitterSafe, targetAccount, label, amount, kind) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", {
             Target.PlayerData.citizenid,
             Emitter.PlayerData.citizenid,
             SozJobCore.Jobs[Emitter.PlayerData.job.id].label,
@@ -190,6 +190,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             targetAccount,
             label,
             amount,
+            kind or "invoice",
         })
 
     if id then
