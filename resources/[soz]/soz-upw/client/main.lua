@@ -129,6 +129,16 @@ Citizen.CreateThread(function()
 
     -- Resale zone
     CreateResaleZone(Config.Upw.Resale.Zone)
+    if not QBCore.Functions.GetBlip("job_upw_resell") then
+        QBCore.Functions.CreateBlip("job_upw_resell", {
+            name = Config.Blip.resell.Name,
+            coords = Config.Upw.Resale.Zone.coords,
+            sprite = Config.Blip.resell.Sprite,
+            scale = Config.Blip.resell.Scale,
+            color = Config.Blip.resell.Color,
+        })
+        QBCore.Functions.HideBlip("job_upw_resell", true)
+    end
 
     -- Cloakroom zone
     CreateCloakroomZone()
