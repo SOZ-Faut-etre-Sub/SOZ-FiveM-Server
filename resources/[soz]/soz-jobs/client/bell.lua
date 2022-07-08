@@ -71,18 +71,18 @@ CreateThread(function()
         maxZ = 46.32,
     }, {options = callSociety("555-STONK"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:upw", vector3(598.25, 2772.34, 41.86), 0.3, 0.2, {
+    exports["qb-target"]:AddBoxZone("bell:upw", vector3(619.76, 2728.02, 41.86), 0.2, 0.3, {
         name = "bell:upw",
-        heading = 64,
-        minZ = 41.64,
-        maxZ = 41.80,
-    }, {options = callSociety("555-UPW"), distance = 2.5})
-
-    exports["qb-target"]:AddBoxZone("bell:pawl", vector3(619.76, 2728.02, 41.86), 0.2, 0.3, {
-        name = "bell:pawl",
         heading = 4,
         minZ = 41.71,
         maxZ = 41.91,
+    }, {options = callSociety("555-UPW"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:pawl", vector3(-540.28, 5299.97, 76.37), 0.2, 0.3, {
+        name = "bell:pawl",
+        heading = 326,
+        minZ = 76.07,
+        maxZ = 76.27,
     }, {options = callSociety("555-PAWL"), distance = 2.5})
 end)
 
