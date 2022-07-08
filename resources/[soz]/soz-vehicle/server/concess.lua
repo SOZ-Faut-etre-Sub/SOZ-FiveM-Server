@@ -48,10 +48,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(concess, vehi
         if pData.Functions.RemoveMoney("money", vehiclePrice, "vehicle-bought-in-showroom") then
             local category = "car"
             local garage
-            if concess == "pdm" then
-                garage = "airportpublic"
-                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
-            elseif concess == "velo" then
+            if concess == "pdm" or concess == "velo" then
                 garage = "airportpublic"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
             elseif concess == "air" then

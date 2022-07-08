@@ -6,6 +6,7 @@ VehicleCategorie = {}
 GlobalVehicle = {}
 InsideConcess = false
 local licenseTypeRequired = "car"
+local camActivated = false
 
 ZonesConcessVehicule = {
     ["Concess"] = BoxZone:Create(vector3(-55.49, -1096.44, 26.92), 10, 10, {
@@ -60,8 +61,8 @@ local function CarModels(vehicule)
     FreezeEntityPosition(veh, true)
     SetVehicleNumberPlateText(veh, "SOZ")
     Citizen.CreateThread(function()
-        while true do
-            Citizen.Wait(0)
+        while camActivated do
+            Citizen.Wait(10)
             if IsControlPressed(0, 176) or IsControlPressed(0, 177) then
                 TriggerEvent("soz-concess:client:deletecam", "")
                 clean()
@@ -194,6 +195,8 @@ end)
 
 VehiculeList:On("close", function()
     VehiculeList:ClearItems()
+    clean()
+    TriggerEvent("soz-concess:client:deletecam", "")
 end)
 
 RegisterNetEvent("soz-concess:client:createcam", function()
