@@ -1,6 +1,6 @@
 GarbageConfig = {}
 
-GarbageConfig.SellPrice = {["default"] = 25, ["sawdust"] = 0.1, ["petroleum_residue"] = 15}
+GarbageConfig.SellPrice = {["default"] = 25, ["sawdust"] = 0.1, ["petroleum_residue"] = 15, ["seeweed_acid"] = 10}
 
 GarbageConfig.RecycleItem = {
     ["plastic"] = 5,
@@ -20,6 +20,7 @@ GarbageConfig.RecycleItem = {
     ["viscere"] = 5,
     ["sawdust"] = 100,
     ["used_bloodbag"] = 5,
+    ["seeweed_acid"] = 5,
 }
 
 GarbageConfig.Cloakroom = {
