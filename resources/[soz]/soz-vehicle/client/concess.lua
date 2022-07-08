@@ -205,6 +205,7 @@ RegisterNetEvent("soz-concess:client:createcam", function()
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
     SetFocusPosAndVel(-53.69, -1094.83, 25.44, 0.0, 0.0, 0.0)
+    camActivated = true
 end)
 
 RegisterNetEvent("soz-concess:client:deletecam", function()
