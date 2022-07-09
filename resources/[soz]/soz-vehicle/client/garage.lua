@@ -1,5 +1,10 @@
 local OutsideVehicles = {}
 
+local vehicles = {}
+for _, vehicle in pairs(QBCore.Shared.Vehicles) do
+    vehicles[vehicle["model"]] = vehicle
+end
+
 local GarageTypes
 AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() == resourceName) then
@@ -187,7 +192,7 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         return
     end
 
-    local size = (QBCore.Shared.Vehicles[qbVehicleKey] or {size = 1}).size
+    local size = (vehicles[vehicle.vehicle] or {size = 1}).size
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage, size)
 
     if #emptySlots == 0 then
@@ -380,7 +385,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 price = 200
             end
         elseif garageType.type == "depot" then
-            local qbVehicle = QBCore.Shared.Vehicles[displayName]
+            local qbVehicle = vehicles[v.vehicle]
             if qbVehicle == nil then
                 print("Can't retrieve the price of vehicle with display name: '" .. displayName .. "' and model name '" .. v.vehicle .. "'.")
                 -- Fallback value
