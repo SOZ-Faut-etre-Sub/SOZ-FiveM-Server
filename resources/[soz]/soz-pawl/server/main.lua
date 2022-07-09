@@ -179,18 +179,20 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
     local craftItemInventory = exports["soz-inventory"]:GetItem(Player.PlayerData.source, craft.SourceItem, nil, true)
 
     if craftItemInventory < (craft.SourceItemAmount or 1) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage n'a pas assez de planche !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'a pas assez de planche !", "error")
         return
     end
 
     local metadata = {}
     if craft.RewardTier then
+        math.randomseed(GetGameTimer())
         local random = math.random(1, 100)
 
-        for tierId, tier in pairsByKeys(craft.RewardTier) do
-            if random >= tier.Chance then
-                metadata.tier = tierId
-                metadata.label = tier.Name
+        for _, tier in pairsByKeys(craft.RewardTier) do
+            metadata.tier = tier.Id
+            metadata.label = tier.Name
+
+            if random <= tier.Chance then
                 break
             end
         end
