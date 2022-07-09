@@ -147,6 +147,7 @@ end)
 function CreateZone(identifier, zoneType, data)
     local zoneName = string.format("%s_%s", identifier, zoneType)
 
+    exports["qb-target"]:RemoveZone(zoneName)
     exports["qb-target"]:AddBoxZone(zoneName, data.coords, data.sx, data.sy,
                                     {
         heading = data.heading,
