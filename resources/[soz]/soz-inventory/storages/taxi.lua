@@ -7,3 +7,13 @@ Config.Storages["taxi_fridge"] = {
     heading = 328,
     offsetUpZ = 1.8,
 }
+
+Config.Storages["taxi_storage"] = {
+    label = "Stockage Carl'jr service",
+    type = "storage",
+    owner = "taxi",
+    position = vector3(899.6, -169.36, 74.17),
+    size = vec2(0.6, 6),
+    heading = 238,
+    offsetUpZ = 2.1,
+}
