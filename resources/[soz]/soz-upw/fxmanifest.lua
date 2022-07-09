@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-shared_scripts {"config.lua"}
+shared_scripts {"config.lua", "shared/*.lua"}
 
 client_scripts {"@PolyZone/client.lua", "@PolyZone/BoxZone.lua", "@menuv/menuv.lua", "client/*.lua"}
 
