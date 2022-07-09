@@ -22,9 +22,7 @@ Config.Storages["upw_boss_storage"] = {
     label = "Unexptected Power and Water",
     type = "boss_storage",
     owner = "upw",
-    position = vector3(602.59, 2760.5, 47.76),
-    size = vec2(1.2, 1.0),
+    position = vector3(600.66, 2760.11, 47.76),
+    size = vec2(0.6, 2.55),
     heading = 4,
-    minZ = 46.71,
-    maxZ = 48.51,
 }

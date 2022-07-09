@@ -108,9 +108,9 @@ Config.SafeStorages = {
     ["safe_upw"] = {
         label = "Coffre Unexpected Water & Power",
         owner = "upw",
-        position = vector3(0.0, 0.0, 0.0),
-        size = vec2(1.0, 1.0),
-        heading = 0,
+        position = vector3(602.59, 2760.5, 47.76),
+        size = vec2(1.2, 1.0),
+        heading = 4,
     },
     ["safe_pawl"] = {
         label = "Coffre Pipe And Wooden Leg",
