@@ -117,6 +117,14 @@ RegisterNetEvent("admin:server:spectate", function(player)
     TriggerClientEvent("admin:client:spectate", src, player.id, coords)
 end)
 
+RegisterNetEvent("admin:server:reset-skin", function(player)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
+    TriggerClientEvent("soz-character:client:RequestCharacterWizard", player.id)
+end)
+
 RegisterNetEvent("admin:server:freeze", function(player)
     if not SozAdmin.Functions.IsPlayerHelper(source) then
         return
@@ -158,9 +166,13 @@ RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)
     end
 
     QBCore.Player.Logout(src)
+
     if QBCore.Player.Login(src, citizenid) then
         TriggerEvent("QBCore:Server:OnPlayerLoaded")
         TriggerClientEvent("QBCore:Client:OnPlayerLoaded", src)
+
+        TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", src)
+        TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", src)
     end
 end)
 
