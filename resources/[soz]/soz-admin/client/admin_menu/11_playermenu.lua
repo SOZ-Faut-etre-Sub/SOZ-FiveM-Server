@@ -128,6 +128,14 @@ function AdminMenuPlayers(menu, permission)
         end,
     })
 
+    playerMenu:AddButton({
+        label = "Reset le skin joueur",
+        value = nil,
+        select = function()
+            TriggerServerEvent("admin:server:reset-skin", CurrentPlayerData)
+        end,
+    })
+
     featureMenu:On("open", function()
         local playerFeatures = QBCore.Functions.TriggerRpc("soz-admin:feature:GetFeatures", CurrentPlayerData.id)
         featureMenu:ClearItems()
