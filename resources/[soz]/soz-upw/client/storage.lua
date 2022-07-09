@@ -1,4 +1,8 @@
+RunInverterRefreshLoop = false
+
 function CreateInverterZone(identifier, data)
+    local inverterSkin = table.deepclone(data)
+
     data.options = {
         {
             label = "Accéder à l'onduleur",
@@ -12,6 +16,36 @@ function CreateInverterZone(identifier, data)
         },
     }
 
+    inverterSkin.sx = 100.0
+    inverterSkin.sy = 100.0
+    inverterSkin.minZ = inverterSkin.minZ - 50.0
+    inverterSkin.maxZ = inverterSkin.maxZ + 50.0
+    inverterSkin.onPlayerInOut = function(isIn)
+        RunInverterRefreshLoop = isIn
+        if isIn then
+            Citizen.CreateThread(function()
+                while RunInverterRefreshLoop do
+                    local capacity = QBCore.Functions.TriggerRpc("soz-upw:server:GetInverterStorage", identifier)
+
+                    if capacity == 100 then
+                        AddReplaceTexture("upwpiletex", "UPW_Emit_100", "upwpiletex", "UPW_Emit_100")
+                    elseif capacity >= 66 then
+                        AddReplaceTexture("upwpiletex", "UPW_Emit_100", "upwpiletex", "UPW_Emit_66")
+                    elseif capacity >= 33 then
+                        AddReplaceTexture("upwpiletex", "UPW_Emit_100", "upwpiletex", "UPW_Emit_33")
+                    else
+                        AddReplaceTexture("upwpiletex", "UPW_Emit_100", "upwpiletex", "UPW_Emit_0")
+                    end
+
+                    Citizen.Wait(1000)
+                end
+            end)
+        else
+            RemoveReplaceTexture("upwpiletex", "UPW_Emit_100")
+        end
+    end
+
+    CreateZone(identifier .. "_visual", "inverter", inverterSkin)
     return CreateZone(identifier, "inverter", data)
 end
 
