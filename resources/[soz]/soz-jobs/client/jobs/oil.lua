@@ -118,6 +118,23 @@ CreateThread(function()
         },
         distance = 2.0,
     })
+
+    exports["qb-target"]:AddBoxZone("fueler:bossPrice", vector3(-237.78, 6090.83, 32.26), 0.25, 1.3,
+                                    {name = "fueler:bossPrice", heading = 45, minZ = 32.01, maxZ = 32.61}, {
+        options = {
+            {
+                label = "Configurateur station",
+                icon = "c:fuel/remplir.png",
+                event = "jobs:client:fueler:OpenFuelStationPriceMenu",
+                canInteract = function()
+                    return PlayerData.job.onduty and SozJobCore.Functions.HasPermission("oil", SozJobCore.JobPermission.Fueler.ChangePrice)
+                end,
+                job = "oil",
+            },
+        },
+        distance = 2.5,
+    })
+
 end)
 
 --- Targets Locations
@@ -253,6 +270,34 @@ end)
 --- Events
 RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function()
     SozJobCore.Functions.OpenCloakroomMenu(societyMenu, FuelerConfig.Cloakroom)
+end)
+
+RegisterNetEvent("jobs:client:fueler:OpenFuelStationPriceMenu", function()
+    societyMenu:ClearItems()
+
+    local stationsPrice = QBCore.Functions.TriggerRpc("jobs:server:fueler:GetFuelStationPrices")
+
+    for _, station in pairs(stationsPrice) do
+        societyMenu:AddButton({
+            label = station.fuel,
+            rightLabel = "$" .. station.price .. "/L",
+            select = function()
+                local price = exports["soz-hud"]:Input("Nouveau prix :", 5)
+                if price == nil or price == "" then
+                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un prix", "error")
+                    return
+                end
+
+                local success = QBCore.Functions.TriggerRpc("fuel:server:changeStationPrice", station.fuel, price)
+                if success then
+                    exports["soz-hud"]:DrawNotification("Le prix des stations a été modifié", "success")
+                end
+                societyMenu:Close()
+            end,
+        })
+    end
+
+    societyMenu:Open()
 end)
 
 RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)

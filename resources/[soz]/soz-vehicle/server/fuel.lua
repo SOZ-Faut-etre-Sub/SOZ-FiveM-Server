@@ -1,4 +1,5 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
+local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local StationsList = {}
 
 --- Main
@@ -6,8 +7,8 @@ MySQL.ready(function()
     local stations = MySQL.Sync.fetchAll("SELECT * FROM fuel_storage")
 
     for _, station in pairs(stations) do
-        StationsList[station.id] = FuelStation:new(station.id, station.station, station.fuel, station.type, station.owner, station.stock, station.position,
-                                                   station.model, station.zone)
+        StationsList[station.id] = FuelStation:new(station.id, station.station, station.fuel, station.type, station.owner, station.stock, station.price,
+                                                   station.position, station.model, station.zone)
 
         StationsList[station.id]:SpawnStation()
     end
@@ -165,6 +166,35 @@ QBCore.Functions.CreateCallback("fuel:server:useJerrycanKerosene", function(sour
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene_jerrycan", 1) then
         Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + Config.JerryCanRefill
+    end
+
+    cb(true)
+end)
+
+--- MTP functions
+QBCore.Functions.CreateCallback("fuel:server:changeStationPrice", function(source, cb, fuel, price)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    if not SozJobCore.Functions.HasPermission("oil", Player.PlayerData.job.id, Player.PlayerData.job.grade, SozJobCore.JobPermission.Fueler.ChangePrice) then
+        cb(false)
+        return
+    end
+
+    if fuel ~= "essence" and fuel ~= "kerosene" then
+        cb(false)
+        return
+    end
+
+    MySQL.query.await("UPDATE fuel_storage SET price = :price WHERE fuel = :fuel AND type = 'public'",
+                      {["price"] = QBCore.Shared.Round(price, 2), ["fuel"] = fuel})
+    for _, station in pairs(StationsList) do
+        if station:IsPublic() and station.fuel == fuel then
+            station.price = QBCore.Shared.Round(price, 2)
+        end
     end
 
     cb(true)
