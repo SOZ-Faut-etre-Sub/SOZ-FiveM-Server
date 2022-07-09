@@ -34,6 +34,7 @@ SozJobCore.JobPermission = {
     NewsManageArticle = "manage-article",
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
     Food = {Harvest = "harvest", Craft = "craft"},
+    Fueler = {ChangePrice = "fueler-change-price"},
 }
 
 SozJobCore.Jobs = {
@@ -331,6 +332,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.Fueler.ChangePrice] = {label = "Changer le prix des stations publique"},
         },
         bossZone = {
             x = -237.14,

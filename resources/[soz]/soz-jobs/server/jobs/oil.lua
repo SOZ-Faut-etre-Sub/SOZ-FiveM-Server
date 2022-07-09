@@ -368,3 +368,8 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:canResell", function(source,
 
     cb(essenceItemAmount >= 10 or keroseneItemAmount >= 10)
 end)
+
+QBCore.Functions.CreateCallback("jobs:server:fueler:GetFuelStationPrices", function(source, cb)
+    local stations = MySQL.execute.await("SELECT DISTINCT fuel, price FROM fuel_storage WHERE type = 'public'", {})
+    cb(stations)
+end)

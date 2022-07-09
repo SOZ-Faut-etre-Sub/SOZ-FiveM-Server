@@ -1,7 +1,7 @@
 --- @class FuelStation
 FuelStation = {}
 
-function FuelStation:new(id, station, fuel, type, owner, stock, position, model, zone)
+function FuelStation:new(id, station, fuel, type, owner, stock, price, position, model, zone)
     self.__index = self
 
     return setmetatable({
@@ -11,6 +11,7 @@ function FuelStation:new(id, station, fuel, type, owner, stock, position, model,
         type = type,
         owner = owner,
         stock = stock,
+        price = price,
         refueling = {},
         position = decode_json(position),
         model = model,
@@ -49,9 +50,16 @@ function FuelStation:CitizenHasAccess(citizenJobId)
     end
 end
 
+function FuelStation:SetPrice(price)
+    if self:IsPrivate() then
+        return
+    end
+    self.price = price
+end
+
 function FuelStation:GetPrice()
     if self:IsPublic() then
-        return 0.8
+        return self.price
     elseif self:IsPrivate() then
         return 0
     end
