@@ -15,6 +15,16 @@ RegisterNetEvent("soz-upw:server:FacilityCapacity", function(data)
     end
 end)
 
+QBCore.Functions.CreateCallback("soz-upw:server:GetInverterStorage", function(source, cb, identifier)
+    local items = exports["soz-inventory"]:GetItemsByType("inverter_" .. identifier, "energy")
+    local weight = 0
+    for _, item in pairs(items) do
+        weight = weight + item.item.weight * item.amount
+    end
+
+    cb(math.ceil(weight / Config.InverterMaxCapacity * 100))
+end)
+
 local function GetTerminals(scope)
     if not scope then
         scope = "default"
