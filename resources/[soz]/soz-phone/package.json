@@ -21,6 +21,7 @@
         "@headlessui/react": "^1.4.3",
         "@heroicons/react": "^1.0.5",
         "@project-error/pe-utils": "^0.1.6",
+        "@rematch/core": "^2.2.0",
         "axios": "^0.27.2",
         "cardinal": "^2.1.1",
         "classnames": "^2.3.1",
@@ -46,6 +47,7 @@
         "react-number-format": "^4.9.3",
         "react-router-dom": "^6.3.0",
         "recoil": "^0.4.1",
+        "redux": "^4.2.0",
         "uuid": "^8.3.2",
         "winston": "^3.3.3"
     },
