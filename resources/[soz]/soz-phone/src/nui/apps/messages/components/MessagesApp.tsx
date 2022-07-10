@@ -13,7 +13,7 @@ import MessageGroupModal from './modal/MessageGroupModal';
 import { MessageModal } from './modal/MessageModal';
 
 export const MessagesApp = () => {
-    const messages = useApp('MESSAGES');
+    const messages = useApp('messages');
     const history = useHistory();
 
     return (

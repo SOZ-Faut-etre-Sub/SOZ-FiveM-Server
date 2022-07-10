@@ -14,7 +14,7 @@ export const HomeApp: React.FC = () => {
 
     const filteredApps =
         societyNumber === null
-            ? apps.filter(app => app.home !== true && app.id !== 'SOCIETY_MESSAGES')
+            ? apps.filter(app => app.home !== true && app.id !== 'society-messages')
             : apps.filter(app => app.home !== true);
     const homeApps = apps.filter(app => app.home === true);
 

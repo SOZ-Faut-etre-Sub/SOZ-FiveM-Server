@@ -17,7 +17,7 @@ export const useCallNotifications = () => {
 
     const { play, stop } = useRingtoneSound();
 
-    const { icon, notificationIcon } = useApp('DIALER');
+    const { icon, notificationIcon } = useApp('dialer');
 
     const callNotificationBase = {
         app: 'CALL',

@@ -14,7 +14,7 @@ import { ThemeContext } from '../../../../styles/themeProvider';
 import { usePhotosValue } from '../../hooks/state';
 
 export const GalleryGrid = () => {
-    const photosApp = useApp('PHOTO');
+    const photosApp = useApp('photo');
     const history = useHistory();
     const query = useQueryParams();
     const [t] = useTranslation();

@@ -9,8 +9,14 @@ export const useApps = () => {
 
     const apps: IApp[] = useMemo(() => {
         return APPS.map(app => {
-            const NotificationIcon = createLazyAppIcon(app.Icon, { className: 'h-8 w-8 rounded-md' });
-            const Icon = createLazyAppIcon(app.Icon, { className: 'h-16 w-16 rounded-[1rem]' });
+            const AppIcon = React.lazy<any>(() =>
+                import(`../../../apps/${app.id}/icon.tsx`).catch(
+                    () => `Icon: '${app.id}' was not able to find a dynamic import for icon from this icon set`
+                )
+            );
+
+            const NotificationIcon = createLazyAppIcon(AppIcon, { className: 'h-8 w-8 rounded-md' });
+            const Icon = createLazyAppIcon(AppIcon, { className: 'h-16 w-16 rounded-[1rem]' });
 
             return {
                 ...app,
@@ -22,7 +28,10 @@ export const useApps = () => {
         });
     }, [icons]);
 
-    const getApp = useCallback((id: string): IApp => apps.find(a => a.id === id) || null, [apps]);
+    const getApp = useCallback(
+        (id: string): IApp => apps.find(a => a.id.toLowerCase() === id.toLowerCase()) || null,
+        [apps]
+    );
     return { apps, getApp };
 };
 

@@ -11,7 +11,7 @@ import { ContactList } from './List/ContactList';
 import ContactsInfoPage from './views/ContactInfo';
 
 export const SocietyContactsApp: React.FC = () => {
-    const contacts = useApp('SOCIETY_CONTACTS');
+    const contacts = useApp('society-contacts');
 
     return (
         <Transition

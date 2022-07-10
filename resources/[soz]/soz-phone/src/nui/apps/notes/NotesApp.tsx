@@ -16,7 +16,7 @@ import NoteList from './list/NoteList';
 import { NoteModal } from './modal/NoteModal';
 
 export const NotesApp: React.FC = () => {
-    const notesApp = useApp('NOTES');
+    const notesApp = useApp('notes');
     const notes = useNotesValue();
     const setSelectedNote = useSetSelectedNote();
     const [isModalVisible] = useModalVisible();

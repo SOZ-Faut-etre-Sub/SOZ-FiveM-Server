@@ -13,7 +13,7 @@ import { ContactList } from './List/ContactList';
 import ContactsInfoPage from './views/ContactInfo';
 
 export const ContactsApp: React.FC = () => {
-    const contacts = useApp('CONTACTS');
+    const contacts = useApp('contacts');
     const { pathname } = useLocation();
     const history = useHistory();
 
