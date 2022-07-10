@@ -4,7 +4,7 @@ import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

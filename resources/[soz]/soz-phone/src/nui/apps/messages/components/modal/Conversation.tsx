@@ -2,7 +2,7 @@ import { useQueryParams } from '@common/hooks/useQueryParams';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageConversation, MessageEvents } from '@typings/messages';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';

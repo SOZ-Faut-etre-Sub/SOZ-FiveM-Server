@@ -1,5 +1,5 @@
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 
 import NewMessageGroupForm from '../form/NewMessageGroupForm';

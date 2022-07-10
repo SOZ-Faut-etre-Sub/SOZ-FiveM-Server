@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ContextMenu, IContextMenuOption } from '../components/ContextMenu';
+import { ContextMenu, IContextMenuOption } from '../old_components/ContextMenu';
 
 type UseContextMenu = [any, any, () => JSX.Element, boolean];
 

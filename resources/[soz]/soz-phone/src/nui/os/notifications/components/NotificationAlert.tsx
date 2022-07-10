@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import Alert from '@ui/components/Alert';
+import Alert from '@ui/old_components/Alert';
 import React from 'react';
 
 import { useNotifications } from '../hooks/useNotifications';

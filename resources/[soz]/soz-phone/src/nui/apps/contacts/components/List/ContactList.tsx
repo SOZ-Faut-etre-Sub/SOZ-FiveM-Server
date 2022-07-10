@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 

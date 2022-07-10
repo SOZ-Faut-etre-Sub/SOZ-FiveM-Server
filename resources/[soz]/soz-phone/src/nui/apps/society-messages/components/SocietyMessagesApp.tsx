@@ -1,9 +1,9 @@
 import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
