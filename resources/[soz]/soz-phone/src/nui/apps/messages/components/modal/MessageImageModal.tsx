@@ -11,7 +11,7 @@ import { fetchNui } from '@utils/fetchNui';
 import qs from 'qs';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
@@ -23,7 +23,7 @@ interface IProps {
 }
 
 export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IProps) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const [t] = useTranslation();
     const { pathname, search } = useLocation();
     const { addAlert } = useSnackbar();
@@ -31,7 +31,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
     const { sendMessage } = useMessageAPI();
     const removeQueryParamImage = useCallback(() => {
         setQueryParamImagePreview(null);
-        history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
     }, [history, pathname, search]);
 
     const sendImageMessage = useCallback(
@@ -110,7 +110,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                         <Button
                             className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-400"
                             onClick={() => {
-                                history.push(
+                                navigate(
                                     `/photo?${qs.stringify({
                                         referal: encodeURIComponent(pathname + search),
                                     })}`

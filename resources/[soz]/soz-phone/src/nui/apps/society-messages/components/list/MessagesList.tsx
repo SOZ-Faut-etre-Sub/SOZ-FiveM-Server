@@ -9,7 +9,7 @@ import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import dayjs from 'dayjs';
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useMessagesValue } from '../../hooks/state';
@@ -20,7 +20,7 @@ const MessagesList = (): any => {
     const societyMessages = useMessagesValue();
     const { theme } = useContext(ThemeContext);
     const { initializeCall } = useCall();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const startCall = (number: string) => {
         LogDebugEvent({
@@ -37,7 +37,7 @@ const MessagesList = (): any => {
             level: 1,
             data: { phoneNumber },
         });
-        history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+        navigate(`/messages/new?phoneNumber=${phoneNumber}`);
     };
 
     const setWaypoint = pos => {

@@ -4,15 +4,14 @@ import { PhotoEvents } from '@typings/photo';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import React from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 
 const PhoneWrapper: React.FC = ({ children }) => {
     const [settings] = useSettings();
-    const { isExact } = useRouteMatch('/');
-    const isCameraPath = useRouteMatch('/camera');
+    const { pathname } = useLocation();
     const { visibility, notifVisibility } = usePhoneVisibility();
 
     return (
@@ -26,7 +25,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
             <div
                 className="PhoneWrapper"
                 onClick={() => {
-                    if (isCameraPath && isCameraPath.isExact) {
+                    if (pathname === '/camera') {
                         fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CONTROL_CAMERA, {});
                     }
                 }}
@@ -48,7 +47,7 @@ const PhoneWrapper: React.FC = ({ children }) => {
                     />
                     <div
                         id="phone"
-                        className={isExact ? 'PhoneScreen' : 'PhoneScreen PhoneScreenNoHome'}
+                        className={pathname === '/' ? 'PhoneScreen' : 'PhoneScreen PhoneScreenNoHome'}
                         style={{
                             backgroundColor: '#545454',
                             backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)

@@ -18,7 +18,7 @@ import { TopLevelErrorComponent } from '@ui/old_components/TopLevelErrorComponen
 import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import DefaultConfig from '../../config.json';
 import { useBankService } from './apps/bank/hooks/useBankService';
@@ -75,13 +75,13 @@ function Phone() {
                 <PhoneWrapper>
                     <NotificationBar />
                     <div className="PhoneAppContainer select-none">
-                        <>
-                            <Route exact path="/" component={HomeApp} />
-                            {callModal && <Route exact path="/call" component={CallModal} />}
-                            {apps.map(App => (
-                                <App.Route key={App.id} />
+                        <Routes>
+                            <Route path="/" element={<HomeApp />} />
+                            {callModal && <Route path="/call" element={<CallModal />} />}
+                            {apps.map(app => (
+                                <Route key={app.id} path={app.path} element={app.component} />
                             ))}
-                        </>
+                        </Routes>
                         <NotificationAlert />
                         <PhoneSnackbar />
                     </div>

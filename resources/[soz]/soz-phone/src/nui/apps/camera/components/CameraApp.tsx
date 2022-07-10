@@ -10,7 +10,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { usePhotosValue } from '../../photo/hooks/state';
 import { usePhotoActions } from '../../photo/hooks/usePhotoActions';
@@ -25,7 +25,7 @@ try {
 }
 
 const CameraApp: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const [t] = useTranslation();
     const photos = usePhotosValue();
     const { addAlert } = useSnackbar();
@@ -59,7 +59,7 @@ const CameraApp: React.FC = () => {
     }, 1);
 
     useEffect(() => {
-        if (!visibility) history.push('/');
+        if (!visibility) navigate('/', { replace: true });
         fetchNui<ServerPromiseResp<void>>(PhotoEvents.ENTER_CAMERA, {});
 
         return () => {
@@ -97,7 +97,7 @@ const CameraApp: React.FC = () => {
                         <div
                             className="bg-center bg-cover w-16 aspect-square rounded-xl cursor-pointer"
                             style={{ backgroundImage: `url(${(photos[0] && photos[0].image) || null})` }}
-                            onClick={() => history.push('/photo')}
+                            onClick={() => navigate('/photo')}
                         />
                         <div
                             className="bg-white h-16 w-16 rounded-full ring ring-white ring-offset-2 ring-offset-black cursor-pointer"

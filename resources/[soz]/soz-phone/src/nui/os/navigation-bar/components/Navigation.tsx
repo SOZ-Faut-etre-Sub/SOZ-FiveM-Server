@@ -1,20 +1,18 @@
 import { Transition } from '@headlessui/react';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import React, { useContext } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useLocation, useNavigate, useRouteMatch } from 'react-router-dom';
 
 import { ThemeContext } from '../../../styles/themeProvider';
 
 export const Navigation = () => {
-    const history = useHistory();
-    const home = useRouteMatch('/');
-    const camera = useRouteMatch('/camera');
-    const call = useRouteMatch('/call');
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
     const { setBarUncollapsed } = useNotifications();
     const { theme } = useContext(ThemeContext);
 
     const color = () => {
-        if ((camera && camera.isExact) || (home && home.isExact) || (call && call.isExact)) {
+        if (pathname === '/camera' || pathname === '/' || pathname === '/call') {
             return 'bg-gray-200';
         } else {
             return theme === 'dark' ? 'bg-gray-200' : 'bg-black';
@@ -36,7 +34,7 @@ export const Navigation = () => {
             <div
                 className={`${color()} bg-opacity-70 rounded-full cursor-pointer h-[0.53rem] w-2/5 transition-colors ease-in-out duration-300`}
                 onClick={() => {
-                    history.push('/');
+                    navigate('/', { replace: true });
                     setBarUncollapsed(false);
                 }}
             />

@@ -6,7 +6,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import { ContactList } from './List/ContactList';
@@ -15,7 +15,7 @@ import ContactsInfoPage from './views/ContactInfo';
 export const ContactsApp: React.FC = () => {
     const contacts = useApp('contacts');
     const { pathname } = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const pathTemplate = /contacts\/-?\d/;
 
@@ -36,7 +36,7 @@ export const ContactsApp: React.FC = () => {
                     app={contacts}
                     action={
                         !pathname.match(pathTemplate) && (
-                            <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => history.push('/contacts/-1')} />
+                            <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
                         )
                     }
                 >
@@ -44,8 +44,10 @@ export const ContactsApp: React.FC = () => {
                 </AppTitle>
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Route path="/contacts/" exact component={ContactList} />
-                        <Route path="/contacts/:id" exact component={ContactsInfoPage} />
+                        <Routes>
+                            <Route path="/contacts/" element={<ContactList />} />
+                            <Route path="/contacts/:id" element={<ContactsInfoPage />} />
+                        </Routes>
                     </React.Suspense>
                 </AppContent>
             </AppWrapper>

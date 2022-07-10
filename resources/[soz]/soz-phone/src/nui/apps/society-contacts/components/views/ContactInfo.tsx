@@ -11,7 +11,7 @@ import { Button } from '@ui/old_components/Button';
 import { TextareaField } from '@ui/old_components/Input';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
@@ -34,7 +34,7 @@ const ContactsInfoPage: React.FC = () => {
         referal: '/society-contacts',
     });
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { getContact } = useContactActions();
     const { sendSocietyMessage } = useContactsAPI();
@@ -78,7 +78,7 @@ const ContactsInfoPage: React.FC = () => {
         >
             <AppWrapper>
                 <AppTitle title={contact.display}>
-                    <Button className="flex items-center text-base" onClick={() => history.goBack()}>
+                    <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                         <ChevronLeftIcon className="h-5 w-5" />
                         Fermer
                     </Button>

@@ -3,14 +3,14 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useFilteredContacts } from '../../../contacts/hooks/state';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
     const contacts = useFilteredContacts();
     const { addConversation } = useMessageAPI();
@@ -22,7 +22,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     }, [phoneNumber, addConversation]);
 
     const handleCancel = () => {
-        history.push('/messages');
+        navigate('/messages');
     };
 
     return (

@@ -4,7 +4,7 @@ import { Message, MessageConversationResponse, MessageEvents, PreDBMessage } fro
 import { fetchNui } from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
 
 import { useContactActions } from '../../contacts/hooks/useContactActions';
@@ -23,7 +23,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
     const { updateLocalMessages, updateLocalConversations, removeLocalConversation } = useMessageActions();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { state: messageConversationsState, contents: messageConversationsContents } = useRecoilValueLoadable(
         messageState.messageCoversations
     );
@@ -59,7 +59,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                 targetNumber,
             }).then(resp => {
                 if (resp.status === 'error') {
-                    history.push('/messages');
+                    navigate('/messages');
                     return addAlert({
                         message: t('MESSAGES.FEEDBACK.CONVERSATION_CREATE_ONE_NUMBER_FAILED', {
                             number: targetNumber,
@@ -73,7 +73,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                 );
 
                 if (doesConversationExist) {
-                    history.push('/messages/conversations/' + resp.data.conversation_id);
+                    navigate('/messages/conversations/' + resp.data.conversation_id);
                     return;
                 }
 
@@ -89,7 +89,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                     avatar,
                 });
 
-                history.push(`/messages/conversations/${resp.data.conversation_id}`);
+                navigate(`/messages/conversations/${resp.data.conversation_id}`);
             });
         },
         [
@@ -138,7 +138,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                         type: 'error',
                     });
 
-                    return history.push('/messages');
+                    return navigate('/messages');
                 }
 
                 setMessages(resp.data);
