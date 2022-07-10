@@ -30,7 +30,6 @@ export const GalleryGrid = () => {
     return (
         <AppWrapper>
             <Transition
-                appear={true}
                 show={true}
                 className="mt-4 h-full flex flex-col"
                 enter="transition-all duration-300"
