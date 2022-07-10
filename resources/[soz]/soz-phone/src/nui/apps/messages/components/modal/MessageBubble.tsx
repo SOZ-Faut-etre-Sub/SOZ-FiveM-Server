@@ -2,7 +2,7 @@ import { LocationMarkerIcon } from '@heroicons/react/solid';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageEvents } from '@typings/messages';
-import { PictureReveal } from '@ui/components/PictureReveal';
+import { PictureReveal } from '@ui/old_components/PictureReveal';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useContext } from 'react';
 

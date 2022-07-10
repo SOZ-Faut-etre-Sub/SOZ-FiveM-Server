@@ -1,5 +1,5 @@
 import { PaperClipIcon, UploadIcon } from '@heroicons/react/outline';
-import { TextField } from '@ui/components/Input';
+import { TextField } from '@ui/old_components/Input';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -1,5 +1,5 @@
 import { useDebounce } from '@os/phone/hooks/useDebounce';
-import { SearchField } from '@ui/components/SearchField';
+import { SearchField } from '@ui/old_components/SearchField';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

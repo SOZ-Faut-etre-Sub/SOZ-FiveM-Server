@@ -1,4 +1,4 @@
-import { AppIcon } from '@ui/components/AppIcon';
+import { AppIcon } from '@ui/old_components/AppIcon';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

@@ -14,7 +14,7 @@ import { usePhoneService } from '@os/phone/hooks/usePhoneService';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { PhoneEvents } from '@typings/phone';
-import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
+import { TopLevelErrorComponent } from '@ui/old_components/TopLevelErrorComponent';
 import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ import { useSocietyMessagesService } from './apps/society-messages/hooks/useMess
 import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import PhoneWrapper from './PhoneWrapper';
-import WindowSnackbar from './ui/components/WindowSnackbar';
+import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
     const { i18n } = useTranslation();

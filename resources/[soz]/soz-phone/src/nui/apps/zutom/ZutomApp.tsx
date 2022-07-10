@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import { AppWrapper } from '@ui/components';
+import { AppWrapper } from '@ui/old_components';
 
 export const ZutomApp: React.FC = () => {
     return (

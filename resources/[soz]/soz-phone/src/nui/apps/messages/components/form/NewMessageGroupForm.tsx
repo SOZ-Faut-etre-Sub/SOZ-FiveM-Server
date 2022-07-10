@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { Button } from '@ui/components/Button';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { Button } from '@ui/old_components/Button';
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 

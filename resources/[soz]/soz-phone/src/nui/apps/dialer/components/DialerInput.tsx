@@ -1,4 +1,4 @@
-import { InputBase } from '@ui/components/Input';
+import { InputBase } from '@ui/old_components/Input';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 

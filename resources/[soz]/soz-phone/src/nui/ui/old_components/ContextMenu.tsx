@@ -1,10 +1,10 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { AppWrapper } from '@ui/components/AppWrapper';
-import { Button } from '@ui/components/Button';
-import { ItemIcon } from '@ui/components/ItemIcon';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { AppWrapper } from '@ui/old_components/AppWrapper';
+import { Button } from '@ui/old_components/Button';
+import { ItemIcon } from '@ui/old_components/ItemIcon';
 import React from 'react';
 
 import { List } from './List';

@@ -5,7 +5,7 @@ import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { SocietyEvents } from '@typings/society';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import dayjs from 'dayjs';
 import React, { useContext } from 'react';

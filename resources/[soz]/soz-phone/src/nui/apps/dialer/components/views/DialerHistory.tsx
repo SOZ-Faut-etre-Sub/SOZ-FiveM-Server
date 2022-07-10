@@ -11,7 +11,7 @@ import {
 import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { CallHistoryItem } from '@typings/call';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useCallback, useContext } from 'react';

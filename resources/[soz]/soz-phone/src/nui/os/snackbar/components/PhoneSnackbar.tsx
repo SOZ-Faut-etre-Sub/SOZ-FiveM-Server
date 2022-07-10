@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import Alert from '@ui/components/Alert';
+import Alert from '@ui/old_components/Alert';
 import React, { useEffect } from 'react';
 
 import { useSnackbar } from '../hooks/useSnackbar';

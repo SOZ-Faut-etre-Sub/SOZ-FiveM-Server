@@ -1,5 +1,5 @@
 import { ClockIcon, UserCircleIcon, ViewGridIcon } from '@heroicons/react/solid';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
