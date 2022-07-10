@@ -13,7 +13,7 @@ import { DialerHistory } from './views/DialerHistory';
 import DialPage from './views/DialPage';
 
 export const DialerApp: React.FC = () => {
-    const dialer = useApp('DIALER');
+    const dialer = useApp('dialer');
     return (
         <Transition
             appear={true}

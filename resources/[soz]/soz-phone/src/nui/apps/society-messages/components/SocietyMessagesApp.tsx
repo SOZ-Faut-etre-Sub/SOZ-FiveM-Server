@@ -10,7 +10,7 @@ import { Route } from 'react-router-dom';
 import MessagesList from './list/MessagesList';
 
 export const SocietyMessagesApp = () => {
-    const messages = useApp('SOCIETY_MESSAGES');
+    const messages = useApp('society-messages');
 
     return (
         <Transition

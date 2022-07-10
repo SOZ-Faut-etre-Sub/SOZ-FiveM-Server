@@ -15,7 +15,7 @@ export const useMessageNotifications = () => {
     const [t] = useTranslation();
     const history = useHistory();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('MESSAGES');
+    const { icon, notificationIcon } = useApp('messages');
     const { getMessageConversationById, goToConversation } = useMessages();
     const { addConversation } = useMessageAPI();
     const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);

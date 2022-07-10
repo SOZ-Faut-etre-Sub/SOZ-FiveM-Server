@@ -34,7 +34,7 @@ interface ContactInfoRouteQuery {
 }
 
 const ContactsInfoPage: React.FC = () => {
-    const contacts = useApp('CONTACTS');
+    const contacts = useApp('contacts');
     const history = useHistory();
     const { theme } = useContext(ThemeContext);
     const { id } = useParams<ContactInfoRouteParams>();

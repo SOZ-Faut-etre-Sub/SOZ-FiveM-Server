@@ -9,7 +9,7 @@ export const useMessageNotifications = () => {
     const [t] = useTranslation();
     const history = useHistory();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('SOCIETY_MESSAGES');
+    const { icon, notificationIcon } = useApp('society-messages');
 
     // Remove notifications from groups when opening them
     history.listen(location => {

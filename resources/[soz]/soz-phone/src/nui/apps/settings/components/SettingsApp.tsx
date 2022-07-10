@@ -36,7 +36,7 @@ import { SettingItem, SettingItemSlider, SettingSwitch } from './SettingItem';
 import WallpaperModal from './WallpaperModal';
 
 export const SettingsApp = () => {
-    const settingsApp = useApp('SETTINGS');
+    const settingsApp = useApp('settings');
     const [config] = usePhoneConfig();
     const myNumber = useMyPhoneNumber();
     const myAvatar = useMyPictureProfile();

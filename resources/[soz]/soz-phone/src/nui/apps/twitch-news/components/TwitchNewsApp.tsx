@@ -10,7 +10,7 @@ import { Route } from 'react-router-dom';
 import NewsList from './list/NewsList';
 
 export const TwitchNewsApp = () => {
-    const messages = useApp('TWITCH_NEWS');
+    const messages = useApp('twitch-news');
 
     return (
         <Transition

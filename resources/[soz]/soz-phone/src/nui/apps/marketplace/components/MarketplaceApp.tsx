@@ -10,7 +10,7 @@ import { MarketplaceListContainer } from './MarketplaceList/MarketplaceListConta
 import { NavigationBar } from './navigation/NavigationBar';
 
 export const MarketplaceApp: React.FC = () => {
-    const marketplaceApp = useApp('MARKETPLACE');
+    const marketplaceApp = useApp('marketplace');
 
     return (
         <AppWrapper id="marketplace-app">
