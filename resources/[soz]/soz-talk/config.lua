@@ -48,4 +48,10 @@ Config.AllowedRadioInVehicle = {
     [GetHashKey("fbi2")] = true,
     [GetHashKey("cogfbi")] = true,
     [GetHashKey("paragonfbi")] = true,
+    --- PAWL
+    [GetHashKey("sadler1")] = true,
+    [GetHashKey("hauler1")] = true,
+    --- UPW
+    [GetHashKey("brickade1")] = true,
+    [GetHashKey("boxville")] = true,
 }
