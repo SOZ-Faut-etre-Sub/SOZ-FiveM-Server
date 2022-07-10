@@ -283,12 +283,12 @@ RegisterNetEvent("jobs:client:fueler:OpenFuelStationPriceMenu", function()
             rightLabel = "$" .. station.price .. "/L",
             select = function()
                 local price = exports["soz-hud"]:Input("Nouveau prix :", 5)
-                if price == nil or price == "" then
+                if price == nil or tonumber(price) < 0 or tonumber(price) > 100 then
                     exports["soz-hud"]:DrawNotification("Vous devez spécifier un prix", "error")
                     return
                 end
 
-                local success = QBCore.Functions.TriggerRpc("fuel:server:changeStationPrice", station.fuel, price)
+                local success = QBCore.Functions.TriggerRpc("fuel:server:changeStationPrice", station.fuel, tonumber(price))
                 if success then
                     exports["soz-hud"]:DrawNotification("Le prix des stations a été modifié", "success")
                 end
