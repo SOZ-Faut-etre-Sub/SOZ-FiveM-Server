@@ -20,7 +20,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         end: null,
     },
     {
-        id: 2,
+        id: 3,
         identifier: 'b8080a50-ad30-4ee9-84cb-00688e2bf167',
         transmitter: '215-8139',
         receiver: '704-1549',
@@ -29,7 +29,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         end: null,
     },
     {
-        id: 5,
+        id: 4,
         identifier: 'b8080a50-ad30-4ee9-84cb-00688e2bf167',
         transmitter: '215-8139',
         receiver: '704-1549',

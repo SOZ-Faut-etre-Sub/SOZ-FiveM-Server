@@ -22,9 +22,6 @@ const ProfileField = forwardRef<HTMLInputElement, ProfileFieldProps>(
                     value={value}
                     onChange={_handleChange}
                     disabled={!allowChange}
-                    inputProps={{
-                        maxLength: maxLength,
-                    }}
                     multiline={multiline}
                     inputRef={ref}
                 />
