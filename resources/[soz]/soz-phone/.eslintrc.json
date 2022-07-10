@@ -1,0 +1,73 @@
+{
+    "plugins": [
+        "prettier",
+        "react",
+        "react-hooks",
+        "simple-import-sort"
+    ],
+    "rules": {
+        "prettier/prettier": ["warn", {
+            "singleQuote": true,
+            "trailingComma": "es5",
+            "bracketSpacing": true,
+            "tabWidth": 4,
+            "printWidth": 120,
+            "arrowParens": "avoid"
+        }],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "no-unused-vars": ["warn", { "args": "after-used", "ignoreRestSiblings": true }],
+        "react-hooks/rules-of-hooks": "error",
+        "simple-import-sort/imports": ["error", { "groups": [
+            // Side effect imports.
+            ["^\\u0000"],
+            // Packages.
+            // Things that start with a lowercase letter (or digit or underscore), or `@` followed by a letter.
+            ["^@?[a-z0-9]"],
+            // Components.
+            // Things that start with an uppercase.
+            ["^[A-Z]"],
+            // Absolute imports and other imports such as Vue-style `@/foo`.
+            // Anything that does not start with a dot.
+            ["^[^.]"],
+            // Relative imports.
+            // Anything that starts with a dot.
+            ["^\\."]
+        ]}]
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "extends": [
+        "prettier"
+    ],
+    "overrides": [
+        {
+            "files": ["**/*.{ts,tsx}"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": [
+                "@typescript-eslint"
+            ],
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "rules": {
+                "@typescript-eslint/no-empty-function": "off",
+                "@typescript-eslint/explicit-module-boundary-types": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "no-irregular-whitespace": "off"
+            }
+        }
+    ]
+}
