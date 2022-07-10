@@ -38,6 +38,15 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
         if harvest then
             exports["soz-inventory"]:AddItem(Player.PlayerData.source, Config.Harvest.RewardItem, 1, nil, nil, function(success, reason)
                 cb(success)
+
+                TriggerEvent("monitor:server:event", "job_pawl_harvest_tree", {
+                    player_source = Player.PlayerData.source,
+                    field = identifier,
+                }, {
+                    position = position,
+                    amount = 1,
+                })
+
                 return
             end)
         end
@@ -202,6 +211,14 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil, function(success, reason)
             if success then
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !", "success")
+
+                TriggerEvent("monitor:server:event", "job_pawl_craft", {
+                    player_source = Player.PlayerData.source,
+                    item = craft.RewardItem,
+                    tier = metadata.tier,
+                }, {
+                    amount = craft.RewardAmount,
+                })
             else
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas récupérer d'objet !", "error")
             end
