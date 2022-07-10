@@ -42,10 +42,7 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
                 TriggerEvent("monitor:server:event", "job_pawl_harvest_tree", {
                     player_source = Player.PlayerData.source,
                     field = identifier,
-                }, {
-                    position = position,
-                    amount = 1,
-                })
+                }, {position = position, amount = 1})
 
                 return
             end)
@@ -212,11 +209,8 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
             if success then
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !", "success")
 
-                TriggerEvent("monitor:server:event", "job_pawl_craft", {
-                    player_source = Player.PlayerData.source,
-                    item = craft.RewardItem,
-                    tier = metadata.tier,
-                }, {
+                TriggerEvent("monitor:server:event", "job_pawl_craft",
+                             {player_source = Player.PlayerData.source, item = craft.RewardItem, tier = metadata.tier}, {
                     amount = craft.RewardAmount,
                 })
             else
