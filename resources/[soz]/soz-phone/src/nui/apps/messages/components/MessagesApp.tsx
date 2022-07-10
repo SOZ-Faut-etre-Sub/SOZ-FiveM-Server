@@ -42,11 +42,11 @@ export const MessagesApp = () => {
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <Routes>
-                            <Route path="/messages/new" element={<MessageGroupModal />} />
-                            <Route path="/messages/new/:phoneNumber" element={<MessageGroupModal />} />
+                            <Route index element={<MessagesList />} />
+                            <Route path="new" element={<MessageGroupModal />} />
+                            <Route path="new/:phoneNumber" element={<MessageGroupModal />} />
 
-                            <Route path="/messages/conversations/:groupId" element={<MessageModal />} />
-                            <Route path="/messages" element={<MessagesList />} />
+                            <Route path="conversations/:groupId" element={<MessageModal />} />
                         </Routes>
                     </React.Suspense>
                 </AppContent>

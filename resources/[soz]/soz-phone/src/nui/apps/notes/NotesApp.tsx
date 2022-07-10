@@ -60,7 +60,7 @@ export const NotesApp: React.FC = () => {
                 <AppContent className="flex-grow mt-6 mb-4">
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <Routes>
-                            <Route path="/notes/*" element={<NoteList />} />
+                            <Route path="*" element={<NoteList />} />
                         </Routes>
                     </React.Suspense>
                 </AppContent>

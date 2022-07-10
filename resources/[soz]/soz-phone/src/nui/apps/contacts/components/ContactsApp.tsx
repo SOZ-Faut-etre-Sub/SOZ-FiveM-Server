@@ -45,8 +45,8 @@ export const ContactsApp: React.FC = () => {
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <Routes>
-                            <Route path="/contacts/" element={<ContactList />} />
-                            <Route path="/contacts/:id" element={<ContactsInfoPage />} />
+                            <Route index element={<ContactList />} />
+                            <Route path=":id" element={<ContactsInfoPage />} />
                         </Routes>
                     </React.Suspense>
                 </AppContent>

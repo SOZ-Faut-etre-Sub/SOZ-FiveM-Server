@@ -29,7 +29,7 @@ export const SocietyMessagesApp = () => {
                 <AppContent className="mt-4 h-[750px] overflow-scroll">
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <Routes>
-                            <Route path="/society-messages" element={<MessagesList />} />
+                            <Route index element={<MessagesList />} />
                         </Routes>
                     </React.Suspense>
                 </AppContent>

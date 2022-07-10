@@ -30,9 +30,9 @@ export const DialerApp: React.FC = () => {
                 <AppTitle app={dialer} />
                 <AppContent className="mt-5 h-[710px]">
                     <Routes>
-                        <Route path="/phone/dial" element={<DialPage />} />
-                        <Route path="/phone" element={<DialerHistory />} />
-                        <Route path="/phone/contacts" element={<ContactList />} />
+                        <Route index element={<DialerHistory />} />
+                        <Route path="dial" element={<DialPage />} />
+                        <Route path="contacts" element={<ContactList />} />
                     </Routes>
                 </AppContent>
                 <DialerNavBar />

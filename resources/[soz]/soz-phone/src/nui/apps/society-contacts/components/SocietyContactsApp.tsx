@@ -30,8 +30,8 @@ export const SocietyContactsApp: React.FC = () => {
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <Routes>
-                            <Route path="/society-contacts/" element={<ContactList />} />
-                            <Route path="/society-contacts/:id" element={<ContactsInfoPage />} />
+                            <Route index element={<ContactList />} />
+                            <Route path=":id" element={<ContactsInfoPage />} />
                         </Routes>
                     </React.Suspense>
                 </AppContent>

@@ -26,8 +26,8 @@ const PhotoApp: React.FC = () => (
             <AppContent>
                 <React.Suspense fallback={<LoadingSpinner />}>
                     <Routes>
-                        <Route path="/photo" element={<GalleryGrid />} />
-                        <Route path="/photo/image" element={<GalleryModal />} />
+                        <Route index element={<GalleryGrid />} />
+                        <Route path="image" element={<GalleryModal />} />
                     </Routes>
                 </React.Suspense>
             </AppContent>

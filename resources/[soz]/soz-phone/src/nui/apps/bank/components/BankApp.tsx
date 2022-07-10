@@ -29,7 +29,7 @@ export const BankApp = () => {
                 <AppTitle title={t('APPS_BANK')} isBigHeader={true} />
                 <AppContent>
                     <Routes>
-                        <Route path="/bank" element={<BankHome />} />
+                        <Route index element={<BankHome />} />
                         {/*<Route path="/bank/account" exact component={BankAccount} />*/}
                     </Routes>
                 </AppContent>
