@@ -21,7 +21,7 @@
         "@headlessui/react": "^1.4.3",
         "@heroicons/react": "^1.0.5",
         "@project-error/pe-utils": "^0.1.6",
-        "axios": "^0.21.4",
+        "axios": "^0.27.2",
         "cardinal": "^2.1.1",
         "classnames": "^2.3.1",
         "dayjs": "^1.10.7",
@@ -50,8 +50,8 @@
         "winston": "^3.3.3"
     },
     "devDependencies": {
-        "@citizenfx/client": "^2.0.5511-1",
-        "@citizenfx/server": "^2.0.5511-1",
+        "@citizenfx/client": "^2.0.5715-1",
+        "@citizenfx/server": "^2.0.5715-1",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
         "@svgr/webpack": "^6.2.1",
         "@swc/core": "^1.2.204",
