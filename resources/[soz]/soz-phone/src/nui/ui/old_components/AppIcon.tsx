@@ -8,7 +8,7 @@ export interface AppIconProps {
     id: string;
     nameLocale: string;
     Icon: React.ElementType;
-    icon: React.ElementType;
+    icon: JSX.Element;
     color: string;
     notification: INotificationIcon;
 }

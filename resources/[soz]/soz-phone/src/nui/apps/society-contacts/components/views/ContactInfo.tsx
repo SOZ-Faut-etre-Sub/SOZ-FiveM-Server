@@ -16,11 +16,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
-interface ContactInfoRouteParams {
-    mode: string;
-    id: string;
-}
-
 interface ContactInfoRouteQuery {
     addNumber?: string;
     referal?: string;
@@ -29,7 +24,7 @@ interface ContactInfoRouteQuery {
 }
 
 const ContactsInfoPage: React.FC = () => {
-    const { id } = useParams<ContactInfoRouteParams>();
+    const { id } = useParams();
     const { referal: referral } = useQueryParams<ContactInfoRouteQuery>({
         referal: '/society-contacts',
     });

@@ -7,14 +7,14 @@ import { Button } from '@ui/old_components/Button';
 import { Tooltip } from '@ui/old_components/Tooltip';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { fetchNui } from '../../../../utils/fetchNui';
 
 export const ListingActions: React.FC<MarketplaceListing> = ({ ...listing }) => {
     const myNumber = useMyPhoneNumber();
     const [t] = useTranslation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { initializeCall } = useCall();
     const { addAlert } = useSnackbar();
 
@@ -59,7 +59,7 @@ export const ListingActions: React.FC<MarketplaceListing> = ({ ...listing }) => 
     };
 
     const handleMessage = () => {
-        history.push(`/messages/new?phoneNumber=${listing.number}`);
+        navigate(`/messages/new?phoneNumber=${listing.number}`);
     };
 
     return (

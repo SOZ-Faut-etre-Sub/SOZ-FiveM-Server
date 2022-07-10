@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
 import { useSettings } from '../apps/settings/hooks/useSettings';
 
@@ -12,7 +12,7 @@ export const ThemeContext = React.createContext<Theme>({
     updateTheme: () => {},
 });
 
-const ThemeProvider: React.FC = ({ children }) => {
+const ThemeProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [settings] = useSettings();
     const [theme, setTheme] = useState(settings.theme.value);
     const updateTheme = useCallback(function (t) {

@@ -8,7 +8,7 @@ import { TextField } from '@ui/old_components/Input';
 import qs from 'qs';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { fetchNui } from '../../../../utils/fetchNui';
 import { useForm } from '../../hooks/state';
@@ -16,7 +16,7 @@ import { useForm } from '../../hooks/state';
 export const ListingForm: React.FC = () => {
     const [t] = useTranslation();
     const { addAlert } = useSnackbar();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { pathname, search } = useLocation();
     const query = useQueryParams();
     const [formState, setFormState] = useForm();
@@ -50,7 +50,7 @@ export const ListingForm: React.FC = () => {
                 message: t('MARKETPLACE.FEEDBACK.CREATE_LISTING_SUCCESS'),
                 type: 'success',
             });
-            history.push('/marketplace');
+            navigate('/marketplace');
             setFormState({
                 title: '',
                 description: '',
@@ -60,7 +60,7 @@ export const ListingForm: React.FC = () => {
     };
 
     const handleChooseImage = useCallback(() => {
-        history.push(
+        navigate(
             `/photo?${qs.stringify({
                 referal: encodeURIComponent(pathname + search),
             })}`
@@ -100,7 +100,7 @@ export const ListingForm: React.FC = () => {
             ...formState,
             url: query.image,
         });
-        history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
     }, [query?.image, history, pathname, search, setFormState, formState]);
 
     return (

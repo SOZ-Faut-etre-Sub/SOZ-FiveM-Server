@@ -3,7 +3,7 @@ import { useCurrentCall } from '@os/call/hooks/state';
 import { NotificationItem } from '@os/notifications/components/NotificationItem';
 import cn from 'classnames';
 import React, { useContext, useEffect } from 'react';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import BatteryIcon from '../../../styles/icons/system/Battery';
 import CellSignal from '../../../styles/icons/system/CellSignal';

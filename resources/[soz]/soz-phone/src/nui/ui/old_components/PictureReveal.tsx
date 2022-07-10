@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from '../../apps/settings/hooks/useSettings';
 
-export const PictureReveal: React.FC = ({ children }) => {
+export const PictureReveal: React.FC<PropsWithChildren> = ({ children }) => {
     const [settings] = useSettings();
     const [covered, setCovered] = useState<boolean>(false);
     const [, setReady] = useState<boolean>(false);
