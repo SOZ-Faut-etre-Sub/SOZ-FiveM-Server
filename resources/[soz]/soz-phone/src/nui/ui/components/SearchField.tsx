@@ -28,7 +28,6 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange, place
                     onChange={onChange}
                     placeholder={placeholder}
                     className={theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-gray-300'}
-                    inputProps={{ 'aria-label': 'search' }}
                 />
             </div>
         </div>
