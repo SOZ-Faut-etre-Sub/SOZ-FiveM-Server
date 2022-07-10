@@ -8,7 +8,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React, { useContext, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { ThemeContext } from '../../styles/themeProvider';
 import { useModalVisible, useNotesValue, useSetModalVisible, useSetSelectedNote } from './hooks/state';
@@ -59,7 +59,9 @@ export const NotesApp: React.FC = () => {
                 <AppTitle app={notesApp} />
                 <AppContent className="flex-grow mt-6 mb-4">
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Route path="/notes" component={NoteList} />
+                        <Routes>
+                            <Route path="/notes/*" element={<NoteList />} />
+                        </Routes>
                     </React.Suspense>
                 </AppContent>
                 <Transition

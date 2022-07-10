@@ -5,7 +5,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import MessagesList from './list/MessagesList';
 
@@ -28,7 +28,9 @@ export const SocietyMessagesApp = () => {
                 <AppTitle app={messages} />
                 <AppContent className="mt-4 h-[750px] overflow-scroll">
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Route path="/society-messages" exact component={MessagesList} />
+                        <Routes>
+                            <Route path="/society-messages" element={<MessagesList />} />
+                        </Routes>
                     </React.Suspense>
                 </AppContent>
             </AppWrapper>

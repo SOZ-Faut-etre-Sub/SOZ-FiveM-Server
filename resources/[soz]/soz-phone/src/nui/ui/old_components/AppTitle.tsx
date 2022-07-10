@@ -1,7 +1,7 @@
 import { IApp } from '@os/apps/config/apps';
 import React, { HTMLAttributes, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { ThemeContext } from '../../styles/themeProvider';
 
@@ -15,12 +15,12 @@ interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
 export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, action, children }) => {
     const [t] = useTranslation();
     const { theme } = useContext(ThemeContext);
-    const camera = useRouteMatch('/camera');
+    const { pathname } = useLocation();
 
     return (
         <div
             className={`${isBigHeader ? 'h-32' : 'h-24'} absolute -top-16 inset-x-0 ${
-                theme === 'dark' ? 'bg-black' : camera && camera.isExact ? 'bg-black' : 'bg-[#F2F2F6]'
+                theme === 'dark' ? 'bg-black' : pathname === '/camera' ? 'bg-black' : 'bg-[#F2F2F6]'
             } px-5 pt-12 transition-all duration-300 ease-in-out z-30`}
         >
             <h2

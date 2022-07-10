@@ -3,7 +3,7 @@ import { useApps } from '@os/apps/hooks/useApps';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { PhoneEvents } from '@typings/phone';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import { phoneState } from './state';
@@ -11,7 +11,7 @@ import { phoneState } from './state';
 export const usePhoneService = () => {
     const { getApp } = useApps();
     const { addAlert } = useSnackbar();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const setAvailability = useSetRecoilState(phoneState.availability);
     const setVisibility = useSetRecoilState(phoneState.visibility);
@@ -25,7 +25,7 @@ export const usePhoneService = () => {
             const foundApp = getApp(app.toUpperCase());
 
             if (!foundApp) return console.error(`App "${app}" is an invalid app id to open`);
-            history.push(foundApp.path);
+            navigate(foundApp.path);
         },
         [getApp, history]
     );

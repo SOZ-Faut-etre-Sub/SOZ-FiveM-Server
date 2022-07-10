@@ -1,7 +1,7 @@
 import { ActiveCall, CallEvents } from '@typings/call';
 import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import { callerState } from './state';
@@ -30,7 +30,7 @@ import { useCallNotifications } from './useCallNotifications';
 
 export const useCallService = () => {
     const { modal } = useCallModal();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { pathname } = useLocation();
 
     const { setCall } = useCall();
@@ -47,10 +47,10 @@ export const useCallService = () => {
 
     useEffect(() => {
         if (!modal && pathname === '/call') {
-            history.replace('/');
+            navigate('/', { replace: true });
         }
         if (modal && !modalHasBeenOpenedThisCall && pathname !== '/call') {
-            history.push('/call');
+            navigate('/call');
         }
     }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
 

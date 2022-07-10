@@ -4,7 +4,7 @@ import { useRingtoneSound } from '@os/sound/hooks/useRingtoneSound';
 import { ActiveCall } from '@typings/call';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { CallNotification } from '../components/CallNotification';
 
@@ -12,7 +12,7 @@ const NOTIFICATION_ID = 'call:current';
 
 export const useCallNotifications = () => {
     const [t] = useTranslation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { addNotificationAlert, removeId, addNotification } = useNotifications();
 
     const { play, stop } = useRingtoneSound();
@@ -24,7 +24,7 @@ export const useCallNotifications = () => {
         id: NOTIFICATION_ID,
         cantClose: true,
         icon,
-        onClick: () => history.push('/call'),
+        onClick: () => navigate('/call'),
         notificationIcon,
     };
 

@@ -27,7 +27,7 @@ import { ListItem } from '@ui/old_components/ListItem';
 import qs from 'qs';
 import React, { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { ThemeContext } from '../../../styles/themeProvider';
@@ -46,7 +46,7 @@ export const SettingsApp = () => {
     const { addAlert } = useSnackbar();
     const query = useQueryParams();
     const { pathname, search } = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { updateProfilePicture } = useSettingsAPI();
     const resetSettings = useResetSettings();
     const { theme, updateTheme } = useContext(ThemeContext);
@@ -92,7 +92,7 @@ export const SettingsApp = () => {
     ];
 
     const handleChooseImage = useCallback(() => {
-        history.push(
+        navigate(
             `/photo?${qs.stringify({
                 referal: encodeURIComponent(pathname + search),
             })}`
@@ -105,7 +105,7 @@ export const SettingsApp = () => {
         if (!query.image) return;
 
         updateProfilePicture({ number: myNumber, url: query.image });
-        history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
     }, [query.image, updateProfilePicture, myNumber, history, pathname, search]);
 
     return (

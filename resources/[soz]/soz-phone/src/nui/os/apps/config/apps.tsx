@@ -13,14 +13,13 @@ import { SocietyContactsApp } from '../../../apps/society-contacts/components/So
 import { SocietyMessagesApp } from '../../../apps/society-messages/components/SocietyMessagesApp';
 import { TwitchNewsApp } from '../../../apps/twitch-news/components/TwitchNewsApp';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
-import { AppRoute } from '../components/AppRoute';
 
 export interface IAppConfig {
     id: string;
     nameLocale: string;
     path: string;
     home?: boolean;
-    Route: React.FC;
+    component: JSX.Element;
 }
 
 export type IApp = IAppConfig & {
@@ -34,71 +33,71 @@ export const APPS: IAppConfig[] = [
     {
         id: 'dialer',
         nameLocale: 'APPS_DIALER',
-        path: '/phone',
+        path: '/phone/*',
         home: true,
-        Route: () => <AppRoute path="/phone" component={DialerApp} />,
+        component: <DialerApp />,
     },
     {
         id: 'messages',
         nameLocale: 'APPS_MESSAGES',
-        path: '/messages',
+        path: '/messages/*',
         home: true,
-        Route: () => <AppRoute path="/messages" component={MessagesApp} />,
+        component: <MessagesApp />,
     },
     {
         id: 'contacts',
         nameLocale: 'APPS_CONTACTS',
-        path: '/contacts',
+        path: '/contacts/*',
         home: true,
-        Route: () => <AppRoute path="/contacts" component={ContactsApp} />,
+        component: <ContactsApp />,
     },
     {
         id: 'bank',
         nameLocale: 'APPS_BANK',
-        path: '/bank',
-        Route: () => <AppRoute path="/bank" component={BankApp} />,
+        path: '/bank/*',
+        component: <BankApp />,
     },
     {
         id: 'notes',
         nameLocale: 'APPS_NOTES',
-        path: '/notes',
-        Route: () => <AppRoute path="/notes" component={NotesApp} />,
+        path: '/notes/*',
+        component: <NotesApp />,
     },
     {
         id: 'society-contacts',
         nameLocale: 'APPS_SOCIETY_CONTACTS',
-        path: '/society-contacts',
-        Route: () => <AppRoute path="/society-contacts" component={SocietyContactsApp} />,
+        path: '/society-contacts/*',
+        component: <SocietyContactsApp />,
     },
     {
         id: 'photo',
         nameLocale: 'APPS_PHOTO',
-        path: '/photo',
-        Route: () => <AppRoute path="/photo" component={PhotoApp} />,
+        path: '/photo/*',
+        component: <PhotoApp />,
     },
     {
         id: 'settings',
         nameLocale: 'APPS_SETTINGS',
-        path: '/settings',
-        Route: () => <AppRoute path="/settings" component={SettingsApp} />,
+        path: '/settings/*',
+        component: <SettingsApp />,
     },
     {
         id: 'society-messages',
         nameLocale: 'APPS_SOCIETY_MESSAGES',
-        path: '/society-messages',
-        Route: () => <AppRoute path="/society-messages" component={SocietyMessagesApp} />,
+        path: '/society-messages/*',
+        component: <SocietyMessagesApp />,
     },
     {
         id: 'twitch-news',
         nameLocale: 'APPS_TWITCH_NEWS',
-        path: '/twitch-news',
-        Route: () => <AppRoute path="/twitch-news" component={TwitchNewsApp} />,
+        path: '/twitch-news/*',
+        component: <TwitchNewsApp />,
     },
     {
         id: 'zutom',
         nameLocale: 'APPS_ZUTOM',
-        path: '/zutom',
-        Route: () => <AppRoute path="/zutom" component={ZutomApp} />,
+        path: '/zutom/*',
+        component: <ZutomApp />,
     },
     /*{
       id: 'marketplace',
@@ -111,8 +110,8 @@ export const APPS: IAppConfig[] = [
     {
         id: 'camera',
         nameLocale: 'APPS_CAMERA',
-        path: '/camera',
+        path: '/camera/*',
         home: true,
-        Route: () => <AppRoute path="/camera" component={CameraApp} />,
+        component: <CameraApp />,
     },
 ];

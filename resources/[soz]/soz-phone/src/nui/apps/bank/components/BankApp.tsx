@@ -6,7 +6,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { BankHome } from './home/BankHome';
 
@@ -28,10 +28,10 @@ export const BankApp = () => {
             <AppWrapper>
                 <AppTitle title={t('APPS_BANK')} isBigHeader={true} />
                 <AppContent>
-                    <Switch>
-                        <Route path="/bank" exact component={BankHome} />
+                    <Routes>
+                        <Route path="/bank" element={<BankHome />} />
                         {/*<Route path="/bank/account" exact component={BankAccount} />*/}
-                    </Switch>
+                    </Routes>
                 </AppContent>
             </AppWrapper>
         </Transition>

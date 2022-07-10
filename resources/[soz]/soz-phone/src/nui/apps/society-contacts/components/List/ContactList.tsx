@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useFilteredContacts } from '../../hooks/state';
@@ -8,10 +8,10 @@ import { SearchContacts } from './SearchContacts';
 export const ContactList: React.FC = () => {
     const filteredContacts = useFilteredContacts();
     const { theme } = useContext(ThemeContext);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const openContactInfo = (contactId: number) => {
-        history.push(`/society-contacts/${contactId}`);
+        navigate(`/society-contacts/${contactId}`);
     };
 
     return (

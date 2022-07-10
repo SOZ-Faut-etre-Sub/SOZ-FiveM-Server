@@ -8,14 +8,14 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { usePhotosValue } from '../../hooks/state';
 
 export const GalleryGrid = () => {
     const photosApp = useApp('photo');
-    const history = useHistory();
+    const navigate = useNavigate();
     const query = useQueryParams();
     const [t] = useTranslation();
     const photos = usePhotosValue();
@@ -24,7 +24,7 @@ export const GalleryGrid = () => {
     const referal = query.referal ? decodeURIComponent(query.referal) : '/photo/image';
 
     const handlePhotoOpen = photo => {
-        history.push(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
+        navigate(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
     };
 
     return (

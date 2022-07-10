@@ -4,7 +4,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { GalleryGrid } from './grid/GalleryGrid';
 import { GalleryModal } from './modal/GalleryModal';
@@ -24,12 +24,12 @@ const PhotoApp: React.FC = () => (
         <AppWrapper>
             <AppTitle title=" " />
             <AppContent>
-                <Switch>
-                    <React.Suspense fallback={<LoadingSpinner />}>
-                        <Route path="/photo" exact component={GalleryGrid} />
-                        <Route path="/photo/image" exact component={GalleryModal} />
-                    </React.Suspense>
-                </Switch>
+                <React.Suspense fallback={<LoadingSpinner />}>
+                    <Routes>
+                        <Route path="/photo" element={<GalleryGrid />} />
+                        <Route path="/photo/image" element={<GalleryModal />} />
+                    </Routes>
+                </React.Suspense>
             </AppContent>
         </AppWrapper>
     </Transition>

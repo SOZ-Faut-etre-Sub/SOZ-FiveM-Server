@@ -15,7 +15,7 @@ import { TextField } from '@ui/old_components/Input';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import NumberFormat from 'react-number-format';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useContactActions } from '../../hooks/useContactActions';
@@ -35,7 +35,7 @@ interface ContactInfoRouteQuery {
 
 const ContactsInfoPage: React.FC = () => {
     const contacts = useApp('contacts');
-    const history = useHistory();
+    const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
     const { id } = useParams<ContactInfoRouteParams>();
     const {
@@ -82,7 +82,7 @@ const ContactsInfoPage: React.FC = () => {
         initializeCall(contact.number);
     };
     const handleContactMessage = () => {
-        history.push(`/messages/new?phoneNumber=${contact.number}`);
+        navigate(`/messages/new?phoneNumber=${contact.number}`);
     };
     const handleContactAdd = () => {
         addNewContact({ display: name, number, avatar }, referral);
@@ -116,7 +116,7 @@ const ContactsInfoPage: React.FC = () => {
         >
             <AppWrapper>
                 <AppTitle app={contacts}>
-                    <Button className="flex items-center text-base" onClick={() => history.goBack()}>
+                    <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                         <ChevronLeftIcon className="h-5 w-5" />
                         Fermer
                     </Button>
