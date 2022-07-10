@@ -70,7 +70,7 @@ Citizen.CreateThread(function()
 
     for _, s in pairs(stations) do
         --- @type FuelStation
-        local station = FuelStation:new(s.id, s.station, s.fuel, s.type, s.owner, s.stock, s.position, s.model, s.zone)
+        local station = FuelStation:new(s.id, s.station, s.fuel, s.type, s.owner, s.stock, s.price, s.position, s.model, s.zone)
 
         if station:IsPublic() then
             QBCore.Functions.CreateBlip("station_" .. station.id, {
@@ -276,7 +276,7 @@ RegisterNetEvent("fuel:client:UseStationPistol", function(vehicle, stationId)
         return
     end
 
-    local station = FuelStation:new(s.id, s.station, s.fuel, s.type, s.owner, s.stock, s.position, s.model, s.zone)
+    local station = FuelStation:new(s.id, s.station, s.fuel, s.type, s.owner, s.stock, s.price, s.position, s.model, s.zone)
 
     if not station:HasSufficientStock() then
         QBCore.Functions.ShowHelpNotification("~r~La station ne contient pas assez d'essence.")
