@@ -29,7 +29,7 @@ export const TwitchNewsApp = () => {
                 <AppContent className="mt-4 overflow-auto">
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <Routes>
-                            <Route path="/twitch-news" element={<NewsList />} />
+                            <Route index element={<NewsList />} />
                         </Routes>
                     </React.Suspense>
                 </AppContent>

@@ -8,7 +8,7 @@ export const AppsGrid: React.FC<any> = ({ items, Component = AppIcon }) => {
             {items &&
                 items.length &&
                 items.map(item => (
-                    <Link key={item.id} to={item.path}>
+                    <Link key={item.id} to={item.path.replace('*', '')}>
                         <Component {...item} />
                     </Link>
                 ))}
