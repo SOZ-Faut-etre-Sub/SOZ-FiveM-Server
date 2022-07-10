@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import cn from 'classnames';
-import React, { useContext } from 'react';
+import React, { PropsWithChildren, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ThemeContext } from '../../styles/themeProvider';
@@ -10,7 +10,7 @@ const wrapperStyle = css`
     display: flex;
 `;
 
-export const AppWrapper: React.FC<AppWrapperTypes> = ({ children, className }) => {
+export const AppWrapper: React.FC<PropsWithChildren<AppWrapperTypes>> = ({ children, className }) => {
     const { pathname } = useLocation();
     const { theme } = useContext(ThemeContext);
 

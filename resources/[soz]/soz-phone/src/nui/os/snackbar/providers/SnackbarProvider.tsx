@@ -1,10 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, PropsWithChildren, useState } from 'react';
 
 import { IAlert } from '../hooks/useSnackbar';
 
 export const SnackbarContext = createContext(null);
 
-const SnackbarProvider: React.FC = ({ children }) => {
+const SnackbarProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [open, setOpen] = useState<boolean>(false);
     const [alert, setAlert] = useState<IAlert>(null);
 

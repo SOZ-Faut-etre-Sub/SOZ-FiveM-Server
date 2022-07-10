@@ -21,11 +21,6 @@ import { ThemeContext } from '../../../../styles/themeProvider';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
-interface ContactInfoRouteParams {
-    mode: string;
-    id: string;
-}
-
 interface ContactInfoRouteQuery {
     addNumber?: string;
     referal?: string;
@@ -37,7 +32,7 @@ const ContactsInfoPage: React.FC = () => {
     const contacts = useApp('contacts');
     const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
-    const { id } = useParams<ContactInfoRouteParams>();
+    const { id } = useParams();
     const {
         addNumber,
         // Because this is mispelled absolutely everywhere

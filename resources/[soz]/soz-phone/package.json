@@ -46,7 +46,7 @@
         "react-infinite-scroll-component": "^6.1.0",
         "react-number-format": "^4.9.3",
         "react-router-dom": "^6.3.0",
-        "recoil": "^0.4.1",
+        "recoil": "^0.7.4",
         "redux": "^4.2.0",
         "uuid": "^8.3.2",
         "winston": "^3.3.3"

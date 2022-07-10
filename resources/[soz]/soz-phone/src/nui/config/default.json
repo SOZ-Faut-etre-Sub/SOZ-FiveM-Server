@@ -150,7 +150,6 @@
   ],
   "debug": {
     "printDebugLogs": false,
-    "logLevel": 1,
-    "shouldShowAtomDebug": false
+    "logLevel": 1
   }
 }

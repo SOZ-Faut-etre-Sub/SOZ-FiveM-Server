@@ -36,16 +36,7 @@ import PhoneWrapper from './PhoneWrapper';
 import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
-    const { i18n } = useTranslation();
-
     const { apps } = useApps();
-    const [settings] = useSettings();
-
-    // Set language from local storage
-    // This will only trigger on first mount & settings changes
-    useEffect(() => {
-        i18n.changeLanguage(settings.language.value).catch(e => console.error(e));
-    }, [i18n, settings.language]);
 
     useConfig();
 
