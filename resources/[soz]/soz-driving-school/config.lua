@@ -206,7 +206,7 @@ Config.Checkpoints = {
         x = -222.02,
         y = -2053.33,
         z = 26.06,
-        message = "L'affiche dit : \"Maze Bank Arena, le 4 juin 2022\"",
+        message = "L'affiche dit : \"Maze Bank Arena, du 8 au 11 septembre 2022\"",
         licenses = {"car", "truck", "motorcycle"},
     },
     {
