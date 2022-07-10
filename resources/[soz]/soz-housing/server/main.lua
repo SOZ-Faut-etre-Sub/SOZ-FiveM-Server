@@ -284,6 +284,15 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
     end
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
+
+    local result = MySQL.query.await("SELECT COUNT(*) as count FROM housing_apartment WHERE ? IN (owner, roommate)", {
+        Target.PlayerData.citizenid,
+    })
+    if result[1].count > 0 then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Cette personne a déjà une maison", "error")
+        return
+    end
+
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
