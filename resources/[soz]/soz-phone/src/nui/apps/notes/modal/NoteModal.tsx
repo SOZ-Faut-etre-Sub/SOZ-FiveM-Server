@@ -1,10 +1,10 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, DotsCircleHorizontalIcon, SaveIcon, TrashIcon } from '@heroicons/react/outline';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { Button } from '@ui/components/Button';
-import { TextareaField, TextField } from '@ui/components/Input';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { Button } from '@ui/old_components/Button';
+import { TextareaField, TextField } from '@ui/old_components/Input';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

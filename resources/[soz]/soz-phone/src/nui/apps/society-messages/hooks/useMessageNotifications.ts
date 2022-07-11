@@ -1,27 +1,27 @@
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useTranslation } from 'react-i18next';
-import { matchPath, useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NOTIFICATION_ID = 'society-messages:broadcast';
 
 export const useMessageNotifications = () => {
     const [t] = useTranslation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('SOCIETY_MESSAGES');
+    const { icon, notificationIcon } = useApp('society-messages');
 
     // Remove notifications from groups when opening them
-    history.listen(location => {
-        if (
-            matchPath(location.pathname, {
-                path: `/society-messages`,
-                exact: true,
-            })
-        ) {
-            removeId(`${NOTIFICATION_ID}`);
-        }
-    });
+    // history.listen(location => {
+    //     if (
+    //         matchPath(location.pathname, {
+    //             path: `/society-messages`,
+    //             exact: true,
+    //         })
+    //     ) {
+    //         removeId(`${NOTIFICATION_ID}`);
+    //     }
+    // });
 
     const setNotification = ({ message = false }) => {
         const notification = {
@@ -29,7 +29,7 @@ export const useMessageNotifications = () => {
             NOTIFICATION_ID,
             sound: true,
             title: t('SOCIETY_MESSAGES.NOTIFICATION.TITLE'),
-            onClick: () => history.push(`/society-messages`),
+            onClick: () => navigate(`/society-messages`),
             content: message,
             icon,
             notificationIcon,

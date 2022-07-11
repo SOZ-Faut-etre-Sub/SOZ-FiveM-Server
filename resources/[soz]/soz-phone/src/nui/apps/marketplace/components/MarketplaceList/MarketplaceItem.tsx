@@ -1,7 +1,7 @@
 import { MarketplaceListing } from '@typings/marketplace';
-import { ListItem } from '@ui/components/ListItem';
-import { PictureResponsive } from '@ui/components/PictureResponsive';
-import { PictureReveal } from '@ui/components/PictureReveal';
+import { ListItem } from '@ui/old_components/ListItem';
+import { PictureResponsive } from '@ui/old_components/PictureResponsive';
+import { PictureReveal } from '@ui/old_components/PictureReveal';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

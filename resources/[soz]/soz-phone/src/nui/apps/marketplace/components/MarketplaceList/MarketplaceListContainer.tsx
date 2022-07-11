@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 
 import { MarketplaceList } from './MarketplaceList';

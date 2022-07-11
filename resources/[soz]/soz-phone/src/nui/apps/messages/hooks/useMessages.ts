@@ -1,6 +1,6 @@
 import { MessageConversation } from '@typings/messages';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState, waitForAll } from 'recoil';
 
 import { messageState, useSetConversationId } from './state';
@@ -15,7 +15,7 @@ interface IUseMessages {
 }
 
 const useMessages = (): IUseMessages => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { state: conversationLoading, contents } = useRecoilValueLoadable(messageState.messageCoversations);
     const [activeMessageConversation] = useRecoilValue(waitForAll([messageState.activeMessageConversation]));
@@ -48,7 +48,7 @@ const useMessages = (): IUseMessages => {
             if (!messageGroup?.conversation_id || !history) return;
             setCurrentConversationId(messageGroup.conversation_id);
 
-            history.push(`/messages/conversations/${messageGroup.conversation_id}`);
+            navigate(`/messages/conversations/${messageGroup.conversation_id}`);
         },
         [setCurrentConversationId, history]
     );

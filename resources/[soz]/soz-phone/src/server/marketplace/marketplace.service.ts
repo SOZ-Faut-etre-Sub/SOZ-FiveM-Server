@@ -7,7 +7,6 @@ import {
     MarketplaceReportDTO,
 } from '../../../typings/marketplace';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
-import { reportListingToDiscord } from '../misc/discord';
 import PlayerService from '../players/player.service';
 import MarketplaceDB, { _MarketplaceDB } from './marketplace.db';
 import { marketplaceLogger } from './marketplace.utils';
@@ -118,8 +117,6 @@ class _MarketplaceService {
             const rListing = await this.marketplaceDB.getListing(reqObj.data.id);
             const reportExists = await this.marketplaceDB.doesReportExist(reqObj.data.id, rListing.username);
 
-            const reportingPlayer = GetPlayerName(reqObj.source.toString());
-
             if (reportExists) {
                 marketplaceLogger.error(`This listing has already been reported`);
                 resp({ status: 'error', errorMsg: 'REPORT_EXISTS' });
@@ -127,7 +124,6 @@ class _MarketplaceService {
             }
 
             await this.marketplaceDB.reportListing(rListing);
-            await reportListingToDiscord(rListing, reportingPlayer);
         } catch (e) {
             marketplaceLogger.error(`Failed to report listing ${e.toString()}`, {
                 source: reqObj.source,

@@ -1,6 +1,6 @@
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 
 import { useCall } from '../hooks/useCall';

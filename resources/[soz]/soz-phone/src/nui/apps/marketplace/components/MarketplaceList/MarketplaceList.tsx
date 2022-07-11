@@ -1,4 +1,4 @@
-import { List } from '@ui/components/List';
+import { List } from '@ui/old_components/List';
 import React from 'react';
 
 import { useListingValue } from '../../hooks/state';

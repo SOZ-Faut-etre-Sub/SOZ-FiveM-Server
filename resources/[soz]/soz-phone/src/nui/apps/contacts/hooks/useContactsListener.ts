@@ -3,13 +3,13 @@ import { useApps } from '@os/apps/hooks/useApps';
 import { AddContactExportData, ContactEvents, ContactsDatabaseLimits } from '@typings/contact';
 import qs from 'qs';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useContactActions } from './useContactActions';
 
 export const useContactsListener = () => {
     const { getContactByNumber } = useContactActions();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { getApp } = useApps();
 
     const addContactExportHandler = useCallback(
@@ -23,13 +23,13 @@ export const useContactsListener = () => {
             });
 
             if (!contact) {
-                return history.push({
+                return navigate({
                     pathname: `${path}/-1`,
                     search: `?${queryData}`,
                 });
             }
 
-            history.push({
+            navigate({
                 pathname: `${path}/${contact.id}`,
                 search: `?${queryData}`,
             });

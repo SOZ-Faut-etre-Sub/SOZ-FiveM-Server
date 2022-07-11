@@ -16,18 +16,18 @@ import {
 import { useApp } from '@os/apps/hooks/useApps';
 import { useMyPhoneNumber, useMyPictureProfile } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { Button } from '@ui/components/Button';
-import { IContextMenuOption } from '@ui/components/ContextMenu';
-import { List } from '@ui/components/List';
-import { ListItem } from '@ui/components/ListItem';
 import { MapSettingItem, SettingOption, useContextMenu } from '@ui/hooks/useContextMenu';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { Button } from '@ui/old_components/Button';
+import { IContextMenuOption } from '@ui/old_components/ContextMenu';
+import { List } from '@ui/old_components/List';
+import { ListItem } from '@ui/old_components/ListItem';
 import qs from 'qs';
 import React, { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { ThemeContext } from '../../../styles/themeProvider';
@@ -36,7 +36,7 @@ import { SettingItem, SettingItemSlider, SettingSwitch } from './SettingItem';
 import WallpaperModal from './WallpaperModal';
 
 export const SettingsApp = () => {
-    const settingsApp = useApp('SETTINGS');
+    const settingsApp = useApp('settings');
     const [config] = usePhoneConfig();
     const myNumber = useMyPhoneNumber();
     const myAvatar = useMyPictureProfile();
@@ -46,7 +46,7 @@ export const SettingsApp = () => {
     const { addAlert } = useSnackbar();
     const query = useQueryParams();
     const { pathname, search } = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { updateProfilePicture } = useSettingsAPI();
     const resetSettings = useResetSettings();
     const { theme, updateTheme } = useContext(ThemeContext);
@@ -92,7 +92,7 @@ export const SettingsApp = () => {
     ];
 
     const handleChooseImage = useCallback(() => {
-        history.push(
+        navigate(
             `/photo?${qs.stringify({
                 referal: encodeURIComponent(pathname + search),
             })}`
@@ -105,7 +105,7 @@ export const SettingsApp = () => {
         if (!query.image) return;
 
         updateProfilePicture({ number: myNumber, url: query.image });
-        history.replace(deleteQueryFromLocation({ pathname, search }, 'image'));
+        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
     }, [query.image, updateProfilePicture, myNumber, history, pathname, search]);
 
     return (

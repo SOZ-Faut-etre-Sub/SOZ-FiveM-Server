@@ -1,17 +1,17 @@
 import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { ContactList } from './List/ContactList';
 import ContactsInfoPage from './views/ContactInfo';
 
 export const SocietyContactsApp: React.FC = () => {
-    const contacts = useApp('SOCIETY_CONTACTS');
+    const contacts = useApp('society-contacts');
 
     return (
         <Transition
@@ -29,8 +29,10 @@ export const SocietyContactsApp: React.FC = () => {
                 <AppTitle app={contacts} />
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Route path="/society-contacts/" exact component={ContactList} />
-                        <Route path="/society-contacts/:id" exact component={ContactsInfoPage} />
+                        <Routes>
+                            <Route index element={<ContactList />} />
+                            <Route path=":id" element={<ContactsInfoPage />} />
+                        </Routes>
                     </React.Suspense>
                 </AppContent>
             </AppWrapper>

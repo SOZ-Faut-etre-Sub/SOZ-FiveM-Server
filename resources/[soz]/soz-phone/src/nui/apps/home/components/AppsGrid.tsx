@@ -1,4 +1,4 @@
-import { AppIcon } from '@ui/components/AppIcon';
+import { AppIcon } from '@ui/old_components/AppIcon';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ export const AppsGrid: React.FC<any> = ({ items, Component = AppIcon }) => {
             {items &&
                 items.length &&
                 items.map(item => (
-                    <Link key={item.id} to={item.path}>
+                    <Link key={item.id} to={item.path.replace('*', '')}>
                         <Component {...item} />
                     </Link>
                 ))}

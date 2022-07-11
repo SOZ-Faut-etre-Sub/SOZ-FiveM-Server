@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react';
 import { useApps } from '@os/apps/hooks/useApps';
 import { useMySocietyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import { AppWrapper } from '@ui/components';
+import { AppWrapper } from '@ui/old_components';
 import React, { useContext } from 'react';
 
 import { ThemeContext } from '../../../styles/themeProvider';
@@ -14,7 +14,7 @@ export const HomeApp: React.FC = () => {
 
     const filteredApps =
         societyNumber === null
-            ? apps.filter(app => app.home !== true && app.id !== 'SOCIETY_MESSAGES')
+            ? apps.filter(app => app.home !== true && app.id !== 'society-messages')
             : apps.filter(app => app.home !== true);
     const homeApps = apps.filter(app => app.home === true);
 

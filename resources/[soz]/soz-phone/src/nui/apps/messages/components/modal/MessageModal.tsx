@@ -2,12 +2,12 @@ import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { Button } from '@ui/components/Button';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { Button } from '@ui/old_components/Button';
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useMessagesState } from '../../hooks/state';
@@ -20,7 +20,7 @@ const MINIMUM_LOAD_TIME = 600;
 
 // abandon all hope ye who enter here
 export const MessageModal = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { pathname } = useLocation();
     const { groupId } = useParams<{ groupId: string }>();
     const { activeMessageConversation, setActiveMessageConversation } = useMessages();
@@ -48,7 +48,7 @@ export const MessageModal = () => {
 
     const closeModal = () => {
         setMessages(null);
-        history.push('/messages');
+        navigate('/messages');
     };
 
     useEffect(() => {
@@ -77,9 +77,9 @@ export const MessageModal = () => {
         const exists = getContactByNumber(number);
         const referal = encodeURIComponent(pathname);
         if (exists) {
-            return history.push(`/contacts/${exists.id}/?referal=${referal}`);
+            return navigate(`/contacts/${exists.id}/?referal=${referal}`);
         }
-        return history.push(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
+        return navigate(`/contacts/-1/?addNumber=${number}&referal=${referal}`);
     };
 
     const targetNumber = activeMessageConversation.phoneNumber;

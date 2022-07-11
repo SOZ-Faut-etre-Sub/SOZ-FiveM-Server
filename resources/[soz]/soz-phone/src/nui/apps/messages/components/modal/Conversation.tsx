@@ -2,12 +2,12 @@ import { useQueryParams } from '@common/hooks/useQueryParams';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageConversation, MessageEvents } from '@typings/messages';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useConversationId, useSetMessages } from '../../hooks/state';
@@ -28,7 +28,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
     const referalImage = query?.image || null;
     const conversationId = useConversationId();
     const { addAlert } = useSnackbar();
-    const history = useHistory();
+    const navigate = useNavigate();
     const setMessages = useSetMessages();
     const [t] = useTranslation();
     const [page, setPage] = useState(1);
@@ -48,7 +48,7 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
                     type: 'error',
                 });
 
-                return history.push('/messages');
+                return navigate('/messages');
             }
 
             if (resp.data.length === 0) {

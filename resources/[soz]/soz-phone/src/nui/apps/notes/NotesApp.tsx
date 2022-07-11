@@ -3,12 +3,12 @@ import { Transition } from '@headlessui/react';
 import { PencilAltIcon } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
 import { AddNoteExportData } from '@typings/notes';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React, { useContext, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { ThemeContext } from '../../styles/themeProvider';
 import { useModalVisible, useNotesValue, useSetModalVisible, useSetSelectedNote } from './hooks/state';
@@ -16,7 +16,7 @@ import NoteList from './list/NoteList';
 import { NoteModal } from './modal/NoteModal';
 
 export const NotesApp: React.FC = () => {
-    const notesApp = useApp('NOTES');
+    const notesApp = useApp('notes');
     const notes = useNotesValue();
     const setSelectedNote = useSetSelectedNote();
     const [isModalVisible] = useModalVisible();
@@ -59,7 +59,9 @@ export const NotesApp: React.FC = () => {
                 <AppTitle app={notesApp} />
                 <AppContent className="flex-grow mt-6 mb-4">
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Route path="/notes" component={NoteList} />
+                        <Routes>
+                            <Route path="*" element={<NoteList />} />
+                        </Routes>
                     </React.Suspense>
                 </AppContent>
                 <Transition

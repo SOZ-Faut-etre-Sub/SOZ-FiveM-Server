@@ -14,11 +14,11 @@ import { usePhoneService } from '@os/phone/hooks/usePhoneService';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { PhoneEvents } from '@typings/phone';
-import { TopLevelErrorComponent } from '@ui/components/TopLevelErrorComponent';
+import { TopLevelErrorComponent } from '@ui/old_components/TopLevelErrorComponent';
 import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import DefaultConfig from '../../config.json';
 import { useBankService } from './apps/bank/hooks/useBankService';
@@ -33,19 +33,10 @@ import { useSocietyMessagesService } from './apps/society-messages/hooks/useMess
 import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
 import InjectDebugData from './os/debug/InjectDebugData';
 import PhoneWrapper from './PhoneWrapper';
-import WindowSnackbar from './ui/components/WindowSnackbar';
+import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
-    const { i18n } = useTranslation();
-
     const { apps } = useApps();
-    const [settings] = useSettings();
-
-    // Set language from local storage
-    // This will only trigger on first mount & settings changes
-    useEffect(() => {
-        i18n.changeLanguage(settings.language.value).catch(e => console.error(e));
-    }, [i18n, settings.language]);
 
     useConfig();
 
@@ -75,13 +66,13 @@ function Phone() {
                 <PhoneWrapper>
                     <NotificationBar />
                     <div className="PhoneAppContainer select-none">
-                        <>
-                            <Route exact path="/" component={HomeApp} />
-                            {callModal && <Route exact path="/call" component={CallModal} />}
-                            {apps.map(App => (
-                                <App.Route key={App.id} />
+                        <Routes>
+                            <Route path="/" element={<HomeApp />} />
+                            {callModal && <Route path="/call" element={<CallModal />} />}
+                            {apps.map(app => (
+                                <Route key={app.id} path={app.path} element={app.component} />
                             ))}
-                        </>
+                        </Routes>
                         <NotificationAlert />
                         <PhoneSnackbar />
                     </div>

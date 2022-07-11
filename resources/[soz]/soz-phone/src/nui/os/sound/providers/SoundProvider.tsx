@@ -1,5 +1,5 @@
 import { Howl } from 'howler';
-import React, { createContext, useCallback, useEffect, useRef } from 'react';
+import React, { createContext, PropsWithChildren, useCallback, useEffect, useRef } from 'react';
 
 interface IMountResponse {
     howl: Howl;
@@ -18,7 +18,7 @@ interface ISoundContext {
 }
 export const soundContext = createContext<ISoundContext>(null);
 
-export const SoundProvider: React.FC = ({ children }) => {
+export const SoundProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const soundRefs = useRef<Map<string, { howl: Howl; volume: number }>>();
 
     useEffect(() => {
