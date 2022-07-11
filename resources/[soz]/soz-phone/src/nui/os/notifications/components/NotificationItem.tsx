@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/outline';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import React from 'react';
 
 import { INotification } from '../providers/NotificationsProvider';

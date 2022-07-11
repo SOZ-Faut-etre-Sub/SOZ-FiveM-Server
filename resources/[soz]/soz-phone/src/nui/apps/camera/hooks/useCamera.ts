@@ -1,7 +1,7 @@
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
+import { useNuiCallback } from '@libs/nui/hooks/useNuiCallback';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
-import { useNuiCallback } from 'fivem-nui-react-lib';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SetterOrUpdater, useRecoilState } from 'recoil';

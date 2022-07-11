@@ -3,7 +3,7 @@ import { useCurrentCall } from '@os/call/hooks/state';
 import { NotificationItem } from '@os/notifications/components/NotificationItem';
 import cn from 'classnames';
 import React, { useContext, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import BatteryIcon from '../../../styles/icons/system/Battery';
 import CellSignal from '../../../styles/icons/system/CellSignal';
@@ -14,9 +14,7 @@ import { useNotifications } from '../hooks/useNotifications';
 export const NotificationBar = () => {
     const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
 
-    const home = useRouteMatch('/');
-    const camera = useRouteMatch('/camera');
-    const call = useRouteMatch('/call');
+    const { pathname } = useLocation();
     const [currentCall] = useCurrentCall();
     const { theme } = useContext(ThemeContext);
     const time = usePhoneTime();
@@ -28,14 +26,14 @@ export const NotificationBar = () => {
     }, [notifications, setBarUncollapsed]);
 
     const color = () => {
-        if (home && home.isExact) {
+        if (pathname === '/') {
             return 'text-white';
-        } else if (call && call.isExact) {
+        } else if (pathname === '/call') {
             if (currentCall?.is_accepted) {
                 return 'text-white bg-white bg-opacity-30';
             }
             return 'text-white';
-        } else if (camera && camera.isExact) {
+        } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
             return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black';

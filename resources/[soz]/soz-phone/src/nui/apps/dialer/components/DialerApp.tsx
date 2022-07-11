@@ -1,11 +1,10 @@
 import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { ContactList } from '../../contacts/components/List/ContactList';
 import DialerNavBar from './DialerNavBar';
@@ -13,7 +12,7 @@ import { DialerHistory } from './views/DialerHistory';
 import DialPage from './views/DialPage';
 
 export const DialerApp: React.FC = () => {
-    const dialer = useApp('DIALER');
+    const dialer = useApp('dialer');
     return (
         <Transition
             appear={true}
@@ -29,19 +28,11 @@ export const DialerApp: React.FC = () => {
             <AppWrapper>
                 <AppTitle app={dialer} />
                 <AppContent className="mt-5 h-[710px]">
-                    <Switch>
-                        <Route path="/phone/dial">
-                            <DialPage />
-                        </Route>
-                        <Route exact path="/phone">
-                            <React.Suspense fallback={<LoadingSpinner />}>
-                                <DialerHistory />
-                            </React.Suspense>
-                        </Route>
-                        <React.Suspense fallback={<LoadingSpinner />}>
-                            <Route path="/phone/contacts" component={ContactList} />
-                        </React.Suspense>
-                    </Switch>
+                    <Routes>
+                        <Route index element={<DialerHistory />} />
+                        <Route path="dial" element={<DialPage />} />
+                        <Route path="contacts" element={<ContactList />} />
+                    </Routes>
                 </AppContent>
                 <DialerNavBar />
             </AppWrapper>

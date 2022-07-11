@@ -1,20 +1,19 @@
 import { Transition } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/outline';
 import { useApp } from '@os/apps/hooks/useApps';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { LoadingSpinner } from '@ui/components/LoadingSpinner';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 
 import MessagesList from './list/MessagesList';
 import MessageGroupModal from './modal/MessageGroupModal';
 import { MessageModal } from './modal/MessageModal';
 
 export const MessagesApp = () => {
-    const messages = useApp('MESSAGES');
-    const history = useHistory();
+    const messages = useApp('messages');
 
     return (
         <Transition
@@ -32,31 +31,22 @@ export const MessagesApp = () => {
                 <AppTitle
                     app={messages}
                     action={
-                        <Route exact path="/messages">
-                            <PlusIcon
-                                className="h-6 w-6 cursor-pointer"
-                                onClick={() => history.push('/messages/new')}
-                            />
-                        </Route>
+                        <Link to="/messages/new">
+                            <PlusIcon className="h-6 w-6 cursor-pointer" />
+                        </Link>
                     }
                 >
                     <div />
                 </AppTitle>
                 <AppContent>
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Switch>
-                            <Route path="/messages/conversations/:groupId">
-                                <MessageModal />
-                            </Route>
-                            <Route exact path="/messages">
-                                <MessagesList />
-                            </Route>
-                        </Switch>
-                        <Switch>
-                            <Route exact path={['/messages/new/:phoneNumber', '/messages/new']}>
-                                <MessageGroupModal />
-                            </Route>
-                        </Switch>
+                        <Routes>
+                            <Route index element={<MessagesList />} />
+                            <Route path="new" element={<MessageGroupModal />} />
+                            <Route path="new/:phoneNumber" element={<MessageGroupModal />} />
+
+                            <Route path="conversations/:groupId" element={<MessageModal />} />
+                        </Routes>
                     </React.Suspense>
                 </AppContent>
             </AppWrapper>

@@ -3,19 +3,19 @@ import { addQueryToLocation } from '@common/utils/addQueryToLocation';
 import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
 import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
-import { AppWrapper } from '@ui/components';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
+import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { usePhotosValue } from '../../hooks/state';
 
 export const GalleryGrid = () => {
-    const photosApp = useApp('PHOTO');
-    const history = useHistory();
+    const photosApp = useApp('photo');
+    const navigate = useNavigate();
     const query = useQueryParams();
     const [t] = useTranslation();
     const photos = usePhotosValue();
@@ -24,13 +24,17 @@ export const GalleryGrid = () => {
     const referal = query.referal ? decodeURIComponent(query.referal) : '/photo/image';
 
     const handlePhotoOpen = photo => {
-        history.push(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
+        console.log(
+            referal,
+            getLocationFromUrl(referal),
+            addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image)
+        );
+        navigate(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
     };
 
     return (
         <AppWrapper>
             <Transition
-                appear={true}
                 show={true}
                 className="mt-4 h-full flex flex-col"
                 enter="transition-all duration-300"

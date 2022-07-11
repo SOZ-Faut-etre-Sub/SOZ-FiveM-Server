@@ -1,8 +1,8 @@
 import { ChevronRightIcon } from '@heroicons/react/outline';
 import { NoteItem } from '@typings/notes';
-import { Button } from '@ui/components/Button';
-import { List } from '@ui/components/List';
-import { ListItem } from '@ui/components/ListItem';
+import { Button } from '@ui/old_components/Button';
+import { List } from '@ui/old_components/List';
+import { ListItem } from '@ui/old_components/ListItem';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -3,18 +3,18 @@ import { useApps } from '@os/apps/hooks/useApps';
 import { AddNoteExportData, NotesEvents } from '@typings/notes';
 import qs from 'qs';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const useNoteListener = () => {
     const { getApp } = useApps();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const addNoteExportHandler = useCallback(
         (noteData: AddNoteExportData) => {
             const { path } = getApp('NOTES');
             const queryStr = qs.stringify(noteData);
 
-            history.push({
+            navigate({
                 pathname: path,
                 search: `?${queryStr}`,
             });

@@ -4,17 +4,17 @@ import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { usePhotoActions } from '../../hooks/usePhotoActions';
 
 export const GalleryModal = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const query = useQueryParams();
     const { theme } = useContext(ThemeContext);
     const { deletePhoto } = usePhotoActions();
@@ -35,7 +35,7 @@ export const GalleryModal = () => {
 
             deletePhoto(meta.image);
 
-            history.goBack();
+            navigate(-1);
         });
     };
 
@@ -45,7 +45,7 @@ export const GalleryModal = () => {
             type: 'success',
             message: "Adresse de l'image copiée dans le presse-papier",
         });
-        history.push(referal);
+        navigate(referal);
     };
 
     if (!meta) return null;

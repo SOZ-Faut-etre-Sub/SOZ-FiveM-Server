@@ -1,9 +1,9 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { ThemeContext } from '../../../../styles/themeProvider';
@@ -12,12 +12,12 @@ import { SearchContacts } from './SearchContacts';
 
 export const ContactList: React.FC = () => {
     const filteredContacts = useFilteredContacts();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
     const { initializeCall } = useCall();
 
     const openContactInfo = (contactId: number) => {
-        history.push(`/contacts/${contactId}`);
+        navigate(`/contacts/${contactId}`);
     };
 
     const startCall = (number: string) => {
@@ -35,7 +35,7 @@ export const ContactList: React.FC = () => {
             level: 1,
             data: { phoneNumber },
         });
-        history.push(`/messages/new?phoneNumber=${phoneNumber}`);
+        navigate(`/messages/new?phoneNumber=${phoneNumber}`);
     };
 
     return (

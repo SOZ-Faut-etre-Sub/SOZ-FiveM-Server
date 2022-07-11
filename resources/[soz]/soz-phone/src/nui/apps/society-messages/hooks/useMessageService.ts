@@ -1,9 +1,9 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { ServerPromiseResp } from '@typings/common';
 import { SocietyEvents, SocietyMessage } from '@typings/society';
 import { fetchNui } from '@utils/fetchNui';
 import { buildRespObj } from '@utils/misc';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useLocation } from 'react-router-dom';
 
 import { MockSocietyMessages } from '../utils/constants';

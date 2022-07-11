@@ -1,6 +1,6 @@
 import { usePhone } from '@os/phone/hooks/usePhone';
 import { useCallback, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 
 const keyboardState = {
@@ -39,7 +39,7 @@ const validKeys = ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Backspace
 const isKeyValid = key => validKeys.indexOf(key) !== -1;
 
 export const useKeyboardService = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { closePhone } = usePhone();
 
     const ArrowRight = useRecoilValue(keyboardState.ArrowRight);
@@ -86,7 +86,7 @@ export const useKeyboardService = () => {
                 // Dont anything if we are typing something :)
                 return;
             }
-            history.goBack();
+            navigate(-1);
         },
         [history]
     );

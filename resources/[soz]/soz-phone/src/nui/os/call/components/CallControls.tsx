@@ -1,18 +1,18 @@
 import { PhoneIcon } from '@heroicons/react/solid';
 import React, { FunctionComponent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useCall } from '../hooks/useCall';
 import { useCallModal } from '../hooks/useCallModal';
 
 export const CallControls: FunctionComponent = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { setModal } = useCallModal();
     const { call, endCall, acceptCall, rejectCall } = useCall();
 
     const handleAcceptCall = e => {
         e.stopPropagation();
-        history.push('/call');
+        navigate('/call');
         acceptCall();
     };
 

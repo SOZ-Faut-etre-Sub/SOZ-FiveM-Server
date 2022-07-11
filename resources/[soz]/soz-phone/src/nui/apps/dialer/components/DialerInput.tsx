@@ -1,12 +1,12 @@
-import { InputBase } from '@ui/components/Input';
+import { InputBase } from '@ui/old_components/Input';
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../styles/themeProvider';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 
 export const DialerInput: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
     const { inputVal, set } = useContext<IDialInputCtx>(DialInputCtx);
 
@@ -15,7 +15,7 @@ export const DialerInput: React.FC = () => {
     }
 
     const handleNewContact = (number: string) => {
-        history.push(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`);
+        navigate(`/contacts/-1/?addNumber=${number}&referal=/phone/contacts`);
     };
 
     return (

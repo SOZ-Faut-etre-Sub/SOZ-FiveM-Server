@@ -2,10 +2,7 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { MessageConversation } from '@typings/messages';
 import { useTranslation } from 'react-i18next';
-import { matchPath, useHistory } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
-import { messageState } from './state';
 import { useMessageAPI } from './useMessageAPI';
 import useMessages from './useMessages';
 
@@ -13,25 +10,25 @@ const NOTIFICATION_ID = 'messages:broadcast';
 
 export const useMessageNotifications = () => {
     const [t] = useTranslation();
-    const history = useHistory();
+    // const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('MESSAGES');
+    const { icon, notificationIcon } = useApp('messages');
     const { getMessageConversationById, goToConversation } = useMessages();
     const { addConversation } = useMessageAPI();
-    const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
+    // const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
 
     // Remove notifications from groups when opening them
-    history.listen(location => {
-        if (
-            activeMessageConversation?.conversation_id &&
-            matchPath(location.pathname, {
-                path: `/messages/conversations/${activeMessageConversation.conversation_id}`,
-                exact: true,
-            })
-        ) {
-            removeId(`${NOTIFICATION_ID}:${activeMessageConversation.conversation_id}`);
-        }
-    });
+    // history.listen(location => {
+    //     if (
+    //         activeMessageConversation?.conversation_id &&
+    //         matchPath(location.pathname, {
+    //             path: `/messages/conversations/${activeMessageConversation.conversation_id}`,
+    //             exact: true,
+    //         })
+    //     ) {
+    //         removeId(`${NOTIFICATION_ID}:${activeMessageConversation.conversation_id}`);
+    //     }
+    // });
 
     const setNotification = ({ conversationName, conversationId, message }) => {
         let group: MessageConversation = null;

@@ -6,25 +6,20 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { ContactsDatabaseLimits } from '@typings/contact';
-import { AppWrapper } from '@ui/components';
-import { ActionButton } from '@ui/components/ActionButton';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { Button } from '@ui/components/Button';
-import { TextField } from '@ui/components/Input';
+import { AppWrapper } from '@ui/old_components';
+import { ActionButton } from '@ui/old_components/ActionButton';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { Button } from '@ui/old_components/Button';
+import { TextField } from '@ui/old_components/Input';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import NumberFormat from 'react-number-format';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
-
-interface ContactInfoRouteParams {
-    mode: string;
-    id: string;
-}
 
 interface ContactInfoRouteQuery {
     addNumber?: string;
@@ -34,10 +29,10 @@ interface ContactInfoRouteQuery {
 }
 
 const ContactsInfoPage: React.FC = () => {
-    const contacts = useApp('CONTACTS');
-    const history = useHistory();
+    const contacts = useApp('contacts');
+    const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
-    const { id } = useParams<ContactInfoRouteParams>();
+    const { id } = useParams();
     const {
         addNumber,
         // Because this is mispelled absolutely everywhere
@@ -82,7 +77,7 @@ const ContactsInfoPage: React.FC = () => {
         initializeCall(contact.number);
     };
     const handleContactMessage = () => {
-        history.push(`/messages/new?phoneNumber=${contact.number}`);
+        navigate(`/messages/new?phoneNumber=${contact.number}`);
     };
     const handleContactAdd = () => {
         addNewContact({ display: name, number, avatar }, referral);
@@ -116,7 +111,7 @@ const ContactsInfoPage: React.FC = () => {
         >
             <AppWrapper>
                 <AppTitle app={contacts}>
-                    <Button className="flex items-center text-base" onClick={() => history.goBack()}>
+                    <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                         <ChevronLeftIcon className="h-5 w-5" />
                         Fermer
                     </Button>

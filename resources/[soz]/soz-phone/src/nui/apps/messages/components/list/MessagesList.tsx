@@ -1,6 +1,6 @@
 import 'dayjs/locale/fr';
 
-import { SearchField } from '@ui/components/SearchField';
+import { SearchField } from '@ui/old_components/SearchField';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';

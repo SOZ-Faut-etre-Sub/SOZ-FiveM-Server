@@ -11,12 +11,12 @@ import {
 import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { CallHistoryItem } from '@typings/call';
-import { Button } from '@ui/components/Button';
+import { Button } from '@ui/old_components/Button';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useCallback, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeContext } from '../../../../styles/themeProvider';
 import { useContacts } from '../../../contacts/hooks/state';
@@ -32,7 +32,7 @@ export const DialerHistory: React.FC = () => {
     const { initializeCall } = useCall();
     const calls = useDialHistory();
     const contacts = useContacts();
-    const history = useHistory();
+    const navigate = useNavigate();
     const [t] = useTranslation();
 
     const handleCall = phoneNumber => {
@@ -157,7 +157,7 @@ export const DialerHistory: React.FC = () => {
                                                     <Button
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                         onClick={() =>
-                                                            history.push(
+                                                            navigate(
                                                                 `/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`
                                                             )
                                                         }
@@ -172,7 +172,7 @@ export const DialerHistory: React.FC = () => {
                                                         <Button
                                                             className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
                                                             onClick={() =>
-                                                                history.push(
+                                                                navigate(
                                                                     `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
                                                                 )
                                                             }

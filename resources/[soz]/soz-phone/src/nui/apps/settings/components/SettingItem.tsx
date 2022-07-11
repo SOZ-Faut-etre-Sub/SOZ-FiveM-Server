@@ -1,8 +1,8 @@
 import { Switch } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/outline';
-import { Button } from '@ui/components/Button';
-import { ItemIcon } from '@ui/components/ItemIcon';
-import { ListItem } from '@ui/components/ListItem';
+import { Button } from '@ui/old_components/Button';
+import { ItemIcon } from '@ui/old_components/ItemIcon';
+import { ListItem } from '@ui/old_components/ListItem';
 import React, { useContext } from 'react';
 
 import { ThemeContext } from '../../../styles/themeProvider';

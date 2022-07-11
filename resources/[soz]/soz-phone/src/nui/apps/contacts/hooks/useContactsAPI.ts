@@ -3,7 +3,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { Contact, ContactEvents, PreDBContact } from '@typings/contact';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { fetchNui } from '../../../utils/fetchNui';
 import { useContactActions } from './useContactActions';
@@ -12,7 +12,7 @@ export const useContactsAPI = () => {
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
     const { addLocalContact, updateLocalContact, deleteLocalContact } = useContactActions();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const addNewContact = useCallback(
         ({ display, number, avatar }: PreDBContact, referral: string) => {
@@ -34,7 +34,7 @@ export const useContactsAPI = () => {
                     message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
                     type: 'success',
                 });
-                history.replace(referral);
+                navigate(referral, { replace: true });
             });
         },
         [addAlert, addLocalContact, history, t]
@@ -67,7 +67,7 @@ export const useContactsAPI = () => {
                     type: 'success',
                 });
 
-                history.goBack();
+                navigate(-1);
             });
         },
         [addAlert, history, t, updateLocalContact]
@@ -82,7 +82,7 @@ export const useContactsAPI = () => {
                         type: 'error',
                     });
                 }
-                history.goBack();
+                navigate(-1);
 
                 deleteLocalContact(id);
 

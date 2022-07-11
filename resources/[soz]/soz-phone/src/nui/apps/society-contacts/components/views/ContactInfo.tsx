@@ -3,23 +3,18 @@ import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { ChatIcon, LocationMarkerIcon, PhoneIncomingIcon, PhoneMissedCallIcon } from '@heroicons/react/solid';
 import { SocietiesDatabaseLimits } from '@typings/society';
-import { AppWrapper } from '@ui/components';
-import { ActionButton } from '@ui/components/ActionButton';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { Button } from '@ui/components/Button';
-import { TextareaField } from '@ui/components/Input';
+import { AppWrapper } from '@ui/old_components';
+import { ActionButton } from '@ui/old_components/ActionButton';
+import { AppContent } from '@ui/old_components/AppContent';
+import { AppTitle } from '@ui/old_components/AppTitle';
+import { Button } from '@ui/old_components/Button';
+import { TextareaField } from '@ui/old_components/Input';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
-
-interface ContactInfoRouteParams {
-    mode: string;
-    id: string;
-}
 
 interface ContactInfoRouteQuery {
     addNumber?: string;
@@ -29,12 +24,12 @@ interface ContactInfoRouteQuery {
 }
 
 const ContactsInfoPage: React.FC = () => {
-    const { id } = useParams<ContactInfoRouteParams>();
+    const { id } = useParams();
     const { referal: referral } = useQueryParams<ContactInfoRouteQuery>({
         referal: '/society-contacts',
     });
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { getContact } = useContactActions();
     const { sendSocietyMessage } = useContactsAPI();
@@ -78,7 +73,7 @@ const ContactsInfoPage: React.FC = () => {
         >
             <AppWrapper>
                 <AppTitle title={contact.display}>
-                    <Button className="flex items-center text-base" onClick={() => history.goBack()}>
+                    <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                         <ChevronLeftIcon className="h-5 w-5" />
                         Fermer
                     </Button>

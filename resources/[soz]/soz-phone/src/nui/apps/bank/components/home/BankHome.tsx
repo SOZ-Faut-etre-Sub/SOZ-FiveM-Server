@@ -1,4 +1,4 @@
-import { AppContent } from '@ui/components/AppContent';
+import { AppContent } from '@ui/old_components/AppContent';
 import cn from 'classnames';
 import React, { useContext } from 'react';
 
