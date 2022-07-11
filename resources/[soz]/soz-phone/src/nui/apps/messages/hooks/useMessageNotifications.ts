@@ -2,10 +2,7 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { MessageConversation } from '@typings/messages';
 import { useTranslation } from 'react-i18next';
-import { matchPath, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
-import { messageState } from './state';
 import { useMessageAPI } from './useMessageAPI';
 import useMessages from './useMessages';
 
@@ -13,12 +10,12 @@ const NOTIFICATION_ID = 'messages:broadcast';
 
 export const useMessageNotifications = () => {
     const [t] = useTranslation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
     const { icon, notificationIcon } = useApp('messages');
     const { getMessageConversationById, goToConversation } = useMessages();
     const { addConversation } = useMessageAPI();
-    const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
+    // const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
 
     // Remove notifications from groups when opening them
     // history.listen(location => {

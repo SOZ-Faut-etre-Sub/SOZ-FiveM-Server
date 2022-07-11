@@ -3,7 +3,6 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { AppWrapper } from '@ui/old_components';
 import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
-import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 

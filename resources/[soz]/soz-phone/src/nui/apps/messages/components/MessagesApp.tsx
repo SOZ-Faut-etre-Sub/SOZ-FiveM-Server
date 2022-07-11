@@ -6,7 +6,7 @@ import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 
 import MessagesList from './list/MessagesList';
 import MessageGroupModal from './modal/MessageGroupModal';
@@ -14,7 +14,6 @@ import { MessageModal } from './modal/MessageModal';
 
 export const MessagesApp = () => {
     const messages = useApp('messages');
-    const navigate = useNavigate();
 
     return (
         <Transition
