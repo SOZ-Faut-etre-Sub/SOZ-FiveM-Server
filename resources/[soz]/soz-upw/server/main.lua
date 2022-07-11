@@ -53,7 +53,6 @@ local function InitiateFacilities()
 end
 
 local function Save()
-    print("save")
     for _, data in pairs(facilities) do
         for __, facility in pairs(data.arr) do
             facility:save()
