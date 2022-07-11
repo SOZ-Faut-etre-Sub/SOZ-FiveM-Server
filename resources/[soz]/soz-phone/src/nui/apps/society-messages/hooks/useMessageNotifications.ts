@@ -1,7 +1,7 @@
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { useTranslation } from 'react-i18next';
-import { matchPath, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NOTIFICATION_ID = 'society-messages:broadcast';
 
