@@ -6,7 +6,7 @@ interface GetLocationFromUrlValue {
 }
 
 export const getLocationFromUrl = (url: string): GetLocationFromUrlValue => {
-    const { pathname, search } = parseUrl(url);
+    const { search } = parseUrl(url, false);
     const searchStr = '?' + (search || '');
-    return { pathname, search: searchStr };
+    return { pathname: url, search: searchStr };
 };

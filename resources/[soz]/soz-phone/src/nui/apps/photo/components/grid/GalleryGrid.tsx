@@ -24,6 +24,11 @@ export const GalleryGrid = () => {
     const referal = query.referal ? decodeURIComponent(query.referal) : '/photo/image';
 
     const handlePhotoOpen = photo => {
+        console.log(
+            referal,
+            getLocationFromUrl(referal),
+            addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image)
+        );
         navigate(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
     };
 
