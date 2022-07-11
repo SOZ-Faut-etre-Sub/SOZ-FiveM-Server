@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
         local zone = PrepareZoneData(data, zonePath)
 
         if zone then
-            createFunc(facility.identifier, zone)
+            createFunc(facility.identifier, zone, facility)
         end
     end
 
@@ -175,4 +175,10 @@ function OnDuty(job)
     local job = job or "upw"
     local PlayerData = QBCore.Functions.GetPlayerData()
     return PlayerData.job.id == job and PlayerData.job.onduty
+end
+
+function OnDutyUpwOrJob(job)
+    local PlayerData = QBCore.Functions.GetPlayerData()
+
+    return (PlayerData.job.id == job or PlayerData.job.id == "upw") and PlayerData.job.onduty
 end
