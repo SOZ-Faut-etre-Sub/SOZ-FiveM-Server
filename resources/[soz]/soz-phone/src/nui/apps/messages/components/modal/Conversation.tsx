@@ -66,12 +66,6 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
     return (
         <>
             <div>
-                <MessageImageModal
-                    image={referalImage}
-                    onClose={() => setImageModalOpen(false)}
-                    isOpen={imageModalOpen}
-                    messageGroupId={activeMessageGroup.conversation_id}
-                />
                 <div id={CONVERSATION_ELEMENT_ID} style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
                     <div
                         style={{
@@ -98,6 +92,12 @@ const Conversation: React.FC<IProps> = ({ activeMessageGroup, messages }) => {
                     </div>
                 </div>
             </div>
+            <MessageImageModal
+                image={referalImage}
+                onClose={() => setImageModalOpen(false)}
+                isOpen={imageModalOpen}
+                messageGroupId={activeMessageGroup.conversation_id}
+            />
             <MessageInput
                 messageGroupName={conversationContact?.display || activeMessageGroup.phoneNumber}
                 messageConversationId={activeMessageGroup.conversation_id}
