@@ -1,5 +1,5 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { MarketplaceBroadcastAddDTO, MarketplaceEvents } from '@typings/marketplace';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useCallback } from 'react';
 
 import { useMarketplaceActions } from './useMarketplaceActions';

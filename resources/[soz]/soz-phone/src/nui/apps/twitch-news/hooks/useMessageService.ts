@@ -1,5 +1,5 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { TwitchNewsEvents } from '@typings/twitch-news';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 
 import { useMessageActions } from './useMessageActions';
 
