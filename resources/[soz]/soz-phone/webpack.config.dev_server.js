@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
         '@utils': path.resolve(__dirname, 'src/nui/utils'),
         '@common': path.resolve(__dirname, 'src/nui/common'),
         '@typings': path.resolve(__dirname, 'typings'),
-        '@libs': path.resolve(__dirname, 'libs'),
+        '@libs': path.resolve(__dirname, 'src/libs'),
     };
 
     config.resolve.fallback = { url: false };
