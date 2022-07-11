@@ -47,7 +47,13 @@ on('onServerResourceStart', async (resource: string) => {
     if (resource === GetCurrentResourceName()) {
         const QBCore = global.exports['qb-core'].GetCoreObject();
 
-        for (const player of QBCore.Functions.GetQBPlayers()) {
+        let players = QBCore.Functions.GetQBPlayers();
+
+        if (!Array.isArray(players)) {
+            players = Object.values(players);
+        }
+
+        for (const player of players) {
             await PlayerService.handleNewPlayerJoined(player);
         }
     }
