@@ -51,9 +51,19 @@ Config.Storages["pawl_fridge"] = {
     label = "Frigo Pipe And Wooden Leg",
     type = "fridge",
     owner = "pawl",
-    position = vector3(-538.5, 5288.44, 75.36),
-    size = vec2(1.4, 0.3),
+    position = vector3(-545.98, 5299.32, 76.37),
+    size = vec2(1.6, 1.0),
     heading = 340,
+    offsetUpZ = 1.5,
+}
+
+Config.Storages["pawl_armory"] = {
+    label = "Armurerie Pipe And Wooden Leg",
+    type = "armory",
+    owner = "pawl",
+    position = vector3(-541.46, 5311.12, 76.37),
+    size = vec2(0.8, 2.85),
+    heading = 70,
     offsetUpZ = 1.5,
 }
 
@@ -61,8 +71,8 @@ Config.Storages["pawl_boss_storage"] = {
     label = "Stockage Patron Pipe And Wooden Leg",
     type = "boss_storage",
     owner = "pawl",
-    position = vector3(-562.79, 5337.99, 70.26),
-    size = vec2(2.0, 1.2),
-    heading = 335,
-    offsetUpZ = 0.5,
+    position = vector3(-537.1, 5304.83, 76.37),
+    size = vec2(1, 1.2),
+    heading = 340,
+    offsetUpZ = 0.0,
 }
