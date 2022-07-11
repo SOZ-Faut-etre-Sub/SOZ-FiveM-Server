@@ -20,7 +20,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
     return (
         <div
             className={`${isBigHeader ? 'h-32' : 'h-24'} absolute -top-16 inset-x-0 ${
-                theme === 'dark' ? 'bg-black' : pathname === '/camera' ? 'bg-black' : 'bg-[#F2F2F6]'
+                theme === 'dark' ? 'bg-black' : pathname.includes('/camera') ? 'bg-black' : 'bg-[#F2F2F6]'
             } px-5 pt-12 transition-all duration-300 ease-in-out z-30`}
         >
             <h2

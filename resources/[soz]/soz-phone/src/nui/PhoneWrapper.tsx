@@ -25,7 +25,7 @@ const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
             <div
                 className="PhoneWrapper"
                 onClick={() => {
-                    if (pathname === '/camera') {
+                    if (pathname.includes('/camera')) {
                         fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CONTROL_CAMERA, {});
                     }
                 }}

@@ -15,7 +15,7 @@ export const AppWrapper: React.FC<PropsWithChildren<AppWrapperTypes>> = ({ child
     const { theme } = useContext(ThemeContext);
 
     const color = () => {
-        if (pathname === '/camera') {
+        if (pathname.includes('/camera')) {
             return 'bg-black';
         }
         if (pathname !== '/') {

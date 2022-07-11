@@ -11,7 +11,7 @@ export const Navigation = memo(() => {
     const { theme } = useContext(ThemeContext);
 
     const color = useCallback(() => {
-        if (pathname === '/camera' || pathname === '/' || pathname === '/call') {
+        if (pathname.includes('/camera') || pathname === '/' || pathname === '/call') {
             return 'bg-gray-200';
         } else {
             return theme === 'dark' ? 'bg-gray-200' : 'bg-black';
