@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import { useNuiEvent } from 'fivem-nui-react-lib';
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import React, { useState } from 'react';
 
 import { Alert } from './Alert';

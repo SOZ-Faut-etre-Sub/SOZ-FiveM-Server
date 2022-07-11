@@ -1,5 +1,5 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { ActiveCall, CallEvents } from '@typings/call';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';

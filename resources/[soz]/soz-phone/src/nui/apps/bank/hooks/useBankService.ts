@@ -1,6 +1,6 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { IAlert, useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { BankEvents } from '@typings/bank';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useTranslation } from 'react-i18next';
 import { useSetRecoilState } from 'recoil';
 

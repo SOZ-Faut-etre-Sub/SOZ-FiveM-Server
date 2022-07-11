@@ -1,5 +1,5 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { PhoneEvents } from '@typings/phone';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import React, { PropsWithChildren, useState } from 'react';
 import { RecoilRoot } from 'recoil';
 

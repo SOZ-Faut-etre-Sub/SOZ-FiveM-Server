@@ -1,9 +1,9 @@
 import './main.css';
 import './i18n';
 
+import { NuiProvider } from '@libs/nui/providers/NuiProvider';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { NuiProvider } from 'fivem-nui-react-lib';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';

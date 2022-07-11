@@ -1,6 +1,6 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { Message, MessageConversationResponse, MessageEvents } from '@typings/messages';
-import { useNuiEvent } from 'fivem-nui-react-lib';
 import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
