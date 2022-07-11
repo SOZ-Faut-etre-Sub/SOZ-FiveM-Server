@@ -33,7 +33,7 @@ export const NotificationBar = () => {
                 return 'text-white bg-white bg-opacity-30';
             }
             return 'text-white';
-        } else if (pathname === '/camera') {
+        } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
             return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black';
