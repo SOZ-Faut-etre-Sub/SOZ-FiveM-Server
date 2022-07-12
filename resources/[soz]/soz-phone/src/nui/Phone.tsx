@@ -41,7 +41,6 @@ import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
     const { apps } = useApps();
-
     // useConfig();
 
     // useKeyboardService();
@@ -64,30 +63,26 @@ function Phone() {
     // const showNavigation = call?.is_accepted || !callModal;
 
     return (
-        <SoundProvider>
-            <ThemeProvider>
-                <NotificationsProvider>
-                    {/*        <SnackbarProvider>*/}
-                    <PhoneWrapper>
-                        {/*<TopLevelErrorComponent>*/}
-                        {/*    <WindowSnackbar />*/}
-                        {/*        <NotificationBar />*/}
-                        <Routes>
-                            <Route path="/" element={<HomeApp />} />
-                            {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
-                            {apps.map(app => (
-                                <Route key={app.id} path={app.path} element={app.component} />
-                            ))}
-                        </Routes>
-                        {/*            <NotificationAlert />*/}
-                        {/*            <PhoneSnackbar />*/}
-                        {/*        {showNavigation && <Navigation />}*/}
-                        {/*</TopLevelErrorComponent>*/}
-                        {/*        </SnackbarProvider>*/}
-                    </PhoneWrapper>
-                </NotificationsProvider>
-            </ThemeProvider>
-        </SoundProvider>
+        <ThemeProvider>
+            {/*        <SnackbarProvider>*/}
+            <PhoneWrapper>
+                {/*<TopLevelErrorComponent>*/}
+                {/*    <WindowSnackbar />*/}
+                {/*        <NotificationBar />*/}
+                <Routes>
+                    <Route path="/" element={<HomeApp />} />
+                    {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
+                    {apps.map(app => (
+                        <Route key={app.id} path={app.path} element={app.component} />
+                    ))}
+                </Routes>
+                {/*            <NotificationAlert />*/}
+                {/*            <PhoneSnackbar />*/}
+                {/*        {showNavigation && <Navigation />}*/}
+                {/*</TopLevelErrorComponent>*/}
+                {/*        </SnackbarProvider>*/}
+            </PhoneWrapper>
+        </ThemeProvider>
     );
 }
 

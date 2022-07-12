@@ -10,6 +10,8 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 
 import { RecoilRootManager } from './lib/RecoilRootManager';
+import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
+import { SoundProvider } from './os/sound/providers/SoundProvider';
 import Phone from './Phone';
 import { store } from './store';
 
@@ -21,7 +23,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <HashRouter>
                 <NuiProvider resource="npwd">
                     <RecoilRootManager>
-                        <Phone />
+                        <SoundProvider>
+                            <NotificationsProvider>
+                                <Phone />
+                            </NotificationsProvider>
+                        </SoundProvider>
                     </RecoilRootManager>
                 </NuiProvider>
             </HashRouter>
