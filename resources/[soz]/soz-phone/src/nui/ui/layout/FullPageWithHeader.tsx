@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { FunctionComponent, PropsWithChildren } from 'react';
 
 import { NavigationBar } from '../components/NavigationBar';
@@ -7,7 +6,7 @@ import { FullPageWithoutHeader } from './FullPageWithoutHeader';
 
 export const FullPageWithHeader: FunctionComponent<PropsWithChildren<any>> = ({ children, className }) => {
     return (
-        <FullPageWithoutHeader className={cn('h-full px-2', className)}>
+        <FullPageWithoutHeader className={className}>
             <TopHeaderBar />
             {children}
             <NavigationBar />

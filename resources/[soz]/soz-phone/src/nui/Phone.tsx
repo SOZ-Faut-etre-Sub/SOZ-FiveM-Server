@@ -19,6 +19,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import DefaultConfig from '../../config.json';
+import { BankEvents } from '../../typings/bank';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useDialService } from './apps/dialer/hooks/useDialService';
@@ -73,7 +74,7 @@ function Phone() {
                     <Route path="/" element={<HomeApp />} />
                     {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
                     {apps.map(app => (
-                        <Route key={app.id} path={app.path} element={app.component} />
+                        <Route key={app.id} path={app.path + '/*'} element={app.component} />
                     ))}
                 </Routes>
                 {/*            <NotificationAlert />*/}
@@ -108,5 +109,14 @@ InjectDebugData<any>([
         app: 'PHONE',
         method: PhoneEvents.SET_CONFIG,
         data: DefaultConfig,
+    },
+    {
+        app: 'BANK',
+        method: BankEvents.SEND_CREDENTIALS,
+        data: {
+            name: 'John Doe',
+            account: '555Z5555T555',
+            balance: 1258745,
+        },
     },
 ]);

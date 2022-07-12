@@ -36,7 +36,7 @@ export const NotificationBar = () => {
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
-            return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black';
+            return theme === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
         }
     };
 

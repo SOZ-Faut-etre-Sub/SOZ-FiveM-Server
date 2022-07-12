@@ -1,10 +1,10 @@
-import { AppContent } from '@ui/old_components/AppContent';
 import cn from 'classnames';
 import React, { useContext } from 'react';
 
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { useCredentials } from '../../hooks/useCredentials';
-import { BankCard } from '../account/BankCard';
+import { ThemeContext } from '../../../styles/themeProvider';
+import { AppContent } from '../../../ui/components/AppContent';
+import { BankCard } from '../components/BankCard';
+import { useCredentials } from '../hooks/useCredentials';
 
 const EyeIcon = () => {
     return (
@@ -106,9 +106,9 @@ export const BankHome = () => {
     const { theme } = useContext(ThemeContext);
 
     return (
-        <AppContent className="mt-14 mb-4">
+        <>
             {credentials ? (
-                <div>
+                <AppContent>
                     <div className="m-auto pt-1 pb-3 flex flex-col w-5/6">
                         <h2
                             className={cn('text-3xl', {
@@ -165,16 +165,14 @@ export const BankHome = () => {
                         <CartEntry title="Paiement en ligne" enabled={false} />
                         <CartEntry title="Stonks Gold+" enabled={false} />
                     </div>
-                </div>
+                </AppContent>
             ) : (
-                <div
-                    className={`h-[600px] w-full flex justify-center items-center ${
-                        theme === 'dark' ? 'text-white' : 'text-dark'
-                    }`}
+                <AppContent
+                    className={`flex justify-center items-center ${theme === 'dark' ? 'text-white' : 'text-dark'}`}
                 >
                     Information non disponible
-                </div>
+                </AppContent>
             )}
-        </AppContent>
+        </>
     );
 };

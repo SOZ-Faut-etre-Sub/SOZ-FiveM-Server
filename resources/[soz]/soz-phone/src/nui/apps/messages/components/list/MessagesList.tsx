@@ -44,7 +44,7 @@ const MessagesList = (): any => {
                         .map(conversation => (
                             <li
                                 key={conversation.conversation_id}
-                                className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} w-full cursor-pointer`}
+                                className={`${theme === 'dark' ? 'bg-black' : 'bg-ios-50'} w-full cursor-pointer`}
                                 onClick={() => goToConversation(conversation)}
                             >
                                 <div
