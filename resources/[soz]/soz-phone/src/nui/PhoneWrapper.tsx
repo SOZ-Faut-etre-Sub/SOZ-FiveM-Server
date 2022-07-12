@@ -1,4 +1,3 @@
-import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { ServerPromiseResp } from '@typings/common';
 import { PhotoEvents } from '@typings/photo';
 import { fetchNui } from '@utils/fetchNui';
@@ -8,59 +7,65 @@ import { useLocation } from 'react-router-dom';
 
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
+import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 
 const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
-    const [settings] = useSettings();
     const { pathname } = useLocation();
     const { visibility, notifVisibility } = usePhoneVisibility();
 
     return (
         <div
-            className={cn('transition-any ease-in-out duration-500', {
-                'translate-y-0': visibility,
-                'translate-y-[38rem]': !visibility && notifVisibility,
-                'translate-y-[2000px]': !visibility && !notifVisibility,
-            })}
+            className="relative h-screen w-screen"
+            onClick={() => {
+                if (pathname.includes('/camera')) {
+                    fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CONTROL_CAMERA, {});
+                }
+            }}
         >
             <div
-                className="PhoneWrapper"
-                onClick={() => {
-                    if (pathname.includes('/camera')) {
-                        fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CONTROL_CAMERA, {});
+                className={cn(
+                    'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover transition-any ease-in-out duration-300',
+                    {
+                        'translate-y-0': visibility,
+                        'translate-y-[38rem]': !visibility && notifVisibility,
+                        'translate-y-[2000px]': !visibility,
                     }
-                }}
+                )}
             >
-                <div
-                    className="Phone"
-                    style={{
-                        position: 'fixed',
-                        transformOrigin: 'right bottom',
-                        zoom: `${settings.zoom.value}%`,
-                        bottom: 0,
-                    }}
-                >
-                    <div
-                        className="PhoneFrame"
-                        style={{
-                            backgroundImage: `url(media/frames/default.png)`,
-                        }}
-                    />
-                    <div
-                        id="phone"
-                        className={pathname === '/' ? 'PhoneScreen' : 'PhoneScreen PhoneScreenNoHome'}
-                        style={{
-                            backgroundColor: '#545454',
-                            backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
-                                ? `url(${settings.wallpaper.value})`
-                                : `url(media/backgrounds/${settings.wallpaper.value})`,
-                        }}
-                    >
-                        {children}
-                    </div>
-                </div>
+                <PhoneFrame />
+                <PhoneScreen>{children}</PhoneScreen>
             </div>
         </div>
     );
 };
+
+export function PhoneFrame() {
+    return (
+        <div
+            className="absolute z-50 w-[500px] h-[1000px] pointer-events-none"
+            style={{
+                backgroundImage: `url(media/frames/default.png)`,
+            }}
+        />
+    );
+}
+
+export function PhoneScreen({ children }: { children: React.ReactNode }) {
+    const [settings] = useSettings();
+
+    return (
+        <div
+            className="overflow-hidden absolute bottom-[100px] left-[50px] right-[50px] top-[35px] flex flex-col rounded-[40px]"
+            style={{
+                backgroundColor: '#545454',
+                backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
+                    ? `url(${settings.wallpaper.value})`
+                    : `url(media/backgrounds/${settings.wallpaper.value})`,
+            }}
+        >
+            {children}
+        </div>
+    );
+}
 
 export default PhoneWrapper;
