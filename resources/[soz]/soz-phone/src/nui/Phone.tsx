@@ -10,76 +10,84 @@ import { Navigation } from '@os/navigation-bar/components/Navigation';
 import { NotificationAlert } from '@os/notifications/components/NotificationAlert';
 import { NotificationBar } from '@os/notifications/components/NotificationBar';
 import { useConfig } from '@os/phone/hooks/useConfig';
-import { usePhoneService } from '@os/phone/hooks/usePhoneService';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { PhoneEvents } from '@typings/phone';
 import { TopLevelErrorComponent } from '@ui/old_components/TopLevelErrorComponent';
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import DefaultConfig from '../../config.json';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useDialService } from './apps/dialer/hooks/useDialService';
-import { HomeApp } from './apps/home/components/Home';
+import { HomeApp } from './apps/home';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
-import { useSettings } from './apps/settings/hooks/useSettings';
 import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
 import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
+import { usePhoneConfig } from './hooks/usePhoneConfig';
 import InjectDebugData from './os/debug/InjectDebugData';
+import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
+import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
+import SnackbarProvider from './os/snackbar/providers/SnackbarProvider';
+import { SoundProvider } from './os/sound/providers/SoundProvider';
 import PhoneWrapper from './PhoneWrapper';
+import { usePhoneService } from './services/usePhoneService';
+import ThemeProvider from './styles/themeProvider';
 import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
     const { apps } = useApps();
 
-    useConfig();
+    // useConfig();
 
-    useKeyboardService();
+    // useKeyboardService();
     usePhoneService();
-    useSimcardService();
-    useMarketplaceService();
-    useBankService();
-    useMessagesService();
-    useContactsListener();
-    useNoteListener();
-    /*usePhotoService();*/
-    useSocietyMessagesService();
-    useTwitchNewsService();
-    useCallService();
-    useDialService();
+    // useSimcardService();
+    // useMarketplaceService();
+    // useBankService();
+    // useMessagesService();
+    // useContactsListener();
+    // useNoteListener();
+    // /*usePhotoService();*/
+    // useSocietyMessagesService();
+    // useTwitchNewsService();
+    // useCallService();
+    // useDialService();
 
-    const { modal: callModal } = useCallModal();
-    const { call } = useCall();
-
-    const showNavigation = call?.is_accepted || !callModal;
+    // const { modal: callModal } = useCallModal();
+    // const { call } = useCall();
+    //
+    // const showNavigation = call?.is_accepted || !callModal;
 
     return (
-        <div>
-            <TopLevelErrorComponent>
-                <WindowSnackbar />
-                <PhoneWrapper>
-                    <NotificationBar />
-                    <div className="PhoneAppContainer select-none">
+        <SoundProvider>
+            <ThemeProvider>
+                <NotificationsProvider>
+                    {/*        <SnackbarProvider>*/}
+                    <PhoneWrapper>
+                        {/*<TopLevelErrorComponent>*/}
+                        {/*    <WindowSnackbar />*/}
+                        {/*        <NotificationBar />*/}
                         <Routes>
                             <Route path="/" element={<HomeApp />} />
-                            {callModal && <Route path="/call" element={<CallModal />} />}
+                            {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
                             {apps.map(app => (
                                 <Route key={app.id} path={app.path} element={app.component} />
                             ))}
                         </Routes>
-                        <NotificationAlert />
-                        <PhoneSnackbar />
-                    </div>
-                    {showNavigation && <Navigation />}
-                </PhoneWrapper>
-            </TopLevelErrorComponent>
-        </div>
+                        {/*            <NotificationAlert />*/}
+                        {/*            <PhoneSnackbar />*/}
+                        {/*        {showNavigation && <Navigation />}*/}
+                        {/*</TopLevelErrorComponent>*/}
+                        {/*        </SnackbarProvider>*/}
+                    </PhoneWrapper>
+                </NotificationsProvider>
+            </ThemeProvider>
+        </SoundProvider>
     );
 }
 
