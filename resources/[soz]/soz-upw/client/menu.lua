@@ -92,8 +92,6 @@ RegisterNetEvent("jobs:client:upw:OpenSocietyMenu", function()
 end)
 
 RegisterNetEvent("upw:client:OpenCloakroomMenu", function()
-    local PlayerData = QBCore.Functions.GetPlayerData()
-
     societyMenu:ClearItems()
 
     societyMenu:AddButton({
