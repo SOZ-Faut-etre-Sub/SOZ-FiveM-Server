@@ -1,6 +1,6 @@
 import React from 'react';
 
-import card from '../../assets/carte_de_credit_soz.png';
+import card from '../assets/carte_de_credit_soz.png';
 
 export const BankCard = props => {
     return (

@@ -24,7 +24,7 @@ export const ContactList: React.FC = () => {
                         <div key={letter} className="relative">
                             <div
                                 className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${
-                                    theme === 'dark' ? 'bg-black text-gray-400' : 'bg-[#F2F2F6] text-gray-600'
+                                    theme === 'dark' ? 'bg-black text-gray-400' : 'bg-ios-50 text-gray-600'
                                 }`}
                             >
                                 <h3>{letter}</h3>
@@ -38,7 +38,7 @@ export const ContactList: React.FC = () => {
                                     <li
                                         key={contact.id}
                                         className={`${
-                                            theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'
+                                            theme === 'dark' ? 'bg-black' : 'bg-ios-50'
                                         } w-full cursor-pointer`}
                                         onClick={() => openContactInfo(contact.id)}
                                     >

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useCredentials } from '../../hooks/useCredentials';
-import { BankCard } from './BankCard';
+import { BankCard } from '../components/BankCard';
+import { useCredentials } from '../hooks/useCredentials';
 
 export const BankAccount = () => {
     const credentials = useCredentials();

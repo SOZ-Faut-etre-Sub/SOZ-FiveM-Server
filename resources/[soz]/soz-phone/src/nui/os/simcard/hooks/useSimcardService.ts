@@ -3,6 +3,7 @@ import { PhoneEvents } from '@typings/phone';
 import { SettingsEvents } from '@typings/settings';
 import { useSetRecoilState } from 'recoil';
 
+import { BankEvents } from '../../../../../typings/bank';
 import InjectDebugData from '../../debug/InjectDebugData';
 import { simcardState } from './state';
 import { useMyPhoneNumber } from './useMyPhoneNumber';

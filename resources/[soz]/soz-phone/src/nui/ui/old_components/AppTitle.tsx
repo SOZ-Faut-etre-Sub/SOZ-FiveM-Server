@@ -19,9 +19,9 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
 
     return (
         <div
-            className={`${isBigHeader ? 'h-32' : 'h-24'} absolute -top-16 inset-x-0 ${
-                theme === 'dark' ? 'bg-black' : pathname.includes('/camera') ? 'bg-black' : 'bg-[#F2F2F6]'
-            } px-5 pt-12 transition-all duration-300 ease-in-out z-30`}
+            className={`${
+                theme === 'dark' ? 'bg-black' : pathname.includes('/camera') ? 'bg-black' : 'bg-ios-50'
+            } px-5 transition-all duration-300 ease-in-out z-0`}
         >
             <h2
                 className={`grid grid-cols-4 ${theme === 'dark' ? 'text-gray-200' : 'text-black'} ${

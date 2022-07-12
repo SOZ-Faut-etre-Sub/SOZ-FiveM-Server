@@ -158,7 +158,7 @@ const ContactsInfoPage: React.FC = () => {
                         )}
                     </div>
                     <div className="mt-6">
-                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
+                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-ios-50'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NAME')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NAME')}
@@ -166,7 +166,7 @@ const ContactsInfoPage: React.FC = () => {
                                 onChange={handleDisplayChange}
                             />
                         </div>
-                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
+                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-ios-50'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
                             <NumberFormat
                                 className={`w-full ${

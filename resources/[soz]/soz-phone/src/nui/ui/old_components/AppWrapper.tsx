@@ -19,7 +19,7 @@ export const AppWrapper: React.FC<PropsWithChildren<AppWrapperTypes>> = ({ child
             return 'bg-black';
         }
         if (pathname !== '/') {
-            return theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]';
+            return theme === 'dark' ? 'bg-black' : 'bg-ios-50';
         }
         return '';
     };

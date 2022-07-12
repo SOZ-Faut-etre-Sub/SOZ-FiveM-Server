@@ -24,23 +24,12 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     }, [notifications, setBarUncollapsed]);
 
     const color = () => {
-        if (pathname === '/') {
-            return 'text-white';
-        } else if (pathname === '/call') {
-            if (currentCall?.is_accepted) {
-                return 'text-white bg-white bg-opacity-30';
-            }
-            return 'text-white';
-        } else if (pathname.includes('/camera')) {
-            return 'bg-black text-white';
-        } else {
-            return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black';
-        }
+        return theme === 'dark' ? 'text-white' : 'text-black';
     };
 
     return (
         <div
-            className={cn('grid grid-cols-3 px-5 py-3 text-sm w-full z-40 cursor-pointer', color())}
+            className={cn('z-40 grid grid-cols-3 px-5 py-3 text-sm w-full cursor-pointer', color())}
             onClick={() => {
                 setBarUncollapsed(curr => !curr);
             }}

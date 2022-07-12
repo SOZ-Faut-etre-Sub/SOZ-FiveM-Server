@@ -59,7 +59,7 @@ export const GalleryModal = () => {
             />
             <div
                 className={`grid grid-cols-4 content-start ${
-                    theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-[#F2F2F6] text-black'
+                    theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-ios-50 text-black'
                 } h-16`}
             >
                 <Button className={`flex flex-col items-center py-3 text-sm`} onClick={handleCopyImage}>
