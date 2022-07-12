@@ -1,6 +1,20 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
+PlayerData = QBCore.Functions.GetPlayerData()
+
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+end)
+
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
+    PlayerData = data
+end)
+
+RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
+    PlayerData.job = JobInfo
+end)
+
 local function GetZoneConfig(zone)
     local config = {
         ["plant"] = {
@@ -173,12 +187,9 @@ end)
 --
 function OnDuty(job)
     local job = job or "upw"
-    local PlayerData = QBCore.Functions.GetPlayerData()
     return PlayerData.job.id == job and PlayerData.job.onduty
 end
 
 function OnDutyUpwOrJob(job)
-    local PlayerData = QBCore.Functions.GetPlayerData()
-
     return (PlayerData.job.id == job or PlayerData.job.id == "upw") and PlayerData.job.onduty
 end

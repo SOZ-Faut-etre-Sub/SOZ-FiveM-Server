@@ -1,8 +1,6 @@
 RunInverterRefreshLoop = false
 
 function CreateInverterZone(identifier, data)
-    local inverterSkin = table.deepclone(data)
-
     data.options = {
         {
             label = "Accéder à l'onduleur",
@@ -16,11 +14,13 @@ function CreateInverterZone(identifier, data)
         },
     }
 
-    inverterSkin.sx = 100.0
-    inverterSkin.sy = 100.0
-    inverterSkin.minZ = inverterSkin.minZ - 50.0
-    inverterSkin.maxZ = inverterSkin.maxZ + 50.0
-    inverterSkin.onPlayerInOut = function(isIn)
+    BoxZone:Create(data.coords, 100.0, 100.0, {
+        name = identifier .. "_visual",
+        heading = data.heading,
+        minZ = data.minZ - 50.0,
+        maxZ = data.maxZ + 50.0,
+        debugPoly = false,
+    }):onPlayerInOut(function(isIn)
         RunInverterRefreshLoop = isIn
         if isIn then
             Citizen.CreateThread(function()
@@ -37,15 +37,14 @@ function CreateInverterZone(identifier, data)
                         AddReplaceTexture("upwpiletex", "UPW_Emit_100", "upwpiletex", "UPW_Emit_0")
                     end
 
-                    Citizen.Wait(1000)
+                    Citizen.Wait(5000)
                 end
             end)
         else
             RemoveReplaceTexture("upwpiletex", "UPW_Emit_100")
         end
-    end
+    end)
 
-    CreateZone(identifier .. "_visual", "inverter", inverterSkin)
     return CreateZone(identifier, "inverter", data)
 end
 
