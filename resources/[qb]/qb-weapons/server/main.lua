@@ -147,11 +147,15 @@ RegisterNetEvent("weapons:server:AddWeaponAmmo", function(CurrentWeaponData, amo
 end)
 
 RegisterNetEvent("weapons:server:UpdateWeaponAmmo", function(CurrentWeaponData, amount)
-    local Player = QBCore.Functions.GetPlayer(source)
+    local player = QBCore.Functions.GetPlayer(source)
     amount = tonumber(amount)
     if CurrentWeaponData then
-        exports['soz-inventory']:SetMetadata(Player.PlayerData.source, CurrentWeaponData.slot, {ammo = amount})
+        exports['soz-inventory']:SetMetadata(player.PlayerData.source, CurrentWeaponData.slot, {ammo = amount})
     end
+end)
+
+RegisterNetEvent("weapons:server:SetCurrentWeaponData", function(CurrentWeaponData)
+    Player(source).state.CurrentWeaponData = CurrentWeaponData
 end)
 
 RegisterNetEvent("weapons:server:TakeBackWeapon", function(k, data)
