@@ -65,24 +65,24 @@ function Phone() {
 
     return (
         <ThemeProvider>
-            {/*        <SnackbarProvider>*/}
-            <PhoneWrapper>
-                {/*<TopLevelErrorComponent>*/}
-                {/*    <WindowSnackbar />*/}
-                {/*        <NotificationBar />*/}
-                <Routes>
-                    <Route path="/" element={<HomeApp />} />
-                    {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
-                    {apps.map(app => (
-                        <Route key={app.id} path={app.path + '/*'} element={app.component} />
-                    ))}
-                </Routes>
-                {/*            <NotificationAlert />*/}
-                {/*            <PhoneSnackbar />*/}
-                {/*        {showNavigation && <Navigation />}*/}
-                {/*</TopLevelErrorComponent>*/}
-                {/*        </SnackbarProvider>*/}
-            </PhoneWrapper>
+            <SnackbarProvider>
+                <PhoneWrapper>
+                    {/*<TopLevelErrorComponent>*/}
+                    {/*    <WindowSnackbar />*/}
+                    {/*        <NotificationBar />*/}
+                    <Routes>
+                        <Route path="/" element={<HomeApp />} />
+                        {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
+                        {apps.map(app => (
+                            <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                        ))}
+                    </Routes>
+                    {/*            <NotificationAlert />*/}
+                    {/*            <PhoneSnackbar />*/}
+                    {/*        {showNavigation && <Navigation />}*/}
+                    {/*</TopLevelErrorComponent>*/}
+                </PhoneWrapper>
+            </SnackbarProvider>
         </ThemeProvider>
     );
 }
