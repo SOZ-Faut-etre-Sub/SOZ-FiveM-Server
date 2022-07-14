@@ -36,7 +36,7 @@ function AdminMenuGameMaster(menu, permission)
     })
 
     gameMasterMenu:AddButton({
-        label = "Se téléporter au marquer",
+        label = "Se téléporter au marqueur",
         value = nil,
         select = function()
             local player = PlayerPedId()
