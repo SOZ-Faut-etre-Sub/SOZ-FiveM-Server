@@ -110,7 +110,7 @@ export const NoteModal: React.FC = () => {
             appear={true}
             show={modalVisible}
             as="div"
-            className="absolute inset-x-0 z-40"
+            className="absolute inset-0 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="translate-x-full"
             enterTo="translate-x-0"
