@@ -27,7 +27,7 @@ const NewsList = (): any => {
     };
 
     return (
-        <ul className={`mt-5 p-2`}>
+        <ul className={`p-2`}>
             {societyMessages.map(message => (
                 <li
                     className={cn('w-full my-3 rounded shadow border-l-4', {
