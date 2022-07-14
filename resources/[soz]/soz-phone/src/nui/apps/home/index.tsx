@@ -33,7 +33,7 @@ export const HomeApp: FunctionComponent = () => {
                 enterFrom="scale-[3.0]"
                 enterTo="scale-100"
             >
-                <AppContent>
+                <AppContent scrollable={false}>
                     <Grid styleRules={{ margin: '1rem 0 3rem 0' }}>
                         {filteredApps.map(app => (
                             <Link key={app.id} to={app.path}>
