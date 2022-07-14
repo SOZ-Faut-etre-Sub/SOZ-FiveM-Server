@@ -1,16 +1,21 @@
 import { Menu, Transition } from '@headlessui/react';
+import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/outline';
 import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
+import { AppContent } from '@ui/components/AppContent';
 import { Button } from '@ui/old_components/Button';
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useApp } from '../../../../os/apps/hooks/useApps';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { ThemeContext } from '../../../../styles/themeProvider';
+import { AppTitle } from '../../../../ui/old_components/AppTitle';
 import { useFilteredContacts } from '../../hooks/state';
 import { SearchContacts } from './SearchContacts';
 
 export const ContactList: React.FC = () => {
+    const contacts = useApp('contacts');
     const filteredContacts = useFilteredContacts();
     const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
@@ -37,15 +42,27 @@ export const ContactList: React.FC = () => {
         });
         navigate(`/messages/new?phoneNumber=${phoneNumber}`);
     };
+    const { pathname } = useLocation();
+    const pathTemplate = /contacts\/-?\d/;
 
     return (
-        <div className="mt-5">
-            <SearchContacts />
-            <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
+        <>
+            <AppTitle
+                app={contacts}
+                action={
+                    !pathname.match(pathTemplate) && (
+                        <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
+                    )
+                }
+            >
+                <div />
+            </AppTitle>
+            <AppContent aria-label="Directory">
+                <SearchContacts />
                 {Object.keys(filteredContacts)
                     .sort()
                     .map(letter => (
-                        <div key={letter} className="relative last:pb-36">
+                        <div key={letter} className="relative">
                             <div
                                 className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${
                                     theme === 'dark' ? 'bg-black text-gray-400' : 'bg-ios-50 text-gray-600'
@@ -133,7 +150,7 @@ export const ContactList: React.FC = () => {
                             </ul>
                         </div>
                     ))}
-            </nav>
-        </div>
+            </AppContent>
+        </>
     );
 };
