@@ -49,7 +49,6 @@ export const NotesApp: React.FC = () => {
             <Transition
                 appear={true}
                 show={true}
-                className="mt-4 h-full flex flex-col"
                 enter="transition-all origin-[35%_10%] duration-500"
                 enterFrom="scale-[0.0] opacity-0"
                 enterTo="scale-100 opacity-100"
@@ -60,7 +59,7 @@ export const NotesApp: React.FC = () => {
                 <NoteModal />
                 <AppWrapper>
                     <AppTitle app={notesApp} />
-                    <AppContent className="flex flex-col justify-between">
+                    <AppContent className="flex flex-col justify-between pb-0">
                         <Routes>
                             <Route index element={<NoteList />} />
                         </Routes>

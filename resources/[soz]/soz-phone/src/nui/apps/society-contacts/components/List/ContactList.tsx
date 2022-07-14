@@ -19,7 +19,7 @@ export const ContactList: React.FC = () => {
     };
 
     return (
-        <AppContent className="mt-5">
+        <AppContent>
             <AppTitle app={contacts} />
             <SearchContacts />
             <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
