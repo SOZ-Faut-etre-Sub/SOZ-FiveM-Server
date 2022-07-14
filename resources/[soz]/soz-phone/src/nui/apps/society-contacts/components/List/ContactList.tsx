@@ -1,11 +1,15 @@
+import { AppContent } from '@ui/components/AppContent';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useApp } from '../../../../os/apps/hooks/useApps';
 import { ThemeContext } from '../../../../styles/themeProvider';
+import { AppTitle } from '../../../../ui/old_components/AppTitle';
 import { useFilteredContacts } from '../../hooks/state';
 import { SearchContacts } from './SearchContacts';
 
 export const ContactList: React.FC = () => {
+    const contacts = useApp('society-contacts');
     const filteredContacts = useFilteredContacts();
     const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
@@ -15,7 +19,8 @@ export const ContactList: React.FC = () => {
     };
 
     return (
-        <div className="mt-5">
+        <AppContent className="mt-5">
+            <AppTitle app={contacts} />
             <SearchContacts />
             <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts)
@@ -73,6 +78,6 @@ export const ContactList: React.FC = () => {
                         </div>
                     ))}
             </nav>
-        </div>
+        </AppContent>
     );
 };
