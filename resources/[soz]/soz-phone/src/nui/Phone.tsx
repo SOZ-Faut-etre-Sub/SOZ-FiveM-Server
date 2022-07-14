@@ -58,7 +58,7 @@ function Phone() {
     // useCallService();
     // useDialService();
 
-    // const { modal: callModal } = useCallModal();
+    const { modal: callModal } = useCallModal();
     // const { call } = useCall();
     //
     // const showNavigation = call?.is_accepted || !callModal;
@@ -72,7 +72,7 @@ function Phone() {
                     {/*        <NotificationBar />*/}
                     <Routes>
                         <Route path="/" element={<HomeApp />} />
-                        {/*{callModal && <Route path="/call" element={<CallModal />} />}*/}
+                        {callModal && <Route path="/call" element={<CallModal />} />}
                         {apps.map(app => (
                             <Route key={app.id} path={app.path + '/*'} element={app.component} />
                         ))}

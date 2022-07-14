@@ -12,7 +12,7 @@ function formatCall(calls) {
     const listedCalls = [];
 
     calls
-        .sort((a, b) => a.start < b.start)
+        .sort((a, b) => dayjs(a.start).valueOf() < dayjs(b.start).valueOf())
         .forEach(call => {
             const key = dayjs(call.start).format('DD/MM/YYYY');
 
