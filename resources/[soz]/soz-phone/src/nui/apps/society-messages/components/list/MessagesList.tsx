@@ -58,12 +58,12 @@ const MessagesList = (): any => {
     };
 
     return (
-        <ul className={`mt-5 relative divide-y ${theme === 'dark' ? 'divide-gray-700' : 'divide-gray-300'}`}>
+        <ul className={`mt-5 relative divide-y space-y-1`}>
             {societyMessages.map(message => (
                 <Menu
                     key={message.conversation_id}
                     as="li"
-                    className={`w-full ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}
+                    className={`w-full ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-md shadow`}
                 >
                     <Menu.Button className="w-full">
                         <div
