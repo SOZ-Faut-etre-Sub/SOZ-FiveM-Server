@@ -1,6 +1,7 @@
 local animationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Animations"})
 local allAnimationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Animations"})
 local allWalksMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Démarches"})
+local allMoodsMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Humeurs"})
 local personalAnimationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Animations"})
 
 local animationCatalogMenu, walkCatalogMenu = {}, {}
@@ -130,6 +131,16 @@ GenerateWalksList = function(menu, category, content)
     Wait(5)
 end
 
+GenerateMoodList = function(menu, label, mood)
+    menu:AddButton({
+        label = label,
+        select = function()
+            SetFacialIdleAnimOverride(PlayerPedId(), mood)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "mood", mood)
+        end,
+    })
+end
+
 function AnimationsEntry()
     personalMenu:AddButton({label = "Animations", value = animationMenu})
 
@@ -162,6 +173,7 @@ end
 CreateThread(function()
     animationMenu:AddButton({label = "Animations", value = allAnimationMenu})
     animationMenu:AddButton({label = "Démarches", value = allWalksMenu})
+    animationMenu:AddButton({label = "Humeurs", value = allMoodsMenu})
     animationMenu:AddButton({label = "Mes Animations", value = personalAnimationMenu})
 
     --- Walk style menu
@@ -188,6 +200,17 @@ CreateThread(function()
     for category, content in pairs(Config.AnimationsList) do
         GenerateAnimationList(allAnimationMenu, category, content)
     end
+
+    allMoodsMenu:AddButton({
+        label = "Humeur par défaut",
+        select = function()
+            SetFacialIdleAnimOverride(PlayerPedId(), "mood_normal_1")
+            TriggerServerEvent("QBCore:Server:SetMetaData", "mood", "")
+        end,
+    })
+    for _, value in pairs(Config.MoodsList) do
+        GenerateMoodList(allMoodsMenu, value.label, value.anim)
+    end
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
@@ -195,6 +218,11 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
 
     if walk then
         PlayWalking(walk)
+    end
+
+    local mood = QBCore.Functions.GetPlayerData().metadata.mood
+    if mood then
+        SetFacialIdleAnimOverride(PlayerPedId(), mood, 0)
     end
 end)
 
