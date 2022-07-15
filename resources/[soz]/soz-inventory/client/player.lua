@@ -62,7 +62,7 @@ RegisterNUICallback("player/giveMoney", function(data, cb)
 
         if amount and tonumber(amount) > 0 then
             TriggerEvent("inventory:client:StoreWeapon")
-            TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "money", tonumber(amount))
+            TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "money", math.ceil(tonumber(amount)))
         end
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
@@ -80,7 +80,7 @@ RegisterNUICallback("player/giveMarkedMoney", function(data, cb)
 
         if amount and tonumber(amount) > 0 then
             TriggerEvent("inventory:client:StoreWeapon")
-            TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "marked_money", tonumber(amount))
+            TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "marked_money", math.ceil(tonumber(amount)))
         end
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
