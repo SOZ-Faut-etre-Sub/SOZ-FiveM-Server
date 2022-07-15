@@ -160,9 +160,9 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
-    local price = itemSpec.resellPrice
+    local price = math.ceil(itemSpec.resellPrice)
     if type(itemSpec.resellPrice) == "table" then
-        price = itemSpec.resellPrice[item.metadata.tier] or 1
+        price = math.ceil(itemSpec.resellPrice[item.metadata.tier] or 1)
     end
 
     TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, price * amount)
