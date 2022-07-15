@@ -9,7 +9,11 @@ local function generateCatalog(dealershipKey)
             local vehicleCategory = vehicle.category
             if dealershipCategoryKey == vehicleCategory then
                 if catalog[categoryIndex] == nil then
-                    catalog[categoryIndex] = {["name"] = dealershipCategoryName, ["vehicles"] = {}}
+                    catalog[categoryIndex] = {
+                        ["key"] = dealershipCategoryKey,
+                        ["name"] = dealershipCategoryName,
+                        ["vehicles"] = {},
+                    }
                 end
                 local index = #catalog[categoryIndex].vehicles + 1
                 catalog[categoryIndex].vehicles[index] = vehicle
@@ -24,8 +28,11 @@ local function generateCatalog(dealershipKey)
     return catalog
 end
 
+local function createMenu(subtitle, namespace)
+    return MenuV:CreateMenu(nil, subtitle, "menu_shop_vehicle_car", "soz", namespace)
+end
+
 function Dealership:SpawnPed()
-    print("Spawning ped: " .. self.key)
     exports["qb-target"]:SpawnPed({
         {
             model = self.ped.model,
@@ -37,80 +44,57 @@ function Dealership:SpawnPed()
             animDict = "abigail_mcs_1_concat-0",
             anim = "csb_abigail_dual-0",
             flag = 1,
-            scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {
-                options = {
-                    type = "client",
-                    icon = "c:dealership/list.png",
-                    label = "Accéder au concessionnaire",
-                    action = function()
-                        print("Action")
-                        --self:GenerateMenu()
-                        --self.menu:Open()
-                    end,
-                    canInteract = function()
-                        print("Can Interact")
-                    --    local licences = PlayerData.metadata["licences"]
-                    --    return self.isInside and (self.licence == nil or licences ~= nil and licences[self.licence] > 0)
-                    end,
-                    blackoutGlobal = true,
-                },
-                distance = 2.5
-            },
+            scenario = "WORLD_HUMAN_CLIPBOARD"
         },
     })
 end
 
-function Dealership:SpawnBlip()
-    QBCore.Functions.CreateBlip(self.key .. ":dealership", {
-        name = self.blip.name,
-        coords = self.blip.coords,
-        sprite = self.blip.sprite,
-        color = self.blip.color,
-    })
-end
-
-function Dealership:CreateMenu(subtitle, namespace)
-    return MenuV:CreateMenu(nil, subtitle, "menu_shop_vehicle_car", "soz", namespace)
-end
-
 function Dealership:new(key, config)
-    local dealership = {}
-    setmetatable(dealership, self)
     self.__index = self
-    dealership.key = key
-    dealership.active = config.active
-    dealership.categories = config.categories
-    dealership.blip = config.blip
-    dealership.licence = config.licence
-    dealership.catalog = generateCatalog(key)
-    dealership.vehicle = config.vehicle
-    dealership.ped = config.ped
-    dealership.menu = Dealership:CreateMenu("Veuillez choisir un véhicule", "shop:vehicle:" .. key)
-    dealership.isInside = false
+    local menu = createMenu("Veuillez choisir un véhicule", "shop:vehicle:" .. key)
 
-    dealership.setInside = function(value)
-        dealership.isInside = value
-    end
+    local dealership = setmetatable({
+        key = key,
+        active = config.active,
+        categories = config.categories,
+        licence = config.licence,
+        catalog = generateCatalog(key),
+        vehicle = config.vehicle,
+        ped = config.ped,
+        menu = menu,
+        isInside = false
+    }, self)
+
+    menu:On('open', function()
+        dealership:SetupCam()
+    end)
+
+    menu:On('close', function()
+        dealership:DeleteCam()
+    end)
 
     return dealership
 end
 
-function Dealership:destroy()
+function Dealership:SetInside(value)
+    self.isInside = value
+end
+
+function Dealership:Destroy()
     self.menu:Close()
     MenuV:DeleteNamespace(namespace)
 end
 
-function Dealership:setupCam()
+function Dealership:SetupCam()
     local spawn = self.vehicle.spawn
     local camera = self.vehicle.camera
-    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", camera.x, camera.y, camera.z, camera.w or 0.0, 0.0, 0.0, 60.0, false, 0)
+    local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", camera.x, camera.y, camera.z, 0.0, 0.0, 0.0, 60.0, false, 0)
     PointCamAtCoord(cam, spawn.x, spawn.y, spawn.z)
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
 end
 
-function Dealership:deleteCam()
+function Dealership:DeleteCam()
     RenderScriptCams(false)
     DestroyAllCams(true)
     SetFocusEntity(GetPlayerPed(PlayerId()))
@@ -158,15 +142,15 @@ end
 -- Menu Functions
 function Dealership:GenerateMenu()
     self.menu:ClearItems()
-    for categoryKey, category in pairs(self.catalog) do
+    for _, category in pairs(self.catalog) do
         local vehiclesStock = QBCore.Functions.Retry(function()
-            return QBCore.Functions.TriggerRpc("soz-concess:server:getstock", categoryKey)
+            return QBCore.Functions.TriggerRpc("soz-concess:server:getstock", category.key)
         end, 5)
-        local namespace = ("soz:dealership:" .. self.key .. ":" .. categoryKey):lower()
+        local namespace = ("soz:dealership:" .. self.key .. ":" .. category.key):lower()
         if not MenuV:IsNamespaceAvailable(namespace) then
             MenuV:DeleteNamespace(namespace)
         end
-        local subMenu = self:CreateMenu(category.name, namespace)
+        local subMenu = createMenu(category.name, namespace)
         for _, vehReference in pairs(category.vehicles) do
             local stock = self:getStockFromVehicle(vehiclesStock, vehReference.model)
             if stock ~= nil then
@@ -185,14 +169,42 @@ AddEventHandler("onClientResourceStart", function(resourceName)
     end
     for dealerKey, config in pairs(Config.Dealerships) do
         if config.active then
-            local zoneConfig = config.ped.zone
-            local zone = BoxZone:new(zoneConfig.center, zoneConfig.length, zoneConfig.width, zoneConfig.options)
             local dealership = Dealership:new(dealerKey, config)
             dealership:SpawnPed()
-            dealership:SpawnBlip()
+
+            QBCore.Functions.CreateBlip(dealerKey .. ":dealership", {
+                name = config.blip.name,
+                coords = config.blip.coords,
+                sprite = config.blip.sprite,
+                color = config.blip.color,
+            })
+
+            local zoneConfig = config.ped.zone
+            local zone = BoxZone:new(zoneConfig.center, zoneConfig.length, zoneConfig.width, zoneConfig.options)
             zone:onPlayerInOut(function(isPointInside)
-                print("isInside " .. json.encode(dealership and dealership.key) .. " : " .. json.encode(isPointInside))
-                --dealership.setInside(isPointInside)
+                dealership:SetInside(isPointInside)
+                if isPointInside then
+                    exports["qb-target"]:AddTargetModel(config.ped.model, {
+                        options = {
+                            {
+                                icon = "c:dealership/list.png",
+                                label = "Accéder au catalogue",
+                                action = function()
+                                    dealership:GenerateMenu()
+                                    dealership.menu:Open()
+                                end,
+                                canInteract = function()
+                                    local licences = PlayerData.metadata["licences"]
+                                    return dealership.isInside and (dealership.licence == nil or licences ~= nil and licences[dealership.licence] > 0)
+                                end,
+                                blackoutGlobal = true
+                            },
+                        },
+                        distance = 2.5
+                    })
+                else
+                    exports["qb-target"]:RemoveTargetModel(config.ped.model, "Accéder au catalogue")
+                end
             end)
             table.insert(dealerships, dealership)
         end
@@ -204,6 +216,6 @@ AddEventHandler("onClientResourceStop", function(resourceName)
         return
     end
     for dealership in dealerships do
-        dealership:destroy()
+        dealership:Destroy()
     end
 end)
