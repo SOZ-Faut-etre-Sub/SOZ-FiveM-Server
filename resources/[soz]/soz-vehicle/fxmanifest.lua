@@ -15,7 +15,7 @@ client_scripts {
     "@PolyZone/BoxZone.lua",
     "@menuv/menuv.lua",
     "client/dealership/*.lua",
-    "client/*.lua"
+    "client/*.lua",
 }
 
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
