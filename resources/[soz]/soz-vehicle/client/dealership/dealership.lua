@@ -21,30 +21,11 @@ local function generateCatalog(dealershipKey)
             end)
         end
     end
-    table.sort(catalog)
     return catalog
 end
 
-function Dealership:GetPedAction()
-    return {
-        icon = "c:dealership/list.png",
-        label = "Accéder au concessionnaire",
-        action = function()
-            self:GenerateMenu()
-            self.menu:Open()
-        end,
-        canInteract = function()
-            if self.licence == nil then
-                return true
-            end
-            local licences = PlayerData.metadata["licences"]
-            return licences ~= nil and licences[self.licence] > 0
-        end,
-        blackoutGlobal = true,
-    }
-end
-
 function Dealership:SpawnPed()
+    print("Spawning ped: " .. self.key)
     exports["qb-target"]:SpawnPed({
         {
             model = self.ped.model,
@@ -57,13 +38,31 @@ function Dealership:SpawnPed()
             anim = "csb_abigail_dual-0",
             flag = 1,
             scenario = "WORLD_HUMAN_CLIPBOARD",
-            target = {options = {self:GetPedAction()}, distance = 2.5},
+            target = {
+                options = {
+                    type = "client",
+                    icon = "c:dealership/list.png",
+                    label = "Accéder au concessionnaire",
+                    action = function()
+                        print("Action")
+                        --self:GenerateMenu()
+                        --self.menu:Open()
+                    end,
+                    canInteract = function()
+                        print("Can Interact")
+                    --    local licences = PlayerData.metadata["licences"]
+                    --    return self.isInside and (self.licence == nil or licences ~= nil and licences[self.licence] > 0)
+                    end,
+                    blackoutGlobal = true,
+                },
+                distance = 2.5
+            },
         },
     })
 end
 
 function Dealership:SpawnBlip()
-    QBCore.Functions.CreateBlip(self.key .. "dealership", {
+    QBCore.Functions.CreateBlip(self.key .. ":dealership", {
         name = self.blip.name,
         coords = self.blip.coords,
         sprite = self.blip.sprite,
@@ -75,8 +74,8 @@ function Dealership:CreateMenu(subtitle, namespace)
     return MenuV:CreateMenu(nil, subtitle, "menu_shop_vehicle_car", "soz", namespace)
 end
 
-function Dealership:new(o, key, config)
-    local dealership = o or {}
+function Dealership:new(key, config)
+    local dealership = {}
     setmetatable(dealership, self)
     self.__index = self
     dealership.key = key
@@ -88,6 +87,12 @@ function Dealership:new(o, key, config)
     dealership.vehicle = config.vehicle
     dealership.ped = config.ped
     dealership.menu = Dealership:CreateMenu("Veuillez choisir un véhicule", "shop:vehicle:" .. key)
+    dealership.isInside = false
+
+    dealership.setInside = function(value)
+        dealership.isInside = value
+    end
+
     return dealership
 end
 
@@ -180,9 +185,15 @@ AddEventHandler("onClientResourceStart", function(resourceName)
     end
     for dealerKey, config in pairs(Config.Dealerships) do
         if config.active then
-            local dealership = Dealership:new(nil, dealerKey, config)
-            dealership.SpawnPed(dealership)
-            dealership.SpawnBlip(dealership)
+            local zoneConfig = config.ped.zone
+            local zone = BoxZone:new(zoneConfig.center, zoneConfig.length, zoneConfig.width, zoneConfig.options)
+            local dealership = Dealership:new(dealerKey, config)
+            dealership:SpawnPed()
+            dealership:SpawnBlip()
+            zone:onPlayerInOut(function(isPointInside)
+                print("isInside " .. json.encode(dealership and dealership.key) .. " : " .. json.encode(isPointInside))
+                --dealership.setInside(isPointInside)
+            end)
             table.insert(dealerships, dealership)
         end
     end
