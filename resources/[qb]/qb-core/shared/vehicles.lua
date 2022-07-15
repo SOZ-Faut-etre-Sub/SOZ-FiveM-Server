@@ -4382,4 +4382,44 @@ QBShared.Vehicles = {
         ['shop']     = 'na',
         ['type']     = 'truck'
     },
+    ['openwheel1']     = {
+        ['name']     = 'BR8',
+        ['brand']    = 'Benefactor',
+        ['model']    = 'openwheel1',
+        ['price']    = 666666,
+        ['category'] = 'Openwheel',
+        ['hash']     = GetHashKey('openwheel1'),
+        ['shop']     = 'na',
+        ['type']     = 'car'
+    },
+    ['openwheel2']     = {
+        ['name']     = 'DR1',
+        ['brand']    = 'Declasse',
+        ['model']    = 'openwheel2',
+        ['price']    = 666666,
+        ['category'] = 'Openwheel',
+        ['hash']     = GetHashKey('openwheel2'),
+        ['shop']     = 'na',
+        ['type']     = 'car'
+    },
+    ['formula']     = {
+        ['name']     = 'PR4',
+        ['brand']    = 'Progen',
+        ['model']    = 'formula',
+        ['price']    = 666666,
+        ['category'] = 'Openwheel',
+        ['hash']     = GetHashKey('formula'),
+        ['shop']     = 'na',
+        ['type']     = 'car'
+    },
+    ['formula2']     = {
+        ['name']     = 'R88',
+        ['brand']    = 'Ocelot',
+        ['model']    = 'formula2',
+        ['price']    = 666666,
+        ['category'] = 'Openwheel',
+        ['hash']     = GetHashKey('formula2'),
+        ['shop']     = 'na',
+        ['type']     = 'car'
+    },
 }
