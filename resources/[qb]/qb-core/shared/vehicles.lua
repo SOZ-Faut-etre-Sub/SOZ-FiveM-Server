@@ -4339,7 +4339,7 @@ QBShared.Vehicles = {
         ['category'] = 'Utility',
         ['hash']     = GetHashKey('sadler1'),
         ['shop']     = 'na',
-        ['type']     = 'truck'
+        ['type']     = 'car'
     },
     ['hauler1']     = {
         ['name']     = 'Hauler',
