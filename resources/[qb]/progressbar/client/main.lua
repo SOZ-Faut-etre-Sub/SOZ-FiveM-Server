@@ -237,7 +237,7 @@ function ActionCleanup()
             ClearPedTasks(ped)
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
-            --SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
+            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         else
             ClearPedTasks(ped)
         end
