@@ -168,7 +168,7 @@ UpgradeMenu:On("open", function(menu)
                 local price = 0
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if v.id == customprice.id then
-                        price = customprice.prices[tempNum] * vehicles[GetEntityModel(Config.AttachedCustomVehicle)].price
+                        price = math.ceil(customprice.prices[tempNum] * vehicles[GetEntityModel(Config.AttachedCustomVehicle)].price)
                     end
                 end
 
@@ -209,7 +209,7 @@ UpgradeMenu:On("open", function(menu)
             if currentTurboState == 0 then
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if customprice.id == v.id then
-                        local price = customprice.prices[1] * vehicles[GetEntityModel(Config.AttachedCustomVehicle)].price
+                        local price = math.ceil(customprice.prices[1] * vehicles[GetEntityModel(Config.AttachedCustomVehicle)].price)
                         menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
                         menu:AddButton({
                             label = "Activer",
