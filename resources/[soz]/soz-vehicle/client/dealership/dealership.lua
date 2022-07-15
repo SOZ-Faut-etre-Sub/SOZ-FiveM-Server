@@ -9,10 +9,7 @@ local function generateCatalog(dealershipKey)
             local vehicleCategory = vehicle.category
             if dealershipCategoryKey == vehicleCategory then
                 if catalog[categoryIndex] == nil then
-                    catalog[categoryIndex] = {
-                        ["name"] = dealershipCategoryName,
-                        ["vehicles"] = {}
-                    }
+                    catalog[categoryIndex] = {["name"] = dealershipCategoryName, ["vehicles"] = {}}
                 end
                 local index = #catalog[categoryIndex].vehicles + 1
                 catalog[categoryIndex].vehicles[index] = vehicle
@@ -70,18 +67,12 @@ function Dealership:SpawnBlip()
         name = self.blip.name,
         coords = self.blip.coords,
         sprite = self.blip.sprite,
-        color = self.blip.color
+        color = self.blip.color,
     })
 end
 
 function Dealership:CreateMenu(subtitle, namespace)
-    return MenuV:CreateMenu(
-        nil,
-        subtitle,
-        "menu_shop_vehicle_car",
-        "soz",
-        namespace
-    )
+    return MenuV:CreateMenu(nil, subtitle, "menu_shop_vehicle_car", "soz", namespace)
 end
 
 function Dealership:new(o, key, config)
@@ -130,23 +121,23 @@ function Dealership:generateVehicleButton(stock, vehicle)
     elseif stock == 1 then
         label = "~o~" .. vehicle.name
         description = "⚠ Stock limité de  " .. vehicleName
-        --value = ChooseVehicleMenu,
-        --select = function()
+        -- value = ChooseVehicleMenu,
+        -- select = function()
         --    selectedVehicle = vehicle
-        --end,
+        -- end,
     end
     return {
         label = label,
         rightLabel = "💸 " .. vehicle["price"] .. "$",
-        --value = ChooseVehicleMenu,
+        -- value = ChooseVehicleMenu,
         description = description,
         select = function()
-            --selectedVehicle = vehicle
+            -- selectedVehicle = vehicle
         end,
         enter = function()
-            --clean()
-            --previsualizeVehicle(vehicle)
-        end
+            -- clean()
+            -- previsualizeVehicle(vehicle)
+        end,
     }
 end
 
@@ -163,7 +154,7 @@ end
 function Dealership:GenerateMenu()
     self.menu:ClearItems()
     for categoryKey, category in pairs(self.catalog) do
-        local vehiclesStock = QBCore.Functions.Retry(function ()
+        local vehiclesStock = QBCore.Functions.Retry(function()
             return QBCore.Functions.TriggerRpc("soz-concess:server:getstock", categoryKey)
         end, 5)
         local namespace = ("soz:dealership:" .. self.key .. ":" .. categoryKey):lower()
@@ -177,16 +168,13 @@ function Dealership:GenerateMenu()
                 subMenu:AddButton(self:generateVehicleButton(stock, vehReference))
             end
         end
-        self.menu:AddButton({
-            label = category.name,
-            value = subMenu
-        })
+        self.menu:AddButton({label = category.name, value = subMenu})
     end
 end
 -- Put in a init.lua file
 local dealerships = {}
 
-AddEventHandler('onClientResourceStart', function (resourceName)
+AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
@@ -200,7 +188,7 @@ AddEventHandler('onClientResourceStart', function (resourceName)
     end
 end)
 
-AddEventHandler('onClientResourceStop', function (resourceName)
+AddEventHandler("onClientResourceStop", function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
