@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/ThymonA/menuv#readme",
   "dependencies": {
-    "colors": "^1.4.0",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
     "fs-extra": "^9.0.1",
