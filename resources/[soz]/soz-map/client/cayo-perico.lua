@@ -354,10 +354,10 @@ CreateThread(function()
             if not islandLoaded then
                 Citizen.InvokeNative(0x9A9D1BA639675CF1, "HeistIsland", 1)
                 Citizen.InvokeNative(0xF74B1FFA4A15FBEA, 1) -- island path nodes (from Disquse)
-                SetScenarioGroupEnabled('Heist_Island_Peds', 1)
-                SetAudioFlag('PlayerOnDLCHeist4Island', 1)
-                SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Zones', 1, 1)
-                SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Disabled_Zones', 0, 1)
+                SetScenarioGroupEnabled("Heist_Island_Peds", 1)
+                SetAudioFlag("PlayerOnDLCHeist4Island", 1)
+                SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 1, 1)
+                SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", 0, 1)
                 islandLoaded = true
             end
         else
