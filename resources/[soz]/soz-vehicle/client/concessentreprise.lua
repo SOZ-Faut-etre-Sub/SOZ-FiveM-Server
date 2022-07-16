@@ -178,7 +178,7 @@ exports["qb-target"]:SpawnPed({
             {
                 type = "client",
                 event = "soz-concessentreprise:checkGrade",
-                icon = "c:concess/lister.png",
+                icon = "c:dealership/list.png",
                 label = "Liste Véhicules",
                 canInteract = function()
                     if OnDuty == false then
