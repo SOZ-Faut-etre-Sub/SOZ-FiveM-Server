@@ -38,6 +38,7 @@ import { SoundProvider } from './os/sound/providers/SoundProvider';
 import PhoneWrapper from './PhoneWrapper';
 import { usePhoneService } from './services/usePhoneService';
 import ThemeProvider from './styles/themeProvider';
+import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
 import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
@@ -70,13 +71,15 @@ function Phone() {
                     {/*<TopLevelErrorComponent>*/}
                     {/*    <WindowSnackbar />*/}
                     {/*        <NotificationBar />*/}
-                    <Routes>
-                        <Route path="/" element={<HomeApp />} />
-                        {callModal && <Route path="/call" element={<CallModal />} />}
-                        {apps.map(app => (
-                            <Route key={app.id} path={app.path + '/*'} element={app.component} />
-                        ))}
-                    </Routes>
+                    <React.Suspense fallback={<LoadingSpinner />}>
+                        <Routes>
+                            <Route path="/" element={<HomeApp />} />
+                            {callModal && <Route path="/call" element={<CallModal />} />}
+                            {apps.map(app => (
+                                <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                            ))}
+                        </Routes>
+                    </React.Suspense>
                     {/*            <NotificationAlert />*/}
                     {/*            <PhoneSnackbar />*/}
                     {/*        {showNavigation && <Navigation />}*/}
