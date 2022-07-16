@@ -116,7 +116,7 @@ export const SettingsApp = () => {
             <Transition
                 appear={true}
                 show={true}
-                className="mt-4 h-full flex flex-col"
+                className="h-full flex flex-col"
                 enter="transition-all origin-[20%_20%] duration-500"
                 enterFrom="scale-[0.0] opacity-0"
                 enterTo="scale-100 opacity-100"
@@ -127,8 +127,8 @@ export const SettingsApp = () => {
                 <ContextMenu />
                 <WallpaperModal />
                 <AppWrapper>
-                    <AppTitle app={settingsApp} isBigHeader={true} />
-                    <AppContent className="" backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
+                    <AppTitle app={settingsApp} />
+                    <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                         <List>
                             <ListItem>
                                 <div

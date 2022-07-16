@@ -11,6 +11,13 @@ export class _SettingsDB {
         return (<ResultSetHeader>setResult).insertId;
     }
 
+    async updatePicture(identifier: string, { number, url }: PreDBSettings): Promise<number> {
+        const query = `UPDATE phone_profile SET avatar = ? WHERE number = ?`;
+        const [setResult] = await DbInterface._rawExec(query, [url, number]);
+
+        return (<ResultSetHeader>setResult).affectedRows;
+    }
+
     async getProfilePicture(number: string): Promise<string | null> {
         const query = `SELECT avatar FROM phone_profile WHERE number = ?`;
         const [results] = await DbInterface._rawExec(query, [number]);

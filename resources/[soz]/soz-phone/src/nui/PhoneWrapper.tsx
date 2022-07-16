@@ -10,6 +10,7 @@ import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
 
 const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+    const [settings] = useSettings();
     const { pathname } = useLocation();
     const { visibility, notifVisibility } = usePhoneVisibility();
 
@@ -24,13 +25,16 @@ const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
         >
             <div
                 className={cn(
-                    'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover transition-any ease-in-out duration-300',
+                    'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover origin-bottom-right transition-any ease-in-out duration-300',
                     {
                         'translate-y-0': visibility,
                         'translate-y-[38rem]': !visibility && notifVisibility,
                         'translate-y-[2000px]': !visibility,
                     }
                 )}
+                style={{
+                    zoom: `${settings.zoom.value}%`,
+                }}
             >
                 <PhoneFrame />
                 <PhoneScreen>{children}</PhoneScreen>
