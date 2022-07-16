@@ -318,7 +318,7 @@ local requestedIpl = {
     "h4_islandx_placement_08",
     "h4_islandx_placement_09",
     "h4_islandx_placement_10",
-    "h4_mph4_island_placement"
+    "h4_mph4_island_placement",
 }
 
 CreateThread(function()
