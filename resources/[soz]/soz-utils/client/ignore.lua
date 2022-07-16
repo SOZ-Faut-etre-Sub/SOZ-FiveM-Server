@@ -35,6 +35,12 @@ CreateThread(function() -- all these should only need to be called once
     RemoveVehiclesFromGeneratorsInArea(1854.82 - 300.0, 3679.4 - 300.0, 33.82 - 300.0, 1854.82 + 300.0, 3679.4 + 300.0, 33.82 + 300.0) -- police station sandy
     RemoveVehiclesFromGeneratorsInArea(-724.46 - 300.0, -1444.03 - 300.0, 5.0 - 300.0, -724.46 + 300.0, -1444.03 + 300.0, 5.0 + 300.0) -- REMOVE CHOPPERS WOW
     ]]
+
+    --- Disable LSMC heli spawn
+    local helipadMin, helipadMax = vec3(286.296326, -1454.3927, 45.7192764), vec3(327.5925, -1464.08911, 59.8875122)
+    if not DoesScenarioBlockingAreaExist(helipadMin, helipadMax) then
+        AddScenarioBlockingArea(helipadMin, helipadMax, 0, 1, 1, 1)
+    end
 end)
 
 CreateThread(function()
