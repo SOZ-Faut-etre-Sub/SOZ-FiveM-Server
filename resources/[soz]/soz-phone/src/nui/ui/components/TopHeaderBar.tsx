@@ -1,8 +1,6 @@
 import cn from 'classnames';
 import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
-import { useCurrentCall } from '../../os/call/hooks/state';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
 import usePhoneTime from '../../os/phone/hooks/usePhoneTime';
 import { ThemeContext } from '../../styles/themeProvider';
@@ -10,10 +8,8 @@ import { BatteryIcon } from '../assets/battery';
 import { CellIcon } from '../assets/cell';
 
 export const TopHeaderBar: FunctionComponent = memo(() => {
-    const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
+    const { icons, notifications, setBarUncollapsed } = useNotifications();
 
-    const { pathname } = useLocation();
-    const [currentCall] = useCurrentCall();
     const { theme } = useContext(ThemeContext);
     const time = usePhoneTime();
 

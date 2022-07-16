@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { FunctionComponent, memo, useCallback, useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
 import { ThemeContext } from '../../styles/themeProvider';

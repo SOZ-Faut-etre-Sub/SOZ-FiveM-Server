@@ -6,14 +6,9 @@ import { useCall } from '@os/call/hooks/useCall';
 import { useCallModal } from '@os/call/hooks/useCallModal';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
-import { Navigation } from '@os/navigation-bar/components/Navigation';
-import { NotificationAlert } from '@os/notifications/components/NotificationAlert';
-import { NotificationBar } from '@os/notifications/components/NotificationBar';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
-import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { PhoneEvents } from '@typings/phone';
-import { TopLevelErrorComponent } from '@ui/old_components/TopLevelErrorComponent';
 import dayjs from 'dayjs';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -29,40 +24,32 @@ import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
 import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
-import { usePhoneConfig } from './hooks/usePhoneConfig';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
-import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
-import SnackbarProvider from './os/snackbar/providers/SnackbarProvider';
-import { SoundProvider } from './os/sound/providers/SoundProvider';
 import PhoneWrapper from './PhoneWrapper';
 import { usePhoneService } from './services/usePhoneService';
 import ThemeProvider from './styles/themeProvider';
 import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
-import WindowSnackbar from './ui/old_components/WindowSnackbar';
 
 function Phone() {
     const { apps } = useApps();
-    // useConfig();
+    useConfig();
 
-    // useKeyboardService();
+    useKeyboardService();
     usePhoneService();
-    // useSimcardService();
-    // useMarketplaceService();
-    // useBankService();
-    // useMessagesService();
-    // useContactsListener();
-    // useNoteListener();
-    // /*usePhotoService();*/
-    // useSocietyMessagesService();
-    // useTwitchNewsService();
-    // useCallService();
-    // useDialService();
+    useSimcardService();
+    useMarketplaceService();
+    useBankService();
+    useMessagesService();
+    useContactsListener();
+    useNoteListener();
+    /*usePhotoService();*/
+    useSocietyMessagesService();
+    useTwitchNewsService();
+    useCallService();
+    useDialService();
 
     const { modal: callModal } = useCallModal();
     const { call } = useCall();
-
-    const showNavigation = call?.is_accepted || !callModal;
 
     return (
         <ThemeProvider>

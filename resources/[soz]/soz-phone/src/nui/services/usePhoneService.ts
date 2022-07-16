@@ -1,6 +1,5 @@
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { useApps } from '@os/apps/hooks/useApps';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { PhoneEvents } from '@typings/phone';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';

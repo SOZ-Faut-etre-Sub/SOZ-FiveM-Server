@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { ThemeContext } from '../../styles/themeProvider';
-import { AppWrapper } from '../../ui/components/AppWrapper';
 import { Grid } from '../../ui/components/Grid';
 import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
 import { AppIcon } from './components/AppIcon';

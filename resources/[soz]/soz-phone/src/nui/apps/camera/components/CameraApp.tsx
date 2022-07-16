@@ -9,7 +9,6 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import { fetchNui } from '@utils/fetchNui';
-import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -50,17 +49,17 @@ const CameraApp: React.FC = () => {
         });
     };
 
-    const toggleCameraPhotoMode = () => {
-        fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CAMERA, {});
+    const toggleCameraPhotoMode = async () => {
+        await fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CAMERA, {});
     };
 
-    /*useInterval(() => {
+    useInterval(() => {
         try {
             setImage(ui.generateImage());
         } catch (e) {
             console.error('WebGL generation ERROR', e);
         }
-    }, 1);*/
+    }, 1);
 
     useEffect(() => {
         if (!visibility) navigate('/', { replace: true });
