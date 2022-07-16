@@ -55,13 +55,10 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(dealership, v
             elseif dealership == Config.DealershipsType.Moto then
                 garage = "haanparking"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
-            elseif dealership == Config.DealershipsType.Boat then
+            else
                 garage = "marina_boat"
                 category = "sea"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé au port en face.")
-            else
-                TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord",
-                                   "error")
             end
 
             MySQL.Async.insert(

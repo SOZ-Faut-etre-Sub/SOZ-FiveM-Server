@@ -1,4 +1,4 @@
-Config.DealershipsType = {Pdm = "pdm", Luxury = "luxury", Cycle = "cycle", Moto = "moto", Air = "air", Boat = "boat"}
+Config.DealershipsType = {Pdm = "pdm", Luxury = "luxury", Cycle = "cycle", Moto = "moto", Air = "air", Boat = "boat",}
 
 Config.Dealerships = {
     [Config.DealershipsType.Pdm] = {
@@ -26,7 +26,7 @@ Config.Dealerships = {
                 ["center"] = vector3(-55.49, -1096.44, 26.92),
                 ["length"] = 10,
                 ["width"] = 10,
-                ["options"] = {name = "Concess_z", heading = 340, minZ = 25.92, maxZ = 29.92},
+                ["options"] = {name = "Concess_z", heading = 340, minZ = 25.92, maxZ = 29.92,},
             },
         },
         ["vehicle"] = {
@@ -48,8 +48,8 @@ Config.Dealerships = {
             ["sprite"] = 523,
             ["color"] = 46,
         },
-        ["ped"] = {["model"] = "a_m_y_business_03", ["coords"] = vector4(0, 0, 0, 0.0), ["zone"] = {}},
-        ["vehicles"] = {["spawn"] = vector4(0, 0, 0, 0.0), ["camera"] = vector3(0, 0, 0)},
+        ["ped"] = {["model"] = "a_m_y_business_03", ["coords"] = vector4(0, 0, 0, 0.0), ["zone"] = {},},
+        ["vehicles"] = {["spawn"] = vector4(0, 0, 0, 0.0), ["camera"] = vector3(0, 0, 0),},
     },
     [Config.DealershipsType.Cycle] = {
         ["active"] = true,
@@ -68,19 +68,18 @@ Config.Dealerships = {
                 ["center"] = vector3(-1223.7, -1495.49, 4.37),
                 ["length"] = 8,
                 ["width"] = 10,
-                ["options"] = {name = "Concessvelo_z", heading = 305, minZ = 3.37, maxZ = 7.37},
+                ["options"] = {name = "Concessvelo_z", heading = 305, minZ = 3.37, maxZ = 7.37,},
             },
         },
         ["vehicle"] = {
             ["spawn"] = vector4(-1221.96, -1498.45, 4.35, 210.0),
             ["camera"] = vector3(-1236.72, -1495.94, 5.33),
         },
-        ["vehicleSpawnPosition"] = vector4(-1221.96, -1498.45, 4.35, 210.0),
     },
     [Config.DealershipsType.Moto] = {
         ["active"] = true,
         ["licence"] = "motorcycle",
-        ["categories"] = {["Motorcycles"] = "Motos"},
+        ["categories"] = {["Motorcycles"] = "Motos",},
         ["blip"] = {
             ["name"] = "Concessionnaire Moto",
             ["coords"] = vector3(1224.79, 2727.25, 38.0),
@@ -94,10 +93,10 @@ Config.Dealerships = {
                 ["center"] = vector3(1224.99, 2725.22, 38.0),
                 ["length"] = 8,
                 ["width"] = 10,
-                ["options"] = {name = "Concessmoto_z", heading = 0, minZ = 37.0, maxZ = 41.0},
+                ["options"] = {name = "Concessmoto_z", heading = 0, minZ = 37.0, maxZ = 41.0,},
             },
         },
-        ["vehicle"] = {["spawn"] = vector4(1224.66, 2706.15, 38.01, 120.0), ["camera"] = vector3(1224.5, 2701.63, 39.0)},
+        ["vehicle"] = {["spawn"] = vector4(1224.66, 2706.15, 38.01, 120.0), ["camera"] = vector3(1224.5, 2701.63, 39.0),},
     },
     [Config.DealershipsType.Air] = {
         ["active"] = true,
@@ -116,7 +115,7 @@ Config.Dealerships = {
                 ["center"] = vector3(1732.15, 3308.31, 41.22),
                 ["length"] = 23.8,
                 ["width"] = 27.8,
-                ["options"] = {name = "sandy_concess_air", heading = 15, minZ = 40.22, maxZ = 44.22},
+                ["options"] = {name = "sandy_concess_air", heading = 15, minZ = 40.22, maxZ = 44.22,},
             },
         },
         ["vehicle"] = {
@@ -141,9 +140,9 @@ Config.Dealerships = {
                 ["center"] = vector3(-847.26, -1311.66, 5.0),
                 ["length"] = 9.8,
                 ["width"] = 7.4,
-                ["options"] = {name = "dealership_boat", heading = 21, minZ = 4.0, maxZ = 7.0},
+                ["options"] = {name = "dealership_boat", heading = 21, minZ = 4.0, maxZ = 7.0,},
             },
         },
-        ["vehicle"] = {["spawn"] = vector4(-857.02, -1327.72, 0.45, 110), ["camera"] = vector3(-871.61, -1342.65, 8.44)},
+        ["vehicle"] = {["spawn"] = vector4(-857.02, -1327.72, 0.45, 110), ["camera"] = vector3(-871.61, -1342.65, 8.44),},
     },
 }
