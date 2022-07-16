@@ -5,7 +5,7 @@ import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
-import { AppWrapper } from '@ui/old_components';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import { AppContent } from '@ui/old_components/AppContent';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useEffect, useState } from 'react';

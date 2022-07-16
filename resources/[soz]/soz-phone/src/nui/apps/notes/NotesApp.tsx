@@ -12,6 +12,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import { ThemeContext } from '../../styles/themeProvider';
 import { useBackground } from '../../ui/hooks/useBackground';
+import { LoadingSpinner } from '../../ui/old_components/LoadingSpinner';
+import { MarketplaceList } from '../marketplace/components/MarketplaceList/MarketplaceList';
 import { useModalVisible, useNotesValue, useSetModalVisible, useSetSelectedNote } from './hooks/state';
 import NoteList from './list/NoteList';
 import { NoteModal } from './modal/NoteModal';
@@ -59,7 +61,7 @@ export const NotesApp: React.FC = () => {
                 <NoteModal />
                 <AppWrapper>
                     <AppTitle app={notesApp} />
-                    <AppContent className="flex flex-col justify-between pb-0">
+                    <AppContent className="flex flex-col justify-center" scrollable={false}>
                         <Routes>
                             <Route index element={<NoteList />} />
                         </Routes>

@@ -2,7 +2,7 @@ import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
-import { AppWrapper } from '@ui/old_components';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';

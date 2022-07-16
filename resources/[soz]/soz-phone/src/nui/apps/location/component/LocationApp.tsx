@@ -1,4 +1,4 @@
-import { AppWrapper } from '@ui/old_components';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import React from 'react';
 
 export const LocationApp: React.FC = () => {

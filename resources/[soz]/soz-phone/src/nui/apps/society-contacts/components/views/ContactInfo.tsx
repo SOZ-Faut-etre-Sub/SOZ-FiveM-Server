@@ -3,7 +3,6 @@ import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { ChatIcon, LocationMarkerIcon, PhoneIncomingIcon, PhoneMissedCallIcon } from '@heroicons/react/solid';
 import { SocietiesDatabaseLimits } from '@typings/society';
-import { AppWrapper } from '@ui/old_components';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
@@ -13,6 +12,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { AppWrapper } from '../../../../ui/components/AppWrapper';
 import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
