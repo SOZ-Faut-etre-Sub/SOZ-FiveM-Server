@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/outline';
+import { PlusIcon } from '@heroicons/react/outline';
 import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';

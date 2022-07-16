@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useBackground } from '../../../ui/hooks/useBackground';
-import { FullPageWithHeader } from '../../../ui/layout/FullPageWithHeader';
 import { FullPageWithoutHeader } from '../../../ui/layout/FullPageWithoutHeader';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
 import { useNotesAPI } from '../hooks/useNotesAPI';

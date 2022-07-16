@@ -1,5 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
+import React from 'react';
 
 import { AppWrapper } from '../../ui/components/AppWrapper';
 import { useBackground } from '../../ui/hooks/useBackground';
