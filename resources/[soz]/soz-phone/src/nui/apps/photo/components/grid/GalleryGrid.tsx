@@ -45,7 +45,7 @@ export const GalleryGrid = () => {
             <AppContent className="overflow-y-auto">
                 {photos.length === 0 && (
                     <div
-                        className={`flex flex-col justify-center items-center ${
+                        className={`h-full flex flex-col justify-center items-center ${
                             theme === 'dark' ? 'text-white' : 'text-black'
                         }`}
                     >

@@ -3,9 +3,11 @@ import { NoteItem } from '@typings/notes';
 import { Button } from '@ui/old_components/Button';
 import { List } from '@ui/old_components/List';
 import { ListItem } from '@ui/old_components/ListItem';
-import React from 'react';
+import cn from 'classnames';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { ThemeContext } from '../../../styles/themeProvider';
 import { useNotesValue, useSetModalVisible } from '../hooks/state';
 import { useSetSelectedNote } from '../hooks/state';
 
@@ -15,6 +17,7 @@ const NoteList = () => {
     const setNote = useSetSelectedNote();
     const [t] = useTranslation();
     const setModalVisible = useSetModalVisible();
+    const { theme } = useContext(ThemeContext);
 
     const handleNoteModal = (note: NoteItem) => {
         setNote(note);
@@ -36,7 +39,12 @@ const NoteList = () => {
         );
 
     return (
-        <div className="flex flex-col justify-center items-center text-white h-full">
+        <div
+            className={cn('flex flex-col justify-center items-center h-full', {
+                'text-dark': theme === 'light',
+                'text-white': theme === 'dark',
+            })}
+        >
             {t('NOTES.FEEDBACK.NO_NOTES')}
         </div>
     );

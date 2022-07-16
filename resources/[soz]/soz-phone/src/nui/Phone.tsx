@@ -25,6 +25,8 @@ import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
 import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
 import InjectDebugData from './os/debug/InjectDebugData';
+import { NotificationAlert } from './os/notifications/components/NotificationAlert';
+import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
 import { usePhoneService } from './services/usePhoneService';
 import ThemeProvider from './styles/themeProvider';
@@ -49,14 +51,14 @@ function Phone() {
     useDialService();
 
     const { modal: callModal } = useCallModal();
-    const { call } = useCall();
 
     return (
         <ThemeProvider>
             <PhoneWrapper>
                 {/*<TopLevelErrorComponent>*/}
                 {/*    <WindowSnackbar />*/}
-                {/*        <NotificationBar />*/}
+                <NotificationAlert />
+                <PhoneSnackbar />
                 <React.Suspense fallback={<LoadingSpinner />}>
                     <Routes>
                         <Route path="/" element={<HomeApp />} />
@@ -66,9 +68,6 @@ function Phone() {
                         ))}
                     </Routes>
                 </React.Suspense>
-                {/*            <NotificationAlert />*/}
-                {/*            <PhoneSnackbar />*/}
-                {/*        {showNavigation && <Navigation />}*/}
                 {/*</TopLevelErrorComponent>*/}
             </PhoneWrapper>
         </ThemeProvider>
