@@ -52,6 +52,13 @@ Config.Products["jewelry"] = {
             items = json.decode(LoadResourceFile(GetCurrentResourceName(), "config/datasource/props_female_hats.json"))[1],
         },
         {
+            propId = 0,
+            label = "Casques",
+            overlay = "Helmet",
+            price = 50,
+            items = json.decode(LoadResourceFile(GetCurrentResourceName(), "config/datasource/props_female_helmets.json"))[1],
+        },
+        {
             propId = 1,
             label = "Lunettes",
             overlay = "Glasses",

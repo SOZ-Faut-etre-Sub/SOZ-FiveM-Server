@@ -80,7 +80,6 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez changé de coupe pour ~g~$%s"):format(price))
             elseif brand == "jewelry" then
                 local clothConfig = Player.PlayerData.cloth_config
-                print("Jewelry productId" .. json.encode(product))
 
                 if product.overlay == "Helmet" then
                     clothConfig["BaseClothSet"].Props["Helmet"] = {
