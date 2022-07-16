@@ -60,32 +60,30 @@ function Phone() {
     // useDialService();
 
     const { modal: callModal } = useCallModal();
-    // const { call } = useCall();
-    //
-    // const showNavigation = call?.is_accepted || !callModal;
+    const { call } = useCall();
+
+    const showNavigation = call?.is_accepted || !callModal;
 
     return (
         <ThemeProvider>
-            <SnackbarProvider>
-                <PhoneWrapper>
-                    {/*<TopLevelErrorComponent>*/}
-                    {/*    <WindowSnackbar />*/}
-                    {/*        <NotificationBar />*/}
-                    <React.Suspense fallback={<LoadingSpinner />}>
-                        <Routes>
-                            <Route path="/" element={<HomeApp />} />
-                            {callModal && <Route path="/call" element={<CallModal />} />}
-                            {apps.map(app => (
-                                <Route key={app.id} path={app.path + '/*'} element={app.component} />
-                            ))}
-                        </Routes>
-                    </React.Suspense>
-                    {/*            <NotificationAlert />*/}
-                    {/*            <PhoneSnackbar />*/}
-                    {/*        {showNavigation && <Navigation />}*/}
-                    {/*</TopLevelErrorComponent>*/}
-                </PhoneWrapper>
-            </SnackbarProvider>
+            <PhoneWrapper>
+                {/*<TopLevelErrorComponent>*/}
+                {/*    <WindowSnackbar />*/}
+                {/*        <NotificationBar />*/}
+                <React.Suspense fallback={<LoadingSpinner />}>
+                    <Routes>
+                        <Route path="/" element={<HomeApp />} />
+                        {callModal && <Route path="/call" element={<CallModal />} />}
+                        {apps.map(app => (
+                            <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                        ))}
+                    </Routes>
+                </React.Suspense>
+                {/*            <NotificationAlert />*/}
+                {/*            <PhoneSnackbar />*/}
+                {/*        {showNavigation && <Navigation />}*/}
+                {/*</TopLevelErrorComponent>*/}
+            </PhoneWrapper>
         </ThemeProvider>
     );
 }
