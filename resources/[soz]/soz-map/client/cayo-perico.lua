@@ -337,7 +337,7 @@ CreateThread(function()
     while true do
         if islandLoaded then
             SetRadarAsExteriorThisFrame()
-            SetRadarAsInteriorThisFrame('h4_fake_islandx', vec(4700.0, -5145.0), 0, 0)
+            SetRadarAsInteriorThisFrame("h4_fake_islandx", vec(4700.0, -5145.0), 0, 0)
         end
         Wait(0)
     end
