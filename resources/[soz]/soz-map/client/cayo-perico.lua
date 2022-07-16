@@ -365,10 +365,10 @@ CreateThread(function()
                 islandLoaded = false
                 Citizen.InvokeNative(0x9A9D1BA639675CF1, "HeistIsland", 0)
                 Citizen.InvokeNative(0xF74B1FFA4A15FBEA, 0)
-                SetScenarioGroupEnabled('Heist_Island_Peds', 0)
-                SetAudioFlag('PlayerOnDLCHeist4Island', 0)
-                SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Zones', 0, 0)
-                SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Disabled_Zones', 1, 0)
+                SetScenarioGroupEnabled("Heist_Island_Peds", 0)
+                SetAudioFlag("PlayerOnDLCHeist4Island", 0)
+                SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 0, 0)
+                SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", 1, 0)
             end
         end
 
