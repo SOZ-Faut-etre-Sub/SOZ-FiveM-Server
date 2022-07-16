@@ -61,8 +61,10 @@ end)
 RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
     if data ~= false then
         CurrentWeaponData = data
+        TriggerServerEvent('weapons:server:SetCurrentWeaponData', CurrentWeaponData)
     else
         CurrentWeaponData = {}
+        TriggerServerEvent('weapons:server:SetCurrentWeaponData', nil)
     end
     CanShoot = bool
 end)
@@ -79,7 +81,7 @@ RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
     if CurrentWeaponData then
         if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
             local total = GetAmmoInPedWeapon(ped, weapon)
-            local found, maxAmmo = GetMaxAmmo(ped, weapon)
+            local _, maxAmmo = GetMaxAmmo(ped, weapon)
             if total < maxAmmo then
                 TaskReloadWeapon(ped)
                 QBCore.Functions.Progressbar("taking_bullets", "S'équipe d'un chargeur", 2000, false, true, {
@@ -127,6 +129,23 @@ end)
 CreateThread(function()
     SetWeaponsNoAutoswap(true)
 end)
+
+CreateThread(function()
+    while true do
+        local ped = PlayerPedId()
+        if IsPedArmed(ped, 7) == 1 and (IsControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 24)) then
+            local weapon = GetSelectedPedWeapon(ped)
+            local ammo = GetAmmoInPedWeapon(ped, weapon)
+            TriggerServerEvent("weapons:server:UpdateWeaponAmmo", CurrentWeaponData, tonumber(ammo))
+            if MultiplierAmount > 0 then
+                TriggerServerEvent("weapons:server:UpdateWeaponQuality", CurrentWeaponData, MultiplierAmount)
+                MultiplierAmount = 0
+            end
+        end
+        Wait(1)
+    end
+end)
+
 
 CreateThread(function()
     while true do
