@@ -1,14 +1,16 @@
+Config.DealershipsType = {Pdm = "pdm", Luxury = "luxury", Cycle = "cycle", Moto = "moto", Air = "air", Boat = "boat"}
+
 Config.Dealerships = {
-    ["pdm"] = {
+    [Config.DealershipsType.Pdm] = {
         ["active"] = true,
         ["licence"] = "car",
         ["categories"] = {
-            ["Sedans"] = "Sedans",
+            ["Compacts"] = "Compacts",
             ["Coupes"] = "Coupés",
+            ["Muscle"] = "Grosse Cylindrée",
+            ["Sedans"] = "Sedans",
             ["Suvs"] = "SUV",
             ["Off-road"] = "Tout-Terrain",
-            ["Muscle"] = "Grosse Cylindrée",
-            ["Compacts"] = "Compacts",
             ["Vans"] = "Vans",
         },
         ["blip"] = {
@@ -24,12 +26,7 @@ Config.Dealerships = {
                 ["center"] = vector3(-55.49, -1096.44, 26.92),
                 ["length"] = 10,
                 ["width"] = 10,
-                ["options"] = {
-                    name = "Concess_z",
-                    heading = 340,
-                    minZ = 25.92,
-                    maxZ = 29.92,
-                }
+                ["options"] = {name = "Concess_z", heading = 340, minZ = 25.92, maxZ = 29.92},
             },
         },
         ["vehicle"] = {
@@ -37,27 +34,24 @@ Config.Dealerships = {
             ["camera"] = vector3(-53.69, -1094.83, 27.0),
         },
     },
-    ["sport"] = {
-        ["active"] = false,
+    [Config.DealershipsType.Luxury] = {
+        ["active"] = GetConvarInt("feature_dlc2_luxury", 0) == 1,
         ["licence"] = "car",
-        ["categories"] = {},
+        ["categories"] = {
+            ["Sports"] = "Sportives",
+            ["Sportsclassic"] = "Sportives Classiques",
+            ["Super"] = "Super-sportives",
+        },
         ["blip"] = {
             ["name"] = "Concessionnaire Auto Sportive",
             ["coords"] = vector3(0, 0, 0),
             ["sprite"] = 523,
             ["color"] = 46,
         },
-        ["ped"] = {
-            ["model"] = "a_m_y_business_03",
-            ["coords"] = vector4(0, 0, 0, 0.0),
-            ["zone"] = {}
-        },
-        ["vehicles"] = {
-            ["spawn"] = vector4(0, 0, 0, 0.0),
-            ["camera"] = vector3(0, 0, 0),
-        },
+        ["ped"] = {["model"] = "a_m_y_business_03", ["coords"] = vector4(0, 0, 0, 0.0), ["zone"] = {}},
+        ["vehicles"] = {["spawn"] = vector4(0, 0, 0, 0.0), ["camera"] = vector3(0, 0, 0)},
     },
-    ["cycle"] = {
+    [Config.DealershipsType.Cycle] = {
         ["active"] = true,
         ["licence"] = nil,
         ["categories"] = {["Cycles"] = "Vélos"},
@@ -74,12 +68,7 @@ Config.Dealerships = {
                 ["center"] = vector3(-1223.7, -1495.49, 4.37),
                 ["length"] = 8,
                 ["width"] = 10,
-                ["options"] = {
-                    name = "Concessvelo_z",
-                    heading = 305,
-                    minZ = 3.37,
-                    maxZ = 7.37,
-                }
+                ["options"] = {name = "Concessvelo_z", heading = 305, minZ = 3.37, maxZ = 7.37},
             },
         },
         ["vehicle"] = {
@@ -88,7 +77,7 @@ Config.Dealerships = {
         },
         ["vehicleSpawnPosition"] = vector4(-1221.96, -1498.45, 4.35, 210.0),
     },
-    ["moto"] = {
+    [Config.DealershipsType.Moto] = {
         ["active"] = true,
         ["licence"] = "motorcycle",
         ["categories"] = {["Motorcycles"] = "Motos"},
@@ -105,17 +94,12 @@ Config.Dealerships = {
                 ["center"] = vector3(1224.99, 2725.22, 38.0),
                 ["length"] = 8,
                 ["width"] = 10,
-                ["options"] = {
-                    name = "Concessmoto_z",
-                    heading = 0,
-                    minZ = 37.0,
-                    maxZ = 41.0,
-                }
+                ["options"] = {name = "Concessmoto_z", heading = 0, minZ = 37.0, maxZ = 41.0},
             },
         },
-        ["vehicle"] = {["spawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), ["camera"] = vector3(1224.5, 2701.63, 39.0)},
+        ["vehicle"] = {["spawn"] = vector4(1224.66, 2706.15, 38.01, 120.0), ["camera"] = vector3(1224.5, 2701.63, 39.0)},
     },
-    ["air"] = {
+    [Config.DealershipsType.Air] = {
         ["active"] = true,
         ["licence"] = "heli",
         ["categories"] = {["Helicopters"] = "Hélicoptères"},
@@ -132,12 +116,7 @@ Config.Dealerships = {
                 ["center"] = vector3(1732.15, 3308.31, 41.22),
                 ["length"] = 23.8,
                 ["width"] = 27.8,
-                ["options"] = {
-                    name = "sandy_concess_air",
-                    heading = 15,
-                    minZ = 40.22,
-                    maxZ = 44.22,
-                }
+                ["options"] = {name = "sandy_concess_air", heading = 15, minZ = 40.22, maxZ = 44.22},
             },
         },
         ["vehicle"] = {
@@ -145,21 +124,26 @@ Config.Dealerships = {
             ["camera"] = vector4(1733.07, 3303.82, 42.22, 14.55),
         },
     },
-    ["boat"] = {
-        ["active"] = false,
-        ["licence"] = "boat",
+    [Config.DealershipsType.Boat] = {
+        ["active"] = GetConvarInt("feature_dlc2_boat", 0) == 1,
+        ["licence"] = nil,
         ["categories"] = {["Boats"] = "Bateaux"},
         ["blip"] = {
-            ["name"] = "Concessionnaire Bateau",
-            ["coords"] = vector3(0, 0, 0),
-            ["sprite"] = 410,
+            ["name"] = "Concessionnaire Maritime",
+            ["coords"] = vector3(-846.51, -1315.44, 5.0),
+            ["sprite"] = 780,
             ["color"] = 46,
         },
         ["ped"] = {
-            ["model"] = "mp_f_boatstaff_01",
-            ["coords"] = vector4(0, 0, 0, 0),
-            ["zone"] = {}
+            ["model"] = "mp_m_boatstaff_01",
+            ["coords"] = vector4(-847.93, -1312.15, 4.0, 296.25),
+            ["zone"] = {
+                ["center"] = vector3(-847.26, -1311.66, 5.0),
+                ["length"] = 9.8,
+                ["width"] = 7.4,
+                ["options"] = {name = "dealership_boat", heading = 21, minZ = 4.0, maxZ = 7.0},
+            },
         },
-        ["vehicle"] = {["spawn"] = vector4(0, 0, 0, 0), ["camera"] = vector3(0, 0, 0)},
+        ["vehicle"] = {["spawn"] = vector4(-857.02, -1327.72, 0.45, 110), ["camera"] = vector3(-871.61, -1342.65, 8.44)},
     },
 }

@@ -25,6 +25,9 @@ local function generateCatalog(dealershipKey)
             end)
         end
     end
+    table.sort(catalog, function(categoryA, categoryB)
+        return categoryA.name < categoryB.name
+    end)
     return catalog
 end
 
@@ -44,7 +47,7 @@ function Dealership:SpawnPed()
             animDict = "abigail_mcs_1_concat-0",
             anim = "csb_abigail_dual-0",
             flag = 1,
-            scenario = "WORLD_HUMAN_CLIPBOARD"
+            scenario = "WORLD_HUMAN_CLIPBOARD",
         },
     })
 end
@@ -52,6 +55,7 @@ end
 function Dealership:new(key, config)
     self.__index = self
     local menu = createMenu("Veuillez choisir un véhicule", "shop:vehicle:" .. key)
+    local confirmMenu = createMenu("")
 
     local dealership = setmetatable({
         key = key,
@@ -62,14 +66,17 @@ function Dealership:new(key, config)
         vehicle = config.vehicle,
         ped = config.ped,
         menu = menu,
-        isInside = false
+        confirmMenu = confirmMenu,
+        isInside = false,
+        selectedVehicle = nil,
     }, self)
 
-    menu:On('open', function()
+    menu:On("open", function()
         dealership:SetupCam()
     end)
 
-    menu:On('close', function()
+    menu:On("close", function()
+        dealership:CleanVehicleSpawn()
         dealership:DeleteCam()
     end)
 
@@ -78,6 +85,10 @@ end
 
 function Dealership:SetInside(value)
     self.isInside = value
+end
+
+function Dealership:SetSelectedVehicle(value)
+    self.selectedVehicle = value
 end
 
 function Dealership:Destroy()
@@ -100,37 +111,71 @@ function Dealership:DeleteCam()
     SetFocusEntity(GetPlayerPed(PlayerId()))
 end
 
-function Dealership:generateVehicleButton(stock, vehicle)
+function Dealership:CleanVehicleSpawn()
+    local coords = self.vehicle.spawn.xyz
+    local stillThere = true
+    while stillThere do
+        local closestVehicle = QBCore.Functions.GetClosestVehicle(coords)
+        if #(coords - GetEntityCoords(closestVehicle)) <= 3.0 then
+            SetEntityAsMissionEntity(closestVehicle, true, true)
+            DeleteVehicle(closestVehicle)
+        else
+            stillThere = false
+        end
+    end
+end
+
+function Dealership:VisualizeVehicle(vehicle)
+    local model = GetHashKey(vehicle.model)
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        Citizen.Wait(10)
+    end
+
+    local vehiclePosition = self.vehicle.spawn
+    local createdVehicle = CreateVehicle(model, vehiclePosition.x, vehiclePosition.y, vehiclePosition.z, vehiclePosition.w, false, false)
+
+    SetModelAsNoLongerNeeded(model)
+    SetVehicleOnGroundProperly(createdVehicle)
+    SetEntityInvincible(createdVehicle, true)
+    SetVehicleDoorsLocked(createdVehicle, 6)
+    FreezeEntityPosition(createdVehicle, true)
+    SetVehicleNumberPlateText(createdVehicle, "SOZ")
+end
+
+function Dealership:GenerateVehicleButton(stock, vehicle)
     local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(vehicle["hash"]))
     local label = vehicle.name
     local description = "Acheter " .. vehicleName
+    local value = self.confirmMenu
+    local select = function()
+        self:SetSelectedVehicle(vehicle)
+        self:GenerateConfirmMenu()
+    end
     if stock == 0 then
         label = "^9" .. label
         description = "❌ HORS STOCK de " .. vehicleName
+        select = function()
+        end
+        value = nil
     elseif stock == 1 then
         label = "~o~" .. vehicle.name
         description = "⚠ Stock limité de  " .. vehicleName
-        -- value = ChooseVehicleMenu,
-        -- select = function()
-        --    selectedVehicle = vehicle
-        -- end,
     end
     return {
         label = label,
-        rightLabel = "💸 " .. vehicle["price"] .. "$",
-        -- value = ChooseVehicleMenu,
+        rightLabel = "💸 $" .. DisplayAmountWithCommas(vehicle.price),
+        value = value,
         description = description,
-        select = function()
-            -- selectedVehicle = vehicle
-        end,
+        select = select,
         enter = function()
-            -- clean()
-            -- previsualizeVehicle(vehicle)
+            self:CleanVehicleSpawn()
+            self:VisualizeVehicle(vehicle)
         end,
     }
 end
 
-function Dealership:getStockFromVehicle(vehiclesStock, model)
+function Dealership:GetStockFromVehicle(vehiclesStock, model)
     for _, vehicleInStock in pairs(vehiclesStock) do
         if model == vehicleInStock.model then
             return vehicleInStock.stock
@@ -140,7 +185,7 @@ function Dealership:getStockFromVehicle(vehiclesStock, model)
 end
 
 -- Menu Functions
-function Dealership:GenerateMenu()
+function Dealership:GenerateSubMenus()
     self.menu:ClearItems()
     for _, category in pairs(self.catalog) do
         local vehiclesStock = QBCore.Functions.Retry(function()
@@ -152,14 +197,34 @@ function Dealership:GenerateMenu()
         end
         local subMenu = createMenu(category.name, namespace)
         for _, vehReference in pairs(category.vehicles) do
-            local stock = self:getStockFromVehicle(vehiclesStock, vehReference.model)
+            local stock = self:GetStockFromVehicle(vehiclesStock, vehReference.model)
             if stock ~= nil then
-                subMenu:AddButton(self:generateVehicleButton(stock, vehReference))
+                subMenu:AddButton(self:GenerateVehicleButton(stock, vehReference))
             end
         end
+
         self.menu:AddButton({label = category.name, value = subMenu})
     end
 end
+
+function Dealership:GenerateConfirmMenu()
+    self.confirmMenu:ClearItems()
+    self.confirmMenu:AddTitle({label = self.selectedVehicle.name})
+    local vehicleLabelText = self.selectedVehicle.name
+    self.confirmMenu:AddButton({
+        label = "Acheter " .. vehicleLabelText,
+        rightLabel = "💸 $" .. DisplayAmountWithCommas(self.selectedVehicle.price),
+        description = "Confirmer l'achat",
+        select = function()
+            MenuV:CloseAll(function()
+                TriggerServerEvent("soz-concess:server:buyShowroomVehicle", self.key, self.selectedVehicle.model)
+                self:CleanVehicleSpawn()
+                self:DeleteCam()
+            end)
+        end,
+    })
+end
+
 -- Put in a init.lua file
 local dealerships = {}
 
@@ -172,7 +237,8 @@ AddEventHandler("onClientResourceStart", function(resourceName)
             local dealership = Dealership:new(dealerKey, config)
             dealership:SpawnPed()
 
-            QBCore.Functions.CreateBlip(dealerKey .. ":dealership", {
+            QBCore.Functions.CreateBlip(dealerKey .. ":dealership",
+                                        {
                 name = config.blip.name,
                 coords = config.blip.coords,
                 sprite = config.blip.sprite,
@@ -190,17 +256,17 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                                 icon = "c:dealership/list.png",
                                 label = "Accéder au catalogue",
                                 action = function()
-                                    dealership:GenerateMenu()
+                                    dealership:GenerateSubMenus()
                                     dealership.menu:Open()
                                 end,
                                 canInteract = function()
                                     local licences = PlayerData.metadata["licences"]
                                     return dealership.isInside and (dealership.licence == nil or licences ~= nil and licences[dealership.licence] > 0)
                                 end,
-                                blackoutGlobal = true
+                                blackoutGlobal = true,
                             },
                         },
-                        distance = 2.5
+                        distance = 2.5,
                     })
                 else
                     exports["qb-target"]:RemoveTargetModel(config.ped.model, "Accéder au catalogue")
