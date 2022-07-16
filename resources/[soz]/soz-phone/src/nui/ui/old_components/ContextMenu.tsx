@@ -43,7 +43,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
             leaveTo="translate-x-full"
         >
             <AppWrapper className={backgroundClass}>
-                <AppTitle title="Configuration" isBigHeader={false}>
+                <AppTitle title="Configuration">
                     {onClose && (
                         <Button className="flex items-center text-base" onClick={onClose}>
                             <ChevronLeftIcon className="h-5 w-5" />

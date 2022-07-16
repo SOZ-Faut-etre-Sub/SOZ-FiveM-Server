@@ -1,8 +1,5 @@
-import './Phone.css';
-
 import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
-import { useCall } from '@os/call/hooks/useCall';
 import { useCallModal } from '@os/call/hooks/useCallModal';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
