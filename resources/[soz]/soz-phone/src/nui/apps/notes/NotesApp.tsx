@@ -59,7 +59,7 @@ export const NotesApp: React.FC = () => {
                 <NoteModal />
                 <AppWrapper>
                     <AppTitle app={notesApp} />
-                    <AppContent className="flex flex-col justify-center" scrollable={false}>
+                    <AppContent className="flex flex-col justify-between" scrollable={false}>
                         <Routes>
                             <Route index element={<NoteList />} />
                         </Routes>
