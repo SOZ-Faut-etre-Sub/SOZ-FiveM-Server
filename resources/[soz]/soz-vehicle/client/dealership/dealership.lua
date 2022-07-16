@@ -55,7 +55,7 @@ end
 function Dealership:new(key, config)
     self.__index = self
     local menu = createMenu("Veuillez choisir un véhicule", "shop:vehicle:" .. key)
-    local confirmMenu = createMenu("")
+    local confirmMenu = MenuV:InheritMenu(menu)
 
     local dealership = setmetatable({
         key = key,
@@ -164,7 +164,7 @@ function Dealership:GenerateVehicleButton(stock, vehicle)
     end
     return {
         label = label,
-        rightLabel = "💸 $" .. DisplayAmountWithCommas(vehicle.price),
+        rightLabel = "💸 $" .. QBCore.Shared.GroupDigits(vehicle.price),
         value = value,
         description = description,
         select = select,
@@ -213,7 +213,7 @@ function Dealership:GenerateConfirmMenu()
     local vehicleLabelText = self.selectedVehicle.name
     self.confirmMenu:AddButton({
         label = "Acheter " .. vehicleLabelText,
-        rightLabel = "💸 $" .. DisplayAmountWithCommas(self.selectedVehicle.price),
+        rightLabel = "💸 $" .. QBCore.Shared.GroupDigits(self.selectedVehicle.price),
         description = "Confirmer l'achat",
         select = function()
             MenuV:CloseAll(function()
