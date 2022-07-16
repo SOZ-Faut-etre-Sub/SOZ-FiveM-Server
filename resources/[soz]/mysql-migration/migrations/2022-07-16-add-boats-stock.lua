@@ -1,0 +1,28 @@
+-- table.insert(migrations, {
+--    name = "add-boats-stock",
+--    queries = {
+--        [[
+--            INSERT INTO concess_storage (model, stock, category) VALUES
+--                ('dinghy', 6, 'Boats'),
+--                ('dinghy2', 6, 'Boats'),
+--                ('dinghy4', 6, 'Boats'),
+--                ('jetmax', 6, 'Boats'),
+--                ('marquis', 6, 'Boats'),
+--                ('seashark', 6, 'Boats'),
+--                ('seashark2', 6, 'Boats'),
+--                ('speeder', 6, 'Boats'),
+--                ('speeder2', 6, 'Boats'),
+--                ('squalo', 6, 'Boats'),
+--                ('submersible', 6, 'Boats'),
+--                ('submersible2', 6, 'Boats'),
+--                ('avisa', 6, 'Boats'),
+--                ('suntrap', 6, 'Boats'),
+--                ('toro', 6, 'Boats'),
+--                ('toro2', 6, 'Boats'),
+--                ('tropic', 6, 'Boats'),
+--                ('tropic2', 6, 'Boats'),
+--                ('longfin', 6, 'Boats')
+--            ;
+--        ]],
+--    },
+-- })

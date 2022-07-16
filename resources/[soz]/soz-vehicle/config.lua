@@ -25,47 +25,6 @@ Config = {
     },
 }
 
-Config.Shops = {
-    ["pdm"] = {
-        ["ShopLabel"] = "Concess Véhicules", -- Blip name
-        ["showBlip"] = true,
-        ["Categories"] = {
-            ["Sedans"] = "Sedans",
-            ["Coupes"] = "Coupes",
-            ["Suvs"] = "SUVs",
-            ["Off-road"] = "Off-road",
-            ["Muscle"] = "Muscle",
-            ["Compacts"] = "Compacts",
-            ["Vans"] = "Vans",
-        },
-        ["Location"] = vector3(-45.67, -1098.34, 26.42), -- Blip Location
-        ["VehicleSpawn"] = vector4(-46.36, -1078.07, 26.43, 70.0), -- Spawn location when vehicle is bought
-    },
-    ["velo"] = {
-        ["ShopLabel"] = "Concess Vélos", -- Blip name
-        ["showBlip"] = true,
-        ["Categories"] = {["Cycles"] = "Bicycles"},
-        ["Location"] = vector3(-1222.26, -1494.83, 4.34), -- Blip Location
-        ["VehicleSpawn"] = vector4(-1221.96, -1498.45, 4.35, 210.0), -- Spawn location when vehicle is bought
-    },
-    ["moto"] = {
-        ["ShopLabel"] = "Concess Motos", -- Blip name
-        ["showBlip"] = true,
-        ["Categories"] = {["Motorcycles"] = "Motorcycles"},
-        ["Location"] = vector3(1224.79, 2727.25, 38.0), -- Blip Location
-        ["VehicleSpawn"] = vector4(1212.69, 2726.24, 38.0, 180.0), -- Spawn location when vehicle is bought
-    },
-    ["air"] = {
-        ["ShopLabel"] = "Concess Aérien", -- Blip name
-        ["showBlip"] = true,
-        ["Categories"] = {["Helicopters"] = "Hélicoptères"},
-        ["Location"] = vector3(1734.18, 3313.44, 41.22), -- Blip Location
-        ["CameraPosition"] = vector4(1733.07, 3303.82, 42.22, 14.55),
-        ["VehicleSpawn"] = vector4(1730.47, 3314.38, 40.22, 153.64), -- Spawn location when vehicle is bought
-        ["PedPosition"] = vector4(1743.13, 3307.23, 40.22, 148.91),
-    },
-}
-
 Config.JerryCanRefill = 30.0
 
 Config.PumpModels = {
@@ -548,52 +507,52 @@ Garages = {
         type = "depot", -- public, job, gang, depot
         vehicle = "air", -- car, air, sea
     },
-    ["lsymc"] = {
-        label = "Port LSYMC",
-        blipcoord = vector3(-794.66, -1510.83, 1.59),
+    --]]
+    ["marina_boat"] = {
+        label = "Port de la Marina",
+        blipcoord = vector3(-916.48, -1386.73, 5.19),
         showBlip = false,
-        blipName = "Marina",
+        blipName = "Port Public",
         blipNumber = 356,
         type = "public", -- public, job, gang, depot
         vehicle = "sea", -- car, air, sea
     },
-    ["paleto"] = {
-        label = "Port Paleto",
+    ["paleto_boat"] = {
+        label = "Port de Paleto",
         blipcoord = vector3(-277.46, 6637.2, 7.48),
         showBlip = false,
-        blipName = "Marina",
+        blipName = "Port Public",
         blipNumber = 356,
         type = "public", -- public, job, gang, depot
         vehicle = "sea", -- car, air, sea
     },
-    ["millars"] = {
+    ["millars_boat"] = {
         label = "Port Millars",
         blipcoord = vector3(1299.24, 4216.69, 33.9),
         showBlip = false,
-        blipName = "Marina",
+        blipName = "Port Public",
         blipNumber = 356,
         type = "public", -- public, job, gang, depot
         vehicle = "sea", -- car, air, sea
     },
-    ["catfish"] = {
+    ["catfish_boat"] = {
         label = "Port Catfish",
         blipcoord = vector3(3865.66, 4463.73, 2.72),
         showBlip = false,
-        blipName = "Marina",
+        blipName = "Port Public",
         blipNumber = 356,
         type = "public", -- public, job, gang, depot
         vehicle = "sea", -- car, air, sea
     },
-    ["seadepot"] = {
-        label = "Dépot LSYMC",
+    ["depot_sea"] = {
+        label = "Fourrière Maritime",
         blipcoord = vector3(-772.98, -1430.76, 1.59),
         showBlip = false,
-        blipName = "Dépot LSYMC",
-        blipNumber = 356,
+        blipName = "Fourrière Maritime",
+        blipNumber = 68,
         type = "depot", -- public, job, gang, depot
         vehicle = "sea", -- car, air, sea
     },
-    --]]
 }
 
 HouseGarages = {}

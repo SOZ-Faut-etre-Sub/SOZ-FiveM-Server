@@ -4430,6 +4430,207 @@ QBShared.Vehicles = {
         ['category'] = 'Openwheel',
         ['hash']     = GetHashKey('formula2'),
         ['shop']     = 'na',
-        ['type']     = 'car'
+        ['type']     = 'car',
+    },
+    -- Boats
+    ['dinghy']     = {
+        ['name']     = 'Dinghy 4 Places',
+        ['brand']    = 'Nagasaki',
+        ['model']    = 'dinghy',
+        ['price']    = 50000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('dinghy'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['dinghy2']     = {
+        ['name']     = 'Dinghy 2 Places',
+        ['brand']    = 'Nagasaki',
+        ['model']    = 'dinghy2',
+        ['price']    = 48000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('dinghy2'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['dinghy3']     = {
+        ['name']     = 'Dinghy',
+        ['brand']    = 'Nagasaki',
+        ['model']    = 'dinghy3',
+        ['price']    = 50000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('dinghy3'),
+        ['shop']     = 'na',
+        ['type']     = 'boat'
+    },
+    ['dinghy4']     = {
+        ['name']     = 'Dinghy Premium',
+        ['brand']    = 'Nagasaki',
+        ['model']    = 'dinghy4',
+        ['price']    = 60000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('dinghy4'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['jetmax']     = {
+        ['name']     = 'Jetmax',
+        ['brand']    = 'Shitzu',
+        ['model']    = 'jetmax',
+        ['price']    = 60000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('jetmax'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['marquis']     = {
+        ['name']     = 'Marquis',
+        ['brand']    = 'Dinka',
+        ['model']    = 'marquis',
+        ['price']    = 120000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('marquis'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['seashark']     = {
+        ['name']     = 'Seashark',
+        ['brand']    = 'Speedophile',
+        ['model']    = 'seashark',
+        ['price']    = 15000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('seashark'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['seashark2']     = {
+        ['name']     = 'Seashark Premium',
+        ['brand']    = 'Speedophile',
+        ['model']    = 'seashark2',
+        ['price']    = 20000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('seashark2'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['speeder']     = {
+        ['name']     = 'Speeder',
+        ['brand']    = 'Pegassi',
+        ['model']    = 'speeder',
+        ['price']    = 65000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('speeder'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['speeder2']     = {
+        ['name']     = 'Speeder Premium',
+        ['brand']    = 'Pegassi',
+        ['model']    = 'speeder',
+        ['price']    = 65000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('speeder'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['squalo']     = {
+        ['name']     = 'Squalo',
+        ['brand']    = 'Shitzu',
+        ['model']    = 'squalo',
+        ['price']    = 135000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('squalo'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['submersible']     = {
+        ['name']     = 'Submersible',
+        ['brand']    = 'Kraken',
+        ['model']    = 'submersible',
+        ['price']    = 200000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('submersible'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['submersible2']     = {
+        ['name']     = 'Kraken',
+        ['brand']    = 'Kraken',
+        ['model']    = 'submersible2',
+        ['price']    = 230000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('submersible2'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['avisa']     = {
+        ['name']     = 'Avisa',
+        ['brand']    = 'Kraken',
+        ['model']    = 'avisa',
+        ['price']    = 290000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('avisa'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['suntrap']     = {
+        ['name']     = 'Suntrap',
+        ['brand']    = 'Shitzu',
+        ['model']    = 'suntrap',
+        ['price']    = 80000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('suntrap'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['toro']     = {
+        ['name']     = 'Toro',
+        ['brand']    = 'Lampadati',
+        ['model']    = 'toro',
+        ['price']    = 165000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('toro'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['toro2']     = {
+        ['name']     = 'Toro Premium',
+        ['brand']    = 'Lampadati',
+        ['model']    = 'toro2',
+        ['price']    = 165000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('toro2'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['tropic']     = {
+        ['name']     = 'Tropic',
+        ['brand']    = 'Shitzu',
+        ['model']    = 'tropic',
+        ['price']    = 125000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('tropic'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['tropic2']     = {
+        ['name']     = 'Tropic Premium',
+        ['brand']    = 'Shitzu',
+        ['model']    = 'tropic2',
+        ['price']    = 145000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('tropic2'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat'
+    },
+    ['longfin']     = {
+        ['name']     = 'Longfin',
+        ['brand']    = 'Shitzu',
+        ['model']    = 'longfin',
+        ['price']    = 260000,
+        ['category'] = 'Boats',
+        ['hash']     = GetHashKey('longfin'),
+        ['shop']     = 'boat',
+        ['type']     = 'boat',
     },
 }
