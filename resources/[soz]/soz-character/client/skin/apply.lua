@@ -175,6 +175,10 @@ function ClothConfigComputeToClothSet(clothConfig)
     end
 
     SetPedConfigFlag(PlayerPedId(), 35, clothConfig.Config.ShowHelmet)
+    if clothConfig.BaseClothSet.Props[tostring(PropType.Helmet)] ~= nil then
+        SetPedHelmetPropIndex(PlayerPedId(), clothConfig.BaseClothSet.Props[tostring(PropType.Helmet)].Drawable or 0)
+        SetPedHelmetTextureIndex(PlayerPedId(), clothConfig.BaseClothSet.Props[tostring(PropType.Helmet)].Texture or 0)
+    end
 
     if clothConfig.Config.HideHead then
         local override = {Props = {[PropType.Head] = {Clear = true}}}
