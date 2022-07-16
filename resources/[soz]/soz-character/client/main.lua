@@ -15,7 +15,10 @@ ComponentType = {
     Torso = 11,
 }
 
-PropType = {Head = 0, Glasses = 1, Ear = 2, LeftHand = 6, RightHand = 7}
+PropType = {
+    Head = 0, Glasses = 1, Ear = 2, LeftHand = 6, RightHand = 7,
+    Helmet = "Helmet"
+}
 
 HeadOverlayType = {
     Blemishes = 0,

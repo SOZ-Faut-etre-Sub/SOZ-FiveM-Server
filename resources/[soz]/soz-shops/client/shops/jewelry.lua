@@ -1,6 +1,5 @@
 --- @class JewelryShop
 JewelryShop = {}
-local cam = nil
 
 function JewelryShop:new(...)
     local shop = setmetatable(ShopShell:new(...), {__index = JewelryShop})
@@ -68,7 +67,6 @@ function JewelryShop:GenerateMenu()
     shopMenu:ClearItems()
     shopMenu:SetSubtitle(self.label)
 
-    local ped = PlayerPedId()
     local PlayerData = QBCore.Functions.GetPlayerData()
 
     self:deleteCam()
@@ -92,7 +90,8 @@ function JewelryShop:GenerateMenu()
 
         if content.menu == nil then
             TriggerEvent("hud:client:DrawNotification", string.format("Le vendeur est occupé, veuillez réessayer dans quelques instants."))
-
+            self:deleteCam()
+            FreezeEntityPosition(PlayerPedId(), false)
             return
         end
     end
@@ -106,9 +105,9 @@ function JewelryShop:GenerateMenu()
     shopMenu:Open()
 end
 
-function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, subCategoryName, subCategory, items)
+function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, index, subCategoryName, subCategory, items)
     local subMenu = MenuV:CreateMenu(nil, subCategoryName, "menu_shop_jewelry", "soz",
-                                     "jewelry:cat:" .. model .. ":" .. categoryPropIndex .. ":" .. subCategoryName)
+                                     "jewelry:cat:" .. model .. ":" .. index .. ":" .. subCategoryName)
 
     table.sort(items)
     for component, drawables in pairs(items) do
@@ -129,6 +128,7 @@ function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, subCa
                     TriggerServerEvent("shops:server:pay", "jewelry",
                                        {
                         overlay = subCategory.overlay,
+                        categoryIndex = index,
                         category = categoryPropIndex,
                         component = component,
                         drawable = drawable,
@@ -147,17 +147,17 @@ end
 
 --- Init
 CreateThread(function()
-    for pedModel, products in pairs(JewelryShop:getShopProducts()) do
-        for categoryPropIndex, content in pairs(products) do
-            local categoryEntry = JewelryShop:getShopProducts()[pedModel][categoryPropIndex]
+    for pedModel, categories in pairs(JewelryShop:getShopProducts()) do
+        for index, category in pairs(categories) do
+            local categoryEntry = JewelryShop:getShopProducts()[pedModel][index]
 
-            if MenuV:IsNamespaceAvailable("jewelry:cat:" .. pedModel .. ":" .. categoryPropIndex) then
-                categoryEntry.menu = MenuV:CreateMenu(nil, content.label, "menu_shop_jewelry", "soz", "jewelry:cat:" .. pedModel .. ":" .. categoryPropIndex)
+            if MenuV:IsNamespaceAvailable("jewelry:cat:" .. pedModel .. ":" .. index) then
+                categoryEntry.menu = MenuV:CreateMenu(nil, category.label, "menu_shop_jewelry", "soz", "jewelry:cat:" .. pedModel .. ":" .. index)
 
-                table.sort(content.items)
-                for itemKey, drawables in pairs(content.items) do
+                table.sort(category.items)
+                for itemKey, drawables in pairs(category.items) do
                     if tonumber(itemKey) == nil then
-                        JewelryShop:GenerateSubMenu(categoryEntry.menu, pedModel, categoryPropIndex, itemKey, categoryEntry, drawables)
+                        JewelryShop:GenerateSubMenu(categoryEntry.menu, pedModel, category.propId, index, itemKey, categoryEntry, drawables)
                     else
                         print("Warning: ItemKey isn't in a category " .. itemKey)
                         local component = itemKey
@@ -168,17 +168,18 @@ CreateThread(function()
                                 label = labels.Localized
                             end
                             if label == "NULL" then
-                                print("Check value for " .. categoryPropIndex .. " " .. component .. " " .. drawable)
+                                print("Check value for " .. category.propId .. " " .. component .. " " .. drawable)
                             end
                             categoryEntry.menu:AddButton({
                                 label = label,
-                                rightLabel = "$" .. content.price,
-                                value = {categoryPropIndex, component, drawable},
+                                rightLabel = "$" .. category.price,
+                                value = {category.propId, component, drawable},
                                 select = function()
                                     TriggerServerEvent("shops:server:pay", "jewelry",
                                                        {
-                                        overlay = content.overlay,
-                                        category = categoryPropIndex,
+                                        overlay = category.overlay,
+                                        categoryIndex = index,
+                                        category = category.propId,
                                         component = component,
                                         drawable = drawable,
                                     }, 1)

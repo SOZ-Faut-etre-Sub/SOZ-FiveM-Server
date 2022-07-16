@@ -65,6 +65,7 @@ function TenueEntry(menu)
         label = "Casque",
         value = PlayerHasHelmet,
         change = function(_, value)
+            PlayerHasHelmet = value
             TriggerServerEvent("soz-character:server:UpdateClothConfig", "ShowHelmet", value)
         end,
     })
