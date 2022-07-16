@@ -106,8 +106,7 @@ function JewelryShop:GenerateMenu()
 end
 
 function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, index, subCategoryName, subCategory, items)
-    local subMenu = MenuV:CreateMenu(nil, subCategoryName, "menu_shop_jewelry", "soz",
-                                     "jewelry:cat:" .. model .. ":" .. index .. ":" .. subCategoryName)
+    local subMenu = MenuV:CreateMenu(nil, subCategoryName, "menu_shop_jewelry", "soz", "jewelry:cat:" .. model .. ":" .. index .. ":" .. subCategoryName)
 
     table.sort(items)
     for component, drawables in pairs(items) do
@@ -125,8 +124,7 @@ function JewelryShop:GenerateSubMenu(parentMenu, model, categoryPropIndex, index
                 rightLabel = "$" .. subCategory.price,
                 value = {categoryPropIndex, component, drawable},
                 select = function()
-                    TriggerServerEvent("shops:server:pay", "jewelry",
-                                       {
+                    TriggerServerEvent("shops:server:pay", "jewelry", {
                         overlay = subCategory.overlay,
                         categoryIndex = index,
                         category = categoryPropIndex,
@@ -175,8 +173,7 @@ CreateThread(function()
                                 rightLabel = "$" .. category.price,
                                 value = {category.propId, component, drawable},
                                 select = function()
-                                    TriggerServerEvent("shops:server:pay", "jewelry",
-                                                       {
+                                    TriggerServerEvent("shops:server:pay", "jewelry", {
                                         overlay = category.overlay,
                                         categoryIndex = index,
                                         category = category.propId,
