@@ -160,11 +160,11 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
-    local price = math.ceil(itemSpec.resellPrice)
+    local price = itemSpec.resellPrice
     if type(itemSpec.resellPrice) == "table" then
-        price = math.ceil(itemSpec.resellPrice[item.metadata.tier] or 1)
+        price = itemSpec.resellPrice[item.metadata.tier] or 1
     end
 
-    TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, price * amount)
+    TriggerEvent("banking:server:TransferMoney", resellZone.SourceAccount, resellZone.TargetAccount, math.ceil(price) * amount)
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, string.format("Vous avez vendu ~o~%s ~b~%s", amount, itemSpec.label))
 end)
