@@ -2,6 +2,7 @@ import './main.css';
 import './i18n';
 
 import { NuiProvider } from '@libs/nui/providers/NuiProvider';
+import SnackbarProvider from '@os/snackbar/providers/SnackbarProvider';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
@@ -25,7 +26,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <RecoilRootManager>
                         <SoundProvider>
                             <NotificationsProvider>
-                                <Phone />
+                                <SnackbarProvider>
+                                    <Phone />
+                                </SnackbarProvider>
                             </NotificationsProvider>
                         </SoundProvider>
                     </RecoilRootManager>

@@ -1,6 +1,6 @@
 import { BackspaceIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
-import React, { useContext } from 'react';
+import React, { memo, useContext } from 'react';
 
 import { ThemeContext } from '../../../styles/themeProvider';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
@@ -11,7 +11,7 @@ interface ButtonItemProps {
     className?: string;
 }
 
-const ButtonItem: React.FC<ButtonItemProps> = ({ label, onClick, className }) => {
+const ButtonItem: React.FC<ButtonItemProps> = memo(({ label, onClick, className }) => {
     const { theme } = useContext(ThemeContext);
 
     return (
@@ -24,7 +24,7 @@ const ButtonItem: React.FC<ButtonItemProps> = ({ label, onClick, className }) =>
             <span className="text-3xl">{label}</span>
         </button>
     );
-};
+});
 
 export const DialGrid = () => {
     const { initializeCall } = useCall();
