@@ -89,6 +89,12 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
         return
     end
 
+    local vehicleId = GetVehiclePedIsIn(GetPlayerPed(Player.PlayerData.source), false)
+    if vehicleId ~= 0 then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous devez d'abord descendre de votre véhicule.", "error")
+        return
+    end
+
     local inside = Player.PlayerData.metadata["inside"]
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
