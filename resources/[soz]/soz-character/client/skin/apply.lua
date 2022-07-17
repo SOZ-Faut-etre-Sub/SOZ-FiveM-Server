@@ -130,9 +130,6 @@ local function ApplyPedClothSet(ped, clothSet)
             ClearPedProp(ped, tonumber(propId))
         elseif tonumber(propId) ~= nil then
             SetPedPropIndex(ped, tonumber(propId), prop.Drawable, prop.Texture or 0, prop.Palette or 0)
-        elseif clothSet.Props[PropType.Helmet] ~= nil then
-            SetPedHelmetPropIndex(PlayerPedId(), clothSet.Props[PropType.Helmet].Drawable or 0)
-            SetPedHelmetTextureIndex(PlayerPedId(), clothSet.Props[PropType.Helmet].Texture or 0)
         end
     end
 end
@@ -177,14 +174,15 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
-    SetPedConfigFlag(PlayerPedId(), 35, clothConfig.Config.ShowHelmet)
-    if not clothConfig.Config.ShowHelmet then
-        local override = {Props = {[PropType.Helmet] = {Clear = true}}}
+    local hasHelmet = clothConfig["BaseClothSet"].Props[PropType.Helmet] ~= nil
+    if not hasHelmet then
+        SetPedConfigFlag(PlayerPedId(), 34, hasHelmet)
+    end
+    if clothConfig.Config.ShowHelmet and hasHelmet then
+        local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[PropType.Helmet]}}
 
         clothSet = MergeClothSet(clothSet, override)
-    end
-
-    if clothConfig.Config.HideHead then
+    elseif clothConfig.Config.HideHead then
         local override = {Props = {[PropType.Head] = {Clear = true}}}
 
         clothSet = MergeClothSet(clothSet, override)
