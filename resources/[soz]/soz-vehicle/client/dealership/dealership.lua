@@ -3,27 +3,24 @@ Dealership = {}
 local function generateCatalog(dealershipKey)
     local catalog = {}
 
-    for dealershipCategoryKey, dealershipCategoryName in pairs(Config.Dealerships[dealershipKey].categories) do
-        local categoryIndex = #catalog + 1
-        for _, vehicle in pairs(QBCore.Shared.Vehicles) do
-            local vehicleCategory = vehicle.category
-            if dealershipCategoryKey == vehicleCategory then
-                if catalog[categoryIndex] == nil then
-                    catalog[categoryIndex] = {
-                        ["key"] = dealershipCategoryKey,
-                        ["name"] = dealershipCategoryName,
-                        ["vehicles"] = {},
-                    }
-                end
-                local index = #catalog[categoryIndex].vehicles + 1
-                catalog[categoryIndex].vehicles[index] = vehicle
+    local vehicles = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetVehiclesOfDealership", dealershipKey)
+    for _, vehicle in pairs(vehicles) do
+        if Config.CategoriesTypes[vehicle.category] ~= nil then
+            if catalog[vehicle.category] == nil then
+                catalog[vehicle.category] = {
+                    key = vehicle.category,
+                    name = Config.CategoriesTypes[vehicle.category],
+                    vehicles = {},
+                }
             end
+            local index = #catalog[vehicle.category].vehicles + 1
+            catalog[vehicle.category].vehicles[index] = vehicle
         end
-        if catalog[categoryIndex] ~= nil and catalog[categoryIndex].vehicles ~= nil then
-            table.sort(catalog[categoryIndex].vehicles, function(vehA, vehB)
-                return vehA.price < vehB.price
-            end)
-        end
+    end
+    for _, category in pairs(catalog) do
+        table.sort(category.vehicles, function(vehicleA, vehicleB)
+            return vehicleA.price < vehicleB.price
+        end)
     end
     table.sort(catalog, function(categoryA, categoryB)
         return categoryA.name < categoryB.name
@@ -143,24 +140,23 @@ function Dealership:VisualizeVehicle(vehicle)
     SetVehicleNumberPlateText(createdVehicle, "SOZ")
 end
 
-function Dealership:GenerateVehicleButton(stock, vehicle)
-    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(vehicle["hash"]))
+function Dealership:GenerateVehicleButton(vehicle)
     local label = vehicle.name
-    local description = "Acheter " .. vehicleName
+    local description = "Acheter " .. label
     local value = self.confirmMenu
     local select = function()
         self:SetSelectedVehicle(vehicle)
         self:GenerateConfirmMenu()
     end
-    if stock == 0 then
+    if vehicle.stock == 0 then
         label = "^9" .. label
-        description = "❌ HORS STOCK de " .. vehicleName
+        description = "❌ HORS STOCK de " .. label
         select = function()
         end
         value = nil
-    elseif stock == 1 then
-        label = "~o~" .. vehicle.name
-        description = "⚠ Stock limité de  " .. vehicleName
+    elseif vehicle.stock == 1 then
+        label = "~o~" .. label
+        description = "⚠ Stock limité de  " .. label
     end
     return {
         label = label,
@@ -175,32 +171,17 @@ function Dealership:GenerateVehicleButton(stock, vehicle)
     }
 end
 
-function Dealership:GetStockFromVehicle(vehiclesStock, model)
-    for _, vehicleInStock in pairs(vehiclesStock) do
-        if model == vehicleInStock.model then
-            return vehicleInStock.stock
-        end
-    end
-    return nil
-end
-
 -- Menu Functions
 function Dealership:GenerateSubMenus()
     self.menu:ClearItems()
     for _, category in pairs(self.catalog) do
-        local vehiclesStock = QBCore.Functions.Retry(function()
-            return QBCore.Functions.TriggerRpc("soz-concess:server:getstock", category.key)
-        end, 5)
         local namespace = ("soz:dealership:" .. self.key .. ":" .. category.key):lower()
         if not MenuV:IsNamespaceAvailable(namespace) then
             MenuV:DeleteNamespace(namespace)
         end
         local subMenu = createMenu(category.name, namespace)
         for _, vehReference in pairs(category.vehicles) do
-            local stock = self:GetStockFromVehicle(vehiclesStock, vehReference.model)
-            if stock ~= nil then
-                subMenu:AddButton(self:GenerateVehicleButton(stock, vehReference))
-            end
+            subMenu:AddButton(self:GenerateVehicleButton(vehReference))
         end
 
         self.menu:AddButton({label = category.name, value = subMenu})

@@ -6,11 +6,6 @@ local vehicleChooseMenu = MenuV:InheritMenu(vehicleListMenu)
 local InsideConcessEntreprise = false
 local selectedModel = {}
 
-local vehicles = {}
-for _, vehicle in pairs(QBCore.Shared.Vehicles) do
-    vehicles[vehicle["model"]] = vehicle
-end
-
 ZonesConcessEntreprise = {
     ["ConcessEntreprise"] = BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
         name = "ConcessEntreprise_z",
@@ -75,13 +70,9 @@ vehicleListMenu:On("open", function(m)
 
     m:ClearItems()
     for vehicleModel, model in pairs(listVehicles) do
-        local qbVehicle = vehicles[vehicleModel]
-        if qbVehicle == nil then
-            print("Could not find vehicle " .. vehicleModel .. " in our referential. Ask a dev to add it.")
-        end
-        local vehicleName = qbVehicle["name"]
-        if qbVehicle["job_name"] then
-            vehicleName = qbVehicle["job_name"][PlayerData.job.id]
+        local vehicleName = model
+        if model.job_name then
+            vehicleName = decode_json(model.job_name)[PlayerData.job.id]
         end
 
         m:AddButton({
@@ -100,18 +91,8 @@ vehicleListMenu:On("close", function()
     vehicleListMenu:ClearItems()
 end)
 
-local function HasLicenceForThisModel(model)
-    local qbVehicle = vehicles[model]
-    local licenseTypeToCheck = "car"
-    if qbVehicle.type then
-        licenseTypeToCheck = qbVehicle.type
-        -- Quick workaround as the air category should be named heli category when it will be rework.
-        if qbVehicle.type == "air" then
-            licenseTypeToCheck = "heli"
-        end
-    end
-    local licences = PlayerData.metadata["licences"]
-    return licences ~= nil and licences[licenseTypeToCheck] > 0
+local function HasRequiredLicence(required_licence)
+
 end
 
 vehicleChooseMenu:On("open", function(m)
@@ -130,7 +111,9 @@ vehicleChooseMenu:On("open", function(m)
         label = "Acheter " .. vehicleName,
         description = "Confirmer l'achat",
         select = function()
-            if HasLicenceForThisModel(selectedModel.model) then
+            local licences = PlayerData.metadata["licences"]
+            local hasLicence = licences ~= nil and licences[required_licence] > 0
+            if hasLicence then
                 vehicleChooseMenu:Close()
                 vehicleListMenu:Close()
                 TakeOutGarage(selectedModel)
