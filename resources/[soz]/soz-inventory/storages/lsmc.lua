@@ -7,13 +7,24 @@ Config.Storages["lsmc_fridge"] = {
     heading = 320,
 }
 
+Config.Storages["lsmc_armory"] = {
+    label = "Stockage des armes LSMC",
+    type = "armory",
+    owner = "lsmc",
+    position = vector3(314.82, -1404.0, 32.51),
+    size = vec2(2.8, 0.6),
+    heading = 320,
+    offsetUpZ = 1.6,
+}
+
 Config.Storages["lsmc_stash"] = {
     label = "Stockage des médecins",
     type = "storage",
     owner = "lsmc",
-    position = vector3(315.73, -1403.04, 32.51),
-    size = vec2(5.0, 0.4),
+    position = vector3(316.35, -1401.84, 32.51),
+    size = vec2(2.6, 0.8),
     heading = 320,
+    offsetUpZ = 1.6,
 }
 
 Config.Storages["lsmc_boss_storage"] = {
