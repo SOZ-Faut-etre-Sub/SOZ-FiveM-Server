@@ -12,11 +12,6 @@ Gvehicle = nil
 Gvehpos = nil
 Gvehjack = nil
 
-local vehicles = {}
-for _, vehicle in pairs(QBCore.Shared.Vehicles) do
-    vehicles[vehicle["hash"]] = vehicle
-end
-
 function GetCurrentMod(id)
     local mod = GetVehicleMod(Config.AttachedCustomVehicle, id)
     local modName = GetLabelText(GetModTextLabel(Config.AttachedCustomVehicle, id, mod))
@@ -158,6 +153,7 @@ UpgradeMenu:On("open", function(menu)
 
     local validMods, amountValidMods = CheckValidMods(v.category, v.id)
     local currentMod, currentModName = GetCurrentMod(v.id)
+    local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicle", Config.AttachedCustomVehicle)
 
     if amountValidMods > 0 or v.id == 18 then
         if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance
@@ -168,7 +164,7 @@ UpgradeMenu:On("open", function(menu)
                 local price = 0
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if v.id == customprice.id then
-                        price = math.ceil(customprice.prices[tempNum] * vehicles[GetEntityModel(Config.AttachedCustomVehicle)].price)
+                        price = math.ceil(customprice.prices[tempNum] * vehiclePrice)
                     end
                 end
 

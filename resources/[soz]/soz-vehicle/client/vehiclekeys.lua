@@ -96,23 +96,25 @@ local function PoliceCall()
                 end
                 local alertTitle = ""
                 if IsPedInAnyVehicle(ped) then
-                    local vehicle = GetVehiclePedIsIn(ped, false)
-                    local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)):lower()
-                    if QBCore.Shared.Vehicles[modelName] ~= nil then
-                        Name = QBCore.Shared.Vehicles[modelName]["brand"] .. " " .. QBCore.Shared.Vehicles[modelName]["name"]
+                    local vehicleId = GetVehiclePedIsIn(ped, false)
+                    local vehicleModel = GetEntityModel(vehicleId)
+                    local vehicle = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetNameOfVehicle", vehicleModel)
+                    if vehicle ~= nil then
+                        Name = vehicle.name
                     else
                         Name = "Inconnu"
                     end
-                    local modelPlate = QBCore.Functions.GetPlate(vehicle)
+                    local modelPlate = QBCore.Functions.GetPlate(vehicleId)
                     local msg = "Vol de véhicule a " .. streetLabel .. ". Véhicule: " .. Name .. ", Immatriculation: " .. modelPlate
                     local alertTitle = "Vol de véhicule a"
                     TriggerServerEvent("police:server:VehicleCall", pos, msg, alertTitle, streetLabel, modelPlate, Name)
                 else
-                    local vehicle = QBCore.Functions.GetClosestVehicle()
-                    local modelName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)):lower()
-                    local modelPlate = QBCore.Functions.GetPlate(vehicle)
-                    if QBCore.Shared.Vehicles[modelName] ~= nil then
-                        Name = QBCore.Shared.Vehicles[modelName]["brand"] .. " " .. QBCore.Shared.Vehicles[modelName]["name"]
+                    local vehicleId = QBCore.Functions.GetClosestVehicle()
+                    local vehicleModel = GetEntityModel(vehicleId)
+                    local vehicle = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetNameOfVehicle", vehicleModel)
+                    local modelPlate = QBCore.Functions.GetPlate(vehicleId)
+                    if vehicle ~= nil then
+                        Name = vehicle.name
                     else
                         Name = "Inconnu"
                     end

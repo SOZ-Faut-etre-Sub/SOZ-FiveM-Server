@@ -1,10 +1,3 @@
-local OutsideVehicles = {}
-
-local vehicles = {}
-for _, vehicle in pairs(QBCore.Shared.Vehicles) do
-    vehicles[vehicle["model"]] = vehicle
-end
-
 local GarageTypes
 AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() == resourceName) then
@@ -175,7 +168,7 @@ local function GetEmptyParkingSlots(slots, indexgarage, size)
     return emptySlots
 end
 
-RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage, plate)
+RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage)
     if not IsModelInCdimage(GetHashKey(vehicle.vehicle)) then
         exports["soz-monitor"]:Log("ERROR", "Invalid vehicle model", {model = vehicle.vehicle, plate = vehicle.plate})
         exports["soz-hud"]:DrawNotification("Véhicule invalide : " .. vehicle.vehicle, "error")
@@ -202,20 +195,7 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         return
     end
 
-    if type_ == "private" or type_ == "depot" then
-        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, vehicle, plate)
-        if not success then
-            QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
-            return
-        end
-    end
-    TriggerEvent("soz-garage:client:doTakeOutGarage", vehicle, type_, indexgarage, plate)
-end)
-
-RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, indexgarage, plate)
-    local garageType = GetGarageType(type_)
-
-    local size = (vehicles[vehicle.vehicle] or {size = 1}).size
+    local size = vehicle.size or 1
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage, size)
 
     if #emptySlots == 0 then
@@ -224,6 +204,20 @@ RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, i
 
         return
     end
+
+    if type_ == "private" or type_ == "depot" then
+        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, veh)
+        if not success then
+            QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
+            return
+        end
+    end
+
+    RequestVehicleModel(veh.vehicle)
+
+    -- Use vehicle plate instead of mods plate
+    local mods = json.decode(veh.mods)
+    mods.plate = vehicle.plate
 
     local emptySlot = emptySlots[1]
 
@@ -454,7 +448,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 price = 200
             end
         elseif garageType.type == "depot" then
-            local qbVehicle = vehicles[v.vehicle]
+            local qbVehicle = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetVehicle", v.vehicle)
             if qbVehicle == nil then
                 print("Can't retrieve the price of vehicle with display name: '" .. displayName .. "' and model name '" .. v.vehicle .. "'.")
                 -- Fallback value
@@ -473,7 +467,7 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 }),
                 select = function()
                     garageType.submenu:Close()
-                    TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage, displayName)
+                    TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage)
                 end,
             })
         end
