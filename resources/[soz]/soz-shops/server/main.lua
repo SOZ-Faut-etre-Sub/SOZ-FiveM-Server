@@ -10,8 +10,11 @@ local function getItemPrice(product, productID, Player)
                 return tattoo["Price"]
             end
         end
-    elseif product == "barber" or product == "jewelry" then
+    elseif product == "barber" then
         return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].price
+    elseif product == "jewelry" then
+        print("ProductId: " .. json.encode(productID))
+        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.categoryIndex].price
     elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
         return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Price
     else
@@ -23,7 +26,7 @@ local function shouldCheckAmount(brand)
     return brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco"
 end
 
-RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
+RegisterNetEvent("shops:server:pay", function(brand, product, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     amount = tonumber(amount) or 1
 
@@ -32,8 +35,8 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
     end
 
     if Player then
-        local item = Config.Products[brand][productID]
-        local price = getItemPrice(brand, productID, Player) * amount
+        local item = Config.Products[brand][product]
+        local price = getItemPrice(brand, product, Player) * amount
 
         if brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco" and item.amount <
             amount then
@@ -57,19 +60,19 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
                 skin.Tattoos = skin.Tattoos or {}
 
                 skin.Tattoos[#skin.Tattoos + 1] = {
-                    Collection = GetHashKey(productID.collection),
-                    Overlay = GetHashKey(productID.overlay),
+                    Collection = GetHashKey(product.collection),
+                    Overlay = GetHashKey(product.overlay),
                 }
 
                 Player.Functions.SetSkin(skin, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
             elseif brand == "barber" then
-                local barberShop = Config.Products[brand][Player.PlayerData.skin.Model.Hash][productID.category]
+                local barberShop = Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.category]
                 local skin = Player.PlayerData.skin
 
-                for componentID, component in pairs(productID.data) do
+                for componentID, component in pairs(product.data) do
                     if barberShop.components[componentID] then
-                        skin[productID.overlay][componentID] = component
+                        skin[product.overlay][componentID] = component
                     end
                 end
 
@@ -78,17 +81,24 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
             elseif brand == "jewelry" then
                 local clothConfig = Player.PlayerData.cloth_config
 
-                clothConfig["BaseClothSet"].Props[tostring(productID.category)] = {
-                    Drawable = tonumber(productID.component),
-                    Texture = tonumber(productID.drawable),
-                }
+                if product.overlay == "Helmet" then
+                    clothConfig["BaseClothSet"].Props["Helmet"] = {
+                        Drawable = tonumber(product.component),
+                        Texture = tonumber(product.drawable),
+                    }
+                else
+                    clothConfig["BaseClothSet"].Props[tostring(product.category)] = {
+                        Drawable = tonumber(product.component),
+                        Texture = tonumber(product.drawable),
+                    }
+                end
 
                 Player.Functions.SetClothConfig(clothConfig, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
             elseif brand == "ponsonbys" or brand == "suburban" or brand == "binco" then
                 local clothConfig = Player.PlayerData.cloth_config
                 local clothItem =
-                    Config.Products[brand][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Items[productID.item]
+                    Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.category].Collections[product.collection].Items[product.item]
 
                 for componentId, component in pairs(clothItem.ApplyComponents or {}) do
                     clothConfig["BaseClothSet"].Components[tostring(componentId)] = {}
@@ -97,10 +107,10 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
                     clothConfig["BaseClothSet"].Components[tostring(componentId)].Palette = tonumber(component.Palette) or 0
                 end
 
-                if productID.torso and productID.torso.drawable and productID.torso.texture then
+                if product.torso and product.torso.drawable and product.torso.texture then
                     clothConfig["BaseClothSet"].Components["3"] = {
-                        Drawable = tonumber(productID.torso.drawable),
-                        Texture = tonumber(productID.torso.texture),
+                        Drawable = tonumber(product.torso.drawable),
+                        Texture = tonumber(product.torso.texture),
                         Palette = 0,
                     }
                 end
@@ -110,9 +120,9 @@ RegisterNetEvent("shops:server:pay", function(brand, productID, amount)
             else
                 exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
                     if success then
-                        Config.Products[brand][productID].amount = Config.Products[brand][productID].amount - amount
-                        if Config.Products[brand][productID].amount <= 0 then
-                            Config.Products[brand][productID].amount = 0
+                        Config.Products[brand][product].amount = Config.Products[brand][product].amount - amount
+                        if Config.Products[brand][product].amount <= 0 then
+                            Config.Products[brand][product].amount = 0
                         end
                         TriggerClientEvent("shops:client:SetShopItems", -1, brand, Config.Products[brand])
 

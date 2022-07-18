@@ -65,6 +65,14 @@ function TenueEntry(menu)
         label = "Casque",
         value = PlayerHasHelmet,
         change = function(_, value)
+            PlayerHasHelmet = value
+            QBCore.Functions.RequestAnimDict("veh@common@fp_helmet@")
+            if PlayerHasHelmet then
+                TaskPlayAnim(ped, "veh@common@fp_helmet@", "put_on_helmet", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
+            else
+                TaskPlayAnim(ped, "veh@common@fp_helmet@", "take_off_helmet_stand", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
+            end
+            Wait(1100)
             TriggerServerEvent("soz-character:server:UpdateClothConfig", "ShowHelmet", value)
         end,
     })
@@ -78,7 +86,7 @@ function TenueEntry(menu)
                 if component.propId ~= nil then
                     QBCore.Functions.RequestAnimDict("mp_masks@on_foot")
                     TaskPlayAnim(ped, "mp_masks@on_foot", "put_on_mask", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
-                    Wait(2000)
+                    Wait(800)
                 elseif component.componentId ~= nil then
                     QBCore.Functions.RequestAnimDict("anim@mp_yacht@shower@male@")
                     TaskPlayAnim(ped, "anim@mp_yacht@shower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8.0, 3000, 16, 0, 0, 0, 0)
