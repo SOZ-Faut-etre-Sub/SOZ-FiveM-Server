@@ -102,7 +102,7 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
         -- Remove checks that are not relevent for current vehicle. `citizenid` and `state` always to be checked
         local fieldsToTest = {}
         for field, data in pairs(fields) do
-            if (field == "citizenid" and type_ ~= "entreprise" and type_ ~= "depot") or field == "state" or expectedState[field] then
+            if (field == "citizenid" and type_ ~= "entreprise" and type_ ~= "depot" and type_ ~= "public") or field == "state" or expectedState[field] then
                 fieldsToTest[field] = data
             end
         end
@@ -165,7 +165,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     local args = {}
 
     local argsByType = {
-        ["public"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
+        ["public"] = {state = VehicleState.InGarage, garage = garage, category = category},
         ["private"] = {state = VehicleState.InGarage, citizenid = cid, garage = garage, category = category},
         ["depot"] = {state = VehicleState.InPound},
         ["entreprise"] = {state = VehicleState.InEntreprise, garage = garage, category = category},
@@ -188,7 +188,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:GetGarageVehicles", function(
     end
 
     -- Special case for pound and entreprise vehicle
-    if type_ == "depot" then
+    if type_ == "depot" or type_ == "public" then
         local canTakeOutPoundJob = SozJobCore.Functions.HasPermission(player.PlayerData.job.id, player.PlayerData.job.id, player.PlayerData.job.grade,
                                                                       SozJobCore.JobPermission.SocietyTakeOutPound)
         if canTakeOutPoundJob then
