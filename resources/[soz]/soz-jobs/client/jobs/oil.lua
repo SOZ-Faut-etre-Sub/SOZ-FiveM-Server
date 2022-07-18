@@ -440,8 +440,8 @@ end)
 
 RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
     local playerPed = PlayerPedId()
-    local model = GetEntityModel(Tanker.vehicle)
-    local class = GetVehicleClass(Tanker.vehicle)
+    local model = GetEntityModel(Tanker.entity)
+    local class = GetVehicleClass(Tanker.entity)
     local hasInventory = QBCore.Functions.TriggerRpc("jobs:server:fueler:ensureInventory", Tanker.vehicle, model, class)
 
     if not hasInventory then
@@ -587,8 +587,8 @@ RegisterNetEvent("jobs:client:fueler:StartStationRefill", function(data)
     end
 
     local refillRequest = exports["soz-hud"]:Input("Quantité a ajouter (en Litre) :", 4, MaxFuelInStation - station.stock)
-    local model = GetEntityModel(Tanker.vehicle)
-    local class = GetVehicleClass(Tanker.vehicle)
+    local model = GetEntityModel(Tanker.entity)
+    local class = GetVehicleClass(Tanker.entity)
     local hasInventory = QBCore.Functions.TriggerRpc("jobs:server:fueler:ensureInventory", Tanker.vehicle, model, class)
 
     if not hasInventory then
@@ -667,8 +667,8 @@ end)
 
 RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     local playerPed = PlayerPedId()
-    local model = GetEntityModel(Tanker.vehicle)
-    local class = GetVehicleClass(Tanker.vehicle)
+    local model = GetEntityModel(Tanker.entity)
+    local class = GetVehicleClass(Tanker.entity)
     local hasInventory = QBCore.Functions.TriggerRpc("jobs:server:fueler:ensureInventory", Tanker.vehicle, model, class)
 
     if not hasInventory then
