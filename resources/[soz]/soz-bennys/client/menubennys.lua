@@ -970,19 +970,32 @@ Dutymecha = BoxZone:Create(vector3(-204.9, -1337.93, 34.89), 5, 4, {
     maxZ = 37.89,
 })
 
-Vehiclemecha1 = BoxZone:Create(vector3(-222.49, -1323.6, 30.89), 9, 6, {
-    name = "Vehiclemecha1_z",
-    heading = 90,
-    minZ = 29.89,
-    maxZ = 33.89,
-})
-
-Vehiclemecha2 = BoxZone:Create(vector3(-222.62, -1330.24, 30.89), 9, 6, {
-    name = "Vehiclemecha2_z",
-    heading = 90,
-    minZ = 29.89,
-    maxZ = 33.89,
-})
+local repairSpots = {
+    BoxZone:Create(vector3(-222.49, -1323.6, 30.89), 9, 6, {
+        name = "Vehiclemecha1_z",
+        heading = 90,
+        minZ = 29.89,
+        maxZ = 33.89,
+    }),
+    BoxZone:Create(vector3(-222.62, -1330.24, 30.89), 9, 6, {
+        name = "Vehiclemecha2_z",
+        heading = 90,
+        minZ = 29.89,
+        maxZ = 33.89,
+    }),
+    BoxZone:Create(vector3(-216.06, -1257.99, 31.31), 13.8, 5.4, {
+        name = "bennys_repair_slot1",
+        heading = 0,
+        minZ = 30.31,
+        maxZ = 35.11,
+    }),
+    BoxZone:Create(vector3(-168.78, -1252.58, 31.3), 6.2, 13.6, {
+        name = "bennys_repair_slot2",
+        heading = 0,
+        minZ = 30.3,
+        maxZ = 35.3,
+    }),
+}
 
 StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
     name = "staff_bennys",
@@ -991,7 +1004,7 @@ StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
     maxZ = 27,
 })
 
-Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, _)
     if isPointInside then
         exports["qb-target"]:AddTargetModel(-2094907124, {
             options = {
@@ -1015,7 +1028,7 @@ Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
     end
 end)
 
-Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, _)
     if isPointInside then
         exports["qb-target"]:AddTargetModel(-1830645735, {
             options = {
@@ -1055,53 +1068,32 @@ Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point
     end
 end)
 
-Insidemecha = false
+local InsideWorkshop = false
 
-Vehiclemecha1:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if OnDuty == true and PlayerJob.id == "bennys" then
-            if Config.AttachedVehicle == nil then
-                if IsPedInAnyVehicle(PlayerPedId()) then
-                    local veh = GetVehiclePedIsIn(PlayerPedId())
-                    if not IsThisModelABicycle(GetEntityModel(veh)) then
-                        Insidemecha = true
-                    else
-                        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mettre de vélos", "error")
+for _, repairSpot in pairs(repairSpots) do
+    repairSpot:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, _)
+        if isPointInside then
+            if OnDuty == true and PlayerJob.id == "bennys" then
+                if Config.AttachedVehicle == nil then
+                    if IsPedInAnyVehicle(PlayerPedId()) then
+                        local veh = GetVehiclePedIsIn(PlayerPedId())
+                        if not IsThisModelABicycle(GetEntityModel(veh)) then
+                            InsideWorkshop = true
+                        else
+                            exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mettre de vélos", "error")
+                        end
                     end
                 end
             end
-        end
-    else
-        if OnDuty == true and PlayerJob.id == "bennys" then
-            Insidemecha = false
-            VehiculeOptions:Close()
-            Config.AttachedVehicle = nil
-        end
-    end
-end)
-
-Vehiclemecha2:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if OnDuty == true and PlayerJob.id == "bennys" then
-            if Config.AttachedVehicle == nil then
-                if IsPedInAnyVehicle(PlayerPedId()) then
-                    local veh = GetVehiclePedIsIn(PlayerPedId())
-                    if not IsThisModelABicycle(GetEntityModel(veh)) then
-                        Insidemecha = true
-                    else
-                        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mettre de vélos", "error")
-                    end
-                end
+        else
+            if OnDuty == true and PlayerJob.id == "bennys" then
+                InsideWorkshop = false
+                VehiculeOptions:Close()
+                Config.AttachedVehicle = nil
             end
         end
-    else
-        if OnDuty == true and PlayerJob.id == "bennys" then
-            Insidemecha = false
-            VehiculeOptions:Close()
-            Config.AttachedVehicle = nil
-        end
-    end
-end)
+    end)
+end
 
 StaffBennys:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
@@ -1111,7 +1103,7 @@ StaffBennys:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
                     if IsPedInAnyVehicle(PlayerPedId()) then
                         local veh = GetVehiclePedIsIn(PlayerPedId())
                         if not IsThisModelABicycle(GetEntityModel(veh)) then
-                            Insidemecha = true
+                            InsideWorkshop = true
                         else
                             exports["soz-hud"]:DrawNotification("Vous ne pouvez pas mettre de vélos", "error")
                         end
@@ -1122,7 +1114,7 @@ StaffBennys:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, poi
     else
         QBCore.Functions.TriggerCallback("admin:server:isAllowed", function(isAllowed, permission)
             if isAllowed then
-                Insidemecha = false
+                InsideWorkshop = false
                 VehiculeOptions:Close()
                 Config.AttachedVehicle = nil
             end
@@ -1143,8 +1135,8 @@ CreateThread(function()
                     Config.AttachedVehicle = entity
                     startAnimation()
                 end,
-                canInteract = function(entity, distance, data)
-                    return Insidemecha
+                canInteract = function()
+                    return InsideWorkshop
                 end,
             },
         },

@@ -52,7 +52,7 @@ local Elevators = {
     --- LSMC
     ["lsmc:0"] = {
         name = "LSMC:Elevator0",
-        label = "Rez de chaussez",
+        label = "Rez-de-chaussée",
         buttons = vector2(337.33, -1433.18),
         heading = 320,
         z = {min = 32.51, max = 33.51},
@@ -73,7 +73,7 @@ local Elevators = {
     --- LSPD
     ["lspd:0"] = {
         name = "LSPD:Elevator0",
-        label = "Rez de chaussez",
+        label = "Rez-de-chaussée",
         buttons = vector2(609.72, -0.13),
         size = vector2(0.9, 0.1),
         heading = 350,
@@ -92,6 +92,29 @@ local Elevators = {
         upTo = nil,
         downTo = "lspd:0",
         spawnPoint = vector4(565.96, 4.89, 103.23, 271.47),
+    },
+    --- BENNY'S
+    ["bennys:0"] = {
+        name = "Bennys:Elevator0",
+        label = "Rez-de-chaussée",
+        buttons = vector2(-173.83, -1272.33),
+        size = vector2(0.2, 0.1),
+        heading = 0,
+        z = {min = 32.6, max = 33.0},
+        upTo = "bennys:1",
+        downTo = nil,
+        spawnPoint = vector4(-172.57, -1273.25, 32.6, 86.66),
+    },
+    ["bennys:1"] = {
+        name = "Bennys:Elevator1",
+        label = "Toit",
+        buttons = vector2(-171.17, -1274.1),
+        size = vector2(0.2, 0.1),
+        heading = 0,
+        z = {min = 48.0, max = 48.2},
+        upTo = nil,
+        downTo = "bennys:0",
+        spawnPoint = vector4(-172.49, -1273.3, 47.9, 270.31),
     },
 }
 
