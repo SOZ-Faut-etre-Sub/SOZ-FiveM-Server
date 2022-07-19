@@ -61,7 +61,7 @@ const MessagesList = (): any => {
         <ul className={`mt-5 relative divide-y space-y-1`}>
             {societyMessages.map(message => (
                 <Menu
-                    key={message.conversation_id}
+                    key={message.id}
                     as="li"
                     className={`w-full ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-md shadow`}
                 >
