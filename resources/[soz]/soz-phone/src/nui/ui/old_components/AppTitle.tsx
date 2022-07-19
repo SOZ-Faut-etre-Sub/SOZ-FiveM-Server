@@ -32,7 +32,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
                 <div className={`${!children && !action ? 'col-span-4 text-left' : 'col-span-2 text-center'} `}>
                     {title ? title : t(app.nameLocale)}
                 </div>
-                {action && <div className="justify-self-end text-[#347DD9]">{action}</div>}
+                {action && <div className="justify-self-end text-[#347DD9] font-normal text-base">{action}</div>}
             </h2>
         </div>
     );
