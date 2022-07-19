@@ -45,9 +45,9 @@ local function SpawnFieldZones()
                     event = "soz-jobs:client:food-collect-ingredients",
                     blackoutGlobal = true,
                     blackoutJob = "food",
-                    canInteract = function()
+                    canInteract = function(entity)
                         local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
-                        return hasPermission and PlayerData.job.onduty and currentField
+                        return hasPermission and PlayerData.job.onduty and currentField and not IsEntityAVehicle(entity) and not IsEntityAPed(entity)
                     end,
                 },
             },
