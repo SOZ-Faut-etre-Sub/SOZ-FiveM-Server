@@ -3,7 +3,6 @@ import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { PhotographIcon } from '@heroicons/react/solid';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { AppWrapper } from '@ui/components/AppWrapper';
-import { FullPageWithoutHeader } from '@ui/layout/FullPageWithoutHeader';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import DialogForm from '@ui/old_components/DialogForm';
@@ -55,12 +54,8 @@ const WallpaperModal: React.FC = () => {
         }
     };
 
-    if (!customWallpaperModal && !wallpaperModal) {
-        return null;
-    }
-
     return (
-        <FullPageWithoutHeader>
+        <>
             <Transition
                 appear={true}
                 show={customWallpaperModal}
@@ -126,7 +121,7 @@ const WallpaperModal: React.FC = () => {
                     />
                 </DialogForm>
             </Transition>
-        </FullPageWithoutHeader>
+        </>
     );
 };
 
