@@ -1,4 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
@@ -76,6 +77,9 @@ CreateThread(function()
                     storageID = id,
                     storage = storage,
                     job = storage.owner,
+                    canInteract = function()
+                        return SozJobCore.Jobs[PlayerData.job.id] == nil or PlayerData.job.onduty
+                    end
                 },
             },
             distance = 2.5,
