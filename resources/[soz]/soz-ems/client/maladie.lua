@@ -30,13 +30,13 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
         Citizen.CreateThread(function()
             while DiseaseLoop do
                 loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
-                TaskPlayAnim(PlayerPedId(), "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 16, 0, 0, 0, 0)
+                TaskPlayAnim(PlayerPedId(), "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 48, 0, 0, 0, 0)
                 TriggerScreenblurFadeIn(100)
                 Wait(1500)
                 TriggerScreenblurFadeOut(100)
                 ClearPedTasks()
 
-                Wait(10 * 1000)
+                Wait(15 * 1000)
             end
         end)
     end
