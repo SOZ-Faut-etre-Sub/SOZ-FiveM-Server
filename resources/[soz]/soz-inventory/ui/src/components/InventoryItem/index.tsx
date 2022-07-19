@@ -62,14 +62,18 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
 
         const amount = item.type !== 'key' ? item.amount : ''
         let extraLabel = ''
+        let expiration = ''
 
         if (item.metadata !== undefined) {
             if (item.metadata['label'] !== undefined) {
                 extraLabel = `(${item.metadata['label']})`
             }
+            if (item.metadata['expiration'] !== undefined) {
+                expiration = (new Date().getTime() > new Date(item.metadata['expiration']).getTime()) ? `[Périmé]` : ''
+            }
         }
 
-        return `${amount} ${item.label} ${extraLabel}`
+        return `${amount} ${item.label} ${extraLabel} ${expiration}`
     }
 
     const createInteractAction = (action: string) => {
