@@ -63,12 +63,12 @@ const MessagesList = (): any => {
                 <Menu
                     key={message.id}
                     as="li"
-                    className={`w-full ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-md shadow`}
+                    className={`w-full ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} rounded-md shadow`}
                 >
                     <Menu.Button className="w-full">
                         <div
                             className={`relative px-6 py-2 flex items-center space-x-3 ${
-                                theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-300'
+                                theme === 'dark' ? 'hover:bg-gray-800' : 'hover:bg-gray-300'
                             }`}
                         >
                             <div className="flex-1 min-w-0 cursor-pointer">

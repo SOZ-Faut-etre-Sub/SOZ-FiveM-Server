@@ -22,7 +22,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     }, [phoneNumber, addConversation]);
 
     const handleCancel = () => {
-        navigate('/messages');
+        navigate(-1);
     };
 
     return (
