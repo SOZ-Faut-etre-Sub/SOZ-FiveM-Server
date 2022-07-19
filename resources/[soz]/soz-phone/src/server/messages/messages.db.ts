@@ -39,20 +39,24 @@ export class _MessagesDB {
      * @param phoneNumber - phoneNumber of the user to get message conversations for
      */
     async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
-        const query = `SELECT phone_messages_conversations.unread,
-                          phone_messages_conversations.conversation_id,
-                          phone_messages_conversations.user_identifier,
-                          phone_messages_conversations.participant_identifier,
-                          JSON_VALUE(player.charinfo,'$.phone') AS phone_number,
-                          unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
-                   FROM (SELECT conversation_id
-                         FROM phone_messages_conversations
-                         WHERE phone_messages_conversations.participant_identifier = ?) AS t
-                            LEFT OUTER JOIN phone_messages_conversations
-                                            ON phone_messages_conversations.conversation_id = t.conversation_id
-                            LEFT OUTER JOIN player
-                                            ON  JSON_VALUE(player.charinfo,'$.phone') = phone_messages_conversations.participant_identifier
-                   ORDER BY phone_messages_conversations.updatedAt DESC
+        const query = `
+            SELECT phone_messages_conversations.unread,
+                   phone_messages_conversations.conversation_id,
+                   phone_messages_conversations.user_identifier,
+                   phone_messages_conversations.participant_identifier,
+                   phone_profile.avatar,
+                   JSON_VALUE(player.charinfo,'$.phone') AS phone_number,
+                   unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
+            FROM (SELECT conversation_id
+                  FROM phone_messages_conversations
+                  WHERE phone_messages_conversations.participant_identifier = ?) AS t
+                     LEFT OUTER JOIN phone_messages_conversations
+                                     ON phone_messages_conversations.conversation_id = t.conversation_id
+                     LEFT OUTER JOIN phone_profile
+                                     ON phone_profile.number = phone_messages_conversations.participant_identifier
+                     LEFT OUTER JOIN player
+                                     ON JSON_VALUE(player.charinfo,'$.phone') = phone_messages_conversations.participant_identifier
+            ORDER BY phone_messages_conversations.updatedAt DESC
 	`;
 
         const [results] = await DbInterface._rawExec(query, [phoneNumber]);
