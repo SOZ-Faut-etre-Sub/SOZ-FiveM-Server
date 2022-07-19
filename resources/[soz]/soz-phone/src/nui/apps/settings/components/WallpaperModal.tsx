@@ -55,6 +55,10 @@ const WallpaperModal: React.FC = () => {
         }
     };
 
+    if (!customWallpaperModal && !wallpaperModal) {
+        return null;
+    }
+
     return (
         <FullPageWithoutHeader>
             <Transition

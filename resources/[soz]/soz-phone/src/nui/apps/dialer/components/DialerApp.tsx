@@ -31,7 +31,7 @@ export const DialerApp: React.FC = () => {
             >
                 <AppWrapper>
                     <AppTitle app={dialer} />
-                    <AppContent scrollable={false} className="flex flex-col justify-between h-[780px]">
+                    <AppContent className="flex flex-col justify-between h-[780px]">
                         <Routes>
                             <Route index element={<DialerHistory />} />
                             <Route path="dial" element={<DialPage />} />
