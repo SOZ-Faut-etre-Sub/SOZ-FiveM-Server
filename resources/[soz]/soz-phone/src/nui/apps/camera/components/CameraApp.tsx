@@ -108,7 +108,7 @@ const CameraApp: React.FC = () => {
                                 onClick={() => navigate('/photo')}
                             />
                             <div
-                                className="bg-white h-16 w-16 rounded-full ring ring-white ring-offset-2 ring-offset-transparent cursor-pointer"
+                                className="bg-white h-16 w-16 rounded-full ring ring-white ring-offset-2 ring-offset-black cursor-pointer"
                                 onClick={handleTakePhoto}
                             />
                             <RefreshIcon
