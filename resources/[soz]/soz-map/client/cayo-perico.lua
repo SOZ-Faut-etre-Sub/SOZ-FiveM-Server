@@ -344,7 +344,7 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    SetDeepOceanScaler(0.0)
+    SetZoneEnabled(GetZoneFromNameId("PrLog"), false) -- REMOVES SNOW FROM CP
     local islandCoords = vector3(4840.571, -5174.425, 2.0)
 
     while true do
@@ -352,6 +352,7 @@ CreateThread(function()
 
         if #(pCoords - islandCoords) < 2000.0 then
             if not islandLoaded then
+                SetDeepOceanScaler(0.0)
                 Citizen.InvokeNative(0x9A9D1BA639675CF1, "HeistIsland", 1)
                 Citizen.InvokeNative(0xF74B1FFA4A15FBEA, 1) -- island path nodes (from Disquse)
                 SetScenarioGroupEnabled("Heist_Island_Peds", 1)
@@ -365,6 +366,7 @@ CreateThread(function()
                 islandLoaded = false
                 Citizen.InvokeNative(0x9A9D1BA639675CF1, "HeistIsland", 0)
                 Citizen.InvokeNative(0xF74B1FFA4A15FBEA, 0)
+                ResetDeepOceanScaler()
                 SetScenarioGroupEnabled("Heist_Island_Peds", 0)
                 SetAudioFlag("PlayerOnDLCHeist4Island", 0)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 0, 0)
