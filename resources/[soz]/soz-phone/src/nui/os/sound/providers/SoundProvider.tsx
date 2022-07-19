@@ -87,6 +87,10 @@ export const SoundProvider: React.FC<PropsWithChildren> = ({ children }) => {
                 }
                 if (loop !== undefined) {
                     sound.howl.loop(loop);
+
+                    setTimeout(() => {
+                        sound.howl.stop();
+                    }, 15000);
                 }
                 sound.howl.play();
 
