@@ -30,6 +30,7 @@ CreateThread(function()
                 color = "news",
                 icon = "c:jobs/recuperer.png",
                 event = "job:client:RemoveObject",
+                job = "news",
                 collect = true,
             },
         },
