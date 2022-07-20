@@ -77,9 +77,6 @@ CreateThread(function()
                     storageID = id,
                     storage = storage,
                     job = storage.owner,
-                    canInteract = function()
-                        return SozJobCore.Jobs[PlayerData.job.id] == nil or PlayerData.job.onduty
-                    end,
                 },
             },
             distance = 2.5,
