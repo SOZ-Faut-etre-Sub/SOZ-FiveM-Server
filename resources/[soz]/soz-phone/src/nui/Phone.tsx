@@ -59,7 +59,7 @@ function Phone() {
                 <React.Suspense fallback={<LoadingSpinner />}>
                     <Routes>
                         <Route path="/" element={<HomeApp />} />
-                        {callModal && <Route path="/call" element={<CallModal />} />}
+                        <Route path="/call" element={<CallModal />} />
                         {apps.map(app => (
                             <Route key={app.id} path={app.path + '/*'} element={app.component} />
                         ))}
