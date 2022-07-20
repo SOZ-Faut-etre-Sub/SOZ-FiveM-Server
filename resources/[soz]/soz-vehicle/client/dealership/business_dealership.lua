@@ -3,10 +3,10 @@ local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local vehicleListMenu = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car_society", "soz", "concessentre:vehicle:car")
 local vehicleChooseMenu = MenuV:InheritMenu(vehicleListMenu)
 
-insideBusinessDealership = false
-selectedModel = {}
+local insideBusinessDealership = false
+local selectedModel = {}
 
-businessDealershipZone = {
+local businessDealershipZone = {
     BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
         name = "business_dealership",
         heading = 0,
@@ -15,7 +15,7 @@ businessDealershipZone = {
     }),
 }
 
-businessDealershipParkingSpots = {
+local businessDealershipParkingSpots = {
     BoxZone:Create(vector3(827.31, -3210.51, 5.9), 8, 6, {
         name = "entreprise1",
         heading = 180,
