@@ -22,7 +22,7 @@ class _SocietyService {
         emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, {
             id: messageId,
             conversation_id: data.number,
-            source_phone: sourcePhone,
+            source_phone: sourcePhone.includes('#') ? '' : sourcePhone,
             message: data.message,
             position: data.pedPosition,
             isTaken: false,
@@ -50,7 +50,7 @@ class _SocietyService {
         }
 
         if (reqObj.data.anonymous) {
-            identifier = '';
+            identifier = `#${identifier}`;
         }
 
         if (reqObj.data.number === '555-FBI') {
@@ -178,9 +178,15 @@ class _SocietyService {
         const identifier = PlayerService.getPlayer(reqObj.source).getSocietyPhoneNumber();
 
         try {
-            const contact = await this.contactsDB.getMessages(identifier);
+            const messages = await this.contactsDB.getMessages(identifier);
 
-            resp({ status: 'ok', data: contact });
+            resp({
+                status: 'ok',
+                data: messages.map(m => ({
+                    ...m,
+                    source_phone: m.source_phone.includes('#') ? '' : m.source_phone,
+                })),
+            });
         } catch (e) {
             societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });

@@ -37,4 +37,13 @@ export const MockHistoryData: CallHistoryItem[] = [
         start: '2022-04-01 21:10:21.0',
         end: null,
     },
+    {
+        id: 5,
+        identifier: 'b8080a50-ad30-4ee9-84cb-00688e2bf167',
+        transmitter: '215-8139',
+        receiver: '704-1549',
+        is_accepted: true,
+        start: '2022-05-01 21:10:21.0',
+        end: null,
+    },
 ];

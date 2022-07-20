@@ -1,11 +1,15 @@
+import { AppContent } from '@ui/components/AppContent';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useApp } from '../../../../os/apps/hooks/useApps';
 import { ThemeContext } from '../../../../styles/themeProvider';
+import { AppTitle } from '../../../../ui/old_components/AppTitle';
 import { useFilteredContacts } from '../../hooks/state';
 import { SearchContacts } from './SearchContacts';
 
 export const ContactList: React.FC = () => {
+    const contacts = useApp('society-contacts');
     const filteredContacts = useFilteredContacts();
     const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
@@ -15,7 +19,8 @@ export const ContactList: React.FC = () => {
     };
 
     return (
-        <div className="mt-5">
+        <AppContent scrollable={false}>
+            <AppTitle app={contacts} />
             <SearchContacts />
             <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts)
@@ -24,7 +29,7 @@ export const ContactList: React.FC = () => {
                         <div key={letter} className="relative">
                             <div
                                 className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${
-                                    theme === 'dark' ? 'bg-black text-gray-400' : 'bg-[#F2F2F6] text-gray-600'
+                                    theme === 'dark' ? 'bg-black text-gray-400' : 'bg-ios-50 text-gray-600'
                                 }`}
                             >
                                 <h3>{letter}</h3>
@@ -38,7 +43,7 @@ export const ContactList: React.FC = () => {
                                     <li
                                         key={contact.id}
                                         className={`${
-                                            theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'
+                                            theme === 'dark' ? 'bg-black' : 'bg-ios-50'
                                         } w-full cursor-pointer`}
                                         onClick={() => openContactInfo(contact.id)}
                                     >
@@ -73,6 +78,6 @@ export const ContactList: React.FC = () => {
                         </div>
                     ))}
             </nav>
-        </div>
+        </AppContent>
     );
 };

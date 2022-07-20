@@ -15,7 +15,7 @@ const DialerNavBar: React.FC = () => {
 
     return (
         <div
-            className={`relative grid grid-cols-3 content-start ${
+            className={`absolute bottom-0 inset-x-0 grid grid-cols-3 content-start ${
                 theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-white text-black'
             } h-20`}
         >

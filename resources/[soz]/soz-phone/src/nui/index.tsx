@@ -2,28 +2,38 @@ import './main.css';
 import './i18n';
 
 import { NuiProvider } from '@libs/nui/providers/NuiProvider';
+import SnackbarProvider from '@os/snackbar/providers/SnackbarProvider';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 
 import { RecoilRootManager } from './lib/RecoilRootManager';
-import { PhoneProviders } from './PhoneProviders';
+import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
+import { SoundProvider } from './os/sound/providers/SoundProvider';
+import Phone from './Phone';
+import { store } from './store';
 
 dayjs.extend(relativeTime);
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <HashRouter>
-            <NuiProvider resource="npwd">
-                <React.Suspense fallback={null}>
+        <Provider store={store}>
+            <HashRouter>
+                <NuiProvider resource="npwd">
                     <RecoilRootManager>
-                        <PhoneProviders />
+                        <SoundProvider>
+                            <NotificationsProvider>
+                                <SnackbarProvider>
+                                    <Phone />
+                                </SnackbarProvider>
+                            </NotificationsProvider>
+                        </SoundProvider>
                     </RecoilRootManager>
-                </React.Suspense>
-            </NuiProvider>
-        </HashRouter>
-    </React.StrictMode>,
-    document.getElementById('root')
+                </NuiProvider>
+            </HashRouter>
+        </Provider>
+    </React.StrictMode>
 );

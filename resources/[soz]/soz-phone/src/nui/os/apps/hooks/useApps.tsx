@@ -15,7 +15,7 @@ export const useApps = () => {
                 )
             );
 
-            const NotificationIcon = createLazyAppIcon(AppIcon, { className: 'h-8 w-8 rounded-md' });
+            const NotificationIcon = createLazyAppIcon(AppIcon, { className: 'h-5 w-5 rounded-md' });
             const Icon = createLazyAppIcon(AppIcon, { className: 'h-16 w-16 rounded-[1rem]' });
 
             return {

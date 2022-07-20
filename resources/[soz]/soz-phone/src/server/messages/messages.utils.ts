@@ -16,6 +16,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
                 unread: conversation.unread,
                 phoneNumber: conversation.phone_number,
                 display: conversation.display,
+                avatar: conversation.avatar,
                 conversation_id: conversation.conversation_id,
                 user_identifier: identifier,
                 updatedAt: conversation.updatedAt,

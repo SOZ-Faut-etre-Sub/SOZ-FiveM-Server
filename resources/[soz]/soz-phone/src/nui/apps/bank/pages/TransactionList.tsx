@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useTransactions } from '../../hooks/useTransactions';
+import { useTransactions } from '../hooks/useTransactions';
 
 export const TransactionList = () => {
     const transactionList = useTransactions();

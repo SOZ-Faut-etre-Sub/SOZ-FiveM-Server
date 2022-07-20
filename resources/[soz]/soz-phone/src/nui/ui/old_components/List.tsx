@@ -9,7 +9,7 @@ export const List = ({ ...props }) => {
         <div
             className={`mx-2 my-4 ${
                 theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-white'
-            } shadow overflow-hidden rounded-[.8rem]`}
+            } shadow overflow-y-auto rounded-[.8rem]`}
         >
             <ul className={`divide-y ${theme === 'dark' ? 'divide-[#3D3D3F]' : 'divide-[#ECECED]'}`}>
                 {props.children}
