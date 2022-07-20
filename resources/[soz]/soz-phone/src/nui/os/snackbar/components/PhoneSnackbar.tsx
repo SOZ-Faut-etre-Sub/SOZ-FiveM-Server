@@ -19,7 +19,7 @@ export const PhoneSnackbar: React.FC = () => {
         <Transition
             appear={true}
             show={isOpen}
-            className="absolute inset-x-0 z-40"
+            className="absolute inset-x-0 mt-10 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="-translate-y-full"
             enterTo="translate-y-0"

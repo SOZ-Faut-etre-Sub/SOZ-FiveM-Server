@@ -1,13 +1,17 @@
 import 'dayjs/locale/fr';
 
+import { PlusIcon } from '@heroicons/react/outline';
 import { SearchField } from '@ui/old_components/SearchField';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
+import { useApp } from '../../../../os/apps/hooks/useApps';
 import { ThemeContext } from '../../../../styles/themeProvider';
+import { AppTitle } from '../../../../ui/old_components/AppTitle';
 import { useFilteredContacts } from '../../../contacts/hooks/state';
 import { useContactActions } from '../../../contacts/hooks/useContactActions';
 import { useFilteredConversationsValue, useFilterValueState } from '../../hooks/state';
@@ -16,6 +20,7 @@ import useMessages from '../../hooks/useMessages';
 dayjs.extend(relativeTime);
 
 const MessagesList = (): any => {
+    const messages = useApp('messages');
     const [t] = useTranslation();
     const { theme } = useContext(ThemeContext);
 
@@ -32,6 +37,16 @@ const MessagesList = (): any => {
 
     return (
         <div className="mt-5">
+            <AppTitle
+                app={messages}
+                action={
+                    <Link to="/messages/new">
+                        <PlusIcon className="h-6 w-6 cursor-pointer" />
+                    </Link>
+                }
+            >
+                <div />
+            </AppTitle>
             <SearchField
                 value={searchValue}
                 onChange={e => setSearchValue(e.target.value)}
@@ -44,7 +59,7 @@ const MessagesList = (): any => {
                         .map(conversation => (
                             <li
                                 key={conversation.conversation_id}
-                                className={`${theme === 'dark' ? 'bg-black' : 'bg-[#F2F2F6]'} w-full cursor-pointer`}
+                                className={`${theme === 'dark' ? 'bg-black' : 'bg-ios-50'} w-full cursor-pointer`}
                                 onClick={() => goToConversation(conversation)}
                             >
                                 <div

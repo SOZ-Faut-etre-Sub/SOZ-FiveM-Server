@@ -1,43 +1,36 @@
-import './Phone.css';
-
 import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
-import { useCall } from '@os/call/hooks/useCall';
 import { useCallModal } from '@os/call/hooks/useCallModal';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
-import { Navigation } from '@os/navigation-bar/components/Navigation';
-import { NotificationAlert } from '@os/notifications/components/NotificationAlert';
-import { NotificationBar } from '@os/notifications/components/NotificationBar';
 import { useConfig } from '@os/phone/hooks/useConfig';
-import { usePhoneService } from '@os/phone/hooks/usePhoneService';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
-import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { PhoneEvents } from '@typings/phone';
-import { TopLevelErrorComponent } from '@ui/old_components/TopLevelErrorComponent';
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import DefaultConfig from '../../config.json';
+import { BankEvents } from '../../typings/bank';
 import { useBankService } from './apps/bank/hooks/useBankService';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useDialService } from './apps/dialer/hooks/useDialService';
-import { HomeApp } from './apps/home/components/Home';
+import { HomeApp } from './apps/home';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
-import { useSettings } from './apps/settings/hooks/useSettings';
 import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
 import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
 import InjectDebugData from './os/debug/InjectDebugData';
+import { NotificationAlert } from './os/notifications/components/NotificationAlert';
+import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
-import WindowSnackbar from './ui/old_components/WindowSnackbar';
+import { usePhoneService } from './services/usePhoneService';
+import ThemeProvider from './styles/themeProvider';
+import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
 
 function Phone() {
     const { apps } = useApps();
-
     useConfig();
 
     useKeyboardService();
@@ -55,31 +48,26 @@ function Phone() {
     useDialService();
 
     const { modal: callModal } = useCallModal();
-    const { call } = useCall();
-
-    const showNavigation = call?.is_accepted || !callModal;
 
     return (
-        <div>
-            <TopLevelErrorComponent>
-                <WindowSnackbar />
-                <PhoneWrapper>
-                    <NotificationBar />
-                    <div className="PhoneAppContainer select-none">
-                        <Routes>
-                            <Route path="/" element={<HomeApp />} />
-                            {callModal && <Route path="/call" element={<CallModal />} />}
-                            {apps.map(app => (
-                                <Route key={app.id} path={app.path} element={app.component} />
-                            ))}
-                        </Routes>
-                        <NotificationAlert />
-                        <PhoneSnackbar />
-                    </div>
-                    {showNavigation && <Navigation />}
-                </PhoneWrapper>
-            </TopLevelErrorComponent>
-        </div>
+        <ThemeProvider>
+            <PhoneWrapper>
+                {/*<TopLevelErrorComponent>*/}
+                {/*    <WindowSnackbar />*/}
+                <NotificationAlert />
+                <PhoneSnackbar />
+                <React.Suspense fallback={<LoadingSpinner />}>
+                    <Routes>
+                        <Route path="/" element={<HomeApp />} />
+                        <Route path="/call" element={<CallModal />} />
+                        {apps.map(app => (
+                            <Route key={app.id} path={app.path + '/*'} element={app.component} />
+                        ))}
+                    </Routes>
+                </React.Suspense>
+                {/*</TopLevelErrorComponent>*/}
+            </PhoneWrapper>
+        </ThemeProvider>
     );
 }
 
@@ -105,5 +93,14 @@ InjectDebugData<any>([
         app: 'PHONE',
         method: PhoneEvents.SET_CONFIG,
         data: DefaultConfig,
+    },
+    {
+        app: 'BANK',
+        method: BankEvents.SEND_CREDENTIALS,
+        data: {
+            name: 'John Doe',
+            account: '555Z5555T555',
+            balance: 1258745,
+        },
     },
 ]);

@@ -1,7 +1,7 @@
 import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import React from 'react';
 
-import { BankApp } from '../../../apps/bank/components/BankApp';
+import { BankApp } from '../../../apps/bank';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
@@ -33,70 +33,70 @@ export const APPS: IAppConfig[] = [
     {
         id: 'dialer',
         nameLocale: 'APPS_DIALER',
-        path: '/phone/*',
+        path: '/phone',
         home: true,
         component: <DialerApp />,
     },
     {
         id: 'messages',
         nameLocale: 'APPS_MESSAGES',
-        path: '/messages/*',
+        path: '/messages',
         home: true,
         component: <MessagesApp />,
     },
     {
         id: 'contacts',
         nameLocale: 'APPS_CONTACTS',
-        path: '/contacts/*',
+        path: '/contacts',
         home: true,
         component: <ContactsApp />,
     },
     {
         id: 'bank',
         nameLocale: 'APPS_BANK',
-        path: '/bank/*',
+        path: '/bank',
         component: <BankApp />,
     },
     {
         id: 'notes',
         nameLocale: 'APPS_NOTES',
-        path: '/notes/*',
+        path: '/notes',
         component: <NotesApp />,
     },
     {
         id: 'society-contacts',
         nameLocale: 'APPS_SOCIETY_CONTACTS',
-        path: '/society-contacts/*',
+        path: '/society-contacts',
         component: <SocietyContactsApp />,
     },
     {
         id: 'photo',
         nameLocale: 'APPS_PHOTO',
-        path: '/photo/*',
+        path: '/photo',
         component: <PhotoApp />,
     },
     {
         id: 'settings',
         nameLocale: 'APPS_SETTINGS',
-        path: '/settings/*',
+        path: '/settings',
         component: <SettingsApp />,
     },
     {
         id: 'society-messages',
         nameLocale: 'APPS_SOCIETY_MESSAGES',
-        path: '/society-messages/*',
+        path: '/society-messages',
         component: <SocietyMessagesApp />,
     },
     {
         id: 'twitch-news',
         nameLocale: 'APPS_TWITCH_NEWS',
-        path: '/twitch-news/*',
+        path: '/twitch-news',
         component: <TwitchNewsApp />,
     },
     {
         id: 'zutom',
         nameLocale: 'APPS_ZUTOM',
-        path: '/zutom/*',
+        path: '/zutom',
         component: <ZutomApp />,
     },
     /*{
@@ -110,7 +110,7 @@ export const APPS: IAppConfig[] = [
     {
         id: 'camera',
         nameLocale: 'APPS_CAMERA',
-        path: '/camera/*',
+        path: '/camera',
         home: true,
         component: <CameraApp />,
     },

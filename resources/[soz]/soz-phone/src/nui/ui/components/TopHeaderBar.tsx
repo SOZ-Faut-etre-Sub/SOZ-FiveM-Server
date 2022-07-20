@@ -1,17 +1,17 @@
 import { Transition } from '@headlessui/react';
-import { useCurrentCall } from '@os/call/hooks/state';
-import { NotificationItem } from '@os/notifications/components/NotificationItem';
 import cn from 'classnames';
-import React, { useContext, useEffect } from 'react';
+import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import BatteryIcon from '../../../styles/icons/system/Battery';
-import CellSignal from '../../../styles/icons/system/CellSignal';
-import { ThemeContext } from '../../../styles/themeProvider';
-import usePhoneTime from '../../phone/hooks/usePhoneTime';
-import { useNotifications } from '../hooks/useNotifications';
+import { useCurrentCall } from '../../os/call/hooks/state';
+import { NotificationItem } from '../../os/notifications/components/NotificationItem';
+import { useNotifications } from '../../os/notifications/hooks/useNotifications';
+import usePhoneTime from '../../os/phone/hooks/usePhoneTime';
+import { ThemeContext } from '../../styles/themeProvider';
+import { BatteryIcon } from '../assets/battery';
+import { CellIcon } from '../assets/cell';
 
-export const NotificationBar = () => {
+export const TopHeaderBar: FunctionComponent = memo(() => {
     const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
 
     const { pathname } = useLocation();
@@ -36,36 +36,44 @@ export const NotificationBar = () => {
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
-            return theme === 'dark' ? 'bg-black text-white' : 'bg-[#F2F2F6] text-black';
+            return theme === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
         }
     };
+
+    useEffect(() => {
+        if (notifications.length === 0) {
+            setBarUncollapsed(false);
+        }
+    }, [notifications, setBarUncollapsed]);
 
     return (
         <>
             <div
-                className={cn('grid grid-cols-3 px-5 py-3 text-sm w-full z-50 cursor-pointer', color())}
+                className={cn('z-40 grid grid-cols-3 px-5 py-3 text-sm w-full cursor-pointer', color())}
                 onClick={() => {
                     setBarUncollapsed(curr => !curr);
                 }}
             >
-                <div className="flex justify-center text-center truncate">
-                    <p className="mr-2">{time}</p>
+                <div className="flex justify-center font-semibold text-center truncate">
+                    <p className="mr-4">{time}</p>
                     {icons.map(notifIcon => (
                         <div className="h-4 w-4 mx-1 notificationBarIcon">{notifIcon.icon}</div>
                     ))}
                 </div>
+
                 <div>&nbsp;</div>
+
                 <div className="flex justify-end">
                     <span>ZT&T</span>
-                    <CellSignal className="h-5 w-5 mx-2" />
-                    <BatteryIcon className="h-5 w-5" />
+                    <CellIcon className="w-5 h-5 mx-2" />
+                    <BatteryIcon className="w-5 h-5" />
                 </div>
             </div>
 
             <Transition
                 appear={true}
                 show={barUncollapsed}
-                className="absolute inset-x-0 h-full w-full z-50"
+                className="absolute inset-0 h-full w-full z-40"
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="-translate-y-full"
                 enterTo="translate-y-0"
@@ -75,7 +83,7 @@ export const NotificationBar = () => {
             >
                 <div className="h-full bg-black bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
                     <div className="my-20 font-light text-6xl">{time}</div>
-                    <ul className="divide-y divide-gray-600 overflow-y-scroll">
+                    <ul className="divide-y divide-gray-600 w-4/5 overflow-y-scroll">
                         {notifications.map((notification, idx) => (
                             <NotificationItem
                                 key={idx}
@@ -98,4 +106,4 @@ export const NotificationBar = () => {
             </Transition>
         </>
     );
-};
+});

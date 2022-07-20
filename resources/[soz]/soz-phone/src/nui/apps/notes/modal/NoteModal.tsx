@@ -1,13 +1,16 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, DotsCircleHorizontalIcon, SaveIcon, TrashIcon } from '@heroicons/react/outline';
-import { AppWrapper } from '@ui/old_components';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField, TextField } from '@ui/old_components/Input';
+import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useBackground } from '../../../ui/hooks/useBackground';
+import { FullPageWithoutHeader } from '../../../ui/layout/FullPageWithoutHeader';
 import { useModalVisible, useSelectedNote } from '../hooks/state';
 import { useNotesAPI } from '../hooks/useNotesAPI';
 
@@ -18,6 +21,7 @@ export const NoteModal: React.FC = () => {
     const [selectedNote] = useSelectedNote();
     const [noteTitle, setNoteTitle] = useState('');
     const [noteContent, setNoteContent] = useState('');
+    const backgroundClass = useBackground();
 
     const isNewNote = !selectedNote?.id;
 
@@ -106,35 +110,37 @@ export const NoteModal: React.FC = () => {
     if (selectedNote === null) return null;
 
     return (
-        <Transition
-            appear={true}
-            show={modalVisible}
-            as="div"
-            className="absolute inset-x-0 z-40"
-            enter="transition ease-in-out duration-300 transform"
-            enterFrom="translate-x-full"
-            enterTo="translate-x-0"
-            leave="transition ease-in-out duration-300 transform"
-            leaveFrom="translate-x-0"
-            leaveTo="translate-x-full"
-        >
-            <AppWrapper>
-                <AppTitle title={t('APPS_NOTES')} isBigHeader={false} action={NoteActions}>
-                    <Button className="flex items-center text-base" onClick={_handleClose}>
-                        <ChevronLeftIcon className="h-5 w-5" />
-                        Fermer
-                    </Button>
-                </AppTitle>
-                <AppContent className="mt-10 mx-4 mb-4">
-                    <TextField placeholder={t('GENERIC.TITLE')} value={noteTitle} onChange={handleTitleChange} />
-                    <TextareaField
-                        placeholder={t('GENERIC.CONTENT')}
-                        rows={22}
-                        value={noteContent}
-                        onChange={handleContentChange}
-                    />
-                </AppContent>
-            </AppWrapper>
-        </Transition>
+        <FullPageWithoutHeader>
+            <Transition
+                appear={true}
+                show={modalVisible}
+                as="div"
+                className="absolute h-full z-40"
+                enter="transition ease-in-out duration-300 transform"
+                enterFrom="translate-x-full"
+                enterTo="translate-x-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="translate-x-0"
+                leaveTo="translate-x-full"
+            >
+                <AppWrapper className={cn('h-full', backgroundClass)}>
+                    <AppTitle title={t('APPS_NOTES')} isBigHeader={false} action={NoteActions}>
+                        <Button className="flex items-center text-base" onClick={_handleClose}>
+                            <ChevronLeftIcon className="h-5 w-5" />
+                            Fermer
+                        </Button>
+                    </AppTitle>
+                    <AppContent className="mt-10 mx-4 mb-4">
+                        <TextField placeholder={t('GENERIC.TITLE')} value={noteTitle} onChange={handleTitleChange} />
+                        <TextareaField
+                            placeholder={t('GENERIC.CONTENT')}
+                            rows={22}
+                            value={noteContent}
+                            onChange={handleContentChange}
+                        />
+                    </AppContent>
+                </AppWrapper>
+            </Transition>
+        </FullPageWithoutHeader>
     );
 };

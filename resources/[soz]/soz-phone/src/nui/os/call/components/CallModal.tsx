@@ -1,6 +1,6 @@
-import { AppWrapper } from '@ui/old_components';
-import { AppContent } from '@ui/old_components/AppContent';
-import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
+import { AppContent } from '@ui/components/AppContent';
+import { AppWrapper } from '@ui/components/AppWrapper';
+import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import React from 'react';
 
 import { useCall } from '../hooks/useCall';
@@ -15,14 +15,14 @@ export const CallModal: React.FC = () => {
     if (!call) return null;
 
     return (
-        <AppWrapper className="bg-black bg-opacity-30 backdrop-blur">
-            <AppContent className="z-40 h-full">
-                <React.Suspense fallback={<LoadingSpinner />}>
+        <FullPageWithHeader className="bg-black bg-opacity-30 backdrop-blur">
+            <AppWrapper>
+                <AppContent>
                     <CallContactContainer />
                     {call?.is_accepted ? <CallTimer /> : call?.isTransmitter && <RingingText />}
                     <CallControls />
-                </React.Suspense>
-            </AppContent>
-        </AppWrapper>
+                </AppContent>
+            </AppWrapper>
+        </FullPageWithHeader>
     );
 };

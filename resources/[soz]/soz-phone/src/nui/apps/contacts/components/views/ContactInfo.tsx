@@ -6,9 +6,9 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import LogDebugEvent from '@os/debug/LogDebugEvents';
 import { ContactsDatabaseLimits } from '@typings/contact';
-import { AppWrapper } from '@ui/old_components';
+import { AppContent } from '@ui/components/AppContent';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import { ActionButton } from '@ui/old_components/ActionButton';
-import { AppContent } from '@ui/old_components/AppContent';
 import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { TextField } from '@ui/old_components/Input';
@@ -101,7 +101,6 @@ const ContactsInfoPage: React.FC = () => {
         <Transition
             appear={true}
             show={true}
-            className="absolute inset-x-0 z-40"
             enter="transition ease-in-out duration-300 transform"
             enterFrom="translate-x-full"
             enterTo="translate-x-0"
@@ -116,7 +115,7 @@ const ContactsInfoPage: React.FC = () => {
                         Fermer
                     </Button>
                 </AppTitle>
-                <AppContent className="text-white mt-10 mx-4 mb-4">
+                <AppContent>
                     <div className="flex justify-center">
                         <div
                             className={`${
@@ -158,7 +157,7 @@ const ContactsInfoPage: React.FC = () => {
                         )}
                     </div>
                     <div className="mt-6">
-                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
+                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-ios-50'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NAME')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NAME')}
@@ -166,7 +165,7 @@ const ContactsInfoPage: React.FC = () => {
                                 onChange={handleDisplayChange}
                             />
                         </div>
-                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-[#F2F2F6]'} rounded-lg my-2`}>
+                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-ios-50'} rounded-lg my-2`}>
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
                             <NumberFormat
                                 className={`w-full ${

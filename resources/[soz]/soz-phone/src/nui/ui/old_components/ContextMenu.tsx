@@ -1,12 +1,13 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { AppContent } from '@ui/old_components/AppContent';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import { AppTitle } from '@ui/old_components/AppTitle';
-import { AppWrapper } from '@ui/old_components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
 import { ItemIcon } from '@ui/old_components/ItemIcon';
 import React from 'react';
 
+import { AppContent } from '../components/AppContent';
+import { useBackground } from '../hooks/useBackground';
 import { List } from './List';
 import { ListItem } from './ListItem';
 
@@ -27,6 +28,8 @@ interface ContextMenuProps {
 }
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
+    const backgroundClass = useBackground();
+
     return (
         <Transition
             appear={true}
@@ -39,8 +42,8 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
         >
-            <AppWrapper>
-                <AppTitle title="Configuration" isBigHeader={false}>
+            <AppWrapper className={backgroundClass}>
+                <AppTitle title="Configuration">
                     {onClose && (
                         <Button className="flex items-center text-base" onClick={onClose}>
                             <ChevronLeftIcon className="h-5 w-5" />
@@ -48,7 +51,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
                         </Button>
                     )}
                 </AppTitle>
-                <AppContent className="mt-10 mb-4">
+                <AppContent className="mt-4 mb-4">
                     <List>
                         {options.map(option => (
                             <ListItem
