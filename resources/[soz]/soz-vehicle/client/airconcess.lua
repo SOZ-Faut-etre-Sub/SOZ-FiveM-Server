@@ -193,6 +193,8 @@ end)
 
 VehicleCategoriesMenu:On("close", function()
     VehicleCategoriesMenu:ClearItems()
+    clean()
+    TriggerEvent("soz-concess:client:deletecam")
 end)
 
 RegisterNetEvent("soz-dealer:air:client:createcam", function()
@@ -233,9 +235,6 @@ if GetConvarInt("feature_dlc1_helicopters", 0) == 1 then
                     event = "soz-dealer:air:client:Menu",
                     icon = "c:concess/lister.png",
                     label = "Liste Véhicules",
-                    action = function()
-                        TriggerEvent("soz-dealer:air:client:Menu", "")
-                    end,
                     canInteract = function()
                         local licenses = PlayerData.metadata["licences"]
                         return isInsideConcess and licenses ~= nil and licenses[licenseTypeRequired] > 0
