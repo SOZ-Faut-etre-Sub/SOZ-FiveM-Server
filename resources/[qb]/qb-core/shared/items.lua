@@ -65,7 +65,7 @@ QBShared.Items = {
     },
     ['weapon_golfclub'] = {
         ['name'] = 'weapon_golfclub',
-        ['label'] = 'Club de golfe',
+        ['label'] = 'Club de golf',
         ['weight'] = 500,
         ['type'] = 'weapon',
         ['ammotype'] = nil,
