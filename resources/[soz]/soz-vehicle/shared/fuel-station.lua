@@ -42,11 +42,11 @@ function FuelStation:CitizenIsOwner(citizenJobId)
     return self.owner == citizenJobId
 end
 
-function FuelStation:CitizenHasAccess(citizenJobId, citizenJobOnDuty)
+function FuelStation:CitizenHasAccess(citizenJobId)
     if self:IsPublic() then
         return true
     elseif self:IsPrivate() then
-        return self:CitizenIsOwner(citizenJobId) and citizenJobOnDuty
+        return self:CitizenIsOwner(citizenJobId)
     end
 end
 
