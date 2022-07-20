@@ -443,7 +443,7 @@ RegisterNetEvent("fuel:client:GetFuelLevel", function(entity, stationId)
         disableMovement = true,
         disableCombat = true,
     }, {task = "PROP_HUMAN_PARKING_METER"}, {}, {}, function() -- Done
-        exports["soz-hud"]:DrawNotification(("Status de la cuve : ~b~%dL"):format(station.stock), "info")
+        exports["soz-hud"]:DrawNotification(("Statut de la cuve : ~b~%dL"):format(station.stock), "info")
     end)
 end)
 
