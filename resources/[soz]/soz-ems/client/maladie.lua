@@ -30,13 +30,13 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
         Citizen.CreateThread(function()
             while DiseaseLoop do
                 loadAnimDict("amb@code_human_wander_idles_fat@female@idle_a")
-                TaskPlayAnim(ped, "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 49, 0, 0, 0, 0)
+                TaskPlayAnim(PlayerPedId(), "amb@code_human_wander_idles_fat@female@idle_a", "idle_b_sneeze", 1.0, 1.0, -1, 48, 0, 0, 0, 0)
                 TriggerScreenblurFadeIn(100)
-                Wait(1500)
+                Wait(1800)
                 TriggerScreenblurFadeOut(100)
                 ClearPedTasks()
 
-                Wait(10000)
+                Wait(10 * 1000)
             end
         end)
     end
@@ -71,6 +71,22 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
                 DisableControlAction(0, 21, true) -- disable sprint
                 DisableControlAction(0, 22, true) -- disable jump
                 Wait(5)
+            end
+        end)
+    end
+
+    if disease == "intoxication" then
+        DiseaseLoop = true
+
+        exports["soz-hud"]:DrawNotification("Vous avez digéré un truc pas frais.")
+
+        Citizen.CreateThread(function()
+            while DiseaseLoop do
+                loadAnimDict("random@drunk_driver_1")
+                TaskPlayAnim(PlayerPedId(), "random@drunk_driver_1", "vomit_outside", 1.0, 1.0, -1, 16, 0, 0, 0, 0)
+                Wait(1500)
+                ClearPedTasks()
+                Wait(60 * 1000)
             end
         end)
     end
