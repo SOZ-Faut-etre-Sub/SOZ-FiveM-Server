@@ -87,7 +87,7 @@ vehicleListMenu:On("open", function(m)
             value = vehicleChooseMenu,
             description = "Acheter  " .. vehicleName,
             select = function()
-                selectedModel = { model = vehicleModel, data = vehicle }
+                selectedModel = {model = vehicleModel, data = vehicle}
             end,
         })
     end
