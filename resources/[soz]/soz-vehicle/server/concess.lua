@@ -58,14 +58,14 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(dealership, v
         if pData.Functions.RemoveMoney("money", price, "vehicle-bought-in-showroom") then
             local category = "car"
             local garage
-            if dealership == Config.DealershipsType.Pdm or dealership == Config.DealershipsType.Luxury or dealership == Config.DealershipsType.Cycle then
+            if dealership == Config.DealershipTypes.Pdm or dealership == Config.DealershipTypes.Luxury or dealership == Config.DealershipTypes.Cycle then
                 garage = "airportpublic"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Sud")
-            elseif dealership == Config.DealershipsType.Air then
+            elseif dealership == Config.DealershipTypes.Air then
                 garage = "sandy_air"
                 category = "air"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! L'hélicoptère a été envoyé à l'héliport en face")
-            elseif dealership == Config.DealershipsType.Moto then
+            elseif dealership == Config.DealershipTypes.Moto then
                 garage = "haanparking"
                 TriggerClientEvent("hud:client:DrawNotification", src, "Merci pour votre achat! Le véhicule a été envoyé dans le Parking Public Nord")
             else

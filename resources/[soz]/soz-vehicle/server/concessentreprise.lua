@@ -16,7 +16,6 @@ MySQL.ready(function()
                 price = v.price,
                 name = v.name,
                 job_name = v.job_name,
-                category = v.category or "car",
                 required_licence = v.required_licence,
             }
         end
@@ -96,6 +95,6 @@ QBCore.Functions.CreateCallback("soz-concessentreprise:server:getLiveryType", fu
         vehicle,
     })
     if result[1] then
-        cb(result[1])
+        cb(result[1].liverytype)
     end
 end)

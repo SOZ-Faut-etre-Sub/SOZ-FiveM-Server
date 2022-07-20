@@ -2,19 +2,25 @@ Dealership = {}
 
 local function generateCatalog(dealershipKey)
     local catalog = {}
+    -- Map of the categories key to lua index so that we can sort the catalog later
+    local keyToIndex = {}
 
     local vehicles = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetVehiclesOfDealership", dealershipKey)
     for _, vehicle in pairs(vehicles) do
-        if Config.CategoriesTypes[vehicle.category] ~= nil then
-            if catalog[vehicle.category] == nil then
-                catalog[vehicle.category] = {
+        if Config.CategoryTypes[vehicle.category] ~= nil then
+            if keyToIndex[vehicle.category] == nil then
+                keyToIndex[vehicle.category] = #catalog + 1
+            end
+            local categoryIndex = keyToIndex[vehicle.category]
+            if catalog[categoryIndex] == nil then
+                catalog[categoryIndex] = {
                     key = vehicle.category,
-                    name = Config.CategoriesTypes[vehicle.category],
+                    name = Config.CategoryTypes[vehicle.category],
                     vehicles = {},
                 }
             end
-            local index = #catalog[vehicle.category].vehicles + 1
-            catalog[vehicle.category].vehicles[index] = vehicle
+            local index = #catalog[categoryIndex].vehicles + 1
+            catalog[categoryIndex].vehicles[index] = vehicle
         end
     end
     for _, category in pairs(catalog) do
@@ -65,7 +71,6 @@ function Dealership:new(key, config)
         menu = menu,
         confirmMenu = confirmMenu,
         isInside = false,
-        selectedVehicle = nil,
     }, self)
 
     menu:On("open", function()
@@ -82,10 +87,6 @@ end
 
 function Dealership:SetInside(value)
     self.isInside = value
-end
-
-function Dealership:SetSelectedVehicle(value)
-    self.selectedVehicle = value
 end
 
 function Dealership:Destroy()
@@ -145,8 +146,7 @@ function Dealership:GenerateVehicleButton(vehicle)
     local description = "Acheter " .. label
     local value = self.confirmMenu
     local select = function()
-        self:SetSelectedVehicle(vehicle)
-        self:GenerateConfirmMenu()
+        self:GenerateConfirmMenu(vehicle)
     end
     if vehicle.stock == 0 then
         label = "^9" .. label
@@ -188,17 +188,17 @@ function Dealership:GenerateSubMenus()
     end
 end
 
-function Dealership:GenerateConfirmMenu()
+function Dealership:GenerateConfirmMenu(selectedVehicle)
     self.confirmMenu:ClearItems()
-    self.confirmMenu:AddTitle({label = self.selectedVehicle.name})
-    local vehicleLabelText = self.selectedVehicle.name
+    self.confirmMenu:AddTitle({label = selectedVehicle.name})
+    local vehicleLabelText = selectedVehicle.name
     self.confirmMenu:AddButton({
         label = "Acheter " .. vehicleLabelText,
-        rightLabel = "💸 $" .. QBCore.Shared.GroupDigits(self.selectedVehicle.price),
+        rightLabel = "💸 $" .. QBCore.Shared.GroupDigits(selectedVehicle.price),
         description = "Confirmer l'achat",
         select = function()
             MenuV:CloseAll(function()
-                TriggerServerEvent("soz-concess:server:buyShowroomVehicle", self.key, self.selectedVehicle.model)
+                TriggerServerEvent("soz-concess:server:buyShowroomVehicle", self.key, selectedVehicle.model)
                 self:CleanVehicleSpawn()
                 self:DeleteCam()
             end)
