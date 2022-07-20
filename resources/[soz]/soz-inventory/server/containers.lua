@@ -29,19 +29,19 @@ Container["player"] = InventoryContainer:new({
 Container["ammo"] = InventoryContainer:new({
     type = "ammo",
     allowedTypes = {"weapon_ammo"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 Container["armory"] = InventoryContainer:new({
     type = "armory",
     allowedTypes = {"weapon"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 Container["fridge"] = InventoryContainer:new({
     type = "fridge",
     allowedTypes = {"food", "drink"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 Container["trunk"] = InventoryContainer:new({
@@ -68,13 +68,13 @@ Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes 
 Container["storage"] = InventoryContainer:new({
     type = "storage",
     allowedTypes = {"item", "drug", "oil_and_item"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
 Container["storage_tank"] = InventoryContainer:new({
     type = "storage_tank",
     allowedTypes = {"oil", "oil_and_item"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
 Container["seizure"] = InventoryContainer:new({
@@ -94,7 +94,7 @@ Container["boss_storage"] = InventoryContainer:new({
 Container["organ"] = InventoryContainer:new({
     type = "organ",
     allowedTypes = {"organ"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 Container["stash"] = InventoryContainer:new({
