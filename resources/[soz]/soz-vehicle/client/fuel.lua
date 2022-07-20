@@ -144,7 +144,7 @@ Citizen.CreateThread(function()
                                     return false
                                 end
 
-                                return station:CitizenHasAccess(PlayerData.job.id, PlayerData.job.onduty)
+                                return station:CitizenHasAccess(PlayerData.job.id)
                             end,
                             blackoutGlobal = true,
                         },
