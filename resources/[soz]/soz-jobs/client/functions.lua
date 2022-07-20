@@ -37,7 +37,7 @@ SozJobCore.Functions.GetBossShopActions = function(job, event)
             blackoutGlobal = true,
             event = event,
             canInteract = function()
-                return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.SocietyShop)
+                return SozJobCore.Functions.HasPermission(job, SozJobCore.JobPermission.SocietyShop) and PlayerData.job.onduty
             end,
         },
     }
