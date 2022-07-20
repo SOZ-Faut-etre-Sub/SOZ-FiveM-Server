@@ -48,7 +48,7 @@ RegisterNetEvent("consumables:client:Eat", function(itemName, expired)
         else
             TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] + ConsumablesEat[itemName])
         end
-    end, function ()
+    end, function()
         if expired then
             TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", QBCore.Functions.GetPlayerData().metadata["hunger"] - ConsumablesExpiredEat)
             TriggerEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", "intoxication")
