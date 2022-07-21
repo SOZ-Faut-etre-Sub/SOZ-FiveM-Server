@@ -18,6 +18,14 @@ export const MockMessageConversations: MessageConversation[] = [
         display: 'Chip',
         updatedAt: 1598400000000,
     },
+    {
+        conversation_id: '555-1111+555-2222',
+        avatar: '',
+        phoneNumber: '555-2222',
+        unread: 0,
+        display: '',
+        updatedAt: 1598400000000,
+    },
 ];
 
 const MockConversationMessages: Message[] = [

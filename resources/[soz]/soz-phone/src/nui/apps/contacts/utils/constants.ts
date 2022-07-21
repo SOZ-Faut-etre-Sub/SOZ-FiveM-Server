@@ -58,4 +58,9 @@ export const BrowserContactsState: Contact[] = [
         display: 'Kidz',
         number: '444-4444',
     },
+    {
+        id: 12,
+        display: 'A very long name for contact & send messages',
+        number: '555-2222',
+    },
 ];

@@ -15,7 +15,6 @@ import { useMessageAPI } from '../../hooks/useMessageAPI';
 import useMessages from '../../hooks/useMessages';
 import Conversation, { CONVERSATION_ELEMENT_ID } from './Conversation';
 
-const MAX_HEADER_CHARS = 80;
 const MINIMUM_LOAD_TIME = 600;
 
 // abandon all hope ye who enter here
@@ -68,11 +67,6 @@ export const MessageModal = () => {
     // We need to wait for the active conversation to be set.
     if (!activeMessageConversation) return <div>{/*<CircularProgress />*/}</div>;
 
-    // don't allow too many characters, it takes too much room
-    let header = getDisplayByNumber(activeMessageConversation.phoneNumber) || activeMessageConversation.phoneNumber;
-    const truncatedHeader = `${header.slice(0, MAX_HEADER_CHARS).trim()}...`;
-    header = header.length > MAX_HEADER_CHARS ? truncatedHeader : header;
-
     const handleAddContact = number => {
         const exists = getContactByNumber(number);
         const referal = encodeURIComponent(pathname);
@@ -98,7 +92,10 @@ export const MessageModal = () => {
         >
             <AppWrapper>
                 <AppTitle
-                    title={header}
+                    title={
+                        getDisplayByNumber(activeMessageConversation.phoneNumber) ||
+                        activeMessageConversation.phoneNumber
+                    }
                     isBigHeader={false}
                     action={
                         <div className="flex">
