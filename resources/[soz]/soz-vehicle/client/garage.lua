@@ -163,7 +163,19 @@ local function GetEmptyParkingSlots(slots, indexgarage, size)
     return emptySlots
 end
 
-RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage, qbVehicleKey)
+local function Deleteveh(plate) -- Delete the vehicle if it is somewhere outside
+    local gameVehicles = QBCore.Functions.GetVehicles()
+    for i = 1, #gameVehicles do
+        local vehicle = gameVehicles[i]
+        if DoesEntityExist(vehicle) then
+            if QBCore.Functions.GetPlate(vehicle) == plate then
+                QBCore.Functions.DeleteVehicle(vehicle)
+            end
+        end
+    end
+end
+
+RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, indexgarage, plate)
     if not IsModelInCdimage(GetHashKey(vehicle.vehicle)) then
         exports["soz-monitor"]:Log("ERROR", "Invalid vehicle model", {model = vehicle.vehicle, plate = vehicle.plate})
         exports["soz-hud"]:DrawNotification("Véhicule invalide : " .. vehicle.vehicle, "error")
@@ -176,8 +188,6 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         return
     end
 
-    local garageType = GetGarageType(type_)
-
     local expectedState = {
         state = {VehicleState.InGarage, VehicleState.InPound, VehicleState.InEntreprise},
         garage = indexgarage,
@@ -186,11 +196,24 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         expectedState.job = PlayerData.job.id
     end
 
-    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, vehicle.plate, expectedState)
+    local veh = QBCore.Functions.TriggerRpc("soz-garage:server:CheckCanGoOut", type_, vehicle.plate, expectedState)
     if not veh then
         QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
         return
     end
+
+    if type_ == "private" or type_ == "depot" then
+        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, vehicle, plate)
+        if not success then
+            QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
+            return
+        end
+    end
+    TriggerEvent("soz-garage:client:doTakeOutGarage", vehicle, type_, indexgarage, plate)
+end)
+
+RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, indexgarage, plate)
+    local garageType = GetGarageType(type_)
 
     local size = (vehicles[vehicle.vehicle] or {size = 1}).size
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage, size)
@@ -202,33 +225,26 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         return
     end
 
-    if type_ == "private" or type_ == "depot" then
-        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, veh, qbVehicleKey)
-        if not success then
-            QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
-            return
-        end
-    end
-
-    RequestVehicleModel(veh.vehicle)
-
-    -- Use vehicle plate instead of mods plate
-    local mods = json.decode(veh.mods)
-    mods.plate = vehicle.plate
-
     local emptySlot = emptySlots[1]
 
     if #emptySlots > 1 then
         emptySlot = emptySlots[math.random(#emptySlots)]
     end
 
-    local success, vehEntity = pcall(QBCore.Functions.TriggerRpc, "soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel, veh.condition)
-    if success and vehEntity then
+    local mods = json.decode(vehicle.mods)
+    local condition = json.decode(vehicle.condition)
+    mods.plate = vehicle.plate
+    Deleteveh(plate)
+    QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+        QBCore.Functions.SetVehicleProperties(veh, mods)
+        QBCore.Functions.SetVehicleProperties(veh, condition)
+        Entity(veh).state.plate = vehicle.plate
+        SetEntityHeading(veh, emptySlot.w)
+        TriggerServerEvent("soz-garage:server:updateVehicleState", vehicle.plate)
+        TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
-    else
-        exports["soz-hud"]:DrawNotification("Livraison impossible, réessayez plus tard", "error")
-        QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
-    end
+    end, emptySlot, true)
+    QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
 end)
 
 RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, condition, fuel)
@@ -237,14 +253,6 @@ end)
 
 RegisterNetEvent("soz-garage:client:UpdateVehicleMods", function(vehNetId, mods)
     QBCore.Functions.SetVehicleProperties(NetToVeh(vehNetId), mods)
-end)
-
-RegisterNetEvent("qb-garages:client:TakeOutPrive", function(v, type, garage, indexgarage, price)
-    if price ~= 0 then
-        TriggerServerEvent("qb-garage:server:PayPrivePrice", v, type, garage, indexgarage, price)
-    else
-        TriggerEvent("qb-garages:client:takeOutGarage", v, type, garage, indexgarage)
-    end
 end)
 
 ---
@@ -322,7 +330,7 @@ local function CanVehicleBeParkedInGarage(veh, indexgarage, type_, plate)
     if type_ == "entreprise" then
         expectedState.job = PlayerData.job.id
     end
-    if not QBCore.Functions.TriggerRpc("soz-garage:server:PrecheckCurrentVehicleStateInDB", type_, plate, expectedState) then
+    if not QBCore.Functions.TriggerRpc("soz-garage:server:CheckCanGoOut", type_, plate, expectedState) then
         return false
     end
 

@@ -10,7 +10,7 @@ local function LockVehicle()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local veh = QBCore.Functions.GetClosestVehicle(pos)
-    local plate = QBCore.Functions.GetPlate(veh)
+    local plate = Entity(veh).state.plate
     local vehpos = GetEntityCoords(veh)
     if IsPedInAnyVehicle(ped) then
         veh = GetVehiclePedIsIn(ped)
@@ -215,6 +215,9 @@ CreateThread(function()
             local entering = GetVehiclePedIsTryingToEnter(ped)
             if entering ~= 0 and not Entity(entering).state.ignoreLocks then
                 sleep = 2000
+                if Entity(entering).state.plate and Entity(entering).state.plate ~= QBCore.Functions.GetPlate(entering) then
+                    SetVehicleNumberPlateText(entering, Entity(entering).state.plate)
+                end
                 local plate = QBCore.Functions.GetPlate(entering)
                 QBCore.Functions.TriggerCallback("vehiclekeys:server:CheckOwnership", function(result)
                     if not result then -- if not player owned
