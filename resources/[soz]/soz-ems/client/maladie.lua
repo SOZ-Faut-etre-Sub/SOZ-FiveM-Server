@@ -86,7 +86,7 @@ RegisterNetEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", function(disea
                 TaskPlayAnim(PlayerPedId(), "random@drunk_driver_1", "vomit_outside", 1.0, 1.0, -1, 16, 0, 0, 0, 0)
                 Wait(1500)
                 ClearPedTasks()
-                Wait(60 * 1000)
+                Wait(45 * 1000)
             end
         end)
     end
