@@ -28,8 +28,8 @@ const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
                     'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover origin-bottom-right transition-any ease-in-out duration-300',
                     {
                         'translate-y-0': visibility,
-                        'translate-y-[38rem]': !visibility && notifVisibility,
-                        'translate-y-[2000px]': !visibility,
+                        'translate-y-[800px]': !visibility && notifVisibility,
+                        'translate-y-[1000px]': !visibility,
                     }
                 )}
                 style={{
@@ -59,7 +59,7 @@ export function PhoneScreen({ children }: { children: React.ReactNode }) {
 
     return (
         <div
-            className="overflow-hidden absolute bottom-[100px] left-[50px] right-[50px] top-[35px] flex flex-col rounded-[40px]"
+            className="overflow-hidden absolute bottom-[100px] left-[50px] right-[50px] top-[35px] flex flex-col rounded-[40px] bg-cover bg-center"
             style={{
                 backgroundColor: '#545454',
                 backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
