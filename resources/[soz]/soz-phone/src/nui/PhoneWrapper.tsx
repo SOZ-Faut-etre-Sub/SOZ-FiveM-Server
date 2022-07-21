@@ -59,7 +59,7 @@ export function PhoneScreen({ children }: { children: React.ReactNode }) {
 
     return (
         <div
-            className="overflow-hidden absolute bottom-[100px] left-[50px] right-[50px] top-[35px] flex flex-col rounded-[40px]"
+            className="overflow-hidden absolute bottom-[100px] left-[50px] right-[50px] top-[35px] flex flex-col rounded-[40px] bg-cover bg-center"
             style={{
                 backgroundColor: '#545454',
                 backgroundImage: !isDefaultWallpaper(settings.wallpaper.value)
