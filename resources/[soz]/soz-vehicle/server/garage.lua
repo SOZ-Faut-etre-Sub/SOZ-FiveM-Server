@@ -135,22 +135,26 @@ local function PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedSta
         end
     end
 
-    return vehicle
+    return true
 end
+
+QBCore.Functions.CreateCallback("soz-garage:server:CheckCanGoOut", function(source, cb, type_, plate, expectedState)
+    cb(PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedState))
+end)
+
+RegisterNetEvent("soz-garage:server:updateVehicleState", function(plate)
+    local res = MySQL.Sync.execute([[
+        UPDATE player_vehicles
+        SET state = ?, garage = null, parkingtime = 0
+        WHERE plate = ?
+    ]], {VehicleState.Out, plate})
+    SetSpawnLock(plate, false)
+end)
 
 QBCore.Functions.CreateCallback("soz-garage:server:IsVehicleOwned", function(source, cb, plate)
     local vehicle = MySQL.Sync.fetchSingle("SELECT * FROM player_vehicles WHERE plate = ?", {plate})
 
     cb(vehicle ~= nil)
-end)
-
-QBCore.Functions.CreateCallback("soz-garage:server:PrecheckCurrentVehicleStateInDB", function(source, cb, type_, plate, expectedState)
-    local vehicle = PrecheckCurrentVehicleStateInDB(source, type_, plate, expectedState)
-    if vehicle then
-        cb(vehicle)
-    else
-        cb(false)
-    end
 end)
 
 ---List vehicles in specified garage
@@ -213,9 +217,9 @@ QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleProperties", fun
     local query = "SELECT mods FROM player_vehicles WHERE plate = ?"
     local veh = NetworkGetEntityFromNetworkId(vehicleNetId)
     local owner = NetworkGetEntityOwner(veh)
-    local result = MySQL.Sync.execute(query, {GetVehicleNumberPlateText(veh)})
-    local mods = json.decode(result)
-    if result ~= nil then
+    local result = MySQL.Sync.fetchAll(query, {GetVehicleNumberPlateText(veh)})
+    if result[1] ~= nil then
+        local mods = json.decode(result[1].mods)
         mods.engineHealth = nil
         mods.tireHealth = nil
         mods.tankHealth = nil
@@ -351,7 +355,7 @@ local function GetVehicleData(vehNetId, extraData)
     return data
 end
 
-QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(source, cb, vehicleNetId, vehicleExtraData)
+local function UpdateVehicleMods(vehicleNetId, vehicleExtraData)
     vehicleExtraData.engineHealth = nil
     vehicleExtraData.tireHealth = nil
     vehicleExtraData.tankHealth = nil
@@ -374,11 +378,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(
     local args = {json.encode(vehicleExtraData), plate}
 
     local res = MySQL.Sync.execute(query, args)
-    if res == 1 then
-        cb(true)
-    else
-        cb(false)
-    end
+    return res == 1
+end
+
+QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(source, cb, vehicleNetId, vehicleExtraData)
+    cb(UpdateVehicleMods(vehicleNetId, vehicleExtraData))
 end)
 
 QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", function(source, cb, type_, indexgarage, vehicleNetId, vehicleExtraData)
@@ -389,15 +393,29 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
         state = 3
     end
 
+    local checkMods = "SELECT mods FROM player_vehicles WHERE plate = ?"
+
+    local decodedExtra1 = json.decode(vehicleExtraData.properties)
+    local data1 = GetVehicleData(vehicleNetId, vehicleExtraData)
+
+    local mods = MySQL.Sync.fetchAll(checkMods, {data1.plate})
+
+    local decodedMods = json.decode(mods[1].mods)
+    if decodedMods then
+        if next(decodedMods) == nil then
+            UpdateVehicleMods(vehicleNetId, decodedExtra1)
+        end
+    end
+
     local query = [[
         UPDATE player_vehicles
         SET `condition` = ?, state = ?, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ?
         WHERE plate = ?
     ]]
 
-    local decodedExtra = json.decode(vehicleExtraData.properties)
     local conditionVehicle = {}
-
+    local decodedExtra = json.decode(vehicleExtraData.properties)
+    local data = GetVehicleData(vehicleNetId, vehicleExtraData)
     conditionVehicle["engineHealth"] = decodedExtra.engineHealth
     conditionVehicle["tireHealth"] = decodedExtra.tireHealth
     conditionVehicle["tankHealth"] = decodedExtra.tankHealth
@@ -410,7 +428,6 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     conditionVehicle["tireBurstCompletely"] = decodedExtra.tireBurstCompletely
     conditionVehicle["doorStatus"] = decodedExtra.doorStatus
 
-    local data = GetVehicleData(vehicleNetId, vehicleExtraData)
     local args = {
         json.encode(conditionVehicle),
         state,
