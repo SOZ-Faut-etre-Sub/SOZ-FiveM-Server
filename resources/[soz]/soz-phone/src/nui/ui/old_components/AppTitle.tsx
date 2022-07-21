@@ -29,7 +29,9 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
                 } ${children && 'text-xl'} font-semibold tracking-wide transition-all duration-300 ease-in-out`}
             >
                 {children && <div className="flex items-center text-[#347DD9]">{children}</div>}
-                <div className={`${!children && !action ? 'col-span-4 text-left' : 'col-span-2 text-center'} `}>
+                <div
+                    className={`truncate ${!children && !action ? 'col-span-4 text-left' : 'col-span-2 text-center'} `}
+                >
                     {title ? title : t(app.nameLocale)}
                 </div>
                 {action && <div className="justify-self-end text-[#347DD9] font-normal text-base">{action}</div>}
