@@ -122,7 +122,14 @@ export const BankHome = () => {
                                 maximumFractionDigits: 0,
                             })}
                         </h2>
-                        <h5 className="text-xs uppercase font-light">Solde actuel</h5>
+                        <h5
+                            className={cn('text-xs uppercase font-light', {
+                                'text-white': theme === 'dark',
+                                'text-black': theme === 'light',
+                            })}
+                        >
+                            Solde actuel
+                        </h5>
                     </div>
                     <BankCard name={credentials.name} account={credentials.account} />
                     <div className="flex pt-10 p-6 justify-around">
