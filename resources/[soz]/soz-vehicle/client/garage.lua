@@ -235,16 +235,20 @@ RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, i
     local condition = json.decode(vehicle.condition)
     mods.plate = vehicle.plate
     Deleteveh(plate)
-    QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
+    QBCore.Functions.TriggerCallback("soz-garage:server:SpawnVehicle", function(vehNet)
+        if vehNet == nil then
+            exports["soz-hud"]:DrawNotification("Le véhicule à eu un probléme lors de la livraison", "error")
+            return
+        end
+        while not NetworkDoesEntityExistWithNetworkId(vehNet) do
+            Citizen.Wait(250)
+        end
+        local veh = NetToVeh(vehNet)
         QBCore.Functions.SetVehicleProperties(veh, mods)
         QBCore.Functions.SetVehicleProperties(veh, condition)
-        Entity(veh).state.plate = vehicle.plate
-        SetEntityHeading(veh, emptySlot.w)
-        TriggerServerEvent("soz-garage:server:updateVehicleState", vehicle.plate)
-        TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
+        exports["soz-vehicle"]:SetFuel(veh, condition.fuelLevel)
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
-    end, emptySlot, true)
-    QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
+    end, vehicle.vehicle, emptySlot, mods, condition)
 end)
 
 RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, condition, fuel)
