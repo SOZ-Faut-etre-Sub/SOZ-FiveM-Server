@@ -27,9 +27,7 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
     if clothes == nil then
         clothConfig["JobClothSet"] = clothes
     else
-        if clothConfig["JobClothSet"] == nil then
-            clothConfig["JobClothSet"] = {Components = {}, Props = {}}
-        end
+        clothConfig["JobClothSet"] = {Components = {}, Props = {}}
 
         for componentId, component in pairs(clothes.Components or {}) do
             clothConfig["JobClothSet"].Components[tostring(componentId)] = component

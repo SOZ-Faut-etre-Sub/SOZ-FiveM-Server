@@ -135,7 +135,13 @@ Config.PatientClothes = {
             [10] = {Drawable = 0, Texture = 0, Palette = 0},
             [11] = {Drawable = 104, Texture = 0, Palette = 0},
         },
-        Props = {[0] = {Clear = true}},
+        Props = {
+            [0] = {Clear = true},
+            [1] = {Clear = true},
+            [2] = {Clear = true},
+            [6] = {Clear = true},
+            [7] = {Clear = true},
+        },
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
@@ -150,7 +156,13 @@ Config.PatientClothes = {
             [10] = {Drawable = 0, Texture = 0, Palette = 0},
             [11] = {Drawable = 95, Texture = 0, Palette = 0},
         },
-        Props = {[0] = {Clear = true}},
+        Props = {
+            [0] = {Clear = true},
+            [1] = {Clear = true},
+            [2] = {Clear = true},
+            [6] = {Clear = true},
+            [7] = {Clear = true},
+        },
     },
 }
 
