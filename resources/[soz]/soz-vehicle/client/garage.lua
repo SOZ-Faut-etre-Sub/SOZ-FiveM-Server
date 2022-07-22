@@ -238,7 +238,6 @@ RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, i
     QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
         QBCore.Functions.SetVehicleProperties(veh, mods)
         QBCore.Functions.SetVehicleProperties(veh, condition)
-        Entity(veh).state.plate = vehicle.plate
         SetEntityHeading(veh, emptySlot.w)
         TriggerServerEvent("soz-garage:server:updateVehicleState", vehicle.plate)
         TriggerEvent("vehiclekeys:client:SetOwner", vehicle.plate)
