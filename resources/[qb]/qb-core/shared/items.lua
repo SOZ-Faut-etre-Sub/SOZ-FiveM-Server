@@ -1255,6 +1255,19 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Pour toutes les petites soifs !'
     },
+    ['rhum'] = {
+        ['name'] = 'rhum',
+        ['label'] = 'Rhum',
+        ['icon'] = '🥃',
+        ['weight'] = 1000,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 365,
+        ['combinable'] = nil,
+        ['description'] = 'Tous les chemins y mènent.'
+    },
     ['grape1'] = {
         ['name'] = 'grape1',
         ['label'] = 'Grappe de Cardinal',
@@ -2895,7 +2908,6 @@ QBShared.Items = {
         },
         ['resellZone'] = 'Resell:Zkea',
     },
-
     --- Deprecated
     ['milkbucket'] = {
         ['name'] = 'milkbucket',

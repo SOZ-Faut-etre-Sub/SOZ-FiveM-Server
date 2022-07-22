@@ -36,6 +36,7 @@ SozJobCore.JobPermission = {
     CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
     Food = {Harvest = "harvest", Craft = "craft"},
     Fueler = {ChangePrice = "fueler-change-price"},
+    Bahamas = {Harvest = "harvest", Craft = "craft"},
 }
 
 SozJobCore.Jobs = {
