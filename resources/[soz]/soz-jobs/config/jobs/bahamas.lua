@@ -3,9 +3,9 @@ BahamasConfig = {}
 BahamasConfig.Blip = {
     Name = "Bahamas Mamas",
     Icon = 93,
-    Color = 48,
-    Coords = vector2(0.0,0.0),
-    Scale = 1.0
+    Color = 4,
+    Coords = vector2(-1393.49, -598.06),
+    Scale = 0.9
 }
 
 BahamasConfig.Cloakroom = {
@@ -73,4 +73,11 @@ BahamasConfig.Cloakroom = {
 
 BahamasConfig.Zones = {}
 
-BahamasConfig.Recipes = {}
+BahamasConfig.Recipes = {
+    mojito = {
+        { itemId = "rhum", quantity = 1 },
+        { itemId = "kurkakola", quantity = 1},
+        { itemId = "lemon", quantity = 1},
+        { itemId = "mint", quantity = 1 },
+    }
+}
