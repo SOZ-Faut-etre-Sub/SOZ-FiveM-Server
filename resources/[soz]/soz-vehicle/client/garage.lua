@@ -222,13 +222,24 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
         emptySlot = emptySlots[math.random(#emptySlots)]
     end
 
-    local success, vehEntity = pcall(QBCore.Functions.TriggerRpc, "soz-garage:server:SpawnVehicle", veh.vehicle, emptySlot, mods, veh.fuel, veh.condition)
-    if success and vehEntity then
+    local mods = json.decode(vehicle.mods)
+    local condition = json.decode(vehicle.condition)
+    mods.plate = vehicle.plate
+    Deleteveh(plate)
+    QBCore.Functions.TriggerCallback("soz-garage:server:SpawnVehicle", function(vehNet)
+        if vehNet == nil then
+            exports["soz-hud"]:DrawNotification("Le véhicule à eu un probléme lors de la livraison", "error")
+            return
+        end
+        while not NetworkDoesEntityExistWithNetworkId(vehNet) do
+            Citizen.Wait(250)
+        end
+        local veh = NetToVeh(vehNet)
+        QBCore.Functions.SetVehicleProperties(veh, mods)
+        QBCore.Functions.SetVehicleProperties(veh, condition)
+        exports["soz-vehicle"]:SetFuel(veh, condition.fuelLevel)
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
-    else
-        exports["soz-hud"]:DrawNotification("Livraison impossible, réessayez plus tard", "error")
-        QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
-    end
+    end, vehicle.vehicle, emptySlot, mods, condition)
 end)
 
 RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, condition, fuel)
