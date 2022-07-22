@@ -19,7 +19,7 @@ function SpawnVehicle(modelName, coords, plate, fuel)
         Citizen.Wait(0)
     end
 
-    Entity(veh).state:set('plate', plate, true)
+    Entity(veh).state:set("plate", plate, true)
     SetVehicleNumberPlateText(veh, plate)
 
     return veh
