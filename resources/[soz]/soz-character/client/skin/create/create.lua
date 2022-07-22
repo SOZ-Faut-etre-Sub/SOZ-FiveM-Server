@@ -111,5 +111,5 @@ RegisterNetEvent("soz-character:client:RequestCharacterWizard", function()
     end
 
     TriggerServerEvent("soz-character:server:set-skin", character.Skin, character.ClothConfig)
-    exports["soz-hud"]:DrawNotification("Votre chirurgie c'est bien passé !")
+    exports["soz-hud"]:DrawNotification("Votre chirurgie s'est bien passée !")
 end)
