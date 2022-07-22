@@ -205,7 +205,8 @@ RegisterCommand("togglelocks", function()
     LockVehicle()
 end)
 
-RegisterCommand("getKeys", function()
+
+RegisterCommand("getKeys", function ()
     local ped = PlayerPedId()
     local pos = GetEntityCoords(ped)
     local veh = QBCore.Functions.GetClosestVehicle(pos)
