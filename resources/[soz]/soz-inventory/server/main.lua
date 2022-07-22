@@ -294,8 +294,8 @@ function Inventory.Search(inv, search, item, metadata)
     end
     return false
 end
--- First argument is the source
-QBCore.Functions.CreateCallback("inventory:server:Search", function(_, cb, inv, search, item, metadata)
+
+QBCore.Functions.CreateCallback("inventory:server:Search", function(source, cb, inv, search, item, metadata)
     cb(Inventory.Search(inv, search, item, metadata))
 end)
 exports("Search", Inventory.Search)
