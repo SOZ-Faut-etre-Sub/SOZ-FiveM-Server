@@ -656,7 +656,7 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         end
         if props.tireHealth then
             for wheelIndex, health in pairs(props.tireHealth) do
-                SetVehicleWheelHealth(vehicle, tonumber(wheelIndex), health)
+                SetVehicleWheelHealth(vehicle, wheelIndex, health)
             end
         end
         if props.tireBurstState then
@@ -707,17 +707,17 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         end
         if props.windowStatus then
             for windowIndex, smashWindow in pairs(props.windowStatus) do
-                if not smashWindow then SmashVehicleWindow(vehicle, tonumber(windowIndex)) end
+                if not smashWindow then SmashVehicleWindow(vehicle, windowIndex) end
             end
         end
         if props.doorStatus then
             for doorIndex, breakDoor in pairs(props.doorStatus) do
-                if breakDoor then SetVehicleDoorBroken(vehicle, tonumber(doorIndex), true)  end
+                if breakDoor then SetVehicleDoorBroken(vehicle, doorIndex, true)  end
             end
         end
         if props.neonEnabled then
             for neonIndex, enableNeons in pairs(props.neonEnabled) do
-                SetVehicleNeonLightEnabled(vehicle, tonumber(neonIndex), enableNeons)
+                SetVehicleNeonLightEnabled(vehicle, i, enableNeons)
             end
         end
         if props.neonColor then
