@@ -242,8 +242,8 @@ end)
 ---@param modelName string
 ---@param coords vector4 Spawn location
 ---@param mods table Vehicle properties
-QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, fuel, condition)
-    local veh = SpawnVehicle(modelName, coords, mods, fuel, condition)
+QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, condition)
+    local veh = SpawnVehicle(modelName, coords, mods.plate, condition.fuelLevel)
     if not veh then
         SetSpawnLock(mods.plate, false)
         exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (Vehicle is nil)"):format(mods.plate))
@@ -266,7 +266,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
 
     SetSpawnLock(mods.plate, false)
 
-    cb(veh)
+    cb(NetworkGetNetworkIdFromEntity(veh))
 end)
 
 ---Make player pay parking fee (private, pound)

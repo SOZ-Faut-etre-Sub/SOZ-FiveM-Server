@@ -7,24 +7,20 @@ exports("DespawnVehicle", DespawnVehicle)
 RegisterNetEvent("soz-garage:server:DespawnVehicle", DespawnVehicle)
 
 --- Make sure model is loaded on client
-function SpawnVehicle(modelName, coords, mods, fuel, condition)
+function SpawnVehicle(modelName, coords, plate, fuel)
     local veh = CreateVehicle(GetHashKey(modelName), coords, true, true)
 
     local start = os.time()
     while not DoesEntityExist(veh) do
         if os.time() > start + 10 then
-            exports["soz-monitor"]:Log("ERROR", "Vehicle spawn timed out", {model = modelName, plate = mods.plate})
+            exports["soz-monitor"]:Log("ERROR", "Vehicle spawn timed out", {model = modelName, plate = plate})
             return nil
         end
         Citizen.Wait(0)
     end
 
-    SetVehicleNumberPlateText(veh, mods.plate)
-
-    -- Send event to entity owner (even if this is not the player that is spawning vehicle)
-    local owner = NetworkGetEntityOwner(veh)
-    local vehNetId = NetworkGetNetworkIdFromEntity(veh)
-    TriggerClientEvent("soz-garage:client:SetVehicleProperties", owner, vehNetId, mods, condition, fuel)
+    Entity(veh).state:set('plate', plate, true)
+    SetVehicleNumberPlateText(veh, plate)
 
     return veh
 end
