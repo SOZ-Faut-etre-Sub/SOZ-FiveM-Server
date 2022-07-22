@@ -283,7 +283,7 @@ div .hide,
 }
 
 .menuv.native .menuv-items .menuv-item.active span.menuv-icon {
-    border-right: 1px solid black;
+    /*border-right: 1px solid black;*/
 }
 
 .menuv.native .menuv-items .menuv-item {
