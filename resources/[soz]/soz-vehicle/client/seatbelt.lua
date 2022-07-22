@@ -32,19 +32,38 @@ RegisterCommand("toggleseatbelt", function()
 end, false)
 
 RegisterKeyMapping("toggleseatbelt", "Toggle Seatbelt", "keyboard", "K")
-
 -- Functions
 
+local isShuffling = false
+function ShufflePlayer()
+    if isShuffling then
+        return
+    end
+    local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
+    if vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) == GetPlayerPed(PlayerPedId()) and not seatbeltOn and not isShuffling then
+        isShuffling = true
+        SetPedConfigFlag(PlayerPedId(), 184, false)
+        Wait(2000)
+        SetPedConfigFlag(PlayerPedId(), 184, true)
+        isShuffling = false
+    end
+end
+
 function ToggleSeatbelt()
+    if isShuffling then
+        return
+    end
     if seatbeltOn then
-        seatbeltOn = false
         TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/unbuckle", 0.2)
+        Citizen.CreateThread(function()
+            Citizen.Wait(3000)
+            ShufflePlayer()
+        end)
     else
-        seatbeltOn = true
         TriggerEvent("InteractSound_CL:PlayOnOne", "seatbelt/buckle", 0.2)
     end
+    seatbeltOn = not seatbeltOn
     TriggerEvent("hud:client:UpdateSeatbelt", seatbeltOn)
-    SetPedConfigFlag(PlayerPedId(), 184, seatbeltOn)
 end
 
 function ResetHandBrake()
@@ -77,7 +96,11 @@ end)
 AddEventHandler("gameEventTriggered", function(name, args)
     if name == "CEventNetworkPlayerEnteredVehicle" and args[1] == PlayerId() then
         TriggerEvent("hud:client:UpdateSeatbelt", false)
-        SetPedConfigFlag(PlayerPedId(), 184, false)
+        SetPedConfigFlag(PlayerPedId(), 184, true)
+        Citizen.CreateThread(function()
+            Citizen.Wait(3000)
+            ShufflePlayer()
+        end)
     end
 end)
 
