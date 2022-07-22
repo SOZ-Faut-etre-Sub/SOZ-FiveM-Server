@@ -1258,7 +1258,6 @@ QBShared.Items = {
     ['rhum'] = {
         ['name'] = 'rhum',
         ['label'] = 'Rhum',
-        ['icon'] = '🥃',
         ['weight'] = 1000,
         ['type'] = 'drink',
         ['unique'] = false,
