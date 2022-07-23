@@ -1,8 +1,8 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronLeftIcon, DotsCircleHorizontalIcon, SaveIcon, TrashIcon } from '@heroicons/react/outline';
+import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { AppContent } from '@ui/old_components/AppContent';
-import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField, TextField } from '@ui/old_components/Input';
 import cn from 'classnames';

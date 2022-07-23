@@ -1,9 +1,9 @@
 import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
+import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { AppTitle } from '@ui/old_components/AppTitle';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 

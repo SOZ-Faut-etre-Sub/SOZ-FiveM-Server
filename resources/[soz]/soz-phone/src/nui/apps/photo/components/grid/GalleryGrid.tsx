@@ -4,7 +4,7 @@ import { getLocationFromUrl } from '@common/utils/getLocationFromUrl';
 import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/old_components/AppTitle';
+import { AppTitle } from '@ui/components/AppTitle';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -23,11 +23,6 @@ export const GalleryGrid = () => {
     const referal = query.referal ? decodeURIComponent(query.referal) : '/photo/image';
 
     const handlePhotoOpen = photo => {
-        console.log(
-            referal,
-            getLocationFromUrl(referal),
-            addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image)
-        );
         navigate(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
     };
 
