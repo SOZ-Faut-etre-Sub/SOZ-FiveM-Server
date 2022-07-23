@@ -212,7 +212,6 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     TriggerEvent("soz-garage:client:doTakeOutGarage", vehicle, type_, indexgarage, plate)
 end)
 
-
 RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, indexgarage, plate)
     local garageType = GetGarageType(type_)
 

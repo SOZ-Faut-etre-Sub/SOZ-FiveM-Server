@@ -346,7 +346,6 @@ local function GetVehicleData(vehNetId, extraData)
     return data
 end
 
-
 local function UpdateVehicleMods(vehicleNetId, vehicleExtraData)
     vehicleExtraData.engineHealth = nil
     vehicleExtraData.tireHealth = nil
