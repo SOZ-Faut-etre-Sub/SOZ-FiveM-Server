@@ -1,5 +1,4 @@
 import './cl_main';
-import './cl_bank';
 import './cl_contacts';
 import './cl_marketplace';
 import './cl_notes';
@@ -11,6 +10,7 @@ import './cl_settings';
 import './calls/cl_calls.controller';
 import './functions';
 import './cl_exports';
+import './apps/bank';
 
 import ClientUtils from './cl_utils';
 

@@ -4,9 +4,9 @@ import { PencilAltIcon } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
 import { AddNoteExportData } from '@typings/notes';
 import { AppContent } from '@ui/components/AppContent';
+import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { AppTitle } from '@ui/old_components/AppTitle';
 import React, { useContext, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
