@@ -137,11 +137,26 @@ local function GetVehicleClientData(veh)
     }
 end
 
+
 exports("GetVehicleClientData", GetVehicleClientData)
 
 local function round(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end
+
+
+local function Deleteveh(plate) -- Delete the vehicle if it is somewhere outside
+	local gameVehicles = QBCore.Functions.GetVehicles()
+    for i = 1, #gameVehicles do
+        local vehicle = gameVehicles[i]
+        if DoesEntityExist(vehicle) then
+            if QBCore.Functions.GetPlate(vehicle) == plate then
+				QBCore.Functions.DeleteVehicle(vehicle)
+            end
+        end
+    end
+end
+
 
 ---
 --- PARK OUT
