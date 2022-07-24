@@ -40,7 +40,12 @@ local function SpawnFieldZones()
             end
         end
 
-        local fieldZone = PolyZone:Create(points, {name = field, minZ = minZ - 2.0, maxZ = maxZ + 2.0, debugPoly = true})
+        local fieldZone = PolyZone:Create(points, {
+            name = field,
+            minZ = minZ - 2.0,
+            maxZ = maxZ + 2.0,
+            debugPoly = false,
+        })
         fieldZone:onPlayerInOut(function(isInside)
             if isInside then
                 exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {
@@ -75,13 +80,6 @@ local function SpawnFieldZones()
         end)
     end
 end
-
-local function InitJob()
-    Citizen.CreateThread(function()
-        SpawnFieldZones()
-    end)
-end
-InitJob()
 
 --- Targets
 CreateThread(function()
@@ -195,6 +193,7 @@ CreateThread(function()
         distance = 2.5,
     })
 
+    SpawnFieldZones()
 end)
 
 --- Targets Locations
@@ -767,16 +766,18 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
             value = societyMenuState.displayHarvestArea,
             change = function(_, value)
                 societyMenuState.displayHarvestArea = value
-                if not QBCore.Functions.GetBlip("mtp_farm") then
-                    QBCore.Functions.CreateBlip("mtp_farm", {
-                        name = "Point de récolte",
-                        coords = vector3(585.93, 2901.68, 39.72),
-                        sprite = 436,
-                        scale = 1.0,
-                    })
-                end
+                for _, coord in pairs({vector3(585.93, 2901.68, 39.72), vector3(1435.49, -2284.8, 71.37)}) do
+                    if not QBCore.Functions.GetBlip("mtp_farm_" .. coord) then
+                        QBCore.Functions.CreateBlip("mtp_farm_" .. coord, {
+                            name = "Point de récolte",
+                            coords = coord,
+                            sprite = 436,
+                            scale = 1.0,
+                        })
+                    end
 
-                QBCore.Functions.HideBlip("mtp_farm", not value)
+                    QBCore.Functions.HideBlip("mtp_farm_" .. coord, not value)
+                end
             end,
         })
 
