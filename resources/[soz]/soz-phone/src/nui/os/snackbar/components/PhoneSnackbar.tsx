@@ -15,6 +15,10 @@ export const PhoneSnackbar: React.FC = () => {
         return () => clearInterval(timer);
     });
 
+    if (!alert) {
+        return null;
+    }
+
     return (
         <Transition
             appear={true}
@@ -28,7 +32,7 @@ export const PhoneSnackbar: React.FC = () => {
             leaveTo="-translate-y-full"
         >
             <Alert severity={alert?.type || 'info'} onClose={handleClose}>
-                {alert?.message || ''}
+                {alert.message}
             </Alert>
         </Transition>
     );
