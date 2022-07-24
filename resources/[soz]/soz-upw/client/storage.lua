@@ -50,6 +50,9 @@ end
 
 function CreateTerminalZone(identifier, data, facility)
     local facilityData = json.decode(facility.data);
+    if type(facility) == "table" then
+        facilityData = facility
+    end
 
     data.options = {
         {
