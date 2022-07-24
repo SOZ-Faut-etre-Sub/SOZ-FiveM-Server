@@ -27,10 +27,13 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 
     if PlayerData.metadata["alcohol"] > 80 or PlayerData.metadata["drug"] > 80 then
+        ShakeGameplayCam("DRUNK_SHAKE", 1.0)
         PlayWalking("move_m@drunk@verydrunk")
     elseif PlayerData.metadata["alcohol"] > 40 or PlayerData.metadata["drug"] > 40 then
+        ShakeGameplayCam("DRUNK_SHAKE", 0.0)
         PlayWalking("move_m@drunk@moderatedrunk")
     elseif PlayerData.metadata["alcohol"] > 0 or PlayerData.metadata["drug"] > 0 then
+        ShakeGameplayCam("DRUNK_SHAKE", 0.0)
         PlayWalking("move_m@drunk@slightlydrunk")
     else
         ResetPedMovementClipset(PlayerPedId())

@@ -9,6 +9,7 @@ shared_scripts {"config.lua", "config/jobs/*.lua"}
 client_script {
     "@PolyZone/client.lua",
     "@PolyZone/BoxZone.lua",
+    "@PolyZone/ComboZone.lua",
     "@menuv/menuv.lua",
     "client/*.lua",
     "client/utils/*.lua",

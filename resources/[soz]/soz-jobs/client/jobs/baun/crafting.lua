@@ -1,13 +1,27 @@
 BaunJob.Functions.InitCraftingZones = function()
-    --for _, config in ipairs(BaunConfig.CraftZones) do
-    --    table.insert(BaunJob.Craft.Zones, BaunJob.Functions.ConfigToZone(config))
-    --end
-    --
-    --BaunJob.Craft.ComboZone = ComboZone:Create(BaunJob.Craft.Zones,{ name = "bahamas:crafting"})
-    --BaunJob.Craft.ComboZone:onPlayerInOut(function(isPointInside, _, _)
-    --    --print("Is Point Inside: " .. json.encode(isPointInside))
-    --    BaunJob.isInsideACraftingZone = isPointInside
-    --end)
+    for _, config in ipairs(BaunConfig.CraftZones) do
+        exports["qb-target"]:AddBoxZone(config.options.name, config.center, config.length, config.width, config.options, {
+            options = {
+                {
+                    color = "baun",
+                    type = "client",
+                    label = "Confectionner",
+                    icon = "c:baun/craft.png",
+                    event = "soz-jobs:client:baun:OpenSocietyMenu",
+                    blackoutGlobal = true,
+                    blackoutJob = "baun",
+                    job = "baun",
+                    craftMode = true,
+                    canInteract = function()
+                        local hasPermission = SozJobCore.Functions.HasPermission("baun", SozJobCore.JobPermission.Baun.Craft)
+                        return hasPermission and PlayerData.job.onduty
+                    end,
+                },
+            },
+            distance = 1.5,
+        })
+        table.insert(BaunJob.CraftZones, config.options.name)
+    end
 end
 
 BaunJob.Functions.DestroyCraftingZones = function()
@@ -27,34 +41,35 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
     end
 end)
 
-AddEventHandler("jobs:client:bahamas:OpenSocietyMenu", function()
+AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
     if BaunJob.Menu.IsOpen then
         return
     end
     BaunJob.Menu:ClearItems()
 
     -- RECIPES
-    local recipesMenu = MenuV:InheritMenu(BaunJob.Menu, { subtitle = "Livre des recettes" })
+    local recipesMenu = MenuV:InheritMenu(BaunJob.Menu, {subtitle = "Livre des recettes"})
     for cocktailId, ingredients in pairs(BaunConfig.Recipes) do
         local cocktail = QBCore.Shared.Items[cocktailId]
         local subtitle = "Ingrédients pour " .. cocktail.label
-        local ingredientsMenu = MenuV:InheritMenu(recipesMenu, { subtitle = subtitle })
+        local ingredientsMenu = MenuV:InheritMenu(recipesMenu, {subtitle = subtitle})
         local canCraft = true
 
         for _, ingredient in pairs(ingredients) do
             local item = QBCore.Shared.Items[ingredient.itemId]
-            local hasTheRequiredQuantity = QBCore.Functions.TriggerRpc("inventory:server:Search", QBCore.Functions.GetPlayerData(), "amount", ingredient.itemId, nil) >= ingredient.quantity
+            local hasTheRequiredQuantity = QBCore.Functions.TriggerRpc("inventory:server:Search", QBCore.Functions.GetPlayerData(), "amount", ingredient.itemId,
+                                                                       nil) >= ingredient.quantity
             if not hasTheRequiredQuantity then
                 canCraft = false
             end
 
-            local suffixLabel = ''
+            local label = item.label
             if ingredient.quantity > 1 then
-                suffixLabel = 's'
+                label = item.pluralLabel or (label .. "s")
             end
 
             ingredientsMenu:AddCheckbox({
-                label = ingredient.quantity .. " " .. item.label .. suffixLabel,
+                label = ingredient.quantity .. " " .. label,
                 -- icon = item.icon or ("https://nui-img/soz-items/" .. item.name)
                 description = item.description,
                 value = hasTheRequiredQuantity,
@@ -62,58 +77,58 @@ AddEventHandler("jobs:client:bahamas:OpenSocietyMenu", function()
             })
         end
 
-        if BaunJob.isInsideACraftingZone then
+        if data and data.craftMode == true then
             ingredientsMenu:AddButton({
                 label = "Fabriquer le cocktail",
                 disabled = not canCraft,
                 select = function()
-                    local item = QBCore.Shared.Items[cocktailId]
-                    QBCore.Functions.Progressbar(
-                        "food-craft-item", string.format("Vous préparez 1 %s", item.label),
-                        BaunConfig.Durations.Crafting, false, true, {
-                            disableMovement = true,
-                            disableCarMovement = true,
-                            disableMouse = false,
-                            disableCombat = true,
-                        }, {animDict = "anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal", anim = "pour_one", flags = 16}, {}, {},
-                        function()
-                            QBCore.Functions.TriggerCallback("soz-jobs:server:bahamas:craft-item", function(success, reason)
-                                if success then
-                                    exports["soz-hud"]:DrawNotification(string.format("Vous avez préparé ~g~1 %s", item.label))
-
-                                    TriggerServerEvent("monitor:server:event", "job_bam_cocktail_craft", {item_id = selectedCocktailId },
-                                        {
-                                            item_label = item.label,
-                                            quantity = 1,
-                                            position = GetEntityCoords(PlayerPedId()),
-                                        }, true)
-                                else
-                                    if reason == nil then
-                                        return
-                                    elseif reason == "invalid_ingredient" then
-                                        exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients...", "error")
-                                    else
-                                        exports["soz-hud"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason),
-                                            "error")
-                                    end
-                                end
-                            end, cocktailId)
-                        end,
-                        function()
-                            exports["soz-hud"]:DrawNotification("Vous n'avez pas terminé votre préparation", "error")
-                        end)
-                end
+                    ingredientsMenu:Close()
+                    recipesMenu:Close()
+                    BaunJob.Menu:Close()
+                    TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
+                end,
             })
         end
 
         recipesMenu:AddButton({
             label = cocktail.label,
             description = cocktail.description,
-            --icon = cocktail.icon or ("https://nui-img/soz-items/" .. cocktail.name),
-            value = ingredientsMenu
+            -- icon = cocktail.icon or ("https://nui-img/soz-items/" .. cocktail.name),
+            value = ingredientsMenu,
         })
     end
-    BaunJob.Menu:AddButton({ icon = "🍸", label = "Livre des recettes", value = recipesMenu })
+    BaunJob.Menu:AddButton({icon = "🍸", label = "Livre des recettes", value = recipesMenu})
 
     BaunJob.Menu:Open()
+end)
+
+RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
+    local item = QBCore.Shared.Items[cocktailId]
+    QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), BaunConfig.Durations.Crafting, false, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal", anim = "pour_one", flags = 16}, {}, {}, function()
+        QBCore.Functions.TriggerCallback("soz-jobs:server:baun:craft", function(success, reason)
+            if success then
+                TriggerServerEvent("monitor:server:event", "job_bam_cocktail_craft", {item_id = selectedCocktailId},
+                                   {item_label = item.label, quantity = 1, position = GetEntityCoords(PlayerPedId())}, true)
+                TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
+            else
+                if reason == nil then
+                    return
+                elseif reason == "invalid_ingredient" then
+                    exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients.", "error")
+                elseif reason == "invalid_weight" then
+                    exports["soz-hud"]:DrawNotification("Vos poches sont pleines.", "error")
+                else
+                    exports["soz-hud"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason), "error")
+                end
+            end
+        end, cocktailId)
+    end, function()
+        exports["soz-hud"]:DrawNotification("Vous avez terminé de mélanger.")
+    end)
 end)

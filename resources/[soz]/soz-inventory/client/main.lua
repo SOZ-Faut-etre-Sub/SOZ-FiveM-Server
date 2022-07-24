@@ -64,8 +64,8 @@ CreateThread(function()
         exports["qb-target"]:AddBoxZone("storage:" .. id, storage.position, storage.size and storage.size.x or 1.0, storage.size and storage.size.y or 1.0, {
             name = "storage:" .. id,
             heading = storage.heading or 0.0,
-            minZ = storage.position.z - (storage.offsetDownZ or 1.0),
-            maxZ = storage.position.z + (storage.offsetUpZ or 1.0),
+            minZ = storage.minZ or (storage.position.z - (storage.offsetDownZ or 1.0)),
+            maxZ = storage.maxZ or (storage.position.z + (storage.offsetUpZ or 1.0)),
             debugPoly = storage.debug or false,
         }, {
             options = {
@@ -77,6 +77,7 @@ CreateThread(function()
                     storage = storage,
                     job = storage.owner,
                 },
+                storage.targetOption,
             },
             distance = 2.5,
         })

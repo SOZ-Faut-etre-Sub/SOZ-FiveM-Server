@@ -1,33 +1,45 @@
-BaunJob = {
-    isInsideACraftingZone = false
-}
+QBCore = exports["qb-core"]:GetCoreObject()
+
+BaunJob = {}
 BaunJob.Functions = {}
--- TODO: Replace texture with menu_job_bahamas
-BaunJob.Menu = MenuV:CreateMenu(nil, "", "default", "soz", "bahamas:menu")
+-- TODO: Replace texture with menu_job_baun
+BaunJob.Menu = MenuV:CreateMenu(nil, "", "default", "soz", "baun:menu")
+
 BaunJob.Harvest = {}
+BaunJob.CraftZones = {}
 
-BaunJob.Craft = {
-    ComboZone = nil,
-    Zones = {}
-}
-
-CreateThread(function()
-    for _, config in pairs(BaunConfig.Blips) do
-        QBCore.Functions.CreateBlip(config.Id, {
-            name = config.Name,
-            coords = config.Coords,
-            sprite = config.Icon,
-            scale = config.Scale,
-            color = config.Color
-        })
-    end
+RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function()
+    SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes)
 end)
 
-BaunJob.Functions.ConfigToZone = function(config)
-    if config.type == 'poly' then
-        return PolyZone:Create(config.points, config.options)
-    elseif config.type == 'box' then
-        return BoxZone:Create(config.center, config.length, config.width, config.options)
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if (GetCurrentResourceName() == resourceName) then
+        for _, config in pairs(BaunConfig.Blips) do
+            QBCore.Functions.CreateBlip(config.Id, {
+                name = config.Name,
+                coords = config.Coords,
+                sprite = config.Icon,
+                scale = config.Scale,
+                color = config.Color,
+                alpha = config.Alpha,
+            })
+        end
+
+        for _, zone in pairs(BaunConfig.Cloakroom.Zones) do
+            exports["qb-target"]:AddBoxZone(zone.options.name, zone.center, zone.length, zone.width, zone.options, {
+                options = {
+                    {
+                        label = "S'habiller",
+                        icon = "c:jobs/habiller.png",
+                        event = "jobs:client:baun:OpenCloakroomMenu",
+                        job = "baun",
+                        canInteract = function()
+                            return PlayerData.job.onduty
+                        end,
+                    },
+                },
+                distance = 2.5,
+            })
+        end
     end
-    return nil
-end
+end)
