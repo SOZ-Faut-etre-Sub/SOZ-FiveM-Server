@@ -53,20 +53,6 @@ BaunJob.Functions.InitHarvestingZones = function()
     end
 end
 
-BaunJob.Functions.DestroyHarvestingZones = function()
-    for zoneName, _ in ipairs(BaunJob.Harvest) do
-        exports["qb-target"]:RemoveZone(zoneName)
-    end
-end
-
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    if duty then
-        BaunJob.Functions.InitHarvestingZones()
-    else
-        BaunJob.Functions.DestroyHarvestingZones()
-    end
-end)
-
 RegisterNetEvent("soz-jobs:client:baun:harvest", function(data)
     local item = QBCore.Shared.Items[data.give_item]
     local action_message = string.format("Vous récoltez des %s.", item.pluralLabel)

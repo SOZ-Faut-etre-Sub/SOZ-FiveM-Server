@@ -28,9 +28,6 @@ BaunJob.Functions.DestroyCraftingZones = function()
     for _, zone in ipairs(BaunJob.Craft.Zones) do
         zone:destroy()
     end
-    if BaunJob.Craft.ComboZone then
-        BaunJob.Craft.ComboZone:destroy()
-    end
 end
 
 RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
