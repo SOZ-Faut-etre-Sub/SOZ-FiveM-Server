@@ -2,7 +2,7 @@ import { useQueryParams } from '@common/hooks/useQueryParams';
 import { Transition } from '@headlessui/react';
 import { PencilAltIcon } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
-import { AddNoteExportData } from '@typings/notes';
+import { AddNoteExportData } from '@typings/app/notes';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
