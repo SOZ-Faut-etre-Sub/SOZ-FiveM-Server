@@ -26,7 +26,7 @@ local function SpawnFieldZones()
             onPlayerInOut = function(isIn)
                 if isIn and PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty then
                     currentField = zoneName
-                    QBCore.Functions.TriggerCallback("soz-jobs:server:get-field-health", function(health)
+                    QBCore.Functions.TriggerCallback("soz-jobs:server:food:getFieldHealth", function(health)
                         currentFieldHealth = health
                         DisplayFieldHealth(true)
                     end, zoneName)
@@ -395,6 +395,7 @@ FoodJob.Functions.CollectIngredients = function(field)
                         TriggerEvent("soz-jobs:client:food-collect-ingredients")
                     end
                 end
+                DisplayFieldHealth(true)
             end, field)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas recolté d'ingrédients", "error")
