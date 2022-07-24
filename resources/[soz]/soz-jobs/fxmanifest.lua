@@ -2,7 +2,7 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-description "job entreprise et pole emploie"
+description "job entreprise et pole emploi"
 
 shared_scripts {"config.lua", "config/jobs/*.lua"}
 
@@ -12,7 +12,7 @@ client_script {
     "@menuv/menuv.lua",
     "client/*.lua",
     "client/utils/*.lua",
-    "client/jobs/*.lua",
+    "client/jobs/**/*.lua",
 }
 
 server_script {

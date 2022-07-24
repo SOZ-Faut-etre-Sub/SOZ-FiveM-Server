@@ -91,6 +91,7 @@ end
 
 
 function ComboZone:draw()
+    print("Asked to draw: " .. json.encode(self.zones))
   local zones = self.zones
   for i=1, #zones do
     local zone = zones[i]
@@ -106,7 +107,7 @@ local function _initDebug(zone, options)
   if not options.debugPoly then
     return
   end
-  
+
   Citizen.CreateThread(function()
     while not zone.destroyed do
       zone:draw()
@@ -157,7 +158,7 @@ function ComboZone:getZones(point)
   if not self.useGrid then
     return self.zones
   end
-  
+
   local grid = self.grid
   local x, y = _getGridCell(point)
   local row = grid[y]

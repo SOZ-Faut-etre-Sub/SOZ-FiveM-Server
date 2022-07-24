@@ -11,7 +11,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:bahamas:craft-item", function(s
         return
     end
 
-    local ingredients = BahamasConfig.Recipes[itemId]
+    local ingredients = BaunConfig.Recipes[itemId]
     for _, ingredient in pairs(ingredients) do
         local ingredientItem = QBCore.Shared.Items[ingredient.itemId]
         if ingredientItem == nil then

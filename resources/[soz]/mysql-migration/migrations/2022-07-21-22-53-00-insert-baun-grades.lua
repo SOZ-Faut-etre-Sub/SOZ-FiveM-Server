@@ -1,10 +1,10 @@
 table.insert(migrations, {
-    name = "insert-bahamas-grades",
+    name = "insert-baun-grades",
     queries = {
         [[
             INSERT INTO job_grades (jobId, name, salary, owner, is_default, permissions)
-            VALUES('bahamas', 'Patron', 0, 1, 0, '[]'),
-                  ('bahamas', 'Employé', 0, 0, 1, '[]');
+            VALUES('baun', 'Patron', 0, 1, 0, '[]'),
+                  ('baun', 'Employé', 0, 0, 1, '[]');
         ]],
     },
 });
