@@ -83,6 +83,8 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
     end
 
     if not cbCalled then
+        -- Retrieve the items from the crate
+        exports["soz-inventory"]:RemoveItem(source, itemId, 1, nil, nil)
         cb(true, nil)
     end
 end)
