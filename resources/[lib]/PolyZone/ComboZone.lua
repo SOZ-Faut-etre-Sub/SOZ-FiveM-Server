@@ -91,7 +91,6 @@ end
 
 
 function ComboZone:draw()
-    print("Asked to draw: " .. json.encode(self.zones))
   local zones = self.zones
   for i=1, #zones do
     local zone = zones[i]
