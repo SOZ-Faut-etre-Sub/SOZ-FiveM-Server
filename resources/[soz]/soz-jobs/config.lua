@@ -19,7 +19,7 @@ SozJobCore.JobType = {
     Bennys = "bennys",
     Upw = "upw",
     Pawl = "pawl",
-    Bahamas = "bahamas",
+    Baun = "baun",
     Debug = "debug",
 }
 
@@ -471,11 +471,11 @@ SozJobCore.Jobs = {
             debugPoly = false,
         },
     },
-    [SozJobCore.JobType.Bahamas] = {
-        label = "Bahamas Mamas",
-        platePrefix = "BAM",
+    [SozJobCore.JobType.Baun] = {
+        label = "Bahama Unicorn",
+        platePrefix = "BAUN",
         grades = {},
-        menuCallback = "jobs:client:bahamas:OpenSocietyMenu",
+        menuCallback = "jobs:client:baun:OpenSocietyMenu",
         canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
@@ -498,7 +498,7 @@ SozJobCore.Jobs = {
             heading = 4,
             minZ = 46.76,
             maxZ = 50.76,
-            debugPoly = false,
+            debugPoly = true,
         },
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
