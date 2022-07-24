@@ -35,11 +35,18 @@ class _SocietyService {
         return data;
     }
 
+    addTagForSocietyMessage(data: PreDBSociety, number: string): PreDBSociety {
+        const msg = { ...data };
+        msg.message = `[${number.replace('555-', '')}] ${msg.message}`;
+        return msg;
+    }
+
     async handleSendSocietyMessage(
         reqObj: PromiseRequest<PreDBSociety>,
         resp: PromiseEventResp<number>
     ): Promise<void> {
         const player = PlayerService.getPlayer(reqObj.source);
+        const originalMessageNumber = reqObj.data.number;
         let identifier = player.getPhoneNumber();
 
         if (reqObj.data.position) {
@@ -78,11 +85,17 @@ class _SocietyService {
                 const message: SocietyInsertDTO = {
                     '555-LSPD': await this.contactsDB.addSociety(
                         identifier,
-                        this.replaceSocietyPhoneNumber(reqObj.data, '555-LSPD')
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-LSPD'
+                        )
                     ),
                     '555-BCSO': await this.contactsDB.addSociety(
                         identifier,
-                        this.replaceSocietyPhoneNumber(reqObj.data, '555-BCSO')
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-BCSO'
+                        )
                     ),
                 };
 
@@ -93,7 +106,7 @@ class _SocietyService {
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            reqObj.data
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
                         );
                     });
             }
@@ -106,15 +119,24 @@ class _SocietyService {
                 const message: SocietyInsertDTO = {
                     '555-LSPD': await this.contactsDB.addSociety(
                         identifier,
-                        this.replaceSocietyPhoneNumber(reqObj.data, '555-LSPD')
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-LSPD'
+                        )
                     ),
                     '555-BCSO': await this.contactsDB.addSociety(
                         identifier,
-                        this.replaceSocietyPhoneNumber(reqObj.data, '555-BCSO')
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-BCSO'
+                        )
                     ),
                     '555-FBI': await this.contactsDB.addSociety(
                         identifier,
-                        this.replaceSocietyPhoneNumber(reqObj.data, '555-FBI')
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-FBI'
+                        )
                     ),
                 };
 
@@ -125,7 +147,7 @@ class _SocietyService {
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            reqObj.data
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
                         );
                     });
             }
