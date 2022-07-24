@@ -13,7 +13,7 @@ RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function()
 end)
 
 AddEventHandler("onClientResourceStart", function(resourceName)
-    if (GetCurrentResourceName() == resourceName) then
+    if (GetCurrentResourceName() == resourceName and GetConvarInt("feature_msb_baun", 0) == 1) then
         for _, config in pairs(BaunConfig.Blips) do
             QBCore.Functions.CreateBlip(config.Id, {
                 name = config.Name,
@@ -41,5 +41,13 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 distance = 2.5,
             })
         end
+
+        BaunJob.Functions.InitHarvestingZones()
+    end
+end)
+
+AddEventHandler("onClientResourceStop", function(resourceName)
+    if (GetCurrentResourceName() == resourceName and GetConvarInt("feature_msb_baun", 0) == 1) then
+        BaunJob.Functions.DestroyHarvestingZones()
     end
 end)
