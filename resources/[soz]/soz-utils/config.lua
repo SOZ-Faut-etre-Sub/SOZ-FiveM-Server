@@ -35,7 +35,7 @@ ConsumablesDrink = {
     ["water_bottle"] = math.random(35, 54),
     ["coffee"] = math.random(40, 50),
     ["kurkakola"] = math.random(35, 54),
-    ["whiskey"] = math.random(5, 10),
+    ["whisky"] = math.random(5, 10),
     ["beer"] = math.random(5, 10),
     ["vodka"] = math.random(5, 10),
     ["wine1"] = math.random(5, 10),
@@ -48,16 +48,18 @@ ConsumablesDrink = {
     ["grapejuice3"] = math.random(40, 70),
     ["grapejuice4"] = math.random(40, 70),
     ["grapejuice5"] = math.random(40, 70),
+    ["royal_mojito"] = math.random(1, 5),
 }
 
 ConsumablesAlcohol = {
     ["whiskey"] = math.random(20, 30),
     ["vodka"] = math.random(20, 40),
-    ["beer"] = math.random(30, 40),
+    ["beer"] = math.random(5, 15),
     ["wine1"] = math.random(40, 60),
     ["wine2"] = math.random(40, 60),
     ["wine3"] = math.random(40, 60),
     ["wine4"] = math.random(40, 60),
+    ["royal_mojito"] = math.random(20, 30),
 }
 
 ConsumablesDrug = {
