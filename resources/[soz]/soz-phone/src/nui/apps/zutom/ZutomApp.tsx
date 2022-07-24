@@ -13,7 +13,6 @@ export const ZutomApp: React.FC = () => {
             <Transition
                 appear={true}
                 show={true}
-                className="h-full"
                 enter="transition-all origin-[60%_20%] duration-500"
                 enterFrom="scale-[0.0] opacity-0"
                 enterTo="scale-100 opacity-100"
@@ -21,14 +20,8 @@ export const ZutomApp: React.FC = () => {
                 leaveFrom="scale-100 opacity-100"
                 leaveTo="scale-[0.0] opacity-0"
             >
-                <AppWrapper>
-                    <div className="h-[775px] w-full">
-                        <iframe
-                            is="x-frame-bypass"
-                            src="https://sutom.nocle.fr"
-                            style={{ width: '100%', height: ' 100%' }}
-                        />
-                    </div>
+                <AppWrapper className="h-[775px] w-full">
+                    <iframe className="h-full w-full" height={775} src="https://sutom.nocle.fr" />
                 </AppWrapper>
             </Transition>
         </FullPageWithHeader>
