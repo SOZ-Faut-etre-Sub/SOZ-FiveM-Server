@@ -1,5 +1,17 @@
 shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:shop:menu")
 
+function DisplayFieldHealth(newVisibility, field, health)
+    if newVisibility then
+        SendNUIMessage({
+            action = "show",
+            health = SozJobCore.FieldHealthStates[health],
+            field = string.match(field, "%a+"),
+        })
+    else
+        SendNUIMessage({action = "hide"})
+    end
+end
+
 local function getTitleAndAmountForInvoice()
     local title = exports["soz-hud"]:Input("Titre", 200)
     if title == nil or title == "" then

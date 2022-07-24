@@ -5,7 +5,7 @@ for name, _ in pairs(FoodConfig.Zones) do
     local fieldType = string.match(name, "%a+")
     local data = FoodConfig.Fields[fieldType]
 
-    Fields[name] = Field:new(name, data.item, data.prodRange.max, data.prodRange, data.refillDelay, data.harvestRange)
+    Fields[name] = Field:new(name, data.item, data.prodRange.min, data.prodRange, data.refillDelay, data.harvestRange)
     Fields[name]:StartRefillLoop(FoodConfig.RefillLoopDelay)
 end
 

@@ -1,5 +1,3 @@
-local FieldHealthStates = {[0] = "0000", [1] = "1000", [2] = "1100", [3] = "1110", [4] = "1111"}
-
 Field = {}
 
 function Field:new(identifier, item, capacity, maxCapacity, refillDelay, harvest)
@@ -25,11 +23,11 @@ function Field:GetHealth()
 end
 
 function Field:GetHealthState()
-    return math.ceil(self.capacity * #FieldHealthStates / self.maxCapacity)
+    return math.ceil(self.capacity * #SozJobCore.FieldHealthStates / self.maxCapacity)
 end
 
 function Field:GetHealthIndicator()
-    return FieldHealthStates[self:GetHealthState()]
+    return SozJobCore.FieldHealthStates[self:GetHealthState()]
 end
 
 --- Refill
@@ -43,7 +41,7 @@ end
 
 --- Harvest
 function Field:Harvest()
-    local min, max = 1, 1
+    local min, max = self.harvest, self.harvest
     if type(self.harvest) == "table" then
         min, max = self.harvest.min, self.harvest.max
     end
