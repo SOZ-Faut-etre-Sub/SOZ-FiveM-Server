@@ -157,7 +157,7 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, jo
         facilityData.arr[identifier] = facility
     end
 
-    TriggerClientEvent("soz-upw:client:CreateZone", -1, identifier, propData.facility, zone)
+    TriggerClientEvent("soz-upw:client:CreateZone", -1, identifier, propData.facility, zone, data)
 end)
 
 --
