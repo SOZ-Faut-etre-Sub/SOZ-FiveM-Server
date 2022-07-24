@@ -28,7 +28,7 @@ local function SpawnFieldZones()
                     currentField = zoneName
                     QBCore.Functions.TriggerCallback("soz-jobs:server:food:getFieldHealth", function(health)
                         currentFieldHealth = health
-                        DisplayFieldHealth(true)
+                        DisplayFieldHealth(true, currentField, currentFieldHealth)
                     end, zoneName)
                 else
                     currentField = nil
@@ -337,18 +337,6 @@ end)
 ---
 --- FARM
 ---
-function DisplayFieldHealth(newVisibility)
-    if newVisibility then
-        SendNUIMessage({
-            action = "show",
-            health = FoodConfig.FieldHealthStates[currentFieldHealth],
-            field = string.match(currentField, "%a+"),
-        })
-    else
-        SendNUIMessage({action = "hide"})
-    end
-end
-
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()
     Citizen.CreateThread(function()
         local field = currentField
@@ -395,7 +383,7 @@ FoodJob.Functions.CollectIngredients = function(field)
                         TriggerEvent("soz-jobs:client:food-collect-ingredients")
                     end
                 end
-                DisplayFieldHealth(true)
+                DisplayFieldHealth(true, currentField, currentFieldHealth)
             end, field)
         else
             exports["soz-hud"]:DrawNotification("Vous n'avez pas recolté d'ingrédients", "error")
