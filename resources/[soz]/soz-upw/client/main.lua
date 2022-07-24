@@ -172,11 +172,11 @@ function CreateZone(identifier, zoneType, data)
     }, {options = data.options})
 end
 
-RegisterNetEvent("soz-upw:client:CreateZone", function(identifier, zoneType, data)
+RegisterNetEvent("soz-upw:client:CreateZone", function(identifier, zoneType, zone, data)
     local conf = GetZoneConfig(zoneType)
 
     if conf.create then
-        conf.create(identifier, data)
+        conf.create(identifier, zone, data)
     else
         exports["soz-hud"]:DrawNotification("Erreur lors de la création de la zone", "error")
     end
