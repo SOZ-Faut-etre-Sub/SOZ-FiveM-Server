@@ -39,41 +39,6 @@ local function spawnPed(item, config)
     })
 end
 
-local function createTargetPed(item, config)
-    print("Spawning target ped")
-    local zone = BoxZone:new(config.center, config.length, config.width, config.options)
-
-    zone:onPlayerInOut(function(isPointInside)
-        print("Is player inside: " .. json.encode(isPointInside))
-        BaunJob.Harvest[config.options.name].isInside = isPointInside
-        if isPointInside then
-            exports["qb-target"]:AddTargetModel(config.ped.model, {
-                options = {
-                    {
-                        color = "baun",
-                        type = "client",
-                        label = "Récupérer",
-                        icon = "c:jobs/recuperer.png",
-                        event = "soz-jobs:client:baun:harvest",
-                        blackoutGlobal = true,
-                        blackoutJob = "baun",
-                        job = "baun",
-                        canInteract = function()
-                            local hasPermission = SozJobCore.Functions.HasPermission("baun", SozJobCore.JobPermission.Baun.Harvest)
-                            return BaunJob.Harvest[config.options.name].isInside and hasPermission and PlayerData.job.onduty
-                        end,
-                        -- metadata
-                        give_item = item,
-                    },
-                },
-                distance = 2.0,
-            })
-        else
-            exports["qb-target"]:RemoveTargetModel(config.ped.model, "Récupérer")
-        end
-    end)
-end
-
 BaunJob.Functions.InitHarvestingZones = function()
     for _, harvestConfig in ipairs(BaunConfig.HarvestZones) do
         for _, config in ipairs(harvestConfig.zones) do
@@ -81,7 +46,6 @@ BaunJob.Functions.InitHarvestingZones = function()
             BaunJob.Harvest[config.options.name] = harvest
             if config.ped then
                 spawnPed(harvestConfig.item, config)
-                -- createTargetPed(harvestConfig.item, config)
             else
                 createTargetBoxZone(harvestConfig.item, config)
             end

@@ -39,14 +39,14 @@ BaunConfig.Cloakroom = {
             ["Tenue de patron"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 90, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 4, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 50, Texture = 2, Palette = 0},
+                    [6] = {Drawable = 10, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 150, Texture = 13, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 0, Texture = 2, Palette = 0},
+                    [11] = {Drawable = 292, Texture = 18, Palette = 0},
                 },
                 Props = {},
             },
@@ -66,21 +66,21 @@ BaunConfig.Cloakroom = {
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
-            ["Tenue de travail"] = {
+            ["Tenue de patron"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 93, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 7, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 52, Texture = 2, Palette = 0},
+                    [6] = {Drawable = 29, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 1, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 39, Texture = 10, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 73, Texture = 1, Palette = 0},
+                    [11] = {Drawable = 25, Texture = 4, Palette = 0},
                 },
                 Props = {},
             },
-            ["Tenue de prestation"] = {
+            ["Tenue de serveur"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 3, Texture = 0, Palette = 0},

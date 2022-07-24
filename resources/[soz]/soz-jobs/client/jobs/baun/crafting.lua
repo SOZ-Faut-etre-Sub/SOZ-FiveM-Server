@@ -79,7 +79,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
 
         if data and data.craftMode == true then
             ingredientsMenu:AddButton({
-                label = "Fabriquer le cocktail",
+                label = "Confectionner le cocktail",
                 disabled = not canCraft,
                 select = function()
                     ingredientsMenu:Close()
@@ -104,31 +104,29 @@ end)
 
 RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
     local item = QBCore.Shared.Items[cocktailId]
-    QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), BaunConfig.Durations.Crafting, false, true,
+    local action_message = string.format("Vous confectionnez 1 %s", item.label)
+    local finished_message = string.format("Vous avez terminé de mélanger.", item.pluralLabel)
+    QBCore.Functions.Progressbar("food-craft-item", action_message, BaunConfig.Durations.Crafting, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {animDict = "anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal", anim = "pour_one", flags = 16}, {}, {}, function()
+    }, {animDict = "anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal", anim = "pour_one", flags = 0}, {}, {}, function()
         QBCore.Functions.TriggerCallback("soz-jobs:server:baun:craft", function(success, reason)
             if success then
-                TriggerServerEvent("monitor:server:event", "job_bam_cocktail_craft", {item_id = selectedCocktailId},
+                TriggerServerEvent("monitor:server:event", "job_bam_cocktail_craft", {item_id = cocktailId},
                                    {item_label = item.label, quantity = 1, position = GetEntityCoords(PlayerPedId())}, true)
                 TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
             else
-                if reason == nil then
+                if reason == nil or reason == "missing_ingredient" or reason == "invalid_weight" then
+                    exports["soz-hud"]:DrawNotification(finished_message)
                     return
-                elseif reason == "invalid_ingredient" then
-                    exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients.", "error")
-                elseif reason == "invalid_weight" then
-                    exports["soz-hud"]:DrawNotification("Vos poches sont pleines.", "error")
-                else
-                    exports["soz-hud"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason), "error")
                 end
+                exports["soz-hud"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason), "error")
             end
         end, cocktailId)
     end, function()
-        exports["soz-hud"]:DrawNotification("Vous avez terminé de mélanger.")
+        exports["soz-hud"]:DrawNotification(finished_message)
     end)
 end)

@@ -20,7 +20,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
         end
         local item = exports["soz-inventory"]:GetItem(source, ingredient.itemId, nil)
         if item.amount < ingredient.quantity or exports["soz-utils"]:ItemIsExpired(item) then
-            cb(false, "Il manque un ingrédient.")
+            cb(false, "missing_ingredient")
             return
         end
     end
@@ -83,8 +83,6 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
     end
 
     if not cbCalled then
-        -- Retrieve the items from the crate
-        exports["soz-inventory"]:RemoveItem(source, itemId, 1, nil, nil)
         cb(true, nil)
     end
 end)
