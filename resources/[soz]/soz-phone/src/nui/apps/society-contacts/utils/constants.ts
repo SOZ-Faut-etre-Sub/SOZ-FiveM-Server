@@ -79,4 +79,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-PAWL',
         avatar: 'media/society_icon/pawl.webp',
     },
+    {
+        id: 14,
+        display: 'Bahama Unicorn',
+        number: '555-BAUN',
+        avatar: 'media/society_icon/baun.webp',
+    },
 ];
