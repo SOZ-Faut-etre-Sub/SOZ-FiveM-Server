@@ -1,6 +1,6 @@
 GarbageConfig = {}
 
-GarbageConfig.SellPrice = {["default"] = 25, ["sawdust"] = 0.1, ["petroleum_residue"] = 15, ["seeweed_acid"] = 10}
+GarbageConfig.SellPrice = {["default"] = 25, ["sawdust"] = 2, ["petroleum_residue"] = 6, ["seeweed_acid"] = 30}
 
 GarbageConfig.RecycleItem = {
     ["plastic"] = 5,
@@ -18,9 +18,9 @@ GarbageConfig.RecycleItem = {
     ["peau"] = 5,
     ["os"] = 5,
     ["viscere"] = 5,
-    ["sawdust"] = 100,
+    ["sawdust"] = 300,
     ["used_bloodbag"] = 5,
-    ["seeweed_acid"] = 5,
+    ["seeweed_acid"] = 3,
 }
 
 GarbageConfig.Cloakroom = {
@@ -55,7 +55,7 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
-        ["Direction"] = {
+        ["Confirmé(e)"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
@@ -102,7 +102,7 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
-        ["Direction"] = {
+        ["Confirmé(e)"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
