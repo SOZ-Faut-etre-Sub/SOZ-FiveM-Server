@@ -83,6 +83,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
     end
 
     if not cbCalled then
+        player.Functions.RemoveItem(itemId, 1)
         cb(true, nil)
     end
 end)

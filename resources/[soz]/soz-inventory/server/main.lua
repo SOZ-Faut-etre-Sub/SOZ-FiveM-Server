@@ -322,6 +322,8 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                 if item.type == "weapon" and metadata.serial == nil then
                     metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) ..
                                                    QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+                elseif item.expiresIn and metadata.expiration == nil then
+                    metadata.expiration = os.date("!%Y-%m-%dT%TZ", os.time() + (item.expiresIn * 60))
                 elseif item.durability and metadata.expiration == nil then
                     metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
                 end

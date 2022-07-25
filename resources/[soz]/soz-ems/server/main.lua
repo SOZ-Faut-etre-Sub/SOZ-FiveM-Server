@@ -22,6 +22,7 @@ AddEventHandler("lsmc:server:revive", function(id)
     TriggerClientEvent("soz_ems:client:Revive", player.PlayerData.source)
     player.Functions.SetMetaData("hunger", player.PlayerData.metadata["hunger"] + 30)
     player.Functions.SetMetaData("thirst", player.PlayerData.metadata["thirst"] + 30)
+    player.Functions.SetMetaData("alcohol", player.PlayerData.metadata["alcohol"] - 50)
     player.Functions.SetMetaData("isdead", false)
     Player(player.PlayerData.source).state.isdead = false
 end)

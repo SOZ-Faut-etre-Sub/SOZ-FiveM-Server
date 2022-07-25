@@ -3152,6 +3152,7 @@ QBShared.Items = {
         type = "item",
         unique = false,
         useable = true,
+        expiresIn = 5, -- in minutes
         shouldClose = true,
         combinable = nil,
         description = "Avec une Douce saveur de citron vert."

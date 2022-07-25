@@ -28,15 +28,20 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
 
     if PlayerData.metadata["alcohol"] > 80 or PlayerData.metadata["drug"] > 80 then
         ShakeGameplayCam("DRUNK_SHAKE", 1.0)
+        SetPedIsDrunk(PlayerPedId(), true)
         PlayWalking("move_m@drunk@verydrunk")
     elseif PlayerData.metadata["alcohol"] > 40 or PlayerData.metadata["drug"] > 40 then
-        ShakeGameplayCam("DRUNK_SHAKE", 0.0)
+        ShakeGameplayCam("DRUNK_SHAKE", 0.5)
+        SetPedIsDrunk(PlayerPedId(), true)
         PlayWalking("move_m@drunk@moderatedrunk")
     elseif PlayerData.metadata["alcohol"] > 0 or PlayerData.metadata["drug"] > 0 then
         ShakeGameplayCam("DRUNK_SHAKE", 0.0)
+        SetPedIsDrunk(PlayerPedId(), false)
         PlayWalking("move_m@drunk@slightlydrunk")
     else
         ResetPedMovementClipset(PlayerPedId())
+        ShakeGameplayCam("DRUNK_SHAKE", 0.0)
+        SetPedIsDrunk(PlayerPedId(), false)
         TriggerEvent("personal:client:ApplyWalkStyle")
     end
 end)
@@ -90,7 +95,8 @@ RegisterNetEvent("consumables:client:DrinkAlcohol", function(itemName, extra)
                                  {model = extra.model, bone = 28422, coords = {x = 0.01, y = -0.01, z = -0.06}}, {}, function()
         if extra.expired then
             TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] - ConsumablesExpiredDrink)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] + ConsumablesExpiredDrink)
+            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol",
+                               QBCore.Functions.GetPlayerData().metadata["alcohol"] + (ConsumablesAlcohol[itemName] * 1.2))
             TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "intoxication")
         else
             -- L'alcool c'est de l'eau
