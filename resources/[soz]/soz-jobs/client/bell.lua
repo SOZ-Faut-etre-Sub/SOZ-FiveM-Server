@@ -84,6 +84,18 @@ CreateThread(function()
         minZ = 76.07,
         maxZ = 76.27,
     }, {options = callSociety("555-PAWL"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("bell:baun:bahama", vector3(-1393.46, -600.43, 30.32), 0.35, 0.25,
+                                    {name = "bell:baun:bahama", heading = 327, minZ = 30.32, maxZ = 30.47}, {
+        options = callSociety("555-BAUN"),
+        distance = 2.5,
+    })
+
+    exports["qb-target"]:AddBoxZone("bell:baun:unicorn", vector3(130.04, -1287.28, 29.28), 0.25, 0.35,
+                                    {name = "bell:baun:unicorn", heading = 302, minZ = 29.28, maxZ = 29.43}, {
+        options = callSociety("555-BAUN"),
+        distance = 2.5,
+    })
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

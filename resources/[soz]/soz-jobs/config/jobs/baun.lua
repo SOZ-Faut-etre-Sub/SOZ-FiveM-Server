@@ -39,7 +39,7 @@ BaunConfig.Cloakroom = {
             ["Tenue Direction"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 4, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 6, Texture = 0, Palette = 0},
                     [4] = {Drawable = 50, Texture = 2, Palette = 0},
                     [6] = {Drawable = 10, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -102,12 +102,7 @@ BaunConfig.HarvestZones = {
                 center = vector3(29.91, -1770.79, 29.57),
                 length = 4,
                 width = 0.1,
-                options = {
-                    name = "baun:harvest:furniture:1",
-                    heading = 320,
-                    minZ = 28.57,
-                    maxZ = 32.17
-                },
+                options = {name = "baun:harvest:furniture:1", heading = 320, minZ = 28.57, maxZ = 32.17},
             },
         },
     },
