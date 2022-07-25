@@ -94,7 +94,7 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
                 {item.description}
                 {item.metadata !== undefined && item.metadata['expiration'] !== undefined && <>
                     <br/>
-                    <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long", year: "numeric"})}</span>
+                    <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"})}</span>
                 </>}
             </span>}
 
