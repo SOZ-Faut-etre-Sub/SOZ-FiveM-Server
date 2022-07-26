@@ -82,14 +82,8 @@ FoodConfig.Collect = {
     Milk = {
         Duration = 10000, -- in ms
         Reward = {min = 1, max = 4},
-        Item = "milkbucket",
+        Item = "milk",
     },
-}
-
-FoodConfig.Process = {
-    Duration = 2000, -- in ms
-    Item = "milk",
-    Count = 4,
 }
 
 FoodConfig.Categories = {
