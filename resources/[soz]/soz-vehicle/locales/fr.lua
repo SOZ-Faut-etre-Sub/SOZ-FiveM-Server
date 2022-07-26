@@ -41,9 +41,7 @@ local Translations = {
             air = "⬅ Quitter le Hangar",
             depot = "⬅ Quitter la fourrière",
         },
-        text = {
-            vehicles = "Voir les véhicules stockés"
-        },
+        text = {vehicles = "Voir les véhicules stockés"},
     },
     status = {
         out = "Dehors",

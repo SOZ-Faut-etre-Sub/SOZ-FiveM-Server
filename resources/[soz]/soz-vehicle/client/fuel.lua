@@ -560,18 +560,18 @@ RegisterNetEvent("soz-fuel:client:onOilJerrycan", function()
             Wait(500)
 
             QBCore.Functions.Progressbar("oil_jerrycan", "Remplissage du véhicule...", 10000, false, false,
-                {
-                    disableMouse = false,
-                    disableMovement = true,
-                    disableCarMovement = true,
-                    disableCombat = true,
-                }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
-                    local newOilLevel = QBCore.Functions.TriggerRpc("fuel:server:useOilJerrycan", VehToNet(vehicle))
-                    if newOilLevel ~= nil then
-                        SetVehicleOilLevel(vehicle, newOilLevel)
-                    end
-                    exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un bidon d'huile")
-                end)
+                                         {
+                disableMouse = false,
+                disableMovement = true,
+                disableCarMovement = true,
+                disableCombat = true,
+            }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
+                local newOilLevel = QBCore.Functions.TriggerRpc("fuel:server:useOilJerrycan", VehToNet(vehicle))
+                if newOilLevel ~= nil then
+                    SetVehicleOilLevel(vehicle, newOilLevel)
+                end
+                exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un bidon d'huile")
+            end)
         else
             exports["soz-hud"]:DrawNotification("Vous avez ~r~trop d'huile moteur~s~ pour utiliser un bidon", "error")
         end

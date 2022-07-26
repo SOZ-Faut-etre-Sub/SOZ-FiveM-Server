@@ -223,13 +223,13 @@ QBCore.Functions.CreateCallback("fuel:server:useOilJerrycan", function(source, c
     local maxOilLevel = 6.5
     local vehicleType = GetVehicleType(vehicle)
 
-    if vehicleType == 'heli' then
+    if vehicleType == "heli" then
         maxOilLevel = 8.0
-    elseif vehicleType == 'bike' or vehicleType == 'plane' then
+    elseif vehicleType == "bike" or vehicleType == "plane" then
         maxOilLevel = 5.0
-    elseif vehicleType == 'boat' then
+    elseif vehicleType == "boat" then
         maxOilLevel = 3.0
-    elseif vehicleType == 'submarine' then
+    elseif vehicleType == "submarine" then
         maxOilLevel = 10.0
     end
 
