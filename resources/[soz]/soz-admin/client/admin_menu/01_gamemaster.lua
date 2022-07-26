@@ -8,6 +8,14 @@ local moneyGiveItem = {
     {label = "$100000", value = 100000},
 }
 
+local licences = {
+    {label = "Voiture", value = "car"},
+    {label = "Poids lourd", value = "truck"},
+    {label = "Moto", value = "motorcycle"},
+    {label = "Hélicoptère", value = "heli"},
+    {label = "Bateau", value = "boat"},
+}
+
 function AdminMenuGameMaster(menu, permission)
     if gameMasterMenu == nil then
         gameMasterMenu = MenuV:InheritMenu(menu, {subtitle = "Dieu ? c'est toi ?"})
@@ -58,6 +66,15 @@ function AdminMenuGameMaster(menu, permission)
                 end
             end
         end,
+    })
+
+    gameMasterMenu:AddSlider({
+        label = "Se donner le permis",
+        values = licences,
+        select = function(_, value)
+            TriggerServerEvent("admin:gamemaster:giveLicence", value)
+        end,
+        disabled = permission ~= "admin",
     })
 
     gameMasterMenu:AddCheckbox({

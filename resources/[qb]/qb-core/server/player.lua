@@ -467,6 +467,14 @@ function QBCore.Player.CreatePlayer(PlayerData)
         return nil
     end
 
+    self.Functions.SetLicence = function (licence, points)
+        local licences = self.PlayerData.metadata.licences
+        if licences[licence] ~= nil then
+            licences[licence] = tonumber(points)
+            self.Functions.UpdatePlayerData()
+        end
+    end
+
     self.Functions.Save = function()
         QBCore.Player.Save(self.PlayerData.source)
     end
