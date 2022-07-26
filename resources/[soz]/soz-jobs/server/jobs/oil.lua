@@ -404,3 +404,21 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:GetFuelStationPrices", funct
     local stations = MySQL.execute.await("SELECT DISTINCT fuel, price FROM fuel_storage WHERE type = 'public'", {})
     cb(stations)
 end)
+
+--
+-- METRICS
+--
+exports("GetMtpMetrics", function()
+    local metrics = {}
+
+    metrics["field_percent"] = {}
+
+    -- Field Level
+    for name, field in pairs(Fields) do
+        local metric = {identifier = name, value = field:GetHealth()}
+
+        table.insert(metrics["field_percent"], metric)
+    end
+
+    return metrics
+end)

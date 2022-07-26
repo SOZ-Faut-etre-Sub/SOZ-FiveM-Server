@@ -19,7 +19,7 @@ end
 
 --- Health
 function Field:GetHealth()
-    return math.ceil(self.capacity / self.maxCapacity)
+    return math.ceil((self.capacity / self.maxCapacity) * 100)
 end
 
 function Field:GetHealthState()
