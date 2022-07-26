@@ -88,7 +88,6 @@ QBCore.Functions.CreateCallback("fuel:server:FinishRefuel", function(source, cb,
 
     if Player.Functions.RemoveMoney("money", cost) then
         Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + refueling
-        Entity(vehicle).state.oil = (Entity(vehicle).state.oil or 1400.0) - refueling
         station:FinishedRefueling(Player.PlayerData.citizenid, refueling)
         saveStation(id)
 
@@ -143,7 +142,6 @@ QBCore.Functions.CreateCallback("fuel:server:useJerrycanEssence", function(sourc
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence_jerrycan", 1) then
         Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + Config.JerryCanRefill
-        Entity(vehicle).state.oil = (Entity(vehicle).state.oil or 1400.0) - Config.JerryCanRefill
     end
 
     cb(true)
@@ -168,7 +166,6 @@ QBCore.Functions.CreateCallback("fuel:server:useJerrycanKerosene", function(sour
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene_jerrycan", 1) then
         Entity(vehicle).state.fuel = (Entity(vehicle).state.fuel or 0.0) + Config.JerryCanRefill
-        Entity(vehicle).state.oil = (Entity(vehicle).state.oil or 1400.0) - Config.JerryCanRefill
     end
 
     cb(true)
@@ -201,41 +198,4 @@ QBCore.Functions.CreateCallback("fuel:server:changeStationPrice", function(sourc
     end
 
     cb(true)
-end)
-
-QBCore.Functions.CreateUseableItem("oil_jerrycan", function(source, item)
-    TriggerClientEvent("soz-fuel:client:onOilJerrycan", source)
-end)
-
-QBCore.Functions.CreateCallback("fuel:server:useOilJerrycan", function(source, cb, netVehicle)
-    local Player = QBCore.Functions.GetPlayer(source)
-    if Player == nil then
-        cb(nil)
-        return
-    end
-
-    local vehicle = NetworkGetEntityFromNetworkId(netVehicle)
-    if vehicle == 0 then
-        cb(nil)
-        return
-    end
-
-    local maxOilLevel = 6.5
-    local vehicleType = GetVehicleType(vehicle)
-
-    if vehicleType == "heli" then
-        maxOilLevel = 8.0
-    elseif vehicleType == "bike" or vehicleType == "plane" then
-        maxOilLevel = 5.0
-    elseif vehicleType == "boat" then
-        maxOilLevel = 3.0
-    elseif vehicleType == "submarine" then
-        maxOilLevel = 10.0
-    end
-
-    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "oil_jerrycan", 1) then
-        Entity(vehicle).state.oil = (Entity(vehicle).state.oil or 0.0) + 700.0
-    end
-
-    cb(Entity(vehicle).state.oil * (1400 / maxOilLevel))
 end)
