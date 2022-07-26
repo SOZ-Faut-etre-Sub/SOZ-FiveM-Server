@@ -298,11 +298,11 @@ RegisterNetEvent("soz-bennys:client:FuelRepair", function(net)
 end)
 
 function ScanVehicle(vehicle)
-    --tankHealth = QBCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle), 0.1),
+    -- tankHealth = QBCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle), 0.1),
     local enginePercent = QBCore.Shared.Round(GetVehicleEngineHealth(vehicle), 1)
     local bodyPercent = QBCore.Shared.Round(GetVehicleBodyHealth(vehicle), 1)
     local currentFuel = QBCore.Shared.Round(Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle), 1)
-    --local oilLevel = QBCore.Shared.Round(Entity(vehicle).state.oil or GetVehicleOilLevel(vehicle), 1)
+    -- local oilLevel = QBCore.Shared.Round(Entity(vehicle).state.oil or GetVehicleOilLevel(vehicle), 1)
 
     if GetVehicleClassFromName(GetHashKey(GetEntityModel(vehicle))) == 13 then
         exports["soz-hud"]:DrawNotification("Moteur: " .. enginePercent)
@@ -311,7 +311,7 @@ function ScanVehicle(vehicle)
         exports["soz-hud"]:DrawNotification("Moteur: " .. enginePercent)
         exports["soz-hud"]:DrawNotification("Carrosserie: " .. bodyPercent)
         exports["soz-hud"]:DrawNotification("Réservoir: " .. currentFuel)
-        --exports["soz-hud"]:DrawNotification("Huile: " .. oilLevel)
+        -- exports["soz-hud"]:DrawNotification("Huile: " .. oilLevel)
     end
 end
 
