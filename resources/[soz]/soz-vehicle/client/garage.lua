@@ -391,9 +391,6 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
     end
 
     for _, v in pairs(result) do
-        local enginePercent = round(v.engine / 10, 0)
-        local bodyPercent = round(v.body / 10, 0)
-        local currentFuel = v.fuel
         local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
         local displayName = GetDisplayNameFromVehicleModel(v.vehicle):lower()
 
