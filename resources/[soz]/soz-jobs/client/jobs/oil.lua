@@ -26,6 +26,36 @@ local function playerHasItem(item, amount)
     return false
 end
 
+local CreateTankerAction = function()
+    exports["qb-target"]:AddTargetModel({"tanker"}, {
+        options = {
+            {
+                event = "jobs:client:fueler:PrepareTankerRefill",
+                icon = "c:fuel/pistolet.png",
+                label = "Connecter le Tanker",
+                color = "oil",
+                canInteract = function()
+                    return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
+                end,
+                job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
+            },
+            {
+                event = "jobs:client:fueler:CancelTankerRefill",
+                icon = "c:fuel/pistolet.png",
+                label = "Déconnecter le Tanker",
+                color = "oil",
+                canInteract = function()
+                    return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                end,
+                job = "oil",
+            },
+        },
+        distance = 4.0,
+    })
+end
+
 local function SpawnFieldZones()
     for field, data in pairs(FuelerConfig.Fields) do
         local points = data.zone
@@ -48,7 +78,8 @@ local function SpawnFieldZones()
         })
         fieldZone:onPlayerInOut(function(isInside)
             if isInside then
-                exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {
+                CreateTankerAction()
+                exports["qb-target"]:AddTargetModel({"p_oil_pjack_01_s", "p_oil_pjack_02_s", "p_oil_pjack_03_s"}, {
                     options = {
                         {
                             event = "jobs:client:fueler:StartTankerRefill",
@@ -75,7 +106,10 @@ local function SpawnFieldZones()
                 currentField = nil
                 currentFieldHealth = nil
                 DisplayFieldHealth(false)
+                exports["qb-target"]:RemoveTargetModel("p_oil_pjack_01_s", "Relier le Tanker")
+                exports["qb-target"]:RemoveTargetModel("p_oil_pjack_02_s", "Relier le Tanker")
                 exports["qb-target"]:RemoveTargetModel("p_oil_pjack_03_s", "Relier le Tanker")
+                exports["qb-target"]:RemoveTargetModel("tanker", {"Connecter le Tanker", "Déconnecter le Tanker"})
             end
         end)
     end
@@ -196,36 +230,11 @@ CreateThread(function()
     SpawnFieldZones()
 end)
 
+
 --- Targets Locations
 AddEventHandler("locations:zone:enter", function(zone, station)
-    if zone == "fueler_petrol_farm" or zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
-        exports["qb-target"]:AddTargetModel({"tanker"}, {
-            options = {
-                {
-                    event = "jobs:client:fueler:PrepareTankerRefill",
-                    icon = "c:fuel/pistolet.png",
-                    label = "Connecter le Tanker",
-                    color = "oil",
-                    canInteract = function()
-                        return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
-                    end,
-                    job = "oil",
-                    blackoutGlobal = true,
-                    blackoutJob = "oil",
-                },
-                {
-                    event = "jobs:client:fueler:CancelTankerRefill",
-                    icon = "c:fuel/pistolet.png",
-                    label = "Déconnecter le Tanker",
-                    color = "oil",
-                    canInteract = function()
-                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
-                    end,
-                    job = "oil",
-                },
-            },
-            distance = 4.0,
-        })
+    if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
+        CreateTankerAction()
     end
     if zone == "fueler_petrol_refinery" then
         local refineryActions = {
@@ -288,7 +297,7 @@ AddEventHandler("locations:zone:enter", function(zone, station)
 end)
 
 AddEventHandler("locations:zone:exit", function(zone, _)
-    if zone == "fueler_petrol_farm" or zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
+    if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
         exports["qb-target"]:RemoveTargetModel("tanker", {"Connecter le Tanker", "Déconnecter le Tanker"})
     end
     if zone == "fueler_petrol_refinery" then
