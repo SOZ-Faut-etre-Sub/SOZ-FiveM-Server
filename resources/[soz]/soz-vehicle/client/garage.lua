@@ -244,15 +244,15 @@ RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, i
             Citizen.Wait(250)
         end
         local veh = NetToVeh(vehNet)
-        --QBCore.Functions.SetVehicleProperties(veh, mods)
-        --QBCore.Functions.SetVehicleProperties(veh, condition)
+        -- QBCore.Functions.SetVehicleProperties(veh, mods)
+        -- QBCore.Functions.SetVehicleProperties(veh, condition)
         exports["soz-vehicle"]:SetFuel(veh, condition.fuelLevel)
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
     end, vehicle.vehicle, emptySlot, mods, condition)
 end)
 
 AddEventHandler("gameEventTriggered", function(name, args)
-    if name == "CEventNetworkEntityDamage"then
+    if name == "CEventNetworkEntityDamage" then
         local entity = args[1]
         local owner = NetworkGetEntityOwner(entity)
         if Entity(entity).state.condition and owner == PlayerId() then
@@ -262,8 +262,8 @@ AddEventHandler("gameEventTriggered", function(name, args)
     end
 end)
 
-AddStateBagChangeHandler('mods' --[[key filter]], nil --[[bag filter]], function(bagName, key, value, _unused, replicated)
-    local entNet = tonumber(bagName:gsub('entity:', ''), 10)
+AddStateBagChangeHandler("mods" --[[key filter]] , nil --[[bag filter]] , function(bagName, key, value, _unused, replicated)
+    local entNet = tonumber(bagName:gsub("entity:", ""), 10)
     while not NetworkDoesEntityExistWithNetworkId(entNet) do
         Citizen.Wait(250)
     end
@@ -284,8 +284,8 @@ AddStateBagChangeHandler('mods' --[[key filter]], nil --[[bag filter]], function
     end
 end)
 
-AddStateBagChangeHandler('condition' --[[key filter]], nil --[[bag filter]], function(bagName, key, value, _unused, replicated)
-    local entNet = tonumber(bagName:gsub('entity:', ''), 10)
+AddStateBagChangeHandler("condition" --[[key filter]] , nil --[[bag filter]] , function(bagName, key, value, _unused, replicated)
+    local entNet = tonumber(bagName:gsub("entity:", ""), 10)
     while not NetworkDoesEntityExistWithNetworkId(entNet) do
         Citizen.Wait(250)
     end
@@ -299,7 +299,6 @@ AddStateBagChangeHandler('condition' --[[key filter]], nil --[[bag filter]], fun
         QBCore.Functions.SetVehicleProperties(veh, mods)
     end
 end)
-
 
 RegisterNetEvent("soz-garage:client:SetVehicleProperties", function(vehNetId, mods, condition, fuel)
     SetVehicleProperties(NetToVeh(vehNetId), mods, condition, fuel)

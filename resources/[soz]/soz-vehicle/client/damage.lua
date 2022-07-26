@@ -40,7 +40,7 @@ local function PropertiesToCondition(properties)
     return conditionVehicle
 end
 
-exports('PropertiesToCondition', PropertiesToCondition)
+exports("PropertiesToCondition", PropertiesToCondition)
 
 Citizen.CreateThread(function()
     while true do
