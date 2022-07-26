@@ -323,28 +323,6 @@ RegisterNetEvent("soz-custom:client:SetAttachedVehicle", function(veh)
     end
 end)
 
-RegisterNetEvent("vehiclemod:client:setPartLevel", function(part, level)
-    if (IsPedInAnyVehicle(PlayerPedId(), false)) then
-        local veh = Config.AttachedCustomVehicle
-        if not IsThisModelABicycle(GetEntityModel(veh)) and GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
-            local plate = QBCore.Functions.GetPlate(veh)
-            if part == "engine" then
-                SetVehicleEngineHealth(veh, level)
-                TriggerServerEvent("vehiclemod:server:updatePart", plate, "engine", GetVehicleEngineHealth(veh))
-            elseif part == "body" then
-                SetVehicleBodyHealth(veh, level)
-                TriggerServerEvent("vehiclemod:server:updatePart", plate, "body", GetVehicleBodyHealth(veh))
-            else
-                TriggerServerEvent("vehiclemod:server:updatePart", plate, part, level)
-            end
-        else
-            exports["soz-hud"]:DrawNotification("You Are Not The Driver Or On A Bicycle", "error")
-        end
-    else
-        exports["soz-hud"]:DrawNotification("You Are Not The Driver Or On A Bicycle", "error")
-    end
-end)
-
 local function startAnimation()
     local veh = Config.AttachedCustomVehicle
     local ped = PlayerPedId()
