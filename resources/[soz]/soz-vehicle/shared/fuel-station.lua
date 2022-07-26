@@ -150,7 +150,7 @@ end
 --- Utils
 ---
 function FuelStation:SpawnStation()
-    if self:IsPrivate() or (GetConvar("feature_dlc1_heli", "0") == "1" and self:IsPublic() and self.fuel == "kerosene") then
+    if self:IsPrivate() or (self:IsPublic() and self.fuel == "kerosene") then
         exports["soz-utils"]:CreateObject(self.model, self.position.x, self.position.y, self.position.z, self.position.w, 8000.0, true)
     end
 end

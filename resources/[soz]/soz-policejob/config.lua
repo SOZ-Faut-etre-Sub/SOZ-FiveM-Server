@@ -456,10 +456,8 @@ Config.WeaponShop = {
     },
 }
 
-if GetConvar("feature_dlc1_pawl", "0") == "1" then
-    Config.WeaponShop["lspd"][7] = nil
-    Config.WeaponShop["bcso"][7] = nil
-end
+Config.WeaponShop["lspd"][7] = nil
+Config.WeaponShop["bcso"][7] = nil
 
 --- Licenses
 Config.Licenses = {

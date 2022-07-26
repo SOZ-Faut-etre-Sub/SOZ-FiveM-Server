@@ -25,10 +25,6 @@ Citizen.CreateThread(function()
             label = string.format(data.label, data.price),
             blackoutGlobal = true,
             canInteract = function()
-                if licenseType == "heli" then
-                    return GetConvarInt("feature_dlc1_heli", 0) == 1 and playerInsideZone
-                end
-
                 return playerInsideZone
             end,
         })
