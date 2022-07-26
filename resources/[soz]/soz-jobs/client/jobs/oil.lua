@@ -230,7 +230,6 @@ CreateThread(function()
     SpawnFieldZones()
 end)
 
-
 --- Targets Locations
 AddEventHandler("locations:zone:enter", function(zone, station)
     if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
