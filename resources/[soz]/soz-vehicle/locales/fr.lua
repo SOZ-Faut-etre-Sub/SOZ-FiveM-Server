@@ -42,8 +42,7 @@ local Translations = {
             depot = "⬅ Quitter la fourrière",
         },
         text = {
-            vehicles = "Voir les véhicules stockés",
-            garageBike = "Moteur: %{value2} | Carrosserie: %{value3}",
+            vehicles = "Voir les véhicules stockés"
         },
     },
     status = {
