@@ -411,12 +411,8 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
                 -- Fallback value
                 qbVehicle = {price = 10000}
             end
-            local feePercentage = (1.0 / 100)
 
-            if GetConvarInt("feature_dlc1_impound", 0) == 1 then
-                feePercentage = (15.0 / 100)
-            end
-            price = math.ceil(qbVehicle["price"] * feePercentage)
+            price = math.ceil(qbVehicle["price"] * 0.15)
         end
 
         if v.state == garageType.state then

@@ -26,15 +26,11 @@ local reboot = function()
 
     local parkingtime = os.time()
     print("[soz-reboot] Mise des véhicules dans le void...")
-    if GetConvarInt("feature_dlc1_impound", 0) == 1 then
-        MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE life_counter = 0", {parkingtime})
+    MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE life_counter = 0", {parkingtime})
 
-        print("[soz-reboot] Mise des véhicules à la fourrière")
-        MySQL.Sync.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ?, life_counter = life_counter - 1 WHERE state = 0",
-                           {parkingtime})
-    else
-        MySQL.Sync.execute("UPDATE player_vehicles SET state = 4, parkingtime = ? WHERE state = 0", {parkingtime})
-    end
+    print("[soz-reboot] Mise des véhicules à la fourrière")
+    MySQL.Sync.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ?, life_counter = life_counter - 1 WHERE state = 0",
+                       {parkingtime})
 
     print("[soz-reboot] Sauvegarde des comptes bancaires...")
     exports["soz-bank"]:saveAccounts()

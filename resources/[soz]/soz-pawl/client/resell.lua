@@ -1,9 +1,5 @@
 -- Resell Port of Los Santos
 Citizen.CreateThread(function()
-    if GetConvar("feature_dlc1_pawl", "0") == "0" then
-        return
-    end
-
     local resellOpt = SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.primary
     local coords = resellOpt.coords
 

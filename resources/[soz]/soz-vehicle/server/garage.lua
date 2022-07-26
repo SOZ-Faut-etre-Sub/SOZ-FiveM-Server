@@ -267,11 +267,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     local player = QBCore.Functions.GetPlayer(source)
 
     local qbVehicle = exports["soz-vehicle"]:GetVehiclesByModels()[vehicle.vehicle]
-    local feePercentage = (1.0 / 100)
-    if GetConvarInt("feature_dlc1_impound", 0) == 1 then
-        feePercentage = (15.0 / 100)
-    end
-    local price = qbVehicle["price"] * feePercentage
+    local price = qbVehicle["price"] * 0.15
     if type_ == "private" then
         local timediff = math.floor((os.time() - vehicle.parkingtime) / 3600)
         price = timediff * 20

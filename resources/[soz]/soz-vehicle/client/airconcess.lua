@@ -216,36 +216,34 @@ for dealerIndex, dealerZone in pairs(dealerZones) do
     end)
 end
 
-if GetConvarInt("feature_dlc1_helicopters", 0) == 1 then
-    exports["qb-target"]:SpawnPed({
-        model = "s_m_m_autoshop_02",
-        coords = dealer.PedPosition,
-        minusOne = false,
-        freeze = true,
-        invincible = true,
-        blockevents = true,
-        animDict = "abigail_mcs_1_concat-0",
-        anim = "csb_abigail_dual-0",
-        flag = 1,
-        scenario = "WORLD_HUMAN_CLIPBOARD",
-        target = {
-            options = {
-                {
-                    type = "client",
-                    event = "soz-dealer:air:client:Menu",
-                    icon = "c:concess/lister.png",
-                    label = "Liste Véhicules",
-                    canInteract = function()
-                        local licenses = PlayerData.metadata["licences"]
-                        return isInsideConcess and licenses ~= nil and licenses[licenseTypeRequired] > 0
-                    end,
-                    blackoutGlobal = true,
-                },
+exports["qb-target"]:SpawnPed({
+    model = "s_m_m_autoshop_02",
+    coords = dealer.PedPosition,
+    minusOne = false,
+    freeze = true,
+    invincible = true,
+    blockevents = true,
+    animDict = "abigail_mcs_1_concat-0",
+    anim = "csb_abigail_dual-0",
+    flag = 1,
+    scenario = "WORLD_HUMAN_CLIPBOARD",
+    target = {
+        options = {
+            {
+                type = "client",
+                event = "soz-dealer:air:client:Menu",
+                icon = "c:concess/lister.png",
+                label = "Liste Véhicules",
+                canInteract = function()
+                    local licenses = PlayerData.metadata["licences"]
+                    return isInsideConcess and licenses ~= nil and licenses[licenseTypeRequired] > 0
+                end,
+                blackoutGlobal = true,
             },
-            distance = 2.5,
         },
-    })
-end
+        distance = 2.5,
+    },
+})
 
 RegisterNetEvent("soz-dealer:air:client:Menu", function()
     VehicleCategoriesMenu:Open()

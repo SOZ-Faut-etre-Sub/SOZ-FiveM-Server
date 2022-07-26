@@ -25,10 +25,6 @@ Citizen.CreateThread(function()
         })
     end
 
-    if GetConvar("feature_dlc1_pawl", "0") == "0" then
-        return
-    end
-
     -- Fields
     for identifier, _ in pairs(Config.Fields) do
         local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
@@ -166,10 +162,6 @@ RegisterNetEvent("pawl:client:OnDegradationLevelChanged", function(level)
 end)
 
 AddEventHandler("populationPedCreating", function(_, _, _, model, _)
-    if GetConvar("feature_dlc1_pawl", "0") == "0" then
-        return
-    end
-
     if Config.Degradation.Peds[model] then
         local random = math.random(0, 100)
         if random >= Config.Degradation.Multiplier[DegradationLevel] then
