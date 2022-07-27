@@ -577,4 +577,6 @@ Config.Cloakroom = {
 Config.BossShop = {
     [1] = {name = "repairkit", metadata = {}, price = 50, amount = 1},
     [2] = {name = "cleaningkit", metadata = {}, price = 40, amount = 1},
+    [3] = {name = "diagnostic_pad", metadata = {}, price = 260, amount = 1},
+    [4] = {name = "oil_jerrycan", metadata = {}, price = 20, amount = 1},
 }

@@ -2723,6 +2723,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
     },
+    ['oil_jerrycan'] = {
+        ['name'] = 'oil_jerrycan',
+        ['label'] = 'Bidon d\'huile',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'De l\'huile servant à remplir les différents véhicules à la main.'
+    },
     ['kerosene'] = {
         ['name'] = 'kerosene',
         ['label'] = 'Kérosène conditionné',
@@ -2816,6 +2827,19 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Bienvenue sur SOZ !'
+    },
+
+    -- Benny's
+    ['diagnostic_pad'] = {
+        ['name'] = 'diagnostic_pad',
+        ['label'] = 'Tablette diagnostic',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour faire des diagnostics sur les véhicules.'
     },
 
     -- PAWL

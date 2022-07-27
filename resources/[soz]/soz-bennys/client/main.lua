@@ -297,6 +297,24 @@ RegisterNetEvent("soz-bennys:client:FuelRepair", function(net)
     SetVehiclePetrolTankHealth(veh, 1000.0)
 end)
 
+function ScanVehicle(vehicle)
+    -- tankHealth = QBCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle), 0.1),
+    local enginePercent = QBCore.Shared.Round(GetVehicleEngineHealth(vehicle), 1)
+    local bodyPercent = QBCore.Shared.Round(GetVehicleBodyHealth(vehicle), 1)
+    local currentFuel = QBCore.Shared.Round(Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle), 1)
+    -- local oilLevel = QBCore.Shared.Round(Entity(vehicle).state.oil or GetVehicleOilLevel(vehicle), 1)
+
+    if GetVehicleClassFromName(GetHashKey(GetEntityModel(vehicle))) == 13 then
+        exports["soz-hud"]:DrawNotification("Moteur: " .. enginePercent)
+        exports["soz-hud"]:DrawNotification("Carrosserie: " .. bodyPercent)
+    else
+        exports["soz-hud"]:DrawNotification("Moteur: " .. enginePercent)
+        exports["soz-hud"]:DrawNotification("Carrosserie: " .. bodyPercent)
+        exports["soz-hud"]:DrawNotification("Réservoir: " .. currentFuel)
+        -- exports["soz-hud"]:DrawNotification("Huile: " .. oilLevel)
+    end
+end
+
 CreateThread(function()
     exports["qb-target"]:AddGlobalVehicle({
         options = {
@@ -332,6 +350,22 @@ CreateThread(function()
                         return false
                     end
                     return true
+                end,
+            },
+            {
+                type = "client",
+                icon = "c:mechanic/reparer.png",
+                label = "Faire un diagnostic",
+                color = "bennys",
+                blackoutGlobal = true,
+                blackoutJob = "bennys",
+                job = "bennys",
+                item = "diagnostic_pad",
+                action = function(vehicle)
+                    ScanVehicle(vehicle)
+                end,
+                canInteract = function()
+                    return OnDuty
                 end,
             },
         },
