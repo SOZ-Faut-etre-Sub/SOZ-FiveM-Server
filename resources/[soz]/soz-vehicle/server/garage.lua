@@ -242,6 +242,9 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
         return
     end
 
+    Entity(veh).state:set("mods", json.encode(mods), true)
+    Entity(veh).state:set("condition", json.encode(condition), true)
+
     local res = MySQL.Sync.execute([[
         UPDATE player_vehicles
         SET state = ?, garage = null, parkingtime = 0
