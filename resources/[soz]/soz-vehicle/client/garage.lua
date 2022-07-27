@@ -391,9 +391,6 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
     end
 
     for _, v in pairs(result) do
-        local enginePercent = round(v.engine / 10, 0)
-        local bodyPercent = round(v.body / 10, 0)
-        local currentFuel = v.fuel
         local vname = GetLabelText(GetDisplayNameFromVehicleModel(v.vehicle))
         local displayName = GetDisplayNameFromVehicleModel(v.vehicle):lower()
 
@@ -416,22 +413,12 @@ local function GenerateVehicleList(result, garage, indexgarage, garageType, time
         end
 
         if v.state == garageType.state then
-
-            local desc;
-
-            if GetVehicleClassFromName(GetHashKey(v.vehicle)) == 13 then
-                desc = Lang:t("menu.text.garageBike", {value2 = enginePercent, value3 = bodyPercent})
-            else
-                desc = Lang:t("menu.text.garage", {value = currentFuel, value2 = enginePercent, value3 = bodyPercent})
-            end
-
             garageType.submenu:AddButton({
                 label = Lang:t(string.format("menu.header.%s", garageType.type), {
                     value = vname,
                     value2 = v.plate,
                     value3 = price,
                 }),
-                description = desc,
                 select = function()
                     garageType.submenu:Close()
                     TriggerEvent("soz-garage:client:takeOutGarage", v, garageType.type, indexgarage, displayName)
