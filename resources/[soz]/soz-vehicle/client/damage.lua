@@ -24,6 +24,24 @@ local function DisableVehicle(vehicle, time)
     SetVehicleEngineOn(vehicle, true, false, true)
 end
 
+local function PropertiesToCondition(properties)
+    local conditionVehicle = {}
+    conditionVehicle["engineHealth"] = properties.engineHealth
+    conditionVehicle["tireHealth"] = properties.tireHealth
+    conditionVehicle["tankHealth"] = properties.tankHealth
+    conditionVehicle["dirtLevel"] = properties.dirtLevel
+    conditionVehicle["bodyHealth"] = properties.bodyHealth
+    conditionVehicle["oilLevel"] = properties.oilLevel
+    conditionVehicle["fuelLevel"] = properties.fuelLevel
+    conditionVehicle["windowStatus"] = properties.windowStatus
+    conditionVehicle["tireBurstState"] = properties.tireBurstState
+    conditionVehicle["tireBurstCompletely"] = properties.tireBurstCompletely
+    conditionVehicle["doorStatus"] = properties.doorStatus
+    return conditionVehicle
+end
+
+exports("PropertiesToCondition", PropertiesToCondition)
+
 Citizen.CreateThread(function()
     while true do
         local player = PlayerPedId()
@@ -40,6 +58,17 @@ Citizen.CreateThread(function()
                     end)
                 end
             end
+
+            if vehEng + vehBody == 0 then
+                local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
+                print(json.encode(newcondition))
+            end
+
+            if newVehEng + newVehBody < vehEng + vehBody then
+                local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
+                Entity(vehicle).state:set("condition", json.encode(newcondition), true)
+            end
+
             vehEng, vehBody = newVehEng, newVehBody
         else
             vehEng, vehBody = 0, 0

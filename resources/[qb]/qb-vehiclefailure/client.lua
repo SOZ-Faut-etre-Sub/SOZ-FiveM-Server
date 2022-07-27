@@ -89,38 +89,6 @@ end
 
 -- Events
 
-RegisterNetEvent("iens:repaira", function()
-    if isPedDrivingAVehicle() then
-        local ped = PlayerPedId()
-        vehicle = GetVehiclePedIsIn(ped, false)
-        SetVehicleDirtLevel(vehicle)
-        SetVehicleUndriveable(vehicle, false)
-        WashDecalsFromVehicle(vehicle, 1.0)
-        exports["soz-hud"]:DrawNotification(Lang:t("success.repaired_veh"))
-        SetVehicleEngineHealth(vehicle, 1000.0)
-        SetVehicleFixed(vehicle)
-        --[[
-        SetVehicleTyreFixed(vehicle, 0)
-        SetVehicleTyreFixed(vehicle, 1)
-        SetVehicleTyreFixed(vehicle, 2)
-        SetVehicleTyreFixed(vehicle, 3)
-        SetVehicleTyreFixed(vehicle, 4)
-        if (IsBackEngine(GetEntityModel(vehicle))) then
-            SetVehicleDoorShut(vehicle, 5, false)
-        else
-            SetVehicleDoorShut(vehicle, 4, false)
-        end
-        --]]
-        healthBodyLast = 1000.0
-        healthEngineLast = 1000.0
-        healthPetrolTankLast = 1000.0
-        SetVehicleEngineOn(vehicle, true, false)
-        return
-    else
-        exports["soz-hud"]:DrawNotification(Lang:t("error.inside_veh_req"), "error")
-    end
-end)
-
 RegisterNetEvent("iens:besked", function()
     exports["soz-hud"]:DrawNotification(Lang:t("error.roadside_avail"), "error")
 end)
