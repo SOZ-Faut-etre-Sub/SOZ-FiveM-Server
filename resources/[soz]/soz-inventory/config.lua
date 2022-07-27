@@ -22,7 +22,7 @@ Config.StorageCapacity = {
     ["sawdust_storage"] = {slot = 10, weight = 1000000},
     ["log_processing"] = {slot = 10, weight = 400000},
     --- Jobs UPW
-    ["inverter"] = {slot = 100, weight = 600000},
+    ["inverter"] = {slot = 100, weight = 1200000},
 }
 
 Config.ErrorMessage = {
