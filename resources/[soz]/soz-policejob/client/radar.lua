@@ -11,7 +11,7 @@ CreateThread(function()
                     local coords = GetEntityCoords(vehicle, false)
                     local streetA, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
 
-                    TriggerServerEvent("police:client:radar:trigger", radarID, VehToNet(vehicle), GetStreetNameFromHashKey(streetA))
+                    TriggerServerEvent("police:client:radar:trigger", radarID, VehToNet(vehicle), GetVehicleClass(vehicle), GetStreetNameFromHashKey(streetA))
                 end
             end
         end)

@@ -13,7 +13,7 @@ CreateThread(function()
 end)
 
 --- Event
-RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, streetName)
+RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, vehicleClass, streetName)
     local Player = QBCore.Functions.GetPlayer(source)
     local radar = Config.Radars[radarID]
     local vehicle = NetworkGetEntityFromNetworkId(vehicleID)
@@ -52,8 +52,10 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, str
 
             if vehicleType == "bike" then
                 licenceType = "motorcycle"
-            elseif vehicleType == "truck" then
-                licenceType = "trailer"
+            elseif vehicleType == "automobile" and (vehicleClass == 10 or vehicleClass == 17 or vehicleClass == 20) then
+                licenceType = "truck"
+            elseif vehicleType == "boat" or vehicleType == "heli" then
+                licenceType = vehicleType
             end
 
             if licences[licenceType] >= 1 then
