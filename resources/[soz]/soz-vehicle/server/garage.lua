@@ -277,6 +277,12 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     end
 
     if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
+        if type == "depot" then
+            bennysFee = qbVehicle["price"] * (2.0 / 100)
+            MySQL.Async.execute("UPDATE bank_accounts SET money = money + ? WHERE account_type = 'business' AND businessid = 'bennys'", {
+                bennysFee,
+            })
+        end
         cb(true)
     else
         TriggerClientEvent("hud:client:DrawNotification", source, Lang:t("error.not_enough"), "error")
