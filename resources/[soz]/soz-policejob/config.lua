@@ -173,7 +173,7 @@ Config.Cloakroom = {
                     [8] = {Drawable = 33, Texture = 0, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 202, Texture = 3, Palette = 0},
+                    [11] = {Drawable = 202, Texture = 2, Palette = 0},
                 },
                 Props = {[0] = {Drawable = 17, Texture = 3, Palette = 0}},
             },
