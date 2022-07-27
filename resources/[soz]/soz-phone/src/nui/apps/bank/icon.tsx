@@ -1,6 +1,6 @@
-import React from 'react';
+import { FunctionComponent, memo } from 'react';
 
-const BankIcon: React.FC = props => {
+const BankIcon: FunctionComponent = memo(props => {
     return (
         <svg {...props} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="200" height="200" fill="white" />
@@ -43,6 +43,6 @@ const BankIcon: React.FC = props => {
             </defs>
         </svg>
     );
-};
+});
 
 export default BankIcon;

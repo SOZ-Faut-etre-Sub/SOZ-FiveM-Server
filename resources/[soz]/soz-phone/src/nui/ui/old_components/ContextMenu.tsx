@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
-import { AppTitle } from '@ui/old_components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { ItemIcon } from '@ui/old_components/ItemIcon';
 import React from 'react';

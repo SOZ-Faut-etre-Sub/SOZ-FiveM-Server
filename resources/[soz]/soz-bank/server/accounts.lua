@@ -212,7 +212,7 @@ RegisterNetEvent("QBCore:Server:PlayerLoaded", function(player --[[PlayerData]] 
         account = Account.Create(player.PlayerData.charinfo.account, player.Functions.GetName(), "player", player.PlayerData.citizenid)
     end
 
-    TriggerClientEvent("phone:client:bank:updateBalance", player.PlayerData.source, player.Functions.GetName(), account.id, account.money)
+    TriggerClientEvent("phone:client:app:bank:updateBalance", player.PlayerData.source, player.Functions.GetName(), account.id, account.money)
 end)
 
 --- Loops

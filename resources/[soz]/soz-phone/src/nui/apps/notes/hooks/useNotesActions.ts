@@ -1,4 +1,4 @@
-import { NoteItem } from '@typings/notes';
+import { NoteItem } from '@typings/app/notes';
 import { useCallback } from 'react';
 
 import { useSetNotes } from './state';

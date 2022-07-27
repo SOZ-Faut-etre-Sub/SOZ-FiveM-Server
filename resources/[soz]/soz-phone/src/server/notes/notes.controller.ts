@@ -1,4 +1,4 @@
-import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '../../../typings/notes';
+import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '../../../typings/app/notes';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import NotesService from './notes.service';
 import { notesLogger } from './notes.utils';

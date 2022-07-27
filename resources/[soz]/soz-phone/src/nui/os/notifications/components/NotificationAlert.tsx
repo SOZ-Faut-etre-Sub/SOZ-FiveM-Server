@@ -8,7 +8,11 @@ export const NotificationAlert = () => {
     const { currentAlert } = useNotifications();
 
     // TODO: improve notification hook
-    const isPosition = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.test(currentAlert?.content.toString());
+    const isPosition = /vec2\((-?[\d.]+),(-?[\d.]+)\)/g.test(currentAlert?.content.toString());
+
+    if (!currentAlert) {
+        return null;
+    }
 
     return (
         <Transition
@@ -22,37 +26,9 @@ export const NotificationAlert = () => {
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
         >
-            <div>
-                <Alert
-                    // action={
-                    // <IconButton
-                    //   color="primary"
-                    //   size="small"
-                    //   onClick={(e) => {
-                    //     e.stopPropagation();
-                    //     currentAlert?.onCloseAlert(e);
-                    //   }}
-                    // >
-                    //   <CloseIcon fontSize="small" />
-                    // </IconButton>
-
-                    onClick={e => currentAlert?.onClickAlert(e)}
-                    icon={currentAlert?.icon || undefined}
-                >
-                    {isPosition ? 'Destination' : currentAlert?.content}
-
-                    {/*<AlertTitle>*/}
-                    {/*  <Box width="282px" whiteSpace="nowrap">*/}
-                    {/*    <Box overflow="hidden" component="div" textOverflow="ellipsis">*/}
-                    {/*      {currentAlert?.title}*/}
-                    {/*    </Box>*/}
-                    {/*  </Box>*/}
-                    {/*</AlertTitle>*/}
-                    {/*<Box component="div"  textOverflow="ellipsis">*/}
-                    {/*  {currentAlert?.content}*/}
-                    {/*</Box>*/}
-                </Alert>
-            </div>
+            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.icon || undefined}>
+                {isPosition ? 'Destination' : currentAlert?.content}
+            </Alert>
         </Transition>
     );
 };

@@ -1,6 +1,6 @@
 import { ResultSetHeader } from 'mysql2';
 
-import { BeforeDBNote, NoteItem } from '../../../typings/notes';
+import { BeforeDBNote, NoteItem } from '../../../typings/app/notes';
 import DbInterface from '../db/db_wrapper';
 
 export class _NotesDB {

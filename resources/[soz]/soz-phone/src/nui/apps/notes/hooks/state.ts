@@ -1,5 +1,5 @@
+import { NoteItem, NotesEvents } from '@typings/app/notes';
 import { ServerPromiseResp } from '@typings/common';
-import { NoteItem, NotesEvents } from '@typings/notes';
 import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import LogDebugEvent from '../../../os/debug/LogDebugEvents';
