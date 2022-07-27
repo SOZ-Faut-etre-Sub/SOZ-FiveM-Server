@@ -22,6 +22,7 @@ server_script {
     "server/functions.lua",
     "server/temporary.lua",
     "server/objects.lua",
+    "server/classes/*.lua",
     "server/jobs/**/*.lua",
 }
 

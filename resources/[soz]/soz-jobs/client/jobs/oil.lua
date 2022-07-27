@@ -8,6 +8,9 @@ local societyMenuState = {
 local Tanker = {hasPipe = false, vehicle = nil, entity = nil, rope = nil, nozzle = nil, using = false}
 local MaxFuelInStation, CurrentStation = 2000, nil
 
+local currentField
+local currentFieldHealth
+
 --- functions
 local function playerHasItem(item, amount)
     for _, slot in pairs(PlayerData.items) do
@@ -21,6 +24,95 @@ local function playerHasItem(item, amount)
     end
 
     return false
+end
+
+local CreateTankerAction = function()
+    exports["qb-target"]:AddTargetModel({"tanker"}, {
+        options = {
+            {
+                event = "jobs:client:fueler:PrepareTankerRefill",
+                icon = "c:fuel/pistolet.png",
+                label = "Connecter le Tanker",
+                color = "oil",
+                canInteract = function()
+                    return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
+                end,
+                job = "oil",
+                blackoutGlobal = true,
+                blackoutJob = "oil",
+            },
+            {
+                event = "jobs:client:fueler:CancelTankerRefill",
+                icon = "c:fuel/pistolet.png",
+                label = "Déconnecter le Tanker",
+                color = "oil",
+                canInteract = function()
+                    return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                end,
+                job = "oil",
+            },
+        },
+        distance = 4.0,
+    })
+end
+
+local function SpawnFieldZones()
+    for field, data in pairs(FuelerConfig.Fields) do
+        local points = data.zone
+
+        local minZ, maxZ
+        for i = 1, #points, 1 do
+            if minZ == nil or points[i].z < minZ then
+                minZ = points[i].z
+            end
+            if maxZ == nil or points[i].z > maxZ then
+                maxZ = points[i].z
+            end
+        end
+
+        local fieldZone = PolyZone:Create(points, {
+            name = field,
+            minZ = minZ - 2.0,
+            maxZ = maxZ + 2.0,
+            debugPoly = false,
+        })
+        fieldZone:onPlayerInOut(function(isInside)
+            if isInside then
+                CreateTankerAction()
+                exports["qb-target"]:AddTargetModel({"p_oil_pjack_01_s", "p_oil_pjack_02_s", "p_oil_pjack_03_s"}, {
+                    options = {
+                        {
+                            event = "jobs:client:fueler:StartTankerRefill",
+                            icon = "c:fuel/remplir.png",
+                            label = "Relier le Tanker",
+                            color = "oil",
+                            canInteract = function()
+                                return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                            end,
+                            job = "oil",
+                            blackoutGlobal = true,
+                            blackoutJob = "oil",
+                        },
+                    },
+                    distance = 4.0,
+                })
+
+                currentField = field
+                QBCore.Functions.TriggerCallback("soz-jobs:server:fueler:getFieldHealth", function(health)
+                    currentFieldHealth = health
+                    DisplayFieldHealth(true, currentField, currentFieldHealth)
+                end, field)
+            else
+                currentField = nil
+                currentFieldHealth = nil
+                DisplayFieldHealth(false)
+                exports["qb-target"]:RemoveTargetModel("p_oil_pjack_01_s", "Relier le Tanker")
+                exports["qb-target"]:RemoveTargetModel("p_oil_pjack_02_s", "Relier le Tanker")
+                exports["qb-target"]:RemoveTargetModel("p_oil_pjack_03_s", "Relier le Tanker")
+                exports["qb-target"]:RemoveTargetModel("tanker", {"Connecter le Tanker", "Déconnecter le Tanker"})
+            end
+        end)
+    end
 end
 
 --- Targets
@@ -135,57 +227,13 @@ CreateThread(function()
         distance = 2.5,
     })
 
+    SpawnFieldZones()
 end)
 
 --- Targets Locations
 AddEventHandler("locations:zone:enter", function(zone, station)
-    if zone == "fueler_petrol_farm" or zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
-        exports["qb-target"]:AddTargetModel({"tanker"}, {
-            options = {
-                {
-                    event = "jobs:client:fueler:PrepareTankerRefill",
-                    icon = "c:fuel/pistolet.png",
-                    label = "Connecter le Tanker",
-                    color = "oil",
-                    canInteract = function()
-                        return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
-                    end,
-                    job = "oil",
-                    blackoutGlobal = true,
-                    blackoutJob = "oil",
-                },
-                {
-                    event = "jobs:client:fueler:CancelTankerRefill",
-                    icon = "c:fuel/pistolet.png",
-                    label = "Déconnecter le Tanker",
-                    color = "oil",
-                    canInteract = function()
-                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
-                    end,
-                    job = "oil",
-                },
-            },
-            distance = 4.0,
-        })
-    end
-    if zone == "fueler_petrol_farm" then
-        exports["qb-target"]:AddTargetModel({"p_oil_pjack_03_s"}, {
-            options = {
-                {
-                    event = "jobs:client:fueler:StartTankerRefill",
-                    icon = "c:fuel/remplir.png",
-                    label = "Relier le Tanker",
-                    color = "oil",
-                    canInteract = function()
-                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
-                    end,
-                    job = "oil",
-                    blackoutGlobal = true,
-                    blackoutJob = "oil",
-                },
-            },
-            distance = 4.0,
-        })
+    if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
+        CreateTankerAction()
     end
     if zone == "fueler_petrol_refinery" then
         local refineryActions = {
@@ -248,11 +296,8 @@ AddEventHandler("locations:zone:enter", function(zone, station)
 end)
 
 AddEventHandler("locations:zone:exit", function(zone, _)
-    if zone == "fueler_petrol_farm" or zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
+    if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
         exports["qb-target"]:RemoveTargetModel("tanker", {"Connecter le Tanker", "Déconnecter le Tanker"})
-    end
-    if zone == "fueler_petrol_farm" then
-        exports["qb-target"]:RemoveTargetModel("p_oil_pjack_03_s", "Relier le Tanker")
     end
     if zone == "fueler_petrol_refinery" then
         exports["qb-target"]:RemoveZone("refinery1")
@@ -425,9 +470,16 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
 
         if success then
-            TriggerServerEvent("jobs:server:fueler:refillTanker", Tanker.vehicle)
-            Wait(1000)
-            canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
+            local refillResponse = QBCore.Functions.TriggerRpc("jobs:server:fueler:refillTanker", Tanker.vehicle, currentField)
+            _, currentFieldHealth = table.unpack(refillResponse)
+            DisplayFieldHealth(true, currentField, currentFieldHealth)
+
+            if currentFieldHealth == 0 then
+                exports["soz-hud"]:DrawNotification("Le champ est épuisé...", "warning")
+                canFillTanker = false
+            else
+                canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
+            end
         else
             canFillTanker = false
         end
@@ -722,16 +774,18 @@ RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
             value = societyMenuState.displayHarvestArea,
             change = function(_, value)
                 societyMenuState.displayHarvestArea = value
-                if not QBCore.Functions.GetBlip("mtp_farm") then
-                    QBCore.Functions.CreateBlip("mtp_farm", {
-                        name = "Point de récolte",
-                        coords = vector3(585.93, 2901.68, 39.72),
-                        sprite = 436,
-                        scale = 1.0,
-                    })
-                end
+                for _, coord in pairs({vector3(585.93, 2901.68, 39.72), vector3(1435.49, -2284.8, 71.37)}) do
+                    if not QBCore.Functions.GetBlip("mtp_farm_" .. coord) then
+                        QBCore.Functions.CreateBlip("mtp_farm_" .. coord, {
+                            name = "Point de récolte",
+                            coords = coord,
+                            sprite = 436,
+                            scale = 1.0,
+                        })
+                    end
 
-                QBCore.Functions.HideBlip("mtp_farm", not value)
+                    QBCore.Functions.HideBlip("mtp_farm_" .. coord, not value)
+                end
             end,
         })
 
