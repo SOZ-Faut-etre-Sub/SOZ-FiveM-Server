@@ -1,6 +1,6 @@
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '@typings/app/notes';
 import { ServerPromiseResp } from '@typings/common';
-import { BeforeDBNote, DeleteNoteDTO, NoteItem, NotesEvents } from '@typings/notes';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 

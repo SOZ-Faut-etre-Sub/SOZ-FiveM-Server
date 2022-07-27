@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../../../../os/apps/hooks/useApps';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { ThemeContext } from '../../../../styles/themeProvider';
-import { AppTitle } from '../../../../ui/old_components/AppTitle';
+import { AppTitle } from '../../../../ui/components/AppTitle';
 import { useFilteredContacts } from '../../hooks/state';
 import { SearchContacts } from './SearchContacts';
 

@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/outline';
-import { NoteItem } from '@typings/notes';
+import { NoteItem } from '@typings/app/notes';
 import { Button } from '@ui/old_components/Button';
 import { List } from '@ui/old_components/List';
 import { ListItem } from '@ui/old_components/ListItem';

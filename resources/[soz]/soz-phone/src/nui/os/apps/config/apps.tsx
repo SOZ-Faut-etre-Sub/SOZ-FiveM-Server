@@ -6,7 +6,7 @@ import CameraApp from '../../../apps/camera/components/CameraApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { NotesApp } from '../../../apps/notes/NotesApp';
+import { NotesApp } from '../../../apps/notes';
 import PhotoApp from '../../../apps/photo/components/PhotoApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { SocietyContactsApp } from '../../../apps/society-contacts/components/SocietyContactsApp';

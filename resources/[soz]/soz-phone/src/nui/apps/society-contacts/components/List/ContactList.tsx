@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useApp } from '../../../../os/apps/hooks/useApps';
 import { ThemeContext } from '../../../../styles/themeProvider';
-import { AppTitle } from '../../../../ui/old_components/AppTitle';
+import { AppTitle } from '../../../../ui/components/AppTitle';
 import { useFilteredContacts } from '../../hooks/state';
 import { SearchContacts } from './SearchContacts';
 

@@ -44,7 +44,7 @@ function PlayerAccount:save(id, owner, amount, marked_money)
         owner,
     })
     if Player then
-        TriggerClientEvent("phone:client:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), id, amount)
+        TriggerClientEvent("phone:client:app:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), id, amount)
     end
     return true
 end

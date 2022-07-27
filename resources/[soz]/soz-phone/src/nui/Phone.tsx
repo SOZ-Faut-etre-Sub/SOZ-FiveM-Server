@@ -1,6 +1,5 @@
 import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
-import { useCallModal } from '@os/call/hooks/useCallModal';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import { useConfig } from '@os/phone/hooks/useConfig';
@@ -11,8 +10,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import DefaultConfig from '../../config.json';
-import { BankEvents } from '../../typings/bank';
-import { useBankService } from './apps/bank/hooks/useBankService';
+import { BankEvents } from '../../typings/app/bank';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import { HomeApp } from './apps/home';
@@ -25,6 +23,7 @@ import InjectDebugData from './os/debug/InjectDebugData';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
+import { useAppBankService } from './services/app/useAppBankService';
 import { usePhoneService } from './services/usePhoneService';
 import ThemeProvider from './styles/themeProvider';
 import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
@@ -37,7 +36,6 @@ function Phone() {
     usePhoneService();
     useSimcardService();
     useMarketplaceService();
-    useBankService();
     useMessagesService();
     useContactsListener();
     useNoteListener();
@@ -46,8 +44,8 @@ function Phone() {
     useTwitchNewsService();
     useCallService();
     useDialService();
-
-    const { modal: callModal } = useCallModal();
+    // Apps services
+    useAppBankService();
 
     return (
         <ThemeProvider>

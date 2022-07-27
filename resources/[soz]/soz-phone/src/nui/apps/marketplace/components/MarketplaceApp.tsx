@@ -1,6 +1,6 @@
 import { useApp } from '@os/apps/hooks/useApps';
+import { AppTitle } from '@ui/components/AppTitle';
 import { AppContent } from '@ui/old_components/AppContent';
-import { AppTitle } from '@ui/old_components/AppTitle';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
