@@ -180,6 +180,9 @@ end
 --
 exports("GetUpwMetrics", function()
     local metrics = {}
+    if Pm == {} then
+        return metrics
+    end
 
     -- Pollution Level
     metrics["pollution_level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
