@@ -1,26 +1,57 @@
+local Fields = {}
 local itemToRefill = 11 -- give 11 item for 24 second
 local tankerLocked = {}
 local MAX_PEOPLE_BY_TANKER = 2
 
+-- Create Fields
+for name, data in pairs(FuelerConfig.Fields) do
+    Fields[name] = Field:new(name, data.item, data.prodRange.max, data.prodRange, data.refillDelay, itemToRefill)
+    Fields[name]:StartRefillLoop(data.refillDelay)
+end
+
+QBCore.Functions.CreateCallback("soz-jobs:server:fueler:getFieldHealth", function(source, cb, fieldName)
+    local field = Fields[fieldName]
+    if field ~= nil then
+        cb(field:GetHealthState())
+    end
+    cb(nil)
+end)
+
 --- Events
-RegisterNetEvent("jobs:server:fueler:refillTanker", function(tankerId)
+QBCore.Functions.CreateCallback("jobs:server:fueler:refillTanker", function(source, cb, tankerId, fieldName)
     local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb({0, 0})
+        return
+    end
+
+    local field = Fields[fieldName]
+    if field == nil then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Il y a eu une erreur: invalid_field", "error")
+        cb({0, 0})
+        return
+    end
+
     local tanker = NetworkGetEntityFromNetworkId(tankerId)
     local tankerPlate = GetVehicleNumberPlateText(tanker)
 
-    exports["soz-inventory"]:AddItem("trunk_" .. tankerPlate, "petroleum", itemToRefill, nil, nil, function(success, _)
+    local quantity, item, newHealth = field:Harvest()
+
+    exports["soz-inventory"]:AddItem("trunk_" .. tankerPlate, item, quantity, nil, nil, function(success, _)
         if success then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~remplis~s~ %dL de pétrole"):format(itemToRefill))
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~remplis~s~ %dL de pétrole"):format(quantity))
 
             TriggerEvent("monitor:server:event", "job_mtp_fill_oil_tanker", {player_source = Player.PlayerData.source},
                          {
-                quantity = tonumber(itemToRefill),
+                quantity = tonumber(quantity),
                 position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
             })
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre remorque ~r~ne peut plus~s~ recevoir de pétrole.", "error")
         end
     end)
+
+    cb({quantity, newHealth})
 end)
 
 RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
@@ -372,4 +403,22 @@ end)
 QBCore.Functions.CreateCallback("jobs:server:fueler:GetFuelStationPrices", function(source, cb)
     local stations = MySQL.execute.await("SELECT DISTINCT fuel, price FROM fuel_storage WHERE type = 'public'", {})
     cb(stations)
+end)
+
+--
+-- METRICS
+--
+exports("GetMtpMetrics", function()
+    local metrics = {}
+
+    metrics["field_percent"] = {}
+
+    -- Field Level
+    for name, field in pairs(Fields) do
+        local metric = {identifier = name, value = field:GetHealth()}
+
+        table.insert(metrics["field_percent"], metric)
+    end
+
+    return metrics
 end)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NUI USED FOR soz-jobs/food -->
+<!-- NUI USED FOR soz-jobs -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,11 +35,20 @@
     </section>
 
     <script type="text/javascript">
+        const ICON_TYPE = {
+            cardinal: getGrapeIcon,
+            muscat: getGrapeIcon,
+            chasselas: getGrapeIcon,
+            centennial: getGrapeIcon,
+            petrol: getDrumIcon,
+        }
+
         const COLORSETS = {
             cardinal: ["#553788", "#9266CC", "#AA8DD8", "#744EAA"],
             muscat: ["#CFCB91", "#C4B991", "#CBCCA9", "#D1C8A1"],
             chasselas: ["#91873A", "#CCBE56", "#D9D06F", "#AB9D4F"],
             centennial: ["#708736", "#B1CC66", "#C1D98D", "#95AB4F"],
+            petrol: ["#3B88C3", "#269", "#99AAB5"],
         };
 
         function setVisible(newValue) {
@@ -62,13 +71,23 @@
                 </svg>`;
         }
 
+        function getDrumIcon(colors) {
+            // Source : https://github.com/twitter/twemoji/blob/master/assets/svg/1f6e2.svg
+            return `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+                    <path fill="${colors[0]}" d="M7 25h22v9H7zm0-11h22v9H7zM7 3h22v10H7z"/>
+                    <path fill="${colors[1]}" d="M30 3.178c0 .454-.368.822-.822.822H6.822C6.368 4 6 3.632 6 3.178v-.356C6 2.368 6.368 2 6.822 2h22.355c.455 0 .823.368.823.822v.356zm0 11c0 .454-.368.822-.822.822H6.822C6.368 15 6 14.632 6 14.178v-.355c0-.455.368-.823.822-.823h22.355c.455 0 .823.368.823.822v.356zm0 10c0 .454-.368.822-.822.822H6.822C6.368 25 6 24.632 6 24.178v-.355c0-.455.368-.823.822-.823h22.355c.455 0 .823.368.823.822v.356zm0 11c0 .454-.368.822-.822.822H6.822C6.368 36 6 35.632 6 35.178v-.355c0-.455.368-.823.822-.823h22.355c.455 0 .823.368.823.822v.356z"/>
+                    <path fill="${colors[2]}" d="M26 1.128c0 .481-.391.872-.872.872h-2.256C22.391 2 22 1.609 22 1.128V.872c0-.481.391-.872.872-.872h2.256c.481 0 .872.391.872.872v.256z"/>
+                </svg>`;
+        }
+
         function displayHealth(healthString, fieldType = "cardinal") {
             const el = document.querySelector("#icons");
 
             const icons = healthString
                 .split("")
-                .map(char => char === "0" ? "✖️" : getGrapeIcon(COLORSETS[fieldType]));
-            
+                .map(char => char === "0" ? "✖️" : ICON_TYPE[fieldType](COLORSETS[fieldType]));
+
             el.innerHTML = icons.join("");
             setVisible(true);
         }

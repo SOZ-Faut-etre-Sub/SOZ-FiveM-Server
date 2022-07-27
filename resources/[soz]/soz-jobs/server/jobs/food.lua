@@ -1,3 +1,22 @@
+local Fields = {}
+
+-- Create Fields
+for name, _ in pairs(FoodConfig.Zones) do
+    local fieldType = string.match(name, "%a+")
+    local data = FoodConfig.Fields[fieldType]
+
+    Fields[name] = Field:new(name, data.item, data.prodRange.min, data.prodRange, data.refillDelay, data.harvestRange)
+    Fields[name]:StartRefillLoop(FoodConfig.RefillLoopDelay)
+end
+
+QBCore.Functions.CreateCallback("soz-jobs:server:food:getFieldHealth", function(source, cb, fieldName)
+    local field = Fields[fieldName]
+    if field ~= nil then
+        cb(field:GetHealthState())
+    end
+    cb(nil)
+end)
+
 local function AddItem(source, item, itemCount)
     local count = 1
     if itemCount then
