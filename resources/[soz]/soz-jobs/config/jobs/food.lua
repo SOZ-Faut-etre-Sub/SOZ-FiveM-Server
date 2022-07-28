@@ -276,7 +276,7 @@ FoodConfig.HuntingReward = {
     ["rognon"] = {min = 1, max = 3},
 }
 
-FoodConfig.CraftDuration = {["default"] = 4000, ["sausage"] = 8000, ["wine"] = 20000}
+FoodConfig.CraftDuration = {["default"] = 4000, ["sausage"] = 8000, ["wine"] = 20000, ["cheese"] = 6000}
 
 FoodConfig.Recipes = {
     -- WINES
@@ -294,15 +294,15 @@ FoodConfig.Recipes = {
     },
     ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 2}},
     -- CHEESES
-    ["cheese1"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese2"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese3"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese4"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese5"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese6"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese7"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese8"] = {category = "cheese", ingredients = {["milk"] = 2}},
-    ["cheese9"] = {category = "cheese", ingredients = {["milk"] = 2}},
+    ["cheese1"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese2"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese3"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese4"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese5"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese6"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese7"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese8"] = {category = "cheese", ingredients = {["milk"] = 1}},
+    ["cheese9"] = {category = "cheese", ingredients = {["milk"] = 1}},
     -- SAUSAGES
     ["sausage1"] = {
         category = "sausage",
