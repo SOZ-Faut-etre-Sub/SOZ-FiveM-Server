@@ -8,22 +8,30 @@ Config.AllowedVehicleModel = {
 
 Config.vehicule_position = {x = 897.24, y = -152.67, z = 76.56, w = 325.62}
 
-Config.Horodateur = {["defaultPrice"] = 4.6}
+Config.Horodateur = {["defaultPrice"] = 14}
 
 Config.Cloakroom = {
     ["taxi"] = {
         [GetHashKey("mp_m_freemode_01")] = {
             ["Tenue de service"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 19, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
                     [4] = {Drawable = 25, Texture = 0, Palette = 0},
                     [6] = {Drawable = 10, Texture = 0, Palette = 0},
                     [7] = {Drawable = 27, Texture = 2, Palette = 0},
                     [8] = {Drawable = 6, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 11, Texture = 1, Palette = 0},
+                },
+                Props = {},
+            },
+            ["Tenue de direction"] = {
+                Components = {
+                    [3] = {Drawable = 14, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 24, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 11, Texture = 12, Palette = 0},
+                    [7] = {Drawable = 24, Texture = 2, Palette = 0},
+                    [8] = {Drawable = 4, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 4, Texture = 0, Palette = 0},
                 },
                 Props = {},
             },
@@ -31,15 +39,23 @@ Config.Cloakroom = {
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue de service"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 21, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 150, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 6, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 20, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 54, Texture = 2, Palette = 0},
+                    [6] = {Drawable = 13, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 23, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 216, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 367, Texture = 0, Palette = 0},
+                },
+                Props = {},
+            },
+            ["Tenue de direction"] = {
+                Components = {
+                    [3] = {Drawable = 3, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 54, Texture = 2, Palette = 0},
+                    [6] = {Drawable = 13, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 20, Texture = 0, Palette = 0},
-                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 6, Texture = 4, Palette = 0},
+                    [8] = {Drawable = 40, Texture = 2, Palette = 0},
+                    [11] = {Drawable = 7, Texture = 0, Palette = 0},
                 },
                 Props = {},
             },
