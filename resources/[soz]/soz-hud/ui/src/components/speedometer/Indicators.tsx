@@ -5,6 +5,7 @@ import KeyIcon from "../../assets/vehicle/key";
 import SeatbeltIcon from "../../assets/vehicle/seatbelt";
 import style from "./style.module.css"
 import cn from "classnames";
+import OilIcon from '../../assets/vehicle/oil';
 
 function LightIndicator(props: {state: number}) {
     return (
@@ -15,13 +16,20 @@ function LightIndicator(props: {state: number}) {
     )
 }
 
-function MotorIndicator(props: {state: number}) {
+function MotorIndicator(props: {motor: number, oil: number}) {
     return (
-        <MotorIcon className={cn(style.icon, style.motor, {
-            [style.hidden]: props.state >= 800,
-            [style.orange]: props.state > 200,
-            [style.red]: props.state <= 200,
-        })} />
+        <>
+            <MotorIcon className={cn(style.icon, style.motor, {
+                [style.hidden]: props.motor >= 800,
+                [style.orange]: props.motor > 200,
+                [style.red]: props.motor <= 200,
+            })} />
+            <OilIcon className={cn(style.icon, style.motor, {
+                [style.hidden]: props.oil >= 80,
+                [style.orange]: props.oil > 20,
+                [style.red]: props.oil <= 20,
+            })} />
+        </>
     )
 }
 

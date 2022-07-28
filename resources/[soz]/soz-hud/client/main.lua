@@ -33,6 +33,8 @@ local HudVehicleStatus = {
     --- @type number
     engine = 1000,
     --- @type number
+    oil = 1000,
+    --- @type number
     lock = 4,
     --- @type boolean
     haveLight = false,
@@ -128,6 +130,7 @@ local function setVehicleData(data)
             fuel = HudVehicleStatus.fuel,
             hasFuel = HudVehicleStatus.hasFuel,
             engine = HudVehicleStatus.engine,
+            oil = HudVehicleStatus.oil,
             lock = HudVehicleStatus.lock,
             haveSeatbelt = HudVehicleStatus.haveSeatbelt,
             haveLight = HudVehicleStatus.haveLight,
@@ -227,6 +230,7 @@ CreateThread(function()
                     fuel = exports["soz-vehicle"]:GetFuel(vehicle),
                     hasFuel = exports["soz-vehicle"]:HasFuel(vehicle),
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
+                    oil = math.ceil(GetVehicleOilLevel(vehicle)),
                     lock = GetVehicleDoorLockStatus(vehicle),
                     haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
                     haveLight = haveLight,
