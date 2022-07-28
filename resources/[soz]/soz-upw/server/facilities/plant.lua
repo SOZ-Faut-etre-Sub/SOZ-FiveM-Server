@@ -47,6 +47,10 @@ function Plant:Produce()
         prod = math.random(self.productionPerMinute.min, self.productionPerMinute.max)
     end
 
+    if Config.Production.HourBoost[self.identifier] then
+        prod = math.ceil(prod * Config.Production.HourBoost[self.identifier])
+    end
+
     self.capacity = self.capacity + (prod * wasteMulitplier)
 
     -- Add pollution
