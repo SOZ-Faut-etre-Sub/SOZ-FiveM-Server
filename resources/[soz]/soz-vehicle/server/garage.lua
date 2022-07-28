@@ -270,7 +270,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     local player = QBCore.Functions.GetPlayer(source)
 
     local qbVehicle = exports["soz-vehicle"]:GetVehiclesByModels()[vehicle.vehicle]
-    local price = qbVehicle["price"] * 0.15
+    local price = math.ceil(qbVehicle["price"] * 0.15)
     if type_ == "private" then
         local timediff = math.floor((os.time() - vehicle.parkingtime) / 3600)
         price = timediff * 20
@@ -281,7 +281,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
 
     if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
         if type == "depot" then
-            bennysFee = qbVehicle["price"] * (2.0 / 100)
+            bennysFee = math.ceil(qbVehicle["price"] * 0.02)
             MySQL.Async.execute("UPDATE bank_accounts SET money = money + ? WHERE account_type = 'business' AND businessid = 'bennys'", {
                 bennysFee,
             })
