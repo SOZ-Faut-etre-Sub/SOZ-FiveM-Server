@@ -428,7 +428,8 @@ FoodJob.Functions.CraftItem = function(itemId, item)
     end
 
     Citizen.CreateThread(function()
-        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label), FoodConfig.Collect.Craft.Duration, false, true,
+        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label),
+                                     FoodConfig.CraftDuration[recipe.category] or FoodConfig.CraftDuration["default"], false, true,
                                      {
             disableMovement = true,
             disableCarMovement = true,
