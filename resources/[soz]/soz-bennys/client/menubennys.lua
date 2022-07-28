@@ -752,7 +752,7 @@ Status:On("open", function(menu)
             menu:Close()
         end,
     })
-    local condition = json.decode((Entity(Config.AttachedVehicle).state or { condition = {} }).condition)
+    local condition = json.decode((Entity(Config.AttachedVehicle).state or {condition = {}}).condition)
     for k, v in pairs(Config.ValuesLabels) do
         if k == "engine" then
             local enginehealth = condition["engineHealth"] or GetVehicleEngineHealth(Config.AttachedVehicle)
