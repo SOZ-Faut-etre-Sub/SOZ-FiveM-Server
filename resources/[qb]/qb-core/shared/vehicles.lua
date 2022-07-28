@@ -4280,6 +4280,16 @@ QBShared.Vehicles = {
         ['shop']     = 'air',
         ['type']     = 'air',
     },
+    ['supervolito1']      = {
+        ['name']     = 'SuperVolito',
+        ['brand']    = 'Buckingham',
+        ['model']    = 'supervolito1',
+        ['price']    = 60000,
+        ['category'] = 'Helicopters',
+        ['hash']     = GetHashKey('supervolito'),
+        ['shop']     = 'na',
+        ['type']     = 'air',
+    },
     ['svolito2']      = {
         ['name']     = 'SuperVolito Carbon',
         ['brand']    = 'Buckingham',

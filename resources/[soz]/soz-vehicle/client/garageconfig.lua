@@ -218,11 +218,11 @@ Zonesentreprise = {
         minZ = 72.23,
         maxZ = 77.63,
     }),
-    ["taxi_air"] = BoxZone:Create(vector3(879.5, -151.68, 78.34), 0.6, 0.6, {
+    ["taxi_air"] = BoxZone:Create(vector3(873.95, -146.61, 79.36), 24.6, 25.8, {
         name="taxi_air",
-        heading=1,
+        heading=329,
         minZ = 77.23,
-        maxZ = 78.63,
+        maxZ = 92.63,
       }),
     ["pawl"] = BoxZone:Create(vector3(-595.89, 5295.04, 70.21), 43.8, 37.2, {
         name = "pawl_z",
@@ -1503,24 +1503,13 @@ PlacesEntreprise = {
                                {name = "taxi3", heading = 10, minZ = 73.33, maxZ = 77.33, data = {indexGarage = "taxi"}}),
     ["taxi4"] = BoxZone:Create(vector3(916.75, -170.56, 74.23), 3.2, 7.0,
                                {name = "taxi4", heading = 10, minZ = 73.03, maxZ = 77.03, data = {indexGarage = "taxi"}}),
-
-    ["taxi_air1"] = PolyZone:Create({
-        vector2(865.94793701172, -149.26512145996),
-        vector2(871.0678100586, -152.277053833),
-        vector2(876.42706298828, -150.70715332032),
-        vector2(879.65826416016, -145.84951782226),
-        vector2(878.26361083984, -140.17663574218),
-        vector2(873.24615478516, -137.16622924804),
-        vector2(867.54754638672, -138.55975341796),
-        vector2(864.47033691406, -143.62902832032)
-      }, {
+    ["taxi_air1"] = BoxZone:Create(vector3(872.11, -144.57, 79.69), 13.6, 13.8, {
         name="taxi_air",
+        heading=329,
         minZ = 77.966094970704,
         maxZ = 89.69627380371,
-        debugPoly = true,
         data = {indexGarage = "taxi_air"}
       }),
-
     ["pawl1"] = BoxZone:Create(vector3(-598.99, 5295.01, 70.21), 17.2, 5.0, {
         name = "pawl1",
         heading = 277,
