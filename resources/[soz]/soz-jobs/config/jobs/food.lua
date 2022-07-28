@@ -276,7 +276,13 @@ FoodConfig.HuntingReward = {
     ["rognon"] = {min = 1, max = 3},
 }
 
-FoodConfig.CraftDuration = {["default"] = 4000, ["sausage"] = 8000, ["wine"] = 20000, ["cheese"] = 6000}
+FoodConfig.CraftDuration = {
+    ["default"] = 4000,
+    ["sausage"] = 8000,
+    ["wine"] = 20000,
+    ["cheese"] = 6000,
+    ["grapejuice"] = 8000,
+}
 
 FoodConfig.Recipes = {
     -- WINES
@@ -285,14 +291,14 @@ FoodConfig.Recipes = {
     ["wine3"] = {category = "wine", ingredients = {["grape3"] = 10}},
     ["wine4"] = {category = "wine", ingredients = {["grape4"] = 10}},
     -- JUICES
-    ["grapejuice1"] = {category = "grapejuice", ingredients = {["grape1"] = 2}},
-    ["grapejuice2"] = {category = "grapejuice", ingredients = {["grape2"] = 2}},
-    ["grapejuice3"] = {category = "grapejuice", ingredients = {["grape3"] = 2}},
+    ["grapejuice1"] = {category = "grapejuice", ingredients = {["grape1"] = 4}},
+    ["grapejuice2"] = {category = "grapejuice", ingredients = {["grape2"] = 4}},
+    ["grapejuice3"] = {category = "grapejuice", ingredients = {["grape3"] = 4}},
     ["grapejuice4"] = {
         category = "grapejuice",
-        ingredients = {["grape1"] = 1, ["grape2"] = 1, ["grape3"] = 1, ["grape4"] = 1},
+        ingredients = {["grape1"] = 2, ["grape2"] = 2, ["grape3"] = 2, ["grape4"] = 2},
     },
-    ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 2}},
+    ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 4}},
     -- CHEESES
     ["cheese1"] = {category = "cheese", ingredients = {["milk"] = 1}},
     ["cheese2"] = {category = "cheese", ingredients = {["milk"] = 1}},
