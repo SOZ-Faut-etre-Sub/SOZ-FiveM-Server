@@ -2895,4 +2895,18 @@ QBShared.Items = {
         },
         ['resellZone'] = 'Resell:Zkea',
     },
+
+    --- Deprecated
+    ['milkbucket'] = {
+        ['name'] = 'milkbucket',
+        ['label'] = 'Bidon archéologique',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['durability'] = 14,
+        ['combinable'] = nil,
+        ['description'] = 'Bidon archéologique, autrefois utilisé pour produire du lait'
+    },
 }
