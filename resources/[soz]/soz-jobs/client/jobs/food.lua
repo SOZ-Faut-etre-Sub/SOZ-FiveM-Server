@@ -359,13 +359,13 @@ FoodJob.Functions.CollectIngredients = function(field)
                 DisplayFieldHealth(true, currentField, currentFieldHealth)
             end, field)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas recolté d'ingrédients", "error")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas récolté d'ingrédients", "error")
         end
     end)
 end
 
 AddEventHandler("jobs:client:food-harvest-milk", function()
-    QBCore.Functions.Progressbar("food-harvest-milk", "Vous récupérer des pot de lait", FoodConfig.Collect.Milk.Duration, false, true,
+    QBCore.Functions.Progressbar("food-harvest-milk", "Vous récupérez des pots de lait", FoodConfig.Collect.Milk.Duration, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -374,12 +374,12 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
         QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count)
             if success then
-                exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pot de lait~s~", count))
+                exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pots de lait~s~", count))
                 Citizen.Wait(1000)
 
                 TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {
                     item_id = FoodConfig.Collect.Milk.Item,
-                }, {item_label = "Seau de lait", quantity = tonumber(count), position = GetEntityCoords(PlayerPedId())}, true)
+                }, {item_label = "Pot de lait", quantity = tonumber(count), position = GetEntityCoords(PlayerPedId())}, true)
 
                 TriggerEvent("jobs:client:food-harvest-milk")
             end
