@@ -1,3 +1,5 @@
+local QBCore = exports["qb-core"]:GetCoreObject()
+
 local VehiculeOptions = MenuV:CreateMenu(nil, "Station entretien", "menu_job_bennys", "soz", "mechanic:vehicle:options")
 local Status = MenuV:InheritMenu(VehiculeOptions, "Etat")
 local VehiculeCustom = MenuV:InheritMenu(VehiculeOptions, "Personnalisation")
@@ -750,10 +752,11 @@ Status:On("open", function(menu)
             menu:Close()
         end,
     })
+    local condition = json.decode((Entity(Config.AttachedVehicle).state or { condition = {} }).condition)
     for k, v in pairs(Config.ValuesLabels) do
         if k == "engine" then
-            local enginehealth = GetVehicleEngineHealth(Config.AttachedVehicle)
-            local enginepercentage = math.round(math.ceil(enginehealth) / 10)
+            local enginehealth = condition["engineHealth"] or GetVehicleEngineHealth(Config.AttachedVehicle)
+            local enginepercentage = QBCore.Shared.Round(enginehealth / 10, 1)
             if enginehealth == 1000 then
                 menu:AddButton({
                     label = v,
@@ -774,8 +777,8 @@ Status:On("open", function(menu)
                 })
             end
         elseif k == "body" then
-            local bodyhealth = GetVehicleBodyHealth(Config.AttachedVehicle)
-            local bodypercentage = math.round(math.ceil(bodyhealth) / 10)
+            local bodyhealth = condition["bodyHealth"] or GetVehicleBodyHealth(Config.AttachedVehicle)
+            local bodypercentage = QBCore.Shared.Round(bodyhealth / 10, 1)
             if bodyhealth == 1000 then
                 menu:AddButton({
                     label = v,
@@ -796,8 +799,8 @@ Status:On("open", function(menu)
                 })
             end
         elseif k == "fuel" then
-            local tankhealth = GetVehiclePetrolTankHealth(Config.AttachedVehicle)
-            local tankpercentage = math.round(math.ceil(tankhealth) / 10)
+            local tankhealth = condition["tankHealth"] or GetVehiclePetrolTankHealth(Config.AttachedVehicle)
+            local tankpercentage = QBCore.Shared.Round(tankhealth / 10, 1)
             if tankhealth == 1000 then
                 menu:AddButton({
                     label = v,
