@@ -246,6 +246,7 @@ RegisterNetEvent("soz-garage:client:doTakeOutGarage", function(vehicle, type_, i
         local veh = NetToVeh(vehNet)
         -- QBCore.Functions.SetVehicleProperties(veh, mods)
         -- QBCore.Functions.SetVehicleProperties(veh, condition)
+        Entity(veh).state.set("condition", vehicle.condition, true)
         exports["soz-vehicle"]:SetFuel(veh, condition.fuelLevel)
         exports["soz-hud"]:DrawNotification(Lang:t("success.vehicle_out"), "primary")
     end, vehicle.vehicle, emptySlot, mods, condition)

@@ -500,17 +500,11 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
         end
 
         local tireHealth = {}
-        for i = 0,3 do
-            tireHealth[i] = GetVehicleWheelHealth(vehicle, i)
-        end
-
         local tireBurstState = {}
-        for i = 0,5 do
-            tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false)
-        end
-
         local tireBurstCompletely = {}
-        for i = 0,5 do
+        for i = 0, GetVehicleNumberOfWheels(vehicle) do
+            tireHealth[i] = GetVehicleWheelHealth(vehicle, i)
+            tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false)
             tireBurstCompletely[i] = IsVehicleTyreBurst(vehicle, i, true)
         end
 
@@ -524,6 +518,9 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
             _doorStatus[i] = IsVehicleDoorDamaged(vehicle, i) == 1
         end
 
+        local oilLevel = Entity(vehicle).state.oilLevel or GetVehicleOilLevel(vehicle)
+        local virtualOilLevel = Entity(vehicle).state.virtualOilLevel or 1400
+
         return {
             model = GetEntityModel(vehicle),
             plate = QBCore.Functions.GetPlate(vehicle),
@@ -533,7 +530,8 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
             tankHealth = QBCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle), 0.1),
             fuelLevel = QBCore.Shared.Round(GetVehicleFuelLevel(vehicle), 0.1),
             dirtLevel = QBCore.Shared.Round(GetVehicleDirtLevel(vehicle), 0.1),
-            oilLevel = QBCore.Shared.Round(GetVehicleOilLevel(vehicle), 0.1),
+            virtualOilLevel = QBCore.Shared.Round(virtualOilLevel, 1),
+            oilLevel = QBCore.Shared.Round(oilLevel, 0.1),
             color1 = colorPrimary,
             color2 = colorSecondary,
             pearlescentColor = pearlescentColor,
@@ -648,7 +646,11 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         if props.fuelLevel then
             SetVehicleFuelLevel(vehicle, props.fuelLevel + 0.0)
         end
+        if props.virtualOilLevel then
+            Entity(vehicle).state:set('virtualOilLevel', props.virtualOilLevel)
+        end
         if props.oilLevel then
+            Entity(vehicle).state:set('oilLevel', props.oilLevel)
             SetVehicleOilLevel(vehicle, props.oilLevel)
         end
         if props.dirtLevel then
