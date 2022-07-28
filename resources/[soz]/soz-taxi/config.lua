@@ -39,12 +39,12 @@ Config.Cloakroom = {
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue de service"] = {
                 Components = {
-                    [3] = {Drawable = 20, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 28, Texture = 0, Palette = 0},
                     [4] = {Drawable = 54, Texture = 2, Palette = 0},
                     [6] = {Drawable = 13, Texture = 0, Palette = 0},
                     [7] = {Drawable = 23, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 216, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 367, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 185, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 334, Texture = 1, Palette = 0},
                 },
                 Props = {},
             },
