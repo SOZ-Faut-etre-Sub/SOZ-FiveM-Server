@@ -76,9 +76,6 @@ FoodConfig.Collect = {
     Grape = {
         Duration = 10000, -- in ms
     },
-    Craft = {
-        Duration = 4000, -- in ms
-    },
     Milk = {
         Duration = 10000, -- in ms
         Reward = {min = 1, max = 4},
@@ -279,6 +276,8 @@ FoodConfig.HuntingReward = {
     ["rognon"] = {min = 1, max = 3},
 }
 
+FoodConfig.CraftDuration = {["default"] = 4000, ["sausage"] = 8000}
+
 FoodConfig.Recipes = {
     -- WINES
     ["wine1"] = {category = "wine", ingredients = {["grape1"] = 3}},
@@ -307,22 +306,22 @@ FoodConfig.Recipes = {
     -- SAUSAGES
     ["sausage1"] = {
         category = "sausage",
-        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+        ingredients = {["tripe"] = 4, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
     },
     ["sausage2"] = {
         category = "sausage",
-        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+        ingredients = {["tripe"] = 4, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
     },
     ["sausage3"] = {
         category = "sausage",
-        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+        ingredients = {["tripe"] = 4, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
     },
     ["sausage4"] = {
         category = "sausage",
-        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+        ingredients = {["tripe"] = 4, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
     },
     ["sausage5"] = {
         category = "sausage",
-        ingredients = {["tripe"] = 1, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
+        ingredients = {["tripe"] = 4, ["viande"] = 1, ["langue"] = 1, ["abat"] = 1, ["rognon"] = 1},
     },
 }
