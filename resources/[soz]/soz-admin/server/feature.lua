@@ -1,4 +1,8 @@
 QBCore.Functions.CreateCallback("soz-admin:feature:GetFeatures", function(source, cb, playerId)
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
+        return
+    end
+
     local player = QBCore.Functions.GetPlayer(playerId)
 
     if player then
@@ -9,6 +13,10 @@ QBCore.Functions.CreateCallback("soz-admin:feature:GetFeatures", function(source
 end)
 
 RegisterNetEvent("soz-admin:feature:AddFeature", function(playerId, feature)
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
+        return
+    end
+
     local player = QBCore.Functions.GetPlayer(playerId)
 
     if not player then
@@ -29,6 +37,10 @@ RegisterNetEvent("soz-admin:feature:AddFeature", function(playerId, feature)
 end)
 
 RegisterNetEvent("soz-admin:feature:RemoveFeature", function(playerId, feature)
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
+        return
+    end
+
     local player = QBCore.Functions.GetPlayer(playerId)
 
     if not player then
