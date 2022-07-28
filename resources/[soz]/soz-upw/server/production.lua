@@ -16,6 +16,17 @@ function StartProductionLoop()
     end)
 end
 
+function StartBoostLoop()
+    Citizen.CreateThread(function()
+        while true do
+            local boostWindPercent = math.random(80, 160) / 100
+            Config.Production.HourBoost.wind1 = boostWindPercent
+
+            Citizen.Wait(1000 * 60 * 60)
+        end
+    end)
+end
+
 --
 -- EVENTS
 --

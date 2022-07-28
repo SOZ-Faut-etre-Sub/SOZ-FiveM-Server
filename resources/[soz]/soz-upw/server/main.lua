@@ -80,6 +80,7 @@ MySQL.ready(function()
     Pm:StartPollutionLoop()
 
     InitiateFacilities()
+    StartBoostLoop()
     StartProductionLoop()
     StartConsumptionLoop()
     StartSaveLoop()
