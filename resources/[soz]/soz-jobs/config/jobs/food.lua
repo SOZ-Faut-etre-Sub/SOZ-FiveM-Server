@@ -276,14 +276,14 @@ FoodConfig.HuntingReward = {
     ["rognon"] = {min = 1, max = 3},
 }
 
-FoodConfig.CraftDuration = {["default"] = 4000, ["sausage"] = 8000}
+FoodConfig.CraftDuration = {["default"] = 4000, ["sausage"] = 8000, ["wine"] = 20000}
 
 FoodConfig.Recipes = {
     -- WINES
-    ["wine1"] = {category = "wine", ingredients = {["grape1"] = 3}},
-    ["wine2"] = {category = "wine", ingredients = {["grape2"] = 3}},
-    ["wine3"] = {category = "wine", ingredients = {["grape3"] = 3}},
-    ["wine4"] = {category = "wine", ingredients = {["grape4"] = 3}},
+    ["wine1"] = {category = "wine", ingredients = {["grape1"] = 10}},
+    ["wine2"] = {category = "wine", ingredients = {["grape2"] = 10}},
+    ["wine3"] = {category = "wine", ingredients = {["grape3"] = 10}},
+    ["wine4"] = {category = "wine", ingredients = {["grape4"] = 10}},
     -- JUICES
     ["grapejuice1"] = {category = "grapejuice", ingredients = {["grape1"] = 2}},
     ["grapejuice2"] = {category = "grapejuice", ingredients = {["grape2"] = 2}},
