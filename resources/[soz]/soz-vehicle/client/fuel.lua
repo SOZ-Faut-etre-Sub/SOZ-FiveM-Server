@@ -6,6 +6,22 @@ local stationPistolInUse = false
 local playerIsInsideStationZone = false
 
 ---
+--- Vehicle Oil (always provide the virtual oil, the methods will calculate the oil for GTA
+---
+function GetOil(vehicle)
+    return Entity(vehicle).state.virtualOilLevel or 1400
+end
+
+function SetOil(vehicle, oil)
+    if type(oil) == "number" and oil >= 0 and oil <= 1400 then
+        local realOilLevel = oil * Config.MaxOil[GetVehicleClass(vehicle)] / 1400
+        SetVehicleOilLevel(vehicle, realOilLevel + 0.0)
+        Entity(vehicle).state:set("virtualOilLevel", oil, true)
+        Entity(vehicle).state:set("oilLevel", GetVehicleOilLevel(vehicle), true)
+    end
+end
+
+---
 --- Vehicle Fuel
 ---
 function ManageFuelUsage(vehicle)
@@ -16,8 +32,9 @@ function ManageFuelUsage(vehicle)
         fuelSynced = true
     end
     if IsVehicleEngineOn(vehicle) and Config.Classes[GetVehicleClass(vehicle)] > 0 then
-        SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] *
-                    (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10)
+        local consumption = Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] * (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10
+        SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - consumption)
+        SetOil(vehicle, GetOil(vehicle) - consumption)
     end
 end
 
