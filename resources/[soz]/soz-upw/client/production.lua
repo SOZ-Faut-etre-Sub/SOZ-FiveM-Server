@@ -38,7 +38,7 @@ function CreateWasteZone(identifier, data)
     }
 
     data.onPlayerInOut = function(isIn)
-        if isIn and OnDuty("garbage") then
+        if isIn and (OnDuty("garbage") or OnDuty("upw")) then
             local waste = QBCore.Functions.TriggerRpc("soz-upw:server:GetWaste", identifier, "waste")
             SendNUIMessage({action = "show", health = Config.FieldHealthStates[waste]})
         else
