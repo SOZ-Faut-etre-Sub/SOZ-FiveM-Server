@@ -107,6 +107,32 @@ Config.Classes = {
     [22] = 0.6, -- Ultra lightweight
 }
 
+Config.MaxOil = {
+    [0] = 6.5, -- Compacts
+    [1] = 6.5, -- Sedans
+    [2] = 6.5, -- SUVs
+    [3] = 6.5, -- Coupes
+    [4] = 6.5, -- Muscle
+    [5] = 6.5, -- Sports Classics
+    [6] = 6.5, -- Sports
+    [7] = 6.5, -- Super
+    [8] = 5.0, -- Motorcycles
+    [9] = 6.5, -- Off-road
+    [10] = 8.0, -- Industrial
+    [11] = 8.0, -- Utility
+    [12] = 6.5, -- Vans
+    [13] = 0.0, -- Cycles
+    [14] = 3.0, -- Boats
+    [15] = 8.0, -- Helicopters
+    [16] = 5.0, -- Planes
+    [17] = 6.5, -- Service
+    [18] = 6.5, -- Emergency
+    [19] = 6.5, -- Military
+    [20] = 6.5, -- Commercial
+    [21] = 0.0, -- Trains
+    [22] = 6.5, -- Ultra lightweight
+}
+
 -- The left part is at percentage RPM, and the right is how much fuel (divided by 10) you want to remove from the tank every second
 Config.FuelUsage = {
     [1.0] = 1.4,
