@@ -1171,7 +1171,7 @@ QBShared.Items = {
     },
     ['sandwich'] = {
         ['name'] = 'sandwich',
-        ['label'] = 'Sandwiche',
+        ['label'] = 'Sandwich',
         ['weight'] = 300,
         ['type'] = 'food',
         ['unique'] = false,
