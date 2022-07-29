@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
         local zone = PrepareZoneData(data, zonePath)
 
         if zone then
-            createFunc(facility.identifier, zone, facility)
+            createFunc(facility.identifier, zone, data)
         end
     end
 

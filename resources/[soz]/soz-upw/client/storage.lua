@@ -49,11 +49,6 @@ function CreateInverterZone(identifier, data)
 end
 
 function CreateTerminalZone(identifier, data, facility)
-    local facilityData = json.decode(facility.data);
-    if type(facility) == "table" then
-        facilityData = facility
-    end
-
     data.options = {
         {
             label = "Déposer l'énergie",
@@ -71,8 +66,8 @@ function CreateTerminalZone(identifier, data, facility)
             identifier = identifier,
             facility = "terminal",
             canInteract = function()
-                if facilityData.scope == "entreprise" then
-                    return OnDutyUpwOrJob(facilityData.job)
+                if facility.scope == "entreprise" then
+                    return OnDutyUpwOrJob(facility.job)
                 else
                     return OnDuty()
                 end
