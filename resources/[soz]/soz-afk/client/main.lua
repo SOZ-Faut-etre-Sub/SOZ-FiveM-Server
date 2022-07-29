@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
                         exports["soz-phone"]:setPhoneFocus(false)
                     end
 
-                    local afkWord = exports["soz-hud"]:Input(("Anti-AFK - %s/%s - Tapper le mot suivant: %s"):format(try, Config.retryAllowed, word), 32)
+                    local afkWord = exports["soz-hud"]:Input(("Anti-AFK - %s/%s - Taper le mot suivant: %s"):format(try, Config.retryAllowed, word), 32)
 
                     if afkWord ~= nil and string.lower(word) == string.lower(afkWord) then
                         try, time = 1, Config.secondsUntilKick
