@@ -537,3 +537,38 @@ RegisterNetEvent("soz-fuel:client:onJerrycanKerosene", function()
         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser cet objet dans un véhicule", "error")
     end
 end)
+
+RegisterNetEvent("soz-fuel:client:onOilKerosene", function()
+    local ped = PlayerPedId()
+    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local model = GetEntityModel(vehicle)
+    local oil = GetOil(vehicle)
+
+    if IsThisModelABicycle(model) then
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser ce carburant pour ce véhicule", "error")
+        return
+    end
+
+    if DoesEntityExist(vehicle) and IsPedOnFoot(ped) then
+        if oil <= 980 then
+            TaskTurnPedToFaceEntity(ped, vehicle, 500)
+            Wait(500)
+
+            QBCore.Functions.Progressbar("oil_jerrycan_kerosene", "Remplissage du véhicule...", 10000, false, false,
+                                         {
+                disableMouse = false,
+                disableMovement = true,
+                disableCarMovement = true,
+                disableCombat = true,
+            }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
+                QBCore.Functions.TriggerRpc("fuel:server:useOilJerrycan", VehToNet(vehicle))
+
+                exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un bidon d'huile")
+            end)
+        else
+            exports["soz-hud"]:DrawNotification("Vous avez ~r~trop d'huile~s~ pour utiliser un jerrycan", "error")
+        end
+    else
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser cet objet dans un véhicule", "error")
+    end
+end)

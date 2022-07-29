@@ -63,7 +63,7 @@ function AdminMenuVehicles(menu, permission)
         value = nil,
         select = function()
             local vehicle = GetVehiclePedIsIn(PlayerPedId())
-            Entity(vehicle).state:set('virtualOilLevel', 1400, true)
+            Entity(vehicle).state:set("virtualOilLevel", 1400, true)
             SetVehicleBodyHealth(vehicle, 1000.0)
             SetVehicleEngineHealth(vehicle, 1000.0)
             SetVehicleFixed(vehicle)
