@@ -25,7 +25,7 @@ BaunJob.Functions.InitCraftingZones = function()
 end
 
 BaunJob.Functions.DestroyCraftingZones = function()
-    for _, zone in ipairs(BaunJob.Craft.Zones) do
+    for _, zone in ipairs(BaunJob.CraftZones) do
         zone:destroy()
     end
 end
