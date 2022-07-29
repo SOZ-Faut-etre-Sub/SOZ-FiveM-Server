@@ -33,7 +33,7 @@ local HudVehicleStatus = {
     --- @type number
     engine = 1000,
     --- @type number
-    oil = 1000,
+    oil = 1400,
     --- @type number
     lock = 4,
     --- @type boolean
@@ -230,7 +230,7 @@ CreateThread(function()
                     fuel = exports["soz-vehicle"]:GetFuel(vehicle),
                     hasFuel = exports["soz-vehicle"]:HasFuel(vehicle),
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
-                    oil = math.ceil(GetVehicleOilLevel(vehicle)),
+                    oil = exports["soz-vehicle"]:GetOilForHud(vehicle),
                     lock = GetVehicleDoorLockStatus(vehicle),
                     haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
                     haveLight = haveLight,

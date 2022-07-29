@@ -21,6 +21,10 @@ function SetOil(vehicle, oil)
     end
 end
 
+function GetOilForHud(vehicle)
+    return GetOil(vehicle) * 100 / 1400
+end
+exports("GetOilForHud", GetOilForHud)
 ---
 --- Vehicle Fuel
 ---
