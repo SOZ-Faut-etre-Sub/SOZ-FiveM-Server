@@ -428,7 +428,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
     end
 
     Citizen.CreateThread(function()
-        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez 1 %s", item.label),
+        QBCore.Functions.Progressbar("food-craft-item", string.format("Vous préparez %s", item.label),
                                      FoodConfig.CraftDuration[recipe.category] or FoodConfig.CraftDuration["default"], false, true,
                                      {
             disableMovement = true,
@@ -439,7 +439,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
             if not wasCancelled then
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
                     if success then
-                        exports["soz-hud"]:DrawNotification(string.format("Vous avez préparé ~g~1 %s", item.label))
+                        exports["soz-hud"]:DrawNotification(string.format("Vous avez préparé ~g~%s", item.label))
 
                         TriggerServerEvent("monitor:server:event", "job_cm_food_craft", {item_id = itemId},
                                            {

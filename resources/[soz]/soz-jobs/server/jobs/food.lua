@@ -131,7 +131,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
         end
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, itemId, recipe.output or 1, nil, nil, function(success, reason)
         if not success then
             local message = "Vos poches sont pleines..."
             if reason ~= "invalid_weight" then
