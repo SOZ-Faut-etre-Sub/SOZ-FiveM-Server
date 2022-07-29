@@ -77,7 +77,7 @@ local function SpawnFieldZones()
             debugPoly = false,
         })
         fieldZone:onPlayerInOut(function(isInside)
-            if isInside then
+            if isInside and PlayerData.job.id == SozJobCore.JobType.Oil and PlayerData.job.onduty then
                 CreateTankerAction()
                 exports["qb-target"]:AddTargetModel({"p_oil_pjack_01_s", "p_oil_pjack_02_s", "p_oil_pjack_03_s"}, {
                     options = {
