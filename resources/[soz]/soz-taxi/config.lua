@@ -26,12 +26,12 @@ Config.Cloakroom = {
             },
             ["Tenue de direction"] = {
                 Components = {
-                    [3] = {Drawable = 14, Texture = 0, Palette = 0},
-                    [4] = {Drawable = 24, Texture = 0, Palette = 0},
-                    [6] = {Drawable = 11, Texture = 12, Palette = 0},
-                    [7] = {Drawable = 24, Texture = 2, Palette = 0},
-                    [8] = {Drawable = 4, Texture = 0, Palette = 0},
-                    [11] = {Drawable = 4, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 12, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 28, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 10, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 27, Texture = 2, Palette = 0},
+                    [8] = {Drawable = 33, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 31, Texture = 0, Palette = 0},
                 },
                 Props = {},
             },
