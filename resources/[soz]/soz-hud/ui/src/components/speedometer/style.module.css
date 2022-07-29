@@ -23,7 +23,7 @@
 .centerContainer {
     display: flex;
     justify-content: center;
-    margin-right: -20px; /* remove fuel container size */
+    margin-right: -40px; /* remove fuel container size */
 }
 
 .rightContainer {
@@ -87,7 +87,7 @@
     flex-direction: column;
     text-align: center;
     top: 1.5rem;
-    margin-right: 40px;
+    margin-right: 80px;
     width: 100px;
     color: rgba(255, 255, 255, .8);
     text-transform: uppercase;
@@ -141,7 +141,8 @@
 .motor {
     position: relative;
     top: 75px;
-    right: 5.3rem;
+    right: 6.5rem;
+    margin: 0 0.25rem;
 }
 
 /* Seatbelt */

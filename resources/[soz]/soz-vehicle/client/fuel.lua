@@ -6,6 +6,26 @@ local stationPistolInUse = false
 local playerIsInsideStationZone = false
 
 ---
+--- Vehicle Oil (always provide the virtual oil, the methods will calculate the oil for GTA
+---
+function GetOil(vehicle)
+    return Entity(vehicle).state.virtualOilLevel or 1400
+end
+
+function SetOil(vehicle, oil)
+    if type(oil) == "number" and oil >= 0 and oil <= 1400 then
+        local realOilLevel = oil * Config.MaxOil[GetVehicleClass(vehicle)] / 1400
+        SetVehicleOilLevel(vehicle, realOilLevel + 0.0)
+        Entity(vehicle).state:set("virtualOilLevel", oil, true)
+        Entity(vehicle).state:set("oilLevel", GetVehicleOilLevel(vehicle), true)
+    end
+end
+
+function GetOilForHud(vehicle)
+    return GetOil(vehicle) * 100 / 1400
+end
+exports("GetOilForHud", GetOilForHud)
+---
 --- Vehicle Fuel
 ---
 function ManageFuelUsage(vehicle)
@@ -16,8 +36,9 @@ function ManageFuelUsage(vehicle)
         fuelSynced = true
     end
     if IsVehicleEngineOn(vehicle) and Config.Classes[GetVehicleClass(vehicle)] > 0 then
-        SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] *
-                    (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10)
+        local consumption = Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] * (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10
+        SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - consumption)
+        SetOil(vehicle, GetOil(vehicle) - consumption)
     end
 end
 
@@ -511,6 +532,41 @@ RegisterNetEvent("soz-fuel:client:onJerrycanKerosene", function()
             end)
         else
             exports["soz-hud"]:DrawNotification("Vous avez ~r~trop de kérosène~s~ pour utiliser un jerrycan", "error")
+        end
+    else
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser cet objet dans un véhicule", "error")
+    end
+end)
+
+RegisterNetEvent("soz-fuel:client:onOilKerosene", function()
+    local ped = PlayerPedId()
+    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local model = GetEntityModel(vehicle)
+    local oil = GetOil(vehicle)
+
+    if IsThisModelABicycle(model) then
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser ce carburant pour ce véhicule", "error")
+        return
+    end
+
+    if DoesEntityExist(vehicle) and IsPedOnFoot(ped) then
+        if oil <= 980 then
+            TaskTurnPedToFaceEntity(ped, vehicle, 500)
+            Wait(500)
+
+            QBCore.Functions.Progressbar("oil_jerrycan_kerosene", "Remplissage du véhicule...", 10000, false, false,
+                                         {
+                disableMouse = false,
+                disableMovement = true,
+                disableCarMovement = true,
+                disableCombat = true,
+            }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
+                QBCore.Functions.TriggerRpc("fuel:server:useOilJerrycan", VehToNet(vehicle))
+
+                exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un bidon d'huile")
+            end)
+        else
+            exports["soz-hud"]:DrawNotification("Vous avez ~r~trop d'huile~s~ pour utiliser un jerrycan", "error")
         end
     else
         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser cet objet dans un véhicule", "error")

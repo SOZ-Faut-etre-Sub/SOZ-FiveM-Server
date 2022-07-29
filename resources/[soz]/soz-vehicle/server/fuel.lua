@@ -171,6 +171,30 @@ QBCore.Functions.CreateCallback("fuel:server:useJerrycanKerosene", function(sour
     cb(true)
 end)
 
+QBCore.Functions.CreateUseableItem("oil_jerrycan", function(source, item)
+    TriggerClientEvent("soz-fuel:client:onOilJerrycan", source)
+end)
+
+QBCore.Functions.CreateCallback("fuel:server:useOilJerrycan", function(source, cb, netVehicle)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local vehicle = NetworkGetEntityFromNetworkId(netVehicle)
+    if vehicle == 0 then
+        cb(false)
+        return
+    end
+
+    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "oil_jerrycan", 1) then
+        Entity(vehicle).state.virtualOilLevel = 1400
+    end
+
+    cb(true)
+end)
+
 --- MTP functions
 QBCore.Functions.CreateCallback("fuel:server:changeStationPrice", function(source, cb, fuel, price)
     local Player = QBCore.Functions.GetPlayer(source)
