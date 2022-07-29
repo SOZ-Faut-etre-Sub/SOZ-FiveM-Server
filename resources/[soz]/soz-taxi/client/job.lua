@@ -6,7 +6,7 @@ local lastLocation = nil
 local TotalDistance = 0
 local retval, taxiGroupHash = AddRelationshipGroup("TAXI")
 
-HorodateurData = {Tarif = 4.6, TarifActuelle = 0, Distance = 0}
+HorodateurData = {Tarif = 14, TarifActuelle = 0, Distance = 0}
 
 NpcData = {
     Active = false,
