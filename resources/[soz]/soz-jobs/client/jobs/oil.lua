@@ -124,7 +124,7 @@ CreateThread(function()
         maxZ = 33.4,
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("fueler:cloakroom", vector3(-231.78, 6078.43, 32.26), 3.55, 4.0,
+    exports["qb-target"]:AddBoxZone("fueler:cloakroom", vector3(-231.78, 6078.43, 32.26), 3.55, 3.9,
                                     {name = "fueler:cloakroom", heading = 316, minZ = 31.26, maxZ = 33.5}, {
         options = {
             {
