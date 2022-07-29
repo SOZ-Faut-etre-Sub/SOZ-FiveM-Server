@@ -20,7 +20,7 @@ CreateThread(function()
                 goto skip
             end
 
-            if PlayerData.metadata['hunger'] <= 0 or PlayerData.metadata['thirst'] <= 0 then
+            if PlayerData.metadata['hunger'] <= 0 or PlayerData.metadata['thirst'] <= 0 or PlayerData.metadata['alcohol'] >= 100 then
                 local ped = PlayerPedId()
 
                 if GetEntityHealth(ped) > 0 then
