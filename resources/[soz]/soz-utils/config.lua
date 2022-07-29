@@ -52,14 +52,14 @@ ConsumablesDrink = {
 }
 
 ConsumablesAlcohol = {
-    ["whiskey"] = math.random(20, 30),
-    ["vodka"] = math.random(20, 40),
-    ["beer"] = math.random(5, 15),
-    ["wine1"] = math.random(40, 60),
-    ["wine2"] = math.random(40, 60),
-    ["wine3"] = math.random(40, 60),
-    ["wine4"] = math.random(40, 60),
-    ["royal_mojito"] = math.random(20, 30),
+    ["whiskey"] = math.random(13, 21),
+    ["vodka"] = math.random(16, 24),
+    ["beer"] = math.random(4, 8),
+    ["wine1"] = math.random(25, 35),
+    ["wine2"] = math.random(25, 35),
+    ["wine3"] = math.random(25, 35),
+    ["wine4"] = math.random(25, 35),
+    ["royal_mojito"] = math.random(12, 17),
 }
 
 ConsumablesDrug = {
