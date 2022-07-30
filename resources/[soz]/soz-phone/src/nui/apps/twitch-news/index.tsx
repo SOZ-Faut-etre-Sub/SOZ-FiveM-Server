@@ -3,13 +3,13 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
+import { useBackground } from '@ui/hooks/useBackground';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { useBackground } from '../../../ui/hooks/useBackground';
-import NewsList from './list/NewsList';
+import NewsList from './pages/NewsList';
 
 export const TwitchNewsApp = () => {
     const messages = useApp('twitch-news');

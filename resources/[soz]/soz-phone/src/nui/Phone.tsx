@@ -4,13 +4,9 @@ import { useCallService } from '@os/call/hooks/useCallService';
 import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
-import { PhoneEvents } from '@typings/phone';
-import dayjs from 'dayjs';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import DefaultConfig from '../../config.json';
-import { BankEvents } from '../../typings/app/bank';
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import { HomeApp } from './apps/home';
@@ -18,12 +14,12 @@ import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceSe
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
-import { useTwitchNewsService } from './apps/twitch-news/hooks/useMessageService';
-import InjectDebugData from './os/debug/InjectDebugData';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
 import { useAppBankService } from './services/app/useAppBankService';
+import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
+import { useDebugService } from './services/useDebugService';
 import { usePhoneService } from './services/usePhoneService';
 import ThemeProvider from './styles/themeProvider';
 import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
@@ -31,6 +27,8 @@ import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
 function Phone() {
     const { apps } = useApps();
     useConfig();
+
+    useDebugService();
 
     useKeyboardService();
     usePhoneService();
@@ -41,11 +39,11 @@ function Phone() {
     useNoteListener();
     /*usePhotoService();*/
     useSocietyMessagesService();
-    useTwitchNewsService();
     useCallService();
     useDialService();
     // Apps services
     useAppBankService();
+    useAppTwitchNewsService();
 
     return (
         <ThemeProvider>
@@ -70,35 +68,3 @@ function Phone() {
 }
 
 export default Phone;
-
-InjectDebugData<any>([
-    {
-        app: 'PHONE',
-        method: PhoneEvents.SET_VISIBILITY,
-        data: true,
-    },
-    {
-        app: 'PHONE',
-        method: PhoneEvents.SET_PHONE_READY,
-        data: true,
-    },
-    {
-        app: 'PHONE',
-        method: PhoneEvents.SET_TIME,
-        data: dayjs().format('hh:mm'),
-    },
-    {
-        app: 'PHONE',
-        method: PhoneEvents.SET_CONFIG,
-        data: DefaultConfig,
-    },
-    {
-        app: 'BANK',
-        method: BankEvents.SEND_CREDENTIALS,
-        data: {
-            name: 'John Doe',
-            account: '555Z5555T555',
-            balance: 1258745,
-        },
-    },
-]);

@@ -11,7 +11,7 @@ import PhotoApp from '../../../apps/photo/components/PhotoApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { SocietyContactsApp } from '../../../apps/society-contacts/components/SocietyContactsApp';
 import { SocietyMessagesApp } from '../../../apps/society-messages/components/SocietyMessagesApp';
-import { TwitchNewsApp } from '../../../apps/twitch-news/components/TwitchNewsApp';
+import { TwitchNewsApp } from '../../../apps/twitch-news';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 
 export interface IAppConfig {
