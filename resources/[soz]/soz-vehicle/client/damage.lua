@@ -61,7 +61,6 @@ Citizen.CreateThread(function()
 
             if vehEng + vehBody == 0 then
                 local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
-                print(json.encode(newcondition))
             end
 
             if newVehEng + newVehBody < vehEng + vehBody then
