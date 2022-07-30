@@ -4,7 +4,7 @@ import React from 'react';
 import { BankApp } from '../../../apps/bank';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
-import { DialerApp } from '../../../apps/dialer/components/DialerApp';
+import { DialerApp } from '../../../apps/dialer';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
 import { NotesApp } from '../../../apps/notes';
 import PhotoApp from '../../../apps/photo/components/PhotoApp';
