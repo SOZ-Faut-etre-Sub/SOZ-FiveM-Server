@@ -37,7 +37,6 @@ local modified = false
 Gready = false
 Gfinishready = false
 
-
 local function setModified(bool)
     modified = bool
 end
@@ -884,7 +883,7 @@ VehiculeCustom:On("close", function()
     VehiculeCustom:ClearItems()
 end)
 
-local function  sanitizeMods(mods)
+local function sanitizeMods(mods)
     mods.engineHealth = nil
     mods.tireHealth = nil
     mods.tankHealth = nil
@@ -914,8 +913,6 @@ local function saveVehicle()
         end
     end
 end
-
-
 
 VehiculeOptions:On("open", function(menu)
     menu:ClearItems()

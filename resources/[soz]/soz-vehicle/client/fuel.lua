@@ -40,7 +40,7 @@ function ManageFuelUsage(vehicle)
         local consumption = Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] * (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10
         SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - consumption)
         if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") > 0 then
-            SetOil(vehicle, GetVehicleOilLevel(vehicle) - (consumption/Config.oilDivider))
+            SetOil(vehicle, GetVehicleOilLevel(vehicle) - (consumption / Config.oilDivider))
         end
     end
     if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") > 0 and GetOil(vehicle) <= 0 and IsVehicleEngineOn(vehicle) then
@@ -75,7 +75,8 @@ CreateThread(function()
     while true do
         Wait(1000)
         for vehicle in exports["soz-vehicle"]:EnumerateVehicles() do
-            if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") > 0 and ((IsVehicleEngineOn(vehicle) and GetOil(vehicle) <= 0.5) or GetOil(vehicle) <= 0) then
+            if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") > 0 and
+                ((IsVehicleEngineOn(vehicle) and GetOil(vehicle) <= 0.5) or GetOil(vehicle) <= 0) then
                 exports["soz-vehicle"]:showLoopParticleAtBone("core", "exp_grd_bzgas_smoke", vehicle, GetEntityBoneIndexByName(vehicle, "engine"), 1.5, 1000)
             end
         end
