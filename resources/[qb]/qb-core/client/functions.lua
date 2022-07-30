@@ -490,7 +490,7 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
         end
 
         local modLivery = GetVehicleMod(vehicle, 48)
-        if GetVehicleMod(vehicle, 48) == -1 and GetVehicleLivery(vehicle) ~= -1 then
+        if GetVehicleMod(vehicle, 48) == -1 and GetVehicleLivery(vehicle) ~= 0 then
             modLivery = GetVehicleLivery(vehicle)
         end
 
@@ -500,11 +500,17 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
         end
 
         local tireHealth = {}
-        local tireBurstState = {}
-        local tireBurstCompletely = {}
-        for i = 0, GetVehicleNumberOfWheels(vehicle) do
+        for i = 0, 3 do
             tireHealth[i] = GetVehicleWheelHealth(vehicle, i)
-            tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false)
+        end
+
+        local tireBurstState = {}
+        for i = 0, 5 do
+           tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false)
+        end
+
+        local tireBurstCompletely = {}
+        for i = 0, 5 do
             tireBurstCompletely[i] = IsVehicleTyreBurst(vehicle, i, true)
         end
 
@@ -612,7 +618,7 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
 end
 
 function QBCore.Functions.SetVehicleProperties(vehicle, props)
-    if DoesEntityExist(vehicle) then
+    if DoesEntityExist(vehicle) and  props then
         if props.extras then
             for id, enabled in pairs(props.extras) do
                 if enabled then
@@ -900,3 +906,38 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         end
     end
 end
+
+local function equals(o1, o2)
+   if o1 == o2 then
+      return true
+   end
+   if type(o1) == "table" and type(o2) == "table" then
+      for k, v in pairs(o1) do
+         if k ==  "neonEnabled" then
+            for keyn, neon1 in pairs(v) do
+                for keyj, neon2 in pairs(o2[tostring(k)]) do
+                    if tonumber(keyn) == tonumber(keyj) and neon1 ~= neon2 then
+                        return false
+                    end
+                end
+            end
+        elseif k == "neonColor" or k == "tyreSmokeColor" then
+            if (tonumber(v[1]) ~= tonumber(o2[tostring(k)][1])) or (tonumber(v[2]) ~= tonumber(o2[tostring(k)][2])) or (tonumber(v[3]) ~= tonumber(o2[tostring(k)][3])) then
+                return false
+            end
+        elseif not equals(v, o2[tostring(k)]) then
+            return false
+         end
+      end
+      return true
+   end
+   return false
+end
+
+function QBCore.Functions.AreModsEquale(old, new)
+    if old and new then
+        return equals(old, new)
+    end
+
+end
+

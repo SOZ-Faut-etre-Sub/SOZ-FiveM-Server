@@ -4,7 +4,11 @@ function ApplyMod(categoryID, modID)
     OriginalCategory = categoryID
     OriginalMod = modID
 
+    if categoryID == 48 then
+        SetVehicleLivery(plyVeh, modID)
+    end
     SetVehicleMod(plyVeh, categoryID, modID)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyExtra(extraID)
@@ -17,12 +21,14 @@ function ApplyExtra(extraID)
         SetVehicleExtra(plyVeh, tonumber(extraID), 0)
         SetVehiclePetrolTankHealth(plyVeh, 4000.0)
     end
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyWindowTint(windowTintID)
     local plyVeh = Config.AttachedVehicle
     OriginalWindowTint = windowTintID
     SetVehicleWindowTint(plyVeh, windowTintID)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyColour(paintType, paintCategory, paintID)
@@ -57,6 +63,7 @@ function ApplyColour(paintType, paintCategory, paintID)
         SetVehicleInteriorColour(plyVeh, paintID)
         OriginalInterColour = paintID
     end
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyWheel(categoryID, wheelID, wheelType)
@@ -73,6 +80,7 @@ function ApplyWheel(categoryID, wheelID, wheelType)
     if GetVehicleClass(plyVeh) == 8 then -- Motorcycle
         SetVehicleMod(plyVeh, 24, wheelID, doesHaveCustomWheels)
     end
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyCustomWheel(state)
@@ -83,6 +91,7 @@ function ApplyCustomWheel(state)
     if GetVehicleClass(plyVeh) == 8 then -- Motorcycle
         SetVehicleMod(plyVeh, 24, GetVehicleMod(plyVeh, 24), state)
     end
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyNeon(side, enabled)
@@ -92,6 +101,7 @@ function ApplyNeon(side, enabled)
     OriginalNeonLightSide = side
 
     SetVehicleNeonLightEnabled(plyVeh, side, enabled)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyNeonColour(r, g, b)
@@ -102,11 +112,13 @@ function ApplyNeonColour(r, g, b)
     OriginalNeonColourB = b
 
     SetVehicleNeonLightsColour(plyVeh, r, g, b)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyXenonLights(category, state)
     local plyVeh = Config.AttachedVehicle
     ToggleVehicleMod(plyVeh, category, state)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyOldLivery(liv)
@@ -115,6 +127,7 @@ function ApplyOldLivery(liv)
     OriginalOldLivery = liv
 
     SetVehicleLivery(plyVeh, liv)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyPlateIndex(index)
@@ -123,6 +136,7 @@ function ApplyPlateIndex(index)
     OriginalPlateIndex = index
 
     SetVehicleNumberPlateTextIndex(plyVeh, index)
+    exports["soz-bennys"]:setModified(true)
 end
 
 function ApplyTyreSmoke(r, g, b)
@@ -130,4 +144,5 @@ function ApplyTyreSmoke(r, g, b)
 
     ToggleVehicleMod(plyVeh, 20, true)
     SetVehicleTyreSmokeColor(plyVeh, r, g, b)
+    exports["soz-bennys"]:setModified(true)
 end

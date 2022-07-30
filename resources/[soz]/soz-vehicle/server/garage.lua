@@ -234,7 +234,12 @@ end)
 ---@param coords vector4 Spawn location
 ---@param mods table Vehicle properties
 QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, condition)
-    local veh = SpawnVehicle(modelName, coords, mods.plate, condition.fuelLevel)
+    if not condition then
+        condition = {}
+        condition.fuelLevel = 1000
+        condition.engineHealth = 1000
+    end
+    local veh = SpawnVehicle(modelName, coords, mods.plate, condition.fuelLevel or 100)
     if not veh then
         SetSpawnLock(mods.plate, false)
         exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (Vehicle is nil)"):format(mods.plate))
@@ -352,29 +357,39 @@ local function GetVehicleData(vehNetId, extraData)
 end
 
 local function UpdateVehicleMods(vehicleNetId, vehicleExtraData)
-    vehicleExtraData.engineHealth = nil
-    vehicleExtraData.tireHealth = nil
-    vehicleExtraData.tankHealth = nil
-    vehicleExtraData.dirtLevel = nil
-    vehicleExtraData.bodyHealth = nil
-    vehicleExtraData.oilLevel = nil
-    vehicleExtraData.fuelLevel = nil
-    vehicleExtraData.windowStatus = nil
-    vehicleExtraData.tireBurstState = nil
-    vehicleExtraData.tireBurstCompletely = nil
-    vehicleExtraData.doorStatus = nil
+    if vehicleExtraData then
+        vehicleExtraData.engineHealth = nil
+        vehicleExtraData.tireHealth = nil
+        vehicleExtraData.tankHealth = nil
+        vehicleExtraData.dirtLevel = nil
+        vehicleExtraData.bodyHealth = nil
+        vehicleExtraData.oilLevel = nil
+        vehicleExtraData.fuelLevel = nil
+        vehicleExtraData.windowStatus = nil
+        vehicleExtraData.tireBurstState = nil
+        vehicleExtraData.tireBurstCompletely = nil
+        vehicleExtraData.doorStatus = nil
 
-    local query = [[
-        UPDATE player_vehicles
-        SET mods = ?
-        WHERE plate = ?
-    ]]
+        local query = [[
+            UPDATE player_vehicles
+            SET mods = ?
+            WHERE plate = ?
+        ]]
 
-    local plate = GetVehicleNumberPlateText(NetworkGetEntityFromNetworkId(vehicleNetId))
-    local args = {json.encode(vehicleExtraData), plate}
+        local mods = json.encode(vehicleExtraData)
+        local veh = NetworkGetEntityFromNetworkId(vehicleNetId)
 
-    local res = MySQL.Sync.execute(query, args)
-    return res == 1
+        Entity(veh).state:set("mods", mods, true)
+
+        exports["soz-monitor"]:Log("INFO", ("Vehcile %s customisation update %s"):format(mods.plate, mods))
+
+        local plate = GetVehicleNumberPlateText(veh)
+        local args = {mods, plate}
+
+        local res = MySQL.Sync.execute(query, args)
+        return res == 1
+    end
+    return false
 end
 
 QBCore.Functions.CreateCallback("soz-garage:server:UpdateVehicleMods", function(source, cb, vehicleNetId, vehicleExtraData)
@@ -399,6 +414,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     local decodedMods = json.decode(mods[1].mods)
     if decodedMods then
         if next(decodedMods) == nil then
+            exports["soz-monitor"]:Log("INFO", ("Vehcile %s no default mods set"):format(decodedExtra1.plate))
             UpdateVehicleMods(vehicleNetId, decodedExtra1)
         end
     end

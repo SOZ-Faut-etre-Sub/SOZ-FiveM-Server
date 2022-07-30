@@ -12,6 +12,9 @@ function PreviewMod(categoryID, modID)
         SetVehicleDoorOpen(plyVeh, 5, false, true)
     end
 
+    if categoryID == 48 then
+        SetVehicleLivery(plyVeh, modID)
+    end
     SetVehicleMod(plyVeh, categoryID, modID)
 end
 

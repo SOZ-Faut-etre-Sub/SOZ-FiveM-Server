@@ -33,8 +33,16 @@ local variableRespraytype
 local variableNeonstate
 local variableSpoilers
 local variablePart
+local modified = false
 Gready = false
 Gfinishready = false
+
+
+local function setModified(bool)
+    modified = bool
+end
+
+exports("setModified", setModified)
 
 ChooseWheelMenu:On("open", function(menu)
     local v = variableChoosewheel
@@ -876,13 +884,38 @@ VehiculeCustom:On("close", function()
     VehiculeCustom:ClearItems()
 end)
 
+local function  sanitizeMods(mods)
+    mods.engineHealth = nil
+    mods.tireHealth = nil
+    mods.tankHealth = nil
+    mods.dirtLevel = nil
+    mods.bodyHealth = nil
+    mods.oilLevel = nil
+    mods.fuelLevel = nil
+    mods.windowStatus = nil
+    mods.tireBurstState = nil
+    mods.tireBurstCompletely = nil
+    mods.doorStatus = nil
+    mods.wheelWidth = nil
+    mods.wheelSize = nil
+    return mods
+end
+
+exports("sanitizeMods", sanitizeMods)
 local function saveVehicle()
     local veh = Config.AttachedVehicle
     local netID = NetworkGetNetworkIdFromEntity(veh)
     local properties = QBCore.Functions.GetVehicleProperties(veh)
-
-    QBCore.Functions.TriggerRpc("soz-garage:server:UpdateVehicleMods", netID, properties)
+    if not QBCore.Functions.AreModsEquale(sanitizeMods(json.decode(Entity(veh).state.mods)), sanitizeMods(properties)) then
+        if not QBCore.Functions.TriggerRpc("soz-garage:server:UpdateVehicleMods", netID, properties) then
+            exports["soz-hud"]:DrawNotification("Le vehicule n'à pu être modifier correctement(réessayer)", "error")
+        else
+            exports["soz-hud"]:DrawNotification("Le vehicule a été modifier correctement", "success")
+        end
+    end
 end
+
+
 
 VehiculeOptions:On("open", function(menu)
     menu:ClearItems()
@@ -897,7 +930,9 @@ VehiculeOptions:On("open", function(menu)
             if Gready == true then
                 Gfinishready = true
                 Gready = false
-                saveVehicle()
+                if modified then
+                    saveVehicle()
+                end
                 TriggerEvent("soz-bennys:client:UnattachVehicle")
                 SetVehicleDoorsLocked(veh, 1)
                 menu:Close()
@@ -1136,6 +1171,7 @@ CreateThread(function()
                 blackoutJob = "bennys",
                 action = function(entity)
                     Config.AttachedVehicle = entity
+                    modified = false
                     startAnimation()
                 end,
                 canInteract = function()
