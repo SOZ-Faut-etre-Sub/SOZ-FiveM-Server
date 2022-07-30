@@ -280,7 +280,9 @@ AddStateBagChangeHandler("mods" --[[key filter]] , nil --[[bag filter]] , functi
         local new = GetVehicleEngineHealth(veh) + GetVehicleBodyHealth(veh) + GetVehiclePetrolTankHealth(veh);
         if old ~= new then
             local condition = json.decode(Entity(veh).state.condition)
-            QBCore.Functions.SetVehicleProperties(veh, condition)
+            if condition then
+                QBCore.Functions.SetVehicleProperties(veh, condition)
+            end
         end
     end
 end)
