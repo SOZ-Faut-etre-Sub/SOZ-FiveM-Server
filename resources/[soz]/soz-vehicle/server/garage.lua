@@ -414,7 +414,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     local decodedMods = json.decode(mods[1].mods)
     if decodedMods then
         if next(decodedMods) == nil then
-            exports["soz-monitor"]:Log("INFO", ("Vehcile %s no default mods set"):format(decodedExtra1.plate))
+            exports["soz-monitor"]:Log("INFO", ("Vehcile %s no default mods"):format(decodedExtra1.plate))
             UpdateVehicleMods(vehicleNetId, decodedExtra1)
         end
     end
@@ -458,9 +458,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
 
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then
+        exports["soz-monitor"]:Log("INFO", ("Vehcile %s rentrer au garage"):format(mods.plate))
         DespawnVehicle(vehicleNetId)
         cb(true)
     else
+        exports["soz-monitor"]:Log("ERROR", ("Vehcile %s impossible de le rentrer au garage"):format(mods.plate))
         cb(false)
     end
 end)
