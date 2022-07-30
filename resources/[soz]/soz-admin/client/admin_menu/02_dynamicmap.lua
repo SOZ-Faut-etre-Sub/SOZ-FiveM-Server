@@ -56,6 +56,10 @@ local function DisplayVehicleName()
                     DrawText3Ds(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z + 1,
                                 GetDisplayNameFromVehicleModel(GetEntityModel(vehiclehandle)) .. " | VehiculeNet: " ..
                                     NetworkGetNetworkIdFromEntity(vehiclehandle) .. textowner .. GetPlayerServerId(NetworkGetEntityOwner(vehiclehandle)))
+                    DrawText3Ds(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z + 2,
+                                "VehiculeEngigneHealth: " .. GetVehicleEngineHealth(vehiclehandle) .. " | VehiculeBodyHealth: " ..
+                                    GetVehicleBodyHealth(vehiclehandle) .. " | VehiculeOil: " .. GetVehicleOilLevel(vehiclehandle) .. "/" ..
+                                    GetVehicleHandlingFloat(vehiclehandle, "CHandlingData", "fOilVolume"))
                 end
             end
             Wait(0)

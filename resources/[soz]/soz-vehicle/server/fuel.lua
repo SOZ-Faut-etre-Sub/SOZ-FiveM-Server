@@ -175,7 +175,7 @@ QBCore.Functions.CreateUseableItem("oil_jerrycan", function(source, item)
     TriggerClientEvent("soz-fuel:client:onOilJerrycan", source)
 end)
 
-QBCore.Functions.CreateCallback("fuel:server:useOilJerrycan", function(source, cb, netVehicle)
+QBCore.Functions.CreateCallback("fuel:server:useOilJerrycan", function(source, cb, netVehicle, oil)
     local Player = QBCore.Functions.GetPlayer(source)
     if Player == nil then
         cb(false)
@@ -189,7 +189,7 @@ QBCore.Functions.CreateCallback("fuel:server:useOilJerrycan", function(source, c
     end
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "oil_jerrycan", 1) then
-        Entity(vehicle).state.virtualOilLevel = 1400
+        Entity(vehicle).state.oilLevel = oil
     end
 
     cb(true)
