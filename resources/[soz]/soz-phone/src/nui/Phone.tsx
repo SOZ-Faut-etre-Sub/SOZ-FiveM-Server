@@ -5,10 +5,9 @@ import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
-import { useDialService } from './apps/dialer/hooks/useDialService';
 import { HomeApp } from './apps/home';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useMessagesService } from './apps/messages/hooks/useMessageService';
@@ -21,6 +20,7 @@ import { useAppBankService } from './services/app/useAppBankService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
 import { useDebugService } from './services/useDebugService';
 import { usePhoneService } from './services/usePhoneService';
+import { useSimCardService } from './services/useSimCardService';
 import ThemeProvider from './styles/themeProvider';
 import { LoadingSpinner } from './ui/old_components/LoadingSpinner';
 
@@ -40,7 +40,10 @@ function Phone() {
     /*usePhotoService();*/
     useSocietyMessagesService();
     useCallService();
-    useDialService();
+
+    // Core services
+    useSimCardService();
+
     // Apps services
     useAppBankService();
     useAppTwitchNewsService();

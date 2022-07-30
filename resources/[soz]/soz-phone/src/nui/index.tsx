@@ -21,8 +21,8 @@ dayjs.extend(relativeTime);
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
-            <HashRouter>
-                <NuiProvider resource="npwd">
+            <NuiProvider resource="npwd">
+                <HashRouter>
                     <RecoilRootManager>
                         <SoundProvider>
                             <NotificationsProvider>
@@ -32,8 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                             </NotificationsProvider>
                         </SoundProvider>
                     </RecoilRootManager>
-                </NuiProvider>
-            </HashRouter>
+                </HashRouter>
+            </NuiProvider>
         </Provider>
     </React.StrictMode>
 );
