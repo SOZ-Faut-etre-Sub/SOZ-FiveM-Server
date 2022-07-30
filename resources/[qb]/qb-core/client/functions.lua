@@ -938,6 +938,6 @@ function QBCore.Functions.AreModsEquale(old, new)
     if old and new then
         return equals(old, new)
     end
-
+    return false
 end
 
