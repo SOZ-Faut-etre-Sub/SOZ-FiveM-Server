@@ -107,6 +107,8 @@ Config.Classes = {
     [22] = 0.6, -- Ultra lightweight
 }
 
+Config.oilDivider = 280.0
+
 Config.MaxOil = {
     [0] = 6.5, -- Compacts
     [1] = 6.5, -- Sedans

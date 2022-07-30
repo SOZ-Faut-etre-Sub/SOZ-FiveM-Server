@@ -417,7 +417,6 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     conditionVehicle["tankHealth"] = decodedExtra.tankHealth
     conditionVehicle["dirtLevel"] = decodedExtra.dirtLevel
     conditionVehicle["bodyHealth"] = decodedExtra.bodyHealth
-    conditionVehicle["virtualOilLevel"] = decodedExtra.virtualOilLevel
     conditionVehicle["oilLevel"] = decodedExtra.oilLevel
     conditionVehicle["fuelLevel"] = decodedExtra.fuelLevel
     conditionVehicle["windowStatus"] = decodedExtra.windowStatus

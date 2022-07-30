@@ -9,20 +9,21 @@ local playerIsInsideStationZone = false
 --- Vehicle Oil (always provide the virtual oil, the methods will calculate the oil for GTA
 ---
 function GetOil(vehicle)
-    return Entity(vehicle).state.virtualOilLevel or 1400
+    return Entity(vehicle).state.oilLevel or GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume")
 end
 
 function SetOil(vehicle, oil)
-    if type(oil) == "number" and oil >= 0 and oil <= 1400 then
-        local realOilLevel = oil * Config.MaxOil[GetVehicleClass(vehicle)] / 1400
-        SetVehicleOilLevel(vehicle, realOilLevel + 0.0)
-        Entity(vehicle).state:set("virtualOilLevel", oil, true)
+    if type(oil) == "number" and oil >= 0 and oil <= GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") then
+        SetVehicleOilLevel(vehicle, oil + 0.0)
+        Entity(vehicle).state:set("oilLevel", GetVehicleOilLevel(vehicle), true)
+    elseif type(oil) == "number" and oil <= 0 then
+        SetVehicleOilLevel(vehicle, 0.0)
         Entity(vehicle).state:set("oilLevel", GetVehicleOilLevel(vehicle), true)
     end
 end
 
 function GetOilForHud(vehicle)
-    return GetOil(vehicle) * 100 / 1400
+    return (GetOil(vehicle) / GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume")) * 100
 end
 exports("GetOilForHud", GetOilForHud)
 ---
@@ -38,7 +39,20 @@ function ManageFuelUsage(vehicle)
     if IsVehicleEngineOn(vehicle) and Config.Classes[GetVehicleClass(vehicle)] > 0 then
         local consumption = Config.FuelUsage[QBCore.Shared.Round(GetVehicleCurrentRpm(vehicle), 1)] * (Config.Classes[GetVehicleClass(vehicle)] or 1.0) / 10
         SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - consumption)
-        SetOil(vehicle, GetOil(vehicle) - consumption)
+        SetOil(vehicle, GetOil(vehicle) - consumption/Config.oilDivider)
+    end
+    if GetOil(vehicle) <= 0.5 then
+        exports['soz-vehicle']:showLoopParticleAtBone("core", "exp_grd_bzgas_smoke", vehicle, GetEntityBoneIndexByName(vehicle, "engine") , 1.5, 1000)
+    end
+    if GetOil(vehicle) <= 0  and  IsVehicleEngineOn(vehicle) then
+        local newEngine = 0
+        if (GetVehicleEngineHealth(vehicle) - 50) > 0 then
+            newEngine = GetVehicleEngineHealth(vehicle) - 50
+        end
+        SetVehicleEngineHealth(vehicle, newEngine)
+    end
+    if GetOil(vehicle) <= 0 then
+        SetVehicleEngineOn(vehicle, false, true, true)
     end
 end
 
@@ -538,7 +552,7 @@ RegisterNetEvent("soz-fuel:client:onJerrycanKerosene", function()
     end
 end)
 
-RegisterNetEvent("soz-fuel:client:onOilKerosene", function()
+RegisterNetEvent("soz-fuel:client:onOilJerrycan", function()
     local ped = PlayerPedId()
     local vehicle = QBCore.Functions.GetClosestVehicle()
     local model = GetEntityModel(vehicle)
@@ -550,7 +564,7 @@ RegisterNetEvent("soz-fuel:client:onOilKerosene", function()
     end
 
     if DoesEntityExist(vehicle) and IsPedOnFoot(ped) then
-        if oil <= 980 then
+        if oil/GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") <= 0.7 then
             TaskTurnPedToFaceEntity(ped, vehicle, 500)
             Wait(500)
 
@@ -561,8 +575,8 @@ RegisterNetEvent("soz-fuel:client:onOilKerosene", function()
                 disableCarMovement = true,
                 disableCombat = true,
             }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 50}, {}, {}, function()
-                QBCore.Functions.TriggerRpc("fuel:server:useOilJerrycan", VehToNet(vehicle))
-
+                QBCore.Functions.TriggerRpc("fuel:server:useOilJerrycan", VehToNet(vehicle), GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume"))
+                SetVehicleOilLevel(vehicle, GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") + 0.0)
                 exports["soz-hud"]:DrawNotification("Vous avez ~g~utilisé~s~ un bidon d'huile")
             end)
         else
