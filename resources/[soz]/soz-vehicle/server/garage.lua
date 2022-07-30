@@ -239,7 +239,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
         condition.fuelLevel = 1000
         condition.engineHealth = 1000
     end
-    local veh = SpawnVehicle(modelName, coords, mods.plate, condition.fuelLevel or 100)
+    local veh = SpawnVehicle(modelName, coords, mods.plate, condition.fuelLevel or 1000)
     if not veh then
         SetSpawnLock(mods.plate, false)
         exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (Vehicle is nil)"):format(mods.plate))
