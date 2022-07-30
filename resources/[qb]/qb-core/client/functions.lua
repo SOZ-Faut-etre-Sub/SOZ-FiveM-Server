@@ -519,7 +519,6 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
         end
 
         local oilLevel = Entity(vehicle).state.oilLevel or GetVehicleOilLevel(vehicle)
-        local virtualOilLevel = Entity(vehicle).state.virtualOilLevel or 1400
 
         return {
             model = GetEntityModel(vehicle),
@@ -530,7 +529,6 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
             tankHealth = QBCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle), 0.1),
             fuelLevel = QBCore.Shared.Round(GetVehicleFuelLevel(vehicle), 0.1),
             dirtLevel = QBCore.Shared.Round(GetVehicleDirtLevel(vehicle), 0.1),
-            virtualOilLevel = QBCore.Shared.Round(virtualOilLevel, 1),
             oilLevel = QBCore.Shared.Round(oilLevel, 0.1),
             color1 = colorPrimary,
             color2 = colorSecondary,
@@ -645,9 +643,6 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         end
         if props.fuelLevel then
             SetVehicleFuelLevel(vehicle, props.fuelLevel + 0.0)
-        end
-        if props.virtualOilLevel then
-            Entity(vehicle).state:set('virtualOilLevel', props.virtualOilLevel)
         end
         if props.oilLevel then
             Entity(vehicle).state:set('oilLevel', props.oilLevel)
