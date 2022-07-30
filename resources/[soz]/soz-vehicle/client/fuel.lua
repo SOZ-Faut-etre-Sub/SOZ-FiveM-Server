@@ -41,9 +41,6 @@ function ManageFuelUsage(vehicle)
         SetFuel(vehicle, GetVehicleFuelLevel(vehicle) - consumption)
         SetOil(vehicle, GetOil(vehicle) - consumption / Config.oilDivider)
     end
-    if GetOil(vehicle) <= 0.5 then
-        exports["soz-vehicle"]:showLoopParticleAtBone("core", "exp_grd_bzgas_smoke", vehicle, GetEntityBoneIndexByName(vehicle, "engine"), 1.5, 1000)
-    end
     if GetOil(vehicle) <= 0 and IsVehicleEngineOn(vehicle) then
         local newEngine = 0
         if (GetVehicleEngineHealth(vehicle) - 50) > 0 then
@@ -72,7 +69,16 @@ CreateThread(function()
         end
     end
 end)
-
+CreateThread(function()
+    while true do
+        Wait(1000)
+        for vehicle in exports["soz-vehicle"]:EnumerateVehicles() do
+            if IsVehicleEngineOn(vehicle) and GetOil(vehicle) <= 0.5 then
+                exports["soz-vehicle"]:showLoopParticleAtBone("core", "exp_grd_bzgas_smoke", vehicle, GetEntityBoneIndexByName(vehicle, "engine"), 1.5, 1000)
+            end
+        end
+    end
+end)
 function HasFuel(vehicle)
     return Config.Classes[GetVehicleClass(vehicle)] > 0
 end
