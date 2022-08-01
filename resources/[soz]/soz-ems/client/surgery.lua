@@ -31,7 +31,8 @@ Citizen.CreateThread(function()
                 blackoutGlobal = true,
                 blackoutJob = "lsmc",
                 canInteract = function(entity)
-                    Organe = QBCore.Functions.TriggerRpc("lsmc:server:GetCurrentOrgan", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                    local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    Organe = QBCore.Functions.TriggerRpc("lsmc:server:GetCurrentOrgan", id)
                     Wait(100)
                     return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "anim@gangops@morgue@table@", "body_search", 3) and InsideSurgery and Organe ==
                                false
@@ -116,6 +117,7 @@ Citizen.CreateThread(function()
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
+                        TriggerServerEvent('QBCore:Server:RemoveItem', Organe, 1)
                         local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                         TriggerServerEvent("lsmc:surgery:server:SetCurrentOrgan", false, id)
                     end)
