@@ -2574,12 +2574,22 @@ REGISTER_NUI_CALLBACK('close', function(info, cb)
 end)
 
 REGISTER_NUI_CALLBACK('close_all', function(info, cb)
-    if (MenuV.CurrentMenu == nil) then cb('ok') return end
+    if (MenuV.CurrentMenu == nil) then
+        for _, parentMenu in ipairs(MenuV.ParentMenus) do
+            parentMenu:Trigger('close')
+        end
+        MenuV.ParentMenus = {}
+        cb('ok')
+        return
+    end
 
     MenuV.CurrentMenu:RemoveOnEvent('update', MenuV.CurrentUpdateUUID)
     MenuV.CurrentMenu:Trigger('close')
     MenuV.CurrentMenu:DestroyThreads()
     MenuV.CurrentMenu = nil
+    for _, parentMenu in ipairs(MenuV.ParentMenus) do
+        parentMenu:Trigger('close')
+    end
     MenuV.ParentMenus = {}
 
     cb('ok')
