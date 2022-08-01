@@ -16,7 +16,6 @@ end)
 RegisterServerEvent("lsmc:surgery:server:SetCurrentOrgan")
 AddEventHandler("lsmc:surgery:server:SetCurrentOrgan", function(organe, id)
     local Player = QBCore.Functions.GetPlayer(id or source)
-
     Player.Functions.SetMetaData("organ", organe)
 
     TriggerClientEvent("lsmc:surgery:client:ApplyCurrentOrgan", Player.PlayerData.source, organe)
@@ -29,7 +28,7 @@ AddEventHandler("lsmc:server:SetHazmat", function(hazmat)
     Player.Functions.SetMetaData("hazmat", hazmat)
 end)
 
-QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(id, cb)
+QBCore.Functions.CreateCallback("lsmc:server:GetCurrentOrgan", function(source, cb, id)
     local Player = QBCore.Functions.GetPlayer(id)
     local organ = Player.PlayerData.metadata["organ"]
     if organ == nil then
