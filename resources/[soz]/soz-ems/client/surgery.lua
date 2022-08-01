@@ -117,7 +117,7 @@ Citizen.CreateThread(function()
                         disableMouse = false,
                         disableCombat = true,
                     }, {animDict = "mini@repair", anim = "fixing_a_ped"}, {}, {}, function()
-                        TriggerServerEvent('QBCore:Server:RemoveItem', Organe, 1)
+                        TriggerServerEvent("QBCore:Server:RemoveItem", Organe, 1)
                         local id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
                         TriggerServerEvent("lsmc:surgery:server:SetCurrentOrgan", false, id)
                     end)
