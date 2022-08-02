@@ -10,7 +10,7 @@ export const appTwitchNews = createModel<RootModel>()({
             return [...payload];
         },
         add: (state, payload) => {
-            return [...payload, ...state];
+            return [payload, ...state];
         },
     },
     effects: dispatch => ({
