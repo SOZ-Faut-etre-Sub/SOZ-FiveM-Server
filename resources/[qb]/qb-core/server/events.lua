@@ -201,6 +201,8 @@ RegisterNetEvent('QBCore:Server:SetMetaData', function(meta, data)
     if meta == 'hunger' or meta == 'thirst' or meta == 'alcohol' or meta == 'drug' then
         if data > 100 then
             data = 100
+        elseif data < 0 then
+            data = 0
         end
     end
     if Player then
