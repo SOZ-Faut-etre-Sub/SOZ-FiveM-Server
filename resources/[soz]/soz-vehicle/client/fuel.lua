@@ -25,6 +25,8 @@ end
 function GetOilForHud(vehicle)
     return (GetOil(vehicle) / GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume")) * 100
 end
+exports("GetOil", GetOil)
+exports("SetOil", SetOil)
 exports("GetOilForHud", GetOilForHud)
 ---
 --- Vehicle Fuel
