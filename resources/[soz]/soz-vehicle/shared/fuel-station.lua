@@ -106,9 +106,13 @@ function FuelStation:GetModel()
 end
 
 function FuelStation:VehicleAccessFuel(vehicle)
+    print("Check vehicle access fuel: " .. json.encode(GetEntityModel(vehicle)))
     if self.fuel == "electric" then
         return Config.FuelStations.Vehicle.ElectricModel[GetEntityModel(vehicle)] or false
     elseif self.fuel == "essence" then
+        if Config.FuelStations.Vehicle.ElectricModel[GetEntityModel(vehicle)] or false then
+            return false
+        end
         if IsDuplicityVersion() then
             local vehicleType = GetVehicleType(vehicle)
             return vehicleType == "automobile" or vehicleType == "bike" or vehicleType == "boat" or vehicleType == "submarine"
@@ -117,6 +121,9 @@ function FuelStation:VehicleAccessFuel(vehicle)
             return vehicleClass ~= 13 and vehicleClass ~= 15 and vehicleClass ~= 16 and vehicleClass ~= 21
         end
     elseif self.fuel == "kerosene" then
+        if Config.FuelStations.Vehicle.ElectricModel[GetEntityModel(vehicle)] or false then
+            return false
+        end
         if IsDuplicityVersion() then
             local vehicleType = GetVehicleType(vehicle)
             return vehicleType == "heli" or vehicleType == "plane"
