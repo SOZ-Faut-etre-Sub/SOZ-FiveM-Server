@@ -5,15 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>SOZ Phone</title>
         <script type="text/javascript">
+            let phoneIsLoaded = false;
+
+            function loadNUIScript(url) {
+                const script = document.createElement('script');
+                script.setAttribute('src', url);
+
+                document.head.appendChild(script);
+                phoneIsLoaded = true;
+            }
+
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'soz-phone-nui-load') {
                     const url = event.data.mode === 'dev' ? 'http://localhost:9001/nui.js' : 'https://cfx-nui-soz-phone/build/nui/nui.js';
-                    const script = document.createElement('script');
-                    script.setAttribute('src', url);
-
-                    document.head.appendChild(script);
+                    loadNUIScript(url);
                 }
             });
+
+            setTimeout(() => {
+                if (phoneIsLoaded) return;
+
+                const url = !!window.invokeNative ? 'https://cfx-nui-soz-phone/build/nui/nui.js' : 'http://localhost:9001/nui.js';
+                loadNUIScript(url);
+            }, 5000);
         </script>
     </head>
     <body>
