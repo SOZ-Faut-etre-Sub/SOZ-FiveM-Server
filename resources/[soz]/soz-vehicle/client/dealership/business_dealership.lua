@@ -3,55 +3,56 @@ local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local vehicleListMenu = MenuV:CreateMenu(nil, "Veuillez choisir un véhicule", "menu_shop_vehicle_car_society", "soz", "concessentre:vehicle:car")
 local vehicleChooseMenu = MenuV:InheritMenu(vehicleListMenu)
 
-local InsideConcessEntreprise = false
+local insideBusinessDealership = false
 local selectedModel = {}
 
-local vehicles = {}
-for _, vehicle in pairs(QBCore.Shared.Vehicles) do
-    vehicles[vehicle["model"]] = vehicle
-end
-
-ZonesConcessEntreprise = {
-    ["ConcessEntreprise"] = BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
-        name = "ConcessEntreprise_z",
+local businessDealershipZone = {
+    BoxZone:Create(vector3(858.83, -3207.03, 5.9), 10, 10, {
+        name = "business_dealership",
         heading = 0,
         minZ = 4.9,
         maxZ = 8.9,
     }),
 }
 
-PlacesConcessEntreprise = {
-    ["entreprise1"] = BoxZone:Create(vector3(827.31, -3210.51, 5.9), 8, 6, {
+local businessDealershipParkingSpots = {
+    BoxZone:Create(vector3(827.31, -3210.51, 5.9), 8, 6, {
         name = "entreprise1",
         heading = 180,
         minZ = 4.9,
         maxZ = 8.9,
-        data = {indexGarage = "ConcessEntreprise", vehicleType = "car"},
+        data = {
+            indexGarage = "business_dealership",
+            vehicleTypes = {car = true, bike = true, motorcycle = true, truck = true},
+        },
     }),
-    ["entreprise2"] = BoxZone:Create(vector3(834.94, -3210.88, 5.9), 8, 6, {
+    BoxZone:Create(vector3(834.94, -3210.88, 5.9), 8, 6, {
         name = "entreprise2",
         heading = 180,
         minZ = 4.9,
         maxZ = 8.9,
-        data = {indexGarage = "ConcessEntreprise", vehicleType = "car"},
+        data = {
+            indexGarage = "business_dealership",
+            vehicleTypes = {car = true, bike = true, motorcycle = true, truck = true},
+        },
     }),
-    ["entreprise3"] = BoxZone:Create(vector3(807.41, -3208.19, 5.9), 12.8, 10.4, {
+    BoxZone:Create(vector3(807.41, -3208.19, 5.9), 12.8, 10.4, {
         name = "entreprise_air",
         heading = 46,
         minZ = 4.9,
         maxZ = 9.9,
-        data = {indexGarage = "ConcessEntreprise", vehicleType = "air"},
+        data = {indexGarage = "business_dealership", vehicleTypes = {heli = true}},
     }),
 }
 
 local function TakeOutGarage(vehicle)
     local location, heading, availableSlots = nil, nil, 0
-    for _, jobDealerSlot in pairs(PlacesConcessEntreprise) do
-        if vehicle.data.category == jobDealerSlot.data.vehicleType then
+    for _, jobDealerSlot in pairs(businessDealershipParkingSpots) do
+        if jobDealerSlot.data.vehicleTypes[vehicle.data.required_licence] then
             local vehiclesPool = GetGamePool("CVehicle")
             local inside = false
-            for _, vehicle2 in ipairs(vehiclesPool) do
-                if jobDealerSlot:isPointInside(GetEntityCoords(vehicle2)) then
+            for _, vehicleFromPool in ipairs(vehiclesPool) do
+                if jobDealerSlot:isPointInside(GetEntityCoords(vehicleFromPool)) then
                     inside = true
                 end
             end
@@ -62,11 +63,11 @@ local function TakeOutGarage(vehicle)
             end
         end
     end
-    local newlocation = vec4(location.x, location.y, location.z, heading)
     if availableSlots == 0 then
-        exports["soz-hud"]:DrawNotification("Déjà une voiture sur une des sorties", "primary", 4500)
+        exports["soz-hud"]:DrawNotification("Aucune place disponible pour ce véhicule.", "primary", 4500)
     else
-        TriggerServerEvent("soz-concessentreprise:server:buyShowroomVehicle", vehicle.model, newlocation)
+        local newLocation = vec4(location.x, location.y, location.z, heading)
+        TriggerServerEvent("soz-concessentreprise:server:buyShowroomVehicle", vehicle.model, newLocation)
     end
 end
 
@@ -74,23 +75,19 @@ vehicleListMenu:On("open", function(m)
     local listVehicles = QBCore.Functions.TriggerRpc("soz-concessentreprise:server:getAvailableVehicles")
 
     m:ClearItems()
-    for vehicleModel, model in pairs(listVehicles) do
-        local qbVehicle = vehicles[vehicleModel]
-        if qbVehicle == nil then
-            print("Could not find vehicle " .. vehicleModel .. " in our referential. Ask a dev to add it.")
-        end
-        local vehicleName = qbVehicle["name"]
-        if qbVehicle["job_name"] then
-            vehicleName = qbVehicle["job_name"][PlayerData.job.id]
+    for vehicleModel, vehicle in pairs(listVehicles) do
+        local vehicleName = vehicle.name
+        if vehicle.job_name and vehicle.job_name[PlayerData.job.id] then
+            vehicleName = decode_json(vehicle.job_name)[PlayerData.job.id]
         end
 
         m:AddButton({
             label = vehicleName,
-            rightLabel = "💸 " .. model.price .. "$",
+            rightLabel = "💸 $" .. QBCore.Shared.GroupDigits(vehicle.price),
             value = vehicleChooseMenu,
             description = "Acheter  " .. vehicleName,
             select = function()
-                selectedModel = {model = vehicleModel, data = model}
+                selectedModel = {model = vehicleModel, data = vehicle}
             end,
         })
     end
@@ -100,23 +97,12 @@ vehicleListMenu:On("close", function()
     vehicleListMenu:ClearItems()
 end)
 
-local function HasLicenceForThisModel(model)
-    local qbVehicle = vehicles[model]
-    local licenseTypeToCheck = "car"
-    if qbVehicle.type then
-        licenseTypeToCheck = qbVehicle.type
-        -- Quick workaround as the air category should be named heli category when it will be rework.
-        if qbVehicle.type == "air" then
-            licenseTypeToCheck = "heli"
-        end
-    end
-    local licences = PlayerData.metadata["licences"]
-    return licences ~= nil and licences[licenseTypeToCheck] > 0
-end
-
 vehicleChooseMenu:On("open", function(m)
     m:ClearItems()
-    local vehicleName = GetLabelText(GetDisplayNameFromVehicleModel(selectedModel.model))
+    local vehicleName = selectedModel.data.name
+    if selectedModel.data.job_name and selectedModel.data.job_name[PlayerData.job.id] then
+        vehicleName = decode_json(selectedModel.data.job_name)[PlayerData.job.id]
+    end
     m:AddButton({
         icon = "◀",
         label = "Retour",
@@ -130,7 +116,9 @@ vehicleChooseMenu:On("open", function(m)
         label = "Acheter " .. vehicleName,
         description = "Confirmer l'achat",
         select = function()
-            if HasLicenceForThisModel(selectedModel.model) then
+            local licences = PlayerData.metadata["licences"]
+            local hasLicence = licences ~= nil and licences[selectedModel.data.required_licence] > 0
+            if hasLicence then
                 vehicleChooseMenu:Close()
                 vehicleListMenu:Close()
                 TakeOutGarage(selectedModel)
@@ -145,12 +133,12 @@ vehicleChooseMenu:On("close", function()
     vehicleChooseMenu:ClearItems()
 end)
 
-for _, ConcessEntreprise in pairs(ZonesConcessEntreprise) do
-    ConcessEntreprise:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+for _, businessDealership in pairs(businessDealershipZone) do
+    businessDealership:onPlayerInOut(function(isPointInside)
         if isPointInside then
-            InsideConcessEntreprise = true
+            insideBusinessDealership = true
         else
-            InsideConcessEntreprise = false
+            insideBusinessDealership = false
             vehicleChooseMenu:Close()
             vehicleListMenu:Close()
         end
@@ -178,13 +166,10 @@ exports["qb-target"]:SpawnPed({
             {
                 type = "client",
                 event = "soz-concessentreprise:checkGrade",
-                icon = "c:concess/lister.png",
+                icon = "c:dealership/list.png",
                 label = "Liste Véhicules",
                 canInteract = function()
-                    if OnDuty == false then
-                        return false
-                    end
-                    return InsideConcessEntreprise
+                    return PlayerData.job.onduty and insideBusinessDealership
                 end,
                 blackoutGlobal = true,
             },
@@ -193,22 +178,22 @@ exports["qb-target"]:SpawnPed({
     },
 })
 
-RegisterNetEvent("soz-concessentreprise:client:buyShowroomVehicle", function(vehicle, plate, newlocation)
+RegisterNetEvent("soz-concessentreprise:client:buyShowroomVehicle", function(vehicle, plate, newLocation)
     local liverytype = QBCore.Functions.TriggerRpc("soz-concessentreprise:server:getLiveryType", vehicle)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         SetFuel(veh, 100)
-        SetVehicleLivery(veh, liverytype.liverytype)
+        SetVehicleLivery(veh, liverytype)
         SetVehicleNumberPlateText(veh, plate)
         SetEntityAsMissionEntity(veh, true, true)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
         TriggerServerEvent("qb-vehicletuning:server:SaveVehicleProps", QBCore.Functions.GetVehicleProperties(veh))
-    end, newlocation, true)
+    end, newLocation, true)
 end)
 
 CreateThread(function()
-    QBCore.Functions.CreateBlip("concess_entreprise", {
-        name = "Concess Entreprise",
+    QBCore.Functions.CreateBlip("business_dealership", {
+        name = "Concessionnaire Entreprise",
         coords = vector3(858.72, -3204.44, 5.99),
         sprite = 821,
     })

@@ -5,13 +5,19 @@ local Vehicles = {}
 
 --- Main
 MySQL.ready(function()
-    MySQL.query("SELECT * FROM concess_entreprise", {}, function(result)
+    MySQL.query("SELECT ce.*, v.name, v.job_name, v.required_licence FROM concess_entreprise ce LEFT JOIN vehicles v ON ce.vehicle = v.model", {},
+                function(result)
         for _, v in pairs(result or {}) do
             if Vehicles[v.job] == nil then
                 Vehicles[v.job] = {}
             end
 
-            Vehicles[v.job][v.vehicle] = {price = v.price, category = v.category or "car"}
+            Vehicles[v.job][v.vehicle] = {
+                price = v.price,
+                name = v.name,
+                job_name = v.job_name,
+                required_licence = v.required_licence,
+            }
         end
     end)
 end)
@@ -89,6 +95,6 @@ QBCore.Functions.CreateCallback("soz-concessentreprise:server:getLiveryType", fu
         vehicle,
     })
     if result[1] then
-        cb(result[1])
+        cb(result[1].liverytype)
     end
 end)
