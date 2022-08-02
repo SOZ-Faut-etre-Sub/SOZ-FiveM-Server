@@ -59,7 +59,7 @@ local facilities = {
     ["waste"] = {
         getFacility = GetPlant,
         precheck = "CanWasteBeHarvested",
-        messages = {precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~1 %s"},
+        messages = {precheckError = "Pas de déchets à collecter", harvestSuccess = "Vous avez récolté ~g~3 %s"},
         action = "HarvestWaste",
         item = "waste",
     },
@@ -189,8 +189,13 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
         p:resolve(true, nil)
     else
-        -- Add energy cell to inventory
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil, nil, function(success, reason)
+        local count = 1
+
+        if harvestType == "waste" and identifier == "hydro1" then
+            count = 3
+        end
+
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, count, nil, nil, function(success, reason)
             p:resolve(success, reason)
         end)
     end
