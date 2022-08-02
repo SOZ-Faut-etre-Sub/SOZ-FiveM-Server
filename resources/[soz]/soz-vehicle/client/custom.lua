@@ -280,7 +280,7 @@ VehiculeOptions:On("open", function(menu)
                 SetVehicleDoorsLocked(veh, 1)
                 Gfinishready = false
             else
-                exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le clic avant de le redescendre", "error")
+                exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le cric avant de le redescendre", "error")
             end
         end,
     })
