@@ -23,6 +23,9 @@ function SetOil(vehicle, oil)
 end
 
 function GetOilForHud(vehicle)
+    if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") == 0 then
+        return 100
+    end
     return (GetOil(vehicle) / GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume")) * 100
 end
 exports("GetOilForHud", GetOilForHud)
