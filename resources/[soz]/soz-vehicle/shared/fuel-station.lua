@@ -106,7 +106,6 @@ function FuelStation:GetModel()
 end
 
 function FuelStation:VehicleAccessFuel(vehicle)
-    print("Check vehicle access fuel: " .. json.encode(GetEntityModel(vehicle)))
     if self.fuel == "electric" then
         return Config.FuelStations.Vehicle.ElectricModel[GetEntityModel(vehicle)] or false
     elseif self.fuel == "essence" then
