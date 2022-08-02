@@ -78,7 +78,7 @@ RegisterNetEvent("consumables:client:Drink", function(itemName, expired)
             TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", "intoxication")
         else
             TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", QBCore.Functions.GetPlayerData().metadata["thirst"] + ConsumablesDrink[itemName])
-            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] - (ConsumablesDrink[itemName] * 0.5))
+            TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", QBCore.Functions.GetPlayerData().metadata["alcohol"] - (ConsumablesDrink[itemName] * 0.2))
         end
     end, function()
         if expired then
