@@ -196,6 +196,7 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     end
 
     local size = vehicle.size or 1
+    local garageType = GetGarageType(type_)
     local emptySlots = GetEmptyParkingSlots(garageType.places, indexgarage, size)
 
     if #emptySlots == 0 then
@@ -206,17 +207,17 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
     end
 
     if type_ == "private" or type_ == "depot" then
-        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, veh)
+        local success = QBCore.Functions.TriggerRpc("soz-garage:server:PayParkingFee", type_, vehicle)
         if not success then
             QBCore.Functions.TriggerRpc("soz-garage:server:SetSpawnLock", vehicle.plate, false)
             return
         end
     end
 
-    RequestVehicleModel(veh.vehicle)
+    RequestVehicleModel(vehicle.vehicle)
 
     -- Use vehicle plate instead of mods plate
-    local mods = json.decode(veh.mods)
+    local mods = json.decode(vehicle.mods)
     mods.plate = vehicle.plate
 
     local emptySlot = emptySlots[1]

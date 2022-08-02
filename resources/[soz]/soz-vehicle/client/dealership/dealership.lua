@@ -250,6 +250,7 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                         distance = 2.5,
                     })
                 else
+                    dealership.menu:Close()
                     exports["qb-target"]:RemoveTargetModel(config.ped.model, "Accéder au catalogue")
                 end
             end)

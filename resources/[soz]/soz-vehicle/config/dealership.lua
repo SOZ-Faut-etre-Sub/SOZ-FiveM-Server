@@ -1,4 +1,4 @@
-Config.DealershipsType = {Pdm = "pdm", Luxury = "luxury", Cycle = "cycle", Moto = "moto", Air = "air", Boat = "boat",}
+Config.DealershipTypes = {Pdm = "pdm", Luxury = "luxury", Cycle = "cycle", Moto = "moto", Air = "air", Boat = "boat"}
 
 Config.CategoryTypes = {
     Boats = "Bateaux",
@@ -46,9 +46,23 @@ Config.Dealerships = {
     [Config.DealershipTypes.Luxury] = {
         active = GetConvarInt("feature_dlc2_luxury", 0) == 1,
         licence = "car",
-        blip = {name = "Concessionnaire Auto Sportive", coords = vector3(0, 0, 0), sprite = 523, color = 46},
-        ped = {model = "a_m_y_business_03", coords = vector4(0, 0, 0, 0.0), zone = {}},
-        vehicles = {spawn = vector4(0, 0, 0, 0.0), camera = vector3(0, 0, 0)},
+        blip = {
+            name = "Concessionnaire Auto Sportive",
+            coords = vector3(-801.18, -221.96, 38.48),
+            sprite = 523,
+            color = 46,
+        },
+        ped = {
+            model = "a_m_y_business_03",
+            coords = vector4(-798.88, -221.4, 36.29, 123.95),
+            zone = {
+                center = vector3(-800.33, -222.0, 37.41),
+                length = 5,
+                width = 5,
+                options = {name = "luxury_car_dealership_zone", heading = 30, minZ = 36.41, maxZ = 39.41},
+            },
+        },
+        vehicle = {spawn = vector4(-786.61, -243.79, 37.69, 54.79), camera = vector3(-792.66, -245.61, 38.02)},
     },
     [Config.DealershipTypes.Cycle] = {
         active = true,
