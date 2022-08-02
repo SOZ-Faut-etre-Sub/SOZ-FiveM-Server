@@ -607,14 +607,14 @@ Config.FuelStations = {
             [GetHashKey("caddy2")] = true,
             [GetHashKey("caddy3")] = true,
             [GetHashKey("cyclone")] = true,
-            --[GetHashKey("dilettante")] = true,
-            --[GetHashKey("dilettante2")] = true,
+            -- [GetHashKey("dilettante")] = true,
+            -- [GetHashKey("dilettante2")] = true,
             [GetHashKey("khamelion")] = true,
             [GetHashKey("neon")] = true,
             [GetHashKey("rcbandito")] = true,
             [GetHashKey("surge")] = true,
             [GetHashKey("voltic")] = true,
-        }
+        },
     },
 }
 
