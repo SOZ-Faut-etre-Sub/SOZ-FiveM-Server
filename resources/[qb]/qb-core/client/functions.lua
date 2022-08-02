@@ -940,4 +940,3 @@ function QBCore.Functions.AreModsEquale(old, new)
     end
     return false
 end
-

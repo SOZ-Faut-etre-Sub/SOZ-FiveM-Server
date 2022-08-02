@@ -1,14 +1,17 @@
 local vehicleMenu, vehicleCategories, vehicleModels
-local vehicles = {}
+local vehicleCatalog = {}
 
 --- Functions
-for k, v in pairs(QBCore.Shared.Vehicles) do
-    local category = v.category
-    if vehicles[category] == nil then
-        vehicles[category] = {}
+CreateThread(function()
+    local vehicles = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetAllVehicles")
+    for _, vehicle in pairs(vehicles) do
+        local category = vehicle.category
+        if vehicleCatalog[category] == nil then
+            vehicleCatalog[category] = {}
+        end
+        table.insert(vehicleCatalog[category], vehicle)
     end
-    vehicles[category][k] = v
-end
+end)
 
 function CheckMods(id)
     local plyPed = PlayerPedId()
@@ -150,7 +153,7 @@ function AdminMenuVehicles(menu, permission)
     vehicleCategories:On("open", function(m)
         m:ClearItems()
 
-        for category, models in pairs(vehicles) do
+        for category, models in pairs(vehicleCatalog) do
             m:AddButton({
                 label = category,
                 value = vehicleModels,

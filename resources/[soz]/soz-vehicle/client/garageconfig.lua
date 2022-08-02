@@ -119,6 +119,12 @@ Zonespublic = {
         minZ = 40.73,
         maxZ = 51.73,
     }),
+    ["marina_boat"] = BoxZone:Create(vector3(-929.41, -1377.01, 5.19), 33.0, 39.4, {
+        name = "marina_boat",
+        heading = 290,
+        minZ = -1.2,
+        maxZ = 11.8,
+    }),
 }
 
 Zonesfourriere = {
@@ -1214,6 +1220,30 @@ PlacesPublic = {
         minZ = 41.06,
         maxZ = 52.06,
         data = {indexGarage = "sandy_air"},
+    }),
+    ["marina_boat_slot1"] = BoxZone:Create(vector3(-921.16, -1373.03, 1.6), 15, 7.2,
+                                           {
+        name = "marina_boat_slot1",
+        heading = 20,
+        minZ = 0.0,
+        maxZ = 7.6,
+        data = {indexGarage = "marina_boat"},
+    }),
+    ["marina_boat_slot2"] = BoxZone:Create(vector3(-929.64, -1376.04, 1.6), 15, 7.2,
+                                           {
+        name = "marina_boat_slot2",
+        heading = 20,
+        minZ = 0.0,
+        maxZ = 7.6,
+        data = {indexGarage = "marina_boat"},
+    }),
+    ["marina_boat_slot3"] = BoxZone:Create(vector3(-937.99, -1379.11, 1.6), 15, 7.2,
+                                           {
+        name = "marina_boat_slot3",
+        heading = 20,
+        minZ = 0.0,
+        maxZ = 7.6,
+        data = {indexGarage = "marina_boat"},
     }),
 }
 
