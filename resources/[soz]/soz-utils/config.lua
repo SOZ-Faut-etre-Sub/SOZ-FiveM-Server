@@ -52,7 +52,7 @@ ConsumablesDrink = {
 }
 
 ConsumablesAlcohol = {
-    ["whiskey"] = math.random(13, 21),
+    ["whisky"] = math.random(13, 21),
     ["vodka"] = math.random(16, 24),
     ["beer"] = math.random(4, 8),
     ["wine1"] = math.random(25, 35),
