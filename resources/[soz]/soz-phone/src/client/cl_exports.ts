@@ -54,20 +54,6 @@ exps('startPhoneCall', (number: string) => {
     initializeCallHandler({ receiverNumber: number });
 });
 
-// Will automatically open the contacts app start the new contact process
-// filling in all of the fields with passed data. If this number already exists,
-// it will edit it.
-//
-// Data Struct
-// interface AddContactExportData {
-//   name?: string;
-//   number: string;
-// }
-exps('fillNewContact', (contactData: AddContactExportData) => {
-    verifyExportArgType('fillNewContact', contactData, ['object']);
-    sendContactsEvent(ContactEvents.ADD_CONTACT_EXPORT, contactData);
-});
-
 // Will automatically open the notes app and start the new note process
 // filling in all of the fields with passed data. If this number already exists,
 // it will edit it.

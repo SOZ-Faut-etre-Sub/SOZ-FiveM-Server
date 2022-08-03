@@ -28,7 +28,7 @@ export const MockMessageConversations: MessageConversation[] = [
     },
 ];
 
-const MockConversationMessages: Message[] = [
+export const MockConversationMessages: Message[] = [
     {
         id: 1,
         author: '215-8139',

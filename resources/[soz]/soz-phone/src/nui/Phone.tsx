@@ -5,12 +5,10 @@ import { useKeyboardService } from '@os/keyboard/hooks/useKeyboardService';
 import { useConfig } from '@os/phone/hooks/useConfig';
 import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import React from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-import { useContactsListener } from './apps/contacts/hooks/useContactsListener';
 import { HomeApp } from './apps/home';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
-import { useMessagesService } from './apps/messages/hooks/useMessageService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
@@ -18,7 +16,9 @@ import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
 import { useAppBankService } from './services/app/useAppBankService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
+import { useContactService } from './services/useContactService';
 import { useDebugService } from './services/useDebugService';
+import { useMessagesService } from './services/useMessagesService';
 import { usePhoneService } from './services/usePhoneService';
 import { useSimCardService } from './services/useSimCardService';
 import ThemeProvider from './styles/themeProvider';
@@ -34,8 +34,6 @@ function Phone() {
     usePhoneService();
     useSimcardService();
     useMarketplaceService();
-    useMessagesService();
-    useContactsListener();
     useNoteListener();
     /*usePhotoService();*/
     useSocietyMessagesService();
@@ -43,6 +41,8 @@ function Phone() {
 
     // Core services
     useSimCardService();
+    useContactService();
+    useMessagesService();
 
     // Apps services
     useAppBankService();

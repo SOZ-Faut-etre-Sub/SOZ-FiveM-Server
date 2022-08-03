@@ -11,7 +11,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { NavBarButton, NavBarContainer } from '../../ui/components/NavBar';
 import { useBackground } from '../../ui/hooks/useBackground';
-import { ContactList } from '../contacts/components/List/ContactList';
+import { ContactList } from '../contacts/pages/ContactList';
 import { DialerHistory } from './pages/DialerHistory';
 import DialerKeyboard from './pages/DialerKeyboard';
 

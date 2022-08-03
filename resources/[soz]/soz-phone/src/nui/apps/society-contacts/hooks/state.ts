@@ -1,5 +1,5 @@
 import { Society } from '@typings/society';
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { SocietyContactsState } from '../utils/constants';
 
@@ -36,11 +36,6 @@ export const contactsState = {
     }),
 };
 
-export const useSetContacts = () => useSetRecoilState(contactsState.contacts);
-export const useContacts = () => useRecoilState(contactsState.contacts);
-export const useContactsValue = () => useRecoilValue(contactsState.contacts);
-
 export const useFilteredContacts = () => useRecoilValue(contactsState.filteredContacts);
 
-export const useContactFilterInput = () => useRecoilState(contactsState.filterInput);
 export const useSetContactFilterInput = () => useSetRecoilState(contactsState.filterInput);

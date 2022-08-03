@@ -20,10 +20,10 @@ export const GalleryGrid = () => {
     const photos = usePhotosValue();
     const { theme } = useContext(ThemeContext);
 
-    const referal = query.referal ? decodeURIComponent(query.referal) : '/photo/image';
+    const referral = query.referral ? decodeURIComponent(query.referral) : '/photo/image';
 
     const handlePhotoOpen = photo => {
-        navigate(addQueryToLocation(getLocationFromUrl(referal), 'image', photo.image));
+        navigate(addQueryToLocation(getLocationFromUrl(referral), 'image', photo.image));
     };
 
     return (

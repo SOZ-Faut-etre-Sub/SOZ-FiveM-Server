@@ -62,7 +62,7 @@ export const ListingForm: React.FC = () => {
     const handleChooseImage = useCallback(() => {
         navigate(
             `/photo?${qs.stringify({
-                referal: encodeURIComponent(pathname + search),
+                referral: encodeURIComponent(pathname + search),
             })}`
         );
     }, [history, pathname, search]);

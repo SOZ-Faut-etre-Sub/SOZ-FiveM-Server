@@ -97,7 +97,7 @@ export const SettingsApp = () => {
     const handleChooseImage = useCallback(() => {
         navigate(
             `/photo?${qs.stringify({
-                referal: encodeURIComponent(pathname + search),
+                referral: encodeURIComponent(pathname + search),
             })}`
         );
     }, [history, pathname, search]);

@@ -112,7 +112,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                             onClick={() => {
                                 navigate(
                                     `/photo?${qs.stringify({
-                                        referal: encodeURIComponent(pathname + search),
+                                        referral: encodeURIComponent(pathname + search),
                                     })}`
                                 );
                             }}

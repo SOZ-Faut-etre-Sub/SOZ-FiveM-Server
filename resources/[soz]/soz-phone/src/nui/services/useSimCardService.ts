@@ -23,6 +23,7 @@ export const useSimCardService = () => {
 
     useNuiEvent('DIALER', CallEvents.SEND_ALERT, handleAddAlert);
 
+    // Reworked
     useEffect(() => {
         fetchNui<ServerPromiseResp<CallHistoryItem[]>>(
             CallEvents.FETCH_CALLS,

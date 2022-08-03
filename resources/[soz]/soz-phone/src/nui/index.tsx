@@ -19,21 +19,19 @@ import { store } from './store';
 dayjs.extend(relativeTime);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <NuiProvider resource="npwd">
-                <HashRouter>
-                    <RecoilRootManager>
-                        <SoundProvider>
-                            <NotificationsProvider>
-                                <SnackbarProvider>
-                                    <Phone />
-                                </SnackbarProvider>
-                            </NotificationsProvider>
-                        </SoundProvider>
-                    </RecoilRootManager>
-                </HashRouter>
-            </NuiProvider>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <NuiProvider resource="npwd">
+            <HashRouter>
+                <RecoilRootManager>
+                    <SoundProvider>
+                        <NotificationsProvider>
+                            <SnackbarProvider>
+                                <Phone />
+                            </SnackbarProvider>
+                        </NotificationsProvider>
+                    </SoundProvider>
+                </RecoilRootManager>
+            </HashRouter>
+        </NuiProvider>
+    </Provider>
 );

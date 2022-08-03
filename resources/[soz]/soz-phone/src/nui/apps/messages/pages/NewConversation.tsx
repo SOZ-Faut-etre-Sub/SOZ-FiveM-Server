@@ -2,17 +2,32 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppContent } from '@ui/old_components/AppContent';
 import { Button } from '@ui/old_components/Button';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { useFilteredContacts } from '../../../contacts/hooks/state';
-import { useMessageAPI } from '../../hooks/useMessageAPI';
+import { useQueryParams } from '../../../common/hooks/useQueryParams';
+import { RootState } from '../../../store';
+import { ThemeContext } from '../../../styles/themeProvider';
+import { useMessageAPI } from '../hooks/useMessageAPI';
 
-const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
+export const NewConversation = () => {
+    const { phoneNumber } = useQueryParams<{ phoneNumber?: string }>();
     const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
-    const contacts = useFilteredContacts();
+    const contacts = useSelector((state: RootState) => state.simCard.contacts);
+    const filteredContacts = useMemo(() => {
+        const list = [];
+        contacts.forEach(contact => {
+            if (list[contact.display[0]] === undefined) {
+                list[contact.display[0]] = [];
+            }
+            list[contact.display[0]].push(contact);
+        });
+
+        return list;
+    }, [contacts]);
+
     const { addConversation } = useMessageAPI();
 
     useEffect(() => {
@@ -26,7 +41,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
     };
 
     return (
-        <div className="mt-10">
+        <>
             <AppTitle title="Contacts">
                 <Button className="flex items-center text-base" onClick={handleCancel}>
                     <ChevronLeftIcon className="h-5 w-5" /> Fermer
@@ -34,7 +49,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
             </AppTitle>
             <AppContent>
                 <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
-                    {Object.keys(contacts)
+                    {Object.keys(filteredContacts)
                         .sort()
                         .map(letter => (
                             <div key={letter} className="relative">
@@ -50,7 +65,7 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
                                         theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'
                                     }`}
                                 >
-                                    {contacts[letter].map(contact => (
+                                    {filteredContacts[letter].map(contact => (
                                         <li
                                             key={contact.id}
                                             className={`${
@@ -99,8 +114,6 @@ const NewMessageGroupForm = ({ phoneNumber }: { phoneNumber?: string }) => {
                         ))}
                 </nav>
             </AppContent>
-        </div>
+        </>
     );
 };
-
-export default NewMessageGroupForm;

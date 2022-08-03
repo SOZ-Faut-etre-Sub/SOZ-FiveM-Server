@@ -13,20 +13,19 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AppWrapper } from '../../../../ui/components/AppWrapper';
-import { useContactActions } from '../../hooks/useContactActions';
 import { useContactsAPI } from '../../hooks/useContactsAPI';
 
 interface ContactInfoRouteQuery {
     addNumber?: string;
-    referal?: string;
+    referral?: string;
     name?: string;
     avatar?: string;
 }
 
 const ContactsInfoPage: React.FC = () => {
     const { id } = useParams();
-    const { referal: referral } = useQueryParams<ContactInfoRouteQuery>({
-        referal: '/society-contacts',
+    const { referral: referral } = useQueryParams<ContactInfoRouteQuery>({
+        referral: '/society-contacts',
     });
 
     const navigate = useNavigate();
