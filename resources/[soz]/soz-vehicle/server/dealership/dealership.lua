@@ -1,5 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-
 local function GeneratePlate()
     local plate = QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(2)
     local result = MySQL.Sync.fetchScalar("SELECT plate FROM player_vehicles WHERE plate = ?", {plate})
@@ -11,7 +9,7 @@ local function GeneratePlate()
 end
 
 local function GetPriceOfVehicle(vehicle)
-    return MySQL.Sync.fetchSingle("SELECT price FROM vehicles WHERE model = ?", {vehicle})
+    return MySQL.Sync.fetchScalar("SELECT price FROM vehicles WHERE model = ?", {vehicle})
 end
 exports("GetPriceOfVehicle", GetPriceOfVehicle)
 QBCore.Functions.CreateCallback("soz-vehicle:server:GetPriceOfVehicle", function(_, cb, vehicle)
@@ -19,7 +17,7 @@ QBCore.Functions.CreateCallback("soz-vehicle:server:GetPriceOfVehicle", function
 end)
 
 local function GetNameOfVehicle(vehicle)
-    return MySQL.Sync.fetchSingle("SELECT name FROM vehicles WHERE model = ?", {vehicle})
+    return MySQL.Sync.fetchScalar("SELECT name FROM vehicles WHERE model = ?", {vehicle})
 end
 QBCore.Functions.CreateCallback("soz-vehicle:server:GetNameOfVehicle", function(_, cb, vehicle)
     cb(GetNameOfVehicle(vehicle))
@@ -44,7 +42,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(dealership, v
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
 
-    local price = GetPriceOfVehicle(vehicle).price
+    local price = GetPriceOfVehicle(vehicle)
     if price == nil then
         exports["soz-monitor"]:Log("WARN", "Vehicle with model name '" .. vehicle .. "' does not have a price for dealership '" .. dealership .. "'.")
         TriggerClientEvent("hud:client:DrawNotification", src, "Désolé je ne retrouve pas le prix de ce véhicule.", "error")

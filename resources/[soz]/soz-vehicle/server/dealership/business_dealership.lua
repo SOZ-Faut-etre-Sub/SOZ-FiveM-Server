@@ -1,6 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-local SozJobCore = exports["soz-jobs"]:GetCoreObject()
-
 local Vehicles = {}
 
 --- Main

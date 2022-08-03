@@ -1,5 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-local SozJobCore = exports["soz-jobs"]:GetCoreObject()
 local garage_props = GetHashKey("soz_prop_paystation")
 
 local spawnLock = {}
