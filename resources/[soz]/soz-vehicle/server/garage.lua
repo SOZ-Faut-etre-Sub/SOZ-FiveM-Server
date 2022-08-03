@@ -458,11 +458,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
 
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then
-        exports["soz-monitor"]:Log("INFO", ("Vehicle %s rentrer au garage"):format(mods.plate))
+        exports["soz-monitor"]:Log("INFO", ("Vehicle %s rentré au garage"):format(data.plate))
         DespawnVehicle(vehicleNetId)
         cb(true)
     else
-        exports["soz-monitor"]:Log("ERROR", ("Vehicle %s impossible de le rentrer au garage"):format(mods.plate))
+        exports["soz-monitor"]:Log("ERROR", ("Vehicle %s impossible de le rentrer au garage"):format(data.plate))
         cb(false)
     end
 end)
