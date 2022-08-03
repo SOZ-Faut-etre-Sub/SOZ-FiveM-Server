@@ -18,6 +18,19 @@ client_scripts {
     "client/*.lua",
 }
 
-server_scripts {"@oxmysql/lib/MySQL.lua", "server/dealership/*.lua", "server/*.lua"}
+server_scripts {
+    "@oxmysql/lib/MySQL.lua",
+    "server/main.lua",
+    "server/carwash.lua",
+    "server/custom.lua",
+    "server/dealership.lua",
+    "server/flatbed.lua",
+    "server/fuel.lua",
+    "server/garage.lua",
+    "server/utils.lua",
+    "server/vehicle.lua",
+    "server/vehiclekeys.lua",
+    "server/dealership/*.lua",
+}
 
 dependencies {"qb-core", "soz-hud", "menuv", "qb-target", "PolyZone"}

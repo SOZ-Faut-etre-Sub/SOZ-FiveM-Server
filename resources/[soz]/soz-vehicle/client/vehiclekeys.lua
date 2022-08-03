@@ -100,7 +100,7 @@ local function PoliceCall()
                     local vehicleModel = GetEntityModel(vehicleId)
                     local vehicle = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetNameOfVehicle", vehicleModel)
                     if vehicle ~= nil then
-                        Name = vehicle.name
+                        Name = vehicle
                     else
                         Name = "Inconnu"
                     end
@@ -114,7 +114,7 @@ local function PoliceCall()
                     local vehicle = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetNameOfVehicle", vehicleModel)
                     local modelPlate = QBCore.Functions.GetPlate(vehicleId)
                     if vehicle ~= nil then
-                        Name = vehicle.name
+                        Name = vehicle
                     else
                         Name = "Inconnu"
                     end

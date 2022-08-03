@@ -1,5 +1,3 @@
-local QBCore = exports["qb-core"]:GetCoreObject()
-
 RegisterNetEvent("qb-vehicletuning:server:SaveVehicleProps", function(vehicleProps)
     if IsVehicleOwned(vehicleProps.plate) then
         MySQL.Async.execute("UPDATE player_vehicles SET mods = ? WHERE plate = ?", {

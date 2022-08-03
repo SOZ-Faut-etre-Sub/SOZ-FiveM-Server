@@ -153,7 +153,9 @@ UpgradeMenu:On("open", function(menu)
 
     local validMods, amountValidMods = CheckValidMods(v.category, v.id)
     local currentMod, currentModName = GetCurrentMod(v.id)
-    local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicle", Config.AttachedCustomVehicle)
+
+    local vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedCustomVehicle)):lower()
+    local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicle", vehicleName)
 
     if amountValidMods > 0 or v.id == 18 then
         if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance
@@ -205,7 +207,7 @@ UpgradeMenu:On("open", function(menu)
             if currentTurboState == 0 then
                 for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                     if customprice.id == v.id then
-                        local price = math.ceil(customprice.prices[1] * vehicles[GetEntityModel(Config.AttachedCustomVehicle)].price)
+                        local price = math.ceil(customprice.prices[1] * vehiclePrice)
                         menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
                         menu:AddButton({
                             label = "Activer",
