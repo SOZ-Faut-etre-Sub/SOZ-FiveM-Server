@@ -8,7 +8,8 @@ Citizen.CreateThread(function()
     while true do
         local Player = QBCore.Functions.GetPlayerData()
         if LocalPlayer.state.isLoggedIn and not Player.metadata.godmode then
-            local currentPos = GetEntityCoords(GetPlayerPed(-1), true)
+            local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
+            local currentPos = vector3(QBCore.Shared.Round(playerPos.x, -1), QBCore.Shared.Round(playerPos.y, -1), QBCore.Shared.Round(playerPos.z, -1))
 
             if currentPos == prevPos then
                 if time > 0 then
