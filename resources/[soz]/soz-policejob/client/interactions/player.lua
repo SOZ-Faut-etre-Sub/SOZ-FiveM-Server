@@ -204,7 +204,9 @@ RegisterNetEvent("police:client:SetEscorting", function()
         Wait(1000)
 
         while LocalPlayer.state.isEscorting do
-            DisableControlAction(0, 21, true)
+            if not IsPedSwimming(PlayerPedId()) then
+                DisableControlAction(0, 21, true)
+            end
             QBCore.Functions.ShowHelpNotification("~INPUT_FRONTEND_RRIGHT~ Pour lâcher")
             if IsControlJustReleased(0, 194) or IsControlJustReleased(0, 225) then
                 local player, distance = QBCore.Functions.GetClosestPlayer()
