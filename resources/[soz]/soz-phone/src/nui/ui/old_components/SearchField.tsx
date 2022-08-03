@@ -20,7 +20,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange, place
     const { theme } = useContext(ThemeContext);
 
     return (
-        <div className="rounded-lg mx-3">
+        <div className="rounded-lg mx-3 py-2">
             <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-gray-300'} flex items-center rounded-lg`}>
                 <SearchIcon className="text-gray-500 ml-2 w-5 h-5" />
                 <TextField

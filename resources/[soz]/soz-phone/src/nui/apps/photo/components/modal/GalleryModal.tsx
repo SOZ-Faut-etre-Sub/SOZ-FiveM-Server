@@ -21,7 +21,7 @@ export const GalleryModal = () => {
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
 
-    const referal = query.referal || '/photo';
+    const referral = query.referral || '/photo';
 
     const meta: GalleryPhoto = useMemo(() => ({ id: parseInt(query.id), image: query.image as string }), [query]);
 
@@ -45,7 +45,7 @@ export const GalleryModal = () => {
             type: 'success',
             message: "Adresse de l'image copiée dans le presse-papier",
         });
-        navigate(referal);
+        navigate(referral);
     };
 
     if (!meta) return null;

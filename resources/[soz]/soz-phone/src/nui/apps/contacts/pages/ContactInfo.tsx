@@ -17,13 +17,13 @@ import { useTranslation } from 'react-i18next';
 import NumberFormat from 'react-number-format';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { useContactActions } from '../../hooks/useContactActions';
-import { useContactsAPI } from '../../hooks/useContactsAPI';
+import { useContact } from '../../../hooks/useContact';
+import { ThemeContext } from '../../../styles/themeProvider';
+import { useContactsAPI } from '../hooks/useContactsAPI';
 
 interface ContactInfoRouteQuery {
     addNumber?: string;
-    referal?: string;
+    referral?: string;
     name?: string;
     avatar?: string;
 }
@@ -35,15 +35,14 @@ const ContactsInfoPage: React.FC = () => {
     const { id } = useParams();
     const {
         addNumber,
-        // Because this is mispelled absolutely everywhere
-        referal: referral,
+        referral: referral,
         avatar: avatarParam,
         name: nameParam,
     } = useQueryParams<ContactInfoRouteQuery>({
-        referal: '/contacts',
+        referral: '/contacts',
     });
 
-    const { getContact } = useContactActions();
+    const { getContact } = useContact();
     const { updateContact, addNewContact, deleteContact } = useContactsAPI();
 
     const contact = getContact(parseInt(id));

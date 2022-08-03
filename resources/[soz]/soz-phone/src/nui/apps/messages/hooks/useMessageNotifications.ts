@@ -4,7 +4,6 @@ import { MessageConversation } from '@typings/messages';
 import { useTranslation } from 'react-i18next';
 
 import { useMessageAPI } from './useMessageAPI';
-import useMessages from './useMessages';
 
 const NOTIFICATION_ID = 'messages:broadcast';
 
@@ -13,7 +12,6 @@ export const useMessageNotifications = () => {
     // const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
     const { icon, notificationIcon } = useApp('messages');
-    const { getMessageConversationById, goToConversation } = useMessages();
     const { addConversation } = useMessageAPI();
     // const activeMessageConversation = useRecoilValue(messageState.activeMessageConversation);
 
@@ -31,7 +29,7 @@ export const useMessageNotifications = () => {
     // });
 
     const setNotification = ({ conversationName, conversationId, message }) => {
-        let group: MessageConversation = null;
+        /*let group: MessageConversation = null;
 
         group = getMessageConversationById(conversationId);
 
@@ -66,7 +64,7 @@ export const useMessageNotifications = () => {
                 return;
             }
             addNotification(n);
-        });
+        });*/
     };
 
     return { setNotification };

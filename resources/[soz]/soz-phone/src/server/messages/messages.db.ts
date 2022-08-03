@@ -49,7 +49,7 @@ export class _MessagesDB {
                    unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
             FROM (SELECT conversation_id
                   FROM phone_messages_conversations
-                  WHERE phone_messages_conversations.participant_identifier = ?) AS t
+                  WHERE phone_messages_conversations.user_identifier = ?) AS t
                      LEFT OUTER JOIN phone_messages_conversations
                                      ON phone_messages_conversations.conversation_id = t.conversation_id
                      LEFT OUTER JOIN phone_profile

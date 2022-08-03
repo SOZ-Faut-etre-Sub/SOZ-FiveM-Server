@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { useContactActions } from '../../../apps/contacts/hooks/useContactActions';
+import { useContact } from '../../../hooks/useContact';
 import { useCall } from '../hooks/useCall';
 
 const CallContactContainer = () => {
     const { call } = useCall();
 
-    const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+    const { getDisplayByNumber, getPictureByNumber } = useContact();
 
     const getDisplayOrNumber = () =>
         call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);

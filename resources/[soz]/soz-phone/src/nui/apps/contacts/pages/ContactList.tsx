@@ -1,22 +1,42 @@
 import { Menu, Transition } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/outline';
 import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
+import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
 import { Button } from '@ui/old_components/Button';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useApp } from '../../../../os/apps/hooks/useApps';
-import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { AppTitle } from '../../../../ui/components/AppTitle';
-import { useFilteredContacts } from '../../hooks/state';
-import { SearchContacts } from './SearchContacts';
+import { RootState } from '../../../store';
+import { ThemeContext } from '../../../styles/themeProvider';
+import { AppTitle } from '../../../ui/components/AppTitle';
+import { SearchField } from '../../../ui/old_components/SearchField';
 
 export const ContactList: React.FC = () => {
-    const contacts = useApp('contacts');
-    const filteredContacts = useFilteredContacts();
+    const contactsApp = useApp('contacts');
+
+    const [searchValue, setSearchValue] = useState<string>('');
+    const contacts = useSelector((state: RootState) => state.simCard.contacts);
+    const filteredContacts = useMemo(() => {
+        const list = [];
+        const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
+
+        contacts
+            .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
+            .forEach(contact => {
+                if (list[contact.display[0]] === undefined) {
+                    list[contact.display[0]] = [];
+                }
+                list[contact.display[0]].push(contact);
+            });
+
+        return list;
+    }, [contacts, searchValue]);
+
+    const [t] = useTranslation();
     const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
     const { initializeCall } = useCall();
@@ -26,20 +46,10 @@ export const ContactList: React.FC = () => {
     };
 
     const startCall = (number: string) => {
-        LogDebugEvent({
-            action: 'Emitting `Start Call` to Scripts',
-            level: 2,
-            data: true,
-        });
         initializeCall(number);
     };
 
     const handleMessage = (phoneNumber: string) => {
-        LogDebugEvent({
-            action: 'Routing to Message',
-            level: 1,
-            data: { phoneNumber },
-        });
         navigate(`/messages/new?phoneNumber=${phoneNumber}`);
     };
     const { pathname } = useLocation();
@@ -48,7 +58,7 @@ export const ContactList: React.FC = () => {
     return (
         <>
             <AppTitle
-                app={contacts}
+                app={contactsApp}
                 action={
                     !pathname.match(pathTemplate) && (
                         <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
@@ -58,7 +68,11 @@ export const ContactList: React.FC = () => {
                 <div />
             </AppTitle>
             <AppContent aria-label="Directory">
-                <SearchContacts />
+                <SearchField
+                    placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
+                    onChange={e => setSearchValue(e.target.value)}
+                    value={searchValue}
+                />
                 {Object.keys(filteredContacts)
                     .sort()
                     .map(letter => (
@@ -68,7 +82,7 @@ export const ContactList: React.FC = () => {
                                     theme === 'dark' ? 'bg-black text-gray-400' : 'bg-ios-50 text-gray-600'
                                 }`}
                             >
-                                <h3>{letter}</h3>
+                                <h3 className="uppercase">{letter}</h3>
                             </div>
                             <ul
                                 className={`relative divide-y ${

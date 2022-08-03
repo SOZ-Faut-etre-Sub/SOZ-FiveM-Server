@@ -10,20 +10,18 @@ import {
 } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
 import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
-import { CallHistoryItem } from '@typings/call';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { useContact } from '../../../hooks/useContact';
 import { RootState } from '../../../store';
 import { ThemeContext } from '../../../styles/themeProvider';
-import { useContacts } from '../../contacts/hooks/state';
-import { useContactActions } from '../../contacts/hooks/useContactActions';
 
 dayjs.extend(relativeTime);
 
@@ -31,22 +29,15 @@ export const DialerHistory: React.FC = () => {
     const calls = useSelector((state: RootState) => state.simCard.callHistory);
 
     const myNumber = useMyPhoneNumber();
-    const { getDisplayByNumber, getPictureByNumber } = useContactActions();
+    const { getDisplayByNumber, getPictureByNumber } = useContact();
     const { theme } = useContext(ThemeContext);
     const { initializeCall } = useCall();
-    const contacts = useContacts();
     const navigate = useNavigate();
     const [t] = useTranslation();
 
     const handleCall = phoneNumber => {
         initializeCall(phoneNumber);
     };
-
-    // To display the name, force a re-render when we get contacts | issue #432
-    const getDisplay = useCallback(
-        (number: string) => (contacts.length ? getDisplayByNumber(number) : number),
-        [contacts, getDisplayByNumber]
-    );
 
     if (calls.length === 0) {
         return (
@@ -113,7 +104,7 @@ export const DialerHistory: React.FC = () => {
                                                     theme === 'dark' ? 'text-gray-100' : 'text-gray-600'
                                                 }`}
                                             >
-                                                {getDisplay(
+                                                {getDisplayByNumber(
                                                     call.transmitter === myNumber ? call.receiver : call.transmitter
                                                 )}
                                             </p>
@@ -145,28 +136,29 @@ export const DialerHistory: React.FC = () => {
                                                 <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
                                             </Button>
                                         </Menu.Item>
-                                        {getDisplay(call.receiver) === call.receiver && myNumber !== call.receiver && (
-                                            <Menu.Item>
-                                                <Button
-                                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                                    onClick={() =>
-                                                        navigate(
-                                                            `/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`
-                                                        )
-                                                    }
-                                                >
-                                                    <UserAddIcon className="mx-3 h-5 w-5" /> Ajouter le contact
-                                                </Button>
-                                            </Menu.Item>
-                                        )}
-                                        {getDisplay(call.transmitter) === call.transmitter &&
+                                        {getDisplayByNumber(call.receiver) === call.receiver &&
+                                            myNumber !== call.receiver && (
+                                                <Menu.Item>
+                                                    <Button
+                                                        className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/contacts/-1?addNumber=${call.receiver}&referral=/phone/contacts`
+                                                            )
+                                                        }
+                                                    >
+                                                        <UserAddIcon className="mx-3 h-5 w-5" /> Ajouter le contact
+                                                    </Button>
+                                                </Menu.Item>
+                                            )}
+                                        {getDisplayByNumber(call.transmitter) === call.transmitter &&
                                             myNumber !== call.transmitter && (
                                                 <Menu.Item>
                                                     <Button
                                                         className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
                                                         onClick={() =>
                                                             navigate(
-                                                                `/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`
+                                                                `/contacts/-1?addNumber=${call.transmitter}&referral=/phone/contacts`
                                                             )
                                                         }
                                                     >
@@ -181,38 +173,5 @@ export const DialerHistory: React.FC = () => {
                 </ul>
             </div>
         </nav>
-
-        // <List disablePadding>
-
-        //   {calls.map((call: CallHistoryItem) =>
-        //     call.transmitter === myNumber ? (
-        //       <ListItem key={call.id}>
-        //         {/*{getDisplay(call.receiver) === call.receiver && (*/}
-        //         {/*  <IconButton*/}
-        //         {/*    onClick={() =>*/}
-        //         {/*      history.push(`/contacts/-1?addNumber=${call.receiver}&referal=/phone/contacts`)*/}
-        //         {/*    }*/}
-        //         {/*    size="large"*/}
-        //         {/*  >*/}
-        //         {/*    <PersonAddIcon />*/}
-        //         {/*  </IconButton>*/}
-        //         {/*)}*/}
-        //       </ListItem>
-        //     ) : (
-        //       <ListItem key={call.id}>
-        //         {/*{getDisplay(call.transmitter) === call.transmitter && (*/}
-        //         {/*  <IconButton*/}
-        //         {/*    onClick={() =>*/}
-        //         {/*      history.push(`/contacts/-1?addNumber=${call.transmitter}&referal=/phone/contacts`)*/}
-        //         {/*    }*/}
-        //         {/*    size="large"*/}
-        //         {/*  >*/}
-        //         {/*    /!*<PersonAddIcon />*!/*/}
-        //         {/*  </IconButton>*/}
-        //         {/*)}*/}
-        //       </ListItem>
-        //     ),
-        //   )}
-        // </List>
     );
 };
