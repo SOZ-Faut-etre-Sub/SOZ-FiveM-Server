@@ -132,15 +132,13 @@ local function finishAnimation()
     exports["soz-hud"]:DrawNotification("Véhicule libéré")
 end
 
-local VehiculeOptions = MenuV:CreateMenu(nil, "LS Customs", "menu_shop_lscustoms", "soz", "custom:vehicle:options")
-local Upgrade = MenuV:InheritMenu(VehiculeOptions, "Upgrade")
-local UpgradeMenu = MenuV:InheritMenu(Upgrade, "Upgrade Menu")
-local VariableV
-local VariableK
+local VehicleOptions = MenuV:CreateMenu(nil, "LS Customs", "menu_shop_lscustoms", "soz", "custom:vehicle:options")
+local Upgrade = MenuV:InheritMenu(VehicleOptions, "Upgrade")
+local UpgradeMenu = MenuV:InheritMenu(VehicleOptions, "Upgrade Menu")
 
-UpgradeMenu:On("open", function(menu)
-    local v = VariableV
-    local k = VariableK
+function GenerateUpgradeMenu(k, v)
+    local menu = UpgradeMenu
+
     menu:ClearItems()
     menu:AddButton({
         icon = "◀",
@@ -152,25 +150,43 @@ UpgradeMenu:On("open", function(menu)
     })
 
     local validMods, amountValidMods = CheckValidMods(v.category, v.id)
-    local currentMod, currentModName = GetCurrentMod(v.id)
+    local currentMod, _ = GetCurrentMod(v.id)
 
     local vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedCustomVehicle)):lower()
     local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicle", vehicleName)
 
-    if amountValidMods > 0 or v.id == 18 then
-        if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance
-            local tempNum = 0
-            for m, n in pairs(validMods) do
-                tempNum = tempNum + 1
+    if amountValidMods <= 0 and v.id ~= 18 then
+        return
+    end
 
-                local price = 0
-                for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
-                    if v.id == customprice.id then
-                        price = math.ceil(customprice.prices[tempNum] * vehiclePrice)
-                    end
+    if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance
+        local tempNum = 0
+        for m, n in pairs(validMods) do
+            tempNum = tempNum + 1
+
+            local price = 0
+            for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
+                if v.id == customprice.id then
+                    price = math.ceil(customprice.prices[tempNum] * vehiclePrice)
                 end
+            end
 
-                if Config.maxVehiclePerformanceUpgrades == 0 then
+            if Config.maxVehiclePerformanceUpgrades == 0 then
+                if currentMod == n.id then
+                    menu:AddButton({label = n.name, rightLabel = "~g~Installé"})
+                else
+                    menu:AddButton({
+                        label = n.name,
+                        rightLabel = "💸 " .. price .. "$",
+                        description = "Acheter 💸",
+                        select = function()
+                            menu:Close()
+                            TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
+                        end,
+                    })
+                end
+            else
+                if tempNum <= (Config.maxVehiclePerformanceUpgrades + 1) then
                     if currentMod == n.id then
                         menu:AddButton({label = n.name, rightLabel = "~g~Installé"})
                     else
@@ -184,57 +200,43 @@ UpgradeMenu:On("open", function(menu)
                             end,
                         })
                     end
-                else
-                    if tempNum <= (Config.maxVehiclePerformanceUpgrades + 1) then
-                        if currentMod == n.id then
-                            menu:AddButton({label = n.name, rightLabel = "~g~Installé"})
-                        else
-                            menu:AddButton({
-                                label = n.name,
-                                rightLabel = "💸 " .. price .. "$",
-                                description = "Acheter 💸",
-                                select = function()
-                                    menu:Close()
-                                    TriggerServerEvent("soz-custom:server:buyupgrade", v.id, n, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
-                                end,
-                            })
-                        end
-                    end
                 end
-            end
-        elseif v.id == 18 then
-            local currentTurboState = GetCurrentTurboState()
-            if currentTurboState == 0 then
-                for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
-                    if customprice.id == v.id then
-                        local price = math.ceil(customprice.prices[1] * vehiclePrice)
-                        menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
-                        menu:AddButton({
-                            label = "Activer",
-                            rightLabel = "💸 " .. price .. "$",
-                            description = "Acheter 💸",
-                            select = function()
-                                menu:Close()
-                                TriggerServerEvent("soz-custom:server:buyupgrade", v.id, 1, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
-                            end,
-                        })
-                    end
-                end
-            else
-                menu:AddButton({
-                    label = "Désactiver",
-                    description = "Gratuit 💸",
-                    select = function()
-                        menu:Close()
-                        TriggerEvent("soz-custom:client:applymod", v.id, 0)
-                        exports["soz-hud"]:DrawNotification("Le turbo a été enlevé!")
-                    end,
-                })
-                menu:AddButton({label = "Activer", rightLabel = "~g~Installé"})
             end
         end
+    elseif v.id == 18 then
+        local currentTurboState = GetCurrentTurboState()
+        if currentTurboState == 0 then
+            for _, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
+                if customprice.id == v.id then
+                    local price = math.ceil(customprice.prices[1] * vehiclePrice)
+                    menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
+                    menu:AddButton({
+                        label = "Activer",
+                        rightLabel = "💸 " .. price .. "$",
+                        description = "Acheter 💸",
+                        select = function()
+                            menu:Close()
+                            TriggerServerEvent("soz-custom:server:buyupgrade", v.id, 1, price, QBCore.Functions.GetPlate(Config.AttachedCustomVehicle))
+                        end,
+                    })
+                end
+            end
+        else
+            menu:AddButton({
+                label = "Désactiver",
+                description = "Gratuit 💸",
+                select = function()
+                    menu:Close()
+                    TriggerEvent("soz-custom:client:applymod", v.id, 0)
+                    exports["soz-hud"]:DrawNotification("Le turbo a été enlevé!")
+                end,
+            })
+            menu:AddButton({label = "Activer", rightLabel = "~g~Installé"})
+        end
     end
-end)
+
+    menu:Open()
+end
 
 Upgrade:On("open", function(menu)
     menu:ClearItems()
@@ -246,21 +248,19 @@ Upgrade:On("open", function(menu)
         end,
     })
     for k, v in ipairs(Config.vehicleCustomisationCustom) do
-        local validMods, amountValidMods = CheckValidMods(v.category, v.id)
+        local _, amountValidMods = CheckValidMods(v.category, v.id)
         if amountValidMods > 0 or (v.id == 18 and GetVehicleClass(Config.AttachedCustomVehicle) ~= 13) then
             menu:AddButton({
                 label = v.category,
-                value = UpgradeMenu,
                 select = function()
-                    VariableV = v
-                    VariableK = k
+                    GenerateUpgradeMenu(k, v)
                 end,
             })
         end
     end
 end)
 
-VehiculeOptions:On("open", function(menu)
+VehicleOptions:On("open", function(menu)
     menu:ClearItems()
     local veh = Config.AttachedCustomVehicle
     FreezeEntityPosition(veh, true)
@@ -292,14 +292,15 @@ VehiculeOptions:On("open", function(menu)
     })
 end)
 
-VehiculeOptions:On("close", function()
+VehicleOptions:On("close", function(menu)
+    menu:ClearItems()
     if Gready == false and Gfinishready == false then
         exports["soz-hud"]:DrawNotification("Veuillez libérer le véhicule avant de partir", "error")
-        VehiculeOptions:Open()
+        VehicleOptions:Open()
     elseif Gready == true then
-        VehiculeOptions:Open()
+        VehicleOptions:Open()
     else
-        VehiculeOptions:Close()
+        VehicleOptions:Close()
     end
 end)
 
@@ -342,7 +343,7 @@ local function startAnimation()
     local vehjack = CreateObject(GetHashKey(model), vehpos.x, vehpos.y, vehpos.z - 0.5, true, true, true)
     AttachEntityToEntity(vehjack, veh, 0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, false, false, false, false, 0, true)
 
-    VehiculeOptions:Open()
+    VehicleOptions:Open()
     TaskTurnPedToFaceEntity(ped, veh, 500)
     TaskPlayAnimAdvanced(ped, dict, "car_bomb_mechanic", coords, 0.0, 0.0, headin, 1.0, 0.5, 1250, 1, 0.0, 1, 1)
     Citizen.Wait(1250)
@@ -458,7 +459,7 @@ for int = 1, 5 do
             Insidecustom = true
         else
             Insidecustom = false
-            VehiculeOptions:Close()
+            VehicleOptions:Close()
             Config.AttachedCustomVehicle = nil
         end
     end)
@@ -483,11 +484,11 @@ CreateThread(function()
                     else
                         QBCore.Functions.TriggerCallback("soz-garage:server:UpdateVehicleProperties", function(success)
                             SetVehicleDoorsLocked(entity, 2)
-                            VehiculeOptions:Open()
+                            VehicleOptions:Open()
                         end, NetworkGetNetworkIdFromEntity(entity))
                     end
                 end,
-                canInteract = function(entity, distance, data)
+                canInteract = function()
                     return Insidecustom
                 end,
                 blackoutGlobal = true,
