@@ -1,3 +1,9 @@
+SozVehicle = SozVehicle or {}
+
+exports("GetCoreObject", function()
+    return SozVehicle
+end)
+
 function SozVehicle:GetVehicle(vehicle)
     return MySQL.Sync.fetchSingle("SELECT * FROM vehicles WHERE model = ?", {vehicle})
 end

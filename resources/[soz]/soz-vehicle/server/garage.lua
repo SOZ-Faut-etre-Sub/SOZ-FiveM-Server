@@ -242,7 +242,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
     local veh = SpawnVehicle(modelName, coords, mods.plate, condition.fuelLevel or 1000)
     if not veh then
         SetSpawnLock(mods.plate, false)
-        exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (Vehicle is nil)"):format(mods.plate))
+        exports["soz-monitor"]:Log("ERROR", ("Vehicle %s fail to spawn (Vehicle is nil)"):format(mods.plate))
         cb(nil)
         return
     end
@@ -257,7 +257,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
     ]], {VehicleState.Out, mods.plate})
     if not res == 1 then
         DespawnVehicle(NetworkGetNetworkIdFromEntity(veh))
-        exports["soz-monitor"]:Log("ERROR", ("Vehcile %s fail to spawn (MYSQL query fail)"):format(mods.plate))
+        exports["soz-monitor"]:Log("ERROR", ("Vehicle %s fail to spawn (MYSQL query fail)"):format(mods.plate))
         return
     end
 
@@ -274,8 +274,8 @@ end)
 QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(source, cb, type_, vehicle)
     local player = QBCore.Functions.GetPlayer(source)
 
-    local qbVehicle = SozVehicle:GetVehicle(vehicle.vehicle).price * 0.15
-    local price = qbVehicle["price"] * 0.15
+    local qbVehicle = SozVehicle:GetVehicle(vehicle.vehicle)
+    local price = qbVehicle.price * 0.15
     if type_ == "private" then
         local timediff = math.floor((os.time() - vehicle.parkingtime) / 3600)
         price = timediff * 20
@@ -286,7 +286,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
 
     if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
         if type == "depot" then
-            bennysFee = math.ceil(qbVehicle["price"] * 0.02)
+            bennysFee = math.ceil(qbVehicle.price * 0.02)
             MySQL.Async.execute("UPDATE bank_accounts SET money = money + ? WHERE account_type = 'business' AND businessid = 'bennys'", {
                 bennysFee,
             })
@@ -381,7 +381,7 @@ local function UpdateVehicleMods(vehicleNetId, vehicleExtraData)
 
         Entity(veh).state:set("mods", mods, true)
 
-        exports["soz-monitor"]:Log("INFO", ("Vehcile %s customisation update %s"):format(mods.plate, mods))
+        exports["soz-monitor"]:Log("INFO", ("Vehicle %s customisation update %s"):format(mods.plate, mods))
 
         local plate = GetVehicleNumberPlateText(veh)
         local args = {mods, plate}
@@ -414,7 +414,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     local decodedMods = json.decode(mods[1].mods)
     if decodedMods then
         if next(decodedMods) == nil then
-            exports["soz-monitor"]:Log("INFO", ("Vehcile %s no default mods"):format(decodedExtra1.plate))
+            exports["soz-monitor"]:Log("INFO", ("Vehicle %s no default mods"):format(decodedExtra1.plate))
             UpdateVehicleMods(vehicleNetId, decodedExtra1)
         end
     end
@@ -458,11 +458,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
 
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then
-        exports["soz-monitor"]:Log("INFO", ("Vehcile %s rentrer au garage"):format(mods.plate))
+        exports["soz-monitor"]:Log("INFO", ("Vehicle %s rentrer au garage"):format(mods.plate))
         DespawnVehicle(vehicleNetId)
         cb(true)
     else
-        exports["soz-monitor"]:Log("ERROR", ("Vehcile %s impossible de le rentrer au garage"):format(mods.plate))
+        exports["soz-monitor"]:Log("ERROR", ("Vehicle %s impossible de le rentrer au garage"):format(mods.plate))
         cb(false)
     end
 end)
