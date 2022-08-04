@@ -16,6 +16,14 @@ QBCore.Functions.CreateCallback("soz-vehicle:server:GetPriceOfVehicle", function
     cb(GetPriceOfVehicle(vehicle))
 end)
 
+local function GetPriceOfVehicleByHash(hash)
+    return MySQL.Sync.fetchScalar("SELECT price FROM vehicles WHERE hash = ?", {hash})
+end
+exports("GetPriceOfVehicleByHash", GetPriceOfVehicleByHash)
+QBCore.Functions.CreateCallback("soz-vehicle:server:GetPriceOfVehicleByHash", function(_, cb, hash)
+    cb(GetPriceOfVehicleByHash(hash))
+end)
+
 local function GetNameOfVehicle(vehicle)
     return MySQL.Sync.fetchScalar("SELECT name FROM vehicles WHERE model = ?", {vehicle})
 end
