@@ -1145,7 +1145,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Hmmmm du fromage chauffé !'
+        ['description'] = 'Hmmmm du fromage chauffé !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['twerks_candy'] = {
         ['name'] = 'twerks_candy',
@@ -1156,7 +1165,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Oooooh, des bonbons !'
+        ['description'] = 'Oooooh, des bonbons !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['snikkel_candy'] = {
         ['name'] = 'snikkel_candy',
@@ -1167,7 +1185,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Miam miam les sucreries !'
+        ['description'] = 'Miam miam les sucreries !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['sandwich'] = {
         ['name'] = 'sandwich',
@@ -1179,7 +1206,16 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 2,
         ['combinable'] = nil,
-        ['description'] = 'Avant tout du pain pour l\'estomac.'
+        ['description'] = 'Avant tout du pain pour l\'estomac.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
 
     -- Drink ITEMS
@@ -1193,7 +1229,16 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 31,
         ['combinable'] = nil,
-        ['description'] = 'De l\'eau, merci.'
+        ['description'] = 'De l\'eau, merci.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['coffee'] = {
         ['name'] = 'coffee',
@@ -1204,7 +1249,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Grande source de caféine.'
+        ['description'] = 'Grande source de caféine.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['kurkakola'] = {
         ['name'] = 'kurkakola',
@@ -1215,7 +1269,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'De l\'eau, beaucoup de sucre et ça pétille !'
+        ['description'] = 'De l\'eau, beaucoup de sucre et ça pétille !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
 
     -- Alcohol
@@ -1229,7 +1292,13 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Rien de mieux qu\'une bonne bière fraiche !'
+        ['description'] = 'Rien de mieux qu\'une bonne bière fraiche !',
+        ['nutrition'] = {
+            ['fiber'] = 0,
+            ['lipid'] = 20,
+            ['sugar'] = 0,
+            ['protein'] = 10,
+        },
     },
     ['grape1'] = {
         ['name'] = 'grape1',
@@ -1241,7 +1310,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Raisin violet au goût légèrement sucré.'
+        ['description'] = 'Raisin violet au goût légèrement sucré.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grape2'] = {
         ['name'] = 'grape2',
@@ -1253,7 +1331,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Raisin blanc, assez sucré.'
+        ['description'] = 'Raisin blanc, assez sucré.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grape3'] = {
         ['name'] = 'grape3',
@@ -1265,7 +1352,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Raisin vert, sucré, avec une pointe d\'acidité.'
+        ['description'] = 'Raisin vert, sucré, avec une pointe d\'acidité.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grape4'] = {
         ['name'] = 'grape4',
@@ -1277,7 +1373,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Raisin jaune avec un léger gout de miel.'
+        ['description'] = 'Raisin jaune avec un léger gout de miel.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['wine1'] = {
         ['name'] = 'wine1',
@@ -1292,6 +1397,15 @@ QBShared.Items = {
         ['description'] = 'Vin rouge avec une légère note sucrée !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['wine2'] = {
         ['name'] = 'wine2',
@@ -1306,6 +1420,15 @@ QBShared.Items = {
         ['description'] = 'Vin blanc assez sucré !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['wine3'] = {
         ['name'] = 'wine3',
@@ -1320,6 +1443,15 @@ QBShared.Items = {
         ['description'] = 'Vin blanc avec une note d\'acidité !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['wine4'] = {
         ['name'] = 'wine4',
@@ -1334,6 +1466,15 @@ QBShared.Items = {
         ['description'] = 'Vin blanc sirupeux au petit goût de miel !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grapejuice1'] = {
         ['name'] = 'grapejuice1',
@@ -1348,6 +1489,15 @@ QBShared.Items = {
         ['description'] = 'Jus de raisins rouges !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grapejuice2'] = {
         ['name'] = 'grapejuice2',
@@ -1362,6 +1512,15 @@ QBShared.Items = {
         ['description'] = 'Jus très sucré !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grapejuice3'] = {
         ['name'] = 'grapejuice3',
@@ -1376,6 +1535,15 @@ QBShared.Items = {
         ['description'] = 'Jus de fruit légèrement acide !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grapejuice4'] = {
         ['name'] = 'grapejuice4',
@@ -1390,6 +1558,15 @@ QBShared.Items = {
         ['description'] = 'Jus multifruits, pleins de vitamines !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['grapejuice5'] = {
         ['name'] = 'grapejuice5',
@@ -1404,6 +1581,15 @@ QBShared.Items = {
         ['description'] = 'Jus de fruit au miel !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['tripe'] = {
         ['name'] = 'tripe',
@@ -1415,7 +1601,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Ragoutant, mais vraiment bon !'
+        ['description'] = 'Ragoutant, mais vraiment bon !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['peau'] = {
         ['name'] = 'peau',
@@ -1462,7 +1657,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Quel cuisson ?'
+        ['description'] = 'Quel cuisson ?',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['langue'] = {
         ['name'] = 'langue',
@@ -1474,7 +1678,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'A faire mijoter !'
+        ['description'] = 'A faire mijoter !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['abat'] = {
         ['name'] = 'abat',
@@ -1486,7 +1699,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Tout le monde n\'aime pas ça !'
+        ['description'] = 'Tout le monde n\'aime pas ça !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['rognon'] = {
         ['name'] = 'rognon',
@@ -1498,7 +1720,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Rosé pour la cuisson !'
+        ['description'] = 'Rosé pour la cuisson !',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['sausage1'] = {
         ['name'] = 'sausage1',
@@ -1513,6 +1744,15 @@ QBShared.Items = {
         ['description'] = 'Un gout inimaginable !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['sausage2'] = {
         ['name'] = 'sausage2',
@@ -1527,6 +1767,15 @@ QBShared.Items = {
         ['description'] = 'Le saucisson le plus long jamais vu !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['sausage3'] = {
         ['name'] = 'sausage3',
@@ -1541,6 +1790,15 @@ QBShared.Items = {
         ['description'] = 'Un peu plus gras que la moyenne !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['sausage4'] = {
         ['name'] = 'sausage4',
@@ -1555,6 +1813,15 @@ QBShared.Items = {
         ['description'] = 'Pour un apéro réussi entre amis !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['sausage5'] = {
         ['name'] = 'sausage5',
@@ -1569,6 +1836,15 @@ QBShared.Items = {
         ['description'] = 'Un gout très prononcé !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['milk'] = {
         ['name'] = 'milk',
@@ -1580,7 +1856,16 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Avant ou après avoir mis les céréales ?'
+        ['description'] = 'Avant ou après avoir mis les céréales ?',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese1'] = {
         ['name'] = 'cheese1',
@@ -1595,6 +1880,15 @@ QBShared.Items = {
         ['description'] = 'Idéal en tranche ou rapé !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese2'] = {
         ['name'] = 'cheese2',
@@ -1609,6 +1903,15 @@ QBShared.Items = {
         ['description'] = 'Un amour du fromage !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese3'] = {
         ['name'] = 'cheese3',
@@ -1623,6 +1926,15 @@ QBShared.Items = {
         ['description'] = 'Parait que c\'est bon avec du café !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese4'] = {
         ['name'] = 'cheese4',
@@ -1637,6 +1949,15 @@ QBShared.Items = {
         ['description'] = 'Un fromage légèrement salé !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese5'] = {
         ['name'] = 'cheese5',
@@ -1651,6 +1972,15 @@ QBShared.Items = {
         ['description'] = 'Très bon avec une confiture !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese6'] = {
         ['name'] = 'cheese6',
@@ -1665,6 +1995,15 @@ QBShared.Items = {
         ['description'] = 'Le fromage des touts petits !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese7'] = {
         ['name'] = 'cheese7',
@@ -1679,6 +2018,15 @@ QBShared.Items = {
         ['description'] = 'Dans une bonne baguette !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese8'] = {
         ['name'] = 'cheese8',
@@ -1693,6 +2041,15 @@ QBShared.Items = {
         ['description'] = 'Idéal pour les burgers !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
     ['cheese9'] = {
         ['name'] = 'cheese9',
@@ -1707,6 +2064,15 @@ QBShared.Items = {
         ['description'] = 'Un très bon fromage fondu en sauce !',
         ['resellPrice'] = 40,
         ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+        },
     },
 
     -- Drugs
