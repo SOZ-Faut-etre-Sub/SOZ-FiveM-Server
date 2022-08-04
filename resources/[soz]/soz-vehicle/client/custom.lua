@@ -152,8 +152,8 @@ function GenerateUpgradeMenu(k, v)
     local validMods, amountValidMods = CheckValidMods(v.category, v.id)
     local currentMod, _ = GetCurrentMod(v.id)
 
-    -- local vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(Config.AttachedCustomVehicle)):lower()
-    -- local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicle", vehicleName)
+    -- local vehicleHash = GetEntityModel(Config.AttachedCustomVehicle)
+    -- local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicleByHash", vehicleHash)
 
     if amountValidMods <= 0 and v.id ~= 18 then
         return
