@@ -24,6 +24,7 @@ export class WeatherProvider {
     onStart(): void {
         GlobalState.blackout ||= false;
         GlobalState.blackout_level ||= 0;
+        GlobalState.blackout_override = false;
         GlobalState.weather ||= 'OVERCAST' as Weather;
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
@@ -153,6 +154,12 @@ export class WeatherProvider {
 
     @Command('blackout_level', { role: 'admin' })
     setBlackoutLevel(source: number, level?: string): void {
-        GlobalState.blackout_level = parseInt(level, 10) || 0;
+        if (level === 'default') {
+            GlobalState.blackout_level = 0;
+            GlobalState.blackout_override = false;
+        } else {
+            GlobalState.blackout_level = parseInt(level, 10) || 0;
+            GlobalState.blackout_override = true;
+        }
     }
 }
