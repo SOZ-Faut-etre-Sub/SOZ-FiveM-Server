@@ -1,4 +1,3 @@
-GlobalState.blackout_level = QBCore.Shared.Blackout.Level.Zero
 local consumptionLoopRunning = false
 local facilities = {["inverter"] = GetInverter, ["terminal"] = GetTerminal}
 
@@ -145,7 +144,7 @@ function StartConsumptionLoop()
             local newBlackoutLevel = GetBlackoutLevel()
 
             -- Blackout level has changed
-            if GlobalState.blackout_level ~= newBlackoutLevel then
+            if not GlobalState.blackout_override and GlobalState.blackout_level ~= newBlackoutLevel then
                 GlobalState.blackout_level = newBlackoutLevel
             end
 
