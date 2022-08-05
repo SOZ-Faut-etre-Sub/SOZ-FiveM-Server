@@ -46,7 +46,7 @@ CreateThread(function()
         if cocktail == nil then
             print("Cocktail '" .. cocktailId "' has not been found.")
         end
-        BaunJob.RecipeBook[cocktailId] = {label = cocktail.label, ingredients = {}}
+        local cocktailToInsert = {id = cocktailId, label = cocktail.label, ingredients = {}}
 
         for _, ingredient in pairs(ingredients) do
             local item = QBCore.Shared.Items[ingredient.itemId]
@@ -57,7 +57,7 @@ CreateThread(function()
             if ingredient.quantity > 1 then
                 label = item.pluralLabel or (label .. "s")
             end
-            table.insert(BaunJob.RecipeBook[cocktailId].ingredients,
+            table.insert(cocktailToInsert.ingredients,
                          {
                 itemId = ingredient.itemId,
                 label = label,
@@ -65,7 +65,16 @@ CreateThread(function()
                 quantity = ingredient.quantity,
             })
         end
+
+        table.sort(cocktailToInsert.ingredients, function(a, b)
+            return a.label < b.label
+        end)
+
+        table.insert(BaunJob.RecipeBook, cocktailToInsert)
     end
+    table.sort(BaunJob.RecipeBook, function(a, b)
+        return a.label < b.label
+    end)
 end)
 
 local function getItem(items, itemId)

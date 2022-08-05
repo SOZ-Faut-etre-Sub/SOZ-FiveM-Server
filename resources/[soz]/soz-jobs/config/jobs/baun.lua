@@ -39,7 +39,7 @@ BaunConfig.Cloakroom = {
             ["Tenue Direction"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 6, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 12, Texture = 0, Palette = 0},
                     [4] = {Drawable = 50, Texture = 2, Palette = 0},
                     [6] = {Drawable = 10, Texture = 0, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -125,6 +125,7 @@ BaunConfig.Restock = {
         -- {itemId = "cinnamon", quantity = 6},
         {itemId = "strawberry_juice", quantity = 6},
         {itemId = "orange_juice", quantity = 6},
+        {itemId = "apple_juice", quantity = 6},
     },
     ["furniture_crate"] = {
         {itemId = "straw", quantity = 10},

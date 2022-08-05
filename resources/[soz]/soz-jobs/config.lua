@@ -490,16 +490,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
-        bossZone = {
-            x = 96.11,
-            y = -1292.08,
-            z = 29.27,
-            sx = 7.2,
-            sy = 6.2,
-            heading = 300,
-            minZ = 28.27,
-            maxZ = 32.27,
-        },
+        bossZone = {x = 96.11, y = -1292.08, z = 29.27, sx = 7.2, sy = 6.2, heading = 300, minZ = 28.27, maxZ = 32.27},
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
 }

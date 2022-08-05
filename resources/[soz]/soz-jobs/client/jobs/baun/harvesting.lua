@@ -10,8 +10,7 @@ local function getOptions(item)
             blackoutJob = "baun",
             job = "baun",
             canInteract = function()
-                local hasPermission = SozJobCore.Functions.HasPermission("baun", SozJobCore.JobPermission.Baun.Harvest)
-                return hasPermission and PlayerData.job.onduty
+                return PlayerData.job.onduty
             end,
             -- metadata
             give_item = item,
