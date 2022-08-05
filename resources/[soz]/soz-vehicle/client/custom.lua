@@ -152,23 +152,22 @@ function GenerateUpgradeMenu(k, v)
     local validMods, amountValidMods = CheckValidMods(v.category, v.id)
     local currentMod, _ = GetCurrentMod(v.id)
 
-    -- local vehicleHash = GetEntityModel(Config.AttachedCustomVehicle)
-    -- local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicleByHash", vehicleHash)
+    local vehicleHash = GetEntityModel(Config.AttachedCustomVehicle)
+    local vehiclePrice = QBCore.Functions.TriggerRpc("soz-vehicle:server:GetPriceOfVehicleByHash", vehicleHash)
 
     if amountValidMods <= 0 and v.id ~= 18 then
         return
     end
 
-    local price = 0
     if v.id == 11 or v.id == 12 or v.id == 13 or v.id == 15 or v.id == 16 then -- Performance
         local tempNum = 0
         for m, n in pairs(validMods) do
             tempNum = tempNum + 1
 
-            for custompriceindex, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
+            local price = 0
+            for _, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                 if v.id == customprice.id then
-                    -- TODO: Remove at 06/08/2022
-                    -- price = math.ceil(customprice.prices[tempNum] * vehiclePrice)
+                    price = math.ceil(customprice.prices[tempNum] * vehiclePrice)
                 end
             end
 
@@ -209,8 +208,7 @@ function GenerateUpgradeMenu(k, v)
         if currentTurboState == 0 then
             for _, customprice in ipairs(Config.vehicleCustomisationPricesCustom) do
                 if customprice.id == v.id then
-                    -- TODO: Remove at 06/08/2022
-                    -- local price = math.ceil(customprice.prices[1] * vehiclePrice)
+                    local price = math.ceil(customprice.prices[1] * vehiclePrice)
                     menu:AddButton({label = "Désactiver", rightLabel = "~g~Installé"})
                     menu:AddButton({
                         label = "Activer",
