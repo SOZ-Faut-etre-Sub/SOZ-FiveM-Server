@@ -295,10 +295,9 @@ function Inventory.Search(inv, search, item, metadata)
     return false
 end
 
-QBCore.Functions.CreateCallback("inventory:server:Search", function(source, cb, inv, search, item, metadata)
-    cb(Inventory.Search(inv, search, item, metadata))
+QBCore.Functions.CreateCallback("inventory:server:GetInventoryItems", function(source, cb)
+    cb(Inventory(source).items)
 end)
-exports("Search", Inventory.Search)
 
 function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
     if type(inv) ~= "table" then

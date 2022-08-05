@@ -2929,7 +2929,6 @@ QBShared.Items = {
         unique = false,
         useable = true,
         shouldClose = true,
-        durability = 7,
         combinable = nil,
         description = 'Pour toutes les petites soifs !'
     },
@@ -2941,7 +2940,6 @@ QBShared.Items = {
         unique = false,
         useable = true,
         shouldClose = true,
-        durability = 7,
         combinable = nil,
         description = 'Pour toutes les petites soifs !'
     },
@@ -2953,7 +2951,6 @@ QBShared.Items = {
         unique = false,
         useable = true,
         shouldClose = true,
-        durability = 7,
         combinable = nil,
         description = 'Pour toutes les petites soifs !'
     },
@@ -2965,7 +2962,6 @@ QBShared.Items = {
         unique = false,
         useable = true,
         shouldClose = true,
-        durability = 7,
         combinable = nil,
         description = 'Pour toutes les petites soifs !'
     },
@@ -2977,7 +2973,6 @@ QBShared.Items = {
         unique = false,
         useable = true,
         shouldClose = true,
-        durability = 7,
         combinable = nil,
         description = 'Pour toutes les petites soifs !'
     },
@@ -2989,21 +2984,8 @@ QBShared.Items = {
         unique = false,
         useable = true,
         shouldClose = true,
-        durability = 7,
         combinable = nil,
         description = 'Tous les chemins y mènent.'
-    },
-    champagne = {
-        name = 'champagne',
-        label = 'Champagne',
-        weight = 1000,
-        type = 'drink',
-        unique = false,
-        useable = true,
-        shouldClose = true,
-        durability = 7,
-        combinable = nil,
-        description = 'Pour fêter n\'importe quoi.'
     },
     green_lemon = {
         name = "green_lemon",
@@ -3111,8 +3093,8 @@ QBShared.Items = {
         combinable = nil,
         description = "Très utile pour confectionner un cocktail."
     },
-    ice_cubes = {
-        name = "ice_cubes",
+    ice_cube = {
+        name = "ice_cube",
         label = "Glaçon",
         weight = 50,
         type = "item",
@@ -3145,9 +3127,9 @@ QBShared.Items = {
         combinable = nil,
         description = "Très utile pour confectionner un cocktail."
     },
-    royal_mojito = {
-        name = "royal_mojito",
-        label = "Royal Mojito",
+    narito = {
+        name = "narito",
+        label = "Narito",
         weight = 500,
         type = "item",
         unique = false,
@@ -3156,5 +3138,89 @@ QBShared.Items = {
         shouldClose = true,
         combinable = nil,
         description = "Avec une Douce saveur de citron vert."
+    },
+    lapicolada = {
+        name = "lapicolada",
+        label = "Lapicolada",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
+    },
+    sunrayou = {
+        name = "sunrayou",
+        label = "Sunrayou",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
+    },
+    ponche = {
+        name = "ponche",
+        label = "Ponche",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
+    },
+    pinkenny = {
+        name = "pinkenny",
+        label = "Pinkenny",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
+    },
+    phasmopolitan = {
+        name = "phasmopolitan",
+        label = "Phasmopolitan",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
+    },
+    escalier = {
+        name = "escalier",
+        label = "Escalier",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
+    },
+    whicanelle = {
+        name = "whicanelle",
+        label = "Whicanelle",
+        weight = 500,
+        type = "item",
+        unique = false,
+        useable = true,
+        expiresIn = 5, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = ""
     },
 }
