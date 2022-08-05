@@ -3,17 +3,17 @@ BaunConfig = {}
 BaunConfig.Blips = {
     {
         Id = "jobs:baun:bahama",
-        Name = "Bahama Mamas",
-        Icon = 93,
-        Color = 4,
+        Name = "Bahama Unicorn",
+        Icon = 807,
+        Color = 0,
         Coords = vector2(-1393.49, -598.06),
         Scale = 1.0,
     },
     {
         Id = "jobs:baun:unicorn",
-        Name = "Vanilla Unicorn",
-        Icon = 121,
-        Color = 62,
+        Name = "Bahama Unicorn",
+        Icon = 807,
+        Color = 0,
         Coords = vector2(127.57, -1288.96),
         Scale = 1.0,
     },
