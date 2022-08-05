@@ -242,6 +242,12 @@ Zonesentreprise = {
         minZ = 41.43,
         maxZ = 45.63,
     }),
+    ["baun_unicorn"] = BoxZone:Create(vector3(147.54, -1280.56, 29.09), 17, 22, {
+        name = "baun_unicorn_z",
+        heading = 299,
+        minZ = 28.09,
+        maxZ = 31.09,
+    }),
 }
 
 ------------------------
@@ -1702,6 +1708,46 @@ PlacesEntreprise = {
         data = {
             indexGarage = "upw",
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["baun_unicorn1"] = BoxZone:Create(vector3(145.19, -1287.47, 29.07), 5.0, 2.8, {
+        name = "baun_unicorn1",
+        heading = 119,
+        minZ = 28.07,
+        maxZ = 32.07,
+        data = {
+            indexGarage = "baun_unicorn",
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["baun_unicorn2"] = BoxZone:Create(vector3(142.27, -1282.74, 29.17), 5, 2.8, {
+        name = "baun_unicorn2",
+        heading = 120,
+        minZ = 28.17,
+        maxZ = 31.17,
+        data = {
+            indexGarage = "baun_unicorn",
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["baun_unicorn3"] = BoxZone:Create(vector3(149.82, -1273.68, 29.19), 5, 2.8, {
+        name = "baun_unicorn3",
+        heading = 299,
+        minZ = 28.19,
+        maxZ = 31.19,
+        data = {
+            indexGarage = "baun_unicorn",
+            capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["baun_unicorn4"] = BoxZone:Create(vector3(147.05, -1279.35, 29.15), 8.8, 4.4, {
+        name = "baun_unicorn4",
+        heading = 29,
+        minZ = 28.15,
+        maxZ = 31.15,
+        data = {
+            indexGarage = "baun_unicorn",
+            capacity = {3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }

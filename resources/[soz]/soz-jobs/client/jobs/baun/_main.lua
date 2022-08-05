@@ -2,8 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 BaunJob = {}
 BaunJob.Functions = {}
--- TODO: Replace texture with menu_job_baun
-BaunJob.Menu = MenuV:CreateMenu(nil, "", "default", "soz", "baun:menu")
+BaunJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_baun", "soz", "baun:menu")
 
 BaunJob.Harvest = {}
 BaunJob.CraftZones = {}

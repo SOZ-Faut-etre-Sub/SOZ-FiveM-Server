@@ -25,8 +25,8 @@ BaunJob.Functions.InitCraftingZones = function()
 end
 
 BaunJob.Functions.DestroyCraftingZones = function()
-    for _, zone in ipairs(BaunJob.CraftZones) do
-        zone:destroy()
+    for _, zoneName in ipairs(BaunJob.CraftZones) do
+        exports["qb-target"]:RemoveZone(zoneName)
     end
 end
 
