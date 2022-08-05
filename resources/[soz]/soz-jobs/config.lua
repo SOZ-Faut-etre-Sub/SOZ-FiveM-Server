@@ -499,7 +499,6 @@ SozJobCore.Jobs = {
             heading = 300,
             minZ = 28.27,
             maxZ = 32.27,
-            debugPoly = true,
         },
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
