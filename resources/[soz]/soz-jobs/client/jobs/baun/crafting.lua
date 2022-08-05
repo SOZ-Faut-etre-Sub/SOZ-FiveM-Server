@@ -38,6 +38,45 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
     end
 end)
 
+BaunJob.RecipeBook = {}
+
+CreateThread(function()
+    for cocktailId, ingredients in pairs(BaunConfig.Recipes) do
+        local cocktail = QBCore.Shared.Items[cocktailId]
+        if cocktail == nil then
+            print("Cocktail '" .. cocktailId "' has not been found.")
+        end
+        BaunJob.RecipeBook[cocktailId] = {label = cocktail.label, ingredients = {}}
+
+        for _, ingredient in pairs(ingredients) do
+            local item = QBCore.Shared.Items[ingredient.itemId]
+            if item == nil then
+                print("Ingredient '" .. ingredient.itemId "' has not been found.")
+            end
+            local label = item.label
+            if ingredient.quantity > 1 then
+                label = item.pluralLabel or (label .. "s")
+            end
+            table.insert(BaunJob.RecipeBook[cocktailId].ingredients,
+                         {
+                itemId = ingredient.itemId,
+                label = label,
+                description = item.description,
+                quantity = ingredient.quantity,
+            })
+        end
+    end
+end)
+
+local function getItem(items, itemId)
+    for _, item in ipairs(items) do
+        if item.name == itemId then
+            return item
+        end
+    end
+    return {amount = 0}
+end
+
 AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
     if BaunJob.Menu.IsOpen then
         return
@@ -46,29 +85,23 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
 
     -- RECIPES
     local recipesMenu = MenuV:InheritMenu(BaunJob.Menu, {subtitle = "Livre des recettes"})
-    for cocktailId, ingredients in pairs(BaunConfig.Recipes) do
-        local cocktail = QBCore.Shared.Items[cocktailId]
+    local items = QBCore.Functions.TriggerRpc("inventory:server:GetInventoryItems")
+
+    for cocktailId, cocktail in pairs(BaunJob.RecipeBook) do
         local subtitle = "Ingrédients pour " .. cocktail.label
         local ingredientsMenu = MenuV:InheritMenu(recipesMenu, {subtitle = subtitle})
         local canCraft = true
 
-        for _, ingredient in pairs(ingredients) do
-            local item = QBCore.Shared.Items[ingredient.itemId]
-            local hasTheRequiredQuantity = QBCore.Functions.TriggerRpc("inventory:server:Search", QBCore.Functions.GetPlayerData(), "amount", ingredient.itemId,
-                                                                       nil) >= ingredient.quantity
+        for _, ingredient in pairs(cocktail.ingredients) do
+            local hasTheRequiredQuantity = getItem(items, ingredient.itemId).amount >= ingredient.quantity
             if not hasTheRequiredQuantity then
                 canCraft = false
             end
 
-            local label = item.label
-            if ingredient.quantity > 1 then
-                label = item.pluralLabel or (label .. "s")
-            end
-
             ingredientsMenu:AddCheckbox({
-                label = ingredient.quantity .. " " .. label,
+                label = ingredient.quantity .. " " .. ingredient.label,
                 -- icon = item.icon or ("https://nui-img/soz-items/" .. item.name)
-                description = item.description,
+                description = ingredient.description,
                 value = hasTheRequiredQuantity,
                 disabled = true,
             })
