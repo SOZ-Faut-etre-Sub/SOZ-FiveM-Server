@@ -5,7 +5,6 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { fetchNui } from '../../../utils/fetchNui';
-import { useNotesActions } from './useNotesActions';
 
 interface NotesAPIValue {
     addNewNote: (data: BeforeDBNote) => Promise<void>;
@@ -16,7 +15,6 @@ interface NotesAPIValue {
 export const useNotesAPI = (): NotesAPIValue => {
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
-    const { addLocalNote, deleteLocalNote, updateLocalNote } = useNotesActions();
 
     const addNewNote = useCallback(
         async ({ title, content }: BeforeDBNote) => {
@@ -32,14 +30,12 @@ export const useNotesAPI = (): NotesAPIValue => {
                 });
             }
 
-            addLocalNote(resp.data);
-
             addAlert({
                 message: t('NOTES.FEEDBACK.ADD_SUCCESS'),
                 type: 'success',
             });
         },
-        [addAlert, addLocalNote, t]
+        [addAlert, t]
     );
 
     const deleteNote = useCallback(
@@ -53,14 +49,12 @@ export const useNotesAPI = (): NotesAPIValue => {
                 });
             }
 
-            deleteLocalNote(resp.data.id);
-
             addAlert({
                 message: t('NOTES.FEEDBACK.DELETE_SUCCESS'),
                 type: 'success',
             });
         },
-        [addAlert, deleteLocalNote, t]
+        [addAlert, t]
     );
 
     const updateNote = useCallback(
@@ -77,14 +71,12 @@ export const useNotesAPI = (): NotesAPIValue => {
                 });
             }
 
-            updateLocalNote({ id, title, content });
-
             addAlert({
                 message: t('NOTES.FEEDBACK.UPDATE_SUCCESS'),
                 type: 'success',
             });
         },
-        [addAlert, t, updateLocalNote]
+        [addAlert, t]
     );
 
     return { addNewNote, deleteNote, updateNote };

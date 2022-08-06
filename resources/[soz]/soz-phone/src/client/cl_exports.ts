@@ -52,17 +52,3 @@ exps('startPhoneCall', (number: string) => {
 
     initializeCallHandler({ receiverNumber: number });
 });
-
-// Will automatically open the notes app and start the new note process
-// filling in all of the fields with passed data. If this number already exists,
-// it will edit it.
-//
-// Data Struct
-// interface AddNoteExportData {
-//   title?: string;
-//   content?: string;
-// }
-exps('fillNewNote', (noteData: AddNoteExportData) => {
-    verifyExportArgType('fillNewNOte', noteData, ['object']);
-    sendNotesEvent(NotesEvents.ADD_NOTE_EXPORT, noteData);
-});

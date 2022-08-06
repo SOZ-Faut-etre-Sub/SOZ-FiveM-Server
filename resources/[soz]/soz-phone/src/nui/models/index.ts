@@ -1,6 +1,7 @@
 import { Models } from '@rematch/core';
 
 import { appBank } from './app/bank';
+import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
 import { appTwitchNews } from './app/twitchNews';
 import { phone } from './phone';
@@ -13,8 +14,9 @@ export interface RootModel extends Models<RootModel> {
 
     // Apps models
     appBank: typeof appBank;
+    appNotes: typeof appNotes;
     appTwitchNews: typeof appTwitchNews;
     appSociety: typeof appSociety;
 }
 
-export const models: RootModel = { phone, simCard, appBank, appTwitchNews, appSociety };
+export const models: RootModel = { phone, simCard, appBank, appNotes, appTwitchNews, appSociety };
