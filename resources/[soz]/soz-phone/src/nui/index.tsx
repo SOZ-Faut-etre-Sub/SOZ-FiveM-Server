@@ -18,7 +18,7 @@ import { store } from './store';
 
 dayjs.extend(relativeTime);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
         <NuiProvider resource="npwd">
             <HashRouter>

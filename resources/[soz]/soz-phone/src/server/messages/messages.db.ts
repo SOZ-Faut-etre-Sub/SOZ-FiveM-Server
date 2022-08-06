@@ -3,8 +3,6 @@ import { ResultSetHeader } from 'mysql2';
 import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import DbInterface from '../db/db_wrapper';
 
-const MESSAGES_PER_PAGE = 20;
-
 // not sure whats going on here.
 export class _MessagesDB {
     /**
