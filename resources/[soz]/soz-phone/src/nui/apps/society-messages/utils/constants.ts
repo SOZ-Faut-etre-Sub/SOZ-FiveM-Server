@@ -11,8 +11,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         takenBy: null,
         takenByUsername: null,
         isDone: false,
-        createdAt: '2022-01-14T09:58:18.000Z',
-        updatedAt: '2022-01-14T09:58:18.000Z',
+        createdAt: 1659789408000,
+        updatedAt: 1659789608000,
     },
     {
         id: 2,
@@ -24,8 +24,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         takenBy: 'XXX',
         takenByUsername: 'John Doe',
         isDone: false,
-        createdAt: '2022-01-14T09:58:18.000Z',
-        updatedAt: '2022-01-14T09:58:18.000Z',
+        createdAt: 1659789408000,
+        updatedAt: 1659789608000,
     },
     {
         id: 3,
@@ -37,8 +37,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         takenBy: 'XXX',
         takenByUsername: 'John Doe',
         isDone: true,
-        createdAt: '2022-01-14T09:58:18.000Z',
-        updatedAt: '2022-01-14T09:58:18.000Z',
+        createdAt: 1659789408000,
+        updatedAt: 1659789608000,
     },
     {
         id: 4,
@@ -50,8 +50,8 @@ export const MockSocietyMessages: SocietyMessage[] = [
         takenBy: 'XXX',
         takenByUsername: 'John Doe',
         isDone: true,
-        createdAt: '2022-01-14T09:58:18.000Z',
-        updatedAt: '2022-01-14T09:58:18.000Z',
+        createdAt: 1659788408000,
+        updatedAt: 1659788608000,
     },
 ];
 
@@ -66,7 +66,7 @@ for (let i = 5; i < 20; i++) {
         takenBy: 'XXX',
         takenByUsername: 'John Doe',
         isDone: true,
-        createdAt: '2022-01-14T09:58:18.000Z',
-        updatedAt: '2022-01-14T09:58:18.000Z',
+        createdAt: 1659759408000,
+        updatedAt: 1659759608000,
     });
 }

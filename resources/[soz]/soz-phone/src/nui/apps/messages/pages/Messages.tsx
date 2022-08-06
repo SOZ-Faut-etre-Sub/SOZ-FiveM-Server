@@ -33,7 +33,6 @@ export const Messages = () => {
 
     const messages = useSelector((state: RootState) => state.simCard.messages);
     const filteredMessages = useMemo(() => {
-        console.log('filteredMessages', messages);
         return messages.filter(conversation => conversation.conversation_id === groupId);
     }, [messages, groupId]);
 

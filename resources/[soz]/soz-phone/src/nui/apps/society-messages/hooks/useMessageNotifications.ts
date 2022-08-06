@@ -23,7 +23,7 @@ export const useMessageNotifications = () => {
     //     }
     // });
 
-    const setNotification = ({ message = false }) => {
+    const setNotification = ({ message = '' }) => {
         const notification = {
             app: 'SOCIETY_MESSAGE',
             NOTIFICATION_ID,

@@ -1,12 +1,12 @@
 import { Transition } from '@headlessui/react';
 import { AppWrapper } from '@ui/components/AppWrapper';
+import { useBackground } from '@ui/hooks/useBackground';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { useBackground } from '../../../ui/hooks/useBackground';
-import { ContactList } from './List/ContactList';
-import ContactsInfoPage from './views/ContactInfo';
+import ContactsInfoPage from './pages/ContactInfo';
+import { ContactList } from './pages/ContactList';
 
 export const SocietyContactsApp: React.FC = () => {
     const backgroundClass = useBackground();

@@ -15,15 +15,13 @@ export const useMessagesService = () => {
             undefined,
             buildRespObj(MockMessageConversations)
         ).then(conversations => {
-            console.log(conversations);
             store.dispatch.simCard.setConversations(conversations.data);
         });
         fetchNui<ServerPromiseResp<Message[]>>(
             MessageEvents.FETCH_MESSAGES,
-            { conversationId: '555-8436', page: 1 },
+            undefined,
             buildRespObj(MockConversationMessages)
         ).then(messages => {
-            console.log(messages);
             store.dispatch.simCard.setMessages(messages.data);
         });
     });

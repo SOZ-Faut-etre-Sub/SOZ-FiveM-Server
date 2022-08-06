@@ -10,11 +10,11 @@ import { Route, Routes } from 'react-router-dom';
 import { HomeApp } from './apps/home';
 import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
-import { useSocietyMessagesService } from './apps/society-messages/hooks/useMessageService';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
 import { useAppBankService } from './services/app/useAppBankService';
+import { useAppSocietyService } from './services/app/useAppSocietyService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
 import { useContactService } from './services/useContactService';
 import { useDebugService } from './services/useDebugService';
@@ -35,8 +35,6 @@ function Phone() {
     useSimcardService();
     useMarketplaceService();
     useNoteListener();
-    /*usePhotoService();*/
-    useSocietyMessagesService();
     useCallService();
 
     // Core services
@@ -47,6 +45,7 @@ function Phone() {
     // Apps services
     useAppBankService();
     useAppTwitchNewsService();
+    useAppSocietyService();
 
     return (
         <ThemeProvider>

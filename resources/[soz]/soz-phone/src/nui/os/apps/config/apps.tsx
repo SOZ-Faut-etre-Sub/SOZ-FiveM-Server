@@ -9,8 +9,8 @@ import { MessagesApp } from '../../../apps/messages';
 import { NotesApp } from '../../../apps/notes';
 import PhotoApp from '../../../apps/photo/components/PhotoApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
-import { SocietyContactsApp } from '../../../apps/society-contacts/components/SocietyContactsApp';
-import { SocietyMessagesApp } from '../../../apps/society-messages/components/SocietyMessagesApp';
+import { SocietyContactsApp } from '../../../apps/society-contacts';
+import { SocietyMessagesApp } from '../../../apps/society-messages';
 import { TwitchNewsApp } from '../../../apps/twitch-news';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 
