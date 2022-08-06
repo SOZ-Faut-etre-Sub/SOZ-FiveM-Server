@@ -1,5 +1,4 @@
 import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact } from '../../../typings/contact';
-import { MessageEvents } from '../../../typings/messages';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import ContactsDB, { _ContactsDB } from './contacts.db';

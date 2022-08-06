@@ -12,7 +12,7 @@ interface ProfileFieldProps {
 }
 
 const ProfileField = forwardRef<HTMLInputElement, ProfileFieldProps>(
-    ({ label, value, handleChange, allowChange, multiline, maxLength }, ref) => {
+    ({ label, value, handleChange, allowChange, multiline }, ref) => {
         const _handleChange = e => handleChange(e.target.value);
 
         return (

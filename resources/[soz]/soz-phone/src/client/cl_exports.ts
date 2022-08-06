@@ -1,7 +1,6 @@
 import { AddNoteExportData, NotesEvents } from '../../typings/app/notes';
-import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { PhoneEvents } from '../../typings/phone';
-import { sendContactsEvent, sendMessage, sendNotesEvent } from '../utils/messages';
+import { sendMessage, sendNotesEvent } from '../utils/messages';
 import { initializeCallHandler } from './calls/cl_calls.controller';
 import { hidePhone, showPhone } from './cl_main';
 import { verifyExportArgType } from './cl_utils';

@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
-import { useContact } from '../../../hooks/useContact';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
 interface ContactInfoRouteQuery {

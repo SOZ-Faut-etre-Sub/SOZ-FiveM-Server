@@ -1,5 +1,5 @@
 import { Society } from '@typings/society';
-import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, selector } from 'recoil';
 
 import { SocietyContactsState } from '../utils/constants';
 
