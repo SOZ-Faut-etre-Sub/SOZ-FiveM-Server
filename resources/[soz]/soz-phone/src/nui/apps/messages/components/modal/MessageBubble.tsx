@@ -1,11 +1,11 @@
 import { LocationMarkerIcon } from '@heroicons/react/solid';
-import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageEvents } from '@typings/messages';
 import { PictureReveal } from '@ui/old_components/PictureReveal';
 import { fetchNui } from '@utils/fetchNui';
 import React, { useContext } from 'react';
 
+import { usePhoneNumber } from '../../../../hooks/useSimCard';
 import { ThemeContext } from '../../../../styles/themeProvider';
 
 const isImage = url => {
@@ -22,7 +22,7 @@ interface MessageBubbleProps {
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     const { theme } = useContext(ThemeContext);
-    const myNumber = useMyPhoneNumber();
+    const myNumber = usePhoneNumber();
     const setWaypoint = () => {
         const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 

@@ -2,7 +2,6 @@ import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useConfig } from '@os/phone/hooks/useConfig';
-import { useSimcardService } from '@os/simcard/hooks/useSimcardService';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -30,7 +29,6 @@ function Phone() {
     useDebugService();
 
     usePhoneService();
-    useSimcardService();
     useCallService();
 
     // Core services
