@@ -1,7 +1,6 @@
 import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
 import { useCallService } from '@os/call/hooks/useCallService';
-import { useConfig } from '@os/phone/hooks/useConfig';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -24,8 +23,6 @@ import ThemeProvider from './styles/themeProvider';
 
 function Phone() {
     const { apps } = useApps();
-    useConfig();
-
     useDebugService();
 
     usePhoneService();

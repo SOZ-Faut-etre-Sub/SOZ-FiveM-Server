@@ -6,14 +6,14 @@ import { ServerPromiseResp } from '../../../../typings/common';
 import { SocietyEvents, SocietyMessage } from '../../../../typings/society';
 import { useMessageNotifications } from '../../apps/society-messages/hooks/useMessageNotifications';
 import { MockSocietyMessages } from '../../apps/society-messages/utils/constants';
-import { usePhoneVisibility } from '../../os/phone/hooks/usePhoneVisibility';
+import { useVisibility } from '../../hooks/usePhone';
 import { store } from '../../store';
 import { fetchNui } from '../../utils/fetchNui';
 import { buildRespObj } from '../../utils/misc';
 
 export const useAppSocietyService = () => {
     const { setNotification } = useMessageNotifications();
-    const { visibility } = usePhoneVisibility();
+    const { visibility } = useVisibility();
     const { pathname } = useLocation();
 
     useEffect(() => {

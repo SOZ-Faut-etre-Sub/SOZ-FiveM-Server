@@ -1,7 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronUpIcon, RefreshIcon } from '@heroicons/react/outline';
 import { ColorSwatchIcon, CubeIcon, EmojiHappyIcon, LightningBoltIcon } from '@heroicons/react/solid';
-import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
@@ -13,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
 import { useBackground } from '../../../ui/hooks/useBackground';
 import useInterval from '../hooks/useInterval';
@@ -34,7 +34,7 @@ const CameraApp: React.FC = () => {
     const photos = getPhotos();
 
     const { addAlert } = useSnackbar();
-    const { visibility } = usePhoneVisibility();
+    const { visibility } = useVisibility();
     const [image, setImage] = useState('https://placekitten.com/960/540');
 
     const handleTakePhoto = () => {
