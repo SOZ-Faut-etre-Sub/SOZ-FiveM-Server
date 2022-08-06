@@ -9,15 +9,18 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { usePhotosValue } from '../../hooks/state';
+import { usePhoto } from '../../../hooks/usePhoto';
+import { ThemeContext } from '../../../styles/themeProvider';
 
 export const GalleryGrid = () => {
     const photosApp = useApp('photo');
+    const [t] = useTranslation();
+
     const navigate = useNavigate();
     const query = useQueryParams();
-    const [t] = useTranslation();
-    const photos = usePhotosValue();
+
+    const { getPhotos } = usePhoto();
+    const photos = getPhotos();
     const { theme } = useContext(ThemeContext);
 
     const referral = query.referral ? decodeURIComponent(query.referral) : '/photo/image';

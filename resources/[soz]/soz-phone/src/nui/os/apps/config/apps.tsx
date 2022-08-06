@@ -7,7 +7,7 @@ import { ContactsApp } from '../../../apps/contacts';
 import { DialerApp } from '../../../apps/dialer';
 import { MessagesApp } from '../../../apps/messages';
 import { NotesApp } from '../../../apps/notes';
-import PhotoApp from '../../../apps/photo/components/PhotoApp';
+import PhotoApp from '../../../apps/photo';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { SocietyContactsApp } from '../../../apps/society-contacts';
 import { SocietyMessagesApp } from '../../../apps/society-messages';

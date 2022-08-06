@@ -1,4 +1,6 @@
-export const MockPhotoData = [
+import { GalleryPhoto } from '../../../../../typings/photo';
+
+export const MockPhotoData: GalleryPhoto[] = [
     {
         id: 1,
         image: 'https://placekitten.com/1280/720',

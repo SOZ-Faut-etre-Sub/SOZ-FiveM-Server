@@ -4,9 +4,9 @@ import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { useBackground } from '../../../ui/hooks/useBackground';
-import { GalleryGrid } from './grid/GalleryGrid';
-import { GalleryModal } from './modal/GalleryModal';
+import { useBackground } from '../../ui/hooks/useBackground';
+import { GalleryGrid } from './pages/GalleryGrid';
+import { GalleryModal } from './pages/GalleryModal';
 
 const PhotoApp: React.FC = () => {
     const backgroundClass = useBackground();
