@@ -1,7 +1,7 @@
-import { SocietyEvents, SocietyMessage } from '../../typings/society';
-import apps from '../utils/apps';
-import { sendMessage } from '../utils/messages';
-import { RegisterNuiProxy } from './cl_utils';
+import { SocietyEvents, SocietyMessage } from '../../../typings/society';
+import apps from '../../utils/apps';
+import { sendMessage } from '../../utils/messages';
+import { RegisterNuiProxy } from '../cl_utils';
 
 RegisterNuiProxy(SocietyEvents.SEND_SOCIETY_MESSAGE);
 RegisterNuiProxy(SocietyEvents.FETCH_SOCIETY_MESSAGES);

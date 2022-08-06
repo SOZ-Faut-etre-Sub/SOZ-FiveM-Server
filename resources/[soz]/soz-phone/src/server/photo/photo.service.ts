@@ -1,4 +1,5 @@
-import { GalleryPhoto } from '../../../typings/photo';
+import { ContactEvents } from '../../../typings/contact';
+import { GalleryPhoto, PhotoEvents } from '../../../typings/photo';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import PhotoDB, { _PhotoDB } from './photo.db';
@@ -18,6 +19,8 @@ class _PhotoService {
 
             const identifier = PlayerService.getIdentifier(reqObj.source);
             const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data);
+
+            emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, reqObj.source, reqObj.data);
 
             resp({ status: 'ok', data: photo });
         } catch (e) {
@@ -46,6 +49,8 @@ class _PhotoService {
         try {
             const identifier = PlayerService.getIdentifier(reqObj.source);
             await this.photoDB.deletePhoto(reqObj.data, identifier);
+
+            emitNet(PhotoEvents.DELETE_PHOTO_SUCCESS, reqObj.source, reqObj.data);
 
             resp({ status: 'ok' });
         } catch (e) {

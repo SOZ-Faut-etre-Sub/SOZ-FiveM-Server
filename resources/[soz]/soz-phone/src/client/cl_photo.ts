@@ -1,7 +1,7 @@
 import config from '../../config.json';
 import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
-import { sendCameraEvent } from '../utils/messages';
+import { sendCameraEvent, sendPhotoEvent } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 import { ClUtils } from './client';
@@ -129,3 +129,11 @@ const takePhoto = () =>
 
 RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
 RegisterNuiProxy(PhotoEvents.DELETE_PHOTO);
+
+onNet(PhotoEvents.DELETE_PHOTO_SUCCESS, (result: number) => {
+    sendPhotoEvent(PhotoEvents.DELETE_PHOTO_SUCCESS, result);
+});
+
+onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, (result: number) => {
+    sendPhotoEvent(PhotoEvents.UPLOAD_PHOTO_SUCCESS, result);
+});

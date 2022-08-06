@@ -19,6 +19,7 @@ import { useDebugService } from './services/useDebugService';
 import { useKeyboardService } from './services/useKeyboardService';
 import { useMessagesService } from './services/useMessagesService';
 import { usePhoneService } from './services/usePhoneService';
+import { usePhotoService } from './services/usePhotoService';
 import { useSimCardService } from './services/useSimCardService';
 import ThemeProvider from './styles/themeProvider';
 
@@ -37,6 +38,7 @@ function Phone() {
     useSimCardService();
     useContactService();
     useMessagesService();
+    usePhotoService();
 
     // Apps services
     useAppBankService();

@@ -10,14 +10,12 @@ import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { usePhotoActions } from '../../hooks/usePhotoActions';
+import { ThemeContext } from '../../../styles/themeProvider';
 
 export const GalleryModal = () => {
     const navigate = useNavigate();
     const query = useQueryParams();
     const { theme } = useContext(ThemeContext);
-    const { deletePhoto } = usePhotoActions();
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
 
@@ -32,8 +30,6 @@ export const GalleryModal = () => {
             if (serverResp.status !== 'ok') {
                 return addAlert({ message: t('CAMERA.FAILED_TO_DELETE'), type: 'error' });
             }
-
-            deletePhoto(meta.image);
 
             navigate(-1);
         });

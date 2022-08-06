@@ -8,12 +8,14 @@ export enum PhotoEvents {
     TAKE_PHOTO = 'phone:camera:take',
     TOGGLE_CAMERA = 'phone:camera:toggle',
     EXIT_CAMERA = 'phone:camera:exit',
+    CAMERA_EXITED = 'npwd:cameraExited',
 
     TOGGLE_CONTROL_CAMERA = 'phone:camera:toggleControl',
-
-    CAMERA_EXITED = 'npwd:cameraExited',
     TAKE_PHOTO_SUCCESS = 'npwd:TakePhotoSuccess',
-    UPLOAD_PHOTO = 'npwd:UploadPhoto',
-    FETCH_PHOTOS = 'npwd:FetchPhotos',
-    DELETE_PHOTO = 'npwd:deletePhoto',
+
+    FETCH_PHOTOS = 'phone:photo:fetch',
+    UPLOAD_PHOTO = 'phone:photo:upload',
+    UPLOAD_PHOTO_SUCCESS = 'phone:photo:upload:success',
+    DELETE_PHOTO = 'phone:photo:delete',
+    DELETE_PHOTO_SUCCESS = 'phone:photo:delete:success',
 }
