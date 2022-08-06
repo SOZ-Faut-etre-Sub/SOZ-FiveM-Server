@@ -18,10 +18,6 @@ export function sendNotesEvent(method: string, data: any = {}): void {
     return sendMessage(apps.NOTES, method, data);
 }
 
-export function sendMarketplaceEvent(method: string, data: any = {}): void {
-    sendMessage(apps.MARKETPLACE, method, data);
-}
-
 export function sendContactsEvent(method: string, data: any = {}): void {
     sendMessage(apps.CONTACTS, method, data);
 }

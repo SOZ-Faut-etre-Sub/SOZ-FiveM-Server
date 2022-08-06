@@ -99,14 +99,6 @@ export const APPS: IAppConfig[] = [
         path: '/zutom',
         component: <ZutomApp />,
     },
-    /*{
-      id: 'marketplace',
-      nameLocale: 'APPS_MARKETPLACE',
-      path: '/marketplace',
-      Route: () => (
-        <AppRoute path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
-      ),
-    },*/
     {
         id: 'camera',
         nameLocale: 'APPS_CAMERA',
