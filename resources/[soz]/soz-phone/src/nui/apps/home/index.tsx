@@ -1,11 +1,11 @@
 import { Transition } from '@headlessui/react';
 import { useApps } from '@os/apps/hooks/useApps';
-import { useMySocietyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { AppContent } from '@ui/components/AppContent';
 import React, { FunctionComponent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { ThemeContext } from '../../styles/themeProvider';
 import { Grid } from '../../ui/components/Grid';
 import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
@@ -15,7 +15,7 @@ export const HomeApp: FunctionComponent = () => {
     const { apps } = useApps();
     const { theme } = useContext(ThemeContext);
     const [t] = useTranslation();
-    const societyNumber = useMySocietyPhoneNumber();
+    const societyNumber = usePhoneSocietyNumber();
 
     const filteredApps =
         societyNumber === null

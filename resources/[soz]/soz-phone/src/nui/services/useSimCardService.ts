@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ServerPromiseResp } from '../../../typings/common';
+import { PhoneEvents } from '../../../typings/phone';
+import { SettingsEvents } from '../../../typings/settings';
 import { MockHistoryData } from '../apps/dialer/utils/constants';
 import { store } from '../store';
 import { fetchNui } from '../utils/fetchNui';
@@ -35,4 +37,8 @@ export const useSimCardService = () => {
     }, []);
 
     // useNuiEvent('DIALER', CallEvents.FETCH_CALLS, store.dispatch.appTwitchNews.appendNews);
+
+    useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, store.dispatch.simCard.SET_NUMBER);
+    useNuiEvent('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, store.dispatch.simCard.SET_SOCIETY_NUMBER);
+    useNuiEvent('AVATAR', SettingsEvents.SET_AVATAR, store.dispatch.simCard.SET_AVATAR);
 };

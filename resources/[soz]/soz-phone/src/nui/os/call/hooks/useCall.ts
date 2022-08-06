@@ -1,4 +1,3 @@
-import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ActiveCall } from '@typings/call';
 import { CallEvents } from '@typings/call';
@@ -8,6 +7,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { SOZ_PHONE_IS_PRODUCTION } from '../../../../globals';
+import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { fetchNui } from '../../../utils/fetchNui';
 import { useCurrentCall } from './state';
 
@@ -25,7 +25,7 @@ interface CallHook {
 export const useCall = (): CallHook => {
     const [call, setCall] = useCurrentCall();
     // const [dialRing, setDialRing] = useState(false);
-    const myPhoneNumber = useMyPhoneNumber();
+    const myPhoneNumber = usePhoneNumber();
     const [t] = useTranslation();
     const { addAlert } = useSnackbar();
     // const { endDialTone, startDialTone } = useDialingSound();

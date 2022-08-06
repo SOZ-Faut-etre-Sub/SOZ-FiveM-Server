@@ -14,7 +14,6 @@ import {
     VolumeUpIcon,
 } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
-import { useMyPhoneNumber, useMyPictureProfile } from '@os/simcard/hooks/useMyPhoneNumber';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
@@ -30,6 +29,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
+import { useAvatar, usePhoneNumber } from '../../../hooks/useSimCard';
 import { ThemeContext } from '../../../styles/themeProvider';
 import { useBackground } from '../../../ui/hooks/useBackground';
 import { FullPageWithHeader } from '../../../ui/layout/FullPageWithHeader';
@@ -40,8 +40,8 @@ import WallpaperModal from './WallpaperModal';
 export const SettingsApp = () => {
     const settingsApp = useApp('settings');
     const [config] = usePhoneConfig();
-    const myNumber = useMyPhoneNumber();
-    const myAvatar = useMyPictureProfile();
+    const myNumber = usePhoneNumber();
+    const myAvatar = useAvatar();
     const [settings, setSettings] = useSettings();
     const [t] = useTranslation();
     const [, setCustomWallpaperState] = useCustomWallpaperModal();

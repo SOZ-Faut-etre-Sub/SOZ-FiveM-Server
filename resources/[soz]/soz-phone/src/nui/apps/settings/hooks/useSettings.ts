@@ -5,10 +5,10 @@ import { SettingOption } from '@ui/hooks/useContextMenu';
 import { fetchNui } from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { atom, DefaultValue, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { atom, DefaultValue, useRecoilState, useResetRecoilState } from 'recoil';
 
 import config from '../../../config/default.json';
-import { simcardState } from '../../../os/simcard/hooks/state';
+import { store } from '../../../store';
 
 const NPWD_STORAGE_KEY = 'soz_settings';
 
@@ -68,7 +68,6 @@ export const useCustomWallpaperModal = () => useRecoilState(customWallpaperState
 export const useSettingsAPI = () => {
     const [t] = useTranslation();
     const { addAlert } = useSnackbar();
-    const setAvatar = useSetRecoilState(simcardState.avatar);
 
     const updateProfilePicture = useCallback(
         ({ number, url }: PreDBSettings) => {
@@ -83,7 +82,7 @@ export const useSettingsAPI = () => {
                     });
                 }
 
-                setAvatar(url);
+                store.dispatch.simCard.SET_AVATAR(url);
                 addAlert({
                     message: t('SETTINGS.FEEDBACK.UPDATE_SUCCESS'),
                     type: 'success',

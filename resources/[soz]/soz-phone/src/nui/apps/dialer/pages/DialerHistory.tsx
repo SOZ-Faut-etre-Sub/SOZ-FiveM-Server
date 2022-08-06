@@ -9,7 +9,6 @@ import {
     UserAddIcon,
 } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
-import { useMyPhoneNumber } from '@os/simcard/hooks/useMyPhoneNumber';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import dayjs from 'dayjs';
@@ -20,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { useContact } from '../../../hooks/useContact';
+import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { RootState } from '../../../store';
 import { ThemeContext } from '../../../styles/themeProvider';
 
@@ -28,7 +28,7 @@ dayjs.extend(relativeTime);
 export const DialerHistory: React.FC = () => {
     const calls = useSelector((state: RootState) => state.simCard.callHistory);
 
-    const myNumber = useMyPhoneNumber();
+    const myNumber = usePhoneNumber();
     const { getDisplayByNumber, getPictureByNumber } = useContact();
     const { theme } = useContext(ThemeContext);
     const { initializeCall } = useCall();
