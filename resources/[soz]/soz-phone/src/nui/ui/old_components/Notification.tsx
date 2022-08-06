@@ -1,4 +1,3 @@
-import { usePhone } from '@os/phone/hooks/usePhone';
 import React, { PropsWithChildren } from 'react';
 
 interface NotificationProps {
@@ -7,10 +6,6 @@ interface NotificationProps {
 }
 
 export const Notification: React.FC<PropsWithChildren<NotificationProps>> = ({ children }) => {
-    const { ResourceConfig } = usePhone();
-
-    if (!ResourceConfig) return null;
-
     return (
         <div>
             <div>

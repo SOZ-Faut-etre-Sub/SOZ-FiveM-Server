@@ -3,10 +3,10 @@ import cn from 'classnames';
 import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { useTime } from '../../hooks/usePhone';
 import { useCurrentCall } from '../../os/call/hooks/state';
 import { NotificationItem } from '../../os/notifications/components/NotificationItem';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
-import usePhoneTime from '../../os/phone/hooks/usePhoneTime';
 import { ThemeContext } from '../../styles/themeProvider';
 import { BatteryIcon } from '../assets/battery';
 import { CellIcon } from '../assets/cell';
@@ -17,7 +17,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     const { pathname } = useLocation();
     const [currentCall] = useCurrentCall();
     const { theme } = useContext(ThemeContext);
-    const time = usePhoneTime();
+    const time = useTime();
 
     useEffect(() => {
         if (notifications.length === 0) {

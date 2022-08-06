@@ -7,12 +7,12 @@ import { useLocation } from 'react-router-dom';
 
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
-import { usePhoneVisibility } from './os/phone/hooks/usePhoneVisibility';
+import { useVisibility } from './hooks/usePhone';
 
 const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
     const [settings] = useSettings();
     const { pathname } = useLocation();
-    const { visibility, notifVisibility } = usePhoneVisibility();
+    const { visibility, notifVisibility } = useVisibility();
 
     return (
         <div

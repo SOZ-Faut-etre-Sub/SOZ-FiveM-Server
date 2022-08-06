@@ -1,10 +1,9 @@
-import { phoneState } from '@os/phone/hooks/state';
 import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 
 import { useSettings } from '../../../apps/settings/hooks/useSettings';
+import { useAvailability, useVisibility } from '../../../hooks/usePhone';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
@@ -51,8 +50,8 @@ export const NotificationsContext = createContext<{
 }>(null);
 
 export function NotificationsProvider({ children }) {
-    const isPhoneOpen = useRecoilValue(phoneState.visibility);
-    const isPhoneAvailable = useRecoilValue(phoneState.availability);
+    const { visibility: isPhoneOpen } = useVisibility();
+    const isPhoneAvailable = useAvailability();
 
     const [settings] = useSettings();
 
