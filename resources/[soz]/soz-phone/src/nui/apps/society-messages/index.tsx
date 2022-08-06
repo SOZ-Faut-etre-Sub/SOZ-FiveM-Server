@@ -4,12 +4,11 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { useBackground } from '../../../ui/hooks/useBackground';
-import MessagesList from './list/MessagesList';
+import { useBackground } from '../../ui/hooks/useBackground';
+import MessagesList from './pages/MessagesList';
 
 export const SocietyMessagesApp = () => {
     const messages = useApp('society-messages');
@@ -30,11 +29,9 @@ export const SocietyMessagesApp = () => {
                 <AppWrapper>
                     <AppTitle app={messages} />
                     <AppContent>
-                        <React.Suspense fallback={<LoadingSpinner />}>
-                            <Routes>
-                                <Route index element={<MessagesList />} />
-                            </Routes>
-                        </React.Suspense>
+                        <Routes>
+                            <Route index element={<MessagesList />} />
+                        </Routes>
                     </AppContent>
                 </AppWrapper>
             </Transition>

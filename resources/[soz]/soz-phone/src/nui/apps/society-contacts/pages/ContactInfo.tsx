@@ -4,6 +4,7 @@ import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { ChatIcon, LocationMarkerIcon, PhoneIncomingIcon, PhoneMissedCallIcon } from '@heroicons/react/solid';
 import { SocietiesDatabaseLimits } from '@typings/society';
 import { AppTitle } from '@ui/components/AppTitle';
+import { AppWrapper } from '@ui/components/AppWrapper';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { AppContent } from '@ui/old_components/AppContent';
 import { Button } from '@ui/old_components/Button';
@@ -12,8 +13,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { AppWrapper } from '../../../../ui/components/AppWrapper';
-import { useContactsAPI } from '../../hooks/useContactsAPI';
+import { useSociety } from '../../../hooks/app/useSociety';
+import { useContact } from '../../../hooks/useContact';
+import { useContactsAPI } from '../hooks/useContactsAPI';
 
 interface ContactInfoRouteQuery {
     addNumber?: string;
@@ -30,7 +32,7 @@ const ContactsInfoPage: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const { getContact } = useContactActions();
+    const { getContact } = useSociety();
     const { sendSocietyMessage } = useContactsAPI();
     const contact = getContact(parseInt(id));
 

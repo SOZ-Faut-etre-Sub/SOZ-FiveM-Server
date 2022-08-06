@@ -31,8 +31,8 @@ export interface SocietyMessage {
     takenBy: string | null;
     takenByUsername: string | null;
     isDone: boolean;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: number;
+    updatedAt: number;
 }
 
 export enum SocietiesDatabaseLimits {
@@ -70,4 +70,4 @@ export const SocietyNumberList: SocietyNumber = {
     bennys: '555-BENNYS',
     upw: '555-UPW',
     pawl: '555-PAWL',
-}
+};

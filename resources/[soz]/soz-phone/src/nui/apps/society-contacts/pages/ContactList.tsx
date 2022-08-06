@@ -1,16 +1,37 @@
 import { AppContent } from '@ui/components/AppContent';
-import React, { useContext } from 'react';
+import { AppTitle } from '@ui/components/AppTitle';
+import React, { useContext, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useApp } from '../../../../os/apps/hooks/useApps';
-import { ThemeContext } from '../../../../styles/themeProvider';
-import { AppTitle } from '../../../../ui/components/AppTitle';
-import { useFilteredContacts } from '../../hooks/state';
-import { SearchContacts } from './SearchContacts';
+import { useSociety } from '../../../hooks/app/useSociety';
+import { useApp } from '../../../os/apps/hooks/useApps';
+import { ThemeContext } from '../../../styles/themeProvider';
+import { SearchField } from '../../../ui/old_components/SearchField';
 
 export const ContactList: React.FC = () => {
-    const contacts = useApp('society-contacts');
-    const filteredContacts = useFilteredContacts();
+    const contactsApp = useApp('society-contacts');
+
+    const { getContacts } = useSociety();
+    const [searchValue, setSearchValue] = useState<string>('');
+    const contacts = getContacts();
+    const filteredContacts = useMemo(() => {
+        const list = [];
+        const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
+
+        contacts
+            .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
+            .forEach(contact => {
+                if (list[contact.display[0]] === undefined) {
+                    list[contact.display[0]] = [];
+                }
+                list[contact.display[0]].push(contact);
+            });
+
+        return list;
+    }, [contacts, searchValue]);
+
+    const [t] = useTranslation();
     const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
 
@@ -20,8 +41,12 @@ export const ContactList: React.FC = () => {
 
     return (
         <AppContent scrollable={false}>
-            <AppTitle app={contacts} />
-            <SearchContacts />
+            <AppTitle app={contactsApp} />
+            <SearchField
+                onChange={e => setSearchValue(e.target.value)}
+                placeholder={t('SOCIETY_CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
+                value={searchValue}
+            />
             <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts)
                     .sort()

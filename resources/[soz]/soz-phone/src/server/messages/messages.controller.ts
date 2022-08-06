@@ -29,15 +29,12 @@ onNetPromise<{ targetNumber: string }, MessageConversationResponse>(
     }
 );
 
-onNetPromise<{ conversationId: string; page: number }, Message[]>(
-    MessageEvents.FETCH_MESSAGES,
-    async (reqObj, resp) => {
-        MessagesService.handleFetchMessages(reqObj, resp).catch(e => {
-            messagesLogger.error(`Error occurred in fetch messages (${reqObj.source}), Error: ${e.message}`);
-            resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
-        });
-    }
-);
+onNetPromise<void, Message[]>(MessageEvents.FETCH_MESSAGES, async (reqObj, resp) => {
+    MessagesService.handleFetchMessages(reqObj, resp).catch(e => {
+        messagesLogger.error(`Error occurred in fetch messages (${reqObj.source}), Error: ${e.message}`);
+        resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+});
 
 onNetPromise<PreDBMessage, Message>(MessageEvents.SEND_MESSAGE, async (reqObj, resp) => {
     MessagesService.handleSendMessage(reqObj, resp).catch(e => {

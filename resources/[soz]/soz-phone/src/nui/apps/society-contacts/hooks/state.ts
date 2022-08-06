@@ -35,7 +35,3 @@ export const contactsState = {
         },
     }),
 };
-
-export const useFilteredContacts = () => useRecoilValue(contactsState.filteredContacts);
-
-export const useSetContactFilterInput = () => useSetRecoilState(contactsState.filterInput);

@@ -88,12 +88,10 @@ class _MessagesService {
         }
     }
 
-    async handleFetchMessages(
-        reqObj: PromiseRequest<{ conversationId: string; page: number }>,
-        resp: PromiseEventResp<Message[]>
-    ) {
+    async handleFetchMessages(reqObj: PromiseRequest<void>, resp: PromiseEventResp<Message[]>) {
         try {
-            const messages = await this.messagesDB.getMessages(reqObj.data.conversationId, reqObj.data.page);
+            const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+            const messages = await this.messagesDB.getMessages(phoneNumber);
 
             messages.sort((a, b) => a.id - b.id);
 
