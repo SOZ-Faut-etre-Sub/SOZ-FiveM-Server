@@ -11,13 +11,17 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { InputBase } from '../../../ui/old_components/Input';
 import { DialerButton } from '../components/DialerButton';
 
+interface IFormInputs {
+    number: string;
+}
+
 const DialerKeyboard: React.FC = () => {
     const query = useQueryParams();
     const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
     const { initializeCall } = useCall();
 
-    const { register, setValue, watch, handleSubmit } = useForm<FormData>();
+    const { register, setValue, watch, handleSubmit } = useForm<IFormInputs>();
     const onSubmit = handleSubmit(() => {});
 
     const handleNewContact = () => {
