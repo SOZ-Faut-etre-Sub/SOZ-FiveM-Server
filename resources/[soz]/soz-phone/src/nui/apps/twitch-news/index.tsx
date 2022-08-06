@@ -5,7 +5,6 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { useBackground } from '@ui/hooks/useBackground';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { LoadingSpinner } from '@ui/old_components/LoadingSpinner';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -30,11 +29,9 @@ export const TwitchNewsApp = () => {
                 <AppWrapper>
                     <AppTitle app={messages} />
                     <AppContent>
-                        <React.Suspense fallback={<LoadingSpinner />}>
-                            <Routes>
-                                <Route index element={<NewsList />} />
-                            </Routes>
-                        </React.Suspense>
+                        <Routes>
+                            <Route index element={<NewsList />} />
+                        </Routes>
                     </AppContent>
                 </AppWrapper>
             </Transition>

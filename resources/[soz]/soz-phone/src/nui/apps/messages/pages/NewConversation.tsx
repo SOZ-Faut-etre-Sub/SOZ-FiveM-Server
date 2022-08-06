@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
-import { AppContent } from '@ui/old_components/AppContent';
 import { Button } from '@ui/old_components/Button';
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
