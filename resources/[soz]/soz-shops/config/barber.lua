@@ -1,21 +1,24 @@
 Config.Products["barber"] = {
     [GetHashKey("mp_m_freemode_01")] = {
-        ["Hair"] = {
+        {
             price = 30,
+            category = "Hair",
             label = "Cheveux",
             overlay = "Hair",
             components = {["HairType"] = true, ["HairColor"] = true, ["HairSecondaryColor"] = true},
             items = Config.CharacterComponentList.HairMale,
         },
-        ["Beard"] = {
+        {
             price = 15,
+            category = "Beard",
             label = "Barbe",
             overlay = "Hair",
             components = {["BeardType"] = true, ["BeardColor"] = true},
             items = Config.CharacterComponentList.BeardMale,
         },
-        ["Makeup"] = {
+        {
             price = 20,
+            category = "Makeup",
             label = "Maquillage",
             overlay = "Makeup",
             components = {
@@ -27,29 +30,33 @@ Config.Products["barber"] = {
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
-        ["Hair"] = {
+        {
             price = 30,
+            category = "Hair",
             label = "Cheveux",
             overlay = "Hair",
             components = {["HairType"] = true, ["HairColor"] = true, ["HairSecondaryColor"] = true},
             items = Config.CharacterComponentList.HairFemale,
         },
-        ["Blush"] = {
+        {
             price = 15,
+            category = "Blush",
             label = "Blush",
             overlay = "Makeup",
             components = {["BlushType"] = true, ["BlushColor"] = true},
             items = Config.CharacterComponentList.Blush,
         },
-        ["Lipstick"] = {
+        {
             price = 15,
+            category = "Lipstick",
             label = "Rouge à lèvre",
             overlay = "Makeup",
             components = {["LipstickType"] = true, ["LipstickColor"] = true},
             items = Config.CharacterComponentList.Lipstick,
         },
-        ["Makeup"] = {
+        {
             price = 20,
+            category = "Makeup",
             label = "Maquillage",
             overlay = "Makeup",
             components = {
