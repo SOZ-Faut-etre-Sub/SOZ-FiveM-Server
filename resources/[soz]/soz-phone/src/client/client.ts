@@ -1,6 +1,5 @@
 import './cl_main';
 import './cl_contacts';
-import './cl_marketplace';
 import './cl_photo';
 import './cl_messages';
 import './cl_societies';

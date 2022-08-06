@@ -4,7 +4,6 @@ import { PhoneEvents } from '../../../typings/phone';
 import { QBJob } from '../../../typings/qb';
 import { SocietyNumberList } from '../../../typings/society';
 import { Delay } from '../../utils/fivem';
-import MarketplaceService from '../marketplace/marketplace.service';
 import { Player } from './player.class';
 import playerDB, { PlayerRepo } from './player.db';
 import { PlayerAddData } from './player.interfaces';
@@ -241,24 +240,10 @@ class _PlayerService {
     }
 
     /**
-     * Clear all data from the database we don't want to stored after the player as disconnected.
-     */
-    async clearPlayerData(src: number) {
-        const identifier = this.getIdentifier(src);
-        try {
-            await MarketplaceService.handleDeleteListingsOnDrop(identifier);
-        } catch (e) {
-            playerLogger.error(`Failed to clear player data when dropped, Error: ${e.toString()}`);
-        }
-    }
-
-    /**
      * Unload event handler
      * @param src - Source of player being unloaded
      **/
     async handleUnloadPlayerEvent(src: number) {
-        await this.clearPlayerData(src);
-
         this.deletePlayerFromMaps(src);
         emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
         playerLogger.info(`Unloaded NPWD Player, source: (${src})`);

@@ -8,7 +8,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { HomeApp } from './apps/home';
-import { useMarketplaceService } from './apps/marketplace/hooks/useMarketplaceService';
 import { useNoteListener } from './apps/notes/hooks/useNoteListener';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
@@ -33,7 +32,6 @@ function Phone() {
     useKeyboardService();
     usePhoneService();
     useSimcardService();
-    useMarketplaceService();
     useNoteListener();
     useCallService();
 
