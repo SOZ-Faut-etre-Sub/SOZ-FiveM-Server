@@ -25,6 +25,7 @@ type BaseItem = {
 export type Nutrition = {
     hunger: number;
     thirst: number;
+    alcohol: number;
     stamina: number;
     fiber: number;
     lipid: number;
@@ -91,7 +92,9 @@ export type DrinkItem = BaseItem & {
 };
 
 export type InventoryItemMetadata = {
-    expiration: Date;
+    expiration?: string;
+    serial?: string;
+    player?: number;
 };
 
 export type InventoryItem = {

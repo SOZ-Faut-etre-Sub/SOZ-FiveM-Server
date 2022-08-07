@@ -1,7 +1,8 @@
 import { Module } from '../../core/decorators/module';
-import { ItemProvider } from './item.provider';
+import { ItemHealthProvider } from './item.health.provider';
+import { ItemNutritionProvider } from './item.nutrition.provider';
 
 @Module({
-    providers: [ItemProvider],
+    providers: [ItemNutritionProvider, ItemHealthProvider],
 })
 export class ItemModule {}

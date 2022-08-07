@@ -1,27 +1,5 @@
 import { Injectable } from '../core/decorators/injectable';
-
-type ProgressOptions = {
-    useWhileDead: boolean;
-    canCancel: boolean;
-    disableCombat: boolean;
-};
-
-type ProgressAnimation = {
-    dictionary: string;
-    name: string;
-    flags: number;
-};
-
-type ProgressResult = {
-    completed: boolean;
-    progress: number;
-};
-
-type ProgressProp = {
-    model: string;
-    bone: number;
-    coords: { x: number; y: number; z: number };
-};
+import { ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
 
 @Injectable()
 export class ProgressService {
@@ -48,7 +26,7 @@ export class ProgressService {
             promiseReject = reject;
         });
 
-        exports['prgressnar'].Progress(
+        exports['progressbar'].Progress(
             {
                 name: name.toLowerCase(),
                 duration,
@@ -63,12 +41,12 @@ export class ProgressService {
                     anim: animation.name,
                     flags: animation.flags || 0,
                 },
-                prop: {},
-                propTwo: {},
+                prop: options.firstProp || {},
+                propTwo: options.secondProp || {},
             },
             (cancelled: boolean) => {
                 if (cancelled) {
-                    const elapsedBeforeCancel = Math.round((GetGameTimer() - start) / duration);
+                    const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
 
                     promiseResolve({
                         completed: false,

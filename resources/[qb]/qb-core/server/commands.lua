@@ -161,7 +161,7 @@ end, 'admin')
 
 -- PolyZone
 
-QBCore.Commands.Add('pzcreate', 'Starts creation of a zone for PolyZone of one of the available types: circle, box, poly (Admin Only)', {{name="zoneType", help="Zone Type (required)"}, { name = 'name', help = 'Name of Zone' }}, true, function(source, args)
+QBCore.tCommands.Add('pzcreate', 'Starts creation of a zone for PolyZone of one of the available types: circle, box, poly (Admin Only)', {{name="zoneType", help="Zone Type (required)"}, { name = 'name', help = 'Name of Zone' }}, true, function(source, args)
     local zoneType = args[1]
     if zoneType == nil then
         TriggerClientEvent('chat:addMessage', source, {

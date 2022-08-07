@@ -1,5 +1,6 @@
 import { Injectable } from '../core/decorators/injectable';
-import { InventoryItem, Item, ItemType } from '../shared/item';
+import { Item, ItemType } from '../shared/item';
+import { QBCorePlayer } from '../shared/player';
 
 @Injectable()
 export class QBCore {
@@ -35,7 +36,7 @@ export class QBCore {
         return filteredItems;
     }
 
-    public getPlayer(source: number) {
+    public getPlayer(source: number): QBCorePlayer {
         return this.QBCore.Functions.GetPlayer(source);
     }
 

@@ -1,3 +1,4 @@
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { addMethodMetadata, setMethodMetadata } from './reflect';
 
 export type EventMetadata = {
@@ -6,6 +7,10 @@ export type EventMetadata = {
 };
 
 export const EventMetadataKey = 'soz_core.decorator.event';
+
+export const OnEvent = (event: ServerEvent | ClientEvent, net = true): MethodDecorator => {
+    return On(event.toString(), net);
+};
 
 export const On = (name?: string, net = true): MethodDecorator => {
     return (target, propertyKey) => {
