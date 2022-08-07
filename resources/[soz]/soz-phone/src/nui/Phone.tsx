@@ -1,6 +1,5 @@
 import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
-import { useCallService } from '@os/call/hooks/useCallService';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
@@ -12,6 +11,7 @@ import { useAppBankService } from './services/app/useAppBankService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
+import { useCallService } from './services/useCallService';
 import { useContactService } from './services/useContactService';
 import { useDebugService } from './services/useDebugService';
 import { useKeyboardService } from './services/useKeyboardService';
@@ -26,11 +26,11 @@ function Phone() {
     useDebugService();
 
     usePhoneService();
-    useCallService();
 
     // Core services
     useKeyboardService();
     useSimCardService();
+    useCallService();
     useContactService();
     useMessagesService();
     usePhotoService();

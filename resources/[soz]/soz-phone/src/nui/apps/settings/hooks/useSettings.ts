@@ -5,12 +5,10 @@ import { SettingOption } from '@ui/hooks/useContextMenu';
 import { fetchNui } from '@utils/fetchNui';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { atom, DefaultValue, useRecoilState, useResetRecoilState } from 'recoil';
 
 import config from '../../../config/default.json';
+import useLocalState from '../../../hooks/useLocalState';
 import { store } from '../../../store';
-
-const NPWD_STORAGE_KEY = 'soz_settings';
 
 export interface IPhoneSettings {
     language: SettingOption;
@@ -25,45 +23,7 @@ export interface IPhoneSettings {
     notiSoundVol: number;
 }
 
-const localStorageEffect =
-    key =>
-    ({ setSelf, onSet }) => {
-        const savedVal = localStorage.getItem(key);
-        if (savedVal) {
-            try {
-                setSelf(JSON.parse(savedVal));
-            } catch (e) {
-                // If we are unable to parse the json string, we set default settings
-                console.error('Unable to parse JSON');
-                setSelf(config.defaultSettings);
-            }
-        }
-
-        onSet(newValue => {
-            if (newValue instanceof DefaultValue) {
-                localStorage.removeItem(key);
-            } else {
-                localStorage.setItem(key, JSON.stringify(newValue));
-            }
-        });
-    };
-
-export const settingsState = atom<IPhoneSettings>({
-    key: 'settings',
-    default: config.defaultSettings,
-    effects_UNSTABLE: [localStorageEffect(NPWD_STORAGE_KEY)],
-});
-
-const customWallpaperState = atom({
-    key: 'customWallpaperState',
-    default: false,
-});
-
-export const useSettings = () => useRecoilState(settingsState);
-
-export const useResetSettings = () => useResetRecoilState(settingsState);
-
-export const useCustomWallpaperModal = () => useRecoilState(customWallpaperState);
+export const useSettings = () => useLocalState(config.defaultSettings);
 
 export const useSettingsAPI = () => {
     const [t] = useTranslation();

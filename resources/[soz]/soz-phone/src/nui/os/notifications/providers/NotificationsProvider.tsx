@@ -12,7 +12,7 @@ export interface INotification {
     title: string;
     content?: React.ReactNode;
     icon?: JSX.Element;
-    notificationIcon?: JSX.Element;
+    notificationIcon?: React.FC<any>;
     sound?: boolean;
     cantClose?: boolean;
     keepWhenPhoneClosed?: boolean;

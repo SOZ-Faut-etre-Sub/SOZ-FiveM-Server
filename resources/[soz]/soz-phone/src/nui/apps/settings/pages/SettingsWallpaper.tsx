@@ -1,33 +1,34 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { PhotographIcon } from '@heroicons/react/solid';
-import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { AppTitle } from '@ui/components/AppTitle';
-import { AppWrapper } from '@ui/components/AppWrapper';
-import { Button } from '@ui/old_components/Button';
-import DialogForm from '@ui/old_components/DialogForm';
-import { TextField } from '@ui/old_components/Input';
-import { List } from '@ui/old_components/List';
 import cn from 'classnames';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
+import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { AppContent } from '../../../ui/components/AppContent';
+import { AppTitle } from '../../../ui/components/AppTitle';
+import { AppWrapper } from '../../../ui/components/AppWrapper';
 import { useBackground } from '../../../ui/hooks/useBackground';
-import { useCustomWallpaperModal, useSettings } from '../hooks/useSettings';
+import { Button } from '../../../ui/old_components/Button';
+import DialogForm from '../../../ui/old_components/DialogForm';
+import { TextField } from '../../../ui/old_components/Input';
+import { List } from '../../../ui/old_components/List';
+import { SettingItem } from '../components/SettingItem';
+import { useSettings } from '../hooks/useSettings';
 import getBackgroundPath from '../utils/getBackgroundPath';
-import { SettingItem } from './SettingItem';
 
-const WallpaperModal: React.FC = () => {
-    const [customWallpaperModal, setCustomWallpaperModal] = useCustomWallpaperModal();
+export const SettingsWallpaper = () => {
     const [wallpaperModal, setWallpaperModal] = useState(false);
     const [settings, setSettings] = useSettings();
     const [t] = useTranslation();
     const [value, setValue] = useState(settings.wallpaper.value ? settings.wallpaper.value : '');
     const { addAlert } = useSnackbar();
-    const [config] = usePhoneConfig();
+    const config = usePhoneConfig();
     const backgroundClass = useBackground();
+    const navigate = useNavigate();
 
     const isImageAndUrl = url => {
         return /^(http(s?):)([/|.|\w|\s|-]).*/g.test(url);
@@ -47,8 +48,8 @@ const WallpaperModal: React.FC = () => {
                 message: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_SUCCESS'),
                 type: 'success',
             });
-            setCustomWallpaperModal(false);
             setWallpaperModal(false);
+            navigate(-1);
         } else {
             addAlert({ message: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_ERROR'), type: 'error' });
         }
@@ -58,7 +59,7 @@ const WallpaperModal: React.FC = () => {
         <>
             <Transition
                 appear={true}
-                show={customWallpaperModal}
+                show={true}
                 className="absolute inset-x-0 z-40"
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="translate-x-full"
@@ -69,7 +70,7 @@ const WallpaperModal: React.FC = () => {
             >
                 <AppWrapper className={cn('h-full', backgroundClass)}>
                     <AppTitle title="Fond d'écran" isBigHeader={false}>
-                        <Button className="flex items-center text-base" onClick={() => setCustomWallpaperModal(false)}>
+                        <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                             <ChevronLeftIcon className="h-5 w-5" />
                             Fermer
                         </Button>
@@ -124,5 +125,3 @@ const WallpaperModal: React.FC = () => {
         </>
     );
 };
-
-export default WallpaperModal;

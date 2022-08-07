@@ -1,4 +1,3 @@
-import { ContactEvents } from '../../../typings/contact';
 import { GalleryPhoto, PhotoEvents } from '../../../typings/photo';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';

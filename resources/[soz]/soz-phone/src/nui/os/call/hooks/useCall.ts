@@ -8,12 +8,11 @@ import { useTranslation } from 'react-i18next';
 
 import { SOZ_PHONE_IS_PRODUCTION } from '../../../../globals';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
+import { useCall as useCallHook } from '../../../hooks/useSimCard';
 import { fetchNui } from '../../../utils/fetchNui';
-import { useCurrentCall } from './state';
 
 interface CallHook {
     call: ActiveCall;
-    setCall: (call: ActiveCall) => void;
     acceptCall(): void;
     rejectCall(): void;
     endCall(): void;
@@ -23,7 +22,7 @@ interface CallHook {
 // const TIME_TILL_AUTO_HANGUP = 15000;
 
 export const useCall = (): CallHook => {
-    const [call, setCall] = useCurrentCall();
+    const call = useCallHook();
     // const [dialRing, setDialRing] = useState(false);
     const myPhoneNumber = usePhoneNumber();
     const [t] = useTranslation();
@@ -74,5 +73,5 @@ export const useCall = (): CallHook => {
         });
     }, [call, myPhoneNumber]);
 
-    return { call, setCall, acceptCall, rejectCall, endCall, initializeCall };
+    return { call, acceptCall, rejectCall, endCall, initializeCall };
 };

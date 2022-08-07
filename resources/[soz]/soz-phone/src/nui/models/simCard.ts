@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 
-import { CallHistoryItem } from '../../../typings/call';
+import { ActiveCall, CallHistoryItem } from '../../../typings/call';
 import { Contact } from '../../../typings/contact';
 import { Message, MessageConversation } from '../../../typings/messages';
 import { RootModel } from '.';
@@ -10,6 +10,7 @@ export const simCard = createModel<RootModel>()({
         number: null,
         societyNumber: null,
         avatar: null,
+        call: null as ActiveCall,
         callHistory: [] as CallHistoryItem[],
         contacts: [] as Contact[],
         conversations: [] as MessageConversation[],
@@ -25,7 +26,10 @@ export const simCard = createModel<RootModel>()({
         SET_AVATAR: (state, payload) => {
             return { ...state, avatar: payload };
         },
-        SET_CALL(state, payload: CallHistoryItem[]) {
+        SET_CALL(state, payload: ActiveCall) {
+            return { ...state, call: payload };
+        },
+        SET_CALL_HISTORY(state, payload: CallHistoryItem[]) {
             return { ...state, callHistory: payload };
         },
         SET_CONTACT(state, payload: Contact[]) {
@@ -57,8 +61,11 @@ export const simCard = createModel<RootModel>()({
         },
     },
     effects: dispatch => ({
-        async setCallHistory(payload: CallHistoryItem[]) {
+        async setCall(payload: ActiveCall) {
             dispatch.simCard.SET_CALL(payload);
+        },
+        async setCallHistory(payload: CallHistoryItem[]) {
+            dispatch.simCard.SET_CALL_HISTORY(payload);
         },
         async setContacts(payload: Contact[]) {
             dispatch.simCard.SET_CONTACT(payload);

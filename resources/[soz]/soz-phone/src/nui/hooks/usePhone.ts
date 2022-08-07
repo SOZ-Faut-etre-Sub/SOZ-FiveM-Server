@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useNotifications } from '../os/notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '../os/notifications/notifications.constants';
 import { RootState } from '../store';
 
