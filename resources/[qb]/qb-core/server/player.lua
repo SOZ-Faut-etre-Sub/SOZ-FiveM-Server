@@ -89,6 +89,15 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] or 0
+    PlayerData.metadata['fiber'] = PlayerData.metadata['fiber'] or 70
+    PlayerData.metadata['lipid'] = PlayerData.metadata['lipid'] or 70
+    PlayerData.metadata['sugar'] = PlayerData.metadata['sugar'] or 70
+    PlayerData.metadata['protein'] = PlayerData.metadata['protein'] or 70
+    PlayerData.metadata['maxstamina'] = PlayerData.metadata['maxstamina'] or 100
+    PlayerData.metadata['strength'] = PlayerData.metadata['strength'] or 100
+    PlayerData.metadata['lastStrengthUpdate'] = PlayerData.metadata['lastStrengthUpdate'] or nil
+    PlayerData.metadata['lastMaxStaminaUpdate'] = PlayerData.metadata['lastMaxStaminaUpdate'] or nil
+    PlayerData.metadata['healthLevel'] = PlayerData.metadata['healthLevel'] or 100
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
     PlayerData.metadata['armor'] = {current = 0, hidden = false}
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
@@ -177,7 +186,13 @@ end
 function QBCore.Player.Logout(source)
     local src = source
     TriggerClientEvent('QBCore:Client:OnPlayerUnload', src)
-    TriggerClientEvent('QBCore:Player:UpdatePlayerData', src)
+
+    local Player = QBCore.Players[src]
+
+    if Player then
+        Player.Functions.Save()
+    end
+
     Wait(200)
     TriggerEvent('inventory:DropPlayerInventory', src)
     TriggerEvent('QBCore:Server:PlayerUnload', src)

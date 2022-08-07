@@ -1,7 +1,9 @@
 import { Module } from '../../core/decorators/module';
-import { PlayerProvider } from './player.provider';
+import { PlayerHealthProvider } from './player.health.provider';
+import { PlayerQbcoreProvider } from './player.qbcore.provider';
+import { ProgressProvider } from './progress.provider';
 
 @Module({
-    providers: [PlayerProvider],
+    providers: [PlayerQbcoreProvider, ProgressProvider, PlayerHealthProvider],
 })
 export class PlayerModule {}

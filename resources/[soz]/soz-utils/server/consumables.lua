@@ -14,37 +14,6 @@ local function preventUsageWhileHoldingWeapon(source)
     return true
 end
 
---- Eat
-for name, _ in pairs(ConsumablesEat) do
-    QBCore.Functions.CreateUseableItem(name, function(source, item)
-        if not preventUsageWhileHoldingWeapon(source) then
-            return
-        end
-        removeItemAndSendEvent(source, item, "consumables:client:Eat", exports["soz-utils"]:ItemIsExpired(item))
-    end)
-end
-
---- Drink
-for name, _ in pairs(ConsumablesDrink) do
-    QBCore.Functions.CreateUseableItem(name, function(source, item)
-        if not preventUsageWhileHoldingWeapon(source) then
-            return
-        end
-        removeItemAndSendEvent(source, item, "consumables:client:Drink", exports["soz-utils"]:ItemIsExpired(item))
-    end)
-end
-
---- Alcohol
-for name, _ in pairs(ConsumablesAlcohol) do
-    QBCore.Functions.CreateUseableItem(name, function(source, item)
-        if not preventUsageWhileHoldingWeapon(source) then
-            return
-        end
-        removeItemAndSendEvent(source, item, "consumables:client:DrinkAlcohol",
-                               {model = "prop_amb_beer_bottle", expired = exports["soz-utils"]:ItemIsExpired(item)})
-    end)
-end
-
 --- Drug
 QBCore.Functions.CreateUseableItem("joint", function(source, item)
     if not preventUsageWhileHoldingWeapon(source) then

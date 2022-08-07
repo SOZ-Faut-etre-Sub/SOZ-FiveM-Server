@@ -1,4 +1,5 @@
 import { Injectable } from '../core/decorators/injectable';
+import { PlayerData } from '../shared/player';
 
 @Injectable()
 export class Qbcore {
@@ -6,7 +7,9 @@ export class Qbcore {
 
     public constructor() {
         this.QBCore = exports['qb-core'].GetCoreObject();
+    }
 
-        console.log(this.QBCore);
+    public getPlayer(): PlayerData {
+        return this.QBCore.Functions.GetPlayerData();
     }
 }

@@ -150,51 +150,6 @@ end)
 
 -- Player
 
-RegisterNetEvent('QBCore:UpdatePlayer', function()
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if Player and not Player.PlayerData.metadata['godmode'] and not Player.PlayerData.metadata['isdead'] then
-        local HungerRate, ThirstRate = QBCore.Config.Player.HungerRate, QBCore.Config.Player.ThirstRate
-
-        local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
-        if pollutionLevel == QBCore.Shared.Pollution.Level.High then
-            HungerRate = HungerRate * 1.2
-            ThirstRate = ThirstRate * 1.2
-        end
-
-        local newHunger = Player.PlayerData.metadata['hunger'] - HungerRate
-        local newThirst = Player.PlayerData.metadata['thirst'] - ThirstRate
-        local newAlcohol = Player.PlayerData.metadata['alcohol'] - QBCore.Config.Player.AlcoholRate
-        local newDrug = Player.PlayerData.metadata['drug'] - QBCore.Config.Player.DrugRate
-
-        if Player.PlayerData.metadata['organ'] == "foie" then
-            newHunger = Player.PlayerData.metadata['hunger'] - 8.4
-        end
-        if Player.PlayerData.metadata['organ'] == "rein" then
-            newThirst = Player.PlayerData.metadata['thirst'] - 7.6
-        end
-        if newHunger <= 0 then
-            newHunger = 0
-        end
-        if newThirst <= 0 then
-            newThirst = 0
-        end
-        if newAlcohol <= 0 then
-            newAlcohol = 0
-        end
-        if newDrug <= 0 then
-            newDrug = 0
-        end
-
-        Player.Functions.SetMetaData('thirst', newThirst)
-        Player.Functions.SetMetaData('hunger', newHunger)
-        Player.Functions.SetMetaData('alcohol', newAlcohol)
-        Player.Functions.SetMetaData('drug', newDrug)
-        TriggerClientEvent('hud:client:UpdateNeeds', src, newHunger, newThirst, newAlcohol, newDrug)
-        Player.Functions.Save()
-    end
-end)
-
 RegisterNetEvent('QBCore:Server:SetMetaData', function(meta, data)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
