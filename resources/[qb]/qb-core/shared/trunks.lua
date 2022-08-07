@@ -59,6 +59,7 @@ QBShared.Trunks = {
 
     -- Chateau Marius
     [GetHashKey('mule6')] = { slot = 10, weight = 400000 },
+    [GetHashKey('taco1')] = { slot = 10, weight = 100000 },
 
     -- Michel Transport Petrol
     [GetHashKey('packer2')] = { slot = 5, weight = 40000 },
