@@ -1,6 +1,7 @@
-import { On } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
 import { uuidv4 } from '../../core/utils';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { ProgressAnimation, ProgressOptions, ProgressResult } from '../../shared/progress';
 
 @Provider()
@@ -33,12 +34,12 @@ export class ProgressService {
             }
         }, duration * 2);
 
-        TriggerClientEvent('soz-core:client:progress:start', player, id, name, label, duration, animation, options);
+        TriggerClientEvent(ClientEvent.PROGRESS_START, player, id, name, label, duration, animation, options);
 
         return promise;
     }
 
-    @On('soz-core:server:progress:finish')
+    @OnEvent(ServerEvent.PROGRESS_FINISH)
     public onProgressFinish(player: number, id: string, result: ProgressResult): void {
         if (this.promises[id]) {
             this.promises[id](result);

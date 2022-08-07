@@ -46,6 +46,7 @@ export class LSMCCheckHealthProvider {
                 width: 0.8,
                 minZ: 31.51,
                 maxZ: 34.51,
+                heading: 320,
             },
             [
                 {
