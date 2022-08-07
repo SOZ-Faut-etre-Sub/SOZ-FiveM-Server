@@ -9,7 +9,7 @@ Config.AllowedRadioInVehicle = {
     [GetHashKey("firetruk")] = true,
     --- Chateau Marius
     [GetHashKey("mule6")] = true,
-    [GetHashKey('taco1')] = true,
+    [GetHashKey("taco1")] = true,
     --- CarlJr Service
     [GetHashKey("dynasty2")] = true,
     --- BlueBird
