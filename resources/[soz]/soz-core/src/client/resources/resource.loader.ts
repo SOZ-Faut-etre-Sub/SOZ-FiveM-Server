@@ -16,4 +16,14 @@ export class ResourceLoader {
     unloadedPtfxAsset(name: string): void {
         RemoveNamedPtfxAsset(name);
     }
+
+    async loadAnimationDictionary(name: string): Promise<void> {
+        if (!HasAnimDictLoaded(name)) {
+            RequestAnimDict(name);
+
+            while (!HasAnimDictLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
 }

@@ -32,7 +32,7 @@ export class PlayerService {
     }
 
     public setPlayerDisease(source: number, disease: string | false) {
-        TriggerEvent('lsmc:maladie:server:SetCurrentDisease', false, source);
+        TriggerEvent('lsmc:maladie:server:SetCurrentDisease', disease, source);
     }
 
     public save(source: number): void {

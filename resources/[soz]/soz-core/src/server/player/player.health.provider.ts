@@ -1,6 +1,7 @@
-import { On } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { ServerEvent } from '../../shared/event';
 import { PlayerMetadata } from '../../shared/player';
 import { Hud } from '../hud';
 import { Pollution, PollutionLevel } from '../pollution';
@@ -28,7 +29,7 @@ export class PlayerHealthProvider {
     @Inject(Hud)
     private hud: Hud;
 
-    @On('soz-core:server:player:nutrition:loop')
+    @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
@@ -93,7 +94,7 @@ export class PlayerHealthProvider {
         this.playerService.save(source);
     }
 
-    @On('soz-core:server:player:nutrition:check')
+    @OnEvent(ServerEvent.PLAYER_NUTRITION_CHECK)
     public async checkHealth(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
 

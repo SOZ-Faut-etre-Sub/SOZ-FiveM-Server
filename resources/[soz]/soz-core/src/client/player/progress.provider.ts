@@ -1,7 +1,8 @@
-import { On } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { ProgressAnimation, ProgressOptions } from '../../shared/progress';
 import { ProgressService } from '../progress.service';
 
@@ -13,7 +14,7 @@ export class ProgressProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @On('soz-core:client:progress:start')
+    @OnEvent(ClientEvent.PROGRESS_START)
     async progress(
         id: string,
         name: string,
@@ -24,6 +25,6 @@ export class ProgressProvider {
     ): Promise<void> {
         const result = await this.progressService.progress(name, label, duration, animation, options);
 
-        TriggerServerEvent('soz-core:server:progress:finish', id, result);
+        TriggerServerEvent(ServerEvent.PROGRESS_FINISH, id, result);
     }
 }
