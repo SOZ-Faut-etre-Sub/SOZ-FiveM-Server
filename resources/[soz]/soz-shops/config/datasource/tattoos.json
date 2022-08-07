@@ -44,6 +44,7 @@
         "Collection": "mpairraces_overlays",
         "HashNameMale": "MP_Airraces_Tattoo_005_M",
         "HashNameFemale": "MP_Airraces_Tattoo_005_F",
+        "LocalizedName": "Ah! La belle étoile!",
         "Zone": "ZONE_TORSO",
         "Price": 300
     },
@@ -844,6 +845,7 @@
         "Collection": "mpbusiness_overlays",
         "HashNameMale": "MP_Buis_M_Neck_003",
         "HashNameFemale": "",
+        "LocalizedName": "100$",
         "Zone": "ZONE_HEAD",
         "Price": 300
     },
@@ -852,6 +854,7 @@
         "Collection": "mpbusiness_overlays",
         "HashNameMale": "MP_Buis_M_LeftArm_000",
         "HashNameFemale": "",
+        "LocalizedName": "Billet de 100$",
         "Zone": "ZONE_LEFT_ARM",
         "Price": 300
     },
@@ -3700,6 +3703,7 @@
         "Collection": "mpsmuggler_overlays",
         "HashNameMale": "MP_Smuggler_Tattoo_010_M",
         "HashNameFemale": "MP_Smuggler_Tattoo_010_F",
+        "LocalizedName": "On se reverra en enfer!",
         "Zone": "ZONE_TORSO",
         "Price": 300
     },
@@ -4404,6 +4408,7 @@
         "Collection": "mpvinewood_overlays",
         "HashNameMale": "MP_Vinewood_Tat_022_M",
         "HashNameFemale": "MP_Vinewood_Tat_022_F",
+        "LocalizedName": "T'as pas sang balles ?",
         "Zone": "ZONE_TORSO",
         "Price": 300
     },
