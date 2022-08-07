@@ -75,9 +75,10 @@ function BarberShop:GenerateMenu()
     self:deleteCam()
     self:setupCam()
 
-    for category, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
+    for _, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
         shopMenu:AddTitle({label = content.label})
         playerUpdater[content.overlay] = {}
+        local category = content.category
 
         if category == "Hair" then
             CreateSliderList(shopMenu, "Type", PlayerData.skin.Hair.HairType, content.items, function(value)
@@ -86,11 +87,11 @@ function BarberShop:GenerateMenu()
             end)
             CreateColorSliderList(shopMenu, "Couleur", PlayerData.skin.Hair.HairColor, Config.CharacterComponentColors.Hair, function(value)
                 playerUpdater.Hair.HairColor = value
-                SetPedHairColor(ped, value, playerUpdater.Hair.HairSecondaryColor or 0)
+                SetPedHairColor(ped, value, playerUpdater.Hair.HairSecondaryColor or PlayerData.skin.Hair.HairSecondaryColor or 0)
             end)
             CreateColorSliderList(shopMenu, "Couleur secondaire", PlayerData.skin.Hair.HairSecondaryColor, Config.CharacterComponentColors.Hair, function(value)
                 playerUpdater.Hair.HairSecondaryColor = value
-                SetPedHairColor(ped, playerUpdater.Hair.HairColor or 0, value)
+                SetPedHairColor(ped, playerUpdater.Hair.HairColor or PlayerData.skin.Hair.HairColor or 0, value)
             end)
         elseif category == "Beard" then
             CreateSliderList(shopMenu, "Type", PlayerData.skin.Hair.BeardType, content.items, function(value)
@@ -117,12 +118,12 @@ function BarberShop:GenerateMenu()
             CreateColorSliderList(shopMenu, "Couleur principale", PlayerData.skin.Makeup.FullMakeupPrimaryColor, Config.CharacterComponentColors.Makeup,
                                   function(value)
                 playerUpdater.Makeup.FullMakeupPrimaryColor = value
-                SetPedHeadOverlayColor(ped, 4, 2, value, playerUpdater.Makeup.FullMakeupSecondaryColor or 0)
+                SetPedHeadOverlayColor(ped, 4, 2, value, playerUpdater.Makeup.FullMakeupSecondaryColor or PlayerData.skin.Makeup.FullMakeupSecondaryColor or 0)
             end)
             CreateColorSliderList(shopMenu, "Couleur secondaire", PlayerData.skin.Makeup.FullMakeupSecondaryColor, Config.CharacterComponentColors.Makeup,
                                   function(value)
                 playerUpdater.Makeup.FullMakeupSecondaryColor = value
-                SetPedHeadOverlayColor(ped, 4, 2, playerUpdater.Makeup.FullMakeupPrimaryColor or 0, value)
+                SetPedHeadOverlayColor(ped, 4, 2, playerUpdater.Makeup.FullMakeupPrimaryColor or PlayerData.skin.Makeup.FullMakeupPrimaryColor or 0, value)
             end)
         elseif category == "Blush" then
             CreateSliderList(shopMenu, "Type", PlayerData.skin.Makeup.BlushType, content.items, function(value)
