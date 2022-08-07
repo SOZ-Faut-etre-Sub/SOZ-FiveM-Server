@@ -55,4 +55,6 @@ Config.AllowedRadioInVehicle = {
     --- UPW
     [GetHashKey("brickade1")] = true,
     [GetHashKey("boxville")] = true,
+    --- BAUN
+    [GetHashKey("youga3")] = true,
 }
