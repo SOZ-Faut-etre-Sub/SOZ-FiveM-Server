@@ -9,7 +9,7 @@ export const useMessageNotifications = () => {
     const [t] = useTranslation();
     const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('society-messages');
+    const { icon: Icon } = useApp('society-messages');
 
     // Remove notifications from groups when opening them
     // history.listen(location => {
@@ -31,8 +31,8 @@ export const useMessageNotifications = () => {
             title: t('SOCIETY_MESSAGES.NOTIFICATION.TITLE'),
             onClick: () => navigate(`/society-messages`),
             content: message,
-            icon,
-            notificationIcon,
+            Icon,
+            notificationIcon: Icon,
         };
 
         addNotificationAlert(notification, n => {

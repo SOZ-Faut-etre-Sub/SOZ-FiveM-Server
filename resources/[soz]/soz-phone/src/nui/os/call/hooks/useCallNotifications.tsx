@@ -17,15 +17,15 @@ export const useCallNotifications = () => {
 
     const { play, stop } = useRingtoneSound();
 
-    const { icon, notificationIcon } = useApp('dialer');
+    const { icon: Icon } = useApp('dialer');
 
     const callNotificationBase = {
         app: 'CALL',
         id: NOTIFICATION_ID,
         cantClose: true,
-        icon,
+        Icon,
         onClick: () => navigate('/call'),
-        notificationIcon,
+        notificationIcon: () => <Icon className="h-5 w-5 rounded-md" />,
     };
 
     const clearNotification = (): void => {

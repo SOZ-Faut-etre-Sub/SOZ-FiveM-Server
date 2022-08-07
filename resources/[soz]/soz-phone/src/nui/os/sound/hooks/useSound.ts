@@ -1,8 +1,7 @@
 import { usePreviousState } from '@common/utils/usePreviousState';
-import { phoneState } from '@os/phone/hooks/state';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 
+import { useAvailability } from '../../../hooks/usePhone';
 import { useSoundProvider } from './useSoundProvider';
 
 interface ISoundOptions {
@@ -20,7 +19,7 @@ const DEFAULT_OPTIONS = { volume: 1, interrupt: false, loop: false };
  * @param { volume, interrupt, loop} Additional options
  **/
 const useSound = (url: string, options: ISoundOptions = DEFAULT_OPTIONS) => {
-    const isPhoneAvailable = useRecoilValue(phoneState.availability);
+    const isPhoneAvailable = useAvailability();
     const { volume: vol, loop: isLoop, interrupt } = options;
 
     const [isPlaying, setPlaying] = useState<boolean>(false);

@@ -54,6 +54,22 @@ export const useDebugService = () => {
                     balance: 1258745,
                 },
             },
+            /*{
+                app: 'CALL',
+                method: CallEvents.SET_CALLER,
+                data: {
+                    accepted: true,
+                    isTransmitter: false,
+                    transmitter: '603-275-8373',
+                    receiver: '603-275-4747',
+                    active: true,
+                },
+            },
+            {
+                app: 'CALL',
+                method: CallEvents.SET_CALL_MODAL,
+                data: true,
+            },*/
         ]);
     }, []);
 };

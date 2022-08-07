@@ -16,3 +16,8 @@ export const useAvatar = () => {
     const state = useSelector((state: RootState) => state.simCard);
     return state.avatar;
 };
+
+export const useCall = () => {
+    const state = useSelector((state: RootState) => state.simCard);
+    return state.call;
+};

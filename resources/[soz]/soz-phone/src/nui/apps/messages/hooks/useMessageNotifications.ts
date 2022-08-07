@@ -1,6 +1,7 @@
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { MessageConversation } from '@typings/messages';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ export const useMessageNotifications = () => {
     const [t] = useTranslation();
     const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('messages');
+    const { icon: Icon } = useApp('messages');
     // const { addConversation } = useMessageAPI();
     // const { getConversation } = useMessage();
     // Remove notifications from groups when opening them
@@ -45,8 +46,8 @@ export const useMessageNotifications = () => {
             title: group?.display || group?.phoneNumber || conversationName,
             onClick: () => navigate(`/messages/conversations/${conversationId}`),
             content: message,
-            icon,
-            notificationIcon,
+            Icon,
+            notificationIcon: Icon,
         };
 
         addNotificationAlert(notification, n => {

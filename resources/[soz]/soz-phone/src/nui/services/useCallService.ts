@@ -1,43 +1,18 @@
 import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { ActiveCall, CallEvents } from '@typings/call';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
 
-import { callerState } from './state';
-import { useCall } from './useCall';
-import { useCallModal } from './useCallModal';
-import { useCallNotifications } from './useCallNotifications';
-
-// InjectDebugData<CallProps | boolean>([
-//   {
-//     app: 'CALL',
-//     method: CallEvents.SET_CALLER,
-//     data: {
-//       accepted: true,
-//       isTransmitter: false,
-//       transmitter: '603-275-8373',
-//       receiver: '603-275-4747',
-//       active: true,
-//     },
-//   },
-//   {
-//     app: 'CALL',
-//     method: CallEvents.SET_CALL_MODAL,
-//     data: true,
-//   },
-// ]);
+import { useCallNotifications } from '../os/call/hooks/useCallNotifications';
+import { RootState, store } from '../store';
 
 export const useCallService = () => {
-    const { modal } = useCallModal();
+    const modal = useSelector((state: RootState) => state.phone.callModal);
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    const { setCall } = useCall();
-
     const { setNotification, clearNotification } = useCallNotifications();
-
-    const setModal = useSetRecoilState(callerState.callModal);
 
     const [modalHasBeenOpenedThisCall, setModalOpened] = useState<boolean>(false);
 
@@ -52,13 +27,13 @@ export const useCallService = () => {
         if (modal && !modalHasBeenOpenedThisCall && pathname !== '/call') {
             navigate('/call');
         }
-    }, [history, modal, pathname, modalHasBeenOpenedThisCall]);
+    }, [navigate, modal, pathname, modalHasBeenOpenedThisCall]);
 
     useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALLER, callData => {
-        setCall(callData);
+        store.dispatch.simCard.setCall(callData);
 
         if (!callData) return clearNotification();
         setNotification(callData);
     });
-    useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, setModal);
+    useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, store.dispatch.phone.setCallModal);
 };

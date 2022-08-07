@@ -12,7 +12,7 @@ export const NotificationItem = ({
     onClose: (e: any) => void;
     onClickClose: (e: any) => void;
 }) => {
-    const { title, notificationIcon, content, cantClose, onClick } = notification;
+    const { title, notificationIcon: NotificationIcon, content, cantClose, onClick } = notification;
 
     const isImage = url => {
         return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
@@ -28,7 +28,11 @@ export const NotificationItem = ({
                 }
             }}
         >
-            {notificationIcon && <div className={`text-white h-5 w-5 p-1 rounded-md`}>{notificationIcon}</div>}
+            {NotificationIcon && (
+                <div className={`text-white h-5 w-5 p-1 rounded-md`}>
+                    <NotificationIcon />
+                </div>
+            )}
             <div className="flex flex-col">
                 <p className="flex-grow ml-4 font-light normal-case">{title}</p>
                 <p className="flex-grow ml-4 font-light normal-case">

@@ -9,6 +9,7 @@ export const phone = createModel<RootModel>()({
         visible: true,
         config: {} as IPhoneSettings,
         time: null,
+        callModal: false,
     },
     reducers: {
         SET_AVAILABILITY(state, payload: boolean) {
@@ -23,6 +24,9 @@ export const phone = createModel<RootModel>()({
         SET_TIME(state, payload: string) {
             return { ...state, time: payload };
         },
+        SET_CALL_MODAL(state, payload: boolean) {
+            return { ...state, callModal: payload };
+        },
     },
     effects: dispatch => ({
         async setAvailability(payload: boolean) {
@@ -36,6 +40,9 @@ export const phone = createModel<RootModel>()({
         },
         async setTime(payload: string) {
             dispatch.phone.SET_TIME(payload);
+        },
+        async setCallModal(payload: boolean) {
+            dispatch.phone.SET_CALL_MODAL(payload);
         },
     }),
 });
