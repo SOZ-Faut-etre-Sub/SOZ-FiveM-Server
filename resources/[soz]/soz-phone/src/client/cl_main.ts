@@ -18,6 +18,12 @@ global.isPlayerLoaded = false;
 
 const exps = global.exports;
 
+/* Functions */
+
+function cityIsInBlackOut(): boolean {
+    return GlobalState.blackout || GlobalState.blackout_level >= 3;
+}
+
 /* * * * * * * * * * * * *
  *
  *  Phone initialize data
@@ -89,18 +95,10 @@ export const hidePhone = async (): Promise<void> => {
 RegisterCommand(
     config.general.toggleCommand,
     async () => {
-        //-- Toggles Phone
-        // Check to see if the phone is marked as disabled
-        if (!global.isPhoneDisabled) await togglePhone();
-    },
-    false
-);
+        if (global.isPhoneDisabled) return;
+        if (cityIsInBlackOut()) return;
 
-RegisterCommand(
-    'phone:restart',
-    async () => {
-        await hidePhone();
-        sendMessage('PHONE', 'phoneRestart', {});
+        await togglePhone();
     },
     false
 );
@@ -201,6 +199,10 @@ setTick(async () => {
     }
 
     if (global.isPhoneOpen && exps['progressbar'].IsDoingAction()) {
+        await hidePhone();
+    }
+
+    if (global.isPhoneOpen && cityIsInBlackOut()) {
         await hidePhone();
     }
 
