@@ -69,6 +69,6 @@ CreateThread(function()
     end
 end)
 
-AddEventHandler("npwd:disableControlActions", function(bool)
+AddEventHandler("phone:client:disableControlActions", function(bool)
     disableKeys = bool
 end)

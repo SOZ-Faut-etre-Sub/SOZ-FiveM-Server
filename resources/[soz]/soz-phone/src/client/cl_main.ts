@@ -69,7 +69,7 @@ export const showPhone = async (): Promise<void> => {
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
     SetNuiFocus(true, true);
     SetNuiFocusKeepInput(true);
-    emit('npwd:disableControlActions', true);
+    emit('phone:client:disableControlActions', true);
 };
 
 export const hidePhone = async (): Promise<void> => {
@@ -78,7 +78,7 @@ export const hidePhone = async (): Promise<void> => {
     await animationService.closePhone();
     SetNuiFocus(false, false);
     SetNuiFocusKeepInput(false);
-    emit('npwd:disableControlActions', false);
+    emit('phone:client:disableControlActions', false);
 };
 
 /* * * * * * * * * * * * *
