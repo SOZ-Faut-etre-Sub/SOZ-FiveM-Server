@@ -75,7 +75,7 @@ function BarberShop:GenerateMenu()
     self:deleteCam()
     self:setupCam()
 
-    for _, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
+    for index, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
         shopMenu:AddTitle({label = content.label})
         playerUpdater[content.overlay] = {}
         local category = content.category
@@ -158,8 +158,10 @@ function BarberShop:GenerateMenu()
             label = "Valider les modifications",
             rightLabel = "$" .. content.price,
             select = function()
-                TriggerServerEvent("shops:server:pay", "barber", {
+                TriggerServerEvent("shops:server:pay", "barber",
+                                   {
                     category = category,
+                    categoryIndex = index,
                     overlay = content.overlay,
                     data = playerUpdater[content.overlay],
                 }, 1)
