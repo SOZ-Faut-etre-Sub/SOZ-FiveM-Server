@@ -116,7 +116,7 @@ class _PlayerService {
         this.addPlayerToMaps(player.PlayerData.source, newPlayer);
         await this.handlePlayerJobUpdate(player.PlayerData.source, player.PlayerData.job);
 
-        playerLogger.info('NPWD Player Loaded!');
+        playerLogger.info('Player Loaded!');
         playerLogger.debug(newPlayer);
 
         // This is a stupid hack for development reloading
@@ -174,12 +174,6 @@ class _PlayerService {
         });
     }
 
-    /**
-     * We call this function whenever we receive a `npwd:newPlayer`
-     * event while multichar is enabled.
-     * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
-     *
-     */
     async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
         const player = await this.createNewPlayer({
             src,
@@ -192,7 +186,7 @@ class _PlayerService {
 
         this.addPlayerToMaps(src, player);
 
-        playerLogger.info(`New NPWD Player added through event (${src}) (${identifier})`);
+        playerLogger.info(`New Player added through event (${src}) (${identifier})`);
         playerLogger.debug(player);
 
         emitNet(PhoneEvents.SET_PLAYER_LOADED, src, true);
@@ -246,7 +240,7 @@ class _PlayerService {
     async handleUnloadPlayerEvent(src: number) {
         this.deletePlayerFromMaps(src);
         emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
-        playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
+        playerLogger.info(`Unloaded Player, source: (${src})`);
     }
 }
 

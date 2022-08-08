@@ -98,16 +98,6 @@ export const RegisterNuiProxy = (event: string) => {
 
 type MsgpackTypes = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol' | 'undefined' | 'function' | 'object';
 
-type WrapperNetEventCb = <T extends any[]>(...args: T) => void;
-
-/**
- * Wrapped onNet so we can use generic types on return values from server
- * @param event - The event name to listen to
- * @param cb - The callback function to execute
- */
-export const onNpwdEvent = (event: string, cb: WrapperNetEventCb) => {
-    onNet(event, cb);
-};
 export const verifyExportArgType = (exportName: string, passedArg: unknown, validTypes: MsgpackTypes[]): void => {
     const passedArgType = typeof passedArg;
 

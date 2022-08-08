@@ -1,4 +1,3 @@
-import path from 'path';
 import winston from 'winston';
 
 import config from '../../config.json';
@@ -13,23 +12,12 @@ const formatLogs = (log: winston.Logform.TransformableInfo): string => {
     return `${log.label} [${log.level}]: ${log.message}`;
 };
 
-const findLogPath = () => `${path.join(GetResourcePath(GetCurrentResourceName()), 'sv_npwd.log')}`;
-// Initiate the main logger for NPWD
-
 export const mainLogger = winston.createLogger({
     level: config.debug.level,
     transports: [
-        new winston.transports.File({
-            filename: findLogPath(),
-            format: winston.format.combine(
-                winston.format.errors({ stack: true }),
-                winston.format.timestamp(),
-                winston.format.json()
-            ),
-        }),
         new winston.transports.Console({
             format: winston.format.combine(
-                winston.format.label({ label: '[NPWD]' }),
+                winston.format.label({ label: '[Phone]' }),
                 winston.format.colorize({ all: true }),
                 winston.format.printf(formatLogs)
             ),

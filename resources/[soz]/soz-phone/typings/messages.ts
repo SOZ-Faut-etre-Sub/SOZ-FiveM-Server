@@ -24,9 +24,6 @@ export interface FormattedMessageConversation {
     phoneNumber: string;
 }
 
-/**
- * Used for the raw npwd_messages_groups row responses
- */
 export interface UnformattedMessageConversation {
     conversation_id: string;
     user_identifier: string;
@@ -38,10 +35,6 @@ export interface UnformattedMessageConversation {
     unread: number;
 }
 
-/**
- * Used to help consolidate raw npwd_messages_groups rows into
- * a mapping of a single message group
- */
 export interface MessageGroupMapping {
     [groupId: string]: {
         user_identifier: string;
@@ -84,23 +77,23 @@ export interface MessageConversationResponse {
 }
 
 export enum MessageEvents {
-    FETCH_MESSAGE_CONVERSATIONS = 'npwd:fetchMessageGroups',
-    FETCH_MESSAGE_GROUPS_SUCCESS = 'npwd:fetchMessageGroupsSuccess',
-    FETCH_MESSAGE_GROUPS_FAILED = 'npwd:fetchMessageGroupsFailed',
-    CREATE_MESSAGE_CONVERSATION = 'npwd:createMessageGroup',
-    CREATE_MESSAGE_CONVERSATION_SUCCESS = 'npwd:createMessageConversationSuccess',
-    CREATE_MESSAGE_GROUP_SUCCESS = 'npwd:createMessageGroupSuccess',
-    CREATE_MESSAGE_GROUP_FAILED = 'npwd:createMessageGroupFailed',
-    SEND_MESSAGE = 'npwd:sendMessage',
-    SEND_MESSAGE_SUCCESS = 'npwd:sendMessageSuccess',
-    SEND_MESSAGE_FAILED = 'npwd:sendMessageFailed',
-    FETCH_MESSAGES = 'npwd:fetchMessages',
-    FETCH_MESSAGES_SUCCESS = 'npwd:fetchMessagesSuccess',
-    FETCH_MESSAGES_FAILED = 'npwd:fetchMessagesFailed',
-    FETCH_INITIAL_MESSAGES = 'npwd:fetchInitialMessages',
-    ACTION_RESULT = 'npwd:setMessagesAlert',
+    FETCH_MESSAGE_CONVERSATIONS = 'phone:fetchMessageGroups',
+    FETCH_MESSAGE_GROUPS_SUCCESS = 'phone:fetchMessageGroupsSuccess',
+    FETCH_MESSAGE_GROUPS_FAILED = 'phone:fetchMessageGroupsFailed',
+    CREATE_MESSAGE_CONVERSATION = 'phone:createMessageGroup',
+    CREATE_MESSAGE_CONVERSATION_SUCCESS = 'phone:createMessageConversationSuccess',
+    CREATE_MESSAGE_GROUP_SUCCESS = 'phone:createMessageGroupSuccess',
+    CREATE_MESSAGE_GROUP_FAILED = 'phone:createMessageGroupFailed',
+    SEND_MESSAGE = 'phone:sendMessage',
+    SEND_MESSAGE_SUCCESS = 'phone:sendMessageSuccess',
+    SEND_MESSAGE_FAILED = 'phone:sendMessageFailed',
+    FETCH_MESSAGES = 'phone:fetchMessages',
+    FETCH_MESSAGES_SUCCESS = 'phone:fetchMessagesSuccess',
+    FETCH_MESSAGES_FAILED = 'phone:fetchMessagesFailed',
+    FETCH_INITIAL_MESSAGES = 'phone:fetchInitialMessages',
+    ACTION_RESULT = 'phone:setMessagesAlert',
     CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
-    SET_MESSAGE_READ = 'npwd:setReadMessages',
+    SET_MESSAGE_READ = 'phone:setReadMessages',
     DELETE_CONVERSATION = 'nwpd:deleteConversation',
     GET_POSITION = 'nwpd:getCurrentPosition',
     GET_DESTINATION = 'nwpd:getCurrentDestination',
