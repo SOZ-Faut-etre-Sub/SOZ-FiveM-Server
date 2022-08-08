@@ -31,7 +31,9 @@ export const useAppSocietyService = () => {
             return;
         }
 
-        setNotification({ message: message.message });
+        if (!message.muted) {
+            setNotification({ message: message.message });
+        }
         store.dispatch.appSociety.appendSocietyMessages(message);
     };
 

@@ -27,6 +27,7 @@ class _SocietyService {
             position: data.pedPosition,
             isTaken: false,
             isDone: false,
+            muted: !Player(player).state.onDuty,
         });
     }
 
