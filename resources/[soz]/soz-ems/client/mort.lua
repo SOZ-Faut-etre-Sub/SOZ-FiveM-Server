@@ -67,7 +67,7 @@ function DeathTimer()
                 TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(PlayerId()))
                 hold = 5
             elseif not isInHospitalBed and IsDead then
-                TriggerEvent("ems:client:applyPatientClothing")
+                TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", Config.PatientClothes[PlayerData.skin.Model.Hash])
                 TriggerEvent("soz-ems:client:respawn")
                 hold = 5
             end
