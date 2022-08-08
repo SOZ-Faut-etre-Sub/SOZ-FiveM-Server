@@ -2,14 +2,14 @@ import { ServerPromiseResp } from '@typings/common';
 import { PhotoEvents } from '@typings/photo';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React, { PropsWithChildren } from 'react';
+import React, { memo, PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useSettings } from './apps/settings/hooks/useSettings';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useVisibility } from './hooks/usePhone';
 
-const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
     const [settings] = useSettings();
     const { pathname } = useLocation();
     const { visibility, notifVisibility } = useVisibility();
@@ -41,9 +41,9 @@ const PhoneWrapper: React.FC<PropsWithChildren> = ({ children }) => {
             </div>
         </div>
     );
-};
+});
 
-export function PhoneFrame() {
+export const PhoneFrame = memo(() => {
     return (
         <div
             className="absolute z-50 w-[500px] h-[1000px] pointer-events-none"
@@ -52,9 +52,9 @@ export function PhoneFrame() {
             }}
         />
     );
-}
+});
 
-export function PhoneScreen({ children }: { children: React.ReactNode }) {
+export const PhoneScreen = memo(({ children }: { children: React.ReactNode }) => {
     const [settings] = useSettings();
 
     return (
@@ -70,6 +70,6 @@ export function PhoneScreen({ children }: { children: React.ReactNode }) {
             {children}
         </div>
     );
-}
+});
 
 export default PhoneWrapper;

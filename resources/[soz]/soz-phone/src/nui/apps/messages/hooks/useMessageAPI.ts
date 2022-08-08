@@ -53,7 +53,7 @@ export const useMessageAPI = (): UseMessageAPIProps => {
                     });
                 }
 
-                navigate(`/messages/conversations/${resp.data.conversation_id}`);
+                navigate(`/messages/${resp.data.conversation_id}`);
             });
         },
         [navigate, addAlert, t, conversations]

@@ -20,15 +20,15 @@ dayjs.extend(relativeTime);
 ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
         <NuiProvider resource="npwd">
-            <HashRouter>
-                <SoundProvider>
-                    <NotificationsProvider>
-                        <SnackbarProvider>
+            <SoundProvider>
+                <NotificationsProvider>
+                    <SnackbarProvider>
+                        <HashRouter>
                             <Phone />
-                        </SnackbarProvider>
-                    </NotificationsProvider>
-                </SoundProvider>
-            </HashRouter>
+                        </HashRouter>
+                    </SnackbarProvider>
+                </NotificationsProvider>
+            </SoundProvider>
         </NuiProvider>
     </Provider>
 );
