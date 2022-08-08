@@ -33,7 +33,7 @@ export const Messages = () => {
 
     const messages = useSelector((state: RootState) => state.simCard.messages);
     const filteredMessages = useMemo(() => {
-        return messages.filter(conversation => conversation.conversation_id === groupId);
+        return messages.filter(conversation => conversation.conversation_id === groupId).sort((a, b) => b.id - a.id);
     }, [messages, groupId]);
 
     const { getDisplayByNumber } = useContact();

@@ -1,10 +1,10 @@
-import { FunctionComponent, PropsWithChildren } from 'react';
+import { FunctionComponent, memo, PropsWithChildren } from 'react';
 
 import { NavigationBar } from '../components/NavigationBar';
 import { TopHeaderBar } from '../components/TopHeaderBar';
 import { FullPageWithoutHeader } from './FullPageWithoutHeader';
 
-export const FullPageWithHeader: FunctionComponent<PropsWithChildren<any>> = ({ children, className }) => {
+export const FullPageWithHeader: FunctionComponent<PropsWithChildren<any>> = memo(({ children, className }) => {
     return (
         <FullPageWithoutHeader className={className}>
             <TopHeaderBar />
@@ -12,4 +12,4 @@ export const FullPageWithHeader: FunctionComponent<PropsWithChildren<any>> = ({ 
             <NavigationBar />
         </FullPageWithoutHeader>
     );
-};
+});

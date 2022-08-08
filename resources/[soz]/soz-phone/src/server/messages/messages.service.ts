@@ -93,8 +93,6 @@ class _MessagesService {
             const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
             const messages = await this.messagesDB.getMessages(phoneNumber);
 
-            messages.sort((a, b) => a.id - b.id);
-
             resp({ status: 'ok', data: messages });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -145,6 +143,13 @@ class _MessagesService {
                     }
                 }
             }
+
+            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, {
+                ...messageData,
+                conversation_id: messageData.conversationId,
+                author: authorPhoneNumber,
+                id: messageId,
+            });
         } catch (e) {
             resp({ status: 'error', errorMsg: e.toString() });
             messagesLogger.error(`Failed to send message, ${e.toString()}`, {
