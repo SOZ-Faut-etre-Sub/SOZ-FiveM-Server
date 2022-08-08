@@ -8903,10 +8903,6 @@ Config.Products["suburban"] = {
                             {Name = GetLabelText("CLO_EXF_EF_0_14"), Id = 14},
                             {Name = GetLabelText("CLO_EXF_EF_0_15"), Id = 15},
                         }),
-                        CreateItemsWithTextures(4, 49, {
-                            {Name = GetLabelText("CLO_EXF_AL_3_0"), Id = 0},
-                            {Name = GetLabelText("CLO_EXF_AL_3_1"), Id = 1},
-                        }),
                     }),
                 },
                 [2] = {
