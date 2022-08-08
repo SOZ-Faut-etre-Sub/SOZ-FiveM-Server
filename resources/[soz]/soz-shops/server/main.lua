@@ -11,9 +11,8 @@ local function getItemPrice(product, productID, Player)
             end
         end
     elseif product == "barber" then
-        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].price
+        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.categoryIndex].price
     elseif product == "jewelry" then
-        print("ProductId: " .. json.encode(productID))
         return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.categoryIndex].price
     elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
         return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Price
@@ -67,7 +66,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 Player.Functions.SetSkin(skin, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
             elseif brand == "barber" then
-                local barberShop = Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.category]
+                local barberShop = Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.categoryIndex]
                 local skin = Player.PlayerData.skin
 
                 for componentID, component in pairs(product.data) do
