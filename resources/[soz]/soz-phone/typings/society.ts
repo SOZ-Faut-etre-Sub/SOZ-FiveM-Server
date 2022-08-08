@@ -33,6 +33,7 @@ export interface SocietyMessage {
     isDone: boolean;
     createdAt: number;
     updatedAt: number;
+    muted?: boolean;
 }
 
 export enum SocietiesDatabaseLimits {
