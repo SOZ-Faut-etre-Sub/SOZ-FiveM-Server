@@ -1,9 +1,13 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import { PlayerData } from '../../shared/player';
+import { Qbcore } from '../qbcore';
 
 @Injectable()
 export class PlayerService {
     private player: PlayerData | null;
+
+    @Inject(Qbcore)
+    private qbcore: Qbcore;
 
     public setPlayer(player: PlayerData) {
         this.player = player;
@@ -19,5 +23,9 @@ export class PlayerService {
 
     public isOnDuty(): boolean {
         return this.player.job.onduty;
+    }
+
+    public getClosestPlayer(): [number, number] {
+        return this.qbcore.getClosestPlayer();
     }
 }

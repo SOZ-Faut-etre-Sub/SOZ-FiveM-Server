@@ -38,7 +38,7 @@ export class PlayerQbcoreProvider {
             const playerData = this.qbcore.getPlayer();
 
             this.playerService.setPlayer(playerData);
-            this.onceLoader.trigger(OnceStep.PlayerLoaded);
+            this.onceLoader.trigger(OnceStep.PlayerLoaded, playerData);
         }
     }
 }

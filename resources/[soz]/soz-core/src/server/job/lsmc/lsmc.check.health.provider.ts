@@ -76,6 +76,45 @@ export class LSMCCheckHealthProvider {
         );
     }
 
+    @OnEvent(ServerEvent.LSMC_HEALTH_CHECK)
+    async onHealthCheck(source: number, target: number) {
+        const { completed } = await this.progressService.progress(
+            source,
+            'lsmc_health_check',
+            "Vous étudiez l'état de santé du patient...",
+            5000,
+            {
+                task: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
+
+        const targetPlayer = this.playerService.getPlayer(target);
+
+        if (!targetPlayer) {
+            return;
+        }
+
+        let state = '';
+
+        if (targetPlayer.metadata.healthLevel > 80) {
+            state = 'excellent';
+        } else if (targetPlayer.metadata.healthLevel > 60) {
+            state = 'bon';
+        } else if (targetPlayer.metadata.healthLevel > 40) {
+            state = 'moyen';
+        } else if (targetPlayer.metadata.healthLevel > 20) {
+            state = 'mauvais';
+        } else {
+            state = 'exécrable';
+        }
+
+        this.notifier.notify(source, `Analyse complète, état de santé ${state}.`, 'success');
+    }
+
     @OnEvent(ServerEvent.LSMC_PEE_ANALYZE)
     async onPeeAnalyze(source: number) {
         const { targetPlayer } = await this.doAnalyze(source, 'Analyse urinaire', 'flask_pee_full');

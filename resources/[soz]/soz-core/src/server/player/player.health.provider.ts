@@ -3,8 +3,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
 import { PlayerMetadata } from '../../shared/player';
+import { PollutionLevel } from '../../shared/pollution';
 import { Hud } from '../hud';
-import { Pollution, PollutionLevel } from '../pollution';
+import { Pollution } from '../pollution';
 import { PlayerService } from './player.service';
 
 const HUNGER_RATE = -1.6;
@@ -92,6 +93,23 @@ export class PlayerHealthProvider {
 
         this.hud.updateNeeds(source);
         this.playerService.save(source);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)
+    public async increaseStrength(source: number): Promise<void> {
+        this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
+        this.playerService.incrementMetadata(source, 'strength', 2, 0, 100);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_INCREASE_STAMINA)
+    public async increaseStamina(source: number): Promise<void> {
+        this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
+        this.playerService.incrementMetadata(source, 'maxstamina', 2, 0, 100);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
+    public async increaseStress(source: number, stress: number): Promise<void> {
+        this.playerService.incrementMetadata(source, 'stressLevel', stress, 0, 100);
     }
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_CHECK)

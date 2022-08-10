@@ -20,10 +20,9 @@ export class ProgressService {
         duration = exports['soz-upw'].CalculateDuration(duration);
 
         const start = GetGameTimer();
-        let promiseResolve, promiseReject;
-        const promise = new Promise<ProgressResult>(function (resolve, reject) {
+        let promiseResolve;
+        const promise = new Promise<ProgressResult>(function (resolve) {
             promiseResolve = resolve;
-            promiseReject = reject;
         });
 
         exports['progressbar'].Progress(

@@ -37,6 +37,7 @@ export type PlayerMetadata = {
     maxstamina: number;
     strength: number;
     healthLevel: number;
+    stressLevel: number;
     armor: {
         current: number;
         hidden: boolean;

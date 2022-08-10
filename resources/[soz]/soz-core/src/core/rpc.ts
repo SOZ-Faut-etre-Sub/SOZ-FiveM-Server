@@ -7,12 +7,12 @@ export const emitRpc = async (name: string, ...args: any[]): Promise<any> => {
     } else {
         const eventResponseName = `${name}_${uuidv4()}`;
         const promise = new Promise<any>((resolve, reject) => {
-            const resultCallback = (result) => {
+            const resultCallback = result => {
                 resolve(result);
                 removeEventListener(eventResponseName, resultCallback);
             };
 
-            const rejectCallback = (error) => {
+            const rejectCallback = error => {
                 reject(error);
                 removeEventListener(eventResponseName, resultCallback);
             };
