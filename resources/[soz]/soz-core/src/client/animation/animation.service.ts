@@ -8,6 +8,11 @@ export type Animation = {
     exit?: AnimationInfo;
 };
 
+export type Scenario = {
+    name: string;
+    duration?: number;
+}
+
 export type AnimationInfo = {
     dictionary: string;
     name: string;
@@ -15,7 +20,8 @@ export type AnimationInfo = {
 };
 
 type AnimationTask = {
-    animation: Animation;
+    animation?: Animation;
+    scenario?: Scenario;
     reject: (reason: any) => void;
     resolve: () => void;
 };
@@ -33,7 +39,7 @@ export class AnimationService {
 
     private currentAnimationLoopResolve: () => void;
 
-    private playAnimation(animation: AnimationInfo, forceDuration: boolean): number {
+    private doAnimation(animation: AnimationInfo, forceDuration: boolean): number {
         const duration = animation.duration ? animation.duration : forceDuration ? 1000 : -1;
 
         TaskPlayAnim(
@@ -53,6 +59,15 @@ export class AnimationService {
         return duration;
     }
 
+    private async doScenario(scenario: Scenario): Promise<void> {
+        ClearPedTasksImmediately(PlayerPedId());
+        TaskStartScenarioInPlace(PlayerPedId(), scenario.name, 0, true);
+
+        await wait(scenario.duration ? scenario.duration : -1);
+
+        ClearPedTasksImmediately(PlayerPedId());
+    }
+
     public async loop() {
         this.running = true;
 
@@ -69,20 +84,24 @@ export class AnimationService {
 
             this.currentAnimation = this.queue.shift();
 
-            if (this.currentAnimation.animation.enter) {
-                await wait(this.playAnimation(this.currentAnimation.animation.enter, true));
-            }
+            if (this.currentAnimation.animation) {
+                if (this.currentAnimation.animation.enter) {
+                    await wait(this.doAnimation(this.currentAnimation.animation.enter, true));
+                }
 
-            const duration = this.playAnimation(this.currentAnimation.animation.base, false);
+                const duration = this.doAnimation(this.currentAnimation.animation.base, false);
 
-            if (duration !== -1) {
-                await wait(duration);
-            } else {
-                await animationPromise;
-            }
+                if (duration !== -1) {
+                    await wait(duration);
+                } else {
+                    await animationPromise;
+                }
 
-            if (this.currentAnimation.animation.exit) {
-                await wait(this.playAnimation(this.currentAnimation.animation.exit, true));
+                if (this.currentAnimation.animation.exit) {
+                    await wait(this.doAnimation(this.currentAnimation.animation.exit, true));
+                }
+            } else if (this.currentAnimation.scenario) {
+                await this.doScenario(this.currentAnimation.scenario);
             }
 
             this.currentAnimation.resolve();
@@ -92,7 +111,24 @@ export class AnimationService {
         }
     }
 
-    public async play(animation: Animation): Promise<void> {
+    public async playScenario(scenario: Scenario): Promise<void> {
+        const promise = new Promise<void>((resolve, reject) => {
+            this.queue.push({
+                scenario,
+                reject,
+                resolve,
+            });
+        });
+
+        // Will stop current animation if in loop
+        if (this.currentAnimationLoopResolve) {
+            this.currentAnimationLoopResolve();
+        }
+
+        return promise;
+    }
+
+    public async playAnimation(animation: Animation): Promise<void> {
         const promise = new Promise<void>((resolve, reject) => {
             this.queue.push({
                 animation,
