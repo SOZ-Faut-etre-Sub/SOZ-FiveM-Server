@@ -7,7 +7,7 @@ export interface DebugEvent<P = any> {
 }
 
 const InjectDebugData = <P>(events: DebugEvent<P>[], timer = 1000) => {
-    if (SOZ_PHONE_IS_PRODUCTION) {
+    if (SOZ_PHONE_IS_PRODUCTION || (window as any).invokeNative) {
         return;
     }
 
