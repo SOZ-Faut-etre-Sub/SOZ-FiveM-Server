@@ -92,8 +92,8 @@ AddEventHandler("soz-ems:client:respawn", function()
             HospitalBedId = k
         end
     end
-    SetPedCoordsKeepVehicle(player, Config.Locations["lit"][HospitalBedId].coords.x, Config.Locations["lit"][HospitalBedId].coords.y,
-                            Config.Locations["lit"][HospitalBedId].coords.z + 0.5)
+    SetEntityCoords(player, Config.Locations["lit"][HospitalBedId].coords.x, Config.Locations["lit"][HospitalBedId].coords.y,
+                    Config.Locations["lit"][HospitalBedId].coords.z + 0.5, false, false, false, false)
     SetEntityHeading(player, 320)
     TriggerServerEvent("soz-ems:server:setLit", HospitalBedId, true)
     isInHospitalBed = true
