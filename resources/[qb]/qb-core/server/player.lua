@@ -98,6 +98,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['lastStrengthUpdate'] = PlayerData.metadata['lastStrengthUpdate'] or nil
     PlayerData.metadata['lastMaxStaminaUpdate'] = PlayerData.metadata['lastMaxStaminaUpdate'] or nil
     PlayerData.metadata['healthLevel'] = PlayerData.metadata['healthLevel'] or 100
+    PlayerData.metadata['stressLevel'] = PlayerData.metadata['stressLevel'] or 100
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
     PlayerData.metadata['armor'] = {current = 0, hidden = false}
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
@@ -392,10 +393,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
+        local strengthMultiplier = math.ceil(self.PlayerData.metadata.strength / 100);
+
         if (baseBag == 0 and jobBag == 0) or ((baseBag ~= 0 or jobBag ~= 0) and self.PlayerData.cloth_config.Config.HideBag) then
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000)
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000 * strengthMultiplier)
         else
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000)
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000 * strengthMultiplier)
         end
     end
 

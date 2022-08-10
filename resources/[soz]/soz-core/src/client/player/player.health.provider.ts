@@ -1,8 +1,9 @@
-import { Once } from '../../core/decorators/event';
+import { Once, OnceStep, OnGameEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { ServerEvent } from '../../shared/event';
+import { GameEvent, ServerEvent } from '../../shared/event';
+import { PlayerData } from '../../shared/player';
 import { AnimationService } from '../animation/animation.service';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
@@ -32,8 +33,12 @@ export class PlayerHealthProvider {
         }
     }
 
-    public async doFreeWeight(): Promise<void> {
-        await this.animationService.play({
+    private async doFooting(): Promise<void> {
+        // @TODO set player animation and task to do footing
+    }
+
+    private async doFreeWeight(): Promise<void> {
+        await this.animationService.playAnimation({
             enter: {
                 dictionary: 'amb@world_human_push_ups@male@enter',
                 name: 'enter',
@@ -50,6 +55,8 @@ export class PlayerHealthProvider {
                 duration: 3400,
             },
         });
+
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
     }
 
     @Once()
@@ -66,7 +73,7 @@ export class PlayerHealthProvider {
             },
             [
                 {
-                    label: 'Souleverrr de la fonte',
+                    label: 'Soulever de la fonte',
                     canInteract: () => {
                         return true;
                     },
@@ -75,6 +82,37 @@ export class PlayerHealthProvider {
             ],
             2.5
         );
+    }
+
+    @OnGameEvent(GameEvent.CEventNetworkPedDamage)
+    async onPedDamage(...args: any[]): Promise<void> {
+        // @TODO Stress - check ped is current player
+        console.log('CEventNetworkPedDamage', args);
+    }
+
+    @OnGameEvent(GameEvent.CEventGunShot)
+    async onGunShot(...args: any[]): Promise<void> {
+        // @TODO Stress
+        console.log('CEventGunShot', args);
+    }
+
+    @OnGameEvent(GameEvent.CEventVehicleCollision)
+    async onVehicleCollision(...args: any[]): Promise<void> {
+        // @TODO Stress - check ped in vehicle (more stress)
+        console.log('CEventVehicleCollision', args);
+    }
+
+    @OnGameEvent(GameEvent.CEventExplosionHeard)
+    async onExplosionHeader(...args: any[]): Promise<void> {
+        // @TODO Stress
+        console.log('CEventExplosionHeard', args);
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    async onPlayerLoaded(player: PlayerData): Promise<void> {
+        SetPlayerMaxStamina(PlayerId(), player.metadata.maxstamina);
+
+        // @TODO Set damage multiplier
     }
 
     @Tick(1000)

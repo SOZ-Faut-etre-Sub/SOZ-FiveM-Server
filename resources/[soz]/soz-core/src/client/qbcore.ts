@@ -12,4 +12,8 @@ export class Qbcore {
     public getPlayer(): PlayerData {
         return this.QBCore.Functions.GetPlayerData();
     }
+
+    public getClosestPlayer(): [number, number] {
+        return this.QBCore.Functions.getClosestPlayer();
+    }
 }

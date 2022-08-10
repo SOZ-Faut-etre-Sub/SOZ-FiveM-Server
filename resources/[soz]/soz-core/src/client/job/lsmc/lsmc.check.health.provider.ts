@@ -23,6 +23,12 @@ export class LSMCCheckHealthProvider {
         TriggerServerEvent(ServerEvent.LSMC_BLOOD_FILL_FLASK, target);
     }
 
+    public doHealthCheck(entity: number) {
+        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+        TriggerServerEvent(ServerEvent.LSMC_HEALTH_CHECK, target);
+    }
+
     @Once()
     public onStart() {
         this.targetFactory.createForAllPlayer([
@@ -35,6 +41,16 @@ export class LSMCCheckHealthProvider {
                 },
                 action: this.doBloodCheck.bind(this),
                 item: 'flask_blood_empty',
+            },
+            {
+                label: 'Etat de santé',
+                color: 'lsmc',
+                job: 'lsmc',
+                canInteract: () => {
+                    // @TODO Add zone check
+                    return this.playerService.isOnDuty();
+                },
+                action: this.doHealthCheck.bind(this),
             },
         ]);
 

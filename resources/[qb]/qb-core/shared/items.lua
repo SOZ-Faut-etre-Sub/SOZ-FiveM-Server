@@ -2566,6 +2566,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Ca pourrait t\'en couter un.'
     },
+    ['antidepressant'] = {
+        ['name'] = 'antidepressant',
+        ['label'] = 'Antidépresseur',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['image'] = 'antibiotic.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Soulage le stress.'
+    },
 
     ['garbagebag'] = {
         ['name'] = 'garbagebag',

@@ -66,6 +66,30 @@ export class ItemHealthProvider {
         }
     }
 
+    private async useAntidepressant(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        if (
+            !this.inventoryManager.removeItemFromInventory(
+                source,
+                item.name,
+                1,
+                inventoryItem.metadata,
+                inventoryItem.slot
+            )
+        ) {
+            return;
+        }
+
+        // @TODO play progress animation
+
+        this.playerService.incrementMetadata(source, 'stressLevel', -20, 0, 100);
+
+        this.notifier.notify(
+            source,
+            "Voila vous êtes parfaitement détendu. Détendu. Vous êtes détendu. Oh oui je suis détendu. Qui est détendu ? C'est moi.",
+            'success'
+        );
+    }
+
     @OnEvent(ServerEvent.LSMC_BLOOD_FILL_FLASK)
     public async useFlaskBlood(source: number, target: number) {
         if (!this.inventoryManager.removeItemFromInventory(source, 'flask_blood_empty', 1)) {
@@ -106,5 +130,6 @@ export class ItemHealthProvider {
     @Once()
     public onStart() {
         this.item.setItemUseCallback('flask_pee_empty', this.useFlaskPee.bind(this));
+        this.item.setItemUseCallback('antidepressant', this.useAntidepressant.bind(this));
     }
 }

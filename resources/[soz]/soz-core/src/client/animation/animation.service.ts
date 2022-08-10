@@ -11,12 +11,28 @@ export type Animation = {
 export type Scenario = {
     name: string;
     duration?: number;
-}
+};
 
 export type AnimationInfo = {
     dictionary: string;
     name: string;
     duration?: number;
+    blendInSpeed?: number;
+    blendOutSpeed?: number;
+    playbackRate?: number;
+    lockX?: boolean;
+    lockY?: boolean;
+    lockZ?: boolean;
+    options?: AnimationOptions;
+};
+
+export type AnimationOptions = {
+    repeat?: boolean;
+    freezeLastFrame?: boolean;
+    freezeLastFrameControllable?: boolean;
+    onlyUpperBody?: boolean;
+    enablePlayerControl?: boolean;
+    cancellable?: boolean;
 };
 
 type AnimationTask = {
@@ -40,20 +56,27 @@ export class AnimationService {
     private currentAnimationLoopResolve: () => void;
 
     private doAnimation(animation: AnimationInfo, forceDuration: boolean): number {
+        const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
+        const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -1;
         const duration = animation.duration ? animation.duration : forceDuration ? 1000 : -1;
+        const flags = animationOptionsToFlags(animation.options || {});
+        const playbackRate = animation.playbackRate ? animation.playbackRate : 0.0;
+        const lockX = animation.lockX ? animation.lockX : false;
+        const lockY = animation.lockY ? animation.lockY : false;
+        const lockZ = animation.lockZ ? animation.lockZ : false;
 
         TaskPlayAnim(
             PlayerPedId(),
             animation.dictionary,
             animation.name,
-            8.0,
-            -8.0,
+            blendInSpeed,
+            blendOutSpeed,
             duration,
-            0,
-            0.0,
-            false,
-            false,
-            false
+            flags,
+            playbackRate,
+            lockX,
+            lockY,
+            lockZ
         );
 
         return duration;
@@ -163,7 +186,38 @@ export class AnimationService {
         }
     }
 
-    public destroy() {
+    public async destroy() {
+        await this.stop();
         this.running = false;
     }
 }
+
+const animationOptionsToFlags = (options: AnimationOptions): number => {
+    let flags = 0;
+
+    if (options.repeat) {
+        flags |= 1;
+    }
+
+    if (options.freezeLastFrame) {
+        flags |= 2;
+    }
+
+    if (options.freezeLastFrameControllable) {
+        flags |= 4;
+    }
+
+    if (options.onlyUpperBody) {
+        flags |= 16;
+    }
+
+    if (options.enablePlayerControl) {
+        flags |= 32;
+    }
+
+    if (options.cancellable) {
+        flags |= 64;
+    }
+
+    return flags;
+};
