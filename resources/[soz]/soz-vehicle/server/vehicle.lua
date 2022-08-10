@@ -17,3 +17,13 @@ end
 QBCore.Functions.CreateCallback("soz-vehicle:server:GetAllVehicles", function(_, cb)
     cb(SozVehicle:GetAllVehicles())
 end)
+
+function SozVehicle:GetCategoryFromLicence(licence)
+    if licence == "heli" then
+        return "air"
+    end
+    if licence == "boat" then
+        return "sea"
+    end
+    return "car"
+end

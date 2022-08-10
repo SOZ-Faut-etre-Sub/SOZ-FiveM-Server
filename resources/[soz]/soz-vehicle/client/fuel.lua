@@ -92,7 +92,7 @@ function HasFuel(vehicle)
 end
 
 function GetFuel(vehicle)
-    return Entity(vehicle).state.fuel
+    return Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle)
 end
 
 function SetFuel(vehicle, fuel)
