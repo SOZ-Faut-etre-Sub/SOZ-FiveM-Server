@@ -76,7 +76,7 @@ const ContactsInfoPage: React.FC = () => {
         initializeCall(contact.number);
     };
     const handleContactMessage = () => {
-        navigate(`/messages/new?phoneNumber=${contact.number}`);
+        navigate(`/messages/new/${contact.number}`);
     };
     const handleContactAdd = () => {
         addNewContact({ display: name, number, avatar }, referral);

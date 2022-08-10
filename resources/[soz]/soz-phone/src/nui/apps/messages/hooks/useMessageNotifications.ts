@@ -1,7 +1,6 @@
 import { useApp } from '@os/apps/hooks/useApps';
 import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { MessageConversation } from '@typings/messages';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,16 +51,6 @@ export const useMessageNotifications = () => {
 
         addNotificationAlert(notification, n => {
             removeId(id);
-            if (group.unread > 1) {
-                addNotification({
-                    ...n,
-                    title: group.phoneNumber || group?.display,
-                    content: t('MESSAGES.MESSAGES.UNREAD_MESSAGES', {
-                        count: group.unread,
-                    }),
-                });
-                return;
-            }
             addNotification(n);
         });
     };

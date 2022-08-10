@@ -34,12 +34,7 @@ const MessagesList = (): any => {
     };
 
     const startMessage = (phoneNumber: string) => {
-        LogDebugEvent({
-            action: 'Routing to Message',
-            level: 1,
-            data: { phoneNumber },
-        });
-        navigate(`/messages/new?phoneNumber=${phoneNumber}`);
+        navigate(`/messages/new/${phoneNumber}`);
     };
 
     const setWaypoint = pos => {

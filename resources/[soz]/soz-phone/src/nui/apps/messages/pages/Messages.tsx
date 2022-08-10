@@ -43,6 +43,11 @@ export const Messages = () => {
         return navigate(`/contacts/-1/?addNumber=${number}`);
     };
 
+    if (conversation === undefined) {
+        navigate('/', { replace: true });
+        return null;
+    }
+
     return (
         <Transition
             appear={true}

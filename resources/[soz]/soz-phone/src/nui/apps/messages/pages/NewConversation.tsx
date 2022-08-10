@@ -4,15 +4,14 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { RootState } from '../../../store';
 import { ThemeContext } from '../../../styles/themeProvider';
 import { useMessageAPI } from '../hooks/useMessageAPI';
 
 export const NewConversation = () => {
-    const { phoneNumber } = useQueryParams<{ phoneNumber?: string }>();
+    const { phoneNumber } = useParams<{ phoneNumber?: string }>();
     const navigate = useNavigate();
     const { theme } = useContext(ThemeContext);
     const contacts = useSelector((state: RootState) => state.simCard.contacts);
@@ -34,7 +33,7 @@ export const NewConversation = () => {
         if (phoneNumber) {
             addConversation(phoneNumber);
         }
-    }, [phoneNumber, addConversation]);
+    }, [addConversation]);
 
     const handleCancel = () => {
         navigate(-1);
