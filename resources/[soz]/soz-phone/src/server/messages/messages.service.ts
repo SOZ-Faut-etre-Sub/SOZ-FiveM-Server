@@ -45,17 +45,6 @@ class _MessagesService {
                 return resp({ status: 'error' });
             }
 
-            if (result.doesExist) {
-                return resp({
-                    status: 'silence',
-                    data: {
-                        conversation_id: result.conversationId,
-                        phoneNumber: result.phoneNumber,
-                        updatedAt: result.updatedAt,
-                    },
-                });
-            }
-
             try {
                 const participant = PlayerService.getPlayerFromIdentifier(result.participant);
 
@@ -63,6 +52,7 @@ class _MessagesService {
                     emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
                         conversation_id: result.conversationId,
                         phoneNumber: sourcePlayer.getPhoneNumber(),
+                        updatedAt: result.updatedAt,
                     });
                 }
             } catch (e) {
@@ -139,6 +129,10 @@ class _MessagesService {
                             conversationName: player.getPhoneNumber(),
                             conversationId: messageData.conversationId,
                             message: messageData.message,
+                        });
+                        emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participantPlayer.source, {
+                            conversation_id: messageData.conversationId,
+                            phoneNumber: authorPhoneNumber,
                         });
                     }
                 }

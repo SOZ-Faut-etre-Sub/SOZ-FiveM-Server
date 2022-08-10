@@ -154,6 +154,7 @@ on('onResourceStop', (resource: string) => {
 });
 
 onNet('QBCore:Client:OnPlayerLoaded', async () => {
+    sendMessage('PHONE', 'phoneRestart', {});
     const canAccess = await checkExportCanOpen();
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
 });

@@ -5,12 +5,14 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { useContact } from '../../../hooks/useContact';
 import { useCall } from '../../../os/call/hooks/useCall';
+import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { RootState } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import MessageInput from '../components/form/MessageInput';
@@ -24,11 +26,23 @@ export const Messages = () => {
     const query = useQueryParams();
     const referralImage = query?.image || null;
 
+    const [t] = useTranslation();
+    const { addAlert } = useSnackbar();
     const [imageModalOpen, setImageModalOpen] = useState(false);
 
     const conversations = useSelector((state: RootState) => state.simCard.conversations);
     const conversation = useMemo(() => {
-        return conversations.find(conversation => conversation.conversation_id === groupId);
+        const conv = conversations.find(conversation => conversation.conversation_id === groupId);
+
+        if (!conv) {
+            navigate('/messages');
+            return addAlert({
+                message: t('MESSAGES.FEEDBACK.FETCHED_MESSAGES_FAILED'),
+                type: 'error',
+            });
+        }
+
+        return conv;
     }, [conversations, groupId]);
 
     const messages = useSelector((state: RootState) => state.simCard.messages);
@@ -43,8 +57,7 @@ export const Messages = () => {
         return navigate(`/contacts/-1/?addNumber=${number}`);
     };
 
-    if (conversation === undefined) {
-        navigate('/', { replace: true });
+    if (!conversation) {
         return null;
     }
 
