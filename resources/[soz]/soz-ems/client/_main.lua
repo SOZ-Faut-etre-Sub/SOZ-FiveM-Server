@@ -109,7 +109,7 @@ AddEventHandler("soz-ems:client:callems", function()
     local coords = GetEntityCoords(ped)
     local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
 
-    TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+    TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
         anonymous = true,
         number = "555-LSMC",
         message = ("Besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
