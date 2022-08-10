@@ -152,6 +152,10 @@ export function NotificationsProvider({ children }) {
     );
 
     const addNotificationAlert = (n: INotification, cb: (n: INotification) => void) => {
+        if (alerts.find(a => a[0].id === n.id)) {
+            return;
+        }
+
         if (n.sound) {
             const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
             mount(sound, volume, false).then(({ url }) => setAlerts(curr => [...curr, [n, cb, url]]));

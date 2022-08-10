@@ -40,12 +40,6 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
         }
     };
 
-    useEffect(() => {
-        if (notifications.length === 0) {
-            setBarUncollapsed(false);
-        }
-    }, [notifications, setBarUncollapsed]);
-
     return (
         <>
             <div

@@ -11,22 +11,10 @@ export const useMessageNotifications = () => {
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
     const { icon: Icon } = useApp('society-messages');
 
-    // Remove notifications from groups when opening them
-    // history.listen(location => {
-    //     if (
-    //         matchPath(location.pathname, {
-    //             path: `/society-messages`,
-    //             exact: true,
-    //         })
-    //     ) {
-    //         removeId(`${NOTIFICATION_ID}`);
-    //     }
-    // });
-
     const setNotification = ({ message = '' }) => {
         const notification = {
             app: 'SOCIETY_MESSAGE',
-            NOTIFICATION_ID,
+            id: NOTIFICATION_ID,
             sound: true,
             title: t('SOCIETY_MESSAGES.NOTIFICATION.TITLE'),
             onClick: () => navigate(`/society-messages`),
