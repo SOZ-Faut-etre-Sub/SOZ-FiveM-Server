@@ -98,9 +98,7 @@ export async function createMessageGroupsFromPhoneNumber(
     const conversationId = createGroupHashID([sourcePhoneNumber, tgtPhoneNumber]);
     const existingConversation = await MessagesDB.doesConversationExist(conversationId, tgtPhoneNumber);
 
-    if (existingConversation) {
-        await MessagesDB.createMessageGroup(existingConversation.user_identifier, conversationId, sourcePhoneNumber);
-    } else {
+    if (!existingConversation) {
         await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, sourcePhoneNumber);
         await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, tgtPhoneNumber);
     }

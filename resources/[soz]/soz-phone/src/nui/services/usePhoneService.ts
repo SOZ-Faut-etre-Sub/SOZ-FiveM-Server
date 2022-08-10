@@ -33,6 +33,10 @@ export const usePhoneService = () => {
         });
     }, []);
 
+    useNuiEvent('PHONE', 'startRestart', () => {
+        setTimeout(() => window.location.reload(), 3000);
+    });
+
     // useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);
     useNuiEvent('PHONE', PhoneEvents.SET_AVAILABILITY, store.dispatch.phone.setAvailability);
     useNuiEvent('PHONE', PhoneEvents.SET_VISIBILITY, store.dispatch.phone.setVisibility);

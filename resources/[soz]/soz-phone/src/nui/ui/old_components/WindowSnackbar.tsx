@@ -10,13 +10,6 @@ const WindowSnackbar: React.FC = () => {
     const [message, setMessage] = useState<string>('');
     const [severity, setSeverity] = useState<'info' | 'error' | 'success'>('info');
 
-    useNuiEvent('PHONE', 'startRestart', () => {
-        setMessage('Restarting UI');
-        setOpen(true);
-        setSeverity('error');
-        setTimeout(() => window.location.reload(), 3000);
-    });
-
     const handleClose = () => {
         setOpen(false);
     };

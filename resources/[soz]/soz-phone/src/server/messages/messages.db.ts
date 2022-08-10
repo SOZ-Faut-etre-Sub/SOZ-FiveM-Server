@@ -47,7 +47,7 @@ export class _MessagesDB {
                    unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
             FROM (SELECT conversation_id
                   FROM phone_messages_conversations
-                  WHERE phone_messages_conversations.user_identifier = ?) AS t
+                  WHERE phone_messages_conversations.participant_identifier = ?) AS t
                      LEFT OUTER JOIN phone_messages_conversations
                                      ON phone_messages_conversations.conversation_id = t.conversation_id
                      LEFT OUTER JOIN phone_profile
@@ -68,7 +68,7 @@ export class _MessagesDB {
                               phone_messages.author
                        FROM phone_messages
                                 INNER JOIN phone_messages_conversations ON phone_messages.conversation_id = phone_messages_conversations.conversation_id
-                       WHERE phone_messages_conversations.user_identifier = ?
+                       WHERE phone_messages_conversations.participant_identifier = ?
                        ORDER BY id DESC`;
 
         const [results] = await DbInterface._rawExec(query, [phoneNumber]);
