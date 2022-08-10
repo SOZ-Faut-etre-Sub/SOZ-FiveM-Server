@@ -28,7 +28,7 @@ type INotificationAlert = INotification & {
 
 export interface INotificationIcon {
     key: string;
-    icon: JSX.Element;
+    icon: React.FC<any>;
     badge: number;
 }
 
