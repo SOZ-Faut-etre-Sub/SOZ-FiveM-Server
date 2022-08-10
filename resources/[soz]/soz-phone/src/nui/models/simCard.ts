@@ -93,7 +93,6 @@ export const simCard = createModel<RootModel>()({
             dispatch.simCard.SET_MESSAGES(payload);
         },
         async appendMessage(payload: Message) {
-            console.log('appendMessage', payload);
             dispatch.simCard.ADD_MESSAGE(payload);
         },
     }),
