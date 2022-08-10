@@ -193,6 +193,10 @@ CreateThread(function()
 				return false
 			end
 
+			if exports["soz-phone"]:isPhoneVisible() then
+				return false
+			end
+
 			return true
 		end
 
