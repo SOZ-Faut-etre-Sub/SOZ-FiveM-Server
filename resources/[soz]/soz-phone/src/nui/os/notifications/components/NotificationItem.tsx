@@ -28,11 +28,7 @@ export const NotificationItem = ({
                 }
             }}
         >
-            {NotificationIcon && (
-                <div className={`text-white h-5 w-5 p-1 rounded-md`}>
-                    <NotificationIcon />
-                </div>
-            )}
+            {NotificationIcon && <NotificationIcon className={`text-white h-12 w-12 p-1 rounded-xl`} />}
             <div className="flex flex-col">
                 <p className="flex-grow ml-4 font-light normal-case">{title}</p>
                 <p className="flex-grow ml-4 font-light normal-case">

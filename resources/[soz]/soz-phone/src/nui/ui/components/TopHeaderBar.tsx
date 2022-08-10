@@ -56,9 +56,10 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
             >
                 <div className="flex justify-center font-semibold text-center truncate">
                     <p className="mr-4">{time}</p>
-                    {icons.map(notifIcon => (
-                        <div className="h-4 w-4 mx-1 notificationBarIcon">{notifIcon.icon}</div>
-                    ))}
+                    {icons.map(notifIcon => {
+                        const Icon = notifIcon.icon;
+                        return <Icon className={`text-white h-4 w-4 rounded-sm`} />;
+                    })}
                 </div>
 
                 <div>&nbsp;</div>
