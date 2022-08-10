@@ -45,7 +45,6 @@ function Phone() {
         <ThemeProvider>
             <PhoneWrapper>
                 {/*<TopLevelErrorComponent>*/}
-                {/*    <WindowSnackbar />*/}
                 <NotificationAlert />
                 <PhoneSnackbar />
                 <Routes>
