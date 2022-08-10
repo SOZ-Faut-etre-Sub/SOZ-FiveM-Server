@@ -50,7 +50,7 @@ export const ContactList: React.FC = () => {
     };
 
     const handleMessage = (phoneNumber: string) => {
-        navigate(`/messages/new?phoneNumber=${phoneNumber}`);
+        navigate(`/messages/new/${phoneNumber}`);
     };
     const { pathname } = useLocation();
     const pathTemplate = /contacts\/-?\d/;
