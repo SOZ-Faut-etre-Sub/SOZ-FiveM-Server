@@ -1,13 +1,14 @@
 import { createModel } from '@rematch/core';
 
 import { IPhoneSettings } from '../apps/settings/hooks/useSettings';
+import config from '../config/default.json';
 import { RootModel } from '.';
 
 export const phone = createModel<RootModel>()({
     state: {
         available: false,
         visible: false,
-        config: {} as IPhoneSettings,
+        config: config.defaultSettings as IPhoneSettings,
         time: null,
         callModal: false,
     },
@@ -36,6 +37,10 @@ export const phone = createModel<RootModel>()({
             dispatch.phone.SET_VISIBILITY(payload);
         },
         async setConfig(payload: IPhoneSettings) {
+            dispatch.phone.SET_CONFIG(payload);
+        },
+        async updateConfig(payload: IPhoneSettings) {
+            localStorage.setItem('soz_settings', JSON.stringify(payload));
             dispatch.phone.SET_CONFIG(payload);
         },
         async setTime(payload: string) {

@@ -5,12 +5,13 @@ import { Transition } from '@headlessui/react';
 import { useApp } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
-import React, { useContext } from 'react';
+import cn from 'classnames';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { useConfig } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
-import { ThemeContext } from '../../../styles/themeProvider';
 
 export const GalleryGrid = () => {
     const photosApp = useApp('photo');
@@ -21,7 +22,7 @@ export const GalleryGrid = () => {
 
     const { getPhotos } = usePhoto();
     const photos = getPhotos();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     const referral = query.referral ? decodeURIComponent(query.referral) : '/photo/image';
 
@@ -43,9 +44,10 @@ export const GalleryGrid = () => {
             <AppContent className="overflow-y-auto">
                 {photos.length === 0 && (
                     <div
-                        className={`h-full flex flex-col justify-center items-center ${
-                            theme === 'dark' ? 'text-white' : 'text-black'
-                        }`}
+                        className={cn('h-full flex flex-col justify-center items-center', {
+                            'text-white': config.theme.value === 'dark',
+                            'text-black': config.theme.value === 'light',
+                        })}
                     >
                         {t('PHOTO.FEEDBACK.NO_PHOTOS')}
                     </div>

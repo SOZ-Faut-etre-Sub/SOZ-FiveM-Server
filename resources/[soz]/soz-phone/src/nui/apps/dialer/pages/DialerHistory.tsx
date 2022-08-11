@@ -19,9 +19,9 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { useContact } from '../../../hooks/useContact';
+import { useConfig } from '../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { RootState } from '../../../store';
-import { ThemeContext } from '../../../styles/themeProvider';
 
 dayjs.extend(relativeTime);
 
@@ -30,7 +30,7 @@ export const DialerHistory: React.FC = () => {
 
     const myNumber = usePhoneNumber();
     const { getDisplayByNumber, getPictureByNumber } = useContact();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { initializeCall } = useCall();
     const navigate = useNavigate();
     const [t] = useTranslation();
@@ -43,8 +43,8 @@ export const DialerHistory: React.FC = () => {
         return (
             <div
                 className={cn('flex h-full justify-center items-center text-white', {
-                    'text-gray-100': theme === 'dark',
-                    'text-gray-600': theme === 'light',
+                    'text-gray-100': config.theme.value === 'dark',
+                    'text-gray-600': config.theme.value === 'light',
                 })}
             >
                 <p>{t('DIALER.NO_HISTORY')}</p>
@@ -55,29 +55,39 @@ export const DialerHistory: React.FC = () => {
     return (
         <nav className="pb-10 h-full overflow-y-auto" aria-label="Directory">
             <div className="relative">
-                <ul className={`relative divide-y ${theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'}`}>
+                <ul
+                    className={cn('relative divide-y', {
+                        'divide-gray-700': config.theme.value === 'dark',
+                        'divide-gray-200': config.theme.value === 'light',
+                    })}
+                >
                     {calls
                         .sort((a, b) => dayjs(b.start).valueOf() - dayjs(a.start).valueOf())
                         .map(call => (
                             <Menu
                                 key={call.id}
                                 as="li"
-                                className={`${theme === 'dark' ? 'bg-black' : 'bg-ios-50'} w-full cursor-pointer`}
+                                className={cn('w-full cursor-pointer', {
+                                    'bg-black': config.theme.value === 'dark',
+                                    'bg-ios-50': config.theme.value === 'light',
+                                })}
                             >
                                 <Menu.Button className="w-full">
                                     <div
-                                        className={`relative px-6 py-2 flex items-center space-x-3 ${
-                                            theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-200'
-                                        }`}
+                                        className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                            'hover:bg-gray-900': config.theme.value === 'dark',
+                                            'hover:bg-gray-200': config.theme.value === 'light',
+                                        })}
                                     >
                                         <div className="flex-shrink-0">
                                             {getPictureByNumber(
                                                 call.transmitter === myNumber ? call.receiver : call.transmitter
                                             ) ? (
                                                 <img
-                                                    className={`h-10 w-10 ${
-                                                        theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'
-                                                    } rounded-full`}
+                                                    className={cn('h-10 w-10 rounded-full', {
+                                                        'bg-gray-700': config.theme.value === 'dark',
+                                                        'bg-gray-300': config.theme.value === 'light',
+                                                    })}
                                                     src={getPictureByNumber(
                                                         call.transmitter === myNumber ? call.receiver : call.transmitter
                                                     )}
@@ -85,9 +95,10 @@ export const DialerHistory: React.FC = () => {
                                                 />
                                             ) : (
                                                 <div
-                                                    className={`h-10 w-10 ${
-                                                        theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'
-                                                    } rounded-full`}
+                                                    className={cn('h-10 w-10 rounded-full', {
+                                                        'bg-gray-700': config.theme.value === 'dark',
+                                                        'bg-gray-300': config.theme.value === 'light',
+                                                    })}
                                                 />
                                             )}
                                         </div>
@@ -100,9 +111,10 @@ export const DialerHistory: React.FC = () => {
                                                 <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
                                             )}
                                             <p
-                                                className={`text-left text-sm font-medium ${
-                                                    theme === 'dark' ? 'text-gray-100' : 'text-gray-600'
-                                                }`}
+                                                className={cn('text-left text-sm font-medium', {
+                                                    'text-gray-100': config.theme.value === 'dark',
+                                                    'text-gray-600': config.theme.value === 'light',
+                                                })}
                                             >
                                                 {getDisplayByNumber(
                                                     call.transmitter === myNumber ? call.receiver : call.transmitter

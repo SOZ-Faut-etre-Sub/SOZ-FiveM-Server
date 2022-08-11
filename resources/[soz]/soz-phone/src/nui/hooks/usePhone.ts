@@ -6,6 +6,7 @@ import { RootState } from '../store';
 
 export const useConfig = () => {
     const state = useSelector((state: RootState) => state.phone);
+
     return state.config;
 };
 

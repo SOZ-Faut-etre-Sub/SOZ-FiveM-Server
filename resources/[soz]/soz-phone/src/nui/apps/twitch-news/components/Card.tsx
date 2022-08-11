@@ -1,9 +1,9 @@
 import cn from 'classnames';
 import dayjs from 'dayjs';
-import React, { FunctionComponent, memo, useContext } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 
 import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
-import { ThemeContext } from '../../../styles/themeProvider';
+import { useConfig } from '../../../hooks/usePhone';
 import {
     convertTypeToName,
     isActivePoliceMessage,
@@ -15,13 +15,13 @@ import { PoliceContent } from './PoliceContent';
 
 export const Card: FunctionComponent<TwitchNewsMessage> = memo(
     ({ type, image, message, reporter, createdAt }: TwitchNewsMessage) => {
-        const { theme } = useContext(ThemeContext);
+        const config = useConfig();
 
         return (
             <li
                 className={cn('w-full my-3 rounded shadow border-l-4', {
-                    'bg-[#1C1C1E]': theme === 'dark',
-                    'bg-white': theme === 'light',
+                    'bg-[#1C1C1E]': config.theme.value === 'dark',
+                    'bg-white': config.theme.value === 'light',
                     'border-[#3336E1]': isLSPDMessage(type),
                     'border-[#2d5547]': isBCSOMessage(type),
                     'border-[#6741b1]': isPoliceMessage(type) === false,
@@ -29,7 +29,12 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
             >
                 <div className={`relative p-3 flex items-center space-x-3`}>
                     <div className="flex-1 min-w-0">
-                        <h2 className={`text-center ${theme === 'dark' ? 'text-gray-100' : 'text-gray-700'}`}>
+                        <h2
+                            className={cn('text-center', {
+                                'text-gray-100': config.theme.value === 'dark',
+                                'text-gray-700': config.theme.value === 'light',
+                            })}
+                        >
                             {convertTypeToName(type)}
                         </h2>
                         {image && (
@@ -39,9 +44,10 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                             />
                         )}
                         <p
-                            className={`text-left text-sm font-medium ${
-                                theme === 'dark' ? 'text-gray-100' : 'text-gray-700'
-                            }`}
+                            className={cn('text-left text-sm font-medium', {
+                                'text-gray-100': config.theme.value === 'dark',
+                                'text-gray-700': config.theme.value === 'light',
+                            })}
                         >
                             {isActivePoliceMessage(type) ? (
                                 <PoliceContent type={type} message={message} />

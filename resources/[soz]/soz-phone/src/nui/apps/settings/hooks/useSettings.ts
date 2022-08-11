@@ -3,7 +3,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { PreDBSettings, SettingsEvents } from '@typings/settings';
 import { SettingOption } from '@ui/hooks/useContextMenu';
 import { fetchNui } from '@utils/fetchNui';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import config from '../../../config/default.json';
@@ -22,8 +22,6 @@ export interface IPhoneSettings {
     notiSound: SettingOption;
     notiSoundVol: number;
 }
-
-export const useSettings = () => useLocalState(config.defaultSettings);
 
 export const useSettingsAPI = () => {
     const [t] = useTranslation();

@@ -10,18 +10,20 @@ import {
     VolumeOffIcon,
     VolumeUpIcon,
 } from '@heroicons/react/solid';
+import cn from 'classnames';
 import qs from 'qs';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '../../../common/utils/deleteQueryFromLocation';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
+import { useConfig } from '../../../hooks/usePhone';
 import { useAvatar, usePhoneNumber } from '../../../hooks/useSimCard';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
-import { ThemeContext } from '../../../styles/themeProvider';
+import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
@@ -30,50 +32,45 @@ import { IContextMenuOption } from '../../../ui/old_components/ContextMenu';
 import { List } from '../../../ui/old_components/List';
 import { ListItem } from '../../../ui/old_components/ListItem';
 import { SettingItem, SettingItemSlider, SettingSwitch } from '../components/SettingItem';
-import { useSettings, useSettingsAPI } from '../hooks/useSettings';
+import { useSettingsAPI } from '../hooks/useSettings';
 
 export const SettingsHome = () => {
     const settingsApp = useApp('settings');
     const { pathname, search } = useLocation();
     const navigate = useNavigate();
 
-    const config = usePhoneConfig();
+    const phoneConfig = usePhoneConfig();
     const myNumber = usePhoneNumber();
     const myAvatar = useAvatar();
-    const [settings, setSettings] = useSettings();
+    const config = useConfig();
     const [t] = useTranslation();
     const { addAlert } = useSnackbar();
     const query = useQueryParams();
     const { updateProfilePicture } = useSettingsAPI();
 
-    const { theme, updateTheme } = useContext(ThemeContext);
     const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
 
     const handleSettingChange = (key: string | number, value: any) => {
-        setSettings({ ...settings, [key]: value });
-
-        if (key === 'theme') {
-            updateTheme(value.value);
-        }
+        store.dispatch.phone.updateConfig({ ...config, [key]: value });
     };
-    // const frames = config.frames.map(
-    //     MapSettingItem(settings.frame, (val: SettingOption) => handleSettingChange('frame', val)),
+    // const frames = phoneConfig.frames.map(
+    //     MapSettingItem(config.frame, (val: SettingOption) => handleSettingChange('frame', val)),
     // );
-    const themes = config.themes.map(
-        MapSettingItem(settings.theme, (val: SettingOption) => handleSettingChange('theme', val))
+    const themes = phoneConfig.themes.map(
+        MapSettingItem(config.theme, (val: SettingOption) => handleSettingChange('theme', val))
     );
-    const zoomOptions = config.zoomOptions.map(
-        MapSettingItem(settings.zoom, (val: SettingOption) => handleSettingChange('zoom', val))
+    const zoomOptions = phoneConfig.zoomOptions.map(
+        MapSettingItem(config.zoom, (val: SettingOption) => handleSettingChange('zoom', val))
     );
-    const ringtones = config.ringtones.map(
-        MapSettingItem(settings.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val))
+    const ringtones = phoneConfig.ringtones.map(
+        MapSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val))
     );
-    const notifications = config.notiSounds.map(
-        MapSettingItem(settings.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val))
+    const notifications = phoneConfig.notiSounds.map(
+        MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val))
     );
 
     const handleResetOptions = () => {
-        setSettings(config.defaultSettings);
+        store.dispatch.phone.updateConfig(phoneConfig.defaultSettings);
         addAlert({
             message: t('SETTINGS.MESSAGES.SETTINGS_RESET'),
             type: 'success',
@@ -112,13 +109,17 @@ export const SettingsHome = () => {
                 <List>
                     <ListItem>
                         <div
-                            className={`${
-                                theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'
-                            } bg-cover bg-center h-20 w-20 my-1 rounded-full`}
+                            className={cn('bg-cover bg-center h-20 w-20 my-1 rounded-full', {
+                                'bg-gray-700': config.theme.value === 'dark',
+                                'bg-gray-100': config.theme.value === 'light',
+                            })}
                             style={{ backgroundImage: `url(${myAvatar})` }}
                         />
                         <Button
-                            className={`flex items-center ${theme === 'dark' ? 'text-white' : 'text-black'} text-sm`}
+                            className={cn('flex items-center text-sm', {
+                                'text-white': config.theme.value === 'dark',
+                                'text-black': config.theme.value === 'light',
+                            })}
                             onClick={handleChooseImage}
                         >
                             {t('MARKETPLACE.CHOOSE_IMAGE')}
@@ -137,7 +138,7 @@ export const SettingsHome = () => {
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.RINGTONE')}
-                        value={settings.ringtone.label}
+                        value={config.ringtone.label}
                         options={ringtones}
                         onClick={openMenu}
                         icon={<VolumeUpIcon />}
@@ -147,14 +148,14 @@ export const SettingsHome = () => {
                         label={t('SETTINGS.OPTIONS.RINGTONE_VOLUME')}
                         iconStart={<VolumeOffIcon />}
                         iconEnd={<VolumeUpIcon />}
-                        value={settings.ringtoneVol}
+                        value={config.ringtoneVol}
                         onCommit={e => handleSettingChange('ringtoneVol', parseInt(e.target.value))}
                     />
                 </List>
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.NOTIFICATION')}
-                        value={settings.notiSound.label}
+                        value={config.notiSound.label}
                         options={notifications}
                         onClick={openMenu}
                         icon={<BellIcon />}
@@ -164,14 +165,14 @@ export const SettingsHome = () => {
                         label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
                         iconStart={<VolumeOffIcon />}
                         iconEnd={<VolumeUpIcon />}
-                        value={settings.notiSoundVol}
+                        value={config.notiSoundVol}
                         onCommit={e => handleSettingChange('notiSoundVol', parseInt(e.target.value))}
                     />
                 </List>
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.THEME')}
-                        value={settings.theme.label}
+                        value={config.theme.label}
                         options={themes}
                         onClick={openMenu}
                         icon={<PencilIcon />}
@@ -180,7 +181,7 @@ export const SettingsHome = () => {
 
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.WALLPAPER')}
-                        value={settings.wallpaper.label}
+                        value={config.wallpaper.label}
                         onClick={() => navigate('/settings/wallpaper')}
                         icon={<PhotographIcon />}
                         color="bg-[#8E8E92]"
@@ -188,7 +189,7 @@ export const SettingsHome = () => {
 
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.ZOOM')}
-                        value={settings.zoom.label}
+                        value={config.zoom.label}
                         options={zoomOptions}
                         onClick={openMenu}
                         icon={<AdjustmentsIcon />}
@@ -200,7 +201,7 @@ export const SettingsHome = () => {
                         label={t('SETTINGS.OPTIONS.STREAMER_MODE.DESCRIPTION')}
                         icon={<EyeOffIcon />}
                         color="bg-[#c41515]"
-                        value={settings.streamerMode}
+                        value={config.streamerMode}
                         onClick={curr => handleSettingChange('streamerMode', !curr)}
                     />
                     <SettingItem

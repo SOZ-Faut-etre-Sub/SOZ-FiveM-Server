@@ -7,7 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
+import { useConfig } from '../../../hooks/usePhone';
 import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
+import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppWrapper } from '../../../ui/components/AppWrapper';
@@ -17,25 +19,24 @@ import DialogForm from '../../../ui/old_components/DialogForm';
 import { TextField } from '../../../ui/old_components/Input';
 import { List } from '../../../ui/old_components/List';
 import { SettingItem } from '../components/SettingItem';
-import { useSettings } from '../hooks/useSettings';
 import getBackgroundPath from '../utils/getBackgroundPath';
 
 export const SettingsWallpaper = () => {
     const [wallpaperModal, setWallpaperModal] = useState(false);
-    const [settings, setSettings] = useSettings();
     const [t] = useTranslation();
-    const [value, setValue] = useState(settings.wallpaper.value ? settings.wallpaper.value : '');
     const { addAlert } = useSnackbar();
-    const config = usePhoneConfig();
+    const phoneConfig = usePhoneConfig();
+    const config = useConfig();
     const backgroundClass = useBackground();
     const navigate = useNavigate();
+    const [value, setValue] = useState(config.wallpaper.value ? config.wallpaper.value : '');
 
     const isImageAndUrl = url => {
         return /^(http(s?):)([/|.|\w|\s|-]).*/g.test(url);
     };
 
     const handleSettingChange = (key: string | number, value: unknown) => {
-        setSettings({ ...settings, [key]: value });
+        store.dispatch.phone.updateConfig({ ...config, [key]: value });
     };
 
     const handleNewWallpaper = local => {
@@ -85,8 +86,8 @@ export const SettingsWallpaper = () => {
                             />
                         </List>
                         <div className="grid gap-2 grid-cols-2 mx-2">
-                            {config.wallpapers &&
-                                config.wallpapers.map(wallpaper => (
+                            {phoneConfig.wallpapers &&
+                                phoneConfig.wallpapers.map(wallpaper => (
                                     <div
                                         key={wallpaper.value}
                                         className="bg-cover bg-center w-5/6 aspect-[9/19] justify-self-center rounded-lg cursor-pointer"

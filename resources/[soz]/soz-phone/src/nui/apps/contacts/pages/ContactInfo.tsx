@@ -12,13 +12,14 @@ import { AppWrapper } from '@ui/components/AppWrapper';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { Button } from '@ui/old_components/Button';
 import { TextField } from '@ui/old_components/Input';
-import React, { useContext, useEffect, useState } from 'react';
+import cn from 'classnames';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import NumberFormat from 'react-number-format';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useContact } from '../../../hooks/useContact';
-import { ThemeContext } from '../../../styles/themeProvider';
+import { useConfig } from '../../../hooks/usePhone';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
 interface ContactInfoRouteQuery {
@@ -31,7 +32,7 @@ interface ContactInfoRouteQuery {
 const ContactsInfoPage: React.FC = () => {
     const contacts = useApp('contacts');
     const navigate = useNavigate();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { id } = useParams();
     const {
         addNumber,
@@ -117,9 +118,10 @@ const ContactsInfoPage: React.FC = () => {
                 <AppContent>
                     <div className="flex justify-center">
                         <div
-                            className={`${
-                                theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'
-                            } bg-cover bg-center h-20 w-20 my-1 rounded-full`}
+                            className={cn('bg-cover bg-center h-20 w-20 my-1 rounded-full', {
+                                'bg-gray-700': config.theme.value === 'dark',
+                                'bg-gray-300': config.theme.value === 'light',
+                            })}
                             style={{ backgroundImage: `url(${avatar})` }}
                         />
                     </div>
@@ -139,9 +141,13 @@ const ContactsInfoPage: React.FC = () => {
                                     <p className="text-sm">Éditer</p>
                                 </ActionButton>
                                 <div
-                                    className={`flex flex-col justify-center items-center ${
-                                        theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-white'
-                                    } text-red-500 rounded-xl p-3 cursor-pointer`}
+                                    className={cn(
+                                        'flex flex-col justify-center items-center text-red-500 rounded-xl p-3 cursor-pointer',
+                                        {
+                                            'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                            'bg-white': config.theme.value === 'light',
+                                        }
+                                    )}
                                     onClick={handleContactDelete}
                                 >
                                     <TrashIcon className="h-6 w-6" />
@@ -156,7 +162,12 @@ const ContactsInfoPage: React.FC = () => {
                         )}
                     </div>
                     <div className="mt-6">
-                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-ios-50'} rounded-lg my-2`}>
+                        <div
+                            className={cn('rounded-lg my-2', {
+                                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                'bg-ios-50': config.theme.value === 'light',
+                            })}
+                        >
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NAME')}</p>
                             <TextField
                                 placeholder={t('CONTACTS.FORM_NAME')}
@@ -164,12 +175,18 @@ const ContactsInfoPage: React.FC = () => {
                                 onChange={handleDisplayChange}
                             />
                         </div>
-                        <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-ios-50'} rounded-lg my-2`}>
+                        <div
+                            className={cn('rounded-lg my-2', {
+                                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                'bg-ios-50': config.theme.value === 'light',
+                            })}
+                        >
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
                             <NumberFormat
-                                className={`w-full ${
-                                    theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-gray-300 text-black'
-                                } rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none`}
+                                className={cn('w-full rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none', {
+                                    'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                                    'bg-gray-300 text-black': config.theme.value === 'light',
+                                })}
                                 format="###-####"
                                 defaultValue="555-"
                                 value={number}

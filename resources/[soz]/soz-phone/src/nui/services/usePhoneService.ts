@@ -4,8 +4,8 @@ import { PhoneEvents } from '@typings/phone';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import config from '../config/default.json';
 import { store } from '../store';
-import { getResourceName, isEnvBrowser } from '../utils/misc';
 
 export const usePhoneService = () => {
     const { getApp } = useApps();
@@ -25,12 +25,13 @@ export const usePhoneService = () => {
     );
 
     useEffect(() => {
-        if (isEnvBrowser()) return;
+        let phoneConfig = config.defaultSettings;
+        const saved = localStorage.getItem('soz_settings');
+        if (saved) {
+            phoneConfig = JSON.parse(saved);
+        }
 
-        fetch(`https://cfx-nui-${getResourceName()}/config.json`).then(async res => {
-            const config = await res.json();
-            store.dispatch.phone.setConfig(config);
-        });
+        store.dispatch.phone.setConfig(phoneConfig);
     }, []);
 
     useNuiEvent('PHONE', 'startRestart', () => {

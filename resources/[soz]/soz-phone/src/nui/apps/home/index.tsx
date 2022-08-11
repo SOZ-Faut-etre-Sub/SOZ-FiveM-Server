@@ -1,19 +1,20 @@
 import { Transition } from '@headlessui/react';
 import { useApps } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
-import React, { FunctionComponent, useContext } from 'react';
+import cn from 'classnames';
+import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { useConfig } from '../../hooks/usePhone';
 import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
-import { ThemeContext } from '../../styles/themeProvider';
 import { Grid } from '../../ui/components/Grid';
 import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
 import { AppIcon } from './components/AppIcon';
 
 export const HomeApp: FunctionComponent = () => {
     const { apps } = useApps();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const [t] = useTranslation();
     const societyNumber = usePhoneSocietyNumber();
 
@@ -42,7 +43,10 @@ export const HomeApp: FunctionComponent = () => {
                     </Grid>
                     <Grid
                         rows={1}
-                        className={`${theme === 'dark' ? 'bg-black' : 'bg-ios-50'} bg-opacity-25 rounded-[20px] p-1.5`}
+                        className={cn('bg-opacity-25 rounded-[20px] p-1.5', {
+                            'bg-black': config.theme.value === 'dark',
+                            'bg-ios-50': config.theme.value === 'light',
+                        })}
                     >
                         {homeApps.map(app => (
                             <Link key={app.id} to={app.path}>

@@ -1,13 +1,14 @@
 import { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
 import { useAvailability } from '../../../hooks/usePhone';
+import { RootState } from '../../../store';
 import { getSoundSettings } from '../utils/getSoundSettings';
 import { useSoundProvider } from './useSoundProvider';
 
 export const useRingtoneSound = () => {
     const isPhoneAvailable = useAvailability();
-    const [settings] = useSettings();
+    const settings = useSelector((state: RootState) => state.phone.config);
 
     const sound = useSoundProvider();
 

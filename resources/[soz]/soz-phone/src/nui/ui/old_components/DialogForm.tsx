@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import cn from 'classnames';
+import React from 'react';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 import { Button } from './Button';
 
 interface DialogFormProps {
@@ -12,13 +13,14 @@ interface DialogFormProps {
 }
 
 const DialogForm: React.FC<DialogFormProps> = ({ children, handleClose, onSubmit, title, content }) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
         <div
-            className={`${
-                theme === 'dark' ? 'bg-black bg-opacity-75 text-white' : 'bg-white bg-opacity-75 text-black'
-            } text-center rounded-[.8rem] mx-10`}
+            className={cn('text-center rounded-[.8rem] mx-10', {
+                'bg-black bg-opacity-75 text-white': config.theme.value === 'dark',
+                'bg-white bg-opacity-75 text-black': config.theme.value === 'light',
+            })}
         >
             <div className="pt-5 px-5">
                 <div className="font-bold">{title}</div>

@@ -1,23 +1,23 @@
 import cn from 'classnames';
-import { FunctionComponent, memo, useCallback, useContext } from 'react';
+import { FunctionComponent, memo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useConfig } from '../../hooks/usePhone';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
-import { ThemeContext } from '../../styles/themeProvider';
 
 export const NavigationBar: FunctionComponent = memo(() => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const { setBarUncollapsed } = useNotifications();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     const color = useCallback(() => {
         if (pathname.includes('/camera') || pathname === '/') {
             return 'bg-gray-200';
         } else {
-            return theme === 'dark' ? 'bg-gray-200' : 'bg-black';
+            return config.theme.value === 'dark' ? 'bg-gray-200' : 'bg-black';
         }
-    }, [theme, pathname]);
+    }, [config.theme.value, pathname]);
 
     if (pathname === '/call') {
         return null;
