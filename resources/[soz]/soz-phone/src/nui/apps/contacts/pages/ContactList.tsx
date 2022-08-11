@@ -6,7 +6,7 @@ import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';

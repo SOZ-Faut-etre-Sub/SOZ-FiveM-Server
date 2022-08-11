@@ -3,11 +3,9 @@ import { ServerPromiseResp } from '@typings/common';
 import { PreDBSettings, SettingsEvents } from '@typings/settings';
 import { SettingOption } from '@ui/hooks/useContextMenu';
 import { fetchNui } from '@utils/fetchNui';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import config from '../../../config/default.json';
-import useLocalState from '../../../hooks/useLocalState';
 import { store } from '../../../store';
 
 export interface IPhoneSettings {

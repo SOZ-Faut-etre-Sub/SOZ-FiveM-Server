@@ -3,7 +3,6 @@ import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import config from '../../../config/default.json';
 import { useAvailability, useVisibility } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
