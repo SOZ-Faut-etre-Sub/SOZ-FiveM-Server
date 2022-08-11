@@ -18,21 +18,21 @@ export class BoxZone {
         this.center = center;
         this.length = length;
         this.width = width;
-        this.minZ = options?.minZ || center.z - 1;
-        this.maxZ = options?.maxZ || center.z + 2;
+        this.minZ = options?.minZ || center[2] - 1;
+        this.maxZ = options?.maxZ || center[2] + 2;
 
-        this.min = { x: center.x - length / 2, y: center.y - width / 2, z: center.z - this.minZ };
-        this.max = { x: center.x + length / 2, y: center.y + width / 2, z: center.z + this.maxZ };
+        this.min = [center[0] - length / 2, center[1] - width / 2, center[2] - this.minZ];
+        this.max = [center[0] + length / 2, center[1] + width / 2, center[2] + this.maxZ];
     }
 
     public isPointInside(point: Point3D): boolean {
         return (
-            point.x >= this.min.x &&
-            point.x <= this.max.x &&
-            point.y >= this.min.y &&
-            point.y <= this.max.y &&
-            point.z >= this.min.z &&
-            point.z <= this.max.z
+            point[0] >= this.min[0] &&
+            point[0] <= this.max[0] &&
+            point[1] >= this.min[1] &&
+            point[1] <= this.max[1] &&
+            point[2] >= this.min[2] &&
+            point[2] <= this.max[2]
         );
     }
 }

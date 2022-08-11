@@ -57,7 +57,7 @@ export class LSMCCheckHealthProvider {
         this.targetFactory.createForBoxZone(
             'lsmc_analyze',
             {
-                center: { x: 371.7, y: -1434.45, z: 32.51 },
+                center: [371.7, -1434.45, 32.51],
                 length: 1.8,
                 width: 0.8,
                 minZ: 31.51,
