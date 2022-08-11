@@ -65,7 +65,7 @@ export class PlayerHealthProvider {
 
             if (hours > 1) {
                 this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
-                this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE);
+                this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
             }
         }
 
@@ -79,7 +79,7 @@ export class PlayerHealthProvider {
 
             if (hours > 1) {
                 this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
-                this.playerService.incrementMetadata(source, 'maxstamina', MAX_STAMINA_RATE);
+                this.playerService.incrementMetadata(source, 'maxstamina', MAX_STAMINA_RATE, 50, 120);
             }
         }
 
@@ -92,18 +92,18 @@ export class PlayerHealthProvider {
 
             if (diff > 1000 * 60 * 10) {
                 this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
-                this.playerService.incrementMetadata(source, 'stressLevel', STRESS_RATE);
+                this.playerService.incrementMetadata(source, 'stressLevel', STRESS_RATE, 0, 100);
             }
         }
 
         this.playerService.incrementMetadata(source, 'hunger', hungerDiff, 0, 100);
         this.playerService.incrementMetadata(source, 'thirst', thirstDiff, 0, 100);
-        this.playerService.incrementMetadata(source, 'alcohol', ALCOHOL_RATE);
-        this.playerService.incrementMetadata(source, 'drug', DRUG_RATE);
-        this.playerService.incrementMetadata(source, 'fiber', FIBER_RATE);
-        this.playerService.incrementMetadata(source, 'lipid', LIPID_RATE);
-        this.playerService.incrementMetadata(source, 'sugar', SUGAR_RATE);
-        this.playerService.incrementMetadata(source, 'protein', PROTEIN_RATE);
+        this.playerService.incrementMetadata(source, 'alcohol', ALCOHOL_RATE, 0, 200);
+        this.playerService.incrementMetadata(source, 'drug', DRUG_RATE, 0, 200);
+        this.playerService.incrementMetadata(source, 'fiber', FIBER_RATE, 0, 200);
+        this.playerService.incrementMetadata(source, 'lipid', LIPID_RATE, 0, 200);
+        this.playerService.incrementMetadata(source, 'sugar', SUGAR_RATE, 0, 200);
+        this.playerService.incrementMetadata(source, 'protein', PROTEIN_RATE, 0, 200);
 
         this.hud.updateNeeds(source);
         this.playerService.save(source);
@@ -112,13 +112,13 @@ export class PlayerHealthProvider {
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)
     public async increaseStrength(source: number): Promise<void> {
         this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'strength', 2, 0, 100);
+        this.playerService.incrementMetadata(source, 'strength', 2, 50, 120);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STAMINA)
     public async increaseStamina(source: number): Promise<void> {
         this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'maxstamina', 2, 0, 100);
+        this.playerService.incrementMetadata(source, 'maxstamina', 2, 50, 120);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)

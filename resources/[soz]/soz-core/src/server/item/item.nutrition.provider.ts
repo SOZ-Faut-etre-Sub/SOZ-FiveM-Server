@@ -80,13 +80,13 @@ export class ItemNutritionProvider {
         const protein = expired ? EXPIRED_MALUS : item.nutrition.protein * progress;
         const lipid = expired ? EXPIRED_MALUS : item.nutrition.lipid * progress;
 
-        this.playerService.incrementMetadata(source, 'hunger', hunger);
-        this.playerService.incrementMetadata(source, 'thirst', thirst);
-        this.playerService.incrementMetadata(source, 'alcohol', alcohol);
-        this.playerService.incrementMetadata(source, 'fiber', fiber);
-        this.playerService.incrementMetadata(source, 'sugar', sugar);
-        this.playerService.incrementMetadata(source, 'protein', protein);
-        this.playerService.incrementMetadata(source, 'lipid', lipid);
+        this.playerService.incrementMetadata(source, 'hunger', hunger, 0, 100);
+        this.playerService.incrementMetadata(source, 'thirst', thirst, 0, 100);
+        this.playerService.incrementMetadata(source, 'alcohol', alcohol, 0, 100);
+        this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 200);
+        this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 200);
+        this.playerService.incrementMetadata(source, 'protein', protein, 0, 200);
+        this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 200);
 
         if (expired) {
             this.playerService.setPlayerDisease(source, 'intoxication');
