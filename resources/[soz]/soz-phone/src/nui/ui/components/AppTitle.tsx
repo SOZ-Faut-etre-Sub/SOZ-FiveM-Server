@@ -1,9 +1,10 @@
 import { IApp } from '@os/apps/config/apps';
-import React, { HTMLAttributes, useContext } from 'react';
+import cn from 'classnames';
+import React, { HTMLAttributes } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
     app?: IApp;
@@ -14,23 +15,31 @@ interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
 
 export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, action, children }) => {
     const [t] = useTranslation();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { pathname } = useLocation();
 
     return (
         <div
-            className={`${
-                theme === 'dark' ? 'bg-black' : pathname.includes('/camera') ? 'bg-black' : 'bg-ios-50'
-            } px-5 transition-all duration-300 ease-in-out pb-2`}
+            className={cn('px-5 transition-all duration-300 ease-in-out pb-2', {
+                'bg-black': config.theme.value === 'dark' || pathname.includes('/camera'),
+                'bg-ios-50': config.theme.value === 'light' && !pathname.includes('/camera'),
+            })}
         >
             <h2
-                className={`grid grid-cols-4 ${theme === 'dark' ? 'text-gray-200' : 'text-black'} ${
-                    isBigHeader ? 'pt-8 text-3xl' : 'pt-3 text-2xl'
-                } ${children && 'text-xl'} font-semibold tracking-wide transition-all duration-300 ease-in-out`}
+                className={cn('grid grid-cols-4 font-semibold tracking-wide transition-all duration-300 ease-in-out', {
+                    'text-gray-200': config.theme.value === 'dark',
+                    'text-black': config.theme.value === 'light',
+                    'pt-8 text-3xl': isBigHeader,
+                    'pt-3 text-2xl': !isBigHeader,
+                    'text-xl': children,
+                })}
             >
                 {children && <div className="flex items-center text-[#347DD9]">{children}</div>}
                 <div
-                    className={`truncate ${!children && !action ? 'col-span-4 text-left' : 'col-span-2 text-center'} `}
+                    className={cn('truncate', {
+                        'col-span-4 text-left': !children && !action,
+                        'col-span-2 text-center': children && action,
+                    })}
                 >
                     {title ? title : t(app.nameLocale)}
                 </div>

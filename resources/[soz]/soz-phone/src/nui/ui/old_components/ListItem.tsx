@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
+import cn from 'classnames';
+import React from 'react';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 
 export const ListItem = ({ ...props }) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
         <li
-            className={`${props.onClick && 'cursor-pointer'} py-2 px-4 flex justify-between items-center ${
-                theme === 'dark' ? 'hover:bg-[#27272A] text-white' : 'hover:bg-gray-50 text-black'
-            } text-sm`}
+            className={cn('py-2 px-4 flex justify-between items-center text-sm', {
+                'hover:bg-[#27272A] text-white': config.theme.value === 'dark',
+                'hover:bg-gray-50 text-black': config.theme.value === 'light',
+                'cursor-pointer': props.onClick,
+            })}
             {...props}
         >
             {props.children}

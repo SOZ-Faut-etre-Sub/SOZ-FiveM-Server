@@ -5,12 +5,11 @@ import cn from 'classnames';
 import React, { memo, PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useSettings } from './apps/settings/hooks/useSettings';
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
-import { useVisibility } from './hooks/usePhone';
+import { useConfig, useVisibility } from './hooks/usePhone';
 
 const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
-    const [settings] = useSettings();
+    const settings = useConfig();
     const { pathname } = useLocation();
     const { visibility, notifVisibility } = useVisibility();
 
@@ -55,7 +54,7 @@ export const PhoneFrame = memo(() => {
 });
 
 export const PhoneScreen = memo(({ children }: { children: React.ReactNode }) => {
-    const [settings] = useSettings();
+    const settings = useConfig();
 
     return (
         <div

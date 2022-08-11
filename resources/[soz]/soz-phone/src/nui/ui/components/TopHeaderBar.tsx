@@ -1,13 +1,12 @@
 import { Transition } from '@headlessui/react';
 import cn from 'classnames';
-import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
+import React, { FunctionComponent, memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useTime } from '../../hooks/usePhone';
+import { useConfig, useTime } from '../../hooks/usePhone';
 import { useCall } from '../../hooks/useSimCard';
 import { NotificationItem } from '../../os/notifications/components/NotificationItem';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
-import { ThemeContext } from '../../styles/themeProvider';
 import { BatteryIcon } from '../assets/battery';
 import { CellIcon } from '../assets/cell';
 
@@ -16,7 +15,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
 
     const { pathname } = useLocation();
     const currentCall = useCall();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const time = useTime();
 
     useEffect(() => {
@@ -36,7 +35,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
-            return theme === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
+            return config.theme.value === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
         }
     };
 

@@ -1,9 +1,11 @@
 import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
+import config from '../../../config/default.json';
 import { useAvailability, useVisibility } from '../../../hooks/usePhone';
+import { RootState } from '../../../store';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
@@ -53,7 +55,7 @@ export function NotificationsProvider({ children }) {
     const { visibility: isPhoneOpen } = useVisibility();
     const isPhoneAvailable = useAvailability();
 
-    const [settings] = useSettings();
+    const settings = useSelector((state: RootState) => state.phone.config);
 
     const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
 

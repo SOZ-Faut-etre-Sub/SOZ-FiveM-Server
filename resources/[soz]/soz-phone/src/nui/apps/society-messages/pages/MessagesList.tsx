@@ -7,17 +7,18 @@ import { MessageEvents } from '@typings/messages';
 import { SocietyEvents } from '@typings/society';
 import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
+import cn from 'classnames';
 import dayjs from 'dayjs';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
-import { ThemeContext } from '../../../styles/themeProvider';
+import { useConfig } from '../../../hooks/usePhone';
 require('dayjs/locale/fr');
 dayjs.locale('fr');
 
 const MessagesList = (): any => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { initializeCall } = useCall();
     const navigate = useNavigate();
 
@@ -62,20 +63,25 @@ const MessagesList = (): any => {
                     <Menu
                         key={message.id}
                         as="li"
-                        className={`w-full ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} rounded-md shadow`}
+                        className={cn('w-full rounded-md shadow', {
+                            'bg-gray-900': config.theme.value === 'dark',
+                            'bg-white': config.theme.value === 'light',
+                        })}
                     >
                         <Menu.Button className="w-full">
                             <div
-                                className={`relative px-6 py-2 flex items-center space-x-3 ${
-                                    theme === 'dark' ? 'hover:bg-gray-800' : 'hover:bg-gray-300'
-                                }`}
+                                className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                    'hover:bg-gray-800': config.theme.value === 'dark',
+                                    'hover:bg-gray-300': config.theme.value === 'light',
+                                })}
                             >
                                 <div className="flex-1 min-w-0 cursor-pointer">
                                     <span className="absolute inset-0" aria-hidden="true" />
                                     <p
-                                        className={`text-left text-sm font-medium ${
-                                            theme === 'dark' ? 'text-gray-100' : 'text-gray-700'
-                                        }`}
+                                        className={cn('text-left text-sm font-medium', {
+                                            'text-gray-100': config.theme.value === 'dark',
+                                            'text-gray-700': config.theme.value === 'light',
+                                        })}
                                     >
                                         {message.message}
                                     </p>

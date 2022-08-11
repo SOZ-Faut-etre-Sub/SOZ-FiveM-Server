@@ -5,13 +5,13 @@ import { Button } from '@ui/old_components/Button';
 import { List } from '@ui/old_components/List';
 import { ListItem } from '@ui/old_components/ListItem';
 import cn from 'classnames';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useNotes } from '../../../hooks/app/useNotes';
+import { useConfig } from '../../../hooks/usePhone';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { ThemeContext } from '../../../styles/themeProvider';
 import { AppTitle } from '../../../ui/components/AppTitle';
 
 // TODO: add search bar later
@@ -22,7 +22,7 @@ const NoteList = () => {
     const notes = getNotes();
     const navigate = useNavigate();
     const [t] = useTranslation();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     const handleNoteModal = (note: NoteItem) => {
         navigate(`/notes/${note.id}`);
@@ -49,8 +49,8 @@ const NoteList = () => {
         <AppContent className="flex flex-col justify-between" scrollable={false}>
             <div
                 className={cn('flex flex-col justify-center items-center h-full', {
-                    'text-dark': theme === 'light',
-                    'text-white': theme === 'dark',
+                    'text-white': config.theme.value === 'dark',
+                    'text-dark': config.theme.value === 'light',
                 })}
             >
                 {t('NOTES.FEEDBACK.NO_NOTES')}

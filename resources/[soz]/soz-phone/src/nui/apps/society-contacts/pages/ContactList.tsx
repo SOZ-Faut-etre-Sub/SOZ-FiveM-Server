@@ -1,12 +1,13 @@
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
-import React, { useContext, useMemo, useState } from 'react';
+import cn from 'classnames';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
+import { useConfig } from '../../../hooks/usePhone';
 import { useApp } from '../../../os/apps/hooks/useApps';
-import { ThemeContext } from '../../../styles/themeProvider';
 import { SearchField } from '../../../ui/old_components/SearchField';
 
 export const ContactList: React.FC = () => {
@@ -32,7 +33,7 @@ export const ContactList: React.FC = () => {
     }, [contacts, searchValue]);
 
     const [t] = useTranslation();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const navigate = useNavigate();
 
     const openContactInfo = (contactId: number) => {
@@ -53,35 +54,40 @@ export const ContactList: React.FC = () => {
                     .map(letter => (
                         <div key={letter} className="relative">
                             <div
-                                className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${
-                                    theme === 'dark' ? 'bg-black text-gray-400' : 'bg-ios-50 text-gray-600'
-                                }`}
+                                className={cn('sticky top-0 pt-4 px-6 py-1 text-sm font-medium', {
+                                    'bg-black text-gray-400': config.theme.value === 'dark',
+                                    'bg-ios-50 text-gray-600': config.theme.value === 'light',
+                                })}
                             >
                                 <h3>{letter}</h3>
                             </div>
                             <ul
-                                className={`relative divide-y ${
-                                    theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'
-                                }`}
+                                className={cn('relative divide-y', {
+                                    'divide-gray-700': config.theme.value === 'dark',
+                                    'divide-gray-200': config.theme.value === 'light',
+                                })}
                             >
                                 {filteredContacts[letter].map(contact => (
                                     <li
                                         key={contact.id}
-                                        className={`${
-                                            theme === 'dark' ? 'bg-black' : 'bg-ios-50'
-                                        } w-full cursor-pointer`}
+                                        className={cn('w-full cursor-pointer', {
+                                            'bg-black': config.theme.value === 'dark',
+                                            'bg-ios-50': config.theme.value === 'light',
+                                        })}
                                         onClick={() => openContactInfo(contact.id)}
                                     >
                                         <div
-                                            className={`relative px-6 py-2 flex items-center space-x-3 ${
-                                                theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-200'
-                                            }`}
+                                            className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                                'hover:bg-gray-900': config.theme.value === 'dark',
+                                                'hover:bg-gray-200': config.theme.value === 'light',
+                                            })}
                                         >
                                             <div className="flex-shrink-0">
                                                 <img
-                                                    className={`h-10 w-10 ${
-                                                        theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'
-                                                    } rounded-full`}
+                                                    className={cn('h-10 w-10 rounded-full', {
+                                                        'bg-gray-700': config.theme.value === 'dark',
+                                                        'bg-gray-100': config.theme.value === 'light',
+                                                    })}
                                                     src={contact.avatar}
                                                     alt=""
                                                 />
@@ -89,9 +95,10 @@ export const ContactList: React.FC = () => {
                                             <div className="flex-1 min-w-0 cursor-pointer">
                                                 <span className="absolute inset-0" aria-hidden="true" />
                                                 <p
-                                                    className={`text-left text-sm font-medium ${
-                                                        theme === 'dark' ? 'text-gray-100' : 'text-gray-600'
-                                                    }`}
+                                                    className={cn('text-left text-sm font-medium', {
+                                                        'text-gray-100': config.theme.value === 'dark',
+                                                        'text-gray-600': config.theme.value === 'light',
+                                                    })}
                                                 >
                                                     {contact.display}
                                                 </p>

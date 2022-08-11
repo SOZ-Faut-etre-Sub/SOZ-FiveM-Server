@@ -1,6 +1,7 @@
-import React, { memo, useContext } from 'react';
+import cn from 'classnames';
+import React, { memo } from 'react';
 
-import { ThemeContext } from '../../../styles/themeProvider';
+import { useConfig } from '../../../hooks/usePhone';
 
 interface ButtonItemProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -10,14 +11,19 @@ interface ButtonItemProps {
 }
 
 export const DialerButton: React.FC<ButtonItemProps> = memo(({ label, type, onClick, className }) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
         <button
             type={type}
-            className={`flex justify-center items-center w-20 aspect-square m-2 ${
-                theme === 'dark' ? 'bg-[#333333] hover:bg-[#444444]' : 'bg-white hover:bg-[#E5E5E5] text-gray-700'
-            } rounded-full cursor-pointer ${className}`}
+            className={cn(
+                'flex justify-center items-center w-20 aspect-square m-2 rounded-full cursor-pointer',
+                className,
+                {
+                    'bg-[#333333] hover:bg-[#444444]': config.theme.value === 'dark',
+                    'bg-white hover:bg-[#E5E5E5] text-gray-700': config.theme.value === 'light',
+                }
+            )}
             onClick={onClick}
         >
             <span className="text-3xl">{label}</span>

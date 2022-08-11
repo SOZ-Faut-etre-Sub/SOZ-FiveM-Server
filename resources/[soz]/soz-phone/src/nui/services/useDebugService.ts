@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
-import DefaultConfig from '../../../config.json';
 import { BankEvents } from '../../../typings/app/bank';
 import { PhoneEvents } from '../../../typings/phone';
 import { SettingsEvents } from '../../../typings/settings';
@@ -24,11 +23,6 @@ export const useDebugService = () => {
                 app: 'PHONE',
                 method: PhoneEvents.SET_TIME,
                 data: dayjs().format('hh:mm'),
-            },
-            {
-                app: 'PHONE',
-                method: PhoneEvents.SET_CONFIG,
-                data: DefaultConfig,
             },
             {
                 app: 'SIMCARD',

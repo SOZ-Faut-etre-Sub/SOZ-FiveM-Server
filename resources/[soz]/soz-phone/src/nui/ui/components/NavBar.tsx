@@ -1,17 +1,18 @@
 import cn from 'classnames';
-import React, { FunctionComponent, PropsWithChildren, useContext } from 'react';
+import React, { FunctionComponent, PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 
 export const NavBarContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
         <div
-            className={`absolute bottom-0 inset-x-0 grid grid-cols-3 content-start ${
-                theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-white text-black'
-            } h-20`}
+            className={cn('absolute bottom-0 inset-x-0 grid grid-cols-3 content-start h-20', {
+                'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                'bg-white text-black': config.theme.value === 'light',
+            })}
         >
             {children}
         </div>

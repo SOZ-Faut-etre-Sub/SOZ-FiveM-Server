@@ -1,11 +1,12 @@
 import { Transition } from '@headlessui/react';
 import { PencilAltIcon } from '@heroicons/react/solid';
 import { AppWrapper } from '@ui/components/AppWrapper';
-import React, { useContext } from 'react';
+import cn from 'classnames';
+import React from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { useNotes } from '../../hooks/app/useNotes';
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 import { AppContent } from '../../ui/components/AppContent';
 import { useBackground } from '../../ui/hooks/useBackground';
 import { FullPageWithHeaderWithNavBar } from '../../ui/layout/FullPageWithHeaderWithNavBar';
@@ -18,7 +19,7 @@ export const NotesApp: React.FC = () => {
     const { getNotes } = useNotes();
     const notes = getNotes();
 
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
@@ -57,7 +58,12 @@ export const NotesApp: React.FC = () => {
                     leaveTo="translate-y-full"
                 >
                     <div className="grid grid-cols-3 items-center font-light text-sm mx-5 mb-10 z-0">
-                        <p className={`col-start-2 ${theme === 'dark' ? 'text-white' : 'text-black'} text-center`}>
+                        <p
+                            className={cn('col-start-2 text-center', {
+                                'text-white': config.theme.value === 'dark',
+                                'text-black': config.theme.value === 'light',
+                            })}
+                        >
                             {notes.length} note{notes.length > 1 && 's'}
                         </p>
                         <PencilAltIcon

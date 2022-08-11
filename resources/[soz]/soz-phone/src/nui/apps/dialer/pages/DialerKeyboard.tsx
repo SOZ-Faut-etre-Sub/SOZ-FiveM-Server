@@ -1,12 +1,12 @@
 import { useQueryParams } from '@common/hooks/useQueryParams';
 import { BackspaceIcon, PhoneIcon } from '@heroicons/react/solid';
 import cn from 'classnames';
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { useConfig } from '../../../hooks/usePhone';
 import { useCall } from '../../../os/call/hooks/useCall';
-import { ThemeContext } from '../../../styles/themeProvider';
 import { AppContent } from '../../../ui/components/AppContent';
 import { InputBase } from '../../../ui/old_components/Input';
 import { DialerButton } from '../components/DialerButton';
@@ -17,7 +17,7 @@ interface IFormInputs {
 
 const DialerKeyboard: React.FC = () => {
     const query = useQueryParams();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const navigate = useNavigate();
     const { initializeCall } = useCall();
 
@@ -56,8 +56,8 @@ const DialerKeyboard: React.FC = () => {
                         <InputBase
                             maxLength={8}
                             className={cn('bg-transparent w-2/4 text-center text-3xl', {
-                                'text-white': theme === 'dark',
-                                'text-black': theme === 'light',
+                                'text-white': config.theme.value === 'dark',
+                                'text-black': config.theme.value === 'light',
                             })}
                             {...register('number', { pattern: /^555-[\d-]{4}$/i })}
                             defaultValue={query.number || ''}
@@ -95,8 +95,6 @@ const DialerKeyboard: React.FC = () => {
                         />
                     </div>
                 </div>
-
-                {/*<DialGrid />*/}
             </form>
         </AppContent>
     );

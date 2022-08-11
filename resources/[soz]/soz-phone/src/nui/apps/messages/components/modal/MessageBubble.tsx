@@ -3,10 +3,10 @@ import { ServerPromiseResp } from '@typings/common';
 import { Message, MessageEvents } from '@typings/messages';
 import { PictureReveal } from '@ui/old_components/PictureReveal';
 import { fetchNui } from '@utils/fetchNui';
-import React, { useContext } from 'react';
+import React from 'react';
 
+import { useConfig } from '../../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../../hooks/useSimCard';
-import { ThemeContext } from '../../../../styles/themeProvider';
 
 const isImage = url => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
@@ -21,7 +21,7 @@ interface MessageBubbleProps {
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const myNumber = usePhoneNumber();
     const setWaypoint = () => {
         const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
@@ -38,7 +38,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         if (isMine) {
             return 'bg-[#32CA5B] text-white';
         } else {
-            return theme === 'dark' ? 'bg-[#26252A] text-white' : 'bg-[#E9E9EB] text-dark';
+            return config.theme.value === 'dark' ? 'bg-[#26252A] text-white' : 'bg-[#E9E9EB] text-dark';
         }
     };
 

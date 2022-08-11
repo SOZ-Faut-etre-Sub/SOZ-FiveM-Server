@@ -5,13 +5,14 @@ import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
 import { Button } from '@ui/old_components/Button';
+import cn from 'classnames';
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
-import { ThemeContext } from '../../../styles/themeProvider';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { SearchField } from '../../../ui/old_components/SearchField';
 
@@ -38,7 +39,7 @@ export const ContactList: React.FC = () => {
 
     const [t] = useTranslation();
     const navigate = useNavigate();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { initializeCall } = useCall();
 
     const openContactInfo = (contactId: number) => {
@@ -78,45 +79,51 @@ export const ContactList: React.FC = () => {
                     .map(letter => (
                         <div key={letter} className="relative">
                             <div
-                                className={`sticky top-0 pt-4 px-6 py-1 text-sm font-medium ${
-                                    theme === 'dark' ? 'bg-black text-gray-400' : 'bg-ios-50 text-gray-600'
-                                }`}
+                                className={cn('sticky top-0 pt-4 px-6 py-1 text-sm font-medium', {
+                                    'bg-black text-gray-400': config.theme.value === 'dark',
+                                    'bg-ios-50 text-gray-600': config.theme.value === 'light',
+                                })}
                             >
                                 <h3 className="uppercase">{letter}</h3>
                             </div>
                             <ul
-                                className={`relative divide-y ${
-                                    theme === 'dark' ? 'divide-gray-700' : 'divide-gray-200'
-                                }`}
+                                className={cn('relative divide-y', {
+                                    'divide-gray-700': config.theme.value === 'dark',
+                                    'divide-gray-200': config.theme.value === 'light',
+                                })}
                             >
                                 {filteredContacts[letter].map(contact => (
                                     <Menu
                                         key={contact.id}
                                         as="li"
-                                        className={`${
-                                            theme === 'dark' ? 'bg-black' : 'bg-ios-50'
-                                        } w-full cursor-pointer`}
+                                        className={cn('w-full cursor-pointer', {
+                                            'bg-black': config.theme.value === 'dark',
+                                            'bg-ios-50': config.theme.value === 'light',
+                                        })}
                                     >
                                         <Menu.Button className="w-full">
                                             <div
-                                                className={`relative px-6 py-2 flex items-center space-x-3 ${
-                                                    theme === 'dark' ? 'hover:bg-gray-900' : 'hover:bg-gray-200'
-                                                }`}
+                                                className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                                    'hover:bg-gray-900': config.theme.value === 'dark',
+                                                    'hover:bg-gray-200': config.theme.value === 'light',
+                                                })}
                                             >
                                                 <div className="flex-shrink-0">
                                                     <div
-                                                        className={`h-10 w-10 ${
-                                                            theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'
-                                                        } bg-cover bg-center rounded-full`}
+                                                        className={cn('h-10 w-10 bg-cover bg-center rounded-full', {
+                                                            'bg-gray-700': config.theme.value === 'dark',
+                                                            'bg-gray-300': config.theme.value === 'light',
+                                                        })}
                                                         style={{ backgroundImage: `url(${contact.avatar})` }}
                                                     />
                                                 </div>
                                                 <div className="flex-1 min-w-0 cursor-pointer">
                                                     <span className="absolute inset-0" aria-hidden="true" />
                                                     <p
-                                                        className={`text-left text-sm font-medium ${
-                                                            theme === 'dark' ? 'text-gray-100' : 'text-gray-600'
-                                                        }`}
+                                                        className={cn('text-left text-sm font-medium', {
+                                                            'text-gray-100': config.theme.value === 'dark',
+                                                            'text-gray-600': config.theme.value === 'light',
+                                                        })}
                                                     >
                                                         {contact.display}
                                                     </p>

@@ -6,16 +6,17 @@ import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
 import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
-import React, { useContext, useMemo } from 'react';
+import cn from 'classnames';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { ThemeContext } from '../../../styles/themeProvider';
+import { useConfig } from '../../../hooks/usePhone';
 
 export const GalleryModal = () => {
     const navigate = useNavigate();
     const query = useQueryParams();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
 
@@ -54,9 +55,10 @@ export const GalleryModal = () => {
                 style={{ backgroundImage: `url(${meta.image})` }}
             />
             <div
-                className={`grid grid-cols-4 content-start ${
-                    theme === 'dark' ? 'bg-[#1C1C1E] text-white' : 'bg-ios-50 text-black'
-                } h-16`}
+                className={cn('grid grid-cols-4 content-start h-16', {
+                    'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                    'bg-ios-50 text-black': config.theme.value === 'light',
+                })}
             >
                 <Button className={`flex flex-col items-center py-3 text-sm`} onClick={handleCopyImage}>
                     <ShareIcon className="h-6 w-6" />
