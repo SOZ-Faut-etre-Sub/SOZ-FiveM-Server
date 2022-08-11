@@ -2,7 +2,7 @@ import { PhoneEvents } from '@typings/phone';
 import { fetchNui } from '@utils/fetchNui';
 import { isEnvBrowser } from '@utils/misc';
 import cn from 'classnames';
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 
 import { useConfig } from '../../hooks/usePhone';
 
