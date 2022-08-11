@@ -85,6 +85,16 @@ RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
     end
 end)
 
+RegisterNetEvent("jobs:server:fueler:resetTanker", function(tankerId)
+    local tanker = NetworkGetEntityFromNetworkId(tankerId)
+    local tankerPlate = GetVehicleNumberPlateText(tanker)
+    local tankerInv = "trunk_" .. tankerPlate
+
+    if GetVehicleType(tanker) == "trailer" then
+        exports["soz-inventory"]:Clear(tankerInv, false)
+    end
+end)
+
 RegisterNetEvent("jobs:server:fueler:craftEssence", function()
     local Player = QBCore.Functions.GetPlayer(source)
     local essenceItemAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "petroleum_refined", nil, true)
