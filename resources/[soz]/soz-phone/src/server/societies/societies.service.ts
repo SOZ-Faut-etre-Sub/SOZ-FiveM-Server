@@ -175,12 +175,14 @@ class _SocietyService {
             if (societyMessage[0]) {
                 const player = await PlayerService.getPlayersFromNumber(societyMessage[0].source_phone);
                 if (player) {
-                    emitNet(
-                        'hud:client:DrawNotification',
-                        player.source,
-                        "Votre ~b~appel~s~ vient d'être pris !",
-                        'info'
-                    );
+                    if (reqObj.data.take && !reqObj.data.done) {
+                        emitNet(
+                            'hud:client:DrawNotification',
+                            player.source,
+                            "Votre ~b~appel~s~ vient d'être pris !",
+                            'info'
+                        );
+                    }
                 }
             }
 
