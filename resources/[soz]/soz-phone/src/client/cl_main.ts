@@ -97,6 +97,7 @@ RegisterCommand(
     async () => {
         if (global.isPhoneDisabled) return;
         if (cityIsInBlackOut()) return;
+        if (IsPedRagdoll(PlayerPedId())) return;
 
         await togglePhone();
     },
@@ -187,7 +188,9 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(PhoneEvents.TOGGLE_KEYS, async ({ keep
 });
 
 setTick(async () => {
-    const isSwimming = IsPedSwimming(PlayerPedId());
+    const ped = PlayerPedId();
+
+    const isSwimming = IsPedSwimming(ped);
     if (isSwimming) {
         global.isPhoneDisabled = true;
         global.isPhoneDrowned = true;
@@ -204,6 +207,9 @@ setTick(async () => {
     }
 
     if (global.isPhoneOpen && cityIsInBlackOut()) {
+        await hidePhone();
+    }
+    if (global.isPhoneOpen && IsPedRagdoll(ped)) {
         await hidePhone();
     }
 
