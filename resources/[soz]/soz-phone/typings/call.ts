@@ -5,6 +5,7 @@ export interface ActiveCall {
     receiver: string;
     channelId?: number;
     isUnavailable?: boolean;
+    startedAt?: number;
 }
 
 export interface InitializeCallDTO {

@@ -146,6 +146,7 @@ class CallsService {
                 receiver: targetCallItem.receiver,
                 isTransmitter: false,
                 channelId,
+                startedAt: new Date().getTime(),
             },
             targetCallItem.receiverSource
         );
@@ -161,6 +162,7 @@ class CallsService {
                 receiver: targetCallItem.receiver,
                 isTransmitter: true,
                 channelId,
+                startedAt: new Date().getTime(),
             },
             targetCallItem.transmitterSource
         );
