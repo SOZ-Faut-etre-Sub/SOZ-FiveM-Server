@@ -17,11 +17,13 @@ export class EventLoader {
 
     public constructor() {
         if (SOZ_CORE_IS_CLIENT) {
-            addEventListener('gameEventTriggered', this.handleGameEvent);
+            addEventListener('gameEventTriggered', this.handleGameEvent.bind(this));
         }
     }
 
     private handleGameEvent(eventName: string, args: any[]): void {
+        console.log('gameEventTriggered', eventName, args);
+
         if (this.gameEvents[eventName]) {
             for (const method of this.gameEvents[eventName]) {
                 method(...args);
