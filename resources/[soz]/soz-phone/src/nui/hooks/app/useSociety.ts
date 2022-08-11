@@ -8,18 +8,18 @@ export const useSociety = () => {
 
     const getContacts = useCallback(() => {
         return society.contacts;
-    }, [society]);
+    }, [society.contacts]);
 
     const getContact = useCallback(
         id => {
             return society.contacts.find(contact => contact.id === id);
         },
-        [society]
+        [society.contacts]
     );
 
     const getSocietyMessages = useCallback(() => {
         return society.messages;
-    }, [society]);
+    }, [society.messages]);
 
     return {
         getContacts,
