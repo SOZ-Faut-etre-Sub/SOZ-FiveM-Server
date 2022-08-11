@@ -16,9 +16,9 @@ export class PlayerStressProvider {
     private isStressUpdated = false;
     private wasDead = false;
 
-    private updateStress() {
+    private updateStress(stress = 1): void {
         this.isStressUpdated = true;
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS);
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, stress);
 
         setTimeout(() => {
             this.isStressUpdated = false;
