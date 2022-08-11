@@ -27,6 +27,8 @@ export const useAppSocietyService = () => {
     }, []);
 
     const handleMessageBroadcast = (message: SocietyMessage) => {
+        store.dispatch.appSociety.appendSocietyMessages(message);
+
         if (visibility && pathname.includes('/society-messages')) {
             return;
         }
@@ -34,7 +36,6 @@ export const useAppSocietyService = () => {
         if (!message.muted) {
             setNotification({ message: message.message });
         }
-        store.dispatch.appSociety.appendSocietyMessages(message);
     };
 
     const handleResetMessages = () => {
