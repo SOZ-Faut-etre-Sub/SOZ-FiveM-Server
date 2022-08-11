@@ -18,6 +18,7 @@ const SUGAR_RATE = -0.5;
 const PROTEIN_RATE = -0.5;
 const STRENGTH_RATE = -1.0;
 const MAX_STAMINA_RATE = -1.0;
+const STRESS_RATE = -1.0;
 
 @Provider()
 export class PlayerHealthProvider {
@@ -82,6 +83,19 @@ export class PlayerHealthProvider {
             }
         }
 
+        if (!player.metadata.lastStressUpdate) {
+            this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
+        } else {
+            const lastUpdate = new Date(player.metadata.lastStressUpdate);
+            const now = new Date();
+            const diff = now.getTime() - lastUpdate.getTime();
+
+            if (diff > 1000 * 60 * 10) {
+                this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
+                this.playerService.incrementMetadata(source, 'stressLevel', STRESS_RATE);
+            }
+        }
+
         this.playerService.incrementMetadata(source, 'hunger', hungerDiff, 0, 100);
         this.playerService.incrementMetadata(source, 'thirst', thirstDiff, 0, 100);
         this.playerService.incrementMetadata(source, 'alcohol', ALCOHOL_RATE);
@@ -109,6 +123,7 @@ export class PlayerHealthProvider {
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
     public async increaseStress(source: number, stress: number): Promise<void> {
+        this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
         this.playerService.incrementMetadata(source, 'stressLevel', stress, 0, 100);
     }
 

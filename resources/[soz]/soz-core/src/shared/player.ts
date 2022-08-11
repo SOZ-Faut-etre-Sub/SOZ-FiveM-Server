@@ -45,4 +45,5 @@ export type PlayerMetadata = {
     organ: 'foie' | 'rein' | null;
     lastStrengthUpdate: string | null;
     lastMaxStaminaUpdate: string | null;
+    lastStressUpdate: string | null;
 };
