@@ -1,10 +1,11 @@
-import { Once, OnceStep, OnGameEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnGameEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { GameEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { AnimationService } from '../animation/animation.service';
+import { GetPedList } from '../enumerate';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
 
@@ -84,28 +85,32 @@ export class PlayerHealthProvider {
         );
     }
 
-    @OnGameEvent(GameEvent.CEventNetworkPedDamage)
-    async onPedDamage(...args: any[]): Promise<void> {
-        // @TODO Stress - check ped is current player
-        console.log('CEventNetworkPedDamage', args);
+    @Tick(1000)
+    async onTick(): Promise<void> {
+        //ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.06);
+        // for (const pedId of GetPedList()) {
+        //     console.log(pedId, GetPedAlertness(pedId));
+        // }
     }
 
-    @OnGameEvent(GameEvent.CEventGunShot)
-    async onGunShot(...args: any[]): Promise<void> {
-        // @TODO Stress
-        console.log('CEventGunShot', args);
+    // @TODO Stress Explosion : use server event
+
+    // @TODO Stress Shot : use nearby pod shooting / alertness ?
+
+    // @TODO Someone has been it
+    @On('CEventShockingGunshotFired', false)
+    public CEventShockingGunshotFired(entities, eventEntity, args): void {
+        console.log('CEventShockingGunshotFired', entities, eventEntity, args);
     }
 
-    @OnGameEvent(GameEvent.CEventVehicleCollision)
-    async onVehicleCollision(...args: any[]): Promise<void> {
-        // @TODO Stress - check ped in vehicle (more stress)
-        console.log('CEventVehicleCollision', args);
+    @On('CEventGunShot', false)
+    public CEventGunShot(entities, eventEntity, args): void {
+        console.log('CEventGunShot', entities, eventEntity, args);
     }
 
-    @OnGameEvent(GameEvent.CEventExplosionHeard)
-    async onExplosionHeader(...args: any[]): Promise<void> {
-        // @TODO Stress
-        console.log('CEventExplosionHeard', args);
+    @On('CEventShockingDrivingOnPavement', false)
+    public CEventShockingDrivingOnPavement(entities, eventEntity, args): void {
+        console.log('CEventShockingDrivingOnPavement', entities, eventEntity, args);
     }
 
     @Once(OnceStep.PlayerLoaded)

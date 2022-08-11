@@ -24,7 +24,7 @@ export class SnowProvider {
 
             UseParticleFxAssetNextCall('core_snow');
         } else {
-            this.resourceLoader.unloadedPtfxAsset('core_snow');
+            this.resourceLoader.unloadPtfxAsset('core_snow');
         }
     }
 

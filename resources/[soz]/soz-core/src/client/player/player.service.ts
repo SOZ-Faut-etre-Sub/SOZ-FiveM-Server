@@ -4,7 +4,7 @@ import { Qbcore } from '../qbcore';
 
 @Injectable()
 export class PlayerService {
-    private player: PlayerData | null;
+    private player: PlayerData | null = null;
 
     @Inject(Qbcore)
     private qbcore: Qbcore;
@@ -17,7 +17,7 @@ export class PlayerService {
         return LocalPlayer.state.isLoggedIn;
     }
 
-    public getPlayer(): PlayerData {
+    public getPlayer(): PlayerData | null {
         return this.player;
     }
 

@@ -5,8 +5,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { PollutionLevel } from '../../shared/pollution';
 import { Forecast, Time, Weather } from '../../shared/weather';
-import { Pollution, PollutionLevel } from '../pollution';
+import { Pollution } from '../pollution';
 import { Polluted, Summer } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
