@@ -71,54 +71,52 @@ const ContactsInfoPage: React.FC = () => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
         >
-            <AppWrapper>
-                <AppTitle title={contact.display}>
-                    <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
-                        <ChevronLeftIcon className="h-5 w-5" />
-                        Fermer
-                    </Button>
-                </AppTitle>
-                <AppContent className="text-white mt-10 mx-4 mb-4">
-                    <div className="flex justify-center">
-                        <div
-                            className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full"
-                            style={{ backgroundImage: `url(${contact.avatar})` }}
-                        />
-                    </div>
-                    <div>
-                        <TextareaField
-                            value={message}
-                            rows={14}
-                            variant="outlined"
-                            onChange={handleNumberChange}
-                            placeholder={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
-                        />
-                    </div>
-                    <div className="mt-4 grid gap-3 grid-cols-3">
-                        <ActionButton onClick={handleSend} disabled={message.length < 3}>
-                            <ChatIcon className="h-6 w-6" />
-                            <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND')}</p>
-                        </ActionButton>
+            <AppTitle title={contact.display}>
+                <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
+                    <ChevronLeftIcon className="h-5 w-5" />
+                    Fermer
+                </Button>
+            </AppTitle>
+            <AppContent className="text-white mt-10 mb-4">
+                <div className="flex justify-center">
+                    <div
+                        className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full"
+                        style={{ backgroundImage: `url(${contact.avatar})` }}
+                    />
+                </div>
+                <div>
+                    <TextareaField
+                        value={message}
+                        rows={14}
+                        variant="outlined"
+                        onChange={handleNumberChange}
+                        placeholder={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
+                    />
+                </div>
+                <div className="mt-4 grid gap-3 grid-cols-3">
+                    <ActionButton onClick={handleSend} disabled={message.length < 5}>
+                        <ChatIcon className="h-6 w-6" />
+                        <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND')}</p>
+                    </ActionButton>
 
-                        <ActionButton onClick={handleAnonymousChange}>
-                            {anonymous ? (
-                                <PhoneMissedCallIcon className="h-6 w-6" />
-                            ) : (
-                                <PhoneIncomingIcon className="h-6 w-6" />
-                            )}
-                            <p className="text-sm text-center">Rappel {anonymous ? 'interdit' : 'autorisé'}</p>
-                        </ActionButton>
+                    <ActionButton onClick={handleAnonymousChange}>
+                        {anonymous ? (
+                            <PhoneMissedCallIcon className="h-6 w-6" />
+                        ) : (
+                            <PhoneIncomingIcon className="h-6 w-6" />
+                        )}
+                        <p className="text-sm text-center">Rappel {anonymous ? 'interdit' : 'autorisé'}</p>
+                    </ActionButton>
 
-                        <ActionButton onClick={handleSendWithLocation} disabled={message.length < 3}>
-                            <LocationMarkerIcon className="h-6 w-6" />
-                            <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND_POSITION')}</p>
-                        </ActionButton>
-                    </div>
-                    {message.length < 3 && (
-                        <p className="text-sm text-center text-red-500 pt-2">Votre message est trop court</p>
-                    )}
-                </AppContent>
-            </AppWrapper>
+                    <ActionButton onClick={handleSendWithLocation} disabled={message.length < 5}>
+                        <LocationMarkerIcon className="h-6 w-6" />
+                        <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND_POSITION')}</p>
+                    </ActionButton>
+                </div>
+                {message.length < 5 && (
+                    <p className="text-sm text-center text-red-500 pt-2">Votre message est trop court</p>
+                )}
+            </AppContent>
         </Transition>
     );
 };
