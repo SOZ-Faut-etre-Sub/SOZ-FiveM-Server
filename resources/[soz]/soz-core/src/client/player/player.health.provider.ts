@@ -1,11 +1,10 @@
-import { On, Once, OnceStep, OnGameEvent } from '../../core/decorators/event';
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { GameEvent, ServerEvent } from '../../shared/event';
+import { ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { AnimationService } from '../animation/animation.service';
-import { GetPedList } from '../enumerate';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
 
@@ -65,7 +64,7 @@ export class PlayerHealthProvider {
         this.targetFactory.createForBoxZone(
             'do_free_weight',
             {
-                center: { x: -1203.27, y: -1573.62, z: 4.61 },
+                center: [-1203.27, -1573.62, 4.61],
                 length: 1.8,
                 minZ: 3.61,
                 maxZ: 6.61,
@@ -85,45 +84,10 @@ export class PlayerHealthProvider {
         );
     }
 
-    @Tick(1000)
-    async onTick(): Promise<void> {
-        //ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.06);
-        // for (const pedId of GetPedList()) {
-        //     console.log(pedId, GetPedAlertness(pedId));
-        // }
-    }
-
-    // @TODO Stress Explosion : use server event
-
-    // @TODO Stress Shot : use nearby pod shooting / alertness ?
-
-    // @TODO Someone has been it
-    @On('CEventShockingGunshotFired', false)
-    public CEventShockingGunshotFired(entities, eventEntity, args): void {
-        console.log('CEventShockingGunshotFired', entities, eventEntity, args);
-    }
-
-    @On('CEventGunShot', false)
-    public CEventGunShot(entities, eventEntity, args): void {
-        console.log('CEventGunShot', entities, eventEntity, args);
-    }
-
-    @On('CEventShockingDrivingOnPavement', false)
-    public CEventShockingDrivingOnPavement(entities, eventEntity, args): void {
-        console.log('CEventShockingDrivingOnPavement', entities, eventEntity, args);
-    }
-
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded(player: PlayerData): Promise<void> {
         SetPlayerMaxStamina(PlayerId(), player.metadata.maxstamina);
 
         // @TODO Set damage multiplier
-    }
-
-    @Tick(1000)
-    async debug(): Promise<void> {
-        // console.log(GetPlayerMaxStamina(PlayerId()));
-        // console.log(GetPlayerStamina(PlayerId()));
-        // console.log('yolo');
     }
 }
