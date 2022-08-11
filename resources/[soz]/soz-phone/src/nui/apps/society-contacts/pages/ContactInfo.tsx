@@ -1,11 +1,9 @@
-import { useQueryParams } from '@common/hooks/useQueryParams';
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { ChatIcon, LocationMarkerIcon, PhoneIncomingIcon, PhoneMissedCallIcon } from '@heroicons/react/solid';
 import { SocietiesDatabaseLimits } from '@typings/society';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
-import { AppWrapper } from '@ui/components/AppWrapper';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField } from '@ui/old_components/Input';
@@ -16,19 +14,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSociety } from '../../../hooks/app/useSociety';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
-interface ContactInfoRouteQuery {
-    addNumber?: string;
-    referral?: string;
-    name?: string;
-    avatar?: string;
-}
-
 const ContactsInfoPage: React.FC = () => {
     const { id } = useParams();
-    const { referral: referral } = useQueryParams<ContactInfoRouteQuery>({
-        referral: '/society-contacts',
-    });
-
     const navigate = useNavigate();
 
     const { getContact } = useSociety();
@@ -50,13 +37,17 @@ const ContactsInfoPage: React.FC = () => {
     };
 
     const handleSend = () => {
-        if (message.length > 5)
-            sendSocietyMessage({ number: contact.number, message, anonymous, position: false }, referral);
+        if (message.length > 5) {
+            sendSocietyMessage({ number: contact.number, message, anonymous, position: false });
+            navigate('/society-contacts', { replace: true });
+        }
     };
 
     const handleSendWithLocation = () => {
-        if (message.length > 5)
-            sendSocietyMessage({ number: contact.number, message, anonymous, position: true }, referral);
+        if (message.length > 5) {
+            sendSocietyMessage({ number: contact.number, message, anonymous, position: true });
+            navigate('/society-contacts', { replace: true });
+        }
     };
 
     return (
