@@ -123,6 +123,15 @@ const ContainerInventory = () => {
                         }
                     );
                 }
+            } else if (event.data.action === "closeInventory") {
+                closeNUI(
+                    () => {
+                        setDisplay(false);
+                    },
+                    {
+                        target: targetInventory.id,
+                    }
+                );
             }
         },
         [setDisplay, setPlayerInventory, setTargetInventory, setPlayerInventoryItems, setTargetInventoryItems]
