@@ -6,22 +6,22 @@ export interface ScriptMessage<T = any> {
 }
 
 export enum PhoneEvents {
-    OPEN_APP = 'npwd:openApp',
-    OPEN_PHONE = 'npwd:open',
-    CLOSE_PHONE = 'npwd:close',
-    UNLOAD_CHARACTER = 'npwd:unloadCharacter',
-    SET_AVAILABILITY = 'npwd:setAvailability',
-    SET_VISIBILITY = 'npwd:setVisibility',
-    ADD_SNACKBAR_ALERT = 'npwd:setSnackarAlert',
-    SET_NUMBER = 'npwd:setNumber',
-    SET_SOCIETY_NUMBER = 'npwd:setSocietyNumber',
-    SET_PHONE_READY = 'npwd:phoneReady',
-    SET_CONFIG = 'npwd:setPhoneConfig',
-    SET_TIME = 'npwd:setGameTime',
-    SEND_CREDENTIALS = 'npwd:sendCredentials',
-    FETCH_CREDENTIALS = 'npwd:getCredentials',
-    TOGGLE_KEYS = 'npwd:toggleAllControls',
-    SET_PLAYER_LOADED = 'npwd:setPlayerLoaded',
+    OPEN_APP = 'phone:openApp',
+    OPEN_PHONE = 'phone:open',
+    CLOSE_PHONE = 'phone:close',
+    UNLOAD_CHARACTER = 'phone:unloadCharacter',
+    SET_AVAILABILITY = 'phone:setAvailability',
+    SET_VISIBILITY = 'phone:setVisibility',
+    ADD_SNACKBAR_ALERT = 'phone:setSnackarAlert',
+    SET_NUMBER = 'phone:setNumber',
+    SET_SOCIETY_NUMBER = 'phone:setSocietyNumber',
+    SET_PHONE_READY = 'phone:phoneReady',
+    SET_CONFIG = 'phone:setPhoneConfig',
+    SET_TIME = 'phone:setGameTime',
+    SEND_CREDENTIALS = 'phone:sendCredentials',
+    FETCH_CREDENTIALS = 'phone:getCredentials',
+    TOGGLE_KEYS = 'phone:toggleAllControls',
+    SET_PLAYER_LOADED = 'phone:setPlayerLoaded',
 }
 
 // Used to standardize the server response

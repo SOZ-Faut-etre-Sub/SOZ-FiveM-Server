@@ -1,7 +1,7 @@
 import config from '../../config.json';
 import { PhotoEvents } from '../../typings/photo';
 import { Delay } from '../utils/fivem';
-import { sendCameraEvent } from '../utils/messages';
+import { sendCameraEvent, sendPhotoEvent } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 import { ClUtils } from './client';
@@ -18,7 +18,7 @@ function CellFrontCamActivate(activate: boolean) {
 
 RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async () => {
     await animationService.openCamera();
-    emit('npwd:disableControlActions', false);
+    emit('phone:client:disableControlActions', false);
 
     inCameraMode = true;
 
@@ -74,7 +74,7 @@ RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async () => {
 
     emit(PhotoEvents.EXIT_CAMERA);
 
-    emit('npwd:disableControlActions', global.isPhoneOpen);
+    emit('phone:client:disableControlActions', global.isPhoneOpen);
     await animationService.closeCamera();
 });
 
@@ -86,7 +86,7 @@ const handleTakePicture = async () => {
     DestroyMobilePhone();
     CellCamActivate(false, false);
     animationService.openPhone();
-    emit('npwd:disableControlActions', true);
+    emit('phone:client:disableControlActions', true);
     await Delay(200);
 
     return resp;
@@ -95,7 +95,7 @@ const handleTakePicture = async () => {
 const handleCameraExit = async () => {
     sendCameraEvent(PhotoEvents.CAMERA_EXITED);
     await animationService.closeCamera();
-    emit('npwd:disableControlActions', true);
+    emit('phone:client:disableControlActions', true);
     DestroyMobilePhone();
     CellCamActivate(false, false);
 };
@@ -129,3 +129,11 @@ const takePhoto = () =>
 
 RegisterNuiProxy(PhotoEvents.FETCH_PHOTOS);
 RegisterNuiProxy(PhotoEvents.DELETE_PHOTO);
+
+onNet(PhotoEvents.DELETE_PHOTO_SUCCESS, (result: number) => {
+    sendPhotoEvent(PhotoEvents.DELETE_PHOTO_SUCCESS, result);
+});
+
+onNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, (result: number) => {
+    sendPhotoEvent(PhotoEvents.UPLOAD_PHOTO_SUCCESS, result);
+});

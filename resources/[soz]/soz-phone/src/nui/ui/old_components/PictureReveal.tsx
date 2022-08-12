@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useSettings } from '../../apps/settings/hooks/useSettings';
+import { useConfig } from '../../hooks/usePhone';
 
 export const PictureReveal: React.FC<PropsWithChildren> = ({ children }) => {
-    const [settings] = useSettings();
+    const settings = useConfig();
     const [covered, setCovered] = useState<boolean>(false);
     const [, setReady] = useState<boolean>(false);
     const [t] = useTranslation();

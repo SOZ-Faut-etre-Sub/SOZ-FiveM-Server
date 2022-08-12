@@ -211,22 +211,23 @@ end)
 
 RegisterNetEvent('QBCore:ToggleDuty', function()
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local itt = Player.PlayerData.metadata["itt"]
+    local player = QBCore.Functions.GetPlayer(src)
+    local itt = player.PlayerData.metadata["itt"]
 
     if itt then
         TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en interdiction de travail temporaire', "info")
         return
     end
 
-    if Player.PlayerData.job.onduty then
-        Player.Functions.SetJobDuty(false)
+    if player.PlayerData.job.onduty then
+        player.Functions.SetJobDuty(false)
         TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
     else
-        Player.Functions.SetJobDuty(true)
+        player.Functions.SetJobDuty(true)
         TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en service', "info")
     end
-    TriggerClientEvent('QBCore:Client:SetDuty', src, Player.PlayerData.job.onduty)
+    Player(player.PlayerData.source).state.onDuty = player.PlayerData.job.onduty
+    TriggerClientEvent('QBCore:Client:SetDuty', src, player.PlayerData.job.onduty)
 end)
 
 -- Items

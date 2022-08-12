@@ -6,6 +6,7 @@ import { SettingsEvents } from '../../typings/settings';
 import { Delay } from '../utils/fivem';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
+import { callService } from './calls/cl_calls.controller';
 import { RegisterNuiCB } from './cl_utils';
 import { ClUtils } from './client';
 import { removePhoneProp } from './functions';
@@ -17,6 +18,12 @@ global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
 
 const exps = global.exports;
+
+/* Functions */
+
+function cityIsInBlackOut(): boolean {
+    return GlobalState.blackout || GlobalState.blackout_level >= 3;
+}
 
 /* * * * * * * * * * * * *
  *
@@ -69,7 +76,7 @@ export const showPhone = async (): Promise<void> => {
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
     SetNuiFocus(true, true);
     SetNuiFocusKeepInput(true);
-    emit('npwd:disableControlActions', true);
+    emit('phone:client:disableControlActions', true);
 };
 
 export const hidePhone = async (): Promise<void> => {
@@ -78,7 +85,7 @@ export const hidePhone = async (): Promise<void> => {
     await animationService.closePhone();
     SetNuiFocus(false, false);
     SetNuiFocusKeepInput(false);
-    emit('npwd:disableControlActions', false);
+    emit('phone:client:disableControlActions', false);
 };
 
 /* * * * * * * * * * * * *
@@ -89,18 +96,11 @@ export const hidePhone = async (): Promise<void> => {
 RegisterCommand(
     config.general.toggleCommand,
     async () => {
-        //-- Toggles Phone
-        // Check to see if the phone is marked as disabled
-        if (!global.isPhoneDisabled) await togglePhone();
-    },
-    false
-);
+        if (global.isPhoneDisabled) return;
+        if (cityIsInBlackOut()) return;
+        if (IsPedRagdoll(PlayerPedId())) return;
 
-RegisterCommand(
-    'phone:restart',
-    async () => {
-        await hidePhone();
-        sendMessage('PHONE', 'phoneRestart', {});
+        await togglePhone();
     },
     false
 );
@@ -156,6 +156,7 @@ on('onResourceStop', (resource: string) => {
 });
 
 onNet('QBCore:Client:OnPlayerLoaded', async () => {
+    sendMessage('PHONE', 'phoneRestart', {});
     const canAccess = await checkExportCanOpen();
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
 });
@@ -188,11 +189,14 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(PhoneEvents.TOGGLE_KEYS, async ({ keep
 });
 
 setTick(async () => {
-    const isSwimming = IsPedSwimming(PlayerPedId());
+    const ped = PlayerPedId();
+
+    const isSwimming = IsPedSwimming(ped);
     if (isSwimming) {
         global.isPhoneDisabled = true;
         global.isPhoneDrowned = true;
         if (global.isPhoneOpen) await hidePhone();
+        callService.handleEndCall();
         sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, false);
     } else if (!isSwimming && global.isPhoneDrowned) {
         global.isPhoneDisabled = false;
@@ -202,6 +206,16 @@ setTick(async () => {
 
     if (global.isPhoneOpen && exps['progressbar'].IsDoingAction()) {
         await hidePhone();
+        callService.handleEndCall();
+    }
+
+    if (global.isPhoneOpen && cityIsInBlackOut()) {
+        await hidePhone();
+        callService.handleEndCall();
+    }
+    if (global.isPhoneOpen && IsPedRagdoll(ped)) {
+        await hidePhone();
+        callService.handleEndCall();
     }
 
     await Delay(1000);

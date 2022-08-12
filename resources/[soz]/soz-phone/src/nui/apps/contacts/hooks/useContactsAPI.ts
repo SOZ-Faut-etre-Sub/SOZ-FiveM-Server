@@ -6,12 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { fetchNui } from '../../../utils/fetchNui';
-import { useContactActions } from './useContactActions';
 
 export const useContactsAPI = () => {
     const { addAlert } = useSnackbar();
     const [t] = useTranslation();
-    const { addLocalContact, updateLocalContact, deleteLocalContact } = useContactActions();
     const navigate = useNavigate();
 
     const addNewContact = useCallback(
@@ -28,8 +26,6 @@ export const useContactsAPI = () => {
                     });
                 }
 
-                // Sanity checks maybe?
-                addLocalContact(serverResp.data);
                 addAlert({
                     message: t('CONTACTS.FEEDBACK.ADD_SUCCESS'),
                     type: 'success',
@@ -37,7 +33,7 @@ export const useContactsAPI = () => {
                 navigate(referral, { replace: true });
             });
         },
-        [addAlert, addLocalContact, history, t]
+        [addAlert, navigate, t]
     );
 
     const updateContact = useCallback(
@@ -55,13 +51,6 @@ export const useContactsAPI = () => {
                     });
                 }
 
-                updateLocalContact({
-                    id,
-                    display,
-                    number,
-                    avatar,
-                });
-
                 addAlert({
                     message: t('CONTACTS.FEEDBACK.UPDATE_SUCCESS'),
                     type: 'success',
@@ -70,7 +59,7 @@ export const useContactsAPI = () => {
                 navigate(-1);
             });
         },
-        [addAlert, history, t, updateLocalContact]
+        [addAlert, navigate, t]
     );
 
     const deleteContact = useCallback(
@@ -84,15 +73,13 @@ export const useContactsAPI = () => {
                 }
                 navigate(-1);
 
-                deleteLocalContact(id);
-
                 addAlert({
                     message: t('CONTACTS.FEEDBACK.DELETE_SUCCESS'),
                     type: 'success',
                 });
             });
         },
-        [addAlert, deleteLocalContact, history, t]
+        [addAlert, navigate, t]
     );
 
     return { addNewContact, updateContact, deleteContact };

@@ -1,4 +1,4 @@
-import { Contact, ContactDeleteDTO, PreDBContact } from '../../../typings/contact';
+import { Contact, ContactDeleteDTO, ContactEvents, PreDBContact } from '../../../typings/contact';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import ContactsDB, { _ContactsDB } from './contacts.db';
@@ -22,6 +22,9 @@ class _ContactService {
         try {
             reqObj.data.number = this.formatPhoneNumber(reqObj.data.number);
             await this.contactsDB.updateContact(reqObj.data, identifier);
+
+            emitNet(ContactEvents.UPDATE_CONTACT_SUCCESS, reqObj.source, reqObj.data);
+
             resp({ status: 'ok' });
         } catch (e) {
             contactsLogger.error(`Error in handleUpdateContact (${identifier}), ${e.toString()}`);
@@ -32,6 +35,9 @@ class _ContactService {
         const identifier = PlayerService.getIdentifier(reqObj.source);
         try {
             await this.contactsDB.deleteContact(reqObj.data.id, identifier);
+
+            emitNet(ContactEvents.DELETE_CONTACT_SUCCESS, reqObj.source, reqObj.data.id);
+
             resp({ status: 'ok' });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
@@ -44,12 +50,15 @@ class _ContactService {
             reqObj.data.number = this.formatPhoneNumber(reqObj.data.number);
             const contact = await this.contactsDB.addContact(identifier, reqObj.data);
 
+            emitNet(ContactEvents.ADD_CONTACT_SUCCESS, reqObj.source, contact);
+
             resp({ status: 'ok', data: contact });
         } catch (e) {
             contactsLogger.error(`Error in handleAddContact, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
+
     async handleFetchContacts(reqObj: PromiseRequest, resp: PromiseEventResp<Contact[]>): Promise<void> {
         const identifier = PlayerService.getIdentifier(reqObj.source);
         try {

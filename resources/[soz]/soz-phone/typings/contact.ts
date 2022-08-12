@@ -26,12 +26,13 @@ export enum ContactsDatabaseLimits {
 }
 
 export enum ContactEvents {
-    GET_CONTACTS = 'npwd:getContacts',
-    ADD_CONTACT = 'npwd:addContacts',
-    UPDATE_CONTACT = 'npwd:updateContact',
-    DELETE_CONTACT = 'npwd:deleteContact',
-    // Used to fill in information through an export event
-    ADD_CONTACT_EXPORT = 'npwd:addContactExport',
+    GET_CONTACTS = 'phone:contact:get',
+    ADD_CONTACT = 'phone:contact:add',
+    ADD_CONTACT_SUCCESS = 'phone:contact:addSuccess',
+    UPDATE_CONTACT = 'phone:contact:update',
+    UPDATE_CONTACT_SUCCESS = 'phone:contact:updateSuccess',
+    DELETE_CONTACT = 'phone:contact:delete',
+    DELETE_CONTACT_SUCCESS = 'phone:contact:deleteSuccess',
 }
 
 export interface AddContactExportData {

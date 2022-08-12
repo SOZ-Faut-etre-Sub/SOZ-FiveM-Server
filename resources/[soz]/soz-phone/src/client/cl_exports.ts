@@ -1,7 +1,5 @@
-import { AddNoteExportData, NotesEvents } from '../../typings/app/notes';
-import { AddContactExportData, ContactEvents } from '../../typings/contact';
 import { PhoneEvents } from '../../typings/phone';
-import { sendContactsEvent, sendMessage, sendNotesEvent } from '../utils/messages';
+import { sendMessage } from '../utils/messages';
 import { initializeCallHandler } from './calls/cl_calls.controller';
 import { hidePhone, showPhone } from './cl_main';
 import { verifyExportArgType } from './cl_utils';
@@ -52,32 +50,4 @@ exps('startPhoneCall', (number: string) => {
     verifyExportArgType('startPhoneCall', number, ['string']);
 
     initializeCallHandler({ receiverNumber: number });
-});
-
-// Will automatically open the contacts app start the new contact process
-// filling in all of the fields with passed data. If this number already exists,
-// it will edit it.
-//
-// Data Struct
-// interface AddContactExportData {
-//   name?: string;
-//   number: string;
-// }
-exps('fillNewContact', (contactData: AddContactExportData) => {
-    verifyExportArgType('fillNewContact', contactData, ['object']);
-    sendContactsEvent(ContactEvents.ADD_CONTACT_EXPORT, contactData);
-});
-
-// Will automatically open the notes app and start the new note process
-// filling in all of the fields with passed data. If this number already exists,
-// it will edit it.
-//
-// Data Struct
-// interface AddNoteExportData {
-//   title?: string;
-//   content?: string;
-// }
-exps('fillNewNote', (noteData: AddNoteExportData) => {
-    verifyExportArgType('fillNewNOte', noteData, ['object']);
-    sendNotesEvent(NotesEvents.ADD_NOTE_EXPORT, noteData);
 });

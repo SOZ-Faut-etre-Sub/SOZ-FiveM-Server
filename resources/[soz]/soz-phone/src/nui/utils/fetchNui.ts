@@ -28,7 +28,7 @@ export async function fetchNui<T = any>(eventName: string, data?: any, mockResp?
         return mockResp;
     }
 
-    const resourceName = (window as any).GetParentResourceName ? (window as any).GetParentResourceName() : 'npwd';
+    const resourceName = (window as any).GetParentResourceName ? (window as any).GetParentResourceName() : 'soz-phone';
 
     const resp = await fetch(`https://${resourceName}/${eventName}`, options);
 

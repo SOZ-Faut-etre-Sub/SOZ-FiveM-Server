@@ -1,0 +1,39 @@
+import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
+import { ActiveCall, CallEvents } from '@typings/call';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useCallNotifications } from '../os/call/hooks/useCallNotifications';
+import { RootState, store } from '../store';
+
+export const useCallService = () => {
+    const modal = useSelector((state: RootState) => state.phone.callModal);
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+    const { setNotification, clearNotification } = useCallNotifications();
+
+    const [modalHasBeenOpenedThisCall, setModalOpened] = useState<boolean>(false);
+
+    useEffect(() => {
+        setModalOpened(!!modal);
+    }, [modal]);
+
+    useEffect(() => {
+        if (!modal && pathname === '/call') {
+            navigate('/', { replace: true });
+        }
+        if (modal && !modalHasBeenOpenedThisCall && pathname !== '/call') {
+            navigate('/call');
+        }
+    }, [navigate, modal, pathname, modalHasBeenOpenedThisCall]);
+
+    useNuiEvent<ActiveCall | null>('CALL', CallEvents.SET_CALLER, callData => {
+        store.dispatch.simCard.setCall(callData);
+
+        if (!callData) return clearNotification();
+        setNotification(callData);
+    });
+    useNuiEvent('CALL', CallEvents.SET_CALL_MODAL, store.dispatch.phone.setCallModal);
+};

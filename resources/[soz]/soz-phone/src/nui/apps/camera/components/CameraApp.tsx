@@ -1,7 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronUpIcon, RefreshIcon } from '@heroicons/react/outline';
 import { ColorSwatchIcon, CubeIcon, EmojiHappyIcon, LightningBoltIcon } from '@heroicons/react/solid';
-import { usePhoneVisibility } from '@os/phone/hooks/usePhoneVisibility';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { GalleryPhoto, PhotoEvents } from '@typings/photo';
@@ -13,9 +12,9 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { useVisibility } from '../../../hooks/usePhone';
+import { usePhoto } from '../../../hooks/usePhoto';
 import { useBackground } from '../../../ui/hooks/useBackground';
-import { usePhotosValue } from '../../photo/hooks/state';
-import { usePhotoActions } from '../../photo/hooks/usePhotoActions';
 import useInterval from '../hooks/useInterval';
 import { ScreenshotUI } from '../utils/screenshot';
 
@@ -30,10 +29,12 @@ const CameraApp: React.FC = () => {
     const backgroundClass = useBackground();
     const navigate = useNavigate();
     const [t] = useTranslation();
-    const photos = usePhotosValue();
+
+    const { getPhotos } = usePhoto();
+    const photos = getPhotos();
+
     const { addAlert } = useSnackbar();
-    const { takePhoto } = usePhotoActions();
-    const { visibility } = usePhoneVisibility();
+    const { visibility } = useVisibility();
     const [image, setImage] = useState('https://placekitten.com/960/540');
 
     const handleTakePhoto = () => {
@@ -44,8 +45,6 @@ const CameraApp: React.FC = () => {
                     type: 'error',
                 });
             }
-
-            takePhoto(serverResp.data);
         });
     };
 

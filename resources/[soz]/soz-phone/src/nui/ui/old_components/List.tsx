@@ -1,17 +1,24 @@
-import React, { useContext } from 'react';
+import cn from 'classnames';
+import React from 'react';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 
 export const List = ({ ...props }) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
         <div
-            className={`mx-2 my-4 ${
-                theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-white'
-            } shadow overflow-y-auto rounded-[.8rem]`}
+            className={cn('mx-2 my-4 shadow overflow-y-auto rounded-[.8rem]', {
+                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                'bg-white': config.theme.value === 'light',
+            })}
         >
-            <ul className={`divide-y ${theme === 'dark' ? 'divide-[#3D3D3F]' : 'divide-[#ECECED]'}`}>
+            <ul
+                className={cn('divide-y', {
+                    'divide-[#3D3D3F]': config.theme.value === 'dark',
+                    'divide-[#ECECED]': config.theme.value === 'light',
+                })}
+            >
                 {props.children}
             </ul>
         </div>

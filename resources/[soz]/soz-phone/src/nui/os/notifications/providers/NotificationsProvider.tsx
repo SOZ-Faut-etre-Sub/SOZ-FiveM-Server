@@ -1,10 +1,10 @@
-import { phoneState } from '@os/phone/hooks/state';
 import { useSoundProvider } from '@os/sound/hooks/useSoundProvider';
 import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useSelector } from 'react-redux';
 
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
+import { useAvailability, useVisibility } from '../../../hooks/usePhone';
+import { RootState } from '../../../store';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
 export interface INotification {
@@ -13,7 +13,7 @@ export interface INotification {
     title: string;
     content?: React.ReactNode;
     icon?: JSX.Element;
-    notificationIcon?: JSX.Element;
+    notificationIcon?: React.FC<any>;
     sound?: boolean;
     cantClose?: boolean;
     keepWhenPhoneClosed?: boolean;
@@ -29,7 +29,7 @@ type INotificationAlert = INotification & {
 
 export interface INotificationIcon {
     key: string;
-    icon: JSX.Element;
+    icon: React.FC<any>;
     badge: number;
 }
 
@@ -51,10 +51,10 @@ export const NotificationsContext = createContext<{
 }>(null);
 
 export function NotificationsProvider({ children }) {
-    const isPhoneOpen = useRecoilValue(phoneState.visibility);
-    const isPhoneAvailable = useRecoilValue(phoneState.availability);
+    const { visibility: isPhoneOpen } = useVisibility();
+    const isPhoneAvailable = useAvailability();
 
-    const [settings] = useSettings();
+    const settings = useSelector((state: RootState) => state.phone.config);
 
     const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
 
@@ -153,6 +153,10 @@ export function NotificationsProvider({ children }) {
     );
 
     const addNotificationAlert = (n: INotification, cb: (n: INotification) => void) => {
+        if (alerts.find(a => a[0].id === n.id)) {
+            return;
+        }
+
         if (n.sound) {
             const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
             mount(sound, volume, false).then(({ url }) => setAlerts(curr => [...curr, [n, cb, url]]));

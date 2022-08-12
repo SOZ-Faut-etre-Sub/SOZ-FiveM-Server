@@ -10,7 +10,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 
-import { RecoilRootManager } from './lib/RecoilRootManager';
 import { NotificationsProvider } from './os/notifications/providers/NotificationsProvider';
 import { SoundProvider } from './os/sound/providers/SoundProvider';
 import Phone from './Phone';
@@ -18,22 +17,18 @@ import { store } from './store';
 
 dayjs.extend(relativeTime);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <HashRouter>
-                <NuiProvider resource="npwd">
-                    <RecoilRootManager>
-                        <SoundProvider>
-                            <NotificationsProvider>
-                                <SnackbarProvider>
-                                    <Phone />
-                                </SnackbarProvider>
-                            </NotificationsProvider>
-                        </SoundProvider>
-                    </RecoilRootManager>
-                </NuiProvider>
-            </HashRouter>
-        </Provider>
-    </React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <Provider store={store}>
+        <NuiProvider resource="soz-phone">
+            <SoundProvider>
+                <NotificationsProvider>
+                    <SnackbarProvider>
+                        <HashRouter>
+                            <Phone />
+                        </HashRouter>
+                    </SnackbarProvider>
+                </NotificationsProvider>
+            </SoundProvider>
+        </NuiProvider>
+    </Provider>
 );

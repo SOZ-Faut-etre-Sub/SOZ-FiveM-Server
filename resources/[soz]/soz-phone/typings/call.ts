@@ -5,6 +5,7 @@ export interface ActiveCall {
     receiver: string;
     channelId?: number;
     isUnavailable?: boolean;
+    startedAt?: number;
 }
 
 export interface InitializeCallDTO {
@@ -61,16 +62,18 @@ export enum CallRejectReasons {
 }
 
 export enum CallEvents {
-    INITIALIZE_CALL = 'npwd:beginCall',
-    START_CALL = 'npwd:startCall',
-    ACCEPT_CALL = 'npwd:acceptCall',
-    END_CALL = 'npwd:endCall',
-    WAS_ENDED = 'npwd:callEnded',
-    WAS_ACCEPTED = 'npwd:callAccepted',
-    REJECTED = 'npwd:rejectCall',
-    WAS_REJECTED = 'npwd:callRejected',
-    FETCH_CALLS = 'npwd:fetchCalls',
-    SET_CALLER = 'npwd:setCaller',
-    SET_CALL_MODAL = 'npwd:callModal',
-    SEND_ALERT = 'npwd:callSetAlert',
+    INITIALIZE_CALL = 'phone:beginCall',
+    START_CALL = 'phone:startCall',
+    ACCEPT_CALL = 'phone:acceptCall',
+    END_CALL = 'phone:endCall',
+    WAS_ENDED = 'phone:callEnded',
+    WAS_ACCEPTED = 'phone:callAccepted',
+    REJECTED = 'phone:rejectCall',
+    WAS_REJECTED = 'phone:callRejected',
+    SET_CALLER = 'phone:setCaller',
+    SET_CALL_MODAL = 'phone:callModal',
+    SEND_ALERT = 'phone:callSetAlert',
+    FETCH_CALLS = 'phone:dialer:fetchCalls',
+    ADD_CALL = 'phone:dialer:addCall',
+    UPDATE_CALL = 'phone:dialer:updateCall',
 }

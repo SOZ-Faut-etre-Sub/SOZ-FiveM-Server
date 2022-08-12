@@ -1,7 +1,8 @@
 import { SearchIcon } from '@heroicons/react/outline';
-import React, { useContext } from 'react';
+import cn from 'classnames';
+import React from 'react';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 import { TextField } from './Input';
 
 interface SearchFieldProps {
@@ -17,17 +18,25 @@ const DEFAULT_PROPS = {
 };
 
 export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange, placeholder } = DEFAULT_PROPS) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
-        <div className="rounded-lg mx-3">
-            <div className={`${theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-gray-300'} flex items-center rounded-lg`}>
+        <div className="rounded-lg mx-3 py-2">
+            <div
+                className={cn('flex items-center rounded-lg', {
+                    'bg-[#1C1C1E]': config.theme.value === 'dark',
+                    'bg-gray-300': config.theme.value === 'light',
+                })}
+            >
                 <SearchIcon className="text-gray-500 ml-2 w-5 h-5" />
                 <TextField
                     value={value}
                     onChange={onChange}
                     placeholder={placeholder}
-                    className={theme === 'dark' ? 'bg-[#1C1C1E]' : 'bg-gray-300'}
+                    className={cn({
+                        'bg-[#1C1C1E]': config.theme.value === 'dark',
+                        'bg-gray-300': config.theme.value === 'light',
+                    })}
                 />
             </div>
         </div>

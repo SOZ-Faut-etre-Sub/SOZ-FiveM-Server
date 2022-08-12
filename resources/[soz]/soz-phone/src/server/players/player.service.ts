@@ -4,7 +4,6 @@ import { PhoneEvents } from '../../../typings/phone';
 import { QBJob } from '../../../typings/qb';
 import { SocietyNumberList } from '../../../typings/society';
 import { Delay } from '../../utils/fivem';
-import MarketplaceService from '../marketplace/marketplace.service';
 import { Player } from './player.class';
 import playerDB, { PlayerRepo } from './player.db';
 import { PlayerAddData } from './player.interfaces';
@@ -117,7 +116,7 @@ class _PlayerService {
         this.addPlayerToMaps(player.PlayerData.source, newPlayer);
         await this.handlePlayerJobUpdate(player.PlayerData.source, player.PlayerData.job);
 
-        playerLogger.info('NPWD Player Loaded!');
+        playerLogger.info('Player Loaded!');
         playerLogger.debug(newPlayer);
 
         // This is a stupid hack for development reloading
@@ -175,12 +174,6 @@ class _PlayerService {
         });
     }
 
-    /**
-     * We call this function whenever we receive a `npwd:newPlayer`
-     * event while multichar is enabled.
-     * @param NewPlayerDTO - A DTO with all the new info required to instantiate a new player
-     *
-     */
     async handleNewPlayerEvent({ source: src, identifier, phoneNumber, firstname, lastname }: PlayerAddData) {
         const player = await this.createNewPlayer({
             src,
@@ -193,7 +186,7 @@ class _PlayerService {
 
         this.addPlayerToMaps(src, player);
 
-        playerLogger.info(`New NPWD Player added through event (${src}) (${identifier})`);
+        playerLogger.info(`New Player added through event (${src}) (${identifier})`);
         playerLogger.debug(player);
 
         emitNet(PhoneEvents.SET_PLAYER_LOADED, src, true);
@@ -241,27 +234,13 @@ class _PlayerService {
     }
 
     /**
-     * Clear all data from the database we don't want to stored after the player as disconnected.
-     */
-    async clearPlayerData(src: number) {
-        const identifier = this.getIdentifier(src);
-        try {
-            await MarketplaceService.handleDeleteListingsOnDrop(identifier);
-        } catch (e) {
-            playerLogger.error(`Failed to clear player data when dropped, Error: ${e.toString()}`);
-        }
-    }
-
-    /**
      * Unload event handler
      * @param src - Source of player being unloaded
      **/
     async handleUnloadPlayerEvent(src: number) {
-        await this.clearPlayerData(src);
-
         this.deletePlayerFromMaps(src);
         emitNet(PhoneEvents.SET_PLAYER_LOADED, src, false);
-        playerLogger.info(`Unloaded NPWD Player, source: (${src})`);
+        playerLogger.info(`Unloaded Player, source: (${src})`);
     }
 }
 
