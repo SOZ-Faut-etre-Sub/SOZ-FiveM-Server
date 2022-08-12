@@ -173,7 +173,9 @@ class _SocietyService {
 
             const societyMessage = await this.contactsDB.getMessage(reqObj.data.id);
             if (societyMessage[0]) {
-                const player = await PlayerService.getPlayersFromNumber(societyMessage[0].source_phone);
+                const player = await PlayerService.getPlayersFromNumber(
+                    societyMessage[0].source_phone.replace('#', '')
+                );
                 if (player) {
                     if (reqObj.data.take && !reqObj.data.done) {
                         emitNet(
