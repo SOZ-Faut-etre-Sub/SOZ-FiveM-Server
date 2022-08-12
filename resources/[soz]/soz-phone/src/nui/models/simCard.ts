@@ -32,6 +32,12 @@ export const simCard = createModel<RootModel>()({
         SET_CALL_HISTORY(state, payload: CallHistoryItem[]) {
             return { ...state, callHistory: payload };
         },
+        ADD_CALL_HISTORY(state, payload: CallHistoryItem) {
+            return { ...state, callHistory: [payload, ...state.callHistory] };
+        },
+        UPDATE_CALL_HISTORY(state, payload: CallHistoryItem) {
+            return { ...state, callHistory: state.callHistory.map(item => (item.id === payload.id ? payload : item)) };
+        },
         SET_CONTACT(state, payload: Contact[]) {
             return { ...state, contacts: payload };
         },
@@ -70,6 +76,12 @@ export const simCard = createModel<RootModel>()({
         },
         async setCallHistory(payload: CallHistoryItem[]) {
             dispatch.simCard.SET_CALL_HISTORY(payload);
+        },
+        async appendCallHistory(payload: CallHistoryItem) {
+            dispatch.simCard.ADD_CALL_HISTORY(payload);
+        },
+        async updateCallHistory(payload: CallHistoryItem) {
+            dispatch.simCard.UPDATE_CALL_HISTORY(payload);
         },
         async setContacts(payload: Contact[]) {
             dispatch.simCard.SET_CONTACT(payload);

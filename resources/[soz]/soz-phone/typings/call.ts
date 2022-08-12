@@ -70,8 +70,10 @@ export enum CallEvents {
     WAS_ACCEPTED = 'phone:callAccepted',
     REJECTED = 'phone:rejectCall',
     WAS_REJECTED = 'phone:callRejected',
-    FETCH_CALLS = 'phone:fetchCalls',
     SET_CALLER = 'phone:setCaller',
     SET_CALL_MODAL = 'phone:callModal',
     SEND_ALERT = 'phone:callSetAlert',
+    FETCH_CALLS = 'phone:dialer:fetchCalls',
+    ADD_CALL = 'phone:dialer:addCall',
+    UPDATE_CALL = 'phone:dialer:updateCall',
 }

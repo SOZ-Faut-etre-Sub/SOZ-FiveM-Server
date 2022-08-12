@@ -103,7 +103,7 @@ export const DialerHistory: React.FC = () => {
                                             )}
                                         </div>
                                         <div className="flex flex-1 min-w-0 cursor-pointer">
-                                            {call.is_accepted ? (
+                                            {!call.is_accepted ? (
                                                 <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
                                             ) : call.transmitter === myNumber ? (
                                                 <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />

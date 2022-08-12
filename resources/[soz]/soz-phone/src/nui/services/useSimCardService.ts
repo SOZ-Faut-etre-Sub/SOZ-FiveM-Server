@@ -25,7 +25,6 @@ export const useSimCardService = () => {
 
     useNuiEvent('DIALER', CallEvents.SEND_ALERT, handleAddAlert);
 
-    // Reworked
     useEffect(() => {
         fetchNui<ServerPromiseResp<CallHistoryItem[]>>(
             CallEvents.FETCH_CALLS,
@@ -36,7 +35,8 @@ export const useSimCardService = () => {
         });
     }, []);
 
-    // useNuiEvent('DIALER', CallEvents.FETCH_CALLS, store.dispatch.appTwitchNews.appendNews);
+    useNuiEvent('DIALER', CallEvents.ADD_CALL, store.dispatch.simCard.appendCallHistory);
+    useNuiEvent('DIALER', CallEvents.UPDATE_CALL, store.dispatch.simCard.updateCallHistory);
 
     useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, store.dispatch.simCard.SET_NUMBER);
     useNuiEvent('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, store.dispatch.simCard.SET_SOCIETY_NUMBER);
