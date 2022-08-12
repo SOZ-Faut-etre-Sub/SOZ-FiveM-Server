@@ -6,6 +6,7 @@ import { SettingsEvents } from '../../typings/settings';
 import { Delay } from '../utils/fivem';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
+import { callService } from './calls/cl_calls.controller';
 import { RegisterNuiCB } from './cl_utils';
 import { ClUtils } from './client';
 import { removePhoneProp } from './functions';
@@ -195,6 +196,7 @@ setTick(async () => {
         global.isPhoneDisabled = true;
         global.isPhoneDrowned = true;
         if (global.isPhoneOpen) await hidePhone();
+        callService.handleEndCall();
         sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, false);
     } else if (!isSwimming && global.isPhoneDrowned) {
         global.isPhoneDisabled = false;
@@ -204,13 +206,16 @@ setTick(async () => {
 
     if (global.isPhoneOpen && exps['progressbar'].IsDoingAction()) {
         await hidePhone();
+        callService.handleEndCall();
     }
 
     if (global.isPhoneOpen && cityIsInBlackOut()) {
         await hidePhone();
+        callService.handleEndCall();
     }
     if (global.isPhoneOpen && IsPedRagdoll(ped)) {
         await hidePhone();
+        callService.handleEndCall();
     }
 
     await Delay(1000);
