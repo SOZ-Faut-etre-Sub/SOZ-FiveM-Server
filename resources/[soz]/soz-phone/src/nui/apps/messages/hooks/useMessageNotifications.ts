@@ -20,7 +20,7 @@ export const useMessageNotifications = () => {
             id,
             sound: true,
             title: group?.display || group?.phoneNumber || conversationName,
-            onClick: () => navigate(`/messages/conversations/${conversationId}`),
+            onClick: () => navigate(`/messages/${conversationId}`),
             content: message,
             Icon,
             notificationIcon: Icon,
