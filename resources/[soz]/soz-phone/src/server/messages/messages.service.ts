@@ -45,17 +45,6 @@ class _MessagesService {
                 return resp({ status: 'error' });
             }
 
-            if (result.doesExist) {
-                return resp({
-                    status: 'silence',
-                    data: {
-                        conversation_id: result.conversationId,
-                        phoneNumber: result.phoneNumber,
-                        updatedAt: result.updatedAt,
-                    },
-                });
-            }
-
             try {
                 const participant = PlayerService.getPlayerFromIdentifier(result.participant);
 
@@ -63,6 +52,7 @@ class _MessagesService {
                     emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participant.source, {
                         conversation_id: result.conversationId,
                         phoneNumber: sourcePlayer.getPhoneNumber(),
+                        updatedAt: result.updatedAt,
                     });
                 }
             } catch (e) {
@@ -88,14 +78,10 @@ class _MessagesService {
         }
     }
 
-    async handleFetchMessages(
-        reqObj: PromiseRequest<{ conversationId: string; page: number }>,
-        resp: PromiseEventResp<Message[]>
-    ) {
+    async handleFetchMessages(reqObj: PromiseRequest<void>, resp: PromiseEventResp<Message[]>) {
         try {
-            const messages = await this.messagesDB.getMessages(reqObj.data.conversationId, reqObj.data.page);
-
-            messages.sort((a, b) => a.id - b.id);
+            const phoneNumber = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
+            const messages = await this.messagesDB.getMessages(phoneNumber);
 
             resp({ status: 'ok', data: messages });
         } catch (e) {
@@ -144,9 +130,20 @@ class _MessagesService {
                             conversationId: messageData.conversationId,
                             message: messageData.message,
                         });
+                        emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participantPlayer.source, {
+                            conversation_id: messageData.conversationId,
+                            phoneNumber: authorPhoneNumber,
+                        });
                     }
                 }
             }
+
+            emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, reqObj.source, {
+                ...messageData,
+                conversation_id: messageData.conversationId,
+                author: authorPhoneNumber,
+                id: messageId,
+            });
         } catch (e) {
             resp({ status: 'error', errorMsg: e.toString() });
             messagesLogger.error(`Failed to send message, ${e.toString()}`, {

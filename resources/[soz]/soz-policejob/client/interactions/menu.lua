@@ -18,7 +18,7 @@ local function RedAlertEntity(menu, societyNumber)
             local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
             if not (IsWarningMessageActive() and tonumber(GetWarningMessageTitleHash()) == 1246147334) then
                 TriggerEvent("police:client:RedCall")
-                TriggerServerEvent("npwd:sendSocietyMessage", "npwd:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+                TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
                     anonymous = false,
                     number = societyNumber,
                     message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),

@@ -2,16 +2,28 @@ import { INotificationIcon } from '@os/notifications/providers/NotificationsProv
 import React from 'react';
 
 import { BankApp } from '../../../apps/bank';
+import BankIcon from '../../../apps/bank/icon';
 import CameraApp from '../../../apps/camera/components/CameraApp';
-import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
-import { DialerApp } from '../../../apps/dialer/components/DialerApp';
-import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
+import CameraIcon from '../../../apps/camera/icon';
+import { ContactsApp } from '../../../apps/contacts';
+import ContactIcon from '../../../apps/contacts/icon';
+import { DialerApp } from '../../../apps/dialer';
+import DialerIcon from '../../../apps/dialer/icon';
+import { MessagesApp } from '../../../apps/messages';
+import MessagesIcon from '../../../apps/messages/icon';
 import { NotesApp } from '../../../apps/notes';
-import PhotoApp from '../../../apps/photo/components/PhotoApp';
-import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
-import { SocietyContactsApp } from '../../../apps/society-contacts/components/SocietyContactsApp';
-import { SocietyMessagesApp } from '../../../apps/society-messages/components/SocietyMessagesApp';
-import { TwitchNewsApp } from '../../../apps/twitch-news/components/TwitchNewsApp';
+import NotesIcon from '../../../apps/notes/icon';
+import PhotoApp from '../../../apps/photo';
+import PhotoIcon from '../../../apps/photo/icon';
+import { SettingsApp } from '../../../apps/settings';
+import SettingsIcon from '../../../apps/settings/icon';
+import { SocietyContactsApp } from '../../../apps/society-contacts';
+import SocietyContactIcon from '../../../apps/society-contacts/icon';
+import { SocietyMessagesApp } from '../../../apps/society-messages';
+import SocietyMessagesIcon from '../../../apps/society-messages/icon';
+import { TwitchNewsApp } from '../../../apps/twitch-news';
+import TwitchNewsIcon from '../../../apps/twitch-news/icon';
+import ZutomIcon from '../../../apps/zutom/icon';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 
 export interface IAppConfig {
@@ -20,13 +32,11 @@ export interface IAppConfig {
     path: string;
     home?: boolean;
     component: JSX.Element;
+    icon: React.FC<any>;
 }
 
 export type IApp = IAppConfig & {
     notification: INotificationIcon;
-    icon: JSX.Element;
-    notificationIcon: JSX.Element;
-    NotificationIcon: React.FC<any>;
 };
 
 export const APPS: IAppConfig[] = [
@@ -36,6 +46,7 @@ export const APPS: IAppConfig[] = [
         path: '/phone',
         home: true,
         component: <DialerApp />,
+        icon: DialerIcon,
     },
     {
         id: 'messages',
@@ -43,6 +54,7 @@ export const APPS: IAppConfig[] = [
         path: '/messages',
         home: true,
         component: <MessagesApp />,
+        icon: MessagesIcon,
     },
     {
         id: 'contacts',
@@ -50,68 +62,70 @@ export const APPS: IAppConfig[] = [
         path: '/contacts',
         home: true,
         component: <ContactsApp />,
+        icon: ContactIcon,
     },
     {
         id: 'bank',
         nameLocale: 'APPS_BANK',
         path: '/bank',
         component: <BankApp />,
+        icon: BankIcon,
     },
     {
         id: 'notes',
         nameLocale: 'APPS_NOTES',
         path: '/notes',
         component: <NotesApp />,
+        icon: NotesIcon,
     },
     {
         id: 'society-contacts',
         nameLocale: 'APPS_SOCIETY_CONTACTS',
         path: '/society-contacts',
         component: <SocietyContactsApp />,
+        icon: SocietyContactIcon,
     },
     {
         id: 'photo',
         nameLocale: 'APPS_PHOTO',
         path: '/photo',
         component: <PhotoApp />,
+        icon: PhotoIcon,
     },
     {
         id: 'settings',
         nameLocale: 'APPS_SETTINGS',
         path: '/settings',
         component: <SettingsApp />,
+        icon: SettingsIcon,
     },
     {
         id: 'society-messages',
         nameLocale: 'APPS_SOCIETY_MESSAGES',
         path: '/society-messages',
         component: <SocietyMessagesApp />,
+        icon: SocietyMessagesIcon,
     },
     {
         id: 'twitch-news',
         nameLocale: 'APPS_TWITCH_NEWS',
         path: '/twitch-news',
         component: <TwitchNewsApp />,
+        icon: TwitchNewsIcon,
     },
     {
         id: 'zutom',
         nameLocale: 'APPS_ZUTOM',
         path: '/zutom',
         component: <ZutomApp />,
+        icon: ZutomIcon,
     },
-    /*{
-      id: 'marketplace',
-      nameLocale: 'APPS_MARKETPLACE',
-      path: '/marketplace',
-      Route: () => (
-        <AppRoute path="/marketplace" component={MarketplaceApp} emitOnOpen={false} />
-      ),
-    },*/
     {
         id: 'camera',
         nameLocale: 'APPS_CAMERA',
         path: '/camera',
         home: true,
         component: <CameraApp />,
+        icon: CameraIcon,
     },
 ];

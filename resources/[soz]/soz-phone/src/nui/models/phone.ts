@@ -1,23 +1,53 @@
 import { createModel } from '@rematch/core';
 
 import { IPhoneSettings } from '../apps/settings/hooks/useSettings';
+import config from '../config/default.json';
 import { RootModel } from '.';
 
 export const phone = createModel<RootModel>()({
     state: {
-        visible: true,
-        available: true,
-        config: {} as IPhoneSettings,
+        available: false,
+        visible: false,
+        config: config.defaultSettings as IPhoneSettings,
+        time: null,
+        callModal: false,
     },
     reducers: {
-        setAvailability(state, payload: boolean) {
+        SET_AVAILABILITY(state, payload: boolean) {
             return { ...state, available: payload };
         },
-        setVisibility(state, payload: boolean) {
+        SET_VISIBILITY(state, payload: boolean) {
             return { ...state, visible: payload };
         },
-        setConfig(state, payload: IPhoneSettings) {
+        SET_CONFIG(state, payload: IPhoneSettings) {
             return { ...state, config: payload };
         },
+        SET_TIME(state, payload: string) {
+            return { ...state, time: payload };
+        },
+        SET_CALL_MODAL(state, payload: boolean) {
+            return { ...state, callModal: payload };
+        },
     },
+    effects: dispatch => ({
+        async setAvailability(payload: boolean) {
+            dispatch.phone.SET_AVAILABILITY(payload);
+        },
+        async setVisibility(payload: boolean) {
+            dispatch.phone.SET_VISIBILITY(payload);
+        },
+        async setConfig(payload: IPhoneSettings) {
+            dispatch.phone.SET_CONFIG(payload);
+        },
+        async updateConfig(payload: IPhoneSettings) {
+            localStorage.setItem('soz_settings', JSON.stringify(payload));
+            dispatch.phone.SET_CONFIG(payload);
+        },
+        async setTime(payload: string) {
+            dispatch.phone.SET_TIME(payload);
+        },
+        async setCallModal(payload: boolean) {
+            dispatch.phone.SET_CALL_MODAL(payload);
+        },
+    }),
 });

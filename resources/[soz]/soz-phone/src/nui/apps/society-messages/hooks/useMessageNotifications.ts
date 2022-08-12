@@ -9,30 +9,18 @@ export const useMessageNotifications = () => {
     const [t] = useTranslation();
     const navigate = useNavigate();
     const { removeId, addNotification, addNotificationAlert } = useNotifications();
-    const { icon, notificationIcon } = useApp('society-messages');
+    const { icon: Icon } = useApp('society-messages');
 
-    // Remove notifications from groups when opening them
-    // history.listen(location => {
-    //     if (
-    //         matchPath(location.pathname, {
-    //             path: `/society-messages`,
-    //             exact: true,
-    //         })
-    //     ) {
-    //         removeId(`${NOTIFICATION_ID}`);
-    //     }
-    // });
-
-    const setNotification = ({ message = false }) => {
+    const setNotification = ({ message = '' }) => {
         const notification = {
             app: 'SOCIETY_MESSAGE',
-            NOTIFICATION_ID,
+            id: NOTIFICATION_ID,
             sound: true,
             title: t('SOCIETY_MESSAGES.NOTIFICATION.TITLE'),
             onClick: () => navigate(`/society-messages`),
             content: message,
-            icon,
-            notificationIcon,
+            Icon,
+            notificationIcon: Icon,
         };
 
         addNotificationAlert(notification, n => {

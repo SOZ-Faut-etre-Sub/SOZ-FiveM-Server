@@ -4,6 +4,7 @@ import { IAlertProps } from '../../../typings/alerts';
 import {
     ActiveCall,
     CallEvents,
+    CallHistoryItem,
     EndCallDTO,
     InitializeCallDTO,
     StartCallEventData,
@@ -11,13 +12,14 @@ import {
 } from '../../../typings/call';
 import { ServerPromiseResp } from '../../../typings/common';
 import { emitNetTyped, onNetTyped } from '../../server/utils/miscUtils';
+import { sendDialerEvent } from '../../utils/messages';
 import { animationService } from '../animations/animation.controller';
 import { hidePhone } from '../cl_main';
 import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { CallService } from './cl_calls.service';
 
-const callService = new CallService();
+export const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
     if (callService.isInCall()) return;
@@ -98,4 +100,12 @@ RegisterNuiProxy(CallEvents.FETCH_CALLS);
 
 onNet(CallEvents.SEND_ALERT, (alert: IAlertProps) => {
     callService.handleSendAlert(alert);
+});
+
+onNet(CallEvents.ADD_CALL, (item: CallHistoryItem) => {
+    sendDialerEvent(CallEvents.ADD_CALL, item);
+});
+
+onNet(CallEvents.UPDATE_CALL, (item: CallHistoryItem) => {
+    sendDialerEvent(CallEvents.UPDATE_CALL, item);
 });

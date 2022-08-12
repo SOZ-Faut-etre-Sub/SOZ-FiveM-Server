@@ -1,9 +1,10 @@
 import { PaperClipIcon, UploadIcon } from '@heroicons/react/outline';
 import { TextField } from '@ui/old_components/Input';
-import React, { useContext, useState } from 'react';
+import cn from 'classnames';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ThemeContext } from '../../../../styles/themeProvider';
+import { useConfig } from '../../../../hooks/usePhone';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface IProps {
@@ -15,7 +16,7 @@ interface IProps {
 
 const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     const [t] = useTranslation();
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const [message, setMessage] = useState('');
     const { sendMessage } = useMessageAPI();
 
@@ -37,7 +38,12 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
     return (
         <div className="flex">
             <button onClick={onAddImageClick}>
-                <PaperClipIcon className={`h-5 w-5 mx-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`} />
+                <PaperClipIcon
+                    className={cn('h-5 w-5 mx-2', {
+                        'text-white': config.theme.value === 'dark',
+                        'text-black': config.theme.value === 'light',
+                    })}
+                />
             </button>
             <TextField
                 onKeyPress={handleKeyPress}

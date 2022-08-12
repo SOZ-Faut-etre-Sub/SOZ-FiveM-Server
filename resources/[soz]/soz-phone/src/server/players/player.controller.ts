@@ -18,10 +18,6 @@ onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
  * for player related actions. Everything here is registered,
  * within the global scope like routes in a web server.
  */
-
-// If multicharacter mode is disabled, we instantiate a new
-// NPWD player by ourselves without waiting for an export
-
 on('QBCore:Server:PlayerLoaded', async (playerData: any) => {
     await PlayerService.handleNewPlayerJoined(playerData);
 });

@@ -2,12 +2,11 @@ import { PhoneIcon } from '@heroicons/react/solid';
 import React, { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { store } from '../../../store';
 import { useCall } from '../hooks/useCall';
-import { useCallModal } from '../hooks/useCallModal';
 
 export const CallControls: FunctionComponent = () => {
     const navigate = useNavigate();
-    const { setModal } = useCallModal();
     const { call, endCall, acceptCall, rejectCall } = useCall();
 
     const handleAcceptCall = e => {
@@ -18,13 +17,13 @@ export const CallControls: FunctionComponent = () => {
 
     const handleRejectCall = e => {
         e.stopPropagation();
-        setModal(false);
+        store.dispatch.phone.setCallModal(false);
         rejectCall();
     };
 
     const handleEndCall = e => {
         e.stopPropagation();
-        setModal(false);
+        store.dispatch.phone.setCallModal(false);
         endCall();
     };
 

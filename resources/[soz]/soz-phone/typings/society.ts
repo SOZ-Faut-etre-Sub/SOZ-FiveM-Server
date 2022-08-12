@@ -31,8 +31,9 @@ export interface SocietyMessage {
     takenBy: string | null;
     takenByUsername: string | null;
     isDone: boolean;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: number;
+    updatedAt: number;
+    muted?: boolean;
 }
 
 export enum SocietiesDatabaseLimits {
@@ -40,12 +41,12 @@ export enum SocietiesDatabaseLimits {
 }
 
 export enum SocietyEvents {
-    UPDATE_SOCIETY_MESSAGE = 'npwd:updateSocietyMessage',
-    SEND_SOCIETY_MESSAGE = 'npwd:sendSocietyMessage',
-    FETCH_SOCIETY_MESSAGES = 'npwd:fetchSocietyMessage',
-    RESET_SOCIETY_MESSAGES = 'npwd:resetSocietyMessage',
-    SEND_SOCIETY_MESSAGE_SUCCESS = 'npwd:sendSocietyMessageSuccess',
-    CREATE_MESSAGE_BROADCAST = 'npwd:createSocietyMessagesBroadcast',
+    UPDATE_SOCIETY_MESSAGE = 'phone:updateSocietyMessage',
+    SEND_SOCIETY_MESSAGE = 'phone:sendSocietyMessage',
+    FETCH_SOCIETY_MESSAGES = 'phone:fetchSocietyMessage',
+    RESET_SOCIETY_MESSAGES = 'phone:resetSocietyMessage',
+    SEND_SOCIETY_MESSAGE_SUCCESS = 'phone:sendSocietyMessageSuccess',
+    CREATE_MESSAGE_BROADCAST = 'phone:createSocietyMessagesBroadcast',
 }
 
 type SocietyNumber = {
@@ -70,4 +71,4 @@ export const SocietyNumberList: SocietyNumber = {
     bennys: '555-BENNYS',
     upw: '555-UPW',
     pawl: '555-PAWL',
-}
+};

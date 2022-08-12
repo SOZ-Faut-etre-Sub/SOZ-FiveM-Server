@@ -152,6 +152,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
 
     PlayerData.job.id = PlayerData.job.id or 'unemployed'
     PlayerData.job.onduty = false
+    Player(PlayerData.source).state.onDuty = PlayerData.job.onduty
     PlayerData.job.grade = tostring(PlayerData.job.grade) or "1"
     -- Gang
     PlayerData.gang = PlayerData.gang or {}

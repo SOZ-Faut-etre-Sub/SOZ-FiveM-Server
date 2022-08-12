@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 
-import { ThemeContext } from '../../../styles/themeProvider';
+import { useConfig } from '../../../hooks/usePhone';
 
 type Props = {
     title: string;
@@ -9,14 +9,14 @@ type Props = {
 };
 
 export const Checkbox = memo(({ title, enabled }: Props) => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
 
     return (
         <div className="flex justify-between items-center py-2">
             <span
                 className={cn('text-sm font-medium ', {
-                    'text-gray-100': theme === 'dark',
-                    'text-gray-900': theme === 'light',
+                    'text-gray-100': config.theme.value === 'dark',
+                    'text-gray-900': config.theme.value === 'light',
                 })}
             >
                 {title}
@@ -26,8 +26,8 @@ export const Checkbox = memo(({ title, enabled }: Props) => {
                     'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200',
                     {
                         'bg-indigo-600': enabled,
-                        'bg-gray-700': !enabled && theme === 'dark',
-                        'bg-gray-300': !enabled && theme === 'light',
+                        'bg-gray-700': !enabled && config.theme.value === 'dark',
+                        'bg-gray-300': !enabled && config.theme.value === 'light',
                     }
                 )}
             >

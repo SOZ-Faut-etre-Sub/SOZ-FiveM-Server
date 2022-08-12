@@ -1,5 +1,5 @@
 {
-    "name": "npwd-game",
+    "name": "soz-phone",
     "version": "0.1.0",
     "private": false,
     "description": "Resources configuration",
@@ -41,12 +41,12 @@
         "qs": "^6.9.6",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-hook-form": "^7.34.0",
         "react-i18next": "^11.14.3",
         "react-infinite-scroll-component": "^6.1.0",
         "react-number-format": "^4.9.3",
         "react-redux": "^8.0.2",
         "react-router-dom": "^6.3.0",
-        "recoil": "^0.7.4",
         "redux": "^4.2.0",
         "uuid": "^8.3.2",
         "winston": "^3.3.3"

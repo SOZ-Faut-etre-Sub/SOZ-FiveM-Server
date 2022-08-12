@@ -1,13 +1,12 @@
 import { Transition } from '@headlessui/react';
 import cn from 'classnames';
-import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
+import React, { FunctionComponent, memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useCurrentCall } from '../../os/call/hooks/state';
+import { useConfig, useTime } from '../../hooks/usePhone';
+import { useCall } from '../../hooks/useSimCard';
 import { NotificationItem } from '../../os/notifications/components/NotificationItem';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
-import usePhoneTime from '../../os/phone/hooks/usePhoneTime';
-import { ThemeContext } from '../../styles/themeProvider';
 import { BatteryIcon } from '../assets/battery';
 import { CellIcon } from '../assets/cell';
 
@@ -15,9 +14,9 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
 
     const { pathname } = useLocation();
-    const [currentCall] = useCurrentCall();
-    const { theme } = useContext(ThemeContext);
-    const time = usePhoneTime();
+    const currentCall = useCall();
+    const config = useConfig();
+    const time = useTime();
 
     useEffect(() => {
         if (notifications.length === 0) {
@@ -36,15 +35,9 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
-            return theme === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
+            return config.theme.value === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
         }
     };
-
-    useEffect(() => {
-        if (notifications.length === 0) {
-            setBarUncollapsed(false);
-        }
-    }, [notifications, setBarUncollapsed]);
 
     return (
         <>
@@ -56,9 +49,10 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
             >
                 <div className="flex justify-center font-semibold text-center truncate">
                     <p className="mr-4">{time}</p>
-                    {icons.map(notifIcon => (
-                        <div className="h-4 w-4 mx-1 notificationBarIcon">{notifIcon.icon}</div>
-                    ))}
+                    {icons.map(notifIcon => {
+                        const Icon = notifIcon.icon;
+                        return <Icon className={`text-white h-4 w-4 rounded-sm`} />;
+                    })}
                 </div>
 
                 <div>&nbsp;</div>

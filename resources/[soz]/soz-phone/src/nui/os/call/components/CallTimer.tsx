@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import useTimer from '../hooks/useTimer';
+import useInterval from '../../../apps/camera/hooks/useInterval';
+import { useCall } from '../hooks/useCall';
 
+const getTimeFromSeconds = (secs: number) => {
+    const totalSeconds = Math.ceil(secs);
+    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    return {
+        seconds,
+        minutes,
+        hours,
+    };
+};
 const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 
 export const CallTimer = () => {
-    const { seconds, hours, minutes } = useTimer();
+    const { call } = useCall();
+    const [time, setTime] = useState({ seconds: 0, minutes: 0, hours: 0 });
+
+    useInterval(() => {
+        if (!call.startedAt || call.startedAt === 0) return;
+
+        setTime(getTimeFromSeconds(new Date().getTime() / 1000 - call.startedAt / 1000));
+    }, 1000);
+
     return (
         <div className="flex flex-col justify-center items-center text-gray-300">
-            <div className="font-light">{`${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}</div>
+            <div className="font-light">{`${formatTime(time.hours)}:${formatTime(time.minutes)}:${formatTime(
+                time.seconds
+            )}`}</div>
         </div>
     );
 };

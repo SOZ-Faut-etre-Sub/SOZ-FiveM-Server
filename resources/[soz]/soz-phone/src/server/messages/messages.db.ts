@@ -3,8 +3,6 @@ import { ResultSetHeader } from 'mysql2';
 import { Message, UnformattedMessageConversation } from '../../../typings/messages';
 import DbInterface from '../db/db_wrapper';
 
-const MESSAGES_PER_PAGE = 20;
-
 // not sure whats going on here.
 export class _MessagesDB {
     /**
@@ -63,19 +61,17 @@ export class _MessagesDB {
         return <UnformattedMessageConversation[]>results;
     }
 
-    async getMessages(conversationId: string, page: number): Promise<Message[]> {
-        const offset = page * MESSAGES_PER_PAGE;
+    async getMessages(phoneNumber: string): Promise<Message[]> {
+        const query = `SELECT DISTINCT phone_messages.id,
+                              phone_messages.conversation_id,
+                              phone_messages.message,
+                              phone_messages.author
+                       FROM phone_messages
+                                INNER JOIN phone_messages_conversations ON phone_messages.conversation_id = phone_messages_conversations.conversation_id
+                       WHERE phone_messages_conversations.participant_identifier = ?
+                       ORDER BY id DESC`;
 
-        const query = `SELECT phone_messages.id,
-                          phone_messages.conversation_id,
-                          phone_messages.message,
-                          phone_messages.author
-                   FROM phone_messages
-                   WHERE phone_messages.conversation_id = ?
-                   ORDER BY id DESC
-                   LIMIT ? OFFSET ?`;
-
-        const [results] = await DbInterface._rawExec(query, [conversationId, MESSAGES_PER_PAGE, offset]);
+        const [results] = await DbInterface._rawExec(query, [phoneNumber]);
 
         return <Message[]>results;
     }

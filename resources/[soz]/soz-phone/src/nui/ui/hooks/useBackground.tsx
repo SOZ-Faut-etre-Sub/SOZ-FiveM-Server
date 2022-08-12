@@ -1,17 +1,16 @@
-import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ThemeContext } from '../../styles/themeProvider';
+import { useConfig } from '../../hooks/usePhone';
 
 export const useBackground = (): string => {
-    const { theme } = useContext(ThemeContext);
+    const config = useConfig();
     const { pathname } = useLocation();
 
     if (pathname.includes('/camera')) {
         return 'bg-black';
     }
     if (pathname !== '/') {
-        return theme === 'dark' ? 'bg-black' : 'bg-ios-50';
+        return config.theme.value === 'dark' ? 'bg-black' : 'bg-ios-50';
     }
     return '';
 };

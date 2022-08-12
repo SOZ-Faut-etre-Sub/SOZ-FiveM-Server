@@ -1,14 +1,14 @@
-import { phoneState } from '@os/phone/hooks/state';
 import { useEffect, useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useSelector } from 'react-redux';
 
-import { useSettings } from '../../../apps/settings/hooks/useSettings';
+import { useAvailability } from '../../../hooks/usePhone';
+import { RootState } from '../../../store';
 import { getSoundSettings } from '../utils/getSoundSettings';
 import { useSoundProvider } from './useSoundProvider';
 
 export const useRingtoneSound = () => {
-    const isPhoneAvailable = useRecoilValue(phoneState.availability);
-    const [settings] = useSettings();
+    const isPhoneAvailable = useAvailability();
+    const settings = useSelector((state: RootState) => state.phone.config);
 
     const sound = useSoundProvider();
 
