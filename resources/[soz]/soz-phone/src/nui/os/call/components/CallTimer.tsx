@@ -24,8 +24,6 @@ export const CallTimer = () => {
     useInterval(() => {
         if (!call.startedAt || call.startedAt === 0) return;
 
-        console.log(new Date().getTime() - call.startedAt);
-
         setTime(getTimeFromSeconds(new Date().getTime() / 1000 - call.startedAt / 1000));
     }, 1000);
 
