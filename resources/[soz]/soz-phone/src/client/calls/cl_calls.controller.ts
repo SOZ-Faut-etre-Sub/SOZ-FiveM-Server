@@ -19,7 +19,7 @@ import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { CallService } from './cl_calls.service';
 
-const callService = new CallService();
+export const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
     if (callService.isInCall()) return;
