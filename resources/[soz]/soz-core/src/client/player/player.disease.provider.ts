@@ -5,6 +5,7 @@ import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
@@ -150,7 +151,11 @@ export class PlayerDiseaseProvider {
         }
 
         let range = DISEASE_RANGE[this.pollution.getPollutionLevel()];
-        range *= (player.metadata.healthLevel + 1) / 100;
+
+        if (isFeatureEnabled(Feature.MyBodySummer)) {
+            range *= (player.metadata.healthLevel + 1) / 100;
+        }
+
         range = Math.max(range, 10);
 
         const diseaseApply = Math.round(Math.random() * range);

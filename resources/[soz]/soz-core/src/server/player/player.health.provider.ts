@@ -2,6 +2,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerMetadata } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { Hud } from '../hud';
@@ -55,55 +56,58 @@ export class PlayerHealthProvider {
             thirstDiff -= 7.6;
         }
 
-        if (!player.metadata.lastStrengthUpdate) {
-            this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
-        } else {
-            const lastUpdate = new Date(player.metadata.lastStrengthUpdate);
-            const now = new Date();
-            const diff = now.getTime() - lastUpdate.getTime();
-            const hours = diff / (1000 * 60 * 60);
-
-            if (hours > 1) {
-                this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
-                this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
-            }
-        }
-
-        if (!player.metadata.lastMaxStaminaUpdate) {
-            this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
-        } else {
-            const lastUpdate = new Date(player.metadata.lastMaxStaminaUpdate);
-            const now = new Date();
-            const diff = now.getTime() - lastUpdate.getTime();
-            const hours = diff / (1000 * 60 * 60);
-
-            if (hours > 1) {
-                this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
-                this.playerService.incrementMetadata(source, 'maxstamina', MAX_STAMINA_RATE, 50, 120);
-            }
-        }
-
-        if (!player.metadata.lastStressUpdate) {
-            this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
-        } else {
-            const lastUpdate = new Date(player.metadata.lastStressUpdate);
-            const now = new Date();
-            const diff = now.getTime() - lastUpdate.getTime();
-
-            if (diff > 1000 * 60 * 10) {
-                this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
-                this.playerService.incrementMetadata(source, 'stressLevel', STRESS_RATE, 0, 100);
-            }
-        }
-
         this.playerService.incrementMetadata(source, 'hunger', hungerDiff, 0, 100);
         this.playerService.incrementMetadata(source, 'thirst', thirstDiff, 0, 100);
         this.playerService.incrementMetadata(source, 'alcohol', ALCOHOL_RATE, 0, 200);
         this.playerService.incrementMetadata(source, 'drug', DRUG_RATE, 0, 200);
-        this.playerService.incrementMetadata(source, 'fiber', FIBER_RATE, 0, 200);
-        this.playerService.incrementMetadata(source, 'lipid', LIPID_RATE, 0, 200);
-        this.playerService.incrementMetadata(source, 'sugar', SUGAR_RATE, 0, 200);
-        this.playerService.incrementMetadata(source, 'protein', PROTEIN_RATE, 0, 200);
+
+        if (isFeatureEnabled(Feature.MyBodySummer)) {
+            this.playerService.incrementMetadata(source, 'fiber', FIBER_RATE, 0, 200);
+            this.playerService.incrementMetadata(source, 'lipid', LIPID_RATE, 0, 200);
+            this.playerService.incrementMetadata(source, 'sugar', SUGAR_RATE, 0, 200);
+            this.playerService.incrementMetadata(source, 'protein', PROTEIN_RATE, 0, 200);
+
+            if (!player.metadata.lastStrengthUpdate) {
+                this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
+            } else {
+                const lastUpdate = new Date(player.metadata.lastStrengthUpdate);
+                const now = new Date();
+                const diff = now.getTime() - lastUpdate.getTime();
+                const hours = diff / (1000 * 60 * 60);
+
+                if (hours > 1) {
+                    this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
+                    this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
+                }
+            }
+
+            if (!player.metadata.lastMaxStaminaUpdate) {
+                this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
+            } else {
+                const lastUpdate = new Date(player.metadata.lastMaxStaminaUpdate);
+                const now = new Date();
+                const diff = now.getTime() - lastUpdate.getTime();
+                const hours = diff / (1000 * 60 * 60);
+
+                if (hours > 1) {
+                    this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
+                    this.playerService.incrementMetadata(source, 'maxstamina', MAX_STAMINA_RATE, 50, 120);
+                }
+            }
+
+            if (!player.metadata.lastStressUpdate) {
+                this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
+            } else {
+                const lastUpdate = new Date(player.metadata.lastStressUpdate);
+                const now = new Date();
+                const diff = now.getTime() - lastUpdate.getTime();
+
+                if (diff > 1000 * 60 * 10) {
+                    this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
+                    this.playerService.incrementMetadata(source, 'stressLevel', STRESS_RATE, 0, 100);
+                }
+            }
+        }
 
         this.hud.updateNeeds(source);
         this.playerService.save(source);

@@ -2,6 +2,7 @@ import { Once } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -31,6 +32,10 @@ export class LSMCCheckHealthProvider {
 
     @Once()
     public onStart() {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         this.targetFactory.createForAllPlayer([
             {
                 label: 'Prise de sang pour test',

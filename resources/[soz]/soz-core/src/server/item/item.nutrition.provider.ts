@@ -1,6 +1,7 @@
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { DrinkItem, FoodItem, InventoryItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
@@ -75,18 +76,22 @@ export class ItemNutritionProvider {
         const hunger = expired ? EXPIRED_MALUS : item.nutrition.hunger * progress;
         const thirst = expired ? EXPIRED_MALUS : item.nutrition.thirst * progress;
         const alcohol = expired ? EXPIRED_MALUS : item.nutrition.alcohol * progress;
-        const fiber = expired ? EXPIRED_MALUS : item.nutrition.fiber * progress;
-        const sugar = expired ? EXPIRED_MALUS : item.nutrition.sugar * progress;
-        const protein = expired ? EXPIRED_MALUS : item.nutrition.protein * progress;
-        const lipid = expired ? EXPIRED_MALUS : item.nutrition.lipid * progress;
 
         this.playerService.incrementMetadata(source, 'hunger', hunger, 0, 100);
         this.playerService.incrementMetadata(source, 'thirst', thirst, 0, 100);
         this.playerService.incrementMetadata(source, 'alcohol', alcohol, 0, 100);
-        this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 200);
-        this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 200);
-        this.playerService.incrementMetadata(source, 'protein', protein, 0, 200);
-        this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 200);
+
+        if (isFeatureEnabled(Feature.MyBodySummer)) {
+            const fiber = expired ? EXPIRED_MALUS : item.nutrition.fiber * progress;
+            const sugar = expired ? EXPIRED_MALUS : item.nutrition.sugar * progress;
+            const protein = expired ? EXPIRED_MALUS : item.nutrition.protein * progress;
+            const lipid = expired ? EXPIRED_MALUS : item.nutrition.lipid * progress;
+
+            this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 200);
+            this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 200);
+            this.playerService.incrementMetadata(source, 'protein', protein, 0, 200);
+            this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 200);
+        }
 
         if (expired) {
             this.playerService.setPlayerDisease(source, 'intoxication');

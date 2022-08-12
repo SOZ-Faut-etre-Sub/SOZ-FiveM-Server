@@ -1,14 +1,27 @@
 import { FunctionComponent } from 'react';
 
-import { MenuContainer, MenuContent, MenuItem, MenuTitle } from '../Styleguide/Menu';
+import {
+    MenuContainer,
+    MenuContent,
+    MenuItemButton,
+    MenuItemSelect,
+    MenuItemSelectOption,
+    MenuTitle,
+} from '../Styleguide/Menu';
 
 export const MenuSetHealthState: FunctionComponent = () => {
     return (
         <MenuContainer>
             <MenuTitle>Carnet de santé</MenuTitle>
             <MenuContent>
-                <MenuItem>Définir l'état de santé</MenuItem>
-                <MenuItem>Définir le taux de glucide</MenuItem>
+                <MenuItemButton>Définir l'état de santé</MenuItemButton>
+                <MenuItemButton>Définir le taux de glucide</MenuItemButton>
+                <MenuItemSelect title="Test">
+                    <MenuItemSelectOption>Value A</MenuItemSelectOption>
+                    <MenuItemSelectOption>Value B</MenuItemSelectOption>
+                    <MenuItemSelectOption>Value C</MenuItemSelectOption>
+                    <MenuItemSelectOption>Value D</MenuItemSelectOption>
+                </MenuItemSelect>
             </MenuContent>
         </MenuContainer>
     );

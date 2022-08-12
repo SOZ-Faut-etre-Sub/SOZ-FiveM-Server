@@ -40,8 +40,7 @@ export const useNuiEvent = <D = unknown>(app: string, method: string, handler: (
         const eventListener = event => {
             if (savedHandler.current && savedHandler.current.call) {
                 const { data } = event;
-                const newData = data;
-                savedHandler.current(newData as D);
+                savedHandler.current(data as D);
             }
         };
 
@@ -49,4 +48,8 @@ export const useNuiEvent = <D = unknown>(app: string, method: string, handler: (
         // Remove Event Listener on component cleanup
         return () => window.removeEventListener(eventName, eventListener);
     }, [app, method]);
+};
+
+export const useSozCoreNuiEvent = <D = unknown>(method: string, handler: (r: D) => void): void => {
+    return useNuiEvent('soz-core', method, handler);
 };
