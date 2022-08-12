@@ -48,7 +48,7 @@ export const ContactList: React.FC = () => {
                 placeholder={t('SOCIETY_CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
                 value={searchValue}
             />
-            <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
+            <nav className="h-[725px] pb-10 overflow-y-auto" aria-label="Directory">
                 {Object.keys(filteredContacts)
                     .sort()
                     .map(letter => (
