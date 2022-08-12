@@ -302,9 +302,10 @@ RegisterNetEvent("soz-bennys:client:FuelRepair", function(net)
 end)
 
 function ScanVehicle(vehicle)
-    local enginePercent = QBCore.Shared.Round(GetVehicleEngineHealth(vehicle) / 10, 1)
-    local bodyPercent = QBCore.Shared.Round(GetVehicleBodyHealth(vehicle) / 10, 1)
-    local tankHealth = QBCore.Shared.Round(GetVehiclePetrolTankHealth(vehicle) / 10, 1)
+    local condition = json.decode(Entity(vehicle).state.condition)
+    local enginePercent = QBCore.Shared.Round(condition.engineHealth / 10, 1)
+    local bodyPercent = QBCore.Shared.Round(condition.bodyHealth / 10, 1)
+    local tankHealth = QBCore.Shared.Round(condition.tankHealth / 10, 1)
     local currentFuel = QBCore.Shared.Round(Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle), 1)
     local oilLevel = nil
     if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") ~= 0.0 then

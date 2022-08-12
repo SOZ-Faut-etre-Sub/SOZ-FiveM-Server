@@ -125,7 +125,7 @@ end
 local function GetVehicleClientData(veh)
     return {
         fuel = exports["soz-vehicle"]:GetFuel(veh),
-        properties = json.encode(QBCore.Functions.GetVehicleProperties(veh)),
+        properties = Entity(veh).state.condition,
         bodyDamage = math.floor(GetVehicleBodyHealth(veh) + 0.5),
     }
 end

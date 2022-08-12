@@ -426,13 +426,14 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     local conditionVehicle = {}
     local decodedExtra = json.decode(vehicleExtraData.properties)
     local data = GetVehicleData(vehicleNetId, vehicleExtraData)
+    local entityId = NetworkGetEntityFromNetworkId(vehicleNetId)
     conditionVehicle["engineHealth"] = decodedExtra.engineHealth
     conditionVehicle["tireHealth"] = decodedExtra.tireHealth
     conditionVehicle["tankHealth"] = decodedExtra.tankHealth
     conditionVehicle["dirtLevel"] = decodedExtra.dirtLevel
     conditionVehicle["bodyHealth"] = decodedExtra.bodyHealth
     conditionVehicle["oilLevel"] = decodedExtra.oilLevel
-    conditionVehicle["fuelLevel"] = decodedExtra.fuelLevel
+    conditionVehicle["fuelLevel"] = Entity(entityId).state.fuel
     conditionVehicle["windowStatus"] = decodedExtra.windowStatus
     conditionVehicle["tireBurstState"] = decodedExtra.tireBurstState
     conditionVehicle["tireBurstCompletely"] = decodedExtra.tireBurstCompletely
@@ -442,7 +443,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
         json.encode(conditionVehicle),
         state,
         indexgarage,
-        data.fuel,
+        Entity(entityId).state.fuel,
         data.engineDamage,
         data.bodyDamage,
         os.time(),
