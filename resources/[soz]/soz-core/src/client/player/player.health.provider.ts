@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ServerEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData } from '../../shared/player';
 import { AnimationService } from '../animation/animation.service';
 import { TargetFactory } from '../target/target.factory';
@@ -28,6 +29,10 @@ export class PlayerHealthProvider {
 
     @Tick(60 * 1000 * 60)
     private async nutritionCheck(): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         if (this.playerService.isLoggedIn()) {
             TriggerServerEvent(ServerEvent.PLAYER_NUTRITION_CHECK);
         }
@@ -61,6 +66,10 @@ export class PlayerHealthProvider {
 
     @Once()
     async onStart(): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         this.targetFactory.createForBoxZone(
             'do_free_weight',
             {
@@ -86,6 +95,10 @@ export class PlayerHealthProvider {
 
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded(player: PlayerData): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         SetPlayerMaxStamina(PlayerId(), player.metadata.maxstamina);
 
         // @TODO Set damage multiplier

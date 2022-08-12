@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ServerEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { PlayerService } from './player.service';
 
@@ -26,33 +27,16 @@ export class PlayerStressProvider {
     }
 
     @On('CEventShockingGunshotFired', false)
-    public tryUpdateStressForEntityEvent(entities, eventEntity: number): void {
-        if (this.isStressUpdated) {
-            return;
-        }
-
-        if (!eventEntity || !DoesEntityExist(eventEntity)) {
-            return;
-        }
-
-        // local distance = #(GetEntityCoords(eventEntity) - GetEntityCoords(PlayerPedId()))
-        const distance = getDistance(
-            GetEntityCoords(eventEntity) as Vector3,
-            GetEntityCoords(PlayerPedId()) as Vector3
-        );
-
-        if (distance < EVENT_DISTANCE_TRIGGER) {
-            this.updateStress();
-        }
-    }
-
-    @On('CEventShockingGunshotFired', false)
     @On('CEventGunShot', false)
     @On('CEventOnFire', false)
     @On('CEventRanOverPed', false)
     @On('CEventShocking', false)
     @On('CEventShockingCarCrash', false)
     public onStressfulGameEvent(entities, eventEntity): void {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         if (this.isStressUpdated) {
             return;
         }
@@ -73,6 +57,10 @@ export class PlayerStressProvider {
 
     @Tick(1000)
     async checkStressfulEvent(): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         if (this.isStressUpdated) {
             return;
         }
@@ -126,6 +114,10 @@ export class PlayerStressProvider {
 
     @Tick(1000)
     async onTick(): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
         const player = this.playerService.getPlayer();
 
         if (player === null || player.metadata.isdead || player.metadata.godmode) {
