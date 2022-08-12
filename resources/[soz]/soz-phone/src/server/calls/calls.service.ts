@@ -124,6 +124,20 @@ class CallsService {
             },
             receivingPlayer.source
         );
+
+        emitNet(CallEvents.ADD_CALL, reqObj.source, {
+            is_accepted: false,
+            transmitter: transmitterNumber,
+            receiver: reqObj.data.receiverNumber,
+            isTransmitter: true,
+        });
+
+        emitNet(CallEvents.ADD_CALL, receivingPlayer.source, {
+            is_accepted: false,
+            transmitter: transmitterNumber,
+            receiver: reqObj.data.receiverNumber,
+            isTransmitter: false,
+        });
     }
 
     async handleAcceptCall(src: number, transmitterNumber: string): Promise<void> {
@@ -166,6 +180,24 @@ class CallsService {
             },
             targetCallItem.transmitterSource
         );
+
+        emitNet(CallEvents.UPDATE_CALL, targetCallItem.receiverSource, {
+            is_accepted: true,
+            transmitter: transmitterNumber,
+            receiver: targetCallItem.receiver,
+            isTransmitter: false,
+            channelId,
+            startedAt: new Date().getTime(),
+        });
+
+        emitNet(CallEvents.UPDATE_CALL, targetCallItem.transmitterSource, {
+            is_accepted: true,
+            transmitter: transmitterNumber,
+            receiver: targetCallItem.receiver,
+            isTransmitter: true,
+            channelId,
+            startedAt: new Date().getTime(),
+        });
     }
 
     async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>): Promise<void> {

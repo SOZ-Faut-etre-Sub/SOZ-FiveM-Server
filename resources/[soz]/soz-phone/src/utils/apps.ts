@@ -1,4 +1,5 @@
 export default {
+    DIALER: 'DIALER',
     MESSAGES: 'MESSAGES',
     NOTES: 'NOTES',
     CONTACTS: 'CONTACTS',

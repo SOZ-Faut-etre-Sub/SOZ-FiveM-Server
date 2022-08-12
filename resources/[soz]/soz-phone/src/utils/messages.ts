@@ -33,3 +33,7 @@ export function sendPhotoEvent(method: string, data: any = {}): void {
 export function sendSocietyEvent(method: string, data: any = {}): void {
     sendMessage(apps.SOCIETIES, method, data);
 }
+
+export function sendDialerEvent(method: string, data: any = {}): void {
+    sendMessage(apps.DIALER, method, data);
+}
