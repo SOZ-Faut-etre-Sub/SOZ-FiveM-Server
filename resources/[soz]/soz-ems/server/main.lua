@@ -95,7 +95,7 @@ AddEventHandler("lsmc:server:SetItt", function(id)
         end
 
         Player.Functions.SetMetaData("itt", true)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez été mit en interdiction de travail temporaire")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez été mis en interdiction de travail temporaire")
         TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez mis la personne en interdiction de travail temporaire")
     end
 end)
