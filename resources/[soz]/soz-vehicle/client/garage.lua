@@ -239,6 +239,12 @@ RegisterNetEvent("soz-garage:client:takeOutGarage", function(vehicle, type_, ind
             Citizen.Wait(250)
         end
         local veh = NetToVeh(vehNet)
+
+        if type_ == "depot" or type_ == "public" then
+            -- Call anyway because the server can detect if the vehicle is a trailer
+            TriggerServerEvent("jobs:server:fueler:resetTanker", vehNet)
+        end
+
         -- QBCore.Functions.SetVehicleProperties(veh, mods)
         -- QBCore.Functions.SetVehicleProperties(veh, condition)
         Entity(veh).state.set("condition", vehicle.condition, true)
