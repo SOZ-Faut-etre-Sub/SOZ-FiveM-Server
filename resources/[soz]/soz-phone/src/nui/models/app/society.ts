@@ -1,7 +1,11 @@
 import { createModel } from '@rematch/core';
 
-import { SocietyMessage } from '../../../../typings/society';
+import { ServerPromiseResp } from '../../../../typings/common';
+import { SocietyEvents, SocietyMessage } from '../../../../typings/society';
 import { SocietyContactsState } from '../../apps/society-contacts/utils/constants';
+import { MockSocietyMessages } from '../../apps/society-messages/utils/constants';
+import { fetchNui } from '../../utils/fetchNui';
+import { buildRespObj } from '../../utils/misc';
 import { RootModel } from '..';
 
 export const appSociety = createModel<RootModel>()({
@@ -23,6 +27,16 @@ export const appSociety = createModel<RootModel>()({
         },
         async appendSocietyMessages(payload: SocietyMessage) {
             dispatch.appSociety.add(payload);
+        },
+        // loader
+        async loadSocietyMessages() {
+            fetchNui<ServerPromiseResp<SocietyMessage[]>>(
+                SocietyEvents.FETCH_SOCIETY_MESSAGES,
+                undefined,
+                buildRespObj(MockSocietyMessages)
+            ).then(messages => {
+                dispatch.appSociety.set(messages.data);
+            });
         },
     }),
 });

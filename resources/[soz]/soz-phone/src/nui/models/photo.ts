@@ -1,6 +1,10 @@
 import { createModel } from '@rematch/core';
 
-import { GalleryPhoto } from '../../../typings/photo';
+import { ServerPromiseResp } from '../../../typings/common';
+import { GalleryPhoto, PhotoEvents } from '../../../typings/photo';
+import { MockPhotoData } from '../apps/photo/utils/constants';
+import { fetchNui } from '../utils/fetchNui';
+import { buildRespObj } from '../utils/misc';
 import { RootModel } from '.';
 
 export const photo = createModel<RootModel>()({
@@ -25,6 +29,16 @@ export const photo = createModel<RootModel>()({
         },
         async removePhoto(payload: number) {
             dispatch.photo.remove(payload);
+        },
+        // loader
+        async loadPhotos() {
+            fetchNui<ServerPromiseResp<GalleryPhoto[]>>(
+                PhotoEvents.FETCH_PHOTOS,
+                undefined,
+                buildRespObj(MockPhotoData)
+            ).then(photos => {
+                dispatch.photo.set(photos.data);
+            });
         },
     }),
 });

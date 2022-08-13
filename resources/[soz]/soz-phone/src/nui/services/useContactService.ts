@@ -1,22 +1,12 @@
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { useEffect } from 'react';
 
-import { ServerPromiseResp } from '../../../typings/common';
-import { Contact, ContactEvents } from '../../../typings/contact';
-import { BrowserContactsState } from '../apps/contacts/utils/constants';
+import { ContactEvents } from '../../../typings/contact';
 import { store } from '../store';
-import { fetchNui } from '../utils/fetchNui';
-import { buildRespObj } from '../utils/misc';
 
 export const useContactService = () => {
     useEffect(() => {
-        fetchNui<ServerPromiseResp<Contact[]>>(
-            ContactEvents.GET_CONTACTS,
-            undefined,
-            buildRespObj(BrowserContactsState)
-        ).then(calls => {
-            store.dispatch.simCard.setContacts(calls.data);
-        });
+        store.dispatch.simCard.loadContacts();
     }, []);
 
     useNuiEvent('CONTACTS', ContactEvents.ADD_CONTACT_SUCCESS, store.dispatch.simCard.appendContact);

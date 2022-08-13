@@ -1,6 +1,10 @@
 import { createModel } from '@rematch/core';
-import { INotes } from '@typings/app/notes';
+import { INotes, NoteItem, NotesEvents } from '@typings/app/notes';
 
+import { ServerPromiseResp } from '../../../../typings/common';
+import { BrowserNotesData } from '../../apps/notes/utils/constants';
+import { fetchNui } from '../../utils/fetchNui';
+import { buildRespObj } from '../../utils/misc';
 import { RootModel } from '..';
 
 export const appNotes = createModel<RootModel>()({
@@ -31,6 +35,16 @@ export const appNotes = createModel<RootModel>()({
         },
         async deleteNote(payload: INotes) {
             dispatch.appNotes.remove(payload);
+        },
+        // loader
+        async loadNotes() {
+            fetchNui<ServerPromiseResp<NoteItem[]>>(
+                NotesEvents.FETCH_ALL_NOTES,
+                undefined,
+                buildRespObj(BrowserNotesData)
+            ).then(messages => {
+                dispatch.appNotes.set(messages.data);
+            });
         },
     }),
 });

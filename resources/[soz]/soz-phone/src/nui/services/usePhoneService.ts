@@ -4,7 +4,6 @@ import { PhoneEvents } from '@typings/phone';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import config from '../config/default.json';
 import { store } from '../store';
 
 export const usePhoneService = () => {
@@ -25,13 +24,7 @@ export const usePhoneService = () => {
     );
 
     useEffect(() => {
-        let phoneConfig = config.defaultSettings;
-        const saved = localStorage.getItem('soz_settings');
-        if (saved) {
-            phoneConfig = JSON.parse(saved);
-        }
-
-        store.dispatch.phone.setConfig(phoneConfig);
+        store.dispatch.phone.loadConfig();
     }, []);
 
     useNuiEvent('PHONE', 'startRestart', () => {
