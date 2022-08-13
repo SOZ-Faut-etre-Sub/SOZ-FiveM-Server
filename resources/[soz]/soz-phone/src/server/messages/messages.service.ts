@@ -60,6 +60,12 @@ class _MessagesService {
                 messagesLogger.error(e.toString());
             }
 
+            emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, reqObj.source, {
+                conversation_id: result.conversationId,
+                phoneNumber: result.phoneNumber,
+                updatedAt: result.updatedAt,
+            });
+
             resp({
                 status: 'ok',
                 data: {
