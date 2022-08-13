@@ -51,7 +51,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                     <p className="mr-4">{time}</p>
                     {icons.map(notifIcon => {
                         const Icon = notifIcon.icon;
-                        return <Icon className={`text-white h-4 w-4 rounded-sm`} />;
+                        return <Icon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
                     })}
                 </div>
 
