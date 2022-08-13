@@ -23,7 +23,7 @@ QBCore.Functions.CreateCallback("banking:getBankingInformation", function(source
             ["name"] = Player.Functions.GetName(),
             ["accountinfo"] = account.id,
             ["bankbalance"] = QBCore.Shared.GroupDigits(account.money) .. "$",
-            ["money"] = QBCore.Shared.GroupDigits(Player.PlayerData.money["money"]) .. "$",
+            ["money"] = QBCore.Shared.GroupDigits(QBCore.Shared.Round(Player.PlayerData.money["money"])) .. "$",
         }
 
         local offshore = Account("offshore_" .. account.id)
