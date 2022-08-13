@@ -112,19 +112,29 @@ end
 function Dealership:CleanVehicleSpawn()
     local coords = self.vehicle.spawn.xyz
     local stillThere = true
-    while stillThere do
+    local maxAttempts = 10
+
+    while stillThere and maxAttempts > 0 do
         local closestVehicle = QBCore.Functions.GetClosestVehicle(coords)
         if #(coords - GetEntityCoords(closestVehicle)) <= 3.0 then
             SetEntityAsMissionEntity(closestVehicle, true, true)
             DeleteVehicle(closestVehicle)
+
+            maxAttempts = maxAttempts - 1
         else
             stillThere = false
         end
+        Citizen.Wait(10)
     end
 end
 
 function Dealership:VisualizeVehicle(vehicle)
     local model = GetHashKey(vehicle.model)
+
+    if not IsModelInCdimage(model) then
+        return
+    end
+
     RequestModel(model)
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
