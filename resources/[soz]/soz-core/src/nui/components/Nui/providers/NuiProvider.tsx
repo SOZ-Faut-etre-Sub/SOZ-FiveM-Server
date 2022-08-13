@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { NuiContext } from '../context/NuiContext';
 import { eventNameFactory } from '../utils/eventNameFactory';
