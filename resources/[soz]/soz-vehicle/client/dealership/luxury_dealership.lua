@@ -9,13 +9,9 @@ function displayBidMenu(menu, bid)
         bidDescription = "Mise à prix: $" .. QBCore.Shared.GroupDigits(bid.minimumBidPrice)
     end
 
-    local bidAction = menu:AddButton({
-        label = "Faire une enchère",
-        description = bidDescription,
-        value = 0
-    })
+    local bidAction = menu:AddButton({label = "Faire une enchère", description = bidDescription, value = 0})
 
-    bidAction:On('select', function()
+    bidAction:On("select", function()
         local price = exports["soz-hud"]:Input("Montant", 10) or ""
         if price == nil or tonumber(price) == nil then
             exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant.", "error")
@@ -24,7 +20,8 @@ function displayBidMenu(menu, bid)
 
         price = math.floor(tonumber(price))
         if price <= (bid.bestBidPrice or bid.minimumBidPrice) then
-            exports["soz-hud"]:DrawNotification("Le montant doit être supérieur à $" .. QBCore.Shared.GroupDigits(bid.bestBidPrice or bid.minimumBidPrice) .. ".", "error")
+            exports["soz-hud"]:DrawNotification(
+                "Le montant doit être supérieur à $" .. QBCore.Shared.GroupDigits(bid.bestBidPrice or bid.minimumBidPrice) .. ".", "error")
             return
         end
 
@@ -78,6 +75,11 @@ end)
 
 local function spawnVehicle(vehicle)
     local model = GetHashKey(vehicle.model)
+
+    if not IsModelInCdimage(model) then
+        return
+    end
+
     RequestModel(model)
     while not HasModelLoaded(model) do
         Citizen.Wait(10)
@@ -90,7 +92,7 @@ local function spawnVehicle(vehicle)
     FreezeEntityPosition(createdVehicle, true)
     SetVehicleNumberPlateText(createdVehicle, "LUXURY")
 
-    exports['qb-target']:AddBoxZone(vehicle.window.options.name, vehicle.window.pos, vehicle.window.length, vehicle.window.width, vehicle.window.options, {
+    exports["qb-target"]:AddBoxZone(vehicle.window.options.name, vehicle.window.pos, vehicle.window.length, vehicle.window.width, vehicle.window.options, {
         options = {
             {
                 type = "client",
@@ -98,9 +100,9 @@ local function spawnVehicle(vehicle)
                 icon = "c:dealership/bid.png",
                 label = "Voir la vente",
                 model = vehicle.model,
-           },
+            },
         },
-        distance = 1.0
+        distance = 1.0,
     })
 end
 
@@ -109,13 +111,12 @@ AddEventHandler("onClientResourceStart", function(resourceName)
         return
     end
     if GetConvarInt("feature_dlc2_luxury", 0) == 1 then
-        QBCore.Functions.CreateBlip("luxury:dealership",
-            {
-                name = LuxuryDealershipConfig.blip.name,
-                coords = LuxuryDealershipConfig.blip.coords,
-                sprite = LuxuryDealershipConfig.blip.sprite,
-                color = LuxuryDealershipConfig.blip.color,
-            })
+        QBCore.Functions.CreateBlip("luxury:dealership", {
+            name = LuxuryDealershipConfig.blip.name,
+            coords = LuxuryDealershipConfig.blip.coords,
+            sprite = LuxuryDealershipConfig.blip.sprite,
+            color = LuxuryDealershipConfig.blip.color,
+        })
         local vehicles = QBCore.Functions.TriggerRpc("soz-dealership:server:GetAuctions")
         for _, vehicle in pairs(vehicles) do
             spawnVehicle(vehicle)
