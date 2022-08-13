@@ -51,6 +51,16 @@ export const SettingsHome = () => {
     const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
 
     const handleSettingChange = (key: string | number, value: any) => {
+        if (key === 'zoom') {
+            if (window.innerHeight <= value.value * 10) {
+                addAlert({
+                    message: t('SETTINGS.ZOOM.WARNING'),
+                    type: 'warning',
+                });
+                return;
+            }
+        }
+
         store.dispatch.phone.updateConfig({ ...config, [key]: value });
     };
     // const frames = phoneConfig.frames.map(
