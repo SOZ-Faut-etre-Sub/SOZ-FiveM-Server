@@ -49,5 +49,15 @@ export const phone = createModel<RootModel>()({
         async setCallModal(payload: boolean) {
             dispatch.phone.SET_CALL_MODAL(payload);
         },
+        // loader
+        async loadConfig() {
+            let phoneConfig = config.defaultSettings;
+            const saved = localStorage.getItem('soz_settings');
+            if (saved) {
+                phoneConfig = JSON.parse(saved);
+            }
+
+            dispatch.phone.SET_CONFIG(phoneConfig);
+        },
     }),
 });

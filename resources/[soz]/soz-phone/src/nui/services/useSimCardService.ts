@@ -1,16 +1,12 @@
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { IAlert, useSnackbar } from '@os/snackbar/hooks/useSnackbar';
-import { CallEvents, CallHistoryItem } from '@typings/call';
+import { CallEvents } from '@typings/call';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ServerPromiseResp } from '../../../typings/common';
 import { PhoneEvents } from '../../../typings/phone';
 import { SettingsEvents } from '../../../typings/settings';
-import { MockHistoryData } from '../apps/dialer/utils/constants';
 import { store } from '../store';
-import { fetchNui } from '../utils/fetchNui';
-import { buildRespObj } from '../utils/misc';
 
 export const useSimCardService = () => {
     const { addAlert } = useSnackbar();
@@ -26,13 +22,7 @@ export const useSimCardService = () => {
     useNuiEvent('DIALER', CallEvents.SEND_ALERT, handleAddAlert);
 
     useEffect(() => {
-        fetchNui<ServerPromiseResp<CallHistoryItem[]>>(
-            CallEvents.FETCH_CALLS,
-            undefined,
-            buildRespObj(MockHistoryData)
-        ).then(calls => {
-            store.dispatch.simCard.setCallHistory(calls.data);
-        });
+        store.dispatch.simCard.loadCallHistory();
     }, []);
 
     useNuiEvent('DIALER', CallEvents.ADD_CALL, store.dispatch.simCard.appendCallHistory);

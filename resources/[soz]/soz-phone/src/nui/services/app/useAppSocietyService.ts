@@ -2,14 +2,10 @@ import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ServerPromiseResp } from '../../../../typings/common';
 import { SocietyEvents, SocietyMessage } from '../../../../typings/society';
 import { useMessageNotifications } from '../../apps/society-messages/hooks/useMessageNotifications';
-import { MockSocietyMessages } from '../../apps/society-messages/utils/constants';
 import { useVisibility } from '../../hooks/usePhone';
 import { store } from '../../store';
-import { fetchNui } from '../../utils/fetchNui';
-import { buildRespObj } from '../../utils/misc';
 
 export const useAppSocietyService = () => {
     const { setNotification } = useMessageNotifications();
@@ -17,13 +13,7 @@ export const useAppSocietyService = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        fetchNui<ServerPromiseResp<SocietyMessage[]>>(
-            SocietyEvents.FETCH_SOCIETY_MESSAGES,
-            undefined,
-            buildRespObj(MockSocietyMessages)
-        ).then(messages => {
-            store.dispatch.appSociety.setSocietyMessages(messages.data);
-        });
+        store.dispatch.appSociety.loadSocietyMessages();
     }, []);
 
     const handleMessageBroadcast = (message: SocietyMessage) => {
@@ -39,18 +29,7 @@ export const useAppSocietyService = () => {
     };
 
     const handleResetMessages = () => {
-        try {
-            fetchNui<ServerPromiseResp<SocietyMessage[]>>(
-                SocietyEvents.FETCH_SOCIETY_MESSAGES,
-                undefined,
-                buildRespObj(MockSocietyMessages)
-            ).then(messages => {
-                store.dispatch.appSociety.setSocietyMessages(messages.data);
-            });
-        } catch (e) {
-            console.error(e);
-            store.dispatch.appSociety.setSocietyMessages([]);
-        }
+        store.dispatch.appSociety.loadSocietyMessages();
     };
 
     useNuiEvent('SOCIETY_MESSAGES', SocietyEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);

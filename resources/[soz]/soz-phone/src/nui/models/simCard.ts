@@ -1,8 +1,14 @@
 import { createModel } from '@rematch/core';
 
-import { ActiveCall, CallHistoryItem } from '../../../typings/call';
-import { Contact } from '../../../typings/contact';
-import { Message, MessageConversation } from '../../../typings/messages';
+import { ActiveCall, CallEvents, CallHistoryItem } from '../../../typings/call';
+import { ServerPromiseResp } from '../../../typings/common';
+import { Contact, ContactEvents } from '../../../typings/contact';
+import { Message, MessageConversation, MessageEvents } from '../../../typings/messages';
+import { BrowserContactsState } from '../apps/contacts/utils/constants';
+import { MockHistoryData } from '../apps/dialer/utils/constants';
+import { MockConversationMessages, MockMessageConversations } from '../apps/messages/utils/constants';
+import { fetchNui } from '../utils/fetchNui';
+import { buildRespObj } from '../utils/misc';
 import { RootModel } from '.';
 
 export const simCard = createModel<RootModel>()({
@@ -106,6 +112,43 @@ export const simCard = createModel<RootModel>()({
         },
         async appendMessage(payload: Message) {
             dispatch.simCard.ADD_MESSAGE(payload);
+        },
+        // loader
+        async loadCallHistory() {
+            fetchNui<ServerPromiseResp<CallHistoryItem[]>>(
+                CallEvents.FETCH_CALLS,
+                undefined,
+                buildRespObj(MockHistoryData)
+            ).then(calls => {
+                dispatch.simCard.SET_CALL_HISTORY(calls.data);
+            });
+        },
+        async loadContacts() {
+            fetchNui<ServerPromiseResp<Contact[]>>(
+                ContactEvents.GET_CONTACTS,
+                undefined,
+                buildRespObj(BrowserContactsState)
+            ).then(calls => {
+                dispatch.simCard.SET_CONTACT(calls.data);
+            });
+        },
+        async loadConversations() {
+            fetchNui<ServerPromiseResp<MessageConversation[]>>(
+                MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
+                undefined,
+                buildRespObj(MockMessageConversations)
+            ).then(conversations => {
+                dispatch.simCard.SET_CONVERSATIONS(conversations.data);
+            });
+        },
+        async loadMessages() {
+            fetchNui<ServerPromiseResp<Message[]>>(
+                MessageEvents.FETCH_MESSAGES,
+                undefined,
+                buildRespObj(MockConversationMessages)
+            ).then(messages => {
+                dispatch.simCard.SET_MESSAGES(messages.data);
+            });
         },
     }),
 });
