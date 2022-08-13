@@ -41,3 +41,7 @@ onNet(MessageEvents.CREATE_MESSAGE_BROADCAST, (result: CreateMessageBroadcast) =
 onNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, (result: MessageConversationResponse) => {
     sendMessageEvent(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, result);
 });
+
+onNet(MessageEvents.UPDATE_MESSAGE_CONVERSATION_SUCCESS, (result: MessageConversationResponse) => {
+    sendMessageEvent(MessageEvents.UPDATE_MESSAGE_CONVERSATION_SUCCESS, result);
+});

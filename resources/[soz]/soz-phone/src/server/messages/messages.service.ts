@@ -135,11 +135,18 @@ class _MessagesService {
                             conversationId: messageData.conversationId,
                             message: messageData.message,
                         });
-                        emitNet(MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS, participantPlayer.source, {
+                        emitNet(MessageEvents.UPDATE_MESSAGE_CONVERSATION_SUCCESS, participantPlayer.source, {
                             conversation_id: messageData.conversationId,
                             phoneNumber: authorPhoneNumber,
+                            updatedAt: new Date().getTime(),
                         });
                     }
+
+                    emitNet(MessageEvents.UPDATE_MESSAGE_CONVERSATION_SUCCESS, reqObj.source, {
+                        conversation_id: messageData.conversationId,
+                        phoneNumber: participantId,
+                        updatedAt: new Date().getTime(),
+                    });
                 }
             }
 
