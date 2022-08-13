@@ -181,6 +181,14 @@ function Dealership:GenerateVehicleButton(vehicle)
     }
 end
 
+function Dealership:GetVehicleInSpawnArea()
+    local vehicle, distance = QBCore.Functions.GetClosestVehicle(self.vehicle.spawn.xyz)
+    if distance <= 5.0 and Entity(vehicle).state.isPlayerVehicle == true then
+        return vehicle
+    end
+    return nil
+end
+
 -- Menu Functions
 function Dealership:GenerateSubMenus()
     self.menu:ClearItems()
@@ -247,6 +255,13 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                                 icon = "c:dealership/list.png",
                                 label = "Accéder au catalogue",
                                 action = function()
+                                    local vehicleInSpawnArea = dealership:GetVehicleInSpawnArea()
+                                    if vehicleInSpawnArea then
+                                        exports["soz-hud"]:DrawNotification(string.format("Le véhicule ~b~%s~s~ bloque le chemin",
+                                                                                          GetVehicleNumberPlateText(vehicleInSpawnArea)), "warning")
+                                        return
+                                    end
+
                                     dealership:GenerateSubMenus()
                                     dealership.menu:Open()
                                 end,
