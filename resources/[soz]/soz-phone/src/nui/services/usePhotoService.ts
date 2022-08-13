@@ -9,6 +9,6 @@ export const usePhotoService = () => {
         store.dispatch.photo.loadPhotos();
     }, []);
 
-    useNuiEvent('PHOTO', PhotoEvents.DELETE_PHOTO_SUCCESS, store.dispatch.photo.appendPhoto);
+    useNuiEvent('PHOTO', PhotoEvents.UPLOAD_PHOTO_SUCCESS, store.dispatch.photo.appendPhoto);
     useNuiEvent('PHOTO', PhotoEvents.DELETE_PHOTO_SUCCESS, store.dispatch.photo.removePhoto);
 };
