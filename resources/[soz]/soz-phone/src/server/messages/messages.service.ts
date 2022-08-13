@@ -124,7 +124,12 @@ class _MessagesService {
                     const participantPlayer = PlayerService.getPlayerFromIdentifier(participantIdentifier);
 
                     if (participantPlayer) {
-                        emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, messageData);
+                        emitNet(MessageEvents.SEND_MESSAGE_SUCCESS, participantPlayer.source, {
+                            ...messageData,
+                            conversation_id: messageData.conversationId,
+                            author: authorPhoneNumber,
+                            id: messageId,
+                        });
                         emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
                             conversationName: player.getPhoneNumber(),
                             conversationId: messageData.conversationId,
