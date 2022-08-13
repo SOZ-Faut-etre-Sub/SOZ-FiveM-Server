@@ -38,7 +38,7 @@ export class _MessagesDB {
      */
     async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
         const query = `
-            SELECT phone_messages_conversations.unread,
+            SELECT DISTINCT phone_messages_conversations.unread,
                    phone_messages_conversations.conversation_id,
                    phone_messages_conversations.user_identifier,
                    phone_messages_conversations.participant_identifier,
