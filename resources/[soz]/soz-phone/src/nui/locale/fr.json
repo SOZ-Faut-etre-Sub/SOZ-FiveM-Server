@@ -57,6 +57,9 @@
         "INVALID_SETTINGS": "Paramètres invalides stockés! Veuillez réinitialiser les paramètres.",
         "SETTINGS_RESET": "Les paramètres ont été réinitialisés!"
       },
+      "ZOOM": {
+        "WARNING": "Le zoom souhaité sur le téléphone est trop grand pour être affiché sur votre écran. Veuillez utiliser un zoom plus petit."
+      },
       "FEEDBACK": {
         "UPDATE_FAILED": "Mise a jour impossible",
         "UPDATE_SUCCESS": "Image mise a jour"
