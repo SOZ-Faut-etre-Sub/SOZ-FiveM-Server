@@ -132,6 +132,8 @@ function Inventory.Clear(inv, keep)
         end
     end
 end
+RegisterNetEvent("inventory:server:Clear", Inventory.Clear)
+exports("Clear", Inventory.Clear)
 
 function Inventory.Remove(inv)
     inv = Inventory(inv)
