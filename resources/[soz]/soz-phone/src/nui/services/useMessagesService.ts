@@ -31,7 +31,7 @@ export const useMessagesService = () => {
         ).then(messages => {
             store.dispatch.simCard.setMessages(messages.data);
         });
-    });
+    }, []);
 
     const handleMessageBroadcast = ({ conversationName, conversationId, message }) => {
         if (visibility && pathname.includes('/messages/conversations')) {
