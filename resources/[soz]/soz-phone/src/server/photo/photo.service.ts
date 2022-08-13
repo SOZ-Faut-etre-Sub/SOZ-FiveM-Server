@@ -19,7 +19,7 @@ class _PhotoService {
             const identifier = PlayerService.getIdentifier(reqObj.source);
             const photo = await this.photoDB.uploadPhoto(identifier, reqObj.data);
 
-            emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, reqObj.source, reqObj.data);
+            emitNet(PhotoEvents.UPLOAD_PHOTO_SUCCESS, reqObj.source, photo);
 
             resp({ status: 'ok', data: photo });
         } catch (e) {

@@ -14,7 +14,7 @@ export const photo = createModel<RootModel>()({
             return [...payload];
         },
         add: (state, payload) => {
-            return [...state, payload];
+            return [payload, ...state];
         },
         remove: (state, payload) => {
             return [...state.filter(photo => photo.id !== payload)];

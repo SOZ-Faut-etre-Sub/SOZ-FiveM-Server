@@ -32,7 +32,7 @@ export const Conversations = (): any => {
         const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
 
         return conversations.filter(
-            conversation => conversation?.display?.match(regExp) || conversation.phoneNumber.match(regExp)
+            conversation => conversation?.display?.match(regExp) || conversation?.phoneNumber?.match(regExp) || ''
         );
     }, [conversations, searchValue]);
 
