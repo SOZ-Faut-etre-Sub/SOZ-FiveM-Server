@@ -30,6 +30,11 @@ export const useMessagesService = () => {
         MessageEvents.CREATE_MESSAGE_CONVERSATION_SUCCESS,
         store.dispatch.simCard.appendConversation
     );
+    useNuiEvent(
+        'MESSAGES',
+        MessageEvents.UPDATE_MESSAGE_CONVERSATION_SUCCESS,
+        store.dispatch.simCard.updateConversation
+    );
     useNuiEvent('MESSAGES', MessageEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
     useNuiEvent('MESSAGES', MessageEvents.SEND_MESSAGE_SUCCESS, store.dispatch.simCard.appendMessage);
 };

@@ -69,6 +69,18 @@ export const simCard = createModel<RootModel>()({
 
             return { ...state, conversations: [payload, ...state.conversations] };
         },
+        UPDATE_CONVERSATION(state, payload: MessageConversation) {
+            if (!state.conversations.find(conversation => conversation.conversation_id === payload.conversation_id)) {
+                return { ...state, conversations: [payload, ...state.conversations] };
+            }
+
+            return {
+                ...state,
+                conversations: state.conversations.map(conversation =>
+                    conversation.conversation_id === payload.conversation_id ? payload : conversation
+                ),
+            };
+        },
         SET_MESSAGES(state, payload: Message[]) {
             return { ...state, messages: payload };
         },
@@ -106,6 +118,9 @@ export const simCard = createModel<RootModel>()({
         },
         async appendConversation(payload: MessageConversation) {
             dispatch.simCard.ADD_CONVERSATION(payload);
+        },
+        async updateConversation(payload: MessageConversation) {
+            dispatch.simCard.UPDATE_CONVERSATION(payload);
         },
         async setMessages(payload: Message[]) {
             dispatch.simCard.SET_MESSAGES(payload);

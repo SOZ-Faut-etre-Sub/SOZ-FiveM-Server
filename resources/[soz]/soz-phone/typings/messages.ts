@@ -82,6 +82,7 @@ export enum MessageEvents {
     FETCH_MESSAGE_GROUPS_FAILED = 'phone:fetchMessageGroupsFailed',
     CREATE_MESSAGE_CONVERSATION = 'phone:createMessageGroup',
     CREATE_MESSAGE_CONVERSATION_SUCCESS = 'phone:createMessageConversationSuccess',
+    UPDATE_MESSAGE_CONVERSATION_SUCCESS = 'phone:updateMessageConversationSuccess',
     CREATE_MESSAGE_GROUP_SUCCESS = 'phone:createMessageGroupSuccess',
     CREATE_MESSAGE_GROUP_FAILED = 'phone:createMessageGroupFailed',
     SEND_MESSAGE = 'phone:sendMessage',
