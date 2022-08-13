@@ -1,7 +1,8 @@
 local auctions = {}
 
 CreateThread(function()
-    local result = MySQL.Sync.fetchAll("SELECT * FROM vehicles WHERE category IN (?) AND price > 0 ORDER BY RAND () LIMIT ?", { LuxuryDealershipConfig.AllowedCategories, #LuxuryDealershipConfig.Spawns })
+    local result = MySQL.Sync.fetchAll("SELECT * FROM vehicles WHERE category IN (?) AND price > 0 ORDER BY RAND () LIMIT ?",
+                                       {LuxuryDealershipConfig.AllowedCategories, #LuxuryDealershipConfig.Spawns})
     for i, vehicle in ipairs(result) do
         local spawn = LuxuryDealershipConfig.Spawns[i]
         auctions[vehicle.model] = {
@@ -14,7 +15,7 @@ CreateThread(function()
             bestBidCitizenId = nil,
             bestBidName = nil,
             bestBidPrice = nil,
-            required_licence = vehicle.required_licence
+            required_licence = vehicle.required_licence,
         }
         auctions[vehicle.model].window.options.name = "luxury_" .. vehicle.model
     end
@@ -45,15 +46,20 @@ QBCore.Functions.CreateCallback("soz-dealership:server:BidAuction", function(sou
     cb(true, nil)
 end)
 
-exports('finishAuctions', function()
+exports("finishAuctions", function()
     for _, auction in pairs(auctions) do
         if auction.bestBidPrice ~= nil then
-            local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { auction.bestBidCitizenId })
+            local PlayerData = exports.oxmysql:singleSync("SELECT * FROM player where citizenid = ?", {
+                auction.bestBidCitizenId,
+            })
             local playerMoney = json.decode(PlayerData.money)
 
             if playerMoney.money >= auction.bestBidPrice then
                 playerMoney.money = math.floor(playerMoney.money - auction.bestBidPrice)
-                exports.oxmysql:singleSync('UPDATE player SET money = ? WHERE citizenid = ?', { json.encode(playerMoney), auction.bestBidCitizenId})
+                exports.oxmysql:singleSync("UPDATE player SET money = ? WHERE citizenid = ?", {
+                    json.encode(playerMoney),
+                    auction.bestBidCitizenId,
+                })
 
                 exports.oxmysql:insertSync(
                     "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -74,7 +80,8 @@ exports('finishAuctions', function()
                     })
                 print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " a remporté une " .. auction.model .. " pour " .. auction.bestBidPrice)
             else
-                print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " n'avait pas les fonds au moment de la finalisation de l'achat d'une " .. auction.model)
+                print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " n'avait pas les fonds au moment de la finalisation de l'achat d'une " ..
+                          auction.model)
             end
         end
     end
