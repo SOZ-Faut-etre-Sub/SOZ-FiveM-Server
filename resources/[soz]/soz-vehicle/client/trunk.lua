@@ -19,7 +19,6 @@ end
 Citizen.CreateThread(function()
     while true do
         if openTrunkVehicle ~= nil then
-            print(#(GetEntityCoords(PlayerPedId()) - GetEntityCoords(openTrunkVehicle)))
             if (not DoesEntityExist(openTrunkVehicle)) or (#(GetEntityCoords(PlayerPedId()) - GetEntityCoords(openTrunkVehicle)) > 3.0) then
                 TriggerEvent("inventory:client:closeInventory")
                 exports["soz-hud"]:DrawNotification("Le coffre est trop loin", "warning")
