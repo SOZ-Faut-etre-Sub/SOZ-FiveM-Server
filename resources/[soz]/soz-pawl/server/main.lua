@@ -108,7 +108,7 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
     end
 
     if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planche est plein !", "error")
         return
     end
 
@@ -185,7 +185,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
     local craftItemInventory = exports["soz-inventory"]:GetItem(Player.PlayerData.source, craft.SourceItem, nil, true)
 
     if craftItemInventory < (craft.SourceItemAmount or 1) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'a pas assez de planche !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez de planches !", "error")
         return
     end
 
