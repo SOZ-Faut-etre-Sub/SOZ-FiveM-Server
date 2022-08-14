@@ -89,6 +89,7 @@ local function spawnVehicle(vehicle)
     local createdVehicle = CreateVehicle(model, vehiclePosition.x, vehiclePosition.y, vehiclePosition.z, vehiclePosition.w, false, false)
 
     SetEntityInvincible(createdVehicle, true)
+    SetVehicleDirtLevel(createdVehicle, 0)
     FreezeEntityPosition(createdVehicle, true)
     SetVehicleNumberPlateText(createdVehicle, "LUXURY")
 
@@ -100,6 +101,9 @@ local function spawnVehicle(vehicle)
                 icon = "c:dealership/bid.png",
                 label = "Voir la vente",
                 model = vehicle.model,
+                canInteract = function()
+                    return PlayerData.metadata.canBid
+                end
             },
         },
         distance = 1.0,
