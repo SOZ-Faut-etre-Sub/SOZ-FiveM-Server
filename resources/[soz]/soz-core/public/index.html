@@ -5,15 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Soz Core App</title>
         <script type="text/javascript">
+            let uiIsLoaded = false;
+
+            function loadNUIScript(url) {
+                const script = document.createElement('script');
+                script.setAttribute('src', url);
+
+                document.head.appendChild(script);
+                uiIsLoaded = true;
+            }
+
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'soz-core-nui-load') {
                     const url = event.data.mode === 'dev' ? 'http://localhost:9000/nui.js' : 'https://cfx-nui-soz-core/build/nui.js';
-                    const script = document.createElement('script');
-                    script.setAttribute('src', url);
-
-                    document.head.appendChild(script);
+                    loadNUIScript(url);
                 }
             });
+
+            setTimeout(() => {
+                if (uiIsLoaded) return;
+
+                const url = !!window.invokeNative ? 'https://cfx-nui-soz-core/build/nui.js' : 'http://localhost:9000/nui.js';
+                loadNUIScript(url);
+            }, 5000);
         </script>
         <style>
             html, body, #app {
