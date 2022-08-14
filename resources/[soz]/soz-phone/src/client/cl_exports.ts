@@ -1,6 +1,7 @@
 import { PhoneEvents } from '../../typings/phone';
 import { sendMessage } from '../utils/messages';
-import { initializeCallHandler } from './calls/cl_calls.controller';
+import { animationService } from './animations/animation.controller';
+import { callService, initializeCallHandler } from './calls/cl_calls.controller';
 import { hidePhone, showPhone } from './cl_main';
 import { verifyExportArgType } from './cl_utils';
 
@@ -50,4 +51,10 @@ exps('startPhoneCall', (number: string) => {
     verifyExportArgType('startPhoneCall', number, ['string']);
 
     initializeCallHandler({ receiverNumber: number });
+});
+
+exps('stopPhoneCall', async () => {
+    await hidePhone();
+    callService.handleEndCall();
+    await animationService.endPhoneCall();
 });
