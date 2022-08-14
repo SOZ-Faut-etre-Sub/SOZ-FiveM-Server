@@ -49,20 +49,6 @@ local HudVoiceStatus = {
     voiceMode = 0,
 }
 
---- Update Functions
-
-RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
-    PlayerHaveGPS, PlayerHaveCompass = false, false
-    for _, item in pairs(PlayerData.items or {}) do
-        if item.name == "gps" then
-            PlayerHaveGPS = true
-        end
-        if item.name == "compass" then
-            PlayerHaveCompass = true
-        end
-    end
-end)
-
 --- Global Hud display function
 --- @param state boolean
 local function setHudDisplay(state)
@@ -111,6 +97,29 @@ local function setPlayerData(data)
         })
     end
 end
+
+--- Update Functions
+
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
+    PlayerHaveGPS, PlayerHaveCompass = false, false
+    for _, item in pairs(PlayerData.items or {}) do
+        if item.name == "gps" then
+            PlayerHaveGPS = true
+        end
+        if item.name == "compass" then
+            PlayerHaveCompass = true
+        end
+    end
+
+    setPlayerData({
+        health = PlayerData.metadata["health"],
+        hunger = PlayerData.metadata["hunger"],
+        thirst = PlayerData.metadata["thirst"],
+        alcohol = PlayerData.metadata["alcohol"],
+        drug = PlayerData.metadata["drug"],
+        armor = PlayerData.metadata["armor"].current,
+    })
+end)
 
 --- Update VehicleData
 --- @param data VehicleData

@@ -1,3 +1,4 @@
+import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { addMethodMetadata, setMethodMetadata } from './reflect';
 
 export type EventMetadata = {
@@ -6,6 +7,11 @@ export type EventMetadata = {
 };
 
 export const EventMetadataKey = 'soz_core.decorator.event';
+export const GameEventMetadataKey = 'soz_core.decorator.game.event';
+
+export const OnEvent = (event: ServerEvent | ClientEvent, net = true): MethodDecorator => {
+    return On(event.toString(), net);
+};
 
 export const On = (name?: string, net = true): MethodDecorator => {
     return (target, propertyKey) => {
@@ -14,6 +20,20 @@ export const On = (name?: string, net = true): MethodDecorator => {
             {
                 name: name || propertyKey.toString(),
                 net,
+            },
+            target,
+            propertyKey
+        );
+    };
+};
+
+export const OnGameEvent = (event: GameEvent): MethodDecorator => {
+    return (target, propertyKey) => {
+        addMethodMetadata(
+            GameEventMetadataKey,
+            {
+                name: event.toString(),
+                net: false,
             },
             target,
             propertyKey

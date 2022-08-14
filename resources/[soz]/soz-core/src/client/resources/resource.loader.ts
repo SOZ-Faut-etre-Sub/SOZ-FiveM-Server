@@ -13,7 +13,31 @@ export class ResourceLoader {
         }
     }
 
-    unloadedPtfxAsset(name: string): void {
+    unloadPtfxAsset(name: string): void {
         RemoveNamedPtfxAsset(name);
+    }
+
+    async loadAnimationDictionary(name: string): Promise<void> {
+        if (!HasAnimDictLoaded(name)) {
+            RequestAnimDict(name);
+
+            while (!HasAnimDictLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
+
+    async loadAnimationSet(name: string): Promise<void> {
+        if (!HasAnimSetLoaded(name)) {
+            RequestAnimSet(name);
+
+            while (!HasAnimSetLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
+
+    unloadedAnimationSet(name: string): void {
+        RemoveAnimSet(name);
     }
 }

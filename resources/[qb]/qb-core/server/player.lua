@@ -89,6 +89,17 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
     PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] or 0
+    PlayerData.metadata['fiber'] = PlayerData.metadata['fiber'] or 70
+    PlayerData.metadata['lipid'] = PlayerData.metadata['lipid'] or 70
+    PlayerData.metadata['sugar'] = PlayerData.metadata['sugar'] or 70
+    PlayerData.metadata['protein'] = PlayerData.metadata['protein'] or 70
+    PlayerData.metadata['max_stamina'] = PlayerData.metadata['max_stamina'] or 100
+    PlayerData.metadata['strength'] = PlayerData.metadata['strength'] or 100
+    PlayerData.metadata['stress_level'] = PlayerData.metadata['stress_level'] or 0
+    PlayerData.metadata['last_max_stamina_update'] = PlayerData.metadata['last_max_stamina_update'] or nil
+    PlayerData.metadata['last_strength_update'] = PlayerData.metadata['last_strength_update'] or nil
+    PlayerData.metadata['last_stress_level_update'] = PlayerData.metadata['last_stress_level_update'] or nil
+    PlayerData.metadata['health_level'] = PlayerData.metadata['health_level'] or 100
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
     PlayerData.metadata['armor'] = {current = 0, hidden = false}
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false
@@ -177,7 +188,13 @@ end
 function QBCore.Player.Logout(source)
     local src = source
     TriggerClientEvent('QBCore:Client:OnPlayerUnload', src)
-    TriggerClientEvent('QBCore:Player:UpdatePlayerData', src)
+
+    local Player = QBCore.Players[src]
+
+    if Player then
+        Player.Functions.Save()
+    end
+
     Wait(200)
     TriggerEvent('inventory:DropPlayerInventory', src)
     TriggerEvent('QBCore:Server:PlayerUnload', src)
@@ -377,10 +394,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
+        local strengthMultiplier = math.ceil(self.PlayerData.metadata.strength / 100);
+
         if (baseBag == 0 and jobBag == 0) or ((baseBag ~= 0 or jobBag ~= 0) and self.PlayerData.cloth_config.Config.HideBag) then
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000)
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 20000 * strengthMultiplier)
         else
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000)
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, 60000 * strengthMultiplier)
         end
     end
 
