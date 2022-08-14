@@ -59,11 +59,8 @@ exports("finishAuctions", function()
                 playerMoney.money = math.floor(playerMoney.money - auction.bestBidPrice)
                 metadata.lastBidTime = os.time()
                 metadata.canBid = false
-                exports.oxmysql:singleSync("UPDATE player SET money = ?, metadata = ? WHERE citizenid = ?", {
-                    json.encode(playerMoney),
-                    json.encode(metadata),
-                    auction.bestBidCitizenId,
-                })
+                exports.oxmysql:singleSync("UPDATE player SET money = ?, metadata = ? WHERE citizenid = ?",
+                                           {json.encode(playerMoney), json.encode(metadata), auction.bestBidCitizenId})
 
                 exports.oxmysql:insertSync(
                     "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -82,7 +79,8 @@ exports("finishAuctions", function()
                         os.time(),
                         os.time(),
                     })
-                print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " a remporté une " .. auction.model .. " pour $" .. QBCore.Shared.GroupDigits(auction.bestBidPrice))
+                print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " a remporté une " .. auction.model .. " pour $" ..
+                          QBCore.Shared.GroupDigits(auction.bestBidPrice))
             else
                 print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " n'avait pas les fonds au moment de la finalisation de l'achat d'une " ..
                           auction.model)
