@@ -99,7 +99,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        SetPlayerMaxStamina(PlayerId(), player.metadata.maxstamina);
+        SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
 
         // @TODO Set damage multiplier
     }

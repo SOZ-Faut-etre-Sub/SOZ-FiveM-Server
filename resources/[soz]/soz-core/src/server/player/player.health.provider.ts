@@ -67,44 +67,44 @@ export class PlayerHealthProvider {
             this.playerService.incrementMetadata(source, 'sugar', SUGAR_RATE, 0, 200);
             this.playerService.incrementMetadata(source, 'protein', PROTEIN_RATE, 0, 200);
 
-            if (!player.metadata.lastStrengthUpdate) {
-                this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
+            if (!player.metadata.last_strength_update) {
+                this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
             } else {
-                const lastUpdate = new Date(player.metadata.lastStrengthUpdate);
+                const lastUpdate = new Date(player.metadata.last_strength_update);
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
                 const hours = diff / (1000 * 60 * 60);
 
                 if (hours > 1) {
-                    this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
+                    this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
                 }
             }
 
-            if (!player.metadata.lastMaxStaminaUpdate) {
-                this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
+            if (!player.metadata.last_max_stamina_update) {
+                this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
             } else {
-                const lastUpdate = new Date(player.metadata.lastMaxStaminaUpdate);
+                const lastUpdate = new Date(player.metadata.last_max_stamina_update);
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
                 const hours = diff / (1000 * 60 * 60);
 
                 if (hours > 1) {
-                    this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
-                    this.playerService.incrementMetadata(source, 'maxstamina', MAX_STAMINA_RATE, 50, 120);
+                    this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
+                    this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 50, 120);
                 }
             }
 
-            if (!player.metadata.lastStressUpdate) {
-                this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
+            if (!player.metadata.last_stress_level_update) {
+                this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
             } else {
-                const lastUpdate = new Date(player.metadata.lastStressUpdate);
+                const lastUpdate = new Date(player.metadata.last_stress_level_update);
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
 
                 if (diff > 1000 * 60 * 10) {
-                    this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
-                    this.playerService.incrementMetadata(source, 'stressLevel', STRESS_RATE, 0, 100);
+                    this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
+                    this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, 0, 100);
                 }
             }
         }
@@ -115,20 +115,20 @@ export class PlayerHealthProvider {
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)
     public async increaseStrength(source: number): Promise<void> {
-        this.playerService.setPlayerMetadata(source, 'lastStrengthUpdate', new Date().toUTCString());
+        this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
         this.playerService.incrementMetadata(source, 'strength', 2, 50, 120);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STAMINA)
     public async increaseStamina(source: number): Promise<void> {
-        this.playerService.setPlayerMetadata(source, 'lastMaxStaminaUpdate', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'maxstamina', 2, 50, 120);
+        this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
+        this.playerService.incrementMetadata(source, 'max_stamina', 2, 50, 120);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
     public async increaseStress(source: number, stress: number): Promise<void> {
-        this.playerService.setPlayerMetadata(source, 'lastStressUpdate', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'stressLevel', stress, 0, 100);
+        this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
+        this.playerService.incrementMetadata(source, 'stress_level', stress, 0, 100);
     }
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_CHECK)
@@ -149,9 +149,9 @@ export class PlayerHealthProvider {
         }
 
         if (badKeys > 0) {
-            this.playerService.incrementMetadata(source, 'healthLevel', -badKeys, 0, 100);
+            this.playerService.incrementMetadata(source, 'health_level', -badKeys, 0, 100);
         } else {
-            this.playerService.incrementMetadata(source, 'healthLevel', 1, 0, 100);
+            this.playerService.incrementMetadata(source, 'health_level', 1, 0, 100);
         }
     }
 }

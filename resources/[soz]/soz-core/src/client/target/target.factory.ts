@@ -54,7 +54,7 @@ export class TargetFactory {
 
         exports['qb-target'].AddBoxZone(
             id,
-            zone.center,
+            { x: zone.center[0], y: zone.center[1], z: zone.center[2] },
             zone.length,
             zone.width,
             {

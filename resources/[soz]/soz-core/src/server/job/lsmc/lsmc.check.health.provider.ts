@@ -100,13 +100,13 @@ export class LSMCCheckHealthProvider {
 
         let state = '';
 
-        if (targetPlayer.metadata.healthLevel > 80) {
+        if (targetPlayer.metadata.health_level > 80) {
             state = 'excellent';
-        } else if (targetPlayer.metadata.healthLevel > 60) {
+        } else if (targetPlayer.metadata.health_level > 60) {
             state = 'bon';
-        } else if (targetPlayer.metadata.healthLevel > 40) {
+        } else if (targetPlayer.metadata.health_level > 40) {
             state = 'moyen';
-        } else if (targetPlayer.metadata.healthLevel > 20) {
+        } else if (targetPlayer.metadata.health_level > 20) {
             state = 'mauvais';
         } else {
             state = 'exécrable';
