@@ -8,6 +8,8 @@
             let phoneIsLoaded = false;
 
             function loadNUIScript(url) {
+                if (phoneIsLoaded) return;
+
                 const script = document.createElement('script');
                 script.setAttribute('src', url);
 
@@ -23,8 +25,6 @@
             });
 
             setTimeout(() => {
-                if (phoneIsLoaded) return;
-
                 const url = !!window.invokeNative ? 'https://cfx-nui-soz-phone/build/nui/nui.js' : 'http://localhost:9001/nui.js';
                 loadNUIScript(url);
             }, 5000);
