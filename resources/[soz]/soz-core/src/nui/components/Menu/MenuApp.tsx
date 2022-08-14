@@ -1,4 +1,4 @@
-import { FunctionComponent, PropsWithChildren, useEffect } from 'react';
+import { FunctionComponent, PropsWithChildren } from 'react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { MenuType } from '../../../shared/menu';

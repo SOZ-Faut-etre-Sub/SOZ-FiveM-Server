@@ -77,12 +77,12 @@ export class TargetFactory {
         });
     }
 
-    // @TODO - Implement it when needed
-    public createWithPedSpawn(peds: PedOptions[]) {}
-
-    // @TODO - Implement it when needed
-    public createForModel() {}
-
-    // @TODO - Implement it when needed
-    public createForAllVehicle() {}
+    // // @TODO - Implement it when needed
+    // public createWithPedSpawn(peds: PedOptions[]) {}
+    //
+    // // @TODO - Implement it when needed
+    // public createForModel() {}
+    //
+    // // @TODO - Implement it when needed
+    // public createForAllVehicle() {}
 }
