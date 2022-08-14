@@ -137,7 +137,7 @@ export class PlayerDiseaseProvider {
         }
 
         if (disease === 'intoxication') {
-            this.notifier.notify('Vous avez digéré un truc pas frais.');
+            this.notifier.notify('Vous avez mangé un truc pas frais...');
             this.currentDiseaseLoop = this.intoxicationLoop();
         }
     }
