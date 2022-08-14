@@ -201,6 +201,8 @@ CreateThread(function()
 		end
 
 		BlackoutGlobalCheck = function()
+			exports["soz-phone"]:stopPhoneCall()
+
 			if GlobalState.blackout_level > 3 then
 				return false
 			end
