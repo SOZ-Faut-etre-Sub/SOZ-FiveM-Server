@@ -1,7 +1,7 @@
 import { On } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
@@ -55,7 +55,7 @@ export class PlayerStressProvider {
         }
     }
 
-    @Tick(1000)
+    @Tick(TickInterval.EVERY_SECOND)
     async checkStressfulEvent(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
@@ -103,7 +103,7 @@ export class PlayerStressProvider {
             const vehicleClass = GetVehicleClass(currentVehicle);
 
             if (vehicleClass !== 14 && vehicleClass !== 15 && vehicleClass !== 16) {
-                const speed = GetEntitySpeed(currentVehicle) * 2.237;
+                const speed = GetEntitySpeed(currentVehicle) * 3.6;
 
                 if (speed > 130) {
                     return this.updateStress();
@@ -112,7 +112,7 @@ export class PlayerStressProvider {
         }
     }
 
-    @Tick(1000)
+    @Tick(TickInterval.EVERY_SECOND)
     async onTick(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;

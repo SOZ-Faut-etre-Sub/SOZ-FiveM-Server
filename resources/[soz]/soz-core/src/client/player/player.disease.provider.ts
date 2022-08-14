@@ -1,7 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
@@ -142,7 +142,7 @@ export class PlayerDiseaseProvider {
         }
     }
 
-    @Tick(1000 * 60 * 15)
+    @Tick(TickInterval.EVERY_15_MINUTE)
     public async diseaseLoop(): Promise<void> {
         const player = this.playerService.getPlayer();
 

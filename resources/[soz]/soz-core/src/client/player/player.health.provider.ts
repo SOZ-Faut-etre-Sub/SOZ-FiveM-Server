@@ -1,7 +1,7 @@
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData } from '../../shared/player';
@@ -20,14 +20,14 @@ export class PlayerHealthProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
-    @Tick(60000)
+    @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
             TriggerServerEvent(ServerEvent.PLAYER_NUTRITION_LOOP);
         }
     }
 
-    @Tick(60 * 1000 * 60)
+    @Tick(TickInterval.EVERY_HOUR)
     private async nutritionCheck(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;

@@ -3,7 +3,7 @@ import { Once } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { PollutionLevel } from '../../shared/pollution';
 import { Forecast, Time, Weather } from '../../shared/weather';
@@ -30,7 +30,7 @@ export class WeatherProvider {
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
 
-    @Tick(1000)
+    @Tick(TickInterval.EVERY_SECOND)
     advanceTime(): void {
         const currentTime = { ...(GlobalState.time as Time) };
 
@@ -109,7 +109,7 @@ export class WeatherProvider {
         return 'OVERCAST';
     }
 
-    @Tick()
+    @Tick(TickInterval.EVERY_FRAME)
     async updateWeather() {
         await wait((Math.random() * 5 + 10) * 60 * 1000);
 
