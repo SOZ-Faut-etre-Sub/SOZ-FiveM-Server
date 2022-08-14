@@ -34,16 +34,16 @@ export type PlayerMetadata = {
     lipid: number;
     sugar: number;
     protein: number;
-    maxstamina: number;
+    max_stamina: number;
     strength: number;
-    healthLevel: number;
-    stressLevel: number;
+    stress_level: number;
+    health_level: number;
     armor: {
         current: number;
         hidden: boolean;
     };
     organ: 'foie' | 'rein' | null;
-    lastStrengthUpdate: string | null;
-    lastMaxStaminaUpdate: string | null;
-    lastStressUpdate: string | null;
+    last_strength_update: string | null;
+    last_max_stamina_update: string | null;
+    last_stress_level_update: string | null;
 };

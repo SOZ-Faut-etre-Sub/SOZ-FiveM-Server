@@ -81,7 +81,7 @@ export class ItemHealthProvider {
 
         // @TODO play progress animation
 
-        this.playerService.incrementMetadata(source, 'stressLevel', -20, 0, 100);
+        this.playerService.incrementMetadata(source, 'stress_level', -20, 0, 100);
 
         this.notifier.notify(
             source,

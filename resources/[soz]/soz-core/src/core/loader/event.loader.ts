@@ -22,8 +22,6 @@ export class EventLoader {
     }
 
     private handleGameEvent(eventName: string, args: any[]): void {
-        console.log('gameEventTriggered', eventName, args);
-
         if (this.gameEvents[eventName]) {
             for (const method of this.gameEvents[eventName]) {
                 method(...args);

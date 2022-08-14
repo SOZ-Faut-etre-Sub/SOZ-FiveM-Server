@@ -124,13 +124,13 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (player.metadata.stressLevel < 20) {
+        if (player.metadata.stress_level < 20) {
             return;
-        } else if (player.metadata.stressLevel < 40) {
+        } else if (player.metadata.stress_level < 40) {
             ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.01);
-        } else if (player.metadata.stressLevel < 60) {
+        } else if (player.metadata.stress_level < 60) {
             ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.03);
-        } else if (player.metadata.stressLevel < 80) {
+        } else if (player.metadata.stress_level < 80) {
             ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.07);
         } else {
             ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.1);

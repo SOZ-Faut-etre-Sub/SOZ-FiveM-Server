@@ -153,7 +153,7 @@ export class PlayerDiseaseProvider {
         let range = DISEASE_RANGE[this.pollution.getPollutionLevel()];
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
-            range *= (player.metadata.healthLevel + 1) / 100;
+            range *= (player.metadata.health_level + 1) / 100;
         }
 
         range = Math.max(range, 10);
