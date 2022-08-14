@@ -50,7 +50,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, veh
             local licences = Player.PlayerData.metadata["licences"]
             local licenceType = "car"
 
-            if vehicleType == "bike" then
+            if vehicleType == "bike" or vehicleClass == 8 then
                 licenceType = "motorcycle"
             elseif vehicleType == "automobile" and (vehicleClass == 10 or vehicleClass == 17 or vehicleClass == 20) then
                 licenceType = "truck"
