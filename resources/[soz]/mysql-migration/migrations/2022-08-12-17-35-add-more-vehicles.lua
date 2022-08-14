@@ -23,6 +23,6 @@ table.insert(migrations, {
         [[ UPDATE vehicles SET category = 'Sports' WHERE model = 'sentinel3'; ]],
         [[ UPDATE vehicles SET price = 0 WHERE model = 'tropos'; ]],
         [[ UPDATE vehicles SET name = 'Rapid GT Classic' WHERE model = 'rapid3'; ]],
-        [[ UPDATE vehicles SET dealership_id = 'luxury' WHERE category IN ('Sports', 'Sportsclassics') AND price > 0; ]]
-    }
+        [[ UPDATE vehicles SET dealership_id = 'luxury' WHERE category IN ('Sports', 'Sportsclassics') AND price > 0; ]],
+    },
 })
