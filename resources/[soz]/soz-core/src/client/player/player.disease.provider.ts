@@ -120,7 +120,7 @@ export class PlayerDiseaseProvider {
         this.currentDisease = disease;
 
         if (disease === 'rhume') {
-            this.notifier.notify('ous avez un petit rhume.');
+            this.notifier.notify('Vous avez un petit rhume.');
             this.currentDiseaseLoop = this.commonColdLoop();
         }
 
