@@ -62,6 +62,7 @@ model concess_entreprise {
   job        String @db.VarChar(15)
   vehicle    String @db.VarChar(15)
   price      Int
+  category   String @default("car") @db.VarChar(50)
   liverytype Int
 }
 
@@ -78,6 +79,7 @@ model fuel_storage {
   type     String  @default("public") @db.VarChar(20)
   owner    String? @db.VarChar(32)
   stock    Int
+  price    Float?  @default(0.00) @db.Float
   position String  @db.Text
   model    Int
   zone     String  @db.Text
@@ -227,7 +229,7 @@ model phone_profile {
 model phone_society_messages {
   id              Int      @id @default(autoincrement())
   conversation_id String   @db.VarChar(512)
-  source_phone    String   @db.VarChar(8)
+  source_phone    String   @db.VarChar(10)
   message         String   @db.VarChar(512)
   position        String?  @db.LongText
   isTaken         Int      @default(0) @db.TinyInt
@@ -362,6 +364,21 @@ model upw_facility {
   type       String  @db.VarChar(50)
   identifier String  @db.VarChar(50)
   data       String? @db.LongText
+}
+
+model vehicles {
+  model            String  @id @db.VarChar(50)
+  hash             Int?
+  name             String  @db.VarChar(255)
+  price            Int
+  category         String? @db.VarChar(50)
+  dealership_id    String? @db.VarChar(10)
+  required_licence String? @db.VarChar(10)
+  size             Int?    @default(1)
+  job_name         String? @db.Text
+
+  @@index([category])
+  @@index([dealership_id], map: "vehicles_dealership_idx")
 }
 
 enum bank_accounts_account_type {
