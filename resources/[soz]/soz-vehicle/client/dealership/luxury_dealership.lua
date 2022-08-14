@@ -103,7 +103,7 @@ local function spawnVehicle(vehicle)
                 model = vehicle.model,
                 canInteract = function()
                     return PlayerData.metadata.canBid
-                end
+                end,
             },
         },
         distance = 1.0,
