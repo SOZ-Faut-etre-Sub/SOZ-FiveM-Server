@@ -204,11 +204,6 @@ setTick(async () => {
         sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
     }
 
-    if (global.isPhoneOpen && exps['progressbar'].IsDoingAction()) {
-        await hidePhone();
-        callService.handleEndCall();
-    }
-
     if (global.isPhoneOpen && cityIsInBlackOut()) {
         await hidePhone();
         callService.handleEndCall();
