@@ -179,5 +179,10 @@ function AdminMenuVehicles(menu, permission)
     end)
 
     --- Add to main menu
-    menu:AddButton({icon = "🚗", label = "Gestion du véhicule", value = vehicleMenu})
+    menu:AddButton({
+        icon = "🚗",
+        label = "Gestion du véhicule",
+        value = vehicleMenu,
+        disabled = permission ~= "admin" and permission ~= "staff",
+    })
 end
