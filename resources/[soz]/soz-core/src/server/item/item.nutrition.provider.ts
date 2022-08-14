@@ -75,7 +75,12 @@ export class ItemNutritionProvider {
         const expired = this.item.isItemExpired(inventoryItem);
         const hunger = expired ? EXPIRED_MALUS : item.nutrition.hunger * progress;
         const thirst = expired ? EXPIRED_MALUS : item.nutrition.thirst * progress;
-        const alcohol = expired ? EXPIRED_MALUS : item.nutrition.alcohol * progress;
+        let alcohol = expired ? item.nutrition.alcohol * 1.2 : item.nutrition.alcohol * progress;
+
+        // Reduce alcohol if drinking a non-alcoholic drink
+        if (!expired && alcohol < 0.1 && thirst > 0.1) {
+            alcohol = 0 - item.nutrition.thirst * progress * 0.2;
+        }
 
         this.playerService.incrementMetadata(source, 'hunger', hunger, 0, 100);
         this.playerService.incrementMetadata(source, 'thirst', thirst, 0, 100);
