@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait } from '../../core/utils';
+import { Vector4 } from '../../shared/polyzone/vector';
 import { Weapons } from '../../shared/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
@@ -138,6 +139,12 @@ export class AnimationService {
             this.currentAnimation = null;
             this.currentAnimationLoopResolve = null;
         }
+    }
+
+    public async walkToCoords(coords: Vector4, duration = 1000) {
+        TaskGoStraightToCoord(PlayerPedId(), coords[0], coords[1], coords[2], 1.0, duration, coords[3], 0.1);
+
+        await wait(duration);
     }
 
     public async playScenario(scenario: Scenario): Promise<void> {
