@@ -232,6 +232,8 @@ end)
 ---@param coords vector4 Spawn location
 ---@param mods table Vehicle properties
 QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(source, cb, modelName, coords, mods, condition)
+    local player = QBCore.Functions.GetPlayer(source)
+
     if not condition then
         condition = {}
         condition.fuelLevel = 1000
@@ -248,6 +250,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:SpawnVehicle", function(sourc
     Entity(veh).state:set("mods", json.encode(mods), true)
     Entity(veh).state:set("condition", json.encode(condition), true)
     Entity(veh).state:set("isPlayerVehicle", true, true)
+
+    TriggerEvent("monitor:server:event", "vehicle_garage_out", {
+        player_source = player.PlayerData.source,
+        vehicle_plate = mods.plate,
+    }, {})
 
     local res = MySQL.Sync.execute([[
         UPDATE player_vehicles
@@ -284,11 +291,13 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     end
 
     if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
-        if type == "depot" then
-            bennysFee = math.ceil(qbVehicle.price * 0.02)
-            MySQL.Async.execute("UPDATE bank_accounts SET money = money + ? WHERE account_type = 'business' AND businessid = 'bennys'", {
-                bennysFee,
-            })
+        TriggerEvent("monitor:server:event", "pay_vehicle_garage_free", {
+            player_source = player.PlayerData.source,
+            vehicle_plate = vehicle.plate,
+        }, {garage = vehicle.garage, price = price})
+
+        if type_ == "depot" then
+            TriggerEvent("banking:server:TransferMoney", "farm_bennys", "safe_bennys", math.ceil(qbVehicle.price * 0.02))
         end
         cb(true)
     else
@@ -324,6 +333,7 @@ end)
 
 RegisterNetEvent("qb-garage:server:setVehicleDestroy", function(plate)
     MySQL.Async.execute("UPDATE player_vehicles SET state = 5 WHERE plate = ?", {plate})
+    TriggerEvent("monitor:server:event", "destroy_vehicle", {vehicle_plate = plate}, {})
 end)
 
 QBCore.Functions.CreateCallback("soz-garage:server:getstock", function(source, cb, indexgarage)
@@ -455,6 +465,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
         table.insert(args, player.PlayerData.citizenid)
     end
 
+    TriggerEvent("monitor:server:event", "vehicle_garage_in", {
+        player_source = player.PlayerData.source,
+        vehicle_plate = data.plate,
+    }, {garage = indexgarage})
+
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then
         exports["soz-monitor"]:Log("INFO", ("Vehicle %s rentré au garage"):format(data.plate))
@@ -467,6 +482,8 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
 end)
 
 QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInDepot", function(source, cb, indexgarage, vehicleNetId, vehicleExtraData)
+    local player = QBCore.Functions.GetPlayer(source)
+
     local query = [[
         UPDATE player_vehicles
         SET state = 2, garage = ?, fuel = ?, engine = ?, body = ?, parkingtime = ?
@@ -475,6 +492,11 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInDepot", function
 
     local data = GetVehicleData(vehicleNetId, vehicleExtraData)
     local args = {indexgarage, data.fuel, data.engineDamage, data.bodyDamage, os.time(), data.plate}
+
+    TriggerEvent("monitor:server:event", "vehicle_garage_in", {
+        player_source = player.PlayerData.source,
+        vehicle_plate = data.plate,
+    }, {garage = indexgarage})
 
     local res = MySQL.Sync.execute(query, args)
     if res == 1 then
