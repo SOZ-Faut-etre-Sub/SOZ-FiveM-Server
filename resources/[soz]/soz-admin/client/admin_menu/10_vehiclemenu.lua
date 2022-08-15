@@ -166,17 +166,19 @@ function AdminMenuVehicles(menu, permission)
                             value = model.model,
                             values = {
                                 {label = "Faire apparaître", value = "car"},
-                                {label = "Voir le prix", value = "seecarprice"},
-                                {label = "Changer le prix", value = "changecarprice"},
+                                {label = "Voir le prix", value = "see-car-price"},
+                                {label = "Changer le prix", value = "change-car-price"},
                             },
                         })
                         slider:On("select", function(item, value)
-                            if value == "car" or value == "seecarprice" then
+                            if value == "car" then
                                 TriggerServerEvent("QBCore:CallCommand", value, {model.model})
-                            elseif value == "changecarprice" then
+                            elseif value == "see-car-price" then
+                                TriggerServerEvent("soz-core:server:admin:vehicle:see-car-price", model.model)
+                            elseif value == "change-car-price" then
                                 local newPrice = exports["soz-hud"]:Input("Nouveau prix", 10)
                                 if tonumber(newPrice) ~= nil then
-                                    TriggerServerEvent("QBCore:CallCommand", value, {model.model, math.floor(newPrice)})
+                                    TriggerServerEvent("soz-core:server:admin:vehicle:change-car-price", model.model, math.floor(newPrice))
                                 end
                             end
                         end)

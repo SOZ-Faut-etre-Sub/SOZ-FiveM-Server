@@ -1,4 +1,7 @@
 export enum ServerEvent {
+    ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
+    ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
@@ -17,6 +20,8 @@ export enum ServerEvent {
 
 export enum ClientEvent {
     PROGRESS_START = 'soz-core:client:progress:start',
+
+    DRAW_NOTIFICATION = 'hud:client:DrawNotification',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
