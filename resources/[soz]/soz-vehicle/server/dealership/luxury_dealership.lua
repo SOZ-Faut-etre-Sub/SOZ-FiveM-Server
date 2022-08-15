@@ -13,6 +13,7 @@ CreateThread(function()
             window = spawn.window,
             minimumBidPrice = vehicle.price,
             bestBidCitizenId = nil,
+            bestBidAccount = nil,
             bestBidName = nil,
             bestBidPrice = nil,
             required_licence = vehicle.required_licence,
@@ -34,57 +35,61 @@ QBCore.Functions.CreateCallback("soz-dealership:server:BidAuction", function(sou
     local auction = auctions[vehicleModel]
     if auction == nil then
         cb(false, "Ce véhicule n'est pas proposé à la mise aux enchères.")
+        return
     end
-    if price < (auction.bestBidPrice or auction.minimumBidPrice) then
+    if price <= (auction.bestBidPrice or (auction.minimumBidPrice - 1)) then
         cb(false, "Le montant doit être supérieur à " .. (auction.bestBidPrice or auction.minimumBidPrice))
+        return
     end
 
     local player = QBCore.Functions.GetPlayer(source)
-    auction.bestBidCitizenId = player.PlayerData.citizenid
-    auction.bestBidName = player.PlayerData.charinfo.firstname .. " " .. player.PlayerData.charinfo.lastname
-    auction.bestBidPrice = price
-    cb(true, nil)
+    TriggerEvent("banking:server:TransferMoney", player.PlayerData.charinfo.account, LuxuryDealershipConfig.BankAccount, price, function(success, reason)
+        if success then
+            if auction.bestBidCitizenId ~= nil then
+                TriggerEvent("banking:server:TransferMoney", LuxuryDealershipConfig.BankAccount, auction.bestBidBankAccount, auction.bestBidPrice,
+                             function(successRefund, reasonRefund)
+                    if not successRefund then
+                        exports["soz-monitor"]:Log("WARN", "Could not transfer from the bank to the player " .. auction.bestBidCitizenId ": " .. reasonRefund)
+                        cb(false, "Erreur avec la banque. Merci de contacter un responsable.")
+                    end
+                end)
+            end
+            auction.bestBidCitizenId = player.PlayerData.citizenid
+            auction.bestBidBankAccount = player.PlayerData.charinfo.account
+            auction.bestBidName = player.PlayerData.charinfo.firstname .. " " .. player.PlayerData.charinfo.lastname
+            auction.bestBidPrice = price
+            cb(true, nil)
+        else
+            cb(false, "Vous n'avez pas assez d'argent sur votre compte.")
+        end
+    end)
 end)
 
 exports("finishAuctions", function()
     for _, auction in pairs(auctions) do
-        if auction.bestBidPrice ~= nil then
+        if auction.bestBidCitizenId ~= nil then
             local PlayerData = exports.oxmysql:singleSync("SELECT * FROM player where citizenid = ?", {
                 auction.bestBidCitizenId,
             })
-            local playerMoney = json.decode(PlayerData.money)
-            local metadata = json.decode(PlayerData.metadata)
-
-            if playerMoney.money >= auction.bestBidPrice then
-                playerMoney.money = math.floor(playerMoney.money - auction.bestBidPrice)
-                metadata.lastBidTime = os.time()
-                metadata.canBid = false
-                exports.oxmysql:singleSync("UPDATE player SET money = ?, metadata = ? WHERE citizenid = ?",
-                                           {json.encode(playerMoney), json.encode(metadata), auction.bestBidCitizenId})
-
-                exports.oxmysql:insertSync(
-                    "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    {
-                        PlayerData.license,
-                        auction.bestBidCitizenId,
-                        auction.model,
-                        auction.hash,
-                        "{}",
-                        "{}",
-                        GeneratePlate(),
-                        "airportpublic",
-                        "car",
-                        1,
-                        3,
-                        os.time(),
-                        os.time(),
-                    })
-                print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " a remporté une " .. auction.model .. " pour $" ..
-                          QBCore.Shared.GroupDigits(auction.bestBidPrice))
-            else
-                print("[soz-vehicle] Le joueur " .. auction.bestBidName .. " n'avait pas les fonds au moment de la finalisation de l'achat d'une " ..
-                          auction.model)
-            end
+            exports.oxmysql:insertSync(
+                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                {
+                    PlayerData.license,
+                    auction.bestBidCitizenId,
+                    auction.model,
+                    auction.hash,
+                    "{}",
+                    "{}",
+                    GeneratePlate(),
+                    "airportpublic",
+                    "car",
+                    1,
+                    3,
+                    os.time(),
+                    os.time(),
+                })
+            exports["soz-monitor"]:Log("INFO", "[soz-vehicle] Le joueur " .. auction.bestBidName .. " a remporté une " .. auction.model .. " pour $" ..
+                                           QBCore.Shared.GroupDigits(auction.bestBidPrice))
         end
     end
 end)
