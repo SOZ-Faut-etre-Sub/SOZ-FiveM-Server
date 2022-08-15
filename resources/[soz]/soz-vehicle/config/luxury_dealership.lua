@@ -2,6 +2,8 @@ LuxuryDealershipConfig = {
     blip = {name = "Concessionnaire Auto Sportive", coords = vector3(-795.77, -243.88, 37.07), sprite = 523, color = 46},
 }
 
+LuxuryDealershipConfig.BankAccount = "luxury_dealership"
+
 LuxuryDealershipConfig.Spawns = {
     {
         vehicle = vector4(-790.36, -236.13, 36.73, 169.0),

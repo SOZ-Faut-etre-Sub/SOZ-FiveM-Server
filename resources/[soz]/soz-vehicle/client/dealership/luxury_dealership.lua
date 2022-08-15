@@ -19,26 +19,20 @@ function displayBidMenu(menu, bid)
         end
 
         price = math.floor(tonumber(price))
-        if price <= (bid.bestBidPrice or bid.minimumBidPrice) then
+        if price <= (bid.bestBidPrice or (bid.minimumBidPrice - 1)) then
             exports["soz-hud"]:DrawNotification(
                 "Le montant doit être supérieur à $" .. QBCore.Shared.GroupDigits(bid.bestBidPrice or bid.minimumBidPrice) .. ".", "error")
             return
         end
 
-        local Player = QBCore.Functions.GetPlayerData()
-        if Player.money.money < price then
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas assez d'argent sur vous.", "error")
-            return
-        end
-
-        local returnValue, reason = QBCore.Functions.TriggerRpc("soz-dealership:server:BidAuction", bid.model, price)
-        if returnValue then
-            exports["soz-hud"]:DrawNotification("Vous avez enchéri de ~g~$" .. QBCore.Shared.GroupDigits(price) .. ".")
-            menu:Close()
-        else
-            exports["soz-hud"]:DrawNotification(reason, "error")
-        end
-
+        QBCore.Functions.TriggerCallback("soz-dealership:server:BidAuction", function(success, reason)
+            if success then
+                exports["soz-hud"]:DrawNotification("Vous avez enchéri de ~g~$" .. QBCore.Shared.GroupDigits(price) .. ".")
+                menu:Close()
+            else
+                exports["soz-hud"]:DrawNotification(reason, "error")
+            end
+        end, bid.model, price)
     end)
 
     if not menu.IsOpen then
