@@ -388,3 +388,14 @@ enum bank_accounts_account_type {
   offshore
   bank_atm      @map("bank-atm")
 }
+
+model vehicles {
+    model    String @id @db.VarChar(50)
+    name     String @db.VarChar(255)
+    price    Int
+    category String? @db.VarChar(50)
+    dealership_id String? @db.VarChar(10)
+    required_licence String? @db.VarChar(10)
+    size Int @default(1) @db.TinyInt
+    job_name String? @db.LongText
+}
