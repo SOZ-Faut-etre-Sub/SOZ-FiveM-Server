@@ -7,6 +7,7 @@ import { DatabaseModule } from './server/database/database.module';
 import { ItemModule } from './server/item/item.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { PlayerModule } from './server/player/player.module';
+import { VehicleModule } from './server/vehicle/vehicle.module';
 import { WeatherModule } from './server/weather/weather.module';
 
 async function bootstrap() {
@@ -16,7 +17,8 @@ async function bootstrap() {
         WeatherModule,
         PlayerModule,
         ItemModule,
-        LSMCModule
+        LSMCModule,
+        VehicleModule
     );
 
     await app.stop();

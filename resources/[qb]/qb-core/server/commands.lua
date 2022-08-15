@@ -91,25 +91,6 @@ QBCore.Commands.Add('car', 'Spawn Vehicle (Admin Only)', { { name = 'model', hel
     TriggerClientEvent('QBCore:Command:SpawnVehicle', src, args[1])
 end, 'staff')
 
-QBCore.Commands.Add('seecarprice', 'See Vehicle Price (Admin Only)', { { name = 'model', help = 'Model name of the vehicle' } }, true, function(source, args)
-    local src = source
-
-    local result = exports.oxmysql:singleSync("SELECT price FROM vehicles WHERE model = ?", {
-        args[1],
-    })
-    TriggerClientEvent("hud:client:DrawNotification", src, ("Prix du ~b~%s~s~: ~g~%s"):format(args[1], result.price))
-end, 'admin')
-
-QBCore.Commands.Add('changecarprice', 'Change Vehicle Price (Admin Only)', { { name = 'model', help = 'Model name of the vehicle' }, { name = 'price', help = 'New price of the vehicle'} }, true, function(source, args)
-    local src = source
-
-    exports.oxmysql:update("UPDATE vehicles SET price = ? WHERE model = ?", {
-        args[2],
-        args[1],
-    })
-    TriggerClientEvent("hud:client:DrawNotification", src, ("Nouveau prix du ~b~%s~s~: ~g~%s"):format(args[1], args[2]))
-end, 'admin')
-
 QBCore.Commands.Add('var', 'Vehicle variation (Admin Only)', { { name = 'id', help = 'vehicle livery' } }, true, function(source, args)
     local src = source
     TriggerClientEvent('QBCore:Command:VehicleVariation', src, args[1])
