@@ -1,3 +1,4 @@
 export enum MenuType {
-    SetHealthState = 'setHealthState',
+    Demo = 'demo',
+    SetHealthState = 'set_health_state',
 }

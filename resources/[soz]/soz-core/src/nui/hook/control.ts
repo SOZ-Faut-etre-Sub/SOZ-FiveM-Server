@@ -18,6 +18,11 @@ export const useKeyPress = (targetKey: string, onKeyPress?: () => void) => {
     }, [targetKey, onKeyPress]);
 };
 
+export const useBackspace = (onKeyPress?: () => void) => {
+    useSozCoreNuiEvent('Backspace', onKeyPress);
+    useKeyPress('Backspace', onKeyPress);
+};
+
 export const useArrowDown = (onKeyPress: () => void) => {
     useSozCoreNuiEvent('ArrowDown', onKeyPress);
     useKeyPress('ArrowDown', onKeyPress);

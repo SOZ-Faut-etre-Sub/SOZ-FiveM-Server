@@ -17,8 +17,10 @@ import {
     useRef,
     useState,
 } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useEnter } from '../../hook/control';
+import { MenuType } from '../../../shared/menu';
+import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
 
 const MenuDescendantContext = createDescendantContext('MenuDescendantContext');
 const MenuItemSelectDescendantContext = createDescendantContext('MenuItemSelectDescendantContext');
@@ -31,6 +33,35 @@ const MenuItemSelectContext = createContext<{ activeOptionIndex: number; setActi
     activeOptionIndex: 0,
     setActiveOptionIndex: () => {},
 });
+const MenuTypeContext = createContext<MenuType | null>(null);
+
+export type MenuProps = {
+    type: MenuType;
+};
+
+export const Menu: FunctionComponent<PropsWithChildren<MenuProps>> = ({ children, type }) => {
+    return <MenuTypeContext.Provider value={type}>{children}</MenuTypeContext.Provider>;
+};
+
+export type SubMenuProps = {
+    id: string;
+};
+
+export const SubMenu: FunctionComponent<PropsWithChildren<SubMenuProps>> = ({ children, id }) => {
+    return (
+        <Routes>
+            <Route path={`/${id}`} element={<MenuContainer>{children}</MenuContainer>} />
+        </Routes>
+    );
+};
+
+export const MainMenu: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    return (
+        <Routes>
+            <Route index element={<MenuContainer>{children}</MenuContainer>} />
+        </Routes>
+    );
+};
 
 export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return <div className="absolute left-8 top-8 w-1/4 min-w-[24rem] max-h-[50vh]">{children}</div>;
@@ -58,6 +89,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
 const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const { activeIndex, setActiveIndex } = useContext(MenuContext);
     const menuItems = useDescendants(MenuDescendantContext);
+    const navigate = useNavigate();
 
     useArrowDown(() => {
         if (activeIndex < menuItems.length - 1) {
@@ -73,6 +105,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
         } else {
             setActiveIndex(menuItems.length - 1);
         }
+    });
+
+    useBackspace(() => {
+        navigate(-1);
     });
 
     return <>{children}</>;
@@ -137,6 +173,22 @@ type MenuItemButtonProps = PropsWithChildren<{
 export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({ children, onConfirm, onSelected }) => {
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm}>
+            {children}
+        </MenuItemContainer>
+    );
+};
+
+type MenuItemSubMenuLinkProps = PropsWithChildren<{
+    id: string;
+    onSelected?: () => void;
+}>;
+
+export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({ children, id, onSelected }) => {
+    const type = useContext(MenuTypeContext);
+    const navigate = useNavigate();
+
+    return (
+        <MenuItemContainer onSelected={onSelected} onConfirm={() => navigate(`/${type}/${id}`)}>
             {children}
         </MenuItemContainer>
     );
