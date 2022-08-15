@@ -3,16 +3,15 @@ import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { MenuType } from '../../../shared/menu';
 import { useSozCoreNuiEvent } from '../Nui/hooks/useNuiEvent';
+import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
 
 export const MenuApp: FunctionComponent = () => {
     return (
         <MemoryRouter>
             <MenuRouteControl>
-                <Routes>
-                    <Route path="/" element={null} />
-                    <Route path={`/${MenuType.SetHealthState}`} element={<MenuSetHealthState />} />
-                </Routes>
+                <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState />} />
+                <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
             </MenuRouteControl>
         </MemoryRouter>
     );
@@ -29,5 +28,5 @@ const MenuRouteControl: FunctionComponent<PropsWithChildren> = ({ children }) =>
         navigate('/');
     });
 
-    return <>{children}</>;
+    return <Routes>{children}</Routes>;
 };

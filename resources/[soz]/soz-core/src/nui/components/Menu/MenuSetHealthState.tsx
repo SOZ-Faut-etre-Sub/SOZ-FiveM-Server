@@ -1,17 +1,11 @@
 import { FunctionComponent } from 'react';
 
-import {
-    MenuContainer,
-    MenuContent,
-    MenuItemButton,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuTitle,
-} from '../Styleguide/Menu';
+import { MenuType } from '../../../shared/menu';
+import { Menu, MenuContent, MenuItemButton, MenuItemSelect, MenuItemSelectOption, MenuTitle } from '../Styleguide/Menu';
 
 export const MenuSetHealthState: FunctionComponent = () => {
     return (
-        <MenuContainer>
+        <Menu type={MenuType.SetHealthState}>
             <MenuTitle>Carnet de santé</MenuTitle>
             <MenuContent>
                 <MenuItemButton>Définir l'état de santé</MenuItemButton>
@@ -23,6 +17,6 @@ export const MenuSetHealthState: FunctionComponent = () => {
                     <MenuItemSelectOption>Value D</MenuItemSelectOption>
                 </MenuItemSelect>
             </MenuContent>
-        </MenuContainer>
+        </Menu>
     );
 };
