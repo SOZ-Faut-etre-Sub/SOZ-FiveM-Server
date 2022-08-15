@@ -1,4 +1,5 @@
 import { Injectable } from '../core/decorators/injectable';
+import { SozRole } from '../core/permissions';
 import { Item, ItemType } from '../shared/item';
 import { QBCorePlayer } from '../shared/player';
 
@@ -44,5 +45,9 @@ export class QBCore {
         const players: Record<number, number> = this.QBCore.Functions.GetPlayers();
 
         return Object.values(players);
+    }
+
+    public hasPermission(source: number, permission: SozRole): boolean {
+        return this.QBCore.Functions.HasPermission(source, permission);
     }
 }

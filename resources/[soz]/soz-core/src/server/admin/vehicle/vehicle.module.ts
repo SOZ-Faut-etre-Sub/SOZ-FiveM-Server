@@ -1,6 +1,6 @@
-import { Module } from '../../core/decorators/module';
+import { Module } from '../../../core/decorators/module';
 import { VehicleProvider } from './vehicle.provider';
-import {DatabaseModule} from "../database/database.module";
+import {DatabaseModule} from "../../database/database.module";
 
 @Module({
     imports: [DatabaseModule],
