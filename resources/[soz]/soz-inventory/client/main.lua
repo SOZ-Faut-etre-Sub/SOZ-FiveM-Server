@@ -56,6 +56,9 @@ RegisterNUICallback("closeNUI", function(data, cb)
     cb(true)
     if data.target then
         TriggerServerEvent("inventory:server:closeInventory", data.target)
+        if string.find(data.target, "trunk") then
+            TriggerEvent("soz-vehicle:client:CloseTrunk")
+        end
     end
 end)
 
@@ -90,6 +93,10 @@ RegisterNetEvent("inventory:client:qTargetOpenInventory", function(data)
     else
         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser ce stockage", "error")
     end
+end)
+
+RegisterNetEvent("inventory:client:closeInventory", function()
+    SendNUIMessage({action = "closeInventory"})
 end)
 
 RegisterNetEvent("inventory:client:updateTargetStoragesState", function(targetInventory)
