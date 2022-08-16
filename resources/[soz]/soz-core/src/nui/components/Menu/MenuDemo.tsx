@@ -14,10 +14,13 @@ import {
 } from '../Styleguide/Menu';
 
 export const MenuDemo: FunctionComponent = () => {
+    const banner =
+        'https://cdn.discordapp.com/attachments/924645707640619089/991854200843669564/SOZ_fond_menus_upw.jpg';
+
     return (
         <Menu type={MenuType.Demo}>
             <MainMenu>
-                <MenuTitle>Main menu</MenuTitle>
+                <MenuTitle banner={banner}>Main menu</MenuTitle>
                 <MenuContent>
                     <MenuItemButton>Button 1</MenuItemButton>
                     <MenuItemButton>Button 2</MenuItemButton>
@@ -40,14 +43,14 @@ export const MenuDemo: FunctionComponent = () => {
                 </MenuContent>
             </SubMenu>
             <SubMenu id="submenu2">
-                <MenuTitle>Sub Menu 21</MenuTitle>
+                <MenuTitle banner={banner}>Sub Menu 21</MenuTitle>
                 <MenuContent>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>
                 </MenuContent>
             </SubMenu>
             <SubMenu id="submenu3">
-                <MenuTitle>Sub Menu 3</MenuTitle>
+                <MenuTitle banner={banner}>Sub Menu 3</MenuTitle>
                 <MenuContent>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>

@@ -1,3 +1,4 @@
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import {
     createDescendantContext,
     DescendantProvider,
@@ -67,8 +68,36 @@ export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }
     return <div className="absolute left-8 top-8 w-1/4 min-w-[24rem] max-h-[50vh]">{children}</div>;
 };
 
-export const MenuTitle: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    return <div className="p-3 font-bold bg-black/30 text-white">{children}</div>;
+export type MenuTitleProps = {
+    banner?: string;
+};
+
+const MenuHeader: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ banner, children }) => {
+    return (
+        <div
+            className="bg-cover bg-center h-[11vh] rounded-t-lg opacity-80"
+            style={{
+                backgroundImage: `url(${banner})`,
+            }}
+        >
+            {children}
+        </div>
+    );
+};
+
+export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ children, banner }) => {
+    return (
+        <>
+            {banner && <MenuHeader banner={banner} />}
+            <div
+                className={cn('px-3 py-1 font-semibold text-sm bg-black/80 text-white uppercase', {
+                    'rounded-t-lg text-center': !banner,
+                })}
+            >
+                {children}
+            </div>
+        </>
+    );
 };
 
 export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) => {
@@ -79,7 +108,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
             <MenuContext.Provider value={{ activeIndex, setActiveIndex }}>
                 <MenuControls>
-                    <ul>{children}</ul>
+                    <ul className="p-2 bg-black/50 rounded-b-lg">{children}</ul>
                 </MenuControls>
             </MenuContext.Provider>
         </DescendantProvider>
@@ -154,9 +183,8 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
     return (
         <li
             ref={handleRefSet}
-            className={cn('cursor-pointer p-3 hover:bg-black/25 text-white', {
-                'bg-black/10': !isSelected,
-                'bg-black/25': isSelected,
+            className={cn('p-1 pl-2 my-0.5 hover:bg-white/10 text-white cursor-pointer rounded', {
+                'bg-white/10': isSelected,
             })}
             onClick={onConfirm}
         >
@@ -228,30 +256,24 @@ const MenuSelectControls: FunctionComponent<PropsWithChildren> = ({ children }) 
     });
 
     return (
-        <div className="flex">
-            <a
-                href="#"
+        <div className="flex items-center">
+            <ChevronLeftIcon
                 onClick={event => {
                     goLeft();
 
                     event.stopPropagation();
                 }}
-                className="mr-2"
-            >
-                &lt;
-            </a>
+                className="h-5 w-5 p-0.5 mr-2 bg-black/10 rounded-full"
+            />
             <div>{children}</div>
-            <a
-                href="#"
+            <ChevronRightIcon
                 onClick={event => {
                     goRight();
 
                     event.stopPropagation();
                 }}
-                className="ml-2"
-            >
-                &gt;
-            </a>
+                className="h-5 w-5 p-0.5 ml-2 bg-black/10 rounded-full"
+            />
         </div>
     );
 };
