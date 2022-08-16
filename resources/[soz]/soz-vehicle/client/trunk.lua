@@ -2,6 +2,8 @@ local tankers = {[GetHashKey("tanker")] = true, [GetHashKey("tanker2")] = true}
 local trailerlogs = {[GetHashKey("trailerlogs")] = true}
 local brickade = {[GetHashKey("brickade")] = true, [GetHashKey("brickade1")] = true}
 
+local openTrunkVehicle = nil
+
 local vehicleTrunkType = function(model)
     if tankers[model] then
         return "tanker"
@@ -13,6 +15,22 @@ local vehicleTrunkType = function(model)
         return "trunk"
     end
 end
+
+Citizen.CreateThread(function()
+    while true do
+        if openTrunkVehicle ~= nil then
+            if (not DoesEntityExist(openTrunkVehicle)) or (#(GetEntityCoords(PlayerPedId()) - GetEntityCoords(openTrunkVehicle)) > 3.0) then
+                TriggerEvent("inventory:client:closeInventory")
+                exports["soz-hud"]:DrawNotification("Le coffre est trop loin", "warning")
+            end
+        end
+        Citizen.Wait(100)
+    end
+end)
+
+AddEventHandler("soz-vehicle:client:CloseTrunk", function()
+    openTrunkVehicle = nil
+end)
 
 -- TODO: implement key management
 local function OpenTrunk()
@@ -40,6 +58,7 @@ local function OpenTrunk()
                         model = model,
                         class = class,
                     })
+                    openTrunkVehicle = vehicle
                 else
                     exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
                 end
@@ -59,6 +78,7 @@ local function OpenTrunk()
                                     model = model,
                                     class = class,
                                 })
+                                openTrunkVehicle = vehicle
                             else
                                 exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
                             end
