@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
     darkMode: 'class',
     content: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
@@ -9,6 +11,7 @@ module.exports = {
             xl: '1440px',
         },
         fontFamily: {
+            sans: ['Inter var', ...defaultTheme.fontFamily.sans],
             arial: ['Arial', 'Helvetica', 'serif'],
             noto: ['Noto Serif', 'serif'],
         },

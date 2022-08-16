@@ -47,9 +47,11 @@
     "dependencies": {
         "@citizenfx/client": "^2.0.5659-1",
         "@citizenfx/server": "^2.0.5659-1",
+        "@heroicons/react": "^1.0.6",
         "@prisma/client": "4.0.0",
         "@reach/descendants": "^0.17.0",
         "classnames": "^2.3.1",
+        "inter-ui": "^3.19.3",
         "inversify": "^6.0.1",
         "postcss": "^8.4.14",
         "react": "^18.2.0",
