@@ -107,6 +107,7 @@ local function RefreshState(state)
     return state
 end
 local lastState = {}
+local restarting = false
 
 RegisterCommand("voip-show-state", function()
     for _, channelId in pairs(lastState.channels) do
@@ -182,36 +183,74 @@ Citizen.CreateThread(function()
     MumbleClearVoiceTarget(voiceTarget)
 
     while true do
-        -- first refresh state of proximity
-        ProximityModuleInstance:refresh()
+        if not restarting then
+            -- first refresh state of proximity
+            ProximityModuleInstance:refresh()
 
-        -- get all speakers and channels
-        local state = {players = {}, channels = {}}
+            -- get all speakers and channels
+            local state = {players = {}, channels = {}}
 
-        state.channels = ProximityModuleInstance:getChannels()
-        state.players = {}
+            state.channels = ProximityModuleInstance:getChannels()
+            state.players = {}
 
-        for _, data in pairs(ProximityModuleInstance:getSpeakers()) do
-            state.players[("player_%d"):format(data.serverId)] = {
-                serverId = data.serverId,
-                volume = -1.0,
-                context = {"proximity"},
-            }
+            for _, data in pairs(ProximityModuleInstance:getSpeakers()) do
+                state.players[("player_%d"):format(data.serverId)] = {
+                    serverId = data.serverId,
+                    volume = -1.0,
+                    context = {"proximity"},
+                }
+            end
+
+            state.players = updateSpeakers(state.players, CarModuleInstance:getSpeakers(), "car", Config.volumeVehicle)
+            state.players = updateSpeakers(state.players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio_sr_secondary", Config.volumeRadioSecondaryShort)
+            state.players = updateSpeakers(state.players, PrimaryShortRadioModuleInstance:getSpeakers(), "radio_sr_primary", Config.volumeRadioPrimaryShort)
+            state.players = updateSpeakers(state.players, SecondaryLongRadioModuleInstance:getSpeakers(), "radio_lr_secondary", Config.volumeRadioSecondaryLong)
+            state.players = updateSpeakers(state.players, PrimaryLongRadioModuleInstance:getSpeakers(), "radio_lr_primary", Config.volumeRadioPrimaryLong)
+            state.players = updateSpeakers(state.players, CallModuleInstance:getSpeakers(), "call", Config.volumeCall)
+
+            RefreshState(state)
+            ApplyFilters(state.players)
+
+            lastState = state
         end
-
-        state.players = updateSpeakers(state.players, CarModuleInstance:getSpeakers(), "car", Config.volumeVehicle)
-        state.players = updateSpeakers(state.players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio_sr_secondary", Config.volumeRadioSecondaryShort)
-        state.players = updateSpeakers(state.players, PrimaryShortRadioModuleInstance:getSpeakers(), "radio_sr_primary", Config.volumeRadioPrimaryShort)
-        state.players = updateSpeakers(state.players, SecondaryLongRadioModuleInstance:getSpeakers(), "radio_lr_secondary", Config.volumeRadioSecondaryLong)
-        state.players = updateSpeakers(state.players, PrimaryLongRadioModuleInstance:getSpeakers(), "radio_lr_primary", Config.volumeRadioPrimaryLong)
-        state.players = updateSpeakers(state.players, CallModuleInstance:getSpeakers(), "call", Config.volumeCall)
-
-        RefreshState(state)
-        ApplyFilters(state.players)
-
-        lastState = state
 
         -- wait, do this every 200ms
         Citizen.Wait(200)
     end
+end)
+
+RegisterNetEvent("voip:client:reset", function()
+    -- Shutdown voip state loop
+    restarting = true
+    Citizen.Wait(200)
+
+    exports["soz-hud"]:DrawNotification("Arret de la voip...", "info")
+
+    -- Clear last state
+    lastState = {}
+
+    -- Remove filters
+    local toRemove = {}
+    FilterRegistryInstance:loop(function(id)
+        table.insert(toRemove, id)
+    end)
+
+    for _, toRemoveId in pairs(toRemove) do
+        FilterRegistryInstance:removeById(toRemoveId)
+    end
+
+    -- Clear volume settings
+    LastVolumesSet = {}
+
+    -- Disable mumble
+    MumbleSetActive(false)
+    Citizen.Wait(1000)
+
+    -- Reenable mumble
+    MumbleSetActive(true)
+    Citizen.Wait(1000)
+
+    -- Allow voice loop to reinit state
+    restarting = false
+    exports["soz-hud"]:DrawNotification("Voip réactiver.", "info")
 end)
