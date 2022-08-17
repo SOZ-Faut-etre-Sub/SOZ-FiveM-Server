@@ -70,6 +70,8 @@ function AdminMenuVehicles(menu, permission)
             SetVehicleEngineHealth(vehicle, 1000.0)
             SetVehicleFixed(vehicle)
             SetVehicleDeformationFixed(vehicle)
+            local newcondition = exports["soz-vehicle"]:PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
+            Entity(vehicle).state:set("condition", json.encode(newcondition), true)
         end,
     })
 
@@ -80,6 +82,8 @@ function AdminMenuVehicles(menu, permission)
             local vehicle = GetVehiclePedIsIn(PlayerPedId())
             SetVehicleDirtLevel(vehicle, 0.1)
             WashDecalsFromVehicle(vehicle, 1.0)
+            local newcondition = exports["soz-vehicle"]:PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
+            Entity(vehicle).state:set("condition", json.encode(newcondition), true)
         end,
     })
 
@@ -89,6 +93,8 @@ function AdminMenuVehicles(menu, permission)
         select = function()
             local vehicle = GetVehiclePedIsIn(PlayerPedId())
             exports["soz-vehicle"]:SetFuel(vehicle, 100.0)
+            local newcondition = exports["soz-vehicle"]:PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
+            Entity(vehicle).state:set("condition", json.encode(newcondition), true)
         end,
     })
 
