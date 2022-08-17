@@ -21,8 +21,6 @@ export enum ServerEvent {
 export enum ClientEvent {
     PROGRESS_START = 'soz-core:client:progress:start',
 
-    DRAW_NOTIFICATION = 'hud:client:DrawNotification',
-
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
 }
