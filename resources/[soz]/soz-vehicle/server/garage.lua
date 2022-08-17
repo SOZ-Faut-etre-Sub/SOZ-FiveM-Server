@@ -443,7 +443,7 @@ QBCore.Functions.CreateCallback("soz-garage:server:ParkVehicleInGarage", functio
     conditionVehicle["tankHealth"] = decodedExtra.tankHealth
     conditionVehicle["dirtLevel"] = decodedExtra.dirtLevel
     conditionVehicle["bodyHealth"] = decodedExtra.bodyHealth
-    conditionVehicle["oilLevel"] = decodedExtra.oilLevel
+    conditionVehicle["oilLevel"] = Entity(entityId).state.oilLevel
     conditionVehicle["fuelLevel"] = Entity(entityId).state.fuel
     conditionVehicle["windowStatus"] = decodedExtra.windowStatus
     conditionVehicle["tireBurstState"] = decodedExtra.tireBurstState
