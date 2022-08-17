@@ -13,6 +13,8 @@ RegisterNetEvent("qb-carwash:client:washCar", function()
         SetVehicleDirtLevel(GlobalVehicle)
         SetVehicleUndriveable(GlobalVehicle, false)
         WashDecalsFromVehicle(GlobalVehicle, 1.0)
+        local newcondition = exports["soz-vehicle"]:PropertiesToCondition(QBCore.Functions.GetVehicleProperties(GlobalVehicle))
+        Entity(GlobalVehicle).state:set("condition", json.encode(newcondition), true)
     end, function() -- Cancel
         exports["soz-hud"]:DrawNotification("Lavage échoué")
     end)
