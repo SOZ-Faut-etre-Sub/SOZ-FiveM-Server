@@ -25,6 +25,7 @@ local function GenerateMenu()
     AnimationsEntry()
     HudToggleEntry(personalMenu)
     JobEntry(personalMenu)
+    VoipEntry(personalMenu)
 
     if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= personalMenu.UUID then
         MenuV:CloseAll(function()

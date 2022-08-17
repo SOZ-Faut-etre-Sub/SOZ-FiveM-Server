@@ -23,13 +23,19 @@ function RadioStateManager:getConsumers(channel)
 end
 
 function RadioStateManager:broadcastToConsumers(channel, cb)
-    channel = tonumber(channel)
+    local channelNumber = tonumber(channel)
 
-    if self.state[channel] == nil then
-        self.state[channel] = {}
+    if channelNumber == nil then
+        exports["soz-monitor"]:Log("ERROR", "nil error when converting channel to number, original value: " .. channel, {})
+
+        return
     end
 
-    for consumer, contexts in pairs(self.state[channel]) do
+    if self.state[channelNumber] == nil then
+        self.state[channelNumber] = {}
+    end
+
+    for consumer, contexts in pairs(self.state[channelNumber]) do
         cb(consumer, contexts)
     end
 end
