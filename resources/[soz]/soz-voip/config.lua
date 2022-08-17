@@ -41,8 +41,8 @@ Config.volumeCall = 0.8
 Config.volumeVehicle = 0.5
 
 --- Grid Module
-Config.gridSize = 512
-Config.gridEdge = 256
+Config.gridSize = 256
+Config.gridEdge = 128
 
 --- Hotkeys
 Config.rangeDecreaseHotkey = "F5"
