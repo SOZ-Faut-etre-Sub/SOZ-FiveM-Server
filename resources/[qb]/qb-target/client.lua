@@ -952,6 +952,9 @@ RegisterNUICallback('selectTarget', function(option, cb)
 		table_wipe(sendData)
 		CreateThread(function()
 			Wait(0)
+
+			exports["soz-phone"]:stopPhoneCall()
+
 			if data.action then
 				data.action(data.entity)
 			elseif data.event then
