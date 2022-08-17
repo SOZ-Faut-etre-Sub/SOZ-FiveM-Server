@@ -202,7 +202,8 @@ Citizen.CreateThread(function()
             end
 
             state.players = updateSpeakers(state.players, CarModuleInstance:getSpeakers(), "car", Config.volumeVehicle)
-            state.players = updateSpeakers(state.players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio_sr_secondary", Config.volumeRadioSecondaryShort)
+            state.players = updateSpeakers(state.players, SecondaryShortRadioModuleInstance:getSpeakers(), "radio_sr_secondary",
+                                           Config.volumeRadioSecondaryShort)
             state.players = updateSpeakers(state.players, PrimaryShortRadioModuleInstance:getSpeakers(), "radio_sr_primary", Config.volumeRadioPrimaryShort)
             state.players = updateSpeakers(state.players, SecondaryLongRadioModuleInstance:getSpeakers(), "radio_lr_secondary", Config.volumeRadioSecondaryLong)
             state.players = updateSpeakers(state.players, PrimaryLongRadioModuleInstance:getSpeakers(), "radio_lr_primary", Config.volumeRadioPrimaryLong)
