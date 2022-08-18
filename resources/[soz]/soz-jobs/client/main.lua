@@ -90,15 +90,16 @@ CreateThread(function()
 
                     local playerPosition = GetEntityCoords(GetPlayerPed(-1))
                     local targetPosition = GetEntityCoords(entity)
-                    local bossZone = bossZones[PlayerData.job.id]
-                    if bossZone ~= nil and (not bossZone:isPointInside(playerPosition) or not bossZone:isPointInside(targetPosition)) then
-                        return false
+                    for _, bossZone in pairs(bossZones[PlayerData.job.id]) do
+                        if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
+                            local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                            local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
+
+                            return targetJob.id == SozJobCore.JobType.Unemployed
+                        end
                     end
 
-                    local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
-
-                    return targetJob.id == SozJobCore.JobType.Unemployed
+                    return false
                 end,
             },
             {
@@ -117,15 +118,16 @@ CreateThread(function()
 
                     local playerPosition = GetEntityCoords(GetPlayerPed(-1))
                     local targetPosition = GetEntityCoords(entity)
-                    local bossZone = bossZones[PlayerData.job.id]
-                    if bossZone ~= nil and (not bossZone:isPointInside(playerPosition) or not bossZone:isPointInside(targetPosition)) then
-                        return false
+                    for _, bossZone in pairs(bossZones[PlayerData.job.id]) do
+                        if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
+                            local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                            local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
+
+                            return targetJob.id == PlayerData.job.id
+                        end
                     end
 
-                    local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
-
-                    return targetJob.id == PlayerData.job.id
+                    return false
                 end,
             },
             {
@@ -145,15 +147,16 @@ CreateThread(function()
 
                     local playerPosition = GetEntityCoords(GetPlayerPed(-1))
                     local targetPosition = GetEntityCoords(entity)
-                    local bossZone = bossZones[PlayerData.job.id]
-                    if bossZone ~= nil and (not bossZone:isPointInside(playerPosition) or not bossZone:isPointInside(targetPosition)) then
-                        return false
+                    for _, bossZone in pairs(bossZones[PlayerData.job.id]) do
+                        if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
+                            local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                            local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
+
+                            return targetJob.id == PlayerData.job.id
+                        end
                     end
 
-                    local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
-
-                    return targetJob.id == PlayerData.job.id
+                    return false
                 end,
             },
         },
@@ -192,14 +195,19 @@ CreateThread(function()
                 distance = 1.5,
             })
         end
-        if job.bossZone then
-            bossZones[jobId] = BoxZone:Create(vector3(job.bossZone.x, job.bossZone.y, job.bossZone.z), job.bossZone.sx, job.bossZone.sy, {
-                name = jobId .. ":boss",
-                heading = job.bossZone.heading,
-                minZ = job.bossZone.minZ,
-                maxZ = job.bossZone.maxZ,
-                debugPoly = job.bossZone.debugPoly or false,
-            })
+        if job.bossZones then
+            for _, bossZone in pairs(job.bossZones) do
+                if bossZones[jobId] == nil then
+                    bossZones[jobId] = {}
+                end
+                table.insert(bossZones[jobId], BoxZone:Create(vector3(bossZone.x, bossZone.y, bossZone.z), bossZone.sx, bossZone.sy, {
+                    name = jobId .. ":boss",
+                    heading = bossZone.heading,
+                    minZ = bossZone.minZ,
+                    maxZ = bossZone.maxZ,
+                    debugPoly = bossZone.debugPoly or false,
+                }))
+            end
         end
     end
 end)
