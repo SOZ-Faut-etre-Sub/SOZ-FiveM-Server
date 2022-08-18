@@ -33,6 +33,12 @@ BaunConfig.Cloakroom = {
             width = 0.4,
             options = {name = "baun:unicorn:cloakroom2", heading = 30, minZ = 27.87, maxZ = 30.27},
         },
+        {
+            center = vector3(-1381.38, -602.26, 30.32),
+            length = 2.0,
+            width = 6.4,
+            options = {name = "baun:bahama:cloakroom1", heading = 303, minZ = 29.92, maxZ = 31.92},
+        },
     },
     Clothes = {
         [GetHashKey("mp_m_freemode_01")] = {
