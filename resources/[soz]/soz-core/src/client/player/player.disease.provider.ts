@@ -1,4 +1,4 @@
-import { OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -6,6 +6,7 @@ import { wait } from '../../core/utils';
 import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
+import { PlayerData } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
@@ -166,6 +167,13 @@ export class PlayerDiseaseProvider {
 
         if (diseaseApply == 10) {
             TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'grippe');
+        }
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    async onPlayerLoaded(player: PlayerData): Promise<void> {
+        if (player.metadata.disease) {
+            this.applyCurrentDiseaseEffect(player.metadata.disease);
         }
     }
 }

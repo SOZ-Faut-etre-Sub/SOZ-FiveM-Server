@@ -1,4 +1,5 @@
 import { SozRole } from '../core/permissions';
+import { Disease } from './disease';
 import { InventoryItem } from './item';
 import { JobType } from './job';
 
@@ -46,4 +47,5 @@ export type PlayerMetadata = {
     last_strength_update: string | null;
     last_max_stamina_update: string | null;
     last_stress_level_update: string | null;
+    disease: Disease | null;
 };
