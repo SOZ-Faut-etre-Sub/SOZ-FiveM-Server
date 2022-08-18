@@ -20,7 +20,7 @@ import {
 } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { MenuType } from '../../../shared/menu';
+import { MenuType } from '../../../shared/nui/menu';
 import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
 
 const MenuDescendantContext = createDescendantContext('MenuDescendantContext');
@@ -65,24 +65,15 @@ export const MainMenu: FunctionComponent<PropsWithChildren> = ({ children }) => 
 };
 
 export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    return <div className="absolute left-8 top-8 w-1/4 min-w-[24rem] max-h-[50vh]">{children}</div>;
+    return <div className="absolute left-8 top-8 w-1/5 min-w-[24rem] max-h-[50vh]">{children}</div>;
 };
 
 export type MenuTitleProps = {
     banner?: string;
 };
 
-const MenuHeader: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ banner, children }) => {
-    return (
-        <div
-            className="bg-cover bg-center h-[11vh] rounded-t-lg opacity-80"
-            style={{
-                backgroundImage: `url(${banner})`,
-            }}
-        >
-            {children}
-        </div>
-    );
+const MenuHeader: FunctionComponent<MenuTitleProps> = ({ banner }) => {
+    return <img src={banner} className="opacity-80 w-full h-auto object-cover" alt="banner" />;
 };
 
 export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ children, banner }) => {
