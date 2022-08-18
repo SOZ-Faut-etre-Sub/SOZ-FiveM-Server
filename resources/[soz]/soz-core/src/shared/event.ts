@@ -1,4 +1,7 @@
 export enum ServerEvent {
+    ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
+    ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',

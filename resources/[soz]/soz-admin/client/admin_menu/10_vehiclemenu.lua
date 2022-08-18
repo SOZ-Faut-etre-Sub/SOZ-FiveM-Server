@@ -59,7 +59,7 @@ function AdminMenuVehicles(menu, permission)
         end,
     })
 
-    vehicleMenu:AddButton({label = "Choisir un véhicule à faire apparaitre", value = vehicleCategories})
+    vehicleMenu:AddButton({label = "Catalogue des véhicules", value = vehicleCategories})
 
     vehicleMenu:AddButton({
         label = "Réparer le véhicule",
@@ -167,13 +167,27 @@ function AdminMenuVehicles(menu, permission)
                     vehicleModels:ClearItems()
 
                     for _, model in pairs(models) do
-                        vehicleModels:AddButton({
+                        local slider = vehicleModels:AddSlider({
                             label = model.name,
                             value = model.model,
-                            select = function(item)
-                                TriggerServerEvent("QBCore:CallCommand", "car", {item.Value})
-                            end,
+                            values = {
+                                {label = "Faire apparaître", value = "car"},
+                                {label = "Voir le prix", value = "see-car-price"},
+                                {label = "Changer le prix", value = "change-car-price"},
+                            },
                         })
+                        slider:On("select", function(item, value)
+                            if value == "car" then
+                                TriggerServerEvent("QBCore:CallCommand", value, {model.model})
+                            elseif value == "see-car-price" then
+                                TriggerServerEvent("soz-core:server:admin:vehicle:see-car-price", model.model)
+                            elseif value == "change-car-price" then
+                                local newPrice = exports["soz-hud"]:Input("Nouveau prix", 10)
+                                if tonumber(newPrice) ~= nil then
+                                    TriggerServerEvent("soz-core:server:admin:vehicle:change-car-price", model.model, math.floor(newPrice))
+                                end
+                            end
+                        end)
                     end
                 end,
             })
