@@ -37,7 +37,7 @@ export class LSMCCheckHealthProvider {
     }
 
     @OnNuiEvent(NuiEvent.SetPlayerFiber)
-    async setPlayerFiber({ source, value }) {
+    async setPlayerFiber() {
         // @TODO
         return Ok(true);
     }

@@ -20,6 +20,8 @@ export enum ClientEvent {
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
+
+    CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 }
 
 export enum GameEvent {
