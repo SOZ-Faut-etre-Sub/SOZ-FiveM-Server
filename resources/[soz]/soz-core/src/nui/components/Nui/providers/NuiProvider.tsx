@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
+import { NuiMethodMap } from '../../../../shared/nui';
 import { NuiContext } from '../context/NuiContext';
 import { eventNameFactory } from '../utils/eventNameFactory';
 
@@ -45,7 +46,9 @@ export const NuiProvider = ({
     const resourceRef = useRef<string>(resource || '');
     const timeoutRef = useRef<number>(timeout || DEFAULT_TIMEOUT);
 
-    const eventListener = (event: { data: { app: string; method: string; data: unknown } }) => {
+    const eventListener = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(event: {
+        data: { app: App; method: Method; data: NuiMethodMap[App][Method] };
+    }) => {
         const { app, method, data } = event.data;
         if (app && method) {
             window.dispatchEvent(

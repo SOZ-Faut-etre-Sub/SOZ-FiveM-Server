@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 
-import { MenuType } from '../../../shared/menu';
+import { MenuType } from '../../../shared/nui/menu';
 import {
     MainMenu,
     Menu,

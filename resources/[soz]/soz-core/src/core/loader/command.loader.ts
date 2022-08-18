@@ -1,3 +1,4 @@
+import { SOZ_CORE_IS_CLIENT } from '../../globals';
 import { CommandMetadata, CommandMetadataKey } from '../decorators/command';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
@@ -19,6 +20,19 @@ export class CommandLoader {
             const commandMethod = (source: number, args: string[]): void => {
                 method(source, ...args);
             };
+
+            if (SOZ_CORE_IS_CLIENT) {
+                if (commandMetadata.keys) {
+                    for (const key of commandMetadata.keys) {
+                        RegisterKeyMapping(
+                            commandMetadata.name,
+                            commandMetadata.description || '',
+                            key.mapper,
+                            key.key
+                        );
+                    }
+                }
+            }
 
             RegisterCommand(commandMetadata.name, commandMethod, commandMetadata.role !== null);
             this.commands.push(commandMetadata);

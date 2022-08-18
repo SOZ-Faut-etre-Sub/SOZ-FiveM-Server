@@ -1,5 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 
+import { NuiMethodMap } from '../../../../shared/nui/';
 import { eventNameFactory } from '../utils/eventNameFactory';
 
 function addEventListener<T extends EventTarget, E extends Event>(
@@ -27,8 +28,12 @@ function addEventListener<T extends EventTarget, E extends Event>(
  * const [dataState, setDataState] = useState<boolean>();
  * useNuiEvent<boolean>("appname", "methodname", setDataState);
  **/
-export const useNuiEvent = <D = unknown>(app: string, method: string, handler: (r: D) => void): void => {
-    const savedHandler: MutableRefObject<(r: D) => void> = useRef();
+export const useNuiEvent = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
+    app: App,
+    method: Method,
+    handler: (r: NuiMethodMap[App][Method]) => void
+): void => {
+    const savedHandler: MutableRefObject<(r: NuiMethodMap[App][Method]) => void> = useRef();
 
     // When handler value changes set mutable ref to handler val
     useEffect(() => {
@@ -40,7 +45,7 @@ export const useNuiEvent = <D = unknown>(app: string, method: string, handler: (
         const eventListener = event => {
             if (savedHandler.current && savedHandler.current.call) {
                 const { data } = event;
-                savedHandler.current(data as D);
+                savedHandler.current(data as NuiMethodMap[App][Method]);
             }
         };
 
@@ -50,6 +55,9 @@ export const useNuiEvent = <D = unknown>(app: string, method: string, handler: (
     }, [app, method]);
 };
 
-export const useSozCoreNuiEvent = <D = unknown>(method: string, handler: (r: D) => void): void => {
-    return useNuiEvent('soz-core', method, handler);
+export const useMenuNuiEvent = <M extends keyof NuiMethodMap['menu']>(
+    method: M,
+    handler: (r: NuiMethodMap['menu'][M]) => void
+) => {
+    return useNuiEvent('menu', method, handler);
 };
