@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useMenuNuiEvent } from '../components/Nui/hooks/useNuiEvent';
+import { useMenuNuiEvent } from './nui';
 
 export const useKeyPress = (targetKey: string, onKeyPress?: () => void) => {
     useEffect(() => {

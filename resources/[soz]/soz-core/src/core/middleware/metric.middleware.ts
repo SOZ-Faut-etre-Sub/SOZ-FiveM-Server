@@ -20,10 +20,12 @@ export class MetricMiddlewareFactory implements MiddlewareFactory {
             this.callsNumber[event.name]++;
             const start = Date.now();
 
-            await next(...args);
+            const result = await next(...args);
 
             const duration = Date.now() - start;
             this.executionTime[event.name] += duration;
+
+            return result;
         };
     }
 }
