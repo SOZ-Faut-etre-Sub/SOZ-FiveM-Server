@@ -8,6 +8,7 @@ RegisterCommand("inventory", function()
     end
 
     exports["menuv"]:SendNUIMessage({action = "KEY_CLOSE_ALL"})
+    TriggerEvent("soz-core:client:menu:close")
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
             SendNUIMessage({

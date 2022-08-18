@@ -235,7 +235,7 @@ div .hide,
 .menuv.default .menuv-items span.menuv-icon {
     margin-left: 2.5px;
     margin-right: 5px;
-    /*border-right: 1px solid white;*/
+    border-right: 1px solid white;
     padding-right: 5px;
     float: left;
     width: 2em;

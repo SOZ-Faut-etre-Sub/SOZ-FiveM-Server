@@ -2274,6 +2274,8 @@ function MenuV:OpenMenu(menu, cb, reopen)
         self.CurrentMenu:DestroyThreads()
     end
 
+    TriggerEvent('soz-core:client:menu:close')
+
     self.CurrentMenu = menu
     self.CurrentUpdateUUID = menu:On('update', function(m, k, v)
         k = Utilities:Ensure(k, 'unknown')
