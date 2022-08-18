@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { SozRole } from '../../core/permissions';
 import { PlayerData, PlayerMetadata } from '../../shared/player';
 import { QBCore } from '../qbcore';
 
@@ -66,5 +67,9 @@ export class PlayerService {
 
             player.Functions.SetMetaData(key, newValue);
         }
+    }
+
+    public hasPermission(source: number, permission: SozRole): boolean {
+        return this.QBCore.hasPermission(source, permission);
     }
 }
