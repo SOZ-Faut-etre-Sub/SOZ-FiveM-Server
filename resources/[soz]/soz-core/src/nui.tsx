@@ -1,13 +1,13 @@
 import { createRoot } from 'react-dom/client';
 
 import { App } from './nui/components/App';
-import { NuiProvider } from './nui/components/Nui/providers/NuiProvider';
+import { NuiListener } from './nui/components/NuiListener';
 
 const container = document.getElementById('app');
 const root = createRoot(container);
 
 root.render(
-    <NuiProvider resource="soz-core">
+    <NuiListener>
         <App />
-    </NuiProvider>
+    </NuiListener>
 );

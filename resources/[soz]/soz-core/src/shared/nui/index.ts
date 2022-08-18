@@ -1,11 +1,10 @@
-import { NuiMenuEventMap } from './menu';
+import { NuiMenuMethodMap } from './menu';
 
 export interface NuiMethodMap {
-    menu: NuiMenuEventMap;
+    menu: NuiMenuMethodMap;
 }
 
-// declare function dispatch<K extends keyof NuiMethodMap, M extends keyof NuiMethodMap[K]>(
-//     app: K,
-//     method: M,
-//     event: NuiMethodMap[K][M]
-// );
+export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
+    app: App,
+    method: Method
+): string => `${String(app)}:${String(method)}`;

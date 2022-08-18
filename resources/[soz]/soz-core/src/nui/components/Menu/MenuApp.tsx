@@ -2,7 +2,7 @@ import { FunctionComponent, PropsWithChildren } from 'react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { MenuType } from '../../../shared/nui/menu';
-import { useMenuNuiEvent } from '../Nui/hooks/useNuiEvent';
+import { useMenuNuiEvent } from '../../hook/nui';
 import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
 

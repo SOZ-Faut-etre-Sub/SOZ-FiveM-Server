@@ -1,4 +1,4 @@
-export interface NuiMenuEventMap {
+export interface NuiMenuMethodMap {
     ArrowDown: never;
     ArrowLeft: never;
     ArrowRight: never;

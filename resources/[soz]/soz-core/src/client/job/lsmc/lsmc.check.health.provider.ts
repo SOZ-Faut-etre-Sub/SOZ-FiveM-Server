@@ -1,8 +1,11 @@
-import { Once } from '../../../core/decorators/event';
+import { Once, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ServerEvent } from '../../../shared/event';
+import { NuiEvent, ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { MenuType } from '../../../shared/nui/menu';
+import { Ok } from '../../../shared/result';
+import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -18,6 +21,9 @@ export class LSMCCheckHealthProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
     public doBloodCheck(entity: number) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -28,6 +34,12 @@ export class LSMCCheckHealthProvider {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
         TriggerServerEvent(ServerEvent.LSMC_HEALTH_CHECK, target);
+    }
+
+    @OnNuiEvent(NuiEvent.SetPlayerFiber)
+    async setPlayerFiber({ source, value }) {
+        // @TODO
+        return Ok(true);
     }
 
     @Once()
@@ -56,6 +68,17 @@ export class LSMCCheckHealthProvider {
                     return this.playerService.isOnDuty();
                 },
                 action: this.doHealthCheck.bind(this),
+            },
+            {
+                label: 'Modifier le carnet de santé',
+                color: 'lsmc',
+                job: 'lsmc',
+                canInteract: () => {
+                    return this.playerService.isOnDuty();
+                },
+                action: () => {
+                    this.nuiMenu.openMenu(MenuType.SetHealthState);
+                },
             },
         ]);
 

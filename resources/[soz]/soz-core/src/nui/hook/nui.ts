@@ -1,7 +1,8 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
-import { NuiMethodMap } from '../../../../shared/nui/';
-import { eventNameFactory } from '../utils/eventNameFactory';
+import { NuiEvent } from '../../shared/event';
+import { eventNameFactory, NuiMethodMap } from '../../shared/nui';
+import { fetchNui, FetchNuiOptions } from '../fetch';
 
 function addEventListener<T extends EventTarget, E extends Event>(
     element: T,
@@ -60,4 +61,41 @@ export const useMenuNuiEvent = <M extends keyof NuiMethodMap['menu']>(
     handler: (r: NuiMethodMap['menu'][M]) => void
 ) => {
     return useNuiEvent('menu', method, handler);
+};
+
+type UseNuiResponse<I, R> = [UseNuiFetch<I, R>, { loading: boolean; data: R | null; error: any }];
+type UseNuiFetch<I, R> = (input?: I, options?: FetchNuiOptions) => Promise<R>;
+
+/**
+ * Make a callback to "myEvent" by sending back "myEventSuccess" or "myEventError" from the client
+ * @param event {NuiEvent} needs to be the same here and in the success and error response events
+ * @returns {[fetchFn, { loading, error, data }]} [UseNuiCallbackFetch, { loading, error, data }]
+ * @example
+ * const [fetchUser, { loading, error, data }] = useNuiFetch<number, IUser>(NuiEvent.FETCH_USER);
+ * useEffect(() => {
+ *  fetchUser(11);
+ * }, [fetchUser]);
+ */
+export const useNuiFetch = <I, R>(event: NuiEvent): UseNuiResponse<I, R> => {
+    const [state, setState] = useState({ loading: false, data: null, error: null });
+
+    const fetchNuiFn = useCallback(
+        async (input?: I, options?: FetchNuiOptions): Promise<R> => {
+            setState({ loading: true, data: null, error: null });
+
+            try {
+                const data = await fetchNui<I, R>(event, input, options);
+                setState({ loading: false, data, error: null });
+
+                return data;
+            } catch (error) {
+                setState({ loading: false, data: null, error });
+
+                throw error;
+            }
+        },
+        [event]
+    );
+
+    return [fetchNuiFn, state];
 };

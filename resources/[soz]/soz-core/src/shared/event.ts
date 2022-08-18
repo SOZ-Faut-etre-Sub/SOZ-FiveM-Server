@@ -28,3 +28,7 @@ export enum GameEvent {
     CEventExplosionHeard = 'CEventExplosionHeard',
     CEventGunShot = 'CEventGunShot',
 }
+
+export enum NuiEvent {
+    SetPlayerFiber = 'soz-core:client:player:fiber:set',
+}
