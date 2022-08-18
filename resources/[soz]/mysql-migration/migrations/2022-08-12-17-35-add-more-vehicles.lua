@@ -20,7 +20,6 @@ table.insert(migrations, {
         [[ UPDATE vehicles SET name = 'Sabre Turbo Custom' WHERE model = 'sabregt2'; ]],
         [[ UPDATE vehicles SET name = 'Desert Raid' WHERE model = 'trophytruck2'; ]],
         [[ UPDATE vehicles SET name = 'Diabolus' WHERE model = 'diablous'; ]],
-        [[ UPDATE vehicles SET model = 'schafter2' WHERE model = 'schafter'; ]],
         [[ UPDATE vehicles SET category = 'Super' WHERE model = 'deveste'; ]],
         [[ UPDATE vehicles SET category = 'Sports' WHERE model = 'sentinel3'; ]],
         [[ UPDATE vehicles SET dealership_id = NULL WHERE model = 'deluxo'; ]],
