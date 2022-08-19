@@ -36,7 +36,7 @@ export const Conversations = (): any => {
         );
     }, [conversations, searchValue]);
 
-    const { getDisplayByNumber } = useContact();
+    const { getDisplayByNumber, getPictureByNumber } = useContact();
 
     return (
         <>
@@ -82,23 +82,17 @@ export const Conversations = (): any => {
                                         })}
                                     >
                                         <div className="flex-shrink-0 inline-block relative">
-                                            {conversation.avatar ? (
-                                                <img
-                                                    className={cn('h-10 w-10 rounded-full', {
-                                                        'bg-gray-700': config.theme.value === 'dark',
-                                                        'bg-gray-100': config.theme.value === 'light',
-                                                    })}
-                                                    src={conversation.avatar}
-                                                    alt=""
-                                                />
-                                            ) : (
-                                                <div
-                                                    className={cn(`h-10 w-10 rounded-full`, {
-                                                        'bg-gray-700': config.theme.value === 'dark',
-                                                        'bg-gray-100': config.theme.value === 'light',
-                                                    })}
-                                                />
-                                            )}
+                                            <div
+                                                className={cn('bg-cover bg-center h-10 w-10 rounded-full', {
+                                                    'bg-gray-700': config.theme.value === 'dark',
+                                                    'bg-gray-100': config.theme.value === 'light',
+                                                })}
+                                                style={{
+                                                    backgroundImage: `url(${getPictureByNumber(
+                                                        conversation.phoneNumber
+                                                    )})`,
+                                                }}
+                                            />
                                             {conversation.unread > 0 && (
                                                 <span
                                                     className={cn(
