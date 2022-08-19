@@ -15,7 +15,7 @@ CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
 -- Proximity modules
 ProximityModuleCullingInstance = ModuleProximityCulling:new(Config.normalRange)
 ProximityModuleGridInstance = ModuleProximityGrid:new(Config.normalRange, Config.gridSize, Config.gridEdge)
-ProximityModuleInstance = ProximityModuleGridInstance
+ProximityModuleInstance = ProximityModuleCullingInstance
 
 -- Filter module
 local FilterRegistryInstance = FilterSubmixRegistry:new()
@@ -253,5 +253,5 @@ RegisterNetEvent("voip:client:reset", function()
 
     -- Allow voice loop to reinit state
     restarting = false
-    exports["soz-hud"]:DrawNotification("Voip réactiver.", "info")
+    exports["soz-hud"]:DrawNotification("Voip réactivée.", "info")
 end)
