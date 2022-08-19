@@ -291,13 +291,21 @@ QBCore.Functions.CreateCallback("soz-garage:server:PayParkingFee", function(sour
     end
 
     if player.Functions.RemoveMoney("money", price, string.format("paid-%s", type_)) then
-        TriggerEvent("monitor:server:event", "pay_vehicle_garage_free", {
-            player_source = player.PlayerData.source,
-            vehicle_plate = vehicle.plate,
-        }, {garage = vehicle.garage, price = price})
+        TriggerEvent("monitor:server:event", "pay_vehicle_garage_fee",
+                     {player_source = player.PlayerData.source, vehicle_plate = vehicle.plate, garage = vehicle.garage}, {
+            price = price,
+        })
 
         if type_ == "depot" then
-            TriggerEvent("banking:server:TransferMoney", "farm_bennys", "safe_bennys", math.ceil(qbVehicle.price * 0.02))
+            local bennysFee = math.ceil(qbVehicle.price * 0.02)
+
+            TriggerEvent("banking:server:TransferMoney", "farm_bennys", "safe_bennys", bennysFee)
+            TriggerEvent("monitor:server:event", "pay_vehicle_impound_fee",
+                         {
+                player_source = player.PlayerData.source,
+                vehicle_plate = vehicle.plate,
+                garage = vehicle.garage,
+            }, {price = bennysFee})
         end
         cb(true)
     else
