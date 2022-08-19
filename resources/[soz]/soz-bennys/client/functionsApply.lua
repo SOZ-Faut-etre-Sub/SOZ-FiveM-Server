@@ -14,13 +14,7 @@ end
 function ApplyExtra(extraID)
     local plyVeh = Config.AttachedVehicle
     local isEnabled = IsVehicleExtraTurnedOn(plyVeh, extraID)
-    if isEnabled == 1 then
-        SetVehicleExtra(plyVeh, tonumber(extraID), 1)
-        SetVehiclePetrolTankHealth(plyVeh, 4000.0)
-    else
-        SetVehicleExtra(plyVeh, tonumber(extraID), 0)
-        SetVehiclePetrolTankHealth(plyVeh, 4000.0)
-    end
+    SetVehicleExtra(plyVeh, tonumber(extraID), isEnabled)
     exports["soz-bennys"]:setModified(true)
 end
 
