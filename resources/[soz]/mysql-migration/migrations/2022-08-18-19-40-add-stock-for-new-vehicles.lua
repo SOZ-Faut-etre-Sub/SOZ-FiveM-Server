@@ -75,7 +75,6 @@ table.insert(migrations, {
                 ('diablous2', 6, 'Motorcycles'),
                 ('fcr', 6, 'Motorcycles'),
                 ('fcr2', 6, 'Motorcycles'),
-                ('speedo4', 6, 'Vans'),
                 ('speedo', 6, 'Vans'),
                 ('minivan2', 6, 'Vans'),
                 ('rumpo3', 6, 'Vans'),

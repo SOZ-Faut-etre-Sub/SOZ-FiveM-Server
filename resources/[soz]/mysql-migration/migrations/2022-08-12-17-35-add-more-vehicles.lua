@@ -37,7 +37,8 @@ table.insert(migrations, {
                 'imperator3', 'peyote2', 'slamvan2', 'stalion2', 'tampa2', 'voodoo2',  'yosemite2',
                 'blazer2', 'blazer5', 'caracara', 'guardian', 'mesa3', 'slamtruck', 'sadler',
                 'trophytruck', 'trophytruck2', 'verus', 'winky', 'baller5', 'baller6',
-                'cavalcade', 'burrito', 'mule5', 'youga3', 'youga4', 'rumpo'
+                'cavalcade', 'burrito', 'mule5', 'youga3', 'youga4', 'rumpo', 'speedo4', 'comet4',
+                'iwagen', 'raiden', 'imorgon', 'iwagen', 'tezeract'
             );
         ]],
     },
