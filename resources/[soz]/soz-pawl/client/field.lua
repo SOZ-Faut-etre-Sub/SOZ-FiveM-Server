@@ -7,7 +7,7 @@ local function TreeInteraction(identifier, position)
         heading = position.w or 0.0,
         minZ = position.z,
         maxZ = position.z + 5.0,
-        debugPoly = true,
+        debugPoly = false,
     }, {
         options = {
             {
