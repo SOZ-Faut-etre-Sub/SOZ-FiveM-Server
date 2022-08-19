@@ -36,7 +36,6 @@ table.insert(migrations, {
                 ('virgo3', 6, 'Muscle'),
                 ('faction3', 6, 'Muscle'),
                 ('ruiner', 6, 'Muscle'),
-                ('ruiner2', 6, 'Muscle'),
                 ('novak', 6, 'Suvs'),
                 ('rebla', 6, 'Suvs'),
                 ('patriot2', 6, 'Suvs'),

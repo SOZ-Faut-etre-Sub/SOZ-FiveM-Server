@@ -33,12 +33,11 @@ table.insert(migrations, {
             UPDATE vehicles SET dealership_id = NULL WHERE model IN (
                 'deluxo', 'jb700', 'jester2', 'kuruma2', 'paragonfbi', 'stromberg', 'khamelion', 'neon',
                 'surge', 'dilettante2', 'issi4', 'issi5', 'issi6', 'dominator2', 'dominator4', 'dukes2',
-                'dukes3', 'impaler2', 'impaler3', 'impaler4', 'imperator', 'imperator2',
-                'imperator3', 'peyote2', 'slamvan2',
-                'blazer2', 'blazer5', 'caracara', 'guardian', 'mesa3', 'slamtruck', 'sadler',
-                'verus', 'winky', 'baller5', 'baller6',
+                'dukes3', 'impaler2', 'impaler3', 'impaler4', 'imperator', 'imperator2', 'toreador',
+                'imperator3', 'peyote2', 'slamvan2', 'ruiner2', 'blazer2', 'blazer5', 'caracara',
+                'guardian', 'mesa3', 'slamtruck', 'sadler', 'verus', 'winky', 'baller5', 'baller6',
                 'cavalcade', 'burrito', 'mule5', 'youga3', 'youga4', 'rumpo', 'speedo4', 'comet4',
-                'iwagen', 'raiden', 'tezeract',
+                'iwagen', 'raiden', 'tezeract', 'ardent', 'deathbike', 'deathbike2', 'deathbike3'
             );
         ]],
     },
