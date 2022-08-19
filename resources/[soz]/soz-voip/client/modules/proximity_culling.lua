@@ -23,7 +23,11 @@ function ModuleProximityCulling:getSpeakers()
         local serverId = GetPlayerServerId(player)
 
         if self.serverId ~= serverId then
-            speakers[("player_%d"):format(serverId)] = {serverId = serverId, transmitting = true}
+            local distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(GetPlayerPed(player)))
+
+            if distance < 50 then
+                speakers[(("player_%d"):format(serverId))] = {serverId = serverId, transmitting = true}
+            end
         end
     end
 
@@ -36,4 +40,10 @@ end
 
 function ModuleProximityCulling:refresh()
     MumbleSetTalkerProximity(self.range)
+    local voiceChannel = self.serverId + 1000
+
+    while MumbleGetVoiceChannelFromServerId(self.serverId) ~= voiceChannel do
+        NetworkSetVoiceChannel(voiceChannel)
+        Citizen.Wait(0)
+    end
 end
