@@ -3,7 +3,6 @@ SozJobCore = exports["soz-jobs"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 
 FieldTrees = {}
-FieldHarvest = {}
 DegradationLevel = Config.Degradation.Level.Green
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
@@ -26,7 +25,7 @@ Citizen.CreateThread(function()
     end
 
     -- Fields
-    for identifier, _ in pairs(Config.Fields) do
+    for identifier, _ in pairs(Config.Field.List) do
         local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
         TriggerEvent("pawl:client:syncField", identifier, field)
     end

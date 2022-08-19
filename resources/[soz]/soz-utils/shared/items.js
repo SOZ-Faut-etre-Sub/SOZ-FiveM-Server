@@ -6,3 +6,7 @@ exports("ItemIsExpired", (item) => {
     }
     return false;
 });
+
+exports("GetTimestamp", () => {
+     return new Date().getTime()
+});

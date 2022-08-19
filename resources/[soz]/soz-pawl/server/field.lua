@@ -1,22 +1,15 @@
 --- @class Field
 Field = {}
 
-function Field:new(identifier, fieldModel, fieldPositions, refillDelay)
+function Field:new(identifier, field, refillDelay, position, radius)
     self.__index = self
-
-    --- Build empty harvest history for initializing the field
-    local harvestHistory = {}
-    for _, p in pairs(fieldPositions) do
-        table.insert(harvestHistory, 0)
-    end
 
     return setmetatable({
         identifier = identifier,
-        field = {},
-        model = fieldModel,
-        positions = fieldPositions,
-        refill = refillDelay,
-        harvestHistory = harvestHistory,
+        field = field,
+        refillDelay = refillDelay,
+        position = position,
+        radius = radius,
     }, self)
 end
 
@@ -25,11 +18,39 @@ function Field:GetField()
 end
 
 function Field:GetFieldStats()
-    return #self.field, #self.positions
+    return self:GetCuttedTrees(), self:GetTrees()
+end
+
+function Field:GetTrees()
+    local count = 0
+
+    for _ in pairs(self.field) do
+        count = count + 1
+    end
+
+    return count
 end
 
 function Field:GetCuttedTrees()
-    return #self.positions - #self.field
+    local count = 0
+
+    for _, tree in pairs(self.field) do
+        if self:TreeIsCutted(tree.harvestTime) then
+            count = count + 1
+        end
+    end
+
+    return count
+end
+
+---
+--- Core
+---
+function Field:Save()
+    MySQL.update.await("UPDATE field SET data = ? WHERE identifier = ? AND owner = 'pawl'", {
+        json.encode({field = self.field, refillDelay = self.refillDelay, position = self.position, radius = self.radius}),
+        self.identifier,
+    })
 end
 
 ---
@@ -37,21 +58,24 @@ end
 ---
 function Field:TreeExistAtPosition(position)
     for _, tree in pairs(self.field) do
-        if tree.position == position then
+        if table.matches(tree.position, position) and not self:TreeIsCutted(tree.harvestTime) then
             return true
         end
     end
     return false
 end
 
+function Field:TreeIsCutted(time)
+    return (os.time() - time) * 1000 <= self.refillDelay
+end
+
 ---
 --- Consume the field
 ---
 function Field:RemoveTree(position)
-    for k, tree in pairs(self.field) do
-        if tree.position == position then
-            table.remove(self.field, k)
-            table.insert(self.harvestHistory, os.time())
+    for _, tree in pairs(self.field) do
+        if table.matches(tree.position, position) then
+            tree.harvestTime = os.time()
 
             self:SyncField()
             return true
@@ -61,7 +85,7 @@ function Field:RemoveTree(position)
 end
 
 function Field:Harvest(position)
-    if #self.field <= 0 then
+    if self:GetTrees() <= 0 then
         return false
     end
 
@@ -73,59 +97,16 @@ function Field:Harvest(position)
 end
 
 ---
---- Regenerate the field capacity
----
-function Field:GenerateTree()
-    for _, position in pairs(self.positions) do
-        if not self:TreeExistAtPosition(position) then
-            return {model = self.model, position = position}
-        end
-    end
-end
-
-function Field:CanRefill()
-    for k, time in pairs(self.harvestHistory) do
-        if (os.time() - time) * 1000 >= self.refill then
-            table.remove(self.harvestHistory, k)
-            return true
-        end
-    end
-    return false
-end
-
-function Field:Refill()
-    if #self.field >= #self.positions then
-        return
-    end
-
-    if not self:CanRefill() then
-        return
-    end
-
-    local tree = self:GenerateTree()
-    if tree then
-        table.insert(self.field, tree)
-        self:SyncField()
-    end
-end
-
----
 --- Workers
 ---
 function Field:RunBackgroundTasks()
     Citizen.CreateThread(function()
         while true do
-            self:Refill()
+            self:Save()
 
             Citizen.Wait(60 * 1000)
         end
     end)
-end
-
-function Field:FullRefillField()
-    while #self.field < #self.positions do
-        self:Refill()
-    end
 end
 
 function Field:SyncField()

@@ -17,6 +17,7 @@ server_scripts {
     "server/prometheus/player.lua",
     "server/prometheus/upw.lua",
     "server/prometheus/mtp.lua",
+    "server/prometheus/pawl.lua",
     "server/prometheus/http.lua",
 }
 
