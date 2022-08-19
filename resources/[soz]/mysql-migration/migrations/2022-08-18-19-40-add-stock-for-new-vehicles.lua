@@ -18,7 +18,6 @@ table.insert(migrations, {
                 ('gauntlet3', 6, 'Muscle'),
                 ('gauntlet4', 6, 'Muscle'),
                 ('gauntlet5', 6, 'Muscle'),
-                ('gasser', 6, 'Muscle'),
                 ('ellie', 6, 'Muscle'),
                 ('dominator3', 6, 'Muscle'),
                 ('dominator7', 6, 'Muscle'),
