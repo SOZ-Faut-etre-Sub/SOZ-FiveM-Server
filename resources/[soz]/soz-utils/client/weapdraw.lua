@@ -7,6 +7,7 @@ local weapons = {
     "WEAPON_BAT",
     "WEAPON_GOLFCLUB",
     "WEAPON_CROWBAR",
+    "WEAPON_KNUCKLE",
     "WEAPON_BOTTLE",
     "WEAPON_DAGGER",
     "WEAPON_HATCHET",
