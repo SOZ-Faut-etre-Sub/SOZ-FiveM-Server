@@ -19,7 +19,7 @@ class _SettingsService {
         const identifier = PlayerService.getPlayer(reqObj.source).getPhoneNumber();
 
         try {
-            const contact = await this.settingsDB.updatePicture(identifier, reqObj.data);
+            const contact = await this.settingsDB.addPicture(identifier, reqObj.data);
 
             resp({ status: 'ok', data: contact });
         } catch (e) {
