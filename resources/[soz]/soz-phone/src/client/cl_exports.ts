@@ -54,7 +54,9 @@ exps('startPhoneCall', (number: string) => {
 });
 
 exps('stopPhoneCall', async () => {
-    await hidePhone();
+    if (global.isPhoneOpen) {
+        await hidePhone();
+    }
     if (callService.isInCall()) {
         callService.handleEndCall();
         await animationService.endPhoneCall();
