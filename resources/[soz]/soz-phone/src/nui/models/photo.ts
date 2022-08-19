@@ -17,7 +17,7 @@ export const photo = createModel<RootModel>()({
             return [payload, ...state];
         },
         remove: (state, payload) => {
-            return [...state.filter(photo => photo.id !== payload)];
+            return [...state.filter(photo => photo.image !== payload)];
         },
     },
     effects: dispatch => ({
@@ -27,8 +27,8 @@ export const photo = createModel<RootModel>()({
         async appendPhoto(payload: GalleryPhoto) {
             dispatch.photo.add(payload);
         },
-        async removePhoto(payload: number) {
-            dispatch.photo.remove(payload);
+        async removePhoto(payload: GalleryPhoto) {
+            dispatch.photo.remove(payload.image);
         },
         // loader
         async loadPhotos() {
