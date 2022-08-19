@@ -20,14 +20,16 @@ RegisterNetEvent("admin:gamemaster:giveLicence", function(licence)
     end
 end)
 
-RegisterNetEvent("admin:gamemaster:unCuff", function(moneyType, amount)
+RegisterNetEvent("admin:gamemaster:unCuff", function()
     if not SozAdmin.Functions.IsPlayerHelper(source) then
         return
     end
 
     local player = QBCore.Functions.GetPlayer(source)
-    if player and moneyType and amount then
+    if player then
         player.Functions.SetMetaData("ishandcuffed", false)
+        Player(source).state:set("ishandcuffed", false, true)
+        TriggerClientEvent("police:client:GetUnCuffed", source)
     end
 end)
 
