@@ -3,13 +3,48 @@ QBCore = exports["qb-core"]:GetCoreObject()
 Fields = {}
 Processing = {Enabled = false, StartedAt = 0}
 
-Citizen.CreateThread(function()
-    for k, v in pairs(Config.Fields) do
-        Fields[k] = Field:new(k, v.model, v.positions, v.refillDelay)
+MySQL.ready(function()
+    local fieldData = {}
 
-        Fields[k]:FullRefillField()
-        Fields[k]:RunBackgroundTasks()
+    for k, field in pairs(Config.Fields) do
+        local identifier = string.match(k, "^(.*)__")
+
+        if not fieldData[identifier] then
+            fieldData[identifier] = {field = {}, refillDelay = field.refillDelay}
+        end
+
+        for _, pos in pairs(field.positions) do
+            table.insert(fieldData[identifier].field, {
+                model = field.model,
+                position = pos,
+                harvestTime = os.time() - field.refillDelay,
+            })
+        end
+
+        if field.blip then
+            fieldData[identifier].position = field.blip.Coords
+            fieldData[identifier].radius = field.blip.Radius
+        end
     end
+
+    for k, v in pairs(fieldData) do
+        -- Migrate field to database if not exist
+        MySQL.insert.await("INSERT IGNORE INTO field (identifier, owner, data) VALUES (?, ?, ?)",
+                           {
+            k,
+            "pawl",
+            json.encode({field = v.field, refillDelay = v.refillDelay, position = v.position, radius = v.radius}),
+        })
+    end
+
+    MySQL.query("SELECT * FROM field WHERE owner = 'pawl'", function(fields)
+        for _, v in pairs(fields or {}) do
+            local data = json.decode(v.data)
+
+            Fields[v.identifier] = Field:new(v.identifier, data.field, data.refillDelay, data.position, data.radius)
+            Fields[v.identifier]:RunBackgroundTasks()
+        end
+    end)
 end)
 
 QBCore.Functions.CreateCallback("pawl:server:getFieldData", function(source, cb, identifier)
@@ -218,4 +253,20 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
             end
         end)
     end
+end)
+
+exports("GetPawlMetrics", function()
+    local metrics = {}
+
+    -- Degradation Level
+    metrics["degradation_percent"] = {{value = GetDegradationPercentage()}}
+
+    -- Fields
+    for identifier, field in pairs(Fields) do
+        local metric = {["identifier"] = identifier, value = field:GetTrees() - field:GetCuttedTrees()}
+
+        metrics[identifier] = {metric}
+    end
+
+    return metrics
 end)
