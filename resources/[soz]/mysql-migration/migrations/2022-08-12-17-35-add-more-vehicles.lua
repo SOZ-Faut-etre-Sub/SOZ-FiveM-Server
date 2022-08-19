@@ -3,7 +3,7 @@ table.insert(migrations, {
     queries = {
         [[
             INSERT INTO vehicles (model, hash, name, price, category, dealership_id, required_licence) VALUES
-            ('rrocket', 916547552, 'Rampant Rocket', 10000, 'Motorcycles', 'luxury', 'car'),
+            ('rrocket', 916547552, 'Rampant Rocket', 10000, 'Motorcycles', 'moto', 'moto'),
             ('zhaba', 1284356689, 'Zhaba', 600000, 'Off-road', NULL, 'car'),
             ('hotring', 1115909093, 'Hotring Sabre', 150000, 'Sports', NULL, 'car'),
             ('patriot2', -420911112, 'Patriot Stretch', 50000, 'Suvs', 'pdm', 'car'),
@@ -33,12 +33,12 @@ table.insert(migrations, {
             UPDATE vehicles SET dealership_id = NULL WHERE model IN (
                 'deluxo', 'jb700', 'jester2', 'kuruma2', 'paragonfbi', 'stromberg', 'khamelion', 'neon',
                 'surge', 'dilettante2', 'issi4', 'issi5', 'issi6', 'dominator2', 'dominator4', 'dukes2',
-                'dukes3', 'gauntlet2', 'impaler2', 'impaler3', 'impaler4', 'imperator', 'imperator2',
-                'imperator3', 'peyote2', 'slamvan2', 'stalion2', 'tampa2', 'voodoo2',  'yosemite2',
+                'dukes3', 'impaler2', 'impaler3', 'impaler4', 'imperator', 'imperator2',
+                'imperator3', 'peyote2', 'slamvan2',
                 'blazer2', 'blazer5', 'caracara', 'guardian', 'mesa3', 'slamtruck', 'sadler',
-                'trophytruck', 'trophytruck2', 'verus', 'winky', 'baller5', 'baller6',
+                'verus', 'winky', 'baller5', 'baller6',
                 'cavalcade', 'burrito', 'mule5', 'youga3', 'youga4', 'rumpo', 'speedo4', 'comet4',
-                'iwagen', 'raiden', 'imorgon', 'iwagen', 'tezeract'
+                'iwagen', 'raiden', 'tezeract',
             );
         ]],
     },
