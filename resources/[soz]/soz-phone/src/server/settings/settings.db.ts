@@ -5,17 +5,10 @@ import DbInterface from '../db/db_wrapper';
 
 export class _SettingsDB {
     async addPicture(identifier: string, { number, url }: PreDBSettings): Promise<number> {
-        const query = `INSERT INTO phone_profile (number, avatar) VALUES (?, ?) ON DUPLICATE KEY UPDATE avatar=avatar`;
-        const [setResult] = await DbInterface._rawExec(query, [number, url]);
+        const query = `INSERT INTO phone_profile (number, avatar) VALUES (?, ?) ON DUPLICATE KEY UPDATE avatar=?`;
+        const [setResult] = await DbInterface._rawExec(query, [number, url, url]);
 
         return (<ResultSetHeader>setResult).insertId;
-    }
-
-    async updatePicture(identifier: string, { number, url }: PreDBSettings): Promise<number> {
-        const query = `UPDATE phone_profile SET avatar = ? WHERE number = ?`;
-        const [setResult] = await DbInterface._rawExec(query, [url, number]);
-
-        return (<ResultSetHeader>setResult).affectedRows;
     }
 
     async getProfilePicture(number: string): Promise<string | null> {
