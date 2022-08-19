@@ -568,7 +568,6 @@ Config.FuelStations = {
             [GetHashKey("cyclone")] = true,
             [GetHashKey("cyclone2")] = true,
             [GetHashKey("iwagen")] = true,
-            [GetHashKey("imorgon")] = true,
             -- [GetHashKey("dilettante")] = true,
             -- [GetHashKey("dilettante2")] = true,
             [GetHashKey("khamelion")] = true,
