@@ -25,8 +25,8 @@ export const useSimCardService = () => {
         store.dispatch.simCard.loadCallHistory();
     }, []);
 
-    useNuiEvent('DIALER', CallEvents.ADD_CALL, store.dispatch.simCard.appendCallHistory);
-    useNuiEvent('DIALER', CallEvents.UPDATE_CALL, store.dispatch.simCard.updateCallHistory);
+    useNuiEvent('DIALER', CallEvents.ADD_CALL, store.dispatch.simCard.loadCallHistory);
+    useNuiEvent('DIALER', CallEvents.UPDATE_CALL, store.dispatch.simCard.loadCallHistory);
 
     useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, store.dispatch.simCard.SET_NUMBER);
     useNuiEvent('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, store.dispatch.simCard.SET_SOCIETY_NUMBER);
