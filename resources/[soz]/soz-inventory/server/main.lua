@@ -477,6 +477,11 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         return
     end
 
+    if not amount or amount == 0 then
+        cb(false, "invalid_amount")
+        return
+    end
+
     if not invSource or not invTarget then
         cb(false, "invalid_inventory")
         return
