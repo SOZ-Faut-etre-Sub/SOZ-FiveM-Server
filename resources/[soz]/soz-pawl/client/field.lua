@@ -1,5 +1,5 @@
 local function TreeInteraction(identifier, position)
-    local zoneName = ("storage:%s:%s"):format(identifier, position.x .. position.y)
+    local zoneName = ("pawl:%s:%s"):format(identifier, position.x .. position.y)
     exports["qb-target"]:RemoveZone(zoneName)
     exports["qb-target"]:AddBoxZone(zoneName, position, 8.0, 8.0,
                                     {
@@ -17,7 +17,7 @@ local function TreeInteraction(identifier, position)
                 event = "pawl:client:harvestTree",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
-                    return PlayerData.job.onduty
+                    return DegradationLevel ~= Config.Degradation.Level.Red and PlayerData.job.onduty
                 end,
                 job = "pawl",
                 blackoutGlobal = true,
@@ -32,9 +32,13 @@ local function TreeInteraction(identifier, position)
 end
 
 local function CanHarvestField(identifier)
-    local hit, maxHit = 0, Config.Fields[identifier].capacity
-    for _, time in pairs(FieldHarvest[identifier] or {}) do
-        if GetGameTimer() - time <= Config.Fields[identifier].refillDelay then
+    if DegradationLevel == Config.Degradation.Level.Red then
+        return false
+    end
+
+    local hit, maxHit = 0, Config.Field.Capacity
+    for _, time in pairs(Config.Field.List[identifier] or {}) do
+        if GetGameTimer() - time <= Config.Field.RefillDelay then
             hit = hit + 1
             if hit >= maxHit then
                 return false
@@ -70,10 +74,7 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
     if success then
         local cutTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTree", data.identifier, data.position)
         if cutTree then
-            if FieldHarvest[data.identifier] == nil then
-                FieldHarvest[data.identifier] = {}
-            end
-            table.insert(FieldHarvest[data.identifier], GetGameTimer())
+            table.insert(Config.Field.List[data.identifier], GetGameTimer())
 
             exports["soz-hud"]:DrawNotification("Vous avez ~g~découpé~s~ l’arbre.")
         else
@@ -90,7 +91,6 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
         FieldTrees[identifier] = {}
         field = FieldTrees[identifier]
     end
-    local model = Config.Fields[identifier].model
 
     --- Delete existing trees
     for k, v in pairs(field or {}) do
@@ -98,12 +98,18 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
         field[k] = nil
     end
 
+    local currentTime = exports["soz-utils"]:GetTimestamp() / 1000
     for _, v in pairs(data) do
-        local tree = CreateObjectNoOffset(model, v.position.x, v.position.y, v.position.z, false, false, false)
-        SetEntityHeading(tree, v.w or 0.0)
-        FreezeEntityPosition(tree, true)
+        if (currentTime - v.harvestTime) * 1000 >= Config.Field.RefillDelay then
+            local tree = CreateObjectNoOffset(v.model, v.position.x, v.position.y, v.position.z, false, false, false)
+            SetEntityHeading(tree, v.position.w or 0.0)
+            FreezeEntityPosition(tree, true)
 
-        field[#field + 1] = tree
-        TreeInteraction(identifier, v.position)
+            field[#field + 1] = tree
+            TreeInteraction(identifier, v.position)
+        else
+            local zoneName = ("pawl:%s:%s"):format(identifier, v.position.x .. v.position.y)
+            exports["qb-target"]:RemoveZone(zoneName)
+        end
     end
 end)
