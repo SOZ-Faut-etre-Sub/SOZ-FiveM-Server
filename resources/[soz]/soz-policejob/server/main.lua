@@ -3,19 +3,21 @@ SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 --- Cuff
 RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local Target = QBCore.Functions.GetPlayer(targetId)
+    local player = QBCore.Functions.GetPlayer(source)
+    local target = QBCore.Functions.GetPlayer(targetId)
 
-    if Target then
-        if Player.Functions.GetItemByName("handcuffs") then
-            exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "handcuffs", 1)
-            Target.Functions.SetMetaData("ishandcuffed", true)
-            Player(Target.PlayerData.source).state:set("ishandcuffed", true, true)
+    if target then
+        if player.Functions.GetItemByName("handcuffs") then
+            exports["soz-inventory"]:RemoveItem(player.PlayerData.source, "handcuffs", 1)
+            target.Functions.SetMetaData("ishandcuffed", true)
+            target.Functions.UpdatePlayerData()
+            Player(target.PlayerData.source).state:set("ishandcuffed", true, true)
 
-            TriggerClientEvent("police:client:HandCuffAnimation", Player.PlayerData.source)
-            TriggerClientEvent("police:client:GetCuffed", Target.PlayerData.source, Player.PlayerData.source, isSoftcuff)
+            TriggerClientEvent("police:client:HandCuffAnimation", player.PlayerData.source)
+            TriggerClientEvent("police:client:GetCuffed", target.PlayerData.source, player.PlayerData.source, isSoftcuff)
+            TriggerClientEvent("soz-talk:client:PowerOffRadio", target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de ~r~menotte", "error")
+            TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~menotte", "error")
         end
     end
 end)

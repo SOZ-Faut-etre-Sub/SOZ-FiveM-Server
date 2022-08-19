@@ -39,6 +39,9 @@ local function powerOffRadio()
     end
     exports["soz-voip"]:SetRadioShortRangePowerState(false)
 end
+RegisterNetEvent("soz-talk:client:PowerOffRadio", function()
+    powerOffRadio()
+end)
 
 local function toggleRadio(toggle)
     radioOpen = toggle
