@@ -35,6 +35,7 @@ Citizen.CreateThread(function()
             GetInventoryMetrics(),
             GetUpwMetrics(),
             GetMtpMetrics(),
+            GetPawlMetrics(),
         }
         metrics = table.concat(newMetrics, "\n")
 

@@ -1,6 +1,6 @@
 local currentDegradationLevel = Config.Degradation.Level.Green
 
-local function GetDegradationLevel()
+function GetDegradationPercentage()
     local tree, maxTree = 0, 0
 
     for _, v in pairs(Fields) do
@@ -9,7 +9,11 @@ local function GetDegradationLevel()
         maxTree = maxTree + t
     end
 
-    local percent = math.floor(tree / maxTree * 100)
+    return math.floor((tree / maxTree) * 100)
+end
+
+local function GetDegradationLevel()
+    local percent = GetDegradationPercentage()
 
     for level, trigger in pairs(Config.Degradation.Threshold) do
         if percent >= trigger then
@@ -27,10 +31,11 @@ end)
 Citizen.CreateThread(function()
     while true do
         local newDegradationLevel = GetDegradationLevel()
-        exports["soz-monitor"]:Log("INFO", "Wild degradation level updated: " .. newDegradationLevel)
 
         if currentDegradationLevel ~= newDegradationLevel then
             currentDegradationLevel = newDegradationLevel
+
+            exports["soz-monitor"]:Log("INFO", "Wild degradation level updated: " .. newDegradationLevel)
             TriggerClientEvent("pawl:client:OnDegradationLevelChanged", -1, currentDegradationLevel)
         end
 
