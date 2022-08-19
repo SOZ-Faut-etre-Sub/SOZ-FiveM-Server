@@ -242,8 +242,13 @@ StonkJob.Functions.CollectBags = function(currentShop, nBags)
 end
 
 AddEventHandler("soz-jobs:client:stonk-collect-bag", function()
+    local currentShop = exports["soz-shops"]:GetCurrentShop()
+
+    if not StonkJob.Permissions.CanBagsBeCollected(currentShop) then
+        return
+    end
+
     Citizen.CreateThread(function()
-        local currentShop = exports["soz-shops"]:GetCurrentShop()
         local range = StonkConfig.Collection.Range
         local nBags = math.random(range.min, range.max)
         StonkJob.Functions.CollectBags(currentShop, nBags)
