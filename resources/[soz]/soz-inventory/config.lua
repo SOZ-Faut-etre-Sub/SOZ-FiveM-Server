@@ -26,6 +26,7 @@ Config.StorageCapacity = {
 }
 
 Config.ErrorMessage = {
+    ["invalid_amount"] = "La quantité a transférer est invalide !",
     ["invalid_item"] = "L'objet a transférer est invalide !",
     ["invalid_inventory"] = "L'inventaire n'est pas disponible !",
     ["invalid_quantity"] = "La quantité indiqué n'est pas valide",
