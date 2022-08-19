@@ -4,12 +4,18 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField, TextField } from '@ui/old_components/Input';
-import React, { useState } from 'react';
+import React, { useLayoutEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useNotes } from '../../../hooks/app/useNotes';
 import { useNotesAPI } from '../hooks/useNotesAPI';
+
+interface IFormInputs {
+    title: string;
+    content: string;
+}
 
 export const NoteForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -20,8 +26,16 @@ export const NoteForm: React.FC = () => {
 
     const { addNewNote, deleteNote, updateNote } = useNotesAPI();
     const [t] = useTranslation();
-    const [noteTitle, setNoteTitle] = useState(note?.title || '');
-    const [noteContent, setNoteContent] = useState(note?.content || '');
+
+    const { register, setValue, watch, handleSubmit } = useForm<IFormInputs>();
+    const onSubmit = handleSubmit(() => {});
+
+    useLayoutEffect(() => {
+        if (note) {
+            setValue('title', note.title);
+            setValue('content', note.content);
+        }
+    }, [note]);
 
     const isNewNote = !note;
 
@@ -34,7 +48,7 @@ export const NoteForm: React.FC = () => {
     };
 
     const handleUpdateNote = () => {
-        updateNote({ id: note.id, title: noteTitle, content: noteContent })
+        updateNote({ id: note.id, title: watch('title'), content: watch('content') })
             .then(() => {
                 navigate(-1);
             })
@@ -42,20 +56,11 @@ export const NoteForm: React.FC = () => {
     };
 
     const handleNewNote = () => {
-        addNewNote({ title: noteTitle, content: noteContent })
+        addNewNote({ title: watch('title'), content: watch('content') })
             .then(() => {
                 navigate(-1);
             })
             .catch(console.error);
-    };
-
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNoteTitle(e.target.value);
-        e.target.focus();
-    };
-
-    const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNoteContent(e.target.value);
     };
 
     const NoteActions = (
@@ -75,7 +80,7 @@ export const NoteForm: React.FC = () => {
                     <Menu.Item>
                         <Button
                             className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                            disabled={noteTitle.length <= 0}
+                            disabled={watch('title')?.length <= 0}
                             onClick={isNewNote ? handleNewNote : handleUpdateNote}
                         >
                             <SaveIcon className="mx-3 h-5 w-5" /> Sauvegarder
@@ -116,13 +121,19 @@ export const NoteForm: React.FC = () => {
                 </Link>
             </AppTitle>
             <AppContent scrollable={false}>
-                <TextField placeholder={t('GENERIC.TITLE')} value={noteTitle} onChange={handleTitleChange} />
-                <TextareaField
-                    className="h-[90%]"
-                    placeholder={t('GENERIC.CONTENT')}
-                    value={noteContent}
-                    onChange={handleContentChange}
-                />
+                <form className="h-full" onSubmit={onSubmit}>
+                    <TextField
+                        {...register('title', { required: true, maxLength: 128 })}
+                        placeholder={t('GENERIC.TITLE')}
+                        maxLength={128}
+                    />
+                    <TextareaField
+                        className="h-[90%]"
+                        {...register('content', { required: true, maxLength: 1024 })}
+                        placeholder={t('GENERIC.CONTENT')}
+                        maxLength={1024}
+                    />
+                </form>
             </AppContent>
         </Transition>
     );
