@@ -6,6 +6,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerMetadata } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { Hud } from '../hud';
+import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
 import { PlayerService } from './player.service';
 
@@ -31,6 +32,9 @@ export class PlayerHealthProvider {
 
     @Inject(Hud)
     private hud: Hud;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
@@ -78,6 +82,8 @@ export class PlayerHealthProvider {
                 if (hours > 1) {
                     this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
+
+                    this.notifier.notify(source, 'Vous vous sentez moins en forme.', 'error');
                 }
             }
 
@@ -92,6 +98,8 @@ export class PlayerHealthProvider {
                 if (hours > 1) {
                     this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 50, 120);
+
+                    this.notifier.notify(source, 'Vous vous sentez moins en forme.', 'error');
                 }
             }
 
@@ -105,6 +113,8 @@ export class PlayerHealthProvider {
                 if (diff > 1000 * 60 * 10) {
                     this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, 0, 100);
+
+                    this.notifier.notify(source, 'Vous vous sentez moins stressé.', 'error');
                 }
             }
         }

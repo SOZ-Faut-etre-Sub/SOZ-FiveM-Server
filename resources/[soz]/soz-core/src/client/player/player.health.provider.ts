@@ -7,6 +7,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData } from '../../shared/player';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
+import { Notifier } from '../notifier';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
 
@@ -62,6 +63,15 @@ export class PlayerHealthProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    private runningStartTime: number | null = null;
+
+    private lastExerciseCompleted: number | null = null;
+
+    private strengthExercisesCount = 0;
+
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
@@ -80,11 +90,36 @@ export class PlayerHealthProvider {
         }
     }
 
-    private async doFooting(): Promise<void> {
-        // @TODO set player animation and task to do footing
+    private doStrengthExercise(): void {
+        this.strengthExercisesCount++;
+
+        if (this.strengthExercisesCount % 10 === 0) {
+            this.notifier.notify('Vous vous sentez plus en forme.', 'success');
+            TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
+        }
+
+        if (this.strengthExercisesCount >= 30) {
+            this.notifier.notify('Vous vous sentez fatigué, il est temps de faire une pause.', 'error');
+            this.lastExerciseCompleted = GetGameTimer();
+            this.strengthExercisesCount = 0;
+        }
+    }
+
+    private canDoExercise(): boolean {
+        if (!this.lastExerciseCompleted || GetGameTimer() - this.lastExerciseCompleted > 60 * 1000 * 60 * 2) {
+            return true;
+        }
+
+        this.notifier.notify('Vous êtes trop fatigué pour faire un autre exercice.', 'error');
+
+        return false;
     }
 
     private async doPushUps(): Promise<void> {
+        if (!this.canDoExercise()) {
+            return;
+        }
+
         await this.animationService.playAnimation({
             enter: {
                 dictionary: 'amb@world_human_push_ups@male@enter',
@@ -103,10 +138,14 @@ export class PlayerHealthProvider {
             },
         });
 
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
+        this.doStrengthExercise();
     }
 
     private async doSitUps(): Promise<void> {
+        if (!this.canDoExercise()) {
+            return;
+        }
+
         await this.animationService.playAnimation({
             enter: {
                 dictionary: 'amb@world_human_sit_ups@male@enter',
@@ -125,19 +164,27 @@ export class PlayerHealthProvider {
             },
         });
 
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
+        this.doStrengthExercise();
     }
 
     private async doFreeWeight(): Promise<void> {
+        if (!this.canDoExercise()) {
+            return;
+        }
+
         await this.animationService.playScenario({
             name: 'world_human_muscle_free_weights',
             duration: 10000,
         });
 
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
+        this.doStrengthExercise();
     }
 
     private async doChinUps(coords: Vector4): Promise<void> {
+        if (!this.canDoExercise()) {
+            return;
+        }
+
         await this.animationService.walkToCoords(coords, 2000);
 
         await this.animationService.playScenario({
@@ -145,7 +192,37 @@ export class PlayerHealthProvider {
             duration: 10000,
         });
 
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
+        this.doStrengthExercise();
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    async checkRunning(): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
+        if (IsPedRunning(PlayerPedId())) {
+            if (!this.runningStartTime) {
+                this.runningStartTime = GetGameTimer();
+            }
+        } else {
+            if (this.runningStartTime) {
+                const duration = (GetGameTimer() - this.runningStartTime) / 1000;
+
+                if (duration >= 60) {
+                    this.notifier.notify('Vous vous sentez plus en forme.', 'success');
+
+                    TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STAMINA);
+                }
+
+                this.runningStartTime = null;
+            }
+        }
+
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
     }
 
     @Once()
