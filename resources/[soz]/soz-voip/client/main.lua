@@ -15,7 +15,7 @@ CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
 -- Proximity modules
 ProximityModuleCullingInstance = ModuleProximityCulling:new(Config.normalRange)
 ProximityModuleGridInstance = ModuleProximityGrid:new(Config.normalRange, Config.gridSize, Config.gridEdge)
-ProximityModuleInstance = ProximityModuleCullingInstance
+ProximityModuleInstance = ProximityModuleGridInstance
 
 -- Filter module
 local FilterRegistryInstance = FilterSubmixRegistry:new()
