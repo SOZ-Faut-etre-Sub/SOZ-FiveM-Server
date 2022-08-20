@@ -483,7 +483,7 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("police4")] = true,
     [GetHashKey("police5")] = true,
     [GetHashKey("police6")] = true,
-    [GetHashKey("policeb")] = true,
+    [GetHashKey("policeb2")] = true,
     --- BCSO
     [GetHashKey("sheriff")] = true,
     [GetHashKey("sheriff2")] = true,
