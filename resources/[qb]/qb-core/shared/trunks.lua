@@ -34,7 +34,7 @@ QBShared.Trunks = {
     --- LSPD
     [GetHashKey('police5')] = { slot = 5, weight = 80000 },
     [GetHashKey('police6')] = { slot = 5, weight = 80000 },
-    [GetHashKey('policeb')] = { slot = 5, weight = 30000 },
+    [GetHashKey('policeb2')] = { slot = 5, weight = 30000 },
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
 
     --- BCSO
