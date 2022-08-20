@@ -58,7 +58,7 @@ local function PayInvoice(PlayerData, account, id)
                 invoice_kind = "invoice",
                 invoice_job = "",
             }, {
-                target_source = Emitter.PlayerData.source,
+                target_source = Emitter and Emitter.PlayerData.source or nil,
                 id = id,
                 amount = tonumber(invoice.amount),
                 target_account = invoice.emitterSafe,
@@ -90,7 +90,7 @@ local function PayInvoice(PlayerData, account, id)
                     invoice_kind = "invoice",
                     invoice_job = Player.PlayerData.job.id,
                 }, {
-                    target_source = Emitter.PlayerData.source,
+                    target_source = Emitter and Emitter.PlayerData.source or nil,
                     id = id,
                     amount = tonumber(invoice.amount),
                     target_account = invoice.emitterSafe,
@@ -136,7 +136,7 @@ local function RejectInvoice(PlayerData, account, id)
             invoice_kind = "invoice",
             invoice_job = "",
         }, {
-            target_source = Emitter.PlayerData.source,
+            target_source = Emitter and Emitter.PlayerData.source or nil,
             id = id,
             amount = tonumber(invoice.amount),
             target_account = invoice.emitterSafe,
@@ -156,7 +156,7 @@ local function RejectInvoice(PlayerData, account, id)
             invoice_kind = "invoice",
             invoice_job = Player.PlayerData.job.id,
         }, {
-            target_source = Emitter.PlayerData.source,
+            target_source = Emitter and Emitter.PlayerData.source or nil,
             id = id,
             amount = tonumber(invoice.amount),
             target_account = invoice.emitterSafe,
