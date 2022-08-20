@@ -133,7 +133,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
-        bossZone = {
+        bossZones = {
             {
                 x = 626.23,
                 y = -24.0,
@@ -163,7 +163,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
-        bossZone = {
+        bossZones = {
             {
                 x = 1855.38,
                 y = 3689.22,
@@ -193,7 +193,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
-        bossZone = {
+        bossZones = {
             {
                 x = 311.74,
                 y = -1419.73,
@@ -222,7 +222,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
-        bossZone = {
+        bossZones = {
             {
                 x = 907.35,
                 y = -152.04,
@@ -260,7 +260,7 @@ SozJobCore.Jobs = {
             SourceAccount = "farm_food",
             TargetAccount = "safe_food",
         },
-        bossZone = {
+        bossZones = {
             {
                 x = -1872.41,
                 y = 2060.3,
@@ -291,7 +291,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.NewsManageArticle] = {label = "Gérer les articles sur le site"},
         },
-        bossZone = {
+        bossZones = {
             {
                 x = -576.17,
                 y = -937.34,
