@@ -152,8 +152,6 @@ function ActionStart()
                     local modelSpawn = CreateObject(GetHashKey(Action.prop.model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
 
                     local netid = ObjToNet(modelSpawn)
-                    SetNetworkIdExistsOnAllMachines(netid, true)
-                    NetworkSetNetworkIdDynamic(netid, true)
                     SetNetworkIdCanMigrate(netid, false)
                     if Action.prop.bone == nil then
                         Action.prop.bone = 60309
@@ -183,8 +181,6 @@ function ActionStart()
                         local modelSpawn = CreateObject(GetHashKey(Action.propTwo.model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
 
                         local netid = ObjToNet(modelSpawn)
-                        SetNetworkIdExistsOnAllMachines(netid, true)
-                        NetworkSetNetworkIdDynamic(netid, true)
                         SetNetworkIdCanMigrate(netid, false)
                         if Action.propTwo.bone == nil then
                             Action.propTwo.bone = 60309
