@@ -37,6 +37,9 @@ local reboot = function()
 
     print("[soz-reboot] Sauvegarde d'Unexpected Power & Water...")
     exports["soz-upw"]:saveUpw()
+
+    print("[soz-reboot] Finalisation des enchères du concessionnaire sportif...")
+    exports["soz-vehicle"]:finishAuctions()
 end
 
 local thunder = function()
