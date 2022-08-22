@@ -1,5 +1,3 @@
-import 'dayjs/locale/fr';
-
 import { Menu, Transition } from '@headlessui/react';
 import {
     PhoneIcon,
@@ -12,7 +10,6 @@ import { useCall } from '@os/call/hooks/useCall';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -22,8 +19,7 @@ import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { RootState } from '../../../store';
-
-dayjs.extend(relativeTime);
+import { DayAgo } from '../../../ui/components/DayAgo';
 
 export const DialerHistory: React.FC = () => {
     const calls = useSelector((state: RootState) => state.simCard.callHistory);
@@ -122,7 +118,7 @@ export const DialerHistory: React.FC = () => {
                                             </p>
                                         </div>
                                         <div className="text-gray-500 text-sm">
-                                            {dayjs(call.start).locale('fr').from(dayjs(new Date().getTime()), true)}
+                                            <DayAgo timestamp={call.start} />
                                         </div>
                                     </div>
                                 </Menu.Button>
