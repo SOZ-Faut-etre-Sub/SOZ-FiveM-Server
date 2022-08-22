@@ -1,11 +1,7 @@
-import 'dayjs/locale/fr';
-
 import { PlusIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
 import { SearchField } from '@ui/old_components/SearchField';
 import cn from 'classnames';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -16,8 +12,7 @@ import { useConfig } from '../../../hooks/usePhone';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { RootState } from '../../../store';
 import { AppTitle } from '../../../ui/components/AppTitle';
-
-dayjs.extend(relativeTime);
+import { DayAgo } from '../../../ui/components/DayAgo';
 
 export const Conversations = (): any => {
     const messageApp = useApp('messages');
@@ -125,9 +120,7 @@ export const Conversations = (): any => {
                                                     'text-gray-600': config.theme.value === 'light',
                                                 })}
                                             >
-                                                {dayjs(conversation.updatedAt)
-                                                    .locale('fr')
-                                                    .from(dayjs(new Date().getTime()), true)}
+                                                <DayAgo timestamp={conversation.updatedAt} />
                                             </p>
                                         </div>
                                     </div>

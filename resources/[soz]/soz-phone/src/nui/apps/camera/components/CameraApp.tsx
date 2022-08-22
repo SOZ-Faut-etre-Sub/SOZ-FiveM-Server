@@ -12,10 +12,10 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import useInterval from '../../../hooks/useInterval';
 import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
 import { useBackground } from '../../../ui/hooks/useBackground';
-import useInterval from '../hooks/useInterval';
 import { ScreenshotUI } from '../utils/screenshot';
 
 const ui = new ScreenshotUI();
