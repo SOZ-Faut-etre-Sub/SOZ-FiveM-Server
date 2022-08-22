@@ -37,7 +37,8 @@ CreateThread(function() -- all these should only need to be called once
     ]]
 
     --- Disable LSMC heli spawn
-    local helipadMin, helipadMax = vec3(286.296326, -1454.3927, 45.7192764), vec3(327.5925, -1464.08911, 59.8875122)
+    local helipad = vector3(305.92, -1457.84, 46.56)
+    local helipadMin, helipadMax = helipad - vector3(20.0, 20.0, 5.0), helipad + vector3(20.0, 20.0, 15.0)
     if not DoesScenarioBlockingAreaExist(helipadMin, helipadMax) then
         AddScenarioBlockingArea(helipadMin, helipadMax, 0, 1, 1, 1)
     end
