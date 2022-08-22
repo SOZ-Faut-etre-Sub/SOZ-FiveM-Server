@@ -851,7 +851,13 @@ VehiculeCustom:On("open", function(menu)
     for k, v in ipairs(Config.vehicleCustomisationMechanic) do
         local validMods, amountValidMods = CheckValidMods(v.category, v.id)
         local currentMod, currentModName = GetCurrentMod(v.id)
-        if amountValidMods > 0 then
+        local isDisabled = false
+        if v.id == 10 then
+            isDisabled = table.contains(Config.DisableRoofModificationOnVehicles, veh)
+        elseif v.id == 5 then
+            isDisabled = table.contains(Config.DisableArmoringModificationOnVehicles, veh)
+        end
+        if amountValidMods > 0 and not isDisabled then
             menu:AddButton({
                 label = v.category,
                 value = SpoilersMenu,
