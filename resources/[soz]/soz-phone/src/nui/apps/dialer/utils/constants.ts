@@ -106,7 +106,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '704-1549',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-15 21:04:21.0',
+        start: '2022-08-22 20:50:21.0',
         end: null,
     },
 ];
