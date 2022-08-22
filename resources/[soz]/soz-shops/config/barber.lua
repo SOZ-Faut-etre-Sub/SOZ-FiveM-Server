@@ -23,6 +23,7 @@ Config.Products["barber"] = {
             overlay = "Makeup",
             components = {
                 ["FullMakeupType"] = true,
+                ["FullMakeupDefaultColor"] = true,
                 ["FullMakeupPrimaryColor"] = true,
                 ["FullMakeupSecondaryColor"] = true,
             },
@@ -61,6 +62,7 @@ Config.Products["barber"] = {
             overlay = "Makeup",
             components = {
                 ["FullMakeupType"] = true,
+                ["FullMakeupDefaultColor"] = true,
                 ["FullMakeupPrimaryColor"] = true,
                 ["FullMakeupSecondaryColor"] = true,
             },

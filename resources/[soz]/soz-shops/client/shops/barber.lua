@@ -113,7 +113,13 @@ function BarberShop:GenerateMenu()
             end)
             CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Makeup.FullMakeupOpacity, function(value)
                 playerUpdater.Makeup.FullMakeupOpacity = value
-                SetPedHeadOverlay(ped, 4, playerUpdater.Makeup.FullMakeupType, value)
+                SetPedHeadOverlay(ped, 4, playerUpdater.Makeup.FullMakeupType or PlayerData.skin.Makeup.FullMakeupType, value)
+            end)
+            shopMenu:AddCheckbox({
+                label = "Utiliser couleur par défaut",
+                value = PlayerData.skin.Makeup.FullMakeupDefaultColor,
+            }):On("change", function(_, value)
+                playerUpdater.Makeup.FullMakeupDefaultColor = value
             end)
             CreateColorSliderList(shopMenu, "Couleur principale", PlayerData.skin.Makeup.FullMakeupPrimaryColor, Config.CharacterComponentColors.Makeup,
                                   function(value)
@@ -132,7 +138,7 @@ function BarberShop:GenerateMenu()
             end)
             CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Makeup.BlushOpacity, function(value)
                 playerUpdater.Makeup.BlushOpacity = value
-                SetPedHeadOverlay(ped, 5, playerUpdater.Makeup.BlushType, value)
+                SetPedHeadOverlay(ped, 5, playerUpdater.Makeup.BlushType or PlayerData.skin.Makeup.BlushType, value)
             end)
             CreateColorSliderList(shopMenu, "Couleur du blush", PlayerData.skin.Makeup.BlushColor, Config.CharacterComponentColors.Makeup, function(value)
                 playerUpdater.Makeup.BlushColor = value
@@ -145,7 +151,7 @@ function BarberShop:GenerateMenu()
             end)
             CreateRangeOpacitySliderItem(shopMenu, "Densité", PlayerData.skin.Makeup.LipstickOpacity, function(value)
                 playerUpdater.Makeup.LipstickOpacity = value
-                SetPedHeadOverlay(ped, 8, playerUpdater.Makeup.LipstickType, value)
+                SetPedHeadOverlay(ped, 8, playerUpdater.Makeup.LipstickType or PlayerData.skin.Makeup.LipstickType, value)
             end)
             CreateColorSliderList(shopMenu, "Couleur du rouge à lèvre", PlayerData.skin.Makeup.LipstickColor, Config.CharacterComponentColors.Makeup,
                                   function(value)
