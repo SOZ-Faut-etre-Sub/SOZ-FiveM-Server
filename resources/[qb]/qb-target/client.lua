@@ -953,7 +953,9 @@ RegisterNUICallback('selectTarget', function(option, cb)
 		CreateThread(function()
 			Wait(0)
 
-			exports["soz-phone"]:stopPhoneCall()
+			if data.blackoutGlobal then
+				exports["soz-phone"]:stopPhoneCall()
+			end
 
 			if data.action then
 				data.action(data.entity)
