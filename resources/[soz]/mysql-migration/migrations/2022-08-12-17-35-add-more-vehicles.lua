@@ -14,7 +14,6 @@ table.insert(migrations, {
             ('pfister811', -1829802492, '811', 0, 'Super', NULL, 'car'),
             ('specter2', 1074745671, 'Specter Custom', 0, 'Sports', NULL, 'car');
         ]],
-        [[ UPDATE vehicles SET category = 'Sports' WHERE model IN ('blista2', 'blista3', 'futo'); ]],
         [[ UPDATE vehicles SET name = 'Sultan Classic' WHERE model = 'sultan2'; ]],
         [[ UPDATE vehicles SET name = '190z' WHERE model = 'z190'; ]],
         [[ UPDATE vehicles SET name = 'Sabre Turbo Custom' WHERE model = 'sabregt2'; ]],
@@ -23,7 +22,7 @@ table.insert(migrations, {
         [[ UPDATE vehicles SET name = 'Rapid GT Classic' WHERE model = 'rapid3'; ]],
         [[ UPDATE vehicles SET model = 'exemplar' WHERE model = 'examplar'; ]],
         [[ UPDATE vehicles SET category = 'Super' WHERE model = 'deveste'; ]],
-        [[ UPDATE vehicles SET category = 'Sports' WHERE model = 'sentinel3'; ]],
+        [[ UPDATE vehicles SET category = 'Sports' WHERE model IN ('blista2', 'blista3', 'futo', 'sentinel3', 'issi7'); ]],
         [[ UPDATE vehicles SET category = 'Sportsclassics' WHERE model IN ('manana'); ]],
         [[ UPDATE vehicles SET category = 'Utility' WHERE model IN ('slamtruck', 'sadler'); ]],
         [[ UPDATE vehicles SET category = 'Industrial' WHERE model IN ('guardian'); ]],
