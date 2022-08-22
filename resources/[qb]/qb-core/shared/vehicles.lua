@@ -421,13 +421,13 @@ QBShared.Vehicles = {
             ['bcso'] = 'Police Maverick',
         }
     },
-    ['policeb']      = {
+    ['policeb2']      = {
         ['name']     = 'Moto de police',
         ['brand']    = 'Los Santos',
-        ['model']    = 'policeb',
+        ['model']    = 'policeb2',
         ['price']    = 25000,
         ['category'] = 'Emergency',
-        ['hash']     = GetHashKey('policeb'),
+        ['hash']     = GetHashKey('policeb2'),
         ['shop']     = 'na',
     },
     ['buzzard2']      = {
