@@ -148,6 +148,15 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         SerialNumber = QBCore.Player.CreateSerialNumber(),
         InstalledApps = {},
     }
+    if not PlayerData.metadata.lastBidTime then
+        PlayerData.metadata.canBid = true
+    else
+        local daysSinceLastBid = os.difftime(os.time(), PlayerData.metadata.lastBidTime) / (24 * 60 * 60)
+        PlayerData.metadata.canBid = daysSinceLastBid >= 14
+        if PlayerData.metadata.canBid then
+            PlayerData.metadata.lastBidTime = nil
+        end
+    end
 
     -- Skin
     PlayerData.skin = PlayerData.skin or {}
