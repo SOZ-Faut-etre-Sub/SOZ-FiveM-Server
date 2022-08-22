@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import useInterval from '../../../apps/camera/hooks/useInterval';
+import useInterval from '../../../hooks/useInterval';
 import { useCall } from '../hooks/useCall';
 
 const getTimeFromSeconds = (secs: number) => {

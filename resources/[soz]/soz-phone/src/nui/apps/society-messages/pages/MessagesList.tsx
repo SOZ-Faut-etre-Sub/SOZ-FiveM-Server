@@ -8,14 +8,12 @@ import { SocietyEvents } from '@typings/society';
 import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import dayjs from 'dayjs';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
-require('dayjs/locale/fr');
-dayjs.locale('fr');
+import { DayAgo } from '../../../ui/components/DayAgo';
 
 const MessagesList = (): any => {
     const config = useConfig();
@@ -93,7 +91,9 @@ const MessagesList = (): any => {
                                         ) : (
                                             <span></span>
                                         )}
-                                        <span>{dayjs().to(message.createdAt)}</span>
+                                        <span>
+                                            <DayAgo timestamp={message.createdAt} />
+                                        </span>
                                     </p>
                                 </div>
                             </div>
