@@ -35,7 +35,7 @@ export const appSociety = createModel<RootModel>()({
                 undefined,
                 buildRespObj(MockSocietyMessages)
             ).then(messages => {
-                dispatch.appSociety.set(messages.data);
+                dispatch.appSociety.set(messages.data || []);
             });
         },
     }),

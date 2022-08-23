@@ -31,7 +31,7 @@ export const appTwitchNews = createModel<RootModel>()({
                 undefined,
                 buildRespObj(MockTwitchNewsMessages)
             ).then(news => {
-                dispatch.appTwitchNews.set(news.data.reverse());
+                dispatch.appTwitchNews.set(news.data.reverse() || []);
             });
         },
     }),
