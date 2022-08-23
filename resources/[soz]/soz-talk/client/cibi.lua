@@ -1,5 +1,5 @@
 local currentVehicle, radioOpen = 0, false
-local primaryRadio, secondaryRadio = {}, {}
+local primaryRadio, secondaryRadio = nil, nil
 local isRegistered = false
 local stateBagHandlers = {}
 
