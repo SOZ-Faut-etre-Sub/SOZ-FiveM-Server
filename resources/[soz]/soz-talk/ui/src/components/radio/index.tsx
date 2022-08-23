@@ -100,9 +100,9 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
             })
         } else {
             if (currentFrequency === 'primary') {
-                setValue('primaryFrequency', '00000')
+                setValue('primaryFrequency', primaryFrequency.frequency.toString().replace(/\./g, ''))
             } else {
-                setValue('secondaryFrequency', '00000')
+                setValue('secondaryFrequency', secondaryFrequency.frequency.toString().replace(/\./g, ''))
             }
         }
     }, [currentFrequency, primaryFrequency, secondaryFrequency])
