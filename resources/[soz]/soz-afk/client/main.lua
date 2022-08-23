@@ -13,7 +13,9 @@ Citizen.CreateThread(function()
 
             if currentPos == prevPos then
                 if time > 0 then
-                    time = time - 1
+                    if not exports["progressbar"]:IsDoingAction() then
+                        time = time - 1
+                    end
                 else
                     TriggerServerEvent("afk:server:kick")
                 end
