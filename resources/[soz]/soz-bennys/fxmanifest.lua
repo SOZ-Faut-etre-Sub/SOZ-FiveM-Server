@@ -4,7 +4,7 @@ game "gta5"
 description "soz-bennys"
 version "1.0.0"
 
-shared_script "config.lua"
+shared_script {"config.lua", "@soz-inventory/shared/table.lua"}
 
 client_scripts {
     "@PolyZone/client.lua",
