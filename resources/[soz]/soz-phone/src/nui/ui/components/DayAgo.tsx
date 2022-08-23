@@ -13,10 +13,10 @@ type Props = {
 };
 
 export const DayAgo: FunctionComponent<Props> = ({ timestamp }) => {
-    const [currentDate, setCurrentDate] = useState<dayjs.Dayjs>(dayjs(new Date().getTime()));
+    const [currentDate, setCurrentDate] = useState<number>(new Date().getTime());
 
     useInterval(() => {
-        setCurrentDate(dayjs(new Date().getTime()));
+        setCurrentDate(new Date().getTime());
     }, 1000);
 
     return <>{dayjs(timestamp).locale('fr').from(currentDate, true)}</>;
