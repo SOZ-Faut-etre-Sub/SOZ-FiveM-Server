@@ -37,7 +37,7 @@ export const photo = createModel<RootModel>()({
                 undefined,
                 buildRespObj(MockPhotoData)
             ).then(photos => {
-                dispatch.photo.set(photos.data);
+                dispatch.photo.set(photos.data || []);
             });
         },
     }),
