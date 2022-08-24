@@ -23,21 +23,21 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
 end)
 
 RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local Target = QBCore.Functions.GetPlayer(targetId)
+    local player = QBCore.Functions.GetPlayer(source)
+    local target = QBCore.Functions.GetPlayer(targetId)
 
-    if Target then
-        if Player.Functions.GetItemByName("handcuffs_key") then
-            exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "handcuffs_key", 1)
+    if target then
+        if player.Functions.GetItemByName("handcuffs_key") then
+            exports["soz-inventory"]:RemoveItem(player.PlayerData.source, "handcuffs_key", 1)
 
-            TriggerClientEvent("police:client:UnCuffAnimation", Player.PlayerData.source)
+            TriggerClientEvent("police:client:UnCuffAnimation", player.PlayerData.source)
             Wait(3000)
 
-            Target.Functions.SetMetaData("ishandcuffed", false)
-            Player(Target.PlayerData.source).state:set("ishandcuffed", false, true)
-            TriggerClientEvent("police:client:GetUnCuffed", Target.PlayerData.source)
+            target.Functions.SetMetaData("ishandcuffed", false)
+            Player(target.PlayerData.source).state:set("ishandcuffed", false, true)
+            TriggerClientEvent("police:client:GetUnCuffed", target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de ~r~clé de menotte", "error")
+            TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~clé de menotte", "error")
         end
     end
 end)
