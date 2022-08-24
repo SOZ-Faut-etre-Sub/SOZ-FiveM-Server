@@ -141,6 +141,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
             [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
         },
+        bossZones = {
+            {
+                x = 626.23,
+                y = -24.0,
+                z = 90.51,
+                sx = 16.2,
+                sy = 16.4,
+                heading = 340,
+                minZ = 89.51,
+                maxZ = 92.51,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.BCSO] = {
         label = "Blaine County Sheriff Office",
@@ -162,6 +175,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
             [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
         },
+        bossZones = {
+            {
+                x = 1855.38,
+                y = 3689.22,
+                z = 38.07,
+                sx = 3.8,
+                sy = 6.8,
+                heading = 30,
+                minZ = 37.07,
+                maxZ = 41.01,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.LSMC] = {
         label = "Los Santos Medical Center",
@@ -179,6 +205,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
+        bossZones = {
+            {
+                x = 311.74,
+                y = -1419.73,
+                z = 32.51,
+                sx = 8.6,
+                sy = 6.6,
+                heading = 320,
+                minZ = 31.51,
+                maxZ = 34.51,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.Taxi] = {
         label = "Carl Jr Service",
@@ -194,6 +233,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+        },
+        bossZones = {
+            {
+                x = 907.35,
+                y = -152.04,
+                z = 74.17,
+                sx = 8.4,
+                sy = 4.2,
+                heading = 58,
+                minZ = 73.17,
+                maxZ = 77.17,
+                debugPoly = false,
+            },
         },
     },
     [SozJobCore.JobType.Food] = {
@@ -220,6 +272,19 @@ SozJobCore.Jobs = {
             SourceAccount = "farm_food",
             TargetAccount = "safe_food",
         },
+        bossZones = {
+            {
+                x = -1872.41,
+                y = 2060.3,
+                z = 141.0,
+                sx = 5.0,
+                sy = 15.2,
+                heading = 340,
+                minZ = 140.0,
+                maxZ = 144.0,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.News] = {
         label = "Twitch News",
@@ -238,6 +303,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.NewsManageArticle] = {label = "Gérer les articles sur le site"},
         },
+        bossZones = {
+            {
+                x = -576.17,
+                y = -937.34,
+                z = 28.82,
+                sx = 5.8,
+                sy = 10.8,
+                heading = 0,
+                minZ = 27.82,
+                maxZ = 31.82,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.Garbage] = {
         label = "BlueBird",
@@ -253,6 +331,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+        },
+        bossZones = {
+            {
+                x = -620.23,
+                y = -1620.86,
+                z = 33.01,
+                sx = 8.0,
+                sy = 11.8,
+                heading = 355,
+                minZ = 32.01,
+                maxZ = 36.01,
+                debugPoly = false,
+            },
         },
     },
     [SozJobCore.JobType.Oil] = {
@@ -270,6 +361,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.Fueler.ChangePrice] = {label = "Changer le prix des stations publique"},
+        },
+        bossZones = {
+            {
+                x = -237.14,
+                y = 6093.98,
+                z = 32.26,
+                sx = 9.0,
+                sy = 7.6,
+                heading = 45,
+                minZ = 31.26,
+                maxZ = 35.26,
+                debugPoly = false,
+            },
         },
     },
     [SozJobCore.JobType.CashTransfer] = {
@@ -291,6 +395,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
+        bossZones = {
+            {
+                x = -17.97,
+                y = -705.88,
+                z = 46.02,
+                sx = 7.8,
+                sy = 4.4,
+                heading = 25,
+                minZ = 45.02,
+                maxZ = 49.02,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.Bennys] = {
         label = "Benny's",
@@ -308,6 +425,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
+        bossZones = {
+            {
+                x = -204.51,
+                y = -1336.96,
+                z = 34.89,
+                sx = 15.8,
+                sy = 3.4,
+                heading = 0,
+                minZ = 33.89,
+                maxZ = 37.89,
+                debugPoly = false,
+            },
+        },
     },
     [SozJobCore.JobType.Upw] = {
         label = "Unexpected Power & Water",
@@ -323,6 +453,19 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+        },
+        bossZones = {
+            {
+                x = 604.3,
+                y = 2765.85,
+                z = 47.76,
+                sx = 11.2,
+                sy = 11.8,
+                heading = 4,
+                minZ = 46.76,
+                maxZ = 50.76,
+                debugPoly = false,
+            },
         },
     },
     [SozJobCore.JobType.Pawl] = {
@@ -349,6 +492,19 @@ SozJobCore.Jobs = {
                 TargetAccount = "safe_pawl",
             },
             secondary = {ZoneName = "Resell:Zkea", SourceAccount = "farm_pawl", TargetAccount = "safe_pawl"},
+        },
+        bossZones = {
+            {
+                x = -539.85,
+                y = 5300.99,
+                z = 76.37,
+                sx = 9.4,
+                sy = 10.8,
+                heading = 341,
+                minZ = 75.37,
+                maxZ = 79.37,
+                debugPoly = false,
+            },
         },
     },
     [SozJobCore.JobType.Baun] = {
