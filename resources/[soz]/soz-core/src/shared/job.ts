@@ -16,4 +16,5 @@ export enum JobType {
     Bennys = 'bennys',
     Pawl = 'pawl',
     Upw = 'upw',
+    Ffs = 'ffs',
 }
