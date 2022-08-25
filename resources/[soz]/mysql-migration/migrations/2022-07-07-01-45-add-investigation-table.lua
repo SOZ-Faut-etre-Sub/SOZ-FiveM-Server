@@ -25,7 +25,7 @@ table.insert(migrations, {
                 `investigationId` int,
                 `citizenid` varchar(255) not null,
                 `content` longtext not null,
-                `create_at` timestamp default CURRENT_TIMESTAMP null,
+                `created_at` timestamp default CURRENT_TIMESTAMP null,
                 CONSTRAINT fk_investigation
                 FOREIGN KEY (`investigationId`)
                     REFERENCES `investigation`(`id`)
