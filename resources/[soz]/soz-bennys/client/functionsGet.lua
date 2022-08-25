@@ -36,8 +36,11 @@ end
 
 function GetCurrentWindowTint()
     local plyVeh = Config.AttachedVehicle
-
-    return GetVehicleWindowTint(plyVeh)
+    local tint = GetVehicleWindowTint(plyVeh)
+    if tint == -1 then
+        tint = 0
+    end
+    return tint
 end
 
 function GetCurrentVehicleWheelSmokeColour()
