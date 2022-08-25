@@ -913,9 +913,9 @@ local function saveVehicle()
     local properties = QBCore.Functions.GetVehicleProperties(veh)
     if not QBCore.Functions.AreModsEquale(sanitizeMods(json.decode(Entity(veh).state.mods)), sanitizeMods(properties)) then
         if not QBCore.Functions.TriggerRpc("soz-garage:server:UpdateVehicleMods", netID, properties) then
-            exports["soz-hud"]:DrawNotification("Le vehicule n'à pu être modifier correctement(réessayer)", "error")
+            exports["soz-hud"]:DrawNotification("Le véhicule n'à pu être modifié correctement(réessayer)", "error")
         else
-            exports["soz-hud"]:DrawNotification("Le vehicule a été modifier correctement", "success")
+            exports["soz-hud"]:DrawNotification("Le véhicule a été modifié correctement", "success")
         end
     end
 end
