@@ -63,7 +63,7 @@ Citizen.CreateThread(function()
                 local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
             end
 
-            if newVehEng + newVehBody < vehEng + vehBody then
+            if newVehEng + newVehBody ~= vehEng + vehBody then
                 local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
                 Entity(vehicle).state:set("condition", json.encode(newcondition), true)
             end
