@@ -28,6 +28,7 @@ class _SocietyService {
             isTaken: false,
             isDone: false,
             muted: !Player(player).state.onDuty,
+            createdAt: new Date().getTime(),
         });
     }
 
