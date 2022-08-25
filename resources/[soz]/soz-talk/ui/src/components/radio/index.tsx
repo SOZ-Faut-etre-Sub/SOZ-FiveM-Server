@@ -98,6 +98,12 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                     setSecondaryFrequency(s => ({...s, ...{frequency: frequency}}))
                 }
             })
+        } else {
+            if (currentFrequency === 'primary') {
+                setValue('primaryFrequency', primaryFrequency.frequency.toString().replace(/\./g, ''))
+            } else {
+                setValue('secondaryFrequency', secondaryFrequency.frequency.toString().replace(/\./g, ''))
+            }
         }
     }, [currentFrequency, primaryFrequency, secondaryFrequency])
     const handleClose = useCallback(() => {
@@ -119,8 +125,8 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                 setCurrentFrequency('primary')
                 setPrimaryFrequency({frequency: 0.0, volume: 100, ear: Ear.Both})
                 setSecondaryFrequency({frequency: 0.0, volume: 100, ear: Ear.Both})
-                setValue('primaryFrequency', null)
-                setValue('secondaryFrequency', null)
+                setValue('primaryFrequency', '00000')
+                setValue('secondaryFrequency', '00000')
             } else if (action === 'open') {
                 setDisplay(true)
             } else if (action === 'close') {
