@@ -1,5 +1,5 @@
 local currentVehicle, radioOpen = 0, false
-local primaryRadio, secondaryRadio = {}, {}
+local primaryRadio, secondaryRadio = nil, nil
 local isRegistered = false
 local stateBagHandlers = {}
 
@@ -156,7 +156,7 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
         state.frequency = tonumber(data.primary)
 
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "primaryRadio", state)
-        SoundProvider.default(0.5)
+        SoundProvider.default(state.volume)
 
         cb("ok")
 
@@ -167,7 +167,7 @@ RegisterNUICallback("cibi/change_frequency", function(data, cb)
         state.frequency = tonumber(data.secondary)
 
         TriggerServerEvent("talk:cibi:sync", VehToNet(currentVehicle), "secondaryRadio", state)
-        SoundProvider.default(0.5)
+        SoundProvider.default(state.volume)
 
         cb("ok")
 
