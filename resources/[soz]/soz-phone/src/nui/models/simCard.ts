@@ -135,7 +135,7 @@ export const simCard = createModel<RootModel>()({
                 undefined,
                 buildRespObj(MockHistoryData)
             ).then(calls => {
-                dispatch.simCard.SET_CALL_HISTORY(calls.data);
+                dispatch.simCard.SET_CALL_HISTORY(calls.data || []);
             });
         },
         async loadContacts() {
@@ -144,7 +144,7 @@ export const simCard = createModel<RootModel>()({
                 undefined,
                 buildRespObj(BrowserContactsState)
             ).then(calls => {
-                dispatch.simCard.SET_CONTACT(calls.data);
+                dispatch.simCard.SET_CONTACT(calls.data || []);
             });
         },
         async loadConversations() {
@@ -153,7 +153,7 @@ export const simCard = createModel<RootModel>()({
                 undefined,
                 buildRespObj(MockMessageConversations)
             ).then(conversations => {
-                dispatch.simCard.SET_CONVERSATIONS(conversations.data);
+                dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
             });
         },
         async loadMessages() {
@@ -162,7 +162,7 @@ export const simCard = createModel<RootModel>()({
                 undefined,
                 buildRespObj(MockConversationMessages)
             ).then(messages => {
-                dispatch.simCard.SET_MESSAGES(messages.data);
+                dispatch.simCard.SET_MESSAGES(messages.data || []);
             });
         },
     }),
