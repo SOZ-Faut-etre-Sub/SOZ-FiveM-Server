@@ -43,7 +43,7 @@ export const appNotes = createModel<RootModel>()({
                 undefined,
                 buildRespObj(BrowserNotesData)
             ).then(messages => {
-                dispatch.appNotes.set(messages.data);
+                dispatch.appNotes.set(messages.data || []);
             });
         },
     }),
