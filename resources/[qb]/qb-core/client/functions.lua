@@ -896,7 +896,11 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         end
         if props.modLivery then
             SetVehicleMod(vehicle, 48, props.modLivery, false)
-            SetVehicleLivery(vehicle, props.modLivery)
+            if props.modLivery ~= -1 then
+                SetVehicleLivery(vehicle, props.modLivery)
+            else
+                SetVehicleLivery(vehicle, 0)
+            end
         end
         if props.modKit49 then
             SetVehicleMod(vehicle, 49, props.modKit49, false)
@@ -907,11 +911,21 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
     end
 end
 
+
+local function tablelength(T)
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+  end
+
 local function equals(o1, o2)
    if o1 == o2 then
       return true
    end
    if type(o1) == "table" and type(o2) == "table" then
+      if tablelength(o1) ~= tablelength(o2) then
+        return false
+      end
       for k, v in pairs(o1) do
          if k ==  "neonEnabled" then
             for keyn, neon1 in pairs(v) do
@@ -940,3 +954,4 @@ function QBCore.Functions.AreModsEquale(old, new)
     end
     return false
 end
+
