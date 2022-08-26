@@ -116,6 +116,29 @@ local Elevators = {
         downTo = "bennys:0",
         spawnPoint = vector4(-172.49, -1273.3, 47.9, 270.31),
     },
+    --- FBI
+    ["fbi:0"] = {
+        name = "FBI:Elevator0",
+        label = "Rez-de-chaussée",
+        buttons = vector2(138.08, -763.93),
+        size = vector2(0.05, 3.35),
+        heading = 340,
+        z = {min = 45.45, max = 46.35},
+        upTo = "fbi:1",
+        downTo = nil,
+        spawnPoint = vector4(136.14, -761.89, 45.75, 162.03),
+    },
+    ["fbi:1"] = {
+        name = "FBI:Elevator1",
+        label = "Étage",
+        buttons = vector2(136.64, -763.40),
+        size = vector2(0.05, 0.35),
+        heading = 340,
+        z = {min = 241.9, max = 242.75},
+        upTo = nil,
+        downTo = "fbi:0",
+        spawnPoint = vector4(135.99, -761.77, 242.15, 161.57),
+    },
 }
 
 ---Create QB-Target options for a possible elevator destination
@@ -159,6 +182,7 @@ Citizen.CreateThread(function()
             heading = data.heading,
             minZ = data.z.min,
             maxZ = data.z.max,
+            debugPoly=true,
         }, {options = CreateTargetOptions(data)})
     end
 end)
