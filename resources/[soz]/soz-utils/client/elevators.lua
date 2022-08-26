@@ -178,12 +178,10 @@ end
 Citizen.CreateThread(function()
     for _, data in pairs(Elevators) do
         data.size = data.size or vector2(0.1, 0.35)
-        exports["qb-target"]:AddBoxZone(data.name, data.buttons, data.size.x, data.size.y, {
-            heading = data.heading,
-            minZ = data.z.min,
-            maxZ = data.z.max,
-            debugPoly=true,
-        }, {options = CreateTargetOptions(data)})
+        exports["qb-target"]:AddBoxZone(data.name, data.buttons, data.size.x, data.size.y,
+                                        {heading = data.heading, minZ = data.z.min, maxZ = data.z.max, debugPoly = true}, {
+            options = CreateTargetOptions(data),
+        })
     end
 end)
 
