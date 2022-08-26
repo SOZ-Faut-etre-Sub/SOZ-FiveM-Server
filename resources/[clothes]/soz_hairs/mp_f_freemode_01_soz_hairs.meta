@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShopPedApparel>
+<pedName>mp_f_freemode_01</pedName>
+<dlcName>soz_hairs</dlcName>
+<fullDlcName>mp_f_freemode_01_soz_hairs</fullDlcName>
+<eCharacter>SCR_CHAR_MULTIPLAYER_F</eCharacter>
+<creatureMetaData></creatureMetaData>
+
+<pedOutfits>
+</pedOutfits>
+<pedComponents>
+</pedComponents>
+<pedProps>
+</pedProps>
+
+</ShopPedApparel>
