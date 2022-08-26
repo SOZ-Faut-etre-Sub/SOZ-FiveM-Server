@@ -57,7 +57,7 @@ Config.Dealerships = {
                 options = {name = "cycle_dealership_zone", heading = 305, minZ = 3.37, maxZ = 7.37},
             },
         },
-        vehicle = {spawn = vector4(-1221.96, -1498.45, 4.35, 210.0), camera = vector3(-1236.72, -1495.94, 5.33)},
+        vehicle = {spawn = vector4(-1221.96, -1498.45, 4.35, 210.0), camera = vector3(-1222.6, -1501.34, 5.37)},
     },
     [Config.DealershipTypes.Moto] = {
         active = true,
