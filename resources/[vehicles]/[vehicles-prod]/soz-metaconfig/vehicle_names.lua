@@ -18,7 +18,7 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey("packer2"), "Packer")
     AddTextEntryByHash(GetHashKey("stockade"), "Securicar")
     AddTextEntryByHash(GetHashKey("utillitruck4"), "Utility Truck")
-    AddTextEntryByHash(GetHashKey("newsvan"), "Burrito Twitch News") -- newsvan
+    AddTextEntryByHash(GetHashKey("newsvan"), "Rumpo Twitch News") -- newsvan
 
     AddTextEntry('0xA4849CEF','Numéro - 0')   -- POLICE5_A0
     AddTextEntry('0xD083F4ED','Numéro - 1')   -- POLICE5_A1
