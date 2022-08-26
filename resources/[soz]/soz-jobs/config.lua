@@ -116,10 +116,12 @@ SozJobCore.Jobs = {
     },
     [SozJobCore.JobType.FBI] = {
         label = "Federal Bureau of Investigation",
-        platePrefix = " FBI",
+        platePrefix = "FBI ",
         grades = {},
         menuCallback = "police:client:OpenSocietyMenu",
-        permissions = {},
+        permissions = {
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+        },
     },
     [SozJobCore.JobType.LSPD] = {
         label = "Los Santos Police Department",
