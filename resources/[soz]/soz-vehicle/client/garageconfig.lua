@@ -248,6 +248,12 @@ Zonesentreprise = {
         minZ = 28.09,
         maxZ = 31.09,
     }),
+    ["fbi"] = BoxZone:Create(vector3(162.85, -694.64, 33.13), 28.2, 40.4, {
+        name = "fbi_z",
+        heading = 340,
+        minZ = 32.13,
+        maxZ = 35.13,
+    }),
 }
 
 ------------------------
@@ -1768,6 +1774,66 @@ PlacesEntreprise = {
         data = {
             indexGarage = "baun_unicorn",
             capacity = {3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fbi1"] = BoxZone:Create(vector3(174.53, -709.93, 33.13), 5.8, 3.4, {
+        name = "fbi1",
+        heading = 70,
+        minZ = 32.13,
+        maxZ = 35.13,
+        data = {
+            indexGarage = "fbi",
+            capacity = {2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fbi2"] = BoxZone:Create(vector3(175.7, -706.48, 33.13), 5.8, 3.4, {
+        name = "fbi2",
+        heading = 70,
+        minZ = 32.13,
+        maxZ = 35.13,
+        data = {
+            indexGarage = "fbi",
+            capacity = {2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fbi3"] = BoxZone:Create(vector3(178.53, -698.87, 33.13), 5.8, 3.4, {
+        name = "fbi3",
+        heading = 70,
+        minZ = 32.13,
+        maxZ = 35.13,
+        data = {
+            indexGarage = "fbi",
+            capacity = {2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fbi4"] = BoxZone:Create(vector3(179.84, -695.21, 33.13), 5.8, 3.4, {
+        name = "fbi4",
+        heading = 70,
+        minZ = 32.13,
+        maxZ = 35.13,
+        data = {
+            indexGarage = "fbi",
+            capacity = {2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fbi5"] = BoxZone:Create(vector3(163.5, -683.73, 33.13), 5.8, 3.4, {
+        name = "fbi5",
+        heading = 340,
+        minZ = 32.13,
+        maxZ = 35.13,
+        data = {
+            indexGarage = "fbi",
+            capacity = {2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["fbi6"] = BoxZone:Create(vector3(148.28, -687.68, 33.13), 5.8, 3.4, {
+        name = "fbi6",
+        heading = 70,
+        minZ = 32.13,
+        maxZ = 35.13,
+        data = {
+            indexGarage = "fbi",
+            capacity = {2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }
