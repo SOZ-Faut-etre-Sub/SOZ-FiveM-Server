@@ -62,6 +62,7 @@ export class TargetFactory {
             zone.length,
             zone.width,
             {
+                debugPoly: zone.debugPoly || false,
                 heading: zone.heading,
                 minZ: zone.minZ,
                 maxZ: zone.maxZ,

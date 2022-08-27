@@ -3930,4 +3930,125 @@ QBShared.Items = {
             ['alcohol'] = 15,
         },
     },
+    -- Fight For Style
+    ['cotton_bale'] = {
+        ['name'] = 'cotton_bale',
+        ['label'] = "Balle de coton",
+        ['pluralLabel'] = "Balles de coton",
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['natural_fiber'] = {
+        ['name'] = 'natural_fiber',
+        ['label'] = "Fibre naturelle",
+        ['pluralLabel'] = "Fibres naturelles",
+        ['weight'] = 83, -- 1 cotton bale (10kg) divided by 120
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['synthetic_fiber'] = {
+        ['name'] = 'synthetic_fiber',
+        ['label'] = "Fibre synthétique",
+        ['pluralLabel'] = "Fibres synthétiques",
+        ['weight'] = 83, -- 1 cotton bale (10kg) divided by 120
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['artificial_fiber'] = {
+        ['name'] = 'artificial_fiber',
+        ['label'] = "Fibre artificielle",
+        ['pluralLabel'] = "Fibres artificielles",
+        ['weight'] = 83, -- 1 cotton bale (10kg) divided by 120
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['leather'] = {
+        ['name'] = 'leather',
+        ['label'] = "Cuir",
+        ['pluralLabel'] = "Cuirs",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['latex'] = {
+        ['name'] = 'latex',
+        ['label'] = "Latex",
+        ['pluralLabel'] = "Latex",
+        ['weight'] = 150,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['sap'] = {
+        ['name'] = 'sap',
+        ['label'] = "Sève",
+        ['pluralLabel'] = "Sèves",
+        ['weight'] = 300,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['garment_top'] = {
+        ['name'] = 'garment_top',
+        ['label'] = "Haut de vêtement",
+        ['pluralLabel'] = "Hauts de vêtement",
+        ['weight'] = 1100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['shoes'] = {
+        ['name'] = 'shoes',
+        ['label'] = "Chaussure",
+        ['pluralLabel'] = "Chaussures",
+        ['weight'] = 900,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['garment_underwear'] = {
+        ['name'] = 'garment_underwear',
+        ['label'] = "Sous-vêtement",
+        ['pluralLabel'] = "Sous-vêtements",
+        ['weight'] = 500, -- 1 cotton bale (10kg) divided by 120
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
 }

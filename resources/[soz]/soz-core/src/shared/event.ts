@@ -6,6 +6,9 @@ export enum ServerEvent {
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
 
+    FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
+    FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',

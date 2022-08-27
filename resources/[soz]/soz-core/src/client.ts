@@ -4,6 +4,7 @@ import './globals';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
+import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { NuiModule } from './client/nui/nui.module';
@@ -25,7 +26,8 @@ async function bootstrap() {
         NuiModule,
         BankModule,
         FoodModule,
-        TargetModule
+        TargetModule,
+        FightForStyleModule
     );
 
     await app.stop();
