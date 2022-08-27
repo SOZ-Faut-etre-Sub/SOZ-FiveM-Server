@@ -27,7 +27,7 @@ export class FightForStyleTransformProvider {
     private notifier: Notifier;
 
     private async doTransform(source: number, fabricMaterial: FabricMaterial) {
-        const label = 'Vous ~g~commencez~s~ vos procédés chimiques et mécaniques.';
+        const label = 'Vous commencez vos procédés chimiques et mécaniques.';
         const { completed } = await this.progressService.progress(source, 'ffs_transform', label, 2000, {
             name: 'base',
             dictionary: 'amb@prop_human_seat_sewing@female@base',

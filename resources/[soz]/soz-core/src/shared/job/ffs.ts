@@ -55,3 +55,173 @@ export const TransformProcesses: {
         outputAmount: 1,
     },
 };
+
+export enum Garment {
+    TOP = 'garment_top',
+    PANT = 'garment_pant',
+    SHOES = 'garment_shoes',
+    UNDERWEAR = 'garment_underwear',
+}
+
+export enum LuxuryGarment {
+    TOP = 'luxury_garment_top',
+    PANT = 'luxury_garment_pant',
+    SHOES = 'luxury_garment_shoes',
+    UNDERWEAR = 'luxury_garment_underwear',
+}
+
+export type CraftProcess = {
+    label: string;
+    inputs: {
+        fabric: FabricMaterial;
+        amount: number;
+    }[];
+    output: Garment | LuxuryGarment;
+    outputAmount: number;
+};
+
+export const craftProcesses: CraftProcess[] = [
+    {
+        label: 'Fabrication: Chaussure',
+        inputs: [
+            {
+                fabric: FabricMaterial.LEATHER,
+                amount: 3,
+            },
+            {
+                fabric: FabricMaterial.LATEX,
+                amount: 2,
+            },
+        ],
+        output: Garment.SHOES,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Haut en fibre naturelle',
+        inputs: [
+            {
+                fabric: FabricMaterial.NATURAL_FIBER,
+                amount: 40,
+            },
+        ],
+        output: Garment.TOP,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Haut en fibre artificielle',
+        inputs: [
+            {
+                fabric: FabricMaterial.ARTIFICIAL_FIBER,
+                amount: 20,
+            },
+        ],
+        output: Garment.TOP,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Pantalon synthétique',
+        inputs: [
+            {
+                fabric: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 20,
+            },
+        ],
+        output: Garment.PANT,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Pantalon naturel',
+        inputs: [
+            {
+                fabric: FabricMaterial.NATURAL_FIBER,
+                amount: 40,
+            },
+        ],
+        output: Garment.PANT,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Sous-vêtement',
+        inputs: [
+            {
+                fabric: FabricMaterial.NATURAL_FIBER,
+                amount: 20,
+            },
+        ],
+        output: Garment.UNDERWEAR,
+        outputAmount: 1,
+    },
+];
+
+export const luxuryCraftProcesses: CraftProcess[] = [
+    {
+        label: 'Fabrication: Chaussure',
+        inputs: [
+            {
+                fabric: FabricMaterial.LEATHER,
+                amount: 6,
+            },
+            {
+                fabric: FabricMaterial.LATEX,
+                amount: 4,
+            },
+        ],
+        output: LuxuryGarment.SHOES,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Haut en fibre naturelle',
+        inputs: [
+            {
+                fabric: FabricMaterial.NATURAL_FIBER,
+                amount: 80,
+            },
+        ],
+        output: LuxuryGarment.TOP,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Haut en fibre artificielle',
+        inputs: [
+            {
+                fabric: FabricMaterial.ARTIFICIAL_FIBER,
+                amount: 40,
+            },
+        ],
+        output: LuxuryGarment.TOP,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Pantalon synthétique',
+        inputs: [
+            {
+                fabric: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 40,
+            },
+        ],
+        output: LuxuryGarment.PANT,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Pantalon naturel',
+        inputs: [
+            {
+                fabric: FabricMaterial.NATURAL_FIBER,
+                amount: 80,
+            },
+        ],
+        output: LuxuryGarment.PANT,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Sous-vêtement',
+        inputs: [
+            {
+                fabric: FabricMaterial.NATURAL_FIBER,
+                amount: 40,
+            },
+        ],
+        output: LuxuryGarment.UNDERWEAR,
+        outputAmount: 1,
+    },
+];
