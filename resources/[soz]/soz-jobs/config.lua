@@ -20,6 +20,7 @@ SozJobCore.JobType = {
     Upw = "upw",
     Pawl = "pawl",
     Baun = "baun",
+    Ffs = "ffs",
     Debug = "debug",
 }
 
@@ -41,6 +42,7 @@ SozJobCore.JobPermission = {
     Investigation = "investigation",
     ManageInvestigation = "investigation-manage",
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
+    Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
 }
 
 SozJobCore.Jobs = {
@@ -532,6 +534,26 @@ SozJobCore.Jobs = {
             {x = 96.11, y = -1292.08, z = 29.27, sx = 7.2, sy = 6.2, heading = 300, minZ = 28.27, maxZ = 32.27},
             {x = -1387.87, y = -631.19, z = 30.81, sx = 5.4, sy = 6.4, heading = 303, minZ = 29.81, maxZ = 33.81},
         },
+    },
+    [SozJobCore.JobType.Ffs] = {
+        label = "Fight For Style",
+        platePrefix = "FFS",
+        grades = {},
+        menuCallback = "soz-jobs:client:ffs:OpenSocietyMenu",
+        canInvoice = true,
+        permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.Ffs.Harvest] = {label = "Récolter des matériaux"},
+            [SozJobCore.JobPermission.Ffs.Restock] = {label = "Réapprovisionner l'atelier"},
+            [SozJobCore.JobPermission.Ffs.Craft] = {label = "Coudre un vêtement"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+        },
+        bossZones = {},
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
 }
