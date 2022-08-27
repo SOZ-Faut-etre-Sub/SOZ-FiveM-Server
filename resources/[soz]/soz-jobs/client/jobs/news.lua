@@ -48,6 +48,9 @@ CreateThread(function()
                 color = "news",
                 icon = "c:news/imprimer.png",
                 event = "jobs:client:news:farmNewspaper",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
                 job = "news",
             },
         },
@@ -87,6 +90,9 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
                 color = "news",
                 icon = "c:news/livrer.png",
                 event = "jobs:client:news:newspaperSold",
+                canInteract = function()
+                    return PlayerData.job.onduty
+                end,
                 job = "news",
             },
         },
