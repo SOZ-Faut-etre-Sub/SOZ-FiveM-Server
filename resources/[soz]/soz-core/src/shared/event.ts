@@ -6,6 +6,7 @@ export enum ServerEvent {
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
 
+    FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
