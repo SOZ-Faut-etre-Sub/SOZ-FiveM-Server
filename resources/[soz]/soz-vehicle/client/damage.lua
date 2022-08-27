@@ -59,9 +59,22 @@ Citizen.CreateThread(function()
                 end
             end
 
-            if vehEng + vehBody == 0 then
-                local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
-            end
+            vehEng, vehBody = newVehEng, newVehBody
+        else
+            vehEng, vehBody = 0, 0
+            Wait(5000)
+        end
+        Wait(500)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        local player = PlayerPedId()
+        local vehicle = GetVehiclePedIsIn(player, false)
+
+        if IsPedInAnyVehicle(player, true) and GetPedInVehicleSeat(vehicle, -1) == player then
+            local newVehEng, newVehBody = GetVehicleEngineHealth(vehicle), GetVehicleBodyHealth(vehicle)
 
             if newVehEng + newVehBody ~= vehEng + vehBody then
                 local newcondition = PropertiesToCondition(QBCore.Functions.GetVehicleProperties(vehicle))
@@ -69,10 +82,7 @@ Citizen.CreateThread(function()
             end
 
             vehEng, vehBody = newVehEng, newVehBody
-        else
-            vehEng, vehBody = 0, 0
-            Wait(5000)
         end
-        Wait(500)
+        Wait(15000)
     end
 end)
