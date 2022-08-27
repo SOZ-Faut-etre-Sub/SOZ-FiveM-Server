@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { HomeApp } from './apps/home';
-import { useConfig } from './hooks/usePhone';
+import { useCallModal, useConfig } from './hooks/usePhone';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
@@ -24,6 +24,7 @@ import { useSimCardService } from './services/useSimCardService';
 function Phone() {
     const { apps } = useApps();
     const config = useConfig();
+    const callModal = useCallModal();
 
     useDebugService();
 
@@ -49,17 +50,15 @@ function Phone() {
 
     return (
         <PhoneWrapper>
-            {/*<TopLevelErrorComponent>*/}
             <NotificationAlert />
             <PhoneSnackbar />
             <Routes>
                 <Route path="/" element={<HomeApp />} />
-                <Route path="/call" element={<CallModal />} />
+                {callModal && <Route path="/call" element={<CallModal />} />}
                 {apps.map(app => (
                     <Route key={app.id} path={app.path + '/*'} element={app.component} />
                 ))}
             </Routes>
-            {/*</TopLevelErrorComponent>*/}
         </PhoneWrapper>
     );
 }

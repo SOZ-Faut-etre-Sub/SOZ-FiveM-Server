@@ -12,16 +12,12 @@ export const NavigationBar: FunctionComponent = memo(() => {
     const config = useConfig();
 
     const color = useCallback(() => {
-        if (pathname.includes('/camera') || pathname === '/') {
+        if (pathname.includes('/camera') || pathname === '/' || pathname === '/call') {
             return 'bg-gray-200';
         } else {
             return config.theme.value === 'dark' ? 'bg-gray-200' : 'bg-black';
         }
     }, [config.theme.value, pathname]);
-
-    if (pathname === '/call') {
-        return null;
-    }
 
     return (
         <div className="absolute flex bottom-0 left-0 right-0 w-full justify-center h-5 z-40">
