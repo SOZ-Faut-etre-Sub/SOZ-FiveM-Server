@@ -12,6 +12,7 @@ import { useConfig } from '../../../hooks/usePhone';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { RootState } from '../../../store';
 import { AppTitle } from '../../../ui/components/AppTitle';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { DayAgo } from '../../../ui/components/DayAgo';
 
 export const Conversations = (): any => {
@@ -77,17 +78,7 @@ export const Conversations = (): any => {
                                         })}
                                     >
                                         <div className="flex-shrink-0 inline-block relative">
-                                            <div
-                                                className={cn('bg-cover bg-center h-10 w-10 rounded-full', {
-                                                    'bg-gray-700': config.theme.value === 'dark',
-                                                    'bg-gray-100': config.theme.value === 'light',
-                                                })}
-                                                style={{
-                                                    backgroundImage: `url(${getPictureByNumber(
-                                                        conversation.phoneNumber
-                                                    )})`,
-                                                }}
-                                            />
+                                            <ContactPicture picture={getPictureByNumber(conversation.phoneNumber)} />
                                             {conversation.unread > 0 && (
                                                 <span
                                                     className={cn(
