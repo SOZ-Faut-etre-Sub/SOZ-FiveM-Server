@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { AppTitle } from '../../../ui/components/AppTitle';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/old_components/SearchField';
 
 export const ContactList: React.FC = () => {
@@ -109,13 +110,7 @@ export const ContactList: React.FC = () => {
                                                 })}
                                             >
                                                 <div className="flex-shrink-0">
-                                                    <div
-                                                        className={cn('h-10 w-10 bg-cover bg-center rounded-full', {
-                                                            'bg-gray-700': config.theme.value === 'dark',
-                                                            'bg-gray-300': config.theme.value === 'light',
-                                                        })}
-                                                        style={{ backgroundImage: `url(${contact.avatar})` }}
-                                                    />
+                                                    <ContactPicture picture={contact.avatar} />
                                                 </div>
                                                 <div className="flex-1 min-w-0 cursor-pointer">
                                                     <span className="absolute inset-0" aria-hidden="true" />

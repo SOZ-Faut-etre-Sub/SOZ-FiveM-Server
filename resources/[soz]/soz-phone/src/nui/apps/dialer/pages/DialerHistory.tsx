@@ -19,6 +19,7 @@ import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../hooks/useSimCard';
 import { RootState } from '../../../store';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { DayAgo } from '../../../ui/components/DayAgo';
 
 export const DialerHistory: React.FC = () => {
@@ -76,27 +77,11 @@ export const DialerHistory: React.FC = () => {
                                         })}
                                     >
                                         <div className="flex-shrink-0">
-                                            {getPictureByNumber(
-                                                call.transmitter === myNumber ? call.receiver : call.transmitter
-                                            ) ? (
-                                                <img
-                                                    className={cn('h-10 w-10 rounded-full', {
-                                                        'bg-gray-700': config.theme.value === 'dark',
-                                                        'bg-gray-300': config.theme.value === 'light',
-                                                    })}
-                                                    src={getPictureByNumber(
-                                                        call.transmitter === myNumber ? call.receiver : call.transmitter
-                                                    )}
-                                                    alt=""
-                                                />
-                                            ) : (
-                                                <div
-                                                    className={cn('h-10 w-10 rounded-full', {
-                                                        'bg-gray-700': config.theme.value === 'dark',
-                                                        'bg-gray-300': config.theme.value === 'light',
-                                                    })}
-                                                />
-                                            )}
+                                            <ContactPicture
+                                                picture={getPictureByNumber(
+                                                    call.transmitter === myNumber ? call.receiver : call.transmitter
+                                                )}
+                                            />
                                         </div>
                                         <div className="flex flex-1 min-w-0 cursor-pointer">
                                             {!call.is_accepted ? (

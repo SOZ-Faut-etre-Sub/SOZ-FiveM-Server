@@ -8,7 +8,7 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import { fetchNui } from '@utils/fetchNui';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,14 +16,7 @@ import useInterval from '../../../hooks/useInterval';
 import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
 import { useBackground } from '../../../ui/hooks/useBackground';
-import { ScreenshotUI } from '../utils/screenshot';
-
-const ui = new ScreenshotUI();
-try {
-    ui.initialize();
-} catch (e) {
-    console.error('WebGL initialisation ERROR', e);
-}
+import { useScreenshot } from '../hooks/useScreenshot';
 
 const CameraApp: React.FC = () => {
     const backgroundClass = useBackground();
@@ -33,9 +26,11 @@ const CameraApp: React.FC = () => {
     const { getPhotos } = usePhoto();
     const photos = getPhotos();
 
+    const ref = useRef<HTMLCanvasElement>();
+    const { renderer, rtTexture, width, height } = useScreenshot();
+
     const { addAlert } = useSnackbar();
     const { visibility } = useVisibility();
-    const [image, setImage] = useState('https://placekitten.com/960/540');
 
     const handleTakePhoto = () => {
         fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then(serverResp => {
@@ -53,10 +48,18 @@ const CameraApp: React.FC = () => {
     };
 
     useInterval(() => {
-        try {
-            setImage(ui.generateImage());
-        } catch (e) {
-            console.error('WebGL generation ERROR', e);
+        const canvas = ref.current;
+        if (canvas) {
+            const read = new Uint8Array(width * height * 4);
+            renderer.readRenderTargetPixels(rtTexture, 0, 0, width, height, read);
+
+            const d = new Uint8ClampedArray(read.buffer);
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.putImageData(new ImageData(d, width, height), 0, 0);
         }
     }, 1);
 
@@ -95,9 +98,12 @@ const CameraApp: React.FC = () => {
                             </div>
                         </div>
 
-                        <div
-                            className="bg-center bg-cover h-full w-full"
-                            style={{ backgroundImage: `url(${image})` }}
+                        <canvas
+                            ref={ref}
+                            className="object-cover h-full w-full"
+                            style={{
+                                objectPosition: '-300px 0',
+                            }}
                         />
 
                         <div className="absolute bottom-0 inset-x-0 flex justify-between px-6 pb-3">
