@@ -54,3 +54,8 @@ export const useTime = () => {
     const state = useSelector((state: RootState) => state.phone);
     return state.time;
 };
+
+export const useCallModal = () => {
+    const state = useSelector((state: RootState) => state.phone);
+    return state.callModal;
+};
