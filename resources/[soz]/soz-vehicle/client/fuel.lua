@@ -294,9 +294,10 @@ RegisterNetEvent("fuel:client:ActivateStationPistol", function(data)
     RopeLoadTextures()
 
     if pistol.rope == nil then
-        pistol.rope = AddRope(coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 15.0, 1, 10.0, 1.0, 0, false, true, false, 1.0, false, 0)
+        pistol.rope = AddRope(coords.x, coords.y, coords.z, 0.0, 0.0, 0.0, 15.0, 1, 10.0, 1.0, 0, false, true, true, 1.0, false, 0)
         local ropeCoords = GetOffsetFromEntityInWorldCoords(stationEntity, 0.0, 0.0, 1.0)
         AttachRopeToEntity(pistol.rope, stationEntity, ropeCoords, 1)
+        ActivatePhysics(pistol.rope)
     end
 
     CreateThread(function()
