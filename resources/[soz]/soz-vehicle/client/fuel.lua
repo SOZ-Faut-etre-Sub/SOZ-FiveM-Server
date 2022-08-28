@@ -134,7 +134,9 @@ Citizen.CreateThread(function()
         BoxZone:Create(station:GetPolyZoneConfiguration()):onPlayerInOut(function(isPointInside, _)
             playerIsInsideStationZone = isPointInside
             if isPointInside then
-                TriggerEvent("locations:zone:enter", "fueler_petrol_station", station:GetIdentifier())
+                if not station:IsKerosene() then
+                    TriggerEvent("locations:zone:enter", "fueler_petrol_station", station:GetIdentifier())
+                end
 
                 exports["qb-target"]:AddTargetModel(station:GetModel(), {
                     options = {
