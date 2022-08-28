@@ -23,7 +23,7 @@ Citizen.CreateThread(function()
         maxZ = coords.z + 2.0,
     })
     zone:onPlayerInOut(function(isInside)
-        if isInside then
+        if isInside and PlayerData.job.onduty then
             TriggerEvent("player/setCurrentResellZone", resellOpt)
         else
             TriggerEvent("player/setCurrentResellZone", nil)
@@ -32,13 +32,13 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent("locations:zone:enter", function(group, name)
-    if group == "zkea" then
+    if group == "zkea" and PlayerData.job.onduty then
         TriggerEvent("player/setCurrentResellZone", SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.secondary)
     end
 end)
 
 RegisterNetEvent("locations:zone:exit", function(group, name)
-    if group == "zkea" then
+    if group == "zkea" and PlayerData.job.onduty then
         TriggerEvent("player/setCurrentResellZone", nil)
     end
 end)
