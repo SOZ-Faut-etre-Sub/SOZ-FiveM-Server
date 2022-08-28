@@ -8,6 +8,7 @@ export enum ServerEvent {
 
     FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
+    FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
@@ -35,6 +36,9 @@ export enum ClientEvent {
     FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
 
     PROGRESS_START = 'soz-core:client:progress:start',
+
+    FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
+    FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
