@@ -1,18 +1,17 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
-import { MenuType } from '../../../shared/menu';
-import { useSozCoreNuiEvent } from '../Nui/hooks/useNuiEvent';
+import { MenuType } from '../../../shared/nui/menu';
+import { useMenuNuiEvent } from '../../hook/nui';
+import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
 
 export const MenuApp: FunctionComponent = () => {
     return (
         <MemoryRouter>
             <MenuRouteControl>
-                <Routes>
-                    <Route path="/" element={null} />
-                    <Route path={`/${MenuType.SetHealthState}`} element={<MenuSetHealthState />} />
-                </Routes>
+                <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState />} />
+                <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
             </MenuRouteControl>
         </MemoryRouter>
     );
@@ -21,13 +20,13 @@ export const MenuApp: FunctionComponent = () => {
 const MenuRouteControl: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate();
 
-    useSozCoreNuiEvent<MenuType | null>('SetMenuType', menutype => {
+    useMenuNuiEvent('SetMenuType', menutype => {
         navigate(menutype ? `/${menutype}` : '/');
     });
 
-    useSozCoreNuiEvent<never>('CloseMenu', () => {
+    useMenuNuiEvent('CloseMenu', () => {
         navigate('/');
     });
 
-    return <>{children}</>;
+    return <Routes>{children}</Routes>;
 };

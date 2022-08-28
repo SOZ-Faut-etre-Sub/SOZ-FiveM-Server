@@ -4,7 +4,7 @@ import { LogMiddlewareFactory } from './log.middleware';
 import { MetricMiddlewareFactory } from './metric.middleware';
 import { SourceMiddlewareFactory } from './source.middleware';
 
-export type Middleware = (...args: any[]) => void | Promise<void>;
+export type Middleware = (...args: any[]) => any | Promise<any>;
 
 export interface MiddlewareFactory {
     create(event: EventMetadata, next: Middleware): Middleware;

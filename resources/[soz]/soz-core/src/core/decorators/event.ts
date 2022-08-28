@@ -1,4 +1,5 @@
-import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, GameEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { Result } from '../../shared/result';
 import { addMethodMetadata, setMethodMetadata } from './reflect';
 
 export type EventMetadata = {
@@ -7,6 +8,7 @@ export type EventMetadata = {
 };
 
 export const EventMetadataKey = 'soz_core.decorator.event';
+export const NuiEventMetadataKey = 'soz_core.decorator.nui_event';
 export const GameEventMetadataKey = 'soz_core.decorator.game.event';
 
 export const OnEvent = (event: ServerEvent | ClientEvent, net = true): MethodDecorator => {
@@ -24,6 +26,22 @@ export const On = (name?: string, net = true): MethodDecorator => {
             target,
             propertyKey
         );
+    };
+};
+
+export const OnNuiEvent = <T = any, R = any, E = any>(event: NuiEvent) => {
+    return (target, propertyKey, descriptor: TypedPropertyDescriptor<(data?: T) => Promise<Result<R, E>>>) => {
+        addMethodMetadata(
+            NuiEventMetadataKey,
+            {
+                name: event.toString(),
+                net: false,
+            },
+            target,
+            propertyKey
+        );
+
+        return descriptor;
     };
 };
 

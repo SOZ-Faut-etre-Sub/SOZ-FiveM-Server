@@ -4,7 +4,13 @@ import { setMethodMetadata } from './reflect';
 export type CommandMetadata = {
     name: string;
     description: string;
-    role?: SozRole;
+    role: SozRole | null;
+    keys: CommandKey[];
+};
+
+export type CommandKey = {
+    mapper: 'keyboard' | 'mouse';
+    key: string;
 };
 
 export const CommandMetadataKey = 'soz_core.decorator.command';
@@ -17,6 +23,7 @@ export const Command = (name: string, options: Partial<Omit<CommandMetadata, 'na
                 name,
                 description: options.description || null,
                 role: options.role || null,
+                keys: options.keys || [],
             },
             target,
             propertyKey
