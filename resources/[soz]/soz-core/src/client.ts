@@ -4,6 +4,7 @@ import './globals';
 import { AnimationModule } from './client/animation/animation.module';
 import { ItemModule } from './client/item/item.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
+import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
 import { WeatherModule } from './client/weather/weather.module';
 import { Application } from './core/application';
@@ -17,7 +18,8 @@ async function bootstrap() {
         WeatherModule,
         ItemModule,
         LSMCModule,
-        AnimationModule
+        AnimationModule,
+        NuiModule
     );
 
     await app.stop();

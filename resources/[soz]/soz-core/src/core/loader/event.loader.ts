@@ -1,5 +1,5 @@
 import { SOZ_CORE_IS_CLIENT } from '../../globals';
-import { EventMetadata, EventMetadataKey, GameEventMetadataKey } from '../decorators/event';
+import { EventMetadata, EventMetadataKey, GameEventMetadataKey, NuiEventMetadataKey } from '../decorators/event';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
 import { ChaineMiddlewareFactory } from '../middleware/middleware';
@@ -9,6 +9,8 @@ type GameEventCallback = (...args: any[]) => void;
 @Injectable()
 export class EventLoader {
     private events: Record<string, any[]> = {};
+
+    private nuiEvents: Record<string, any[]> = {};
 
     private gameEvents: Record<string, GameEventCallback[]> = {};
 
@@ -64,6 +66,30 @@ export class EventLoader {
                     this.gameEvents[gameEventMetadata.name].push(methodWithMiddleware);
                 }
             }
+
+            const nuiEventMethodList = getMethodMetadata<EventMetadata[]>(NuiEventMetadataKey, provider);
+
+            for (const methodName of Object.keys(nuiEventMethodList)) {
+                const nuiEventMetadataList = nuiEventMethodList[methodName];
+                const method = provider[methodName].bind(provider);
+
+                for (const nuiEventMetadata of nuiEventMetadataList) {
+                    const nuiEventName = `__cfx_nui:${nuiEventMetadata.name}`;
+
+                    if (!this.events[nuiEventName]) {
+                        this.events[nuiEventName] = [];
+                    }
+
+                    const methodWithMiddleware = this.middlewareFactory.create(nuiEventMetadata, method);
+                    const methodWithNuiCallback = async (data: any, callback: (response: any) => void) => {
+                        callback(await methodWithMiddleware(data));
+                    };
+
+                    RegisterNuiCallbackType(nuiEventMetadata.name);
+                    addEventListener(nuiEventName, methodWithNuiCallback);
+                    this.events[nuiEventName].push(methodWithNuiCallback);
+                }
+            }
         }
     }
 
@@ -74,11 +100,18 @@ export class EventLoader {
             }
         }
 
-        this.gameEvents = {};
-        this.events = {};
-
         if (SOZ_CORE_IS_CLIENT) {
             removeEventListener('gameEventTriggered', this.handleGameEvent);
+
+            for (const event of Object.keys(this.nuiEvents)) {
+                for (const method of this.nuiEvents[event]) {
+                    removeEventListener(event, method);
+                }
+            }
         }
+
+        this.events = {};
+        this.gameEvents = {};
+        this.nuiEvents = {};
     }
 }

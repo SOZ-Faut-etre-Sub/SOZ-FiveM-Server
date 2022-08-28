@@ -1,3 +1,4 @@
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import {
     createDescendantContext,
     DescendantProvider,
@@ -17,8 +18,10 @@ import {
     useRef,
     useState,
 } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useEnter } from '../../hook/control';
+import { MenuType } from '../../../shared/nui/menu';
+import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
 
 const MenuDescendantContext = createDescendantContext('MenuDescendantContext');
 const MenuItemSelectDescendantContext = createDescendantContext('MenuItemSelectDescendantContext');
@@ -31,13 +34,61 @@ const MenuItemSelectContext = createContext<{ activeOptionIndex: number; setActi
     activeOptionIndex: 0,
     setActiveOptionIndex: () => {},
 });
+const MenuTypeContext = createContext<MenuType | null>(null);
 
-export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    return <div className="absolute left-8 top-8 w-1/4 min-w-[24rem] max-h-[50vh]">{children}</div>;
+export type MenuProps = {
+    type: MenuType;
 };
 
-export const MenuTitle: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    return <div className="p-3 font-bold bg-black/30 text-white">{children}</div>;
+export const Menu: FunctionComponent<PropsWithChildren<MenuProps>> = ({ children, type }) => {
+    return <MenuTypeContext.Provider value={type}>{children}</MenuTypeContext.Provider>;
+};
+
+export type SubMenuProps = {
+    id: string;
+};
+
+export const SubMenu: FunctionComponent<PropsWithChildren<SubMenuProps>> = ({ children, id }) => {
+    return (
+        <Routes>
+            <Route path={`/${id}`} element={<MenuContainer>{children}</MenuContainer>} />
+        </Routes>
+    );
+};
+
+export const MainMenu: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    return (
+        <Routes>
+            <Route index element={<MenuContainer>{children}</MenuContainer>} />
+        </Routes>
+    );
+};
+
+export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    return <div className="absolute left-8 top-8 w-1/5 min-w-[24rem] max-h-[50vh]">{children}</div>;
+};
+
+export type MenuTitleProps = {
+    banner?: string;
+};
+
+const MenuHeader: FunctionComponent<MenuTitleProps> = ({ banner }) => {
+    return <img src={banner} className="opacity-80 w-full h-auto object-cover" alt="banner" />;
+};
+
+export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ children, banner }) => {
+    return (
+        <>
+            {banner && <MenuHeader banner={banner} />}
+            <div
+                className={cn('px-3 py-1 font-semibold text-sm bg-black/80 text-white uppercase', {
+                    'rounded-t-lg text-center': !banner,
+                })}
+            >
+                {children}
+            </div>
+        </>
+    );
 };
 
 export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) => {
@@ -48,7 +99,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
             <MenuContext.Provider value={{ activeIndex, setActiveIndex }}>
                 <MenuControls>
-                    <ul>{children}</ul>
+                    <ul className="p-2 bg-black/50 rounded-b-lg">{children}</ul>
                 </MenuControls>
             </MenuContext.Provider>
         </DescendantProvider>
@@ -58,6 +109,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
 const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const { activeIndex, setActiveIndex } = useContext(MenuContext);
     const menuItems = useDescendants(MenuDescendantContext);
+    const navigate = useNavigate();
 
     useArrowDown(() => {
         if (activeIndex < menuItems.length - 1) {
@@ -73,6 +125,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
         } else {
             setActiveIndex(menuItems.length - 1);
         }
+    });
+
+    useBackspace(() => {
+        navigate(-1);
     });
 
     return <>{children}</>;
@@ -118,9 +174,8 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
     return (
         <li
             ref={handleRefSet}
-            className={cn('cursor-pointer p-3 hover:bg-black/25 text-white', {
-                'bg-black/10': !isSelected,
-                'bg-black/25': isSelected,
+            className={cn('p-1 pl-2 my-0.5 hover:bg-white/10 text-white cursor-pointer rounded', {
+                'bg-white/10': isSelected,
             })}
             onClick={onConfirm}
         >
@@ -137,6 +192,22 @@ type MenuItemButtonProps = PropsWithChildren<{
 export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({ children, onConfirm, onSelected }) => {
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm}>
+            {children}
+        </MenuItemContainer>
+    );
+};
+
+type MenuItemSubMenuLinkProps = PropsWithChildren<{
+    id: string;
+    onSelected?: () => void;
+}>;
+
+export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({ children, id, onSelected }) => {
+    const type = useContext(MenuTypeContext);
+    const navigate = useNavigate();
+
+    return (
+        <MenuItemContainer onSelected={onSelected} onConfirm={() => navigate(`/${type}/${id}`)}>
             {children}
         </MenuItemContainer>
     );
@@ -176,30 +247,24 @@ const MenuSelectControls: FunctionComponent<PropsWithChildren> = ({ children }) 
     });
 
     return (
-        <div className="flex">
-            <a
-                href="#"
+        <div className="flex items-center">
+            <ChevronLeftIcon
                 onClick={event => {
                     goLeft();
 
                     event.stopPropagation();
                 }}
-                className="mr-2"
-            >
-                &lt;
-            </a>
+                className="h-5 w-5 p-0.5 mr-2 bg-black/10 rounded-full"
+            />
             <div>{children}</div>
-            <a
-                href="#"
+            <ChevronRightIcon
                 onClick={event => {
                     goRight();
 
                     event.stopPropagation();
                 }}
-                className="ml-2"
-            >
-                &gt;
-            </a>
+                className="h-5 w-5 p-0.5 ml-2 bg-black/10 rounded-full"
+            />
         </div>
     );
 };
