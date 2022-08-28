@@ -20,6 +20,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
 interface ContactInfoRouteQuery {
@@ -117,13 +118,7 @@ const ContactsInfoPage: React.FC = () => {
                 </AppTitle>
                 <AppContent>
                     <div className="flex justify-center">
-                        <div
-                            className={cn('bg-cover bg-center h-20 w-20 my-1 rounded-full', {
-                                'bg-gray-700': config.theme.value === 'dark',
-                                'bg-gray-300': config.theme.value === 'light',
-                            })}
-                            style={{ backgroundImage: `url(${avatar})` }}
-                        />
+                        <ContactPicture picture={avatar} size="large" />
                     </div>
                     <div className={`mt-4 grid gap-3 ${contact ? 'grid-cols-4' : 'grid-cols-3'}`}>
                         <ActionButton onClick={handleContactCall}>

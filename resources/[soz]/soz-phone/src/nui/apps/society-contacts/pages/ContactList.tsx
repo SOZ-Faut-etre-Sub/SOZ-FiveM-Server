@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
 import { useApp } from '../../../os/apps/hooks/useApps';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/old_components/SearchField';
 
 export const ContactList: React.FC = () => {
@@ -83,14 +84,7 @@ export const ContactList: React.FC = () => {
                                             })}
                                         >
                                             <div className="flex-shrink-0">
-                                                <img
-                                                    className={cn('h-10 w-10 rounded-full', {
-                                                        'bg-gray-700': config.theme.value === 'dark',
-                                                        'bg-gray-100': config.theme.value === 'light',
-                                                    })}
-                                                    src={contact.avatar}
-                                                    alt=""
-                                                />
+                                                <ContactPicture picture={contact.avatar} useOffset={false} />
                                             </div>
                                             <div className="flex-1 min-w-0 cursor-pointer">
                                                 <span className="absolute inset-0" aria-hidden="true" />
