@@ -26,6 +26,7 @@ import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
 import { Button } from '../../../ui/old_components/Button';
 import { IContextMenuOption } from '../../../ui/old_components/ContextMenu';
@@ -118,13 +119,7 @@ export const SettingsHome = () => {
             <AppContent backdrop={isMenuOpen} onClickBackdrop={closeMenu}>
                 <List>
                     <ListItem>
-                        <div
-                            className={cn('bg-cover bg-center h-20 w-20 my-1 rounded-full', {
-                                'bg-gray-700': config.theme.value === 'dark',
-                                'bg-gray-100': config.theme.value === 'light',
-                            })}
-                            style={{ backgroundImage: `url(${myAvatar})` }}
-                        />
+                        <ContactPicture picture={myAvatar} size={'large'} />
                         <Button
                             className={cn('flex items-center text-sm', {
                                 'text-white': config.theme.value === 'dark',

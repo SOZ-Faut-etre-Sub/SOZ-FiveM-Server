@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
 const ContactsInfoPage: React.FC = () => {
@@ -70,10 +71,7 @@ const ContactsInfoPage: React.FC = () => {
             </AppTitle>
             <AppContent className="text-white mt-10 mb-4">
                 <div className="flex justify-center">
-                    <div
-                        className="bg-gray-700 bg-cover bg-center h-20 w-20 my-1 rounded-full"
-                        style={{ backgroundImage: `url(${contact.avatar})` }}
-                    />
+                    <ContactPicture picture={contact.avatar} useOffset={false} size="large" />
                 </div>
                 <div>
                     <TextareaField
