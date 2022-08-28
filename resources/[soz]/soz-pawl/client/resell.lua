@@ -32,13 +32,13 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent("locations:zone:enter", function(group, name)
-    if group == "zkea" and PlayerData.job.onduty then
+    if group == "zkea" and PlayerData.job and PlayerData.job.onduty then
         TriggerEvent("player/setCurrentResellZone", SozJobCore.Jobs[SozJobCore.JobType.Pawl].resell.secondary)
     end
 end)
 
 RegisterNetEvent("locations:zone:exit", function(group, name)
-    if group == "zkea" and PlayerData.job.onduty then
+    if group == "zkea" and PlayerData.job and PlayerData.job.onduty then
         TriggerEvent("player/setCurrentResellZone", nil)
     end
 end)
