@@ -238,6 +238,20 @@ currentApartmentMenu:On("open", function(menu)
         end,
     })
 
+    menu:AddSlider({
+        label = "Prix de l'intérieur",
+        value = HouseOption.CurrentApartmentData.price,
+        values = Config.ApartmentPrices,
+        select = function(_, value)
+            QBCore.Functions
+                .TriggerRpc("admin:server:housing:SetApartmentPrice", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, value)
+            exports["soz-hud"]:DrawNotification("Le prix a été modifié", "success")
+            HouseOption.CurrentApartmentData.price = value
+            menu:Close()
+            menu:Open()
+        end,
+    })
+
     menu:AddButton({
         label = "Modifier la position d'apparition",
         select = function()
