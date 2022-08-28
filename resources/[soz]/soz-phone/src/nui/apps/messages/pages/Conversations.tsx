@@ -21,14 +21,15 @@ export const Conversations = (): any => {
     const config = useConfig();
 
     const conversations = useSelector((state: RootState) => state.simCard.conversations);
+    const messages = useSelector((state: RootState) => state.simCard.messages);
     const [searchValue, setSearchValue] = useState<string>('');
 
     const filteredConversations = useMemo(() => {
         const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
 
-        return conversations.filter(
-            conversation => conversation?.display?.match(regExp) || conversation?.phoneNumber?.match(regExp) || ''
-        );
+        return conversations
+            .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
+            .filter(c => c?.display?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
     }, [conversations, searchValue]);
 
     const { getDisplayByNumber, getPictureByNumber } = useContact();
