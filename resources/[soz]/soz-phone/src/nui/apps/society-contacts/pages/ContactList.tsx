@@ -68,38 +68,40 @@ export const ContactList: React.FC = () => {
                                     'divide-gray-200': config.theme.value === 'light',
                                 })}
                             >
-                                {filteredContacts[letter].map(contact => (
-                                    <li
-                                        key={contact.id}
-                                        className={cn('w-full cursor-pointer', {
-                                            'bg-black': config.theme.value === 'dark',
-                                            'bg-ios-50': config.theme.value === 'light',
-                                        })}
-                                        onClick={() => openContactInfo(contact.id)}
-                                    >
-                                        <div
-                                            className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                                'hover:bg-gray-900': config.theme.value === 'dark',
-                                                'hover:bg-gray-200': config.theme.value === 'light',
+                                {filteredContacts[letter]
+                                    .sort((a, b) => a.display.localeCompare(b.display))
+                                    .map(contact => (
+                                        <li
+                                            key={contact.id}
+                                            className={cn('w-full cursor-pointer', {
+                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-50': config.theme.value === 'light',
                                             })}
+                                            onClick={() => openContactInfo(contact.id)}
                                         >
-                                            <div className="flex-shrink-0">
-                                                <ContactPicture picture={contact.avatar} useOffset={false} />
+                                            <div
+                                                className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                                    'hover:bg-gray-900': config.theme.value === 'dark',
+                                                    'hover:bg-gray-200': config.theme.value === 'light',
+                                                })}
+                                            >
+                                                <div className="flex-shrink-0">
+                                                    <ContactPicture picture={contact.avatar} useOffset={false} />
+                                                </div>
+                                                <div className="flex-1 min-w-0 cursor-pointer">
+                                                    <span className="absolute inset-0" aria-hidden="true" />
+                                                    <p
+                                                        className={cn('text-left text-sm font-medium', {
+                                                            'text-gray-100': config.theme.value === 'dark',
+                                                            'text-gray-600': config.theme.value === 'light',
+                                                        })}
+                                                    >
+                                                        {contact.display}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className="flex-1 min-w-0 cursor-pointer">
-                                                <span className="absolute inset-0" aria-hidden="true" />
-                                                <p
-                                                    className={cn('text-left text-sm font-medium', {
-                                                        'text-gray-100': config.theme.value === 'dark',
-                                                        'text-gray-600': config.theme.value === 'light',
-                                                    })}
-                                                >
-                                                    {contact.display}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                ))}
+                                        </li>
+                                    ))}
                             </ul>
                         </div>
                     ))}
