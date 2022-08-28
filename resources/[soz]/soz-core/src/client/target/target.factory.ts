@@ -102,9 +102,21 @@ export class TargetFactory {
     // // @TODO - Implement it when needed
     // public createWithPedSpawn(peds: PedOptions[]) {}
     //
-    // // @TODO - Implement it when needed
-    // public createForModel() {}
-    //
+
+    public createForModel(models: string[], targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+        exports['qb-target'].AddTargetModel(models, {
+            options: targets,
+            distance: distance,
+        });
+    }
+
     // // @TODO - Implement it when needed
     // public createForAllVehicle() {}
+
+    public removeTargetModel(models: string[], labels: string[]) {
+        exports['qb-target'].RemoveTargetModel(models, labels);
+    }
+
+    // // @TODO - Implement it when needed
+    // public removeTargetEntity(entities: string[], labels: string[]) {}
 }
