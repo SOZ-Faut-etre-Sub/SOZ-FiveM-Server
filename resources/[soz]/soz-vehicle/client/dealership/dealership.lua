@@ -65,7 +65,7 @@ function Dealership:new(key, config)
         active = config.active,
         categories = config.categories,
         licence = config.licence,
-        catalog = generateCatalog(key),
+        catalog = {},
         vehicle = config.vehicle,
         ped = config.ped,
         menu = menu,
@@ -191,6 +191,7 @@ end
 
 -- Menu Functions
 function Dealership:GenerateSubMenus()
+    self.catalog = generateCatalog(self.key)
     self.menu:ClearItems()
     for _, category in pairs(self.catalog) do
         local namespace = ("soz:dealership:" .. self.key .. ":" .. category.key):lower()
@@ -261,7 +262,6 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                                                                                           GetVehicleNumberPlateText(vehicleInSpawnArea)), "warning")
                                         return
                                     end
-
                                     dealership:GenerateSubMenus()
                                     dealership.menu:Open()
                                 end,
