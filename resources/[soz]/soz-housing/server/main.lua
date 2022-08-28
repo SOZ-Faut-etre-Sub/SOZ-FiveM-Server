@@ -261,8 +261,9 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
     end
 
     if Player.Functions.AddMoney("money", apartment:GetResellPrice()) then
-        MySQL.update.await("UPDATE housing_apartment SET owner = NULL WHERE id = ?", {apartmentId})
+        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL WHERE id = ?", {apartmentId})
         apartment:SetOwner(nil)
+        apartment:SetRoommate(nil)
 
         TriggerEvent("monitor:server:event", "house_sell", {player_source = Player.PlayerData.source},
                      {house_id = apartment:GetIdentifier(), amount = apartment:GetResellPrice()})
