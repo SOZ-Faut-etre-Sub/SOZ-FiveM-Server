@@ -104,6 +104,13 @@ RegisterNetEvent("housing:client:SetApartmentLabel", function(propertyId, apartm
     end
 end)
 
+RegisterNetEvent("housing:client:SetApartmentPrice", function(propertyId, apartmentId, price)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment then
+        apartment:SetPrice(price)
+    end
+end)
+
 RegisterNetEvent("housing:client:SetApartmentInsideCoord", function(propertyId, apartmentId, coord)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment then

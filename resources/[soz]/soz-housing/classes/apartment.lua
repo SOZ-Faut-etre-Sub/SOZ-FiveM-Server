@@ -116,6 +116,10 @@ function Apartment:SetLabel(label)
     self.label = label
 end
 
+function Apartment:SetPrice(price)
+    self.price = price
+end
+
 function Apartment:SetOwner(owner)
     self.owner = owner
 end

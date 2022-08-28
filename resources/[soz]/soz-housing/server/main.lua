@@ -484,6 +484,25 @@ exports("SetApartmentLabel", function(propertyId, apartmentId, label)
     TriggerClientEvent("housing:client:SetApartmentLabel", -1, propertyId, apartmentId, label)
 end)
 
+exports("SetApartmentPrice", function(propertyId, apartmentId, price)
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        local propertyBd = MySQL.query.await("SELECT * FROM housing_property WHERE id = ?", {propertyId})
+        local apartmentData = Apartment:new(propertyBd.identifier, propertyBd.label)
+        Properties[propertyId]:UpdateApartment(apartmentId, apartmentData)
+        apartment = Properties[propertyId]:GetApartment(apartmentId)
+    end
+
+    apartment:SetPrice(price)
+
+    MySQL.update.await("UPDATE housing_apartment SET price = ? WHERE id = ? AND property_id = ?", {
+        price,
+        apartmentId,
+        propertyId,
+    })
+    TriggerClientEvent("housing:client:SetApartmentPrice", -1, propertyId, apartmentId, price)
+end)
+
 exports("SetApartmentInsideCoord", function(propertyId, apartmentId, coord)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then

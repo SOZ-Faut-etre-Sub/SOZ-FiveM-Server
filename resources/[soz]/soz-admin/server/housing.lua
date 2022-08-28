@@ -55,6 +55,15 @@ QBCore.Functions.CreateCallback("admin:server:housing:SetApartmentLabel", functi
     cb(true)
 end)
 
+QBCore.Functions.CreateCallback("admin:server:housing:SetApartmentPrice", function(source, cb, propertyId, apartmentId, label)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
+    exports["soz-housing"]:SetApartmentPrice(propertyId, apartmentId, label)
+    cb(true)
+end)
+
 QBCore.Functions.CreateCallback("admin:server:housing:SetApartmentInsideCoord", function(source, cb, propertyId, apartmentId, coord)
     if not SozAdmin.Functions.IsPlayerHelper(source) then
         return
