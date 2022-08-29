@@ -32,5 +32,6 @@ export class InventoryManager {
                 }
             }
         }
+        return false;
     }
 }

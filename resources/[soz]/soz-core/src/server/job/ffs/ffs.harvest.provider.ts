@@ -2,14 +2,13 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { SewingRawMaterial } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
 
 @Provider()
 export class FightForStyleHarvestProvider {
-    private readonly COTTON_BALE_ID: string = 'cotton_bale';
-
     @Inject(ProgressService)
     private progressService: ProgressService;
 
@@ -30,14 +29,14 @@ export class FightForStyleHarvestProvider {
             return false;
         }
 
-        this.inventoryManager.addItemToInventory(source, this.COTTON_BALE_ID, 1);
+        this.inventoryManager.addItemToInventory(source, SewingRawMaterial.COTTON_BALE, 1);
 
         return true;
     }
 
     @OnEvent(ServerEvent.FFS_HARVEST)
     async onHarvest(source: number) {
-        while (this.inventoryManager.canCarryItem(source, this.COTTON_BALE_ID, 1, {})) {
+        while (this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1, {})) {
             const hasHarvested = await this.doHarvest(source, 'Vous récoltez une balle de coton.');
             if (!hasHarvested) {
                 return;

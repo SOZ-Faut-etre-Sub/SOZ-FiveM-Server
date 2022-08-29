@@ -84,9 +84,9 @@ function QBCore.Functions.DrawText3D(x, y, z, text)
 end
 
 function QBCore.Functions.CreateBlip(id, data)
-    local blip = AddBlipForCoord(data.coords)
+    local blip = AddBlipForCoord(data.coords.x, data.coords.y, data.coords.z)
 
-    if data.sprite then SetBlipSprite(blip, data.sprite) end
+    if data.sprite then SetBlipSprite(blip, tonumber(data.sprite)) end
     if data.range then SetBlipAsShortRange(blip, data.range) else SetBlipAsShortRange(blip, true) end
     if data.color then SetBlipColour(blip, data.color) end
     if data.alpha then SetBlipAlpha(blip, data.alpha or 255) end
@@ -96,7 +96,7 @@ function QBCore.Functions.CreateBlip(id, data)
     if data.heading then SetBlipRotation(blip, math.ceil(data.heading)) end
     if data.showheading then ShowHeadingIndicatorOnBlip(blip, data.showheading) end
     if data.secondarycolor then SetBlipSecondaryColour(blip, data.secondarycolor) end
-    if data.friend then SetBlipFriend(blip, data.friend) end
+    if data.friend then ShowFriendIndicatorOnBlip(blip, data.friend) end
     if data.mission then SetBlipAsMissionCreatorBlip(blip, data.mission) end
     if data.route then SetBlipRoute(blip, data.route) end
     if data.friendly then SetBlipAsFriendly(blip, data.friendly) end

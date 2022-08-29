@@ -15,6 +15,7 @@ export type TargetOptions = {
     label: string;
     icon?: string;
     color?: string;
+    type?: string;
     event?: string;
     blackoutGlobal?: boolean;
     canInteract?: (entity) => boolean;

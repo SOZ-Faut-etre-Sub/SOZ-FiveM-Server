@@ -19,8 +19,6 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 coords = config.Coords,
                 sprite = config.Icon,
                 scale = config.Scale,
-                color = config.Color,
-                alpha = config.Alpha,
             })
         end
 

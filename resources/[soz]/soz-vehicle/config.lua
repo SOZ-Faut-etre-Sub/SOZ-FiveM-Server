@@ -500,6 +500,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "fbi",
     },
+    ["ffs"] = {
+        label = "Fight For Style",
+        blipcoord = vector4(691.73, -973.33, 22.69, 270),
+        showBlip = false,
+        blipName = "Fight For Style",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "ffs",
+    },
     --[[
     ["intairport"] = {
         label = "Airport Heliport",

@@ -1,3 +1,5 @@
+import { PlayerGender } from './player';
+
 export enum JobType {
     Unemployed = 'unemployed',
     Adsl = 'adsl',

@@ -1,4 +1,4 @@
-import { Once } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
@@ -23,8 +23,8 @@ export class FightForStyleCraftProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Once()
-    public onStart() {
+    @Once(OnceStep.PlayerLoaded)
+    public onPlayerLoaded() {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
@@ -65,6 +65,7 @@ export class FightForStyleCraftProvider {
     private craftProcessToTarget(craftProcess: CraftProcess): TargetOptions {
         return {
             label: craftProcess.label,
+            icon: 'c:/ffs/craft.png',
             color: 'ffs',
             job: 'ffs',
             canInteract: () => {
