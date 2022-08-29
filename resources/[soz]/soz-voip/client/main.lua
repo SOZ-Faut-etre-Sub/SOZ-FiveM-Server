@@ -15,7 +15,7 @@ CarModuleInstance = ModuleCar:new(Config.volumeVehicle)
 -- Proximity modules
 ProximityModuleCullingInstance = ModuleProximityCulling:new(Config.normalRange)
 ProximityModuleGridInstance = ModuleProximityGrid:new(Config.normalRange, Config.gridSize, Config.gridEdge)
-ProximityModuleInstance = ProximityModuleGridInstance
+ProximityModuleInstance = ProximityModuleCullingInstance
 
 -- Filter module
 local FilterRegistryInstance = FilterSubmixRegistry:new()
@@ -148,7 +148,7 @@ local function ApplyFilters(players)
     local toRemove = {}
 
     FilterRegistryInstance:loop(function(id)
-        if not players[id] or players[id].transmitting == false then
+        if not players[id] or players[id].transmitting ~= true then
             table.insert(toRemove, id)
         end
     end)
@@ -171,6 +171,19 @@ local function ApplyFilters(players)
 end
 
 Citizen.CreateThread(function()
+    -- Sometimes people need to to restart voip as soon as they log in, so we force a reconnection on start
+    MumbleSetActive(false)
+    Citizen.Wait(1000)
+
+    -- Clear state
+    lastState = {}
+    LastVolumesSet = {}
+
+    -- Reconnect
+    MumbleSetActive(true)
+    Citizen.Wait(1000)
+
+    -- Init modules
     CarModuleInstance:init()
     ProximityModuleInstance:init()
     PrimaryShortRadioModuleInstance:init()
