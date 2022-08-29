@@ -31,4 +31,5 @@ Config.ApartmentPrices = {
     {label = "Nord Caravanes", value = 39000},
     {label = "Nord Maison LOW", value = 64000},
     {label = "Nord Maison MID", value = 98000},
+    {label = "Personnalisé", value = "custom"},
 }

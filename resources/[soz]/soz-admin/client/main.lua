@@ -1,7 +1,16 @@
 QBCore = exports["qb-core"]:GetCoreObject()
+PlayerData = QBCore.Functions.GetPlayerData()
 
 AdminMenu = MenuV:CreateMenu(nil, "", "menu_admin", "soz", "admin-panel")
 MapperMenu = MenuV:CreateMenu(nil, "", "menu_mapper", "soz", "mapping-panel")
+
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+end)
+
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
+    PlayerData = data
+end)
 
 local function OpenAdminMenu()
     if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= AdminMenu.UUID then
