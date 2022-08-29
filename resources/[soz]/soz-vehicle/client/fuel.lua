@@ -134,9 +134,7 @@ Citizen.CreateThread(function()
         BoxZone:Create(station:GetPolyZoneConfiguration()):onPlayerInOut(function(isPointInside, _)
             playerIsInsideStationZone = isPointInside
             if isPointInside then
-                if not station:IsKerosene() then
-                    TriggerEvent("locations:zone:enter", "fueler_petrol_station", station:GetIdentifier())
-                end
+                TriggerEvent("locations:zone:enter", "fueler_petrol_station", station:GetIdentifier(), station:IsKerosene())
 
                 exports["qb-target"]:AddTargetModel(station:GetModel(), {
                     options = {
@@ -241,7 +239,7 @@ Citizen.CreateThread(function()
                     distance = 3.0,
                 })
             else
-                TriggerEvent("locations:zone:exit", "fueler_petrol_station")
+                TriggerEvent("locations:zone:exit", "fueler_petrol_station", station:GetIdentifier(), station:IsKerosene())
                 exports["qb-target"]:RemoveTargetEntity(GetPlayersLastVehicle(), "Remplir")
             end
         end)
