@@ -1847,7 +1847,7 @@ Config.Products["ponsonbys"] = {
                             {Name = "Robe à motif blanche", Id = 18},
                             {Name = "Robe à motif noire", Id = 19},
                             {Name = "Robe à motif cyan", Id = 20},
-                        }, nil, 2)
+                        }, nil, 2),
                     }),
                 },
             },
