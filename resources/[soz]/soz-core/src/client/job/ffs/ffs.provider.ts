@@ -5,15 +5,11 @@ import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
-import { JobCore } from '../jobcore';
 
 @Provider()
 export class FightForStyleProvider {
     @Inject(Qbcore)
     private qbCore: Qbcore;
-
-    @Inject(JobCore)
-    private jobCore: JobCore;
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
