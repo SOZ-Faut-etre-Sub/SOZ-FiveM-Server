@@ -1,13 +1,14 @@
 --- @class Property
 Property = {}
 
-function Property:new(identifier, entry_zone, garage_zone)
+function Property:new(identifier, entry_zone, garage_zone, exterior_culling)
     self.__index = self
 
     return setmetatable({
         identifier = identifier,
         entry_zone = decode_json(entry_zone),
         garage_zone = decode_json(garage_zone),
+        exterior_culling = decode_json(exterior_culling),
 
         --- @type Apartment[]
         apartments = {},
@@ -179,6 +180,10 @@ end
 
 function Property:GetGarageZone()
     return self.garage_zone
+end
+
+function Property:GetExteriorCulling()
+    return self.exterior_culling
 end
 
 ---
