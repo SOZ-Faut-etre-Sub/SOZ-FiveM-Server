@@ -470,6 +470,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "upw",
     },
+    ["baun_bahama"] = {
+        label = "Bahama Unicorn - Bahama Mamas",
+        blipcoord = vector4(-1391.21, -643.47, 27.67, 295.25),
+        showBlip = false,
+        blipName = "Bahama Unicorn",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "baun",
+    },
     ["baun_unicorn"] = {
         label = "Bahama Unicorn - Vanilla Unicorn",
         blipcoord = vector4(148.33, -1289.93, 28.18, 120),
