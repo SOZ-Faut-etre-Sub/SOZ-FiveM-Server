@@ -43,13 +43,6 @@ SozJobCore.Functions.GetBossShopActions = function(job, event)
     }
 end
 
-SozJobCore.Functions.CreateJobSocietyMenu = function(job)
-    if MenuV:IsNamespaceAvailable(job .. ":menu") then
-        return MenuV:CreateMenu(nil, "", "menu_job_" .. job, "soz", job .. ":menu")
-    end
-    return nil
-end
-
 --- Cloakroom
 SozJobCore.Functions.OpenCloakroomMenu = function(menu, cloakroom)
     menu:ClearItems()
