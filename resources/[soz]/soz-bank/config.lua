@@ -120,6 +120,15 @@ Config.SafeStorages = {
         size = vec2(0.75, 0.3),
         heading = 340,
     },
+    ["safe_baun"] = {
+        label = "Coffre Bahama Unicorn",
+        owner = "baun",
+        position = vector3(-1384.84, -631.58, 30.81),
+        size = vec2(0.7, 0.7),
+        heading=303,
+        minZ=26.81,
+        maxZ=30.81,
+    }
 }
 
 Config.ATMModels = {
