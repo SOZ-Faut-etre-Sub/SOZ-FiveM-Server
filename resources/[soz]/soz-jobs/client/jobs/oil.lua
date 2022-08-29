@@ -231,8 +231,8 @@ CreateThread(function()
 end)
 
 --- Targets Locations
-AddEventHandler("locations:zone:enter", function(zone, station)
-    if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
+AddEventHandler("locations:zone:enter", function(zone, station, isAKeroseneStation)
+    if zone == "fueler_petrol_refinery" or (zone == "fueler_petrol_station" and not isAKeroseneStation) or zone == "fueler_petrol_resell" then
         CreateTankerAction()
     end
     if zone == "fueler_petrol_refinery" then
@@ -295,8 +295,8 @@ AddEventHandler("locations:zone:enter", function(zone, station)
     end
 end)
 
-AddEventHandler("locations:zone:exit", function(zone, _)
-    if zone == "fueler_petrol_refinery" or zone == "fueler_petrol_station" or zone == "fueler_petrol_resell" then
+AddEventHandler("locations:zone:exit", function(zone, _, isAKeroseneStation)
+    if zone == "fueler_petrol_refinery" or (zone == "fueler_petrol_station" and not isAKeroseneStation) or zone == "fueler_petrol_resell" then
         exports["qb-target"]:RemoveTargetModel("tanker", {"Connecter le Tanker", "Déconnecter le Tanker"})
     end
     if zone == "fueler_petrol_refinery" then
