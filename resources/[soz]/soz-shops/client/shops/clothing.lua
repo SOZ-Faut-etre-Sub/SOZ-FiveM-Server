@@ -103,41 +103,47 @@ function ClothingShop:GenerateMenu(skipIntro)
         local partMenu = MenuV:InheritMenu(shopMenu, {subtitle = content.Name})
 
         partMenu:On("open", function()
+            partMenu:ClearItems()
+
             for collectionID, collection in pairs(content.Collections) do
-                local itemOptions = {}
+                local collectionMenu = MenuV:InheritMenu(partMenu, {subtitle = collection.Name})
 
-                for itemIndex, item in pairs(collection.Items) do
-                    itemOptions[#itemOptions + 1] = {value = itemIndex, label = item.Name, item = item}
-                end
+                collectionMenu:On("switch", function(_, item)
+                    local ped = PlayerPedId()
+                    for id, component in pairs(item.Value.ApplyComponents) do
+                        SetPedComponentVariation(ped, id, component.Drawable, component.Texture or 0, component.Palette or 0);
+                    end
 
-                partMenu:AddSlider({
-                    label = collection.Name,
-                    description = "Changer de tenue pour $" .. collection.Price,
-                    value = 0,
-                    values = itemOptions,
-                    change = function(_, value)
-                        local ped = PlayerPedId()
-                        for id, component in pairs(itemOptions[value].item.ApplyComponents) do
-                            SetPedComponentVariation(ped, id, component.Drawable, component.Texture or 0, component.Palette or 0);
-                        end
+                    local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
+                    if torsoDrawable ~= -1 and torsoTexture ~= -1 then
+                        SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
+                    end
+                end)
 
-                        local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
-                        if torsoDrawable ~= -1 and torsoTexture ~= -1 then
-                            SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
-                        end
-                    end,
-                    select = function(_, value)
-                        local ped = PlayerPedId()
-                        local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
+                collectionMenu:On("open", function()
+                    collectionMenu:ClearItems()
 
-                        TriggerServerEvent("shops:server:pay", self.brand, {
-                            category = categoryID,
-                            collection = collectionID,
-                            item = value,
-                            torso = {drawable = torsoDrawable, texture = torsoTexture},
-                        }, 1)
-                    end,
-                })
+                    for itemID, item in pairs(collection.Items) do
+                        collectionMenu:AddButton({
+                            label = item.Name,
+                            description = "Changer de tenue pour $" .. collection.Price,
+                            value = item,
+                            select = function()
+                                local ped = PlayerPedId()
+                                local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
+
+                                TriggerServerEvent("shops:server:pay", self.brand, {
+                                    category = categoryID,
+                                    collection = collectionID,
+                                    item = itemID,
+                                    torso = {drawable = torsoDrawable, texture = torsoTexture},
+                                }, 1)
+                            end,
+                        })
+                    end
+                end)
+
+                partMenu:AddButton({label = collection.Name, value = collectionMenu})
             end
         end)
 
