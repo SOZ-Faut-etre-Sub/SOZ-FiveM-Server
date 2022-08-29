@@ -74,7 +74,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source
     if amount > result.missingAmount then
         amount = result.missingAmount
     end
-    TriggerEvent("banking:server:TransferMoney", StonkConfig.Accounts.FarmAccount, result.accountId, amount)
+    TriggerEvent("banking:server:TransferMoney", StonkConfig.Accounts.BankAccount, result.accountId, amount)
     TriggerEvent("banking:server:TransferMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, StonkConfig.Resale.BankPrice)
 
     if data.bank ~= nil then
