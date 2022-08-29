@@ -16,5 +16,5 @@ Config.Storages["ffs_boss_storage"] = {
     size = vec2(0.2, 1.6),
     heading = 0,
     minZ = 29.41,
-    maxZ = 30.86
+    maxZ = 30.86,
 }

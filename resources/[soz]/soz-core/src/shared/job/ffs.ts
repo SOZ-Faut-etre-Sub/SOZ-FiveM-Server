@@ -1,4 +1,4 @@
-enum SewingRawMaterial {
+export enum SewingRawMaterial {
     COTTON_BALE = 'cotton_bale',
     REFINED_PETROLEUM = 'petroleum_refined',
     WOOD_PLANK = 'wood_plank',
@@ -155,7 +155,7 @@ export const craftProcesses: CraftProcess[] = [
 
 export const luxuryCraftProcesses: CraftProcess[] = [
     {
-        label: 'Fabrication: Chaussure',
+        label: 'Fabrication: Chaussure luxueuse',
         inputs: [
             {
                 fabric: FabricMaterial.LEATHER,
@@ -170,7 +170,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Haut en fibre naturelle',
+        label: 'Fabrication: Haut luxueux en fibre naturelle',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -181,7 +181,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Haut en fibre artificielle',
+        label: 'Fabrication: Haut luxueux en fibre artificielle',
         inputs: [
             {
                 fabric: FabricMaterial.ARTIFICIAL_FIBER,
@@ -192,7 +192,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Pantalon synthétique',
+        label: 'Fabrication: Pantalon luxueux synthétique',
         inputs: [
             {
                 fabric: FabricMaterial.SYNTHETIC_FIBER,
@@ -203,7 +203,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Pantalon naturel',
+        label: 'Fabrication: Pantalon luxueux naturel',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -214,7 +214,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Sous-vêtement',
+        label: 'Fabrication: Sous-vêtement luxueux',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,

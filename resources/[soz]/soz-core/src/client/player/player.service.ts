@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { JobType } from '../../shared/job';
 import { PlayerData } from '../../shared/player';
 import { Qbcore } from '../qbcore';
 

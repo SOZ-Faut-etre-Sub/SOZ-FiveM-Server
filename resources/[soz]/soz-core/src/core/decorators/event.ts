@@ -60,7 +60,13 @@ export const OnGameEvent = (event: GameEvent): MethodDecorator => {
 
 export enum OnceStep {
     Start = 'start',
+    /**
+     * Can only be used on the **server**.
+     */
     DatabaseConnected = 'databaseConnected',
+    /**
+     * Can only be used on the **client**.
+     */
     PlayerLoaded = 'playerLoaded',
     Stop = 'stop',
 }

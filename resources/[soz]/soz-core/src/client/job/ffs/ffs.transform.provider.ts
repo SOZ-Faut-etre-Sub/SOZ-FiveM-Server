@@ -1,4 +1,4 @@
-import { Once } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
@@ -24,8 +24,8 @@ export class FightForStyleTransformProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Once()
-    public onStart() {
+    @Once(OnceStep.PlayerLoaded)
+    public onPlayerLoaded() {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
@@ -37,6 +37,7 @@ export class FightForStyleTransformProvider {
 
             return {
                 label: `Transformer: ${item.label}`,
+                icon: `c:/ffs/transform.png`,
                 color: 'ffs',
                 job: 'ffs',
                 canInteract: () => {
