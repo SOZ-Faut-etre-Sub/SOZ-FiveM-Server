@@ -29,6 +29,20 @@ QBCore.Functions.CreateCallback("admin:server:housing:CreateProperty", function(
     cb(MySQL.query.await("INSERT INTO housing_property (identifier) VALUES (?)", {name}))
 end)
 
+QBCore.Functions.CreateCallback("admin:server:housing:DeleteProperty", function(source, cb, id)
+    print("admin:server:housing:DeleteProperty")
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
+    print(id)
+    if id == nil then
+        return
+    end
+
+    cb(MySQL.query.await("DELETE FROM housing_property WHERE id = ?", {id}))
+end)
+
 RegisterNetEvent("admin:server:housing:UpdatePropertyZone", function(id, zone_type, zone_config)
     if not SozAdmin.Functions.IsPlayerHelper(source) then
         return
@@ -95,4 +109,16 @@ QBCore.Functions.CreateCallback("admin:server:housing:CreateApartment", function
         identifier,
         label,
     }))
+end)
+
+QBCore.Functions.CreateCallback("admin:server:housing:DeleteApartment", function(source, cb, propertyId, apartmentId)
+    if not SozAdmin.Functions.IsPlayerHelper(source) then
+        return
+    end
+
+    if propertyId == nil or apartmentId == nil then
+        return
+    end
+
+    cb(MySQL.query.await("DELETE FROM housing_apartment WHERE property_id = ? AND id = ?", {propertyId, apartmentId}))
 end)
