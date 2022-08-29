@@ -34,6 +34,22 @@ end)
 --- Main Functions
 RegisterNetEvent("housing:client:Teleport", function(coords)
     Housing.Functions.Teleport("Ouvre la porte", coords)
+
+    Citizen.CreateThread(function()
+        Citizen.Wait(2000)
+
+        while Housing.Functions.IsInsideApartment do
+            local propertyId = PlayerData.metadata["inside"].property
+
+            if propertyId then
+                for _, hash in pairs(Properties[propertyId]:GetExteriorCulling() or {}) do
+                    EnableExteriorCullModelThisFrame(hash)
+                end
+            end
+
+            Citizen.Wait(0)
+        end
+    end)
 end)
 
 RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmentId, data)
@@ -57,7 +73,7 @@ end)
 RegisterNetEvent("housing:client:SyncProperties", function()
     local properties = QBCore.Functions.TriggerRpc("housing:server:GetAllProperties")
     for propertyId, property in pairs(properties or {}) do
-        Properties[propertyId] = Property:new(property.identifier, property.entry_zone, property.garage_zone)
+        Properties[propertyId] = Property:new(property.identifier, property.entry_zone, property.garage_zone, property.exterior_culling)
 
         for apartmentId, apartment in pairs(property.apartments) do
             Properties[propertyId]:AddApartment(apartmentId,
