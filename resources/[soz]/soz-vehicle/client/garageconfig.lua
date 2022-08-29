@@ -250,7 +250,7 @@ Zonesentreprise = {
     }),
     ["baun_bahama"] = BoxZone:Create(vector3(-1399.71, -643.76, 28.67), 27.4, 16.6, {
         name = "baun_bahama_z",
-        heading=33,
+        heading = 33,
         minZ = 27.67,
         maxZ = 31.67,
     }),
@@ -1732,7 +1732,7 @@ PlacesEntreprise = {
             capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["baun_bahama2"] = BoxZone:Create(vector3(-1392.93, -652.27, 28.67), 3.2, 6.0,{
+    ["baun_bahama2"] = BoxZone:Create(vector3(-1392.93, -652.27, 28.67), 3.2, 6.0, {
         name = "baun_bahama2",
         heading = 307,
         minZ = 27.67,
