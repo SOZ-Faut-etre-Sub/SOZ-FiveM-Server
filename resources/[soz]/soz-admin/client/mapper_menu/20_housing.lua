@@ -161,6 +161,18 @@ currentPropertyMenu:On("open", function(menu)
         })
     end
 
+    menu:AddConfirm(({
+        label = "Supprimer la propriété",
+        value = "n",
+        confirm = function()
+            local confirm = exports["soz-hud"]:Input("Êtes-vous sûr de vouloir supprimer la propriété ?", 5, "yes/no")
+            if confirm == "yes" then
+                QBCore.Functions.TriggerRpc("admin:server:housing:DeleteProperty", HouseOption.CurrentPropertyData.id)
+                menu:Close()
+            end
+        end,
+    }))
+
     menu:AddTitle({label = "Liste des intérieurs"})
     local apartments = QBCore.Functions.TriggerRpc("admin:housing:server:GetApartments", HouseOption.CurrentPropertyData.id)
     table.sort(apartments, function(a, b)
@@ -238,20 +250,6 @@ currentApartmentMenu:On("open", function(menu)
         end,
     })
 
-    menu:AddSlider({
-        label = "Prix de l'intérieur",
-        value = HouseOption.CurrentApartmentData.price,
-        values = Config.ApartmentPrices,
-        select = function(_, value)
-            QBCore.Functions
-                .TriggerRpc("admin:server:housing:SetApartmentPrice", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, value)
-            exports["soz-hud"]:DrawNotification("Le prix a été modifié", "success")
-            HouseOption.CurrentApartmentData.price = value
-            menu:Close()
-            menu:Open()
-        end,
-    })
-
     menu:AddButton({
         label = "Modifier la position d'apparition",
         select = function()
@@ -264,6 +262,44 @@ currentApartmentMenu:On("open", function(menu)
             exports["soz-hud"]:DrawNotification("La position d'apparition a été modifiée", "success")
         end,
     })
+
+    menu:AddSlider({
+        label = "Prix de l'intérieur",
+        value = HouseOption.CurrentApartmentData.price,
+        values = Config.ApartmentPrices,
+        select = function(_, value)
+            if value == "custom" and PlayerData.role == "admin" then
+                local price = exports["soz-hud"]:Input("Prix de l'intérieur:", 50, HouseOption.CurrentApartmentData.price)
+                if price == nil or #price == 0 then
+                    exports["soz-hud"]:DrawNotification("Le prix ne peut pas être vide", "error")
+                    return
+                end
+                value = price
+            else
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a cette option", "error")
+                return
+            end
+
+            QBCore.Functions
+                .TriggerRpc("admin:server:housing:SetApartmentPrice", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, value)
+            exports["soz-hud"]:DrawNotification("Le prix a été modifié", "success")
+            HouseOption.CurrentApartmentData.price = value
+            menu:Close()
+            menu:Open()
+        end,
+    })
+
+    menu:AddConfirm(({
+        label = "Supprimer l'intérieur",
+        value = "n",
+        confirm = function()
+            local confirm = exports["soz-hud"]:Input("Êtes-vous sûr de vouloir supprimer l'intérieur ?", 5, "yes/no")
+            if confirm == "yes" then
+                QBCore.Functions.TriggerRpc("admin:server:housing:DeleteApartment", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id)
+                menu:Close()
+            end
+        end,
+    }))
 
     table.sort(HouseOption.ApartmentZone, function(a, b)
         return a.label < b.label
