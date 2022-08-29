@@ -171,6 +171,19 @@ local function ApplyFilters(players)
 end
 
 Citizen.CreateThread(function()
+    -- Sometimes people need to to restart voip as soon as they log in, so we force a reconnection on start
+    MumbleSetActive(false)
+    Citizen.Wait(1000)
+
+    -- Clear state
+    lastState = {}
+    LastVolumesSet = {}
+
+    -- Reconnect
+    MumbleSetActive(true)
+    Citizen.Wait(1000)
+
+    -- Init modules
     CarModuleInstance:init()
     ProximityModuleInstance:init()
     PrimaryShortRadioModuleInstance:init()
