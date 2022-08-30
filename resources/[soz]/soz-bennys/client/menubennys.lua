@@ -939,6 +939,7 @@ VehiculeOptions:On("open", function(menu)
                 TriggerEvent("soz-bennys:client:UnattachVehicle")
                 SetVehicleDoorsLocked(veh, 1)
                 menu:Close()
+                Config.AttachedVehicle = nil
             else
                 exports["soz-hud"]:DrawNotification("Veuillez attendre de monter le cric avant de le redescendre", "error")
             end

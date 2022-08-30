@@ -38,6 +38,22 @@ local DamageComponents = {
 
 -- Functions
 
+local function setHealthEngineLast(newHealth)
+    healthEngineLast = newHealth
+end
+
+local function setHealthPetrolTankLast(newHealth)
+    healthPetrolTankLast = newHealth
+end
+
+local function setHealthBodyLast(newHealth)
+    healthBodyLast = newHealth
+end
+
+exports("setHealthEngineLast", setHealthEngineLast)
+exports("setHealthPetrolTankLast", setHealthPetrolTankLast)
+exports("setHealthBodyLast", setHealthBodyLast)
+
 local function DamageRandomComponent()
     local dmgFctr = math.random() + math.random(0, 2)
     local randomComponent = DamageComponents[math.random(1, #DamageComponents)]
