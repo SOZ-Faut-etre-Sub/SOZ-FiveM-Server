@@ -17,12 +17,12 @@ RegisterNetEvent("pawl:client:OpenSocietyMenu", function()
             value = displayBlips,
             change = function(_, value)
                 displayBlips = value
-                for identifier, data in pairs(Config.Fields) do
-                    if data.blip then
+                for identifier, data in pairs(Config.Blip.Fields) do
+                    if data then
                         local zoneName = "pawl_farm:" .. identifier
 
                         if not Blips[zoneName] then
-                            local blip = AddBlipForRadius(data.blip.Coords, data.blip.Radius)
+                            local blip = AddBlipForRadius(data.Coords, data.Radius)
                             SetBlipSprite(blip, 9)
                             SetBlipColour(blip, 0)
 

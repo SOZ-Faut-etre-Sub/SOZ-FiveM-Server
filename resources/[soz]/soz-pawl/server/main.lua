@@ -4,39 +4,6 @@ Fields = {}
 Processing = {Enabled = false, StartedAt = 0}
 
 MySQL.ready(function()
-    local fieldData = {}
-
-    for k, field in pairs(Config.Fields) do
-        local identifier = string.match(k, "^(.*)__")
-
-        if not fieldData[identifier] then
-            fieldData[identifier] = {field = {}, refillDelay = field.refillDelay}
-        end
-
-        for _, pos in pairs(field.positions) do
-            table.insert(fieldData[identifier].field, {
-                model = field.model,
-                position = pos,
-                harvestTime = os.time() - field.refillDelay,
-            })
-        end
-
-        if field.blip then
-            fieldData[identifier].position = field.blip.Coords
-            fieldData[identifier].radius = field.blip.Radius
-        end
-    end
-
-    for k, v in pairs(fieldData) do
-        -- Migrate field to database if not exist
-        MySQL.insert.await("INSERT IGNORE INTO field (identifier, owner, data) VALUES (?, ?, ?)",
-                           {
-            k,
-            "pawl",
-            json.encode({field = v.field, refillDelay = v.refillDelay, position = v.position, radius = v.radius}),
-        })
-    end
-
     MySQL.query("SELECT * FROM field WHERE owner = 'pawl'", function(fields)
         for _, v in pairs(fields or {}) do
             local data = json.decode(v.data)

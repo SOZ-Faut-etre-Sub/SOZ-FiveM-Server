@@ -31,19 +31,9 @@ local function TreeInteraction(identifier, position)
     })
 end
 
-local function CanHarvestField(identifier)
+local function CanHarvestField()
     if DegradationLevel == Config.Degradation.Level.Red then
         return false
-    end
-
-    local hit, maxHit = 0, Config.Field.Capacity
-    for _, time in pairs(Config.Field.List[identifier] or {}) do
-        if GetGameTimer() - time <= Config.Field.RefillDelay then
-            hit = hit + 1
-            if hit >= maxHit then
-                return false
-            end
-        end
     end
     return true
 end
