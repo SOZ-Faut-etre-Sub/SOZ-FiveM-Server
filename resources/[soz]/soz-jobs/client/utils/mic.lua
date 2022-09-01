@@ -62,7 +62,7 @@ RegisterNetEvent("jobs:utils:mic:toggle", function()
         return
     end
 
-    TriggerEvent("talk🎤use");
+    TriggerEvent("talk:microphone:use");
     MicConfig.enabled = not MicConfig.enabled
     micOperator()
 end)
