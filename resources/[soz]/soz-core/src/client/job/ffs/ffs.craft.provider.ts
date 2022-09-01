@@ -68,6 +68,7 @@ export class FightForStyleCraftProvider {
             icon: 'c:/ffs/craft.png',
             color: 'ffs',
             job: 'ffs',
+            blackoutGlobal: true,
             canInteract: () => {
                 for (const input of craftProcess.inputs) {
                     if (!this.inventoryManager.hasEnoughItem(input.fabric, input.amount)) {

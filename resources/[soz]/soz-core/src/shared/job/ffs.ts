@@ -82,7 +82,7 @@ export type CraftProcess = {
 
 export const craftProcesses: CraftProcess[] = [
     {
-        label: 'Fabrication: Chaussure',
+        label: 'Fabrication: Paire de chaussures',
         inputs: [
             {
                 fabric: FabricMaterial.LEATHER,
@@ -155,7 +155,7 @@ export const craftProcesses: CraftProcess[] = [
 
 export const luxuryCraftProcesses: CraftProcess[] = [
     {
-        label: 'Fabrication: Chaussure luxueuse',
+        label: 'Fabrication: Paire de chaussures luxueuses',
         inputs: [
             {
                 fabric: FabricMaterial.LEATHER,

@@ -26,16 +26,15 @@ export class FightForStyleTransformProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private async doTransform(source: number, fabricMaterial: FabricMaterial) {
-        const label = 'Vous commencez vos procédés chimiques et mécaniques.';
-        const { completed } = await this.progressService.progress(source, 'ffs_transform', label, 2000, {
+    private async doTransform(source: number, fabricMaterial: FabricMaterial): Promise<boolean> {
+        const { completed } = await this.progressService.progress(source, 'ffs_transform', 'Transformation', 2000, {
             name: 'base',
             dictionary: 'amb@prop_human_seat_sewing@female@base',
             flags: 16,
         });
 
         if (!completed) {
-            return;
+            return false;
         }
 
         const transformationProcess = TransformProcesses[fabricMaterial];
@@ -51,17 +50,30 @@ export class FightForStyleTransformProvider {
             transformationProcess.output,
             transformationProcess.outputAmount
         );
+
+        return true;
     }
 
     @OnEvent(ServerEvent.FFS_TRANSFORM)
     public async onTransform(source: number, fabricMaterial: FabricMaterial) {
+        this.notifier.notify(source, 'Vous ~g~commencez~s~ vos procédés chimiques et mécaniques.');
         const transformProcess = TransformProcesses[fabricMaterial];
-        const item = this.inventoryManager.getFirstItemInventory(source, transformProcess.input);
-        if (!item || item.amount < transformProcess.inputAmount) {
-            return;
-        }
+        while (this.inventoryManager.canCarryItem(source, transformProcess.output, transformProcess.outputAmount, {})) {
+            const item = this.inventoryManager.getFirstItemInventory(source, transformProcess.input);
+            if (!item || item.amount < transformProcess.inputAmount) {
+                return;
+            }
 
-        await this.doTransform(source, fabricMaterial);
+            const hasTransformed = await this.doTransform(source, fabricMaterial);
+            if (!hasTransformed) {
+                this.notifier.notify(
+                    source,
+                    `Vous n'avez pas ~r~terminé~s~ vos procédés chimiques et mécaniques.`,
+                    'error'
+                );
+                return;
+            }
+        }
 
         this.notifier.notify(source, `Vous avez ~r~terminé~s~ vos procédés chimiques et mécaniques.`);
     }

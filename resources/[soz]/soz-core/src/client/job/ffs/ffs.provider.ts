@@ -29,6 +29,38 @@ export class FightForStyleProvider {
             scale: 1.2,
         });
         this.targetFactory.createForBoxZone(
+            'ffs:duty',
+            {
+                center: [707.29, -967.58, 30.41],
+                length: 0.35,
+                width: 0.4,
+                minZ: 30.21,
+                maxZ: 30.66,
+            },
+            [
+                {
+                    type: 'server',
+                    event: 'QBCore:ToggleDuty',
+                    icon: 'fas fa-sign-in-alt',
+                    label: 'Prise de service',
+                    canInteract: () => {
+                        return !this.playerService.isOnDuty();
+                    },
+                    job: 'ffs',
+                },
+                {
+                    type: 'server',
+                    event: 'QBCore:ToggleDuty',
+                    icon: 'fas fa-sign-in-alt',
+                    label: 'Fin de service',
+                    canInteract: () => {
+                        return this.playerService.isOnDuty();
+                    },
+                    job: 'ffs',
+                },
+            ]
+        );
+        this.targetFactory.createForBoxZone(
             'jobs:ffs:cloakroom',
             {
                 center: [709.5, -959.61, 30.4],
