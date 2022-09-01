@@ -56,7 +56,7 @@ end
 
 --- Toggle Events
 RegisterNetEvent("jobs:utils:bmic:toggle", function()
-    if CameraConfig.enabled or MicConfig.enabled then
+    if CameraConfig.enabled then
         return
     end
 
