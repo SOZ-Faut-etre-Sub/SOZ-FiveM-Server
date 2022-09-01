@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait } from '../../core/utils';
+import { Weapons } from '../../shared/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
 export type Animation = {
@@ -58,7 +59,11 @@ export class AnimationService {
     private doAnimation(animation: AnimationInfo, forceDuration: boolean): number {
         const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
         const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -1;
-        const duration = animation.duration ? animation.duration : forceDuration ? 1000 : -1;
+        const duration = animation.duration
+            ? animation.duration
+            : forceDuration
+            ? 1000
+            : GetAnimDuration(animation.dictionary, animation.name);
         const flags = animationOptionsToFlags(animation.options || {});
         const playbackRate = animation.playbackRate ? animation.playbackRate : 0.0;
         const lockX = animation.lockX ? animation.lockX : false;
@@ -127,6 +132,7 @@ export class AnimationService {
                 await this.doScenario(this.currentAnimation.scenario);
             }
 
+            SetCurrentPedWeapon(PlayerPedId(), GetHashKey(Weapons.UNARMED), true);
             this.currentAnimation.resolve();
 
             this.currentAnimation = null;

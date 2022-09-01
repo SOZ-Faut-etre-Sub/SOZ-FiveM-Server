@@ -20,6 +20,8 @@ RegisterCommand("hu", function()
     end
 
     if handsup then
+        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
+        TriggerEvent("soz-personal-menu:cleanProps")
         TaskPlayAnim(ped, animDict, anim, 8.0, 8.0, -1, 50, 0, false, false, false)
         if IsPedInAnyVehicle(ped, false) then
             local vehicle = GetVehiclePedIsIn(ped, false)
