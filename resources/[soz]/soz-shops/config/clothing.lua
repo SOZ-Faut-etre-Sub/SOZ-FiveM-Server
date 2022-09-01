@@ -13,15 +13,15 @@ local function CreateItemsWithTextures(componentType, drawableId, textures, tors
     for _, texture in pairs(textures) do
         local item = {
             Name = texture.Name,
-            ApplyComponents = {[componentType] = {Drawable = drawableId, Texture = texture.Id, Palette = 0}},
+            Components = {[tostring(componentType)] = {Drawable = drawableId, Texture = texture.Id, Palette = 0}},
         }
 
         if componentType == 11 then
-            item.ApplyComponents[8] = {Drawable = underShirt or 15, Texture = 0, Palette = 0}
+            item.Components["8"] = {Drawable = underShirt or 15, Texture = 0, Palette = 0}
         end
 
         if torso then
-            item.ApplyComponents[3] = {Drawable = torso, Texture = 0, Palette = 0}
+            item.Components["3"] = {Drawable = torso, Texture = 0, Palette = 0}
         end
 
         table.insert(items, item)
