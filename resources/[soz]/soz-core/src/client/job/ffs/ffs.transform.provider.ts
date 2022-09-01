@@ -40,6 +40,7 @@ export class FightForStyleTransformProvider {
                 icon: `c:/ffs/transform.png`,
                 color: 'ffs',
                 job: 'ffs',
+                blackoutGlobal: true,
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
@@ -61,7 +62,6 @@ export class FightForStyleTransformProvider {
                 minZ: 29.4,
                 maxZ: 30.85,
                 heading: 0,
-                debugPoly: true,
             },
             targets
         );

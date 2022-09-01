@@ -47,6 +47,24 @@ export class TargetFactory {
     private zones: { [id: string]: any } = {};
     private players: { [id: string]: any } = {};
 
+    public createForComboZone(id: string, zones: ZoneOptions[], targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+        const boxZones = [];
+
+        for (const [i, zone] of zones.entries()) {
+            boxZones.push(exports['PolyZone'].CreateBoxZone(id + i, zone));
+            this.zones[id + i] = zone;
+        }
+
+        exports['qb-target'].AddComboZone(
+            boxZones,
+            { name: id, debugPoly: true },
+            {
+                options: targets,
+                distance: distance,
+            }
+        );
+    }
+
     public createForBoxZone(id: string, zone: ZoneOptions, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,

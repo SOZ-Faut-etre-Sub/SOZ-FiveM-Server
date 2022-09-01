@@ -27,8 +27,8 @@ export class FightForStyleRestockProvider {
             return;
         }
 
-        const label = 'Vous commencez à restocker le magasin de vêtements';
-        const { completed } = await this.progressService.progress(source, 'restock', label, 2000 * item.amount, {
+        this.notifier.notify(source, 'Vous ~g~commencez~s~ à restocker le magasin de vêtements', 'success');
+        const { completed } = await this.progressService.progress(source, 'restock', 'Restockage', 2000 * item.amount, {
             name: 'base',
             dictionary: 'amb@prop_human_bum_bin@base',
             flags: 1,
@@ -46,7 +46,7 @@ export class FightForStyleRestockProvider {
         const totalAmount = item.amount * this.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
 
-        this.notifier.notify(source, 'Vous avez ~r~terminé de restocker le magasin de vêtements.', 'success');
+        this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
 
     private getRewardFromDeliveredGarment(garment: Garment | LuxuryGarment) {
