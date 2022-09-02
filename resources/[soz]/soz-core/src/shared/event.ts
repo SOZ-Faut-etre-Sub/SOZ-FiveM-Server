@@ -31,6 +31,10 @@ export enum ClientEvent {
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
 
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
+
+    // Temp event which sould be internally used by a service when only soz core
+    PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
+    PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
 }
 
 export enum GameEvent {
