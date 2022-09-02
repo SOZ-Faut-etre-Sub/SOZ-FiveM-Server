@@ -48,4 +48,12 @@ export type PlayerMetadata = {
     last_max_stamina_update: string | null;
     last_stress_level_update: string | null;
     disease: Disease | null;
+    health_book_health_level: number | null;
+    health_book_max_stamina: number | null;
+    health_book_strength: number | null;
+    health_book_stress_level: number | null;
+    health_book_fiber: number | null;
+    health_book_lipid: number | null;
+    health_book_sugar: number | null;
+    health_book_protein: number | null;
 };

@@ -1,8 +1,8 @@
-import { Once, OnceStep } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData } from '../../shared/player';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -51,6 +51,8 @@ const FREE_WEIGHT_COORDS = [
         },
     },
 ];
+
+const UNARMED_WEAPON_HASH = GetHashKey('WEAPON_UNARMED');
 
 @Provider()
 export class PlayerHealthProvider {
@@ -115,7 +117,8 @@ export class PlayerHealthProvider {
         return false;
     }
 
-    private async doPushUps(): Promise<void> {
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
+    public async doPushUps(): Promise<void> {
         if (!this.canDoExercise()) {
             return;
         }
@@ -141,7 +144,8 @@ export class PlayerHealthProvider {
         this.doStrengthExercise();
     }
 
-    private async doSitUps(): Promise<void> {
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
+    public async doSitUps(): Promise<void> {
         if (!this.canDoExercise()) {
             return;
         }
@@ -263,7 +267,26 @@ export class PlayerHealthProvider {
         }
 
         SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
+    }
 
-        // @TODO Set damage multiplier
+    @Tick(TickInterval.EVERY_FRAME)
+    async setDamageMultiplier(): Promise<void> {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        const multiplier = player.metadata.strength / 100;
+
+        if (GetSelectedPedWeapon(PlayerPedId()) === UNARMED_WEAPON_HASH) {
+            SetPlayerWeaponDamageModifier(PlayerId(), multiplier);
+        } else {
+            SetPlayerWeaponDamageModifier(PlayerId(), 1.0);
+        }
     }
 }
