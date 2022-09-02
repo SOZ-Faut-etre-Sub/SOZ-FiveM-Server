@@ -43,7 +43,7 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
                 if cbSent then
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.id, item.amount, nil, nil, function(success, reason)
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
                     if not success then
                         cb(false)
                         cbSent = true

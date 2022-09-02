@@ -32,6 +32,7 @@ Config.FarmAccountMoney = {
     ["farm_food"] = {money = 100000, marked_money = 0},
     ["farm_upw"] = {money = 100000, marked_money = 0},
     ["farm_pawl"] = {money = 100000, marked_money = 0},
+    ["farm_baun"] = {money = 100000, marked_money = 0},
     ["farm_ffs"] = {money = 100000, marked_money = 0},
 }
 

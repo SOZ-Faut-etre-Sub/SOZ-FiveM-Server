@@ -63,11 +63,11 @@ export class FightForStyleProvider {
         this.targetFactory.createForBoxZone(
             'jobs:ffs:cloakroom',
             {
-                center: [709.5, -959.61, 30.4],
-                length: 2.0,
-                width: 0.55,
+                center: [706.41, -959.03, 30.4],
+                length: 0.5,
+                width: 4.25,
                 minZ: 29.4,
-                maxZ: 32.4,
+                maxZ: 31.6,
             },
             [
                 {
