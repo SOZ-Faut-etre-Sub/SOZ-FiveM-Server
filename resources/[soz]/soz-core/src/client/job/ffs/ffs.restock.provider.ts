@@ -32,6 +32,8 @@ export class FightForStyleRestockProvider {
                 icon: 'c:/ffs/restock.png',
                 color: 'ffs',
                 job: 'ffs',
+                blackoutGlobal: true,
+                blackoutJob: 'ffs',
                 canInteract: () => {
                     return this.playerService.isOnDuty() && this.inventoryManager.hasEnoughItem(garment, 1);
                 },

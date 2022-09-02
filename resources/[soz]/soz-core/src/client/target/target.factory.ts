@@ -18,6 +18,7 @@ export type TargetOptions = {
     type?: string;
     event?: string;
     blackoutGlobal?: boolean;
+    blackoutJob?: string;
     canInteract?: (entity) => boolean;
     action?: (entity) => void;
     job?: string;

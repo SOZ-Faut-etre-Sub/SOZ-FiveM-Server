@@ -66,11 +66,7 @@ export class FightForStyleTransformProvider {
 
             const hasTransformed = await this.doTransform(source, fabricMaterial);
             if (!hasTransformed) {
-                this.notifier.notify(
-                    source,
-                    `Vous n'avez pas ~r~terminé~s~ vos procédés chimiques et mécaniques.`,
-                    'error'
-                );
+                this.notifier.notify(source, `Vous avez ~r~arrêté~s~ vos procédés chimiques et mécaniques.`, 'error');
                 return;
             }
         }

@@ -71,6 +71,7 @@ export class FightForStyleCraftProvider {
             color: 'ffs',
             job: 'ffs',
             blackoutGlobal: true,
+            blackoutJob: 'ffs',
             canInteract: () => {
                 for (const input of craftProcess.inputs) {
                     if (!this.inventoryManager.hasEnoughItem(input.fabric, input.amount)) {

@@ -41,6 +41,7 @@ export class FightForStyleTransformProvider {
                 color: 'ffs',
                 job: 'ffs',
                 blackoutGlobal: true,
+                blackoutJob: 'ffs',
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
