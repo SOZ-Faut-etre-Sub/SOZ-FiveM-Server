@@ -7,11 +7,34 @@ local personalAnimationMenu = MenuV:InheritMenu(personalMenu, {subtitle = "Anima
 local animationCatalogMenu, walkCatalogMenu = {}, {}
 local favoriteAnimationRegister, favoriteAnimationKey = false, 1
 
+local prop_net = nil
+local prop2_net = nil
+
+function cleanProps()
+    if prop_net then
+        DetachEntity(prop_net, 0, 0)
+        DeleteEntity(prop_net)
+        prop_net = nil
+    end
+    if prop2_net then
+        DetachEntity(prop2_net, 0, 0)
+        DeleteEntity(prop2_net)
+        prop2_net = nil
+    end
+end
+RegisterNetEvent("soz-personal-menu:cleanProps", function()
+    cleanProps()
+end)
+
 -- animation parameters:
 -- [1] = 0 if scenario, the dict name otherwise
 -- [2] = anim name
 -- [3] = flag (see https://wiki.rage.mp/index.php?title=Player::taskPlayAnim) only for animation and not scenario
 -- [4] = boolean for the loop (TODO: Remove this flag and use the third argument instead)
+-- [5] = never used
+-- [6] = used for arrestation animation only
+-- [7] = Prop 1 configuration
+-- [8] = Prop 2 configuration
 local PlayEmote = function(animation)
     local ped = PlayerPedId()
 
@@ -36,6 +59,42 @@ local PlayEmote = function(animation)
                 local animDuration = GetAnimDuration(animation[1], animation[2])
                 Wait(animDuration * 1000)
                 TaskPlayAnim(ped, animation[1], animation[6], 8.0, -8.0, -1, flag, 0, lockPosition, lockPosition, lockPosition)
+            end
+
+            if animation[7] then
+                RequestModel(animation[7].model)
+
+                while not HasModelLoaded(GetHashKey(animation[7].model)) do
+                    Wait(1)
+                end
+                local pCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0)
+                local modelSpawn = CreateObject(GetHashKey(animation[7].model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
+                -- local objectNetId = ObjToNet(modelSpawn)
+                -- SetNetworkIdCanMigrate(objectNetId, false)
+
+                AttachEntityToEntity(modelSpawn, ped, GetPedBoneIndex(ped, animation[7].bone), animation[7].coords[1], animation[7].coords[2],
+                                     animation[7].coords[3], animation[7].coords[4], animation[7].coords[5], animation[7].coords[6], true, true, false, true, 0,
+                                     true)
+                prop_net = modelSpawn
+                SetModelAsNoLongerNeeded(animation[7].model)
+            end
+
+            if animation[8] then
+                RequestModel(animation[8].model)
+
+                while not HasModelLoaded(GetHashKey(animation[8].model)) do
+                    Wait(1)
+                end
+                local pCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0)
+                local modelSpawn = CreateObject(GetHashKey(animation[8].model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
+                -- local objectNetId = ObjToNet(modelSpawn)
+                -- SetNetworkIdCanMigrate(objectNetId, false)
+
+                AttachEntityToEntity(modelSpawn, ped, GetPedBoneIndex(ped, animation[8].bone), animation[8].coords[1], animation[8].coords[2],
+                                     animation[8].coords[3], animation[8].coords[4], animation[8].coords[5], animation[8].coords[6], true, true, false, true, 0,
+                                     true)
+                prop2_net = modelSpawn
+                SetModelAsNoLongerNeeded(animation[8].model)
             end
         end
     else
@@ -194,7 +253,9 @@ CreateThread(function()
         label = "Arrêter l'animation",
         value = nil,
         select = function()
+            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
             ClearPedTasks(PlayerPedId())
+            cleanProps()
         end,
     })
     for category, content in pairs(Config.AnimationsList) do

@@ -48,7 +48,11 @@ export class ItemNutritionProvider {
         const name = item.type === 'food' ? 'eat_something' : 'drink_something';
         const prop =
             item.type === 'food'
-                ? null
+                ? {
+                      model: 'prop_cs_burger_01',
+                      bone: 60309,
+                      coords: { x: 0.01, y: -0.01, z: -0.06 },
+                  }
                 : {
                       model: 'ba_prop_club_water_bottle',
                       bone: 28422,
