@@ -3,7 +3,15 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
-import { CraftProcess, craftProcesses, luxuryCraftProcesses } from '../../../shared/job/ffs';
+import {
+    CraftProcess,
+    craftProcesses,
+    craftZones,
+    luxuryCraftProcesses,
+    luxuryCraftZones,
+    shoesCraftProcesses,
+    shoesCraftZones,
+} from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
@@ -28,44 +36,38 @@ export class FightForStyleCraftProvider {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
+        const targets: TargetOptions[] = craftProcesses.map(craftProcess => {
+            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            return method(craftProcess, 'c:/ffs/craft.png');
+        });
 
-        const targets: TargetOptions[] = craftProcesses.map(this.craftProcessToTarget.bind(this));
+        craftZones.forEach(zone => {
+            this.targetFactory.createForBoxZone(zone.name, zone, targets);
+        });
 
-        this.targetFactory.createForBoxZone(
-            'ffs_craft_zone',
-            {
-                center: [713.6, -960.64, 30.4],
-                length: 0.65,
-                width: 0.3,
-                minZ: 30.4,
-                maxZ: 30.8,
-                heading: 270,
-                debugPoly: true,
-            },
-            targets
-        );
+        const luxuryTargets: TargetOptions[] = luxuryCraftProcesses.map(craftProcess => {
+            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            return method(craftProcess, 'c:/ffs/craft.png');
+        });
 
-        const luxuryTargets: TargetOptions[] = luxuryCraftProcesses.map(this.craftProcessToTarget.bind(this));
+        luxuryCraftZones.forEach(zone => {
+            this.targetFactory.createForBoxZone(zone.name, zone, luxuryTargets);
+        });
 
-        this.targetFactory.createForBoxZone(
-            'ffs_luxury_craft_zone',
-            {
-                center: [718.71, -963.14, 30.4],
-                length: 0.25,
-                width: 0.65,
-                minZ: 30.4,
-                maxZ: 30.85,
-                heading: 359,
-                debugPoly: true,
-            },
-            luxuryTargets
-        );
+        const shoesTargets: TargetOptions[] = shoesCraftProcesses.map(craftProcess => {
+            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            return method(craftProcess, 'c:/ffs/craft_shoes.png');
+        });
+
+        shoesCraftZones.forEach(zone => {
+            this.targetFactory.createForBoxZone(zone.name, zone, shoesTargets);
+        });
     }
 
-    private craftProcessToTarget(craftProcess: CraftProcess): TargetOptions {
+    private craftProcessToTarget(craftProcess: CraftProcess, icon: string): TargetOptions {
         return {
             label: craftProcess.label,
-            icon: 'c:/ffs/craft.png',
+            icon: icon,
             color: 'ffs',
             job: 'ffs',
             blackoutGlobal: true,

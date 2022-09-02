@@ -104,7 +104,7 @@ function Field:RunBackgroundTasks()
         while true do
             self:Save()
 
-            Citizen.Wait(60 * 1000)
+            Citizen.Wait(60000 * 1000)
         end
     end)
 end
