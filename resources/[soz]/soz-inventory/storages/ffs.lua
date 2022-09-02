@@ -2,10 +2,11 @@ Config.Storages["ffs_storage"] = {
     label = "Stockage Fight For Style",
     type = "storage",
     owner = "ffs",
-    position = vector3(705.98, -959.42, 30.4),
-    size = vec2(1.6, 4.2),
+    position = vector3(720.16, -973.66, 30.4),
+    size = vec2(3.0, 1.4),
     heading = 0,
-    offsetUpZ = 3.0,
+    minZ=29.4,
+    maxZ=31.4
 }
 
 Config.Storages["ffs_boss_storage"] = {

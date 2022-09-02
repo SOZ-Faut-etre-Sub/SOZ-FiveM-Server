@@ -28,31 +28,36 @@ export class FightForStyleCraftProvider {
 
     @OnEvent(ServerEvent.FFS_CRAFT)
     public async onCraft(source: number, craftProcess: CraftProcess) {
+        this.notifier.notify(source, 'Vous ~g~commencez~s~ à confectionner.', 'success');
         for (const input of craftProcess.inputs) {
             const item = this.inventoryManager.getFirstItemInventory(source, input.fabric);
             if (!item || item.amount < input.amount) {
                 return;
             }
         }
-        await this.doCraft(source, craftProcess);
-        this.notifier.notify(source, 'Vous avez ~r~fini~s~ de confectionner.');
+        const hasCrafted = await this.doCraft(source, craftProcess);
+        let label = 'Vous avez ~r~fini~s~ de confectionner.';
+        if (!hasCrafted) {
+            label = 'Vous avez ~r~arrêté~s~ de confectionner.';
+        }
+        this.notifier.notify(source, label);
     }
 
     private async doCraft(source: number, craftProcess: CraftProcess) {
-        const label = 'Vous commencez à confectionner.';
-        const { completed } = await this.progressService.progress(source, 'ffs_craft', label, 5000, {
+        const { completed } = await this.progressService.progress(source, 'ffs_craft', 'Confection en cours', 5000, {
             name: 'base',
             dictionary: 'amb@prop_human_seat_sewing@female@base',
             flags: 16,
         });
 
         if (!completed) {
-            return;
+            return false;
         }
 
         for (const input of craftProcess.inputs) {
             this.inventoryManager.removeItemFromInventory(source, input.fabric, input.amount);
         }
         this.inventoryManager.addItemToInventory(source, craftProcess.output, craftProcess.outputAmount);
+        return true;
     }
 }

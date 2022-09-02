@@ -1,3 +1,5 @@
+import { ZoneOptions } from '../../client/target/target.factory';
+
 export enum SewingRawMaterial {
     COTTON_BALE = 'cotton_bale',
     REFINED_PETROLEUM = 'petroleum_refined',
@@ -80,22 +82,60 @@ export type CraftProcess = {
     outputAmount: number;
 };
 
-export const craftProcesses: CraftProcess[] = [
+export const craftZones: (ZoneOptions & { name: string })[] = [
     {
-        label: 'Fabrication: Paire de chaussures',
-        inputs: [
-            {
-                fabric: FabricMaterial.LEATHER,
-                amount: 3,
-            },
-            {
-                fabric: FabricMaterial.LATEX,
-                amount: 2,
-            },
-        ],
-        output: Garment.SHOES,
-        outputAmount: 1,
+        name: 'ffs_craft1',
+        center: [713.6, -960.64, 30.4],
+        length: 0.65,
+        width: 0.3,
+        minZ: 30.4,
+        maxZ: 30.8,
+        heading: 270,
+        debugPoly: false,
     },
+    {
+        name: 'ffs_craft2',
+        center: [716.17, -960.72, 30.4],
+        length: 0.3,
+        width: 0.7,
+        minZ: 30.4,
+        maxZ: 30.85,
+        heading: 0,
+        debugPoly: false,
+    },
+    {
+        name: 'ffs_craft3',
+        center: [718.7, -960.72, 30.4],
+        length: 0.3,
+        width: 0.7,
+        minZ: 30.4,
+        maxZ: 30.8,
+        heading: 0,
+        debugPoly: false,
+    },
+    {
+        name: 'ffs_craft4',
+        center: [715.97, -963.08, 30.4],
+        length: 0.4,
+        width: 0.7,
+        minZ: 30.4,
+        maxZ: 30.8,
+        heading: 0,
+        debugPoly: false,
+    },
+    {
+        name: 'ffs_craft5',
+        center: [718.69, -963.17, 30.4],
+        length: 0.3,
+        width: 0.7,
+        minZ: 30.2,
+        maxZ: 30.85,
+        heading: 0,
+        debugPoly: false,
+    },
+];
+
+export const craftProcesses: CraftProcess[] = [
     {
         label: 'Fabrication: Haut en fibre naturelle',
         inputs: [
@@ -153,22 +193,40 @@ export const craftProcesses: CraftProcess[] = [
     },
 ];
 
-export const luxuryCraftProcesses: CraftProcess[] = [
+export const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
     {
-        label: 'Fabrication: Paire de chaussures luxueuses',
-        inputs: [
-            {
-                fabric: FabricMaterial.LEATHER,
-                amount: 6,
-            },
-            {
-                fabric: FabricMaterial.LATEX,
-                amount: 4,
-            },
-        ],
-        output: LuxuryGarment.SHOES,
-        outputAmount: 1,
+        name: 'ffs_luxury_craft1',
+        center: [714.32, -972.22, 30.4],
+        length: 0.8,
+        width: 0.4,
+        minZ: 30.2,
+        maxZ: 30.65,
+        heading: 0,
+        debugPoly: false,
     },
+    {
+        name: 'ffs_luxury_craft2',
+        center: [714.3, -969.96, 30.4],
+        length: 0.7,
+        width: 0.35,
+        minZ: 30.2,
+        maxZ: 30.6,
+        heading: 0,
+        debugPoly: false,
+    },
+    {
+        name: 'ffs_luxury_craft3',
+        center: [714.3, -967.78, 30.4],
+        length: 0.7,
+        width: 0.3,
+        minZ: 30.2,
+        maxZ: 30.65,
+        heading: 0,
+        debugPoly: false,
+    },
+];
+
+export const luxuryCraftProcesses: CraftProcess[] = [
     {
         label: 'Fabrication: Haut luxueux en fibre naturelle',
         inputs: [
@@ -222,6 +280,52 @@ export const luxuryCraftProcesses: CraftProcess[] = [
             },
         ],
         output: LuxuryGarment.UNDERWEAR,
+        outputAmount: 1,
+    },
+];
+
+export const shoesCraftZones: (ZoneOptions & { name: string })[] = [
+    {
+        name: 'ffs_shoes_craft1',
+        center: [710.62, -969.53, 30.4],
+        length: 2.4,
+        width: 1.0,
+        minZ: 30.05,
+        maxZ: 30.4,
+        heading: 0,
+        debugPoly: false,
+    },
+];
+
+export const shoesCraftProcesses: CraftProcess[] = [
+    {
+        label: 'Fabrication: Paire de chaussures',
+        inputs: [
+            {
+                fabric: FabricMaterial.LEATHER,
+                amount: 3,
+            },
+            {
+                fabric: FabricMaterial.LATEX,
+                amount: 2,
+            },
+        ],
+        output: Garment.SHOES,
+        outputAmount: 1,
+    },
+    {
+        label: 'Fabrication: Paire de chaussures luxueuses',
+        inputs: [
+            {
+                fabric: FabricMaterial.LEATHER,
+                amount: 6,
+            },
+            {
+                fabric: FabricMaterial.LATEX,
+                amount: 4,
+            },
+        ],
+        output: LuxuryGarment.SHOES,
         outputAmount: 1,
     },
 ];
