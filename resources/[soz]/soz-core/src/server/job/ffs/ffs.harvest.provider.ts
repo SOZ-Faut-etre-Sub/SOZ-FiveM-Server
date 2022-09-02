@@ -40,7 +40,7 @@ export class FightForStyleHarvestProvider {
         while (this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1, {})) {
             const hasHarvested = await this.doHarvest(source, 'Vous récoltez une balle de coton.');
             if (!hasHarvested) {
-                this.notifier.notify(source, `Vous avez ~r~arrêté~g~ de récolter.`, 'error');
+                this.notifier.notify(source, `Vous avez ~r~arrêté~s~ de récolter.`, 'error');
                 return;
             }
         }
