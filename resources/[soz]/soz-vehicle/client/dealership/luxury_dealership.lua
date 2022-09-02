@@ -108,14 +108,16 @@ AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
-    QBCore.Functions.CreateBlip("luxury:dealership", {
-        name = LuxuryDealershipConfig.blip.name,
-        coords = LuxuryDealershipConfig.blip.coords,
-        sprite = LuxuryDealershipConfig.blip.sprite,
-        color = LuxuryDealershipConfig.blip.color,
-    })
-    local vehicles = QBCore.Functions.TriggerRpc("soz-dealership:server:GetAuctions")
-    for _, vehicle in pairs(vehicles) do
-        spawnVehicle(vehicle)
+    if GetConvarInt("feature_dlc2_luxury", 0) == 1 then
+        QBCore.Functions.CreateBlip("luxury:dealership", {
+            name = LuxuryDealershipConfig.blip.name,
+            coords = LuxuryDealershipConfig.blip.coords,
+            sprite = LuxuryDealershipConfig.blip.sprite,
+            color = LuxuryDealershipConfig.blip.color,
+        })
+        local vehicles = QBCore.Functions.TriggerRpc("soz-dealership:server:GetAuctions")
+        for _, vehicle in pairs(vehicles) do
+            spawnVehicle(vehicle)
+        end
     end
 end)
