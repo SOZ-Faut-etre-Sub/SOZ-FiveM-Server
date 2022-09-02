@@ -587,7 +587,7 @@ Config.AnimationsList = {
                 {"mp_safehouseshower@male@", "male_shower_idle_d", 262144, true},
             },
         },
-        {"Holster", "Berlutine Aigû", false, false, {"move_m@intimidation@cop@unarmed", "idle", 49}},
+        {"Holster", "Berlutine Aigüe", false, false, {"move_m@intimidation@cop@unarmed", "idle", 49}},
         {
             "Massage Cardiaque",
             "Sert à rien mais dans le doute",
@@ -595,7 +595,22 @@ Config.AnimationsList = {
             "inv_reanime",
             {"mini@cpr@char_a@cpr_str", "cpr_pumpchest", 262144, true},
         },
-        {"Noter", "DESC", false, false, {"0", "CODE_HUMAN_MEDIC_TIME_OF_DEATH", 262144}},
+        {
+            "Noter",
+            "DESC",
+            false,
+            false,
+            {
+                "missheistdockssetup1clipboard@base",
+                "base",
+                1,
+                false,
+                false,
+                nil,
+                {model = "prop_notepad_01", bone = 18905, coords = {0.1, 0.02, 0.05, 10.0, 0.0, 0.0}},
+                {model = "prop_pencil_01", bone = 58866, coords = {0.11, -0.02, 0.001, -120.0, 0.0, 0.0}},
+            },
+        },
         {"SDF", "DESC", false, false, {"0", "world_human_bum_freeway", 262144}},
         ["Travaux"] = {
             {"BTP", "DESC", false, false, {"0", "world_human_const_drill", 262144}},
