@@ -97,6 +97,8 @@ Config.SeatChairOffset = {
     [-1173315865] = {z = 0.5},
     [536071214] = {z = 0.5},
     [603897027] = {z = 0.4},
+    [GetHashKey("soz_v_club_bahbarstool")] = {x = -0.1, z = 0.35},
+    [GetHashKey("soz_v_club_baham_bckt_chr")] = {z = 0.1},
 }
 
 Config.Teleports = {}
