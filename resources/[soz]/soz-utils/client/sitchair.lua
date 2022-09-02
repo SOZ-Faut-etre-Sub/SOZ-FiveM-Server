@@ -19,6 +19,8 @@ local sitchair = {
     49088219,
     -1173315865,
     847910771,
+    "soz_v_club_bahbarstool",
+    "soz_v_club_baham_bckt_chr",
 }
 
 RegisterCommand("unsit", function()
