@@ -83,17 +83,7 @@ local function RefreshState(state)
 
         if not LastVolumesSet[id] or LastVolumesSet[id].volume ~= config.volume then
             MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
-            LastVolumesSet[id] = {serverId = config.serverId, volume = config.volume, time = GetGameTimer()}
-        end
-
-        local currentTime = GetGameTimer()
-
-        -- Reset every 1 second
-        if currentTime - LastVolumesSet[id].time > (1000 * 1) then
-            MumbleSetVolumeOverrideByServerId(config.serverId, -1.0)
-            MumbleSetVolumeOverrideByServerId(config.serverId, config.volume)
-
-            LastVolumesSet[id].time = GetGameTimer()
+            LastVolumesSet[id] = {serverId = config.serverId, volume = config.volume}
         end
     end
 
