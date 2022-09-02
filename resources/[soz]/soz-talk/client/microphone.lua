@@ -38,6 +38,10 @@ local function toggleMicrophone(toggle)
     toggleMicrophoneAnimation(microphoneInUse)
 end
 
+RegisterNetEvent("talk:microphone:reset", function()
+    toggleMicrophone(false)
+end)
+
 --- Events
 RegisterNetEvent("talk:microphone:use", function()
     local player = PlayerPedId()

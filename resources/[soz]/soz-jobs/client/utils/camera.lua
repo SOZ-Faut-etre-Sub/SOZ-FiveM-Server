@@ -110,14 +110,20 @@ local createCameraThread = function()
         local player = PlayerPedId()
 
         local cam = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
-        AttachCamToEntity(cam, player, 0.05, 0.5, 0.7, true)
+        if not IsPedSittingInAnyVehicle(player) then
+            AttachCamToEntity(cam, player, 0.05, 0.5, 0.7, true)
+        else
+            AttachCamToEntity(cam, player, 0, 0, 0.7, true)
+        end
         SetCamRot(cam, 2.0, 1.0, GetEntityHeading(player))
         SetCamFov(cam, fov)
         RenderScriptCams(true, false, 0, 1, 0)
 
         exports["soz-hud"]:EnableTwitchNewsOverlay()
         while CameraConfig.enabled do
-            SetEntityHeading(player, new_z)
+            if not IsPedSittingInAnyVehicle(player) then
+                SetEntityHeading(player, new_z)
+            end
 
             DisableControlAction(2, 30, true)
             DisableControlAction(2, 33, true)
@@ -174,6 +180,11 @@ end
 RegisterNetEvent("jobs:utils:camera:toggle", function()
     if MicConfig.enabled or BMicConfig.enabled then
         return
+    elseif IsPedSittingInAnyVehicle(PlayerPedId()) then
+        local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+        if GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
+            return
+        end
     end
 
     CameraConfig.enabled = not CameraConfig.enabled
