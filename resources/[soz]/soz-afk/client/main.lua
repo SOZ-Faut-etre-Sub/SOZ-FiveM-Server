@@ -41,6 +41,9 @@ Citizen.CreateThread(function()
                         exports["soz-phone"]:setPhoneFocus(false)
                     end
 
+                    if GetPauseMenuState() ~= 0 then
+                        ActivateFrontendMenu(GetHashKey(FE_MENU_VERSION_MP_PAUSE), false, -1)
+                    end
                     local afkWord = exports["soz-hud"]:Input(("Anti-AFK - %s/%s - Taper le mot suivant: %s"):format(try, Config.retryAllowed, word), 32)
 
                     if afkWord ~= nil and string.lower(word) == string.lower(afkWord) then
