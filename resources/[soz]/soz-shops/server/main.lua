@@ -54,32 +54,6 @@ MySQL.ready(function()
             }
         end
     end
-
-    -- local log = ""
-    -- for _, t in pairs({"ponsonbys", "suburban", "binco"}) do
-    --    for modelHash, products in pairs(Config.Products[t]) do
-    --        for _, category in pairs(products) do
-    --            for _, collection in pairs(category.Collections) do
-    --                log = log .. ";INSERT INTO shop_content (shop_id, category_id, label, price, data) VALUES "
-    --                for _, item in pairs(collection.Items) do
-    --                    log = log .. ("(%s, %s, %s, %s, %s),"):format(
-    --                        "(SELECT id FROM shop WHERE name = '"..t.."')",
-    --                        ("(SELECT id FROM category WHERE name = '%s')"):format(collection.Name),
-    --                        "'" .. item.Name:gsub("'", "\\\'") .. "'",
-    --                        collection.Price,
-    --                        ("'" .. json.encode({
-    --                            modelHash = modelHash,
-    --                            label = item.Name,
-    --                            components = item.Components
-    --                        }):gsub("'", "\\\'") .. "'")
-    --                    )
-    --                end
-    --            end
-    --        end
-    --    end
-    -- end
-    --
-    -- SaveResourceFile(GetCurrentResourceName(), "insert.sql", (log..";"):gsub(",;", ";"), -1)
 end)
 
 -- GetShopContent
