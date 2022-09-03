@@ -43,7 +43,7 @@ export class FoodMealsProvider {
         const [transferred] = await this.bankProvider.transferBankMoney('safe_food', 'farm_food', 2000);
         if (transferred) {
             const date = new Date();
-            date.setTime(date.getTime() + 2 * 60 * 1000);
+            date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
             this.orderReadyDate = date;
 
             this.updateOrderInProgress(true);
