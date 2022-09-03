@@ -52,3 +52,12 @@ QBCore.Functions.CreateUseableItem("painkiller", function(source)
 
     exports["soz-inventory"]:RemoveItem(source, "painkiller", 1, nil)
 end)
+
+QBCore.Functions.CreateUseableItem("meal_box", function(source)
+    -- TODO: Add the CanCarryItems once FFS is merged
+    exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, nil)
+    exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, nil)
+    exports["soz-inventory"]:AddItem(source, "royal_assortment", 5, nil)
+    exports["soz-inventory"]:AddItem(source, "shiro_miso", 5, nil)
+    exports["soz-inventory"]:AddItem(source, "rice_plate", 5, nil)
+end)
