@@ -270,7 +270,7 @@ local garmentToCategory = function(garment)
     elseif garment == "garment_shoes" or garment == "luxury_garment_shoes" then
         return 10
     elseif garment == "garment_underwear" or garment == "luxury_garment_underwear" then
-        return 0
+        return 19
     end
 end
 
