@@ -9,7 +9,8 @@ Citizen.CreateThread(function()
                 icon = "c:mechanic/Mettre.png",
                 event = "vehicle:flatbed:attach",
                 canInteract = function(entity)
-                    return GetEntityModel(entity) ~= flatbedModel and Entity(entity).state.towedVehicle == nil and Entity(GetLastDrivenVehicle()).state.towedVehicle == nil
+                    return GetEntityModel(entity) ~= flatbedModel and Entity(entity).state.towedVehicle == nil and
+                               Entity(GetLastDrivenVehicle()).state.towedVehicle == nil
                 end,
                 job = "bennys",
             },
