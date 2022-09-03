@@ -61,7 +61,7 @@ export class FightForStyleTransformProvider {
         while (this.inventoryManager.canCarryItem(source, transformProcess.output, transformProcess.outputAmount, {})) {
             const item = this.inventoryManager.getFirstItemInventory(source, transformProcess.input);
             if (!item || item.amount < transformProcess.inputAmount) {
-                return;
+                break;
             }
 
             const hasTransformed = await this.doTransform(source, fabricMaterial);
