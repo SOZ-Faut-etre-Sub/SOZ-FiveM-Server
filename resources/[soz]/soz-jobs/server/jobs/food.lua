@@ -181,3 +181,12 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vos poches sont pleines...", "error")
     end
 end)
+
+QBCore.Functions.CreateUseableItem("meal_box", function(source)
+    -- TODO: Add the CanCarryItems once FFS is merged
+    exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, nil)
+    exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, nil)
+    exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, nil)
+    exports["soz-inventory"]:AddItem(source, "meat_festival", 5, nil)
+    exports["soz-inventory"]:AddItem(source, "unknown_vegetables", 5, nil)
+end)
