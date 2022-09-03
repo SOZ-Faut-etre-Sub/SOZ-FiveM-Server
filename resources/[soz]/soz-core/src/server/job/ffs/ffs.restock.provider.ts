@@ -40,8 +40,7 @@ export class FightForStyleRestockProvider {
 
         this.inventoryManager.removeItemFromInventory(source, garment, item.amount);
 
-        // TODO: Add stock on the shop
-        // this.shopService.addStock(brand, garment, amount);
+        exports['soz-shops'].RestockShop(brand, garment, item.amount);
 
         const totalAmount = item.amount * this.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
