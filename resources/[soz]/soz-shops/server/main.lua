@@ -73,7 +73,6 @@ local function checkStock(products, productID, amount)
 
     for productId, product in pairs(products) do
         if productId == productID and product.stock then
-            print(json.encode(product))
             return (product.stock >= amount), product
         end
     end
@@ -260,4 +259,111 @@ RegisterNetEvent("shops:server:resetTattoos", function()
         Player.Functions.SetSkin(skin, false)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de vous faire retirer tous vos tatouages")
     end
+end)
+
+---
+local garmentToCategory = function(garment)
+    if garment == "garment_top" or garment == "luxury_garment_top" then
+        return 1
+    elseif garment == "garment_pant" or garment == "luxury_garment_pant" then
+        return 6
+    elseif garment == "garment_shoes" or garment == "luxury_garment_shoes" then
+        return 10
+    elseif garment == "garment_underwear" or garment == "luxury_garment_underwear" then
+        return 0
+    end
+end
+
+local function getItems(products)
+    if type(products) ~= "table" then
+        return {}
+    end
+
+    local items = {}
+    local buffer = {}
+
+    for productId, product in pairs(products) do
+        if product.stock and product.stock >= 0 then
+            buffer[productId] = {id = productId, data = product}
+        end
+    end
+
+    for _, product in pairs(products) do
+        if product.items ~= nil then
+            local list = getItems(product.items)
+            for _, p in pairs(list) do
+                buffer[p.id] = p
+            end
+        end
+    end
+
+    if products.items ~= nil then
+        for _, product in pairs(products.items) do
+            local list = getItems(product.items)
+            for _, p in pairs(list) do
+                buffer[p.id] = p
+            end
+        end
+    end
+
+    for _, v in pairs(buffer) do
+        items[#items + 1] = v
+    end
+
+    return items
+end
+
+exports("RestockShop", function(brand, item, amount)
+    local category = garmentToCategory(item)
+    local sexToRefill = math.random(0, 1)
+
+    local shop = ShopsContent[sexToRefill and -1667301416 or 1885233650][Shops[brand]]
+    if not shop then
+        return false
+    end
+
+    shop = shop.items[category]
+    if not shop then
+        return false
+    end
+
+    local allClothes = getItems(shop.items)
+
+    for _ = 1, amount do
+        local randomClothes = allClothes[math.random(1, #allClothes)]
+        local clothesWithSameDrawable = {}
+
+        if not randomClothes then
+            return false
+        end
+
+        for _, clothe in pairs(allClothes) do
+            for k, v in pairs(clothe.data.data.components or {}) do
+                local originComponent = randomClothes.data.data.components[tostring(k)]
+
+                if originComponent then
+                    if k ~= "8" and k ~= "3" and tonumber(originComponent.Drawable) == tonumber(v.Drawable) then
+                        clothesWithSameDrawable[clothe.id] = clothe.data
+                    end
+                end
+            end
+        end
+
+        local clothesWithSameDrawableID = {}
+        for clotheId, _ in pairs(clothesWithSameDrawable) do
+            clothesWithSameDrawableID[#clothesWithSameDrawableID + 1] = clotheId
+        end
+
+        local affectedRows = MySQL.update.await("update shop_content set stock = stock + @stock where id IN (@id)",
+                                                {id = clothesWithSameDrawableID, stock = amount})
+        if affectedRows > 0 then
+            for _, clothe in pairs(clothesWithSameDrawable) do
+                clothe.stock = clothe.stock + amount
+            end
+
+            return true
+        end
+    end
+
+    return false
 end)
