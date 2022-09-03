@@ -2,6 +2,7 @@ import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
+import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -17,24 +18,24 @@ export class FoodMealsProvider {
 
     @OnEvent(ClientEvent.FOOD_UPDATE_ORDER)
     public onUpdateOrder(order: boolean) {
-        console.log('Update order', order);
         this.orderInProgress = order;
     }
 
     @Once(OnceStep.PlayerLoaded)
     onPlayerLoaded() {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
         TriggerServerEvent(ServerEvent.FOOD_RETRIEVE_STATE);
-        console.log('Create for box zone');
         this.targetFactory.createForBoxZone(
             'food_meals_provider',
             {
-                center: [-1391.69, -742.9, 24.63],
-                width: 1.1,
-                length: 1.1,
-                heading: 38,
+                center: [-1388.57, -744.79, 24.63],
+                width: 1.0,
+                length: 3.9,
+                heading: 37,
                 minZ: 23.63,
-                maxZ: 27.63,
-                debugPoly: true,
+                maxZ: 26.08,
             },
             [
                 {
