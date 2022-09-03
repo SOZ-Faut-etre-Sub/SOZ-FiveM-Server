@@ -2,7 +2,6 @@ import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { JobType } from '../../../shared/job';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -40,6 +39,7 @@ export class FoodMealsProvider {
             [
                 {
                     label: 'Commander',
+                    icon: 'c:food/order.png',
                     job: 'food',
                     canInteract: () => {
                         return this.playerService.isOnDuty() && !this.orderInProgress;
@@ -48,6 +48,7 @@ export class FoodMealsProvider {
                 },
                 {
                     label: 'Récupérer la commande',
+                    icon: 'c:food/retrieve-order.png',
                     job: 'food',
                     canInteract: () => {
                         return this.playerService.isOnDuty() && this.orderInProgress;
