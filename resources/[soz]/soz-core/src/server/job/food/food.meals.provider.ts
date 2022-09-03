@@ -45,6 +45,7 @@ export class FoodMealsProvider {
             const date = new Date();
             date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
             this.orderReadyDate = date;
+            this.orderedMeals++;
 
             this.updateOrderInProgress(true);
 
