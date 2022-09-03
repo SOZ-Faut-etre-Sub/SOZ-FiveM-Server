@@ -2128,7 +2128,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 7,
         ['combinable'] = nil,
-        ['description'] = 'Dans une bonne baguette !',
+        ['description'] = 'Contient de nombreux plats.',
     },
     ['vegan_meal'] = {
         ['name'] = 'vegan_meal',
