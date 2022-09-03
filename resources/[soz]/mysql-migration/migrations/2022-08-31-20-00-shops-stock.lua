@@ -62,7 +62,7 @@ table.insert(migrations, {
                 (16, 'Robes', 1),
                 (17, 'Pantalon', 6),
                 (18, 'Maillots de bain', 6),
-                (19, 'Sous-Vêtements', 6),
+                (19, 'Sous-Vêtements', null),
                 (20, 'Jupes', 6),
                 (21, 'Talons', 10),
                 (22, 'Joggings & Survêtements', 6),
