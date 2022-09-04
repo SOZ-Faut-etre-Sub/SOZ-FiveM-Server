@@ -119,7 +119,7 @@ RegisterNetEvent("admin:server:spectate", function(player)
 end)
 
 RegisterNetEvent("admin:server:reset-skin", function(player)
-    if not SozAdmin.Functions.IsPlayerHelper(source) then
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
         return
     end
 
@@ -127,7 +127,7 @@ RegisterNetEvent("admin:server:reset-skin", function(player)
 end)
 
 RegisterNetEvent("admin:server:freeze", function(player)
-    if not SozAdmin.Functions.IsPlayerHelper(source) then
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
         return
     end
 
@@ -136,7 +136,7 @@ RegisterNetEvent("admin:server:freeze", function(player)
 end)
 
 RegisterNetEvent("admin:server:unfreeze", function(player)
-    if not SozAdmin.Functions.IsPlayerHelper(source) then
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
         return
     end
 
@@ -145,7 +145,7 @@ RegisterNetEvent("admin:server:unfreeze", function(player)
 end)
 
 RegisterNetEvent("admin:server:kill", function(player)
-    if not SozAdmin.Functions.IsPlayerHelper(source) then
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
         return
     end
 
@@ -153,7 +153,7 @@ RegisterNetEvent("admin:server:kill", function(player)
 end)
 
 RegisterNetEvent("admin:server:revive", function(player)
-    if not SozAdmin.Functions.IsPlayerHelper(source) then
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
         return
     end
 
@@ -162,7 +162,7 @@ end)
 
 RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)
     local src = source
-    if not SozAdmin.Functions.IsPlayerHelper(src) then
+    if not SozAdmin.Functions.IsPlayerStaff(src) then
         return
     end
 
