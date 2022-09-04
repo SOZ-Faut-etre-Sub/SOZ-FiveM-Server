@@ -72,4 +72,5 @@ export const SocietyNumberList: SocietyNumber = {
     upw: '555-UPW',
     pawl: '555-PAWL',
     baun: '555-BAUN',
+    ffs: '555-FFS',
 };
