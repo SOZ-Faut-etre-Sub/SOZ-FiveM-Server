@@ -47,16 +47,16 @@ function AdminMenuPlayers(menu, permission)
         end,
     })
 
-    playerMenu:AddSlider({
-        label = "Santé du joueur",
-        value = "heal",
-        values = {{label = "Tuer", value = "kill"}, {label = "Réanimer", value = "revive"}},
-        select = function(_, value)
-            TriggerServerEvent("admin:server:" .. value, CurrentPlayerData)
-        end,
-    })
-
     if permission ~= "helper" then
+        playerMenu:AddSlider({
+            label = "Santé du joueur",
+            value = "heal",
+            values = {{label = "Tuer", value = "kill"}, {label = "Réanimer", value = "revive"}},
+            select = function(_, value)
+                TriggerServerEvent("admin:server:" .. value, CurrentPlayerData)
+            end,
+        })
+
         playerMenu:AddSlider({
             label = "Mouvement du joueur",
             value = "freeze",
@@ -169,13 +169,13 @@ function AdminMenuPlayers(menu, permission)
                 end)
             end
         end)
+
+        playerMenu:AddButton({label = "Gérer les features", value = featureMenu})
     end
 
     featureMenu:On("close", function()
         featureMenu:ClearItems()
     end)
-
-    playerMenu:AddButton({label = "Gérer les features", value = featureMenu})
 
     --- Add to main menu
     AdminMenu:AddButton({icon = "👨‍💻‍", label = "Gestion des joueurs", value = playersMenu})
