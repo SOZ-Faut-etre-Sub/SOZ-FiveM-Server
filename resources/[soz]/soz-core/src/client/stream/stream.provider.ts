@@ -68,7 +68,7 @@ export class StreamProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     async onTick(): Promise<void> {
-        if (!this.handle) {
+        if (!this.handle || this.playingUrl === BLACK_URL) {
             return;
         }
 
