@@ -3,8 +3,12 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { HealthBookLabel, HealthBookMinMax } from '../../../shared/health';
 import { MenuType } from '../../../shared/nui/menu';
-import { Ok } from '../../../shared/result';
+import { PlayerHealthBook } from '../../../shared/player';
+import { Err, Ok } from '../../../shared/result';
+import { InputService } from '../../nui/input.service';
+import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
@@ -24,6 +28,12 @@ export class LSMCCheckHealthProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
+    @Inject(InputService)
+    private inputService: InputService;
+
     public doBloodCheck(entity: number) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
@@ -36,9 +46,36 @@ export class LSMCCheckHealthProvider {
         TriggerServerEvent(ServerEvent.LSMC_HEALTH_CHECK, target);
     }
 
-    @OnNuiEvent(NuiEvent.SetPlayerFiber)
-    async setPlayerFiber() {
-        // @TODO
+    @OnNuiEvent(NuiEvent.PlayerSetHealthBookField)
+    async setPlayerHealthBookField({ source, field }: { source: number; field: keyof PlayerHealthBook }) {
+        const value = await this.inputService.askInput(
+            {
+                title: `Carte de santé: ${HealthBookLabel[field]}`,
+                defaultValue: '',
+                maxCharacters: 3,
+            },
+            value => {
+                const number = Number(value);
+                if (isNaN(number)) {
+                    return Err('Valeur incorrecte');
+                }
+
+                if (number < HealthBookMinMax[field].min || number > HealthBookMinMax[field].max) {
+                    return Err(
+                        `Valeur incorrecte, doit être entre ${HealthBookMinMax[field].min} et ${HealthBookMinMax[field].max}`
+                    );
+                }
+
+                return Ok(true);
+            }
+        );
+
+        if (value === null) {
+            return Ok(true);
+        }
+
+        TriggerServerEvent(ServerEvent.LSMC_SET_HEALTH_BOOK, source, field, Number(value));
+
         return Ok(true);
     }
 
@@ -64,20 +101,20 @@ export class LSMCCheckHealthProvider {
                 color: 'lsmc',
                 job: 'lsmc',
                 canInteract: () => {
-                    // @TODO Add zone check
                     return this.playerService.isOnDuty();
                 },
                 action: this.doHealthCheck.bind(this),
             },
             {
-                label: 'Modifier le carnet de santé',
+                label: 'Modifier la carte de santé',
                 color: 'lsmc',
                 job: 'lsmc',
                 canInteract: () => {
                     return this.playerService.isOnDuty();
                 },
-                action: () => {
-                    this.nuiMenu.openMenu(MenuType.SetHealthState);
+                action: entity => {
+                    const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    this.nuiMenu.openMenu(MenuType.SetHealthState, target);
                 },
             },
         ]);

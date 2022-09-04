@@ -2,42 +2,53 @@ import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { Result } from '../../../shared/result';
+import { PlayerMetadata } from '../../../shared/player';
 import { fetchNui } from '../../fetch';
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemButton,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuTitle,
-} from '../Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
 
-export const MenuSetHealthState: FunctionComponent = () => {
+type MenuSetHealthStateProps = {
+    source: number;
+};
+
+export const MenuSetHealthState: FunctionComponent<MenuSetHealthStateProps> = ({ source }) => {
+    const createSetHealthBookField = (field: keyof PlayerMetadata) => {
+        return async () => {
+            fetchNui(NuiEvent.PlayerSetHealthBookField, {
+                field,
+                source,
+            });
+        };
+    };
+
     return (
         <Menu type={MenuType.SetHealthState}>
             <MainMenu>
-                <MenuTitle>Carnet de santé</MenuTitle>
+                <MenuTitle banner="https://nui-img/soz/menu_job_lsmc">Carnet de santé</MenuTitle>
                 <MenuContent>
-                    <MenuItemButton>Définir l'état de santé</MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={async () => {
-                            // @TODO Sync menu data
-                            await fetchNui<any, Result<boolean, any>>(NuiEvent.SetPlayerFiber, {
-                                source: 1,
-                                value: 0,
-                            });
-                        }}
-                    >
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_health_level')}>
+                        Définir l'état de santé
+                    </MenuItemButton>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_max_stamina')}>
+                        Définir l'endurance
+                    </MenuItemButton>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_strength')}>
+                        Définir la force
+                    </MenuItemButton>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_stress_level')}>
+                        Définir l'état de stress
+                    </MenuItemButton>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_sugar')}>
                         Définir le taux de glucide
                     </MenuItemButton>
-                    <MenuItemSelect title="Test">
-                        <MenuItemSelectOption>Value A</MenuItemSelectOption>
-                        <MenuItemSelectOption>Value B</MenuItemSelectOption>
-                        <MenuItemSelectOption>Value C</MenuItemSelectOption>
-                        <MenuItemSelectOption>Value D</MenuItemSelectOption>
-                    </MenuItemSelect>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_fiber')}>
+                        Définir le taux de fibres
+                    </MenuItemButton>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_lipid')}>
+                        Définir le taux de lipide
+                    </MenuItemButton>
+                    <MenuItemButton onConfirm={createSetHealthBookField('health_book_protein')}>
+                        Définir le taux de protéine
+                    </MenuItemButton>
                 </MenuContent>
             </MainMenu>
         </Menu>
