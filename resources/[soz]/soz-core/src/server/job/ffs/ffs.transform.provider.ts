@@ -58,7 +58,15 @@ export class FightForStyleTransformProvider {
     public async onTransform(source: number, fabricMaterial: FabricMaterial) {
         this.notifier.notify(source, 'Vous ~g~commencez~s~ vos procédés chimiques et mécaniques.');
         const transformProcess = TransformProcesses[fabricMaterial];
-        while (this.inventoryManager.canCarryItem(source, transformProcess.output, transformProcess.outputAmount, {})) {
+        while (
+            this.inventoryManager.canSwapItem(
+                source,
+                transformProcess.input,
+                transformProcess.inputAmount,
+                transformProcess.output,
+                transformProcess.outputAmount
+            )
+        ) {
             const item = this.inventoryManager.getFirstItemInventory(source, transformProcess.input);
             if (!item || item.amount < transformProcess.inputAmount) {
                 break;
