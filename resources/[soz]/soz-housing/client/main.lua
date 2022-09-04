@@ -40,8 +40,9 @@ RegisterNetEvent("housing:client:Teleport", function(coords)
 
         while Housing.Functions.IsInsideApartment do
             local propertyId = PlayerData.metadata["inside"].property
+            local interiorId = GetInteriorFromEntity(PlayerPedId())
 
-            if propertyId then
+            if interiorId ~= 0 and propertyId then
                 for _, hash in pairs(Properties[propertyId]:GetExteriorCulling() or {}) do
                     EnableExteriorCullModelThisFrame(hash)
                 end
