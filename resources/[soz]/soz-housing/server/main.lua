@@ -36,7 +36,7 @@ end
 MySQL.ready(function()
     local properties = MySQL.query.await("SELECT * FROM housing_property")
     for _, property in pairs(properties or {}) do
-        Properties[property.id] = Property:new(property.identifier, property.entry_zone, property.garage_zone)
+        Properties[property.id] = Property:new(property.identifier, property.entry_zone, property.garage_zone, property.exterior_culling)
     end
 
     local apartments = MySQL.query.await("SELECT * FROM housing_apartment")
@@ -106,6 +106,7 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
     TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord())
 
     inside.apartment = apartmentId
+    inside.property = propertyId
     inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
     Player.Functions.SetMetaData("inside", inside)
 end)
@@ -143,6 +144,7 @@ RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId
     TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, inside.exitCoord)
 
     inside.apartment = false
+    inside.property = nil
     inside.exitCoord = false
     Player.Functions.SetMetaData("inside", inside)
 end)
