@@ -2,7 +2,9 @@ import 'reflect-metadata';
 import './globals';
 
 import { AnimationModule } from './client/animation/animation.module';
+import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
+import { FoodModule } from './client/job/food/food.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
@@ -19,7 +21,9 @@ async function bootstrap() {
         ItemModule,
         LSMCModule,
         AnimationModule,
-        NuiModule
+        NuiModule,
+        BankModule,
+        FoodModule
     );
 
     await app.stop();

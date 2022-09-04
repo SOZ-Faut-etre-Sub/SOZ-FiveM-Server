@@ -2,6 +2,10 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
+    FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
+    FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
+    FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
@@ -19,6 +23,8 @@ export enum ServerEvent {
 }
 
 export enum ClientEvent {
+    FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
+
     PROGRESS_START = 'soz-core:client:progress:start',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',

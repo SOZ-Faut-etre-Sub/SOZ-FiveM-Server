@@ -193,6 +193,7 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
         cb(success, reason)
     end
 end
+exports("TransferMoney", Account.TransfertMoney)
 
 function Account.AccessGranted(acc, playerId)
     acc = Account(acc)
