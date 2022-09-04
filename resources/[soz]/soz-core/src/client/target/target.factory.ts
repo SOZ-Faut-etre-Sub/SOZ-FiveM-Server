@@ -8,6 +8,7 @@ export type ZoneOptions = {
     heading?: number;
     minZ?: number;
     maxZ?: number;
+    debugPoly?: boolean;
 };
 
 export type TargetOptions = {
@@ -62,6 +63,7 @@ export class TargetFactory {
                 minZ: zone.minZ,
                 maxZ: zone.maxZ,
                 name: id,
+                debugPoly: zone.debugPoly || false,
             },
             {
                 options: targets,
