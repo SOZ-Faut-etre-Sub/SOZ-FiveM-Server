@@ -119,7 +119,7 @@ export class LSMCCheckHealthProvider {
         );
         this.notifier.notify(
             source,
-            `Etat de force ${stressLevelLabel} (${targetPlayer.metadata.stress_level}).`,
+            `Etat de force ${strengthLevelLabel} (${targetPlayer.metadata.strength}).`,
             'success'
         );
         this.notifier.notify(
@@ -129,7 +129,7 @@ export class LSMCCheckHealthProvider {
         );
         this.notifier.notify(
             source,
-            `Etat de stress ${strengthLevelLabel} (${targetPlayer.metadata.strength}).`,
+            `Etat de stress ${stressLevelLabel} (${targetPlayer.metadata.stress_level}).`,
             'success'
         );
     }
