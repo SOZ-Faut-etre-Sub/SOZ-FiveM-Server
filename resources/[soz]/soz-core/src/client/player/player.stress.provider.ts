@@ -5,6 +5,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { Notifier } from '../notifier';
 import { PlayerService } from './player.service';
 
 const EVENT_DISTANCE_TRIGGER = 70.0;
@@ -14,12 +15,17 @@ export class PlayerStressProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     private isStressUpdated = false;
     private wasDead = false;
 
     private updateStress(stress = 1): void {
         this.isStressUpdated = true;
         TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, stress);
+
+        this.notifier.notify('Un evenement vous à fait stressé.', 'error');
 
         setTimeout(() => {
             this.isStressUpdated = false;
@@ -105,7 +111,7 @@ export class PlayerStressProvider {
             if (vehicleClass !== 14 && vehicleClass !== 15 && vehicleClass !== 16) {
                 const speed = GetEntitySpeed(currentVehicle) * 3.6;
 
-                if (speed > 130) {
+                if (speed > 170) {
                     return this.updateStress();
                 }
             }

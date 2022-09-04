@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait } from '../../core/utils';
+import { Vector4 } from '../../shared/polyzone/vector';
 import { Weapons } from '../../shared/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
@@ -140,6 +141,12 @@ export class AnimationService {
         }
     }
 
+    public async walkToCoords(coords: Vector4, duration = 1000) {
+        TaskGoStraightToCoord(PlayerPedId(), coords[0], coords[1], coords[2], 1.0, duration, coords[3], 0.1);
+
+        await wait(duration);
+    }
+
     public async playScenario(scenario: Scenario): Promise<void> {
         const promise = new Promise<void>((resolve, reject) => {
             this.queue.push({
@@ -158,14 +165,6 @@ export class AnimationService {
     }
 
     public async playAnimation(animation: Animation): Promise<void> {
-        const promise = new Promise<void>((resolve, reject) => {
-            this.queue.push({
-                animation,
-                reject,
-                resolve,
-            });
-        });
-
         if (animation.enter?.dictionary) {
             await this.resourceLoader.loadAnimationDictionary(animation.enter.dictionary);
         }
@@ -177,6 +176,14 @@ export class AnimationService {
         if (animation.exit?.dictionary) {
             await this.resourceLoader.loadAnimationDictionary(animation.exit.dictionary);
         }
+
+        const promise = new Promise<void>((resolve, reject) => {
+            this.queue.push({
+                animation,
+                reject,
+                resolve,
+            });
+        });
 
         // Will stop current animation if in loop
         if (this.currentAnimationLoopResolve) {

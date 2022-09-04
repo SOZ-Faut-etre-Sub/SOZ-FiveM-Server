@@ -1,4 +1,4 @@
-import { FunctionComponent, PropsWithChildren } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { MenuType } from '../../../shared/nui/menu';
@@ -9,24 +9,29 @@ import { MenuSetHealthState } from './MenuSetHealthState';
 export const MenuApp: FunctionComponent = () => {
     return (
         <MemoryRouter>
-            <MenuRouteControl>
-                <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState />} />
-                <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
-            </MenuRouteControl>
+            <MenuRouter />
         </MemoryRouter>
     );
 };
 
-const MenuRouteControl: FunctionComponent<PropsWithChildren> = ({ children }) => {
+const MenuRouter: FunctionComponent = () => {
     const navigate = useNavigate();
+    const [menuData, setMenuData] = useState(null);
 
-    useMenuNuiEvent('SetMenuType', menutype => {
-        navigate(menutype ? `/${menutype}` : '/');
+    useMenuNuiEvent('SetMenuType', ({ menuType, data }) => {
+        navigate(menuType ? `/${menuType}` : '/');
+        setMenuData(data);
     });
 
     useMenuNuiEvent('CloseMenu', () => {
         navigate('/');
+        setMenuData(null);
     });
 
-    return <Routes>{children}</Routes>;
+    return (
+        <Routes>
+            <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
+            <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
+        </Routes>
+    );
 };

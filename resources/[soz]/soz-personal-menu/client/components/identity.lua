@@ -17,6 +17,7 @@ function GenerateIdentityMenu(identitySubmenu, selectedCheckbox, showingAround)
     local checkboxes = {
         ["identity"] = {label = "carte d'identité", event = "soz-identity:client:request-identity-data"},
         ["licenses"] = {label = "permis", event = "soz-identity:client:request-licenses-data"},
+        ["health_book"] = {label = "carte de santé", event = "soz-core:client:player:health:request-health-book"},
     }
 
     local description = nil

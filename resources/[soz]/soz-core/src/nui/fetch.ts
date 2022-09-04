@@ -4,7 +4,7 @@ export type FetchNuiOptions = {
     timeout: number | false;
 };
 
-export const fetchNui = async <I, R>(event: NuiEvent, input: I, options?: FetchNuiOptions): Promise<R> => {
+export const fetchNui = async <I, R>(event: NuiEvent, input?: I, options?: FetchNuiOptions): Promise<R> => {
     const timeout = options?.timeout ?? false;
     const controller = new AbortController();
     const id = timeout ? setTimeout(() => controller.abort(), timeout) : null;
@@ -13,7 +13,7 @@ export const fetchNui = async <I, R>(event: NuiEvent, input: I, options?: FetchN
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: JSON.stringify(input),
+        body: JSON.stringify(input || null),
         signal: controller.signal,
     });
 

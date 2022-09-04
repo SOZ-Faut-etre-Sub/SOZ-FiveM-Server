@@ -73,7 +73,7 @@ export type MenuTitleProps = {
 };
 
 const MenuHeader: FunctionComponent<MenuTitleProps> = ({ banner }) => {
-    return <img src={banner} className="opacity-80 w-full h-auto object-cover" alt="banner" />;
+    return <img src={banner} className="opacity-80 w-full h-auto object-cover mb-[-2px]" alt="banner" />;
 };
 
 export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ children, banner }) => {
