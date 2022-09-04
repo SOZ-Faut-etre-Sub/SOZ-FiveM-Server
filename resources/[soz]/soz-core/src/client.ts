@@ -9,6 +9,7 @@ import { FoodModule } from './client/job/food/food.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
+import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { WeatherModule } from './client/weather/weather.module';
 import { Application } from './core/application';
@@ -27,7 +28,8 @@ async function bootstrap() {
         BankModule,
         FoodModule,
         TargetModule,
-        FightForStyleModule
+        FightForStyleModule,
+        StreamModule
     );
 
     await app.stop();
