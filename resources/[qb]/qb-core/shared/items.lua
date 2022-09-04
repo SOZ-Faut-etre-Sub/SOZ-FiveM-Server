@@ -2196,9 +2196,9 @@ QBShared.Items = {
             ['alcohol'] = 0,
         },
     },
-    ['unknown_vegetables'] = {
-        ['name'] = 'unknown_vegetables',
-        ['label'] = "Légumes 'Jesaispas'",
+    ['royal_vegetables'] = {
+        ['name'] = 'royal_vegetables',
+        ['label'] = "Légume royal aux viandes",
         ['weight'] = 800,
         ['type'] = 'food',
         ['unique'] = false,
@@ -2206,7 +2206,17 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = "Ah bon il a pas d'nom ?",
+        ['description'] = "Un plat royal.",
+        ['nutrition'] = {
+            ['hunger'] = 40,
+            ['thirst'] = 0,
+            ['stamina'] = 10,
+            ['fiber'] = 3,
+            ['lipid'] = 15,
+            ['sugar'] = 0,
+            ['protein'] = 30,
+            ['alcohol'] = 0,
+        },
         ['nutrition'] = {
             ['hunger'] = 45,
             ['thirst'] = 0,
