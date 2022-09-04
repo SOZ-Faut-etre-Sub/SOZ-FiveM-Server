@@ -64,9 +64,9 @@ export class Application {
             return;
         }
 
+        const stopped = await this.running;
         await this.onceLoader.trigger(OnceStep.Stop);
 
-        const stopped = await this.running;
         this.logger.debug('[soz-core] stopping application');
 
         this.moduleLoader.unload();

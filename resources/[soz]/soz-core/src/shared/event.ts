@@ -11,6 +11,7 @@ export enum ServerEvent {
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
+    LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
 
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STAMINA = 'soz-core:server:player:increase-stamina',
@@ -18,8 +19,12 @@ export enum ServerEvent {
 
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
+    PLAYER_SHOW_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
+
+    // not core
+    IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
 }
 
 export enum ClientEvent {
@@ -32,9 +37,12 @@ export enum ClientEvent {
 
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
+    PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
+
     // Temp event which sould be internally used by a service when only soz core
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
+    IDENTITY_HIDE = 'soz-identity:client:hide',
 }
 
 export enum GameEvent {
@@ -45,5 +53,7 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
-    SetPlayerFiber = 'soz-core:client:player:fiber:set',
+    PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
+    InputSet = 'soz-core:client:input:set',
+    InputCancel = 'soz-core:client:input:cancel',
 }

@@ -6,10 +6,22 @@ export interface NuiMenuMethodMap {
     Backspace: never;
     CloseMenu: never;
     Enter: never;
-    SetMenuType: MenuType;
+    SetMenuType: SetMenuType;
+
+    MenuHealthSetSource: number;
 }
+
+export type SetMenuType = {
+    menuType: MenuType;
+    data: any;
+};
 
 export enum MenuType {
     Demo = 'demo',
     SetHealthState = 'set_health_state',
+}
+
+export interface MenuTypeMap extends Record<MenuType, unknown> {
+    [MenuType.Demo]: never;
+    [MenuType.SetHealthState]: number;
 }

@@ -165,14 +165,6 @@ export class AnimationService {
     }
 
     public async playAnimation(animation: Animation): Promise<void> {
-        const promise = new Promise<void>((resolve, reject) => {
-            this.queue.push({
-                animation,
-                reject,
-                resolve,
-            });
-        });
-
         if (animation.enter?.dictionary) {
             await this.resourceLoader.loadAnimationDictionary(animation.enter.dictionary);
         }
@@ -184,6 +176,14 @@ export class AnimationService {
         if (animation.exit?.dictionary) {
             await this.resourceLoader.loadAnimationDictionary(animation.exit.dictionary);
         }
+
+        const promise = new Promise<void>((resolve, reject) => {
+            this.queue.push({
+                animation,
+                reject,
+                resolve,
+            });
+        });
 
         // Will stop current animation if in loop
         if (this.currentAnimationLoopResolve) {

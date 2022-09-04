@@ -2,12 +2,16 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData } from '../../shared/player';
+import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
 
@@ -54,6 +58,9 @@ const FREE_WEIGHT_COORDS = [
 
 const UNARMED_WEAPON_HASH = GetHashKey('WEAPON_UNARMED');
 
+const MAX_RUN_COUNT = 5;
+const RUN_DURATION = 45;
+
 @Provider()
 export class PlayerHealthProvider {
     @Inject(PlayerService)
@@ -68,11 +75,21 @@ export class PlayerHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
     private runningStartTime: number | null = null;
 
     private lastExerciseCompleted: number | null = null;
 
     private strengthExercisesCount = 0;
+
+    private runCount = 0;
+
+    private sportZone = new BoxZone([-1202.52, -1566.88, 4.37], 12.2, 26.2, {
+        maxZ: 6.37,
+        minZ: 3.37,
+    });
 
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
@@ -94,6 +111,8 @@ export class PlayerHealthProvider {
 
     private doStrengthExercise(): void {
         this.strengthExercisesCount++;
+
+        this.notifier.notify(`Exercice ${this.strengthExercisesCount % 10} / 10.`, 'success');
 
         if (this.strengthExercisesCount % 10 === 0) {
             this.notifier.notify('Vous vous sentez plus en forme.', 'success');
@@ -123,6 +142,14 @@ export class PlayerHealthProvider {
             return;
         }
 
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
+        if (!this.sportZone.isPointInside(position)) {
+            this.notifier.notify("Vous devez être à l'interieur de la zone de musculation.", 'error');
+
+            return;
+        }
+
         await this.animationService.playAnimation({
             enter: {
                 dictionary: 'amb@world_human_push_ups@male@enter',
@@ -132,7 +159,7 @@ export class PlayerHealthProvider {
             base: {
                 dictionary: 'amb@world_human_push_ups@male@base',
                 name: 'base',
-                duration: 4000,
+                duration: 10000,
             },
             exit: {
                 dictionary: 'amb@world_human_push_ups@male@exit',
@@ -144,9 +171,17 @@ export class PlayerHealthProvider {
         this.doStrengthExercise();
     }
 
-    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_SIT_UP)
     public async doSitUps(): Promise<void> {
         if (!this.canDoExercise()) {
+            return;
+        }
+
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
+        if (!this.sportZone.isPointInside(position)) {
+            this.notifier.notify("Vous devez être à l'interieur de la zone de musculation.", 'error');
+
             return;
         }
 
@@ -159,7 +194,7 @@ export class PlayerHealthProvider {
             base: {
                 dictionary: 'amb@world_human_sit_ups@male@base',
                 name: 'base',
-                duration: 4000,
+                duration: 10000,
             },
             exit: {
                 dictionary: 'amb@world_human_sit_ups@male@exit',
@@ -205,28 +240,52 @@ export class PlayerHealthProvider {
             return;
         }
 
+        if (this.runningStartTime) {
+            const duration = (GetGameTimer() - this.runningStartTime) / 1000;
+
+            if (duration >= RUN_DURATION) {
+                this.runningStartTime = null;
+                this.runCount++;
+
+                if (this.runCount > MAX_RUN_COUNT) {
+                    this.notifier.notify("Vous avez beaucoup couru aujourd'hui, reposez vous.", 'error');
+
+                    return;
+                } else {
+                    this.notifier.notify('Vous vous sentez plus en forme.', 'success');
+
+                    TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STAMINA);
+                }
+            }
+        }
+
         if (IsPedRunning(PlayerPedId())) {
             if (!this.runningStartTime) {
                 this.runningStartTime = GetGameTimer();
             }
         } else {
-            if (this.runningStartTime) {
-                const duration = (GetGameTimer() - this.runningStartTime) / 1000;
-
-                if (duration >= 60) {
-                    this.notifier.notify('Vous vous sentez plus en forme.', 'success');
-
-                    TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STAMINA);
-                }
-
-                this.runningStartTime = null;
-            }
+            this.runningStartTime = null;
         }
+    }
 
-        const player = this.playerService.getPlayer();
-        if (!player) {
+    @OnEvent(ClientEvent.PLAYER_REQUEST_HEALTH_BOOK)
+    async requestHealthBook(target: number, action: 'see' | 'show'): Promise<void> {
+        if (action === 'show') {
+            TriggerServerEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK, target);
+
             return;
         }
+
+        const targetPlayer = await emitRpc<PlayerData | null>(RpcEvent.PLAYER_GET_HEALTH_BOOK, target);
+
+        if (null !== targetPlayer) {
+            this.nuiDispatch.dispatch('health_book', 'ShowHealthBook', targetPlayer);
+        }
+    }
+
+    @OnEvent(ClientEvent.IDENTITY_HIDE)
+    async identityHide(): Promise<void> {
+        this.nuiDispatch.dispatch('health_book', 'HideHealthBook');
     }
 
     @Once()

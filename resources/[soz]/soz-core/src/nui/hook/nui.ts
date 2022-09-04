@@ -63,6 +63,13 @@ export const useMenuNuiEvent = <M extends keyof NuiMethodMap['menu']>(
     return useNuiEvent('menu', method, handler);
 };
 
+export const useInputNuiEvent = <M extends keyof NuiMethodMap['input']>(
+    method: M,
+    handler: (r: NuiMethodMap['input'][M]) => void
+) => {
+    return useNuiEvent('input', method, handler);
+};
+
 type UseNuiResponse<I, R> = [UseNuiFetch<I, R>, { loading: boolean; data: R | null; error: any }];
 type UseNuiFetch<I, R> = (input?: I, options?: FetchNuiOptions) => Promise<R>;
 
