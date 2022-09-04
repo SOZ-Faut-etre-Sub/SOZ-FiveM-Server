@@ -25,7 +25,7 @@ export class PlayerStressProvider {
         this.isStressUpdated = true;
         TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, stress);
 
-        this.notifier.notify('Un evenement vous à fait stressé.', 'error');
+        this.notifier.notify('Un évènement vous a fait stresser.', 'error');
 
         setTimeout(() => {
             this.isStressUpdated = false;
