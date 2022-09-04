@@ -1,6 +1,10 @@
 import { PlayerHealthBook } from './player';
 
-export const healthLevelToLabel = (level: number, min: number, max: number): string => {
+export const healthLevelToLabel = (level: number | null, min: number, max: number): string => {
+    if (null === level) {
+        return 'inconnu';
+    }
+
     const base0Level = level - min;
     const percentLevel = (base0Level * 100) / (max - min);
 
