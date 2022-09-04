@@ -101,6 +101,7 @@ RegisterNetEvent("admin:server:bring", function(player)
         local inside = Target.PlayerData.metadata["inside"]
 
         inside.apartment = false
+        inside.property = nil
         inside.exitCoord = false
         Target.Functions.SetMetaData("inside", inside)
     end
