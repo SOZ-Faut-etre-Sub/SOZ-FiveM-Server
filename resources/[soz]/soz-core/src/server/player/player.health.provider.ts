@@ -1,10 +1,12 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { Rpc } from '../../core/decorators/rpc';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerMetadata } from '../../shared/player';
+import { PlayerData, PlayerMetadata } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
+import { RpcEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
@@ -139,6 +141,28 @@ export class PlayerHealthProvider {
     public async increaseStress(source: number, stress: number): Promise<void> {
         this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
         this.playerService.incrementMetadata(source, 'stress_level', stress, 0, 100);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK)
+    public async showHealthBook(source: number, target: number): Promise<void> {
+        TriggerClientEvent(ClientEvent.PLAYER_REQUEST_HEALTH_BOOK, target, source, 'see');
+    }
+
+    @OnEvent(ServerEvent.IDENTITY_HIDE_AROUND)
+    public async identityHideAround(source: number, target: number): Promise<void> {
+        console.log('identityHideAround', source, target);
+        TriggerClientEvent(ClientEvent.IDENTITY_HIDE, target);
+    }
+
+    @Rpc(RpcEvent.PLAYER_GET_HEALTH_BOOK)
+    public getHealthBook(source: number, target: number): PlayerData | null {
+        const targetPlayer = this.playerService.getPlayer(target);
+
+        if (targetPlayer === null) {
+            return null;
+        }
+
+        return targetPlayer;
     }
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_CHECK)

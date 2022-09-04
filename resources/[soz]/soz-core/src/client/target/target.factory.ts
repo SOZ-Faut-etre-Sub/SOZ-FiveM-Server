@@ -43,6 +43,9 @@ const DEFAULT_DISTANCE = 2.5;
 
 @Injectable()
 export class TargetFactory {
+    private zones: { [id: string]: any } = {};
+    private players: { [id: string]: any } = {};
+
     public createForBoxZone(id: string, zone: ZoneOptions, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
@@ -70,6 +73,8 @@ export class TargetFactory {
                 distance: distance,
             }
         );
+
+        this.zones[id] = zone;
     }
 
     public createForAllPlayer(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
@@ -77,6 +82,20 @@ export class TargetFactory {
             options: targets,
             distance: distance,
         });
+
+        for (const target of targets) {
+            this.players[target.label] = target;
+        }
+    }
+
+    public unload() {
+        for (const id of Object.keys(this.zones)) {
+            exports['qb-target'].RemoveZone(id);
+        }
+
+        for (const id of Object.keys(this.players)) {
+            exports['qb-target'].RemovePlayer(id);
+        }
     }
 
     // // @TODO - Implement it when needed

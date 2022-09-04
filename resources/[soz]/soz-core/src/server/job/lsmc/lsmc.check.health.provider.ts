@@ -2,6 +2,8 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { healthLevelToLabel } from '../../../shared/health';
+import { PlayerHealthBook } from '../../../shared/player';
 import { InventoryManager } from '../../item/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -61,6 +63,13 @@ export class LSMCCheckHealthProvider {
         return { targetPlayer, inventoryItem };
     }
 
+    @OnEvent(ServerEvent.LSMC_SET_HEALTH_BOOK)
+    async setHealthBook(source: number, target: number, field: keyof PlayerHealthBook, value: number) {
+        this.playerService.setPlayerMetadata(target, field, value);
+
+        this.notifier.notify(source, `Carte de santé mis à jour.`, 'success');
+    }
+
     @OnEvent(ServerEvent.LSMC_BLOOD_ANALYZE)
     async onBloodAnalyze(source: number) {
         const { targetPlayer } = await this.doAnalyze(source, 'Analyse de sang', 'flask_blood_full');
@@ -98,21 +107,31 @@ export class LSMCCheckHealthProvider {
             return;
         }
 
-        let state = '';
+        const healthStateLabel = healthLevelToLabel(targetPlayer.metadata.health_level, 0, 100);
+        const stressLevelLabel = healthLevelToLabel(targetPlayer.metadata.stress_level, 0, 100);
+        const maxStaminaLevelLabel = healthLevelToLabel(targetPlayer.metadata.max_stamina, 0, 100);
+        const strengthLevelLabel = healthLevelToLabel(targetPlayer.metadata.strength, 0, 100);
 
-        if (targetPlayer.metadata.health_level > 80) {
-            state = 'excellent';
-        } else if (targetPlayer.metadata.health_level > 60) {
-            state = 'bon';
-        } else if (targetPlayer.metadata.health_level > 40) {
-            state = 'moyen';
-        } else if (targetPlayer.metadata.health_level > 20) {
-            state = 'mauvais';
-        } else {
-            state = 'exécrable';
-        }
-
-        this.notifier.notify(source, `Analyse complète, état de santé ${state}.`, 'success');
+        this.notifier.notify(
+            source,
+            `Etat de santé ${healthStateLabel} (${targetPlayer.metadata.health_level}).`,
+            'success'
+        );
+        this.notifier.notify(
+            source,
+            `Etat de force ${stressLevelLabel} (${targetPlayer.metadata.stress_level}).`,
+            'success'
+        );
+        this.notifier.notify(
+            source,
+            `Etat d'endurance ${maxStaminaLevelLabel} (${targetPlayer.metadata.max_stamina}).`,
+            'success'
+        );
+        this.notifier.notify(
+            source,
+            `Etat de stress ${strengthLevelLabel} (${targetPlayer.metadata.strength}).`,
+            'success'
+        );
     }
 
     @OnEvent(ServerEvent.LSMC_PEE_ANALYZE)

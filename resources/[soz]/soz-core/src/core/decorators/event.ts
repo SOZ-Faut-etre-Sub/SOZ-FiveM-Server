@@ -1,5 +1,4 @@
 import { ClientEvent, GameEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { Result } from '../../shared/result';
 import { addMethodMetadata, setMethodMetadata } from './reflect';
 
 export type EventMetadata = {
@@ -29,8 +28,8 @@ export const On = (name?: string, net = true): MethodDecorator => {
     };
 };
 
-export const OnNuiEvent = <T = any, R = any, E = any>(event: NuiEvent) => {
-    return (target, propertyKey, descriptor: TypedPropertyDescriptor<(data?: T) => Promise<Result<R, E>>>) => {
+export const OnNuiEvent = <T = any, R = any>(event: NuiEvent) => {
+    return (target, propertyKey, descriptor: TypedPropertyDescriptor<(data?: T) => Promise<R>>) => {
         addMethodMetadata(
             NuiEventMetadataKey,
             {
