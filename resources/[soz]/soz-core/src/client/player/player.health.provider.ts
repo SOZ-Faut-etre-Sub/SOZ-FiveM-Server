@@ -112,7 +112,13 @@ export class PlayerHealthProvider {
     private doStrengthExercise(): void {
         this.strengthExercisesCount++;
 
-        this.notifier.notify(`Exercice ${this.strengthExercisesCount % 10} / 10.`, 'success');
+        let displayExercisesCount = this.strengthExercisesCount % 10;
+
+        if (displayExercisesCount === 0) {
+            displayExercisesCount = 10;
+        }
+
+        this.notifier.notify(`Exercice ${displayExercisesCount} / 10.`, 'success');
 
         if (this.strengthExercisesCount % 10 === 0) {
             this.notifier.notify('Vous vous sentez plus en forme.', 'success');
