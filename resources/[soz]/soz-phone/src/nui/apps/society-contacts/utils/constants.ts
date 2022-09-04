@@ -85,4 +85,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-BAUN',
         avatar: 'media/society_icon/baun.webp',
     },
+    {
+        id: 15,
+        display: 'Fight For Style',
+        number: '555-FFS',
+        avatar: 'media/society_icon/ffs.webp',
+    },
 ];
