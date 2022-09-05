@@ -1,3 +1,42 @@
+export type AnimationOptions = {
+    repeat?: boolean;
+    freezeLastFrame?: boolean;
+    freezeLastFrameControllable?: boolean;
+    onlyUpperBody?: boolean;
+    enablePlayerControl?: boolean;
+    cancellable?: boolean;
+};
+
+export const animationOptionsToFlags = (options: AnimationOptions): number => {
+    let flags = 0;
+
+    if (options.repeat) {
+        flags |= 1;
+    }
+
+    if (options.freezeLastFrame) {
+        flags |= 2;
+    }
+
+    if (options.freezeLastFrameControllable) {
+        flags |= 4;
+    }
+
+    if (options.onlyUpperBody) {
+        flags |= 16;
+    }
+
+    if (options.enablePlayerControl) {
+        flags |= 32;
+    }
+
+    if (options.cancellable) {
+        flags |= 64;
+    }
+
+    return flags;
+};
+
 export type ProgressOptions = {
     useWhileDead: boolean;
     canCancel: boolean;
@@ -11,6 +50,7 @@ export type ProgressAnimation = {
     name?: string;
     flags?: number;
     task?: string;
+    options?: AnimationOptions;
 };
 
 export type ProgressResult = {

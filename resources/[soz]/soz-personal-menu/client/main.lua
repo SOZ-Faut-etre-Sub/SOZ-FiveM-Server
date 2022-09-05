@@ -25,7 +25,6 @@ local function GenerateMenu()
     AnimationsEntry()
     HudToggleEntry(personalMenu)
     JobEntry(personalMenu)
-    HealthEntry(personalMenu)
     VoipEntry(personalMenu)
 
     if MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= personalMenu.UUID then
