@@ -23,6 +23,10 @@ Config.StorageCapacity = {
     ["log_processing"] = {slot = 10, weight = 400000},
     --- Jobs UPW
     ["inverter"] = {slot = 100, weight = 1200000},
+    --- Jobs BAUN
+    ["flavor_storage"] = {slot = 100, weight = 400000},
+    ["liquor_storage"] = {slot = 100, weight = 600000},
+    ["furniture_storage"] = {slot = 100, weight = 200000},
 }
 
 Config.ErrorMessage = {

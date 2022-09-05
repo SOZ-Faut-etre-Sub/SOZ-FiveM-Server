@@ -49,12 +49,24 @@
     background: url("../../assets/boss_storage.jpg") left no-repeat;
     background-size: cover;
 }
+.flavor_storage {
+    background: url("../../assets/flavor_storage.jpg") left no-repeat;
+    background-size: cover;
+}
 .fridge {
     background: url("../../assets/fridge.jpg") left no-repeat;
     background-size: cover;
 }
+.furniture_storage {
+    background: url("../../assets/furniture_storage.jpg") left no-repeat;
+    background-size: cover;
+}
 .inverter {
     background: url("../../assets/inverter.jpg") left no-repeat;
+    background-size: cover;
+}
+.liquor_storage {
+    background: url("../../assets/liquor_storage.jpg") left no-repeat;
     background-size: cover;
 }
 .log_storage {
