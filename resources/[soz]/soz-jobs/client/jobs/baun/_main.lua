@@ -12,6 +12,16 @@ RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function()
     SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes)
 end)
 
+
+local function getItem(items, itemId)
+    for _, item in ipairs(items) do
+        if item.name == itemId then
+            return item
+        end
+    end
+    return {amount = 0}
+end
+
 AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() == resourceName and GetConvarInt("feature_msb_baun", 0) == 1) then
         for _, config in pairs(BaunConfig.Blips) do
@@ -104,58 +114,58 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
 
     BaunJob.Menu:AddCheckbox({
         label = "Afficher la récolte d'alcools",
-        value = BaunJob.MenuState.ffs_liquor,
+        value = BaunJob.MenuState.baun_liquor,
         select = function(_, value)
-            BaunJob.MenuState.ffs_liquor = value
-            if not QBCore.Functions.GetBlip("ffs_liquor") then
-                QBCore.Functions.CreateBlip("ffs_liquor",
+            BaunJob.MenuState.baun_liquor = value
+            if not QBCore.Functions.GetBlip("baun_liquor") then
+                QBCore.Functions.CreateBlip("baun_liquor",
                     {
                         name = "Point de récolte d'alcool",
-                        coords = vector3(2793.73, 1524.45, 24.52),
+                        coords = vector3(1410.96, 1147.6, 114.33),
                         sprite = 436,
                         scale = 1.0,
                     })
             end
 
-            QBCore.Functions.HideBlip("ffs_liquor", not value)
+            QBCore.Functions.HideBlip("baun_liquor", not value)
         end
     })
 
     BaunJob.Menu:AddCheckbox({
         label = "Afficher la récolte de saveurs",
-        value = BaunJob.MenuState.ffs_flavor,
+        value = BaunJob.MenuState.baun_flavor,
         select = function(_, value)
-            BaunJob.MenuState.ffs_flavor = value
-            if not QBCore.Functions.GetBlip("ffs_flavor") then
-                QBCore.Functions.CreateBlip("ffs_flavor",
+            BaunJob.MenuState.baun_flavor = value
+            if not QBCore.Functions.GetBlip("baun_flavor") then
+                QBCore.Functions.CreateBlip("baun_flavor",
                     {
                         name = "Point de récolte de saveurs",
-                        coords = vector3(2793.73, 1524.45, 24.52),
+                        coords = vector3(867.17, -1628.59, 30.2),
                         sprite = 436,
                         scale = 1.0,
                     })
             end
 
-            QBCore.Functions.HideBlip("ffs_flavor", not value)
+            QBCore.Functions.HideBlip("baun_flavor", not value)
         end
     })
 
     BaunJob.Menu:AddCheckbox({
         label = "Afficher la récolte de fournitures",
-        value = BaunJob.MenuState.ffs_furniture,
+        value = BaunJob.MenuState.baun_furniture,
         select = function(_, value)
-            BaunJob.MenuState.ffs_furniture = value
-            if not QBCore.Functions.GetBlip("ffs_furniture") then
-                QBCore.Functions.CreateBlip("ffs_furniture",
+            BaunJob.MenuState.baun_furniture = value
+            if not QBCore.Functions.GetBlip("baun_furniture") then
+                QBCore.Functions.CreateBlip("baun_furniture",
                     {
                         name = "Point de récolte de fournitures",
-                        coords = vector3(2793.73, 1524.45, 24.52),
+                        coords = vector3(44.98, -1749.42, 29.59),
                         sprite = 436,
                         scale = 1.0,
                     })
             end
 
-            QBCore.Functions.HideBlip("ffs_furniture", not value)
+            QBCore.Functions.HideBlip("baun_furniture", not value)
         end
     })
 
