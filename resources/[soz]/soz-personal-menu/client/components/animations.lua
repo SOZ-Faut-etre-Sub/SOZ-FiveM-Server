@@ -43,6 +43,11 @@ local PlayEmote = function(animation)
         return
     end
 
+    if animation.event then
+        TriggerEvent(animation.event)
+        return
+    end
+
     if animation[1] ~= "0" then
         QBCore.Functions.RequestAnimDict(animation[1])
         local lockPosition = false
@@ -144,6 +149,7 @@ GenerateAnimationList = function(menu, category, content)
     menu:AddButton({
         label = content[1],
         rightLabel = content[3] or nil,
+        icon = content[6] or nil,
         select = function()
             if favoriteAnimationRegister then
                 SetResourceKvp("soz/animation/" .. favoriteAnimationKey, json.encode({

@@ -1,5 +1,5 @@
 import { Injectable } from '../core/decorators/injectable';
-import { ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
+import { animationOptionsToFlags, ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
 
 @Injectable()
 export class ProgressService {
@@ -38,7 +38,8 @@ export class ProgressService {
                 animation: {
                     animDict: animation.dictionary,
                     anim: animation.name,
-                    flags: animation.flags || 0,
+                    flags: animation.options ? animationOptionsToFlags(animation.options) : animation.flags || 0,
+                    task: animation.task,
                 },
                 prop: options.firstProp || {},
                 propTwo: options.secondProp || {},
