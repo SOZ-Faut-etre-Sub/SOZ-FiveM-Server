@@ -119,12 +119,21 @@ function ClothingShop:GenerateMenu(skipIntro)
             return
         end
 
+        local description = "Ce produit n'est plus en stock"
+        if product.stock > 0 then
+            description = "Il ne reste que " .. product.stock .. " exemplaire(s) de ce produit"
+        end
+
         menu:AddButton({
-            label = displayLabel(product.label),
+            label = (product.stock > 0 and "" or "^9") .. displayLabel(product.label),
             rightLabel = "$" .. product.price,
-            description = "Il ne reste que " .. product.stock .. " exemplaire(s) de ce produit",
+            description = description,
             value = product.data,
             select = function()
+                if product.stock <= 0 then
+                    return
+                end
+
                 local ped = PlayerPedId()
                 local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
 
@@ -135,7 +144,6 @@ function ClothingShop:GenerateMenu(skipIntro)
                     torso = {drawable = torsoDrawable, texture = torsoTexture},
                 }, 1)
             end,
-            disabled = product.stock <= 0,
         })
     end
 
