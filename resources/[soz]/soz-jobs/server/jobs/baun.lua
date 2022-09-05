@@ -43,6 +43,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
     end)
 end)
 
+QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-harvest", function (source, cb, item)
+    local canHarvest = exports['soz-inventory']:CanCarryItem(source, item, 1)
+    cb(canHarvest)
+end)
+
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:harvest", function(source, cb, itemId)
     local player = QBCore.Functions.GetPlayer(source)
     if player == nil then
@@ -53,6 +58,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:harvest", function(source,
     exports["soz-inventory"]:AddItem(source, itemId, 1, nil, nil, function(success, reason)
         cb(success, reason)
     end)
+end)
+
+QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-restock", function (source, cb, itemId)
+    local canRestock = exports["soz-inventory"]:GetItem(source, itemId, nil, true) > 0
+    cb(canRestock)
 end)
 
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source, cb, storage, itemId)
