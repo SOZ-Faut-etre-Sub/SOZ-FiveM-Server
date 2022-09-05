@@ -69,4 +69,18 @@ export class InventoryManager {
 
         return { success, reason };
     }
+
+    public canCarryItem(source: number, itemId: string, amount: number, metadata?: InventoryItemMetadata): boolean {
+        return this.sozInventory.CanCarryItem(source, itemId, amount, metadata);
+    }
+
+    public canSwapItem(
+        source: number,
+        firstItemId: string,
+        firstItemAmount: number,
+        secondItemId: string,
+        secondItemAmount: number
+    ): boolean {
+        return this.sozInventory.CanSwapItem(source, firstItemId, firstItemAmount, secondItemId, secondItemAmount);
+    }
 }

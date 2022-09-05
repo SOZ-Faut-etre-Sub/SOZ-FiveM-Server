@@ -182,6 +182,9 @@ Config.BossShop = {
         [12] = {name = "poumon", metadata = {}, price = 2000, amount = 1},
         [13] = {name = "rein", metadata = {}, price = 2000, amount = 1},
         [14] = {name = "foie", metadata = {}, price = 2000, amount = 1},
+        [15] = {name = "flask_pee_empty", metadata = {}, price = 15, amount = 1},
+        [16] = {name = "flask_blood_empty", metadata = {}, price = 15, amount = 1},
+        [17] = {name = "antidepressant", metadata = {}, price = 15, amount = 1},
     },
 }
 

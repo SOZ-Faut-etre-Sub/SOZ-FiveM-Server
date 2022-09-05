@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 
+import { NuiMethodMap } from '../../shared/nui';
+import { useIsInInput } from './input';
 import { useMenuNuiEvent } from './nui';
 
 export const useKeyPress = (targetKey: string, onKeyPress?: () => void) => {
+    const isInInput = useIsInInput();
+
     useEffect(() => {
         const downHandler = (event: KeyboardEvent) => {
-            if (event.key === targetKey) {
+            if (event.key === targetKey && !isInInput) {
                 onKeyPress && onKeyPress();
             }
         };
@@ -15,35 +19,47 @@ export const useKeyPress = (targetKey: string, onKeyPress?: () => void) => {
         return () => {
             window.removeEventListener('keydown', downHandler);
         };
-    }, [targetKey, onKeyPress]);
+    }, [targetKey, onKeyPress, isInInput]);
+};
+
+const useMenuControlNuiEvent = <M extends keyof NuiMethodMap['menu']>(
+    method: M,
+    handler: (r: NuiMethodMap['menu'][M]) => void
+) => {
+    const isInInput = useIsInInput();
+    return useMenuNuiEvent(method, r => {
+        if (!isInInput) {
+            handler(r);
+        }
+    });
 };
 
 export const useBackspace = (onKeyPress?: () => void) => {
-    useMenuNuiEvent('Backspace', onKeyPress);
+    useMenuControlNuiEvent('Backspace', onKeyPress);
     useKeyPress('Backspace', onKeyPress);
 };
 
 export const useArrowDown = (onKeyPress: () => void) => {
-    useMenuNuiEvent('ArrowDown', onKeyPress);
+    useMenuControlNuiEvent('ArrowDown', onKeyPress);
     useKeyPress('ArrowDown', onKeyPress);
 };
 
 export const useArrowUp = (onKeyPress: () => void) => {
-    useMenuNuiEvent('ArrowUp', onKeyPress);
+    useMenuControlNuiEvent('ArrowUp', onKeyPress);
     useKeyPress('ArrowUp', onKeyPress);
 };
 
 export const useArrowRight = (onKeyPress: () => void) => {
-    useMenuNuiEvent('ArrowRight', onKeyPress);
+    useMenuControlNuiEvent('ArrowRight', onKeyPress);
     useKeyPress('ArrowRight', onKeyPress);
 };
 
 export const useArrowLeft = (onKeyPress: () => void) => {
-    useMenuNuiEvent('ArrowLeft', onKeyPress);
+    useMenuControlNuiEvent('ArrowLeft', onKeyPress);
     useKeyPress('ArrowLeft', onKeyPress);
 };
 
 export const useEnter = (onKeyPress?: () => void) => {
-    useMenuNuiEvent('Enter', onKeyPress);
+    useMenuControlNuiEvent('Enter', onKeyPress);
     useKeyPress('Enter', onKeyPress);
 };

@@ -2,6 +2,21 @@
 ClothingShop = {}
 local cam = nil
 
+local function tablelength(T)
+    local count = 0
+    for _ in pairs(T) do
+        count = count + 1
+    end
+    return count
+end
+
+local function displayLabel(text)
+    if string.match(text, "#") ~= nil then
+        return GetLabelText(text:gsub("#", ""))
+    end
+    return text
+end
+
 function ClothingShop:new(...)
     local shop = setmetatable(ShopShell:new(...), {__index = ClothingShop})
     setmetatable(ClothingShop, {__index = ShopShell})
@@ -81,8 +96,6 @@ function ClothingShop:GenerateMenu(skipIntro)
         Wait(4000)
     end
 
-    local PlayerData = QBCore.Functions.GetPlayerData()
-
     self:deleteCam()
     self:setupCam()
 
@@ -99,51 +112,63 @@ function ClothingShop:GenerateMenu(skipIntro)
         end,
     })
 
-    for categoryID, content in pairs(self:getShopProducts()[PlayerData.skin.Model.Hash]) do
-        local partMenu = MenuV:InheritMenu(shopMenu, {subtitle = content.Name})
+    local products = QBCore.Functions.TriggerRpc("shops:server:GetShopContent", self.brand)
+
+    local createProduct = function(menu, productId, product, categoryID, collectionID)
+        if product.label == nil or product.price == nil then
+            return
+        end
+
+        menu:AddButton({
+            label = displayLabel(product.label),
+            rightLabel = "$" .. product.price,
+            description = "Il ne reste que " .. product.stock .. " exemplaire(s) de ce produit",
+            value = product.data,
+            select = function()
+                local ped = PlayerPedId()
+                local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
+
+                TriggerServerEvent("shops:server:pay", self.brand, {
+                    category = categoryID,
+                    collection = collectionID,
+                    item = productId,
+                    torso = {drawable = torsoDrawable, texture = torsoTexture},
+                }, 1)
+            end,
+            disabled = product.stock <= 0,
+        })
+    end
+
+    for categoryID, content in pairs(products) do
+        local partMenu = MenuV:InheritMenu(shopMenu, {subtitle = content.name})
 
         partMenu:On("open", function()
             partMenu:ClearItems()
 
-            for collectionID, collection in pairs(content.Collections) do
-                local collectionMenu = MenuV:InheritMenu(partMenu, {subtitle = collection.Name})
+            for collectionID, collection in pairs(content.items) do
+                if tablelength(collection.items or {}) > 0 then
+                    local collectionMenu = MenuV:InheritMenu(partMenu, {subtitle = collection.name})
 
-                collectionMenu:On("switch", function(_, item)
-                    local ped = PlayerPedId()
-                    for id, component in pairs(item.Value.ApplyComponents) do
-                        SetPedComponentVariation(ped, id, component.Drawable, component.Texture or 0, component.Palette or 0);
+                    collectionMenu:On("switch", function(_, item)
+                        local ped = PlayerPedId()
+                        for id, component in pairs(item.Value.components) do
+                            SetPedComponentVariation(ped, tonumber(id), component.Drawable, component.Texture or 0, component.Palette or 0);
+                        end
+
+                        local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
+                        if torsoDrawable ~= -1 and torsoTexture ~= -1 then
+                            SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
+                        end
+                    end)
+
+                    for clotheId, clothe in pairs(collection.items) do
+                        createProduct(collectionMenu, clotheId, clothe, categoryID, collectionID)
                     end
 
-                    local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
-                    if torsoDrawable ~= -1 and torsoTexture ~= -1 then
-                        SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
-                    end
-                end)
+                    partMenu:AddButton({label = collection.name, value = collectionMenu})
+                end
 
-                collectionMenu:On("open", function()
-                    collectionMenu:ClearItems()
-
-                    for itemID, item in pairs(collection.Items) do
-                        collectionMenu:AddButton({
-                            label = item.Name,
-                            description = "Changer de tenue pour $" .. collection.Price,
-                            value = item,
-                            select = function()
-                                local ped = PlayerPedId()
-                                local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
-
-                                TriggerServerEvent("shops:server:pay", self.brand, {
-                                    category = categoryID,
-                                    collection = collectionID,
-                                    item = itemID,
-                                    torso = {drawable = torsoDrawable, texture = torsoTexture},
-                                }, 1)
-                            end,
-                        })
-                    end
-                end)
-
-                partMenu:AddButton({label = collection.Name, value = collectionMenu})
+                createProduct(partMenu, collectionID, collection, categoryID, collectionID)
             end
         end)
 
@@ -154,7 +179,7 @@ function ClothingShop:GenerateMenu(skipIntro)
             partMenu:ClearItems()
         end)
 
-        shopMenu:AddButton({label = content.Name, value = partMenu})
+        shopMenu:AddButton({label = content.name, value = partMenu})
     end
 
     shopMenu:On("close", function()

@@ -32,6 +32,8 @@ Config.FarmAccountMoney = {
     ["farm_food"] = {money = 100000, marked_money = 0},
     ["farm_upw"] = {money = 100000, marked_money = 0},
     ["farm_pawl"] = {money = 100000, marked_money = 0},
+    ["farm_baun"] = {money = 100000, marked_money = 0},
+    ["farm_ffs"] = {money = 100000, marked_money = 0},
 }
 
 Config.SafeStorages = {
@@ -128,6 +130,15 @@ Config.SafeStorages = {
         size = vec2(0.7, 0.7),
         heading = 303,
         minZ = 26.81,
+        maxZ = 30.81,
+    },
+    ["safe_ffs"] = {
+        label = "Coffre Fight For Style",
+        owner = "ffs",
+        position = vector3(709.35, -966.88, 30.41),
+        size = vec2(1.05, 0.1),
+        heading = 0,
+        minZ = 30.21,
         maxZ = 30.81,
     },
 }

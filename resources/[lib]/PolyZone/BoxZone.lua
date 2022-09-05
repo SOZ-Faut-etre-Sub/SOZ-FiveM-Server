@@ -66,7 +66,7 @@ local function _initDebug(zone, options)
   if not options.debugPoly then
     return
   end
-  
+
   Citizen.CreateThread(function()
     while not zone.destroyed do
       zone:draw()
@@ -121,13 +121,16 @@ function BoxZone:Create(center, length, width, options)
   _initDebug(zone, options)
   return zone
 end
+exports('CreateBoxZone', function(zone)
+   return BoxZone:Create(zone.center, zone.length, zone.width, zone.options)
+end)
 
 
 -- Helper functions
 function BoxZone:isPointInside(point)
   if self.destroyed then
     print("[PolyZone] Warning: Called isPointInside on destroyed zone {name=" .. self.name .. "}")
-    return false 
+    return false
   end
 
   local startPos = self.startPos

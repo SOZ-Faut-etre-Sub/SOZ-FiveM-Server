@@ -100,6 +100,14 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['last_strength_update'] = PlayerData.metadata['last_strength_update'] or nil
     PlayerData.metadata['last_stress_level_update'] = PlayerData.metadata['last_stress_level_update'] or nil
     PlayerData.metadata['health_level'] = PlayerData.metadata['health_level'] or 100
+    PlayerData.metadata['health_book_health_level'] = PlayerData.metadata['health_book_health_level'] or nil
+    PlayerData.metadata['health_book_max_stamina'] = PlayerData.metadata['health_book_max_stamina'] or nil
+    PlayerData.metadata['health_book_strength'] = PlayerData.metadata['health_book_strength'] or nil
+    PlayerData.metadata['health_book_stress_level'] = PlayerData.metadata['health_book_stress_level'] or nil
+    PlayerData.metadata['health_book_sugar'] = PlayerData.metadata['health_book_sugar'] or nil
+    PlayerData.metadata['health_book_fiber'] = PlayerData.metadata['health_book_fiber'] or nil
+    PlayerData.metadata['health_book_lipid'] = PlayerData.metadata['health_book_lipid'] or nil
+    PlayerData.metadata['health_book_protein'] = PlayerData.metadata['health_book_protein'] or nil
     PlayerData.metadata['drug'] = PlayerData.metadata['drug'] or 0
     PlayerData.metadata['armor'] = {current = 0, hidden = false}
     PlayerData.metadata['inlaststand'] = PlayerData.metadata['inlaststand'] or false

@@ -1,6 +1,103 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
+local Shops = {}
+local ShopsContent = {
+    [1885233650] = {}, -- Homme
+    [-1667301416] = {}, -- Femme
+}
+
+-- Create the shop
+MySQL.ready(function()
+    local shops = MySQL.query.await(
+                      "select shop.id as shop_id, shop.name as shop_name, category.id as category_id, category.parent_id as category_parent_id, category.name as category_name from shop_categories inner join shop on shop_categories.shop_id = shop.id inner join category on shop_categories.category_id = category.id or shop_categories.category_id = category.parent_id")
+
+    for _, shop in pairs(ShopsContent) do
+        for _, v in pairs(shops or {}) do
+            Shops[v.shop_name] = v.shop_id
+
+            if shop[v.shop_id] == nil then
+                shop[v.shop_id] = {name = v.shop_name, items = {}}
+            end
+
+            if v.category_parent_id then
+                if shop[v.shop_id].items[v.category_parent_id] == nil then
+                    shop[v.shop_id].items[v.category_parent_id] = {name = v.category_name, items = {}}
+                end
+
+                shop[v.shop_id].items[v.category_parent_id].items[v.category_id] = {name = v.category_name, items = {}}
+            else
+                if shop[v.shop_id].items[v.category_id] == nil then
+                    shop[v.shop_id].items[v.category_id] = {name = v.category_name, items = {}}
+                end
+            end
+        end
+    end
+
+    local clothes = MySQL.query.await(
+                        "select shop_content.*, category.id as category_id, category.parent_id as category_parent_id from shop_content inner join category on shop_content.category_id = category.id or shop_content.category_id = category.parent_id where shop_id IN (1, 2, 3)")
+    for _, v in pairs(clothes or {}) do
+        local data = json.decode(v.data)
+
+        if v.category_parent_id then
+            ShopsContent[tonumber(data.modelHash)][v.shop_id].items[v.category_parent_id].items[v.category_id].items[v.id] = {
+                label = v.label,
+                price = v.price,
+                data = data,
+                stock = v.stock,
+            }
+        else
+            ShopsContent[tonumber(data.modelHash)][v.shop_id].items[v.category_id].items[v.id] = {
+                label = v.label,
+                price = v.price,
+                data = data,
+                stock = v.stock,
+            }
+        end
+    end
+end)
+
+-- GetShopContent
+QBCore.Functions.CreateCallback("shops:server:GetShopContent", function(source, cb, shop_name)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local PlayerModelHash = Player.PlayerData.skin.Model.Hash
+
+    cb(ShopsContent[PlayerModelHash][Shops[shop_name]].items or {})
+end)
+
 --- Items functions
+
+local function checkStock(products, productID, amount)
+    if type(products) ~= "table" then
+        return false, nil
+    end
+
+    for productId, product in pairs(products) do
+        if productId == productID and product.stock then
+            return (product.stock >= amount), product
+        end
+    end
+
+    for _, product in pairs(products) do
+        if product.items ~= nil then
+            local stock, p = checkStock(product.items, productID, amount)
+            if stock then
+                return stock, p
+            end
+        end
+    end
+
+    if products.items ~= nil then
+        for _, product in pairs(products.items) do
+            local stock, p = checkStock(product.items, productID, amount)
+            if stock then
+                return stock, p
+            end
+        end
+    end
+
+    return false, nil
+end
+
 local function getItemPrice(product, productID, Player)
     if product == "tattoo" then
         for _, tattoo in pairs(Config.Products[product]) do
@@ -15,7 +112,11 @@ local function getItemPrice(product, productID, Player)
     elseif product == "jewelry" then
         return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.categoryIndex].price
     elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
-        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.category].Collections[productID.collection].Price
+        local _, item = checkStock(ShopsContent[Player.PlayerData.skin.Model.Hash][Shops[product]], productID.item, 1)
+        if item then
+            return item.price
+        end
+        return 1000000000 -- Safe guard, if no clothe was found
     else
         return Config.Products[product][productID].price
     end
@@ -96,10 +197,14 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
             elseif brand == "ponsonbys" or brand == "suburban" or brand == "binco" then
                 local clothConfig = Player.PlayerData.cloth_config
-                local clothItem =
-                    Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.category].Collections[product.collection].Items[product.item]
+                local hasStock, clothItem = checkStock(ShopsContent[Player.PlayerData.skin.Model.Hash][Shops[brand]], product.item, amount)
 
-                for componentId, component in pairs(clothItem.ApplyComponents or {}) do
+                if not hasStock or clothItem == nil then
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
+                    return
+                end
+
+                for componentId, component in pairs(clothItem.data.components or {}) do
                     clothConfig["BaseClothSet"].Components[tostring(componentId)] = {}
                     clothConfig["BaseClothSet"].Components[tostring(componentId)].Drawable = tonumber(component.Drawable)
                     clothConfig["BaseClothSet"].Components[tostring(componentId)].Texture = tonumber(component.Texture) or 0
@@ -112,6 +217,14 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                         Texture = tonumber(product.torso.texture),
                         Palette = 0,
                     }
+                end
+
+                local affectedRows = MySQL.update.await("update shop_content set stock = stock - @stock where id = @id", {
+                    id = product.item,
+                    stock = amount,
+                })
+                if affectedRows then
+                    clothItem.stock = clothItem.stock - amount
                 end
 
                 Player.Functions.SetClothConfig(clothConfig, false)
@@ -146,4 +259,111 @@ RegisterNetEvent("shops:server:resetTattoos", function()
         Player.Functions.SetSkin(skin, false)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de vous faire retirer tous vos tatouages")
     end
+end)
+
+---
+local garmentToCategory = function(garment)
+    if garment == "garment_top" or garment == "luxury_garment_top" then
+        return 1
+    elseif garment == "garment_pant" or garment == "luxury_garment_pant" then
+        return 6
+    elseif garment == "garment_shoes" or garment == "luxury_garment_shoes" then
+        return 10
+    elseif garment == "garment_underwear" or garment == "luxury_garment_underwear" then
+        return 19
+    end
+end
+
+local function getItems(products)
+    if type(products) ~= "table" then
+        return {}
+    end
+
+    local items = {}
+    local buffer = {}
+
+    for productId, product in pairs(products) do
+        if product.stock and product.stock >= 0 then
+            buffer[productId] = {id = productId, data = product}
+        end
+    end
+
+    for _, product in pairs(products) do
+        if product.items ~= nil then
+            local list = getItems(product.items)
+            for _, p in pairs(list) do
+                buffer[p.id] = p
+            end
+        end
+    end
+
+    if products.items ~= nil then
+        for _, product in pairs(products.items) do
+            local list = getItems(product.items)
+            for _, p in pairs(list) do
+                buffer[p.id] = p
+            end
+        end
+    end
+
+    for _, v in pairs(buffer) do
+        items[#items + 1] = v
+    end
+
+    return items
+end
+
+exports("RestockShop", function(brand, item, amount)
+    local category = garmentToCategory(item)
+    local sexToRefill = math.random(0, 1)
+
+    local shop = ShopsContent[sexToRefill and -1667301416 or 1885233650][Shops[brand]]
+    if not shop then
+        return false
+    end
+
+    shop = shop.items[category]
+    if not shop then
+        return false
+    end
+
+    local allClothes = getItems(shop.items)
+
+    for _ = 1, amount do
+        local randomClothes = allClothes[math.random(1, #allClothes)]
+        local clothesWithSameDrawable = {}
+
+        if not randomClothes then
+            return false
+        end
+
+        for _, clothe in pairs(allClothes) do
+            for k, v in pairs(clothe.data.data.components or {}) do
+                local originComponent = randomClothes.data.data.components[tostring(k)]
+
+                if originComponent then
+                    if k ~= "8" and k ~= "3" and tonumber(originComponent.Drawable) == tonumber(v.Drawable) then
+                        clothesWithSameDrawable[clothe.id] = clothe.data
+                    end
+                end
+            end
+        end
+
+        local clothesWithSameDrawableID = {}
+        for clotheId, _ in pairs(clothesWithSameDrawable) do
+            clothesWithSameDrawableID[#clothesWithSameDrawableID + 1] = clotheId
+        end
+
+        local affectedRows = MySQL.update.await("update shop_content set stock = stock + @stock where id IN (@id)",
+                                                {id = clothesWithSameDrawableID, stock = amount})
+        if affectedRows > 0 then
+            for _, clothe in pairs(clothesWithSameDrawable) do
+                clothe.stock = clothe.stock + amount
+            end
+
+            return true
+        end
+    end
+
+    return false
 end)

@@ -11,19 +11,36 @@ export type QBCorePlayer = {
     PlayerData: PlayerData;
 };
 
-export type PlayerJob = {
-    onduty: boolean;
-    job: JobType;
-};
-
 export type PlayerData = {
+    charinfo: PlayerCharInfo;
     role: SozRole;
     metadata: PlayerMetadata;
     job: PlayerJob;
     items: Record<string, InventoryItem> | InventoryItem[];
 };
 
-export type PlayerMetadata = {
+export type PlayerCharInfo = {
+    firstname: string;
+    lastname: string;
+};
+
+export type PlayerJob = {
+    onduty: boolean;
+    id: JobType;
+};
+
+export type PlayerHealthBook = {
+    health_book_health_level: number | null;
+    health_book_max_stamina: number | null;
+    health_book_strength: number | null;
+    health_book_stress_level: number | null;
+    health_book_fiber: number | null;
+    health_book_lipid: number | null;
+    health_book_sugar: number | null;
+    health_book_protein: number | null;
+};
+
+export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
     health: number;

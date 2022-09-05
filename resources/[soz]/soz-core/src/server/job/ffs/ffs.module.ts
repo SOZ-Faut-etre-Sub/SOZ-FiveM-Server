@@ -1,7 +1,15 @@
 import { Module } from '../../../core/decorators/module';
-import { FightForStyleProvider } from './ffs.provider';
+import { FightForStyleCraftProvider } from './ffs.craft.provider';
+import { FightForStyleHarvestProvider } from './ffs.harvest.provider';
+import { FightForStyleRestockProvider } from './ffs.restock.provider';
+import { FightForStyleTransformProvider } from './ffs.transform.provider';
 
 @Module({
-    providers: [FightForStyleProvider],
+    providers: [
+        FightForStyleHarvestProvider,
+        FightForStyleTransformProvider,
+        FightForStyleCraftProvider,
+        FightForStyleRestockProvider,
+    ],
 })
 export class FightForStyleModule {}

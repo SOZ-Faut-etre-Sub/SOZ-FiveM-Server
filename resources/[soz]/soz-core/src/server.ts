@@ -6,8 +6,10 @@ import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { DatabaseModule } from './server/database/database.module';
 import { ItemModule } from './server/item/item.module';
 import { FightForStyleModule } from './server/job/ffs/ffs.module';
+import { FoodModule } from './server/job/food/food.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { PlayerModule } from './server/player/player.module';
+import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { WeatherModule } from './server/weather/weather.module';
 
@@ -20,7 +22,9 @@ async function bootstrap() {
         ItemModule,
         LSMCModule,
         FightForStyleModule,
-        VehicleModule
+        VehicleModule,
+        FoodModule,
+        StreamModule
     );
 
     await app.stop();

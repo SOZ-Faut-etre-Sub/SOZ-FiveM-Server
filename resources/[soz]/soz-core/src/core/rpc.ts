@@ -1,7 +1,8 @@
 import { SOZ_CORE_IS_SERVER } from '../globals';
+import { RpcEvent } from '../shared/rpc';
 import { uuidv4 } from './utils';
 
-export const emitRpc = async (name: string, ...args: any[]): Promise<any> => {
+export const emitRpc = async <R>(name: RpcEvent, ...args: any[]): Promise<R> => {
     if (SOZ_CORE_IS_SERVER) {
         console.error("Can't emit RPC on server");
     } else {

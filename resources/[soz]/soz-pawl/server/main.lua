@@ -35,19 +35,27 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
         return
     end
 
-    if exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, Config.Harvest.RewardItem, 1) then
+    if exports["soz-inventory"]:CanCarryItems(Player.PlayerData.source, Config.Harvest.RewardItems) then
         local harvest = field:Harvest(position)
         if harvest then
-            exports["soz-inventory"]:AddItem(Player.PlayerData.source, Config.Harvest.RewardItem, 1, nil, nil, function(success, reason)
-                cb(success)
+            local cbSent = false
+            for _, item in pairs(Config.Harvest.RewardItems) do
+                if cbSent then
+                    return
+                end
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
+                    if not success then
+                        cb(false)
+                        cbSent = true
+                    end
+                end)
+            end
+            TriggerEvent("monitor:server:event", "job_pawl_harvest_tree", {
+                player_source = Player.PlayerData.source,
+                field = identifier,
+            }, {position = position, amount = 1})
 
-                TriggerEvent("monitor:server:event", "job_pawl_harvest_tree", {
-                    player_source = Player.PlayerData.source,
-                    field = identifier,
-                }, {position = position, amount = 1})
-
-                return
-            end)
+            return
         end
         cb(false)
     else

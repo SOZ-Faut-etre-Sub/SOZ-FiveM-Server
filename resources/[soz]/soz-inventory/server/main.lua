@@ -222,6 +222,30 @@ end
 RegisterNetEvent("inventory:server:CanCarryItem", Inventory.CanCarryItem)
 exports("CanCarryItem", Inventory.CanCarryItem)
 
+function Inventory.CanCarryItems(inv, items, metadata)
+    inv = Inventory(inv)
+    if items then
+        local itemsTotalWeight = 0
+        for _, v in pairs(items) do
+            local item = QBCore.Shared.Items[v.name]
+            local itemSlots, totalAmount, emptySlots = Inventory.GetItemSlots(inv, item, metadata == nil and {} or type(metadata) == "string" and
+                                                                                  {type = metadata} or metadata)
+            if #itemSlots > 0 or emptySlots > 0 then
+                if inv.type == "player" and item.limit and (totalAmount + v.amount) > item.limit then
+                    return false
+                end
+                itemsTotalWeight = itemsTotalWeight + (item.weight * v.amount)
+            end
+        end
+
+        local inventoryUsedWeight = Inventory.CalculateWeight(inv.items)
+        return itemsTotalWeight + inventoryUsedWeight <= inv.maxWeight
+    end
+    return true
+end
+RegisterNetEvent("inventory:server:CanCarryItems", Inventory.CanCarryItems)
+exports("CanCarryItems", Inventory.CanCarryItems)
+
 --- Items management
 function Inventory.FilterItems(inv, invType)
     if type(inv) ~= "table" then

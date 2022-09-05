@@ -8,7 +8,7 @@ if IsDuplicityVersion() then
     Config.CharacterComponentColors = {}
 
     function GetLabelText(label)
-        return label
+        return "#" .. label
     end
 else
     Config.CharacterComponentList = exports["soz-character"]:GetLabels()
