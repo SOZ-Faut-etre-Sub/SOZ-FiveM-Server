@@ -3,8 +3,6 @@ import { Vector3 } from '../../shared/polyzone/vector';
 
 export const BLACK_SCREEN_URL = 'nui://soz-core/public/dui_twitch_stream.html';
 
-const SCALE = 1.0;
-
 const createNamedRenderTargetForModel = (name, model): number => {
     let handle = 0;
 
@@ -38,13 +36,20 @@ export class StreamScreen {
 
     private zone: BoxZone;
 
-    public constructor(zone: BoxZone, name: string, model: string, renderTarget = 'cinscreen') {
+    public constructor(
+        zone: BoxZone,
+        name: string,
+        model: string,
+        renderTarget = 'cinscreen',
+        width = 4096,
+        height = 2048
+    ) {
         this.textureDictionary = name + '_dict';
-        this.textureName = name + '_texture';
+        this.textureName = 'video';
         this.zone = zone;
         this.renderTarget = renderTarget;
 
-        this.duiObject = CreateDui(this.playingUrl, 1280 * SCALE, 720 * SCALE);
+        this.duiObject = CreateDui(this.playingUrl, width, height);
 
         CreateRuntimeTextureFromDuiHandle(
             CreateRuntimeTxd(this.textureDictionary),
@@ -83,9 +88,8 @@ export class StreamScreen {
         }
 
         SetTextRenderId(this.handle);
-        Set_2dLayer(4);
+        SetScriptGfxDrawOrder(4);
         SetScriptGfxDrawBehindPausemenu(true);
-        DrawRect(0.5, 0.5, 1.0, 1.0, 0, 0, 0, 255);
         DrawSprite(this.textureDictionary, this.textureName, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255);
         SetTextRenderId(GetDefaultScriptRendertargetRenderId());
         SetScriptGfxDrawBehindPausemenu(false);
