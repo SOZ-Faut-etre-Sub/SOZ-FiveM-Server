@@ -525,14 +525,11 @@ Config.AnimationsList = {
                 {"mp_deathmatch_intros@unarmed", "intro_male_unarmed_e", 262144},
             },
         },
-        ["Yoga"] = {
-            {"Faire du Yoga", "DESC", false, false, {"0", "WORLD_HUMAN_YOGA", 262144}},
-            {"Faire du Yoga #2", "DESC", false, false, {"timetable@amanda@ig_4", "ig_4_idle", 262144}},
-        },
         {"Départ de course", "DESC", false, false, {"random@street_race", "grid_girl_race_start", 262144}},
-        {"Faire des abdos", "DESC", false, false, {"0", "WORLD_HUMAN_SIT_UPS", 262144}},
-        {"Faire des altères", "DESC", false, false, {"0", "WORLD_HUMAN_MUSCLE_FREE_WEIGHTS", 262144}},
-        {"Faire des pompes", "DESC", false, false, {"0", "WORLD_HUMAN_PUSH_UPS", 262144}},
+        {"Faire des abdos", "DESC", false, false, { event = "soz-core:client:player:health:sit-up" }, "💪"},
+        {"Faire des altères", "DESC", false, false, { event = "soz-core:client:player:health:free-weight" }, "💪"},
+        {"Faire des pompes", "DESC", false, false, { event = "soz-core:client:player:health:push-up" }, "💪"},
+        {"Faire du yoga", "DESC", false, false, { event = "soz-core:client:player:health:yoga" }, "🧘"},
         {"Karate", "DESC", false, false, {"anim@mp_player_intcelebrationfemale@karate_chops", "karate_chops", 262144}},
         {"Montrer ses muscles", "DESC", false, false, {"0", "WORLD_HUMAN_MUSCLE_FLEX", 262144}},
         ["Étirements"] = {

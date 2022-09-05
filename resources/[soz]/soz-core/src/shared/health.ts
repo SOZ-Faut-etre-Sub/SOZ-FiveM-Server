@@ -1,7 +1,7 @@
 import { PlayerHealthBook } from './player';
 
 export const healthLevelToLabel = (level: number | null, min: number, max: number): string => {
-    if (null === level) {
+    if (!level) {
         return 'inconnu';
     }
 

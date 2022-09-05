@@ -1,11 +1,13 @@
-import { On } from '../../core/decorators/event';
+import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
+import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
 
 const EVENT_DISTANCE_TRIGGER = 70.0;
@@ -18,14 +20,18 @@ export class PlayerStressProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
     private isStressUpdated = false;
+    private lastStressDowngrade = null;
     private wasDead = false;
 
     private updateStress(stress = 1): void {
         this.isStressUpdated = true;
         TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, stress);
 
-        this.notifier.notify('Un évènement vous a fait stresser.', 'error');
+        this.notifier.notify('Un événement vous a légèrement ~r~angoissé~s~.', 'error');
 
         setTimeout(() => {
             this.isStressUpdated = false;
@@ -116,6 +122,26 @@ export class PlayerStressProvider {
                 }
             }
         }
+    }
+
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_YOGA)
+    async doYoga(): Promise<void> {
+        const { completed } = await this.progressService.progress('Yoga', 'Vous vous relaxez...', 30000, {
+            dictionary: 'timetable@amanda@ig_4',
+            name: 'ig_4_idle',
+        });
+
+        if (!completed) {
+            return;
+        }
+
+        if (this.lastStressDowngrade && GetGameTimer() - this.lastStressDowngrade < 60000) {
+            return;
+        }
+
+        this.lastStressDowngrade = GetGameTimer();
+
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, -1);
     }
 
     @Tick(TickInterval.EVERY_SECOND)

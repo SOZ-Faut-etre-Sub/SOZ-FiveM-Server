@@ -85,7 +85,7 @@ export class PlayerHealthProvider {
                     this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
 
-                    this.notifier.notify(source, 'Vous vous sentez moins en forme.', 'error');
+                    this.notifier.notify(source, 'Vous vous sentez moins en ~r~forme~s~.', 'error');
                 }
             }
 
@@ -101,7 +101,7 @@ export class PlayerHealthProvider {
                     this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 50, 120);
 
-                    this.notifier.notify(source, 'Vous vous sentez moins en forme.', 'error');
+                    this.notifier.notify(source, 'Vous vous sentez moins en ~r~forme~s~.', 'error');
                 }
             }
 
@@ -116,7 +116,7 @@ export class PlayerHealthProvider {
                     this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, 0, 100);
 
-                    this.notifier.notify(source, 'Vous vous sentez moins stressé.', 'error');
+                    this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'error');
                 }
             }
         }
