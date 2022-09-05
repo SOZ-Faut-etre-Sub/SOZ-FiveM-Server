@@ -36,6 +36,13 @@ export class FightForStyleHarvestProvider {
 
     @OnEvent(ServerEvent.FFS_HARVEST)
     async onHarvest(source: number) {
+        if (!this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1)) {
+            this.notifier.notify(
+                source,
+                `Vous ne possédez suffisamment pas de place dans ton inventaire pour récolter.`
+            );
+            return;
+        }
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à récolter');
         while (this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1, {})) {
             const hasHarvested = await this.doHarvest(source, 'Vous récoltez une balle de coton.');
@@ -43,6 +50,7 @@ export class FightForStyleHarvestProvider {
                 this.notifier.notify(source, `Vous avez ~r~arrêté~s~ de récolter.`, 'error');
                 return;
             }
+            this.notifier.notify(source, `Vous avez récolté une balle de coton.`);
         }
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de récolter.', 'success');
     }

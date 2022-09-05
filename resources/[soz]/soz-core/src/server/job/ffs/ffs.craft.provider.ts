@@ -5,6 +5,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { CraftProcess } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
+import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
@@ -26,21 +27,33 @@ export class FightForStyleCraftProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnEvent(ServerEvent.FFS_CRAFT)
-    public async onCraft(source: number, craftProcess: CraftProcess) {
-        this.notifier.notify(source, 'Vous ~g~commencez~s~ à confectionner.', 'success');
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    private canCraft(source: number, craftProcess: CraftProcess): boolean {
         for (const input of craftProcess.inputs) {
             const item = this.inventoryManager.getFirstItemInventory(source, input.fabric);
             if (!item || item.amount < input.amount) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @OnEvent(ServerEvent.FFS_CRAFT)
+    public async onCraft(source: number, craftProcess: CraftProcess) {
+        while (this.canCraft(source, craftProcess)) {
+            this.notifier.notify(source, 'Vous ~g~commencez~s~ à confectionner.', 'success');
+            const hasCrafted = await this.doCraft(source, craftProcess);
+            const outputItemLabel = this.itemService.getItem(craftProcess.output).label;
+            if (hasCrafted) {
+                this.notifier.notify(source, `Vous avez confectionné un·e ~g~${outputItemLabel}~s~.`);
+            } else {
+                this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de confectionner.');
                 return;
             }
         }
-        const hasCrafted = await this.doCraft(source, craftProcess);
-        let label = 'Vous avez ~r~fini~s~ de confectionner.';
-        if (!hasCrafted) {
-            label = 'Vous avez ~r~arrêté~s~ de confectionner.';
-        }
-        this.notifier.notify(source, label);
+        this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`);
     }
 
     private async doCraft(source: number, craftProcess: CraftProcess) {

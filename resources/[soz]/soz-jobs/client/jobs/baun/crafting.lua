@@ -77,15 +77,6 @@ CreateThread(function()
     end)
 end)
 
-local function getItem(items, itemId)
-    for _, item in ipairs(items) do
-        if item.name == itemId then
-            return item
-        end
-    end
-    return {amount = 0}
-end
-
 RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
     local item = QBCore.Shared.Items[cocktailId]
     local action_message = string.format("Vous confectionnez 1 %s", item.label)
