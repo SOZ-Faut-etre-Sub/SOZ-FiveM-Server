@@ -30,7 +30,7 @@ export class StreamProvider {
             }),
             'bennys',
             'soz_big_screenbenny',
-            'cinscreen'
+            'big_disp'
         );
     }
 
