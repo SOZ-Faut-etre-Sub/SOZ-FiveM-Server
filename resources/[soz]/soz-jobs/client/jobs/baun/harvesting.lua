@@ -53,28 +53,37 @@ BaunJob.Functions.InitHarvestingZones = function()
 end
 
 RegisterNetEvent("soz-jobs:client:baun:harvest", function(data)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:can-harvest", function(canHarvest)
+        if canHarvest then
+            harvest(data)
+        end
+    end, data.give_item)
+end)
+
+function harvest(data)
     local item = QBCore.Shared.Items[data.give_item]
     local action_message = string.format("Vous récoltez des %s.", item.pluralLabel)
     local finished_message = string.format("Vous avez terminé de récolter des %s.", item.pluralLabel)
-    QBCore.Functions.Progressbar("harvest-crate", action_message, BaunConfig.Durations.Harvesting, false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function()
-        QBCore.Functions.TriggerCallback("soz-jobs:server:baun:harvest", function(success, reason)
-            if success then
-                TriggerEvent("soz-jobs:client:baun:harvest", data)
-            else
-                if reason ~= "invalid_weight" then
-                    exports["soz-hud"]:DrawNotification(string.format("Il y a eu une erreur : `%s`", reason), "error")
+    exports["soz-hud"]:DrawNotification(action_message)
+    QBCore.Functions.Progressbar("harvest-crate", "Récolte en cours...", BaunConfig.Durations.Harvesting, false, true,
+        {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function()
+            QBCore.Functions.TriggerCallback("soz-jobs:server:baun:harvest", function(success, reason)
+                if success then
+                    TriggerEvent("soz-jobs:client:baun:harvest", data)
                 else
-                    exports["soz-hud"]:DrawNotification(finished_message)
+                    if reason ~= "invalid_weight" then
+                        exports["soz-hud"]:DrawNotification(string.format("Il y a eu une erreur : `%s`", reason), "error")
+                    else
+                        exports["soz-hud"]:DrawNotification(finished_message)
+                    end
                 end
-            end
-        end, data.give_item)
-    end, function()
-        exports["soz-hud"]:DrawNotification(finished_message)
-    end)
-end)
+            end, data.give_item)
+        end, function()
+            exports["soz-hud"]:DrawNotification(finished_message)
+        end)
+end

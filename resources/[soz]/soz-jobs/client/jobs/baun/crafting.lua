@@ -86,61 +86,6 @@ local function getItem(items, itemId)
     return {amount = 0}
 end
 
-AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
-    if BaunJob.Menu.IsOpen then
-        return
-    end
-    BaunJob.Menu:ClearItems()
-
-    -- RECIPES
-    local recipesMenu = MenuV:InheritMenu(BaunJob.Menu, {subtitle = "Livre des recettes"})
-    local items = QBCore.Functions.TriggerRpc("inventory:server:GetInventoryItems")
-
-    for cocktailId, cocktail in pairs(BaunJob.RecipeBook) do
-        local subtitle = "Ingrédients pour " .. cocktail.label
-        local ingredientsMenu = MenuV:InheritMenu(recipesMenu, {subtitle = subtitle})
-        local canCraft = true
-
-        for _, ingredient in pairs(cocktail.ingredients) do
-            local hasTheRequiredQuantity = getItem(items, ingredient.itemId).amount >= ingredient.quantity
-            if not hasTheRequiredQuantity then
-                canCraft = false
-            end
-
-            ingredientsMenu:AddCheckbox({
-                label = ingredient.quantity .. " " .. ingredient.label,
-                -- icon = item.icon or ("https://nui-img/soz-items/" .. item.name)
-                description = ingredient.description,
-                value = hasTheRequiredQuantity,
-                disabled = true,
-            })
-        end
-
-        if data and data.craftMode == true then
-            ingredientsMenu:AddButton({
-                label = "Confectionner le cocktail",
-                disabled = not canCraft,
-                select = function()
-                    ingredientsMenu:Close()
-                    recipesMenu:Close()
-                    BaunJob.Menu:Close()
-                    TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
-                end,
-            })
-        end
-
-        recipesMenu:AddButton({
-            label = cocktail.label,
-            description = cocktail.description,
-            -- icon = cocktail.icon or ("https://nui-img/soz-items/" .. cocktail.name),
-            value = ingredientsMenu,
-        })
-    end
-    BaunJob.Menu:AddButton({icon = "🍸", label = "Livre des recettes", value = recipesMenu})
-
-    BaunJob.Menu:Open()
-end)
-
 RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
     local item = QBCore.Shared.Items[cocktailId]
     local action_message = string.format("Vous confectionnez 1 %s", item.label)

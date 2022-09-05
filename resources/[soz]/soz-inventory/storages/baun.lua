@@ -18,7 +18,7 @@ end
 
 Config.Storages["baun_unicorn_fridge_1"] = {
     label = "Frigo - Vanilla Unicorn",
-    type = "fridge",
+    type = "liquor_storage",
     owner = "baun",
     position = vector3(132.34, -1285.02, 29.27),
     size = vec2(3.6, 0.6),
@@ -30,7 +30,7 @@ Config.Storages["baun_unicorn_fridge_1"] = {
 
 Config.Storages["baun_unicorn_fridge_2"] = {
     label = "Frigo - Vanilla Unicorn",
-    type = "fridge",
+    type = "liquor_storage",
     owner = "baun",
     position = vector3(129.87, -1280.56, 29.27),
     size = vec2(2.8, 0.8),
@@ -42,7 +42,7 @@ Config.Storages["baun_unicorn_fridge_2"] = {
 
 Config.Storages["baun_unicorn_flavor_storage_1"] = {
     label = "Coffre à saveurs - Vanilla Unicorn",
-    type = "storage",
+    type = "flavor_storage",
     owner = "baun",
     position = vector3(133.31, -1286.06, 29.27),
     size = vec2(0.7, 0.7),
@@ -54,7 +54,7 @@ Config.Storages["baun_unicorn_flavor_storage_1"] = {
 
 Config.Storages["baun_unicorn_furniture_storage_1"] = {
     label = "Coffre à fournitures - Vanilla Unicorn",
-    type = "storage",
+    type = "flavor_storage",
     owner = "baun",
     position = vector3(128.97, -1284.42, 29.27),
     size = vec2(0.5, 0.35),
@@ -66,7 +66,7 @@ Config.Storages["baun_unicorn_furniture_storage_1"] = {
 
 Config.Storages["baun_bahama_fridge_storage_1"] = {
     label = "Frigo - Bahama Mamas",
-    type = "storage",
+    type = "liquor_storage",
     owner = "baun",
     position = vector3(-1375.53, -629.32, 30.82),
     size = vec2(6.8, 0.2),
@@ -78,7 +78,7 @@ Config.Storages["baun_bahama_fridge_storage_1"] = {
 
 Config.Storages["baun_bahama_fridge_storage_2"] = {
     label = "Frigo - Bahama Mamas",
-    type = "storage",
+    type = "liquor_storage",
     owner = "baun",
     position = vector3(-1391.59, -606.41, 30.32),
     size = vec2(2.7, 0.3),
@@ -90,7 +90,7 @@ Config.Storages["baun_bahama_fridge_storage_2"] = {
 
 Config.Storages["baun_bahama_flavor_storage_1"] = {
     label = "Coffre à saveurs - Bahama Mamas",
-    type = "storage",
+    type = "flavor_storage",
     owner = "baun",
     position = vector3(-1389.55, -599.86, 30.32),
     size = vec2(0.75, 0.7),
@@ -102,7 +102,7 @@ Config.Storages["baun_bahama_flavor_storage_1"] = {
 
 Config.Storages["baun_bahama_flavor_storage_2"] = {
     label = "Coffre à saveurs - Bahama Mamas",
-    type = "storage",
+    type = "flavor_storage",
     owner = "baun",
     position = vector3(-1378.66, -631.6, 30.82),
     size = vec2(0.65, 0.6),
@@ -114,7 +114,7 @@ Config.Storages["baun_bahama_flavor_storage_2"] = {
 
 Config.Storages["baun_bahama_furniture_storage_1"] = {
     label = "Coffre à fournitures - Bahama Mamas",
-    type = "storage",
+    type = "furniture_storage",
     owner = "baun",
     position = vector3(-1389.54, -606.59, 30.38),
     size = vec2(0.55, 0.35),
@@ -126,7 +126,7 @@ Config.Storages["baun_bahama_furniture_storage_1"] = {
 
 Config.Storages["baun_bahama_furniture_storage_2"] = {
     label = "Coffre à fournitures - Bahama Mamas",
-    type = "storage",
+    type = "furniture_storage",
     owner = "baun",
     position = vector3(-1375.82, -627.51, 30.82),
     size = vec2(0.55, 0.3),
