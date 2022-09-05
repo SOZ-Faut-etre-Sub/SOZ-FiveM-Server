@@ -66,24 +66,24 @@ function harvest(data)
     local finished_message = string.format("Vous avez terminé de récolter des %s.", item.pluralLabel)
     exports["soz-hud"]:DrawNotification(action_message)
     QBCore.Functions.Progressbar("harvest-crate", "Récolte en cours...", BaunConfig.Durations.Harvesting, false, true,
-        {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function()
-            QBCore.Functions.TriggerCallback("soz-jobs:server:baun:harvest", function(success, reason)
-                if success then
-                    TriggerEvent("soz-jobs:client:baun:harvest", data)
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {}, {}, {}, function()
+        QBCore.Functions.TriggerCallback("soz-jobs:server:baun:harvest", function(success, reason)
+            if success then
+                TriggerEvent("soz-jobs:client:baun:harvest", data)
+            else
+                if reason ~= "invalid_weight" then
+                    exports["soz-hud"]:DrawNotification(string.format("Il y a eu une erreur : `%s`", reason), "error")
                 else
-                    if reason ~= "invalid_weight" then
-                        exports["soz-hud"]:DrawNotification(string.format("Il y a eu une erreur : `%s`", reason), "error")
-                    else
-                        exports["soz-hud"]:DrawNotification(finished_message)
-                    end
+                    exports["soz-hud"]:DrawNotification(finished_message)
                 end
-            end, data.give_item)
-        end, function()
-            exports["soz-hud"]:DrawNotification(finished_message)
-        end)
+            end
+        end, data.give_item)
+    end, function()
+        exports["soz-hud"]:DrawNotification(finished_message)
+    end)
 end
