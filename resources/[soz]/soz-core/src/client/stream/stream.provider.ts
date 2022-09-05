@@ -19,8 +19,8 @@ export class StreamProvider {
                 minZ: 103.02 - 1,
             }),
             'cinema',
-            'v_ilev_cin_screen',
-            'cinscreen'
+            'v_50_curtains',
+            'big_disp2'
         );
 
         this.bennysScreen = new StreamScreen(
