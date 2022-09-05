@@ -19,7 +19,7 @@ export class StreamProvider {
                 minZ: 103.02 - 1,
             }),
             'cinema',
-            'v_50_curtains',
+            'v_50_floornwalls',
             'big_disp2'
         );
 
