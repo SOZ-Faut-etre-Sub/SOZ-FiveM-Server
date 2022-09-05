@@ -42,8 +42,14 @@ export class FightForStyleCraftProvider {
 
     @OnEvent(ServerEvent.FFS_CRAFT)
     public async onCraft(source: number, craftProcess: CraftProcess) {
+        if (!this.canCraft(source, craftProcess)) {
+            this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`, 'error');
+            return;
+        }
+
+        this.notifier.notify(source, 'Vous ~g~commencez~s~ à confectionner.', 'success');
+
         while (this.canCraft(source, craftProcess)) {
-            this.notifier.notify(source, 'Vous ~g~commencez~s~ à confectionner.', 'success');
             const hasCrafted = await this.doCraft(source, craftProcess);
             const outputItemLabel = this.itemService.getItem(craftProcess.output).label;
             if (hasCrafted) {
