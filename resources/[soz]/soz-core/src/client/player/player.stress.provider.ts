@@ -5,7 +5,6 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
