@@ -9,7 +9,8 @@
         "build": "concurrently \"yarn run build-module\" \"yarn run build-nui\"",
         "dev-module": "webpack --config webpack.config.watch.js --watch --mode development",
         "dev-nui": "webpack-dev-server --config webpack.config.dev_server.js --mode development --hot",
-        "dev": "concurrently \"yarn run dev-module\" \"yarn run dev-nui\""
+        "dev": "concurrently \"yarn run dev-module\" \"yarn run dev-nui\"",
+        "lint": "tsc -p tsconfig.json --noEmit"
     },
     "devDependencies": {
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",

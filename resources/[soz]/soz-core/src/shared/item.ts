@@ -16,6 +16,7 @@ export type ItemType =
 type BaseItem = {
     name: string;
     label: string;
+    pluralLabel?: string;
     weight: number;
     description: string;
     unique: boolean;
@@ -73,6 +74,19 @@ export type PlankItem = BaseItem & {
     type: 'plank';
 };
 
+// Fight For Style
+export type SewingRawMaterialItem = BaseItem & {
+    type: 'item';
+};
+
+export type FabricItem = BaseItem & {
+    type: 'item';
+};
+
+export type GarmentItem = BaseItem & {
+    type: 'item';
+};
+
 type AnimationItem = {
     name: string;
     dictionary: string;
@@ -122,4 +136,7 @@ export type Item =
     | SawdustItem
     | PlankItem
     | FoodItem
-    | DrinkItem;
+    | DrinkItem
+    | SewingRawMaterialItem
+    | FabricItem
+    | GarmentItem;

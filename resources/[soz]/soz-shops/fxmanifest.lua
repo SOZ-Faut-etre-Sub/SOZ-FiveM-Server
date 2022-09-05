@@ -13,6 +13,6 @@ client_scripts {
     "client/shops/*.lua",
     "client/shops.lua",
 }
-server_scripts {"server/main.lua"}
+server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua"}
 
-dependencies {"qb-core", "qb-target", "soz-hud", "soz-locations", "menuv", "soz-character"}
+dependencies {"oxmysql", "qb-core", "qb-target", "soz-hud", "soz-locations", "menuv", "soz-character"}

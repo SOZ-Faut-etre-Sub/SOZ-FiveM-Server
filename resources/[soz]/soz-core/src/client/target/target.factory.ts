@@ -8,14 +8,17 @@ export type ZoneOptions = {
     heading?: number;
     minZ?: number;
     maxZ?: number;
+    debugPoly?: boolean;
 };
 
 export type TargetOptions = {
     label: string;
     icon?: string;
     color?: string;
+    type?: string;
     event?: string;
     blackoutGlobal?: boolean;
+    blackoutJob?: string;
     canInteract?: (entity) => boolean;
     action?: (entity) => void;
     job?: string;
@@ -42,6 +45,9 @@ const DEFAULT_DISTANCE = 2.5;
 
 @Injectable()
 export class TargetFactory {
+    private zones: { [id: string]: any } = {};
+    private players: { [id: string]: any } = {};
+
     public createForBoxZone(id: string, zone: ZoneOptions, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
@@ -58,6 +64,7 @@ export class TargetFactory {
             zone.length,
             zone.width,
             {
+                debugPoly: zone.debugPoly || false,
                 heading: zone.heading,
                 minZ: zone.minZ,
                 maxZ: zone.maxZ,
@@ -68,6 +75,8 @@ export class TargetFactory {
                 distance: distance,
             }
         );
+
+        this.zones[id] = zone;
     }
 
     public createForAllPlayer(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
@@ -75,14 +84,40 @@ export class TargetFactory {
             options: targets,
             distance: distance,
         });
+
+        for (const target of targets) {
+            this.players[target.label] = target;
+        }
+    }
+
+    public unload() {
+        for (const id of Object.keys(this.zones)) {
+            exports['qb-target'].RemoveZone(id);
+        }
+
+        for (const id of Object.keys(this.players)) {
+            exports['qb-target'].RemovePlayer(id);
+        }
     }
 
     // // @TODO - Implement it when needed
     // public createWithPedSpawn(peds: PedOptions[]) {}
     //
-    // // @TODO - Implement it when needed
-    // public createForModel() {}
-    //
+
+    public createForModel(models: string[], targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+        exports['qb-target'].AddTargetModel(models, {
+            options: targets,
+            distance: distance,
+        });
+    }
+
     // // @TODO - Implement it when needed
     // public createForAllVehicle() {}
+
+    public removeTargetModel(models: string[], labels: string[]) {
+        exports['qb-target'].RemoveTargetModel(models, labels);
+    }
+
+    // // @TODO - Implement it when needed
+    // public removeTargetEntity(entities: string[], labels: string[]) {}
 }

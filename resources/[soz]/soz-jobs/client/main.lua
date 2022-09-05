@@ -90,7 +90,7 @@ CreateThread(function()
 
                     local playerPosition = GetEntityCoords(GetPlayerPed(-1))
                     local targetPosition = GetEntityCoords(entity)
-                    for _, bossZone in pairs(bossZones[PlayerData.job.id]) do
+                    for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
                             local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                             local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
@@ -118,7 +118,7 @@ CreateThread(function()
 
                     local playerPosition = GetEntityCoords(GetPlayerPed(-1))
                     local targetPosition = GetEntityCoords(entity)
-                    for _, bossZone in pairs(bossZones[PlayerData.job.id]) do
+                    for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
                             local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                             local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
@@ -147,7 +147,7 @@ CreateThread(function()
 
                     local playerPosition = GetEntityCoords(GetPlayerPed(-1))
                     local targetPosition = GetEntityCoords(entity)
-                    for _, bossZone in pairs(bossZones[PlayerData.job.id]) do
+                    for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
                             local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                             local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)

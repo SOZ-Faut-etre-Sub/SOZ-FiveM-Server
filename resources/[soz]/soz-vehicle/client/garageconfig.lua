@@ -260,6 +260,12 @@ Zonesentreprise = {
         minZ = 32.13,
         maxZ = 35.13,
     }),
+    ["ffs"] = BoxZone:Create(vector3(688.3, -965.28, 23.48), 15.0, 21.2, {
+        name = "ffs_z",
+        heading = 270,
+        minZ = 22.39,
+        maxZ = 26.39,
+    }),
 }
 
 ------------------------
@@ -1870,6 +1876,26 @@ PlacesEntreprise = {
         data = {
             indexGarage = "fbi",
             capacity = {2}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["ffs1"] = BoxZone:Create(vector3(688.77, -959.34, 23.45), 6.6, 3.0, {
+        name = "ffs1",
+        heading = 180,
+        minZ = 22.45,
+        maxZ = 25.65,
+        data = {
+            indexGarage = "ffs",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
+        },
+    }),
+    ["ffs2"] = BoxZone:Create(vector3(692.69, -959.13, 23.52), 6.6, 3.0, {
+        name = "ffs2",
+        heading = 180,
+        minZ = 22.52,
+        maxZ = 25.92,
+        data = {
+            indexGarage = "ffs",
+            capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
 }
