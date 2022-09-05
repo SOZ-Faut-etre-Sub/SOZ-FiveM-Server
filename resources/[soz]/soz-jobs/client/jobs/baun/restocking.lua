@@ -1,5 +1,14 @@
 RegisterNetEvent("soz-jobs:client:baun:restock", function(data)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:can-restock", function(canRestock)
+        if canRestock then
+            restock(data)
+        end
+    end, data.item)
+end)
+
+function restock(data)
     local action_message = "Vous commencez à restocker."
+    local stopped_message = "Vous avez arrêté de restocker."
     local finished_message = "Vous avez terminé de restocker."
     QBCore.Functions.Progressbar("restock", action_message, BaunConfig.Durations.Restocking, false, true,
                                  {
@@ -20,6 +29,6 @@ RegisterNetEvent("soz-jobs:client:baun:restock", function(data)
             end
         end, data.storage, data.item)
     end, function()
-        exports["soz-hud"]:DrawNotification(finished_message)
+        exports["soz-hud"]:DrawNotification(stopped_message)
     end)
-end)
+end

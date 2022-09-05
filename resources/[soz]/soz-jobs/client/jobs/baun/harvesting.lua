@@ -53,10 +53,19 @@ BaunJob.Functions.InitHarvestingZones = function()
 end
 
 RegisterNetEvent("soz-jobs:client:baun:harvest", function(data)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:can-harvest", function(canHarvest)
+        if canHarvest then
+            harvest(data)
+        end
+    end, data.give_item)
+end)
+
+function harvest(data)
     local item = QBCore.Shared.Items[data.give_item]
     local action_message = string.format("Vous récoltez des %s.", item.pluralLabel)
     local finished_message = string.format("Vous avez terminé de récolter des %s.", item.pluralLabel)
-    QBCore.Functions.Progressbar("harvest-crate", action_message, BaunConfig.Durations.Harvesting, false, true,
+    exports["soz-hud"]:DrawNotification(action_message)
+    QBCore.Functions.Progressbar("harvest-crate", "Récolte en cours...", BaunConfig.Durations.Harvesting, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
@@ -77,4 +86,4 @@ RegisterNetEvent("soz-jobs:client:baun:harvest", function(data)
     end, function()
         exports["soz-hud"]:DrawNotification(finished_message)
     end)
-end)
+end
