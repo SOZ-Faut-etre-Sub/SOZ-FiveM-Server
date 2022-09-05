@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait } from '../../core/utils';
 import { Vector4 } from '../../shared/polyzone/vector';
+import { AnimationOptions, animationOptionsToFlags } from '../../shared/progress';
 import { Weapons } from '../../shared/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
@@ -26,15 +27,6 @@ export type AnimationInfo = {
     lockY?: boolean;
     lockZ?: boolean;
     options?: AnimationOptions;
-};
-
-export type AnimationOptions = {
-    repeat?: boolean;
-    freezeLastFrame?: boolean;
-    freezeLastFrameControllable?: boolean;
-    onlyUpperBody?: boolean;
-    enablePlayerControl?: boolean;
-    cancellable?: boolean;
 };
 
 type AnimationTask = {
@@ -89,12 +81,16 @@ export class AnimationService {
     }
 
     private async doScenario(scenario: Scenario): Promise<void> {
-        ClearPedTasksImmediately(PlayerPedId());
-        TaskStartScenarioInPlace(PlayerPedId(), scenario.name, 0, true);
+        const ped = PlayerPedId();
+
+        ClearPedTasksImmediately(ped);
+        TaskStartScenarioInPlace(ped, scenario.name, 0, true);
 
         await wait(scenario.duration ? scenario.duration : -1);
 
-        ClearPedTasksImmediately(PlayerPedId());
+        ClearPedTasks(ped);
+        ClearPedSecondaryTask(ped);
+        SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true);
     }
 
     public async loop() {
@@ -204,33 +200,3 @@ export class AnimationService {
         this.running = false;
     }
 }
-
-const animationOptionsToFlags = (options: AnimationOptions): number => {
-    let flags = 0;
-
-    if (options.repeat) {
-        flags |= 1;
-    }
-
-    if (options.freezeLastFrame) {
-        flags |= 2;
-    }
-
-    if (options.freezeLastFrameControllable) {
-        flags |= 4;
-    }
-
-    if (options.onlyUpperBody) {
-        flags |= 16;
-    }
-
-    if (options.enablePlayerControl) {
-        flags |= 32;
-    }
-
-    if (options.cancellable) {
-        flags |= 64;
-    }
-
-    return flags;
-};
