@@ -12,7 +12,7 @@ FfsConfig.Cloakroom = {
                 [8] = {Drawable = 31, Texture = 0, Palette = 0},
                 [9] = {Drawable = 0, Texture = 0, Palette = 0},
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
-                [11] = {Drawable = 103, Texture = 3, Palette = 0},
+                [11] = {Drawable = 103, Texture = 0, Palette = 0},
             },
             Props = {},
         },
