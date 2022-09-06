@@ -30,6 +30,8 @@ export class StreamScreen {
 
     private readonly renderTarget: string;
 
+    private readonly model: string;
+
     private handle: number | null = null;
 
     private playingUrl = BLACK_SCREEN_URL;
@@ -48,6 +50,8 @@ export class StreamScreen {
         this.textureName = 'video';
         this.zone = zone;
         this.renderTarget = renderTarget;
+        this.model = model;
+        this.handle = null;
 
         this.duiObject = CreateDui(this.playingUrl, width, height);
 
@@ -56,29 +60,39 @@ export class StreamScreen {
             this.textureName,
             GetDuiHandle(this.duiObject)
         );
+    }
 
-        this.handle = createNamedRenderTargetForModel(this.renderTarget, GetHashKey(model));
+    public createHandle() {
+        this.handle = createNamedRenderTargetForModel(this.renderTarget, GetHashKey(this.model));
     }
 
     public update(position: Vector3, url: string) {
         const inside = this.zone.isPointInside(position);
 
-        if (!inside && this.playingUrl === BLACK_SCREEN_URL) {
+        if (!inside) {
+            if (this.handle) {
+                ReleaseNamedRendertarget(this.renderTarget);
+                this.handle = null;
+            }
+
+            if (this.playingUrl !== BLACK_SCREEN_URL) {
+                this.playingUrl = BLACK_SCREEN_URL;
+            }
+
+            SetDuiUrl(this.duiObject, this.playingUrl);
+
             return;
         }
 
-        if (!inside) {
-            this.playingUrl = BLACK_SCREEN_URL;
+        if (!this.handle) {
+            this.createHandle();
         }
 
         if (this.playingUrl === url) {
             return;
         }
 
-        if (inside) {
-            this.playingUrl = url;
-        }
-
+        this.playingUrl = url;
         SetDuiUrl(this.duiObject, this.playingUrl);
     }
 
