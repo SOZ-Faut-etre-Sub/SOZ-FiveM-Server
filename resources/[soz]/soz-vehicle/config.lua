@@ -502,7 +502,7 @@ Garages = {
     },
     ["ffs"] = {
         label = "Fight For Style",
-        blipcoord = vector4(691.73, -973.33, 22.69, 270),
+        blipcoord = vector4(750.75, -974.89, 23.83, 90),
         showBlip = false,
         blipName = "Fight For Style",
         blipNumber = 357,

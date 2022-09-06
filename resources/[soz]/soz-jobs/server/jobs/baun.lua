@@ -97,3 +97,37 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
         cb(true, nil)
     end
 end)
+
+QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", function(source, cb)
+    local numberOfCocktails = 0
+    local player = QBCore.Functions.GetPlayer(source)
+    for _, item in pairs(player.PlayerData.items) do
+        if item.type == "cocktail" then
+            numberOfCocktails = numberOfCocktails + item.amount
+        end
+    end
+    if numberOfCocktails < 10 then
+        TriggerClientEvent("hud:client:DrawNotification", source, "Vous devez avoir au moins 10 cocktails pour créer une caisse.", "error")
+        cb(false)
+        return
+    end
+    local cocktailsToRemove = 10
+    for _, item in pairs(player.PlayerData.items) do
+        if item.type == "cocktail" then
+            local amount = item.amount > cocktailsToRemove and cocktailsToRemove or item.amount
+            exports["soz-inventory"]:RemoveItem(source, item.name, amount)
+            cocktailsToRemove = cocktailsToRemove - amount
+            if cocktailsToRemove == 0 then
+                break
+            end
+        end
+    end
+    exports["soz-inventory"]:AddItem(source, "cocktail_box", 1, nil, nil, function(success, reason)
+        if not success then
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
+        else
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez créé une cocktail box", "success")
+        end
+        cb(success)
+    end)
+end)

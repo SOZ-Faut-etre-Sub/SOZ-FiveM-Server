@@ -2,11 +2,13 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
+    BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
+
+    BAUN_RESELL = 'soz-core:server:baun:resell',
+
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
-
-    BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
 
     FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
