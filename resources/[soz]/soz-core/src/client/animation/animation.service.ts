@@ -50,13 +50,16 @@ export class AnimationService {
     private currentAnimationLoopResolve: () => void;
 
     private doAnimation(animation: AnimationInfo, forceDuration: boolean): number {
-        const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
-        const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -1;
         const duration = animation.duration
             ? animation.duration
             : forceDuration
             ? 1000
+            : animation.options?.repeat
+            ? -1
             : GetAnimDuration(animation.dictionary, animation.name);
+
+        const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
+        const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -1;
         const flags = animationOptionsToFlags(animation.options || {});
         const playbackRate = animation.playbackRate ? animation.playbackRate : 0.0;
         const lockX = animation.lockX ? animation.lockX : false;
@@ -189,14 +192,14 @@ export class AnimationService {
         return promise;
     }
 
-    public async stop() {
+    public stop() {
         if (this.currentAnimationLoopResolve) {
             this.currentAnimationLoopResolve();
         }
     }
 
-    public async destroy() {
-        await this.stop();
+    public destroy() {
+        this.stop();
         this.running = false;
     }
 }

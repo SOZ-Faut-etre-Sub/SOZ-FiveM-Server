@@ -7,7 +7,7 @@ export class ProgressService {
         name: string,
         label: string,
         duration: number,
-        animation: ProgressAnimation,
+        animation?: ProgressAnimation,
         options: Partial<ProgressOptions> = {}
     ): Promise<ProgressResult> {
         options = {
@@ -35,12 +35,14 @@ export class ProgressService {
                 controlDisables: {
                     disableCombat: options.disableCombat,
                 },
-                animation: {
-                    animDict: animation.dictionary,
-                    anim: animation.name,
-                    flags: animation.options ? animationOptionsToFlags(animation.options) : animation.flags || 0,
-                    task: animation.task,
-                },
+                animation: animation
+                    ? {
+                          animDict: animation.dictionary,
+                          anim: animation.name,
+                          flags: animation.options ? animationOptionsToFlags(animation.options) : animation.flags || 0,
+                          task: animation.task,
+                      }
+                    : null,
                 prop: options.firstProp || {},
                 propTwo: options.secondProp || {},
             },

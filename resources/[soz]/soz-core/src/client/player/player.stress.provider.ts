@@ -9,8 +9,6 @@ import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
 
-const EVENT_DISTANCE_TRIGGER = 50.0;
-
 @Provider()
 export class PlayerStressProvider {
     @Inject(PlayerService)
