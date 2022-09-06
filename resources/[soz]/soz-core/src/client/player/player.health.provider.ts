@@ -132,6 +132,7 @@ export class PlayerHealthProvider {
     private sportZone = new BoxZone([-1202.52, -1566.88, 4.37], 12.2, 26.2, {
         maxZ: 6.37,
         minZ: 3.37,
+        heading: 305,
     });
 
     private runningStartTime: number | null = null;
@@ -203,42 +204,98 @@ export class PlayerHealthProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
     public async doPushUps(): Promise<void> {
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000, {
-                task: 'WORLD_HUMAN_PUSH_UPS',
+        if (!this.canDoExercise()) {
+            return;
+        }
+
+        const animationPromise = this.animationService.playAnimation({
+            enter: {
+                dictionary: 'amb@world_human_push_ups@male@enter',
+                name: 'enter',
+                duration: 3050,
                 options: {
-                    cancellable: true,
+                    enablePlayerControl: false,
+                },
+            },
+            base: {
+                dictionary: 'amb@world_human_push_ups@male@base',
+                name: 'base',
+                options: {
                     enablePlayerControl: false,
                     repeat: true,
                 },
-            });
+            },
+            exit: {
+                dictionary: 'amb@world_human_push_ups@male@exit',
+                name: 'exit',
+                duration: 3050,
+                options: {
+                    enablePlayerControl: false,
+                },
+            },
+        });
+
+        while (this.canDoExercise()) {
+            const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000);
 
             if (!completed) {
-                return;
+                break;
             }
 
             this.doStrengthExercise();
         }
+
+        this.animationService.stop();
+
+        await animationPromise;
     }
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_SIT_UP)
     public async doSitUps(): Promise<void> {
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Pompes', 'Vous faites des abdos...', 20000, {
-                task: 'WORLD_HUMAN_SIT_UPS',
+        if (!this.canDoExercise()) {
+            return;
+        }
+
+        const animationPromise = this.animationService.playAnimation({
+            enter: {
+                dictionary: 'amb@world_human_sit_ups@male@enter',
+                name: 'enter',
+                duration: 3050,
                 options: {
-                    cancellable: true,
+                    enablePlayerControl: false,
+                },
+            },
+            base: {
+                dictionary: 'amb@world_human_sit_ups@male@base',
+                name: 'base',
+                options: {
                     enablePlayerControl: false,
                     repeat: true,
                 },
-            });
+            },
+            exit: {
+                dictionary: 'amb@world_human_sit_ups@male@exit',
+                name: 'exit',
+                duration: 3050,
+                options: {
+                    enablePlayerControl: false,
+                },
+            },
+        });
+
+        while (this.canDoExercise()) {
+            const { completed } = await this.progressService.progress('Abdominaux', 'Vous faites des abdos...', 20000);
 
             if (!completed) {
-                return;
+                break;
             }
 
             this.doStrengthExercise();
         }
+
+        this.animationService.stop();
+
+        await animationPromise;
     }
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_FREE_WEIGHT)
