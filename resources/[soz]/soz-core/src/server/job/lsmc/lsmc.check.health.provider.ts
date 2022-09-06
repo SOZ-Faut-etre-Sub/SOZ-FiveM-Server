@@ -52,13 +52,7 @@ export class LSMCCheckHealthProvider {
             return {};
         }
 
-        this.inventoryManager.removeItemFromInventory(
-            source,
-            'flask_pee_full',
-            1,
-            inventoryItem.metadata,
-            inventoryItem.slot
-        );
+        this.inventoryManager.removeItemFromInventory(source, item_id, 1, inventoryItem.metadata, inventoryItem.slot);
 
         return { targetPlayer, inventoryItem };
     }
