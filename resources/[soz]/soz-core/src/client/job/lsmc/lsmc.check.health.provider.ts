@@ -60,10 +60,15 @@ export class LSMCCheckHealthProvider {
                     return Err('Valeur incorrecte');
                 }
 
-                if (number < HealthBookMinMax[field].min || number > HealthBookMinMax[field].max) {
+                if (
+                    HealthBookMinMax[field].max &&
+                    (number < HealthBookMinMax[field].min || number > HealthBookMinMax[field].max)
+                ) {
                     return Err(
                         `Valeur incorrecte, doit être entre ${HealthBookMinMax[field].min} et ${HealthBookMinMax[field].max}`
                     );
+                } else if (!HealthBookMinMax[field].max && number < HealthBookMinMax[field].min) {
+                    return Err(`Valeur incorrecte, doit être supérieur à ${HealthBookMinMax[field].min}`);
                 }
 
                 return Ok(true);
