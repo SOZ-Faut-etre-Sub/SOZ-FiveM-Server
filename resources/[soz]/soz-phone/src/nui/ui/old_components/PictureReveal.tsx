@@ -20,8 +20,12 @@ export const PictureReveal: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <div className="relative" onClick={onClickCover}>
-            {covered && <div className="h-full flex justify-center items-center">{t('GENERIC_CLICK_TO_REVEAL')}</div>}
-            <div className={`${covered && 'relative opacity-50 blur-md'}`}>{children}</div>
+            {covered && (
+                <div className="relative h-full flex justify-center items-center">{t('GENERIC_CLICK_TO_REVEAL')}</div>
+            )}
+            <div className={`${covered && 'relative -top-[95%] left-0 h-full opacity-50 grayscale blur-md'}`}>
+                {children}
+            </div>
         </div>
     );
 };
