@@ -15,7 +15,7 @@ RegisterCommand("hu", function()
     handsup = not handsup
 
     if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
-        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
+        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] or exports["progressbar"]:IsDoingAction() then
         return
     end
 
