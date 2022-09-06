@@ -4,7 +4,7 @@ import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
 import { isActivePoliceMessage } from '../utils/isPolice';
 
 export const PoliceContent: FunctionComponent<TwitchNewsMessage> = ({ type, message }: TwitchNewsMessage) => {
-    if (isActivePoliceMessage(type)) {
+    if (!isActivePoliceMessage(type)) {
         return (
             <>
                 Les forces de l'ordre ont arrêté <strong>{message}</strong>.
