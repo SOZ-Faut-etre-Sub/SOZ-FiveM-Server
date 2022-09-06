@@ -115,14 +115,13 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
         label = "Afficher la récolte d'alcools",
         value = BaunJob.MenuState["baun_liquor"],
         change = function(_, value)
-            print("Set liquor value" .. json.encode(value))
             BaunJob.MenuState["baun_liquor"] = value
             if not QBCore.Functions.GetBlip("baun_liquor") then
-                QBCore.Functions.CreateBlip("baun_liquor",
-                                            {
+                QBCore.Functions.CreateBlip("baun_liquor", {
                     name = "Point de récolte d'alcool",
                     coords = vector3(1410.96, 1147.6, 114.33),
-                    sprite = 806,
+                    sprite = 615,
+                    color = 28,
                     scale = 1.0,
                 })
             end
@@ -135,14 +134,13 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
         label = "Afficher la récolte de saveurs",
         value = BaunJob.MenuState["baun_flavor"],
         change = function(_, value)
-            print("Set flavor value" .. json.encode(value))
             BaunJob.MenuState["baun_flavor"] = value
             if not QBCore.Functions.GetBlip("baun_flavor") then
-                QBCore.Functions.CreateBlip("baun_flavor",
-                                            {
+                QBCore.Functions.CreateBlip("baun_flavor", {
                     name = "Point de récolte de saveurs",
                     coords = vector3(867.17, -1628.59, 30.2),
-                    sprite = 806,
+                    sprite = 615,
+                    color = 28,
                     scale = 1.0,
                 })
             end
@@ -155,14 +153,13 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
         label = "Afficher la récolte de fournitures",
         value = BaunJob.MenuState["baun_furniture"],
         change = function(_, value)
-            print("Set furniture value" .. json.encode(value))
             BaunJob.MenuState["baun_furniture"] = value
             if not QBCore.Functions.GetBlip("baun_furniture") then
-                QBCore.Functions.CreateBlip("baun_furniture",
-                                            {
+                QBCore.Functions.CreateBlip("baun_furniture", {
                     name = "Point de récolte de fournitures",
                     coords = vector3(44.98, -1749.42, 29.59),
-                    sprite = 806,
+                    sprite = 615,
+                    color = 28,
                     scale = 1.0,
                 })
             end

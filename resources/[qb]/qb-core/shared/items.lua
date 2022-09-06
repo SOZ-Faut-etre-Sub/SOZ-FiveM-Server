@@ -2121,7 +2121,7 @@ QBShared.Items = {
     ['meal_box'] = {
         ['name'] = 'meal_box',
         ['label'] = 'Caisse alimentaire',
-        ['weight'] = 5000,
+        ['weight'] = 4000,
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = true,
@@ -2132,7 +2132,7 @@ QBShared.Items = {
     },
     ['vegan_meal'] = {
         ['name'] = 'vegan_meal',
-        ['label'] = 'Salade & Soupe Sozar',
+        ['label'] = 'Pot-au-feu végétarien',
         ['weight'] = 800,
         ['type'] = 'food',
         ['unique'] = false,

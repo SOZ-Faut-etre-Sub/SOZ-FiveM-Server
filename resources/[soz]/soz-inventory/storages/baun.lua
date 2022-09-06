@@ -59,7 +59,7 @@ Config.Storages["baun_storage"] = {
     },
 }
 
-Config.Storages["baun_unicorn_fridge_1"] = {
+Config.Storages["baun_unicorn_liquor_storage_1"] = {
     label = "Frigo - Vanilla Unicorn",
     type = "liquor_storage",
     owner = "baun",
@@ -68,10 +68,10 @@ Config.Storages["baun_unicorn_fridge_1"] = {
     minZ = 28.27,
     maxZ = 29.27,
     heading = 30,
-    targetOption = getTargetOption("baun_unicorn_fridge_1", "liquor_crate"),
+    targetOption = getTargetOption("baun_unicorn_liquor_storage_1", "liquor_crate"),
 }
 
-Config.Storages["baun_unicorn_fridge_2"] = {
+Config.Storages["baun_unicorn_liquor_storage_2"] = {
     label = "Frigo - Vanilla Unicorn",
     type = "liquor_storage",
     owner = "baun",
@@ -80,7 +80,7 @@ Config.Storages["baun_unicorn_fridge_2"] = {
     minZ = 28.27,
     maxZ = 29.27,
     heading = 30,
-    targetOption = getTargetOption("baun_unicorn_fridge_2", "liquor_crate"),
+    targetOption = getTargetOption("baun_unicorn_liquor_storage_2", "liquor_crate"),
 }
 
 Config.Storages["baun_unicorn_flavor_storage_1"] = {
@@ -97,7 +97,7 @@ Config.Storages["baun_unicorn_flavor_storage_1"] = {
 
 Config.Storages["baun_unicorn_furniture_storage_1"] = {
     label = "Coffre à fournitures - Vanilla Unicorn",
-    type = "flavor_storage",
+    type = "furniture_storage",
     owner = "baun",
     position = vector3(128.97, -1284.42, 29.27),
     size = vec2(0.5, 0.35),
@@ -164,7 +164,7 @@ Config.Storages["baun_bahama_furniture_storage_1"] = {
     minZ = 30.33,
     maxZ = 30.73,
     heading = 38,
-    targetOption = getTargetOption("baun_bahama_furniture_storage_1", "liquor_crate"),
+    targetOption = getTargetOption("baun_bahama_furniture_storage_1", "furniture_crate"),
 }
 
 Config.Storages["baun_bahama_furniture_storage_2"] = {
@@ -176,5 +176,5 @@ Config.Storages["baun_bahama_furniture_storage_2"] = {
     minZ = 30.77,
     maxZ = 31.17,
     heading = 301,
-    targetOption = getTargetOption("baun_bahama_furniture_storage_2", "liquor_crate"),
+    targetOption = getTargetOption("baun_bahama_furniture_storage_2", "furniture_crate"),
 }

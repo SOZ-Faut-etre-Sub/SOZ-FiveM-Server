@@ -8,11 +8,15 @@ import { Notifier } from '../../notifier';
 
 @Provider()
 export class FoodMealsProvider {
+    private readonly LIMIT_OF_ORDERS = 5;
+
+    private readonly MEALS_PER_ORDER = 3;
+
+    private readonly MEAL_BOX_ITEM = 'meal_box';
+
     private orderedMeals = 0;
 
     private orderInProgress = false;
-
-    private readonly LIMIT_MEALS = 5;
 
     private orderReadyDate: Date;
 
@@ -32,7 +36,7 @@ export class FoodMealsProvider {
 
     @OnEvent(ServerEvent.FOOD_ORDER_MEALS)
     public async onOrderMeals(source: number) {
-        if (this.orderedMeals >= this.LIMIT_MEALS) {
+        if (this.orderedMeals >= this.LIMIT_OF_ORDERS) {
             this.notifier.notify(source, `Désolé nos chefs sont occupés pour la journée. Revenez ~r~demain~s~.`);
             return;
         }
@@ -75,11 +79,11 @@ export class FoodMealsProvider {
                 }~s~.`
             );
             return;
-        } else if (!this.inventoryManager.canCarryItem(source, 'meal_box', 1)) {
+        } else if (!this.inventoryManager.canCarryItem(source, this.MEAL_BOX_ITEM, this.MEALS_PER_ORDER)) {
             this.notifier.notify(source, `Vous n'avez ~r~pas assez de place~s~ dans votre inventaire.`);
             return;
         }
-        this.inventoryManager.addItemToInventory(source, 'meal_box', 1);
+        this.inventoryManager.addItemToInventory(source, this.MEAL_BOX_ITEM, this.MEALS_PER_ORDER);
         this.notifier.notify(source, `Vous avez ~g~récupéré~s~ votre commande. Bon appétit !`);
 
         this.updateOrderInProgress(false);
