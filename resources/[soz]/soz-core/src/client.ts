@@ -4,6 +4,7 @@ import './globals';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
+import { BaunModule } from './client/job/baun/baun.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
@@ -29,6 +30,7 @@ async function bootstrap() {
         FoodModule,
         TargetModule,
         FightForStyleModule,
+        BaunModule,
         StreamModule
     );
 
