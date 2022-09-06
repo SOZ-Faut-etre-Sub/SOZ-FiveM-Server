@@ -12,7 +12,7 @@ export const healthLevelToLabel = (
     max: number,
     strategy = LabelStrategy.MinMax
 ): string => {
-    if (!level) {
+    if (!level && level !== 0) {
         return 'inconnu';
     }
 
