@@ -2,7 +2,7 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { DrinkItem, FoodItem, InventoryItem } from '../../shared/item';
+import { CocktailItem, DrinkItem, FoodItem, InventoryItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { InventoryManager } from './inventory.manager';
@@ -26,7 +26,7 @@ export class ItemNutritionProvider {
 
     private async useFoodOrDrink(
         source: number,
-        item: FoodItem | DrinkItem,
+        item: FoodItem | DrinkItem | CocktailItem,
         inventoryItem: InventoryItem
     ): Promise<void> {
         if (!this.item.canPlayerUseItem(source, true)) {
@@ -119,6 +119,12 @@ export class ItemNutritionProvider {
 
         for (const drinkId of Object.keys(drinks)) {
             this.item.setItemUseCallback<FoodItem>(drinkId, this.useFoodOrDrink.bind(this));
+        }
+
+        const cocktails = this.item.getItems<CocktailItem>('cocktail');
+
+        for (const cocktailId of Object.keys(cocktails)) {
+            this.item.setItemUseCallback<CocktailItem>(cocktailId, this.useFoodOrDrink.bind(this));
         }
     }
 }

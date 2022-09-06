@@ -16,6 +16,49 @@ local function getTargetOption(storage, itemId)
     }
 end
 
+Config.Storages["baun_boss_storage"] = {
+    label = "Stockage Patron Bahama Unicorn",
+    type = "boss_storage",
+    owner = "baun",
+    position = vector3(92.05, -1291.21, 29.27),
+    size = vec2(0.7, 0.8),
+    heading = 300,
+    minZ = 28.27,
+    maxZ = 29.87,
+}
+
+Config.Storages["baun_storage"] = {
+    label = "Stockage Bahama Unicorn",
+    type = "storage",
+    owner = "baun",
+    position = vector3(92.87, -1290.87, 29.27),
+    size = vec2(0.9, 0.8),
+    heading = 300,
+    minZ = 28.27,
+    maxZ = 30.22,
+    targetOption = {
+        color = "baun",
+        label = "Créer un cocktail box",
+        icon = "c:baun/createCocktailBox.png",
+        type = "client",
+        event = "soz-jobs:client:baun:createCocktailBox",
+        blackoutGlobal = true,
+        blackoutJob = "baun",
+        job = "baun",
+        canInteract = function()
+            local numberOfCocktails = 0
+            print("Items: " .. json.encode(PlayerData.items))
+            for _, item in pairs(PlayerData.items) do
+                if item.type == "cocktail" then
+                    numberOfCocktails = numberOfCocktails + item.amount
+                end
+            end
+            print("Number of cocktails: " .. json.encode(numberOfCocktails))
+            return PlayerData.job.onduty and numberOfCocktails >= 10
+        end,
+    },
+}
+
 Config.Storages["baun_unicorn_fridge_1"] = {
     label = "Frigo - Vanilla Unicorn",
     type = "liquor_storage",
