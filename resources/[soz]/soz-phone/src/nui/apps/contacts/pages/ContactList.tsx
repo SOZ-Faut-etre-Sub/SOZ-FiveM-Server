@@ -29,10 +29,11 @@ export const ContactList: React.FC = () => {
         contacts
             .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
             .forEach(contact => {
-                if (list[contact.display[0]] === undefined) {
-                    list[contact.display[0]] = [];
+                const letter = contact.display[0].toUpperCase();
+                if (list[letter] === undefined) {
+                    list[letter] = [];
                 }
-                list[contact.display[0]].push(contact);
+                list[letter].push(contact);
             });
 
         return list;
@@ -93,76 +94,78 @@ export const ContactList: React.FC = () => {
                                     'divide-gray-200': config.theme.value === 'light',
                                 })}
                             >
-                                {filteredContacts[letter].map(contact => (
-                                    <Menu
-                                        key={contact.id}
-                                        as="li"
-                                        className={cn('w-full cursor-pointer', {
-                                            'bg-black': config.theme.value === 'dark',
-                                            'bg-ios-50': config.theme.value === 'light',
-                                        })}
-                                    >
-                                        <Menu.Button className="w-full">
-                                            <div
-                                                className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                                    'hover:bg-gray-900': config.theme.value === 'dark',
-                                                    'hover:bg-gray-200': config.theme.value === 'light',
-                                                })}
-                                            >
-                                                <div className="flex-shrink-0">
-                                                    <ContactPicture picture={contact.avatar} />
-                                                </div>
-                                                <div className="flex-1 min-w-0 cursor-pointer">
-                                                    <span className="absolute inset-0" aria-hidden="true" />
-                                                    <p
-                                                        className={cn('text-left text-sm font-medium', {
-                                                            'text-gray-100': config.theme.value === 'dark',
-                                                            'text-gray-600': config.theme.value === 'light',
-                                                        })}
-                                                    >
-                                                        {contact.display}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </Menu.Button>
-                                        <Transition
-                                            enter="transition duration-100 ease-out"
-                                            enterFrom="transform scale-95 opacity-0"
-                                            enterTo="transform scale-100 opacity-100"
-                                            leave="transition duration-75 ease-out"
-                                            leaveFrom="transform scale-100 opacity-100"
-                                            leaveTo="transform scale-95 opacity-0"
-                                            className="absolute z-50 right-0 w-56"
+                                {filteredContacts[letter]
+                                    .sort((a, b) => a.display.localeCompare(b.display))
+                                    .map(contact => (
+                                        <Menu
+                                            key={contact.id}
+                                            as="li"
+                                            className={cn('w-full cursor-pointer', {
+                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-50': config.theme.value === 'light',
+                                            })}
                                         >
-                                            <Menu.Items className="mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
-                                                <Menu.Item>
-                                                    <Button
-                                                        className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                                        onClick={() => startCall(contact.number)}
-                                                    >
-                                                        <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
-                                                    </Button>
-                                                </Menu.Item>
-                                                <Menu.Item>
-                                                    <Button
-                                                        className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                                        onClick={() => handleMessage(contact.number)}
-                                                    >
-                                                        <ChatIcon className="mx-3 h-5 w-5" /> Message
-                                                    </Button>
-                                                </Menu.Item>
-                                                <Menu.Item>
-                                                    <Button
-                                                        className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
-                                                        onClick={() => openContactInfo(contact.id)}
-                                                    >
-                                                        <PencilAltIcon className="mx-3 h-5 w-5" /> Éditer
-                                                    </Button>
-                                                </Menu.Item>
-                                            </Menu.Items>
-                                        </Transition>
-                                    </Menu>
-                                ))}
+                                            <Menu.Button className="w-full">
+                                                <div
+                                                    className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                                        'hover:bg-gray-900': config.theme.value === 'dark',
+                                                        'hover:bg-gray-200': config.theme.value === 'light',
+                                                    })}
+                                                >
+                                                    <div className="flex-shrink-0">
+                                                        <ContactPicture picture={contact.avatar} />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0 cursor-pointer">
+                                                        <span className="absolute inset-0" aria-hidden="true" />
+                                                        <p
+                                                            className={cn('text-left text-sm font-medium', {
+                                                                'text-gray-100': config.theme.value === 'dark',
+                                                                'text-gray-600': config.theme.value === 'light',
+                                                            })}
+                                                        >
+                                                            {contact.display}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </Menu.Button>
+                                            <Transition
+                                                enter="transition duration-100 ease-out"
+                                                enterFrom="transform scale-95 opacity-0"
+                                                enterTo="transform scale-100 opacity-100"
+                                                leave="transition duration-75 ease-out"
+                                                leaveFrom="transform scale-100 opacity-100"
+                                                leaveTo="transform scale-95 opacity-0"
+                                                className="absolute z-50 right-0 w-56"
+                                            >
+                                                <Menu.Items className="mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                                                    <Menu.Item>
+                                                        <Button
+                                                            className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                            onClick={() => startCall(contact.number)}
+                                                        >
+                                                            <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
+                                                        </Button>
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        <Button
+                                                            className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                            onClick={() => handleMessage(contact.number)}
+                                                        >
+                                                            <ChatIcon className="mx-3 h-5 w-5" /> Message
+                                                        </Button>
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        <Button
+                                                            className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
+                                                            onClick={() => openContactInfo(contact.id)}
+                                                        >
+                                                            <PencilAltIcon className="mx-3 h-5 w-5" /> Éditer
+                                                        </Button>
+                                                    </Menu.Item>
+                                                </Menu.Items>
+                                            </Transition>
+                                        </Menu>
+                                    ))}
                             </ul>
                         </div>
                     ))}
