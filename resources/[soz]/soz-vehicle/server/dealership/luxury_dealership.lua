@@ -1,7 +1,7 @@
 local auctions = {}
 
 CreateThread(function()
-    local result = MySQL.Sync.fetchAll("SELECT * FROM vehicles WHERE category IN (?) AND price > 0 ORDER BY RAND () LIMIT ?",
+    local result = MySQL.Sync.fetchAll("SELECT * FROM vehicles WHERE category IN (?) AND price > 0 AND dealership_id IS NOT NULL ORDER BY RAND () LIMIT ?",
                                        {LuxuryDealershipConfig.AllowedCategories, #LuxuryDealershipConfig.Spawns})
     for i, vehicle in ipairs(result) do
         local spawn = LuxuryDealershipConfig.Spawns[i]
