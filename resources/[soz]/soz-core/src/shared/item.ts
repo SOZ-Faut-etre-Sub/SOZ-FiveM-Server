@@ -5,13 +5,17 @@ export type ItemType =
     | 'drug'
     | 'food'
     | 'drink'
+    | 'cocktail'
     | 'item_illegal'
     | 'organ'
     | 'oil'
     | 'oil_and_item'
     | 'log'
     | 'sawdust'
-    | 'plank';
+    | 'plank'
+    | 'flavor'
+    | 'furniture'
+    | 'liquor';
 
 type BaseItem = {
     name: string;
@@ -74,6 +78,19 @@ export type PlankItem = BaseItem & {
     type: 'plank';
 };
 
+// BAUN
+export type FlavorItem = BaseItem & {
+    type: 'flavor';
+};
+
+export type FurnitureItem = BaseItem & {
+    type: 'furniture';
+};
+
+export type LiquorItem = BaseItem & {
+    type: 'liquor';
+};
+
 // Fight For Style
 export type SewingRawMaterialItem = BaseItem & {
     type: 'item';
@@ -101,6 +118,12 @@ export type FoodItem = BaseItem & {
 
 export type DrinkItem = BaseItem & {
     type: 'drink';
+    nutrition: Nutrition;
+    animation?: AnimationItem;
+};
+
+export type CocktailItem = BaseItem & {
+    type: 'cocktail';
     nutrition: Nutrition;
     animation?: AnimationItem;
 };
@@ -135,8 +158,12 @@ export type Item =
     | LogItem
     | SawdustItem
     | PlankItem
+    | FlavorItem
+    | FurnitureItem
+    | LiquorItem
     | FoodItem
     | DrinkItem
+    | CocktailItem
     | SewingRawMaterialItem
     | FabricItem
     | GarmentItem;

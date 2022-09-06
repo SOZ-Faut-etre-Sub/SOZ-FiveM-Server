@@ -5,6 +5,7 @@ import { unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { DatabaseModule } from './server/database/database.module';
 import { ItemModule } from './server/item/item.module';
+import { BaunModule } from './server/job/baun/baun.module';
 import { FightForStyleModule } from './server/job/ffs/ffs.module';
 import { FoodModule } from './server/job/food/food.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
@@ -24,6 +25,7 @@ async function bootstrap() {
         FightForStyleModule,
         VehicleModule,
         FoodModule,
+        BaunModule,
         StreamModule
     );
 
