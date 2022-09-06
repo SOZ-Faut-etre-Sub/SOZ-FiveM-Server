@@ -9,7 +9,7 @@ export const NavBarContainer: FunctionComponent<PropsWithChildren> = ({ children
 
     return (
         <div
-            className={cn('absolute bottom-0 inset-x-0 grid grid-cols-3 content-start h-20', {
+            className={cn('absolute -bottom-3.5 inset-x-0 grid grid-cols-3 content-start h-20', {
                 'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
                 'bg-white text-black': config.theme.value === 'light',
             })}
