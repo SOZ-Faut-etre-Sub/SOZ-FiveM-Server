@@ -9,7 +9,7 @@ import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
 
-const EVENT_DISTANCE_TRIGGER = 70.0;
+const EVENT_DISTANCE_TRIGGER = 50.0;
 
 @Provider()
 export class PlayerStressProvider {
@@ -34,16 +34,35 @@ export class PlayerStressProvider {
 
         setTimeout(() => {
             this.isStressUpdated = false;
-        }, 60000);
+        }, 120000);
     }
 
     @On('CEventShockingGunshotFired', false)
-    @On('CEventGunShot', false)
+    public onCEventShockingGunshotFired(entities, eventEntity): void {
+        this.onStressfulGameEvent(entities, eventEntity, 60.0, false);
+    }
+
     @On('CEventOnFire', false)
+    public onCEventOnFire(entities, eventEntity): void {
+        this.onStressfulGameEvent(entities, eventEntity, 70.0, false);
+    }
+
     @On('CEventRanOverPed', false)
+    public onCEventRanOverPed(entities, eventEntity): void {
+        this.onStressfulGameEvent(entities, eventEntity, 50.0, false);
+    }
+
     @On('CEventShocking', false)
+    public onCEventShocking(entities, eventEntity): void {
+        this.onStressfulGameEvent(entities, eventEntity, 30.0, true);
+    }
+
     @On('CEventShockingCarCrash', false)
-    public onStressfulGameEvent(entities, eventEntity): void {
+    public onCEventShockingCarCrash(entities, eventEntity): void {
+        this.onStressfulGameEvent(entities, eventEntity, 40.0, true);
+    }
+
+    public onStressfulGameEvent(entities, eventEntity, trigger_distance: number, must_be_player = false): void {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
@@ -56,13 +75,17 @@ export class PlayerStressProvider {
             return;
         }
 
+        if (must_be_player && (!IsEntityAPed(eventEntity) || !IsPedAPlayer(eventEntity))) {
+            return;
+        }
+
         const distance = getDistance(
             GetEntityCoords(eventEntity) as Vector3,
             GetEntityCoords(PlayerPedId()) as Vector3
         );
 
-        if (distance < EVENT_DISTANCE_TRIGGER) {
-            this.updateStress();
+        if (distance > trigger_distance) {
+            return;
         }
     }
 
