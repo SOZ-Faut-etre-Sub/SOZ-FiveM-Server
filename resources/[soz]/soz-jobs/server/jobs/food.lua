@@ -183,10 +183,19 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
 end)
 
 QBCore.Functions.CreateUseableItem("meal_box", function(source)
-    -- TODO: Add the CanCarryItems once FFS is merged
-    exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, nil)
-    exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, nil)
-    exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, nil)
-    exports["soz-inventory"]:AddItem(source, "meat_festival", 5, nil)
-    exports["soz-inventory"]:AddItem(source, "royal_vegetables", 5, nil)
+    if exports["soz-inventory"]:CanCarryItems(source, {
+        {name = "meal_box", amount = -1},
+        {name = "vegan_meal", amount = 5},
+        {name = "onigiri_assortment", amount = 5},
+        {name = "meat_festival", amount = 5},
+        {name = "royal_vegetables", amount = 5},
+    }) then
+        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, nil)
+        exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, nil)
+        exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, nil)
+        exports["soz-inventory"]:AddItem(source, "meat_festival", 5, nil)
+        exports["soz-inventory"]:AddItem(source, "royal_vegetables", 5, nil)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont trop pleines pour ouvrir la caisse.", "error")
+    end
 end)

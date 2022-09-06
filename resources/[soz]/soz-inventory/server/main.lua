@@ -222,6 +222,8 @@ end
 RegisterNetEvent("inventory:server:CanCarryItem", Inventory.CanCarryItem)
 exports("CanCarryItem", Inventory.CanCarryItem)
 
+-- items is a table of objects that must provide "{ name = 'itemId', amount = 1 }"
+-- You can use amount = -1 to use a similar effect to CanSwapItem with multiple items.
 function Inventory.CanCarryItems(inv, items, metadata)
     inv = Inventory(inv)
     if items then
