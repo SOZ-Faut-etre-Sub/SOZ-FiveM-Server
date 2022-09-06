@@ -17,6 +17,7 @@ export class StreamProvider {
             new BoxZone([344.41, 208.8, 103.02], 44.15, 44.2, {
                 maxZ: 103.02 + 20,
                 minZ: 103.02 - 1,
+                heading: 340,
             }),
             'cinema',
             'v_50_floornwalls',

@@ -1,4 +1,5 @@
 export type Vector2 = [number, number];
+export type Point2D = Vector2;
 
 export type Vector3 = [number, number, number];
 export type Point3D = Vector3;
