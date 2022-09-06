@@ -132,6 +132,7 @@ export class PlayerHealthProvider {
     private sportZone = new BoxZone([-1202.52, -1566.88, 4.37], 12.2, 26.2, {
         maxZ: 6.37,
         minZ: 3.37,
+        heading: 305,
     });
 
     private runningStartTime: number | null = null;
