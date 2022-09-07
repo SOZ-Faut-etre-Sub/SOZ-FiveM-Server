@@ -4150,4 +4150,26 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = ''
     },
+    ['popcorn'] = {
+        ['name'] = 'popcorn',
+        ['label'] = "Boîte de popcorn",
+        ['pluralLabel'] = "Boîtes de popcorns",
+        ['weight'] = 100,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Ne pas en jeter sur vos voisins.",
+        ['nutrition'] = {
+            ['hunger'] = 5,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 2,
+            ['lipid'] = 2,
+            ['sugar'] = 20,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+    }
 }

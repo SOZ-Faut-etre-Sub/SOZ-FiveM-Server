@@ -13,6 +13,7 @@ import { PlayerModule } from './server/player/player.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { WeatherModule } from './server/weather/weather.module';
+import { ZEventModule } from './server/zevent/zevent.module';
 
 async function bootstrap() {
     const app = await Application.create(
@@ -26,7 +27,8 @@ async function bootstrap() {
         VehicleModule,
         FoodModule,
         BaunModule,
-        StreamModule
+        StreamModule,
+        ZEventModule
     );
 
     await app.stop();
