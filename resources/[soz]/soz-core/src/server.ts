@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
+import { AfkModule } from './server/afk/afk.module';
 import { AdminModule } from './server/admin/admin.module';
 import { DatabaseModule } from './server/database/database.module';
 import { FieldModule } from './server/farm/field.module';
@@ -46,7 +47,8 @@ async function bootstrap() {
         FieldModule,
         ShopModule,
         RebootModule,
-        StoryModule
+        StoryModule,
+        AfkModule
     );
 
     await app.stop();
