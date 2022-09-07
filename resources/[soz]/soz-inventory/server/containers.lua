@@ -40,7 +40,7 @@ Container["armory"] = InventoryContainer:new({
 
 Container["fridge"] = InventoryContainer:new({
     type = "fridge",
-    allowedTypes = {"food", "drink"},
+    allowedTypes = {"food", "drink", "cocktail"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 

@@ -177,7 +177,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
                 QBCore.Functions.CreateBlip("baun_resell", {
                     name = "Point de vente des cocktails",
                     coords = vector3(393.02, 177.3, 103.86),
-                    sprite = 605,
+                    sprite = 478,
                     color = 28,
                     scale = 1.0,
                 })
