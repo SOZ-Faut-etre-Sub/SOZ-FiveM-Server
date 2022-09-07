@@ -1,7 +1,8 @@
 import { Command } from '../../core/decorators/command';
-import { Once } from '../../core/decorators/event';
+import { On, Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { ServerEvent } from '../../shared/event';
 import { Notifier } from '../notifier';
 
 @Provider()
@@ -12,6 +13,11 @@ export class AfkProvider {
     @Once()
     onStart(): void {
         GlobalState.disableAFK ||= false;
+    }
+
+    @On(ServerEvent.AFK_KICK)
+    async kickPlayerForAFK(source: string): Promise<void> {
+        DropPlayer(source, 'Tu as été AFK trop longtemps...');
     }
 
     @Command('afk', { role: 'admin' })
