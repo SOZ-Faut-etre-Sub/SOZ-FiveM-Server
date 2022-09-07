@@ -1,7 +1,7 @@
 import { Module } from '../../core/decorators/module';
-import { ZEventPopcornProvider } from './zevent.popcorn.provider';
+import { ZEventProvider } from './zevent.provider';
 
 @Module({
-    providers: [ZEventPopcornProvider],
+    providers: [ZEventProvider],
 })
 export class ZEventModule {}

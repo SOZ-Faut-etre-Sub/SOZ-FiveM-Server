@@ -5,14 +5,14 @@ import { ServerEvent } from '../../shared/event';
 import { TargetFactory } from '../target/target.factory';
 
 @Provider()
-export class ZEventPopcornProvider {
+export class ZEventProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
         this.targetFactory.createForBoxZone(
-            'zvent_popcorn',
+            'zevent_popcorn',
             {
                 center: [339.55, 187.84, 103.0],
                 length: 0.4,
