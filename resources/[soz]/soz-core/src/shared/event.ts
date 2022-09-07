@@ -32,6 +32,8 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
+    ZEVENT_GET_POPCORN = 'soz-core:server:zevent:get-popcorn',
+
     // not core
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
 }
