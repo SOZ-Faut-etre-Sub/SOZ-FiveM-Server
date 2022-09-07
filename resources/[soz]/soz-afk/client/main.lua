@@ -5,7 +5,7 @@ local time = Config.secondsUntilKick
 local try = 1
 
 Citizen.CreateThread(function()
-    while true do
+    while false do
         local Player = QBCore.Functions.GetPlayerData()
         if LocalPlayer.state.isLoggedIn and not Player.metadata.godmode then
             local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
@@ -31,7 +31,7 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    while true do
+    while false do
         if LocalPlayer.state.isLoggedIn then
             if time == Config.requestInputAt then
                 while try <= Config.retryAllowed do
