@@ -13,6 +13,7 @@ import { PlayerModule } from './client/player/player.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { WeatherModule } from './client/weather/weather.module';
+import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
@@ -31,7 +32,8 @@ async function bootstrap() {
         TargetModule,
         FightForStyleModule,
         BaunModule,
-        StreamModule
+        StreamModule,
+        ZEventModule
     );
 
     await app.stop();
