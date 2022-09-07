@@ -182,7 +182,7 @@ export class PlayerHealthProvider {
         this.notifier.notify(`Exercice ${displayExercisesCount} / 10.`, 'success');
 
         if (this.strengthExercisesCount % 10 === 0) {
-            this.notifier.notify('Vous vous sentez plus en ~g~forme~s~.', 'success');
+            this.notifier.notify('Vous vous sentez ~g~plus puissant~s~.', 'success');
             TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
         }
 
@@ -370,7 +370,7 @@ export class PlayerHealthProvider {
 
                     return;
                 } else {
-                    this.notifier.notify('Vous vous sentez plus en forme.', 'success');
+                    this.notifier.notify('Vous vous sentez ~g~plus athlétique~s~.', 'success');
 
                     TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STAMINA);
                 }
