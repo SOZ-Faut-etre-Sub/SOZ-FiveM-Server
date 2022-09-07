@@ -7,6 +7,7 @@ export type QBCorePlayer = {
     Functions: {
         SetMetaData: (key: string, val: any) => void;
         Save: () => void;
+        UpdateMaxWeight: () => void;
     };
     PlayerData: PlayerData;
 };

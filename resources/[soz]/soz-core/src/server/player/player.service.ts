@@ -24,6 +24,14 @@ export class PlayerService {
         return player.PlayerData;
     }
 
+    public updatePlayerMaxWeight(source: number): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.UpdateMaxWeight();
+        }
+    }
+
     public setPlayerMetadata<K extends keyof PlayerMetadata>(source: number, key: K, value: PlayerMetadata[K]) {
         const player = this.QBCore.getPlayer(source);
 

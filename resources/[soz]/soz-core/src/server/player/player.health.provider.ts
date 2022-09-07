@@ -84,6 +84,7 @@ export class PlayerHealthProvider {
                 if (hours > 1) {
                     this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
+                    this.playerService.updatePlayerMaxWeight(source);
 
                     this.notifier.notify(source, 'Vous vous sentez ~r~moins puissant~s~.', 'error');
                 }
@@ -129,6 +130,7 @@ export class PlayerHealthProvider {
     public async increaseStrength(source: number): Promise<void> {
         this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
         this.playerService.incrementMetadata(source, 'strength', 2, 50, 120);
+        this.playerService.updatePlayerMaxWeight(source);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STAMINA)
