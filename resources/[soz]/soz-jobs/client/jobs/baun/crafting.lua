@@ -78,6 +78,7 @@ CreateThread(function()
 end)
 
 RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
+    print("Crafting " .. cocktailId)
     local item = QBCore.Shared.Items[cocktailId]
     local action_message = string.format("Vous confectionnez 1 %s", item.label)
     local finished_message = string.format("Vous avez terminé de mélanger.", item.pluralLabel)
