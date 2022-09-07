@@ -38,26 +38,37 @@ local function getCocktailTargetOption()
     }
 end
 
-Config.Storages["baun_boss_storage"] = {
-    label = "Stockage Patron Bahama Unicorn",
+Config.Storages["baun_bahama_boss_storage"] = {
+    label = "Stockage Patron Bahama Mamas",
     type = "boss_storage",
     owner = "baun",
-    position = vector3(92.05, -1291.21, 29.27),
-    size = vec2(0.7, 0.8),
-    heading = 300,
+    position = vector3(-1385.25, -632.97, 30.81),
+    size = vec2(2.8, 0.6),
+    heading = 309,
+    minZ = 29.81,
+    maxZ = 32.61,
+}
+
+Config.Storages["baun_unicorn_boss_storage"] = {
+    label = "Stockage Patron Vanilla Unicorn",
+    type = "boss_storage",
+    owner = "baun",
+    position = vector3(92.05, -1292.26, 29.27),
+    size = vec2(1.05, 0.4),
+    heading = 30,
     minZ = 28.27,
-    maxZ = 29.87,
+    maxZ = 29.27,
 }
 
 Config.Storages["baun_bahama_storage"] = {
     label = "Stockage Bahama Mamas",
     type = "storage",
     owner = "baun",
-    position = vector3(-1385.06, -633.24, 30.81),
-    size = vec2(0.8, 2.8),
-    heading = 33,
-    minZ = 29.81,
-    maxZ = 32.61,
+    position = vector3(-1387.14, -606.22, 30.32),
+    size = vec2(3.8, 0.8),
+    heading = 303,
+    minZ = 29.32,
+    maxZ = 30.12,
     targetOption = getCocktailTargetOption(),
 }
 
@@ -65,12 +76,34 @@ Config.Storages["baun_unicorn_storage"] = {
     label = "Stockage Vanilla Unicorn",
     type = "storage",
     owner = "baun",
-    position = vector3(92.87, -1290.87, 29.27),
-    size = vec2(0.9, 0.8),
-    heading = 300,
+    position = vector3(95.4, -1295.67, 29.27),
+    size = vec2(1, 2.8),
+    heading = 30,
     minZ = 28.27,
-    maxZ = 30.22,
+    maxZ = 31.07,
     targetOption = getCocktailTargetOption(),
+}
+
+Config.Storages["baun_bahama_fridge"] = {
+    label = "Frigo - Bahama Mamas",
+    type = "fridge",
+    owner = "baun",
+    position = vector3(-1386.24, -609.34, 30.32),
+    size = vec2(1, 0.9),
+    heading = 32,
+    minZ = 29.32,
+    maxZ = 31.52,
+}
+
+Config.Storages["baun_unicorn_fridge"] = {
+    label = "Frigo - Vanilla Unicorn",
+    type = "fridge",
+    owner = "baun",
+    position = vector3(92.88, -1290.84, 29.27),
+    size = vec2(0.75, 0.85),
+    heading = 30,
+    minZ = 28.27,
+    maxZ = 30.27,
 }
 
 Config.Storages["baun_unicorn_liquor_storage_1"] = {
