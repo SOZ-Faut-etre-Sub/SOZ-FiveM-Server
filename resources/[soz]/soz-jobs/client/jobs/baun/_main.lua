@@ -69,7 +69,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
     local recipesMenu = MenuV:InheritMenu(BaunJob.Menu, {subtitle = "Livre des recettes"})
     local items = QBCore.Functions.TriggerRpc("inventory:server:GetInventoryItems")
 
-    for cocktailId, cocktail in pairs(BaunJob.RecipeBook) do
+    for _, cocktail in pairs(BaunJob.RecipeBook) do
         local subtitle = "Ingrédients pour " .. cocktail.label
         local ingredientsMenu = MenuV:InheritMenu(recipesMenu, {subtitle = subtitle})
         local canCraft = true
@@ -97,7 +97,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
                     ingredientsMenu:Close()
                     recipesMenu:Close()
                     BaunJob.Menu:Close()
-                    TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
+                    TriggerEvent("soz-jobs:client:baun:craft", cocktail.id)
                 end,
             })
         end
@@ -120,7 +120,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
                 QBCore.Functions.CreateBlip("baun_liquor", {
                     name = "Point de récolte d'alcool",
                     coords = vector3(1410.96, 1147.6, 114.33),
-                    sprite = 615,
+                    sprite = 478,
                     color = 28,
                     scale = 1.0,
                 })
@@ -139,7 +139,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
                 QBCore.Functions.CreateBlip("baun_flavor", {
                     name = "Point de récolte de saveurs",
                     coords = vector3(867.17, -1628.59, 30.2),
-                    sprite = 615,
+                    sprite = 478,
                     color = 28,
                     scale = 1.0,
                 })
@@ -158,7 +158,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
                 QBCore.Functions.CreateBlip("baun_furniture", {
                     name = "Point de récolte de fournitures",
                     coords = vector3(44.98, -1749.42, 29.59),
-                    sprite = 615,
+                    sprite = 478,
                     color = 28,
                     scale = 1.0,
                 })
@@ -168,5 +168,32 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
         end,
     })
 
+    BaunJob.Menu:AddCheckbox({
+        label = "Afficher la revente des cocktails",
+        value = BaunJob.MenuState["baun_resell"],
+        change = function(_, value)
+            BaunJob.MenuState["baun_resell"] = value
+            if not QBCore.Functions.GetBlip("baun_resell") then
+                QBCore.Functions.CreateBlip("baun_resell", {
+                    name = "Point de vente des cocktails",
+                    coords = vector3(393.02, 177.3, 103.86),
+                    sprite = 605,
+                    color = 28,
+                    scale = 1.0,
+                })
+            end
+
+            QBCore.Functions.HideBlip("baun_resell", not value)
+        end,
+    })
+
     BaunJob.Menu:Open()
 end)
+
+exports["qb-target"]:AddBoxZone("baun:bahama:duty", vector3(-1388.11, -606.23, 30.32), 0.55, 0.55,
+                                {name = "baun:bahama:duty", heading = 16, minZ = 30.32, maxZ = 30.87},
+                                {options = SozJobCore.Functions.GetDutyActions("baun"), distance = 2.5})
+
+exports["qb-target"]:AddBoxZone("baun:unicorn:duty", vector3(133.53, -1286.86, 29.27), 0.45, 0.5,
+                                {name = "baun:unicorn:duty", heading = 345, minZ = 29.27, maxZ = 29.67},
+                                {options = SozJobCore.Functions.GetDutyActions("baun"), distance = 2.5})
