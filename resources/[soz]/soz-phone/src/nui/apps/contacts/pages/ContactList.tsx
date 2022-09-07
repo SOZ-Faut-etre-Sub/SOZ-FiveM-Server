@@ -29,7 +29,7 @@ export const ContactList: React.FC = () => {
         contacts
             .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
             .forEach(contact => {
-                const letter = contact.display[0].toUpperCase();
+                const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
                 if (list[letter] === undefined) {
                     list[letter] = [];
                 }
