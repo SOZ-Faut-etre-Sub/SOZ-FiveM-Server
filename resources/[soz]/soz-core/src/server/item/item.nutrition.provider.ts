@@ -48,11 +48,18 @@ export class ItemNutritionProvider {
         const name = item.type === 'food' ? 'eat_something' : 'drink_something';
         const prop =
             item.type === 'food'
-                ? {
-                      model: 'prop_cs_burger_01',
-                      bone: 60309,
-                      coords: { x: 0.01, y: -0.01, z: -0.06 },
-                  }
+                ? item.name === 'zevent2022_popcorn'
+                    ? {
+                          model: 'xs_prop_trinket_cup_01a',
+                          bone: 60309,
+                          coords: { x: 0.14, y: 0.01, z: -0.01 },
+                          rotation: { x: 0.01, y: -90.01, z: 0.01 },
+                      }
+                    : {
+                          model: 'prop_cs_burger_01',
+                          bone: 60309,
+                          coords: { x: 0.01, y: -0.01, z: -0.06 },
+                      }
                 : {
                       model: 'ba_prop_club_water_bottle',
                       bone: 28422,

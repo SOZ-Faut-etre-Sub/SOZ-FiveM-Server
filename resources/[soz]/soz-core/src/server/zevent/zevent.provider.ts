@@ -6,7 +6,9 @@ import { InventoryManager } from '../item/inventory.manager';
 import { Notifier } from '../notifier';
 
 @Provider()
-export class ZEventPopcornProvider {
+export class ZEventProvider {
+    private readonly ITEM_ID = 'zevent2022_popcorn';
+    private readonly AMOUNT_TO_GIVE = 1;
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
@@ -15,11 +17,11 @@ export class ZEventPopcornProvider {
 
     @OnEvent(ServerEvent.ZEVENT_GET_POPCORN)
     public onGetPopcorn(source: number) {
-        if (!this.inventoryManager.canCarryItem(source, 'popcorn', 1)) {
+        if (!this.inventoryManager.canCarryItem(source, this.ITEM_ID, this.AMOUNT_TO_GIVE)) {
             this.notifier.notify(source, `Tu as les poches pleines.`, 'error');
             return;
         }
-        this.inventoryManager.addItemToInventory(source, 'popcorn', 1);
+        this.inventoryManager.addItemToInventory(source, this.ITEM_ID, this.AMOUNT_TO_GIVE);
         this.notifier.notify(source, `Vous avez pris du pop-corn. Bon appétit !`, 'success');
     }
 }
