@@ -65,5 +65,6 @@ export type PlayerMetadata = PlayerHealthBook & {
     last_strength_update: string | null;
     last_max_stamina_update: string | null;
     last_stress_level_update: string | null;
+    last_exercise_completed: number | null;
     disease: Disease | null;
 };

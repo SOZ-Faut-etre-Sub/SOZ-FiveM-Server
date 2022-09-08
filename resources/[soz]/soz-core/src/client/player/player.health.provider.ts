@@ -137,8 +137,6 @@ export class PlayerHealthProvider {
 
     private runningStartTime: number | null = null;
 
-    private lastExerciseCompleted: number | null = null;
-
     private strengthExercisesCount = 0;
 
     private runCount = 0;
@@ -187,13 +185,22 @@ export class PlayerHealthProvider {
         }
 
         if (this.strengthExercisesCount >= 30) {
-            this.lastExerciseCompleted = GetGameTimer();
+            TriggerServerEvent(ServerEvent.PLAYER_HEALTH_SET_EXERCISE_COMPLETED, new Date().getTime());
             this.strengthExercisesCount = 0;
         }
     }
 
     private canDoExercise(): boolean {
-        if (!this.lastExerciseCompleted || GetGameTimer() - this.lastExerciseCompleted > 60 * 1000 * 60 * 2) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return false;
+        }
+
+        if (
+            !player.metadata.last_exercise_completed ||
+            new Date().getTime() - player.metadata.last_exercise_completed > 60 * 1000 * 60 * 2
+        ) {
             return true;
         }
 
