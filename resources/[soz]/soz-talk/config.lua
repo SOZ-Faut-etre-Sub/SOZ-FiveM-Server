@@ -57,4 +57,6 @@ Config.AllowedRadioInVehicle = {
     [GetHashKey("boxville")] = true,
     --- BAUN
     [GetHashKey("youga3")] = true,
+    --- FFS
+    [GetHashKey("rumpo4")] = true,
 }
