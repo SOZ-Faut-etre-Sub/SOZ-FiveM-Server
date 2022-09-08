@@ -38,6 +38,11 @@ export class PlayerHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @OnEvent(ServerEvent.PLAYER_HEALTH_SET_EXERCISE_COMPLETED)
+    public async setExerciseCompleted(source: number, date: number): Promise<void> {
+        this.playerService.setPlayerMetadata(source, 'last_exercise_completed', date);
+    }
+
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
