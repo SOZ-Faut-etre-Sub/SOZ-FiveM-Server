@@ -20,7 +20,7 @@ export class StreamProvider {
                 heading: 340,
             }),
             'cinema',
-            'v_50_floornwalls',
+            'soz_v_50_floornwalls',
             'big_disp2'
         );
 
