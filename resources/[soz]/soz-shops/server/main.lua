@@ -315,9 +315,14 @@ end
 
 exports("RestockShop", function(brand, item, amount)
     local category = garmentToCategory(item)
-    local sexToRefill = math.random(0, 1)
+    local sexToRefill = -1667301416
 
-    local shop = ShopsContent[sexToRefill and -1667301416 or 1885233650][Shops[brand]]
+    if math.random() > 0.5 then
+        sexToRefill = 1885233650
+    end
+
+    local shop = ShopsContent[sexToRefill][Shops[brand]]
+
     if not shop then
         return false
     end
