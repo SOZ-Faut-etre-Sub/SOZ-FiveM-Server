@@ -17,6 +17,6 @@ client_scripts {
     "client/exports.lua",
 }
 
-server_scripts {"server/main.lua", "server/state/*.lua", "server/modules/*.lua"}
+server_scripts {"server/main.lua", "server/zumble.lua", "server/state/*.lua", "server/modules/*.lua"}
 
 dependencies {"/onesync", "qb-core"}
