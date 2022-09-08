@@ -160,6 +160,9 @@ local function ApplyFilters(players)
     end
 end
 
+local serverAddress = GetConvar("soz_voip_mumble_address", "")
+local serverPort = GetConvarInt("soz_voip_mumble_port", 64738)
+
 Citizen.CreateThread(function()
     -- Sometimes people need to to restart voip as soon as they log in, so we force a reconnection on start
     MumbleSetActive(false)
@@ -170,6 +173,10 @@ Citizen.CreateThread(function()
     LastVolumesSet = {}
 
     -- Reconnect
+    if serverAddress ~= "" then
+        MumbleSetServerAddress(serverAddress, serverPort)
+    end
+
     MumbleSetActive(true)
     Citizen.Wait(1000)
 
