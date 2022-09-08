@@ -197,6 +197,12 @@ export class PlayerHealthProvider {
             return false;
         }
 
+        if (player.metadata.disease !== false) {
+            this.notifier.notify("Vous êtes ~r~malade~s~, vous ne pouvez pas faire d'exercice.", 'error');
+
+            return false;
+        }
+
         if (
             !player.metadata.last_exercise_completed ||
             new Date().getTime() - player.metadata.last_exercise_completed > 60 * 1000 * 60 * 2
