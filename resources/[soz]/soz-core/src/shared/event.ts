@@ -29,6 +29,7 @@ export enum ServerEvent {
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
     PLAYER_SHOW_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
+    PLAYER_HEALTH_SET_EXERCISE_COMPLETED = 'soz-core:client:player:health:set-exercise-completed',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
