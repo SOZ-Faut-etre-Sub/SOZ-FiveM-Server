@@ -37,7 +37,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
         else
             for _, ingredient in pairs(ingredients) do
                 if not player.Functions.RemoveItem(ingredient.itemId, ingredient.quantity) then
-                    cb(false, "Impossible de retirer un ingrédient")
+                    cb(false, "missing_ingredient")
                     return
                 end
             end
