@@ -36,7 +36,10 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
             return
         else
             for _, ingredient in pairs(ingredients) do
-                player.Functions.RemoveItem(ingredient.itemId, ingredient.quantity)
+                if not player.Functions.RemoveItem(ingredient.itemId, ingredient.quantity) then
+                    cb(false, "Impossible de retirer un ingrédient")
+                    return
+                end
             end
             cb(true)
         end
@@ -44,8 +47,11 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
 end)
 
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-harvest", function(source, cb, item)
-    local canHarvest = exports["soz-inventory"]:CanCarryItem(source, item, 1)
-    cb(canHarvest)
+    if exports["soz-inventory"]:CanCarryItem(source, item, 1) then
+        cb(true, nil)
+    else
+        cb(false, 'Vos poches sont pleines.');
+    end
 end)
 
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:harvest", function(source, cb, itemId)

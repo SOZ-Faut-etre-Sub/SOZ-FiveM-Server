@@ -53,9 +53,11 @@ BaunJob.Functions.InitHarvestingZones = function()
 end
 
 RegisterNetEvent("soz-jobs:client:baun:harvest", function(data)
-    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:can-harvest", function(canHarvest)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:can-harvest", function(canHarvest, reason)
         if canHarvest then
             harvest(data)
+        else
+            exports["soz-hud"]:DrawNotification(reason, "error")
         end
     end, data.give_item)
 end)
