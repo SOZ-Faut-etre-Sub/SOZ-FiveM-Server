@@ -50,7 +50,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-harvest", function(sou
     if exports["soz-inventory"]:CanCarryItem(source, item, 1) then
         cb(true, nil)
     else
-        cb(false, 'Vos poches sont pleines.');
+        cb(false, "Vos poches sont pleines.");
     end
 end)
 
