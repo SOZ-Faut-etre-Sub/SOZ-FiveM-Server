@@ -35,7 +35,7 @@ export class ZEventProvider {
         this.notifier.notify(source, `Vous avez pris du pop-corn. Bon appétit !`, 'success');
     }
 
-    private async useTShirt(source: number, _item: CommonItem, _inventoryItem: InventoryItem) {
+    private async useTShirt(source: number) {
         const { completed } = await this.progressService.progress(source, 'wear_tshirt', '', 5000, {
             dictionary: 'anim@mp_yacht@shower@male@',
             name: 'male_shower_towel_dry_to_get_dressed',

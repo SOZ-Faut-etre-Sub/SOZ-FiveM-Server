@@ -47,14 +47,14 @@ export class ZEventProvider {
         [GetHashKey('mp_m_freemode_01')]: {
             Components: {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [8]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 44, Texture: 1, Palette: 0 },
             },
         },
         [GetHashKey('mp_f_freemode_01')]: {
             Components: {
-                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 2, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 335, Texture: 19, Palette: 0 },
             },
         },
