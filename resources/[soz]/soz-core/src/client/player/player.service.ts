@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { Qbcore } from '../qbcore';
 
@@ -27,5 +28,9 @@ export class PlayerService {
 
     public getClosestPlayer(): [number, number] {
         return this.qbcore.getClosestPlayer();
+    }
+
+    public setJobClothes(clothes: any) {
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, clothes);
     }
 }

@@ -18,6 +18,14 @@ export type PlayerData = {
     metadata: PlayerMetadata;
     job: PlayerJob;
     items: Record<string, InventoryItem> | InventoryItem[];
+    skin: Skin;
+};
+
+// TODO: Finish to implement the other properties
+export type Skin = {
+    Model: {
+        Hash: number;
+    };
 };
 
 export type PlayerCharInfo = {
@@ -67,4 +75,6 @@ export type PlayerMetadata = PlayerHealthBook & {
     last_stress_level_update: string | null;
     last_exercise_completed: number | null;
     disease: Disease | null;
+    // Typing is intentionally in that way so that you could program future items that gives clothes.
+    isWearingItem: 'zevent2022_tshirt' | null;
 };

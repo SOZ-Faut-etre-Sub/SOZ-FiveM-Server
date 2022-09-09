@@ -2,8 +2,6 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
-    BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
-
     BAUN_RESELL = 'soz-core:server:baun:resell',
 
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
@@ -19,7 +17,6 @@ export enum ServerEvent {
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
-    LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
 
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
@@ -36,7 +33,10 @@ export enum ServerEvent {
     ZEVENT_GET_POPCORN = 'soz-core:server:zevent:get-popcorn',
 
     // not core
+    BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
+    CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
+    LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
 }
 
 export enum ClientEvent {
@@ -53,6 +53,8 @@ export enum ClientEvent {
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
     PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
+
+    ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 
     // Temp event which sould be internally used by a service when only soz core
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
