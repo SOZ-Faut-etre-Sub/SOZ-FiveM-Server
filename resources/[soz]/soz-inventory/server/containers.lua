@@ -175,17 +175,17 @@ Container["inverter"] = InventoryContainer:new({
 Container["liquor_storage"] = InventoryContainer:new({
     type = "liquor_storage",
     allowedTypes = {"liquor"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 Container["flavor_storage"] = InventoryContainer:new({
     type = "flavor_storage",
     allowedTypes = {"flavor"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 Container["furniture_storage"] = InventoryContainer:new({
     type = "furniture_storage",
     allowedTypes = {"furniture"},
-    inventoryPermissionCallback = playerHaveJob,
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
