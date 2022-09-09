@@ -94,7 +94,10 @@ RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
                                    {item_label = item.label, quantity = 1, position = GetEntityCoords(PlayerPedId())}, true)
                 TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
             else
-                if reason == nil or reason == "missing_ingredient" or reason == "invalid_weight" then
+                if reason == nil or reason == "invalid_weight" then
+                    exports["soz-hud"]:DrawNotification("Vos poches sont pleines.")
+                    return
+                elseif reason == "missing_ingredient" then
                     exports["soz-hud"]:DrawNotification(finished_message)
                     return
                 end
