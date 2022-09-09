@@ -12,8 +12,11 @@ import {
     shoesCraftProcesses,
     shoesCraftZones,
 } from '../../../shared/job/ffs';
+import { MenuType } from '../../../shared/nui/menu';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
+import { NuiDispatch } from '../../nui/nui.dispatch';
+import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';
 
@@ -30,6 +33,12 @@ export class FightForStyleCraftProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
@@ -57,6 +66,16 @@ export class FightForStyleCraftProvider {
         const shoesTargets: TargetOptions[] = shoesCraftProcesses.map(craftProcess => {
             const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
             return method(craftProcess, 'c:/ffs/craft_shoes.png');
+        });
+
+        shoesTargets.push({
+            label: 'Voir le menu',
+            color: 'ffs',
+            action: () => {
+                this.nuiMenu.openMenu(MenuType.FfsRecipeBook);
+
+                this.nuiDispatch.dispatch('ffs_recipe_book', 'ShowFfsRecipeBook', craftProcesses);
+            },
         });
 
         shoesCraftZones.forEach(zone => {
