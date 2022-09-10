@@ -6,9 +6,11 @@ import {
     Menu,
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuItemText,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -23,15 +25,20 @@ export const MenuDemo: FunctionComponent = () => {
                 <MenuTitle banner={banner}>Main menu</MenuTitle>
                 <MenuContent>
                     <MenuItemButton>Button 1</MenuItemButton>
-                    <MenuItemButton>Button 2</MenuItemButton>
+                    <MenuItemButton disabled>Button 2</MenuItemButton>
                     <MenuItemSelect title="Test">
                         <MenuItemSelectOption>Value A</MenuItemSelectOption>
                         <MenuItemSelectOption>Value B</MenuItemSelectOption>
                         <MenuItemSelectOption>Value C</MenuItemSelectOption>
                         <MenuItemSelectOption>Value D</MenuItemSelectOption>
                     </MenuItemSelect>
+                    <MenuItemText>Text 1</MenuItemText>
                     <MenuItemSubMenuLink id="submenu1">Submenu 1</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="submenu3">Submenu 3</MenuItemSubMenuLink>
+                    <MenuItemCheckbox disabled>Checkbox 1</MenuItemCheckbox>
+                    <MenuItemCheckbox checked onChange={value => console.log('checkbox 2', value)}>
+                        Checkbox 2
+                    </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="submenu1">

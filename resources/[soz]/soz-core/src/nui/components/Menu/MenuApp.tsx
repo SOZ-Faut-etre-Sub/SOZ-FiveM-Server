@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { MenuType } from '../../../shared/nui/menu';
@@ -27,6 +27,10 @@ const MenuRouter: FunctionComponent = () => {
         navigate('/');
         setMenuData(null);
     });
+
+    useEffect(() => {
+        navigate('/' + MenuType.Demo + '/');
+    }, []);
 
     return (
         <Routes>
