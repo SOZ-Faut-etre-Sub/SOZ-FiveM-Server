@@ -13,6 +13,8 @@ export class ZEventProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    private isWearingTShirt = false;
+
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
         this.targetFactory.createForBoxZone(
@@ -35,12 +37,6 @@ export class ZEventProvider {
                 },
             ]
         );
-
-        const player = this.playerService.getPlayer();
-
-        if (player.metadata.isWearingItem == 'zevent2022_tshirt') {
-            this.playerService.setJobClothes(this.skin[player.skin.Model.Hash]);
-        }
     }
 
     private readonly skin: any = {
@@ -63,12 +59,13 @@ export class ZEventProvider {
     @OnEvent(ClientEvent.ZEVENT_TOGGLE_TSHIRT)
     public onToggleTShirt() {
         const player = this.playerService.getPlayer();
-        if (player.metadata.isWearingItem == 'zevent2022_tshirt') {
+        if (this.isWearingTShirt) {
             player.metadata.isWearingItem = null;
             this.playerService.setJobClothes(null);
         } else {
             player.metadata.isWearingItem = 'zevent2022_tshirt';
             this.playerService.setJobClothes(this.skin[player.skin.Model.Hash]);
         }
+        this.isWearingTShirt = !this.isWearingTShirt;
     }
 }
