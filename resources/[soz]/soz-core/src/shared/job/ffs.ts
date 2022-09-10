@@ -137,7 +137,7 @@ export const craftZones: (ZoneOptions & { name: string })[] = [
 
 export const craftProcesses: CraftProcess[] = [
     {
-        label: 'Fabrication: Haut en fibre naturelle',
+        label: 'Haut en fibre naturelle',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -148,7 +148,7 @@ export const craftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Haut en fibre artificielle',
+        label: 'Haut en fibre artificielle',
         inputs: [
             {
                 fabric: FabricMaterial.ARTIFICIAL_FIBER,
@@ -159,7 +159,7 @@ export const craftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Pantalon synthétique',
+        label: 'Pantalon synthétique',
         inputs: [
             {
                 fabric: FabricMaterial.SYNTHETIC_FIBER,
@@ -170,7 +170,7 @@ export const craftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Pantalon naturel',
+        label: 'Pantalon naturel',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -181,7 +181,7 @@ export const craftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Sous-vêtement',
+        label: 'Sous-vêtement',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -228,7 +228,7 @@ export const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
 
 export const luxuryCraftProcesses: CraftProcess[] = [
     {
-        label: 'Fabrication: Haut luxueux en fibre naturelle',
+        label: 'Haut luxueux en fibre naturelle',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -239,7 +239,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Haut luxueux en fibre artificielle',
+        label: 'Haut luxueux en fibre artificielle',
         inputs: [
             {
                 fabric: FabricMaterial.ARTIFICIAL_FIBER,
@@ -250,7 +250,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Pantalon luxueux synthétique',
+        label: 'Pantalon luxueux synthétique',
         inputs: [
             {
                 fabric: FabricMaterial.SYNTHETIC_FIBER,
@@ -261,7 +261,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Pantalon luxueux naturel',
+        label: 'Pantalon luxueux naturel',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -272,7 +272,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Sous-vêtement luxueux',
+        label: 'Sous-vêtement luxueux',
         inputs: [
             {
                 fabric: FabricMaterial.NATURAL_FIBER,
@@ -299,7 +299,7 @@ export const shoesCraftZones: (ZoneOptions & { name: string })[] = [
 
 export const shoesCraftProcesses: CraftProcess[] = [
     {
-        label: 'Fabrication: Paire de chaussures',
+        label: 'Paire de chaussures',
         inputs: [
             {
                 fabric: FabricMaterial.LEATHER,
@@ -314,7 +314,7 @@ export const shoesCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
     {
-        label: 'Fabrication: Paire de chaussures luxueuses',
+        label: 'Paire de chaussures luxueuses',
         inputs: [
             {
                 fabric: FabricMaterial.LEATHER,

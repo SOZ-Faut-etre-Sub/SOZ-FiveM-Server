@@ -1,8 +1,9 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 
+import { NuiEvent } from '../../../shared/event';
 import { CraftProcess } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
-import { useNuiEvent } from '../../hook/nui';
+import { fetchNui } from '../../fetch';
 import {
     MainMenu,
     Menu,
@@ -13,51 +14,56 @@ import {
     SubMenu,
 } from '../Styleguide/Menu';
 
-export const FfsRecipeBook: FunctionComponent = () => {
-    const [craftProcesses, setCraftProcesses] = useState<CraftProcess[] | null>(null);
+export type FfsRecipe = {
+    canCraft: boolean;
+    craftProcess: CraftProcess;
+    label: string;
+    inputs: {
+        label: string;
+        hasRequiredAmount: boolean;
+        amount: number;
+    }[];
+    output: {
+        label: string;
+        amount: number;
+    };
+};
 
-    useNuiEvent('ffs_recipe_book', 'ShowFfsRecipeBook', craftProcesses => {
-        console.log('Set Craft Processes: ' + craftProcesses);
-        setCraftProcesses(craftProcesses);
-    });
+type FfsRecipeBookStateProps = {
+    recipes: FfsRecipe[];
+};
 
-    useNuiEvent('ffs_recipe_book', 'HideFfsRecipeBook', () => {
-        setCraftProcesses(null);
-    });
-
-    if (!craftProcesses) {
-        console.log('craftProcesses is null');
-        return null;
-    }
-
-    const banner = '';
+export const FfsRecipeBook: FunctionComponent<FfsRecipeBookStateProps> = ({ recipes }) => {
+    const banner = 'https://nui-img/soz/menu_job_ffs';
 
     const craft = craftProcess => {
-        return () => {
-            console.log('So you want to craft a ' + craftProcess.name + ' ?');
+        return async () => {
+            await fetchNui(NuiEvent.FfsCraft, craftProcess);
         };
     };
 
     return (
         <Menu type={MenuType.FfsRecipeBook}>
             <MainMenu>
-                <MenuTitle banner={banner}>Main menu</MenuTitle>
+                <MenuTitle banner={banner}>Livre de recettes</MenuTitle>
                 <MenuContent>
-                    {craftProcesses.map(craftProcess => (
-                        <MenuItemSubMenuLink id={craftProcess.output}>{craftProcess.label}</MenuItemSubMenuLink>
+                    {recipes.map((recipe, index) => (
+                        <MenuItemSubMenuLink id={'process' + index}>{recipe.label}</MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
             </MainMenu>
-            {craftProcesses.map(craftProcess => (
-                <SubMenu id={craftProcess.output}>
-                    <MenuTitle>{craftProcess.label}</MenuTitle>
+            {recipes.map((recipe, index) => (
+                <SubMenu id={'process' + index}>
+                    <MenuTitle banner={banner}>{recipe.label}</MenuTitle>
                     <MenuContent>
-                        {craftProcess.inputs.map(input => (
-                            <div>
-                                {input.amount}x {input.fabric}
-                            </div>
+                        {recipe.inputs.map(input => (
+                            <MenuItemButton disabled={!input.hasRequiredAmount}>
+                                {input.amount}x {input.label} {input.hasRequiredAmount ? '' : '(manquant)'}
+                            </MenuItemButton>
                         ))}
-                        <MenuItemButton onConfirm={craft(craftProcess)}>Confectionner</MenuItemButton>
+                        <MenuItemButton onConfirm={craft(recipe.craftProcess)} disabled={!recipe.canCraft}>
+                            Confectionner {recipe.canCraft ? '' : `(Pas assez d'ingrédients)`}
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

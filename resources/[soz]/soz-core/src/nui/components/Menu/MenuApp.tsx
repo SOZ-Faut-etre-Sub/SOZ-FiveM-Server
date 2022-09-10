@@ -32,7 +32,7 @@ const MenuRouter: FunctionComponent = () => {
     return (
         <Routes>
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
-            <Route path={`/${MenuType.FfsRecipeBook}/*`} element={<FfsRecipeBook />} />
+            <Route path={`/${MenuType.FfsRecipeBook}/*`} element={<FfsRecipeBook recipes={menuData} />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
         </Routes>
     );

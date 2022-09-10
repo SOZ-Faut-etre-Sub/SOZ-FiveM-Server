@@ -1,6 +1,6 @@
-import { CraftProcess } from '../job/ffs';
+import { FfsRecipe } from '../../nui/components/FfsRecipeBook/FfsRecipeBookApp';
 
 export interface NuiFfsRecipeBookMethodMap {
-    ShowFfsRecipeBook: any;
+    ShowFfsRecipeBook: FfsRecipe[];
     HideFfsRecipeBook: never;
 }
