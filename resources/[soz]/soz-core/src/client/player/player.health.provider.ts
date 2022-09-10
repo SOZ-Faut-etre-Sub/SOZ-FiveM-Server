@@ -197,7 +197,7 @@ export class PlayerHealthProvider {
             return false;
         }
 
-        if (player.metadata.disease !== false) {
+        if (player.metadata.disease) {
             this.notifier.notify("Vous êtes ~r~malade~s~, vous ne pouvez pas faire d'exercice.", 'error');
 
             return false;
