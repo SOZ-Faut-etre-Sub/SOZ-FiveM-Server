@@ -28,10 +28,6 @@ const MenuRouter: FunctionComponent = () => {
         setMenuData(null);
     });
 
-    useEffect(() => {
-        navigate('/' + MenuType.Demo + '/');
-    }, []);
-
     return (
         <Routes>
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
