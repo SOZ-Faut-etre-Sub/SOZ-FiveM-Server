@@ -183,16 +183,20 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
 
     const index = useDescendant(descendant, MenuDescendantContext);
 
-    const isSelected = index === activeIndex;
+    const isSelected = disabled ? false : index === activeIndex;
 
     useEffect(() => {
+        if (disabled) {
+            return;
+        }
+
         if (isSelected) {
             onSelected && onSelected();
         }
     }, [isSelected]);
 
     useEnter(() => {
-        if (!isSelected) {
+        if (!isSelected || disabled) {
             return;
         }
 
