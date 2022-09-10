@@ -36,6 +36,7 @@ export class PlayerService {
         const player = this.QBCore.getPlayer(source);
 
         if (player) {
+            console.log('setPlayerMetadata', key, value);
             player.Functions.SetMetaData(key, value);
         }
     }

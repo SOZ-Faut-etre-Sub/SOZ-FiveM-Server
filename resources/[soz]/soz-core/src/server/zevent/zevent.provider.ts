@@ -5,6 +5,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryManager } from '../item/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 
 @Provider()
@@ -23,6 +24,9 @@ export class ZEventProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @OnEvent(ServerEvent.ZEVENT_GET_POPCORN)
     public onGetPopcorn(source: number) {
