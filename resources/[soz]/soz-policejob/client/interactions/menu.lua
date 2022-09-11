@@ -354,7 +354,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
         local giveLicenseMenu = MenuV:InheritMenu(menu, {subtitle = "Attribuer un permis"})
 
         for license, value in pairs(playerLicenses) do
-            if type(value) == "number" and value > 1 then
+            if type(value) == "number" and value >= 1 then
                 local sliderPoints = {}
                 for i = 1, value do
                     sliderPoints[i] = {label = i .. " point" .. (i > 1 and "s" or ""), value = i}
@@ -407,7 +407,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
                     value = license,
                     confirm = function(item)
                         local ped = PlayerPedId()
-                        QBCore.Functions.Progressbar("job:police:license", "Retrais de points en cours...", 5000, false, true,
+                        QBCore.Functions.Progressbar("job:police:license", "Retrait de points en cours...", 5000, false, true,
                                                      {
                             disableMovement = false,
                             disableCarMovement = true,
