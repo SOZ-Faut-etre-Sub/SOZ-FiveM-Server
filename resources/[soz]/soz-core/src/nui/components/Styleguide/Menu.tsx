@@ -1,6 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import { CheckIcon } from '@heroicons/react/solid';
 import {
     createDescendantContext,
+    Descendant,
     DescendantProvider,
     useDescendant,
     useDescendants,
@@ -23,7 +25,11 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { MenuType } from '../../../shared/nui/menu';
 import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
 
-const MenuDescendantContext = createDescendantContext('MenuDescendantContext');
+type MenuDescendant = Descendant & {
+    disabled: boolean;
+};
+
+const MenuDescendantContext = createDescendantContext<MenuDescendant>('MenuDescendantContext');
 const MenuItemSelectDescendantContext = createDescendantContext('MenuItemSelectDescendantContext');
 const MenuContext = createContext<{ activeIndex: number; setActiveIndex: (number) => void }>({
     activeIndex: 0,
@@ -112,19 +118,39 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate();
 
     useArrowDown(() => {
-        if (activeIndex < menuItems.length - 1) {
-            setActiveIndex(activeIndex + 1);
-        } else {
-            setActiveIndex(0);
-        }
+        let newIndex = activeIndex;
+
+        do {
+            newIndex = newIndex + 1;
+
+            if (newIndex >= menuItems.length) {
+                newIndex = 0;
+            }
+
+            if (newIndex === activeIndex) {
+                break;
+            }
+        } while (menuItems[newIndex].disabled);
+
+        setActiveIndex(newIndex);
     });
 
     useArrowUp(() => {
-        if (activeIndex > 0) {
-            setActiveIndex(activeIndex - 1);
-        } else {
-            setActiveIndex(menuItems.length - 1);
-        }
+        let newIndex = activeIndex;
+
+        do {
+            newIndex = newIndex - 1;
+
+            if (newIndex < 0) {
+                newIndex = menuItems.length - 1;
+            }
+
+            if (newIndex === activeIndex) {
+                break;
+            }
+        } while (menuItems[newIndex].disabled);
+
+        setActiveIndex(newIndex);
     });
 
     useBackspace(() => {
@@ -137,9 +163,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
 type MenuItemProps = PropsWithChildren<{
     onConfirm?: () => void;
     onSelected?: () => void;
+    disabled?: boolean;
 }>;
 
-const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfirm, onSelected }) => {
+const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfirm, onSelected, disabled = false }) => {
     const { activeIndex } = useContext(MenuContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
@@ -150,6 +177,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
     const descendant = useMemo(() => {
         return {
             element,
+            disabled,
         };
     }, [element]);
 
@@ -168,16 +196,32 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
             return;
         }
 
+        if (disabled) {
+            return;
+        }
+
         onConfirm && onConfirm();
     });
+
+    const onClick = () => {
+        if (disabled) {
+            return;
+        }
+
+        onConfirm && onConfirm();
+    };
 
     return (
         <li
             ref={handleRefSet}
-            className={cn('p-1 pl-2 my-0.5 hover:bg-white/10 text-white cursor-pointer rounded', {
+            className={cn('p-1 pl-2 my-0.5 hover:bg-white/10 rounded', {
                 'bg-white/10': isSelected,
+                'text-white/50': disabled,
+                'text-white': !disabled,
+                'cursor-not-allowed': disabled,
+                'cursor-pointer': !disabled,
             })}
-            onClick={onConfirm}
+            onClick={onClick}
         >
             <MenuSelectedContext.Provider value={isSelected}>{children}</MenuSelectedContext.Provider>
         </li>
@@ -187,12 +231,65 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
 type MenuItemButtonProps = PropsWithChildren<{
     onConfirm?: () => void;
     onSelected?: () => void;
+    disabled?: boolean;
 }>;
 
-export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({ children, onConfirm, onSelected }) => {
+export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
+    children,
+    onConfirm,
+    onSelected,
+    disabled = false,
+}) => {
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm}>
+        <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
             {children}
+        </MenuItemContainer>
+    );
+};
+
+type MenuItemTextProps = PropsWithChildren<{
+    onSelected?: () => void;
+}>;
+
+export const MenuItemText: FunctionComponent<MenuItemTextProps> = ({ children, onSelected }) => {
+    return (
+        <MenuItemContainer onSelected={onSelected} disabled={true}>
+            <h3 className="text-white cursor-default">{children}</h3>
+        </MenuItemContainer>
+    );
+};
+
+type MenuItemCheckboxProps = PropsWithChildren<{
+    onSelected?: () => void;
+    onChange?: (value: boolean) => void;
+    checked?: boolean;
+    disabled?: boolean;
+}>;
+
+export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
+    children,
+    onChange,
+    checked = false,
+    onSelected,
+    disabled = false,
+}) => {
+    const [isChecked, setIsChecked] = useState(checked);
+
+    const onConfirm = () => {
+        setIsChecked(!isChecked);
+        onChange && onChange(!isChecked);
+    };
+
+    return (
+        <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
+            <div className="flex  justify-between items-center">
+                <h3>{children}</h3>
+                <div className="border border-white w-5 h-5 rounded bg-black/20">
+                    {isChecked && (
+                        <CheckIcon className="w-full h-full text-white" aria-hidden="true" focusable="false" />
+                    )}
+                </div>
+            </div>
         </MenuItemContainer>
     );
 };
@@ -200,14 +297,20 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({ childre
 type MenuItemSubMenuLinkProps = PropsWithChildren<{
     id: string;
     onSelected?: () => void;
+    disabled?: boolean;
 }>;
 
-export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({ children, id, onSelected }) => {
+export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({
+    children,
+    id,
+    onSelected,
+    disabled = false,
+}) => {
     const type = useContext(MenuTypeContext);
     const navigate = useNavigate();
 
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={() => navigate(`/${type}/${id}`)}>
+        <MenuItemContainer onSelected={onSelected} onConfirm={() => navigate(`/${type}/${id}`)} disabled={disabled}>
             {children}
         </MenuItemContainer>
     );
@@ -254,7 +357,7 @@ const MenuSelectControls: FunctionComponent<PropsWithChildren> = ({ children }) 
 
                     event.stopPropagation();
                 }}
-                className="h-5 w-5 p-0.5 mr-2 bg-black/10 rounded-full"
+                className="h-5 w-5 p-0.5 mr-2 bg-black/20 rounded-full"
             />
             <div>{children}</div>
             <ChevronRightIcon
@@ -263,7 +366,7 @@ const MenuSelectControls: FunctionComponent<PropsWithChildren> = ({ children }) 
 
                     event.stopPropagation();
                 }}
-                className="h-5 w-5 p-0.5 ml-2 bg-black/10 rounded-full"
+                className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full"
             />
         </div>
     );
@@ -273,9 +376,16 @@ type MenuItemSelectProps = PropsWithChildren<{
     title: string;
     onConfirm?: (index: number) => void;
     onSelected?: () => void;
+    disabled?: boolean;
 }>;
 
-export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({ children, onConfirm, onSelected, title }) => {
+export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
+    children,
+    onConfirm,
+    onSelected,
+    title,
+    disabled = false,
+}) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
 
@@ -284,7 +394,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({ childre
     }, [activeOptionIndex, onConfirm]);
 
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm}>
+        <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm} disabled={disabled}>
             <DescendantProvider context={MenuItemSelectDescendantContext} items={descendants} set={setDescendants}>
                 <MenuItemSelectContext.Provider value={{ activeOptionIndex, setActiveOptionIndex }}>
                     <div className="flex justify-between">
