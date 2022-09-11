@@ -1728,9 +1728,9 @@ PlacesEntreprise = {
             capacity = {1, 2, 3}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["baun_bahama1"] = BoxZone:Create(vector3(-1395.8, -654.34, 28.67), 3.2, 6.0, {
+    ["baun_bahama1"] = BoxZone:Create(vector3(-1395.8, -654.34, 28.67), 6.0, 3.2, {
         name = "baun_bahama1",
-        heading = 307,
+        heading = 37,
         minZ = 27.67,
         maxZ = 31.67,
         data = {
@@ -1738,9 +1738,9 @@ PlacesEntreprise = {
             capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["baun_bahama2"] = BoxZone:Create(vector3(-1392.93, -652.27, 28.67), 3.2, 6.0, {
+    ["baun_bahama2"] = BoxZone:Create(vector3(-1392.93, -652.27, 28.67), 6.0, 3.2, {
         name = "baun_bahama2",
-        heading = 307,
+        heading = 37,
         minZ = 27.67,
         maxZ = 31.67,
         data = {
@@ -1748,9 +1748,9 @@ PlacesEntreprise = {
             capacity = {1, 2}, -- 1 = S, 2 = M, 3 = L
         },
     }),
-    ["baun_bahama3"] = BoxZone:Create(vector3(-1400.93, -641.8, 28.67), 5.2, 11.4, {
+    ["baun_bahama3"] = BoxZone:Create(vector3(-1400.93, -641.8, 28.67), 11.4, 5.2, {
         name = "baun_bahama3",
-        heading = 355,
+        heading = 85,
         minZ = 27.67,
         maxZ = 31.67,
         data = {
