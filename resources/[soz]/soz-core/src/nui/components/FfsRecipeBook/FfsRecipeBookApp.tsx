@@ -9,6 +9,7 @@ import {
     Menu,
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSubMenuLink,
     MenuTitle,
     SubMenu,
@@ -57,9 +58,9 @@ export const FfsRecipeBook: FunctionComponent<FfsRecipeBookStateProps> = ({ reci
                     <MenuTitle banner={banner}>{recipe.label}</MenuTitle>
                     <MenuContent>
                         {recipe.inputs.map(input => (
-                            <MenuItemButton disabled={!input.hasRequiredAmount}>
-                                {input.amount}x {input.label} {input.hasRequiredAmount ? '' : '(manquant)'}
-                            </MenuItemButton>
+                            <MenuItemCheckbox disabled={true} checked={input.hasRequiredAmount}>
+                                {input.amount} {input.label}
+                            </MenuItemCheckbox>
                         ))}
                         <MenuItemButton onConfirm={craft(recipe.craftProcess)} disabled={!recipe.canCraft}>
                             Confectionner {recipe.canCraft ? '' : `(Pas assez d'ingrédients)`}
