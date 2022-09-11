@@ -77,10 +77,21 @@ CreateThread(function()
     end)
 end)
 
-RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
+RegisterNetEvent("soz-jobs:client:baun:can-craft", function(cocktailId)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:can-craft", function(success, reason)
+        if success then
+            craft(cocktailId)
+        else
+            exports["soz-hud"]:DrawNotification("Vous avez ~r~terminé~s~ de mélanger.")
+        end
+    end, cocktailId)
+end)
+
+function craft(cocktailId)
     local item = QBCore.Shared.Items[cocktailId]
-    local action_message = string.format("Vous confectionnez 1 %s", item.label)
-    local finished_message = string.format("Vous avez terminé de mélanger.", item.pluralLabel)
+    local action_message = string.format("Vous ~g~confectionnez~s~ 1 %s", item.label)
+    local crafted_message = string.format("Vous avez confectionné 1 %s", item.label)
+    local finished_message = "Vous avez terminé de mélanger."
     QBCore.Functions.Progressbar("food-craft-item", action_message, BaunConfig.Durations.Crafting, false, true,
                                  {
         disableMovement = true,
@@ -90,9 +101,10 @@ RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
     }, {animDict = "anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal", anim = "pour_one", flags = 0}, {}, {}, function()
         QBCore.Functions.TriggerCallback("soz-jobs:server:baun:craft", function(success, reason)
             if success then
+                exports["soz-hud"]:DrawNotification(crafted_message, "success")
                 TriggerServerEvent("monitor:server:event", "job_bam_cocktail_craft", {item_id = cocktailId},
                                    {item_label = item.label, quantity = 1, position = GetEntityCoords(PlayerPedId())}, true)
-                TriggerEvent("soz-jobs:client:baun:craft", cocktailId)
+                TriggerEvent("soz-jobs:client:baun:can-craft", cocktailId)
             else
                 if reason == nil or reason == "invalid_weight" then
                     exports["soz-hud"]:DrawNotification("Vos poches sont pleines.")
@@ -107,10 +119,9 @@ RegisterNetEvent("soz-jobs:client:baun:craft", function(cocktailId)
     end, function()
         exports["soz-hud"]:DrawNotification(finished_message)
     end)
-end)
+end
 
 RegisterNetEvent("soz-jobs:client:baun:createCocktailBox", function()
     QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createCocktailBox", function(success, reason)
-        print(success)
     end)
 end)

@@ -97,7 +97,7 @@ AddEventHandler("soz-jobs:client:baun:OpenSocietyMenu", function(data)
                     ingredientsMenu:Close()
                     recipesMenu:Close()
                     BaunJob.Menu:Close()
-                    TriggerEvent("soz-jobs:client:baun:craft", cocktail.id)
+                    TriggerEvent("soz-jobs:client:baun:can-craft", cocktail.id)
                 end,
             })
         end
