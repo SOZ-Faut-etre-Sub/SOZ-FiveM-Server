@@ -200,6 +200,10 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
             return;
         }
 
+        if (disabled) {
+            return;
+        }
+
         onConfirm && onConfirm();
     });
 
