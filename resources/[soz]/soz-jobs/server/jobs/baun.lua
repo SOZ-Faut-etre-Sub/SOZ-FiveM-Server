@@ -1,3 +1,32 @@
+QBCore.Functions.CreateCallback("soz-jobs:server:baun:can-craft", function(source, cb, itemId)
+    local player = QBCore.Functions.GetPlayer(source)
+    if player == nil then
+        cb(false, "Le joueur n'existe pas.")
+        return
+    end
+
+    local cocktail = QBCore.Shared.Items[itemId]
+    if cocktail == nil then
+        cb(false, "Le cocktail n'existe pas.")
+        return
+    end
+
+    local ingredients = BaunConfig.Recipes[itemId]
+    for _, ingredient in pairs(ingredients) do
+        local ingredientItem = QBCore.Shared.Items[ingredient.itemId]
+        if ingredientItem == nil then
+            cb(false, "Un des ingrédients n'existe pas.")
+            return
+        end
+        local item = exports["soz-inventory"]:GetItem(source, ingredient.itemId, nil)
+        if item.amount < ingredient.quantity or exports["soz-utils"]:ItemIsExpired(item) then
+            cb(false, "Vous n'avez pas assez de " .. ingredientItem.label .. ".")
+            return
+        end
+    end
+    cb(true, nil)
+end)
+
 QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, cb, itemId)
     local player = QBCore.Functions.GetPlayer(source)
     if player == nil then
