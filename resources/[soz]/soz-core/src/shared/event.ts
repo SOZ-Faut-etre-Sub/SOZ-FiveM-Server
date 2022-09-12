@@ -72,6 +72,7 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
+    FfsCraft = 'soz-core:client:job:ffs:craft',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
