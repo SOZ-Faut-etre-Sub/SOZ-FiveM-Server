@@ -32,6 +32,10 @@ export class FightForStyleProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
+    private state = {
+        ffs_cotton_bale: false,
+    };
+
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
         this.QBCore.createBlip('jobs:ffs', {
@@ -105,13 +109,18 @@ export class FightForStyleProvider {
 
     @OnNuiEvent(NuiEvent.FfsDisplayBlip)
     public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
+        console.log('', blip, value);
+        this.state[blip] = value;
         this.QBCore.hideBlip(blip, value);
     }
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_CLOAKROOM)
     public onOpenCloakroomMenu() {
+        if (!this.playerService.isOnDuty()) {
+            return;
+        }
         const recipes = this.computeRecipes(craftProcesses);
-        this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, recipes);
+        this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, { recipes: recipes, state: this.state });
     }
 
     private computeRecipes(craftProcesses: CraftProcess[]): FfsRecipe[] {

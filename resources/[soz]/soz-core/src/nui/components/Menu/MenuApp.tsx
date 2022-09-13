@@ -32,7 +32,7 @@ const MenuRouter: FunctionComponent = () => {
     return (
         <Routes>
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
-            <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu recipes={menuData} />} />
+            <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
         </Routes>
     );
