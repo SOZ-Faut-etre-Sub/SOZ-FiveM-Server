@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { CraftProcess } from '../../../shared/job/ffs';
@@ -30,16 +30,33 @@ export type FfsRecipe = {
 };
 
 type FightForStyleStateProps = {
-    recipes: FfsRecipe[];
+    data: {
+        recipes: FfsRecipe[];
+        state: {
+            ffs_cotton_bale: boolean;
+        };
+    };
 };
 
-export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = ({ recipes }) => {
+export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_ffs';
+    const [blips, setBlips] = useState(null);
 
-    const displayBlip = (blip: string, value) => {
-        return async () => {
-            await fetchNui(NuiEvent.FfsDisplayBlip, blip, value);
-        };
+    useEffect(() => {
+        if (data && data.state) {
+            setBlips(data.state);
+        }
+    }, [data]);
+
+    if (!blips) {
+        return null;
+    }
+
+    const recipes = data.recipes;
+
+    const displayBlip = async (blip: string, value: boolean) => {
+        setBlips({ ...blips, [blip]: value });
+        await fetchNui(NuiEvent.FfsDisplayBlip, { blip, value });
     };
 
     return (
@@ -48,7 +65,10 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="recipe">Livre de recettes</MenuItemSubMenuLink>
-                    <MenuItemCheckbox onChange={value => displayBlip('ffs_cotton_bale', value)}>
+                    <MenuItemCheckbox
+                        checked={blips['ffs_cotton_bale']}
+                        onChange={value => displayBlip('ffs_cotton_bale', value)}
+                    >
                         Afficher la récolte de balle de coton
                     </MenuItemCheckbox>
                 </MenuContent>
