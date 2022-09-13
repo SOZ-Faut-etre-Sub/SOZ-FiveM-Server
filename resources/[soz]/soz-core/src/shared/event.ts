@@ -59,12 +59,13 @@ export enum ClientEvent {
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 
-    // Temp event which sould be internally used by a service when only soz core
+    // Temp event which should be internally used by a service when only soz core
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
     PLAYER_HEALTH_DO_YOGA = 'soz-core:client:player:health:yoga',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     IDENTITY_HIDE = 'soz-identity:client:hide',
+    JOBS_FFS_OPEN_CLOAKROOM = 'soz-jobs:client:ffs:OpenSocietyMenu',
 }
 
 export enum GameEvent {
@@ -75,7 +76,7 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
-    FfsCraft = 'soz-core:client:job:ffs:craft',
+    FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',

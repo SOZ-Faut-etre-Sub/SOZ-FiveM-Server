@@ -19,7 +19,7 @@ export type SetMenuType = {
 export enum MenuType {
     Demo = 'demo',
     SetHealthState = 'set_health_state',
-    FfsRecipeBook = 'ffs_recipe_book',
+    FightForStyleJobMenu = 'ffs_job_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, unknown> {
