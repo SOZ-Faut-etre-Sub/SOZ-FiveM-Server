@@ -8,7 +8,6 @@ import {
     MainMenu,
     Menu,
     MenuContent,
-    MenuItemButton,
     MenuItemCheckbox,
     MenuItemSubMenuLink,
     MenuTitle,
@@ -30,29 +29,38 @@ export type FfsRecipe = {
     };
 };
 
-type FfsRecipeBookStateProps = {
+type FightForStyleStateProps = {
     recipes: FfsRecipe[];
 };
 
-export const FfsRecipeBook: FunctionComponent<FfsRecipeBookStateProps> = ({ recipes }) => {
+export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = ({ recipes }) => {
     const banner = 'https://nui-img/soz/menu_job_ffs';
 
-    const craft = craftProcess => {
+    const displayBlip = (blip: string, value) => {
         return async () => {
-            await fetchNui(NuiEvent.FfsCraft, craftProcess);
+            await fetchNui(NuiEvent.FfsDisplayBlip, blip, value);
         };
     };
 
     return (
-        <Menu type={MenuType.FfsRecipeBook}>
+        <Menu type={MenuType.FightForStyleJobMenu}>
             <MainMenu>
+                <MenuTitle banner={banner}></MenuTitle>
+                <MenuContent>
+                    <MenuItemSubMenuLink id="recipe">Livre de recettes</MenuItemSubMenuLink>
+                    <MenuItemCheckbox onChange={value => displayBlip('ffs_cotton_bale', value)}>
+                        Afficher la récolte de balle de coton
+                    </MenuItemCheckbox>
+                </MenuContent>
+            </MainMenu>
+            <SubMenu id="recipe">
                 <MenuTitle banner={banner}>Livre de recettes</MenuTitle>
                 <MenuContent>
                     {recipes.map((recipe, index) => (
                         <MenuItemSubMenuLink id={'process' + index}>{recipe.label}</MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
-            </MainMenu>
+            </SubMenu>
             {recipes.map((recipe, index) => (
                 <SubMenu id={'process' + index}>
                     <MenuTitle banner={banner}>{recipe.label}</MenuTitle>
@@ -62,9 +70,6 @@ export const FfsRecipeBook: FunctionComponent<FfsRecipeBookStateProps> = ({ reci
                                 {input.amount} {input.label}
                             </MenuItemCheckbox>
                         ))}
-                        <MenuItemButton onConfirm={craft(recipe.craftProcess)} disabled={!recipe.canCraft}>
-                            Confectionner {recipe.canCraft ? '' : `(Pas assez d'ingrédients)`}
-                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

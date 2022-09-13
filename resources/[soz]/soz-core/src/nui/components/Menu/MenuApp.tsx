@@ -3,7 +3,7 @@ import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { MenuType } from '../../../shared/nui/menu';
 import { useMenuNuiEvent } from '../../hook/nui';
-import { FfsRecipeBook } from '../FfsRecipeBook/FfsRecipeBookApp';
+import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
 
@@ -32,7 +32,7 @@ const MenuRouter: FunctionComponent = () => {
     return (
         <Routes>
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
-            <Route path={`/${MenuType.FfsRecipeBook}/*`} element={<FfsRecipeBook recipes={menuData} />} />
+            <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu recipes={menuData} />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
         </Routes>
     );
