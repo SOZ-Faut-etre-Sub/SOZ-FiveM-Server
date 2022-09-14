@@ -15,6 +15,8 @@ export enum ServerEvent {
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
+    LSMC_BUY_ITEM = 'soz-core:server:job:lsmc:buy-item',
+    LSMC_HEAL = 'soz-core:server:job:lsmc:heal',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
@@ -37,6 +39,7 @@ export enum ServerEvent {
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
+    LSMC_REVIVE = 'lsmc:server:revive',
 }
 
 export enum ClientEvent {
