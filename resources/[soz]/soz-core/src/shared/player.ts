@@ -8,6 +8,7 @@ export type QBCorePlayer = {
         SetMetaData: (key: string, val: any) => void;
         Save: () => void;
         UpdateMaxWeight: () => void;
+        RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
     };
     PlayerData: PlayerData;
 };

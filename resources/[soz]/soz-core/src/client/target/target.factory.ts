@@ -1,5 +1,5 @@
 import { Injectable } from '../../core/decorators/injectable';
-import { Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { Vector3 } from '../../shared/polyzone/vector';
 
 export type ZoneOptions = {
     center: Vector3;
@@ -27,14 +27,17 @@ export type TargetOptions = {
 };
 
 export type PedOptions = {
-    spawnNow: boolean;
-    model: number;
-    coords: Vector4;
-    minusOne: boolean;
-    freeze: boolean;
-    invincible: boolean;
-    blockevents: boolean;
-    scenario: string;
+    spawnNow?: boolean;
+    model: string;
+    coords: { x: number; y: number; z: number; w: number };
+    minusOne?: boolean;
+    freeze?: boolean;
+    invincible?: boolean;
+    blockevents?: boolean;
+    scenario?: string;
+    animDict?: string;
+    anim?: string;
+    flag?: number;
     target: {
         options: TargetOptions[];
         distance: number;
@@ -100,9 +103,9 @@ export class TargetFactory {
         }
     }
 
-    // // @TODO - Implement it when needed
-    // public createWithPedSpawn(peds: PedOptions[]) {}
-    //
+    public createForPed(ped: PedOptions) {
+        exports['qb-target'].SpawnPed(ped);
+    }
 
     public createForModel(models: string[], targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         exports['qb-target'].AddTargetModel(models, {

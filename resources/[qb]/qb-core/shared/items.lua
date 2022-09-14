@@ -2533,14 +2533,14 @@ QBShared.Items = {
     },
     ['painkiller'] = {
         ['name'] = 'painkiller',
-        ['label'] = 'Anti-douleurs',
+        ['label'] = 'Antidouleurs',
         ['weight'] = 100,
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Quand la douleur est trop forte, une petite pillule et c\'est reparti !'
+        ['description'] = 'Généralement prescrit pour traiter les maux au dos.'
     },
     ['antibiotic'] = {
         ['name'] = 'antibiotic',
@@ -2552,7 +2552,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Quand on a la grippe, une petite pillule et c\'est reparti !'
+        ['description'] = 'Soulage les indigestions'
     },
     ['walkstick'] = {
         ['name'] = 'walkstick',
@@ -2611,7 +2611,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile en cas de rhume'
+        ['description'] = "Vous débarrasse de n'importe quel rhume."
     },
     ['pommade'] = {
         ['name'] = 'pommade',
@@ -2623,7 +2623,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile en cas de rougeur'
+        ['description'] = "Soulage les rougeurs et les irritations."
     },
     ['defibrillator'] = {
         ['name'] = 'defibrillator',
