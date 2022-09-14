@@ -6,9 +6,9 @@ export type Environment = 'development' | 'production' | 'test';
 
 const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
     [Feature.MyBodySummer]: {
-        production: true,
+        production: false,
         development: true,
-        test: true,
+        test: false,
     },
 };
 
