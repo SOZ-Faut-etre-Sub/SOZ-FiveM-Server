@@ -12,12 +12,12 @@ StonkConfig.Resale = {
     Quantity = 5,
     Duration = 5000, -- in ms
     Price = 80,
-    BankPrice = 160,
+    BankPrice = 240,
 }
 
 StonkConfig.FillIn = {
     Duration = 3000, -- in ms
-    Amount = 2000,
+    Amount = 4000,
 }
 
 StonkConfig.Blip = {Name = "STONK Depository", Icon = 605, Coords = vector2(6.25, -709.11), Scale = 1.0}
