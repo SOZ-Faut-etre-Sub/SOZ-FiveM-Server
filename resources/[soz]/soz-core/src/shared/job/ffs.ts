@@ -36,23 +36,23 @@ export const TransformProcesses: {
         input: SewingRawMaterial.REFINED_PETROLEUM,
         inputAmount: 1,
         output: FabricMaterial.SYNTHETIC_FIBER,
-        outputAmount: 10,
+        outputAmount: 20,
     },
     [FabricMaterial.ARTIFICIAL_FIBER]: {
         input: SewingRawMaterial.WOOD_PLANK,
         inputAmount: 1,
         output: FabricMaterial.ARTIFICIAL_FIBER,
-        outputAmount: 10,
+        outputAmount: 20,
     },
     [FabricMaterial.LEATHER]: {
         input: SewingRawMaterial.SKIN,
         inputAmount: 1,
         output: FabricMaterial.LEATHER,
-        outputAmount: 1,
+        outputAmount: 3,
     },
     [FabricMaterial.LATEX]: {
         input: SewingRawMaterial.SAP,
-        inputAmount: 2,
+        inputAmount: 6,
         output: FabricMaterial.LATEX,
         outputAmount: 1,
     },
@@ -71,6 +71,8 @@ export enum LuxuryGarment {
     SHOES = 'luxury_garment_shoes',
     UNDERWEAR = 'luxury_garment_underwear',
 }
+
+export const CRAFT_DURATION = 8000;
 
 export type CraftProcess = {
     label: string;

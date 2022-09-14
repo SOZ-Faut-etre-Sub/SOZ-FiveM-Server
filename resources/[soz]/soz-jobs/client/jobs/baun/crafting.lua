@@ -92,7 +92,8 @@ function craft(cocktailId)
     local action_message = string.format("Vous ~g~confectionnez~s~ 1 %s", item.label)
     local crafted_message = string.format("Vous avez confectionné 1 %s", item.label)
     local finished_message = "Vous avez terminé de mélanger."
-    QBCore.Functions.Progressbar("food-craft-item", action_message, BaunConfig.Durations.Crafting, false, true,
+    exports["soz-hud"]:DrawNotification(action_message)
+    QBCore.Functions.Progressbar("food-craft-item", "Confection en cours...", BaunConfig.Durations.Crafting, false, true,
                                  {
         disableMovement = true,
         disableCarMovement = true,
