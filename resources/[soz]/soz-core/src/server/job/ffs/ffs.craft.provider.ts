@@ -3,7 +3,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { CraftProcess } from '../../../shared/job/ffs';
+import { CRAFT_DURATION, CraftProcess } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
@@ -63,11 +63,17 @@ export class FightForStyleCraftProvider {
     }
 
     private async doCraft(source: number, craftProcess: CraftProcess) {
-        const { completed } = await this.progressService.progress(source, 'ffs_craft', 'Confection en cours', 5000, {
-            name: 'base',
-            dictionary: 'amb@prop_human_seat_sewing@female@base',
-            flags: 16,
-        });
+        const { completed } = await this.progressService.progress(
+            source,
+            'ffs_craft',
+            'Confection en cours',
+            CRAFT_DURATION,
+            {
+                name: 'base',
+                dictionary: 'amb@prop_human_seat_sewing@female@base',
+                flags: 16,
+            }
+        );
 
         if (!completed) {
             return false;
