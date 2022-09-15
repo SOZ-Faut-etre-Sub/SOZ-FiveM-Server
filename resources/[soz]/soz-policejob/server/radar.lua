@@ -39,7 +39,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, veh
 
         if Config.RadarAllowedVehicle[vehicleModel] then
             TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle,
-                radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED", "info")
+                               radarMessage .. "~g~Véhicule autorisé~s~", "CHAR_BLOCKED", "info")
             return
         end
 
