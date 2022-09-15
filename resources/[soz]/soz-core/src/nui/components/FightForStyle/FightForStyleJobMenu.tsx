@@ -9,7 +9,10 @@ import {
     Menu,
     MenuContent,
     MenuItemCheckbox,
+    MenuItemSelect,
+    MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuItemText,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -41,6 +44,7 @@ type FightForStyleStateProps = {
 export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_ffs';
     const [blips, setBlips] = useState(null);
+    const [currentRecipe, setCurrentRecipe] = useState<FfsRecipe>(null);
 
     useEffect(() => {
         if (data && data.state) {
@@ -76,23 +80,29 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
             <SubMenu id="recipe">
                 <MenuTitle banner={banner}>Livre de recettes</MenuTitle>
                 <MenuContent>
-                    {recipes.map((recipe, index) => (
-                        <MenuItemSubMenuLink id={'process' + index}>{recipe.label}</MenuItemSubMenuLink>
-                    ))}
+                    <MenuItemSelect title={'Vêtement'}>
+                        {recipes.map(recipe => (
+                            <MenuItemSelectOption
+                                onSelected={() => {
+                                    setCurrentRecipe(recipe);
+                                }}
+                            >
+                                {recipe.label}
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                    {currentRecipe &&
+                        currentRecipe.inputs.map(input => (
+                            // TODO: Use the checkbox component instead
+                            // <MenuItemCheckbox checked={input.hasRequiredAmount}>
+                            //     {input.amount} {input.label}
+                            // </MenuItemCheckbox>
+                            <MenuItemText>
+                                {input.amount} {input.label}
+                            </MenuItemText>
+                        ))}
                 </MenuContent>
             </SubMenu>
-            {recipes.map((recipe, index) => (
-                <SubMenu id={'process' + index}>
-                    <MenuTitle banner={banner}>{recipe.label}</MenuTitle>
-                    <MenuContent>
-                        {recipe.inputs.map(input => (
-                            <MenuItemCheckbox disabled={true} checked={input.hasRequiredAmount}>
-                                {input.amount} {input.label}
-                            </MenuItemCheckbox>
-                        ))}
-                    </MenuContent>
-                </SubMenu>
-            ))}
         </Menu>
     );
 };
