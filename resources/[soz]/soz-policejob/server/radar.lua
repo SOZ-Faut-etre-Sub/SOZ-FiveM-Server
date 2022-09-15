@@ -91,7 +91,7 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, veh
 
         TriggerEvent("banking:server:TransferMoney", Player.PlayerData.charinfo.account, radar.station, fine)
         TriggerClientEvent("hud:client:DrawAdvancedNotification", Player.PlayerData.source, RadarMessage.Title, RadarMessage.FlashVehicle, radarMessage,
-            "CHAR_BLOCKED", "info")
+                           "CHAR_BLOCKED", "info")
 
         for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
             if (Police.PlayerData.job.id == SozJobCore.JobType.BCSO or Police.PlayerData.job.id == SozJobCore.JobType.LSPD) and Police.PlayerData.job.onduty then
