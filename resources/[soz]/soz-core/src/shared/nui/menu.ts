@@ -17,12 +17,15 @@ export type SetMenuType = {
 };
 
 export enum MenuType {
+    BahamaUnicornJobMenu = 'baun_job_menu',
+    FightForStyleJobMenu = 'ffs_job_menu',
     Demo = 'demo',
     SetHealthState = 'set_health_state',
-    FightForStyleJobMenu = 'ffs_job_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, unknown> {
+    [MenuType.BahamaUnicornJobMenu]: any;
+    [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Demo]: never;
     [MenuType.SetHealthState]: number;
 }

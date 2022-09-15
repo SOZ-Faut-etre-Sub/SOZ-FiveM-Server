@@ -142,7 +142,6 @@ export class FightForStyleProvider {
             }
             return {
                 canCraft: canCraft,
-                craftProcess,
                 label: craftProcess.label,
                 inputs: inputs,
                 output: {
