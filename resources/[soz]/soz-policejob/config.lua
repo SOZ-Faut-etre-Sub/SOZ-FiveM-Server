@@ -498,6 +498,24 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("cogfbi")] = true,
     [GetHashKey("paragonfbi")] = true,
 }
+
+Config.RadarInformedVehicle = {
+    --- LSPD
+    [GetHashKey("police")] = true,
+    [GetHashKey("police2")] = true,
+    [GetHashKey("police3")] = true,
+    [GetHashKey("police4")] = true,
+    [GetHashKey("police5")] = true,
+    [GetHashKey("police6")] = true,
+    [GetHashKey("policeb2")] = true,
+    --- BCSO
+    [GetHashKey("sheriff")] = true,
+    [GetHashKey("sheriff2")] = true,
+    [GetHashKey("sheriff3")] = true,
+    [GetHashKey("sheriff4")] = true,
+    [GetHashKey("sheriffb")] = true,
+}
+
 --- Fines
 Config.Fines = {
     ["lspd"] = {
@@ -626,7 +644,7 @@ Config.Radars = {
         props = vector4(2365.11, 5763.63, 44.94, 236.35),
         zone = vector3(2386.17, 5745.69, 45.73),
         station = "bcso",
-        isOnline = false,
+        isOnline = true,
         zoneRadius = 10,
         speed = 0,
     },
@@ -682,7 +700,7 @@ Config.Radars = {
         props = vector4(2767.39, 4601.74, 44.2, 29.84),
         zone = vector3(2751.96, 4625.0, 44.89),
         station = "bcso",
-        isOnline = false,
+        isOnline = true,
         zoneRadius = 10,
         speed = 0,
     },
@@ -762,7 +780,7 @@ Config.Radars = {
         props = vector4(844.38, 141.1, 71.3, 301.84),
         zone = vector3(868.5, 154.6, 73.41),
         station = "lspd",
-        isOnline = false,
+        isOnline = true,
         zoneRadius = 12,
         speed = 0,
     },

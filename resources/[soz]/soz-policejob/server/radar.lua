@@ -94,12 +94,15 @@ RegisterNetEvent("police:client:radar:trigger", function(radarID, vehicleID, veh
                            "CHAR_BLOCKED", "info")
 
         for _, Police in pairs(QBCore.Functions.GetQBPlayers()) do
-            if Police.PlayerData.job.id == radar.station then
+            if (Police.PlayerData.job.id == SozJobCore.JobType.BCSO or Police.PlayerData.job.id == SozJobCore.JobType.LSPD) and Police.PlayerData.job.onduty then
                 local currentVehicle = GetVehiclePedIsIn(GetPlayerPed(Police.PlayerData.source), false)
-                if currentVehicle ~= 0 and Config.RadarAllowedVehicle[GetEntityModel(currentVehicle)] then
-                    TriggerClientEvent("hud:client:DrawAdvancedNotification", Police.PlayerData.source, RadarMessage.Title, RadarMessage.FlashPolice,
-                                       string.format("Plaque: ~b~%s~s~ ~n~Rue: ~b~%s~s~ ~n~Vitesse: ~r~%s km/h~s~", vehiclePlate, streetName,
-                                                     QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED", "info")
+                if currentVehicle ~= 0 and Config.RadarInformedVehicle[GetEntityModel(currentVehicle)] then
+                    local ped = GetPlayerPed(Police.PlayerData.source)
+                    if (GetPedInVehicleSeat(currentVehicle, -1) == ped or GetPedInVehicleSeat(currentVehicle, 0) == ped) then
+                        TriggerClientEvent("hud:client:DrawAdvancedNotification", Police.PlayerData.source, RadarMessage.Title, RadarMessage.FlashPolice,
+                                           string.format("Plaque: ~b~%s~s~ ~n~Rue: ~b~%s~s~ ~n~Vitesse: ~r~%s km/h~s~", vehiclePlate, streetName,
+                                                         QBCore.Shared.Round(vehicleSpeed)), "CHAR_BLOCKED", "info")
+                    end
                 end
             end
         end
