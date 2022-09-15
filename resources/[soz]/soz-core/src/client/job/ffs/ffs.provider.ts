@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { FfsRecipe } from '../../../nui/components/FightForStyle/FightForStyleJobMenu';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { CraftProcess, craftProcesses } from '../../../shared/job/ffs';
+import { CraftProcess, craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -109,9 +109,8 @@ export class FightForStyleProvider {
 
     @OnNuiEvent(NuiEvent.FfsDisplayBlip)
     public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
-        console.log('', blip, value);
         this.state[blip] = value;
-        this.QBCore.hideBlip(blip, value);
+        this.QBCore.hideBlip(blip, !value);
     }
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_CLOAKROOM)
@@ -119,7 +118,12 @@ export class FightForStyleProvider {
         if (!this.playerService.isOnDuty()) {
             return;
         }
-        const recipes = this.computeRecipes(craftProcesses);
+        const recipes = [
+            ...this.computeRecipes(craftProcesses),
+            ...this.computeRecipes(luxuryCraftProcesses),
+            ...this.computeRecipes(shoesCraftProcesses),
+        ];
+        recipes.sort((a, b) => a.label.localeCompare(b.label));
         this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, { recipes: recipes, state: this.state });
     }
 
