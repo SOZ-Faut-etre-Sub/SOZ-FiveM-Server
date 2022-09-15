@@ -2,7 +2,6 @@ import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -23,9 +22,6 @@ export class FoodMealsProvider {
 
     @Once(OnceStep.PlayerLoaded)
     onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
         TriggerServerEvent(ServerEvent.FOOD_RETRIEVE_STATE);
         this.targetFactory.createForBoxZone(
             'food_meals_provider',
