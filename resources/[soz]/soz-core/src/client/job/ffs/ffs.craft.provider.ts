@@ -3,7 +3,6 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { FfsRecipe } from '../../../nui/components/FfsRecipeBook/FfsRecipeBookApp';
 import { NuiEvent, ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
 import {
     CraftProcess,
     craftProcesses,
@@ -39,10 +38,6 @@ export class FightForStyleCraftProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
-
         craftZones.forEach(zone => {
             this.targetFactory.createForBoxZone(zone.name, zone, [
                 this.createTargetOptions(craftProcesses, 'c:/ffs/craft.png'),

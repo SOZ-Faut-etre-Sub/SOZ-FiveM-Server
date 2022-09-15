@@ -1,7 +1,6 @@
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
@@ -19,9 +18,6 @@ export class FightForStyleProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
         this.qbCore.createBlip('jobs:ffs', {
             name: 'Fight For Style',
             coords: { x: 717.72, y: -974.24, z: 24.91 },

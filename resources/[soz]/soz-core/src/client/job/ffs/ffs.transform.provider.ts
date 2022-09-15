@@ -2,7 +2,6 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { SewingRawMaterialItem } from '../../../shared/item';
 import { FabricMaterial, TransformProcess, TransformProcesses } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
@@ -26,10 +25,6 @@ export class FightForStyleTransformProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
-
         const targets: TargetOptions[] = Object.keys(FabricMaterial).map(key => {
             const fabricMaterial: string = FabricMaterial[key];
             const item = this.itemService.getItem<SewingRawMaterialItem>(fabricMaterial);

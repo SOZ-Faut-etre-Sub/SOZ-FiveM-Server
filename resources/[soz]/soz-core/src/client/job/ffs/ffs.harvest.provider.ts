@@ -2,7 +2,6 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -16,10 +15,6 @@ export class FightForStyleHarvestProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
-
         this.targetFactory.createForBoxZone(
             'ffs_harvest_zone',
             {
