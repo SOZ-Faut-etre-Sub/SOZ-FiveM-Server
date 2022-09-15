@@ -76,6 +76,7 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
+    BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
