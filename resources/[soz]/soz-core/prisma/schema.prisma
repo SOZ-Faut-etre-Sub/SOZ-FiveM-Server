@@ -381,6 +381,16 @@ model vehicles {
   @@index([dealership_id], map: "vehicles_dealership_idx")
 }
 
+model player_purchases {
+    id         Int      @id @default(autoincrement())
+    citizenid  String?  @db.VarChar(50)
+    shop_type  String   @db.VarChar(25)
+    shop_id    String?  @db.VarChar(50)
+    item_id    String   @db.VarChar(50)
+    amount     Int
+    date       DateTime @default(now()) @db.Timestamp(0)
+}
+
 enum bank_accounts_account_type {
   player
   business
