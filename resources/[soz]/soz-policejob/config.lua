@@ -630,6 +630,7 @@ Config.Armors = {
     },
 }
 
+-- TODO: Move the radar configuration in database for the Chains Of Justice DLC
 --- Radars config
 Config.Radars = {
     [1] = {
@@ -640,6 +641,7 @@ Config.Radars = {
         zoneRadius = 9,
         speed = 130,
     },
+    -- Freeway Radars, do not touch until migration in DB
     [2] = {
         props = vector4(2365.11, 5763.63, 44.94, 236.35),
         zone = vector3(2386.17, 5745.69, 45.73),
@@ -696,6 +698,7 @@ Config.Radars = {
         zoneRadius = 10,
         speed = 110,
     },
+    -- Freeway Radars, do not touch until migration in DB
     [9] = {
         props = vector4(2767.39, 4601.74, 44.2, 29.84),
         zone = vector3(2751.96, 4625.0, 44.89),
@@ -776,6 +779,7 @@ Config.Radars = {
         zoneRadius = 12,
         speed = 90,
     },
+    -- Freeway Radars, do not touch until migration in DB
     [19] = {
         props = vector4(844.38, 141.1, 71.3, 301.84),
         zone = vector3(868.5, 154.6, 73.41),
