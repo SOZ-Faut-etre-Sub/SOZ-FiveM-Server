@@ -38,18 +38,7 @@ export class FightForStyleProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        this.QBCore.createBlip('jobs:ffs', {
-            name: 'Fight For Style',
-            coords: { x: 717.72, y: -974.24, z: 24.91 },
-            sprite: 808,
-            scale: 1.2,
-        });
-        this.QBCore.createBlip('ffs_cotton_bale', {
-            name: 'Point de récolte de balle de coton',
-            coords: { x: 2564.11, y: 4680.59, z: 34.08 },
-            sprite: 808,
-            scale: 0.9,
-        });
+        this.createBlips();
 
         this.targetFactory.createForBoxZone(
             'ffs:duty',
@@ -113,7 +102,7 @@ export class FightForStyleProvider {
         this.QBCore.hideBlip(blip, !value);
     }
 
-    @OnEvent(ClientEvent.JOBS_FFS_OPEN_CLOAKROOM)
+    @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
     public onOpenCloakroomMenu() {
         if (!this.playerService.isOnDuty()) {
             return;
@@ -125,6 +114,22 @@ export class FightForStyleProvider {
         ];
         recipes.sort((a, b) => a.label.localeCompare(b.label));
         this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, { recipes: recipes, state: this.state });
+    }
+
+    private createBlips() {
+        this.QBCore.createBlip('jobs:ffs', {
+            name: 'Fight For Style',
+            coords: { x: 717.72, y: -974.24, z: 24.91 },
+            sprite: 808,
+            scale: 1.2,
+        });
+        this.QBCore.createBlip('ffs_cotton_bale', {
+            name: 'Point de récolte de balle de coton',
+            coords: { x: 2564.11, y: 4680.59, z: 34.08 },
+            sprite: 808,
+            scale: 0.9,
+        });
+        this.QBCore.hideBlip('ffs_cotton_bale', true);
     }
 
     private computeRecipes(craftProcesses: CraftProcess[]): FfsRecipe[] {

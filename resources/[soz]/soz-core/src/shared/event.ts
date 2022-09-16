@@ -65,7 +65,8 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     IDENTITY_HIDE = 'soz-identity:client:hide',
-    JOBS_FFS_OPEN_CLOAKROOM = 'soz-jobs:client:ffs:OpenSocietyMenu',
+    JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
+    JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
 }
 
 export enum GameEvent {
