@@ -388,7 +388,7 @@ model player_purchases {
     shop_id    String?  @db.VarChar(50)
     item_id    String   @db.VarChar(50)
     amount     Int
-    date       DateTime @default(now()) @db.Timestamp(0)
+    date       Int
 }
 
 enum bank_accounts_account_type {
