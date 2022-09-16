@@ -98,7 +98,7 @@ local function SpawnJobZones()
     --    heading = 250.0,
     --    minZ = 141.0,
     --    maxZ = 141.5,
-    --}, {
+    -- }, {
     --    options = {
     --        {
     --            icon = "c:food/cuisiner.png",
