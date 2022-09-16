@@ -1,14 +1,24 @@
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ClientEvent } from '../../../shared/event';
+import { BaunRecipe } from '../../../nui/components/BahamaUnicorn/BahamaUnicornJobMenu';
+import { ClientEvent, NuiEvent } from '../../../shared/event';
+import { BaunCraftProcess, baunCraftProcesses } from '../../../shared/job/baun';
 import { MenuType } from '../../../shared/nui/menu';
+import { InventoryManager } from '../../item/inventory.manager';
+import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 
 @Provider()
 export class BaunProvider {
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Inject(Qbcore)
     private QBCore: Qbcore;
 
@@ -30,13 +40,21 @@ export class BaunProvider {
         this.createBlips();
     }
 
+    @OnNuiEvent(NuiEvent.BaunDisplayBlip)
+    public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
+        this.state[blip] = value;
+        this.QBCore.hideBlip(blip, !value);
+    }
+
     @OnEvent(ClientEvent.JOBS_BAUN_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
         if (!this.playerService.isOnDuty()) {
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.BahamaUnicornJobMenu, { recipes: [], state: this.state });
+        const recipes = this.computeRecipes(baunCraftProcesses);
+        recipes.sort((a, b) => a.output.label.localeCompare(b.output.label));
+        this.nuiMenu.openMenu(MenuType.BahamaUnicornJobMenu, { recipes, state: this.state });
     }
 
     private createBlips() {
@@ -75,5 +93,31 @@ export class BaunProvider {
             scale: 0.9,
         });
         this.QBCore.hideBlip('displayResellBlip', true);
+    }
+
+    private computeRecipes(craftProcesses: BaunCraftProcess[]): BaunRecipe[] {
+        return craftProcesses.map(craftProcess => {
+            let canCraft = true;
+            const inputs = [];
+            for (const input of craftProcess.inputs) {
+                const hasRequiredAmount = this.inventoryManager.hasEnoughItem(input.id, input.amount);
+                const inputItem = this.itemService.getItem(input.id);
+                inputs.push({
+                    label: inputItem.pluralLabel || inputItem.label,
+                    hasRequiredAmount,
+                    amount: input.amount,
+                });
+                canCraft = canCraft && hasRequiredAmount;
+            }
+            const outputItem = this.itemService.getItem(craftProcess.output.id);
+            return {
+                canCraft,
+                inputs,
+                output: {
+                    label: outputItem.pluralLabel || outputItem.label,
+                    amount: craftProcess.output.amount,
+                },
+            };
+        });
     }
 }

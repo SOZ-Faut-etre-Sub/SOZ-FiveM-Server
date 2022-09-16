@@ -1,7 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { CraftProcess } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import {
@@ -19,7 +18,6 @@ import {
 
 export type BaunRecipe = {
     canCraft: boolean;
-    label: string;
     inputs: {
         label: string;
         hasRequiredAmount: boolean;
@@ -38,6 +36,7 @@ type BahamaUnicornStateProps = {
             displayLiquorBlip: boolean;
             displayFlavorBlip: boolean;
             displayFurnitureBlip: boolean;
+            displayResellBlip: boolean;
         };
     };
 };
@@ -45,7 +44,7 @@ type BahamaUnicornStateProps = {
 export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_baun';
     const [state, setState] = useState(null);
-    const [currentRecipe, setCurrentRecipe] = useState<BaunRecipe>(null);
+    const [inputs, setInputs] = useState([]);
 
     useEffect(() => {
         if (data && data.state) {
@@ -88,6 +87,12 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
                     >
                         Afficher la récolte de fournitures
                     </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={state.displayResellBlip}
+                        onChange={value => displayBlip('displayResellBlip', value)}
+                    >
+                        Afficher la vente des cocktails
+                    </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="recipe">
@@ -96,24 +101,24 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
                     <MenuItemSelect title={'Cocktail'}>
                         {recipes.map(recipe => (
                             <MenuItemSelectOption
+                                key={recipe.output.label}
                                 onSelected={() => {
-                                    setCurrentRecipe(recipe);
+                                    setInputs(recipe.inputs);
                                 }}
                             >
-                                {recipe.label}
+                                {recipe.output.label}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
-                    {currentRecipe &&
-                        currentRecipe.inputs.map(input => (
-                            // TODO: Use the checkbox component instead
-                            // <MenuItemCheckbox checked={input.hasRequiredAmount}>
-                            //     {input.amount} {input.label}
-                            // </MenuItemCheckbox>
-                            <MenuItemText>
-                                {input.amount} {input.label}
-                            </MenuItemText>
-                        ))}
+                    {inputs.map(input => (
+                        // TODO: Use the checkbox component instead
+                        // <MenuItemCheckbox disabled checked={input.hasRequiredAmount}>
+                        //     {input.amount} {input.label}
+                        // </MenuItemCheckbox>
+                        <MenuItemText>
+                            {input.amount} {input.label}
+                        </MenuItemText>
+                    ))}
                 </MenuContent>
             </SubMenu>
         </Menu>

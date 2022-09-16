@@ -2,6 +2,7 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
+    BAUN_CRAFT = 'soz-core:server:baun:craft',
     BAUN_RESELL = 'soz-core:server:baun:resell',
 
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
