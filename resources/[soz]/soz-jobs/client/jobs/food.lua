@@ -93,8 +93,8 @@ local function SpawnJobZones()
     })
 
     -- CRAFTING
-    --CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
-    --exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
+    -- CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
+    -- exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
     --    heading = 250.0,
     --    minZ = 141.0,
     --    maxZ = 141.5,
