@@ -130,7 +130,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             if (newIndex === activeIndex) {
                 break;
             }
-        } while (menuItems[newIndex].disabled);
+        } while (menuItems[newIndex] && menuItems[newIndex].disabled);
 
         setActiveIndex(newIndex);
     });
@@ -148,7 +148,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             if (newIndex === activeIndex) {
                 break;
             }
-        } while (menuItems[newIndex].disabled);
+        } while (menuItems[newIndex] && menuItems[newIndex].disabled);
 
         setActiveIndex(newIndex);
     });

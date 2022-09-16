@@ -103,7 +103,7 @@ export class FightForStyleProvider {
     }
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
-    public onOpenCloakroomMenu() {
+    public onOpenSocietyMenu() {
         if (!this.playerService.isOnDuty()) {
             return;
         }
@@ -113,7 +113,7 @@ export class FightForStyleProvider {
             ...this.computeRecipes(shoesCraftProcesses),
         ];
         recipes.sort((a, b) => a.label.localeCompare(b.label));
-        this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, { recipes: recipes, state: this.state });
+        this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, { processes: recipes, state: this.state });
     }
 
     private createBlips() {
