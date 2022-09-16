@@ -113,7 +113,7 @@ local function SpawnJobZones()
     --            end,
     --        },
     --    },
-    --})
+    -- })
 
     local kitchen = BoxZone:Create(vector2(-1881.59, 2068.93), 7.5, 5.5, {heading = 70.0, minZ = 140.0, maxZ = 142.5})
     kitchen:onPlayerInOut(function(isInside)
