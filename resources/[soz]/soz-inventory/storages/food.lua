@@ -16,7 +16,7 @@ Config.Storages["food_storage"] = {
     size = vector2(1.25, 1.0),
     minZ = 140.0,
     maxZ = 142.3,
-    heading = 340.0
+    heading = 340.0,
 }
 
 Config.Storages["food_boss_storage"] = {
