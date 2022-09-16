@@ -342,6 +342,8 @@ function MenuV:CloseAll(cb)
     self.CurrentMenu:Trigger('close')
     self.CurrentMenu:DestroyThreads()
 
+    TriggerEvent('soz-core:client:menu:close')
+
     SEND_NUI_MESSAGE({ action = 'CLOSE_MENU', uuid = uuid })
 
     self.CurrentMenu = nil
