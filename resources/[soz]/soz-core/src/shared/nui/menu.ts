@@ -19,6 +19,7 @@ export type SetMenuType = {
 export enum MenuType {
     BahamaUnicornJobMenu = 'baun_job_menu',
     FightForStyleJobMenu = 'ffs_job_menu',
+    FoodJobMenu = 'food_job_menu',
     Demo = 'demo',
     SetHealthState = 'set_health_state',
 }

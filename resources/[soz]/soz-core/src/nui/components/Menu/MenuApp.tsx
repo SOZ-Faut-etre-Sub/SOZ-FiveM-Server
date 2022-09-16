@@ -5,6 +5,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import { useMenuNuiEvent } from '../../hook/nui';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
+import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
 
@@ -35,6 +36,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.BahamaUnicornJobMenu}/*`} element={<BahamaUnicornJobMenu data={menuData} />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
             <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
         </Routes>
     );

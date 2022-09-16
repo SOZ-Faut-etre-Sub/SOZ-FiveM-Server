@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { InventoryItem } from '../../../shared/item';
 import { BaunCraftProcess, baunCraftProcesses, baunCraftZones } from '../../../shared/job/baun';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -44,7 +45,12 @@ export class BaunCraftProvider {
             blackoutJob: 'ffs',
             canInteract: () => {
                 for (const input of craftProcess.inputs) {
-                    if (!this.inventoryManager.hasEnoughItem(input.id, input.amount)) {
+                    const predicate = (item: InventoryItem) => {
+                        return (
+                            item.name === input.id && item.amount >= input.amount && !this.itemService.isExpired(item)
+                        );
+                    };
+                    if (!this.inventoryManager.findItem(predicate)) {
                         return false;
                     }
                 }

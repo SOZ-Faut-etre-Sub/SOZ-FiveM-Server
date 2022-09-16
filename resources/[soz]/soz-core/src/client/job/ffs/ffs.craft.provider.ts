@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { InventoryItem } from '../../../shared/item';
 import {
     CraftProcess,
     craftProcesses,
@@ -66,9 +67,18 @@ export class FightForStyleCraftProvider {
             icon,
             color: 'ffs',
             job: 'ffs',
+            blackoutGlobal: true,
+            blackoutJob: 'ffs',
             canInteract: () => {
                 for (const input of craftProcess.inputs) {
-                    if (!this.inventoryManager.hasEnoughItem(input.fabric, input.amount)) {
+                    const predicate = (item: InventoryItem) => {
+                        return (
+                            item.name === input.fabric &&
+                            item.amount >= input.amount &&
+                            this.itemService.isExpired(item)
+                        );
+                    };
+                    if (!this.inventoryManager.findItem(predicate)) {
                         return false;
                     }
                 }

@@ -13,6 +13,7 @@ export class InventoryManager {
         this.sozInventory = exports['soz-inventory'];
     }
 
+    // deprecated: Use findItem instead
     public getFirstItemInventory(source: number, itemId: string): InventoryItem | null {
         let inventoryItem = null;
 
@@ -37,6 +38,20 @@ export class InventoryManager {
         }
 
         return inventoryItem;
+    }
+
+    public findItem(source, predicate: (item: InventoryItem) => boolean): InventoryItem | null {
+        const items = this.playerService.getPlayer(source).items;
+
+        if (Array.isArray(items)) {
+            return items.find(predicate) || null;
+        } else {
+            return (
+                Object.keys(items)
+                    .map(key => items[key])
+                    .find(predicate) || null
+            );
+        }
     }
 
     public getItem(source: number, itemId: string, metadata?: InventoryItemMetadata): any {

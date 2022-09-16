@@ -2,9 +2,10 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
-    BAUN_CRAFT = 'soz-core:server:baun:craft',
-    BAUN_RESELL = 'soz-core:server:baun:resell',
+    BAUN_CRAFT = 'soz-core:server:job:baun:craft',
+    BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
+    FOOD_CRAFT = 'soz-core:server:job:food:craft',
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
@@ -68,6 +69,7 @@ export enum ClientEvent {
     IDENTITY_HIDE = 'soz-identity:client:hide',
     JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
+    JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
 }
 
 export enum GameEvent {

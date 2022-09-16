@@ -30,16 +30,6 @@ export class FightForStyleCraftProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    private canCraft(source: number, craftProcess: CraftProcess): boolean {
-        for (const input of craftProcess.inputs) {
-            const item = this.inventoryManager.getFirstItemInventory(source, input.fabric);
-            if (!item || item.amount < input.amount) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @OnEvent(ServerEvent.FFS_CRAFT)
     public async onCraft(source: number, craftProcess: CraftProcess) {
         if (!this.canCraft(source, craftProcess)) {
@@ -60,6 +50,16 @@ export class FightForStyleCraftProvider {
             }
         }
         this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`);
+    }
+
+    private canCraft(source: number, craftProcess: CraftProcess): boolean {
+        for (const input of craftProcess.inputs) {
+            const item = this.inventoryManager.getFirstItemInventory(source, input.fabric);
+            if (!item || item.amount < input.amount) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private async doCraft(source: number, craftProcess: CraftProcess) {
