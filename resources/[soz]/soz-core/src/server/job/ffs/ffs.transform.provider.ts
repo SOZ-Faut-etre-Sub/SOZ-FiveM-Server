@@ -54,8 +54,23 @@ export class FightForStyleTransformProvider {
         return true;
     }
 
+    private canCraft(source: number, fabricMaterial: FabricMaterial): boolean {
+        const transformProcess = TransformProcesses[fabricMaterial];
+        return this.inventoryManager.canSwapItem(
+            source,
+            transformProcess.input,
+            transformProcess.inputAmount,
+            transformProcess.output,
+            transformProcess.outputAmount
+        );
+    }
+
     @OnEvent(ServerEvent.FFS_TRANSFORM)
     public async onTransform(source: number, fabricMaterial: FabricMaterial) {
+        if (!this.canCraft(source, fabricMaterial)) {
+            this.notifier.notify(source, 'Vos poches sont pleines.', 'error');
+            return;
+        }
         this.notifier.notify(source, 'Vous ~g~commencez~s~ vos procédés chimiques et mécaniques.');
         const transformProcess = TransformProcesses[fabricMaterial];
         while (

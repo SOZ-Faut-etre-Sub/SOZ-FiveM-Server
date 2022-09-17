@@ -107,7 +107,7 @@ FoodConfig.Collect = {
     Milk = {
         Duration = 10000, -- in ms
         Reward = {min = 1, max = 4},
-        Item = "milk",
+        Items = {[0] = "milk", [1] = "semi_skimmed_milk", [2] = "skimmed_milk"},
     },
 }
 
@@ -329,15 +329,15 @@ FoodConfig.Recipes = {
     },
     ["grapejuice5"] = {category = "grapejuice", ingredients = {["grape4"] = 4}, output = 4},
     -- CHEESES
-    ["cheese1"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
+    ["cheese1"] = {category = "cheese", ingredients = {["skimmed_milk"] = 1}, output = 3},
     ["cheese2"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
     ["cheese3"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
-    ["cheese4"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
-    ["cheese5"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
-    ["cheese6"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
+    ["cheese4"] = {category = "cheese", ingredients = {["semi_skimmed_milk"] = 1}, output = 3},
+    ["cheese5"] = {category = "cheese", ingredients = {["semi_skimmed_milk"] = 1}, output = 3},
+    ["cheese6"] = {category = "cheese", ingredients = {["semi_skimmed_milk"] = 1}, output = 3},
     ["cheese7"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
-    ["cheese8"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
-    ["cheese9"] = {category = "cheese", ingredients = {["milk"] = 1}, output = 3},
+    ["cheese8"] = {category = "cheese", ingredients = {["skimmed_milk"] = 1}, output = 3},
+    ["cheese9"] = {category = "cheese", ingredients = {["skimmed_milk"] = 1}, output = 3},
     -- SAUSAGES
     ["sausage1"] = {
         category = "sausage",

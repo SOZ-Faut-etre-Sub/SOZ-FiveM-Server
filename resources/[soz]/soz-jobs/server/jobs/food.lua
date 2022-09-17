@@ -92,8 +92,12 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-milk", function(so
 
     local count = math.random(min, max)
 
-    if AddItem(Player.PlayerData.source, FoodConfig.Collect.Milk.Item, count) then
-        cb(true, count)
+    local time = os.date("*t")
+    local index = math.floor(time.hour / (24 / #FoodConfig.Collect.Milk.Items))
+    local item = FoodConfig.Collect.Milk.Items[index + 1]
+
+    if AddItem(Player.PlayerData.source, item, count) then
+        cb(true, count, item)
     else
         cb(false)
     end

@@ -57,7 +57,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                     </MenuItemSelect>
                     {currentRecipe &&
                         currentRecipe.inputs.map(input => (
-                            <MenuItemText>
+                            <MenuItemText key={'ingredient_' + input.label}>
                                 {input.amount} {input.label}
                             </MenuItemText>
                         ))}

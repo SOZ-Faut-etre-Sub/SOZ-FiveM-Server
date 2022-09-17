@@ -276,14 +276,17 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
-        QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count)
+        QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count, item)
             if success then
                 exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pots de lait~s~", count))
                 Citizen.Wait(1000)
 
-                TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {
-                    item_id = FoodConfig.Collect.Milk.Item,
-                }, {item_label = "Pot de lait", quantity = tonumber(count), position = GetEntityCoords(PlayerPedId())}, true)
+                TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {item_id = item},
+                                   {
+                    item_label = "Pot de lait",
+                    quantity = tonumber(count),
+                    position = GetEntityCoords(PlayerPedId()),
+                }, true)
 
                 TriggerEvent("jobs:client:food-harvest-milk")
             end
