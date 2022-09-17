@@ -66,7 +66,12 @@ export class FoodCraftProvider {
             'food_craft',
             'Vous cuisinez...',
             duration,
-            {}
+            {},
+            {
+                disableCombat: true,
+                disableCarMovement: true,
+                disableMovement: true,
+            }
         );
 
         if (!completed) {

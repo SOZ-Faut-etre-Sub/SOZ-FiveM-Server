@@ -104,7 +104,7 @@ export class FightForStyleProvider {
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (!this.playerService.isOnDuty()) {
+        if (!this.playerService.isOnDuty() || this.nuiMenu.isOpen()) {
             return;
         }
         const recipes = [

@@ -82,7 +82,7 @@ const cheeseCraftZones: (ZoneOptions & { name: string })[] = [
 
 const cheeseProcesses: FoodCraftProcess[] = [
     {
-        inputs: [{ id: 'milk', amount: 1 }],
+        inputs: [{ id: 'skimmed_milk', amount: 1 }],
         output: { id: 'cheese1', amount: 3 },
     },
     {
@@ -94,15 +94,15 @@ const cheeseProcesses: FoodCraftProcess[] = [
         output: { id: 'cheese3', amount: 3 },
     },
     {
-        inputs: [{ id: 'milk', amount: 1 }],
+        inputs: [{ id: 'semi_skimmed_milk', amount: 1 }],
         output: { id: 'cheese4', amount: 3 },
     },
     {
-        inputs: [{ id: 'milk', amount: 1 }],
+        inputs: [{ id: 'semi_skimmed_milk', amount: 1 }],
         output: { id: 'cheese5', amount: 3 },
     },
     {
-        inputs: [{ id: 'milk', amount: 1 }],
+        inputs: [{ id: 'semi_skimmed_milk', amount: 1 }],
         output: { id: 'cheese6', amount: 3 },
     },
     {
@@ -110,11 +110,11 @@ const cheeseProcesses: FoodCraftProcess[] = [
         output: { id: 'cheese7', amount: 3 },
     },
     {
-        inputs: [{ id: 'milk', amount: 1 }],
+        inputs: [{ id: 'skimmed_milk', amount: 1 }],
         output: { id: 'cheese8', amount: 3 },
     },
     {
-        inputs: [{ id: 'milk', amount: 1 }],
+        inputs: [{ id: 'skimmed_milk', amount: 1 }],
         output: { id: 'cheese9', amount: 3 },
     },
 ];
@@ -134,51 +134,51 @@ const sausageCraftZones: (ZoneOptions & { name: string })[] = [
 const sausageProcesses: FoodCraftProcess[] = [
     {
         inputs: [
+            { id: 'abat', amount: 4 },
+            { id: 'langue', amount: 4 },
+            { id: 'rognon', amount: 4 },
             { id: 'tripe', amount: 4 },
             { id: 'viande', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'abat', amount: 4 },
-            { id: 'rognon', amount: 4 },
         ],
         output: { id: 'sausage1', amount: 4 },
     },
     {
         inputs: [
+            { id: 'abat', amount: 4 },
+            { id: 'langue', amount: 4 },
+            { id: 'rognon', amount: 4 },
             { id: 'tripe', amount: 4 },
             { id: 'viande', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'abat', amount: 4 },
-            { id: 'rognon', amount: 4 },
         ],
         output: { id: 'sausage2', amount: 4 },
     },
     {
         inputs: [
+            { id: 'abat', amount: 4 },
+            { id: 'langue', amount: 4 },
+            { id: 'rognon', amount: 4 },
             { id: 'tripe', amount: 4 },
             { id: 'viande', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'abat', amount: 4 },
-            { id: 'rognon', amount: 4 },
         ],
         output: { id: 'sausage3', amount: 4 },
     },
     {
         inputs: [
+            { id: 'abat', amount: 4 },
+            { id: 'langue', amount: 4 },
+            { id: 'rognon', amount: 4 },
             { id: 'tripe', amount: 4 },
             { id: 'viande', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'abat', amount: 4 },
-            { id: 'rognon', amount: 4 },
         ],
         output: { id: 'sausage4', amount: 4 },
     },
     {
         inputs: [
+            { id: 'abat', amount: 4 },
+            { id: 'langue', amount: 4 },
+            { id: 'rognon', amount: 4 },
             { id: 'tripe', amount: 4 },
             { id: 'viande', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'abat', amount: 4 },
-            { id: 'rognon', amount: 4 },
         ],
         output: { id: 'sausage5', amount: 4 },
     },
