@@ -137,11 +137,11 @@ Zonesfourriere = {
 }
 
 Zonesentreprise = {
-    ["bcso"] = BoxZone:Create(vector3(1858.13, 3677.16, 33.76), 8.4, 28.8, {
+    ["bcso"] = BoxZone:Create(vector3(1867.42, 3682.77, 33.68), 9.2, 14.2, {
         name = "bcso:garage:car",
         heading = 30,
-        minZ = 32.76,
-        maxZ = 35.76,
+        minZ = 32.64,
+        maxZ = 35.64,
     }),
     ["bcso_air"] = BoxZone:Create(vector3(1804.82, 3720.44, 33.72), 18.4, 23.8, {
         name = "bcso:garage:air",
@@ -1465,12 +1465,14 @@ PlacesEntreprise = {
         maxZ = 49.51,
         data = {indexGarage = "lsmc_air"},
     }),
-    ["bcso1"] = BoxZone:Create(vector3(1847.36, 3672.06, 33.72), 6.2, 3.8,
-                               {name = "bcso1", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
-    ["bcso2"] = BoxZone:Create(vector3(1850.38, 3673.92, 33.76), 6.2, 3.8,
-                               {name = "bcso2", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
-    ["bcso3"] = BoxZone:Create(vector3(1853.76, 3675.65, 33.75), 6.2, 3.8,
-                               {name = "bcso3", heading = 31, minZ = 32.76, maxZ = 35.76, data = {indexGarage = "bcso"}}),
+    ["bcso1"] = BoxZone:Create(vector3(1866.81, 3681.9, 33.7), 6.0, 2.4,
+                               {
+        name = "bcso1",
+        heading = 300,
+        minZ = 32.23,
+        maxZ = 36.23,
+        data = {indexGarage = "bcso"},
+    }),
     ["bcso_air1"] = BoxZone:Create(vector3(1802.57, 3719.3, 35.65), 10.6, 10.6,
                                    {
         name = "bcso_air1",
