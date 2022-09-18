@@ -66,7 +66,11 @@ export class FoodCraftProvider {
             'food_craft',
             'Vous cuisinez...',
             duration,
-            {},
+            {
+                dictionary: 'amb@prop_human_bbq@male@idle_a',
+                name: 'idle_b',
+                flags: 1,
+            },
             {
                 disableCombat: true,
                 disableCarMovement: true,
