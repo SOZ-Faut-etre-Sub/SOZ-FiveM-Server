@@ -4075,7 +4075,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "S'associe bien avec le latex pour une raison... inconnue."
     },
     ['latex'] = {
         ['name'] = 'latex',
@@ -4087,7 +4087,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "S'associe bien avec le cuir pour une raison... inconnue."
     },
     ['sap'] = {
         ['name'] = 'sap',
@@ -4111,7 +4111,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "Vaut mieux en porter un dimanche qu'un avec dix manches !"
     },
     ['garment_pant'] = {
         ['name'] = 'garment_pant',
@@ -4123,7 +4123,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Il vaut mieux en avoir une paire.'
     },
     ['garment_shoes'] = {
         ['name'] = 'garment_shoes',
@@ -4135,7 +4135,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Toujours trouver chaussure à son pied.'
     },
     ['garment_underwear'] = {
         ['name'] = 'garment_underwear',
@@ -4147,7 +4147,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Plus besoin de vous imaginez en sous-vêtement.'
     },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
@@ -4159,7 +4159,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "Fait avec les laines les plus douces de l'île"
     },
     ['luxury_garment_pant'] = {
         ['name'] = 'luxury_garment_pant',
@@ -4171,7 +4171,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Il vaut mieux en avoir une paire... et en or!'
     },
     ['luxury_garment_shoes'] = {
         ['name'] = 'luxury_garment_shoes',
@@ -4183,7 +4183,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Avec ça, on se sentirait comme Cendrillon.'
     },
     ['luxury_garment_underwear'] = {
         ['name'] = 'luxury_garment_underwear',
@@ -4195,7 +4195,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Vous aurez la classe avec ça.'
     },
     -- ZEVENT 2022
     ['zevent2022_popcorn'] = {

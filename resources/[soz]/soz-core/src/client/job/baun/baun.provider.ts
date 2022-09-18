@@ -48,13 +48,18 @@ export class BaunProvider {
 
     @OnEvent(ClientEvent.JOBS_BAUN_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (!this.playerService.isOnDuty()) {
+        if (this.nuiMenu.isOpen()) {
+            this.nuiMenu.closeMenu();
             return;
         }
 
         const recipes = this.computeRecipes(baunCraftProcesses);
         recipes.sort((a, b) => a.output.label.localeCompare(b.output.label));
-        this.nuiMenu.openMenu(MenuType.BahamaUnicornJobMenu, { recipes, state: this.state });
+        this.nuiMenu.openMenu(MenuType.BahamaUnicornJobMenu, {
+            recipes,
+            state: this.state,
+            onDuty: this.playerService.isOnDuty(),
+        });
     }
 
     private createBlips() {

@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 
 import { MenuType } from '../../../shared/nui/menu';
+import { CraftList } from '../Shared/CraftList';
 import {
     MainMenu,
     Menu,
@@ -27,6 +28,7 @@ export type FoodRecipe = {
 type FoodStateProps = {
     data: {
         recipes: FoodRecipe[];
+        onDuty: boolean;
     };
 };
 
@@ -36,6 +38,19 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
 
     if (!data.recipes) {
         return null;
+    }
+
+    if (!data.onDuty) {
+        return (
+            <Menu type={MenuType.FoodJobMenu}>
+                <MainMenu>
+                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuContent>
+                        <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
+                    </MenuContent>
+                </MainMenu>
+            </Menu>
+        );
     }
 
     return (
@@ -55,12 +70,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
-                    {currentRecipe &&
-                        currentRecipe.inputs.map(input => (
-                            <MenuItemText key={'ingredient_' + input.label}>
-                                {input.amount} {input.label}
-                            </MenuItemText>
-                        ))}
+                    {currentRecipe && <CraftList inputs={currentRecipe.inputs} />}
                 </MenuContent>
             </MainMenu>
         </Menu>
