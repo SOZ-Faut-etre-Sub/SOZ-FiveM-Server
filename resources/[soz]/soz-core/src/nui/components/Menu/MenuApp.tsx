@@ -1,7 +1,9 @@
-import { FunctionComponent, useState } from 'react';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
+import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
+import { fetchNui } from '../../fetch';
 import { useMenuNuiEvent } from '../../hook/nui';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
@@ -18,8 +20,15 @@ export const MenuApp: FunctionComponent = () => {
 };
 
 const MenuRouter: FunctionComponent = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const [menuData, setMenuData] = useState(null);
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            fetchNui(NuiEvent.MenuClosed, {});
+        }
+    }, [location]);
 
     useMenuNuiEvent('SetMenuType', ({ menuType, data }) => {
         navigate(menuType ? `/${menuType}` : '/');
@@ -27,7 +36,9 @@ const MenuRouter: FunctionComponent = () => {
     });
 
     useMenuNuiEvent('CloseMenu', () => {
-        navigate('/');
+        if (location.pathname !== '/') {
+            navigate('/');
+        }
         setMenuData(null);
     });
 

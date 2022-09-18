@@ -282,7 +282,7 @@ export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
 
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
-            <div className="flex  justify-between items-center">
+            <div className="flex justify-between items-center">
                 <h3>{children}</h3>
                 <div className="border border-white w-5 h-5 rounded bg-black/20">
                     {isChecked && (

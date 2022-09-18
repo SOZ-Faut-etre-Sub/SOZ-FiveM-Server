@@ -27,7 +27,8 @@ export class FoodProvider {
 
     @OnEvent(ClientEvent.JOBS_FOOD_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (!this.playerService.isOnDuty()) {
+        if (this.nuiMenu.isOpen()) {
+            this.nuiMenu.closeMenu();
             return;
         }
         const sortFunction = (a, b) => a.output.label.localeCompare(b.output.label);
@@ -37,7 +38,7 @@ export class FoodProvider {
             ...this.computeRecipes(FoodConfig.processes.cheeseProcesses, '🧀').sort(sortFunction),
             ...this.computeRecipes(FoodConfig.processes.sausageProcesses, '🌭').sort(sortFunction),
         ];
-        this.nuiMenu.openMenu(MenuType.FoodJobMenu, { recipes: processes });
+        this.nuiMenu.openMenu(MenuType.FoodJobMenu, { recipes: processes, onDuty: this.playerService.isOnDuty() });
     }
 
     private computeRecipes(craftProcesses: FoodCraftProcess[], prefixIcon: string): FoodRecipe[] {

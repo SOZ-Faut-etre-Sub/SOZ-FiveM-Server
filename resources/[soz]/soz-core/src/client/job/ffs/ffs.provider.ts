@@ -104,7 +104,8 @@ export class FightForStyleProvider {
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (!this.playerService.isOnDuty() || this.nuiMenu.isOpen()) {
+        if (this.nuiMenu.isOpen()) {
+            this.nuiMenu.closeMenu();
             return;
         }
         const recipes = [
@@ -113,7 +114,11 @@ export class FightForStyleProvider {
             ...this.computeRecipes(shoesCraftProcesses),
         ];
         recipes.sort((a, b) => a.label.localeCompare(b.label));
-        this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, { processes: recipes, state: this.state });
+        this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, {
+            recipes,
+            state: this.state,
+            onDuty: this.playerService.isOnDuty(),
+        });
     }
 
     private createBlips() {

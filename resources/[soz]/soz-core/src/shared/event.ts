@@ -85,4 +85,5 @@ export enum NuiEvent {
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
+    MenuClosed = 'menu_closed',
 }

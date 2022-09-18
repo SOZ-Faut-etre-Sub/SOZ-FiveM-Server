@@ -1,8 +1,11 @@
+import { CheckIcon } from '@heroicons/react/solid';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
+import { FoodRecipe } from '../Food/FoodJobMenu';
+import { CraftList } from '../Shared/CraftList';
 import {
     MainMenu,
     Menu,
@@ -38,13 +41,14 @@ type BahamaUnicornStateProps = {
             displayFurnitureBlip: boolean;
             displayResellBlip: boolean;
         };
+        onDuty: boolean;
     };
 };
 
 export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_baun';
     const [state, setState] = useState(null);
-    const [inputs, setInputs] = useState([]);
+    const [currentRecipe, setCurrentRecipe] = useState<FoodRecipe>();
 
     useEffect(() => {
         if (data && data.state) {
@@ -52,7 +56,7 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
         }
     }, [data]);
 
-    if (!state) {
+    if (!state || !data.recipes) {
         return null;
     }
 
@@ -62,6 +66,19 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
         setState({ ...state, [key]: value });
         await fetchNui(NuiEvent.BaunDisplayBlip, { blip: key, value });
     };
+
+    if (!data.onDuty) {
+        return (
+            <Menu type={MenuType.BahamaUnicornJobMenu}>
+                <MainMenu>
+                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuContent>
+                        <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
+                    </MenuContent>
+                </MainMenu>
+            </Menu>
+        );
+    }
 
     return (
         <Menu type={MenuType.BahamaUnicornJobMenu}>
@@ -103,22 +120,14 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
                             <MenuItemSelectOption
                                 key={recipe.output.label}
                                 onSelected={() => {
-                                    setInputs(recipe.inputs);
+                                    setCurrentRecipe(recipe);
                                 }}
                             >
                                 {recipe.output.label}
                             </MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
-                    {inputs.map(input => (
-                        // TODO: Use the checkbox component instead
-                        // <MenuItemCheckbox disabled checked={input.hasRequiredAmount}>
-                        //     {input.amount} {input.label}
-                        // </MenuItemCheckbox>
-                        <MenuItemText>
-                            {input.amount} {input.label}
-                        </MenuItemText>
-                    ))}
+                    {currentRecipe && <CraftList inputs={currentRecipe.inputs} />}
                 </MenuContent>
             </SubMenu>
         </Menu>
