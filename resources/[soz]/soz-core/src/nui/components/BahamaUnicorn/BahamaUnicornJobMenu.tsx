@@ -1,4 +1,3 @@
-import { CheckIcon } from '@heroicons/react/solid';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
