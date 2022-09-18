@@ -129,9 +129,7 @@ BaunConfig.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 25, Texture = 7, Palette = 0},
                 },
-                Props = {
-                    [0] = {Drawable = 120, Texture = 0, Palette = 0},
-                },
+                Props = {[0] = {Drawable = 120, Texture = 0, Palette = 0}},
             },
             ["Tenue de patron"] = {
                 Components = {
