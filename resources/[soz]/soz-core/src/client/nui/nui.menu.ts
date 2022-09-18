@@ -1,6 +1,6 @@
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { ClientEvent, NuiEvent } from '../../shared/event';
+import { ClientEvent } from '../../shared/event';
 import { MenuTypeMap } from '../../shared/nui/menu';
 import { NuiDispatch } from './nui.dispatch';
 
