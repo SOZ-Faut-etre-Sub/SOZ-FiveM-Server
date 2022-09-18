@@ -40,7 +40,9 @@ BaunConfig.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 230, Texture = 7, Palette = 0},
                 },
-                Props = {},
+                Props = {
+                    [0] = {Drawable = 58, Texture = 2, Palette = 0},
+                },
             },
             ["Tenue de service"] = {
                 Components = {
@@ -59,7 +61,7 @@ BaunConfig.Cloakroom = {
             ["Tenue de la direction"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 1, Texture = 0, Palette = 0},
                     [4] = {Drawable = 25, Texture = 2, Palette = 0},
                     [6] = {Drawable = 21, Texture = 0, Palette = 0},
                     [7] = {Drawable = 24, Texture = 2, Palette = 0},
@@ -82,7 +84,10 @@ BaunConfig.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 70, Texture = 5, Palette = 0},
                 },
-                Props = {},
+                Props = {
+                    [0] = {Drawable = 25, Texture = 2, Palette = 0},
+                    [1] = {Drawable = 12, Texture = 0, Palette = 0},
+                },
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
@@ -93,12 +98,14 @@ BaunConfig.Cloakroom = {
                     [4] = {Drawable = 4, Texture = 0, Palette = 0},
                     [6] = {Drawable = 3, Texture = 2, Palette = 0},
                     [7] = {Drawable = 0, Texture = 0, Palette = 0},
-                    [8] = {Drawable = 51, Texture = 1, Palette = 0},
+                    [8] = {Drawable = 52, Texture = 1, Palette = 0},
                     [9] = {Drawable = 0, Texture = 0, Palette = 0},
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 240, Texture = 7, Palette = 0},
                 },
-                Props = {},
+                Props = {
+                    [0] = {Drawable = 58, Texture = 2, Palette = 0},
+                },
             },
             ["Tenue de service"] = {
                 Components = {
@@ -112,7 +119,9 @@ BaunConfig.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 26, Texture = 2, Palette = 0},
                 },
-                Props = {},
+                Props = {
+                    [0] = {Drawable = 120, Texture = 0, Palette = 0},
+                },
             },
             ["Tenue de la direction"] = {
                 Components = {
@@ -126,7 +135,9 @@ BaunConfig.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 25, Texture = 7, Palette = 0},
                 },
-                Props = {},
+                Props = {
+                    [0] = {Drawable = 120, Texture = 0, Palette = 0},
+                },
             },
             ["Tenue de patron"] = {
                 Components = {
@@ -140,7 +151,12 @@ BaunConfig.Cloakroom = {
                     [10] = {Drawable = 0, Texture = 0, Palette = 0},
                     [11] = {Drawable = 415, Texture = 0, Palette = 0},
                 },
-                Props = {},
+                Props = {
+                    [0] = {Drawable = 61, Texture = 2, Palette = 0},
+                    [1] = {Drawable = 11, Texture = 4, Palette = 0},
+                    [6] = {Drawable = 19, Texture = 4, Palette = 0},
+                    [7] = {Drawable = 16, Texture = 0, Palette = 0},
+                },
             },
         },
     },
