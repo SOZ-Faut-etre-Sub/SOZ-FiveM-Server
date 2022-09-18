@@ -107,16 +107,20 @@ RegisterNetEvent("upw:client:OpenCloakroomMenu", function()
         end,
     })
 
-    for name, skin in pairs(Config.Cloakroom[PlayerData.skin.Model.Hash]) do
+    table.sort(Config.Cloakroom[PlayerData.skin.Model.Hash], function(a, b)
+        return a.name < b.name
+    end)
+
+    for _, config in pairs(Config.Cloakroom[PlayerData.skin.Model.Hash]) do
         societyMenu:AddButton({
-            label = name,
+            label = config.name,
             value = nil,
             select = function()
                 QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", config.skin)
                 end)
             end,
         })
