@@ -30,6 +30,10 @@ end
 
 TaxiJob.Functions.Menu.GenerateJobMenu = function(job)
     TaxiJob.Functions.Menu.GenerateMenu(job, function(menu)
+        if menu.IsOpen then
+            menu:Close()
+            return
+        end
         if PlayerData.job.onduty then
             menu:AddButton({
                 label = "Afficher Horodateur",

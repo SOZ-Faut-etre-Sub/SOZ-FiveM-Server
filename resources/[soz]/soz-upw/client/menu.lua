@@ -33,6 +33,11 @@ local function SetBlipVisibility(type, visible, entreprise)
 end
 
 RegisterNetEvent("jobs:client:upw:OpenSocietyMenu", function()
+    if societyMenu.IsOpen then
+        societyMenu:Close()
+        return
+    end
+
     societyMenu:ClearItems()
 
     if OnDuty() then
