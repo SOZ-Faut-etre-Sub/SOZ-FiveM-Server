@@ -73,7 +73,14 @@ RegisterNetEvent("soz-concessentreprise:server:buyShowroomVehicle", function(veh
             })
 
         MySQL.Async.insert("INSERT INTO player_purchases (citizenid, shop_type, shop_id, item_id, amount, date) VALUES (?,?,?,?,?,?)",
-            {Player.PlayerData.citizenid, "dealership", Config.DealershipTypes.Luxury, vehicle, price, os.time()})
+                           {
+            Player.PlayerData.citizenid,
+            "dealership",
+            Config.DealershipTypes.Luxury,
+            vehicle,
+            price,
+            os.time(),
+        })
 
         TriggerEvent("monitor:server:event", "vehicle_buy", {player_source = Player.PlayerData.source, buy_type = "job"}, {
             vehicle_id = vehicle,
