@@ -4111,7 +4111,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Vaut mieux en porter un dimanche qu'un avec dix manches !"
+        ['description'] = "Ta mamie te trouverait très beau avec vêtement mais il n'y a bien qu'elle."
     },
     ['garment_pant'] = {
         ['name'] = 'garment_pant',
@@ -4147,7 +4147,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Plus besoin de vous imaginez en sous-vêtement.'
+        ['description'] = 'Enrobe délicatement vos formes pour les mettre en valeur lors de soirées trop arrosées.'
     },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
@@ -4195,7 +4195,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Vous aurez la classe avec ça.'
+        ['description'] = "Ça moule pas trop j'espère ?"
     },
     -- ZEVENT 2022
     ['zevent2022_popcorn'] = {
