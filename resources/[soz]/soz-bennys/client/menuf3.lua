@@ -18,5 +18,10 @@ BennysF3:On("open", function(menu)
 end)
 
 RegisterNetEvent("bennys:client:OpenSocietyMenu", function()
+    if BennysF3.IsOpen then
+        BennysF3:Close()
+        return
+    end
+
     BennysF3:Open()
 end)

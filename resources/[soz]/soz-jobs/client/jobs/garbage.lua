@@ -142,6 +142,10 @@ RegisterNetEvent("jobs:client:garbage:processExpired", function(data)
 end)
 
 RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
+    if societyMenu.IsOpen then
+        societyMenu:Close()
+        return
+    end
     societyMenu:ClearItems()
 
     if PlayerData.job.onduty then
