@@ -42,6 +42,7 @@ Config.Dealerships = {
             },
         },
         vehicle = {spawn = vector4(-46.64, -1097.53, 25.44, 26.42), camera = vector3(-53.69, -1094.83, 27.0)},
+        daysBeforeNextPurchase = 7,
     },
     [Config.DealershipTypes.Cycle] = {
         active = true,
@@ -58,6 +59,7 @@ Config.Dealerships = {
             },
         },
         vehicle = {spawn = vector4(-1221.96, -1498.45, 4.35, 210.0), camera = vector3(-1222.6, -1501.34, 5.37)},
+        daysBeforeNextPurchase = 7,
     },
     [Config.DealershipTypes.Moto] = {
         active = true,
@@ -74,6 +76,7 @@ Config.Dealerships = {
             },
         },
         vehicle = {spawn = vector4(1224.66, 2706.15, 38.01, 120.0), camera = vector3(1224.5, 2701.63, 39.0)},
+        daysBeforeNextPurchase = 7,
     },
     [Config.DealershipTypes.Air] = {
         active = true,
@@ -95,6 +98,7 @@ Config.Dealerships = {
             },
         },
         vehicle = {spawn = vector4(1730.47, 3314.38, 40.22, 153.64), camera = vector4(1733.07, 3303.82, 42.22, 14.55)},
+        daysBeforeNextPurchase = 7,
     },
     [Config.DealershipTypes.Boat] = {
         active = GetConvarInt("feature_dlc2_boat", 0) == 1,
@@ -111,5 +115,6 @@ Config.Dealerships = {
             },
         },
         vehicle = {spawn = vector4(-857.02, -1327.72, 0.45, 110), camera = vector3(-871.61, -1342.65, 8.44)},
+        daysBeforeNextPurchase = 7,
     },
 }

@@ -38,6 +38,16 @@ QBCore.Functions.CreateCallback("soz-vehicle:server:GetAllVehicles", function(_,
     cb(GetAllVehicles())
 end)
 
+local function GetLastPurchase(source, dealershipId)
+    local player = QBCore.Functions.GetPlayer(source)
+    local citizenId = player.PlayerData.citizenid
+
+    return MySQL.Sync.fetchScalar("SELECT * FROM player_purchases WHERE citizenid = ? AND shop_type = 'dealership' AND shop_id = ?", {
+        citizenId,
+        dealershipId,
+    })
+end
+
 QBCore.Functions.CreateCallback("soz-vehicle:server:GetVehiclesOfDealership", function(_, cb, dealershipId)
     local models = MySQL.Sync.fetchAll(
                        "SELECT vehicles.model AS model, name, price, vehicles.category AS category, required_licence, size, job_name, stock FROM vehicles LEFT JOIN concess_storage ON vehicles.model = concess_storage.model WHERE dealership_id = ? AND stock IS NOT NULL;",
@@ -49,6 +59,19 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(dealership, v
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     local cid = pData.PlayerData.citizenid
+
+    if dealership ~= Config.DealershipTypes.Cycle then
+        local lastPurchase = GetLastPurchase(source, dealership)
+        if lastPurchase then
+            local canPurchaseAfter = os.time() + (Config.Dealerships[dealership].daysBeforeNextPurchase * 24 * 60 * 60)
+            if os.time() < canPurchaseAfter then
+                local daysBeforeNextPurchase = math.floor(os.difftime(canPurchaseAfter, os.time()) / (24 * 60 * 60))
+                TriggerClientEvent("hud:client:DrawNotification", src, "Tu dois attendre " .. daysBeforeNextPurchase .. " jour(s) avant ton prochain achat.",
+                                   "error")
+                return
+            end
+        end
+    end
 
     local price = GetPriceOfVehicle(vehicle)
     if price == nil then
@@ -97,6 +120,9 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(dealership, v
                     os.time(),
                     os.time(),
                 })
+            MySQL.Async.insert("INSERT INTO player_purchases (citizenid, shop_type, shop_id, item_id, amount, date) VALUES (?,?,?,?,?,?)",
+                               {pData.PlayerData.citizenid, "dealership", dealership, vehicle, price, os.time()})
+
             MySQL.Async.execute("UPDATE concess_storage SET stock = stock - 1 WHERE model = ?", {vehicle})
 
             TriggerEvent("monitor:server:event", "vehicle_buy", {
