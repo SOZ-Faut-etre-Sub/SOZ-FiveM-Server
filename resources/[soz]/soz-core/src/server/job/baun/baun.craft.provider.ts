@@ -2,6 +2,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { InventoryItem } from '../../../shared/item';
 import { BaunConfig, BaunCraftProcess } from '../../../shared/job/baun';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -72,8 +73,10 @@ export class BaunCraftProvider {
 
     private canCraft(source: number, craftProcess: BaunCraftProcess): boolean {
         for (const input of craftProcess.inputs) {
-            const item = this.inventoryManager.getFirstItemInventory(source, input.id);
-            if (!item || item.amount < input.amount) {
+            const predicate = (item: InventoryItem) => {
+                return item.name == input.id && item.amount >= input.amount && !this.itemService.isItemExpired(item);
+            };
+            if (!this.inventoryManager.findItem(source, predicate)) {
                 return false;
             }
         }
