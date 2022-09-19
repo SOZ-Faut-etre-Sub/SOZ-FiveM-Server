@@ -142,6 +142,10 @@ end
 
 StonkJob.Functions.Menu.GenerateJobMenu = function(job)
     StonkJob.Functions.Menu.GenerateMenu(job, function(menu)
+        if menu.IsOpen then
+            menu:Close()
+            return
+        end
         if PlayerData.job.onduty then
             PropsEntity(menu)
         else

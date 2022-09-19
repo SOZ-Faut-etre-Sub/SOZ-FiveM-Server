@@ -206,6 +206,10 @@ end
 
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
+        if menu.IsOpen then
+            menu:Close()
+            return
+        end
         if PlayerData.job.id == "fbi" then
             menu:AddButton({
                 label = "Faire une communication",

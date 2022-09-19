@@ -42,6 +42,10 @@ end
 
 EmsJob.Functions.Menu.GenerateJobMenu = function(job)
     EmsJob.Functions.Menu.GenerateMenu(job, function(menu)
+        if menu.IsOpen then
+            menu:Close()
+            return
+        end
         if PlayerData.job.onduty then
             PropsEntity(menu)
         else
