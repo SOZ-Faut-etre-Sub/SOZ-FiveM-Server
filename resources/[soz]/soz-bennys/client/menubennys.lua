@@ -1025,6 +1025,12 @@ local repairSpots = {
         minZ = 29.89,
         maxZ = 33.89,
     }),
+    BoxZone:Create(vector3(-168.78, -1252.58, 31.3), 6.2, 13.6, {
+        name = "bennys_repair_slot2",
+        heading = 0,
+        minZ = 30.3,
+        maxZ = 35.3,
+    }),
 }
 
 StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
