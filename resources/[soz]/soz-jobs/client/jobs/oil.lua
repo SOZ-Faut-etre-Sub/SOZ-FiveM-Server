@@ -766,6 +766,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
 end)
 
 RegisterNetEvent("jobs:client:fueler:OpenSocietyMenu", function()
+    if societyMenu.IsOpen then
+        societyMenu:Close()
+        return
+    end
     societyMenu:ClearItems()
 
     if PlayerData.job.onduty then

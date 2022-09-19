@@ -124,6 +124,10 @@ RegisterNetEvent("jobs:client:news:farmNewspaper", function()
 end)
 
 RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
+    if societyMenu.IsOpen then
+        societyMenu:Close()
+        return
+    end
     societyMenu:ClearItems()
 
     societyMenu:AddSlider({
