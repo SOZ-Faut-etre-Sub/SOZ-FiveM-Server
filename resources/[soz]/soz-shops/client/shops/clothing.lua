@@ -160,6 +160,7 @@ function ClothingShop:GenerateMenu(skipIntro)
                     collectionMenu:On("switch", function(_, item)
                         local ped = PlayerPedId()
                         for id, component in pairs(item.Value.components) do
+                            print("Debug component: " .. json.encode(component))
                             SetPedComponentVariation(ped, tonumber(id), component.Drawable, component.Texture or 0, component.Palette or 0);
                         end
 
