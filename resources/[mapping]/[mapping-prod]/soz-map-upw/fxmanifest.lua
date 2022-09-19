@@ -7,7 +7,6 @@ files {
     "audio/soz_upw_mix.dat15.rel",
     "stream/ymap/560780229.ymt",
     "interiorproxies.meta"
-
 }
 
 data_file 'INTERIOR_PROXY_ORDER_FILE' 'interiorproxies.meta'
