@@ -160,7 +160,7 @@ class CallsService {
                 receiver: targetCallItem.receiver,
                 isTransmitter: false,
                 channelId,
-                startedAt: new Date().getTime(),
+                startedAt: new Date().getTime() / 1000,
             },
             targetCallItem.receiverSource
         );
@@ -176,7 +176,7 @@ class CallsService {
                 receiver: targetCallItem.receiver,
                 isTransmitter: true,
                 channelId,
-                startedAt: new Date().getTime(),
+                startedAt: new Date().getTime() / 1000,
             },
             targetCallItem.transmitterSource
         );
@@ -187,7 +187,7 @@ class CallsService {
             receiver: targetCallItem.receiver,
             isTransmitter: false,
             channelId,
-            startedAt: new Date().getTime(),
+            startedAt: new Date().getTime() / 1000,
         });
 
         emitNet(CallEvents.UPDATE_CALL, targetCallItem.transmitterSource, {
@@ -196,7 +196,7 @@ class CallsService {
             receiver: targetCallItem.receiver,
             isTransmitter: true,
             channelId,
-            startedAt: new Date().getTime(),
+            startedAt: new Date().getTime() / 1000,
         });
     }
 
