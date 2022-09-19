@@ -1,7 +1,7 @@
 local currentDegradationLevel = Config.Degradation.Level.Green
 
 function GetDegradationPercentage()
-    local tree, maxTree = 0, 0
+    local tree, maxTree = 0, 1
 
     for _, v in pairs(Fields) do
         local a, t = v:GetFieldStats()
@@ -15,13 +15,13 @@ end
 local function GetDegradationLevel()
     local percent = GetDegradationPercentage()
 
-    for level, trigger in pairs(Config.Degradation.Threshold) do
-        if percent >= trigger then
+    for trigger, level in pairsByKeys(Config.Degradation.Threshold) do
+        if percent <= trigger then
             return level
         end
     end
 
-    return Config.Degradation.Level.Red
+    return Config.Degradation.Level.Green
 end
 
 QBCore.Functions.CreateCallback("pawl:server:getDegradationLevel", function(source, cb)

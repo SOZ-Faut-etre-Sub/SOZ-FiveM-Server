@@ -158,7 +158,7 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
 end)
 
 --- Crafting
-local function pairsByKeys(t)
+function pairsByKeys(t)
     local a = {}
     for n in pairs(t) do
         table.insert(a, n)
