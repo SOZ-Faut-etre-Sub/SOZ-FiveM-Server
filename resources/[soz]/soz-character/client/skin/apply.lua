@@ -266,7 +266,10 @@ function ClothConfigComputeToClothSet(clothConfig)
 
     if clothConfig.Config.HidePants then
         local override = {
-            Components = {[ComponentType.Pants] = clothConfig.NakedClothSet.Components[ComponentType.Pants]},
+            Components = {
+                [ComponentType.Pants] = clothConfig.NakedClothSet.Components[ComponentType.Pants] or
+                    clothConfig.NakedClothSet.Components[tostring(ComponentType.Pants)],
+            },
         }
 
         clothSet = MergeClothSet(clothSet, override)
