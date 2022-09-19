@@ -205,10 +205,17 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 end
 
                 for componentId, component in pairs(clothItem.data.components or {}) do
-                    clothConfig["BaseClothSet"].Components[tostring(componentId)] = {}
-                    clothConfig["BaseClothSet"].Components[tostring(componentId)].Drawable = tonumber(component.Drawable)
-                    clothConfig["BaseClothSet"].Components[tostring(componentId)].Texture = tonumber(component.Texture) or 0
-                    clothConfig["BaseClothSet"].Components[tostring(componentId)].Palette = tonumber(component.Palette) or 0
+                    local compId = tostring(componentId)
+                    local clothConfigName = "BaseClothSet"
+
+                    if product.category == 19 then
+                        clothConfigName = "NakedClothSet"
+                    end
+
+                    clothConfig[clothConfigName].Components[compId] = {}
+                    clothConfig[clothConfigName].Components[compId].Drawable = tonumber(component.Drawable)
+                    clothConfig[clothConfigName].Components[compId].Texture = tonumber(component.Texture) or 0
+                    clothConfig[clothConfigName].Components[compId].Palette = tonumber(component.Palette) or 0
                 end
 
                 if product.torso and product.torso.drawable and product.torso.texture then
