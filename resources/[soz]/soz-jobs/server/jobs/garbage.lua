@@ -1,21 +1,29 @@
 Citizen.CreateThread(function()
     while true do
-        local processingItem = exports["soz-inventory"]:GetFirstItem(GarbageConfig.Processing.ProcessingStorage)
+        local processingItems = exports["soz-inventory"]:GetAllItems(GarbageConfig.Processing.ProcessingStorage)
 
-        if processingItem then
-            local itemToProcess = GarbageConfig.RecycleItem[processingItem.item.name] or GarbageConfig.RecycleItem["default"]
+        if #processingItems > 0 then
+            local remainingItemToProcess = GarbageConfig.Processing.ProcessingAmount
 
-            if processingItem.amount < itemToProcess then
-                itemToProcess = processingItem.amount
-            end
+            for _, item in pairs(processingItems) do
+                if remainingItemToProcess > 0 then
+                    local itemAmount = item.amount
 
-            if exports["soz-inventory"]:RemoveItem(GarbageConfig.Processing.ProcessingStorage, processingItem.item.name, itemToProcess) then
-                local resellPrice = GarbageConfig.SellPrice[processingItem.item.name] or GarbageConfig.SellPrice["default"]
+                    if itemAmount > remainingItemToProcess then
+                        itemAmount = remainingItemToProcess
+                    end
 
-                TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", itemToProcess * resellPrice)
-                TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
-                    item = processingItem.item.name,
-                }, {quantity = tonumber(itemToProcess)})
+                    remainingItemToProcess = remainingItemToProcess - itemAmount
+
+                    if exports["soz-inventory"]:RemoveItem(GarbageConfig.Processing.ProcessingStorage, item.item.name, itemAmount) then
+                        local resellPrice = GarbageConfig.SellPrice[item.item.name] or GarbageConfig.SellPrice["default"]
+
+                        TriggerEvent("banking:server:TransferMoney", "farm_garbage", "safe_garbage", itemAmount * resellPrice)
+                        TriggerEvent("monitor:server:event", "job_bluebird_recycling_garbage_bag", {
+                            item = item.item.name,
+                        }, {quantity = tonumber(itemAmount)})
+                    end
+                end
             end
         end
 

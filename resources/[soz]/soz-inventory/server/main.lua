@@ -596,23 +596,24 @@ RegisterNetEvent("inventory:server:GetItemsByType", Inventory.GetItemsByType)
 exports("GetItemsByType", Inventory.GetItemsByType)
 
 --- Get item
-function Inventory.GetFirstItem(inv)
+function Inventory.GetAllItems(inv)
     inv = Inventory(inv)
+    local items = {}
 
     if inv then
         for _, v in pairs(inv.items) do
             local item = QBCore.Shared.Items[v.name]
 
             if item then
-                return {item = item, amount = v.amount, metadata = v.metadata}
+                table.insert(items, {item = item, amount = v.amount, metadata = v.metadata})
             end
         end
     end
 
-    return nil
+    return items
 end
-RegisterNetEvent("inventory:server:GetFirstItem", Inventory.GetFirstItem)
-exports("GetFirstItem", Inventory.GetFirstItem)
+RegisterNetEvent("inventory:server:GetAllItems", Inventory.GetAllItems)
+exports("GetAllItems", Inventory.GetAllItems)
 
 --- Slots
 function Inventory.GetItem(inv, item, metadata, returnsAmount)
