@@ -64,23 +64,26 @@ Container["trunk"] = InventoryContainer:new({
 Container["tanker"] = InventoryContainer:new({type = "trunk", allowedTypes = {"oil", "oil_and_item"}})
 Container["brickade"] = InventoryContainer:new({type = "trunk", allowedTypes = {"energy"}})
 Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes = {"log"}})
-Container["trash"] = InventoryContainer:new({type = "trunk", allowedTypes = {
-    "item",
-    "drug",
-    "food",
-    "drink",
-    "cocktail",
-    "item_illegal",
-    "organ",
-    "oil",
-    "oil_and_item",
-    "log",
-    "sawdust",
-    "plank",
-    "flavor",
-    "furniture",
-    "liquor",
-}})
+Container["trash"] = InventoryContainer:new({
+    type = "trunk",
+    allowedTypes = {
+        "item",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+    },
+})
 
 Container["storage"] = InventoryContainer:new({
     type = "storage",

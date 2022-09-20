@@ -2,29 +2,7 @@ GarbageConfig = {}
 
 GarbageConfig.SellPrice = {["default"] = 25, ["sawdust"] = 2, ["petroleum_residue"] = 6, ["seeweed_acid"] = 30}
 
-GarbageConfig.RecycleItem = {
-    ["default"] = 5,
-    ["petroleum_residue"] = 20,
-    ["sawdust"] = 300,
-    ["seeweed_acid"] = 3,
-    ["sap"] = 20,
-    ["liquor_crate"] = 3,
-    ["flavor_crate"] = 3,
-    ["furniture_crate"] = 3,
-    ["green_lemon"] = 10,
-    ["cane_sugar"] = 10,
-    ["ananas_juice"] = 10,
-    ["coconut_milk"] = 10,
-    ["cinnamon"] = 10,
-    ["orange_juice"] = 10,
-    ["strawberry_juice"] = 10,
-    ["apple_juice"] = 10,
-    ["straw"] = 10,
-    ["ice_cube"] = 10,
-    ["fruit_slice"] = 10,
-}
-
-GarbageConfig.Processing = {Duration = 10000, ProcessingStorage = "garbage_processing"}
+GarbageConfig.Processing = {Duration = 60 * 1000, ProcessingStorage = "garbage_processing", ProcessingAmount = 100}
 
 GarbageConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
