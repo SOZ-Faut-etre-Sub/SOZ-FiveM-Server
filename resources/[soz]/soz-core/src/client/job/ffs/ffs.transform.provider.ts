@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { SewingRawMaterialItem } from '../../../shared/item';
-import { FabricMaterial, TransformProcess, TransformProcesses } from '../../../shared/job/ffs';
+import { FabricMaterial, FfsConfig, TransformProcess } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
@@ -28,7 +28,7 @@ export class FightForStyleTransformProvider {
         const targets: TargetOptions[] = Object.keys(FabricMaterial).map(key => {
             const fabricMaterial: string = FabricMaterial[key];
             const item = this.itemService.getItem<SewingRawMaterialItem>(fabricMaterial);
-            const transformProcess: TransformProcess = TransformProcesses[fabricMaterial];
+            const transformProcess: TransformProcess = FfsConfig.transform.processes[fabricMaterial];
 
             return {
                 label: `Transformer: ${item.label}`,

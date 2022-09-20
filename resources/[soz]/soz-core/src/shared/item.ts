@@ -89,6 +89,8 @@ export type FurnitureItem = BaseItem & {
 
 export type LiquorItem = BaseItem & {
     type: 'liquor';
+    nutrition: Nutrition;
+    animation?: AnimationItem;
 };
 
 // Fight For Style

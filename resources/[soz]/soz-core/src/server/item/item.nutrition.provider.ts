@@ -2,7 +2,7 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { CocktailItem, DrinkItem, FoodItem, InventoryItem } from '../../shared/item';
+import { CocktailItem, DrinkItem, FoodItem, InventoryItem, LiquorItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { InventoryManager } from './inventory.manager';
@@ -26,7 +26,7 @@ export class ItemNutritionProvider {
 
     private async useFoodOrDrink(
         source: number,
-        item: FoodItem | DrinkItem | CocktailItem,
+        item: FoodItem | DrinkItem | CocktailItem | LiquorItem,
         inventoryItem: InventoryItem
     ): Promise<void> {
         if (!this.item.canPlayerUseItem(source, true)) {
@@ -132,6 +132,12 @@ export class ItemNutritionProvider {
 
         for (const cocktailId of Object.keys(cocktails)) {
             this.item.setItemUseCallback<CocktailItem>(cocktailId, this.useFoodOrDrink.bind(this));
+        }
+
+        const liquors = this.item.getItems<CocktailItem>('liquor');
+
+        for (const liquorId of Object.keys(liquors)) {
+            this.item.setItemUseCallback<LiquorItem>(liquorId, this.useFoodOrDrink.bind(this));
         }
     }
 }

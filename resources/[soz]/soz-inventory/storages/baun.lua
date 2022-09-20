@@ -19,7 +19,7 @@ end
 local function getCocktailTargetOption()
     return {
         color = "baun",
-        label = "Créer un cocktail box",
+        label = "Créer un assortiment de cocktails",
         icon = "c:baun/createCocktailBox.png",
         type = "client",
         event = "soz-jobs:client:baun:createCocktailBox",

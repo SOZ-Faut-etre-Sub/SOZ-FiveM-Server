@@ -44,7 +44,7 @@ export class FoodMealsProvider {
             this.notifier.notify(source, 'Une commande est déjà en cours.');
             return;
         }
-        const [transferred] = await this.bankProvider.transferBankMoney('safe_food', 'farm_food', 2000);
+        const [transferred] = await this.bankProvider.transferBankMoney('food', 'farm_food', 2000);
         if (transferred) {
             const date = new Date();
             date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
