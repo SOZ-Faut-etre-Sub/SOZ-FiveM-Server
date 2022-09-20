@@ -3,32 +3,14 @@ GarbageConfig = {}
 GarbageConfig.SellPrice = {["default"] = 25, ["sawdust"] = 2, ["petroleum_residue"] = 6, ["seeweed_acid"] = 30}
 
 GarbageConfig.RecycleItem = {
-    ["plastic"] = 5,
-    ["metalscrap"] = 5,
-    ["aluminum"] = 5,
-    ["rubber"] = 5,
-    ["electronickit"] = 5,
-    ["rolex"] = 5,
-    ["diamond_ring"] = 5,
-    ["goldchain"] = 5,
-    ["10kgoldchain"] = 5,
-    ["goldbar"] = 5,
-    ["garbagebag"] = 5,
+    ["default"] = 5,
     ["petroleum_residue"] = 20,
-    ["os"] = 5,
-    ["viscere"] = 5,
     ["sawdust"] = 300,
-    ["used_bloodbag"] = 5,
     ["seeweed_acid"] = 3,
     ["sap"] = 20,
     ["liquor_crate"] = 3,
     ["flavor_crate"] = 3,
     ["furniture_crate"] = 3,
-    ["vodka"] = 5,
-    ["gin"] = 5,
-    ["tequila"] = 5,
-    ["whisky"] = 5,
-    ["cognac"] = 5,
     ["green_lemon"] = 10,
     ["cane_sugar"] = 10,
     ["ananas_juice"] = 10,
@@ -40,16 +22,9 @@ GarbageConfig.RecycleItem = {
     ["straw"] = 10,
     ["ice_cube"] = 10,
     ["fruit_slice"] = 10,
-    ["tumbler"] = 5,
-    ["narito"] = 5,
-    ["lapicolada"] = 5,
-    ["sunrayou"] = 5,
-    ["ponche"] = 5,
-    ["pinkenny"] = 5,
-    ["phasmopolitan"] = 5,
-    ["escalier"] = 5,
-    ["whicanelle"] = 5,
 }
+
+GarbageConfig.Processing = {Duration = 10000, ProcessingStorage = "garbage_processing"}
 
 GarbageConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
