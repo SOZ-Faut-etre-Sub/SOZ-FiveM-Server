@@ -1,6 +1,8 @@
 import { Command } from '../../core/decorators/command';
+import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { NuiEvent } from '../../shared/event';
 import { NuiDispatch } from './nui.dispatch';
 
 @Provider()
@@ -97,5 +99,10 @@ export class NuiMenuProvider {
     })
     onMenuClose(): void {
         this.nuiDispatch.dispatch('menu', 'CloseMenu');
+    }
+
+    @OnNuiEvent(NuiEvent.MenuClosed)
+    public async onMenuClosed() {
+        this.nuiDispatch.setMenuOpen(false);
     }
 }

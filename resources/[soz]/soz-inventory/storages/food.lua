@@ -12,10 +12,11 @@ Config.Storages["food_storage"] = {
     label = "Stockage Château Marius",
     type = "storage",
     owner = "food",
-    position = vector3(-1880.26, 2068.38, 141.01),
-    size = vector2(1.0, 2.0),
-    offsetUpZ = 0.0,
-    heading = 250.0,
+    position = vector3(-1888.19, 2060.61, 141.0),
+    size = vector2(1.25, 1.0),
+    minZ = 140.0,
+    maxZ = 142.3,
+    heading = 340.0,
 }
 
 Config.Storages["food_boss_storage"] = {

@@ -6,6 +6,7 @@ export class NuiDispatch {
     public isNuiFocused = false;
     public isNuiCursor = false;
     public isNuiKeepInput = false;
+    public isMenuOpen = false;
 
     dispatch<App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
         app: App,
@@ -22,5 +23,13 @@ export class NuiDispatch {
         this.isNuiFocused = focus;
         this.isNuiCursor = cursor;
         this.isNuiKeepInput = keepGameInput;
+    }
+
+    setMenuOpen(isOpen: boolean) {
+        this.isMenuOpen = isOpen;
+    }
+
+    isMenuOpened() {
+        return this.isMenuOpen;
     }
 }

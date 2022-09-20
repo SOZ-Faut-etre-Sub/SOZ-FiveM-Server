@@ -34,6 +34,9 @@ export class ProgressService {
                 canCancel: options.canCancel,
                 controlDisables: {
                     disableCombat: options.disableCombat,
+                    disableMovement: options.disableMovement,
+                    disableCarMovement: options.disableCarMovement,
+                    disableMouse: options.disableMouse,
                 },
                 animation: animation
                     ? {
