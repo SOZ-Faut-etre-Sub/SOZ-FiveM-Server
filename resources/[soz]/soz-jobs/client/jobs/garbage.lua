@@ -22,47 +22,6 @@ CreateThread(function()
         distance = 2.5,
     })
 
-    local garbageActions = {}
-    for item, _ in pairs(GarbageConfig.RecycleItem) do
-        garbageActions[#garbageActions + 1] = {
-            label = ("Recycler \"%s\""):format(QBCore.Shared.Items[item].label),
-            color = "garbage",
-            icon = "c:bluebird/recycler.png",
-            event = "jobs:client:garbage:processBags",
-            item = item,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            job = "garbage",
-            blackoutGlobal = true,
-            blackoutJob = "garbage",
-        }
-    end
-    garbageActions[#garbageActions + 1] = {
-        label = "Recycler nourriture périmée",
-        color = "garbage",
-        icon = "c:bluebird/recycler.png",
-        event = "jobs:client:garbage:processExpired",
-        canInteract = function()
-            return PlayerData.job.onduty and HasExpiredItems()
-        end,
-        job = "garbage",
-        blackoutGlobal = true,
-        blackoutJob = "garbage",
-    }
-
-    exports["qb-target"]:AddBoxZone("garbage:process", vector3(-601.26, -1602.99, 30.41), 2.2, 3.4,
-                                    {name = "garbage:process", heading = 355, minZ = 29.41, maxZ = 32.41}, {
-        options = garbageActions,
-        distance = 2.5,
-        job = "garbage",
-        canInteract = function()
-            return PlayerData.job.onduty
-        end,
-        blackoutGlobal = true,
-        blackoutJob = "garbage",
-    })
-
     local props = QBCore.Functions.TriggerRpc("core:server:getProps")
     for _, prop in pairs(props) do
         if prop.model == binModel then
@@ -103,44 +62,6 @@ local detachBag = function()
 end
 
 --- Events
-RegisterNetEvent("jobs:client:garbage:processBags", function(data)
-    QBCore.Functions.Progressbar("Recyclage du sac", "Recyclage en cours...", math.random(4000, 8000), false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "missfbi4prepp1", anim = "_bag_throw_garbage_man", flags = 49}, {}, {}, function() -- Done
-        TriggerServerEvent("jobs:server:garbage:processBags", data.item)
-    end)
-end)
-
-RegisterNetEvent("jobs:client:garbage:processExpired", function(data)
-    if data.slot == nil then
-        for _, item in pairs(PlayerData.items or {}) do
-            if exports["soz-utils"]:ItemIsExpired(item) then
-                data.slot = item.slot
-                goto continue
-            end
-        end
-    end
-    ::continue::
-
-    if data.slot == nil then
-        return
-    end
-
-    QBCore.Functions.Progressbar("Recyclage du sac", "Recyclage en cours...", math.random(4000, 8000), false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "missfbi4prepp1", anim = "_bag_throw_garbage_man", flags = 49}, {}, {}, function() -- Done
-        TriggerServerEvent("jobs:server:garbage:processExpired", data.slot)
-    end)
-end)
-
 RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
     if societyMenu.IsOpen then
         societyMenu:Close()

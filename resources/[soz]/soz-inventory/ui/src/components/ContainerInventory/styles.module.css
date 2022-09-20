@@ -85,6 +85,10 @@
     background: url("../../assets/player.jpg") left no-repeat;
     background-size: cover;
 }
+.recycler_processing {
+    background: url("../../assets/recycler_processing.jpg") left no-repeat;
+    background-size: cover;
+}
 .sawdust_storage {
     background: url("../../assets/sawdust_storage.jpg") left no-repeat;
     background-size: cover;
