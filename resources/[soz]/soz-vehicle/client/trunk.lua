@@ -54,10 +54,8 @@ local function OpenTrunk()
                     local model = GetEntityModel(vehicle)
                     local class = GetVehicleClass(vehicle)
 
-                    TriggerServerEvent("inventory:server:openInventory", vehicleTrunkType(model), plate, {
-                        model = model,
-                        class = class,
-                    })
+                    TriggerServerEvent("inventory:server:openInventory", vehicleTrunkType(model), plate,
+                                       {model = model, class = class, entity = VehToNet(vehicle)})
                     openTrunkVehicle = vehicle
                 else
                     exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
@@ -74,10 +72,8 @@ local function OpenTrunk()
                                 local model = GetEntityModel(vehicle)
                                 local class = GetVehicleClass(vehicle)
 
-                                TriggerServerEvent("inventory:server:openInventory", vehicleTrunkType(model), plate, {
-                                    model = model,
-                                    class = class,
-                                })
+                                TriggerServerEvent("inventory:server:openInventory", vehicleTrunkType(model), plate,
+                                                   {model = model, class = class, entity = VehToNet(vehicle)})
                                 openTrunkVehicle = vehicle
                             else
                                 exports["soz-hud"]:DrawNotification("Véhicule verrouillé", "info")
