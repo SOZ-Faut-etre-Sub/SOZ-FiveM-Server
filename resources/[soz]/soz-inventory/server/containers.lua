@@ -212,8 +212,6 @@ Container["recycler_processing"] = InventoryContainer:new({
     type = "recycler_processing",
     allowedTypes = {
         "item",
-        "weapon",
-        "weapon_ammo",
         "drug",
         "food",
         "drink",
