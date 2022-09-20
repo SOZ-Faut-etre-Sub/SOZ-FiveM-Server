@@ -189,3 +189,31 @@ Container["furniture_storage"] = InventoryContainer:new({
     allowedTypes = {"furniture"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
+
+--- Jobs BB
+Container["recycler_processing"] = InventoryContainer:new({
+    type = "recycler_processing",
+    allowedTypes = {
+        "item",
+        "weapon",
+        "weapon_ammo",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+    },
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryGetContentCallback = function()
+        return false
+    end,
+})
