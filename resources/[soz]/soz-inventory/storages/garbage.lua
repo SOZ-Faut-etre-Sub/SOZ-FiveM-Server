@@ -8,6 +8,17 @@ Config.Storages["garbage_storage"] = {
     offsetUpZ = 1.8,
 }
 
+Config.Storages["garbage_processing"] = {
+    label = "Recycler BlueBird",
+    type = "recycler_processing",
+    owner = "garbage",
+    position = vector3(-601.2, -1602.75, 30.4),
+    size = vec2(1.2, 0.4),
+    heading = 355,
+    minZ = 29.4,
+    maxZ = 31.0,
+}
+
 Config.Storages["garbage_fridge"] = {
     label = "Frigo BlueBird",
     type = "fridge",

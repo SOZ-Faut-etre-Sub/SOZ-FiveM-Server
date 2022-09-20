@@ -595,6 +595,26 @@ end
 RegisterNetEvent("inventory:server:GetItemsByType", Inventory.GetItemsByType)
 exports("GetItemsByType", Inventory.GetItemsByType)
 
+--- Get item
+function Inventory.GetAllItems(inv)
+    inv = Inventory(inv)
+    local items = {}
+
+    if inv then
+        for _, v in pairs(inv.items) do
+            local item = QBCore.Shared.Items[v.name]
+
+            if item then
+                table.insert(items, {item = item, amount = v.amount, metadata = v.metadata})
+            end
+        end
+    end
+
+    return items
+end
+RegisterNetEvent("inventory:server:GetAllItems", Inventory.GetAllItems)
+exports("GetAllItems", Inventory.GetAllItems)
+
 --- Slots
 function Inventory.GetItem(inv, item, metadata, returnsAmount)
     item = type(item) == "table" and item or QBCore.Shared.Items[item]
@@ -699,7 +719,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" then
+    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" or storageType == "trash" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
