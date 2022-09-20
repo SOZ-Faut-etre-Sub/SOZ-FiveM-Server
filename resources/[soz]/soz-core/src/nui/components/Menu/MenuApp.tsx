@@ -1,9 +1,13 @@
-import { FunctionComponent, useState } from 'react';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
+import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
+import { fetchNui } from '../../fetch';
 import { useMenuNuiEvent } from '../../hook/nui';
-import { FfsRecipeBook } from '../FfsRecipeBook/FfsRecipeBookApp';
+import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
+import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
+import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
 
@@ -16,8 +20,15 @@ export const MenuApp: FunctionComponent = () => {
 };
 
 const MenuRouter: FunctionComponent = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const [menuData, setMenuData] = useState(null);
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            fetchNui(NuiEvent.MenuClosed, {});
+        }
+    }, [location]);
 
     useMenuNuiEvent('SetMenuType', ({ menuType, data }) => {
         navigate(menuType ? `/${menuType}` : '/');
@@ -25,15 +36,19 @@ const MenuRouter: FunctionComponent = () => {
     });
 
     useMenuNuiEvent('CloseMenu', () => {
-        navigate('/');
+        if (location.pathname !== '/') {
+            navigate('/');
+        }
         setMenuData(null);
     });
 
     return (
         <Routes>
-            <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
-            <Route path={`/${MenuType.FfsRecipeBook}/*`} element={<FfsRecipeBook recipes={menuData} />} />
+            <Route path={`/${MenuType.BahamaUnicornJobMenu}/*`} element={<BahamaUnicornJobMenu data={menuData} />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
+            <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
         </Routes>
     );
 };

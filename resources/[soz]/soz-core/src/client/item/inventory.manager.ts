@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { InventoryItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 
 @Injectable()
@@ -33,5 +34,19 @@ export class InventoryManager {
             }
         }
         return false;
+    }
+
+    public findItem(predicate: (item: InventoryItem) => boolean): InventoryItem | null {
+        const items = this.playerService.getPlayer().items;
+
+        if (Array.isArray(items)) {
+            return items.find(predicate) || null;
+        } else {
+            return (
+                Object.keys(items)
+                    .map(key => items[key])
+                    .find(predicate) || null
+            );
+        }
     }
 }

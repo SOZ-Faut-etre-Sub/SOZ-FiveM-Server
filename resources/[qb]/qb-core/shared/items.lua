@@ -1882,7 +1882,7 @@ QBShared.Items = {
     },
     ['milk'] = {
         ['name'] = 'milk',
-        ['label'] = 'Pot de lait',
+        ['label'] = 'Pot de lait entier',
         ['weight'] = 3000,
         ['type'] = 'food',
         ['unique'] = false,
@@ -1896,8 +1896,52 @@ QBShared.Items = {
             ['thirst'] = 10,
             ['stamina'] = 0,
             ['fiber'] = 10,
-            ['lipid'] = 10,
+            ['lipid'] = 25,
+            ['sugar'] = 15,
+            ['protein'] = 10,
+            ['alcohol'] = 0,
+        },
+    },
+    ['semi_skimmed_milk'] = {
+        ['name'] = 'semi_skimmed_milk',
+        ['label'] = 'Pot de lait demi-écrémé',
+        ['weight'] = 3000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['durability'] = 14,
+        ['combinable'] = nil,
+        ['description'] = 'Avant ou après avoir mis les céréales ?',
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 13,
+            ['stamina'] = 0,
+            ['fiber'] = 10,
+            ['lipid'] = 15,
             ['sugar'] = 10,
+            ['protein'] = 10,
+            ['alcohol'] = 0,
+        },
+    },
+    ['skimmed_milk'] = {
+        ['name'] = 'skimmed_milk',
+        ['label'] = 'Pot de lait écrémé',
+        ['weight'] = 3000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['durability'] = 14,
+        ['combinable'] = nil,
+        ['description'] = 'Avant ou après avoir mis les céréales ?',
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 17,
+            ['stamina'] = 0,
+            ['fiber'] = 6,
+            ['lipid'] = 5,
+            ['sugar'] = 2,
             ['protein'] = 10,
             ['alcohol'] = 0,
         },
@@ -4031,7 +4075,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "S'associe bien avec le latex pour une raison... inconnue."
     },
     ['latex'] = {
         ['name'] = 'latex',
@@ -4043,7 +4087,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "S'associe bien avec le cuir pour une raison... inconnue."
     },
     ['sap'] = {
         ['name'] = 'sap',
@@ -4067,7 +4111,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "Ta mamie te trouverait très beau avec vêtement mais il n'y a bien qu'elle."
     },
     ['garment_pant'] = {
         ['name'] = 'garment_pant',
@@ -4079,7 +4123,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Il vaut mieux en avoir une paire.'
     },
     ['garment_shoes'] = {
         ['name'] = 'garment_shoes',
@@ -4091,7 +4135,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Toujours trouver chaussure à son pied.'
     },
     ['garment_underwear'] = {
         ['name'] = 'garment_underwear',
@@ -4103,7 +4147,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Enrobe délicatement vos formes pour les mettre en valeur lors de soirées trop arrosées.'
     },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
@@ -4115,7 +4159,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "Fait avec les laines les plus douces de l'île"
     },
     ['luxury_garment_pant'] = {
         ['name'] = 'luxury_garment_pant',
@@ -4127,7 +4171,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Il vaut mieux en avoir une paire... et en or!'
     },
     ['luxury_garment_shoes'] = {
         ['name'] = 'luxury_garment_shoes',
@@ -4139,7 +4183,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = 'Avec ça, on se sentirait comme Cendrillon.'
     },
     ['luxury_garment_underwear'] = {
         ['name'] = 'luxury_garment_underwear',
@@ -4151,7 +4195,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "Ça moule pas trop j'espère ?"
     },
     -- ZEVENT 2022
     ['zevent2022_popcorn'] = {

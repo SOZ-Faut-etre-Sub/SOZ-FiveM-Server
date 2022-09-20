@@ -40,6 +40,9 @@ export const animationOptionsToFlags = (options: AnimationOptions): number => {
 export type ProgressOptions = {
     useWhileDead: boolean;
     canCancel: boolean;
+    disableMovement: boolean;
+    disableCarMovement: boolean;
+    disableMouse: boolean;
     disableCombat: boolean;
     firstProp: ProgressProp;
     secondProp: ProgressProp;

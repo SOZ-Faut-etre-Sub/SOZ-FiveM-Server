@@ -1,8 +1,8 @@
-import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { FfsRecipe } from '../../../nui/components/FfsRecipeBook/FfsRecipeBookApp';
-import { NuiEvent, ServerEvent } from '../../../shared/event';
+import { ServerEvent } from '../../../shared/event';
+import { InventoryItem } from '../../../shared/item';
 import {
     CraftProcess,
     craftProcesses,
@@ -12,18 +12,13 @@ import {
     shoesCraftProcesses,
     shoesCraftZones,
 } from '../../../shared/job/ffs';
-import { MenuType } from '../../../shared/nui/menu';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
-import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';
 
 @Provider()
 export class FightForStyleCraftProvider {
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
-
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
@@ -33,75 +28,65 @@ export class FightForStyleCraftProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(NuiMenu)
-    private nuiMenu: NuiMenu;
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
+        const targets: TargetOptions[] = craftProcesses.map(craftProcess => {
+            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            return method(craftProcess, 'c:/ffs/craft.png');
+        });
+
         craftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, [
-                this.createTargetOptions(craftProcesses, 'c:/ffs/craft.png'),
-            ]);
+            this.targetFactory.createForBoxZone(zone.name, zone, targets);
+        });
+
+        const luxuryTargets: TargetOptions[] = luxuryCraftProcesses.map(craftProcess => {
+            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            return method(craftProcess, 'c:/ffs/craft.png');
         });
 
         luxuryCraftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, [
-                this.createTargetOptions(luxuryCraftProcesses, 'c:/ffs/craft.png'),
-            ]);
+            this.targetFactory.createForBoxZone(zone.name, zone, luxuryTargets);
+        });
+
+        const shoesTargets: TargetOptions[] = shoesCraftProcesses.map(craftProcess => {
+            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            return method(craftProcess, 'c:/ffs/craft_shoes.png');
         });
 
         shoesCraftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, [
-                this.createTargetOptions(shoesCraftProcesses, 'c:/ffs/craft_shoes.png'),
-            ]);
+            this.targetFactory.createForBoxZone(zone.name, zone, shoesTargets);
         });
     }
 
-    @OnNuiEvent(NuiEvent.FfsCraft)
-    public async onCraft(craftProcess: CraftProcess) {
-        TriggerServerEvent(ServerEvent.FFS_CRAFT, craftProcess);
-        this.nuiMenu.closeMenu();
-    }
-
-    private createTargetOptions(craftProcesses: CraftProcess[], icon: string): TargetOptions {
+    private craftProcessToTarget(craftProcess: CraftProcess, icon: string): TargetOptions {
         return {
-            label: 'Confectionner',
+            label: craftProcess.label,
             icon,
             color: 'ffs',
             job: 'ffs',
+            blackoutGlobal: true,
+            blackoutJob: 'ffs',
             canInteract: () => {
+                for (const input of craftProcess.inputs) {
+                    const predicate = (item: InventoryItem) => {
+                        return (
+                            item.name === input.fabric &&
+                            item.amount >= input.amount &&
+                            this.itemService.isExpired(item)
+                        );
+                    };
+                    if (!this.inventoryManager.findItem(predicate)) {
+                        return false;
+                    }
+                }
                 return this.playerService.isOnDuty();
             },
             action: () => {
-                const recipes = this.computeRecipes(craftProcesses);
-                this.nuiMenu.openMenu(MenuType.FfsRecipeBook, recipes);
+                TriggerServerEvent(ServerEvent.FFS_CRAFT, craftProcess);
             },
         };
-    }
-
-    private computeRecipes(craftProcesses: CraftProcess[]): FfsRecipe[] {
-        return craftProcesses.map(craftProcess => {
-            let canCraft = true;
-            const inputs = [];
-            for (const input of craftProcess.inputs) {
-                const hasRequiredAmount = this.inventoryManager.hasEnoughItem(input.fabric, input.amount);
-                inputs.push({
-                    label: this.itemService.getItem(input.fabric).label,
-                    hasRequiredAmount,
-                    amount: input.amount,
-                });
-                canCraft = canCraft && hasRequiredAmount;
-            }
-            return {
-                canCraft: canCraft,
-                craftProcess,
-                label: craftProcess.label,
-                inputs: inputs,
-                output: {
-                    label: this.itemService.getItem(craftProcess.output).label,
-                    amount: craftProcess.outputAmount,
-                },
-            };
-        });
     }
 }

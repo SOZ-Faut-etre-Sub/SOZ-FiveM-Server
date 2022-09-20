@@ -2,8 +2,10 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
-    BAUN_RESELL = 'soz-core:server:baun:resell',
+    BAUN_CRAFT = 'soz-core:server:job:baun:craft',
+    BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
+    FOOD_CRAFT = 'soz-core:server:job:food:craft',
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
@@ -59,12 +61,15 @@ export enum ClientEvent {
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 
-    // Temp event which sould be internally used by a service when only soz core
+    // Temp event which should be internally used by a service when only soz core
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
     PLAYER_HEALTH_DO_YOGA = 'soz-core:client:player:health:yoga',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     IDENTITY_HIDE = 'soz-identity:client:hide',
+    JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
+    JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
+    JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
 }
 
 export enum GameEvent {
@@ -75,8 +80,10 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
-    FfsCraft = 'soz-core:client:job:ffs:craft',
+    BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
+    FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
+    MenuClosed = 'menu_closed',
 }

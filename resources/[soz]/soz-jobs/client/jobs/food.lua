@@ -93,27 +93,27 @@ local function SpawnJobZones()
     })
 
     -- CRAFTING
-    CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
-    exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
-        heading = 250.0,
-        minZ = 141.0,
-        maxZ = 141.5,
-    }, {
-        options = {
-            {
-                icon = "c:food/cuisiner.png",
-                color = "food",
-                event = "jobs:client:food:OpenCraftingMenu",
-                label = "Cuisiner",
-                job = "food",
-                blackoutGlobal = true,
-                blackoutJob = "food",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-            },
-        },
-    })
+    -- CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
+    -- exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
+    --    heading = 250.0,
+    --    minZ = 141.0,
+    --    maxZ = 141.5,
+    -- }, {
+    --    options = {
+    --        {
+    --            icon = "c:food/cuisiner.png",
+    --            color = "food",
+    --            event = "jobs:client:food:OpenCraftingMenu",
+    --            label = "Cuisiner",
+    --            job = "food",
+    --            blackoutGlobal = true,
+    --            blackoutJob = "food",
+    --            canInteract = function()
+    --                return PlayerData.job.onduty
+    --            end,
+    --        },
+    --    },
+    -- })
 
     local kitchen = BoxZone:Create(vector2(-1881.59, 2068.93), 7.5, 5.5, {heading = 70.0, minZ = 140.0, maxZ = 142.5})
     kitchen:onPlayerInOut(function(isInside)
@@ -211,102 +211,6 @@ RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
     SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom)
 end)
 
-local function GetRecipesByCat()
-    local recipesByCat = {}
-    for itemId, recipe in pairs(FoodConfig.Recipes) do
-        if recipesByCat[recipe.category] == nil then
-            recipesByCat[recipe.category] = {[itemId] = recipe}
-        else
-            recipesByCat[recipe.category][itemId] = recipe
-        end
-    end
-    return recipesByCat
-end
-
-local function GenerateIngredientList(parent, ingredients)
-    local submenu = MenuV:InheritMenu(parent)
-
-    for itemId, count in pairs(ingredients) do
-        local item = QBCore.Shared.Items[itemId]
-        submenu:AddButton({label = item.label, rightLabel = count})
-    end
-
-    return submenu
-end
-
-local function GenerateSubmenu(parent, recipes, isIngredientMenu)
-    local subtitle = nil
-    if isIngredientMenu then
-        subtitle = "Liste des ingrédients"
-    end
-
-    local submenu = MenuV:InheritMenu(parent, {subtitle = subtitle})
-
-    if not isIngredientMenu then
-        submenu:AddButton({
-            icon = "👨‍🍳",
-            label = "Liste des ingrédients",
-            value = GenerateSubmenu(submenu, recipes, true),
-        })
-    end
-
-    for itemId, recipe in pairs(recipes) do
-        local item = QBCore.Shared.Items[itemId]
-
-        local value = itemId
-        if isIngredientMenu then
-            value = GenerateIngredientList(submenu, recipe.ingredients)
-        end
-
-        submenu:AddButton({
-            icon = "https://nui-img/soz-items/" .. item.name,
-            label = item.label,
-            value = value,
-            select = function()
-                if not isIngredientMenu then
-                    TriggerEvent("soz-jobs:client:food-craft-item", itemId)
-                    submenu:Close()
-                    parent:Close()
-                end
-            end,
-        })
-    end
-
-    return submenu
-end
-
-RegisterNetEvent("jobs:client:food:OpenCraftingMenu", function()
-    local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Craft)
-    if not hasPermission or not PlayerData.job.onduty then
-        return
-    end
-
-    FoodJob.Menu:ClearItems()
-
-    for catId, recipes in pairs(GetRecipesByCat()) do
-        local category = FoodConfig.Categories[catId]
-        local submenu = GenerateSubmenu(FoodJob.Menu, recipes)
-        FoodJob.Menu:AddButton({icon = category.icon, label = category.label, value = submenu})
-    end
-
-    FoodJob.Menu:Open()
-end)
-
-RegisterNetEvent("jobs:client:food:OpenSocietyMenu", function()
-    FoodJob.Menu:ClearItems()
-
-    -- RECIPES
-    local recipesMenu = MenuV:InheritMenu(FoodJob.Menu)
-    for catId, recipes in pairs(GetRecipesByCat()) do
-        local category = FoodConfig.Categories[catId]
-        local submenu = GenerateSubmenu(recipesMenu, recipes, true)
-        recipesMenu:AddButton({icon = category.icon, label = category.label, value = submenu})
-    end
-    FoodJob.Menu:AddButton({icon = "👨‍🍳", label = "Livre des recettes", value = recipesMenu})
-
-    FoodJob.Menu:Open()
-end)
-
 ---
 --- FARM
 ---
@@ -372,14 +276,17 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
-        QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count)
+        QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count, item)
             if success then
                 exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pots de lait~s~", count))
                 Citizen.Wait(1000)
 
-                TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {
-                    item_id = FoodConfig.Collect.Milk.Item,
-                }, {item_label = "Pot de lait", quantity = tonumber(count), position = GetEntityCoords(PlayerPedId())}, true)
+                TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {item_id = item},
+                                   {
+                    item_label = "Pot de lait",
+                    quantity = tonumber(count),
+                    position = GetEntityCoords(PlayerPedId()),
+                }, true)
 
                 TriggerEvent("jobs:client:food-harvest-milk")
             end

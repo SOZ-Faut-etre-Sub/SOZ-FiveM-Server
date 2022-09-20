@@ -130,7 +130,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             if (newIndex === activeIndex) {
                 break;
             }
-        } while (menuItems[newIndex].disabled);
+        } while (menuItems[newIndex] && menuItems[newIndex].disabled);
 
         setActiveIndex(newIndex);
     });
@@ -148,7 +148,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             if (newIndex === activeIndex) {
                 break;
             }
-        } while (menuItems[newIndex].disabled);
+        } while (menuItems[newIndex] && menuItems[newIndex].disabled);
 
         setActiveIndex(newIndex);
     });
@@ -193,10 +193,6 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
 
     useEnter(() => {
         if (!isSelected) {
-            return;
-        }
-
-        if (disabled) {
             return;
         }
 
@@ -286,7 +282,7 @@ export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
 
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
-            <div className="flex  justify-between items-center">
+            <div className="flex justify-between items-center">
                 <h3>{children}</h3>
                 <div className="border border-white w-5 h-5 rounded bg-black/20">
                     {isChecked && (

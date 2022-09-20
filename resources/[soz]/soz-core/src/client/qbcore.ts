@@ -27,6 +27,10 @@ export class Qbcore {
         this.QBCore.Functions.CreateBlip(id, blip);
     }
 
+    public hideBlip(id: string, value: boolean): void {
+        this.QBCore.Functions.HideBlip(id, value);
+    }
+
     public removeBlip(id: string): void {
         this.QBCore.Functions.RemoveBlip(id);
     }
