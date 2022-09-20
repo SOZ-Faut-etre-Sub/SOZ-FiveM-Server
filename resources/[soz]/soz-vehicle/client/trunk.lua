@@ -1,6 +1,7 @@
 local tankers = {[GetHashKey("tanker")] = true, [GetHashKey("tanker2")] = true}
 local trailerlogs = {[GetHashKey("trailerlogs")] = true}
 local brickade = {[GetHashKey("brickade")] = true, [GetHashKey("brickade1")] = true}
+local trash = {[GetHashKey("trash")] = true}
 
 local openTrunkVehicle = nil
 
@@ -11,6 +12,8 @@ local vehicleTrunkType = function(model)
         return "trailerlogs"
     elseif brickade[model] then
         return "brickade"
+    elseif trash[model] then
+        return "trash"
     else
         return "trunk"
     end

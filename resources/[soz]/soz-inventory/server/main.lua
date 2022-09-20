@@ -718,7 +718,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" then
+    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" or storageType == "trash" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
