@@ -712,6 +712,10 @@ function GetOrCreateInventory(storageType, invID, ctx)
                 trunkConfig = QBCore.Shared.Trunks[ctx.model]
             end
 
+            if Entity(NetworkGetEntityFromNetworkId(ctx.entity)).state.isPlayerVehicle ~= true then
+                storageType = "temporary_trunk"
+            end
+
             targetInv = Inventory.Create("trunk_" .. invID, invID, storageType, trunkConfig.slot, trunkConfig.weight, invID)
         end
     elseif storageType == "stash" then
