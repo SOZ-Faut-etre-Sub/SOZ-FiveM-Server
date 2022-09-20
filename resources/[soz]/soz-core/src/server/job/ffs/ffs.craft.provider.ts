@@ -3,7 +3,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { CRAFT_DURATION, CraftProcess } from '../../../shared/job/ffs';
+import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
@@ -67,7 +67,7 @@ export class FightForStyleCraftProvider {
             source,
             'ffs_craft',
             'Confection en cours',
-            CRAFT_DURATION,
+            FfsConfig.craft.duration,
             {
                 name: 'base',
                 dictionary: 'amb@prop_human_seat_sewing@female@base',

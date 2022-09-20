@@ -3,15 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
-import {
-    CraftProcess,
-    craftProcesses,
-    craftZones,
-    luxuryCraftProcesses,
-    luxuryCraftZones,
-    shoesCraftProcesses,
-    shoesCraftZones,
-} from '../../../shared/job/ffs';
+import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
@@ -33,6 +25,9 @@ export class FightForStyleCraftProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
+        const { craftZones, luxuryCraftZones, shoesCraftZones } = FfsConfig.craft.zones;
+        const { craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } = FfsConfig.craft.processes;
+
         const targets: TargetOptions[] = craftProcesses.map(craftProcess => {
             const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
             return method(craftProcess, 'c:/ffs/craft.png');

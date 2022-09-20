@@ -161,7 +161,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
         if not success then
             TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
         else
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez créé une cocktail box", "success")
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez créé un assortiment de cocktails.", "success")
         end
         cb(success)
     end)

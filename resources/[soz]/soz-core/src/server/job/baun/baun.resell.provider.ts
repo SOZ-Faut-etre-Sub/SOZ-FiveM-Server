@@ -42,7 +42,7 @@ export class BaunResellProvider {
 
         this.inventoryManager.removeItemFromInventory(source, 'cocktail_box', item.amount);
 
-        const totalAmount = item.amount * 300;
+        const totalAmount = item.amount * 500;
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_baun', 'safe_baun', totalAmount);
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de revendre.', 'success');

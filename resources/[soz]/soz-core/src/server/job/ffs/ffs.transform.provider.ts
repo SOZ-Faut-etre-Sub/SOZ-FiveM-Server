@@ -3,7 +3,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { FabricMaterial, TransformProcesses } from '../../../shared/job/ffs';
+import { FabricMaterial, FfsConfig } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -37,7 +37,7 @@ export class FightForStyleTransformProvider {
             return false;
         }
 
-        const transformationProcess = TransformProcesses[fabricMaterial];
+        const transformationProcess = FfsConfig.transform.processes[fabricMaterial];
 
         this.inventoryManager.removeItemFromInventory(
             source,
@@ -72,7 +72,7 @@ export class FightForStyleTransformProvider {
             return;
         }
         this.notifier.notify(source, 'Vous ~g~commencez~s~ vos procédés chimiques et mécaniques.');
-        const transformProcess = TransformProcesses[fabricMaterial];
+        const transformProcess = FfsConfig.transform.processes[fabricMaterial];
         while (
             this.inventoryManager.canSwapItem(
                 source,

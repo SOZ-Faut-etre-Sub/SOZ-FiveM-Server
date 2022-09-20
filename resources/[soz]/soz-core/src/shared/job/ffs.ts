@@ -23,7 +23,7 @@ export type TransformProcess = {
     outputAmount: number;
 };
 
-export const TransformProcesses: {
+const transformProcesses: {
     [key in FabricMaterial]: TransformProcess;
 } = {
     [FabricMaterial.NATURAL_FIBER]: {
@@ -72,8 +72,6 @@ export enum LuxuryGarment {
     UNDERWEAR = 'luxury_garment_underwear',
 }
 
-export const CRAFT_DURATION = 8000;
-
 export type CraftProcess = {
     label: string;
     inputs: {
@@ -84,7 +82,7 @@ export type CraftProcess = {
     outputAmount: number;
 };
 
-export const craftZones: (ZoneOptions & { name: string })[] = [
+const craftZones: (ZoneOptions & { name: string })[] = [
     {
         name: 'ffs_craft1',
         center: [713.6, -960.64, 30.4],
@@ -137,7 +135,7 @@ export const craftZones: (ZoneOptions & { name: string })[] = [
     },
 ];
 
-export const craftProcesses: CraftProcess[] = [
+const craftProcesses: CraftProcess[] = [
     {
         label: 'Haut en fibre naturelle',
         inputs: [
@@ -195,7 +193,7 @@ export const craftProcesses: CraftProcess[] = [
     },
 ];
 
-export const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
+const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
     {
         name: 'ffs_luxury_craft1',
         center: [714.32, -972.22, 30.4],
@@ -228,7 +226,7 @@ export const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
     },
 ];
 
-export const luxuryCraftProcesses: CraftProcess[] = [
+const luxuryCraftProcesses: CraftProcess[] = [
     {
         label: 'Haut luxueux en fibre naturelle',
         inputs: [
@@ -286,7 +284,7 @@ export const luxuryCraftProcesses: CraftProcess[] = [
     },
 ];
 
-export const shoesCraftZones: (ZoneOptions & { name: string })[] = [
+const shoesCraftZones: (ZoneOptions & { name: string })[] = [
     {
         name: 'ffs_shoes_craft1',
         center: [710.62, -969.53, 30.4],
@@ -299,7 +297,7 @@ export const shoesCraftZones: (ZoneOptions & { name: string })[] = [
     },
 ];
 
-export const shoesCraftProcesses: CraftProcess[] = [
+const shoesCraftProcesses: CraftProcess[] = [
     {
         label: 'Paire de chaussures',
         inputs: [
@@ -331,3 +329,44 @@ export const shoesCraftProcesses: CraftProcess[] = [
         outputAmount: 1,
     },
 ];
+
+const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number => {
+    switch (garment) {
+        case Garment.TOP:
+        case Garment.PANT:
+            return 24;
+        case Garment.UNDERWEAR:
+            return 10;
+        case Garment.SHOES:
+            return 15;
+        case LuxuryGarment.TOP:
+        case LuxuryGarment.PANT:
+            return 48;
+        case LuxuryGarment.UNDERWEAR:
+            return 20;
+        case LuxuryGarment.SHOES:
+            return 30;
+    }
+};
+
+export const FfsConfig = {
+    transform: {
+        processes: transformProcesses,
+    },
+    craft: {
+        duration: 8000,
+        zones: {
+            craftZones,
+            luxuryCraftZones,
+            shoesCraftZones,
+        },
+        processes: {
+            craftProcesses,
+            luxuryCraftProcesses,
+            shoesCraftProcesses,
+        },
+    },
+    restock: {
+        getRewardFromDeliveredGarment,
+    },
+};
