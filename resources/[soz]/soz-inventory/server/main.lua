@@ -595,6 +595,25 @@ end
 RegisterNetEvent("inventory:server:GetItemsByType", Inventory.GetItemsByType)
 exports("GetItemsByType", Inventory.GetItemsByType)
 
+--- Get item
+function Inventory.GetFirstItem(inv)
+    inv = Inventory(inv)
+
+    if inv then
+        for _, v in pairs(inv.items) do
+            local item = QBCore.Shared.Items[v.name]
+
+            if item then
+                return {item = item, amount = v.amount, metadata = v.metadata}
+            end
+        end
+    end
+
+    return nil
+end
+RegisterNetEvent("inventory:server:GetFirstItem", Inventory.GetFirstItem)
+exports("GetFirstItem", Inventory.GetFirstItem)
+
 --- Slots
 function Inventory.GetItem(inv, item, metadata, returnsAmount)
     item = type(item) == "table" and item or QBCore.Shared.Items[item]
