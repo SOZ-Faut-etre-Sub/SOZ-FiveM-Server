@@ -139,6 +139,29 @@ local Elevators = {
         downTo = "fbi:0",
         spawnPoint = vector4(135.99, -761.77, 242.15, 161.57),
     },
+    --- Admin
+    ["admin:0"] = {
+        name = "Admin:Elevator0",
+        label = "Surface",
+        buttons = vector2(1982.81, 3026.07),
+        size = vector2(1.4, 0.1),
+        heading = 59,
+        z = {min = 46.91, max = 49.31},
+        upTo = nil,
+        downTo = "admin:-1",
+        spawnPoint = vector4(1983.47, 3027.05, 47.34, 330.03),
+    },
+    ["admin:-1"] = {
+        name = "Admin:Elevator-1",
+        label = "Sous-Sol",
+        buttons = vector2(2154.9, 2919.62),
+        size = vector2(0.2, 0.05),
+        heading = 91,
+        z = {min = -81.28, max = -80.78},
+        upTo = "admin:0",
+        downTo = nil,
+        spawnPoint = vector4(2154.62, 2920.95, -81.08, 272.4),
+    },
 }
 
 ---Create QB-Target options for a possible elevator destination
