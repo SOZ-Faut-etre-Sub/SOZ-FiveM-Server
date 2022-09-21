@@ -39,15 +39,6 @@ export const useDebugService = () => {
                 method: SettingsEvents.SET_AVATAR,
                 data: 'https://beta.iodine.gg/teUcY.jpeg',
             },
-            {
-                app: 'BANK',
-                method: BankEvents.SEND_CREDENTIALS,
-                data: {
-                    name: 'John Doe',
-                    account: '555Z5555T555',
-                    balance: 1258745,
-                },
-            },
             /*{
                 app: 'CALL',
                 method: CallEvents.SET_CALLER,
