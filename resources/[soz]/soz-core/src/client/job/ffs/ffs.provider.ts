@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { FfsRecipe } from '../../../nui/components/FightForStyle/FightForStyleJobMenu';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { CraftProcess, craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } from '../../../shared/job/ffs';
+import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -108,6 +108,8 @@ export class FightForStyleProvider {
             this.nuiMenu.closeMenu();
             return;
         }
+
+        const { craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } = FfsConfig.craft.processes;
         const recipes = [
             ...this.computeRecipes(craftProcesses),
             ...this.computeRecipes(luxuryCraftProcesses),
