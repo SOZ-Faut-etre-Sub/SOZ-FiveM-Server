@@ -3038,7 +3038,7 @@
           <HudSpeed value="15" />
           <HudCapacity value="0" />
           <HudAccuracy value="0" />
-          <HudRange value="0" />		  
+          <HudRange value="0" />
         </Item>
         <Item type="CWeaponInfo">
           <Name>WEAPON_HAMMER</Name>
@@ -8685,12 +8685,12 @@
           <NetworkPedDamageModifier value="1.000000" />
           <NetworkHeadShotPlayerDamageModifier value="1.000000" />
           <LockOnRange value="10.000000" />
-          <WeaponRange value="30.000000" />
+          <WeaponRange value="33.000000" />
           <BulletDirectionOffsetInDegrees value="0.000000" />
           <AiSoundRange value="5.000000" />
           <AiPotentialBlastEventRange value="-1.000000" />
-          <DamageFallOffRangeMin value="11.000000" />
-          <DamageFallOffRangeMax value="11.000000" />
+          <DamageFallOffRangeMin value="33.000000" />
+          <DamageFallOffRangeMax value="33.000000" />
           <DamageFallOffModifier value="0.300000" />
           <VehicleWeaponHash />
           <DefaultCameraHash>DEFAULT_THIRD_PERSON_PED_AIM_CAMERA</DefaultCameraHash>
@@ -11072,7 +11072,7 @@
           </AttachPoints>
           <GunFeedBone />
           <TargetSequenceGroup />
-          <WeaponFlags>CarriedInHand Automatic Gun CanFreeAim Heavy TwoHanded UsableOnFoot AllowEarlyExitFromFireAnimAfterBulletFired ForceEjectShellAfterFiring Scary ForcesActionMode DisableCombatRoll DisableStealth DisableFPSScope UseFPSAimIK UseFPSSecondaryMotion ApplyVehicleDamageToEngine</WeaponFlags>	
+          <WeaponFlags>CarriedInHand Automatic Gun CanFreeAim Heavy TwoHanded UsableOnFoot AllowEarlyExitFromFireAnimAfterBulletFired ForceEjectShellAfterFiring Scary ForcesActionMode DisableCombatRoll DisableStealth DisableFPSScope UseFPSAimIK UseFPSSecondaryMotion ApplyVehicleDamageToEngine</WeaponFlags>
           <TintSpecValues ref="TINT_DEFAULT" />
           <FiringPatternAliases ref="NULL" />
           <ReloadUpperBodyFixupExpressionData ref="default" />
@@ -11900,7 +11900,7 @@
           <AimProbeRadiusOverrideFPSIdleStealth value="0.000000" />
           <AimProbeRadiusOverrideFPSLT value="0.200000" />
           <AimProbeRadiusOverrideFPSRNG value="0.000000" />
-          <AimProbeRadiusOverrideFPSScope value="0.000000" />         
+          <AimProbeRadiusOverrideFPSScope value="0.000000" />
           <TorsoAimOffset x="0.000000" y="0.000000" />
           <TorsoCrouchedAimOffset x="0.000000" y="0.000000" />
           <LeftHandIkOffset x="0.000000" y="0.000000" z="0.000000" />
@@ -12729,7 +12729,7 @@
           <AttachPoints />
           <GunFeedBone />
           <TargetSequenceGroup />
-          <WeaponFlags>CarriedInHand Gun CanLockonOnFoot CanLockonInVehicle CanFreeAim AnimReload AnimCrouchFire UsableOnFoot UsableClimbing UsableInCover AllowEarlyExitFromFireAnimAfterBulletFired NonViolent HiddenFromWeaponWheel NoAmmoDisplay EnableFPSIdleOnly UseFPSAimIK UseFPSSecondaryMotion AttachFPSLeftHandIKToRight</WeaponFlags> 
+          <WeaponFlags>CarriedInHand Gun CanLockonOnFoot CanLockonInVehicle CanFreeAim AnimReload AnimCrouchFire UsableOnFoot UsableClimbing UsableInCover AllowEarlyExitFromFireAnimAfterBulletFired NonViolent HiddenFromWeaponWheel NoAmmoDisplay EnableFPSIdleOnly UseFPSAimIK UseFPSSecondaryMotion AttachFPSLeftHandIKToRight</WeaponFlags>
           <TintSpecValues ref="TINT_DEFAULT" />
           <FiringPatternAliases ref="NULL" />
           <ReloadUpperBodyFixupExpressionData ref="default" />
@@ -14644,7 +14644,7 @@
           <AttachPoints />
           <GunFeedBone />
           <TargetSequenceGroup />
-          <WeaponFlags>Gun CanLockonInVehicle Homing Vehicle EnforceAimingRestrictions HomingToggle</WeaponFlags>       
+          <WeaponFlags>Gun CanLockonInVehicle Homing Vehicle EnforceAimingRestrictions HomingToggle</WeaponFlags>
           <TintSpecValues ref="TINT_DEFAULT" />
           <FiringPatternAliases ref="NULL" />
           <ReloadUpperBodyFixupExpressionData ref="default" />
