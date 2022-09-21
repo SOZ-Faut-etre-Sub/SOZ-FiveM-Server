@@ -22,6 +22,10 @@ export class CallService {
         return this.currentCall !== 0;
     }
 
+    isCallAccepted() {
+        return this.currentCallData?.is_accepted;
+    }
+
     openCallModal(show: boolean) {
         CallService.sendCallAction<boolean>(CallEvents.SET_CALL_MODAL, show);
     }
@@ -37,7 +41,7 @@ export class CallService {
 
     handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean, isUnavailable: boolean) {
         // If we're already in a call we want to automatically reject
-        if (this.isInCall()) return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+        if (this.isCallAccepted()) return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
 
         // We set -1 to notify that comminucation is about to be etablished. So i'll respond 'BUSY_LINE'
         this.currentCall = -1;
@@ -65,7 +69,7 @@ export class CallService {
     }
 
     handleEndCall() {
-        if (this.currentCallData?.is_accepted === true) {
+        if (this.isCallAccepted()) {
             emitNet('voip:server:call:end');
         }
 
