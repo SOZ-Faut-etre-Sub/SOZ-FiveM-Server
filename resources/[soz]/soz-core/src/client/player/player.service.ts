@@ -30,7 +30,7 @@ export class PlayerService {
         return this.qbcore.getClosestPlayer();
     }
 
-    public setJobClothes(clothes: any) {
-        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, clothes);
+    public setTempClothes(clothes: any) {
+        TriggerEvent(ServerEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes);
     }
 }

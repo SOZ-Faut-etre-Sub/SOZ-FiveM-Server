@@ -1,7 +1,7 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent } from '../../shared/event';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
 
@@ -14,30 +14,6 @@ export class ZEventProvider {
     private playerService: PlayerService;
 
     private isWearingTShirt = false;
-
-    @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
-        this.targetFactory.createForBoxZone(
-            'zevent_popcorn',
-            {
-                center: [339.55, 187.84, 103.0],
-                length: 0.4,
-                width: 0.65,
-                minZ: 103.0,
-                maxZ: 103.4,
-                heading: 340,
-            },
-            [
-                {
-                    label: 'Prendre du pop-corn',
-                    icon: 'c:/zevent/popcorn.png',
-                    action: () => {
-                        TriggerServerEvent(ServerEvent.ZEVENT_GET_POPCORN);
-                    },
-                },
-            ]
-        );
-    }
 
     private readonly skin: any = {
         [GetHashKey('mp_m_freemode_01')]: {
@@ -61,10 +37,10 @@ export class ZEventProvider {
         const player = this.playerService.getPlayer();
         if (this.isWearingTShirt) {
             player.metadata.isWearingItem = null;
-            this.playerService.setJobClothes(null);
+            this.playerService.setTempClothes({});
         } else {
             player.metadata.isWearingItem = 'zevent2022_tshirt';
-            this.playerService.setJobClothes(this.skin[player.skin.Model.Hash]);
+            this.playerService.setTempClothes(this.skin[player.skin.Model.Hash]);
         }
         this.isWearingTShirt = !this.isWearingTShirt;
     }
