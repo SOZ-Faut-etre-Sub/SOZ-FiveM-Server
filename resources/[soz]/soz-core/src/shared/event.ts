@@ -39,6 +39,7 @@ export enum ServerEvent {
     // not core
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
+    CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_REVIVE = 'lsmc:server:revive',
@@ -82,6 +83,7 @@ export enum GameEvent {
 export enum NuiEvent {
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
+    FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
