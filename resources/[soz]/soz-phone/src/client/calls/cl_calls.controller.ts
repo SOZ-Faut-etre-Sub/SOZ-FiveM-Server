@@ -73,8 +73,10 @@ onNet(CallEvents.WAS_REJECTED, async () => {
 
 RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
     try {
-        const serverRes: ServerPromiseResp<void> = await ClUtils.emitNetPromise(CallEvents.END_CALL, data);
-        if (serverRes.status === 'error') console.error(serverRes.errorMsg);
+        if (callService.isCallAccepted()) {
+            const serverRes: ServerPromiseResp<void> = await ClUtils.emitNetPromise(CallEvents.END_CALL, data);
+            if (serverRes.status === 'error') console.error(serverRes.errorMsg);
+        }
         callService.handleEndCall();
         cb({});
     } catch (e) {
