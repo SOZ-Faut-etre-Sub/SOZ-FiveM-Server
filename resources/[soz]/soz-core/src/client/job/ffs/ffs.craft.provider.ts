@@ -72,11 +72,7 @@ export class FightForStyleCraftProvider {
             canInteract: () => {
                 for (const input of craftProcess.inputs) {
                     const predicate = (item: InventoryItem) => {
-                        return (
-                            item.name === input.fabric &&
-                            item.amount >= input.amount &&
-                            this.itemService.isExpired(item)
-                        );
+                        return item.name === input.fabric && item.amount >= input.amount;
                     };
                     if (!this.inventoryManager.findItem(predicate)) {
                         return false;
