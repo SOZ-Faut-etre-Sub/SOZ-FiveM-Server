@@ -29,7 +29,7 @@ local function getCocktailTargetOption()
         canInteract = function()
             local numberOfCocktails = 0
             for _, item in pairs(PlayerData.items) do
-                if item.type == "cocktail" then
+                if item.type == "cocktail" and not exports["soz-utils"]:ItemIsExpired(item) then
                     numberOfCocktails = numberOfCocktails + item.amount
                 end
             end

@@ -1,8 +1,8 @@
-import { OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { FoodRecipe } from '../../../nui/components/Food/FoodJobMenu';
-import { ClientEvent } from '../../../shared/event';
+import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
 import { FoodConfig, FoodCraftProcess } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
@@ -10,6 +10,7 @@ import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
+import { Qbcore } from '../../qbcore';
 
 @Provider()
 export class FoodProvider {
@@ -25,6 +26,24 @@ export class FoodProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(Qbcore)
+    private QBCore: Qbcore;
+
+    private state = {
+        displayMilkBlip: false,
+    };
+
+    @OnNuiEvent(NuiEvent.FoodDisplayBlip)
+    public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
+        this.state[blip] = value;
+        this.QBCore.hideBlip(blip, !value);
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    public onPlayerLoaded() {
+        this.createBlips();
+    }
+
     @OnEvent(ClientEvent.JOBS_FOOD_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
         if (this.nuiMenu.isOpen()) {
@@ -38,7 +57,11 @@ export class FoodProvider {
             ...this.computeRecipes(FoodConfig.processes.cheeseProcesses, '🧀').sort(sortFunction),
             ...this.computeRecipes(FoodConfig.processes.sausageProcesses, '🌭').sort(sortFunction),
         ];
-        this.nuiMenu.openMenu(MenuType.FoodJobMenu, { recipes: processes, onDuty: this.playerService.isOnDuty() });
+        this.nuiMenu.openMenu(MenuType.FoodJobMenu, {
+            recipes: processes,
+            state: this.state,
+            onDuty: this.playerService.isOnDuty(),
+        });
     }
 
     private computeRecipes(craftProcesses: FoodCraftProcess[], prefixIcon: string): FoodRecipe[] {
@@ -73,5 +96,15 @@ export class FoodProvider {
                 },
             };
         });
+    }
+
+    private createBlips() {
+        this.QBCore.createBlip('displayMilkBlip', {
+            name: 'Point de récolte du lait',
+            coords: { x: 2416.01, y: 4993.49, z: 46.22 },
+            sprite: 176,
+            scale: 0.9,
+        });
+        this.QBCore.hideBlip('displayMilkBlip', true);
     }
 }
