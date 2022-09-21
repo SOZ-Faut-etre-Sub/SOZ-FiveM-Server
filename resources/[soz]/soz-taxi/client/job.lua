@@ -260,6 +260,7 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
             SetNewWaypoint(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y)
             NpcData.LastNpc = NpcData.CurrentNpc
             NpcData.Active = true
+            local hasHonked = false
 
             CreateThread(function()
                 while not NpcData.NpcTaken do
@@ -270,9 +271,14 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                                      vector3(Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].x, Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].y,
                                              Config.NPCLocations.TakeLocations[NpcData.CurrentNpc].z))
 
-                    if dist < 5 then
+                    local veh = GetVehiclePedIsIn(ped, 0)
+                    hasHonked = hasHonked or IsHornActive(veh)
+                    local requiredDist = 5
+                    if (hasHonked) then
+                        requiredDist = 15
+                    end
+                    if (dist < requiredDist) then
                         if IsVehicleStopped(GetVehiclePedIsIn(ped, 0)) and ValidVehicle() then
-                            local veh = GetVehiclePedIsIn(ped, 0)
                             local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(veh)
 
                             for i = maxSeats - 1, 0, -1 do
@@ -291,16 +297,20 @@ RegisterNetEvent("taxi:client:DoTaxiNpc", function()
                             TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
                             local count = 0
                             while not IsPedInVehicle(NpcData.Npc, veh, false) do
-                                if count == 15 or dist > 5 then
+                                local requiredDist = 5
+                                if (hasHonked) then
+                                    requiredDist = 15
+                                end
+                                if count == 15 or dist > requiredDist then
                                     ClearNpcMission()
-                                    exports["soz-hud"]:DrawNotification("Ouvre ton véhicule, là prochaine fois ?")
+                                    exports["soz-hud"]:DrawNotification("Ouvre ton véhicule la prochaine fois ?")
                                     return
                                 end
                                 Wait(1000)
                                 TaskEnterVehicle(NpcData.Npc, veh, -1, freeSeat, 1.0, 0)
                                 count = count + 1
                             end
-                            exports["soz-hud"]:DrawNotification("Amenez la personne a la destination spécifiée")
+                            exports["soz-hud"]:DrawNotification("Amenez la personne à la destination spécifiée")
                             if NpcData.NpcBlip ~= nil then
                                 RemoveBlip(NpcData.NpcBlip)
                             end
