@@ -4111,7 +4111,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Ta mamie te trouverait très beau avec vêtement mais il n'y a bien qu'elle."
+        ['description'] = "Ta mamie te trouverait très beau avec ce vêtement mais il n'y a bien qu'elle."
     },
     ['garment_pant'] = {
         ['name'] = 'garment_pant',

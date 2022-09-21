@@ -105,5 +105,6 @@ export class FoodProvider {
             sprite: 176,
             scale: 0.9,
         });
+        this.QBCore.hideBlip('displayMilkBlip', true);
     }
 }

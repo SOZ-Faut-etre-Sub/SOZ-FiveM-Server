@@ -137,7 +137,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     local numberOfCocktails = 0
     local player = QBCore.Functions.GetPlayer(source)
     for _, item in pairs(player.PlayerData.items) do
-        if item.type == "cocktail" then
+        if item.type == "cocktail" and not exports["soz-utils"]:ItemIsExpired(item) then
             numberOfCocktails = numberOfCocktails + item.amount
         end
     end
@@ -148,7 +148,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     end
     local cocktailsToRemove = 10
     for _, item in pairs(player.PlayerData.items) do
-        if item.type == "cocktail" then
+        if item.type == "cocktail" and not exports["soz-utils"]:ItemIsExpired(item) then
             local amount = item.amount > cocktailsToRemove and cocktailsToRemove or item.amount
             exports["soz-inventory"]:RemoveItem(source, item.name, amount)
             cocktailsToRemove = cocktailsToRemove - amount
