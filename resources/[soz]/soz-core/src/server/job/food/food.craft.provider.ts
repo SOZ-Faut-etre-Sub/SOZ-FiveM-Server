@@ -40,7 +40,10 @@ export class FoodCraftProvider {
             const hasCrafted = await this.doCraft(source, craftProcess, duration);
             const outputItemLabel = this.itemService.getItem(craftProcess.output.id).label;
             if (hasCrafted) {
-                this.notifier.notify(source, `Vous avez cuisiné un·e ~g~${outputItemLabel}~s~.`);
+                this.notifier.notify(
+                    source,
+                    `Vous avez cuisiné ${craftProcess.output.amount} ~g~${outputItemLabel}~s~.`
+                );
             } else {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de cuisiner.');
                 return;
