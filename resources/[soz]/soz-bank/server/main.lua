@@ -185,3 +185,10 @@ RegisterNetEvent("banking:server:updatePhoneBalance", function()
 
     TriggerClientEvent("phone:client:app:bank:updateBalance", Player.PlayerData.source, Player.Functions.GetName(), account.id, account.money)
 end)
+
+exports("GetPlayerAccount", function(source)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local account = Account(Player.PlayerData.charinfo.account)
+
+    return {name = Player.Functions.GetName(), account = account.id, balance = account.money}
+end)
