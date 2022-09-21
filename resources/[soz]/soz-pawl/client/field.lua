@@ -17,7 +17,7 @@ local function TreeInteraction(identifier, position)
                 event = "pawl:client:harvestTree",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
-                    return DegradationLevel ~= Config.Degradation.Level.Red and PlayerData.job.onduty
+                    return PlayerData.job.onduty
                 end,
                 job = "pawl",
                 blackoutGlobal = true,
@@ -31,19 +31,7 @@ local function TreeInteraction(identifier, position)
     })
 end
 
-local function CanHarvestField()
-    if DegradationLevel == Config.Degradation.Level.Red then
-        return false
-    end
-    return true
-end
-
 RegisterNetEvent("pawl:client:harvestTree", function(data)
-    if not CanHarvestField(data.identifier) then
-        exports["soz-hud"]:DrawNotification("Vous avez ~r~dépassé~s~ le quota de coupe d’arbre.", "error")
-        return
-    end
-
     local ped = PlayerPedId()
 
     local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)

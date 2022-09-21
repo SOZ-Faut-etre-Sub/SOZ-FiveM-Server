@@ -163,7 +163,7 @@ end)
 AddEventHandler("populationPedCreating", function(_, _, _, model, _)
     if Config.Degradation.Peds[model] then
         local random = math.random(0, 100)
-        if random >= Config.Degradation.Multiplier[DegradationLevel] then
+        if random > Config.Degradation.Multiplier[DegradationLevel] then
             CancelEvent()
         end
     end
