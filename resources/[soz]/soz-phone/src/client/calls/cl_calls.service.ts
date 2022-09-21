@@ -65,7 +65,7 @@ export class CallService {
     }
 
     handleEndCall() {
-        if (this.currentCallData?.is_accepted) {
+        if (this.currentCallData?.is_accepted === true) {
             emitNet('voip:server:call:end');
         }
 
