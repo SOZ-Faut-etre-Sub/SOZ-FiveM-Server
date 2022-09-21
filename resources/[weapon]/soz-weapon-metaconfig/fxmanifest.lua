@@ -2,7 +2,7 @@ fx_version "cerulean"
 game "gta5"
 
 files {
-    'stream/weapon.meta',
+    'stream/weapons.meta',
 }
 
-data_file "WEAPON_METADATA_FILE" "stream/weapon.meta"
+data_file "WEAPONINFO_FILE_PATCH" "stream/weapons.meta"
