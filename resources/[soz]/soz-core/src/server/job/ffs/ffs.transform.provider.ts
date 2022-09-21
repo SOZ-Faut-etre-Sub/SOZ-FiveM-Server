@@ -55,7 +55,7 @@ export class FightForStyleTransformProvider {
     }
 
     private canCraft(source: number, fabricMaterial: FabricMaterial): boolean {
-        const transformProcess = TransformProcesses[fabricMaterial];
+        const transformProcess = FfsConfig.transform.processes[fabricMaterial];
         return this.inventoryManager.canSwapItem(
             source,
             transformProcess.input,
