@@ -109,6 +109,7 @@ model housing_property {
   identifier        String              @unique(map: "housing_property_identifier_uindex") @db.VarChar(32)
   entry_zone        String?             @db.LongText
   garage_zone       String?             @db.LongText
+  exterior_culling  String              @default("[]") @db.LongText
   housing_apartment housing_apartment[]
 }
 
@@ -122,6 +123,7 @@ model invoices {
   label         String   @db.VarChar(200)
   amount        Int
   payed         Boolean  @default(false)
+  kind          String?  @default("invoice") @db.VarChar(50)
   refused       Boolean  @default(false)
   created_at    DateTime @default(now()) @db.Timestamp(0)
   updated_at    DateTime @default(now()) @db.Timestamp(0)
@@ -215,8 +217,8 @@ model phone_messages_conversations {
 model phone_notes {
   id         Int    @id @default(autoincrement())
   identifier String @db.VarChar(48)
-  title      String @db.VarChar(255)
-  content    String @db.VarChar(255)
+  title      String @db.VarChar(128)
+  content    String @db.VarChar(1024)
 
   @@index([identifier], map: "identifier")
 }
@@ -288,22 +290,6 @@ model player_cloth_set {
   player    player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_player_cloth_set_player")
 
   @@index([citizenid], map: "FK_player_cloth_set_player")
-}
-
-model player_house {
-  id              Int     @id @default(autoincrement())
-  identifier      String? @db.VarChar(50)
-  building        String? @db.VarChar(50)
-  owner           String? @db.VarChar(50)
-  price           Int?
-  entry_zone      String? @db.LongText
-  exit_zone       String? @db.LongText
-  teleport        String? @db.LongText
-  fridge_position String? @db.LongText
-  closet_position String? @db.LongText
-  stash_position  String? @db.LongText
-  money_position  String? @db.LongText
-  garage_zone     String? @db.LongText
 }
 
 model player_outfits {
@@ -382,13 +368,91 @@ model vehicles {
 }
 
 model player_purchases {
-    id         Int      @id @default(autoincrement())
-    citizenid  String?  @db.VarChar(50)
-    shop_type  String   @db.VarChar(25)
-    shop_id    String?  @db.VarChar(50)
-    item_id    String   @db.VarChar(50)
-    amount     Int
-    date       Int
+  id        Int     @id @default(autoincrement())
+  citizenid String  @db.VarChar(50)
+  shop_type String  @db.VarChar(25)
+  shop_id   String? @db.VarChar(50)
+  item_id   String  @db.VarChar(50)
+  amount    Int
+  date      Int
+
+  @@index([shop_id], map: "shop_id")
+}
+
+model category {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  parent_id       Int?
+  category        category?         @relation("categoryTocategory_parent_id", fields: [parent_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "category_ibfk_1")
+  other_category  category[]        @relation("categoryTocategory_parent_id")
+  shop_categories shop_categories[]
+  shop_content    shop_content[]
+
+  @@index([parent_id], map: "parent_id")
+}
+
+model field {
+  id         Int     @id @default(autoincrement())
+  identifier String  @unique(map: "identifier") @db.VarChar(64)
+  owner      String? @db.VarChar(32)
+  data       String? @db.LongText
+}
+
+model investigation {
+  id                     Int                      @id @unique(map: "investigation_id_uindex") @default(autoincrement())
+  citizenid              String                   @db.VarChar(255)
+  service                String                   @db.VarChar(255)
+  title                  String                   @db.VarChar(128)
+  closed                 Boolean?                 @default(false)
+  granted                String?                  @db.LongText
+  created_at             DateTime?                @default(now()) @db.Timestamp(0)
+  updated_at             DateTime?                @default(now()) @db.Timestamp(0)
+  investigation_revision investigation_revision[]
+}
+
+model investigation_revision {
+  id              Int            @id @default(autoincrement())
+  investigationId Int?
+  citizenid       String         @db.VarChar(255)
+  content         String         @db.LongText
+  created_at      DateTime?      @default(now()) @db.Timestamp(0)
+  investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
+
+  @@index([investigationId], map: "fk_investigation")
+}
+
+model shop {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  label           String            @db.VarChar(255)
+  shop_categories shop_categories[]
+  shop_content    shop_content[]
+}
+
+model shop_categories {
+  id          Int      @id @default(autoincrement())
+  shop_id     Int
+  category_id Int
+  category    category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_categories_ibfk_2")
+  shop        shop     @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_categories_ibfk_1")
+
+  @@index([category_id], map: "category_id")
+  @@index([shop_id], map: "shop_id")
+}
+
+model shop_content {
+  id          Int       @id @default(autoincrement())
+  shop_id     Int?
+  category_id Int?
+  label       String    @db.VarChar(255)
+  price       Int       @default(50)
+  data        String    @db.LongText
+  stock       Int       @default(5)
+  category    category? @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_content_ibfk_2")
+  shop        shop?     @relation(fields: [shop_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "shop_content_ibfk_1")
+
+  @@index([category_id], map: "category_id")
+  @@index([shop_id], map: "shop_id")
 }
 
 enum bank_accounts_account_type {
