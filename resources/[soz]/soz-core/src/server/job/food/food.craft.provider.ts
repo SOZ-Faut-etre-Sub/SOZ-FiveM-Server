@@ -2,6 +2,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { InventoryItem } from '../../../shared/item';
 import { FoodCraftProcess } from '../../../shared/job/food';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -51,19 +52,11 @@ export class FoodCraftProvider {
     }
 
     private canCraft(source: number, craftProcess: FoodCraftProcess): boolean {
-        const items = this.inventoryManager.getItems(source);
-
         for (const input of craftProcess.inputs) {
-            let totalAmount = 0;
-            for (const item of items) {
-                if (totalAmount >= input.amount) {
-                    break;
-                }
-                if (item.name === input.id && !this.itemService.isItemExpired(item)) {
-                    totalAmount += item.amount;
-                }
-            }
-            if (totalAmount < input.amount) {
+            const predicate = (item: InventoryItem) => {
+                return item.name === input.id && item.amount >= input.amount && !this.itemService.isItemExpired(item);
+            };
+            if (!this.inventoryManager.findItem(source, predicate)) {
                 return false;
             }
         }
@@ -92,20 +85,8 @@ export class FoodCraftProvider {
             return false;
         }
 
-        const items = this.inventoryManager.getItems(source);
-
         for (const input of craftProcess.inputs) {
-            let amountToRemove = input.amount;
-            for (const item of items) {
-                if (amountToRemove == 0) {
-                    break;
-                }
-                if (item.name === input.id && !this.itemService.isItemExpired(item)) {
-                    const amount = item.amount > amountToRemove ? amountToRemove : item.amount;
-                    this.inventoryManager.removeItemFromInventory(source, item.name, amount, null, item.slot);
-                    amountToRemove -= amount;
-                }
-            }
+            this.inventoryManager.removeItemFromInventory(source, input.id, input.amount);
         }
         this.inventoryManager.addItemToInventory(source, craftProcess.output.id, craftProcess.output.amount);
         return true;
