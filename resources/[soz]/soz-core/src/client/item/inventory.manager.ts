@@ -7,6 +7,16 @@ export class InventoryManager {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    public getItems(): InventoryItem[] {
+        const items = this.playerService.getPlayer().items;
+
+        if (Array.isArray(items)) {
+            return items;
+        } else {
+            return Object.keys(items).map(key => items[key]);
+        }
+    }
+
     public hasEnoughItem(itemId: string, amount?: number): boolean {
         const items = this.playerService.getPlayer().items;
 
