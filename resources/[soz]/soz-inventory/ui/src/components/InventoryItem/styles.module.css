@@ -3,10 +3,11 @@
     display: flex;
     font-weight: 300;
     color: white;
-    padding: .4rem 1em;
+    padding: .2rem 1em;
     margin-bottom: .2rem;
     border-radius: .3rem;
     background: rgba(255, 255, 255, .10);
+    align-items: center;
 }
 
 .item:hover {
@@ -14,10 +15,9 @@
 }
 
 .icon {
-    width: 1rem;
-    height: 1rem;
+    width: 2rem;
+    height: 2rem;
     margin-right: .5rem;
-    margin-top: .2rem;
 }
 
 .item:hover .tooltip {
