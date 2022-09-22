@@ -40,7 +40,7 @@ Container["armory"] = InventoryContainer:new({
 
 Container["fridge"] = InventoryContainer:new({
     type = "fridge",
-    allowedTypes = {"food", "drink", "cocktail"},
+    allowedTypes = {"food", "drink", "cocktail", "liquor"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
@@ -58,6 +58,9 @@ Container["trunk"] = InventoryContainer:new({
         "plank",
         "sawdust",
         "item_illegal",
+        "liquor",
+        "furniture",
+        "flavor",
     },
 })
 
@@ -75,6 +78,9 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "plank",
         "sawdust",
         "item_illegal",
+        "liquor",
+        "furniture",
+        "flavor",
     },
 })
 
