@@ -54,6 +54,7 @@ export class _MessagesDB {
                                      ON phone_profile.number = phone_messages_conversations.participant_identifier
                      LEFT OUTER JOIN player
                                      ON JSON_VALUE(player.charinfo,'$.phone') = phone_messages_conversations.participant_identifier
+            WHERE updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
             ORDER BY phone_messages_conversations.updatedAt DESC
 	`;
 
@@ -68,7 +69,7 @@ export class _MessagesDB {
                               phone_messages.author
                        FROM phone_messages
                                 INNER JOIN phone_messages_conversations ON phone_messages.conversation_id = phone_messages_conversations.conversation_id
-                       WHERE phone_messages_conversations.participant_identifier = ?
+                       WHERE phone_messages_conversations.participant_identifier = ? AND phone_messages.updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
                        ORDER BY id DESC`;
 
         const [results] = await DbInterface._rawExec(query, [phoneNumber]);
