@@ -66,6 +66,10 @@ const juiceProcesses: FoodCraftProcess[] = [
         ],
         output: { id: 'grapejuice4', amount: 4 },
     },
+    {
+        inputs: [{ id: 'grape4', amount: 4 }],
+        output: { id: 'grapejuice5', amount: 4 },
+    },
 ];
 
 const cheeseCraftZones: (ZoneOptions & { name: string })[] = [
