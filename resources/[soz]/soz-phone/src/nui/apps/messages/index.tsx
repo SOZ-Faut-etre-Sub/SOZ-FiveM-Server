@@ -17,10 +17,10 @@ export const MessagesApp = () => {
             <Transition
                 appear={true}
                 show={true}
-                enter="transition-all origin-[45%_90%] duration-500"
+                enter="transition-all origin-[45%_90%] duration-300"
                 enterFrom="scale-[0.0] opacity-0"
                 enterTo="scale-100 opacity-100"
-                leave="transition-all origin-[45%_90%] duration-500"
+                leave="transition-all origin-[45%_90%] duration-300"
                 leaveFrom="scale-100 opacity-100"
                 leaveTo="scale-[0.0] opacity-0"
             >
