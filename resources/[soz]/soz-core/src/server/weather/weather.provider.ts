@@ -8,13 +8,13 @@ import { wait } from '../../core/utils';
 import { PollutionLevel } from '../../shared/pollution';
 import { Forecast, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
-import { Polluted, Summer } from './forecast';
+import { Polluted, SpringAutumn } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
 @Provider()
 export class WeatherProvider {
-    private forecast: Forecast = Summer;
+    private forecast: Forecast = SpringAutumn;
 
     private shouldUpdateWeather = true;
 
@@ -55,58 +55,6 @@ export class WeatherProvider {
         }
 
         GlobalState.time = currentTime;
-    }
-
-    private getNextForecast(currentWeather: Weather): Weather {
-        let currentForecast = this.forecast;
-        const pollutionLevel = this.pollution.getPollutionLevel();
-
-        if (pollutionLevel === PollutionLevel.High) {
-            currentForecast = Polluted;
-        } else if (pollutionLevel === PollutionLevel.Low) {
-            const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 2, SMOG: 0, FOGGY: 0 };
-            const any = 0.75;
-
-            for (const weather of Object.keys(currentForecast)) {
-                for (const nextWeather of Object.keys(currentForecast[weather])) {
-                    const multiplier = multipliers[nextWeather] || any;
-
-                    currentForecast[weather][nextWeather] = Math.round(
-                        multiplier * currentForecast[weather][nextWeather]
-                    );
-                }
-            }
-        }
-
-        let transitions = currentForecast[currentWeather];
-
-        if (!transitions) {
-            console.error('no transitions for, bad weather ' + currentWeather);
-
-            transitions = {};
-        }
-
-        if (Object.keys(transitions).length === 0) {
-            return 'OVERCAST';
-        }
-
-        let totalWeight = 0;
-
-        for (const weight of Object.values(transitions)) {
-            totalWeight += weight;
-        }
-
-        let random = Math.round(Math.random() * totalWeight);
-
-        for (const [weather, weight] of Object.entries(transitions)) {
-            if (random < weight) {
-                return weather as Weather;
-            }
-
-            random -= weight;
-        }
-
-        return 'OVERCAST';
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -162,5 +110,57 @@ export class WeatherProvider {
             GlobalState.blackout_level = parseInt(level, 10) || 0;
             GlobalState.blackout_override = true;
         }
+    }
+
+    private getNextForecast(currentWeather: Weather): Weather {
+        let currentForecast = this.forecast;
+        const pollutionLevel = this.pollution.getPollutionLevel();
+
+        if (pollutionLevel === PollutionLevel.High) {
+            currentForecast = Polluted;
+        } else if (pollutionLevel === PollutionLevel.Low) {
+            const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 2, SMOG: 0, FOGGY: 0 };
+            const any = 0.75;
+
+            for (const weather of Object.keys(currentForecast)) {
+                for (const nextWeather of Object.keys(currentForecast[weather])) {
+                    const multiplier = multipliers[nextWeather] || any;
+
+                    currentForecast[weather][nextWeather] = Math.round(
+                        multiplier * currentForecast[weather][nextWeather]
+                    );
+                }
+            }
+        }
+
+        let transitions = currentForecast[currentWeather];
+
+        if (!transitions) {
+            console.error('no transitions for, bad weather ' + currentWeather);
+
+            transitions = {};
+        }
+
+        if (Object.keys(transitions).length === 0) {
+            return 'OVERCAST';
+        }
+
+        let totalWeight = 0;
+
+        for (const weight of Object.values(transitions)) {
+            totalWeight += weight;
+        }
+
+        let random = Math.round(Math.random() * totalWeight);
+
+        for (const [weather, weight] of Object.entries(transitions)) {
+            if (random < weight) {
+                return weather as Weather;
+            }
+
+            random -= weight;
+        }
+
+        return 'OVERCAST';
     }
 }
