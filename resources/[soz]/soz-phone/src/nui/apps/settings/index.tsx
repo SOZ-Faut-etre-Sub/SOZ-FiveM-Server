@@ -17,10 +17,10 @@ export const SettingsApp = () => {
                 appear={true}
                 show={true}
                 className="h-full flex flex-col"
-                enter="transition-all origin-[20%_20%] duration-500"
+                enter="transition-all origin-[20%_20%] duration-300"
                 enterFrom="scale-[0.0] opacity-0"
                 enterTo="scale-100 opacity-100"
-                leave="transition-all origin-[20%_20%] duration-500"
+                leave="transition-all origin-[20%_20%] duration-300"
                 leaveFrom="scale-100 opacity-100"
                 leaveTo="scale-[0.0] opacity-0"
             >
