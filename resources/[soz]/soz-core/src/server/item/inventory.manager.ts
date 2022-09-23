@@ -13,6 +13,16 @@ export class InventoryManager {
         this.sozInventory = exports['soz-inventory'];
     }
 
+    public getItems(source: number): InventoryItem[] {
+        const items = this.playerService.getPlayer(source).items;
+
+        if (Array.isArray(items)) {
+            return items;
+        } else {
+            return Object.keys(items).map(key => items[key]);
+        }
+    }
+
     // deprecated: Use findItem instead
     public getFirstItemInventory(source: number, itemId: string): InventoryItem | null {
         let inventoryItem = null;
