@@ -2,7 +2,6 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { InventoryItem } from '../../../shared/item';
 import { FoodConfig, FoodCraftProcess } from '../../../shared/job/food';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -73,13 +72,19 @@ export class FoodCraftProvider {
             blackoutGlobal: true,
             blackoutJob: 'food',
             canInteract: () => {
+                const items = this.inventoryManager.getItems();
+
                 for (const input of craftProcess.inputs) {
-                    const predicate = (item: InventoryItem) => {
-                        return (
-                            item.name === input.id && item.amount >= input.amount && !this.itemService.isExpired(item)
-                        );
-                    };
-                    if (!this.inventoryManager.findItem(predicate)) {
+                    let totalAmount = 0;
+                    for (const item of items) {
+                        if (totalAmount >= input.amount) {
+                            break;
+                        }
+                        if (item.name === input.id && !this.itemService.isExpired(item)) {
+                            totalAmount += item.amount;
+                        }
+                    }
+                    if (totalAmount < input.amount) {
                         return false;
                     }
                 }
