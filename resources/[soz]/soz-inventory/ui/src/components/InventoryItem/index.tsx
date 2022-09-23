@@ -85,7 +85,7 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
 
     return (
         <div ref={itemRef} className={styles.item} data-item={JSON.stringify(item)}>
-            {item && <img className={styles.icon} src={`https://nui-img/soz-items/${item.name}`} alt=""/>}
+            {item && <img className={styles.icon} src={`https://nui-img/soz-items/${item.name}`} alt="" onError={(e) => e.currentTarget.style.visibility = 'hidden'}/>}
             <div className={styles.label}>
                 <span>{getLabel()}</span>
                 <span>{money && money.toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
