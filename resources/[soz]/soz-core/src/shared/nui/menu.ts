@@ -1,3 +1,4 @@
+import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
 
 export interface NuiMenuMethodMap {
@@ -17,6 +18,7 @@ export type SetMenuType = {
 };
 
 export enum MenuType {
+    AdminMenu = 'AdminMenu',
     BahamaUnicornJobMenu = 'baun_job_menu',
     FightForStyleJobMenu = 'ffs_job_menu',
     FoodJobMenu = 'food_job_menu',
@@ -26,6 +28,7 @@ export enum MenuType {
 }
 
 export interface MenuTypeMap extends Record<MenuType, unknown> {
+    [MenuType.AdminMenu]: AdminMenuStateProps['data'];
     [MenuType.BahamaUnicornJobMenu]: any;
     [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Demo]: never;

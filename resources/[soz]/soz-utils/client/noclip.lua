@@ -140,6 +140,7 @@ end
 function ToggleNoClipMode()
     return SetNoClip(not isNoClipping)
 end
+exports("ToggleNoClipMode", ToggleNoClipMode)
 
 AddEventHandler("onResourceStop", function(resourceName)
     if resourceName == RESSOURCE_NAME then
