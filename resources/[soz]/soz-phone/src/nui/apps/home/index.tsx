@@ -29,7 +29,7 @@ export const HomeApp: FunctionComponent = () => {
             <Transition
                 appear={true}
                 show={true}
-                enter="transition-transform duration-700"
+                enter="transition-transform duration-500"
                 enterFrom="scale-[3.0]"
                 enterTo="scale-100"
             >
