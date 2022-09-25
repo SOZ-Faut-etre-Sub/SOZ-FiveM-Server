@@ -1,5 +1,6 @@
 import { Injectable } from '../core/decorators/injectable';
 import { Blip } from '../shared/blip';
+import { Draw2dTextParameters, Draw3dTextParameters } from '../shared/draw';
 import { Item } from '../shared/item';
 import { PlayerData } from '../shared/player';
 
@@ -33,5 +34,34 @@ export class Qbcore {
 
     public removeBlip(id: string): void {
         this.QBCore.Functions.RemoveBlip(id);
+    }
+
+    public DrawText(drawRequest: Draw2dTextParameters): void {
+        SetTextFont(4);
+        SetTextProportional(false);
+        SetTextScale(drawRequest.scale, drawRequest.scale);
+        SetTextColour(drawRequest.r, drawRequest.g, drawRequest.b, drawRequest.a);
+        SetTextDropshadow(0, 0, 0, 0, 255);
+        SetTextEdge(2, 0, 0, 0, 255);
+        SetTextDropShadow();
+        SetTextOutline();
+        SetTextEntry('STRING');
+        AddTextComponentString(drawRequest.text);
+        DrawText(drawRequest.x - drawRequest.width / 2, drawRequest.y - drawRequest.height / 2 + 0.005);
+    }
+
+    public Draw3dText(drawRequest: Draw3dTextParameters): void {
+        SetTextScale(0.35, 0.35);
+        SetTextFont(4);
+        SetTextProportional(true);
+        SetTextColour(255, 255, 255, 215);
+        SetTextEntry('STRING');
+        SetTextCentre(true);
+        AddTextComponentString(drawRequest.text);
+        SetDrawOrigin(drawRequest.x, drawRequest.y, drawRequest.z, 0);
+        DrawText(0.0, 0.0);
+        const factor = drawRequest.text.length / 370;
+        DrawRect(0.0, 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75);
+        ClearDrawOrigin();
     }
 }

@@ -1,3 +1,4 @@
+import { NuiClipboardMethodMap } from './clipboard';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHealthBookMethodMap } from './health_book';
 import { NuiInputMethodMap } from './input';
@@ -11,6 +12,7 @@ export interface NuiMethodMap {
     global: NuiGlobalMethodMap;
     menu: NuiMenuMethodMap;
     input: NuiInputMethodMap;
+    clipboard: NuiClipboardMethodMap;
     health_book: NuiHealthBookMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
 }

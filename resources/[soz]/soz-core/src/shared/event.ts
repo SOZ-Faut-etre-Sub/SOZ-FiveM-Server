@@ -1,4 +1,5 @@
 export enum ServerEvent {
+    ADMIN_CHANGE_PLAYER = 'soz-core:server:admin:change-player',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
@@ -46,10 +47,18 @@ export enum ServerEvent {
     ZEVENT_GET_POPCORN = 'soz-core:server:zevent:get-popcorn',
 
     // not core
+    ADMIN_GIVE_LICENCE = 'admin:gamemaster:giveLicence',
+    ADMIN_GIVE_MONEY = 'admin:gamemaster:giveMoney',
+    ADMIN_GOD_MODE = 'admin:gamemaster:godmode',
+
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:server:ApplyTemporaryClothSet',
+    QBCORE_SET_METADATA = 'QBCore:Server:SetMetaData',
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
+
+    LSMC_CLEAR_DISEASE = 'lsmc:maladie:ClearDisease',
+    LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_REVIVE = 'lsmc:server:revive',
 }
 
@@ -72,6 +81,8 @@ export enum ClientEvent {
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
 
     // Temp event which should be internally used by a service when only soz core
+    CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
+
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
     PLAYER_HEALTH_DO_YOGA = 'soz-core:client:player:health:yoga',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
@@ -92,6 +103,21 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
+    AdminChangePlayer = 'soz-core:client:admin:change-player',
+    AdminCopyCoords = 'soz-core:client:admin:copy-coords',
+    AdminGiveLicence = 'soz-core:client:admin:give-licence',
+    AdminGiveMoney = 'soz-core:client:admin:give-money',
+    AdminGiveMarkedMoney = 'soz-core:client:admin:give-marked-money',
+    AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
+    AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
+    AdminSetInvincible = 'soz-core:client:admin:set-invincible',
+    AdminSetVisible = 'soz-core:client:admin:set-visible',
+    AdminTeleportToWaypoint = 'soz-core:client:admin:teleport-to-waypoint',
+    AdminToggleMoneyCase = 'soz-core:client:admin:toggle-disable-money-case',
+    AdminToggleNoClip = 'soz-core:client:admin:toggle-noclip',
+    AdminToggleShowCoordinates = 'soz-core:client:admin:toggle-show-coordinates',
+    AdminUpdateState = 'soz-core:client:admin:update-state',
+
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',

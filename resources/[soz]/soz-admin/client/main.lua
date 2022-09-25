@@ -25,7 +25,6 @@ local function OpenAdminMenu()
                 AdminMenuSkin(AdminMenu, permission)
                 AdminMenuVehicles(AdminMenu, permission)
                 AdminMenuPlayers(AdminMenu, permission)
-                AdminMenuDeveloper(AdminMenu, permission)
 
                 MenuV:CloseAll(function()
                     AdminMenu:Open()
