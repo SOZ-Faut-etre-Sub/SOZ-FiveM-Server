@@ -45,21 +45,19 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     return (
         <div className={`flex ${isMine && 'justify-end'}`}>
             <div className={`flex justify-between w-3/4 rounded-2xl ${messageColor()} p-3 m-2 text-ellipsis`}>
-                <>
-                    {isImage(message.message) && (
-                        <PictureReveal>
-                            <img src={message.message} className="rounded-lg" alt="message multimedia" />
-                        </PictureReveal>
-                    )}
-                    {isPosition(message.message) && (
-                        <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
-                            <LocationMarkerIcon className="h-5 w-5 mr-2" /> Destination
-                        </span>
-                    )}
-                    {!isImage(message.message) && !isPosition(message.message) && (
-                        <p className="break-words text-ellipsis w-full">{message.message}</p>
-                    )}
-                </>
+                {isImage(message.message) && (
+                    <PictureReveal image={message.message}>
+                        <img src={message.message} className="rounded-lg" alt="message multimedia" />
+                    </PictureReveal>
+                )}
+                {isPosition(message.message) && (
+                    <span className="flex items-center cursor-pointer" onClick={setWaypoint}>
+                        <LocationMarkerIcon className="h-5 w-5 mr-2" /> Destination
+                    </span>
+                )}
+                {!isImage(message.message) && !isPosition(message.message) && (
+                    <p className="break-words text-ellipsis w-full">{message.message}</p>
+                )}
             </div>
         </div>
     );
