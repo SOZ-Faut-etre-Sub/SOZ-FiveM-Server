@@ -165,6 +165,10 @@ end
 function ClothConfigComputeToClothSet(clothConfig)
     local clothSet = Clone(clothConfig.BaseClothSet)
 
+    local function getNakedComponent(component)
+        return clothConfig.NakedClothSet.Components[component] or clothConfig.NakedClothSet.Components[tostring(component)]
+    end
+
     if clothConfig.JobClothSet ~= nil then
         clothSet = MergeClothSet(clothSet, clothConfig.JobClothSet)
     end
@@ -198,9 +202,7 @@ function ClothConfigComputeToClothSet(clothConfig)
     end
 
     if clothConfig.Config.HideMask then
-        local override = {
-            Components = {[ComponentType.Mask] = clothConfig.NakedClothSet.Components[ComponentType.Mask]},
-        }
+        local override = {Components = {[ComponentType.Mask] = getNakedComponent(ComponentType.Mask)}}
 
         clothSet = MergeClothSet(clothSet, override)
     end
@@ -218,17 +220,13 @@ function ClothConfigComputeToClothSet(clothConfig)
     end
 
     if clothConfig.Config.HideChain then
-        local override = {
-            Components = {[ComponentType.Chain] = clothConfig.NakedClothSet.Components[ComponentType.Chain]},
-        }
+        local override = {Components = {[ComponentType.Chain] = getNakedComponent(ComponentType.Chain)}}
 
         clothSet = MergeClothSet(clothSet, override)
     end
 
     if clothConfig.Config.HideBulletproof then
-        local override = {
-            Components = {[ComponentType.Bulletproof] = clothConfig.NakedClothSet.Components[ComponentType.Bulletproof]},
-        }
+        local override = {Components = {[ComponentType.Bulletproof] = getNakedComponent(ComponentType.Bulletproof)}}
 
         clothSet = MergeClothSet(clothSet, override)
     end
@@ -236,10 +234,10 @@ function ClothConfigComputeToClothSet(clothConfig)
     if clothConfig.Config.HideTop then
         local override = {
             Components = {
-                [ComponentType.Arms] = clothConfig.NakedClothSet.Components[ComponentType.Arms],
-                [ComponentType.Top] = clothConfig.NakedClothSet.Components[ComponentType.Top],
-                [ComponentType.Decals] = clothConfig.NakedClothSet.Components[ComponentType.Decals],
-                [ComponentType.Torso] = clothConfig.NakedClothSet.Components[ComponentType.Torso],
+                [ComponentType.Arms] = getNakedComponent(ComponentType.Arms),
+                [ComponentType.Top] = getNakedComponent(ComponentType.Top),
+                [ComponentType.Decals] = getNakedComponent(ComponentType.Decals),
+                [ComponentType.Torso] = getNakedComponent(ComponentType.Torso),
             },
         }
 
@@ -259,26 +257,19 @@ function ClothConfigComputeToClothSet(clothConfig)
     end
 
     if clothConfig.Config.HideBag then
-        local override = {Components = {[ComponentType.Bag] = clothConfig.NakedClothSet.Components[ComponentType.Bag]}}
+        local override = {Components = {[ComponentType.Bag] = getNakedComponent(ComponentType.Bag)}}
 
         clothSet = MergeClothSet(clothSet, override)
     end
 
     if clothConfig.Config.HidePants then
-        local override = {
-            Components = {
-                [ComponentType.Pants] = clothConfig.NakedClothSet.Components[ComponentType.Pants] or
-                    clothConfig.NakedClothSet.Components[tostring(ComponentType.Pants)],
-            },
-        }
+        local override = {Components = {[ComponentType.Pants] = getNakedComponent(ComponentType.Pants)}}
 
         clothSet = MergeClothSet(clothSet, override)
     end
 
     if clothConfig.Config.HideShoes then
-        local override = {
-            Components = {[ComponentType.Shoes] = clothConfig.NakedClothSet.Components[ComponentType.Shoes]},
-        }
+        local override = {Components = {[ComponentType.Shoes] = getNakedComponent(ComponentType.Shoes)}}
 
         clothSet = MergeClothSet(clothSet, override)
     end
