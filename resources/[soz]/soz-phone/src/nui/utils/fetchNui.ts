@@ -30,6 +30,10 @@ export async function fetchNui<T = any>(eventName: string, data?: any, mockResp?
 
     const resourceName = (window as any).GetParentResourceName ? (window as any).GetParentResourceName() : 'soz-phone';
 
+    if (resourceName === undefined || eventName === undefined) {
+        return Promise.reject('Invalid resource name or event name');
+    }
+
     const resp = await fetch(`https://${resourceName}/${eventName}`, options);
 
     const responseObj = await resp.json();
