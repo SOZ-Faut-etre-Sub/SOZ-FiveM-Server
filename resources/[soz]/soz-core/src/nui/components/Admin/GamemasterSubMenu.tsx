@@ -89,6 +89,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 <MenuItemCheckbox
                     checked={moneyCase}
                     onChange={async value => {
+                        setMoneyCase(value);
                         updateState('gameMaster', 'moneyCase', value);
                         await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
                     }}
@@ -98,8 +99,9 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 <MenuItemCheckbox
                     checked={invisible}
                     onChange={async value => {
+                        setInvisible(value);
                         updateState('gameMaster', 'invisible', value);
-                        await fetchNui(NuiEvent.AdminSetVisible, value);
+                        await fetchNui(NuiEvent.AdminSetVisible, !value);
                     }}
                 >
                     Invisible
@@ -107,16 +109,24 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 <MenuItemCheckbox
                     checked={invincible}
                     onChange={async value => {
+                        setInvincible(value);
                         updateState('gameMaster', 'invincible', value);
                         await fetchNui(NuiEvent.AdminSetInvincible, value);
                     }}
                 >
                     Invincible
                 </MenuItemCheckbox>
-                <MenuItemButton>Auto-pilote</MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminAutoPilot);
+                    }}
+                >
+                    Auto-pilote
+                </MenuItemButton>
                 <MenuItemCheckbox
                     checked={godMode}
                     onChange={async value => {
+                        setGodMode(value);
                         updateState('gameMaster', 'godMode', value);
                         await fetchNui(NuiEvent.AdminSetGodMode, value);
                     }}

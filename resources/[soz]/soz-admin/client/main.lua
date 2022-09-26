@@ -60,8 +60,5 @@ local function OpenMapperMenu()
     end
 end
 
-RegisterKeyMapping("admin", "AdminMenu", "keyboard", "F9")
-RegisterCommand("admin", OpenAdminMenu, false)
-
 RegisterKeyMapping("mapper", "MapperMenu", "keyboard", "F10")
 RegisterCommand("mapper", OpenMapperMenu, false)
