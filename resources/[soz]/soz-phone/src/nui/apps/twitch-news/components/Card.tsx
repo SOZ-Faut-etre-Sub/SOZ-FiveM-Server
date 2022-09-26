@@ -49,11 +49,7 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                                 'text-gray-700': config.theme.value === 'light',
                             })}
                         >
-                            {isActivePoliceMessage(type) ? (
-                                <PoliceContent type={type} message={message} />
-                            ) : (
-                                <>{message}</>
-                            )}
+                            {isPoliceMessage(type) ? <PoliceContent type={type} message={message} /> : <>{message}</>}
                         </p>
                         <p className="flex justify-between text-xs text-gray-400">
                             <span>{reporter}</span>

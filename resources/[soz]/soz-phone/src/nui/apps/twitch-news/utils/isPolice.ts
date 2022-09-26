@@ -1,13 +1,13 @@
 export const isLSPDMessage = messageType => {
-    return /(lspd)(:end)?/.test(messageType);
+    return /^(lspd)(:end)?$/.test(messageType);
 };
 
 export const isBCSOMessage = messageType => {
-    return /(bcso)(:end)?/.test(messageType);
+    return /^(bcso)(:end)?$/.test(messageType);
 };
 
 export const isActivePoliceMessage = messageType => {
-    return /(lspd|bcso)$/.test(messageType);
+    return /^(lspd|bcso)$/.test(messageType);
 };
 
 export const isPoliceMessage = messageType => {
