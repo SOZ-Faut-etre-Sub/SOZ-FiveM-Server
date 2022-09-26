@@ -1,10 +1,15 @@
 import { OnNuiEvent } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { Notifier } from '../notifier';
 
 @Provider()
 export class AdminMenuGameMasterProvider {
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'money', amount);
@@ -55,11 +60,34 @@ export class AdminMenuGameMasterProvider {
         SetEntityInvincible(PlayerPedId(), value);
     }
 
+    @OnNuiEvent(NuiEvent.AdminAutoPilot)
+    public async setAutoPilot(): Promise<void> {
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+        const waypoint = GetFirstBlipInfoId(8);
+
+        if (DoesBlipExist(waypoint)) {
+            const waypointCoords = GetBlipInfoIdCoord(waypoint);
+
+            TaskVehicleDriveToCoordLongrange(
+                PlayerPedId(),
+                vehicle,
+                waypointCoords[0],
+                waypointCoords[1],
+                waypointCoords[2],
+                60.0,
+                262539,
+                20.0
+            );
+        } else {
+            this.notifier.notify(`Vous n'avez pas sélectionné de destination.`, 'error');
+        }
+    }
+
     @OnNuiEvent(NuiEvent.AdminSetGodMode)
     public async setGodMode(value: boolean): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_GOD_MODE, value);
         if (value) {
-            TriggerEvent(ServerEvent.LSMC_CLEAR_DISEASE);
+            TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'false', GetPlayerServerId(PlayerId()));
         }
     }
 }

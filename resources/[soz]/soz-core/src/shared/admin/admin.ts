@@ -12,3 +12,14 @@ export const LICENCES = [
     { label: 'Hélicoptère', value: 'heli' },
     { label: 'Bateau', value: 'boat' },
 ];
+
+export type AdminPlayer = {
+    id: number;
+    name: string;
+    coords: number[];
+    heading: number;
+    cid: string;
+    citizenId: string;
+    ped: number;
+    source: number;
+};

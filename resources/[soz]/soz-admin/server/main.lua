@@ -57,7 +57,6 @@ QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
             citizenid = ped.PlayerData.citizenid,
             sources = GetPlayerPed(ped.PlayerData.source),
             sourceplayer = ped.PlayerData.source,
-
         })
     end
     cb(players)

@@ -103,6 +103,7 @@ export enum GameEvent {
 }
 
 export enum NuiEvent {
+    AdminAutoPilot = 'soz-core:client:admin:autopilot',
     AdminChangePlayer = 'soz-core:client:admin:change-player',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
     AdminGiveLicence = 'soz-core:client:admin:give-licence',
@@ -113,6 +114,9 @@ export enum NuiEvent {
     AdminSetInvincible = 'soz-core:client:admin:set-invincible',
     AdminSetVisible = 'soz-core:client:admin:set-visible',
     AdminTeleportToWaypoint = 'soz-core:client:admin:teleport-to-waypoint',
+    AdminToggleDisplayOwners = 'soz-core:client:admin:toggle-display-owners',
+    AdminToggleDisplayPlayerNames = 'soz-core:client:admin:toggle-display-player-names',
+    AdminToggleDisplayPlayersOnMap = 'soz-core:client:admin:toggle-display-players-on-map',
     AdminToggleMoneyCase = 'soz-core:client:admin:toggle-disable-money-case',
     AdminToggleNoClip = 'soz-core:client:admin:toggle-noclip',
     AdminToggleShowCoordinates = 'soz-core:client:admin:toggle-show-coordinates',

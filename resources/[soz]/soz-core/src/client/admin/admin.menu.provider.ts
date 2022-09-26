@@ -13,15 +13,20 @@ export class AdminMenuProvider {
     private nuiMenu: NuiMenu;
 
     private menuState: AdminMenuStateProps['data']['state'] = {
-        developer: {
-            noClip: false,
-            displayCoords: false,
-        },
         gameMaster: {
             godMode: false,
             invisible: false,
             invincible: false,
             moneyCase: true,
+        },
+        interactive: {
+            displayOwners: false,
+            displayPlayerNames: false,
+            displayPlayersOnMap: false,
+        },
+        developer: {
+            noClip: false,
+            displayCoords: false,
         },
     };
 

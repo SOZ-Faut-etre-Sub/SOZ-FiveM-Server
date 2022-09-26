@@ -16,12 +16,14 @@ import {
 } from '../Styleguide/Menu';
 import { DeveloperSubMenu, DeveloperSubMenuProps } from './DeveloperSubMenu';
 import { GameMasterSubMenu, GameMasterSubMenuProps } from './GamemasterSubMenu';
+import { InteractiveSubMenu, InteractiveSubMenuProps } from './InteractiveSubMenu';
 
 export type AdminMenuStateProps = {
     data: {
         state: {
-            developer: DeveloperSubMenuProps['state'];
             gameMaster: GameMasterSubMenuProps['state'];
+            interactive: InteractiveSubMenuProps['state'];
+            developer: DeveloperSubMenuProps['state'];
         };
     };
 };
@@ -60,14 +62,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                 </MenuContent>
             </MainMenu>
             <GameMasterSubMenu banner={banner} updateState={updateState} state={state.gameMaster} />
-            <SubMenu id="interactive">
-                <MenuTitle banner={banner}>Des options à la carte</MenuTitle>
-                <MenuContent>
-                    <MenuItemCheckbox>Afficher le propriétaire des véhicules</MenuItemCheckbox>
-                    <MenuItemCheckbox>Afficher le nom des joueurs</MenuItemCheckbox>
-                    <MenuItemCheckbox>Afficher les joueurs sur la carte</MenuItemCheckbox>
-                </MenuContent>
-            </SubMenu>
+            <InteractiveSubMenu banner={banner} updateState={updateState} state={state.interactive} />
             <SubMenu id="business">
                 <MenuTitle banner={banner}>Pour se construire un avenir</MenuTitle>
                 <MenuContent>
