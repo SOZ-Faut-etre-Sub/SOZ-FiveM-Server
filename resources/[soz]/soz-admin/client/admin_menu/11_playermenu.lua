@@ -127,7 +127,7 @@ function AdminMenuPlayers(menu, permission)
                 {label = "Soigner", value = false},
             },
             select = function(_, value)
-                TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", value, CurrentPlayerData.id)
+                TriggerServerEvent("soz-core:server:server:set-current-disease", value, CurrentPlayerData.id)
             end,
         })
 

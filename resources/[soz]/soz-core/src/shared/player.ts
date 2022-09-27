@@ -14,12 +14,14 @@ export type QBCorePlayer = {
 };
 
 export type PlayerData = {
+    citizenid: string;
     charinfo: PlayerCharInfo;
     role: SozRole;
     metadata: PlayerMetadata;
     job: PlayerJob;
     items: Record<string, InventoryItem> | InventoryItem[];
     skin: Skin;
+    source: number;
 };
 
 // TODO: Finish to implement the other properties
@@ -53,6 +55,7 @@ export type PlayerHealthBook = {
 export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
+    ishandcuffed: boolean;
     health: number;
     hunger: number;
     thirst: number;
@@ -76,6 +79,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     last_stress_level_update: string | null;
     last_exercise_completed: number | null;
     disease: Disease | null;
+    last_disease_at: number | null;
     // Typing is intentionally in that way so that you could program future items that gives clothes.
     isWearingItem: 'zevent2022_tshirt' | null;
 };

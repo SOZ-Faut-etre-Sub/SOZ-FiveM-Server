@@ -44,7 +44,7 @@ export class PlayerDiseaseProvider {
             const propagation = Math.round(Math.random() * 4);
 
             if (playerServerId != -1 && distance < 4.5 && propagation == 0) {
-                TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'grippe', playerServerId);
+                TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE, 'grippe', playerServerId);
             }
 
             await wait(1000 * 60);
@@ -162,11 +162,11 @@ export class PlayerDiseaseProvider {
         const diseaseApply = Math.round(Math.random() * range);
 
         if (diseaseApply == 1) {
-            TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'rhume');
+            TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE, 'rhume');
         }
 
         if (diseaseApply == 10) {
-            TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'grippe');
+            TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE, 'grippe');
         }
     }
 

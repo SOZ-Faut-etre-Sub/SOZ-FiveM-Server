@@ -2,12 +2,50 @@ import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Item } from '../../shared/item';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
+
+enum StressLooseType {
+    VehicleAbove160,
+    VehicleAbove180,
+    VehicleYellowEngine,
+    ShootingNearby,
+    HittingNearby,
+    Dead,
+    Handcuffed,
+    DrinkCoffee,
+    DrinkAlcohol,
+}
+
+const PointsByStressLooseType: Record<StressLooseType, number> = {
+    [StressLooseType.VehicleAbove160]: 1,
+    [StressLooseType.VehicleAbove180]: 2,
+    [StressLooseType.VehicleYellowEngine]: 3,
+    [StressLooseType.ShootingNearby]: 3,
+    [StressLooseType.HittingNearby]: 2,
+    [StressLooseType.Dead]: 10,
+    [StressLooseType.Handcuffed]: 1,
+    [StressLooseType.DrinkCoffee]: -2,
+    [StressLooseType.DrinkAlcohol]: -6,
+};
+
+const IntervalByStressLooseType: Record<StressLooseType, number> = {
+    [StressLooseType.VehicleAbove160]: 30,
+    [StressLooseType.VehicleAbove180]: 30,
+    [StressLooseType.VehicleYellowEngine]: 30,
+    [StressLooseType.ShootingNearby]: 30,
+    [StressLooseType.HittingNearby]: 2,
+    [StressLooseType.Dead]: 10,
+    [StressLooseType.Handcuffed]: 1,
+    [StressLooseType.DrinkCoffee]: -2,
+    [StressLooseType.DrinkAlcohol]: -6,
+};
 
 @Provider()
 export class PlayerStressProvider {
@@ -23,49 +61,70 @@ export class PlayerStressProvider {
     private isStressUpdated = false;
     private lastStressDowngrade = null;
     private wasDead = false;
+    private wasHandcuff = false;
+    private previousVehicleHealth = null;
+    private slowMode = false;
+    private invalidMode = false;
 
-    private updateStress(stress = 1): void {
-        this.isStressUpdated = true;
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, stress);
+    private lastStressTypeUsedAt: Record<StressLooseType, number | null> = {
+        [StressLooseType.VehicleAbove160]: null,
+        [StressLooseType.VehicleAbove180]: null,
+        [StressLooseType.VehicleYellowEngine]: null,
+        [StressLooseType.ShootingNearby]: null,
+        [StressLooseType.HittingNearby]: null,
+        [StressLooseType.Dead]: null,
+        [StressLooseType.Handcuffed]: null,
+        [StressLooseType.DrinkCoffee]: null,
+        [StressLooseType.DrinkAlcohol]: null,
+    };
 
-        this.notifier.notify('Un événement vous a légèrement ~r~angoissé~s~.', 'error');
+    private updateStress(type: StressLooseType): void {
+        const lastUsedAt = this.lastStressTypeUsedAt[type];
 
-        setTimeout(() => {
-            this.isStressUpdated = false;
-        }, 120000);
+        if (lastUsedAt !== null && GetGameTimer() - lastUsedAt < IntervalByStressLooseType[type] * 60 * 1000) {
+            return;
+        }
+
+        const stressPoints = PointsByStressLooseType[type];
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, stressPoints);
+
+        this.notifier.notify('Un événement vous a ~r~angoissé~s~.', 'error');
+        this.lastStressTypeUsedAt[type] = GetGameTimer();
     }
 
-    @On('CEventShockingGunshotFired', false)
-    public onCEventShockingGunshotFired(entities, eventEntity): void {
-        this.onStressfulGameEvent(entities, eventEntity, 60.0, false);
-    }
-
-    @On('CEventOnFire', false)
-    public onCEventOnFire(entities, eventEntity): void {
-        this.onStressfulGameEvent(entities, eventEntity, 70.0, false);
-    }
-
-    @On('CEventRanOverPed', false)
-    public onCEventRanOverPed(entities, eventEntity): void {
-        this.onStressfulGameEvent(entities, eventEntity, 50.0, false);
-    }
-
-    @On('CEventShocking', false)
-    public onCEventShocking(entities, eventEntity): void {
-        this.onStressfulGameEvent(entities, eventEntity, 30.0, true);
-    }
-
-    @On('CEventShockingCarCrash', false)
-    public onCEventShockingCarCrash(entities, eventEntity): void {
-        this.onStressfulGameEvent(entities, eventEntity, 40.0, true);
-    }
-
-    public onStressfulGameEvent(entities, eventEntity, trigger_distance: number, must_be_player = false): void {
+    @OnEvent(ClientEvent.ITEM_USE)
+    public onItemUse(name: string, item: Item): void {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
-        if (this.isStressUpdated) {
+        if (name === 'coffee') {
+            this.updateStress(StressLooseType.DrinkCoffee);
+        }
+
+        if (item.type === 'drink' && item.nutrition && item.nutrition.alcohol > 0) {
+            this.updateStress(StressLooseType.DrinkAlcohol);
+        }
+    }
+
+    @On('CEventShockingGunshotFired', false)
+    public onCEventShockingGunshotFired(entities, eventEntity): void {
+        this.onStressfulGameEvent(StressLooseType.ShootingNearby, entities, eventEntity, 60.0, false);
+    }
+
+    @On('CEventShockingCarCrash', false)
+    public onCEventShockingCarCrash(entities, eventEntity): void {
+        this.onStressfulGameEvent(StressLooseType.HittingNearby, entities, eventEntity, 40.0, true);
+    }
+
+    public onStressfulGameEvent(
+        type: StressLooseType,
+        entities,
+        eventEntity,
+        trigger_distance: number,
+        must_be_player = false
+    ): void {
+        if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
@@ -85,6 +144,8 @@ export class PlayerStressProvider {
         if (distance > trigger_distance) {
             return;
         }
+
+        this.updateStress(type);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -104,43 +165,51 @@ export class PlayerStressProvider {
         }
 
         if (!this.wasDead && player.metadata.isdead) {
-            this.wasDead = true;
-
-            return this.updateStress();
+            this.updateStress(StressLooseType.Dead);
         }
 
         this.wasDead = player.metadata.isdead;
+
+        if (!this.wasHandcuff && player.metadata.ishandcuffed) {
+            this.updateStress(StressLooseType.Handcuffed);
+        }
+
+        this.wasHandcuff = player.metadata.ishandcuffed;
 
         if (player.metadata.isdead) {
             return;
         }
 
         const ped = PlayerPedId();
-
-        if (IsPedShooting(ped)) {
-            return this.updateStress();
-        }
-
-        if (GetPedAlertness(ped) > 0) {
-            return this.updateStress();
-        }
-
-        if (IsPedInMeleeCombat(ped)) {
-            return this.updateStress();
-        }
-
         const currentVehicle = GetVehiclePedIsIn(ped, false);
 
         if (currentVehicle) {
             const vehicleClass = GetVehicleClass(currentVehicle);
+            const engineHealth = GetVehicleEngineHealth(currentVehicle);
+
+            if (this.previousVehicleHealth === null) {
+                this.previousVehicleHealth = engineHealth;
+            } else if (this.previousVehicleHealth !== engineHealth) {
+                if (this.previousVehicleHealth >= 800 && engineHealth < 800) {
+                    this.updateStress(StressLooseType.VehicleYellowEngine);
+                }
+
+                this.previousVehicleHealth = engineHealth;
+            }
 
             if (vehicleClass !== 14 && vehicleClass !== 15 && vehicleClass !== 16) {
                 const speed = GetEntitySpeed(currentVehicle) * 3.6;
 
-                if (speed > 170) {
-                    return this.updateStress();
+                if (speed > 160) {
+                    this.updateStress(StressLooseType.VehicleAbove160);
+                }
+
+                if (speed > 160) {
+                    this.updateStress(StressLooseType.VehicleAbove180);
                 }
             }
+        } else {
+            this.previousVehicleHealth = null;
         }
     }
 
@@ -155,17 +224,32 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (this.lastStressDowngrade && GetGameTimer() - this.lastStressDowngrade < 60000) {
-            return;
+        TriggerServerEvent(ServerEvent.PLAYER_DO_YOGA);
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    async onEachFrame(): Promise<void> {
+        const playerPed = PlayerPedId();
+
+        if (this.slowMode) {
+            RequestAnimSet('move_m@casual@a');
+            SetPedMovementClipset(playerPed, 'move_m@casual@a', 0.0);
         }
 
-        this.lastStressDowngrade = GetGameTimer();
-
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRESS, -1);
+        if (this.invalidMode) {
+            DisableControlAction(0, 21, true); // disable sprint
+            DisableControlAction(0, 22, true); // disable jump
+            DisableControlAction(0, 24, true); // disable attack
+            DisableControlAction(0, 71, true); // disable vehicle accelerate
+            DisableControlAction(0, 72, true); // disable vehicle brake
+        }
     }
 
     @Tick(TickInterval.EVERY_SECOND)
     async onTick(): Promise<void> {
+        this.slowMode = false;
+        this.invalidMode = false;
+
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
@@ -176,16 +260,26 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (player.metadata.stress_level < 20) {
+        if (player.metadata.stress_level <= 40) {
             return;
-        } else if (player.metadata.stress_level < 40) {
-            ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.01);
-        } else if (player.metadata.stress_level < 60) {
-            ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.03);
-        } else if (player.metadata.stress_level < 80) {
-            ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.07);
-        } else {
-            ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.1);
         }
+
+        TriggerScreenblurFadeIn(100);
+        await wait(1000);
+        TriggerScreenblurFadeOut(100);
+
+        if (player.metadata.stress_level <= 60) {
+            return await wait(1000 * 60 * 5);
+        }
+
+        this.slowMode = true;
+
+        if (player.metadata.stress_level <= 80) {
+            return await wait(1000 * 60 * 2);
+        }
+
+        this.invalidMode = true;
+
+        await wait(1000 * 60 * 2);
     }
 }
