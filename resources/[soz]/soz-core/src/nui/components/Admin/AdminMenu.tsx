@@ -3,26 +3,18 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemCheckbox,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuItemSubMenuLink,
-    MenuTitle,
-    SubMenu,
-} from '../Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle, SubMenu } from '../Styleguide/Menu';
 import { DeveloperSubMenu, DeveloperSubMenuProps } from './DeveloperSubMenu';
 import { GameMasterSubMenu, GameMasterSubMenuProps } from './GamemasterSubMenu';
 import { InteractiveSubMenu, InteractiveSubMenuProps } from './InteractiveSubMenu';
+import { JobSubMenu, JobSubMenuProps } from './JobSubMenu';
 
 export type AdminMenuStateProps = {
     data: {
         state: {
             gameMaster: GameMasterSubMenuProps['state'];
             interactive: InteractiveSubMenuProps['state'];
+            job: JobSubMenuProps['state'];
             developer: DeveloperSubMenuProps['state'];
         };
     };
@@ -54,7 +46,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                 <MenuContent>
                     <MenuItemSubMenuLink id="game_master">Menu du maître du jeu</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="interactive">Informations interactives</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="business">Gestion métier</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="job">Gestion métier</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="player_style">Modification du style du joueur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="vehicle">Gestion du véhicule</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="players">Gestion des joueurs</MenuItemSubMenuLink>
@@ -63,19 +55,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             </MainMenu>
             <GameMasterSubMenu banner={banner} updateState={updateState} state={state.gameMaster} />
             <InteractiveSubMenu banner={banner} updateState={updateState} state={state.interactive} />
-            <SubMenu id="business">
-                <MenuTitle banner={banner}>Pour se construire un avenir</MenuTitle>
-                <MenuContent>
-                    <MenuItemSelect title="Changer de métier">
-                        <MenuItemSelectOption>Bahama Unicorn</MenuItemSelectOption>
-                    </MenuItemSelect>
-                    <MenuItemSelect title="Changer de grade">
-                        <MenuItemSelectOption>Employé</MenuItemSelectOption>
-                        <MenuItemSelectOption>Patron</MenuItemSelectOption>
-                    </MenuItemSelect>
-                    <MenuItemCheckbox>Passer en service</MenuItemCheckbox>
-                </MenuContent>
-            </SubMenu>
+            <JobSubMenu banner={banner} updateState={updateState} state={state.job} />
             <SubMenu id="player_style">
                 <MenuTitle banner={banner}>Chien, Chat, Président...</MenuTitle>
                 <MenuContent></MenuContent>
