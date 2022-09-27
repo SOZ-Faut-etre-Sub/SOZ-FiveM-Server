@@ -24,6 +24,11 @@ export class AdminMenuProvider {
             displayPlayerNames: false,
             displayPlayersOnMap: false,
         },
+        job: {
+            currentJob: undefined,
+            currentJobGrade: undefined,
+            isOnDuty: false,
+        },
         developer: {
             noClip: false,
             displayCoords: false,
@@ -31,8 +36,8 @@ export class AdminMenuProvider {
     };
 
     @OnNuiEvent(NuiEvent.AdminUpdateState)
-    public async updateState(data: { namespace: string; key: string; value: any }): Promise<void> {
-        this.menuState[data.namespace][data.key] = data.value;
+    public async updateState({ namespace, key, value }: { namespace: string; key: string; value: any }): Promise<void> {
+        this.menuState[namespace][key] = value;
     }
 
     // @Command('admin', {role: 'admin'})

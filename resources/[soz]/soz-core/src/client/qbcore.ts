@@ -7,9 +7,11 @@ import { PlayerData } from '../shared/player';
 @Injectable()
 export class Qbcore {
     private QBCore;
+    private SozJobCore;
 
     public constructor() {
         this.QBCore = exports['qb-core'].GetCoreObject();
+        this.SozJobCore = exports['soz-jobs'].GetCoreObject();
     }
 
     public getPlayer(): PlayerData {
@@ -36,32 +38,8 @@ export class Qbcore {
         this.QBCore.Functions.RemoveBlip(id);
     }
 
-    public DrawText(drawRequest: Draw2dTextParameters): void {
-        SetTextFont(4);
-        SetTextProportional(false);
-        SetTextScale(drawRequest.scale, drawRequest.scale);
-        SetTextColour(drawRequest.r, drawRequest.g, drawRequest.b, drawRequest.a);
-        SetTextDropshadow(0, 0, 0, 0, 255);
-        SetTextEdge(2, 0, 0, 0, 255);
-        SetTextDropShadow();
-        SetTextOutline();
-        SetTextEntry('STRING');
-        AddTextComponentString(drawRequest.text);
-        DrawText(drawRequest.x - drawRequest.width / 2, drawRequest.y - drawRequest.height / 2 + 0.005);
-    }
-
-    public Draw3dText(drawRequest: Draw3dTextParameters): void {
-        SetTextScale(0.35, 0.35);
-        SetTextFont(4);
-        SetTextProportional(true);
-        SetTextColour(255, 255, 255, 215);
-        SetTextEntry('STRING');
-        SetTextCentre(true);
-        AddTextComponentString(drawRequest.text);
-        SetDrawOrigin(drawRequest.x, drawRequest.y, drawRequest.z, 0);
-        DrawText(0.0, 0.0);
-        const factor = drawRequest.text.length / 370;
-        DrawRect(0.0, 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75);
-        ClearDrawOrigin();
+    // TODO: Add types
+    public getJobs(): any {
+        return this.SozJobCore.Jobs;
     }
 }

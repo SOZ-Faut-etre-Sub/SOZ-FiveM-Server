@@ -3,16 +3,16 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Ok } from '../../shared/result';
+import { DrawService } from '../draw.service';
 import { InputService } from '../nui/input.service';
-import { Qbcore } from '../qbcore';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
     @Inject(InputService)
     private inputService: InputService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(DrawService)
+    private drawService: DrawService;
 
     private showCoordinatesInterval = null;
 
@@ -36,7 +36,7 @@ export class AdminMenuDeveloperProvider {
             const y = coords[1].toFixed(2);
             const z = coords[2].toFixed(2);
 
-            this.QBCore.DrawText({
+            this.drawService.drawText({
                 x: 0.4,
                 y: 0.01,
                 width: 0,
