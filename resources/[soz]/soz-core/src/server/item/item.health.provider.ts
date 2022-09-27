@@ -26,6 +26,8 @@ export class ItemHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    private usedAntiDepressant = new Set<string>();
+
     public async useFlaskPee(source: number, item: CommonItem, inventoryItem: InventoryItem) {
         if (
             !this.inventoryManager.removeItemFromInventory(
@@ -67,6 +69,12 @@ export class ItemHealthProvider {
     }
 
     private async useAntidepressant(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
         if (
             !this.inventoryManager.removeItemFromInventory(
                 source,
@@ -79,9 +87,14 @@ export class ItemHealthProvider {
             return;
         }
 
-        // @TODO play progress animation
+        if (this.usedAntiDepressant.has(player.citizenid)) {
+            this.notifier.notify(source, 'Vous avez déjà pris un antidépresseur.', 'error');
 
-        this.playerService.incrementMetadata(source, 'stress_level', -20, 0, 100);
+            return;
+        }
+
+        this.usedAntiDepressant.add(player.citizenid);
+        this.playerService.incrementMetadata(source, 'stress_level', -40, 0, 100);
 
         this.notifier.notify(
             source,

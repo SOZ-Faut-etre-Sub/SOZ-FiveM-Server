@@ -21,7 +21,7 @@ const LIPID_RATE = -0.5;
 const SUGAR_RATE = -0.5;
 const PROTEIN_RATE = -0.5;
 const STRENGTH_RATE = -1.0;
-const MAX_STAMINA_RATE = -1.0;
+const MAX_STAMINA_RATE = -2.0;
 const STRESS_RATE = -1.0;
 
 @Provider()
@@ -38,10 +38,15 @@ export class PlayerHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnEvent(ServerEvent.PLAYER_HEALTH_SET_EXERCISE_COMPLETED)
-    public async setExerciseCompleted(source: number, date: number): Promise<void> {
-        this.playerService.setPlayerMetadata(source, 'last_exercise_completed', date);
-    }
+    private lostStrengthByCitizenId: Record<string, number> = {};
+
+    private strengthExerciseCountByCitizenId: Record<string, number> = {};
+
+    private runTimeByCitizenId: Record<string, number> = {};
+
+    private lostStaminaByCitizenId: Record<string, number> = {};
+
+    private yogaDoneByCitizenId = new Set<string>();
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
@@ -84,12 +89,17 @@ export class PlayerHealthProvider {
                 const lastUpdate = new Date(player.metadata.last_strength_update);
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
-                const hours = diff / (1000 * 60 * 60);
 
-                if (hours > 1) {
+                if (
+                    diff > 30 * 60 * 1000 &&
+                    this.lostStaminaByCitizenId[player.citizenid] < 4 &&
+                    this.strengthExerciseCountByCitizenId[player.citizenid] < 4
+                ) {
                     this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
-                    this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 50, 120);
+                    this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 60, 150);
                     this.playerService.updatePlayerMaxWeight(source);
+                    this.lostStrengthByCitizenId[player.citizenid] =
+                        this.lostStrengthByCitizenId[player.citizenid] + 1 || 1;
 
                     this.notifier.notify(source, 'Vous vous sentez ~r~moins puissant~s~.', 'error');
                 }
@@ -101,11 +111,12 @@ export class PlayerHealthProvider {
                 const lastUpdate = new Date(player.metadata.last_max_stamina_update);
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
-                const hours = diff / (1000 * 60 * 60);
 
-                if (hours > 1) {
+                if (diff > 60 * 60 * 1000 && this.lostStaminaByCitizenId[player.citizenid] < 3) {
                     this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
-                    this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 50, 120);
+                    this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 60, 150);
+                    this.lostStaminaByCitizenId[player.citizenid] =
+                        this.lostStaminaByCitizenId[player.citizenid] + 1 || 1;
 
                     this.notifier.notify(source, 'Vous vous sentez ~r~moins athlétique~s~.', 'error');
                 }
@@ -118,7 +129,7 @@ export class PlayerHealthProvider {
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
 
-                if (diff > 1000 * 60 * 10) {
+                if (diff > 1000 * 60 * 30) {
                     this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, 0, 100);
 
@@ -133,21 +144,44 @@ export class PlayerHealthProvider {
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)
     public async increaseStrength(source: number): Promise<void> {
-        this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'strength', 2, 50, 120);
+        const player = this.playerService.getPlayer(source);
+
+        if (player === null || player.metadata.godmode || player.metadata.isdead) {
+            return;
+        }
+
+        if (this.strengthExerciseCountByCitizenId[player.citizenid] >= 4) {
+            return;
+        }
+
+        this.strengthExerciseCountByCitizenId[player.citizenid] =
+            this.strengthExerciseCountByCitizenId[player.citizenid] + 1 || 1;
+
+        this.playerService.incrementMetadata(source, 'strength', 2, 60, 150);
         this.playerService.updatePlayerMaxWeight(source);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STAMINA)
     public async increaseStamina(source: number): Promise<void> {
         this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'max_stamina', 2, 50, 120);
+        this.playerService.incrementMetadata(source, 'max_stamina', 2, 60, 150);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
     public async increaseStress(source: number, stress: number): Promise<void> {
         this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
         this.playerService.incrementMetadata(source, 'stress_level', stress, 0, 100);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME)
+    public async increaseRunTime(source: number): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (player === null || player.metadata.godmode || player.metadata.isdead) {
+            return;
+        }
+
+        this.runTimeByCitizenId[player.citizenid] = this.runTimeByCitizenId[player.citizenid] + 1 || 1;
     }
 
     @OnEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK)
@@ -157,8 +191,23 @@ export class PlayerHealthProvider {
 
     @OnEvent(ServerEvent.IDENTITY_HIDE_AROUND)
     public async identityHideAround(source: number, target: number): Promise<void> {
-        console.log('identityHideAround', source, target);
         TriggerClientEvent(ClientEvent.IDENTITY_HIDE, target);
+    }
+
+    @OnEvent(ServerEvent.PLAYER_DO_YOGA)
+    public async doYoga(source: number, target: number): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (player === null) {
+            return;
+        }
+
+        if (this.yogaDoneByCitizenId.has(player.citizenid)) {
+            return;
+        }
+
+        this.yogaDoneByCitizenId.add(player.citizenid);
+        await this.increaseStress(source, -8);
     }
 
     @Rpc(RpcEvent.PLAYER_GET_HEALTH_BOOK)
@@ -170,6 +219,20 @@ export class PlayerHealthProvider {
         }
 
         return targetPlayer;
+    }
+
+    @Rpc(RpcEvent.PLAYER_GET_HEALTH_EXERCISE_DATA)
+    public getHealthExerciseData(source: number): { runTime: number; strengthExerciseCount: number } | null {
+        const player = this.playerService.getPlayer(source);
+
+        if (player === null) {
+            return null;
+        }
+
+        return {
+            runTime: this.runTimeByCitizenId[player.citizenid] || 0,
+            strengthExerciseCount: this.strengthExerciseCountByCitizenId[player.citizenid] || 0,
+        };
     }
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_CHECK)

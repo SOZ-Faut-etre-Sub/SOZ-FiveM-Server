@@ -26,6 +26,9 @@ export enum ServerEvent {
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STAMINA = 'soz-core:server:player:increase-stamina',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
+    PLAYER_SET_CURRENT_DISEASE = 'soz-core:server:server:set-current-disease',
+    PLAYER_INCREASE_RUN_TIME = 'soz-core:client:player:health:increase-run-time',
+    PLAYER_DO_YOGA = 'soz-core:server:player:do-yoga',
 
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
@@ -41,36 +44,37 @@ export enum ServerEvent {
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
-    LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_REVIVE = 'lsmc:server:revive',
 }
 
 export enum ClientEvent {
-    FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
-
-    PROGRESS_START = 'soz-core:client:progress:start',
+    CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
     FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
 
+    FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
+
+    IDENTITY_HIDE = 'soz-identity:client:hide',
+    ITEM_USE = 'soz-core:client:item:use',
+
+    JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
+    JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
+    JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
+
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
-
-    CORE_CLOSE_MENU = 'soz-core:client:menu:close',
-
-    PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
-
-    ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 
     // Temp event which should be internally used by a service when only soz core
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
     PLAYER_HEALTH_DO_YOGA = 'soz-core:client:player:health:yoga',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
-    IDENTITY_HIDE = 'soz-identity:client:hide',
-    JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
-    JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
-    JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
+    PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
+
+    PROGRESS_START = 'soz-core:client:progress:start',
+
+    ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
 
 export enum GameEvent {

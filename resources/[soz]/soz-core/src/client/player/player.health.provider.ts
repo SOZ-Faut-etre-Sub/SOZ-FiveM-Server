@@ -104,11 +104,6 @@ const FREE_WEIGHT_COORDS = [
     },
 ];
 
-const UNARMED_WEAPON_HASH = GetHashKey('WEAPON_UNARMED');
-
-const MAX_RUN_COUNT = 5;
-const RUN_DURATION = 45;
-
 @Provider()
 export class PlayerHealthProvider {
     @Inject(PlayerService)
@@ -129,17 +124,21 @@ export class PlayerHealthProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    private sportZone = new BoxZone([-1202.52, -1566.88, 4.37], 12.2, 26.2, {
-        maxZ: 6.37,
-        minZ: 3.37,
-        heading: 305,
-    });
-
-    private runningStartTime: number | null = null;
+    private runTime = 0;
 
     private strengthExercisesCount = 0;
 
-    private runCount = 0;
+    @Once(OnceStep.PlayerLoaded)
+    async onPlayerInit(): Promise<void> {
+        const exerciseData = await emitRpc<{ runTime: number; strengthExerciseCount: number } | null>(
+            RpcEvent.PLAYER_GET_HEALTH_EXERCISE_DATA
+        );
+
+        if (null !== exerciseData) {
+            this.runTime = exerciseData.runTime;
+            this.strengthExercisesCount = exerciseData.strengthExerciseCount;
+        }
+    }
 
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
@@ -162,31 +161,25 @@ export class PlayerHealthProvider {
     private doStrengthExercise(): void {
         this.strengthExercisesCount++;
 
-        if (this.strengthExercisesCount % 10 > 0) {
-            const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
-
-            if (this.sportZone.isPointInside(position)) {
-                this.notifier.notify("Vous êtes dans une salle de sport, l'exercice compte ~g~double~s~.", 'success');
-                this.strengthExercisesCount++;
-            }
+        if (this.strengthExercisesCount === 1) {
+            this.notifier.notify(
+                "Tu as débuté ta Daily Routine ! Effectue 4 exercices afin ~g~d'augmenter ta force~s~.",
+                'success'
+            );
         }
 
-        let displayExercisesCount = this.strengthExercisesCount % 10;
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
 
-        if (displayExercisesCount === 0) {
-            displayExercisesCount = 10;
-        }
-
-        this.notifier.notify(`Exercice ${displayExercisesCount} / 10.`, 'success');
-
-        if (this.strengthExercisesCount % 10 === 0) {
-            this.notifier.notify('Vous vous sentez ~g~plus puissant~s~.', 'success');
-            TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
-        }
-
-        if (this.strengthExercisesCount >= 30) {
-            TriggerServerEvent(ServerEvent.PLAYER_HEALTH_SET_EXERCISE_COMPLETED, new Date().getTime());
-            this.strengthExercisesCount = 0;
+        if (this.strengthExercisesCount < 4) {
+            this.notifier.notify(
+                `Tu as complété ${this.strengthExercisesCount} des exercices de ta Daily Routine, Keep up !`,
+                'success'
+            );
+        } else if (this.strengthExercisesCount === 4) {
+            this.notifier.notify(
+                "Tu as terminé ta Daily Routine ! Tu te sens en forme pour toute la journée. Il t'est inutile de faire plus de sport, tes muscles ont besoins de repos.",
+                'success'
+            );
         }
     }
 
@@ -203,16 +196,13 @@ export class PlayerHealthProvider {
             return false;
         }
 
-        if (
-            !player.metadata.last_exercise_completed ||
-            new Date().getTime() - player.metadata.last_exercise_completed > 60 * 1000 * 60 * 2
-        ) {
-            return true;
+        if (this.strengthExercisesCount >= 4) {
+            this.notifier.notify('Vous êtes trop ~r~fatigué~s~ pour faire un autre exercice.', 'error');
+
+            return false;
         }
 
-        this.notifier.notify('Vous êtes trop ~r~fatigué~s~ pour faire un autre exercice.', 'error');
-
-        return false;
+        return true;
     }
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
@@ -365,37 +355,37 @@ export class PlayerHealthProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_FRAME)
+    @Tick(TickInterval.EVERY_SECOND)
     async checkRunning(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
-        if (this.runningStartTime) {
-            const duration = (GetGameTimer() - this.runningStartTime) / 1000;
-
-            if (duration >= RUN_DURATION) {
-                this.runningStartTime = null;
-                this.runCount++;
-
-                if (this.runCount > MAX_RUN_COUNT) {
-                    this.notifier.notify("Vous avez beaucoup couru aujourd'hui, reposez vous.", 'error');
-
-                    return;
-                } else {
-                    this.notifier.notify('Vous vous sentez ~g~plus athlétique~s~.', 'success');
-
-                    TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STAMINA);
-                }
-            }
+        if (this.runTime > 60 * 8) {
+            return;
         }
 
-        if (IsPedRunning(PlayerPedId())) {
-            if (!this.runningStartTime) {
-                this.runningStartTime = GetGameTimer();
+        if (IsPedRunning(PlayerPedId()) || IsPedSwimming(PlayerPedId())) {
+            this.runTime += 1;
+            TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
+
+            if (this.runTime % 60 === 0) {
+                const minutes = this.runTime / 60;
+
+                if (minutes < 8) {
+                    this.notifier.notify(
+                        `Tu as couru durant ${minutes} ${
+                            minutes === 1 ? 'minute' : 'minutes'
+                        } ! Tu te sens de plus en plus endurant, continue comme ça.`,
+                        'success'
+                    );
+                } else if (minutes === 8) {
+                    this.notifier.notify(
+                        "Tu as couru tes 8 minutes de la journée ! Tu te sens en forme pour toute la journée. Courir n'améliore plus ton endurance, et ce, jusqu'au lendemain.",
+                        'success'
+                    );
+                }
             }
-        } else {
-            this.runningStartTime = null;
         }
     }
 
@@ -457,26 +447,5 @@ export class PlayerHealthProvider {
         }
 
         SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
-    }
-
-    @Tick(TickInterval.EVERY_FRAME)
-    async setDamageMultiplier(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
-
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        const multiplier = player.metadata.strength / 100;
-
-        if (GetSelectedPedWeapon(PlayerPedId()) === UNARMED_WEAPON_HASH) {
-            SetPlayerWeaponDamageModifier(PlayerId(), multiplier);
-        } else {
-            SetPlayerWeaponDamageModifier(PlayerId(), 1.0);
-        }
     }
 }

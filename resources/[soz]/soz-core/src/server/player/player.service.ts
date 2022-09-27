@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { SozRole } from '../../core/permissions';
+import { Disease } from '../../shared/disease';
+import { ClientEvent } from '../../shared/event';
 import { PlayerData, PlayerMetadata } from '../../shared/player';
 import { QBCore } from '../qbcore';
 
@@ -36,13 +38,51 @@ export class PlayerService {
         const player = this.QBCore.getPlayer(source);
 
         if (player) {
-            console.log('setPlayerMetadata', key, value);
             player.Functions.SetMetaData(key, value);
         }
     }
 
-    public setPlayerDisease(source: number, disease: string | false) {
-        TriggerEvent('lsmc:maladie:server:SetCurrentDisease', disease, source);
+    public setPlayerDisease(source: number, disease: Disease | false) {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (disease === false) {
+            player.Functions.SetMetaData('disease', disease);
+            TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, disease);
+
+            return;
+        }
+
+        if (disease === 'grippe' && player.PlayerData.metadata['hazmat']) {
+            return;
+        }
+
+        let interval = 2 * 60 * 60 * 1000; // 2 hours
+
+        if (player.PlayerData.metadata.health_level > 80) {
+            interval = 45 * 60 * 1000; // 30 minutes
+        } else if (player.PlayerData.metadata.health_level > 60) {
+            interval = 45 * 60 * 1000; // 45 minutes
+        } else if (player.PlayerData.metadata.health_level > 40) {
+            interval = 1 * 60 * 60 * 1000; // 1 hour
+        }
+
+        if (
+            player.PlayerData.metadata.last_disease_at &&
+            Date.now() - player.PlayerData.metadata.last_disease_at < interval
+        ) {
+            return;
+        }
+
+        if (player && (disease !== 'grippe' || (disease === 'grippe' && !player.PlayerData.metadata['hazmat']))) {
+            player.Functions.SetMetaData('disease', disease);
+            player.Functions.SetMetaData('last_disease_at', Date.now());
+
+            TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, disease);
+        }
     }
 
     public save(source: number): void {
