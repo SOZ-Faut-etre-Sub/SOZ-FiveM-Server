@@ -1,7 +1,7 @@
 import { Injectable } from '../core/decorators/injectable';
 import { Blip } from '../shared/blip';
-import { Draw2dTextParameters, Draw3dTextParameters } from '../shared/draw';
 import { Item } from '../shared/item';
+import { Job, JobType } from '../shared/job';
 import { PlayerData } from '../shared/player';
 
 @Injectable()
@@ -38,8 +38,13 @@ export class Qbcore {
         this.QBCore.Functions.RemoveBlip(id);
     }
 
-    // TODO: Add types
-    public getJobs(): any {
-        return this.SozJobCore.Jobs;
+    public getJobs(): Job[] {
+        const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
+        if (!jobs) {
+            return [];
+        }
+        return Object.entries(jobs)
+            .sort((a, b) => a[1].label.localeCompare(b[1].label))
+            .map(([key, value]) => ({ ...value, id: key as JobType }));
     }
 }

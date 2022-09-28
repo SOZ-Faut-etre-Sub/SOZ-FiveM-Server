@@ -49,7 +49,7 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                     onChange={async value => {
                         setNoClip(value);
                         updateState('developer', 'noClip', value);
-                        await fetchNui(NuiEvent.AdminToggleNoClip, {});
+                        await fetchNui(NuiEvent.AdminToggleNoClip);
                     }}
                 >
                     No clip

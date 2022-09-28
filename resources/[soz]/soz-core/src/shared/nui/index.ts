@@ -1,3 +1,4 @@
+import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHealthBookMethodMap } from './health_book';
@@ -15,6 +16,7 @@ export interface NuiMethodMap {
     clipboard: NuiClipboardMethodMap;
     health_book: NuiHealthBookMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
+    admin_player_submenu: NuiAdminPlayerSubMenuMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

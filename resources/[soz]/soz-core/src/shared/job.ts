@@ -22,6 +22,8 @@ export enum JobType {
 }
 
 export type Job = {
+    // Must use the getJobs method to generate the id from the object.
+    id: JobType;
     grades: {
         [key: string]: {
             id: number;
@@ -43,7 +45,7 @@ export type Job = {
         [key: string]: {
             label: string;
         };
-    }[];
+    };
     platePrefix?: string;
     // TODO: Complete when necessary
     temporary?: any;

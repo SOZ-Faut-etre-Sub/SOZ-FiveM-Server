@@ -2,6 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
+import { AdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
@@ -79,13 +80,12 @@ export class AdminMenuInteractiveProvider {
                 RemoveMpGamerTag(value);
             }
 
-            // TODO: Use proper type
-            const players = await emitRpc<any[]>(RpcEvent.ADMIN_GET_PLAYERS);
+            const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
 
             players.forEach(player => {
-                this.multiplayerTags[player.citizenid] = GetPlayerFromServerId(player.sourceplayer);
+                this.multiplayerTags[player.citizenId] = GetPlayerFromServerId(player.source);
                 CreateMpGamerTagWithCrewColor(
-                    this.multiplayerTags[player.citizenid],
+                    this.multiplayerTags[player.citizenId],
                     player.name,
                     false,
                     false,
@@ -95,7 +95,7 @@ export class AdminMenuInteractiveProvider {
                     0,
                     0
                 );
-                SetMpGamerTagVisibility(this.multiplayerTags[player.citizenid], 0, true);
+                SetMpGamerTagVisibility(this.multiplayerTags[player.citizenId], 0, true);
             });
         }, 5000);
     }
@@ -111,13 +111,14 @@ export class AdminMenuInteractiveProvider {
                 this.QBCore.removeBlip(value);
             }
 
-            const players = await emitRpc<any[]>(RpcEvent.ADMIN_GET_PLAYERS);
+            const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
             for (const player of players) {
-                const blipId = 'admin:player-blip:' + player.citizenid;
-                this.playerBlips[player.citizenid] = blipId;
+                const blipId = 'admin:player-blip:' + player.citizenId;
+                this.playerBlips[player.citizenId] = blipId;
 
+                const coords = player.coords;
                 this.QBCore.createBlip(blipId, {
-                    coords: player.coords,
+                    coords: { x: coords[0], y: coords[1], z: coords[2] },
                     heading: player.heading,
                     name: player.name,
                     showheading: true,

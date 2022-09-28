@@ -2,7 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
-import { Job, JobType } from '../../shared/job';
+import { Job } from '../../shared/job';
 import { Qbcore } from '../qbcore';
 
 @Provider()
@@ -11,7 +11,8 @@ export class AdminMenuJobProvider {
     private QBCore: Qbcore;
 
     @OnNuiEvent(NuiEvent.AdminGetJobs)
-    public async getJobs(): Promise<JobType> {
+    public async getJobs(): Promise<Job[]> {
+        // FIXME: Don't use QBCore.
         return this.QBCore.getJobs();
     }
 

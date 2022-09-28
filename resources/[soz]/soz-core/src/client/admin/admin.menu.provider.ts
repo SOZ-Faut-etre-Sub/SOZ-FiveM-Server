@@ -25,8 +25,8 @@ export class AdminMenuProvider {
             displayPlayersOnMap: false,
         },
         job: {
-            currentJob: undefined,
-            currentJobGrade: undefined,
+            currentJobIndex: undefined,
+            currentJobGradeIndex: undefined,
             isOnDuty: false,
         },
         developer: {
