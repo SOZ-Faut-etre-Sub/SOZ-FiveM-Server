@@ -383,6 +383,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     onConfirm?: (index: number) => void;
     onSelected?: () => void;
     disabled?: boolean;
+    value?: number;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -391,9 +392,16 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     onSelected,
     title,
     disabled = false,
+    value,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
+
+    useEffect(() => {
+        if (value) {
+            setActiveOptionIndex(value);
+        }
+    }, [value]);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex);

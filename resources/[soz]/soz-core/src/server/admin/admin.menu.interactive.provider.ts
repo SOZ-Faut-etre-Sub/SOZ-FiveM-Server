@@ -3,21 +3,21 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { AdminPlayer } from '../../shared/admin/admin';
 import { RpcEvent } from '../../shared/rpc';
-import { PlayerService } from '../player/player.service';
+import { PermissionService } from '../permission.service';
 import { QBCore } from '../qbcore';
 
 @Provider()
 export class AdminMenuInteractiveProvider {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
 
     @Inject(QBCore)
     private QBCore: QBCore;
 
     @Rpc(RpcEvent.ADMIN_GET_PLAYERS)
-    public async getPlayers(source: number): Promise<AdminPlayer[]> {
-        if (!this.playerService.hasPermission(source, 'helper')) {
-            return;
+    public getPlayers(source: number): AdminPlayer[] {
+        if (!this.permissionService.isHelper(source)) {
+            return [];
         }
 
         const players: AdminPlayer[] = [];

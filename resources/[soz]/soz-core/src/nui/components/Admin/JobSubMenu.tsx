@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { Job } from '../../../shared/job';
+import { Job, JobType } from '../../../shared/job';
 import { fetchNui } from '../../fetch';
 import {
     MenuContent,
@@ -16,35 +16,42 @@ export type JobSubMenuProps = {
     banner: string;
     updateState: (namespace: 'job', key: keyof JobSubMenuProps['state'], value: any) => void;
     state: {
-        currentJob: string;
-        currentJobGrade: string;
+        currentJobIndex: number;
+        currentJobGradeIndex: number;
         isOnDuty: boolean;
     };
 };
 
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, updateState }) => {
-    const [currentJobId, setCurrentJobId] = useState<string>(undefined);
+    const [currentJobId, setCurrentJobId] = useState<JobType>(undefined);
+    const [currentJobIndex, setCurrentJobIndex] = useState<number>(undefined);
+    const [currentJobGradeIndex, setCurrentJobGradeIndex] = useState<number>(undefined);
     const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
     const [jobs, setJobs] = useState<Job[]>(null);
     const [grades, setGrades] = useState<Job['grades']>(null);
 
-    if (!jobs) {
-        fetchNui<void, Job[]>(NuiEvent.AdminGetJobs).then(setJobs);
-    }
-
     useEffect(() => {
+        if (!jobs) {
+            fetchNui<void, Job[]>(NuiEvent.AdminGetJobs).then(setJobs);
+        }
         if (state && state.isOnDuty) {
             setIsOnDuty(state.isOnDuty);
         }
-    });
+        if (state && state.currentJobIndex !== undefined) {
+            setCurrentJobIndex(state.currentJobIndex);
+        }
+        if (state && state.currentJobGradeIndex !== undefined) {
+            setCurrentJobGradeIndex(state.currentJobGradeIndex);
+        }
+    }, [state, jobs]);
 
     useEffect(() => {
-        if (currentJobId) {
-            setGrades(jobs[currentJobId].grades);
+        if (currentJobIndex) {
+            setGrades(jobs[currentJobIndex].grades);
         }
-    }, [currentJobId]);
+    }, [currentJobIndex]);
 
-    if (!jobs) {
+    if (!jobs || typeof jobs !== 'array') {
         return null;
     }
 
@@ -54,26 +61,29 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
             <MenuContent>
                 <MenuItemSelect
                     title="Changer de métier"
+                    value={currentJobIndex || 0}
                     onConfirm={async selectedIndex => {
-                        const jobId = Object.keys(jobs)[selectedIndex];
+                        const jobId = jobs[selectedIndex].id;
 
                         setCurrentJobId(jobId);
+                        setCurrentJobIndex(selectedIndex);
+                        updateState('job', 'currentJobIndex', selectedIndex);
                     }}
                 >
-                    {Object.entries(jobs)
-                        .sort(([, a], [, b]) => a.label.localeCompare(b.label))
-                        .map(([jobId, job]) => (
-                            <MenuItemSelectOption key={jobId}>{job.label}</MenuItemSelectOption>
-                        ))}
+                    {jobs.map(job => (
+                        <MenuItemSelectOption key={job.id}>{job.label}</MenuItemSelectOption>
+                    ))}
                 </MenuItemSelect>
                 <MenuItemSelect
                     title="Changer de grade"
+                    value={currentJobGradeIndex || 0}
                     onConfirm={async selectedIndex => {
-                        const job = jobs[currentJobId];
+                        const job = jobs[currentJobIndex];
                         const currentJobGrade = job.grades[Object.keys(job.grades)[selectedIndex]].id;
 
+                        setCurrentJobGradeIndex(selectedIndex);
                         await fetchNui(NuiEvent.AdminSetJob, { jobId: currentJobId, jobGrade: currentJobGrade });
-                        await updateState('job', 'currentJobGrade', currentJobGrade);
+                        await updateState('job', 'currentJobGradeIndex', selectedIndex);
                     }}
                 >
                     {grades &&
