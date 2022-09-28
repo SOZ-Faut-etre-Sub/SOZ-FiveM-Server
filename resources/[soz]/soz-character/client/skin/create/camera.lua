@@ -25,7 +25,7 @@ Camera.Activate = function(delay)
     end
 
     local playerPed = PlayerPedId()
-    FreezeEntityPosition(playerPed, false)
+    FreezeEntityPosition(playerPed, true)
     Citizen.Wait(1000)
 
     FreezePedCameraRotation(playerPed, true)
