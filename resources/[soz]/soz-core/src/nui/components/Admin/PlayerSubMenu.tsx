@@ -47,7 +47,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
 
     useEffect(() => {
         if (players != null && players.length === 0) {
-            fetchNui<never, AdminPlayer[]>(NuiEvent.AdminGetPlayers);
+            fetchNui<never, AdminPlayer[]>(NuiEvent.AdminGetPlayers).then();
         }
     }, [players]);
 
@@ -61,7 +61,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                 <MenuTitle banner={banner}>Michel ? C'est toi ?</MenuTitle>
                 <MenuContent>
                     {players.map(player => (
-                        <MenuItemSubMenuLink id={'player_' + player.cid}>
+                        <MenuItemSubMenuLink id={'player_' + player.cid} key={'player_link_' + player.cid}>
                             [{player.id}] {player.name}
                         </MenuItemSubMenuLink>
                     ))}
@@ -88,7 +88,9 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                             }}
                         >
                             {HEALTH_OPTIONS.map(option => (
-                                <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
+                                <MenuItemSelectOption key={'health_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>
                         <MenuItemSelect
@@ -101,7 +103,9 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                             }}
                         >
                             {MOVEMENT_OPTIONS.map(option => (
-                                <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
+                                <MenuItemSelectOption key={'movement_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>
                         <MenuItemSelect
@@ -114,7 +118,9 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                             }}
                         >
                             {VOCAL_OPTIONS.map(option => (
-                                <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
+                                <MenuItemSelectOption key={'vocal_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>
                     </MenuContent>

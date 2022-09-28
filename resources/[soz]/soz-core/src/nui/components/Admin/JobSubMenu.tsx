@@ -3,6 +3,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event';
 import { Job, JobType } from '../../../shared/job';
 import { fetchNui } from '../../fetch';
+import { useNuiEvent } from '../../hook/nui';
 import {
     MenuContent,
     MenuItemCheckbox,
@@ -22,18 +23,29 @@ export type JobSubMenuProps = {
     };
 };
 
+export interface NuiAdminJobSubMenuMethodMap {
+    SetJobs: Job[];
+}
+
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, updateState }) => {
     const [currentJobId, setCurrentJobId] = useState<JobType>(undefined);
     const [currentJobIndex, setCurrentJobIndex] = useState<number>(undefined);
     const [currentJobGradeIndex, setCurrentJobGradeIndex] = useState<number>(undefined);
     const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
-    const [jobs, setJobs] = useState<Job[]>(null);
-    const [grades, setGrades] = useState<Job['grades']>(null);
+    const [jobs, setJobs] = useState<Job[]>([]);
+    const [grades, setGrades] = useState<Job['grades']>({});
+
+    useNuiEvent('admin_job_submenu', 'SetJobs', jobs => {
+        setJobs(jobs);
+    });
 
     useEffect(() => {
-        if (!jobs) {
-            fetchNui<void, Job[]>(NuiEvent.AdminGetJobs).then(setJobs);
+        if (jobs !== null && jobs.length === 0) {
+            fetchNui<void, Job[]>(NuiEvent.AdminGetJobs).then();
         }
+    }, [jobs]);
+
+    useEffect(() => {
         if (state && state.isOnDuty) {
             setIsOnDuty(state.isOnDuty);
         }
@@ -43,15 +55,15 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
         if (state && state.currentJobGradeIndex !== undefined) {
             setCurrentJobGradeIndex(state.currentJobGradeIndex);
         }
-    }, [state, jobs]);
+    }, [state]);
 
     useEffect(() => {
-        if (currentJobIndex) {
+        if (jobs.length > 0 && currentJobIndex) {
             setGrades(jobs[currentJobIndex].grades);
         }
-    }, [currentJobIndex]);
+    }, [currentJobIndex, jobs]);
 
-    if (!jobs || typeof jobs !== 'array') {
+    if (!jobs) {
         return null;
     }
 
@@ -71,7 +83,7 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                     }}
                 >
                     {jobs.map(job => (
-                        <MenuItemSelectOption key={job.id}>{job.label}</MenuItemSelectOption>
+                        <MenuItemSelectOption key={'job_' + job.id}>{job.label}</MenuItemSelectOption>
                     ))}
                 </MenuItemSelect>
                 <MenuItemSelect
@@ -79,6 +91,7 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                     value={currentJobGradeIndex || 0}
                     onConfirm={async selectedIndex => {
                         const job = jobs[currentJobIndex];
+                        console.log('job', job);
                         const currentJobGrade = job.grades[Object.keys(job.grades)[selectedIndex]].id;
 
                         setCurrentJobGradeIndex(selectedIndex);

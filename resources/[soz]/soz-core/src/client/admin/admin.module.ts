@@ -5,6 +5,7 @@ import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider'
 import { AdminMenuJobProvider } from './admin.menu.job.provider';
 import { AdminMenuPlayerProvider } from './admin.menu.player.provider';
 import { AdminMenuProvider } from './admin.menu.provider';
+import { AdminMenuVehicleProvider } from './admin.menu.vehicle.provider';
 
 @Module({
     providers: [
@@ -13,6 +14,7 @@ import { AdminMenuProvider } from './admin.menu.provider';
         AdminMenuJobProvider,
         AdminMenuPlayerProvider,
         AdminMenuDeveloperProvider,
+        AdminMenuVehicleProvider,
         AdminMenuProvider,
     ],
 })
