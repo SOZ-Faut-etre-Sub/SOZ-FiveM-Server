@@ -41,6 +41,10 @@ Citizen.CreateThread(function()
                         exports["soz-phone"]:setPhoneFocus(false)
                     end
 
+                    if exports["soz-talk"]:isRadioOpen() then
+                        exports["soz-talk"]:setRadioOpen(false)
+                    end
+
                     if GetPauseMenuState() ~= 0 then
                         ActivateFrontendMenu(GetHashKey(FE_MENU_VERSION_MP_PAUSE), false, -1)
                     end

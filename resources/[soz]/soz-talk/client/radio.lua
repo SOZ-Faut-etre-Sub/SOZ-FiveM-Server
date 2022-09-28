@@ -168,6 +168,14 @@ RegisterCommand("radio_toggle", function()
 end, false)
 RegisterKeyMapping("radio_toggle", "Sortir la radio", "keyboard", "N")
 
+exports("isRadioOpen", function()
+    return radioOpen
+end)
+
+exports("setRadioOpen", function(status)
+    toggleRadio(status)
+end)
+
 RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
     powerOffRadio()
 end)
