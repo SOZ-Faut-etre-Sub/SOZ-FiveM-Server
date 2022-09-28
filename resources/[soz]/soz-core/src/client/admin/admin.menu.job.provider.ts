@@ -3,17 +3,22 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Job } from '../../shared/job';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { Qbcore } from '../qbcore';
 
 @Provider()
 export class AdminMenuJobProvider {
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
     @Inject(Qbcore)
     private QBCore: Qbcore;
 
     @OnNuiEvent(NuiEvent.AdminGetJobs)
-    public async getJobs(): Promise<Job[]> {
+    public async getJobs(): Promise<void> {
         // FIXME: Don't use QBCore.
-        return this.QBCore.getJobs();
+        const jobs = this.QBCore.getJobs();
+        this.nuiDispatch.dispatch('admin_job_submenu', 'SetJobs', jobs);
     }
 
     @OnNuiEvent(NuiEvent.AdminSetJob)

@@ -9,6 +9,7 @@ import { GameMasterSubMenu, GameMasterSubMenuProps } from './GamemasterSubMenu';
 import { InteractiveSubMenu, InteractiveSubMenuProps } from './InteractiveSubMenu';
 import { JobSubMenu, JobSubMenuProps } from './JobSubMenu';
 import { PlayerSubMenu } from './PlayerSubMenu';
+import { VehicleSubMenu } from './VehicleSubMenu';
 
 export type AdminMenuStateProps = {
     data: {
@@ -61,10 +62,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                 <MenuTitle banner={banner}>Chien, Chat, Président...</MenuTitle>
                 <MenuContent></MenuContent>
             </SubMenu>
-            <SubMenu id="vehicle">
-                <MenuTitle banner={banner}>ça roule vite ?</MenuTitle>
-                <MenuContent></MenuContent>
-            </SubMenu>
+            <VehicleSubMenu banner={banner} />
             <PlayerSubMenu banner={banner} />
             <DeveloperSubMenu banner={banner} state={state.developer} updateState={updateState} />
         </Menu>
