@@ -75,7 +75,7 @@ function ResetAll()
     isInHospitalBed = false
     Callems = false
 
-    TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", false)
+    TriggerServerEvent("soz-core:server:server:set-current-disease", false)
 
     StopScreenEffect("DeathFailOut")
     TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
@@ -130,7 +130,7 @@ AddEventHandler("lsmc:client:heal", function(disease)
     local player = PlayerPedId()
     SetEntityHealth(player, GetEntityHealth(player) + 25)
     if disease == "grippe" then
-        TriggerServerEvent("lsmc:maladie:server:SetCurrentDisease", false)
+        TriggerServerEvent("soz-core:server:server:set-current-disease", false)
         exports["soz-hud"]:DrawNotification("Vous êtes guéri!")
     end
     TriggerEvent("personal:client:ApplyWalkStyle")

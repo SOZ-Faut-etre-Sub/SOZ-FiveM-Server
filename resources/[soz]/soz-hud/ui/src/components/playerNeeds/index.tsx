@@ -4,11 +4,12 @@ import {PlayerContext} from "../../context/player";
 import PlayerStat from "../player/stats";
 
 const PlayerNeeds= () => {
-    const {hunger, thirst, alcohol, drug, updateHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug} = useContext(PlayerContext)
+    const {hunger, thirst, alcohol, drug, updateHealth, updateMaxHealth, updateArmor, updateHunger, updateThirst, updateAlcohol, updateDrug} = useContext(PlayerContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'update_needs') {
             if (event.data.health !== undefined) updateHealth(event.data.health)
+            if (event.data.maxHealth !== undefined) updateMaxHealth(event.data.maxHealth)
             if (event.data.armor !== undefined) updateArmor(event.data.armor)
             if (event.data.hunger !== undefined) updateHunger(event.data.hunger)
             if (event.data.thirst !== undefined) updateThirst(event.data.thirst)

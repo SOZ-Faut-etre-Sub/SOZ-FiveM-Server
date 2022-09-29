@@ -240,6 +240,7 @@ end
 function QBCore.Functions.UseItem(source, item)
     local src = source
     QBCore.UseableItems[item.name](src, item)
+    TriggerClientEvent('soz-core:client:item:use', src, item.name, QBCore.Shared.Items[item.name])
 end
 
 -- Kick Player
