@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerData, PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
+import { PlayerData, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { RpcEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
@@ -211,7 +211,7 @@ export class PlayerHealthProvider {
     }
 
     @OnEvent(ServerEvent.PLAYER_DO_YOGA)
-    public async doYoga(source: number, target: number): Promise<void> {
+    public async doYoga(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (player === null) {
