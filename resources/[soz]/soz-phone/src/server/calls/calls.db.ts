@@ -1,23 +1,26 @@
 import { CallHistoryItem } from '../../../typings/call';
-import DbInterface from '../db/db_wrapper';
 import { FetchDefaultLimits } from '../utils/ServerConstants';
 
 export class CallsRepo {
     async saveCall(call: CallHistoryItem): Promise<void> {
-        const query = 'INSERT INTO phone_calls (identifier, transmitter, receiver) VALUES (?, ?, ?)';
-        await DbInterface._rawExec(query, [call.identifier, call.transmitter, call.receiver]);
+        await exports.oxmysql.insert_async(
+            'INSERT INTO phone_calls (identifier, transmitter, receiver) VALUES (?, ?, ?)',
+            [call.identifier, call.transmitter, call.receiver]
+        );
     }
 
     async updateCall(call: CallHistoryItem, isAccepted: boolean): Promise<void> {
-        const query = 'UPDATE phone_calls SET is_accepted=?, end=current_timestamp() WHERE identifier = ?';
-        await DbInterface._rawExec(query, [isAccepted, call.identifier]);
+        await exports.oxmysql.update_async(
+            'UPDATE phone_calls SET is_accepted=?, end=current_timestamp() WHERE identifier = ?',
+            [isAccepted, call.identifier]
+        );
     }
 
     async fetchCalls(phoneNumber: string, limit = FetchDefaultLimits.CALLS_FETCH_LIMIT): Promise<CallHistoryItem[]> {
-        const query = 'SELECT * FROM phone_calls WHERE receiver = ? OR transmitter = ? ORDER BY start DESC LIMIT ?';
-        const [result] = await DbInterface._rawExec(query, [phoneNumber, phoneNumber, limit]);
-
-        return <CallHistoryItem[]>result;
+        return exports.oxmysql.query_async(
+            'SELECT * FROM phone_calls WHERE receiver = ? OR transmitter = ? ORDER BY start DESC LIMIT ?',
+            [phoneNumber, phoneNumber, limit]
+        );
     }
 }
 
