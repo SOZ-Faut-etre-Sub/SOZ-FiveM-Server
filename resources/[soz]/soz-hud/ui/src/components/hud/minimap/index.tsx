@@ -5,7 +5,7 @@ import {PlayerContext} from "../../../context/player";
 
 const Minimap= () => {
     const {minimap, updateMinimap} = useContext(GameContext)
-    const {inVehicle, health, armor} = useContext(PlayerContext)
+    const {inVehicle, health, maxHealth, armor} = useContext(PlayerContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'hud_minimap_pos') {
@@ -19,6 +19,8 @@ const Minimap= () => {
         return () => window.removeEventListener('message', onMessageReceived)
     }, []);
 
+    const healthPercent = (health * 100 / maxHealth);
+
     return (
         <div style={{
             position: 'absolute',
@@ -30,9 +32,9 @@ const Minimap= () => {
             top: `calc((100vh * ${minimap.bottomY}) - .5rem )`,
             left: `calc(100vw * ${minimap.leftX})`
         }}>
-            {(inVehicle || health - 100 <= 50) && <PlayerStat
+            {(inVehicle || healthPercent <= 80) && <PlayerStat
                 type="health"
-                value={health - 100}
+                value={healthPercent}
                 backgroundPrimary={'rgba(60,152,30,0.5)'}
                 backgroundSecondary={'linear-gradient(to top, rgba(71,190,32,0.6) 31%, rgba(79,228,30,0.6) 100%)'}
             />}

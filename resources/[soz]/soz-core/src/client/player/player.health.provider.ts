@@ -3,11 +3,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerData } from '../../shared/player';
-import { BoxZone } from '../../shared/polyzone/box.zone';
+import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
@@ -124,22 +122,6 @@ export class PlayerHealthProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    private runTime = 0;
-
-    private strengthExercisesCount = 0;
-
-    @Once(OnceStep.PlayerLoaded)
-    async onPlayerInit(): Promise<void> {
-        const exerciseData = await emitRpc<{ runTime: number; strengthExerciseCount: number } | null>(
-            RpcEvent.PLAYER_GET_HEALTH_EXERCISE_DATA
-        );
-
-        if (null !== exerciseData) {
-            this.runTime = exerciseData.runTime;
-            this.strengthExercisesCount = exerciseData.strengthExerciseCount;
-        }
-    }
-
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
@@ -147,35 +129,24 @@ export class PlayerHealthProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_HOUR)
-    private async nutritionCheck(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
+    private async doStrengthExercise(type: keyof PlayerServerStateExercise) {
+        const playerState = await emitRpc<PlayerServerState>(RpcEvent.PLAYER_GET_SERVER_STATE);
 
-        if (this.playerService.isLoggedIn()) {
-            TriggerServerEvent(ServerEvent.PLAYER_NUTRITION_CHECK);
-        }
-    }
-
-    private doStrengthExercise(): void {
-        this.strengthExercisesCount++;
-
-        if (this.strengthExercisesCount === 1) {
+        if (playerState.exercise.completed === 0) {
             this.notifier.notify(
                 "Tu as débuté ta Daily Routine ! Effectue 4 exercices afin ~g~d'augmenter ta force~s~.",
                 'success'
             );
         }
 
-        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH, type);
 
-        if (this.strengthExercisesCount < 4) {
+        if (!playerState.exercise[type] && playerState.exercise.completed < 3) {
             this.notifier.notify(
-                `Tu as complété ${this.strengthExercisesCount} des exercices de ta Daily Routine, Keep up !`,
+                `Tu as complété ${playerState.exercise.completed + 1} des exercices de ta Daily Routine, Keep up !`,
                 'success'
             );
-        } else if (this.strengthExercisesCount === 4) {
+        } else if (!playerState.exercise[type] && playerState.exercise.completed === 3) {
             this.notifier.notify(
                 "Tu as terminé ta Daily Routine ! Tu te sens en forme pour toute la journée. Il t'est inutile de faire plus de sport, tes muscles ont besoins de repos.",
                 'success'
@@ -192,12 +163,6 @@ export class PlayerHealthProvider {
 
         if (player.metadata.disease) {
             this.notifier.notify("Vous êtes ~r~malade~s~, vous ne pouvez pas faire d'exercice.", 'error');
-
-            return false;
-        }
-
-        if (this.strengthExercisesCount >= 4) {
-            this.notifier.notify('Vous êtes trop ~r~fatigué~s~ pour faire un autre exercice.', 'error');
 
             return false;
         }
@@ -238,14 +203,10 @@ export class PlayerHealthProvider {
             },
         });
 
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000);
+        const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000);
 
-            if (!completed) {
-                break;
-            }
-
-            this.doStrengthExercise();
+        if (completed) {
+            await this.doStrengthExercise('pushUp');
         }
 
         this.animationService.stop();
@@ -286,14 +247,10 @@ export class PlayerHealthProvider {
             },
         });
 
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Abdominaux', 'Vous faites des abdos...', 20000);
+        const { completed } = await this.progressService.progress('Abdominaux', 'Vous faites des abdos...', 20000);
 
-            if (!completed) {
-                break;
-            }
-
-            this.doStrengthExercise();
+        if (completed) {
+            await this.doStrengthExercise('sitUp');
         }
 
         this.animationService.stop();
@@ -303,21 +260,21 @@ export class PlayerHealthProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_FREE_WEIGHT)
     public async doFreeWeight(): Promise<void> {
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Altères', 'Vous faites des altères...', 20000, {
-                task: 'world_human_muscle_free_weights',
-                options: {
-                    cancellable: true,
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            });
+        if (!this.canDoExercise()) {
+            return;
+        }
 
-            if (!completed) {
-                return;
-            }
+        const { completed } = await this.progressService.progress('Altères', 'Vous faites des altères...', 20000, {
+            task: 'world_human_muscle_free_weights',
+            options: {
+                cancellable: true,
+                enablePlayerControl: false,
+                repeat: true,
+            },
+        });
 
-            this.doStrengthExercise();
+        if (completed) {
+            await this.doStrengthExercise('freeWeight');
         }
     }
 
@@ -328,30 +285,17 @@ export class PlayerHealthProvider {
 
         await this.animationService.walkToCoords(coords, 2000);
 
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress(
-                'Tractions',
-                'Vous faites des tractions...',
-                18000,
-                {
-                    task: 'prop_human_muscle_chin_ups',
-                    options: {
-                        cancellable: true,
-                        enablePlayerControl: false,
-                        repeat: true,
-                    },
-                }
-            );
+        const { completed } = await this.progressService.progress('Tractions', 'Vous faites des tractions...', 18000, {
+            task: 'prop_human_muscle_chin_ups',
+            options: {
+                cancellable: true,
+                enablePlayerControl: false,
+                repeat: true,
+            },
+        });
 
-            if (!completed) {
-                return;
-            }
-
-            this.doStrengthExercise();
-
-            await wait(2000);
-
-            await this.animationService.walkToCoords(coords, 500);
+        if (completed) {
+            this.doStrengthExercise('chinUp');
         }
     }
 
@@ -361,31 +305,8 @@ export class PlayerHealthProvider {
             return;
         }
 
-        if (this.runTime > 60 * 8) {
-            return;
-        }
-
         if (IsPedRunning(PlayerPedId()) || IsPedSwimming(PlayerPedId())) {
-            this.runTime += 1;
             TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
-
-            if (this.runTime % 60 === 0) {
-                const minutes = this.runTime / 60;
-
-                if (minutes < 8) {
-                    this.notifier.notify(
-                        `Tu as couru durant ${minutes} ${
-                            minutes === 1 ? 'minute' : 'minutes'
-                        } ! Tu te sens de plus en plus endurant, continue comme ça.`,
-                        'success'
-                    );
-                } else if (minutes === 8) {
-                    this.notifier.notify(
-                        "Tu as couru tes 8 minutes de la journée ! Tu te sens en forme pour toute la journée. Courir n'améliore plus ton endurance, et ce, jusqu'au lendemain.",
-                        'success'
-                    );
-                }
-            }
         }
     }
 

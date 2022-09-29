@@ -10,6 +10,8 @@ local HudPlayerStatus = {
     --- @type number
     health = 200,
     --- @type number
+    maxHealth = 200,
+    --- @type number
     armor = 0,
     --- @type number
     hunger = 100,
@@ -89,6 +91,7 @@ local function setPlayerData(data)
             action = "update_needs",
             haveSeatbelt = HudPlayerStatus.haveSeatbelt,
             health = HudPlayerStatus.health,
+            maxHealth = HudPlayerStatus.maxHealth,
             armor = HudPlayerStatus.armor,
             hunger = HudPlayerStatus.hunger,
             thirst = HudPlayerStatus.thirst,
@@ -113,6 +116,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
 
     setPlayerData({
         health = PlayerData.metadata["health"],
+        maxHealth = PlayerData.metadata["max_health"],
         hunger = PlayerData.metadata["hunger"],
         thirst = PlayerData.metadata["thirst"],
         alcohol = PlayerData.metadata["alcohol"],
