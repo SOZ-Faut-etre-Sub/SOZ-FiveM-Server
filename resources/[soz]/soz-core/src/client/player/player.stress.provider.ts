@@ -59,7 +59,6 @@ export class PlayerStressProvider {
     private progressService: ProgressService;
 
     private isStressUpdated = false;
-    private lastStressDowngrade = null;
     private wasDead = false;
     private wasHandcuff = false;
     private previousVehicleHealth = null;
@@ -264,9 +263,9 @@ export class PlayerStressProvider {
             return;
         }
 
-        TriggerScreenblurFadeIn(100);
-        await wait(1000);
-        TriggerScreenblurFadeOut(100);
+        TriggerScreenblurFadeIn(500);
+        await wait(2000);
+        TriggerScreenblurFadeOut(500);
 
         if (player.metadata.stress_level <= 60) {
             return await wait(1000 * 60 * 5);
