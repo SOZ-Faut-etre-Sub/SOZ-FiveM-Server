@@ -1,5 +1,4 @@
 // Setup controllers
-import './db/pool';
 import './players/player.controller';
 import './calls/calls.controller';
 import './notes/notes.controller';
