@@ -71,7 +71,7 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                     }}
                 >
                     {coordOptions.map(option => (
-                        <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
+                        <MenuItemSelectOption key={'copy_coords_' + option.value}>{option.label}</MenuItemSelectOption>
                     ))}
                 </MenuItemSelect>
                 <MenuItemButton

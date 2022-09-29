@@ -322,10 +322,18 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     );
 };
 
-const MenuSelectControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
+type MenuSelectControlsProps = PropsWithChildren<{
+    onChange?: (index: number) => void;
+}>;
+
+const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChange, children }) => {
     const { activeOptionIndex, setActiveOptionIndex } = useContext(MenuItemSelectContext);
     const isItemSelected = useContext(MenuSelectedContext);
     const menuItems = useDescendants(MenuItemSelectDescendantContext);
+
+    useEffect(() => {
+        onChange && onChange(activeOptionIndex);
+    }, [activeOptionIndex]);
 
     const goLeft = () => {
         if (activeOptionIndex > 0) {
@@ -382,6 +390,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     title: string;
     onConfirm?: (index: number) => void;
     onSelected?: () => void;
+    onChange?: (index: number) => void;
     disabled?: boolean;
     value?: number;
 }>;
@@ -390,6 +399,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     children,
     onConfirm,
     onSelected,
+    onChange,
     title,
     disabled = false,
     value,
@@ -414,7 +424,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                     <div className="flex justify-between">
                         <h3>{title}</h3>
                         <div>
-                            <MenuSelectControls>
+                            <MenuSelectControls onChange={onChange}>
                                 <ul>{children}</ul>
                             </MenuSelectControls>
                         </div>

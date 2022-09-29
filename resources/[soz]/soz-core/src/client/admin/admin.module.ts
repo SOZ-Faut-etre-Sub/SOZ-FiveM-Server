@@ -5,6 +5,7 @@ import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider'
 import { AdminMenuJobProvider } from './admin.menu.job.provider';
 import { AdminMenuPlayerProvider } from './admin.menu.player.provider';
 import { AdminMenuProvider } from './admin.menu.provider';
+import { AdminMenuSkinProvider } from './admin.menu.skin.provider';
 import { AdminMenuVehicleProvider } from './admin.menu.vehicle.provider';
 
 @Module({
@@ -12,6 +13,7 @@ import { AdminMenuVehicleProvider } from './admin.menu.vehicle.provider';
         AdminMenuGameMasterProvider,
         AdminMenuInteractiveProvider,
         AdminMenuJobProvider,
+        AdminMenuSkinProvider,
         AdminMenuPlayerProvider,
         AdminMenuDeveloperProvider,
         AdminMenuVehicleProvider,

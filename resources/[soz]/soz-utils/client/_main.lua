@@ -18,6 +18,7 @@ Citizen.CreateThread(function()
 end)
 
 local function CopyToClipboard(text)
+    print("Copied to clipboard: " .. text)
     SendNUIMessage({string = text})
 end
 exports("CopyToClipboard", CopyToClipboard)

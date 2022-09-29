@@ -62,7 +62,7 @@ export class AdminMenuPlayerProvider {
             if (isMuted) {
                 this.notifier.notify(`Le joueur est ~r~muté.`, 'info');
             } else {
-                this.notifier.notify(`Le joueur est ~g~n'est pas muté.`, 'info');
+                this.notifier.notify(`Le joueur ~g~n'est pas muté.`, 'info');
             }
         } else if (action === 'mute') {
             TriggerServerEvent(ServerEvent.VOIP_MUTE, true, player.id);

@@ -9,6 +9,7 @@ import { GameMasterSubMenu, GameMasterSubMenuProps } from './GamemasterSubMenu';
 import { InteractiveSubMenu, InteractiveSubMenuProps } from './InteractiveSubMenu';
 import { JobSubMenu, JobSubMenuProps } from './JobSubMenu';
 import { PlayerSubMenu } from './PlayerSubMenu';
+import { SkinSubMenu, SkinSubMenuProps } from './SkinSubMenu';
 import { VehicleSubMenu } from './VehicleSubMenu';
 
 export type AdminMenuStateProps = {
@@ -49,7 +50,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink id="game_master">Menu du maître du jeu</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="interactive">Informations interactives</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="job">Gestion métier</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="player_style">Modification du style du joueur</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="skin">Modification du style du joueur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="vehicle">Gestion du véhicule</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="players">Gestion des joueurs</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="developer">Outils pour développeur</MenuItemSubMenuLink>
@@ -58,10 +59,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <GameMasterSubMenu banner={banner} updateState={updateState} state={state.gameMaster} />
             <InteractiveSubMenu banner={banner} updateState={updateState} state={state.interactive} />
             <JobSubMenu banner={banner} updateState={updateState} state={state.job} />
-            <SubMenu id="player_style">
-                <MenuTitle banner={banner}>Chien, Chat, Président...</MenuTitle>
-                <MenuContent></MenuContent>
-            </SubMenu>
+            <SkinSubMenu banner={banner} />
             <VehicleSubMenu banner={banner} />
             <PlayerSubMenu banner={banner} />
             <DeveloperSubMenu banner={banner} state={state.developer} updateState={updateState} />
