@@ -151,6 +151,11 @@ export enum NuiEvent {
     AdminMenuVehicleSave = 'soz-core:client:admin:vehicle:save',
     AdminMenuVehicleSetFBIConfig = 'soz-core:client:admin:vehicle:set-fbi-config',
     AdminMenuVehicleDelete = 'soz-core:client:admin:vehicle:delete',
+    AdminMenuSkinChangeAppearance = 'soz-core:client:admin:skin:change-appearance',
+    AdminMenuSkinChangeComponent = 'soz-core:client:admin:skin:change-component',
+    AdminMenuSkinChangeProp = 'soz-core:client:admin:skin:change-prop',
+    AdminMenuSkinCopy = 'soz-core:client:admin:skin:copy',
+    AdminMenuSkinSave = 'soz-core:client:admin:skin:save',
 
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
