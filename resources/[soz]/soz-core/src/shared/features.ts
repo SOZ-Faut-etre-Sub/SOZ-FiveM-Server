@@ -8,7 +8,7 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
     [Feature.MyBodySummer]: {
         production: false,
         development: true,
-        test: false,
+        test: true,
     },
 };
 
