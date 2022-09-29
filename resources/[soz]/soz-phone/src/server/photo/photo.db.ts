@@ -1,22 +1,26 @@
 import { GalleryPhoto } from '../../../typings/photo';
-import DbInterface from '../db/db_wrapper';
 
 export class _PhotoDB {
     async uploadPhoto(identifier: string, image: string): Promise<GalleryPhoto> {
-        const query = 'INSERT INTO phone_gallery (identifier, image) VALUES (?, ?)';
-        const [results] = (await DbInterface._rawExec(query, [identifier, image])) as any;
-        return { id: results.insertId, image };
+        const id = exports.oxmysql.insert_async('INSERT INTO phone_gallery (identifier, image) VALUES (?, ?)', [
+            identifier,
+            image,
+        ]);
+        return { id, image };
     }
 
     async getPhotosByIdentifier(identifier: string): Promise<GalleryPhoto[]> {
-        const query = 'SELECT id, image FROM phone_gallery WHERE identifier = ? ORDER BY id DESC';
-        const [results] = await DbInterface._rawExec(query, [identifier]);
-        return <GalleryPhoto[]>results;
+        return exports.oxmysql.query_async(
+            'SELECT id, image FROM phone_gallery WHERE identifier = ? ORDER BY id DESC',
+            [identifier]
+        );
     }
 
     async deletePhoto(photo: GalleryPhoto, identifier: string) {
-        const query = 'DELETE FROM phone_gallery WHERE image = ? AND identifier = ?';
-        await DbInterface._rawExec(query, [photo.image, identifier]);
+        exports.oxmysql.query_async('DELETE FROM phone_gallery WHERE image = ? AND identifier = ?', [
+            photo.image,
+            identifier,
+        ]);
     }
 }
 
