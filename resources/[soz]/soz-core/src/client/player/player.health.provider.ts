@@ -3,11 +3,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerData } from '../../shared/player';
-import { BoxZone } from '../../shared/polyzone/box.zone';
+import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
@@ -104,11 +102,6 @@ const FREE_WEIGHT_COORDS = [
     },
 ];
 
-const UNARMED_WEAPON_HASH = GetHashKey('WEAPON_UNARMED');
-
-const MAX_RUN_COUNT = 5;
-const RUN_DURATION = 45;
-
 @Provider()
 export class PlayerHealthProvider {
     @Inject(PlayerService)
@@ -129,18 +122,6 @@ export class PlayerHealthProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    private sportZone = new BoxZone([-1202.52, -1566.88, 4.37], 12.2, 26.2, {
-        maxZ: 6.37,
-        minZ: 3.37,
-        heading: 305,
-    });
-
-    private runningStartTime: number | null = null;
-
-    private strengthExercisesCount = 0;
-
-    private runCount = 0;
-
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
@@ -148,45 +129,28 @@ export class PlayerHealthProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_HOUR)
-    private async nutritionCheck(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
+    private async doStrengthExercise(type: keyof PlayerServerStateExercise) {
+        const playerState = await emitRpc<PlayerServerState>(RpcEvent.PLAYER_GET_SERVER_STATE);
+
+        if (playerState.exercise.completed === 0) {
+            this.notifier.notify(
+                "Tu as débuté ta Daily Routine ! Effectue 4 exercices afin ~g~d'augmenter ta force~s~.",
+                'success'
+            );
         }
 
-        if (this.playerService.isLoggedIn()) {
-            TriggerServerEvent(ServerEvent.PLAYER_NUTRITION_CHECK);
-        }
-    }
+        TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH, type);
 
-    private doStrengthExercise(): void {
-        this.strengthExercisesCount++;
-
-        if (this.strengthExercisesCount % 10 > 0) {
-            const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
-
-            if (this.sportZone.isPointInside(position)) {
-                this.notifier.notify("Vous êtes dans une salle de sport, l'exercice compte ~g~double~s~.", 'success');
-                this.strengthExercisesCount++;
-            }
-        }
-
-        let displayExercisesCount = this.strengthExercisesCount % 10;
-
-        if (displayExercisesCount === 0) {
-            displayExercisesCount = 10;
-        }
-
-        this.notifier.notify(`Exercice ${displayExercisesCount} / 10.`, 'success');
-
-        if (this.strengthExercisesCount % 10 === 0) {
-            this.notifier.notify('Vous vous sentez ~g~plus puissant~s~.', 'success');
-            TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STRENGTH);
-        }
-
-        if (this.strengthExercisesCount >= 30) {
-            TriggerServerEvent(ServerEvent.PLAYER_HEALTH_SET_EXERCISE_COMPLETED, new Date().getTime());
-            this.strengthExercisesCount = 0;
+        if (!playerState.exercise[type] && playerState.exercise.completed < 3) {
+            this.notifier.notify(
+                `Tu as complété ${playerState.exercise.completed + 1} des exercices de ta Daily Routine, Keep up !`,
+                'success'
+            );
+        } else if (!playerState.exercise[type] && playerState.exercise.completed === 3) {
+            this.notifier.notify(
+                "Tu as terminé ta Daily Routine ! Tu te sens en forme pour toute la journée. Il t'est inutile de faire plus de sport, tes muscles ont besoins de repos.",
+                'success'
+            );
         }
     }
 
@@ -203,16 +167,7 @@ export class PlayerHealthProvider {
             return false;
         }
 
-        if (
-            !player.metadata.last_exercise_completed ||
-            new Date().getTime() - player.metadata.last_exercise_completed > 60 * 1000 * 60 * 2
-        ) {
-            return true;
-        }
-
-        this.notifier.notify('Vous êtes trop ~r~fatigué~s~ pour faire un autre exercice.', 'error');
-
-        return false;
+        return true;
     }
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
@@ -248,14 +203,10 @@ export class PlayerHealthProvider {
             },
         });
 
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000);
+        const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000);
 
-            if (!completed) {
-                break;
-            }
-
-            this.doStrengthExercise();
+        if (completed) {
+            await this.doStrengthExercise('pushUp');
         }
 
         this.animationService.stop();
@@ -296,14 +247,10 @@ export class PlayerHealthProvider {
             },
         });
 
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Abdominaux', 'Vous faites des abdos...', 20000);
+        const { completed } = await this.progressService.progress('Abdominaux', 'Vous faites des abdos...', 20000);
 
-            if (!completed) {
-                break;
-            }
-
-            this.doStrengthExercise();
+        if (completed) {
+            await this.doStrengthExercise('sitUp');
         }
 
         this.animationService.stop();
@@ -313,21 +260,21 @@ export class PlayerHealthProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_FREE_WEIGHT)
     public async doFreeWeight(): Promise<void> {
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress('Altères', 'Vous faites des altères...', 20000, {
-                task: 'world_human_muscle_free_weights',
-                options: {
-                    cancellable: true,
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            });
+        if (!this.canDoExercise()) {
+            return;
+        }
 
-            if (!completed) {
-                return;
-            }
+        const { completed } = await this.progressService.progress('Altères', 'Vous faites des altères...', 20000, {
+            task: 'world_human_muscle_free_weights',
+            options: {
+                cancellable: true,
+                enablePlayerControl: false,
+                repeat: true,
+            },
+        });
 
-            this.doStrengthExercise();
+        if (completed) {
+            await this.doStrengthExercise('freeWeight');
         }
     }
 
@@ -338,64 +285,28 @@ export class PlayerHealthProvider {
 
         await this.animationService.walkToCoords(coords, 2000);
 
-        while (this.canDoExercise()) {
-            const { completed } = await this.progressService.progress(
-                'Tractions',
-                'Vous faites des tractions...',
-                18000,
-                {
-                    task: 'prop_human_muscle_chin_ups',
-                    options: {
-                        cancellable: true,
-                        enablePlayerControl: false,
-                        repeat: true,
-                    },
-                }
-            );
+        const { completed } = await this.progressService.progress('Tractions', 'Vous faites des tractions...', 18000, {
+            task: 'prop_human_muscle_chin_ups',
+            options: {
+                cancellable: true,
+                enablePlayerControl: false,
+                repeat: true,
+            },
+        });
 
-            if (!completed) {
-                return;
-            }
-
-            this.doStrengthExercise();
-
-            await wait(2000);
-
-            await this.animationService.walkToCoords(coords, 500);
+        if (completed) {
+            this.doStrengthExercise('chinUp');
         }
     }
 
-    @Tick(TickInterval.EVERY_FRAME)
+    @Tick(TickInterval.EVERY_SECOND)
     async checkRunning(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
 
-        if (this.runningStartTime) {
-            const duration = (GetGameTimer() - this.runningStartTime) / 1000;
-
-            if (duration >= RUN_DURATION) {
-                this.runningStartTime = null;
-                this.runCount++;
-
-                if (this.runCount > MAX_RUN_COUNT) {
-                    this.notifier.notify("Vous avez beaucoup couru aujourd'hui, reposez vous.", 'error');
-
-                    return;
-                } else {
-                    this.notifier.notify('Vous vous sentez ~g~plus athlétique~s~.', 'success');
-
-                    TriggerServerEvent(ServerEvent.PLAYER_INCREASE_STAMINA);
-                }
-            }
-        }
-
-        if (IsPedRunning(PlayerPedId())) {
-            if (!this.runningStartTime) {
-                this.runningStartTime = GetGameTimer();
-            }
-        } else {
-            this.runningStartTime = null;
+        if (IsPedRunning(PlayerPedId()) || IsPedSwimming(PlayerPedId())) {
+            TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
         }
     }
 
@@ -457,26 +368,5 @@ export class PlayerHealthProvider {
         }
 
         SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
-    }
-
-    @Tick(TickInterval.EVERY_FRAME)
-    async setDamageMultiplier(): Promise<void> {
-        if (!isFeatureEnabled(Feature.MyBodySummer)) {
-            return;
-        }
-
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        const multiplier = player.metadata.strength / 100;
-
-        if (GetSelectedPedWeapon(PlayerPedId()) === UNARMED_WEAPON_HASH) {
-            SetPlayerWeaponDamageModifier(PlayerId(), multiplier);
-        } else {
-            SetPlayerWeaponDamageModifier(PlayerId(), 1.0);
-        }
     }
 }

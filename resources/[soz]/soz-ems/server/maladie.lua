@@ -1,18 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-RegisterServerEvent("lsmc:maladie:server:SetCurrentDisease")
-AddEventHandler("lsmc:maladie:server:SetCurrentDisease", function(disease, id)
-    local Player = QBCore.Functions.GetPlayer(id or source)
-
-    if disease ~= "grippe" then
-        Player.Functions.SetMetaData("disease", disease)
-        TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
-    elseif disease == "grippe" and not Player.PlayerData.metadata["hazmat"] then
-        Player.Functions.SetMetaData("disease", disease)
-        TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", Player.PlayerData.source, disease)
-    end
-end)
-
 RegisterServerEvent("lsmc:surgery:server:SetCurrentOrgan")
 AddEventHandler("lsmc:surgery:server:SetCurrentOrgan", function(organe, id)
     local Player = QBCore.Functions.GetPlayer(id or source)

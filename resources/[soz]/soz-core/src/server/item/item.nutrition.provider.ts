@@ -8,7 +8,8 @@ import { ProgressService } from '../player/progress.service';
 import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
-const EXPIRED_MALUS = -5;
+const INTOXICATED_MALUS = -5;
+const INTOXICATED_NUTRITION_MALUS = -2;
 
 @Provider()
 export class ItemNutritionProvider {
@@ -24,11 +25,19 @@ export class ItemNutritionProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    private lastItemEatByPlayer: Record<string, string> = {};
+
     private async useFoodOrDrink(
         source: number,
         item: FoodItem | DrinkItem | CocktailItem | LiquorItem,
         inventoryItem: InventoryItem
     ): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
         if (!this.item.canPlayerUseItem(source, true)) {
             return;
         }
@@ -83,13 +92,37 @@ export class ItemNutritionProvider {
             firstProp: prop,
         });
 
-        const expired = this.item.isItemExpired(inventoryItem);
-        const hunger = expired ? EXPIRED_MALUS : item.nutrition.hunger * progress;
-        const thirst = expired ? EXPIRED_MALUS : item.nutrition.thirst * progress;
-        let alcohol = expired ? item.nutrition.alcohol * 1.2 : item.nutrition.alcohol * progress;
+        let intoxicatedLuck = 2.0;
+
+        if (isFeatureEnabled(Feature.MyBodySummer)) {
+            if (this.lastItemEatByPlayer[player.citizenid] === item.name) {
+                intoxicatedLuck = 20.0;
+            }
+
+            const totalPercent =
+                player.metadata.sugar +
+                player.metadata.fiber +
+                player.metadata.lipid +
+                player.metadata.protein +
+                item.nutrition.sugar +
+                item.nutrition.fiber +
+                item.nutrition.lipid +
+                item.nutrition.protein;
+
+            const diffPercent = totalPercent - 100;
+
+            if (diffPercent > 0) {
+                intoxicatedLuck += Math.floor(diffPercent / 2);
+            }
+        }
+
+        const intoxicated = Math.random() * 100 <= intoxicatedLuck || this.item.isItemExpired(inventoryItem);
+        const hunger = intoxicated ? INTOXICATED_MALUS : item.nutrition.hunger * progress;
+        const thirst = intoxicated ? INTOXICATED_MALUS : item.nutrition.thirst * progress;
+        let alcohol = intoxicated ? item.nutrition.alcohol * 1.2 : item.nutrition.alcohol * progress;
 
         // Reduce alcohol if drinking a non-alcoholic drink
-        if (!expired && alcohol < 0.1 && thirst > 0.1) {
+        if (!intoxicated && alcohol < 0.1 && thirst > 0.1) {
             alcohol = 0 - item.nutrition.thirst * progress * 0.2;
         }
 
@@ -98,20 +131,41 @@ export class ItemNutritionProvider {
         this.playerService.incrementMetadata(source, 'alcohol', alcohol, 0, 100);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
-            const fiber = expired ? EXPIRED_MALUS : item.nutrition.fiber * progress;
-            const sugar = expired ? EXPIRED_MALUS : item.nutrition.sugar * progress;
-            const protein = expired ? EXPIRED_MALUS : item.nutrition.protein * progress;
-            const lipid = expired ? EXPIRED_MALUS : item.nutrition.lipid * progress;
+            const fiber = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.fiber * progress;
+            const sugar = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.sugar * progress;
+            const protein = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.protein * progress;
+            const lipid = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.lipid * progress;
 
-            this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 200);
-            this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 200);
-            this.playerService.incrementMetadata(source, 'protein', protein, 0, 200);
-            this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 200);
+            this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 25);
+            this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 25);
+            this.playerService.incrementMetadata(source, 'protein', protein, 0, 25);
+            this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 25);
+            const newHealthLevel = this.playerService.incrementMetadata(
+                source,
+                'health_level',
+                fiber + sugar + protein + lipid,
+                0,
+                100
+            );
+
+            if (newHealthLevel !== null) {
+                let maxHealth = 200;
+
+                if (newHealthLevel < 20) {
+                    maxHealth = 120;
+                } else if (newHealthLevel < 40) {
+                    maxHealth = 160;
+                }
+
+                this.playerService.setPlayerMetadata(source, 'max_health', maxHealth);
+            }
         }
 
-        if (expired) {
+        if (intoxicated) {
             this.playerService.setPlayerDisease(source, 'intoxication');
         }
+
+        this.lastItemEatByPlayer[player.citizenid] = item.name;
     }
 
     @Once()
