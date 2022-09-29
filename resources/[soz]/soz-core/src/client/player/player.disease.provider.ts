@@ -151,14 +151,7 @@ export class PlayerDiseaseProvider {
             return;
         }
 
-        let range = DISEASE_RANGE[this.pollution.getPollutionLevel()];
-
-        if (isFeatureEnabled(Feature.MyBodySummer)) {
-            range *= (player.metadata.health_level + 1) / 100;
-        }
-
-        range = Math.max(range, 10);
-
+        const range = Math.max(DISEASE_RANGE[this.pollution.getPollutionLevel()], 10);
         const diseaseApply = Math.round(Math.random() * range);
 
         if (diseaseApply == 1) {

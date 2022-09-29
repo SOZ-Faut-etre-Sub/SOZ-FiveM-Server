@@ -94,6 +94,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['sugar'] = PlayerData.metadata['sugar'] or 70
     PlayerData.metadata['protein'] = PlayerData.metadata['protein'] or 70
     PlayerData.metadata['max_stamina'] = PlayerData.metadata['max_stamina'] or 100
+    PlayerData.metadata['max_health'] = PlayerData.metadata['max_health'] or 200
     PlayerData.metadata['strength'] = PlayerData.metadata['strength'] or 100
     PlayerData.metadata['stress_level'] = PlayerData.metadata['stress_level'] or 0
     PlayerData.metadata['last_max_stamina_update'] = PlayerData.metadata['last_max_stamina_update'] or nil

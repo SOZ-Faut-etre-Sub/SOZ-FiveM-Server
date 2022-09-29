@@ -52,6 +52,24 @@ export type PlayerHealthBook = {
     health_book_protein: number | null;
 };
 
+export type PlayerServerStateExercise = {
+    pushUp: boolean;
+    sitUp: boolean;
+    chinUp: boolean;
+    freeWeight: boolean;
+};
+
+export type PlayerServerState = {
+    yoga: boolean;
+    lostStamina: number;
+    lostStrength: number;
+    runTime: number;
+    exercisePushUp: boolean;
+    exercise: PlayerServerStateExercise & {
+        completed: number;
+    };
+};
+
 export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
@@ -66,6 +84,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     sugar: number;
     protein: number;
     max_stamina: number;
+    max_health: number;
     strength: number;
     stress_level: number;
     health_level: number;

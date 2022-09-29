@@ -1,8 +1,12 @@
 import { On, Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Rpc } from '../../core/decorators/rpc';
 import { Permissions } from '../../core/permissions';
+import { PlayerServerState } from '../../shared/player';
+import { RpcEvent } from '../../shared/rpc';
 import { QBCore } from '../qbcore';
+import { PlayerStateService } from './player.state.service';
 
 @Provider()
 export class PlayerProvider {
@@ -11,6 +15,9 @@ export class PlayerProvider {
 
     @Inject(Permissions)
     private permissions: Permissions;
+
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @On('QBCore:Server:PlayerLoaded', false)
     onPlayerLoaded(player: any) {
@@ -26,5 +33,10 @@ export class PlayerProvider {
 
             this.permissions.addPlayerRole(source, player.PlayerData.role);
         }
+    }
+
+    @Rpc(RpcEvent.PLAYER_GET_SERVER_STATE)
+    public getServerState(source: number): PlayerServerState {
+        return this.playerStateService.get(source);
     }
 }

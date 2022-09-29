@@ -62,11 +62,11 @@ export class PlayerService {
 
         let interval = 2 * 60 * 60 * 1000; // 2 hours
 
-        if (player.PlayerData.metadata.health_level > 80) {
+        if (player.PlayerData.metadata.health_level < 20) {
             interval = 45 * 60 * 1000; // 30 minutes
-        } else if (player.PlayerData.metadata.health_level > 60) {
+        } else if (player.PlayerData.metadata.health_level < 40) {
             interval = 45 * 60 * 1000; // 45 minutes
-        } else if (player.PlayerData.metadata.health_level > 40) {
+        } else if (player.PlayerData.metadata.health_level < 60) {
             interval = 1 * 60 * 60 * 1000; // 1 hour
         }
 
@@ -99,7 +99,7 @@ export class PlayerService {
         value: number,
         min = 0,
         max: number | null = null
-    ) {
+    ): number {
         const player = this.QBCore.getPlayer(source);
 
         if (player) {
@@ -115,7 +115,11 @@ export class PlayerService {
             }
 
             player.Functions.SetMetaData(key, newValue);
+
+            return newValue;
         }
+
+        return null;
     }
 
     public hasPermission(source: number, permission: SozRole): boolean {

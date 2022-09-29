@@ -4,13 +4,14 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerData, PlayerMetadata } from '../../shared/player';
+import { PlayerData, PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { RpcEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
 import { PlayerService } from './player.service';
+import { PlayerStateService } from './player.state.service';
 
 const HUNGER_RATE = -1.6;
 const THIRST_RATE = -2.2;
@@ -29,6 +30,9 @@ export class PlayerHealthProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
+
     @Inject(Pollution)
     private pollution: Pollution;
 
@@ -38,16 +42,6 @@ export class PlayerHealthProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private lostStrengthByCitizenId: Record<string, number> = {};
-
-    private strengthExerciseCountByCitizenId: Record<string, number> = {};
-
-    private runTimeByCitizenId: Record<string, number> = {};
-
-    private lostStaminaByCitizenId: Record<string, number> = {};
-
-    private yogaDoneByCitizenId = new Set<string>();
-
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
@@ -55,6 +49,8 @@ export class PlayerHealthProvider {
         if (player === null || player.metadata.godmode || player.metadata.isdead) {
             return;
         }
+
+        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
 
         let hungerDiff = HUNGER_RATE;
         let thirstDiff = THIRST_RATE;
@@ -90,16 +86,12 @@ export class PlayerHealthProvider {
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
 
-                if (
-                    diff > 30 * 60 * 1000 &&
-                    this.lostStaminaByCitizenId[player.citizenid] < 4 &&
-                    this.strengthExerciseCountByCitizenId[player.citizenid] < 4
-                ) {
+                if (diff > 30 * 60 * 1000 && playerState.lostStrength < 4 && playerState.exercise.completed < 4) {
                     this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 60, 150);
                     this.playerService.updatePlayerMaxWeight(source);
-                    this.lostStrengthByCitizenId[player.citizenid] =
-                        this.lostStrengthByCitizenId[player.citizenid] + 1 || 1;
+
+                    playerState.lostStrength += 1;
 
                     this.notifier.notify(source, 'Vous vous sentez ~r~moins puissant~s~.', 'error');
                 }
@@ -112,11 +104,11 @@ export class PlayerHealthProvider {
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
 
-                if (diff > 60 * 60 * 1000 && this.lostStaminaByCitizenId[player.citizenid] < 3) {
+                if (diff > 60 * 60 * 1000 && playerState.lostStamina < 3) {
                     this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 60, 150);
-                    this.lostStaminaByCitizenId[player.citizenid] =
-                        this.lostStaminaByCitizenId[player.citizenid] + 1 || 1;
+
+                    playerState.lostStamina += 1;
 
                     this.notifier.notify(source, 'Vous vous sentez ~r~moins athlétique~s~.', 'error');
                 }
@@ -143,19 +135,21 @@ export class PlayerHealthProvider {
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)
-    public async increaseStrength(source: number): Promise<void> {
+    public async increaseStrength(source: number, exercise: keyof PlayerServerStateExercise): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (player === null || player.metadata.godmode || player.metadata.isdead) {
             return;
         }
 
-        if (this.strengthExerciseCountByCitizenId[player.citizenid] >= 4) {
+        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+
+        if (playerState.exercise[exercise]) {
             return;
         }
 
-        this.strengthExerciseCountByCitizenId[player.citizenid] =
-            this.strengthExerciseCountByCitizenId[player.citizenid] + 1 || 1;
+        playerState.exercise[exercise] = true;
+        playerState.exercise.completed += 1;
 
         this.playerService.incrementMetadata(source, 'strength', 2, 60, 150);
         this.playerService.updatePlayerMaxWeight(source);
@@ -181,7 +175,29 @@ export class PlayerHealthProvider {
             return;
         }
 
-        this.runTimeByCitizenId[player.citizenid] = this.runTimeByCitizenId[player.citizenid] + 1 || 1;
+        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+
+        playerState.runTime += 1;
+
+        if (playerState.runTime % 60 === 0) {
+            const minutes = playerState.runTime / 60;
+
+            if (minutes < 8) {
+                this.notifier.notify(
+                    source,
+                    `Tu as couru durant ${minutes} ${
+                        minutes === 1 ? 'minute' : 'minutes'
+                    } ! Tu te sens de plus en plus endurant, continue comme ça.`,
+                    'success'
+                );
+            } else if (minutes === 8) {
+                this.notifier.notify(
+                    source,
+                    "Tu as couru tes 8 minutes de la journée ! Tu te sens en forme pour toute la journée. Courir n'améliore plus ton endurance, et ce, jusqu'au lendemain.",
+                    'success'
+                );
+            }
+        }
     }
 
     @OnEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK)
@@ -202,11 +218,14 @@ export class PlayerHealthProvider {
             return;
         }
 
-        if (this.yogaDoneByCitizenId.has(player.citizenid)) {
+        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+
+        if (playerState.yoga) {
             return;
         }
 
-        this.yogaDoneByCitizenId.add(player.citizenid);
+        playerState.yoga = true;
+
         await this.increaseStress(source, -8);
     }
 
@@ -219,43 +238,5 @@ export class PlayerHealthProvider {
         }
 
         return targetPlayer;
-    }
-
-    @Rpc(RpcEvent.PLAYER_GET_HEALTH_EXERCISE_DATA)
-    public getHealthExerciseData(source: number): { runTime: number; strengthExerciseCount: number } | null {
-        const player = this.playerService.getPlayer(source);
-
-        if (player === null) {
-            return null;
-        }
-
-        return {
-            runTime: this.runTimeByCitizenId[player.citizenid] || 0,
-            strengthExerciseCount: this.strengthExerciseCountByCitizenId[player.citizenid] || 0,
-        };
-    }
-
-    @OnEvent(ServerEvent.PLAYER_NUTRITION_CHECK)
-    public async checkHealth(source: number): Promise<void> {
-        const player = this.playerService.getPlayer(source);
-
-        if (player === null || player.metadata.godmode || player.metadata.isdead) {
-            return;
-        }
-
-        const keys = ['fiber', 'lipid', 'sugar', 'protein'] as Array<keyof PlayerMetadata>;
-        let badKeys = 0;
-
-        for (const key of keys) {
-            if (player.metadata[key] < 1 || player.metadata[key] >= 100) {
-                badKeys++;
-            }
-        }
-
-        if (badKeys > 0) {
-            this.playerService.incrementMetadata(source, 'health_level', -badKeys, 0, 100);
-        } else {
-            this.playerService.incrementMetadata(source, 'health_level', 1, 0, 100);
-        }
     }
 }
