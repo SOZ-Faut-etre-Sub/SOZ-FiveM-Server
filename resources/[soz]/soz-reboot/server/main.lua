@@ -26,7 +26,7 @@ local reboot = function()
 
     print("[soz-reboot] Mise des véhicules à la fourrière")
     MySQL.Sync.execute("UPDATE player_vehicles SET state = 2, garage = 'fourriere', parkingtime = ?, life_counter = life_counter - 1 WHERE state = 0",
-    {parkingtime})
+                       {parkingtime})
 
     local parkingtime = os.time()
     print("[soz-reboot] Mise des véhicules dans le void...")
