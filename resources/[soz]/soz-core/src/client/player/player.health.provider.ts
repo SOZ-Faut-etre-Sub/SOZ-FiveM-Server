@@ -305,6 +305,16 @@ export class PlayerHealthProvider {
             return;
         }
 
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        if (player.metadata.isdead || player.metadata.disease !== false) {
+            return;
+        }
+
         if (IsPedRunning(PlayerPedId()) || IsPedSwimming(PlayerPedId())) {
             TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
         }
