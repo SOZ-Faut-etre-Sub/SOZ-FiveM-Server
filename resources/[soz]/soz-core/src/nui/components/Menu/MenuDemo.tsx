@@ -35,6 +35,7 @@ export const MenuDemo: FunctionComponent = () => {
                     <MenuItemText>Text 1</MenuItemText>
                     <MenuItemSubMenuLink id="submenu1">Submenu 1</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="submenu3">Submenu 3</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="submenu4">Submenu 4 (a lot of items)</MenuItemSubMenuLink>
                     <MenuItemCheckbox disabled>Checkbox 1</MenuItemCheckbox>
                     <MenuItemCheckbox checked onChange={value => console.log('checkbox 2', value)}>
                         Checkbox 2
@@ -59,6 +60,57 @@ export const MenuDemo: FunctionComponent = () => {
             <SubMenu id="submenu3">
                 <MenuTitle banner={banner}>Sub Menu 3</MenuTitle>
                 <MenuContent>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id="submenu4">
+                <MenuTitle banner={banner}>Sub Menu 4</MenuTitle>
+                <MenuContent>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 1</MenuItemButton>
+                    <MenuItemButton>Sub Menu Button 2</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 1</MenuItemButton>
                     <MenuItemButton>Sub Menu Button 2</MenuItemButton>
                 </MenuContent>

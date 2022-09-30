@@ -71,7 +71,7 @@ export const MainMenu: FunctionComponent<PropsWithChildren> = ({ children }) => 
 };
 
 export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    return <div className="absolute left-8 top-8 w-1/5 min-w-[24rem] max-h-[50vh]">{children}</div>;
+    return <div className="absolute left-8 top-8 w-1/5 min-w-[24rem]">{children}</div>;
 };
 
 export type MenuTitleProps = {
@@ -105,7 +105,9 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
             <MenuContext.Provider value={{ activeIndex, setActiveIndex }}>
                 <MenuControls>
-                    <ul className="p-2 bg-black/50 rounded-b-lg">{children}</ul>
+                    <ul className="p-2 bg-black/50 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                        {children}
+                    </ul>
                 </MenuControls>
             </MenuContext.Provider>
         </DescendantProvider>
@@ -188,8 +190,12 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
     useEffect(() => {
         if (isSelected) {
             onSelected && onSelected();
+
+            if (ref) {
+                ref.current.scrollIntoView();
+            }
         }
-    }, [isSelected]);
+    }, [isSelected, ref]);
 
     useEnter(() => {
         if (!isSelected) {
