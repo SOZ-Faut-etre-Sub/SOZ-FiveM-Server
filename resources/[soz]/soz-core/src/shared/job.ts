@@ -25,21 +25,15 @@ export type Job = {
     // Must use the getJobs method to generate the id from the object.
     id: JobType;
     grades: {
-        [key: string]: {
-            id: number;
-            is_default: boolean;
-            jobId: string;
-            name: string;
-            owner: number;
-            permissions: {
-                [key: string]: {
-                    label: string;
-                };
-            }[];
-            salary: number;
-            weight: number;
-        };
-    };
+        id: number;
+        is_default: boolean;
+        jobId: string;
+        name: string;
+        owner: number;
+        permissions: string[];
+        salary: number;
+        weight: number;
+    }[];
     label: string;
     permissions: {
         [key: string]: {

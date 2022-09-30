@@ -33,10 +33,11 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
     const [currentJobGradeIndex, setCurrentJobGradeIndex] = useState<number>(undefined);
     const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
     const [jobs, setJobs] = useState<Job[]>([]);
-    const [grades, setGrades] = useState<Job['grades']>({});
+    const [grades, setGrades] = useState<Job['grades']>([]);
 
     useNuiEvent('admin_job_submenu', 'SetJobs', jobs => {
         setJobs(jobs);
+        setGrades(jobs[0].grades);
     });
 
     useEffect(() => {
@@ -75,11 +76,20 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                     title="Changer de métier"
                     value={currentJobIndex || 0}
                     onConfirm={async selectedIndex => {
-                        const jobId = jobs[selectedIndex].id;
+                        const job = jobs[selectedIndex];
 
-                        setCurrentJobId(jobId);
+                        setCurrentJobId(job.id);
                         setCurrentJobIndex(selectedIndex);
                         updateState('job', 'currentJobIndex', selectedIndex);
+
+                        if (job.grades && Object.keys(job.grades).length > 0) {
+                            const currentJobGrade = Object.values(jobs[selectedIndex].grades)[0];
+
+                            await fetchNui(NuiEvent.AdminSetJob, { jobId: job.id, jobGrade: currentJobGrade });
+                            return;
+                        }
+
+                        await fetchNui(NuiEvent.AdminSetJob, { jobId: job.id, jobGrade: 0 });
                     }}
                 >
                     {jobs.map(job => (
@@ -91,7 +101,6 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                     value={currentJobGradeIndex || 0}
                     onConfirm={async selectedIndex => {
                         const job = jobs[currentJobIndex];
-                        console.log('job', job);
                         const currentJobGrade = job.grades[Object.keys(job.grades)[selectedIndex]].id;
 
                         setCurrentJobGradeIndex(selectedIndex);
@@ -99,12 +108,11 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                         await updateState('job', 'currentJobGradeIndex', selectedIndex);
                     }}
                 >
-                    {grades &&
-                        Object.entries(grades)
-                            .sort(([, a], [, b]) => a.name.localeCompare(b.name))
-                            .map(([gradeId, grade]) => (
-                                <MenuItemSelectOption key={gradeId}>{grade.name}</MenuItemSelectOption>
-                            ))}
+                    {grades.map(grade => (
+                        <MenuItemSelectOption key={'grade_' + currentJobIndex + '_' + grade.id}>
+                            {grade.name}
+                        </MenuItemSelectOption>
+                    ))}
                 </MenuItemSelect>
                 <MenuItemCheckbox
                     checked={isOnDuty}

@@ -2,6 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
+import { wait } from '../../core/utils';
 import { AdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
@@ -69,34 +70,46 @@ export class AdminMenuInteractiveProvider {
         }, 1);
     }
 
-    @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayerNames)
-    public async toggleDisplayPlayerNames(): Promise<void> {
-        if (this.intervalHandlers.displayPlayerNames) {
-            clearInterval(this.intervalHandlers.displayPlayerNames);
-            return;
+    private async displayPlayerNames(): Promise<void> {
+        for (const value of Object.values(this.multiplayerTags)) {
+            RemoveMpGamerTag(value);
+            this.multiplayerTags.delete(value);
         }
-        this.intervalHandlers.displayPlayerNames = setInterval(async () => {
-            for (const value of Object.values(this.multiplayerTags)) {
+
+        const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
+
+        players.forEach(player => {
+            this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.source));
+            CreateMpGamerTagWithCrewColor(
+                this.multiplayerTags.get(player.citizenId),
+                player.name,
+                false,
+                false,
+                '',
+                0,
+                0,
+                0,
+                0
+            );
+            SetMpGamerTagVisibility(this.multiplayerTags.get(player.citizenId), 0, true);
+        });
+    }
+
+    @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayerNames)
+    public async toggleDisplayPlayerNames(value: boolean): Promise<void> {
+        if (!value) {
+            console.log(this.multiplayerTags);
+            for (const value of this.multiplayerTags.values()) {
+                SetMpGamerTagVisibility(value, 0, false);
                 RemoveMpGamerTag(value);
             }
-
-            const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
-
-            players.forEach(player => {
-                this.multiplayerTags[player.citizenId] = GetPlayerFromServerId(player.source);
-                CreateMpGamerTagWithCrewColor(
-                    this.multiplayerTags[player.citizenId],
-                    player.name,
-                    false,
-                    false,
-                    '',
-                    0,
-                    0,
-                    0,
-                    0
-                );
-                SetMpGamerTagVisibility(this.multiplayerTags[player.citizenId], 0, true);
-            });
+            clearInterval(this.intervalHandlers.displayPlayerNames);
+            this.intervalHandlers.displayPlayerNames = null;
+            return;
+        }
+        await this.displayPlayerNames();
+        this.intervalHandlers.displayPlayerNames = setInterval(async () => {
+            await this.displayPlayerNames();
         }, 5000);
     }
 
