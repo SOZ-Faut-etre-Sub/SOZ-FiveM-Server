@@ -9,6 +9,7 @@ import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
 import { FightForStyleModule } from './server/job/ffs/ffs.module';
 import { FoodModule } from './server/job/food/food.module';
+import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { PlayerModule } from './server/player/player.module';
 import { StreamModule } from './server/stream/stream.module';
@@ -32,10 +33,12 @@ async function bootstrap() {
         StreamModule,
         ZEventModule,
         AdminModule,
-        VoipModule
+        VoipModule,
+        JobModule
     );
 
     await app.stop();
+
     unloadContainer();
 }
 
