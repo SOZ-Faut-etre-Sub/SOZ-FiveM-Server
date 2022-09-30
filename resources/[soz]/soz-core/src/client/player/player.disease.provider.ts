@@ -5,7 +5,6 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { AnimationService } from '../animation/animation.service';

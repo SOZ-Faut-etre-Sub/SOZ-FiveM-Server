@@ -5,12 +5,14 @@ import { NuiEvent } from '../../../shared/event';
 import { AskInput } from '../../../shared/nui/input';
 import { isErr, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
-import { useInputNuiEvent } from '../../hook/nui';
+import { useInputNuiEvent, useNuiFocus } from '../../hook/nui';
 
 export const InputApp: FunctionComponent = () => {
     const [askInput, setAskInput] = useState<AskInput | null>(null);
     const [value, setValue] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+
+    useNuiFocus(askInput !== null, askInput !== null);
 
     useInputNuiEvent('AskInput', askInput => {
         setAskInput(askInput);

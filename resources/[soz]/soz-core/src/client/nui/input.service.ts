@@ -24,17 +24,11 @@ export class InputService {
 
         this.currentInputValidate = validate;
 
-        const wasFocused = this.nuiDispatch.isNuiFocused;
-        const wasCursor = this.nuiDispatch.isNuiCursor;
-        const wasKeepingInput = this.nuiDispatch.isNuiKeepInput;
-
         this.nuiDispatch.dispatch('input', 'AskInput', input);
         this.nuiDispatch.dispatch('input', 'InInput', true);
-        this.nuiDispatch.setNuiFocus(true, true, false);
 
         const value = await promise;
 
-        this.nuiDispatch.setNuiFocus(wasFocused, wasCursor, wasKeepingInput);
         this.nuiDispatch.dispatch('input', 'InInput', false);
 
         return value;
@@ -53,7 +47,7 @@ export class InputService {
     @OnNuiEvent(NuiEvent.InputSet)
     public async onInput(input: string): Promise<Result<any, string>> {
         if (!this.currentInputValidate) {
-            return;
+            return Ok(null);
         }
 
         if (this.currentInputValidate) {

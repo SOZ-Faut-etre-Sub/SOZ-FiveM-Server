@@ -92,4 +92,5 @@ export enum NuiEvent {
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
     MenuClosed = 'menu_closed',
+    SetFocusInput = 'soz-core:nui:set-focus-input',
 }
