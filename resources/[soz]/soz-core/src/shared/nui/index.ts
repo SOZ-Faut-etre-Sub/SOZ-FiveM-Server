@@ -3,7 +3,12 @@ import { NuiHealthBookMethodMap } from './health_book';
 import { NuiInputMethodMap } from './input';
 import { NuiMenuMethodMap } from './menu';
 
+export interface NuiGlobalMethodMap {
+    PauseMenuActive: boolean;
+}
+
 export interface NuiMethodMap {
+    global: NuiGlobalMethodMap;
     menu: NuiMenuMethodMap;
     input: NuiInputMethodMap;
     health_book: NuiHealthBookMethodMap;

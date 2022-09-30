@@ -1,7 +1,10 @@
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
+import { uuidv4 } from '../../core/utils';
 import { NuiEvent } from '../../shared/event';
 import { eventNameFactory, NuiMethodMap } from '../../shared/nui';
+import { SetFocusInput } from '../../shared/nui/focus';
+import { Result } from '../../shared/result';
 import { fetchNui, FetchNuiOptions } from '../fetch';
 
 function addEventListener<T extends EventTarget, E extends Event>(
@@ -105,4 +108,29 @@ export const useNuiFetch = <I, R>(event: NuiEvent): UseNuiResponse<I, R> => {
     );
 
     return [fetchNuiFn, state];
+};
+
+/**
+ * Allow a component to self register it's nui focus
+ * @param keyboard {boolean} if keyboard should be focus
+ * @param cursor {boolean} if cursor should be focus
+ */
+export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
+    useEffect(() => {
+        const id = uuidv4();
+
+        fetchNui<SetFocusInput, Result<any, any>>(NuiEvent.SetFocusInput, {
+            id,
+            focus: {
+                keyboard,
+                cursor,
+            },
+        });
+
+        return () => {
+            fetchNui<SetFocusInput, Result<any, any>>(NuiEvent.SetFocusInput, {
+                id,
+            });
+        };
+    }, [keyboard, cursor]);
 };
