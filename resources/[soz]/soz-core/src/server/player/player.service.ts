@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { SozRole } from '../../core/permissions';
 import { Disease } from '../../shared/disease';
 import { ClientEvent } from '../../shared/event';
 import { PlayerData, PlayerMetadata } from '../../shared/player';
@@ -120,9 +119,5 @@ export class PlayerService {
         }
 
         return null;
-    }
-
-    public hasPermission(source: number, permission: SozRole): boolean {
-        return this.QBCore.hasPermission(source, permission);
     }
 }

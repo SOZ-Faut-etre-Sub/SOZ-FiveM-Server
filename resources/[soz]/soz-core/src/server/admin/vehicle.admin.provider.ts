@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
+import { PermissionService } from '../permission.service';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
@@ -17,9 +18,12 @@ export class VehicleAdminProvider {
     @Inject(PrismaService)
     private prisma: PrismaService;
 
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
+
     @OnEvent(ServerEvent.ADMIN_VEHICLE_SEE_CAR_PRICE)
     public async seeCarPrice(source: number, modelName: string): Promise<void> {
-        if (!this.playerService.hasPermission(source, 'admin')) {
+        if (!this.permissionService.isAdmin(source)) {
             return;
         }
         const vehicle = await this.prisma.vehicles.findFirst({
@@ -34,7 +38,7 @@ export class VehicleAdminProvider {
 
     @OnEvent(ServerEvent.ADMIN_VEHICLE_CHANGE_CAR_PRICE)
     public async changeCarPrice(source: number, modelName: string, price: number): Promise<void> {
-        if (!this.playerService.hasPermission(source, 'admin')) {
+        if (!this.permissionService.isAdmin(source)) {
             return;
         }
         await this.prisma.vehicles.update({
