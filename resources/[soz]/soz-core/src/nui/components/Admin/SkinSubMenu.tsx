@@ -1,9 +1,8 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import { ClothConfig, ComponentIndex, PropIndex } from '../../../shared/clothing';
+import { ClothSet, ComponentIndex, PropIndex } from '../../../shared/clothing';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
-import { useNuiEvent } from '../../hook/nui';
 import {
     MenuContent,
     MenuItemButton,
@@ -16,102 +15,26 @@ import {
 
 export type SkinSubMenuProps = {
     banner: string;
+    updateState: (namespace: 'skin', key: keyof SkinSubMenuProps['state'], value: any) => void;
+    state: {
+        clothConfig: ClothSet;
+        maxOptions: {
+            componentIndex?: ComponentIndex;
+            propIndex?: PropIndex;
+            maxDrawables: number;
+        }[];
+    };
 };
 
 export interface NuiAdminSkinSubMenuMethodMap {
-    SetMaxOptions: {
-        drawables: number;
-        textures: number;
-        palettes: number;
+    InitializeSubMenu: {
+        clothConfig: ClothSet;
+        maxOptions: {
+            index: ComponentIndex | PropIndex;
+            maxDrawables: number;
+        }[];
     };
 }
-
-const mockSkin: ClothConfig = {
-    components: {
-        [ComponentIndex.Head]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Mask]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Hair]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Torso]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Legs]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Bags]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Shoes]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Accessories]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Undershirt]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.BodyArmor]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Decals]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-        [ComponentIndex.Tops]: {
-            drawableId: 0,
-            textureId: 0,
-            paletteId: 0,
-        },
-    },
-    props: {
-        [PropIndex.Hats]: {
-            drawableId: 0,
-            textureId: 0,
-        },
-        [PropIndex.Glasses]: {
-            drawableId: 0,
-            textureId: 0,
-        },
-        [PropIndex.EarPieces]: {
-            drawableId: 0,
-            textureId: 0,
-        },
-        [PropIndex.Watches]: {
-            drawableId: 0,
-            textureId: 0,
-        },
-        [PropIndex.Bracelets]: {
-            drawableId: 0,
-            textureId: 0,
-        },
-    },
-};
 
 const SKIN_OPTIONS = [
     { key: 'skin_dog', label: 'Chien', value: 'a_c_shepherd' },
@@ -122,39 +45,36 @@ const SKIN_OPTIONS = [
     { key: 'player_male', label: 'Joueur Homme', value: 'mp_m_freemode_01' },
 ];
 
-export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner }) => {
-    const [clothConfig, setClothConfig] = useState<ClothConfig>(null);
-    const [maxDrawable, setMaxDrawable] = useState<number>(0);
-    const [maxTexture, setMaxTexture] = useState<number>(0);
-    const [maxPalette, setMaxPalette] = useState<number>(0);
-    const [currentTextureId, setCurrentTextureId] = useState<number>(0);
+export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updateState, state }) => {
+    const [clothConfig, setClothConfig] = useState<ClothSet>(null);
+    const [maxOptions, setMaxOptions] = useState<SkinSubMenuProps['state']['maxOptions']>([]);
 
-    useNuiEvent('admin_skin_submenu', 'SetMaxOptions', (data: NuiAdminSkinSubMenuMethodMap['SetMaxOptions']) => {
-        setMaxDrawable(data.drawables);
-        setMaxTexture(data.textures);
-        setMaxPalette(data.palettes);
-    });
+    useEffect(() => {
+        if (state && state.clothConfig && state.clothConfig !== clothConfig) {
+            setClothConfig(state.clothConfig);
+        }
+        if (state && state.maxOptions && state.maxOptions !== maxOptions) {
+            setMaxOptions(state.maxOptions);
+        }
+    }, [state]);
 
-    const onComponentChange = async (
-        componentIndex: ComponentIndex,
-        key: 'drawable' | 'texture' | 'palette',
-        value: number
-    ) => {
-        const component = clothConfig.components[ComponentIndex[componentIndex]];
+    const onComponentChange = async (componentIndex: ComponentIndex, key: 'drawable' | 'texture', value: number) => {
+        if (!clothConfig) {
+            return;
+        }
+
+        const component = clothConfig.Components[ComponentIndex[componentIndex]];
 
         switch (key) {
             case 'drawable':
-                component.drawableId = value;
-                component.textureId = 0;
-                setCurrentTextureId(0);
+                component.Drawable = value;
                 break;
             case 'texture':
-                component.textureId = value;
-                break;
-            case 'palette':
-                component.paletteId = value;
+                component.Texture = value;
                 break;
         }
+
+        updateState('skin', 'clothConfig', clothConfig);
 
         await fetchNui(NuiEvent.AdminMenuSkinChangeComponent, {
             componentIndex,
@@ -162,11 +82,26 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner }) => 
         });
     };
 
-    useEffect(() => {
+    const onPropChange = async (propIndex: PropIndex, key: 'drawable' | 'texture', value: number) => {
         if (!clothConfig) {
-            setClothConfig(mockSkin);
+            return;
         }
-    });
+        const prop = clothConfig.Props[PropIndex[propIndex]];
+
+        switch (key) {
+            case 'drawable':
+                prop.Drawable = value;
+                break;
+            case 'texture':
+                prop.Texture = value;
+                break;
+        }
+
+        await fetchNui(NuiEvent.AdminMenuSkinChangeProp, {
+            propIndex,
+            prop,
+        });
+    };
 
     if (!clothConfig) {
         return null;
@@ -223,8 +158,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner }) => 
             <SubMenu id={'player_style_components'}>
                 <MenuTitle banner={banner}>Éléments du personnage</MenuTitle>
                 <MenuContent>
-                    {Object.keys(clothConfig.components).map(componentIndex => (
-                        <MenuItemSubMenuLink id={`player_style_${componentIndex}`} key={componentIndex}>
+                    {Object.keys(clothConfig.Components).map(componentIndex => (
+                        <MenuItemSubMenuLink id={`player_style_component_${componentIndex}`} key={componentIndex}>
                             {`[${componentIndex}] - ${ComponentIndex[componentIndex]}`}
                         </MenuItemSubMenuLink>
                     ))}
@@ -233,25 +168,29 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner }) => 
             <SubMenu id={'player_style_props'}>
                 <MenuTitle banner={banner}>Accessoires du personnage</MenuTitle>
                 <MenuContent>
-                    {Object.keys(clothConfig.props).map(propIndex => (
-                        <MenuItemSubMenuLink id={`player_style_${propIndex}`} key={propIndex}>
+                    {Object.keys(clothConfig.Props).map(propIndex => (
+                        <MenuItemSubMenuLink id={`player_style_prop_${propIndex}`} key={propIndex}>
                             {`[${propIndex}] - ${PropIndex[propIndex]}`}
                         </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
             </SubMenu>
 
-            {Object.keys(clothConfig.components).map(componentIndex => (
-                <SubMenu id={`player_style_${componentIndex}`} key={componentIndex}>
+            {Object.keys(clothConfig.Components).map(componentIndex => (
+                <SubMenu id={`player_style_component_${componentIndex}`} key={componentIndex}>
                     <MenuTitle banner={banner}>{`[${componentIndex}] - ${ComponentIndex[componentIndex]}`}</MenuTitle>
                     <MenuContent>
                         <MenuItemSelect
                             title={`Drawable`}
+                            value={clothConfig.Components[componentIndex].Drawable || 0}
                             onChange={async index => {
                                 await onComponentChange(ComponentIndex[componentIndex], 'drawable', index);
                             }}
                         >
-                            {Array(maxDrawable)
+                            {Array(
+                                maxOptions.find(option => option.componentIndex === Number(componentIndex))
+                                    ?.maxDrawables || 0
+                            )
                                 .fill(0)
                                 .map((_, index) => (
                                     <MenuItemSelectOption key={`${componentIndex}_drawable_${index}`}>
@@ -261,13 +200,12 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner }) => 
                         </MenuItemSelect>
                         <MenuItemSelect
                             title={`Texture`}
-                            value={currentTextureId}
-                            disabled={maxTexture < 1}
+                            value={clothConfig.Components[componentIndex].Texture || 0}
                             onChange={async index => {
                                 await onComponentChange(ComponentIndex[componentIndex], 'texture', index);
                             }}
                         >
-                            {Array(maxTexture)
+                            {Array(20)
                                 .fill(0)
                                 .map((_, index) => (
                                     <MenuItemSelectOption key={`${componentIndex}_texture_${index}`}>
@@ -275,17 +213,40 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner }) => 
                                     </MenuItemSelectOption>
                                 ))}
                         </MenuItemSelect>
+                    </MenuContent>
+                </SubMenu>
+            ))}
+
+            {Object.keys(clothConfig.Props).map(propIndex => (
+                <SubMenu id={`player_style_prop_${propIndex}`} key={propIndex}>
+                    <MenuTitle banner={banner}>{`[${propIndex}] - ${PropIndex[propIndex]}`}</MenuTitle>
+                    <MenuContent>
                         <MenuItemSelect
-                            title={`Palette`}
-                            disabled={maxPalette < 1}
+                            title={`Drawable`}
+                            value={clothConfig.Props[propIndex].Drawable || 0}
                             onChange={async index => {
-                                await onComponentChange(ComponentIndex[componentIndex], 'palette', index);
+                                await onPropChange(PropIndex[propIndex], 'drawable', index);
                             }}
                         >
-                            {Array(maxPalette)
+                            {Array(maxOptions.find(option => option.propIndex === Number(propIndex))?.maxDrawables || 0)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${componentIndex}_palette_${index}`}>
+                                    <MenuItemSelectOption key={`${propIndex}_drawable_${index}`}>
+                                        {index}
+                                    </MenuItemSelectOption>
+                                ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={`Texture`}
+                            value={clothConfig.Props[propIndex].Texture || 0}
+                            onChange={async index => {
+                                await onPropChange(PropIndex[propIndex], 'texture', index);
+                            }}
+                        >
+                            {Array(20)
+                                .fill(0)
+                                .map((_, index) => (
+                                    <MenuItemSelectOption key={`${propIndex}_texture_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}

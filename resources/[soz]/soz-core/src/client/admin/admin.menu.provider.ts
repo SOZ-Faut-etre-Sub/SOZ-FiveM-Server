@@ -5,12 +5,16 @@ import { Provider } from '../../core/decorators/provider';
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
 
 @Provider()
 export class AdminMenuProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(ClothingService)
+    private clothingService: ClothingService;
 
     private menuState: AdminMenuStateProps['data']['state'] = {
         gameMaster: {
@@ -28,6 +32,10 @@ export class AdminMenuProvider {
             currentJobIndex: undefined,
             currentJobGradeIndex: undefined,
             isOnDuty: false,
+        },
+        skin: {
+            clothConfig: undefined,
+            maxOptions: [],
         },
         developer: {
             noClip: false,
@@ -47,6 +55,10 @@ export class AdminMenuProvider {
             this.nuiMenu.closeMenu();
             return;
         }
+
+        this.menuState.skin.clothConfig = this.clothingService.getClothSet();
+        this.menuState.skin.maxOptions = this.clothingService.getMaxOptions();
+
         this.nuiMenu.openMenu<MenuType.AdminMenu>(MenuType.AdminMenu, {
             state: this.menuState,
         });

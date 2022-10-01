@@ -1,14 +1,13 @@
-export type ClothConfig = {
-    components: {
+export type ClothSet = {
+    Components: {
         [key in ComponentIndex]?: ClothComponent;
     };
-    props: {
+    Props: {
         [key in PropIndex]?: ClothProp;
     };
 };
 
 export enum ComponentIndex {
-    Head = 0,
     Mask = 1,
     Hair = 2,
     Torso = 3,
@@ -23,9 +22,9 @@ export enum ComponentIndex {
 }
 
 export type ClothComponent = {
-    drawableId: number;
-    textureId: number;
-    paletteId: number;
+    Drawable: number;
+    Texture: number;
+    Palette: number;
 };
 
 export enum PropIndex {
@@ -37,7 +36,7 @@ export enum PropIndex {
 }
 
 export type ClothProp = {
-    drawableId: number;
-    textureId: number;
+    Drawable: number;
+    Texture: number;
     attach?: boolean;
 };

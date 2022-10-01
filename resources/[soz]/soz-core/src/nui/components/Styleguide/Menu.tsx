@@ -411,7 +411,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         if (value) {
             setActiveOptionIndex(value);
         }
-    }, [value]);
+    }, [value, children]);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex);

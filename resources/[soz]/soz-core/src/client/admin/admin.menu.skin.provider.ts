@@ -1,7 +1,7 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClothComponent, ComponentIndex } from '../../shared/clothing';
+import { ClothComponent, ClothProp, ComponentIndex, PropIndex } from '../../shared/clothing';
 import { NuiEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { ClothingService } from '../clothing/clothing.service';
@@ -65,35 +65,39 @@ export class AdminMenuSkinProvider {
         componentIndex: ComponentIndex;
         component: ClothComponent;
     }) {
-        const componentId = Number(ComponentIndex[componentIndex]);
-        SetPedComponentVariation(
-            PlayerPedId(),
-            componentId,
-            component.drawableId || 0,
-            component.textureId || 0,
-            component.paletteId || 0
-        );
+        this.clothingService.applyComponent(componentIndex, component);
 
-        const maxDrawable = GetNumberOfPedDrawableVariations(PlayerPedId(), componentId);
-        const maxTexture = GetNumberOfPedTextureVariations(PlayerPedId(), componentId, component.drawableId || 0);
-        const maxPalette = GetPedPaletteVariation(PlayerPedId(), componentId);
+        return Ok(true);
+    }
+    @OnNuiEvent(NuiEvent.AdminMenuSkinChangeProp)
+    public async onSkinChangeProp({ propIndex, prop }: { propIndex: PropIndex; prop: ClothProp }) {
+        this.clothingService.applyProp(propIndex, prop);
 
-        this.nuiDispatch.dispatch('admin_skin_submenu', 'SetMaxOptions', {
-            drawables: maxDrawable,
-            textures: maxTexture,
-            palettes: maxPalette,
-        });
         return Ok(true);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinCopy)
     public async onSkinCopy() {
-        exports['soz-utils'].CopyToClipboard(JSON.stringify(this.clothingService.getClothing()));
+        exports['soz-utils'].CopyToClipboard(JSON.stringify(this.clothingService.getClothSet()));
         this.notifier.notify('Tenue copié dans le presse-papier');
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuVehicleSave)
+    @OnNuiEvent(NuiEvent.AdminMenuSkinSave)
     public async onSkinSave() {
-        TriggerServerEvent('admin:skin:UpdateClothes', this.clothingService.getClothing());
+        const clothSet = this.clothingService.getClothSet();
+        const Components: ClothComponent[] = Object.entries(clothSet.Components)
+            .sort(([a], [b]) => Number(a) - Number(b))
+            .map(([componentIndex, component]) => ({
+                ...component,
+                component: componentIndex,
+            }));
+        const Props: ClothProp[] = Object.entries(clothSet.Props)
+            .sort(([a], [b]) => Number(a) - Number(b))
+            .map(([propIndex, prop]) => ({
+                ...prop,
+                prop: propIndex,
+            }));
+
+        TriggerServerEvent('admin:skin:UpdateClothes', { Components, Props });
     }
 }
