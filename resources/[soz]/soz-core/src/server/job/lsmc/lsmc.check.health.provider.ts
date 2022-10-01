@@ -2,7 +2,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { healthLevelToLabel, LabelStrategy } from '../../../shared/health';
+import { healthLevelToLabel, stressLevelToLabel } from '../../../shared/health';
 import { PlayerHealthBook } from '../../../shared/player';
 import { InventoryManager } from '../../item/inventory.manager';
 import { Notifier } from '../../notifier';
@@ -102,14 +102,9 @@ export class LSMCCheckHealthProvider {
         }
 
         const healthStateLabel = healthLevelToLabel(targetPlayer.metadata.health_level, 0, 100);
-        const stressLevelLabel = healthLevelToLabel(
-            targetPlayer.metadata.stress_level,
-            0,
-            100,
-            LabelStrategy.MinMaxInverted
-        );
-        const maxStaminaLevelLabel = healthLevelToLabel(targetPlayer.metadata.max_stamina, 0, 100);
-        const strengthLevelLabel = healthLevelToLabel(targetPlayer.metadata.strength, 0, 100);
+        const stressLevelLabel = stressLevelToLabel(targetPlayer.metadata.stress_level);
+        const maxStaminaLevelLabel = healthLevelToLabel(targetPlayer.metadata.max_stamina, 60, 150);
+        const strengthLevelLabel = healthLevelToLabel(targetPlayer.metadata.strength, 60, 150);
 
         this.notifier.notify(
             source,

@@ -71,6 +71,7 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
+    PLAYER_UPDATE = 'soz-core:client:player:update',
 
     PROGRESS_START = 'soz-core:client:progress:start',
 

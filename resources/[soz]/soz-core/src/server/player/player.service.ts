@@ -42,7 +42,7 @@ export class PlayerService {
         }
     }
 
-    public setPlayerDisease(source: number, disease: Disease | false) {
+    public setPlayerDisease(source: number, disease: Disease = false) {
         const player = this.QBCore.getPlayer(source);
 
         if (!player) {

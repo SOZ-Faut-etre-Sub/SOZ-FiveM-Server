@@ -17,10 +17,6 @@ const HUNGER_RATE = -1.6;
 const THIRST_RATE = -2.2;
 const ALCOHOL_RATE = -3.8;
 const DRUG_RATE = -2.1;
-const FIBER_RATE = -0.5;
-const LIPID_RATE = -0.5;
-const SUGAR_RATE = -0.5;
-const PROTEIN_RATE = -0.5;
 const STRENGTH_RATE = -1.0;
 const MAX_STAMINA_RATE = -2.0;
 const STRESS_RATE = -1.0;
@@ -74,11 +70,6 @@ export class PlayerHealthProvider {
         this.playerService.incrementMetadata(source, 'drug', DRUG_RATE, 0, 200);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
-            this.playerService.incrementMetadata(source, 'fiber', FIBER_RATE, 0, 200);
-            this.playerService.incrementMetadata(source, 'lipid', LIPID_RATE, 0, 200);
-            this.playerService.incrementMetadata(source, 'sugar', SUGAR_RATE, 0, 200);
-            this.playerService.incrementMetadata(source, 'protein', PROTEIN_RATE, 0, 200);
-
             if (!player.metadata.last_strength_update) {
                 this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
             } else {
@@ -104,7 +95,7 @@ export class PlayerHealthProvider {
                 const now = new Date();
                 const diff = now.getTime() - lastUpdate.getTime();
 
-                if (diff > 60 * 60 * 1000 && playerState.lostStamina < 3) {
+                if (diff > 60 * 60 * 1000 && playerState.lostStamina < 3 && playerState.runTime < 60 * 8) {
                     this.playerService.setPlayerMetadata(source, 'last_max_stamina_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 60, 150);
 
@@ -125,7 +116,7 @@ export class PlayerHealthProvider {
                     this.playerService.setPlayerMetadata(source, 'last_stress_level_update', new Date().toUTCString());
                     this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, 0, 100);
 
-                    this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'error');
+                    this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
                 }
             }
         }
@@ -179,8 +170,16 @@ export class PlayerHealthProvider {
 
         playerState.runTime += 1;
 
+        if (playerState.runTime > 60 * 8) {
+            return;
+        }
+
         if (playerState.runTime % 60 === 0) {
             const minutes = playerState.runTime / 60;
+
+            if (playerState.runTime % 120 == 0) {
+                this.playerService.incrementMetadata(source, 'max_stamina', 1);
+            }
 
             if (minutes < 8) {
                 this.notifier.notify(
