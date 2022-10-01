@@ -527,7 +527,7 @@ Config.AnimationsList = {
         },
         {"Départ de course", "DESC", false, false, {"random@street_race", "grid_girl_race_start", 262144}},
         {"Faire des abdos", "DESC", false, false, {event = "soz-core:client:player:health:sit-up"}, "💪"},
-        {"Faire des altères", "DESC", false, false, {event = "soz-core:client:player:health:free-weight"}, "💪"},
+        {"Faire des haltères", "DESC", false, false, {event = "soz-core:client:player:health:free-weight"}, "💪"},
         {"Faire des pompes", "DESC", false, false, {event = "soz-core:client:player:health:push-up"}, "💪"},
         {"Faire du yoga", "DESC", false, false, {event = "soz-core:client:player:health:yoga"}, "🧘"},
         {"Karate", "DESC", false, false, {"anim@mp_player_intcelebrationfemale@karate_chops", "karate_chops", 262144}},

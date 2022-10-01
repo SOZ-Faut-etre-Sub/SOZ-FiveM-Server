@@ -102,6 +102,8 @@ const FREE_WEIGHT_COORDS = [
     },
 ];
 
+const EXERCISE_TIME = 90_000;
+
 @Provider()
 export class PlayerHealthProvider {
     @Inject(PlayerService)
@@ -203,7 +205,7 @@ export class PlayerHealthProvider {
             },
         });
 
-        const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', 20000);
+        const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', EXERCISE_TIME);
 
         if (completed) {
             await this.doStrengthExercise('pushUp');
@@ -247,7 +249,11 @@ export class PlayerHealthProvider {
             },
         });
 
-        const { completed } = await this.progressService.progress('Abdominaux', 'Vous faites des abdos...', 20000);
+        const { completed } = await this.progressService.progress(
+            'Abdominaux',
+            'Vous faites des abdos...',
+            EXERCISE_TIME
+        );
 
         if (completed) {
             await this.doStrengthExercise('sitUp');
@@ -264,14 +270,19 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress('Altères', 'Vous faites des altères...', 20000, {
-            task: 'world_human_muscle_free_weights',
-            options: {
-                cancellable: true,
-                enablePlayerControl: false,
-                repeat: true,
-            },
-        });
+        const { completed } = await this.progressService.progress(
+            'Haltères',
+            'Vous faites des haltères...',
+            EXERCISE_TIME,
+            {
+                task: 'world_human_muscle_free_weights',
+                options: {
+                    cancellable: true,
+                    enablePlayerControl: false,
+                    repeat: true,
+                },
+            }
+        );
 
         if (completed) {
             await this.doStrengthExercise('freeWeight');
@@ -285,14 +296,19 @@ export class PlayerHealthProvider {
 
         await this.animationService.walkToCoords(coords, 2000);
 
-        const { completed } = await this.progressService.progress('Tractions', 'Vous faites des tractions...', 18000, {
-            task: 'prop_human_muscle_chin_ups',
-            options: {
-                cancellable: true,
-                enablePlayerControl: false,
-                repeat: true,
-            },
-        });
+        const { completed } = await this.progressService.progress(
+            'Tractions',
+            'Vous faites des tractions...',
+            EXERCISE_TIME,
+            {
+                task: 'prop_human_muscle_chin_ups',
+                options: {
+                    cancellable: true,
+                    enablePlayerControl: false,
+                    repeat: true,
+                },
+            }
+        );
 
         if (completed) {
             this.doStrengthExercise('chinUp');
@@ -361,7 +377,7 @@ export class PlayerHealthProvider {
         for (const { name, zone } of FREE_WEIGHT_COORDS) {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
-                    label: 'Faire des altères',
+                    label: 'Faire des haltères',
                     canInteract: () => true,
                     action: () => {
                         this.doFreeWeight();

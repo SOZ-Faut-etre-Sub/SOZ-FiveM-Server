@@ -6,6 +6,22 @@ export enum LabelStrategy {
     MinMaxAverage,
 }
 
+export const stressLevelToLabel = (level: number | null): string => {
+    if (level < 40) {
+        return 'bon';
+    }
+
+    if (level <= 60) {
+        return 'moyen';
+    }
+
+    if (level <= 80) {
+        return 'élevé';
+    }
+
+    return 'très élevé';
+};
+
 export const healthLevelToLabel = (
     level: number | null,
     min: number,
