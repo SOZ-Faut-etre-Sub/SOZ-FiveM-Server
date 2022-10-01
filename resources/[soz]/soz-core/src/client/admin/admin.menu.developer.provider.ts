@@ -63,11 +63,11 @@ export class AdminMenuDeveloperProvider {
         switch (type) {
             case 'vector3':
                 // FIXME: This is not working
-                exports['soz-utils'].CopyToClipboard(`vector3(${x}, ${y}, ${z})`);
+                SendNUIMessage({ string: `vector3(${x}, ${y}, ${z})` });
                 break;
             case 'vector4':
                 // FIXME: This is not working
-                exports['soz-utils'].CopyToClipboard(`vector4(${x}, ${y}, ${z}, ${heading})`);
+                SendNUIMessage({ string: `vector4(${x}, ${y}, ${z}, ${heading})` });
                 break;
         }
     }

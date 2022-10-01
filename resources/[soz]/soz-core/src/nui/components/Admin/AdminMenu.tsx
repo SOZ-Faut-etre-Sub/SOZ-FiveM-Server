@@ -14,6 +14,7 @@ import { VehicleSubMenu } from './VehicleSubMenu';
 
 export type AdminMenuStateProps = {
     data: {
+        banner: string;
         state: {
             gameMaster: GameMasterSubMenuProps['state'];
             interactive: InteractiveSubMenuProps['state'];
@@ -25,12 +26,15 @@ export type AdminMenuStateProps = {
 };
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_admin_admin';
     const [state, setState] = useState<AdminMenuStateProps['data']['state']>(null);
+    const [banner, setBanner] = useState<string>(null);
 
     useEffect(() => {
         if (data && data.state) {
             setState(data.state);
+        }
+        if (data && data.banner) {
+            setBanner(data.banner);
         }
     }, [data]);
 
