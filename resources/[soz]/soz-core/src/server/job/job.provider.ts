@@ -27,7 +27,7 @@ export class JobProvider {
         grades.forEach(grade => {
             const job = jobs.find(j => j.id === grade.jobId);
             if (job) {
-                if (!job.grades) {
+                if (typeof job.grades === 'object') {
                     job.grades = [];
                 }
                 job.grades.push({

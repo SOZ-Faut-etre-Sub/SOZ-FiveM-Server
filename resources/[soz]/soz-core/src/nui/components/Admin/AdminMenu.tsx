@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle, SubMenu } from '../Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle } from '../Styleguide/Menu';
 import { DeveloperSubMenu, DeveloperSubMenuProps } from './DeveloperSubMenu';
 import { GameMasterSubMenu, GameMasterSubMenuProps } from './GamemasterSubMenu';
 import { InteractiveSubMenu, InteractiveSubMenuProps } from './InteractiveSubMenu';
@@ -18,6 +18,7 @@ export type AdminMenuStateProps = {
             gameMaster: GameMasterSubMenuProps['state'];
             interactive: InteractiveSubMenuProps['state'];
             job: JobSubMenuProps['state'];
+            skin: SkinSubMenuProps['state'];
             developer: DeveloperSubMenuProps['state'];
         };
     };
@@ -59,7 +60,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <GameMasterSubMenu banner={banner} updateState={updateState} state={state.gameMaster} />
             <InteractiveSubMenu banner={banner} updateState={updateState} state={state.interactive} />
             <JobSubMenu banner={banner} updateState={updateState} state={state.job} />
-            <SkinSubMenu banner={banner} />
+            <SkinSubMenu banner={banner} updateState={updateState} state={state.skin} />
             <VehicleSubMenu banner={banner} />
             <PlayerSubMenu banner={banner} />
             <DeveloperSubMenu banner={banner} state={state.developer} updateState={updateState} />

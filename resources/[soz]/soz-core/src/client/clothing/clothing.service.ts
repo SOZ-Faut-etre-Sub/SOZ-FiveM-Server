@@ -1,63 +1,95 @@
 import { Injectable } from '../../core/decorators/injectable';
-import { ClothComponent, ClothConfig, ClothProp, ComponentIndex, PropIndex } from '../../shared/clothing';
+import { ClothComponent, ClothProp, ClothSet, ComponentIndex, PropIndex } from '../../shared/clothing';
 
 @Injectable()
 export class ClothingService {
     public applyComponent(componentIndex: ComponentIndex, component: ClothComponent) {
+        let componentId = Number(componentIndex);
+        if (isNaN(componentId)) {
+            componentId = Number(ComponentIndex[componentIndex]);
+        }
+
         SetPedComponentVariation(
             PlayerPedId(),
-            componentIndex,
-            component.drawableId,
-            component.textureId,
-            component.paletteId
+            componentId,
+            component.Drawable || 0,
+            component.Texture || 0,
+            component.Palette || 0
         );
     }
 
     public applyProp(propIndex: PropIndex, prop: ClothProp) {
-        SetPedPropIndex(PlayerPedId(), propIndex, prop.drawableId, prop.textureId, prop.attach || true);
+        let propId = Number(propIndex);
+        if (isNaN(propId)) {
+            propId = Number(PropIndex[propIndex]);
+        }
+
+        SetPedPropIndex(PlayerPedId(), propId, prop.Drawable || 0, prop.Texture || 0, prop.attach || true);
     }
 
-    public applyClothes(skin: ClothConfig) {
-        for (const [componentIndex, component] of Object.entries(skin.components)) {
+    public applyClothes(skin: ClothSet) {
+        for (const [componentIndex, component] of Object.entries(skin.Components)) {
             this.applyComponent(Number(componentIndex), component);
         }
 
-        for (const [propIndex, prop] of Object.entries(skin.props)) {
+        for (const [propIndex, prop] of Object.entries(skin.Props)) {
             this.applyProp(Number(propIndex), prop);
         }
     }
 
-    public getClothing(): ClothConfig {
-        const components: ClothConfig['components'] = {};
+    public getClothSet(): ClothSet {
+        const components: ClothSet['Components'] = {};
 
-        for (const componentIndex of Object.keys(ComponentIndex).filter(key => !isNaN(Number(key)) && key !== '7')) {
-            const componentId = Number(ComponentIndex[componentIndex]);
+        for (const componentIndex of Object.keys(ComponentIndex).filter(key => !isNaN(Number(key)))) {
+            const componentId = Number(componentIndex);
             const drawableId = GetPedDrawableVariation(PlayerPedId(), componentId);
             const textureId = GetPedTextureVariation(PlayerPedId(), componentId);
-            const paletteId = GetPedPaletteVariation(PlayerPedId(), componentId);
 
             components[componentIndex] = {
-                drawableId,
-                textureId,
-                paletteId,
+                Drawable: drawableId,
+                Texture: textureId,
+                Palette: 0,
             };
         }
 
-        const props: ClothConfig['props'] = {};
-        for (const propIndex of Object.values(PropIndex)) {
-            const propId = PropIndex[propIndex];
+        const props: ClothSet['Props'] = {};
+        for (const propIndex of Object.values(PropIndex).filter(key => !isNaN(Number(key)))) {
+            const propId = Number(propIndex);
             const drawableId = GetPedPropIndex(PlayerPedId(), propId);
             const textureId = GetPedPropTextureIndex(PlayerPedId(), propId);
 
             props[propIndex] = {
-                drawableId,
-                textureId,
+                Drawable: drawableId,
+                Texture: textureId,
             };
         }
 
         return {
-            components,
-            props,
+            Components: components,
+            Props: props,
         };
+    }
+
+    public getMaxOptions() {
+        const maxOptions = [];
+        for (const componentIndex of Object.values(ComponentIndex).filter(key => !isNaN(Number(key)) && key !== '7')) {
+            const componentId = Number(componentIndex);
+            const maxDrawable = GetNumberOfPedDrawableVariations(PlayerPedId(), componentId);
+            maxOptions.push({
+                componentIndex: componentIndex,
+                maxDrawables: maxDrawable,
+            });
+        }
+
+        for (const propIndex of Object.values(PropIndex).filter(key => !isNaN(Number(key)))) {
+            const propId = Number(propIndex);
+            const maxDrawable = GetNumberOfPedPropDrawableVariations(PlayerPedId(), propId);
+            maxOptions.push({
+                propIndex: propIndex,
+                maxDrawables: maxDrawable,
+            });
+        }
+
+        return maxOptions;
     }
 }

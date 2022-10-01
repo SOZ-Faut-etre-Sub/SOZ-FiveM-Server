@@ -23,7 +23,6 @@ export class AdminMenuJobProvider {
     @OnNuiEvent(NuiEvent.AdminGetJobs)
     public async getJobs(): Promise<void> {
         const jobs = await emitRpc<Job[]>(RpcEvent.JOB_GET_JOBS);
-        console.log(jobs);
         this.nuiDispatch.dispatch('admin_job_submenu', 'SetJobs', jobs);
     }
 
