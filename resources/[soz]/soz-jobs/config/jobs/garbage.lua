@@ -6,7 +6,7 @@ GarbageConfig.Processing = {Duration = 60 * 1000, ProcessingStorage = "garbage_p
 
 GarbageConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
-        ["En essai"] = {
+        ["Essai"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
@@ -21,7 +21,7 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
-        ["Employé"] = {
+        ["Junior"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
@@ -36,7 +36,7 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
-        ["Confirmé(e)"] = {
+        ["Senior"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
@@ -53,7 +53,7 @@ GarbageConfig.Cloakroom = {
         },
     },
     [GetHashKey("mp_f_freemode_01")] = {
-        ["En essai"] = {
+        ["Essai"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
@@ -68,7 +68,7 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
-        ["Employé"] = {
+        ["Junior"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
@@ -83,7 +83,7 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
-        ["Confirmé(e)"] = {
+        ["Senior"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
