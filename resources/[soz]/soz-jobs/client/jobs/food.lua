@@ -290,7 +290,7 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
 
                 TriggerEvent("jobs:client:food-harvest-milk")
             end
-        end)
+        end, GetClockHours())
     end, function()
         exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la collecte de pot de lait", "error")
     end)

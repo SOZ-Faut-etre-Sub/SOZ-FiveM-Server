@@ -107,7 +107,7 @@ FoodConfig.Collect = {
     Milk = {
         Duration = 10000, -- in ms
         Reward = {min = 1, max = 4},
-        Items = {[0] = "milk", [1] = "semi_skimmed_milk", [2] = "skimmed_milk"},
+        Items = {[1] = "milk", [2] = "semi_skimmed_milk", [3] = "skimmed_milk"},
     },
 }
 
