@@ -40,7 +40,7 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                     onChange={async value => {
                         setDisplayOwners(value);
                         updateState('interactive', 'displayOwners', value);
-                        await fetchNui(NuiEvent.AdminToggleDisplayOwners);
+                        await fetchNui(NuiEvent.AdminToggleDisplayOwners, value);
                     }}
                 >
                     Afficher les propriétaires de véhicules

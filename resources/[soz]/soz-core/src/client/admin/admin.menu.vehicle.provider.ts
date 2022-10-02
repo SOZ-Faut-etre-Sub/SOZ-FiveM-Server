@@ -5,20 +5,34 @@ import { emitRpc } from '../../core/rpc';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
+import { groupBy } from '../../shared/utils/array';
+import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { VehicleService } from '../vehicle/vehicle.service';
 
 @Provider()
 export class AdminMenuVehicleProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
         const vehicles = await emitRpc<any[]>(RpcEvent.ADMIN_GET_VEHICLES);
 
+        let catalog: Record<keyof VehicleCategory, Vehicle[]> = groupBy(vehicles, v => v.category);
+
+        catalog = Object.entries(catalog)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) as Record<keyof VehicleCategory, Vehicle[]>;
+
+        this.nuiDispatch.dispatch('admin_vehicle_submenu', 'SetCatalog', catalog);
         this.nuiDispatch.dispatch('admin_vehicle_submenu', 'SetVehicles', vehicles);
 
         return Ok(true);
@@ -35,7 +49,7 @@ export class AdminMenuVehicleProvider {
                     defaultValue: '',
                 },
                 model => {
-                    if (model && model !== '') {
+                    if (!model || IsModelInCdimage(model) || IsModelValid(model)) {
                         return Ok(true);
                     }
                     return Err('Le modèle du véhicule est invalide');
@@ -55,8 +69,6 @@ export class AdminMenuVehicleProvider {
             SetVehicleBodyHealth(vehicle, 1000);
             SetVehicleEngineHealth(vehicle, 1000);
             SetVehicleDeformationFixed(vehicle);
-
-            // TODO: Check if the sync of the condition is necessary as FiveM should sync it itself;
         }
         return Ok(true);
     }
@@ -67,8 +79,6 @@ export class AdminMenuVehicleProvider {
         if (vehicle) {
             SetVehicleDirtLevel(vehicle, 0.1);
             WashDecalsFromVehicle(vehicle, 1.0);
-
-            // TODO: Check if the sync of the condition is necessary
         }
         return Ok(true);
     }
@@ -83,7 +93,12 @@ export class AdminMenuVehicleProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSave)
     public async onAdminMenuVehicleSave() {
-        // TODO
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+        const mods = this.vehicleService.getVehicleProperties(vehicle);
+        const vehicleModel = GetEntityModel(vehicle);
+        const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel);
+
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, mods);
         return Ok(true);
     }
 

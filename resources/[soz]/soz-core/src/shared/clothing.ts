@@ -22,6 +22,7 @@ export enum ComponentIndex {
 }
 
 export type ClothComponent = {
+    Index?: number;
     Drawable: number;
     Texture: number;
     Palette: number;
@@ -36,7 +37,8 @@ export enum PropIndex {
 }
 
 export type ClothProp = {
+    Index?: number;
     Drawable: number;
     Texture: number;
-    attach?: boolean;
+    Attached?: boolean;
 };

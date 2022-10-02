@@ -47,4 +47,8 @@ export class Qbcore {
             .sort((a, b) => a[1].label.localeCompare(b[1].label))
             .map(([key, value]) => ({ ...value, id: key as JobType }));
     }
+
+    public getProperties(vehicle: any): any[] {
+        return this.QBCore.Functions.GetVehicleProperties(vehicle);
+    }
 }

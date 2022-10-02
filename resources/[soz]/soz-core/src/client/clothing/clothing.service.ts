@@ -24,7 +24,7 @@ export class ClothingService {
             propId = Number(PropIndex[propIndex]);
         }
 
-        SetPedPropIndex(PlayerPedId(), propId, prop.Drawable || 0, prop.Texture || 0, prop.attach || true);
+        SetPedPropIndex(PlayerPedId(), propId, prop.Drawable || 0, prop.Texture || 0, prop.Attached || true);
     }
 
     public applyClothes(skin: ClothSet) {

@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { SozRole } from '../../../core/permissions';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
@@ -15,6 +16,7 @@ import { VehicleSubMenu } from './VehicleSubMenu';
 export type AdminMenuStateProps = {
     data: {
         banner: string;
+        permission: SozRole;
         state: {
             gameMaster: GameMasterSubMenuProps['state'];
             interactive: InteractiveSubMenuProps['state'];
@@ -28,6 +30,7 @@ export type AdminMenuStateProps = {
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
     const [state, setState] = useState<AdminMenuStateProps['data']['state']>(null);
     const [banner, setBanner] = useState<string>(null);
+    const [permission, setPermission] = useState<SozRole>(null);
 
     useEffect(() => {
         if (data && data.state) {
@@ -35,6 +38,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
         }
         if (data && data.banner) {
             setBanner(data.banner);
+        }
+        if (data && data.permission) {
+            setPermission(data.permission);
         }
     }, [data]);
 
@@ -54,18 +60,27 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                 <MenuContent>
                     <MenuItemSubMenuLink id="game_master">Menu du maître du jeu</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="interactive">Informations interactives</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="job">Gestion métier</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="skin">Modification du style du joueur</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="vehicle">Gestion du véhicule</MenuItemSubMenuLink>
+                    {['staff', 'admin'].includes(permission) && (
+                        <>
+                            <MenuItemSubMenuLink id="job">Gestion métier</MenuItemSubMenuLink>
+                            <MenuItemSubMenuLink id="skin">Modification du style du joueur</MenuItemSubMenuLink>
+                            <MenuItemSubMenuLink id="vehicle">Gestion du véhicule</MenuItemSubMenuLink>
+                        </>
+                    )}
                     <MenuItemSubMenuLink id="players">Gestion des joueurs</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="developer">Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
-            <GameMasterSubMenu banner={banner} updateState={updateState} state={state.gameMaster} />
+            <GameMasterSubMenu
+                banner={banner}
+                permission={permission}
+                updateState={updateState}
+                state={state.gameMaster}
+            />
             <InteractiveSubMenu banner={banner} updateState={updateState} state={state.interactive} />
             <JobSubMenu banner={banner} updateState={updateState} state={state.job} />
             <SkinSubMenu banner={banner} updateState={updateState} state={state.skin} />
-            <VehicleSubMenu banner={banner} />
+            <VehicleSubMenu banner={banner} permission={permission} />
             <PlayerSubMenu banner={banner} />
             <DeveloperSubMenu banner={banner} state={state.developer} updateState={updateState} />
         </Menu>

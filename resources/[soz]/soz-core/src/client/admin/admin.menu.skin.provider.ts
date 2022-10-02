@@ -57,6 +57,50 @@ export class AdminMenuSkinProvider {
         return Ok(true);
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuSkinLookAtDrawable)
+    public async onSkinLookAtComponentDrawable({
+        index,
+        isComponent,
+    }: {
+        index: ComponentIndex | PropIndex;
+        isComponent: boolean;
+    }) {
+        const formattedIndex = Number(index);
+
+        const maxDrawable = isComponent
+            ? GetNumberOfPedDrawableVariations(PlayerPedId(), formattedIndex)
+            : GetNumberOfPedPropDrawableVariations(PlayerPedId(), formattedIndex);
+        const value = await this.inputService.askInput(
+            {
+                title: `Drawable id [0-${maxDrawable}] :`,
+                defaultValue: '',
+                maxCharacters: 5,
+            },
+            value => {
+                if (!value) {
+                    return Ok(true);
+                }
+                if (isNaN(Number(value))) {
+                    return Err('Le drawable id doit être un nombre.');
+                }
+                if (Number(value) < 0 || Number(value) > maxDrawable) {
+                    return Err(`Le drawable id doit être compris entre 0 et ${maxDrawable}.`);
+                }
+                return Ok(true);
+            }
+        );
+
+        if (value !== null) {
+            this.nuiDispatch.dispatch('admin_skin_submenu', 'SetComponentDrawable', {
+                index: index,
+                drawable: Number(value),
+                isComponent,
+            });
+        }
+
+        return Ok(true);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuSkinChangeComponent)
     public async onSkinChangeComponent({
         componentIndex,
@@ -85,18 +129,20 @@ export class AdminMenuSkinProvider {
     @OnNuiEvent(NuiEvent.AdminMenuSkinSave)
     public async onSkinSave() {
         const clothSet = this.clothingService.getClothSet();
+        console.log('Save cloth set: ', JSON.stringify(clothSet));
+
         const Components: ClothComponent[] = Object.entries(clothSet.Components)
             .sort(([a], [b]) => Number(a) - Number(b))
             .map(([componentIndex, component]) => ({
                 ...component,
                 component: componentIndex,
             }));
-        const Props: ClothProp[] = Object.entries(clothSet.Props)
-            .sort(([a], [b]) => Number(a) - Number(b))
-            .map(([propIndex, prop]) => ({
-                ...prop,
-                prop: propIndex,
-            }));
+
+        const Props = Object.fromEntries(
+            Object.entries(clothSet.Props)
+                .sort(([a], [b]) => Number(a) - Number(b))
+                .map(([propIndex, prop], index) => [propIndex, { ...prop, Index: index }] as [string, ClothProp])
+        ) as Record<PropIndex, ClothProp>;
 
         TriggerServerEvent('admin:skin:UpdateClothes', { Components, Props });
     }

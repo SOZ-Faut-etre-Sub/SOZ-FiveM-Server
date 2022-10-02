@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { SozRole } from '../../../core/permissions';
 import { LICENCES, MONEY_OPTIONS } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
@@ -15,6 +16,7 @@ import {
 
 export type GameMasterSubMenuProps = {
     banner: string;
+    permission: SozRole;
     updateState: (namespace: 'gameMaster', key: keyof GameMasterSubMenuProps['state'], value: any) => void;
     state: {
         moneyCase: boolean;
@@ -24,7 +26,12 @@ export type GameMasterSubMenuProps = {
     };
 };
 
-export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ banner, state, updateState }) => {
+export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
+    banner,
+    permission,
+    state,
+    updateState,
+}) => {
     const [moneyCase, setMoneyCase] = useState<boolean>(false);
     const [invisible, setInvisible] = useState<boolean>(false);
     const [invincible, setInvincible] = useState<boolean>(false);
@@ -49,26 +56,30 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
         <SubMenu id="game_master">
             <MenuTitle banner={banner}>Dieu ? C'est toi ?</MenuTitle>
             <MenuContent>
-                <MenuItemSelect
-                    title="Se donner de l'argent propre"
-                    onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminGiveMoney, MONEY_OPTIONS[index].value);
-                    }}
-                >
-                    {MONEY_OPTIONS.map(option => (
-                        <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
-                    ))}
-                </MenuItemSelect>
-                <MenuItemSelect
-                    title="Se donner de l'argent marqué"
-                    onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminGiveMarkedMoney, MONEY_OPTIONS[index].value);
-                    }}
-                >
-                    {MONEY_OPTIONS.map(option => (
-                        <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
-                    ))}
-                </MenuItemSelect>
+                {permission == 'admin' && (
+                    <MenuItemSelect
+                        title="Se donner de l'argent propre"
+                        onConfirm={async index => {
+                            await fetchNui(NuiEvent.AdminGiveMoney, MONEY_OPTIONS[index].value);
+                        }}
+                    >
+                        {MONEY_OPTIONS.map(option => (
+                            <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                )}
+                {permission == 'admin' && (
+                    <MenuItemSelect
+                        title="Se donner de l'argent marqué"
+                        onConfirm={async index => {
+                            await fetchNui(NuiEvent.AdminGiveMarkedMoney, MONEY_OPTIONS[index].value);
+                        }}
+                    >
+                        {MONEY_OPTIONS.map(option => (
+                            <MenuItemSelectOption key={option.value}>{option.label}</MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                )}
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminTeleportToWaypoint);
@@ -76,46 +87,50 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 >
                     Se téléporter au marqueur
                 </MenuItemButton>
-                <MenuItemSelect
-                    title="Se donner le permis"
-                    onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminGiveLicence, LICENCES[index].value);
-                    }}
-                >
-                    {LICENCES.map(licence => (
-                        <MenuItemSelectOption key={licence.label}>{licence.label}</MenuItemSelectOption>
-                    ))}
-                </MenuItemSelect>
-                <MenuItemCheckbox
-                    checked={moneyCase}
-                    onChange={async value => {
-                        setMoneyCase(value);
-                        updateState('gameMaster', 'moneyCase', value);
-                        await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
-                    }}
-                >
-                    Mallette d'argent
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    checked={invisible}
-                    onChange={async value => {
-                        setInvisible(value);
-                        updateState('gameMaster', 'invisible', value);
-                        await fetchNui(NuiEvent.AdminSetVisible, !value);
-                    }}
-                >
-                    Invisible
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    checked={invincible}
-                    onChange={async value => {
-                        setInvincible(value);
-                        updateState('gameMaster', 'invincible', value);
-                        await fetchNui(NuiEvent.AdminSetInvincible, value);
-                    }}
-                >
-                    Invincible
-                </MenuItemCheckbox>
+                {permission == 'admin' && (
+                    <>
+                        <MenuItemSelect
+                            title="Se donner le permis"
+                            onConfirm={async index => {
+                                await fetchNui(NuiEvent.AdminGiveLicence, LICENCES[index].value);
+                            }}
+                        >
+                            {LICENCES.map(licence => (
+                                <MenuItemSelectOption key={licence.label}>{licence.label}</MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemCheckbox
+                            checked={moneyCase}
+                            onChange={async value => {
+                                setMoneyCase(value);
+                                updateState('gameMaster', 'moneyCase', value);
+                                await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
+                            }}
+                        >
+                            Mallette d'argent
+                        </MenuItemCheckbox>
+                        <MenuItemCheckbox
+                            checked={invisible}
+                            onChange={async value => {
+                                setInvisible(value);
+                                updateState('gameMaster', 'invisible', value);
+                                await fetchNui(NuiEvent.AdminSetVisible, !value);
+                            }}
+                        >
+                            Invisible
+                        </MenuItemCheckbox>
+                        <MenuItemCheckbox
+                            checked={invincible}
+                            onChange={async value => {
+                                setInvincible(value);
+                                updateState('gameMaster', 'invincible', value);
+                                await fetchNui(NuiEvent.AdminSetInvincible, value);
+                            }}
+                        >
+                            Invincible
+                        </MenuItemCheckbox>
+                    </>
+                )}
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminAutoPilot);
@@ -123,16 +138,18 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ b
                 >
                     Auto-pilote
                 </MenuItemButton>
-                <MenuItemCheckbox
-                    checked={godMode}
-                    onChange={async value => {
-                        setGodMode(value);
-                        updateState('gameMaster', 'godMode', value);
-                        await fetchNui(NuiEvent.AdminSetGodMode, value);
-                    }}
-                >
-                    God mode
-                </MenuItemCheckbox>
+                {permission == 'admin' && (
+                    <MenuItemCheckbox
+                        checked={godMode}
+                        onChange={async value => {
+                            setGodMode(value);
+                            updateState('gameMaster', 'godMode', value);
+                            await fetchNui(NuiEvent.AdminSetGodMode, value);
+                        }}
+                    >
+                        God mode
+                    </MenuItemCheckbox>
+                )}
                 <MenuItemButton>Se libérer des menottes</MenuItemButton>
             </MenuContent>
         </SubMenu>

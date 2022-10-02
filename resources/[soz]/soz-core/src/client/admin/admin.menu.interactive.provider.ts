@@ -2,7 +2,6 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
 import { AdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
@@ -27,9 +26,10 @@ export class AdminMenuInteractiveProvider {
     private playerBlips: Map<string, number> = new Map();
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayOwners)
-    public async toggleDisplayOwners(): Promise<void> {
-        if (this.intervalHandlers.displayOwners) {
+    public async toggleDisplayOwners(value: boolean): Promise<void> {
+        if (!value) {
             clearInterval(this.intervalHandlers.displayOwners);
+            this.intervalHandlers.displayOwners = null;
             return;
         }
         this.intervalHandlers.displayOwners = setInterval(async () => {
@@ -48,21 +48,21 @@ export class AdminMenuInteractiveProvider {
                 );
                 if (dist < 50) {
                     let text = ' | OwnerNet: ';
-                    if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) == GetPlayerServerId(PlayerId())) {
-                        text = ' | ~g~OwnerNet: ';
+                    if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) === GetPlayerServerId(PlayerId())) {
+                        text = ` | ~g~OwnerNet: `;
                     }
                     const ownerInfo =
                         `${GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))} ` +
                         `| VehicleNet: ${NetworkGetNetworkIdFromEntity(vehicle)} ` +
                         `${text} ${GetPlayerServerId(NetworkGetEntityOwner(vehicle))}`;
                     const vehicleInfo =
-                        `Vehicle Engine Health: ${GetVehicleEngineHealth(vehicle)} ` +
-                        `| Vehicle Body Health: ${GetVehicleBodyHealth(vehicle)}` +
-                        `| Vehicle Oil: ${GetVehicleOilLevel(vehicle)}/${GetVehicleHandlingFloat(
+                        `Vehicle Engine Health: ${GetVehicleEngineHealth(vehicle).toFixed(2)} ` +
+                        `| Vehicle Body Health: ${GetVehicleBodyHealth(vehicle).toFixed(2)}` +
+                        `| Vehicle Oil: ${GetVehicleOilLevel(vehicle).toFixed(2)}/${GetVehicleHandlingFloat(
                             vehicle,
                             'CHandlingData',
                             'fOilVolume'
-                        )}`;
+                        ).toFixed(2)}`;
                     this.drawService.drawText3d(vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 1, ownerInfo);
                     this.drawService.drawText3d(vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 2, vehicleInfo);
                 }
@@ -70,35 +70,9 @@ export class AdminMenuInteractiveProvider {
         }, 1);
     }
 
-    private async displayPlayerNames(): Promise<void> {
-        for (const value of Object.values(this.multiplayerTags)) {
-            RemoveMpGamerTag(value);
-            this.multiplayerTags.delete(value);
-        }
-
-        const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
-
-        players.forEach(player => {
-            this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.source));
-            CreateMpGamerTagWithCrewColor(
-                this.multiplayerTags.get(player.citizenId),
-                player.name,
-                false,
-                false,
-                '',
-                0,
-                0,
-                0,
-                0
-            );
-            SetMpGamerTagVisibility(this.multiplayerTags.get(player.citizenId), 0, true);
-        });
-    }
-
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayerNames)
     public async toggleDisplayPlayerNames(value: boolean): Promise<void> {
         if (!value) {
-            console.log(this.multiplayerTags);
             for (const value of this.multiplayerTags.values()) {
                 SetMpGamerTagVisibility(value, 0, false);
                 RemoveMpGamerTag(value);
@@ -139,5 +113,30 @@ export class AdminMenuInteractiveProvider {
                 });
             }
         }, 2500);
+    }
+
+    private async displayPlayerNames(): Promise<void> {
+        for (const value of Object.values(this.multiplayerTags)) {
+            RemoveMpGamerTag(value);
+            this.multiplayerTags.delete(value);
+        }
+
+        const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
+
+        players.forEach(player => {
+            this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.source));
+            CreateMpGamerTagWithCrewColor(
+                this.multiplayerTags.get(player.citizenId),
+                player.name,
+                false,
+                false,
+                '',
+                0,
+                0,
+                0,
+                0
+            );
+            SetMpGamerTagVisibility(this.multiplayerTags.get(player.citizenId), 0, true);
+        });
     }
 }

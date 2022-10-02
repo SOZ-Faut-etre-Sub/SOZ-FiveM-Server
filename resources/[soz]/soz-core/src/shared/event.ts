@@ -47,6 +47,7 @@ export enum ServerEvent {
     ZEVENT_GET_POPCORN = 'soz-core:server:zevent:get-popcorn',
 
     // not core
+    ADMIN_ADD_VEHICLE = 'admin:vehicle:addVehicle',
     ADMIN_GIVE_LICENCE = 'admin:gamemaster:giveLicence',
     ADMIN_GIVE_MONEY = 'admin:gamemaster:giveMoney',
     ADMIN_GOD_MODE = 'admin:gamemaster:godmode',
@@ -155,6 +156,7 @@ export enum NuiEvent {
     AdminMenuSkinChangeComponent = 'soz-core:client:admin:skin:change-component',
     AdminMenuSkinChangeProp = 'soz-core:client:admin:skin:change-prop',
     AdminMenuSkinCopy = 'soz-core:client:admin:skin:copy',
+    AdminMenuSkinLookAtDrawable = 'soz-core:client:admin:skin:look-at-drawable',
     AdminMenuSkinSave = 'soz-core:client:admin:skin:save',
 
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
