@@ -1,6 +1,8 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { SozRole } from '../../../core/permissions';
 import { NuiEvent } from '../../../shared/event';
+import { Vehicle, VehicleCategory } from '../../../shared/vehicle/vehicle';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
 import {
@@ -15,10 +17,12 @@ import {
 
 export type VehicleSubMenuProps = {
     banner: string;
+    permission: SozRole;
 };
 
 export interface NuiAdminVehicleSubMenuMethodMap {
     SetVehicles: any[];
+    SetCatalog: Record<keyof VehicleCategory, Vehicle[]>;
 }
 
 export const VEHICLE_OPTIONS = [
@@ -27,10 +31,13 @@ export const VEHICLE_OPTIONS = [
     { label: 'Changer le prix', value: 'change-car-price' },
 ];
 
-export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner }) => {
+export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner, permission }) => {
     const [vehicles, setVehicles] = useState<any[]>([]);
+    const [catalog, setCatalog] = useState<Record<keyof VehicleCategory, Vehicle[]>>(null);
 
     useNuiEvent('admin_vehicle_submenu', 'SetVehicles', setVehicles);
+
+    useNuiEvent('admin_vehicle_submenu', 'SetCatalog', setCatalog);
 
     useEffect(() => {
         if (vehicles != null && vehicles.length === 0) {
@@ -38,7 +45,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner 
         }
     });
 
-    if (!vehicles) {
+    if (!vehicles || !catalog) {
         return null;
     }
 
@@ -76,20 +83,24 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner 
                     >
                         Ravitailler le véhicule
                     </MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={async () => {
-                            await fetchNui(NuiEvent.AdminMenuVehicleSave);
-                        }}
-                    >
-                        Sauvegarder le véhicule
-                    </MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={async () => {
-                            await fetchNui(NuiEvent.AdminMenuVehicleSetFBIConfig);
-                        }}
-                    >
-                        Configuration FBI
-                    </MenuItemButton>
+                    {permission == 'admin' && (
+                        <>
+                            <MenuItemButton
+                                onConfirm={async () => {
+                                    await fetchNui(NuiEvent.AdminMenuVehicleSetFBIConfig);
+                                }}
+                            >
+                                Configuration FBI
+                            </MenuItemButton>
+                            <MenuItemButton
+                                onConfirm={async () => {
+                                    await fetchNui(NuiEvent.AdminMenuVehicleSave);
+                                }}
+                            >
+                                Enregistrer une copie du véhicule
+                            </MenuItemButton>
+                        </>
+                    )}
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleDelete);
@@ -102,30 +113,45 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner 
             <SubMenu id={'vehicles_catalog'} key={'vehicles_catalog'}>
                 <MenuTitle banner={banner}>Catalogue des véhicules</MenuTitle>
                 <MenuContent>
-                    {vehicles.map(vehicle => (
-                        <MenuItemSelect
-                            title={vehicle.name}
-                            key={'vehicle_' + vehicle.model}
-                            onConfirm={async selectedIndex => {
-                                const option = VEHICLE_OPTIONS[selectedIndex];
-                                if (option.value === 'spawn') {
-                                    await fetchNui(NuiEvent.AdminMenuVehicleSpawn, vehicle.model);
-                                } else if (option.value === 'see-car-price') {
-                                    await fetchNui(NuiEvent.AdminMenuVehicleSeeCarPrice, vehicle.model);
-                                } else if (option.value === 'change-car-price') {
-                                    await fetchNui(NuiEvent.AdminMenuVehicleChangeCarPrice, vehicle.model);
-                                }
-                            }}
+                    {Object.keys(catalog).map(category => (
+                        <MenuItemSubMenuLink
+                            id={'vehicles_catalog_' + category}
+                            key={'vehicles_catalog_' + category + '_link'}
                         >
-                            {VEHICLE_OPTIONS.map(option => (
-                                <MenuItemSelectOption key={'vehicle_option_' + option.value}>
-                                    {option.label}
-                                </MenuItemSelectOption>
-                            ))}
-                        </MenuItemSelect>
+                            {VehicleCategory[category]}
+                        </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
             </SubMenu>
+            {Object.keys(catalog).map(category => (
+                <SubMenu id={'vehicles_catalog_' + category} key={'vehicles_catalog_' + category}>
+                    <MenuTitle banner={banner}>{VehicleCategory[category]}</MenuTitle>
+                    <MenuContent>
+                        {catalog[category].map(vehicle => (
+                            <MenuItemSelect
+                                title={vehicle.name}
+                                key={'vehicle_' + vehicle.model}
+                                onConfirm={async selectedIndex => {
+                                    const option = VEHICLE_OPTIONS[selectedIndex];
+                                    if (option.value === 'spawn') {
+                                        await fetchNui(NuiEvent.AdminMenuVehicleSpawn, vehicle.model);
+                                    } else if (option.value === 'see-car-price') {
+                                        await fetchNui(NuiEvent.AdminMenuVehicleSeeCarPrice, vehicle.model);
+                                    } else if (option.value === 'change-car-price') {
+                                        await fetchNui(NuiEvent.AdminMenuVehicleChangeCarPrice, vehicle.model);
+                                    }
+                                }}
+                            >
+                                {VEHICLE_OPTIONS.map(option => (
+                                    <MenuItemSelectOption key={'vehicle_option_' + option.value}>
+                                        {option.label}
+                                    </MenuItemSelectOption>
+                                ))}
+                            </MenuItemSelect>
+                        ))}
+                    </MenuContent>
+                </SubMenu>
+            ))}
         </>
     );
 };

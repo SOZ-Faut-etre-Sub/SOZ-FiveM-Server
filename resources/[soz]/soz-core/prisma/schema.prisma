@@ -358,13 +358,13 @@ model vehicles {
   name             String  @db.VarChar(255)
   price            Int
   category         String? @db.VarChar(50)
-  dealership_id    String? @db.VarChar(10)
-  required_licence String? @db.VarChar(10)
+  dealershipId    String? @db.VarChar(10) @map("dealership_id")
+  requiredLicence String? @db.VarChar(10) @map("required_licence")
   size             Int?    @default(1)
-  job_name         String? @db.Text
+  jobName         String? @db.Text @map("job_name")
 
   @@index([category])
-  @@index([dealership_id], map: "vehicles_dealership_idx")
+  @@index([dealershipId], map: "vehicles_dealership_idx")
 }
 
 model player_purchases {

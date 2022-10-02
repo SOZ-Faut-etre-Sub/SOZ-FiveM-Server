@@ -2,6 +2,7 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { NuiEvent } from '../../shared/event';
@@ -67,6 +68,7 @@ export class AdminMenuProvider {
 
         this.nuiMenu.openMenu<MenuType.AdminMenu>(MenuType.AdminMenu, {
             banner,
+            permission: permission as SozRole,
             state: this.menuState,
         });
     }
