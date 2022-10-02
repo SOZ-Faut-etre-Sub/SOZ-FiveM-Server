@@ -171,7 +171,8 @@ Citizen.CreateThread(function()
                                 TriggerEvent("fuel:client:GetFuelLevel", entity, station.id)
                             end,
                             canInteract = function()
-                                return PlayerData.job.id == "oil" or (station:IsPrivate() and station:CitizenIsOwner(PlayerData.job.id))
+                                return PlayerData.job.onduty and
+                                           (PlayerData.job.id == "oil" or (station:IsPrivate() and station:CitizenIsOwner(PlayerData.job.id)))
                             end,
                             blackoutGlobal = true,
                         },
