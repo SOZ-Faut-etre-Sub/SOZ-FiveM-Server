@@ -74,7 +74,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-ingredients", func
     cb(collectedItems, newHealth)
 end)
 
-QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-milk", function(source, cb)
+QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-milk", function(source, cb, hour)
     local Player = QBCore.Functions.GetPlayer(source)
     if Player == nil then
         return
@@ -92,8 +92,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-collect-milk", function(so
 
     local count = math.random(min, max)
 
-    local time = os.date("*t")
-    local index = math.floor(time.hour / (24 / #FoodConfig.Collect.Milk.Items))
+    local index = math.floor(hour / (24 / #FoodConfig.Collect.Milk.Items))
     local item = FoodConfig.Collect.Milk.Items[index + 1]
 
     if AddItem(Player.PlayerData.source, item, count) then
