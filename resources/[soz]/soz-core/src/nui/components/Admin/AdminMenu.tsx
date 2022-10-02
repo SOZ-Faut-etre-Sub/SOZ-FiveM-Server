@@ -85,7 +85,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <JobSubMenu banner={banner} updateState={updateState} state={state.job} />
             <SkinSubMenu banner={banner} updateState={updateState} state={state.skin} />
             <VehicleSubMenu banner={banner} permission={permission} />
-            <PlayerSubMenu banner={banner} />
+            <PlayerSubMenu banner={banner} permission={permission} />
             <DeveloperSubMenu banner={banner} state={state.developer} updateState={updateState} />
         </Menu>
     );

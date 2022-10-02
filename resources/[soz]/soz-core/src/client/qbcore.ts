@@ -26,8 +26,8 @@ export class Qbcore {
         return (this.QBCore.Shared.Items[name] as T) || null;
     }
 
-    public createBlip(id: string, blip: Blip): void {
-        this.QBCore.Functions.CreateBlip(id, blip);
+    public createBlip(id: string, blip: Blip): number {
+        return this.QBCore.Functions.CreateBlip(id, blip);
     }
 
     public hideBlip(id: string, value: boolean): void {

@@ -51,6 +51,20 @@ const SKIN_OPTIONS = [
     { key: 'player_male', label: 'Joueur Homme', value: 'mp_m_freemode_01' },
 ];
 
+const TRANSLATED_INDEXES: { [key: string]: string } = {
+    Mask: 'Masque',
+    Hair: 'Coupe de cheveux',
+    Torso: 'Torse',
+    Legs: 'Jambes',
+    Bags: 'Sacs',
+    Shoes: 'Chaussures',
+    Accessories: 'Accessoires',
+    Undershirt: 'Undershirt',
+    BodyArmor: 'Armure',
+    Decals: 'Décalques',
+    Top: 'Haut',
+};
+
 export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updateState, state }) => {
     const [clothConfig, setClothConfig] = useState<ClothSet>(null);
     const [maxOptions, setMaxOptions] = useState<SkinSubMenuProps['state']['maxOptions']>([]);
@@ -197,7 +211,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                 <MenuContent>
                     {Object.keys(clothConfig.Components).map(componentIndex => (
                         <MenuItemSubMenuLink id={`player_style_component_${componentIndex}`} key={componentIndex}>
-                            {`[${componentIndex}] - ${ComponentIndex[componentIndex]}`}
+                            {`[${componentIndex}] - ${TRANSLATED_INDEXES[ComponentIndex[componentIndex]]}`}
                         </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
@@ -207,7 +221,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                 <MenuContent>
                     {Object.keys(clothConfig.Props).map(propIndex => (
                         <MenuItemSubMenuLink id={`player_style_prop_${propIndex}`} key={propIndex}>
-                            {`[${propIndex}] - ${PropIndex[propIndex]}`}
+                            {`[${propIndex}] - ${TRANSLATED_INDEXES[PropIndex[propIndex]]}`}
                         </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>

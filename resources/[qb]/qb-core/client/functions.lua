@@ -108,6 +108,7 @@ function QBCore.Functions.CreateBlip(id, data)
     EndTextCommandSetBlipName(blip)
 
     Blips[id] = {blip = blip, data = data}
+    return blip
 end
 
 function QBCore.Functions.RemoveBlip(id)

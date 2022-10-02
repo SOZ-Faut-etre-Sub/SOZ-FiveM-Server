@@ -149,7 +149,13 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 >
                     God mode
                 </MenuItemCheckbox>
-                <MenuItemButton>Se libérer des menottes</MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuGameMasterUncuff);
+                    }}
+                >
+                    Se libérer des menottes
+                </MenuItemButton>
             </MenuContent>
         </SubMenu>
     );

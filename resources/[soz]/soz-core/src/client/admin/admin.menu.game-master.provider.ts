@@ -13,11 +13,13 @@ export class AdminMenuGameMasterProvider {
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'money', amount);
+        this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent propre.`, 'success');
     }
 
     @OnNuiEvent(NuiEvent.AdminGiveMarkedMoney)
     public async giveMarkedMoney(amount: number): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked', amount);
+        this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent sale.`, 'success');
     }
 
     @OnNuiEvent(NuiEvent.AdminTeleportToWaypoint)
@@ -89,5 +91,10 @@ export class AdminMenuGameMasterProvider {
         if (value) {
             TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'false', GetPlayerServerId(PlayerId()));
         }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuGameMasterUncuff)
+    public async unCuff(): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_UNCUFF);
     }
 }

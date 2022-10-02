@@ -60,7 +60,7 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                     onChange={async value => {
                         setDisplayPlayersOnMap(value);
                         updateState('interactive', 'displayPlayersOnMap', value);
-                        await fetchNui(NuiEvent.AdminToggleDisplayPlayersOnMap);
+                        await fetchNui(NuiEvent.AdminToggleDisplayPlayersOnMap, value);
                     }}
                 >
                     Afficher les joueurs sur la carte
