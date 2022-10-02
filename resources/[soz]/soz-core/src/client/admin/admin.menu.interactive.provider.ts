@@ -2,7 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { AdminPlayer } from '../../shared/admin/admin';
+import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
@@ -88,29 +88,33 @@ export class AdminMenuInteractiveProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayersOnMap)
-    public async toggleDisplayPlayersOnMap(): Promise<void> {
-        if (this.intervalHandlers.displayPlayersOnMap) {
+    public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
+        if (!value) {
+            for (const value of Object.values(this.playerBlips)) {
+                this.QBCore.removeBlip(value);
+            }
             clearInterval(this.intervalHandlers.displayPlayersOnMap);
             return;
         }
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            for (const value of Object.values(this.playerBlips)) {
-                this.QBCore.removeBlip(value);
-            }
-
-            const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
+            const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
             for (const player of players) {
-                const blipId = 'admin:player-blip:' + player.citizenId;
-                this.playerBlips[player.citizenId] = blipId;
+                const blipId = this.playerBlips.get(player.citizenId);
 
                 const coords = player.coords;
-                this.QBCore.createBlip(blipId, {
-                    coords: { x: coords[0], y: coords[1], z: coords[2] },
-                    heading: player.heading,
-                    name: player.name,
-                    showheading: true,
-                    sprite: 1,
-                });
+                if (DoesBlipExist(blipId)) {
+                    SetBlipCoords(blipId, coords[0], coords[1], coords[2]);
+                    SetBlipRotation(blipId, Math.ceil(player.heading));
+                } else {
+                    const createdBlip = this.QBCore.createBlip('admin:player-blip:' + player.citizenId, {
+                        coords: { x: coords[0], y: coords[1], z: coords[2] },
+                        heading: player.heading,
+                        name: player.name,
+                        showheading: true,
+                        sprite: 1,
+                    });
+                    this.playerBlips.set(player.citizenId, createdBlip);
+                }
             }
         }, 2500);
     }
@@ -124,7 +128,7 @@ export class AdminMenuInteractiveProvider {
         const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
 
         players.forEach(player => {
-            this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.source));
+            this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));
             CreateMpGamerTagWithCrewColor(
                 this.multiplayerTags.get(player.citizenId),
                 player.name,

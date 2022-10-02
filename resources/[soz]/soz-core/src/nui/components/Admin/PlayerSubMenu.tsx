@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { SozRole } from '../../../core/permissions';
 import { AdminPlayer } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
@@ -16,6 +17,7 @@ import {
 
 export type PlayerSubMenuProps = {
     banner: string;
+    permission: SozRole;
 };
 
 export interface NuiAdminPlayerSubMenuMethodMap {
@@ -38,7 +40,27 @@ export const VOCAL_OPTIONS = [
     { label: 'Démuter', value: 'unmute' },
 ];
 
-export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner }) => {
+export const TELEPORT_OPTIONS = [
+    { label: 'vers le joueur', value: 'goto' },
+    { label: 'à moi', value: 'bring' },
+];
+
+export const EFFECTS_OPTIONS = [
+    { label: 'Alcoolique', value: 'alcohol' },
+    { label: 'Drogué', value: 'drug' },
+    { label: 'Normal', value: 'normal' },
+];
+
+export const DISEASE_OPTIONS = [
+    { label: 'Rhume', value: 'rhume' },
+    { label: 'Grippe', value: 'grippe' },
+    { label: 'Intoxication', value: 'intoxication' },
+    { label: 'Rougeur', value: 'rougeur' },
+    { label: 'Mal au dos', value: 'backpain' },
+    { label: 'Soigner', value: false },
+];
+
+export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission }) => {
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
 
     useNuiEvent('admin_player_submenu', 'SetPlayers', players => {
@@ -55,25 +77,27 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
         return null;
     }
 
+    const isAdminOrHelper = ['admin', 'helper'].includes(permission);
+
     return (
         <>
             <SubMenu id="players">
                 <MenuTitle banner={banner}>Michel ? C'est toi ?</MenuTitle>
                 <MenuContent>
                     {players.map(player => (
-                        <MenuItemSubMenuLink id={'player_' + player.cid} key={'player_link_' + player.cid}>
+                        <MenuItemSubMenuLink id={'player_' + player.citizenId} key={'player_link_' + player.citizenId}>
                             [{player.id}] {player.name}
                         </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
             </SubMenu>
             {players.map(player => (
-                <SubMenu id={'player_' + player.cid} key={player.cid}>
+                <SubMenu id={'player_' + player.citizenId} key={player.citizenId}>
                     <MenuTitle banner={banner}>{player.name}</MenuTitle>
                     <MenuContent>
                         <MenuItemButton
                             onConfirm={async () => {
-                                await fetchNui(NuiEvent.AdminSpectate, player);
+                                await fetchNui(NuiEvent.AdminMenuPlayerSpectate, player);
                             }}
                         >
                             Observer le joueur
@@ -81,7 +105,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                         <MenuItemSelect
                             title={'Santé du joueur'}
                             onConfirm={async selectedIndex => {
-                                await fetchNui(NuiEvent.AdminHandleHealthOption, {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleHealthOption, {
                                     action: HEALTH_OPTIONS[selectedIndex].value,
                                     player,
                                 });
@@ -96,7 +120,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                         <MenuItemSelect
                             title={'Mouvement du joueur'}
                             onConfirm={async selectedIndex => {
-                                await fetchNui(NuiEvent.AdminHandleMovementOption, {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleMovementOption, {
                                     action: MOVEMENT_OPTIONS[selectedIndex].value,
                                     player,
                                 });
@@ -111,7 +135,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                         <MenuItemSelect
                             title={'Vocal en jeu'}
                             onConfirm={async selectedIndex => {
-                                await fetchNui(NuiEvent.AdminHandleVocalOption, {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleVocalOption, {
                                     action: VOCAL_OPTIONS[selectedIndex].value,
                                     player,
                                 });
@@ -123,9 +147,64 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner })
                                 </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Téléportation'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleTeleportOption, {
+                                    action: TELEPORT_OPTIONS[selectedIndex].value,
+                                    player,
+                                });
+                            }}
+                        >
+                            {TELEPORT_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'teleport_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Effets'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleEffectsOption, {
+                                    action: EFFECTS_OPTIONS[selectedIndex].value,
+                                    player,
+                                });
+                            }}
+                        >
+                            {EFFECTS_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'effects_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Rendre malade'}
+                            disabled={!isAdminOrHelper}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleDiseaseOption, {
+                                    action: DISEASE_OPTIONS[selectedIndex].value,
+                                    player,
+                                });
+                            }}
+                        >
+                            {DISEASE_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'disease_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemButton
+                            disabled={!isAdminOrHelper}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetSkin, player);
+                            }}
+                        >
+                            Réinitialiser le skin du joueur
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}
+            <SubMenu id={'player_features'} key={'player_features'}></SubMenu>
         </>
     );
 };

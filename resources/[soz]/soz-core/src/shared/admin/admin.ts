@@ -13,13 +13,22 @@ export const LICENCES = [
     { label: 'Bateau', value: 'boat' },
 ];
 
+/**
+ * A very simple version of the admin player.
+ * If you need more, use the FullAdminPlayer.
+ */
 export type AdminPlayer = {
-    id: number;
+    id: number; // That's the server id of the player.
+    citizenId: string;
+    name: string;
+};
+
+export type FullAdminPlayer = {
+    id: number; // That's the server id of the player.
     name: string;
     coords: number[];
     heading: number;
     cid: string;
     citizenId: string;
     ped: number;
-    source: number;
 };

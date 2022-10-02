@@ -122,14 +122,16 @@ export class AdminMenuSkinProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinCopy)
     public async onSkinCopy() {
-        exports['soz-utils'].CopyToClipboard(JSON.stringify(this.clothingService.getClothSet()));
+        SendNUIMessage({
+            string: JSON.stringify(this.clothingService.getClothSet()),
+        });
+        // exports['soz-utils'].CopyToClipboard(JSON.stringify(this.clothingService.getClothSet()));
         this.notifier.notify('Tenue copié dans le presse-papier');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinSave)
     public async onSkinSave() {
         const clothSet = this.clothingService.getClothSet();
-        console.log('Save cloth set: ', JSON.stringify(clothSet));
 
         const Components: ClothComponent[] = Object.entries(clothSet.Components)
             .sort(([a], [b]) => Number(a) - Number(b))

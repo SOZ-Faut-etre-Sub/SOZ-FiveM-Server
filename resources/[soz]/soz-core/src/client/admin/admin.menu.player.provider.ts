@@ -23,35 +23,40 @@ export class AdminMenuPlayerProvider {
 
     @OnNuiEvent(NuiEvent.AdminGetPlayers)
     public async getPlayers(): Promise<void> {
-        const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
+        const players = (await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS)).sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
 
         this.nuiDispatch.dispatch('admin_player_submenu', 'SetPlayers', players);
     }
 
-    @OnNuiEvent(NuiEvent.AdminSpectate)
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSpectate)
     public async spectate(player: AdminPlayer): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_SPECTATE, player);
+        this.notifier.notify(`Vous êtes maintenant en mode spectateur sur ~g~${player.name}.`, 'info');
     }
 
-    @OnNuiEvent(NuiEvent.AdminHandleHealthOption)
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleHealthOption)
     public async handleHealthOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
         if (!ALLOWED_HEALTH_OPTIONS.includes(action)) {
             return;
         }
         const event: ServerEvent = action === 'kill' ? ServerEvent.ADMIN_KILL : ServerEvent.ADMIN_REVIVE;
         TriggerServerEvent(event, player);
+        this.notifier.notify(`Le joueur ~g~${player.name}~s~ est maintenant ~r~${action}.`, 'info');
     }
 
-    @OnNuiEvent(NuiEvent.AdminHandleMovementOption)
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleMovementOption)
     public async handleMovementOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
         if (!ALLOWED_MOVEMENT_OPTIONS.includes(action)) {
             return;
         }
         const event: ServerEvent = action === 'freeze' ? ServerEvent.ADMIN_FREEZE : ServerEvent.ADMIN_UNFREEZE;
         TriggerServerEvent(event, player);
+        this.notifier.notify(`Le joueur ~g~${player.name}~s~ est maintenant ~r~${action}.`, 'info');
     }
 
-    @OnNuiEvent(NuiEvent.AdminHandleVocalOption)
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleVocalOption)
     public async handleVocalOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
         if (!ALLOWED_VOCAL_OPTIONS.includes(action)) {
             return;
@@ -66,8 +71,39 @@ export class AdminMenuPlayerProvider {
             }
         } else if (action === 'mute') {
             TriggerServerEvent(ServerEvent.VOIP_MUTE, true, player.id);
+            this.notifier.notify(`Le joueur ~g~${player.name}~s~ est maintenant ~r~muté.`, 'info');
         } else {
             TriggerServerEvent(ServerEvent.VOIP_MUTE, false, player.id);
+            this.notifier.notify(`Le joueur ~g~${player.name}~s~ n'est plus ~r~muté.`, 'info');
         }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleTeleportOption)
+    public async handleTeleportOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
+        if (action === 'goto') {
+            TriggerServerEvent(ServerEvent.ADMIN_TELEPORT_TO_PLAYER, player);
+        } else if (action === 'bring') {
+            TriggerServerEvent(ServerEvent.ADMIN_TELEPORT_PLAYER_TO_ME, player);
+        } else {
+            this.notifier.notify(`L'action ~r~${action}~s~ n'est pas valide.`, 'error');
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleEffectsOption)
+    public async handleEffectsOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
+        TriggerServerEvent(`admin:server:effect:${action}`, player.id);
+        this.notifier.notify(`L'effet ~g~${action}~s~ a été appliqué sur le joueur ~g~${player.name}~s~.`, 'info');
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleDiseaseOption)
+    public async handleDiseaseOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
+        TriggerServerEvent(`admin:server:disease:${action}`, player.id);
+        this.notifier.notify(`La maladie ~g~${action}~s~ a été appliquée sur le joueur ~g~${player.name}~s~.`, 'info');
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetSkin)
+    public async handleResetSkin(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_SKIN, player);
+        this.notifier.notify(`Le skin du joueur ~g~${player.name}~s~ a été réinitialisé.`, 'info');
     }
 }
