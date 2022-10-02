@@ -10,6 +10,20 @@ FoodConfig.BossShop = {
 
 FoodConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
+        ["Tenue de Direction"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 6, Texture = 0, Palette = 0},
+                [4] = {Drawable = 24, Texture = 0, Palette = 0},
+                [6] = {Drawable = 104, Texture = 4, Palette = 0},
+                [7] = {Drawable = 117, Texture = 4, Palette = 0},
+                [8] = {Drawable = 31, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 29, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
         ["Tenue de travail"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -55,6 +69,20 @@ FoodConfig.Cloakroom = {
     },
 
     [GetHashKey("mp_f_freemode_01")] = {
+        ["Tenue de Direction"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 3, Texture = 0, Palette = 0},
+                [4] = {Drawable = 37, Texture = 0, Palette = 0},
+                [6] = {Drawable = 42, Texture = 2, Palette = 0},
+                [7] = {Drawable = 87, Texture = 4, Palette = 0},
+                [8] = {Drawable = 38, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 7, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
         ["Tenue de travail"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
