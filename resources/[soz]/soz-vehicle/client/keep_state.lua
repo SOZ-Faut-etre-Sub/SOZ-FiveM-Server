@@ -66,3 +66,7 @@ CreateThread(function()
         Wait(1000)
     end
 end)
+
+AddEventHandler("baseevents:enteredVehicle", function()
+    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+end)
