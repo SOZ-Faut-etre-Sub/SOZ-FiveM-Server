@@ -53,22 +53,26 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
         return null;
     }
 
+    const isStaffOrAdmin = ['staff', 'admin'].includes(permission);
+
     return (
         <Menu type={MenuType.AdminMenu}>
             <MainMenu>
                 <MenuTitle banner={banner}>Menu des admins</MenuTitle>
                 <MenuContent>
-                    <MenuItemSubMenuLink id="game_master">Menu du maître du jeu</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="interactive">Informations interactives</MenuItemSubMenuLink>
-                    {['staff', 'admin'].includes(permission) && (
-                        <>
-                            <MenuItemSubMenuLink id="job">Gestion métier</MenuItemSubMenuLink>
-                            <MenuItemSubMenuLink id="skin">Modification du style du joueur</MenuItemSubMenuLink>
-                            <MenuItemSubMenuLink id="vehicle">Gestion du véhicule</MenuItemSubMenuLink>
-                        </>
-                    )}
-                    <MenuItemSubMenuLink id="players">Gestion des joueurs</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="developer">Outils pour développeur</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="game_master">🎲 Menu du maître du jeu</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="interactive">🗺 Informations interactives</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="job">
+                        ⛑ Gestion métier
+                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="skin">
+                        🐕 Modification du style du joueur
+                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="vehicle">
+                        🚗 Gestion du véhicule
+                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="players">👨‍💻 Gestion des joueurs</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
             <GameMasterSubMenu
