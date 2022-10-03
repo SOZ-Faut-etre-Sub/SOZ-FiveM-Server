@@ -11,12 +11,12 @@ export class PlayerDiseaseProvider {
     private playerService: PlayerService;
 
     @OnEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE)
-    public setPlayerDisease(source: number, disease: Disease) {
+    public setPlayerDisease(source: number, disease: Disease, target?: number) {
         // Data from fivem can be wrongly typed, force false here
         if (!disease) {
             disease = false;
         }
 
-        this.playerService.setPlayerDisease(source, disease);
+        this.playerService.setPlayerDisease(target ? target : source, disease);
     }
 }

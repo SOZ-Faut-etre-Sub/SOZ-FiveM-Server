@@ -1,15 +1,17 @@
+import PCancelable from 'p-cancelable';
+
 import { Injectable } from '../core/decorators/injectable';
 import { animationOptionsToFlags, ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
 
 @Injectable()
 export class ProgressService {
-    public async progress(
+    public progress(
         name: string,
         label: string,
         duration: number,
         animation?: ProgressAnimation,
         options: Partial<ProgressOptions> = {}
-    ): Promise<ProgressResult> {
+    ): PCancelable<ProgressResult> {
         options = {
             useWhileDead: false,
             canCancel: true,
@@ -21,8 +23,12 @@ export class ProgressService {
 
         const start = GetGameTimer();
         let promiseResolve;
-        const promise = new Promise<ProgressResult>(function (resolve) {
+        const promise = new PCancelable<ProgressResult>(function (resolve, reject, onCancel) {
             promiseResolve = resolve;
+
+            onCancel(() => {
+                TriggerEvent('progressbar:client:cancel');
+            });
         });
 
         exports['progressbar'].Progress(

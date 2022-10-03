@@ -54,6 +54,7 @@
         "classnames": "^2.3.1",
         "inter-ui": "^3.19.3",
         "inversify": "^6.0.1",
+        "p-cancelable": "^4.0.1",
         "postcss": "^8.4.14",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

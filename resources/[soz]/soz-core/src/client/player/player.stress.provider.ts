@@ -257,9 +257,22 @@ export class PlayerStressProvider {
         if (this.invalidMode) {
             DisableControlAction(0, 21, true); // disable sprint
             DisableControlAction(0, 22, true); // disable jump
-            DisableControlAction(0, 24, true); // disable attack
+            DisableControlAction(0, 24, true); // Attack
+            DisableControlAction(0, 25, true); // Aim
+            DisableControlAction(2, 36, true); // Disable going stealth
+            DisableControlAction(0, 37, true); // Select Weapon
+            DisableControlAction(0, 44, true); // Cover
+            DisableControlAction(0, 45, true); // Reload
+            DisableControlAction(0, 47, true); // Disable weapon
             DisableControlAction(0, 71, true); // disable vehicle accelerate
             DisableControlAction(0, 72, true); // disable vehicle brake
+            DisableControlAction(0, 140, true); // Disable melee
+            DisableControlAction(0, 141, true); // Disable melee
+            DisableControlAction(0, 142, true); // Disable melee
+            DisableControlAction(0, 143, true); // Disable melee
+            DisableControlAction(0, 257, true); // Attack 2
+            DisableControlAction(0, 263, true); // Melee Attack 1
+            DisableControlAction(0, 264, true); // Disable melee
         }
     }
 
@@ -298,9 +311,13 @@ export class PlayerStressProvider {
         blurAction();
 
         if (player.metadata.stress_level <= 60) {
-            return await wait(1000 * 60 * 5);
+            await wait(1000 * 60 * 5);
+
+            return;
         }
 
-        return await wait(1000 * 60 * 2);
+        await wait(1000 * 60 * 2);
+
+        return;
     }
 }

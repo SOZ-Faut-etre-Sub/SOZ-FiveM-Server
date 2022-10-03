@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 
-import { healthLevelToLabel, LabelStrategy } from '../../../shared/health';
+import { healthLevelToLabel, LabelStrategy, stressLevelToLabel } from '../../../shared/health';
 import { PlayerData } from '../../../shared/player';
 import { useNuiEvent } from '../../hook/nui';
 
@@ -65,7 +65,7 @@ export const HealthBookApp: FunctionComponent = () => {
                             {healthLevelToLabel(
                                 playerData.metadata.health_book_sugar,
                                 0,
-                                100,
+                                25,
                                 LabelStrategy.MinMaxAverage
                             )}
                         </li>
@@ -73,7 +73,7 @@ export const HealthBookApp: FunctionComponent = () => {
                             {healthLevelToLabel(
                                 playerData.metadata.health_book_fiber,
                                 0,
-                                100,
+                                25,
                                 LabelStrategy.MinMaxAverage
                             )}
                         </li>
@@ -81,7 +81,7 @@ export const HealthBookApp: FunctionComponent = () => {
                             {healthLevelToLabel(
                                 playerData.metadata.health_book_lipid,
                                 0,
-                                100,
+                                25,
                                 LabelStrategy.MinMaxAverage
                             )}
                         </li>
@@ -89,7 +89,7 @@ export const HealthBookApp: FunctionComponent = () => {
                             {healthLevelToLabel(
                                 playerData.metadata.health_book_protein,
                                 0,
-                                100,
+                                25,
                                 LabelStrategy.MinMaxAverage
                             )}
                         </li>
@@ -108,16 +108,9 @@ export const HealthBookApp: FunctionComponent = () => {
                         </li>
                     </ul>
                     <ul className="text-lime-700 ml-2 italic capitalize">
-                        <li>{healthLevelToLabel(playerData.metadata.health_book_max_stamina, 50, 120)}</li>
-                        <li>{healthLevelToLabel(playerData.metadata.health_book_strength, 50, 120)}</li>
-                        <li>
-                            {healthLevelToLabel(
-                                playerData.metadata.health_book_stress_level,
-                                0,
-                                100,
-                                LabelStrategy.MinMaxInverted
-                            )}
-                        </li>
+                        <li>{healthLevelToLabel(playerData.metadata.health_book_max_stamina, 60, 150)}</li>
+                        <li>{healthLevelToLabel(playerData.metadata.health_book_strength, 60, 150)}</li>
+                        <li>{stressLevelToLabel(playerData.metadata.health_book_stress_level)}</li>
                     </ul>
                 </div>
             </div>

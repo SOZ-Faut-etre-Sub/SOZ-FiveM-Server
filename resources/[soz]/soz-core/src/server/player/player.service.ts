@@ -49,9 +49,9 @@ export class PlayerService {
             return;
         }
 
-        if (disease === false) {
-            player.Functions.SetMetaData('disease', disease);
-            TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, disease);
+        if (!disease) {
+            player.Functions.SetMetaData('disease', false);
+            TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, false);
 
             return;
         }

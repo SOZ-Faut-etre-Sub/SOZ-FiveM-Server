@@ -1,5 +1,38 @@
-export const wait = (ms: number): Promise<void> => {
-    return new Promise(resolve => setTimeout(resolve, ms));
+import PCancelable from 'p-cancelable';
+
+export const wait = (ms: number): PCancelable<boolean> => {
+    return new PCancelable(resolve => setTimeout(() => resolve(true), ms));
+};
+
+export const waitUntil = (until: () => Promise<boolean>, timeout?: number): PCancelable<boolean> => {
+    const cancelable = new PCancelable<boolean>((resolve, reject, onCancel) => {
+        const tick = setTick(async () => {
+            const result = await until();
+
+            if (result) {
+                clearTick(tick);
+                resolve(true);
+            }
+        });
+
+        onCancel.shouldReject = false;
+        onCancel(() => {
+            clearTick(tick);
+            resolve(false);
+        });
+    });
+
+    if (timeout) {
+        setTimeout(() => {
+            try {
+                cancelable.cancel();
+            } catch {
+                // do nothing
+            }
+        }, timeout);
+    }
+
+    return cancelable;
 };
 
 export const uuidv4 = (): string => {
