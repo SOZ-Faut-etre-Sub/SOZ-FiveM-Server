@@ -5,8 +5,10 @@ import { emitRpc } from '../../core/rpc';
 import { HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../nui/components/Admin/PlayerSubMenu';
 import { AdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
+import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 
 const ALLOWED_HEALTH_OPTIONS = HEALTH_OPTIONS.map(option => option.value);
@@ -21,13 +23,41 @@ export class AdminMenuPlayerProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(InputService)
+    private inputService: InputService;
+
+    private async getPlayers(): Promise<AdminPlayer[]> {
+        return (await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS)).sort((a, b) => a.name.localeCompare(b.name));
+    }
+
     @OnNuiEvent(NuiEvent.AdminGetPlayers)
-    public async getPlayers(): Promise<void> {
-        const players = (await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS)).sort((a, b) =>
-            a.name.localeCompare(b.name)
-        );
+    public async onGetPlayers(): Promise<void> {
+        const players = await this.getPlayers();
 
         this.nuiDispatch.dispatch('admin_player_submenu', 'SetPlayers', players);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSearchPlayer)
+    public async handleSearchPlayer(): Promise<void> {
+        const players = await this.getPlayers();
+        const player = await this.inputService.askInput(
+            {
+                title: 'Rechercher un joueur',
+                maxCharacters: 50,
+                defaultValue: '',
+            },
+            value => {
+                if (!value || value === '') {
+                    return Ok(true);
+                }
+                const player = players.find(p => p.name.toLowerCase().includes(value.toLowerCase()));
+                if (!player) {
+                    return Err('Aucun joueur trouvé.');
+                }
+                return Ok(true);
+            }
+        );
+        this.nuiDispatch.dispatch('admin_player_submenu', 'SetSearchFilter', player || '');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSpectate)

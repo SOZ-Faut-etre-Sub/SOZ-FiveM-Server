@@ -24,25 +24,29 @@ export class JobProvider {
             },
         });
 
-        grades.forEach(grade => {
-            const job = jobs.find(j => j.id === grade.jobId);
-            if (job) {
-                if (typeof job.grades === 'object') {
-                    job.grades = [];
+        grades
+            .filter(grade => grade.owner > 0)
+            .forEach(grade => {
+                const job = jobs.find(j => j.id === grade.jobId);
+                if (job) {
+                    if (typeof job.grades === 'object') {
+                        job.grades = Object.values(job.grades);
+                    }
+                    if (!job.grades.find(g => g.id === grade.id)) {
+                        job.grades.push({
+                            id: grade.id,
+                            jobId: grade.jobId,
+                            salary: grade.salary,
+                            name: grade.name,
+                            is_default: grade.is_default === 1,
+                            owner: grade.owner,
+                            permissions: JSON.parse(grade.permissions),
+                            weight: grade.weight,
+                        });
+                    }
                 }
-                job.grades.push({
-                    id: grade.id,
-                    jobId: grade.jobId,
-                    salary: grade.salary,
-                    name: grade.name,
-                    is_default: grade.is_default === 1,
-                    owner: grade.owner,
-                    permissions: JSON.parse(grade.permissions),
-                    weight: grade.weight,
-                });
-            }
-        });
+            });
 
-        return jobs;
+        return jobs.filter(job => job.grades.length > 0);
     }
 }

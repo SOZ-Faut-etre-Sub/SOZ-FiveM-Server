@@ -22,6 +22,7 @@ export type PlayerSubMenuProps = {
 
 export interface NuiAdminPlayerSubMenuMethodMap {
     SetPlayers: AdminPlayer[];
+    SetSearchFilter: string;
 }
 
 export const HEALTH_OPTIONS = [
@@ -41,8 +42,8 @@ export const VOCAL_OPTIONS = [
 ];
 
 export const TELEPORT_OPTIONS = [
-    { label: 'vers le joueur', value: 'goto' },
-    { label: 'à moi', value: 'bring' },
+    { label: 'Vers le joueur', value: 'goto' },
+    { label: 'Du joueur à moi', value: 'bring' },
 ];
 
 export const EFFECTS_OPTIONS = [
@@ -62,9 +63,14 @@ export const DISEASE_OPTIONS = [
 
 export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission }) => {
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
+    const [searchFilter, setSearchFilter] = useState<string>('');
 
     useNuiEvent('admin_player_submenu', 'SetPlayers', players => {
         setPlayers(players);
+    });
+
+    useNuiEvent('admin_player_submenu', 'SetSearchFilter', filter => {
+        setSearchFilter(filter);
     });
 
     useEffect(() => {
@@ -84,11 +90,25 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
             <SubMenu id="players">
                 <MenuTitle banner={banner}>Michel ? C'est toi ?</MenuTitle>
                 <MenuContent>
-                    {players.map(player => (
-                        <MenuItemSubMenuLink id={'player_' + player.citizenId} key={'player_link_' + player.citizenId}>
-                            [{player.id}] {player.name}
-                        </MenuItemSubMenuLink>
-                    ))}
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.AdminMenuPlayerHandleSearchPlayer);
+                        }}
+                    >
+                        Rechercher un joueur: {searchFilter}
+                    </MenuItemButton>
+                    {players
+                        .filter(player =>
+                            searchFilter !== '' ? player.name.toLowerCase().includes(searchFilter.toLowerCase()) : true
+                        )
+                        .map(player => (
+                            <MenuItemSubMenuLink
+                                id={'player_' + player.citizenId}
+                                key={'player_link_' + player.citizenId}
+                            >
+                                [{player.id}] {player.name}
+                            </MenuItemSubMenuLink>
+                        ))}
                 </MenuContent>
             </SubMenu>
             {players.map(player => (

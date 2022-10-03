@@ -29,8 +29,8 @@ export interface NuiAdminJobSubMenuMethodMap {
 
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, updateState }) => {
     const [currentJobId, setCurrentJobId] = useState<JobType>(undefined);
-    const [currentJobIndex, setCurrentJobIndex] = useState<number>(undefined);
-    const [currentJobGradeIndex, setCurrentJobGradeIndex] = useState<number>(undefined);
+    const [currentJobIndex, setCurrentJobIndex] = useState<number>(0);
+    const [currentJobGradeIndex, setCurrentJobGradeIndex] = useState<number>(0);
     const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
     const [jobs, setJobs] = useState<Job[]>([]);
     const [grades, setGrades] = useState<Job['grades']>([]);

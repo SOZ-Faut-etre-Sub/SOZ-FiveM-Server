@@ -57,11 +57,6 @@ export class AdminMenuGameMasterProvider {
         SetEntityVisible(PlayerPedId(), value, false);
     }
 
-    @OnNuiEvent(NuiEvent.AdminSetInvincible)
-    public async setInvincible(value: boolean): Promise<void> {
-        SetEntityInvincible(PlayerPedId(), value);
-    }
-
     @OnNuiEvent(NuiEvent.AdminAutoPilot)
     public async setAutoPilot(): Promise<void> {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
@@ -70,15 +65,18 @@ export class AdminMenuGameMasterProvider {
         if (DoesBlipExist(waypoint)) {
             const waypointCoords = GetBlipInfoIdCoord(waypoint);
 
-            TaskVehicleDriveToCoordLongrange(
+            TaskVehicleDriveToCoord(
                 PlayerPedId(),
                 vehicle,
                 waypointCoords[0],
                 waypointCoords[1],
                 waypointCoords[2],
-                60.0,
-                262539,
-                20.0
+                30.0,
+                1.0,
+                GetHashKey(vehicle.toString()),
+                786603,
+                1.0,
+                1
             );
         } else {
             this.notifier.notify(`Vous n'avez pas sélectionné de destination.`, 'error');

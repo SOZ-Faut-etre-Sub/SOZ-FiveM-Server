@@ -21,7 +21,6 @@ export type GameMasterSubMenuProps = {
     state: {
         moneyCase: boolean;
         invisible: boolean;
-        invincible: boolean;
         godMode: boolean;
     };
 };
@@ -34,7 +33,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
 }) => {
     const [moneyCase, setMoneyCase] = useState<boolean>(false);
     const [invisible, setInvisible] = useState<boolean>(false);
-    const [invincible, setInvincible] = useState<boolean>(false);
     const [godMode, setGodMode] = useState<boolean>(false);
 
     useEffect(() => {
@@ -43,9 +41,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
         }
         if (state && state.invisible !== undefined) {
             setInvisible(state.invisible);
-        }
-        if (state && state.invincible !== undefined) {
-            setInvincible(state.invincible);
         }
         if (state && state.godMode !== undefined) {
             setGodMode(state.godMode);
@@ -59,7 +54,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
             <MenuTitle banner={banner}>Dieu ? C'est toi ?</MenuTitle>
             <MenuContent>
                 <MenuItemSelect
-                    title="Se donner de l'argent propre"
+                    title="💰 Se donner de l'argent propre"
                     disabled={!isAdmin}
                     onConfirm={async index => {
                         await fetchNui(NuiEvent.AdminGiveMoney, MONEY_OPTIONS[index].value);
@@ -70,7 +65,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     ))}
                 </MenuItemSelect>
                 <MenuItemSelect
-                    title="Se donner de l'argent marqué"
+                    title="💰 Se donner de l'argent marqué"
                     disabled={!isAdmin}
                     onConfirm={async index => {
                         await fetchNui(NuiEvent.AdminGiveMarkedMoney, MONEY_OPTIONS[index].value);
@@ -85,7 +80,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                         await fetchNui(NuiEvent.AdminTeleportToWaypoint);
                     }}
                 >
-                    Se téléporter au marqueur
+                    🥷 Se téléporter au marqueur
                 </MenuItemButton>
                 <MenuItemSelect
                     title="Se donner le permis"
@@ -107,7 +102,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                         await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
                     }}
                 >
-                    Mallette d'argent
+                    💼 Mallette d'argent
                 </MenuItemCheckbox>
                 <MenuItemCheckbox
                     checked={invisible}
@@ -120,23 +115,12 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 >
                     Invisible
                 </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    checked={invincible}
-                    disabled={!isAdmin}
-                    onChange={async value => {
-                        setInvincible(value);
-                        updateState('gameMaster', 'invincible', value);
-                        await fetchNui(NuiEvent.AdminSetInvincible, value);
-                    }}
-                >
-                    Invincible
-                </MenuItemCheckbox>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminAutoPilot);
                     }}
                 >
-                    Auto-pilote
+                    🏎️ Auto-pilote
                 </MenuItemButton>
                 <MenuItemCheckbox
                     checked={godMode}
@@ -147,7 +131,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                         await fetchNui(NuiEvent.AdminSetGodMode, value);
                     }}
                 >
-                    God mode
+                    🔱 Mode Dieu
                 </MenuItemCheckbox>
                 <MenuItemButton
                     onConfirm={async () => {
