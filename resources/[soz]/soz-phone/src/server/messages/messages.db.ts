@@ -14,12 +14,12 @@ export class _MessagesDB {
         conversationId: string,
         message: string
     ): Promise<number> {
-        const id = exports.oxmysql.insert_async(
+        const id = await exports.oxmysql.insert_async(
             'INSERT INTO phone_messages (user_identifier, author, message, conversation_id) VALUES (?, ?, ?, ?)',
             [userIdentifier, author, message, conversationId]
         );
 
-        exports.oxmysql.update_async(
+        await exports.oxmysql.update_async(
             'UPDATE phone_messages_conversations SET updatedAt = current_timestamp() WHERE conversation_id = ?',
             [conversationId]
         );
@@ -34,7 +34,7 @@ export class _MessagesDB {
      * @param phoneNumber - phoneNumber of the user to get message conversations for
      */
     async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
-        return exports.oxmysql.query_async(
+        return await exports.oxmysql.query_async(
             `SELECT DISTINCT phone_messages_conversations.unread,
                    phone_messages_conversations.conversation_id,
                    phone_messages_conversations.user_identifier,
@@ -59,7 +59,7 @@ export class _MessagesDB {
     }
 
     async getMessages(phoneNumber: string): Promise<Message[]> {
-        return exports.oxmysql.query_async(
+        return await exports.oxmysql.query_async(
             `SELECT DISTINCT phone_messages.id,
                               phone_messages.conversation_id,
                               phone_messages.message,
@@ -84,7 +84,7 @@ export class _MessagesDB {
         conversationId: string,
         participantIdentifier: string
     ): Promise<void> {
-        exports.oxmysql.insert_async(
+        await exports.oxmysql.insert_async(
             'INSERT INTO phone_messages_conversations (user_identifier, conversation_id, participant_identifier) VALUES (?, ?, ?)',
             [userIdentifier, conversationId, participantIdentifier]
         );
@@ -95,7 +95,7 @@ export class _MessagesDB {
      * @param phoneNumber - the phone number to search for
      */
     async getIdentifierFromPhoneNumber(phoneNumber: string): Promise<string> {
-        const result = exports.oxmysql.query_async('SELECT citizenid FROM player WHERE charinfo LIKE ? LIMIT 1', [
+        const result = await exports.oxmysql.query_async('SELECT citizenid FROM player WHERE charinfo LIKE ? LIMIT 1', [
             '%' + phoneNumber + '%',
         ]);
 
@@ -110,7 +110,7 @@ export class _MessagesDB {
      * @param groupId - group Id to check that it exists
      */
     async checkIfMessageGroupExists(groupId: string): Promise<boolean> {
-        const result = exports.oxmysql.single_async(
+        const result = await exports.oxmysql.single_async(
             `SELECT COUNT(*) as count FROM phone_messages_conversations WHERE conversation_id = ?`,
             [groupId]
         );
@@ -118,7 +118,7 @@ export class _MessagesDB {
     }
 
     async getMessageCountByGroup(groupId: string): Promise<number> {
-        const result = exports.oxmysql.single_async(
+        const result = await exports.oxmysql.single_async(
             `SELECT COUNT(*) as count FROM phone_messages WHERE conversation_id = ?`,
             [groupId]
         );
@@ -131,7 +131,7 @@ export class _MessagesDB {
      * @param identifier The identifier for the player
      */
     async setMessageRead(groupId: string, identifier: string) {
-        exports.oxmysql.query_async(
+        await exports.oxmysql.query_async(
             `UPDATE phone_messages_conversations
                    SET unreadCount = 0
                    WHERE conversation_id = ?
@@ -141,7 +141,7 @@ export class _MessagesDB {
     }
 
     async deleteConversation(conversationId: string, sourcePhoneNumber: string) {
-        exports.oxmysql.query_async(
+        await exports.oxmysql.query_async(
             `DELETE
                    FROM phone_messages_conversations
                    WHERE conversation_id = ?
@@ -154,7 +154,7 @@ export class _MessagesDB {
         conversationId: string,
         identifier: string
     ): Promise<UnformattedMessageConversation | null> {
-        return exports.oxmysql.single_async(
+        return await exports.oxmysql.single_async(
             `SELECT *
                    FROM phone_messages_conversations
                    WHERE conversation_id = ?
