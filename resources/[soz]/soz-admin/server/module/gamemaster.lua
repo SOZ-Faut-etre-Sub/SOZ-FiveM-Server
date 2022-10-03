@@ -38,6 +38,7 @@ RegisterNetEvent("admin:gamemaster:godmode", function(val)
         return
     end
 
+    SetEntityInvincible(GetPlayerPed(source), val)
     local player = QBCore.Functions.GetPlayer(source)
     player.Functions.SetMetaData("godmode", val)
 end)

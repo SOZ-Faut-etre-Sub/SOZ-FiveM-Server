@@ -3,6 +3,28 @@ local propsMenu
 local PropOption = {model = nil, event = nil, setupMode = false, prop = nil, propCoord = vec4(0, 0, 0, 0)}
 
 --- function
+function BuildJobList()
+    local SozJobCore = exports["soz-jobs"]:GetCoreObject()
+    local JobList = {}
+
+    for jobID, jobData in pairs(SozJobCore.Jobs) do
+        for _, grade in pairs(jobData.grades) do
+            if grade.owner == 1 then
+                table.insert(JobList, {
+                    label = jobData.label,
+                    value = {label = jobData.label, jobID = jobID, gradeId = grade.id},
+                })
+            end
+        end
+    end
+
+    table.sort(JobList, function(a, b)
+        return a.label < b.label
+    end)
+
+    return JobList
+end
+
 local function setupGhostProp()
     if PropOption.prop ~= nil or PropOption.model == nil then
         return

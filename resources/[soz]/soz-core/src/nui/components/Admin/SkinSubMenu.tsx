@@ -62,7 +62,12 @@ const TRANSLATED_INDEXES: { [key: string]: string } = {
     Undershirt: 'Undershirt',
     BodyArmor: 'Armure',
     Decals: 'Décalques',
-    Top: 'Haut',
+    Tops: 'Hauts',
+    Hats: 'Chapeaux',
+    Glasses: 'Lunettes',
+    EarPieces: 'Accessoires oreilles',
+    Watches: 'Montres',
+    Bracelets: 'Bracelets',
 };
 
 export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updateState, state }) => {
@@ -229,7 +234,9 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
 
             {Object.keys(clothConfig.Components).map(componentIndex => (
                 <SubMenu id={`player_style_component_${componentIndex}`} key={componentIndex}>
-                    <MenuTitle banner={banner}>{`[${componentIndex}] - ${ComponentIndex[componentIndex]}`}</MenuTitle>
+                    <MenuTitle banner={banner}>{`[${componentIndex}] - ${
+                        TRANSLATED_INDEXES[ComponentIndex[componentIndex]]
+                    }`}</MenuTitle>
                     <MenuContent>
                         <MenuItemSelect
                             title={`Drawable`}
@@ -276,7 +283,9 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
 
             {Object.keys(clothConfig.Props).map(propIndex => (
                 <SubMenu id={`player_style_prop_${propIndex}`} key={propIndex}>
-                    <MenuTitle banner={banner}>{`[${propIndex}] - ${PropIndex[propIndex]}`}</MenuTitle>
+                    <MenuTitle banner={banner}>{`[${propIndex}] - ${
+                        TRANSLATED_INDEXES[PropIndex[propIndex]]
+                    }`}</MenuTitle>
                     <MenuContent>
                         <MenuItemSelect
                             title={`Drawable`}
