@@ -211,9 +211,11 @@ RegisterNetEvent("hud:client:OverrideVisibility", function(newState)
 end)
 
 RegisterNetEvent("phone:camera:enter", function()
+    HudForcedStateDisplay = false
     setHudDisplay(false)
 end)
 RegisterNetEvent("phone:camera:exit", function()
+    HudForcedStateDisplay = true
     setHudDisplay(true)
 end)
 
@@ -233,7 +235,7 @@ CreateThread(function()
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
 
                 PlayerInVehicle = true
-                setHudRadar(true)
+                setHudRadar(true and HudDisplayed)
                 local actualspeed = GetEntitySpeed(vehicle);
                 if actualspeed < 0.09 then
                     actualspeed = 0
