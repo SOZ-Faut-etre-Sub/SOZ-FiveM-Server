@@ -225,6 +225,8 @@ export class PlayerHealthProvider {
 
         playerState.yoga = true;
 
+        this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
+
         await this.increaseStress(source, -8);
     }
 
