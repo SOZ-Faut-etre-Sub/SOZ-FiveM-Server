@@ -1,3 +1,5 @@
+import { Wardrobe, WardrobeMenuData } from '../cloth';
+
 export interface NuiMenuMethodMap {
     ArrowDown: never;
     ArrowLeft: never;
@@ -7,8 +9,6 @@ export interface NuiMenuMethodMap {
     CloseMenu: never;
     Enter: never;
     SetMenuType: SetMenuType;
-
-    MenuHealthSetSource: number;
 }
 
 export type SetMenuType = {
@@ -22,6 +22,7 @@ export enum MenuType {
     FoodJobMenu = 'food_job_menu',
     Demo = 'demo',
     SetHealthState = 'set_health_state',
+    Wardrobe = 'wardrobe',
 }
 
 export interface MenuTypeMap extends Record<MenuType, unknown> {
@@ -29,4 +30,5 @@ export interface MenuTypeMap extends Record<MenuType, unknown> {
     [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Demo]: never;
     [MenuType.SetHealthState]: number;
+    [MenuType.Wardrobe]: WardrobeMenuData;
 }

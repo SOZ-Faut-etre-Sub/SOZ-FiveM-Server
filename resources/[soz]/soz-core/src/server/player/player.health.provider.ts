@@ -10,6 +10,7 @@ import { RpcEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
+import { PlayerMoneyService } from './player.money.service';
 import { PlayerService } from './player.service';
 import { PlayerStateService } from './player.state.service';
 
@@ -37,6 +38,9 @@ export class PlayerHealthProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
@@ -239,5 +243,30 @@ export class PlayerHealthProvider {
         }
 
         return targetPlayer;
+    }
+
+    @OnEvent(ServerEvent.PLAYER_HEALTH_GYM_SUBSCRIBE)
+    public onGymSubscribe(source: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (player.metadata.gym_subscription_expire_at && player.metadata.gym_subscription_expire_at > Date.now()) {
+            return;
+        }
+
+        if (this.playerMoneyService.remove(source, 300)) {
+            this.playerService.setPlayerMetadata(
+                source,
+                'gym_subscription_expire_at',
+                Date.now() + 7 * 24 * 60 * 60 * 1000
+            );
+
+            this.notifier.notify(source, `Merci pour votre ~g~abonnement~s~ à la salle de sport.`, 'success');
+        } else {
+            this.notifier.notify(source, `T'as cru que c'était gratuit ? Il faut payer ~r~$300~s~.`, 'error');
+        }
     }
 }

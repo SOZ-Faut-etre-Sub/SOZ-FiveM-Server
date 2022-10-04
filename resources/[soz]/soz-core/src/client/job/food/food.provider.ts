@@ -6,6 +6,7 @@ import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
 import { FoodConfig, FoodCraftProcess } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
+import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -26,8 +27,8 @@ export class FoodProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     private state = {
         displayMilkBlip: false,
@@ -36,12 +37,19 @@ export class FoodProvider {
     @OnNuiEvent(NuiEvent.FoodDisplayBlip)
     public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
         this.state[blip] = value;
-        this.QBCore.hideBlip(blip, !value);
+        this.blipFactory.hide(blip, !value);
     }
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        this.createBlips();
+        this.blipFactory.create('displayMilkBlip', {
+            name: 'Point de récolte du lait',
+            coords: { x: 2416.01, y: 4993.49, z: 46.22 },
+            sprite: 176,
+            scale: 0.9,
+        });
+
+        this.blipFactory.hide('displayMilkBlip', true);
     }
 
     @OnEvent(ClientEvent.JOBS_FOOD_OPEN_SOCIETY_MENU)
@@ -96,15 +104,5 @@ export class FoodProvider {
                 },
             };
         });
-    }
-
-    private createBlips() {
-        this.QBCore.createBlip('displayMilkBlip', {
-            name: 'Point de récolte du lait',
-            coords: { x: 2416.01, y: 4993.49, z: 46.22 },
-            sprite: 176,
-            scale: 0.9,
-        });
-        this.QBCore.hideBlip('displayMilkBlip', true);
     }
 }

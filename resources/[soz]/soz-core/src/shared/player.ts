@@ -1,4 +1,5 @@
 import { SozRole } from '../core/permissions';
+import { ClothConfig } from './cloth';
 import { Disease } from './disease';
 import { InventoryItem } from './item';
 import { JobType } from './job';
@@ -9,6 +10,7 @@ export type QBCorePlayer = {
         Save: () => void;
         UpdateMaxWeight: () => void;
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
+        SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
     };
     PlayerData: PlayerData;
 };
@@ -21,6 +23,7 @@ export type PlayerData = {
     job: PlayerJob;
     items: Record<string, InventoryItem> | InventoryItem[];
     skin: Skin;
+    cloth_config: ClothConfig;
     source: number;
 };
 
@@ -101,4 +104,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     last_disease_at: number | null;
     // Typing is intentionally in that way so that you could program future items that gives clothes.
     isWearingItem: 'zevent2022_tshirt' | null;
+    gym_subscription_expire_at: number | null;
 };

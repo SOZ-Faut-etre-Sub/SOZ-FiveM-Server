@@ -27,13 +27,19 @@ export enum ServerEvent {
     PLAYER_INCREASE_STAMINA = 'soz-core:server:player:increase-stamina',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
     PLAYER_SET_CURRENT_DISEASE = 'soz-core:server:server:set-current-disease',
-    PLAYER_INCREASE_RUN_TIME = 'soz-core:client:player:health:increase-run-time',
+    PLAYER_INCREASE_RUN_TIME = 'soz-core:server:player:health:increase-run-time',
     PLAYER_DO_YOGA = 'soz-core:server:player:do-yoga',
 
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
-    PLAYER_SHOW_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
-    PLAYER_HEALTH_SET_EXERCISE_COMPLETED = 'soz-core:client:player:health:set-exercise-completed',
+    PLAYER_SHOW_HEALTH_BOOK = 'soz-core:server:player:health:request-health-book',
+    PLAYER_HEALTH_SET_EXERCISE_COMPLETED = 'soz-core:server:player:health:set-exercise-completed',
+    PLAYER_HEALTH_GYM_SUBSCRIBE = 'soz-core:server:player:health:gym-subscribe',
+
+    PLAYER_APPEARANCE_SET_JOB_OUTFIT = 'soz-core:server:appearance:set-job-outfit',
+    PLAYER_APPEARANCE_REMOVE_JOB_OUTFIT = 'soz-core:server:appearance:remove-job-outfit',
+    PLAYER_APPEARANCE_SET_TEMP_OUTFIT = 'soz-core:server:appearance:set-temp-outfit',
+    PLAYER_APPEARANCE_REMOVE_TEMP_OUTFIT = 'soz-core:server:appearance:remove-temp-outfit',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
@@ -42,7 +48,7 @@ export enum ServerEvent {
     // not core
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
-    CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
+    CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:server:ApplyTemporaryClothSet',
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
     LSMC_REVIVE = 'lsmc:server:revive',
 }
@@ -94,4 +100,5 @@ export enum NuiEvent {
     InputCancel = 'soz-core:client:input:cancel',
     MenuClosed = 'menu_closed',
     SetFocusInput = 'soz-core:nui:set-focus-input',
+    SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 }
