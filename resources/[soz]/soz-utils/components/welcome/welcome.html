@@ -32,6 +32,14 @@
             opacity: 1;
         }
 
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
         #pages {
             display: flex;
             align-items: center;
@@ -71,11 +79,19 @@
 <body>
     <div id="wrapper">
         <div id="pages">
-            <img src="./welcome-0.jpg" class="page" id="p0" />
-            <img src="./welcome-1.jpg" class="page" id="p1" />
-            <img src="./welcome-2.jpg" class="page" id="p2" />
-            <img src="./welcome-3.jpg" class="page" id="p3" />
-            <img src="./welcome-4.jpg" class="page" id="p4" />
+            <div id="welcome">
+                <img src="./welcome/welcome-0.jpg" class="page" id="p0" />
+                <img src="./welcome/welcome-1.jpg" class="page" id="p1" />
+                <img src="./welcome/welcome-2.jpg" class="page" id="p2" />
+                <img src="./welcome/welcome-3.jpg" class="page" id="p3" />
+                <img src="./welcome/welcome-4.jpg" class="page" id="p4" />
+            </div>
+            <div id="health">
+                <img src="./health/health-book-0.jpg" class="page" id="ph0" />
+                <img src="./health/health-book-1.jpg" class="page" id="ph1" />
+                <img src="./health/health-book-2.jpg" class="page" id="ph2" />
+                <img src="./health/health-book-3.jpg" class="page" id="ph3" />
+            </div>
         </div>
 
         <div class="buttons">
@@ -89,13 +105,21 @@
         let activeStep = 0;
 
         let wzoom = []
-        const steps = [
+        const stepsWelcome = [
             document.querySelector("#p0"),
             document.querySelector("#p1"),
             document.querySelector("#p2"),
             document.querySelector("#p3"),
             document.querySelector("#p4"),
         ];
+        const stepsHealths = [
+            document.querySelector("#ph0"),
+            document.querySelector("#ph1"),
+            document.querySelector("#ph2"),
+            document.querySelector("#ph3"),
+        ];
+
+        let steps = stepsWelcome;
 
         const btnL = document.querySelector("#btnL");
         const btnR = document.querySelector("#btnR");
@@ -140,7 +164,21 @@
 
             const wrapper = document.querySelector("#wrapper");
 
-            if (action === "show") {
+            if (action === "show" || action === "show-health") {
+                if (action === "show-health") {
+                    steps = stepsHealths;
+                    document.querySelector('#welcome').classList.add('hide');
+                    document.querySelector('#welcome').classList.remove('show');
+                    document.querySelector('#health').classList.add('show');
+                    document.querySelector('#health').classList.remove('hide');
+                } else {
+                    steps = stepsWelcome;
+                    document.querySelector('#welcome').classList.add('show');
+                    document.querySelector('#welcome').classList.remove('hide');
+                    document.querySelector('#health').classList.add('hide');
+                    document.querySelector('#health').classList.remove('show');
+                }
+
                 wrapper.classList.add("show");
                 showStep(activeStep);
 

@@ -1,3 +1,6 @@
 QBCore.Functions.CreateUseableItem("welcome_book", function(source, item)
     TriggerClientEvent("soz-utils:welcome-show", source)
 end)
+QBCore.Functions.CreateUseableItem("health_book", function(source, item)
+    TriggerClientEvent("soz-utils:health-book", source)
+end)

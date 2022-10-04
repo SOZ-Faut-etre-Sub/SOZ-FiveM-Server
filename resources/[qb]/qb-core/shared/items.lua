@@ -3358,6 +3358,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Bienvenue sur SOZ !'
     },
+    ['health_book'] = {
+        ['name'] = 'health_book',
+        ['label'] = 'Guide de santé',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Votre guide de santé..'
+    },
 
     -- Benny's
     ['diagnostic_pad'] = {
