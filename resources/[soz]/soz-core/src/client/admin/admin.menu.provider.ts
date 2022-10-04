@@ -23,7 +23,6 @@ export class AdminMenuProvider {
         gameMaster: {
             godMode: false,
             invisible: false,
-            invincible: false,
             moneyCase: true,
         },
         interactive: {
