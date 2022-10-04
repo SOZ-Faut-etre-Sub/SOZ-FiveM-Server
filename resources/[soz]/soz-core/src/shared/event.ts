@@ -1,5 +1,5 @@
 export enum ServerEvent {
-    ADMIN_CHANGE_PLAYER = 'soz-core:server:admin:change-player',
+    ADMIN_SET_HEALTH_METADATA = 'soz-core:server:admin:set-health-metadata',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 
@@ -44,10 +44,9 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
-    ZEVENT_GET_POPCORN = 'soz-core:server:zevent:get-popcorn',
-
     // not core
     ADMIN_ADD_VEHICLE = 'admin:vehicle:addVehicle',
+    ADMIN_CHANGE_PLAYER = 'admin:server:ChangePlayer',
     ADMIN_GIVE_LICENCE = 'admin:gamemaster:giveLicence',
     ADMIN_GIVE_MONEY = 'admin:gamemaster:giveMoney',
     ADMIN_GOD_MODE = 'admin:gamemaster:godmode',
@@ -133,10 +132,11 @@ export enum NuiEvent {
     AdminMenuPlayerHandleEffectsOption = 'soz-core:client:admin:handle-effects-option',
     AdminMenuPlayerHandleHealthOption = 'soz-core:client:admin:handle-health-option',
     AdminMenuPlayerHandleMovementOption = 'soz-core:client:admin:handle-movement-option',
+    AdminMenuPlayerHandleResetSkin = 'soz-core:client:admin:handle-reset-skin',
     AdminMenuPlayerHandleSearchPlayer = 'soz-core:client:admin:handle-search-player',
+    AdminMenuPlayerHandleSetAttribute = 'soz-core:client:admin:handle-set-attribute',
     AdminMenuPlayerHandleTeleportOption = 'soz-core:client:admin:handle-teleport-option',
     AdminMenuPlayerHandleVocalOption = 'soz-core:client:admin:handle-vocal-option',
-    AdminMenuPlayerHandleResetSkin = 'soz-core:client:admin:handle-reset-skin',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
     AdminSetJob = 'soz-core:client:admin:set-job',

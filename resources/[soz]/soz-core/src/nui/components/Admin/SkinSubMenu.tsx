@@ -192,15 +192,17 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
             <SubMenu id={'player_style'}>
                 <MenuTitle banner={banner}>Modifier les éléments du personnage</MenuTitle>
                 <MenuContent>
-                    <MenuItemSubMenuLink id={'player_style_components'}>Composants du personnage</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id={'player_style_props'}>Accessoires du personnage</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id={'player_style_components'}>
+                        👕 Composants du personnage
+                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id={'player_style_props'}>🎩 Accessoires du personnage</MenuItemSubMenuLink>
 
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuSkinCopy);
                         }}
                     >
-                        Copier la tenue dans le presse papier
+                        📋 Copier la tenue dans le presse papier
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {

@@ -5,11 +5,13 @@ import { emitRpc } from '../../core/rpc';
 import { HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../nui/components/Admin/PlayerSubMenu';
 import { AdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { PlayerMetadata } from '../../shared/player';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { PlayerService } from '../player/player.service';
 
 const ALLOWED_HEALTH_OPTIONS = HEALTH_OPTIONS.map(option => option.value);
 const ALLOWED_MOVEMENT_OPTIONS = MOVEMENT_OPTIONS.map(option => option.value);
@@ -135,5 +137,18 @@ export class AdminMenuPlayerProvider {
     public async handleResetSkin(player: AdminPlayer): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_RESET_SKIN, player);
         this.notifier.notify(`Le skin du joueur ~g~${player.name}~s~ a été réinitialisé.`, 'info');
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetAttribute)
+    public async handleSetAttribute({
+        player,
+        attribute,
+        value,
+    }: {
+        player: AdminPlayer;
+        attribute: keyof PlayerMetadata;
+        value: number;
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_SET_HEALTH_METADATA, player, attribute, value);
     }
 }

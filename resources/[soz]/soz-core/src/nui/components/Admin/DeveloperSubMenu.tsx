@@ -21,6 +21,11 @@ export type DeveloperSubMenuProps = {
     };
 };
 
+const coordOptions = [
+    { label: 'Vector 3', value: 'coords3' },
+    { label: 'Vector 4', value: 'coords4' },
+];
+
 export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state, updateState }) => {
     const [noClip, setNoClip] = useState<boolean>(false);
     const [displayCoords, setDisplayCoords] = useState<boolean>(false);
@@ -33,12 +38,6 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
             setDisplayCoords(state.displayCoords);
         }
     }, [state]);
-
-    // TODO: Move to a shared file
-    const coordOptions = [
-        { label: 'Vector 3', value: 'coords3' },
-        { label: 'Vector 4', value: 'coords4' },
-    ];
 
     return (
         <SubMenu id="developer">
@@ -65,7 +64,7 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                     Afficher les coordonnées
                 </MenuItemCheckbox>
                 <MenuItemSelect
-                    title="Copier les coords"
+                    title="📋 Copier les coords"
                     onConfirm={async selectedIndex => {
                         await fetchNui(NuiEvent.AdminCopyCoords, coordOptions[selectedIndex].value);
                     }}
@@ -79,7 +78,7 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                         await fetchNui(NuiEvent.AdminChangePlayer);
                     }}
                 >
-                    Changer de joueur
+                    🧑 Changer de joueur
                 </MenuItemButton>
                 <MenuItemButton
                     onConfirm={async () => {

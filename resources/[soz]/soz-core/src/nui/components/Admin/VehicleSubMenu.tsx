@@ -59,29 +59,29 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                             await fetchNui(NuiEvent.AdminMenuVehicleSpawn);
                         }}
                     >
-                        Faire apparaître un véhicule
+                        🧞 Faire apparaître un véhicule
                     </MenuItemButton>
-                    <MenuItemSubMenuLink id={'vehicles_catalog'}>Catalogue des véhicules</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id={'vehicles_catalog'}>📝 Catalogue des véhicules</MenuItemSubMenuLink>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleRepair);
                         }}
                     >
-                        Réparer le véhicule
+                        ⚒️ Réparer le véhicule
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleClean);
                         }}
                     >
-                        Nettoyer le véhicule
+                        🧽 Nettoyer le véhicule
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleRefill);
                         }}
                     >
-                        Ravitailler le véhicule
+                        ⛽ Ravitailler le véhicule
                     </MenuItemButton>
                     {permission == 'admin' && (
                         <>
@@ -90,14 +90,14 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                                     await fetchNui(NuiEvent.AdminMenuVehicleSetFBIConfig);
                                 }}
                             >
-                                Configuration FBI
+                                👮 Configuration FBI
                             </MenuItemButton>
                             <MenuItemButton
                                 onConfirm={async () => {
                                     await fetchNui(NuiEvent.AdminMenuVehicleSave);
                                 }}
                             >
-                                Enregistrer une copie du véhicule
+                                ⚠️ Enregistrer une copie du véhicule
                             </MenuItemButton>
                         </>
                     )}
@@ -106,7 +106,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                             await fetchNui(NuiEvent.AdminMenuVehicleDelete);
                         }}
                     >
-                        Supprimer le véhicule
+                        ❌ Supprimer le véhicule
                     </MenuItemButton>
                 </MenuContent>
             </SubMenu>
