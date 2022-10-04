@@ -35,9 +35,7 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
     global.isPlayerLoaded = state;
     // Whenever a player is unloaded, we need to communicate this to the NUI layer.
     // resetting the global state.
-    if (state) {
-        emitNet('banking:server:updatePhoneBalance');
-    } else {
+    if (!state) {
         sendMessage('PHONE', PhoneEvents.UNLOAD_CHARACTER, {});
     }
 });

@@ -200,17 +200,13 @@ class CallsService {
         });
     }
 
-    async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>): Promise<void> {
+    async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>) {
         try {
             const player = PlayerService.getPlayer(reqObj.source);
             const srcPlayerNumber = player.getPhoneNumber();
             const calls = await this.callsDB.fetchCalls(srcPlayerNumber);
 
-            const callsObj = calls.map(call => {
-                return { ...call, start: call.start.toString() };
-            });
-
-            resp({ status: 'ok', data: callsObj });
+            resp({ status: 'ok', data: calls });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
             console.error(`Error while fetching calls, ${e.toString()}`);
@@ -239,7 +235,7 @@ class CallsService {
     async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
         const transmitterNumber = reqObj.data.transmitterNumber;
         const currentCall = this.callMap.get(transmitterNumber);
-        const targetCall = this.callMap.get(currentCall.receiver);
+        const targetCall = this.callMap.get(currentCall?.receiver);
 
         if (!currentCall) {
             callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map!`);

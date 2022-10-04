@@ -2,7 +2,7 @@ import { GalleryPhoto } from '../../../typings/photo';
 
 export class _PhotoDB {
     async uploadPhoto(identifier: string, image: string): Promise<GalleryPhoto> {
-        const id = exports.oxmysql.insert_async('INSERT INTO phone_gallery (identifier, image) VALUES (?, ?)', [
+        const id = await exports.oxmysql.insert_async('INSERT INTO phone_gallery (identifier, image) VALUES (?, ?)', [
             identifier,
             image,
         ]);
@@ -10,14 +10,14 @@ export class _PhotoDB {
     }
 
     async getPhotosByIdentifier(identifier: string): Promise<GalleryPhoto[]> {
-        return exports.oxmysql.query_async(
+        return await exports.oxmysql.query_async(
             'SELECT id, image FROM phone_gallery WHERE identifier = ? ORDER BY id DESC',
             [identifier]
         );
     }
 
     async deletePhoto(photo: GalleryPhoto, identifier: string) {
-        exports.oxmysql.query_async('DELETE FROM phone_gallery WHERE image = ? AND identifier = ?', [
+        await exports.oxmysql.query_async('DELETE FROM phone_gallery WHERE image = ? AND identifier = ?', [
             photo.image,
             identifier,
         ]);
