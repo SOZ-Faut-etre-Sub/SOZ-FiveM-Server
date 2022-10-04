@@ -11,6 +11,7 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuItemText,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -95,7 +96,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             await fetchNui(NuiEvent.AdminMenuPlayerHandleSearchPlayer);
                         }}
                     >
-                        Rechercher un joueur: {searchFilter}
+                        🔎 Rechercher un joueur: {searchFilter}
                     </MenuItemButton>
                     {players
                         .filter(player =>
@@ -221,6 +222,62 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Réinitialiser le skin du joueur
                         </MenuItemButton>
+                        <MenuItemText>Hygiène de vie</MenuItemText>
+                        <MenuItemSelect
+                            title={'Force'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
+                                    player,
+                                    attribute: 'strength',
+                                    value: selectedIndex === 0 ? 0 : 150,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption key={'strength_min_option'}>Min</MenuItemSelectOption>
+                            <MenuItemSelectOption key={'strength_max_option'}>Max</MenuItemSelectOption>
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Endurance'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
+                                    player,
+                                    attribute: 'max_stamina',
+                                    value: selectedIndex === 0 ? 0 : 150,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption key={'stamina_min_option'}>Min</MenuItemSelectOption>
+                            <MenuItemSelectOption key={'stamina_max_option'}>Max</MenuItemSelectOption>
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Stress'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
+                                    player,
+                                    attribute: 'stress_level',
+                                    value: selectedIndex === 0 ? 0 : 100,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption key={'stress_min_option'}>Min</MenuItemSelectOption>
+                            <MenuItemSelectOption key={'stress_max_option'}>Max</MenuItemSelectOption>
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Carence'}
+                            onConfirm={async selectedIndex => {
+                                ['fiber', 'lipid', 'sugar', 'protein'].map(
+                                    async attribute =>
+                                        await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
+                                            player,
+                                            attribute,
+                                            value: selectedIndex === 0 ? 0 : 200,
+                                        })
+                                );
+                            }}
+                        >
+                            <MenuItemSelectOption key={'deficiency_option'}>Avec</MenuItemSelectOption>
+                            <MenuItemSelectOption key={'no_deficiency_option'}>Sans</MenuItemSelectOption>
+                        </MenuItemSelect>
                     </MenuContent>
                 </SubMenu>
             ))}

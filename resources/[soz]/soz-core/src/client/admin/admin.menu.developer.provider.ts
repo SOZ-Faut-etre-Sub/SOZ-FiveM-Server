@@ -3,16 +3,24 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Ok } from '../../shared/result';
+import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
+import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
-    @Inject(InputService)
-    private inputService: InputService;
+    @Inject(ClipboardService)
+    private clipboard: ClipboardService;
 
     @Inject(DrawService)
-    private drawService: DrawService;
+    private draw: DrawService;
+
+    @Inject(InputService)
+    private input: InputService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private showCoordinatesInterval = null;
 
@@ -36,7 +44,7 @@ export class AdminMenuDeveloperProvider {
             const y = coords[1].toFixed(2);
             const z = coords[2].toFixed(2);
 
-            this.drawService.drawText({
+            this.draw.drawText({
                 x: 0.4,
                 y: 0.01,
                 width: 0,
@@ -52,7 +60,7 @@ export class AdminMenuDeveloperProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminCopyCoords)
-    public async copyCoords(type: 'vector3' | 'vector4'): Promise<void> {
+    public async copyCoords(type: 'coords3' | 'coords4') {
         const coords = GetEntityCoords(PlayerPedId(), true);
         const heading = GetEntityHeading(PlayerPedId()).toFixed(2);
 
@@ -61,20 +69,19 @@ export class AdminMenuDeveloperProvider {
         const z = coords[2].toFixed(2);
 
         switch (type) {
-            case 'vector3':
-                // FIXME: This is not working
-                SendNUIMessage({ string: `vector3(${x}, ${y}, ${z})` });
+            case 'coords3':
+                this.clipboard.copy(`vector3(${x}, ${y}, ${z})`);
                 break;
-            case 'vector4':
-                // FIXME: This is not working
-                SendNUIMessage({ string: `vector4(${x}, ${y}, ${z}, ${heading})` });
+            case 'coords4':
+                this.clipboard.copy(`vector4(${x}, ${y}, ${z}, ${heading})`);
                 break;
         }
+        this.notifier.notify('Coordonnées copiées dans le presse-papier');
     }
 
     @OnNuiEvent(NuiEvent.AdminChangePlayer)
     public async changePlayer(): Promise<void> {
-        const citizenId = await this.inputService.askInput(
+        const citizenId = await this.input.askInput(
             {
                 title: 'Citizen ID',
                 defaultValue: '',

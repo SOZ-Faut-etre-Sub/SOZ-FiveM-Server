@@ -14,7 +14,6 @@ const copyToClipboard = str => {
 
 window.addEventListener('message', event => {
     if (event.data.string) {
-        console.log('Received message from server', event.data.string, new Date());
         copyToClipboard(event.data.string);
     }
 });

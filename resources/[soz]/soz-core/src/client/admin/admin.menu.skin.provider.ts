@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { ClothComponent, ClothProp, ComponentIndex, PropIndex } from '../../shared/clothing';
 import { NuiEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
+import { ClipboardService } from '../clipboard.service';
 import { ClothingService } from '../clothing/clothing.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
@@ -12,20 +13,23 @@ import { SkinService } from '../skin/skin.service';
 
 @Provider()
 export class AdminMenuSkinProvider {
-    @Inject(InputService)
-    private inputService: InputService;
-
-    @Inject(SkinService)
-    private skinService: SkinService;
+    @Inject(ClipboardService)
+    private clipboard: ClipboardService;
 
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
-    @Inject(NuiDispatch)
-    private nuiDispatch: NuiDispatch;
+    @Inject(InputService)
+    private inputService: InputService;
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
+    @Inject(SkinService)
+    private skinService: SkinService;
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinChangeAppearance)
     public async onSkinChangeAppearance(model?: string) {
@@ -122,10 +126,7 @@ export class AdminMenuSkinProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinCopy)
     public async onSkinCopy() {
-        SendNUIMessage({
-            string: JSON.stringify(this.clothingService.getClothSet()),
-        });
-        // exports['soz-utils'].CopyToClipboard(JSON.stringify(this.clothingService.getClothSet()));
+        this.clipboard.copy(this.clothingService.getClothSet());
         this.notifier.notify('Tenue copié dans le presse-papier');
     }
 
