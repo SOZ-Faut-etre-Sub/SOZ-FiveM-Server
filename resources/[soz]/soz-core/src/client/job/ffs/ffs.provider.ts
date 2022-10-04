@@ -5,6 +5,7 @@ import { FfsRecipe } from '../../../nui/components/FightForStyle/FightForStyleJo
 import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
+import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -26,8 +27,8 @@ export class FightForStyleProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
@@ -99,7 +100,7 @@ export class FightForStyleProvider {
     @OnNuiEvent(NuiEvent.FfsDisplayBlip)
     public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
         this.state[blip] = value;
-        this.QBCore.hideBlip(blip, !value);
+        this.blipFactory.hide(blip, !value);
     }
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
@@ -124,19 +125,19 @@ export class FightForStyleProvider {
     }
 
     private createBlips() {
-        this.QBCore.createBlip('jobs:ffs', {
+        this.blipFactory.create('jobs:ffs', {
             name: 'Fight For Style',
             coords: { x: 717.72, y: -974.24, z: 24.91 },
             sprite: 808,
             scale: 1.2,
         });
-        this.QBCore.createBlip('ffs_cotton_bale', {
+        this.blipFactory.create('ffs_cotton_bale', {
             name: 'Point de récolte de balle de coton',
             coords: { x: 2564.11, y: 4680.59, z: 34.08 },
             sprite: 808,
             scale: 0.9,
         });
-        this.QBCore.hideBlip('ffs_cotton_bale', true);
+        this.blipFactory.hide('ffs_cotton_bale', true);
     }
 
     private computeRecipes(craftProcesses: CraftProcess[]): FfsRecipe[] {

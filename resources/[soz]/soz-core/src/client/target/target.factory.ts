@@ -101,6 +101,9 @@ export class TargetFactory {
         for (const id of Object.keys(this.players)) {
             exports['qb-target'].RemovePlayer(id);
         }
+
+        //
+        exports['qb-target'].DeletePeds();
     }
 
     public createForPed(ped: PedOptions) {

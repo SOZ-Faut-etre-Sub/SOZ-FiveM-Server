@@ -3,17 +3,20 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
+import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
+import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ProgressService } from '../progress.service';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
+import { PlayerWardrobe } from './player.wardrobe';
 
 const CHIN_UPS_COORDS = [
     {
@@ -64,6 +67,42 @@ const CHIN_UPS_COORDS = [
         },
         coords: [-1198.53, -1570.13, 4.61, 216.0] as Vector4,
     },
+    {
+        name: 'chin_ups_5',
+        zone: {
+            center: [1448.87, 3573.61, 35.76] as Vector3,
+            heading: 16,
+            width: 0.4,
+            length: 1.6,
+            minZ: 34.76,
+            maxZ: 39.76,
+        },
+        coords: [1448.75, 3573.76, 35.81, 205] as Vector4,
+    },
+    {
+        name: 'chin_ups_6',
+        zone: {
+            center: [1465.33, 3578.1, 35.87] as Vector3,
+            heading: 354,
+            width: 1.4,
+            length: 1.2,
+            minZ: 34.87,
+            maxZ: 38.87,
+        },
+        coords: [1464.71, 3578.14, 35.89, 276.33] as Vector4,
+    },
+    {
+        name: 'chin_ups_7',
+        zone: {
+            center: [1464.79, 3581.58, 35.89] as Vector3,
+            heading: 309,
+            width: 1.4,
+            length: 1.4,
+            minZ: 34.89,
+            maxZ: 38.89,
+        },
+        coords: [1464.1, 3581.03, 35.82, 314.76] as Vector4,
+    },
 ];
 
 const FREE_WEIGHT_COORDS = [
@@ -100,7 +139,92 @@ const FREE_WEIGHT_COORDS = [
             heading: 320,
         },
     },
+    {
+        name: 'free_weight_4',
+        zone: {
+            center: [1448.21, 3579.3, 35.71] as Vector3,
+            length: 1.0,
+            width: 1.6,
+            minZ: 34.71,
+            maxZ: 38.71,
+            heading: 17,
+        },
+    },
+    {
+        name: 'free_weight_5',
+        zone: {
+            center: [1444.38, 3578.2, 35.78] as Vector3,
+            length: 1.0,
+            width: 1.6,
+            minZ: 34.78,
+            maxZ: 38.78,
+            heading: 15,
+        },
+    },
 ];
+
+const GymWardrobeConfig: WardrobeConfig = {
+    [GetHashKey('mp_m_freemode_01')]: {
+        'Homme natation': {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Arms]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Pants]: { Drawable: 16, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
+                [Component.Chain]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Top]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Bulletproof]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        'Homme sport': {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Arms]: { Drawable: 5, Texture: 0, Palette: 0 },
+                [Component.Pants]: { Drawable: 12, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 31, Texture: 0, Palette: 3 },
+                [Component.Chain]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Top]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Bulletproof]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 237, Texture: 0, Palette: 13 },
+            },
+            Props: {},
+        },
+    },
+    [GetHashKey('mp_f_freemode_01')]: {
+        'Femme natation': {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Arms]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Pants]: { Drawable: 17, Texture: 9, Palette: 0 },
+                [Component.Shoes]: { Drawable: 35, Texture: 0, Palette: 0 },
+                [Component.Chain]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Top]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [Component.Bulletproof]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 18, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        'Femme sport': {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Arms]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Pants]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 81, Texture: 0, Palette: 0 },
+                [Component.Chain]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Top]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Bulletproof]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 284, Texture: 4, Palette: 0 },
+            },
+            Props: {},
+        },
+    },
+};
 
 const EXERCISE_TIME = 90_000;
 
@@ -123,6 +247,12 @@ export class PlayerHealthProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
+    @Inject(PlayerWardrobe)
+    private playerWardrobe: PlayerWardrobe;
 
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
@@ -394,5 +524,141 @@ export class PlayerHealthProvider {
         }
 
         SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
+
+        this.blipFactory.create('outdoorSport1', {
+            name: 'Zone de sport',
+            coords: { x: -1202.53, y: -1567.85, z: 4.44 }, // vector3(-1202.53, -1567.85, 4.44)
+            sprite: 311,
+            scale: 0.9,
+            color: 5,
+        });
+
+        this.blipFactory.create('outdoorSport2', {
+            name: 'Zone de sport',
+            coords: { x: 1453.92, y: 3576.09, z: 36.06 },
+            sprite: 311,
+            scale: 0.9,
+            color: 5,
+        });
+
+        this.blipFactory.create('musclePeach', {
+            name: 'Salle de sport',
+            coords: { x: 256.3, y: -256.14, z: 54.02 },
+            sprite: 311,
+            scale: 0.9,
+            color: 47,
+        });
+
+        const targets = [
+            {
+                icon: 'c:jobs/habiller.png',
+                label: 'Changer de tenue',
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    if (!player.metadata.gym_subscription_expire_at) {
+                        return false;
+                    }
+
+                    return (
+                        player.metadata.gym_subscription_expire_at &&
+                        player.metadata.gym_subscription_expire_at > Date.now()
+                    );
+                },
+                action: async () => {
+                    const outfit = await this.playerWardrobe.selectOutfit(GymWardrobeConfig, 'Tenue civile');
+
+                    if (outfit) {
+                        TriggerServerEvent(ServerEvent.PLAYER_APPEARANCE_SET_JOB_OUTFIT, outfit);
+                    } else {
+                        TriggerServerEvent(ServerEvent.PLAYER_APPEARANCE_REMOVE_JOB_OUTFIT);
+                    }
+                },
+            },
+        ];
+
+        this.targetFactory.createForBoxZone(
+            'gym_wardrobe_1',
+            {
+                center: [265.31, -271.74, 53.98],
+                heading: 340,
+                width: 12.4,
+                length: 4.2,
+                minZ: 52.98,
+                maxZ: 56.98,
+            },
+            targets
+        );
+
+        this.targetFactory.createForBoxZone(
+            'gym_wardrobe_2',
+            {
+                center: [274.64, -275.26, 53.98],
+                heading: 340,
+                width: 12.2,
+                length: 4.6,
+                minZ: 52.98,
+                maxZ: 56.98,
+            },
+            targets
+        );
+
+        this.targetFactory.createForPed({
+            model: 'a_f_y_fitness_01',
+            coords: { w: 341.61, x: 258.39, y: -271.52, z: 52.96 },
+            invincible: true,
+            freeze: true,
+            spawnNow: true,
+            blockevents: true,
+            animDict: 'anim@amb@casino@valet_scenario@pose_d@',
+            anim: 'base_a_m_y_vinewood_01',
+            flag: 49,
+            target: {
+                distance: 2.5,
+                options: [
+                    {
+                        label: 'Prendre un abonnement.',
+                        canInteract: () => {
+                            const player = this.playerService.getPlayer();
+
+                            if (!player) {
+                                return false;
+                            }
+
+                            return !player.metadata.gym_subscription_expire_at;
+                        },
+                        action: () => {
+                            TriggerServerEvent(ServerEvent.PLAYER_HEALTH_GYM_SUBSCRIBE);
+                        },
+                    },
+                    {
+                        label: 'Renouveler son abonnement.',
+                        canInteract: () => {
+                            const player = this.playerService.getPlayer();
+
+                            if (!player) {
+                                return false;
+                            }
+
+                            if (!player.metadata.gym_subscription_expire_at) {
+                                return false;
+                            }
+
+                            return (
+                                player.metadata.gym_subscription_expire_at &&
+                                player.metadata.gym_subscription_expire_at < Date.now()
+                            );
+                        },
+                        action: () => {
+                            TriggerServerEvent(ServerEvent.PLAYER_HEALTH_GYM_SUBSCRIBE);
+                        },
+                    },
+                ],
+            },
+        });
     }
 }

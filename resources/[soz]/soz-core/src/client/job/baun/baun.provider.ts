@@ -5,6 +5,7 @@ import { BaunRecipe } from '../../../nui/components/BahamaUnicorn/BahamaUnicornJ
 import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { BaunCraftProcess, baunCraftProcesses } from '../../../shared/job/baun';
 import { MenuType } from '../../../shared/nui/menu';
+import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -19,8 +20,8 @@ export class BaunProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(Qbcore)
-    private QBCore: Qbcore;
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -43,7 +44,7 @@ export class BaunProvider {
     @OnNuiEvent(NuiEvent.BaunDisplayBlip)
     public async onDisplayBlip({ blip, value }: { blip: string; value: boolean }) {
         this.state[blip] = value;
-        this.QBCore.hideBlip(blip, !value);
+        this.blipFactory.hide(blip, !value);
     }
 
     @OnEvent(ClientEvent.JOBS_BAUN_OPEN_SOCIETY_MENU)
@@ -63,41 +64,41 @@ export class BaunProvider {
     }
 
     private createBlips() {
-        this.QBCore.createBlip('displayLiquorBlip', {
+        this.blipFactory.create('displayLiquorBlip', {
             name: "Point de récolte d'alcools",
             coords: { x: 1410.96, y: 1147.6, z: 114.33 },
             sprite: 478,
             color: 28,
             scale: 0.9,
         });
-        this.QBCore.hideBlip('displayLiquorBlip', true);
+        this.blipFactory.hide('displayLiquorBlip', true);
 
-        this.QBCore.createBlip('displayFlavorBlip', {
+        this.blipFactory.create('displayFlavorBlip', {
             name: 'Point de récolte de saveurs',
             coords: { x: 867.17, y: -1628.59, z: 30.2 },
             sprite: 478,
             color: 28,
             scale: 0.9,
         });
-        this.QBCore.hideBlip('displayFlavorBlip', true);
+        this.blipFactory.hide('displayFlavorBlip', true);
 
-        this.QBCore.createBlip('displayFurnitureBlip', {
+        this.blipFactory.create('displayFurnitureBlip', {
             name: 'Point de récolte de fournitures',
             coords: { x: 44.98, y: -1749.42, z: 29.59 },
             sprite: 478,
             color: 28,
             scale: 0.9,
         });
-        this.QBCore.hideBlip('displayFurnitureBlip', true);
+        this.blipFactory.hide('displayFurnitureBlip', true);
 
-        this.QBCore.createBlip('displayResellBlip', {
+        this.blipFactory.create('displayResellBlip', {
             name: 'Point de vente des cocktails',
             coords: { x: 393.02, y: 177.3, z: 103.86 },
             sprite: 478,
             color: 28,
             scale: 0.9,
         });
-        this.QBCore.hideBlip('displayResellBlip', true);
+        this.blipFactory.hide('displayResellBlip', true);
     }
 
     private computeRecipes(craftProcesses: BaunCraftProcess[]): BaunRecipe[] {
