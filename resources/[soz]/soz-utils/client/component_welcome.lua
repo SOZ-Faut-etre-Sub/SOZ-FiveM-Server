@@ -8,3 +8,8 @@ RegisterNetEvent("soz-utils:welcome-show", function()
     SendNUIMessage({action = "show"})
     SetNuiFocus(true, true)
 end)
+
+RegisterNetEvent("soz-utils:health-book", function()
+    SendNUIMessage({action = "show-health"})
+    SetNuiFocus(true, true)
+end)
