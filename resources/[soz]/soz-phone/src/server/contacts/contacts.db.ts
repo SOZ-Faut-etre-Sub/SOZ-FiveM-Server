@@ -12,7 +12,7 @@ export class _ContactsDB {
     }
 
     async addContact(identifier: string, { display, number }: PreDBContact): Promise<Contact> {
-        const id = exports.oxmysql.insert_async(
+        const id = await exports.oxmysql.insert_async(
             'INSERT INTO phone_contacts (identifier, number, display) VALUES (?, ?, ?)',
             [identifier, number, display]
         );
@@ -25,14 +25,14 @@ export class _ContactsDB {
     }
 
     async updateContact(contact: Contact, identifier: string): Promise<any> {
-        exports.oxmysql.update_async(
+        await exports.oxmysql.update_async(
             'UPDATE phone_contacts SET number = ?, display = ? WHERE id = ? AND identifier = ?',
             [contact.number, contact.display, contact.id, identifier]
         );
     }
 
     async deleteContact(contactId: number, identifier: string): Promise<void> {
-        exports.oxmysql.update_async('DELETE FROM phone_contacts WHERE id = ? AND identifier = ?', [
+        await exports.oxmysql.update_async('DELETE FROM phone_contacts WHERE id = ? AND identifier = ?', [
             contactId,
             identifier,
         ]);
