@@ -1,4 +1,4 @@
-import { Wardrobe, WardrobeMenuData } from '../cloth';
+import { WardrobeMenuData } from '../cloth';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;

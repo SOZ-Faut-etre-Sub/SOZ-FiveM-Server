@@ -1,5 +1,5 @@
 import { OnEvent } from '../../core/decorators/event';
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Outfit } from '../../shared/cloth';
 import { ServerEvent } from '../../shared/event';

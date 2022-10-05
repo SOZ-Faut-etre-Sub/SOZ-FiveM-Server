@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 
-import { Wardrobe, WardrobeMenuData } from '../../../shared/cloth';
+import { WardrobeMenuData } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
