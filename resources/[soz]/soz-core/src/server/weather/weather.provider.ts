@@ -63,6 +63,7 @@ export class WeatherProvider {
 
         if (this.shouldUpdateWeather) {
             GlobalState.weather = this.getNextForecast(GlobalState.weather || 'OVERCAST');
+            console.log('weather changed to ' + GlobalState.weather);
         }
     }
 
@@ -119,8 +120,8 @@ export class WeatherProvider {
         if (pollutionLevel === PollutionLevel.High) {
             currentForecast = Polluted;
         } else if (pollutionLevel === PollutionLevel.Low) {
-            const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 2, SMOG: 0, FOGGY: 0 };
-            const any = 0.75;
+            const multipliers: { [key in Weather]?: number } = { EXTRASUNNY: 1.0, SMOG: 0.5, FOGGY: 0.5, CLOUDS: 0.5 };
+            const any = 1;
 
             for (const weather of Object.keys(currentForecast)) {
                 for (const nextWeather of Object.keys(currentForecast[weather])) {
