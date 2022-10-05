@@ -58,12 +58,11 @@ export enum ServerEvent {
     ADMIN_REVIVE = 'admin:server:revive',
     ADMIN_SET_JOB = 'admin:jobs:setjob',
     ADMIN_SPECTATE = 'admin:server:spectate',
-    ADMIN_UNCUFF = 'admin:gamemaster:uncuff',
+    ADMIN_UNCUFF = 'admin:gamemaster:unCuff',
     ADMIN_UNFREEZE = 'admin:server:unfreeze',
 
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
-    CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:server:ApplyTemporaryClothSet',
     QBCORE_CALL_COMMAND = 'QBCore:CallCommand',
     QBCORE_TOGGLE_DUTY = 'QBCore:ToggleDuty',
     QBCORE_SET_METADATA = 'QBCore:Server:SetMetaData',

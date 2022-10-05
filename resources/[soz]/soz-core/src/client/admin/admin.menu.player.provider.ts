@@ -203,7 +203,7 @@ export class AdminMenuPlayerProvider {
                     ServerEvent.ADMIN_SET_HEALTH_METADATA,
                     player,
                     'stress_level',
-                    value === 'min' ? 0 : 100
+                    value === 'min' ? 100 : 0
                 );
                 ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
                     TriggerServerEvent(
