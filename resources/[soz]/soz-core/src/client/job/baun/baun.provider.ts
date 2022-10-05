@@ -10,7 +10,6 @@ import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
-import { Qbcore } from '../../qbcore';
 
 @Provider()
 export class BaunProvider {

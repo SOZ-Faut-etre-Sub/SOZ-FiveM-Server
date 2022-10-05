@@ -7,7 +7,6 @@ import { InventoryManager } from '../../item/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';
-import { QBCore } from '../../qbcore';
 
 @Provider()
 export class LSMCPharmacyProvider {

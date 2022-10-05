@@ -103,6 +103,30 @@ const CHIN_UPS_COORDS = [
         },
         coords: [1464.1, 3581.03, 35.82, 314.76] as Vector4,
     },
+    {
+        name: 'chin_ups_8',
+        zone: {
+            center: [249.44, -268.54, 59.92] as Vector3,
+            heading: 340,
+            width: 1.2,
+            length: 1.4,
+            minZ: 58.92,
+            maxZ: 62.92,
+        },
+        coords: [248.8, -268.39, 59.92, 255.54] as Vector4,
+    },
+    {
+        name: 'chin_ups_9',
+        zone: {
+            center: [250.43, -266.64, 59.92] as Vector3,
+            heading: 309,
+            width: 1.4,
+            length: 1.6,
+            minZ: 58.92,
+            maxZ: 62.92,
+        },
+        coords: [251.21, -266.92, 59.92, 70.94] as Vector4,
+    },
 ];
 
 const FREE_WEIGHT_COORDS = [
