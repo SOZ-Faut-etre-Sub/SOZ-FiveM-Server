@@ -222,14 +222,16 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Réinitialiser le skin du joueur
                         </MenuItemButton>
-                        <MenuItemText>Hygiène de vie</MenuItemText>
+                        <MenuItemText>
+                            <b>Hygiène de vie</b>
+                        </MenuItemText>
                         <MenuItemSelect
                             title={'Force'}
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
                                     player,
                                     attribute: 'strength',
-                                    value: selectedIndex === 0 ? 0 : 150,
+                                    value: selectedIndex === 0 ? 'min' : 'max',
                                 });
                             }}
                         >
@@ -241,8 +243,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
                                     player,
-                                    attribute: 'max_stamina',
-                                    value: selectedIndex === 0 ? 0 : 150,
+                                    attribute: 'stamina',
+                                    value: selectedIndex === 0 ? 'min' : 'max',
                                 });
                             }}
                         >
@@ -254,8 +256,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
                                     player,
-                                    attribute: 'stress_level',
-                                    value: selectedIndex === 0 ? 0 : 100,
+                                    attribute: 'stress',
+                                    value: selectedIndex === 0 ? 'min' : 'max',
                                 });
                             }}
                         >
@@ -265,18 +267,28 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         <MenuItemSelect
                             title={'Carence'}
                             onConfirm={async selectedIndex => {
-                                ['fiber', 'lipid', 'sugar', 'protein'].map(
-                                    async attribute =>
-                                        await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
-                                            player,
-                                            attribute,
-                                            value: selectedIndex === 0 ? 0 : 200,
-                                        })
-                                );
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
+                                    player,
+                                    attribute: 'deficiency',
+                                    value: selectedIndex === 0 ? 'min' : 'max',
+                                });
                             }}
                         >
                             <MenuItemSelectOption key={'deficiency_option'}>Avec</MenuItemSelectOption>
                             <MenuItemSelectOption key={'no_deficiency_option'}>Sans</MenuItemSelectOption>
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Self AIO'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleSetAttribute, {
+                                    player,
+                                    attribute: 'all',
+                                    value: selectedIndex === 0 ? 'min' : 'max',
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption key={'aio_min_option'}>Min</MenuItemSelectOption>
+                            <MenuItemSelectOption key={'aio_max_option'}>Max</MenuItemSelectOption>
                         </MenuItemSelect>
                     </MenuContent>
                 </SubMenu>

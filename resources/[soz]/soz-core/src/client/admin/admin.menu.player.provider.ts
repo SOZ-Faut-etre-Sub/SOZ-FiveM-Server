@@ -5,13 +5,11 @@ import { emitRpc } from '../../core/rpc';
 import { HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../nui/components/Admin/PlayerSubMenu';
 import { AdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent, ServerEvent } from '../../shared/event';
-import { PlayerMetadata } from '../../shared/player';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { PlayerService } from '../player/player.service';
 
 const ALLOWED_HEALTH_OPTIONS = HEALTH_OPTIONS.map(option => option.value);
 const ALLOWED_MOVEMENT_OPTIONS = MOVEMENT_OPTIONS.map(option => option.value);
@@ -75,7 +73,7 @@ export class AdminMenuPlayerProvider {
         }
         const event: ServerEvent = action === 'kill' ? ServerEvent.ADMIN_KILL : ServerEvent.ADMIN_REVIVE;
         TriggerServerEvent(event, player);
-        this.notifier.notify(`Le joueur ~g~${player.name}~s~ est maintenant ~r~${action}.`, 'info');
+        this.notifier.notify(`Le joueur ~g~${player.name}~s~ a été ~r~${action}.`, 'info');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleMovementOption)
@@ -146,9 +144,77 @@ export class AdminMenuPlayerProvider {
         value,
     }: {
         player: AdminPlayer;
-        attribute: keyof PlayerMetadata;
-        value: number;
+        attribute: 'strength' | 'stamina' | 'stress' | 'deficiency' | 'all';
+        value: 'min' | 'max';
     }): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_SET_HEALTH_METADATA, player, attribute, value);
+        switch (attribute) {
+            case 'strength':
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    player,
+                    'strength',
+                    value === 'min' ? 0 : 150
+                );
+                this.notifier.notify(`La force du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
+                break;
+            case 'stamina':
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    player,
+                    'max_stamina',
+                    value === 'min' ? 0 : 150
+                );
+                this.notifier.notify(`L'endurance du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
+                break;
+            case 'stress':
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    player,
+                    'stress_level',
+                    value === 'min' ? 0 : 100
+                );
+                this.notifier.notify(`Le stress du joueur ~g~${player.name}~s~ a été modifié.`, 'info');
+                break;
+            case 'deficiency':
+                ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
+                    TriggerServerEvent(
+                        ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                        player,
+                        attribute,
+                        value === 'min' ? 0 : 200
+                    );
+                });
+                this.notifier.notify(`Les carences du joueur ~g~${player.name}~s~ ont été modifiées.`, 'info');
+                break;
+            case 'all':
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    player,
+                    'strength',
+                    value === 'min' ? 0 : 150
+                );
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    player,
+                    'max_stamina',
+                    value === 'min' ? 0 : 150
+                );
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    player,
+                    'stress_level',
+                    value === 'min' ? 0 : 100
+                );
+                ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
+                    TriggerServerEvent(
+                        ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                        player,
+                        attribute,
+                        value === 'min' ? 0 : 200
+                    );
+                });
+                this.notifier.notify(`Les attributs du joueur ~g~${player.name}~s~ ont été modifiés.`, 'info');
+                break;
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerMetadata } from '../../shared/player';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -17,7 +17,11 @@ export class AdminMenuPlayerProvider {
     @OnEvent(ServerEvent.ADMIN_SET_HEALTH_METADATA)
     public async onSetHealthMetadata(source: number, target: number, key: keyof PlayerMetadata, value: number) {
         this.playerService.setPlayerMetadata(target, key, value);
+    }
 
-        this.notifier.notify(source, `L'attribut ~g~${key}~s~ du joueur a été mis à jour.`, 'success');
+    @OnEvent(ServerEvent.ADMIN_RESET_SKIN)
+    public async onResetSkin(source: number, target: number) {
+        TriggerClientEvent(ClientEvent.CHARACTER_REQUEST_CHARACTER_WIZARD, target);
+        this.notifier.notify(source, 'Le skin du joueur a été reset.');
     }
 }

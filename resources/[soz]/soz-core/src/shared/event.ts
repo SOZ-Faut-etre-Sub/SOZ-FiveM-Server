@@ -1,4 +1,5 @@
 export enum ServerEvent {
+    ADMIN_RESET_SKIN = 'soz-core:server:admin:reset-skin',
     ADMIN_SET_HEALTH_METADATA = 'soz-core:server:admin:set-health-metadata',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
@@ -54,7 +55,6 @@ export enum ServerEvent {
     ADMIN_TELEPORT_PLAYER_TO_ME = 'admin:server:bring',
     ADMIN_FREEZE = 'admin:server:freeze',
     ADMIN_KILL = 'admin:server:kill',
-    ADMIN_RESET_SKIN = 'admin:server:resetSkin',
     ADMIN_REVIVE = 'admin:server:revive',
     ADMIN_SET_JOB = 'admin:jobs:setjob',
     ADMIN_SPECTATE = 'admin:server:spectate',
@@ -79,6 +79,8 @@ export enum ServerEvent {
 }
 
 export enum ClientEvent {
+    CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
+
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
