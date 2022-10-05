@@ -32,6 +32,6 @@ export class PlayerService {
     }
 
     public setTempClothes(clothes: any) {
-        TriggerEvent(ServerEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes);
+        TriggerEvent(ClientEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes);
     }
 }
