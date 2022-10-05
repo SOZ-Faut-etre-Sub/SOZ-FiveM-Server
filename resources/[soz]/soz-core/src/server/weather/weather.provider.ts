@@ -63,7 +63,6 @@ export class WeatherProvider {
 
         if (this.shouldUpdateWeather) {
             GlobalState.weather = this.getNextForecast(GlobalState.weather || 'OVERCAST');
-            console.log('weather changed to ' + GlobalState.weather);
         }
     }
 
