@@ -22,7 +22,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
     return (
         <Menu type={MenuType.Wardrobe}>
             <MainMenu>
-                <MenuTitle>Changer de tenue</MenuTitle>
+                <MenuTitle banner="https://nui-img/soz/menu_wardrobe_outdoor">Changer de tenue</MenuTitle>
                 <MenuContent>
                     {wardrobe.allowNullLabel && (
                         <MenuItemButton onConfirm={() => onConfirm(null)}>{wardrobe.allowNullLabel}</MenuItemButton>
