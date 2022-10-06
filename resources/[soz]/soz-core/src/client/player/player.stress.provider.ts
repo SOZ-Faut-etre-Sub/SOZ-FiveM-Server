@@ -222,7 +222,7 @@ export class PlayerStressProvider {
                     this.updateStress(StressLooseType.VehicleAbove160);
                 }
 
-                if (speed > 160) {
+                if (speed > 200) {
                     this.updateStress(StressLooseType.VehicleAbove180);
                 }
             }

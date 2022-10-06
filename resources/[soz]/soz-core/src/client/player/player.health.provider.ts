@@ -596,10 +596,28 @@ export class PlayerHealthProvider {
                 action: async () => {
                     const outfit = await this.playerWardrobe.selectOutfit(GymWardrobeConfig, 'Tenue civile');
 
+                    await this.progressService.progress(
+                        'switch_clothes',
+                        "Changement d'habits...",
+                        5000,
+                        {
+                            name: 'male_shower_towel_dry_to_get_dressed',
+                            dictionary: 'anim@mp_yacht@shower@male@',
+                            options: {
+                                cancellable: false,
+                                enablePlayerControl: false,
+                            },
+                        },
+                        {
+                            disableCombat: true,
+                            disableMovement: true,
+                        }
+                    );
+
                     if (outfit) {
-                        TriggerServerEvent(ServerEvent.PLAYER_APPEARANCE_SET_JOB_OUTFIT, outfit);
+                        TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfit);
                     } else {
-                        TriggerServerEvent(ServerEvent.PLAYER_APPEARANCE_REMOVE_JOB_OUTFIT);
+                        TriggerServerEvent('soz-character:server:SetPlayerJobClothes', null);
                     }
                 },
             },

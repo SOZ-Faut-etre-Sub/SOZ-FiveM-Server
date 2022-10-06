@@ -266,7 +266,11 @@ export class PlayerHealthProvider {
 
             this.notifier.notify(source, `Merci pour votre ~g~abonnement~s~ à la salle de sport.`, 'success');
         } else {
-            this.notifier.notify(source, `T'as cru que c'était gratuit ? Il faut payer ~r~$300~s~.`, 'error');
+            this.notifier.notify(
+                source,
+                `Payez notre abonnement d'une semaine pour ~r~$300~s~ afin de rofiter de nos vestiaires et installations sportives !`,
+                'error'
+            );
         }
     }
 }
