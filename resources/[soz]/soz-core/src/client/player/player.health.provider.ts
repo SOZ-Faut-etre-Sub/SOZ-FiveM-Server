@@ -8,6 +8,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getRandomInt, getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
@@ -250,7 +251,7 @@ const GymWardrobeConfig: WardrobeConfig = {
     },
 };
 
-const EXERCISE_TIME = 90_000;
+const EXERCISE_TIME = 1_000;
 
 @Provider()
 export class PlayerHealthProvider {
@@ -594,7 +595,28 @@ export class PlayerHealthProvider {
                     );
                 },
                 action: async () => {
-                    const outfit = await this.playerWardrobe.selectOutfit(GymWardrobeConfig, 'Tenue civile');
+                    const menWardrobe = GymWardrobeConfig[GetHashKey('mp_m_freemode_01')];
+                    const femaleWardrobe = GymWardrobeConfig[GetHashKey('mp_f_freemode_01')];
+
+                    menWardrobe['Homme natation'].Components[Component.Pants].Texture = getRandomInt(0, 11);
+                    menWardrobe['Homme sport'].Components[Component.Pants].Texture = getRandomItem([0, 5, 7, 12]);
+                    menWardrobe['Homme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 4);
+                    menWardrobe['Homme sport'].Components[Component.Top].Texture = getRandomInt(0, 7);
+                    menWardrobe['Homme sport'].Components[Component.Torso].Texture = getRandomInt(0, 20);
+
+                    const randomSwimTexture = getRandomInt(0, 11);
+
+                    femaleWardrobe['Femme natation'].Components[Component.Pants].Texture = randomSwimTexture;
+                    femaleWardrobe['Femme natation'].Components[Component.Torso].Texture = randomSwimTexture;
+                    femaleWardrobe['Femme sport'].Components[Component.Pants].Texture = getRandomInt(0, 2);
+                    femaleWardrobe['Femme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 3);
+                    femaleWardrobe['Femme sport'].Components[Component.Torso].Texture = getRandomInt(0, 11);
+
+                    const outfitSelection = await this.playerWardrobe.selectOutfit(GymWardrobeConfig, 'Tenue civile');
+
+                    if (outfitSelection.canceled) {
+                        return;
+                    }
 
                     await this.progressService.progress(
                         'switch_clothes',
@@ -614,8 +636,8 @@ export class PlayerHealthProvider {
                         }
                     );
 
-                    if (outfit) {
-                        TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfit);
+                    if (outfitSelection.outfit) {
+                        TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfitSelection.outfit);
                     } else {
                         TriggerServerEvent('soz-character:server:SetPlayerJobClothes', null);
                     }
@@ -627,7 +649,7 @@ export class PlayerHealthProvider {
             'gym_wardrobe_1',
             {
                 center: [265.31, -271.74, 53.98],
-                heading: 340,
+                heading: 251,
                 width: 12.4,
                 length: 4.2,
                 minZ: 52.98,
@@ -640,7 +662,7 @@ export class PlayerHealthProvider {
             'gym_wardrobe_2',
             {
                 center: [274.64, -275.26, 53.98],
-                heading: 340,
+                heading: 251,
                 width: 12.2,
                 length: 4.6,
                 minZ: 52.98,
