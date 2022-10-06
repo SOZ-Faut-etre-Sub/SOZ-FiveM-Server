@@ -1,4 +1,4 @@
-local criticalHealth = 150
+local criticalHealth = 40
 local criticalHealthNotification = false
 
 CreateThread(function()

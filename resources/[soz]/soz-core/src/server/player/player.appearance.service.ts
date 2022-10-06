@@ -21,6 +21,7 @@ export class PlayerAppearanceService {
         if (player) {
             const config = player.PlayerData.cloth_config;
             config.JobClothSet = outfit;
+            config.TemporaryClothSet = null;
 
             if (apply && progress) {
                 await this.progressService.progress(
