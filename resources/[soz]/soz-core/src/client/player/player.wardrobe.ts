@@ -6,14 +6,19 @@ import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { NuiMenu } from '../nui/nui.menu';
 
+type OutfitSelection = {
+    outfit: Outfit | null;
+    canceled: boolean;
+};
+
 @Provider()
 export class PlayerWardrobe {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    private currentOutfitResolve: (outfit: Outfit | null) => void | null;
+    private currentOutfitResolve: (outfit: OutfitSelection) => void | null;
 
-    public async selectOutfit(config: WardrobeConfig, nullLabel?: string): Promise<Outfit | null> {
+    public async selectOutfit(config: WardrobeConfig, nullLabel?: string): Promise<OutfitSelection | null> {
         const model = GetEntityModel(PlayerPedId());
         const wardrobe = config[model];
 
@@ -21,7 +26,7 @@ export class PlayerWardrobe {
             return null;
         }
 
-        const promise = new Promise<Outfit>(resolve => {
+        const promise = new Promise<OutfitSelection>(resolve => {
             this.currentOutfitResolve = resolve;
         });
 
@@ -34,9 +39,9 @@ export class PlayerWardrobe {
     }
 
     @OnNuiEvent<Outfit>(NuiEvent.SetWardrobeOutfit)
-    public async onSetWardRobeOutfit(outfit: Outfit) {
+    public async onSetWardRobeOutfit(outfit: Outfit | null) {
         if (this.currentOutfitResolve) {
-            this.currentOutfitResolve(outfit);
+            this.currentOutfitResolve({ outfit: outfit, canceled: false });
         }
 
         this.nuiMenu.closeMenu();
@@ -48,7 +53,7 @@ export class PlayerWardrobe {
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)
     public async onCloseMenu() {
         if (this.currentOutfitResolve) {
-            this.currentOutfitResolve(null);
+            this.currentOutfitResolve({ outfit: null, canceled: true });
         }
 
         this.nuiMenu.closeMenu();

@@ -133,7 +133,7 @@ export class PlayerHealthProvider {
     public async increaseStrength(source: number, exercise: keyof PlayerServerStateExercise): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
-        if (player === null || player.metadata.godmode || player.metadata.isdead) {
+        if (player === null || player.metadata.isdead) {
             return;
         }
 
@@ -264,7 +264,11 @@ export class PlayerHealthProvider {
                 Date.now() + 7 * 24 * 60 * 60 * 1000
             );
 
-            this.notifier.notify(source, `Merci pour votre ~g~abonnement~s~ à la salle de sport.`, 'success');
+            this.notifier.notify(
+                source,
+                `Damn la team Los Santos ! Merci à toi d'avoir acheté notre abonnement de sport MUSCLE PEACH d'une semaine à 300$ ! Tu peux désormais te changer dans nos vestiaires.`,
+                'success'
+            );
         } else {
             this.notifier.notify(
                 source,
