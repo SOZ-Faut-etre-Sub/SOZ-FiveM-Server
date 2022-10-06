@@ -62,6 +62,6 @@ local thunder = function()
 end
 
 --- Commands
-RegisterCommand("reboot", reboot, true)
+RegisterCommand("reboot", reboot, false)
 
 RegisterCommand("thunder", thunder, true)
