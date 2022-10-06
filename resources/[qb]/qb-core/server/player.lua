@@ -414,12 +414,13 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
-        local strengthMultiplier = self.PlayerData.metadata.strength / 100;
+        local strengthMultiplier = self.PlayerData.metadata.strength / 100
+        local baseWeight = 20000 * strengthMultiplier
 
         if (baseBag == 0 and jobBag == 0) or ((baseBag ~= 0 or jobBag ~= 0) and self.PlayerData.cloth_config.Config.HideBag) then
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(20000 * strengthMultiplier))
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight))
         else
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(60000 * strengthMultiplier))
+            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight + 40000))
         end
     end
 
