@@ -43,7 +43,7 @@ onNetPromise<EndCallDTO, void>(CallEvents.END_CALL, (reqObj, resp) => {
 
 onNetPromise<void, CallHistoryItem[]>(CallEvents.FETCH_CALLS, (reqObj, resp) => {
     CallService.handleFetchCalls(reqObj, resp).catch(e => {
-        resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
         callLogger.error(`Error occured in fetch call event, Error: ${e.message}`);
+        resp({ status: 'error', errorMsg: 'SERVER_ERROR' });
     });
 });

@@ -17,8 +17,8 @@ export class CallsRepo {
     }
 
     async fetchCalls(phoneNumber: string, limit = FetchDefaultLimits.CALLS_FETCH_LIMIT): Promise<CallHistoryItem[]> {
-        return exports.oxmysql.query_async(
-            'SELECT * FROM phone_calls WHERE receiver = ? OR transmitter = ? ORDER BY start DESC LIMIT ?',
+        return await exports.oxmysql.query_async(
+            'SELECT *, unix_timestamp(start)*1000 as start, unix_timestamp(end)*1000 as end FROM phone_calls WHERE receiver = ? OR transmitter = ? ORDER BY start DESC LIMIT ?',
             [phoneNumber, phoneNumber, limit]
         );
     }
