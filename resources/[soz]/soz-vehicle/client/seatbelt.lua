@@ -19,6 +19,10 @@ local modifierDensity = true
 -- Register Key
 
 RegisterCommand("toggleseatbelt", function()
+    if exports["soz-phone"]:isPhoneVisible() then
+        return
+    end
+
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         local class = GetVehicleClass(GetVehiclePedIsUsing(PlayerPedId()))
         if class ~= 8 and class ~= 13 and class ~= 14 then

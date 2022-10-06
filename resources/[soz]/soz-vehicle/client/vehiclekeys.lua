@@ -15,6 +15,11 @@ local function LockVehicle()
     if IsPedInAnyVehicle(ped) then
         veh = GetVehiclePedIsIn(ped)
     end
+
+    if exports["soz-phone"]:isPhoneVisible() then
+        return
+    end
+
     if GetEntitySpeed(veh) * 3.6 > 75 then
         exports["soz-hud"]:DrawNotification("Vous allez trop vite pour faire ça", "error")
         return
