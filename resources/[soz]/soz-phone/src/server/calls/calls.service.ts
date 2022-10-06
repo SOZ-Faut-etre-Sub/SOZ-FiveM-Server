@@ -200,16 +200,16 @@ class CallsService {
         });
     }
 
-    async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>) {
-        try {
-            const player = PlayerService.getPlayer(reqObj.source);
-            const srcPlayerNumber = player.getPhoneNumber();
-            const calls = await this.callsDB.fetchCalls(srcPlayerNumber);
+    async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>): Promise<void> {
+        const player = PlayerService.getPlayer(reqObj.source);
+        const srcPlayerNumber = player.getPhoneNumber();
 
+        try {
+            const calls = await this.callsDB.fetchCalls(srcPlayerNumber);
             resp({ status: 'ok', data: calls });
         } catch (e) {
             resp({ status: 'error', errorMsg: 'DATABASE_ERROR' });
-            console.error(`Error while fetching calls, ${e.toString()}`);
+            callLogger.error(`Error while fetching calls, ${e.toString()}`);
         }
     }
 
