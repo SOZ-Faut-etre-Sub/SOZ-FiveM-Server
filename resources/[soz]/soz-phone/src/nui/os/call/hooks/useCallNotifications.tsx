@@ -24,7 +24,10 @@ export const useCallNotifications = () => {
         id: NOTIFICATION_ID,
         cantClose: true,
         Icon,
-        onClick: () => navigate('/call'),
+        onClick: () => {
+            navigate('/call');
+            removeId(NOTIFICATION_ID);
+        },
         notificationIcon: () => <Icon className="h-5 w-5 rounded-md" />,
     };
 
