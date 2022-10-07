@@ -96,7 +96,8 @@ local function spawnVehicle(vehicle)
                 label = "Voir la vente",
                 model = vehicle.model,
                 canInteract = function()
-                    return PlayerData.metadata.canBid
+                    local licences = PlayerData.metadata["licences"]
+                    return PlayerData.metadata.canBid and (licences ~= nil and licences["car"] > 0)
                 end,
             },
         },
