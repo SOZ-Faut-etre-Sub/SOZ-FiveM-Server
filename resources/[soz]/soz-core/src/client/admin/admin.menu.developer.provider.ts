@@ -91,7 +91,9 @@ export class AdminMenuDeveloperProvider {
                 return Ok(true);
             }
         );
-        TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
+        if (!citizenId) {
+            TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
+        }
     }
 
     @OnNuiEvent(NuiEvent.AdminResetHealthData)
