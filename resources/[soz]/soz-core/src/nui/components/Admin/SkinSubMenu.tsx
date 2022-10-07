@@ -271,7 +271,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                                 await onComponentChange(ComponentIndex[componentIndex], 'texture', index);
                             }}
                         >
-                            {Array(20)
+                            {Array(26)
                                 .fill(0)
                                 .map((_, index) => (
                                     <MenuItemSelectOption key={`${componentIndex}_texture_${index}`}>
@@ -318,7 +318,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                                 await onPropChange(PropIndex[propIndex], 'texture', index);
                             }}
                         >
-                            {Array(20)
+                            {Array(26)
                                 .fill(0)
                                 .map((_, index) => (
                                     <MenuItemSelectOption key={`${propIndex}_texture_${index}`}>
