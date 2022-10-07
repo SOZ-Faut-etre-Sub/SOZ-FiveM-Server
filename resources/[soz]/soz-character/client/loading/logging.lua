@@ -48,11 +48,11 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     -- Login player into server (qbcore)
     local playerObject = QBCore.Functions.TriggerRpc("soz-character:server:LoginPlayer", player)
 
-    if (playerObject.PlayerData.skin.length == 0) then
+    if (#playerObject.PlayerData.skin == 0) then
         playerObject.PlayerData.skin = DefaultSkin
     end
     ApplyPlayerBodySkin(PlayerId(), playerObject.PlayerData.skin)
-    if (playerObject.PlayerData.cloth_config.length == 0) then
+    if (#playerObject.PlayerData.cloth_config == 0) then
         playerObject.PlayerData.cloth_config = DefaultClothConfig
     end
 
