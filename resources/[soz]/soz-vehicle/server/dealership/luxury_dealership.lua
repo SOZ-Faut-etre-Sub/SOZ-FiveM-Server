@@ -51,14 +51,21 @@ QBCore.Functions.CreateCallback("soz-dealership:server:BidAuction", function(sou
                     if not successRefund then
                         exports["soz-monitor"]:Log("WARN", "Could not transfer from the bank to the player " .. auction.bestBidCitizenId ": " .. reasonRefund)
                         cb(false, "Erreur avec la banque. Merci de contacter un responsable.")
+                    else
+                        auction.bestBidCitizenId = player.PlayerData.citizenid
+                        auction.bestBidBankAccount = player.PlayerData.charinfo.account
+                        auction.bestBidName = player.PlayerData.charinfo.firstname .. " " .. player.PlayerData.charinfo.lastname
+                        auction.bestBidPrice = price
+                        cb(true, nil)
                     end
                 end)
+            else
+                auction.bestBidCitizenId = player.PlayerData.citizenid
+                auction.bestBidBankAccount = player.PlayerData.charinfo.account
+                auction.bestBidName = player.PlayerData.charinfo.firstname .. " " .. player.PlayerData.charinfo.lastname
+                auction.bestBidPrice = price
+                cb(true, nil)
             end
-            auction.bestBidCitizenId = player.PlayerData.citizenid
-            auction.bestBidBankAccount = player.PlayerData.charinfo.account
-            auction.bestBidName = player.PlayerData.charinfo.firstname .. " " .. player.PlayerData.charinfo.lastname
-            auction.bestBidPrice = price
-            cb(true, nil)
         else
             cb(false, "Vous n'avez pas assez d'argent sur votre compte.")
         end
@@ -71,25 +78,40 @@ exports("finishAuctions", function()
             local PlayerData = exports.oxmysql:singleSync("SELECT * FROM player where citizenid = ?", {
                 auction.bestBidCitizenId,
             })
-            exports.oxmysql:insertSync(
-                "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                {
-                    PlayerData.license,
-                    auction.bestBidCitizenId,
+            if (PlayerData == nil) then
+                exports["soz-monitor"]:Log("WARN", "Le joueur " .. auction.bestBidCitizenId .. " n'existe pas en base. Il devait avoir une " .. auction.model ..
+                                               " pour " .. auction.bestBidPrice)
+            else
+                exports.oxmysql:insertSync(
+                    "INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, `condition`, plate, garage, category, state, life_counter, boughttime, parkingtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    {
+                        PlayerData.license,
+                        PlayerData.citizenid,
+                        auction.model,
+                        auction.hash,
+                        "{}",
+                        "{}",
+                        GeneratePlate(),
+                        "airportpublic",
+                        "car",
+                        1,
+                        3,
+                        os.time(),
+                        os.time(),
+                    })
+                exports.oxmysql:insertSync("INSERT INTO player_purchases (citizenid, shop_type, shop_id, item_id, amount, date) VALUES (?,?,?,?,?,?)",
+                                           {
+                    PlayerData.citizenid,
+                    "dealership",
+                    "luxury",
                     auction.model,
-                    auction.hash,
-                    "{}",
-                    "{}",
-                    GeneratePlate(),
-                    "airportpublic",
-                    "car",
-                    1,
-                    3,
-                    os.time(),
+                    auction.bestBidPrice,
                     os.time(),
                 })
-            exports["soz-monitor"]:Log("INFO", "[soz-vehicle] Le joueur " .. auction.bestBidName .. " a remporté une " .. auction.model .. " pour $" ..
-                                           QBCore.Shared.GroupDigits(auction.bestBidPrice))
+                exports["soz-monitor"]:Log("INFO",
+                                           "[soz-vehicle] Le joueur " .. auction.bestBidName .. " [" .. PlayerData.citizenid .. "] a remporté une " ..
+                                               auction.model .. " pour $" .. QBCore.Shared.GroupDigits(auction.bestBidPrice))
+            end
         end
     end
 end)
