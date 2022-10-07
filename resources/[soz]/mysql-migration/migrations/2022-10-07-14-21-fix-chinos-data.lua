@@ -33,6 +33,6 @@ table.insert(migrations, {
             (1, 17, '#CLO_FXF_L_3_23', 50, '{"components":{"4":{"Drawable":148,"Palette":0,"Texture":23}},"label":"#CLO_FXF_L_3_23","modelHash":-1667301416}'),
             (1, 17, '#CLO_FXF_L_3_24', 50, '{"components":{"4":{"Drawable":148,"Palette":0,"Texture":24}},"label":"#CLO_FXF_L_3_24","modelHash":-1667301416}'),
             (1, 17, '#CLO_FXF_L_3_25', 50, '{"components":{"4":{"Drawable":148,"Palette":0,"Texture":25}},"label":"#CLO_FXF_L_3_25","modelHash":-1667301416}');
-        ]]
-    }
+        ]],
+    },
 })
