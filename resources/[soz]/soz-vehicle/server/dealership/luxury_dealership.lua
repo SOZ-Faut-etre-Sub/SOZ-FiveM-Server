@@ -109,8 +109,8 @@ exports("finishAuctions", function()
                     os.time(),
                 })
                 exports["soz-monitor"]:Log("INFO",
-                                           "[soz-vehicle] Le joueur " .. auction.bestBidName .. " [" .. PlayerData.citizenid .. "] a remporté une " .. auction.model ..
-                                               " pour $" .. QBCore.Shared.GroupDigits(auction.bestBidPrice))
+                                           "[soz-vehicle] Le joueur " .. auction.bestBidName .. " [" .. PlayerData.citizenid .. "] a remporté une " ..
+                                               auction.model .. " pour $" .. QBCore.Shared.GroupDigits(auction.bestBidPrice))
             end
         end
     end
