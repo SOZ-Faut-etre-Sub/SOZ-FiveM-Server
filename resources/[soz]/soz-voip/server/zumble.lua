@@ -72,4 +72,4 @@ function ZumbleIsPlayerMuted(source)
 
     return data.mute
 end
-exports('ZumbleIsPlayerMuted', ZumbleIsPlayerMuted)
+exports("ZumbleIsPlayerMuted", ZumbleIsPlayerMuted)
