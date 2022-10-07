@@ -251,7 +251,7 @@ const GymWardrobeConfig: WardrobeConfig = {
     },
 };
 
-const EXERCISE_TIME = 1_000;
+const EXERCISE_TIME = 90_000;
 
 @Provider()
 export class PlayerHealthProvider {
