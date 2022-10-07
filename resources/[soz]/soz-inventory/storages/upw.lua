@@ -12,10 +12,11 @@ Config.Storages["upw_stash"] = {
     label = "Unexptected Power and Water",
     type = "storage",
     owner = "upw",
-    position = vector3(606.23, 2768.08, 41.86),
-    size = vec2(0.8, 8.8),
-    heading = 320,
-    offsetUpZ = 1.5,
+    position = vector3(599.6, 2757.35, 41.86),
+    size = vec2(2.4, 0.4),
+    heading = 4,
+    minZ = 40.86,
+    maxZ = 42.86,
 }
 
 Config.Storages["upw_boss_storage"] = {
