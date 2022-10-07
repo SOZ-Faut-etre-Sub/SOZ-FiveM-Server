@@ -44,6 +44,7 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     -- Login player into server (qbcore)
     local playerObject = QBCore.Functions.TriggerRpc("soz-character:server:LoginPlayer", player)
 
+    print("PlayerObject: " .. json.encode(playerObject))
     ApplyPlayerBodySkin(PlayerId(), playerObject.PlayerData.skin)
     ApplyPlayerClothConfig(PlayerId(), playerObject.PlayerData.cloth_config)
 
