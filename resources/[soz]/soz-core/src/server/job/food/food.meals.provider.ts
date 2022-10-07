@@ -8,11 +8,13 @@ import { Notifier } from '../../notifier';
 
 @Provider()
 export class FoodMealsProvider {
-    private readonly LIMIT_OF_ORDERS = 5;
+    private readonly LIMIT_OF_ORDERS = 4;
 
-    private readonly MEALS_PER_ORDER = 3;
+    private readonly MEAL_BOXES_PER_ORDER = 8;
 
     private readonly MEAL_BOX_ITEM = 'meal_box';
+
+    private readonly ORDER_PRICE = 4000;
 
     private orderedMeals = 0;
 
@@ -44,7 +46,7 @@ export class FoodMealsProvider {
             this.notifier.notify(source, 'Une commande est déjà en cours.');
             return;
         }
-        const [transferred] = await this.bankProvider.transferBankMoney('food', 'farm_food', 2000);
+        const [transferred] = await this.bankProvider.transferBankMoney('food', 'farm_food', this.ORDER_PRICE);
         if (transferred) {
             const date = new Date();
             date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
@@ -79,11 +81,11 @@ export class FoodMealsProvider {
                 }~s~.`
             );
             return;
-        } else if (!this.inventoryManager.canCarryItem(source, this.MEAL_BOX_ITEM, this.MEALS_PER_ORDER)) {
+        } else if (!this.inventoryManager.canCarryItem(source, this.MEAL_BOX_ITEM, this.MEAL_BOXES_PER_ORDER)) {
             this.notifier.notify(source, `Vous n'avez ~r~pas assez de place~s~ dans votre inventaire.`);
             return;
         }
-        this.inventoryManager.addItemToInventory(source, this.MEAL_BOX_ITEM, this.MEALS_PER_ORDER);
+        this.inventoryManager.addItemToInventory(source, this.MEAL_BOX_ITEM, this.MEAL_BOXES_PER_ORDER);
         this.notifier.notify(source, `Vous avez ~g~récupéré~s~ votre commande. Bon appétit !`);
 
         this.updateOrderInProgress(false);
