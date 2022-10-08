@@ -26,6 +26,9 @@ end)
 QBCore.Functions.CreateCallback("soz-dealership:server:GetAuctions", function(source, cb)
     cb(auctions)
 end)
+exports("GetAuctions", function()
+    return auctions
+end)
 
 QBCore.Functions.CreateCallback("soz-dealership:server:GetAuction", function(source, cb, model)
     cb(auctions[model])
