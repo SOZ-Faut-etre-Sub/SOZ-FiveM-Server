@@ -353,6 +353,10 @@ QBCore.Functions.CreateCallback("soz-garage:server:getstock", function(source, c
     end
 end)
 
+function trim(s)
+    return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 ---Return vehicle's data to be stored
 ---@param vehNetId number Vehicle Network ID
 ---@param extraData table Extra data coming from client (fuel)
@@ -361,7 +365,7 @@ local function GetVehicleData(vehNetId, extraData)
     local entityId = NetworkGetEntityFromNetworkId(vehNetId)
 
     local data = {
-        plate = GetVehicleNumberPlateText(entityId),
+        plate = trim(GetVehicleNumberPlateText(entityId)),
         engineDamage = math.floor(GetVehicleEngineHealth(entityId) + 0.5) or 500,
     }
 

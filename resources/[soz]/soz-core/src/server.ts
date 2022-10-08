@@ -4,6 +4,7 @@ import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { AdminModule } from './server/admin/admin.module';
+import { BennysModule } from './server/bennys/bennys.module';
 import { DatabaseModule } from './server/database/database.module';
 import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
@@ -34,7 +35,8 @@ async function bootstrap() {
         ZEventModule,
         AdminModule,
         VoipModule,
-        JobModule
+        JobModule,
+        BennysModule
     );
 
     await app.stop();
