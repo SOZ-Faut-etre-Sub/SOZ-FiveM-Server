@@ -61,38 +61,10 @@ export const HealthBookApp: FunctionComponent = () => {
                         </li>
                     </ul>
                     <ul className="text-lime-700 ml-2 italic capitalize">
-                        <li>
-                            {healthLevelToLabel(
-                                playerData.metadata.health_book_sugar,
-                                0,
-                                25,
-                                LabelStrategy.MinMaxAverage
-                            )}
-                        </li>
-                        <li>
-                            {healthLevelToLabel(
-                                playerData.metadata.health_book_fiber,
-                                0,
-                                25,
-                                LabelStrategy.MinMaxAverage
-                            )}
-                        </li>
-                        <li>
-                            {healthLevelToLabel(
-                                playerData.metadata.health_book_lipid,
-                                0,
-                                25,
-                                LabelStrategy.MinMaxAverage
-                            )}
-                        </li>
-                        <li>
-                            {healthLevelToLabel(
-                                playerData.metadata.health_book_protein,
-                                0,
-                                25,
-                                LabelStrategy.MinMaxAverage
-                            )}
-                        </li>
+                        <li>{healthLevelToLabel(playerData.metadata.health_book_sugar, 0, 25)}</li>
+                        <li>{healthLevelToLabel(playerData.metadata.health_book_fiber, 0, 25)}</li>
+                        <li>{healthLevelToLabel(playerData.metadata.health_book_lipid, 0, 25)}</li>
+                        <li>{healthLevelToLabel(playerData.metadata.health_book_protein, 0, 25)}</li>
                     </ul>
                 </div>
                 <div className="grid grid-cols-2">
