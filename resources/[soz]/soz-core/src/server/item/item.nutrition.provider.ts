@@ -9,7 +9,7 @@ import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
 const INTOXICATED_MALUS = -5;
-const INTOXICATED_NUTRITION_MALUS = -2;
+const DYSPEPSIA_NUTRITION_MALUS = -2;
 
 @Provider()
 export class ItemNutritionProvider {
@@ -92,11 +92,11 @@ export class ItemNutritionProvider {
             firstProp: prop,
         });
 
-        let intoxicatedLuck = 2.0;
+        let dyspepsiaLuck = 1.0;
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
-            if (this.lastItemEatByPlayer[player.citizenid] === item.name) {
-                intoxicatedLuck = 20.0;
+            if (this.lastItemEatByPlayer[player.citizenid] === item.name && item.type === 'food') {
+                dyspepsiaLuck = 25.0;
             }
 
             const totalPercent =
@@ -112,11 +112,17 @@ export class ItemNutritionProvider {
             const diffPercent = totalPercent - 100;
 
             if (diffPercent > 0) {
-                intoxicatedLuck += Math.floor(diffPercent / 2);
+                dyspepsiaLuck += Math.floor(diffPercent / 4);
             }
         }
 
-        const intoxicated = Math.random() * 100 <= intoxicatedLuck || this.item.isItemExpired(inventoryItem);
+        let intoxicated = this.item.isItemExpired(inventoryItem) && Math.random() * 100 <= 75;
+        const dyspepsia = Math.random() * 100 <= dyspepsiaLuck;
+
+        if (intoxicated) {
+            intoxicated = this.playerService.setPlayerDisease(source, 'intoxication') === 'intoxication';
+        }
+
         const hunger = intoxicated ? INTOXICATED_MALUS : item.nutrition.hunger * progress;
         const thirst = intoxicated ? INTOXICATED_MALUS : item.nutrition.thirst * progress;
         let alcohol = intoxicated ? item.nutrition.alcohol * 1.2 : item.nutrition.alcohol * progress;
@@ -131,10 +137,10 @@ export class ItemNutritionProvider {
         this.playerService.incrementMetadata(source, 'alcohol', alcohol, 0, 100);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
-            const fiber = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.fiber * progress;
-            const sugar = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.sugar * progress;
-            const protein = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.protein * progress;
-            const lipid = intoxicated ? INTOXICATED_NUTRITION_MALUS : item.nutrition.lipid * progress;
+            const fiber = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.fiber * progress;
+            const sugar = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.sugar * progress;
+            const protein = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.protein * progress;
+            const lipid = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.lipid * progress;
 
             this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 25);
             this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 25);
@@ -163,6 +169,10 @@ export class ItemNutritionProvider {
 
         if (intoxicated) {
             this.playerService.setPlayerDisease(source, 'intoxication');
+        }
+
+        if (dyspepsia) {
+            this.playerService.setPlayerDisease(source, 'dyspepsie');
         }
 
         this.lastItemEatByPlayer[player.citizenid] = item.name;
