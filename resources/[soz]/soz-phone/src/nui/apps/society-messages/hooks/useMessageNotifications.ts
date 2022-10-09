@@ -29,5 +29,9 @@ export const useMessageNotifications = () => {
         });
     };
 
-    return { setNotification };
+    const removeNotification = () => {
+        removeId(NOTIFICATION_ID);
+    };
+
+    return { setNotification, removeNotification };
 };
