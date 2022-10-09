@@ -46,7 +46,7 @@ export const NotificationsContext = createContext<{
     updateId(id: string, value: Partial<INotification>): void;
     removeId(id: string): void;
     hasNotification(id: string): INotification | null;
-    hasAppNotification(app: string): number;
+    countAppNotification(app: string): number;
     addNotificationAlert(n: INotification, cb?: (n: INotification) => void);
 }>(null);
 
@@ -96,9 +96,9 @@ export function NotificationsProvider({ children }) {
      * Checks if a notification exists for current app
      * and returns its index or -1 if not found.
      */
-    const hasAppNotification = useCallback(
+    const countAppNotification = useCallback(
         (appId: string): number => {
-            return notifications.findIndex(n => n.app === appId);
+            return notifications.filter(n => n.app === appId).length;
         },
         [notifications]
     );
@@ -222,7 +222,7 @@ export function NotificationsProvider({ children }) {
                 updateId,
                 removeId,
                 hasNotification,
-                hasAppNotification,
+                countAppNotification,
                 addNotificationAlert,
                 icons,
                 count: notifications.length,
