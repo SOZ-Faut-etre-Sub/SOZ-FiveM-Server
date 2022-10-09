@@ -41,6 +41,9 @@ local prop_net = nil
 local propTwo_net = nil
 local runProgThread = false
 
+local playerProps = {}
+local playerHasProp = false
+
 RegisterNetEvent('progressbar:client:ToggleBusyness', function(bool)
     isDoingAction = bool
 end)
@@ -62,8 +65,8 @@ function ProgressWithStartAndTick(action, start, tick, finish)
 end
 
 function Process(action, start, tick, finish)
-    ActionStart()
     Action = action
+    ActionStart()
     local ped = PlayerPedId()
     if not IsEntityDead(ped) or Action.useWhileDead then
         if not isDoingAction then
@@ -151,6 +154,9 @@ function ActionStart()
                     local pCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0)
                     local modelSpawn = CreateObject(GetHashKey(Action.prop.model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
 
+                    table.insert(playerProps, modelSpawn)
+                    playerHasProp = true
+
                     local netid = ObjToNet(modelSpawn)
                     SetNetworkIdCanMigrate(netid, false)
                     if Action.prop.bone == nil then
@@ -179,6 +185,9 @@ function ActionStart()
 
                         local pCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0)
                         local modelSpawn = CreateObject(GetHashKey(Action.propTwo.model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
+
+                        table.insert(playerProps, modelSpawn)
+                        playerHasProp = true
 
                         local netid = ObjToNet(modelSpawn)
                         SetNetworkIdCanMigrate(netid, false)
@@ -209,6 +218,7 @@ function ActionStart()
 end
 
 function Cancel()
+    print("Cancel")
     isDoingAction = false
     wasCancelled = true
     LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
@@ -220,6 +230,7 @@ function Cancel()
 end
 
 function Finish()
+    print("Finish")
     isDoingAction = false
     ActionCleanup()
     LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
@@ -238,6 +249,12 @@ function ActionCleanup()
             ClearPedTasks(ped)
         end
     end
+
+    for _, v in pairs(playerProps) do
+        DeleteEntity(v)
+    end
+    playerProps = {}
+    playerHasProp = false
 
     DetachEntity(NetToObj(prop_net), 1, 1)
     DeleteEntity(NetToObj(prop_net))

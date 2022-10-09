@@ -3,9 +3,9 @@ import './globals';
 
 import { AdminModule } from './client/admin/admin.module';
 import { AnimationModule } from './client/animation/animation.module';
-import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
+import { BennysModule } from './client/job/bennys/bennys.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
@@ -28,14 +28,14 @@ async function bootstrap() {
         LSMCModule,
         AnimationModule,
         NuiModule,
-        BankModule,
         FoodModule,
         TargetModule,
         FightForStyleModule,
         BaunModule,
         StreamModule,
         ZEventModule,
-        AdminModule
+        AdminModule,
+        BennysModule
     );
 
     await app.stop();

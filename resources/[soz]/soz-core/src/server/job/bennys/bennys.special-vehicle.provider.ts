@@ -1,22 +1,19 @@
-import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
-import { Auction } from '../../shared/dealership/auction';
-import { PrismaService } from '../database/prisma.service';
-
-const upgradedSimplifiedMods = {
-    modArmor: 4,
-    modBrakes: 2,
-    modEngine: 3,
-    modTransmission: 2,
-    modTurbo: 1,
-};
+import { BankService } from '../../../client/bank/bank.service';
+import { Once, OnceStep } from '../../../core/decorators/event';
+import { Inject } from '../../../core/decorators/injectable';
+import { Provider } from '../../../core/decorators/provider';
+import { wait } from '../../../core/utils';
+import { Auction } from '../../../shared/dealership/auction';
+import { BennysConfig } from '../../../shared/job/bennys';
+import { PrismaService } from '../../database/prisma.service';
 
 @Provider()
 export class BennysSpecialVehicleProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(BankService)
+    private bankProvider: BankService;
 
     @Once(OnceStep.Start)
     public async onStart() {
@@ -27,25 +24,26 @@ export class BennysSpecialVehicleProvider {
         } while (auctions.length === 0);
         for (const vehicle of auctions) {
             const index = auctions.indexOf(vehicle);
+            console.log('adding vehicle');
             await this.prismaService.player_vehicles.upsert({
                 create: {
                     plate: 'LUXE ' + (index + 1),
                     hash: vehicle.hash.toString(),
                     vehicle: vehicle.model,
-                    garage: 'bennys',
+                    garage: 'bennys_luxury',
                     job: 'bennys',
                     state: 3,
                     category: vehicle.required_licence,
                     fuel: 100,
                     engine: 1000,
                     body: 1000,
-                    mods: JSON.stringify(upgradedSimplifiedMods),
+                    mods: JSON.stringify(BennysConfig.Mods.upgradedSimplifiedMods),
                     condition: '{}',
                 },
                 update: {
                     vehicle: vehicle.model,
                     hash: vehicle.hash.toString(),
-                    garage: 'bennys',
+                    garage: 'bennys_luxury',
                     state: 3,
                 },
                 where: {

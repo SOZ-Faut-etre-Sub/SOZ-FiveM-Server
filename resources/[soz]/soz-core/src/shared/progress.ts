@@ -65,4 +65,5 @@ export type ProgressProp = {
     model: string;
     bone: number;
     coords: { x: number; y: number; z: number };
+    rotation?: { x: number; y: number; z: number };
 };

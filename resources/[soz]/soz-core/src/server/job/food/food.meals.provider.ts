@@ -1,4 +1,4 @@
-import { BankProvider } from '../../../client/bank/bank.provider';
+import { BankService } from '../../../client/bank/bank.service';
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -28,8 +28,8 @@ export class FoodMealsProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    @Inject(BankProvider)
-    private bankProvider: BankProvider;
+    @Inject(BankService)
+    private bankService: BankService;
 
     @OnEvent(ServerEvent.FOOD_RETRIEVE_STATE)
     onRetrieveState(source: number) {
@@ -46,7 +46,7 @@ export class FoodMealsProvider {
             this.notifier.notify(source, 'Une commande est déjà en cours.');
             return;
         }
-        const [transferred] = await this.bankProvider.transferBankMoney('food', 'farm_food', this.ORDER_PRICE);
+        const [transferred] = await this.bankService.transferBankMoney('food', 'farm_food', this.ORDER_PRICE);
         if (transferred) {
             const date = new Date();
             date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
