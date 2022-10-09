@@ -272,7 +272,7 @@ export class PlayerHealthProvider {
         } else {
             this.notifier.notify(
                 source,
-                `Payez notre abonnement d'une semaine pour ~r~$300~s~ afin de rofiter de nos vestiaires et installations sportives !`,
+                `Tu ne possèdes pas 300$ ! Si tu souhaites profiter de nos installations et de notre vestiaire, reviens avec de l'argent.`,
                 'error'
             );
         }

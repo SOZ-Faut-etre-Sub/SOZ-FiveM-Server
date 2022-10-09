@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
 import { Notifier } from '../notifier';
+import { PlayerDiseaseProvider } from '../player/player.disease.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { InventoryManager } from './inventory.manager';
@@ -25,6 +26,9 @@ export class ItemHealthProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PlayerDiseaseProvider)
+    private diseaseService: PlayerDiseaseProvider;
 
     private usedAntiDepressant = new Set<string>();
 
@@ -140,9 +144,41 @@ export class ItemHealthProvider {
         }
     }
 
+    public useAntiacide(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (
+            !this.inventoryManager.removeItemFromInventory(
+                source,
+                item.name,
+                1,
+                inventoryItem.metadata,
+                inventoryItem.slot
+            )
+        ) {
+            return;
+        }
+
+        if (player.metadata.disease === 'dyspepsie') {
+            this.diseaseService.setPlayerDisease(source, false);
+            this.notifier.notify(source, 'Vous vous sentez moins balonner.', 'success');
+        } else {
+            this.notifier.notify(
+                source,
+                "Vous vous demandez encore pourquoi vous venez d'avaler ce médicament ?",
+                'error'
+            );
+        }
+    }
+
     @Once()
     public onStart() {
         this.item.setItemUseCallback('flask_pee_empty', this.useFlaskPee.bind(this));
         this.item.setItemUseCallback('antidepressant', this.useAntidepressant.bind(this));
+        this.item.setItemUseCallback('antiacide', this.useAntiacide.bind(this));
     }
 }
