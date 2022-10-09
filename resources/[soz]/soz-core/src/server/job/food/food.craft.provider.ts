@@ -3,6 +3,8 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FoodCraftProcess } from '../../../shared/job/food';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
@@ -26,6 +28,9 @@ export class FoodCraftProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     @OnEvent(ServerEvent.FOOD_CRAFT)
     public async onCraft(source: number, craftProcess: FoodCraftProcess, duration: number) {
         if (!this.canCraft(source, craftProcess)) {
@@ -38,7 +43,21 @@ export class FoodCraftProvider {
         while (this.canCraft(source, craftProcess)) {
             const hasCrafted = await this.doCraft(source, craftProcess, duration);
             const outputItemLabel = this.itemService.getItem(craftProcess.output.id).label;
+
             if (hasCrafted) {
+                this.monitor.publish(
+                    'job_cm_food_craft',
+                    {
+                        item_id: craftProcess.output.id,
+                        player_source: source,
+                    },
+                    {
+                        item_label: outputItemLabel,
+                        quantity: craftProcess.output.amount,
+                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                    }
+                );
+
                 this.notifier.notify(
                     source,
                     `Vous avez cuisiné ${craftProcess.output.amount} ~g~${outputItemLabel}~s~.`
@@ -107,7 +126,9 @@ export class FoodCraftProvider {
                 }
             }
         }
+
         this.inventoryManager.addItemToInventory(source, craftProcess.output.id, craftProcess.output.amount);
+
         return true;
     }
 }
