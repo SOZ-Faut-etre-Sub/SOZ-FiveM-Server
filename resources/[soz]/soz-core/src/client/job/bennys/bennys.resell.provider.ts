@@ -8,6 +8,7 @@ import { Vector3 } from '../../../shared/polyzone/vector';
 import { Err, Ok } from '../../../shared/result';
 import { InputService } from '../../nui/input.service';
 import { PlayerService } from '../../player/player.service';
+import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
@@ -20,6 +21,9 @@ export class BennysResellProvider {
 
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(Qbcore)
+    private QBCore: Qbcore;
 
     @Once(OnceStep.Start)
     public onStart() {
@@ -65,7 +69,13 @@ export class BennysResellProvider {
                     if (!value) {
                         return;
                     }
-                    TriggerServerEvent(ServerEvent.BENNYS_SELL_VEHICLE, NetworkGetNetworkIdFromEntity(entity));
+
+                    const properties = this.QBCore.getVehicleProperties(entity);
+                    TriggerServerEvent(
+                        ServerEvent.BENNYS_SELL_VEHICLE,
+                        NetworkGetNetworkIdFromEntity(entity),
+                        properties
+                    );
                 },
             },
         ]);

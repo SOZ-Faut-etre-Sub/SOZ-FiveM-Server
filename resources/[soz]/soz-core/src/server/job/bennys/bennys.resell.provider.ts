@@ -3,9 +3,11 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { isErr } from '../../../shared/result';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
+import { EstimationService } from './estimationService';
 
 @Provider()
 export class BennysResellProvider {
@@ -21,8 +23,11 @@ export class BennysResellProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(EstimationService)
+    private estimationService: EstimationService;
+
     @OnEvent(ServerEvent.BENNYS_SELL_VEHICLE)
-    public async onSellVehicle(source: number, networkId: number) {
+    public async onSellVehicle(source: number, networkId: number, properties: any) {
         const entity = NetworkGetEntityFromNetworkId(networkId);
         const hash = GetEntityModel(entity);
         const plate = GetVehicleNumberPlateText(entity).trim();
@@ -49,11 +54,17 @@ export class BennysResellProvider {
             },
         });
         if (!playerVehicle) {
-            this.notifier.notify(source, `~r~Je n'ai pas de référence pour ce véhicule.`);
+            this.notifier.notify(source, `Désolé je reprends pas les véhicules volés.`, 'error');
             return;
         }
 
-        const sellPrice = vehicle.price / 2;
+        const result = await this.estimationService.estimateVehicle(source, networkId, properties);
+        if (isErr(result)) {
+            this.notifier.notify(source, result.err, 'error');
+            return;
+        }
+
+        const sellPrice = result.ok / 2;
 
         const [hasTransferred] = await this.bankService.transferBankMoney('bennys_reseller', 'bennys', sellPrice);
         if (hasTransferred) {
