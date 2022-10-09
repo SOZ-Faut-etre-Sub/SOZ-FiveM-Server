@@ -3,5 +3,6 @@ export const PHARMACY_PRICES = {
     antibiotic: 150,
     pommade: 150,
     painkiller: 150,
+    antiacide: 150,
     heal: 400,
 };

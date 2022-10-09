@@ -101,6 +101,25 @@ export class PlayerDiseaseProvider {
         }
     }
 
+    private async dyspepsiaLoop(): Promise<void> {
+        while (this.currentDisease === 'dyspepsie') {
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@drunk_driver_1',
+                    name: 'drunk_fall_over',
+                    options: {
+                        onlyUpperBody: true,
+                    },
+                    duration: 1500,
+                },
+            });
+
+            ClearPedTasks(PlayerPedId());
+
+            await wait(45 * 1000);
+        }
+    }
+
     @OnEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT)
     public applyCurrentDiseaseEffect(disease: Disease) {
         if (!disease) {
@@ -139,6 +158,13 @@ export class PlayerDiseaseProvider {
         if (disease === 'intoxication') {
             this.notifier.notify('Vous avez mangé un truc pas frais...');
             this.currentDiseaseLoop = this.intoxicationLoop();
+        }
+
+        if (disease === 'dyspepsie') {
+            this.notifier.notify(
+                "Tu as l'impression de mal digérer ! consulte un médecin au plus vite ou prend une gélule d'antiacide."
+            );
+            this.currentDiseaseLoop = this.dyspepsiaLoop();
         }
     }
 
