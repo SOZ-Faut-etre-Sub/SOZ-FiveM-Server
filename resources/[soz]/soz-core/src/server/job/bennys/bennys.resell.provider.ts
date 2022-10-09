@@ -25,7 +25,12 @@ export class BennysResellProvider {
     public async onSellVehicle(source: number, networkId: number) {
         const entity = NetworkGetEntityFromNetworkId(networkId);
         const hash = GetEntityModel(entity);
-        const plate = GetVehicleNumberPlateText(entity);
+        const plate = GetVehicleNumberPlateText(entity).trim();
+
+        if (plate.includes('ESSAI') || plate.includes('LUXE')) {
+            this.notifier.notify(source, 'Vous ne pouvez pas vendre un véhicule de test.', 'error');
+            return;
+        }
 
         const vehicle = await this.prismaService.vehicles.findFirst({
             where: {
