@@ -360,6 +360,16 @@ Garages = {
         vehicle = "car", -- car, air, sea
         job = "bennys",
     },
+    ["bennys_luxury"] = {
+        label = "Bennys - Concessionnaire",
+        blipcoord = vector4(-172.01, -1309.43, 30.33, 178.0),
+        showBlip = false,
+        blipName = "Bennys - Concessionnaire",
+        blipNumber = 357,
+        type = "entreprise", -- public, job, gang, depot
+        vehicle = "car", -- car, air, sea
+        job = "bennys",
+    },
     ["bennys_air"] = {
         label = "Bennys",
         blipcoord = vector4(-147.64, -1282.43, 46.9, 356.22),

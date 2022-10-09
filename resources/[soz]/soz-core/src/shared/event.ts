@@ -7,6 +7,9 @@ export enum ServerEvent {
     BAUN_CRAFT = 'soz-core:server:job:baun:craft',
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
+    BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
+    BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
+    BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
 
     FOOD_CRAFT = 'soz-core:server:job:food:craft',

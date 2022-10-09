@@ -117,8 +117,12 @@ export class TargetFactory {
         });
     }
 
-    // // @TODO - Implement it when needed
-    // public createForAllVehicle() {}
+    public createForAllVehicle(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+        exports['qb-target'].AddGlobalVehicle({
+            options: targets,
+            distance: distance,
+        });
+    }
 
     public removeTargetModel(models: string[], labels: string[]) {
         exports['qb-target'].RemoveTargetModel(models, labels);

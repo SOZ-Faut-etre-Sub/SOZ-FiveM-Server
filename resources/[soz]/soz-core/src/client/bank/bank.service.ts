@@ -1,7 +1,7 @@
-import { Provider } from '../../core/decorators/provider';
+import { Injectable } from '../../core/decorators/injectable';
 
-@Provider()
-export class BankProvider {
+@Injectable()
+export class BankService {
     // TODO: Enforce better type for source and target
     public transferBankMoney(source: string, target: string, amount: number): Promise<[boolean, string]> {
         return new Promise(resolve => {

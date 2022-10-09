@@ -48,7 +48,13 @@ export class Qbcore {
             .map(([key, value]) => ({ ...value, id: key as JobType }));
     }
 
-    public getVehicleProperties(vehicle: any): any[] {
+    // Temporary method that would be moved
+    public hasJobPermission(job: string, permission: string): boolean {
+        return this.SozJobCore.Functions.HasPermission(job, permission);
+    }
+
+    // Temporary method that would be moved
+    public getVehicleProperties(vehicle: number): any {
         return this.QBCore.Functions.GetVehicleProperties(vehicle);
     }
 }

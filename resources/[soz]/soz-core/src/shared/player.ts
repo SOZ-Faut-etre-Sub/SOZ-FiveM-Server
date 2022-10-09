@@ -18,6 +18,10 @@ export type QBCorePlayer = {
 export type PlayerData = {
     citizenid: string;
     license: string;
+    money: {
+        marked_money: number;
+        money: number;
+    };
     charinfo: PlayerCharInfo;
     role: SozRole;
     metadata: PlayerMetadata;

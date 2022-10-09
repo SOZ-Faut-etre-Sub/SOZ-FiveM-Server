@@ -41,6 +41,9 @@ local reboot = function()
 
     print("[soz-reboot] Finalisation des enchères du concessionnaire sportif...")
     exports["soz-vehicle"]:finishAuctions()
+
+    print("[soz-reboot] Suppression des véhicules d'essai")
+    exports["soz-core"]:deleteTestVehicles()
 end
 
 local thunder = function()
