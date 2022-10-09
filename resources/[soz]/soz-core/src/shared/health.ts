@@ -81,13 +81,13 @@ export const healthLevelToLabel = (
 
 export const HealthBookMinMax: Record<keyof PlayerHealthBook, { min: number; max?: number }> = {
     health_book_health_level: { min: 0, max: 100 },
-    health_book_fiber: { min: 0 },
-    health_book_lipid: { min: 0 },
-    health_book_max_stamina: { min: 50, max: 120 },
-    health_book_protein: { min: 0 },
-    health_book_strength: { min: 50, max: 120 },
+    health_book_fiber: { min: 0, max: 25 },
+    health_book_lipid: { min: 0, max: 25 },
+    health_book_max_stamina: { min: 50, max: 160 },
+    health_book_protein: { min: 0, max: 25 },
+    health_book_strength: { min: 50, max: 160 },
     health_book_stress_level: { min: 0, max: 100 },
-    health_book_sugar: { min: 0 },
+    health_book_sugar: { min: 0, max: 25 },
 };
 
 export const HealthBookLabel: Record<keyof PlayerHealthBook, string> = {
