@@ -228,7 +228,7 @@ function Cancel()
     })
 end
 
-function Finish()y
+function Finish()
     isDoingAction = false
     ActionCleanup()
     LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
