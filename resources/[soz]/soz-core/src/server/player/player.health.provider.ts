@@ -166,7 +166,7 @@ export class PlayerHealthProvider {
     public async increaseRunTime(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
-        if (player === null || player.metadata.godmode || player.metadata.isdead) {
+        if (player === null || player.metadata.isdead) {
             return;
         }
 

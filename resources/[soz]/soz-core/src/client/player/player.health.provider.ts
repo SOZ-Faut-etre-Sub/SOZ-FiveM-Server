@@ -7,7 +7,7 @@ import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
-import { Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
@@ -279,6 +279,8 @@ export class PlayerHealthProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
+    private lastRunPosition = null;
+
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
@@ -486,8 +488,26 @@ export class PlayerHealthProvider {
             return;
         }
 
-        if (IsPedRunning(PlayerPedId()) || IsPedSwimming(PlayerPedId())) {
-            TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
+        const playerPed = PlayerPedId();
+        const currentVehicle = GetVehiclePedIsIn(playerPed, false);
+        const isRunning = IsPedRunning(playerPed) || IsPedSprinting(playerPed);
+        const isSwimming = IsPedSwimming(playerPed);
+        const isInBike = currentVehicle && IsThisModelABike(GetEntityModel(currentVehicle));
+
+        if (isRunning || isSwimming || isInBike) {
+            const position = GetEntityCoords(playerPed, true) as Vector3;
+
+            if (this.lastRunPosition !== null) {
+                const distance = getDistance(this.lastRunPosition, position);
+
+                if ((distance > 2.5 && isSwimming) || (distance > 3.5 && isRunning) || (distance > 5.0 && isInBike)) {
+                    TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
+                }
+            }
+
+            this.lastRunPosition = position;
+        } else {
+            this.lastRunPosition = null;
         }
     }
 
