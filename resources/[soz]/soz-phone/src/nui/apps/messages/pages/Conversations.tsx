@@ -84,7 +84,7 @@ export const Conversations = (): any => {
                                             {conversation.unread > 0 && (
                                                 <span
                                                     className={cn(
-                                                        'absolute -top-1 -right-1 block h-4 px-1 w-auto rounded-full ring-2 bg-red-400 text-xs text-white',
+                                                        'absolute -top-1 -right-1 flex justify-center items-center py-1 px-2 rounded-full ring-2 bg-red-400 text-xs text-white',
                                                         {
                                                             'ring-gray-700': config.theme.value === 'dark',
                                                             'ring-gray-100': config.theme.value !== 'dark',

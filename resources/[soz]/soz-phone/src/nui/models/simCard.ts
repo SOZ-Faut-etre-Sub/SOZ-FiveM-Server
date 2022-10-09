@@ -78,7 +78,7 @@ export const simCard = createModel<RootModel>()({
                 ...state,
                 conversations: state.conversations.map(conversation =>
                     conversation.conversation_id === payload.conversation_id
-                        ? { ...payload, unread: conversation.unread + payload.unread, masked: false }
+                        ? { ...payload, unread: conversation.unread + payload.unread }
                         : conversation
                 ),
             };
@@ -92,6 +92,21 @@ export const simCard = createModel<RootModel>()({
                 ...state,
                 conversations: state.conversations.map(conversation =>
                     conversation.conversation_id === payload ? { ...conversation, masked: true } : conversation
+                    conversation.conversation_id === payload.conversation_id
+                        ? { ...payload, unread: conversation.unread + payload.unread }
+                        : conversation
+                ),
+            };
+        },
+        SET_CONVERSATION_AS_READ(state, payload: string) {
+            if (!state.conversations.find(conversation => conversation.conversation_id === payload)) {
+                return state;
+            }
+
+            return {
+                ...state,
+                conversations: state.conversations.map(conversation =>
+                    conversation.conversation_id === payload ? { ...conversation, unread: 0 } : conversation
                 ),
             };
         },
@@ -175,6 +190,13 @@ export const simCard = createModel<RootModel>()({
                 conversation_id: conversation_id,
             }).then(() => {
                 dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
+            });
+        },
+        async setConversationAsRead(conversation_id) {
+            fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_MESSAGE_READ, {
+                conversation_id: conversation_id,
+            }).then(() => {
+                dispatch.simCard.SET_CONVERSATION_AS_READ(conversation_id);
             });
         },
         async loadMessages() {

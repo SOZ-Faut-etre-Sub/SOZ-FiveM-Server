@@ -50,11 +50,13 @@ onNetPromise<{ conversationsId: string[] }, void>(MessageEvents.DELETE_CONVERSAT
     });
 });
 
-onNet(MessageEvents.SET_MESSAGE_READ, async (groupId: string) => {
+onNetPromise<{ conversation_id: string }, void>(MessageEvents.SET_MESSAGE_READ, async (reqObj, resp) => {
     const src = getSource();
-    MessagesService.handleSetMessageRead(src, groupId).catch(e =>
-        messagesLogger.error(`Error occurred in set message read event (${src}), Error: ${e.message}`)
-    );
+    MessagesService.handleSetMessageRead(src, reqObj.data.conversation_id).catch(e => {
+        messagesLogger.error(`Error occurred in set message read event (${src}), Error: ${e.message}`);
+        resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+    resp({ status: 'ok' });
 });
 
 onNetPromise<{ conversation_id: string }, void>(MessageEvents.SET_CONVERSATION_ARCHIVED, async (reqObj, resp) => {
