@@ -8,12 +8,13 @@ import { SocietyEvents } from '@typings/society';
 import { Button } from '@ui/old_components/Button';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
 import { DayAgo } from '../../../ui/components/DayAgo';
+import { useMessageNotifications } from '../hooks/useMessageNotifications';
 
 const MessagesList = (): any => {
     const config = useConfig();
@@ -22,6 +23,7 @@ const MessagesList = (): any => {
 
     const { getSocietyMessages } = useSociety();
     const societyMessages = getSocietyMessages();
+    const { removeNotification } = useMessageNotifications();
 
     const startCall = (number: string) => {
         LogDebugEvent({
@@ -52,6 +54,10 @@ const MessagesList = (): any => {
             done,
         });
     };
+
+    useEffect(() => {
+        removeNotification();
+    }, []);
 
     return (
         <ul className={`mt-5 relative divide-y space-y-1`}>
