@@ -58,7 +58,7 @@ export class BennysResellProvider {
                             if (value.toLowerCase() === label) {
                                 return Ok(true);
                             }
-                            return Err(`La valeur saisie ne correspond pas au modèle du véhicule: ${label}`);
+                            return Err(`La valeur saisie ne correspond pas au modèle du véhicule.`);
                         }
                     );
 

@@ -218,7 +218,6 @@ function ActionStart()
 end
 
 function Cancel()
-    print("Cancel")
     isDoingAction = false
     wasCancelled = true
     LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
@@ -229,8 +228,7 @@ function Cancel()
     })
 end
 
-function Finish()
-    print("Finish")
+function Finish()y
     isDoingAction = false
     ActionCleanup()
     LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
