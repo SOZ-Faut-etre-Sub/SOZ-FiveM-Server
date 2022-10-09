@@ -1,1 +1,1 @@
-export type Disease = false | 'grippe' | 'backpain' | 'intoxication' | 'rhume';
+export type Disease = false | 'grippe' | 'backpain' | 'intoxication' | 'rhume' | 'dyspepsie';

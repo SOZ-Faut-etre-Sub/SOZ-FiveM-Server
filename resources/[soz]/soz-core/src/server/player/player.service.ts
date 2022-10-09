@@ -42,22 +42,22 @@ export class PlayerService {
         }
     }
 
-    public setPlayerDisease(source: number, disease: Disease = false) {
+    public setPlayerDisease(source: number, disease: Disease = false): Disease {
         const player = this.QBCore.getPlayer(source);
 
         if (!player) {
-            return;
+            return false;
         }
 
         if (!disease) {
             player.Functions.SetMetaData('disease', false);
             TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, false);
 
-            return;
+            return false;
         }
 
         if (disease === 'grippe' && player.PlayerData.metadata['hazmat']) {
-            return;
+            return false;
         }
 
         let interval = 2 * 60 * 60 * 1000; // 2 hours
@@ -71,18 +71,19 @@ export class PlayerService {
         }
 
         if (
+            disease !== 'dyspepsie' &&
             player.PlayerData.metadata.last_disease_at &&
             Date.now() - player.PlayerData.metadata.last_disease_at < interval
         ) {
-            return;
+            return false;
         }
 
-        if (player && (disease !== 'grippe' || (disease === 'grippe' && !player.PlayerData.metadata['hazmat']))) {
-            player.Functions.SetMetaData('disease', disease);
-            player.Functions.SetMetaData('last_disease_at', Date.now());
+        player.Functions.SetMetaData('disease', disease);
+        player.Functions.SetMetaData('last_disease_at', Date.now());
 
-            TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, disease);
-        }
+        TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, disease);
+
+        return disease;
     }
 
     public save(source: number): void {

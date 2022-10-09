@@ -2659,6 +2659,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = "Soulage les rougeurs et les irritations."
     },
+    ['antiacide'] = {
+        ['name'] = 'antiacide',
+        ['label'] = 'Antiacide',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Dégazifie votre intérieur."
+    },
     ['defibrillator'] = {
         ['name'] = 'defibrillator',
         ['label'] = 'Défibrillateur',
