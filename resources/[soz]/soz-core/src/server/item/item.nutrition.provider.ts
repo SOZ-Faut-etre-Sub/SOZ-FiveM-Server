@@ -107,7 +107,7 @@ export class ItemNutritionProvider {
         }
 
         let intoxicated = this.item.isItemExpired(inventoryItem) && Math.random() * 100 <= 75;
-        const dyspepsia = Math.random() * 100 <= dyspepsiaLuck;
+        const dyspepsia = item.type === 'food' && Math.random() * 100 <= dyspepsiaLuck;
 
         if (intoxicated) {
             intoxicated = this.playerService.setPlayerDisease(source, 'intoxication') === 'intoxication';
