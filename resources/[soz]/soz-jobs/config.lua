@@ -43,7 +43,7 @@ SozJobCore.JobPermission = {
     ManageInvestigation = "investigation-manage",
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
-    Bennys = {Estimate = "estimate", Sell = "sell", Order = "order"},
+    Bennys = {Estimate = "estimate", Resell = "resell", Order = "order"},
 }
 
 SozJobCore.Jobs = {
@@ -431,7 +431,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.Bennys.Estimate] = {label = "Estimer les véhicules"},
             [SozJobCore.JobPermission.Bennys.Order] = {label = "Commander un véhicule d'essai"},
-            [SozJobCore.JobPermission.Bennys.Sell] = {label = "Vendre un véhicule"},
+            [SozJobCore.JobPermission.Bennys.Resell] = {label = "Revendre un véhicule"},
         },
         bossZones = {
             {
