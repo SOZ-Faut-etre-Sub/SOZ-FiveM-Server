@@ -159,7 +159,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     table.insert(checkList, {name = "cocktail_box", amount = 1})
 
     for _, item in pairs(playerCocktails) do
-        table.insert(checkList, { name = item.name, amount = -item.amount })
+        table.insert(checkList, {name = item.name, amount = -item.amount})
     end
 
     if not exports["soz-inventory"]:CanCarryItems(source, checkList) then
