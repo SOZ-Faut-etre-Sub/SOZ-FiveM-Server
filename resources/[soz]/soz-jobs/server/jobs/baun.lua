@@ -156,7 +156,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     end
 
     local checkList = {}
-    table.insert(checkList, { name = "cocktail_box", amount = 1 })
+    table.insert(checkList, {name = "cocktail_box", amount = 1})
 
     for _, item in pairs(playerCocktails) do
         table.insert(checkList, { name = item.name, amount = -item.amount })
