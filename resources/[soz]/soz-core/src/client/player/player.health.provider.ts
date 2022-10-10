@@ -492,15 +492,15 @@ export class PlayerHealthProvider {
         const currentVehicle = GetVehiclePedIsIn(playerPed, false);
         const isRunning = IsPedRunning(playerPed) || IsPedSprinting(playerPed);
         const isSwimming = IsPedSwimming(playerPed);
-        const isInBike = currentVehicle && IsThisModelABike(GetEntityModel(currentVehicle));
+        const isInBicycle = currentVehicle && IsThisModelABicycle(GetEntityModel(currentVehicle));
 
-        if (isRunning || isSwimming || isInBike) {
+        if (isRunning || isSwimming || isInBicycle) {
             const position = GetEntityCoords(playerPed, true) as Vector3;
 
             if (this.lastRunPosition !== null) {
                 const distance = getDistance(this.lastRunPosition, position);
 
-                if ((distance > 2.5 && isSwimming) || (distance > 3.5 && isRunning) || (distance > 5.0 && isInBike)) {
+                if ((distance > 2.5 && isSwimming) || isRunning || (distance > 5.0 && isInBicycle)) {
                     TriggerServerEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME);
                 }
             }
