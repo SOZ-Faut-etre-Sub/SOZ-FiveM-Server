@@ -70,3 +70,7 @@ end)
 AddEventHandler("baseevents:enteredVehicle", function()
     TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
 end)
+
+AddEventHandler("baseevents:leftVehicle", function()
+    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+end)
