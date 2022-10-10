@@ -17,6 +17,7 @@ export interface MessageConversation {
     phoneNumber: string;
     unread: number;
     updatedAt: number;
+    masked: boolean;
 }
 
 export interface FormattedMessageConversation {
@@ -95,8 +96,9 @@ export enum MessageEvents {
     ACTION_RESULT = 'phone:setMessagesAlert',
     CREATE_MESSAGE_BROADCAST = 'createMessagesBroadcast',
     SET_MESSAGE_READ = 'phone:setReadMessages',
-    DELETE_CONVERSATION = 'nwpd:deleteConversation',
-    GET_POSITION = 'nwpd:getCurrentPosition',
-    GET_DESTINATION = 'nwpd:getCurrentDestination',
-    SET_WAYPOINT = 'nwpd:setWaypoint',
+    DELETE_CONVERSATION = 'phone:deleteConversation',
+    GET_POSITION = 'phone:getCurrentPosition',
+    GET_DESTINATION = 'phone:getCurrentDestination',
+    SET_WAYPOINT = 'phone:setWaypoint',
+    SET_CONVERSATION_ARCHIVED = 'phone:setConversationArchived',
 }
