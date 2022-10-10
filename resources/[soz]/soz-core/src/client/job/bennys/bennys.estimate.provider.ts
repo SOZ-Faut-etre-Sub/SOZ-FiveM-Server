@@ -25,12 +25,9 @@ export class BennysEstimateProvider {
                 icon: 'c:bennys/estimate.png',
                 job: 'bennys',
                 canInteract: () => {
-                    return this.playerService.isOnDuty();
+                    return this.playerService.isOnDuty() && this.QBCore.hasJobPermission('bennys', 'estimate');
                 },
                 action: async vehicle => {
-                    if (!this.playerService.isOnDuty() || !this.QBCore.hasJobPermission('bennys', 'estimate')) {
-                        return;
-                    }
                     const properties = this.QBCore.getVehicleProperties(vehicle);
                     const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 

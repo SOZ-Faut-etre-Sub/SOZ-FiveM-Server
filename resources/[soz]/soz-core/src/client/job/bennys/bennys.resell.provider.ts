@@ -43,7 +43,11 @@ export class BennysResellProvider {
                 canInteract: entity => {
                     const coords = GetEntityCoords(entity, false);
                     const point: Vector3 = [coords[0], coords[1], coords[2]];
-                    return this.playerService.isOnDuty() && zone.isPointInside(point);
+                    return (
+                        this.playerService.isOnDuty() &&
+                        this.QBCore.hasJobPermission('bennys', 'resell') &&
+                        zone.isPointInside(point)
+                    );
                 },
                 action: async entity => {
                     const displayName = GetDisplayNameFromVehicleModel(GetEntityModel(entity));
