@@ -20,7 +20,7 @@ export class _MessagesDB {
         );
 
         await exports.oxmysql.update_async(
-            'UPDATE phone_messages_conversations SET updatedAt = current_timestamp() WHERE conversation_id = ?',
+            'UPDATE phone_messages_conversations SET masked = 0, updatedAt = current_timestamp() WHERE conversation_id = ?',
             [conversationId]
         );
 
@@ -37,6 +37,7 @@ export class _MessagesDB {
         return await exports.oxmysql.query_async(
             `SELECT DISTINCT phone_messages_conversations.unread,
                    phone_messages_conversations.conversation_id,
+                   phone_messages_conversations.masked,
                    phone_messages_conversations.user_identifier,
                    phone_messages_conversations.participant_identifier,
                    phone_profile.avatar,
@@ -127,16 +128,20 @@ export class _MessagesDB {
 
     /**
      * Sets the current message isRead to 0 for said player
-     * @param groupId The unique group ID for the message
+     * @param conversation_id The unique group ID for the message
      * @param identifier The identifier for the player
      */
-    async setMessageRead(groupId: string, identifier: string) {
+    async setMessageRead(conversation_id: string, identifier: string) {
         await exports.oxmysql.query_async(
-            `UPDATE phone_messages_conversations
-                   SET unreadCount = 0
-                   WHERE conversation_id = ?
-                     AND participant_identifier = ?`,
-            [groupId, identifier]
+            `UPDATE phone_messages_conversations SET unread = 0 WHERE conversation_id = ? AND user_identifier = ?`,
+            [conversation_id, identifier]
+        );
+    }
+
+    async setMessageArchived(conversation_id: string, identifier: string) {
+        await exports.oxmysql.query_async(
+            `UPDATE phone_messages_conversations SET masked = 1 WHERE conversation_id = ? AND user_identifier = ?`,
+            [conversation_id, identifier]
         );
     }
 

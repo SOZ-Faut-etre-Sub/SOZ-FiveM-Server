@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
+import { ArchiveIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
@@ -13,7 +13,7 @@ import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { useContact } from '../../../hooks/useContact';
 import { useCall } from '../../../os/call/hooks/useCall';
 import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
-import { RootState } from '../../../store';
+import { RootState, store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import MessageInput from '../components/form/MessageInput';
 import { MessageBubble } from '../components/modal/MessageBubble';
@@ -57,6 +57,11 @@ export const Messages = () => {
         return navigate(`/contacts/-1/?addNumber=${number}`);
     };
 
+    const handleArchiveConversation = conversation_id => {
+        store.dispatch.simCard.setConversationArchived(conversation_id);
+        navigate(-1);
+    };
+
     if (!conversation) {
         return null;
     }
@@ -78,6 +83,10 @@ export const Messages = () => {
                     title={getDisplayByNumber(conversation.phoneNumber) || conversation.phoneNumber}
                     action={
                         <div className="flex">
+                            <ArchiveIcon
+                                className="h-6 w-6 cursor-pointer"
+                                onClick={() => handleArchiveConversation(conversation.conversation_id)}
+                            />
                             {getDisplayByNumber(conversation.phoneNumber) === conversation.phoneNumber && (
                                 <Button className="mx-3">
                                     <UserAddIcon

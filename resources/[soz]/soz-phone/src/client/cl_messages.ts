@@ -13,6 +13,7 @@ RegisterNuiProxy(MessageEvents.CREATE_MESSAGE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.DELETE_CONVERSATION);
 RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 /*RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);*/
+RegisterNuiProxy(MessageEvents.SET_CONVERSATION_ARCHIVED);
 
 RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any) => {
     if (position['x'] !== 0 && position['y'] !== 0) {
