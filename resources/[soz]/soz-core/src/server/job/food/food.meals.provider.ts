@@ -10,7 +10,7 @@ import { Notifier } from '../../notifier';
 export class FoodMealsProvider {
     private readonly LIMIT_OF_ORDERS = 4;
 
-    private readonly MEAL_BOXES_PER_ORDER = 8;
+    private readonly MEAL_BOXES_PER_ORDER = 10;
 
     private readonly MEAL_BOX_ITEM = 'meal_box';
 
