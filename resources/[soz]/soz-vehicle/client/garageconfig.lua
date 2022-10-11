@@ -154,7 +154,6 @@ Zonesentreprise = {
         heading = 0,
         minZ = 30.3,
         maxZ = 34.3,
-        debugPoly = true,
     }),
     ["bennys_luxury"] = BoxZone:Create(vector3(-163.17, -1306.41, 31.26), 7.7, 20.0,
                                        {
@@ -162,7 +161,6 @@ Zonesentreprise = {
         heading = 0,
         minZ = 30.26,
         maxZ = 34.26,
-        debugPoly = true,
     }),
     ["bennys_air"] = BoxZone:Create(vector3(-149.04, -1273.76, 49.57), 34.0, 49.2, {
         name = "bennys_air",
@@ -1331,7 +1329,6 @@ PlacesEntreprise = {
         minZ = 30.22,
         maxZ = 34.22,
         data = {indexGarage = "bennys"},
-        debugPoly = true,
     }),
     ["bennys2"] = BoxZone:Create(vector3(-163.44, -1305.2, 31.3), 12, 4,
                                  {
@@ -1340,7 +1337,6 @@ PlacesEntreprise = {
         minZ = 30.3,
         maxZ = 34.3,
         data = {indexGarage = "bennys"},
-        debugPoly = true,
     }),
     ["bennys_luxury1"] = BoxZone:Create(vector3(-162.93, -1305.15, 31.34), 9, 4,
                                         {
