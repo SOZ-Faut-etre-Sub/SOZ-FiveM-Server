@@ -182,6 +182,17 @@ class _MessagesService {
         }
     }
 
+    async handleSetConversationArchived(src: number, conversation_id: string) {
+        try {
+            const identifier = PlayerService.getPlayer(src).getPhoneNumber();
+            await this.messagesDB.setMessageArchived(conversation_id, identifier);
+        } catch (e) {
+            messagesLogger.error(`Failed to set message as read, ${e.toString()}`, {
+                source: src,
+            });
+        }
+    }
+
     async handleDeleteConversation(
         reqObj: PromiseRequest<{ conversationsId: string[] }>,
         resp: PromiseEventResp<void>

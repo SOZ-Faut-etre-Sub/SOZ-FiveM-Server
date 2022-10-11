@@ -14,6 +14,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
         if (conversation.participant_identifier != identifier) {
             mapping[groupId] = {
                 unread: conversation.unread,
+                masked: conversation.masked,
                 phoneNumber: conversation.phone_number,
                 display: conversation.display,
                 avatar: conversation.avatar,

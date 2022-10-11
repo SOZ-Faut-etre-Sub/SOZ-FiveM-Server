@@ -77,7 +77,21 @@ export const simCard = createModel<RootModel>()({
             return {
                 ...state,
                 conversations: state.conversations.map(conversation =>
-                    conversation.conversation_id === payload.conversation_id ? payload : conversation
+                    conversation.conversation_id === payload.conversation_id
+                        ? { ...payload, unread: conversation.unread + payload.unread, masked: false }
+                        : conversation
+                ),
+            };
+        },
+        SET_CONVERSATION_AS_ARCHIVED: (state, payload: string) => {
+            if (!state.conversations.find(conversation => conversation.conversation_id === payload)) {
+                return state;
+            }
+
+            return {
+                ...state,
+                conversations: state.conversations.map(conversation =>
+                    conversation.conversation_id === payload ? { ...conversation, masked: true } : conversation
                 ),
             };
         },
@@ -154,6 +168,13 @@ export const simCard = createModel<RootModel>()({
                 buildRespObj(MockMessageConversations)
             ).then(conversations => {
                 dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
+            });
+        },
+        async setConversationArchived(conversation_id) {
+            fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_CONVERSATION_ARCHIVED, {
+                conversation_id: conversation_id,
+            }).then(() => {
+                dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
             });
         },
         async loadMessages() {

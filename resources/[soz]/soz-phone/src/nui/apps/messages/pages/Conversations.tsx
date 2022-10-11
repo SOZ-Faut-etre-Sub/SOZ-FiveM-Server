@@ -29,6 +29,7 @@ export const Conversations = (): any => {
         const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
 
         return conversations
+            .filter(c => c.masked === false)
             .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
             .filter(c => c?.display?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
     }, [conversations, searchValue]);
@@ -73,7 +74,7 @@ export const Conversations = (): any => {
                                     })}
                                 >
                                     <div
-                                        className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                        className={cn('relative px-3 py-2 flex items-center space-x-3', {
                                             'hover:bg-gray-900': config.theme.value === 'dark',
                                             'hover:bg-gray-200': config.theme.value === 'light',
                                         })}
