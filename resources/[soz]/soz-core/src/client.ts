@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import './globals';
 
 import { AdminModule } from './client/admin/admin.module';
+import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
@@ -18,12 +19,12 @@ import { ShopModule } from './client/shop/shop.module';
 import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
+import { VehicleModule } from './client/vehicle/vehicle.module';
 import { WeatherModule } from './client/weather/weather.module';
 import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
-import { AfkModule } from './client/afk/afk.module';
 
 async function bootstrap() {
     const app = await Application.create(
@@ -47,7 +48,8 @@ async function bootstrap() {
         JobModule,
         ShopModule,
         StoryModule,
-        AfkModule
+        AfkModule,
+        VehicleModule
     );
 
     await app.stop();
