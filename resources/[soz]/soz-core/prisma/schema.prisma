@@ -208,6 +208,7 @@ model phone_messages_conversations {
   label                  String?  @default("") @db.VarChar(60)
   unreadCount            Int      @default(0)
   unread                 Int?
+  masked                 Boolean  @default(false)
   createdAt              DateTime @default(now()) @db.Timestamp(0)
   updatedAt              DateTime @default(now()) @db.Timestamp(0)
 
