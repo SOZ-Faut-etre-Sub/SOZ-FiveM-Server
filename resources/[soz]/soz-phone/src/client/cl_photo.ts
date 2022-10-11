@@ -16,7 +16,7 @@ function CellFrontCamActivate(activate: boolean) {
     return Citizen.invokeNative('0x2491A93618B7D838', activate);
 }
 
-RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async () => {
+RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async (_, cb) => {
     await animationService.openCamera();
     emit('phone:client:disableControlActions', false);
 
@@ -26,6 +26,9 @@ RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async () => {
     CellCamActivate(true, true);
 
     emit(PhotoEvents.ENTER_CAMERA);
+    if (cb) {
+        cb(true);
+    }
 
     while (inCameraMode) {
         await Delay(0);
@@ -48,22 +51,26 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
 
     disableMouseControl = true;
     SetNuiFocus(true, true);
+
+    emit(`__cfx_nui:${PhotoEvents.ENTER_CAMERA}`);
 });
 
-RegisterNuiCB<void>(PhotoEvents.TOGGLE_CAMERA, async () => {
+RegisterNuiCB<void>(PhotoEvents.TOGGLE_CAMERA, async (_, cb) => {
     frontCam = !frontCam;
     CellFrontCamActivate(frontCam);
 
     disableMouseControl = true;
     SetNuiFocus(true, true);
+    cb(true);
 });
 
-RegisterNuiCB<void>(PhotoEvents.TOGGLE_CONTROL_CAMERA, async () => {
+RegisterNuiCB<void>(PhotoEvents.TOGGLE_CONTROL_CAMERA, async (_, cb) => {
     disableMouseControl = !disableMouseControl;
     SetNuiFocus(disableMouseControl, disableMouseControl);
+    cb(true);
 });
 
-RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async () => {
+RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async (_, cb) => {
     frontCam = false;
     disableMouseControl = true;
     inCameraMode = false;
@@ -76,6 +83,7 @@ RegisterNuiCB<void>(PhotoEvents.EXIT_CAMERA, async () => {
 
     emit('phone:client:disableControlActions', global.isPhoneOpen);
     await animationService.closeCamera();
+    cb(true);
 });
 
 const handleTakePicture = async () => {

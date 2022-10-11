@@ -69,7 +69,8 @@
       "SHARE_DESTINATION": "Où voulez-vous partager l'image ?",
       "COPY_IMAGE": "Copiez le lien de l'image ici:",
       "FAILED_TO_DELETE": "La photo n'a pas pu être supprimée :(",
-      "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :("
+      "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :(",
+      "TAKE_PHOTO_SUCCESS": "La photo est bien sauvegardée !"
     },
       "PHOTO": {
           "FEEDBACK": {

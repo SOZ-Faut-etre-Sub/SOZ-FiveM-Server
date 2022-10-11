@@ -40,6 +40,10 @@ const CameraApp: React.FC = () => {
                     type: 'error',
                 });
             }
+            return addAlert({
+                message: t('CAMERA.TAKE_PHOTO_SUCCESS'),
+                type: 'success',
+            });
         });
     };
 
