@@ -57,10 +57,13 @@ export class FoodMealsProvider {
 
             this.notifier.notify(
                 source,
-                'Merci pour votre commande ! Cela fera ~r~2000$~s~. Celle-ci sera prête dans ~g~une heure~s~.'
+                `Merci pour votre commande ! Cela fera ~r~${this.ORDER_PRICE.toLocaleString()}$~s~. Celle-ci sera prête dans ~g~une heure~s~.`
             );
         } else {
-            this.notifier.notify(source, `Il te manque ~r~2000$~s~ sur le compte de l'entreprise.`);
+            this.notifier.notify(
+                source,
+                `Il te manque ~r~${this.ORDER_PRICE.toLocaleString()}$~s~ sur le compte de l'entreprise.`
+            );
         }
     }
 
