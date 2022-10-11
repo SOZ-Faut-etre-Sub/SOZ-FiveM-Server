@@ -16,7 +16,7 @@ export const useMessageNotifications = () => {
         const id = `${NOTIFICATION_ID}:${conversationId}`;
 
         const notification = {
-            app: 'MESSAGES',
+            app: 'messages',
             id,
             sound: true,
             title: group?.display || group?.phoneNumber || conversationName,
@@ -32,5 +32,9 @@ export const useMessageNotifications = () => {
         });
     };
 
-    return { setNotification };
+    const removeNotification = (conversationId: string) => {
+        removeId(`${NOTIFICATION_ID}:${conversationId}`);
+    };
+
+    return { setNotification, removeNotification };
 };

@@ -4,7 +4,7 @@ import { ArchiveIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -18,6 +18,7 @@ import { AppContent } from '../../../ui/components/AppContent';
 import MessageInput from '../components/form/MessageInput';
 import { MessageBubble } from '../components/modal/MessageBubble';
 import { MessageImageModal } from '../components/modal/MessageImageModal';
+import { useMessageNotifications } from '../hooks/useMessageNotifications';
 
 export const Messages = () => {
     const navigate = useNavigate();
@@ -29,6 +30,8 @@ export const Messages = () => {
     const [t] = useTranslation();
     const { addAlert } = useSnackbar();
     const [imageModalOpen, setImageModalOpen] = useState(false);
+
+    const { removeNotification } = useMessageNotifications();
 
     const conversations = useSelector((state: RootState) => state.simCard.conversations);
     const conversation = useMemo(() => {
@@ -61,6 +64,13 @@ export const Messages = () => {
         store.dispatch.simCard.setConversationArchived(conversation_id);
         navigate(-1);
     };
+
+    useEffect(() => {
+        if (conversation) {
+            store.dispatch.simCard.setConversationAsRead(conversation.conversation_id);
+            removeNotification(conversation.conversation_id);
+        }
+    }, []);
 
     if (!conversation) {
         return null;
