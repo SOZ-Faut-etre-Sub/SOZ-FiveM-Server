@@ -3039,18 +3039,6 @@ QBShared.Items = {
     },
 
     -- Other Tools
-    ['moneybag'] = {
-        ['name'] = 'moneybag',
-        ['label'] = 'Sac d\'argent',
-        ['weight'] = 2500,
-        ['type'] = 'item',
-        ['image'] = 'moneybag.png',
-        ['unique'] = false,
-        ['useable'] = true,
-        ['shouldClose'] = true,
-        ['combinable'] = nil,
-        ['description'] = 'Un sac plein de THUNES.'
-    },
     ['parachute'] = {
         ['name'] = 'parachute',
         ['label'] = 'Parachute',
@@ -4255,5 +4243,66 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Un T-Shirt en hommage au ZEvent 2022.",
-    }
+    },
+    --- STONK
+    ['moneybag'] = {
+        ['name'] = 'moneybag',
+        ['label'] = 'Sac d\'argent',
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un sac plein de THUNES.'
+    },
+    ['jewelbag'] = {
+        ['name'] = 'jewelbag',
+        ['label'] = 'Sac de bijoux marqué',
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un sac plein de THUNES.'
+    },
+    ['small_moneybag'] = {
+        ['name'] = 'small_moneybag',
+        ['label'] = 'Petit sac d’argent marqué',
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un sac plein de THUNES.'
+    },
+    ['medium_moneybag'] = {
+        ['name'] = 'medium_moneybag',
+        ['label'] = 'Moyen sac d’argent marqué',
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un sac plein de THUNES.'
+    },
+    ['big_moneybag'] = {
+        ['name'] = 'big_moneybag',
+        ['label'] = 'Grand sac d’argent marqué',
+        ['weight'] = 2500,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un sac plein de THUNES.'
+    },
 }
