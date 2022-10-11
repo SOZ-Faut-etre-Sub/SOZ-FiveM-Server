@@ -70,12 +70,27 @@ export class BennysResellProvider {
         if (hasTransferred) {
             this.notifier.notify(source, `Vous avez vendu ce véhicule pour ~g~$${sellPrice.toLocaleString()}~s~.`);
             DeleteEntity(entity);
-            this.prismaService.player_vehicles.delete({
+            await this.prismaService.player_vehicles.delete({
                 where: {
                     plate: plate,
                 },
             });
-            this.prismaService.concess_storage.update({
+            const player_purchase = await this.prismaService.player_purchases.findFirst({
+                where: {
+                    citizenid: playerVehicle.citizenid,
+                    shop_type: 'dealership',
+                    shop_id: 'luxury',
+                    item_id: vehicle.model,
+                },
+            });
+            if (player_purchase) {
+                await this.prismaService.player_purchases.delete({
+                    where: {
+                        id: player_purchase.id,
+                    },
+                });
+            }
+            await this.prismaService.concess_storage.update({
                 where: {
                     model: vehicle.model,
                 },

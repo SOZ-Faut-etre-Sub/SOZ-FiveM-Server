@@ -22,7 +22,7 @@ export class BennysEstimateProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Estimer',
-                icon: 'c:bennys/estimate.png',
+                icon: 'c:/mechanic/estimate.png',
                 job: 'bennys',
                 canInteract: () => {
                     return this.playerService.isOnDuty() && this.QBCore.hasJobPermission('bennys', 'estimate');

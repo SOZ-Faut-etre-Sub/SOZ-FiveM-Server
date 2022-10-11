@@ -362,7 +362,7 @@ Garages = {
     },
     ["bennys_luxury"] = {
         label = "Bennys - Concessionnaire",
-        blipcoord = vector4(-172.01, -1309.43, 30.33, 178.0),
+        blipcoord = vector4(-178.45, -1312.36, 30.3, 271.79),
         showBlip = false,
         blipName = "Bennys - Concessionnaire",
         blipNumber = 357,
