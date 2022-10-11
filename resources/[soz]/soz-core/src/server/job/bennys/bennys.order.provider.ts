@@ -84,18 +84,30 @@ export class BennysOrderProvider {
         const [transferred] = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
 
         if (!transferred) {
-            this.notifier.notify(source, `Il faut ~r~${vehiclePrice}$~s~ sur le compte de l'entreprise.`);
+            this.notifier.notify(
+                source,
+                `Il faut ~r~${vehiclePrice.toLocaleString()}$~s~ sur le compte de l'entreprise.`
+            );
             return;
+        } else {
+            this.notifier.notify(source, `Virement de ~g~${vehiclePrice.toLocaleString()}$~s~ effectué.`);
         }
 
         if (this.ordersInProgress.has(model)) {
             const lastOrder = this.ordersInProgress.get(model);
             if (lastOrder && lastOrder.getTime() + 1000 * 60 * 60 > Date.now()) {
-                this.notifier.notify(source, `Vous avez déjà commandé ce modèle il y a moins d'une heure.`);
+                const leftMinutes = Math.floor((lastOrder.getTime() + 1000 * 60 * 60 - Date.now()) / 1000 / 60);
+                this.notifier.notify(
+                    source,
+                    `Une livraison est déjà en cours, elle arrive dans ${leftMinutes} minute(s).`,
+                    'warning'
+                );
                 return;
             }
         }
         this.ordersInProgress.set(model, new Date());
+
+        this.notifier.notify(source, `Votre ${vehicle.model} arrive dans une heure.`);
     }
 
     @Exportable('deleteTestVehicles')

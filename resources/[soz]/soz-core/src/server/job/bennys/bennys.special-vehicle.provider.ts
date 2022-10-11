@@ -24,7 +24,7 @@ export class BennysSpecialVehicleProvider {
         } while (auctions.length === 0);
         for (const vehicle of auctions) {
             const index = auctions.indexOf(vehicle);
-            console.log('adding vehicle');
+
             await this.prismaService.player_vehicles.upsert({
                 create: {
                     plate: 'LUXE ' + (index + 1),

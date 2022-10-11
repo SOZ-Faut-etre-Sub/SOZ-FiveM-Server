@@ -29,7 +29,7 @@ export class BennysOrderProvider {
         this.targetFactory.createForBoxZone(orderZone.name, orderZone, [
             {
                 label: 'Commander une voiture',
-                icon: 'c:/bennys/order.png',
+                icon: 'c:/mechanic/order.png',
                 color: 'bennys',
                 job: 'bennys',
                 blackoutJob: 'bennys',
@@ -45,15 +45,17 @@ export class BennysOrderProvider {
                             maxCharacters: 32,
                         },
                         value => {
-                            if (!value || IsModelInCdimage(model) || IsModelValid(model)) {
+                            if (!value || IsModelInCdimage(value) || IsModelValid(value)) {
                                 return Ok(true);
                             }
                             return Err('Le modèle du véhicule est invalide.');
                         }
                     );
                     if (!model) {
-                        TriggerServerEvent(ServerEvent.BENNYS_ORDER_VEHICLE, model);
+                        return;
                     }
+
+                    TriggerServerEvent(ServerEvent.BENNYS_ORDER_VEHICLE, model);
                 },
             },
         ]);

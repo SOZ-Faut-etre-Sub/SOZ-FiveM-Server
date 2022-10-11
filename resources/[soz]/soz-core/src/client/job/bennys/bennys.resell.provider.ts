@@ -37,6 +37,7 @@ export class BennysResellProvider {
         this.targetFactory.createForAllVehicle([
             {
                 label: 'Vendre',
+                icon: 'c:/mechanic/resell.png',
                 job: 'bennys',
                 blackoutGlobal: true,
                 blackoutJob: 'bennys',

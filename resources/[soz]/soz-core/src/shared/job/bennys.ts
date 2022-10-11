@@ -21,12 +21,12 @@ const upgradedSimplifiedMods = {
 
 const resellZone: ZoneOptions & { name: string } = {
     name: 'bennys_resell',
-    center: [806.84, -3021.32, 5.74],
-    length: 10,
-    width: 21.6,
-    minZ: 34.49,
-    maxZ: 35.09,
-    heading: 0,
+    center: [260.77, 2578.32, 45.1],
+    length: 5.8,
+    width: 9.8,
+    minZ: 44.1,
+    maxZ: 49.1,
+    heading: 10,
 };
 
 export const BennysConfig = {
