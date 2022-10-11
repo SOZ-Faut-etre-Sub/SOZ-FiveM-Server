@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 import { useConfig } from '../../hooks/usePhone';
 import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
+import { useNotifications } from '../../os/notifications/hooks/useNotifications';
 import { Grid } from '../../ui/components/Grid';
 import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
 import { AppIcon } from './components/AppIcon';
@@ -17,6 +18,7 @@ export const HomeApp: FunctionComponent = () => {
     const config = useConfig();
     const [t] = useTranslation();
     const societyNumber = usePhoneSocietyNumber();
+    const { countAppNotification } = useNotifications();
 
     const filteredApps =
         societyNumber === null
@@ -37,7 +39,11 @@ export const HomeApp: FunctionComponent = () => {
                     <Grid styleRules={{ margin: '1rem 0 3rem 0' }}>
                         {filteredApps.map(app => (
                             <Link key={app.id} to={app.path}>
-                                <AppIcon title={t(app.nameLocale)} icon={app.icon} />
+                                <AppIcon
+                                    title={t(app.nameLocale)}
+                                    icon={app.icon}
+                                    badge={countAppNotification(app.id)}
+                                />
                             </Link>
                         ))}
                     </Grid>
@@ -50,7 +56,11 @@ export const HomeApp: FunctionComponent = () => {
                     >
                         {homeApps.map(app => (
                             <Link key={app.id} to={app.path}>
-                                <AppIcon title={t(app.nameLocale)} icon={app.icon} />
+                                <AppIcon
+                                    title={t(app.nameLocale)}
+                                    icon={app.icon}
+                                    badge={countAppNotification(app.id)}
+                                />
                             </Link>
                         ))}
                     </Grid>

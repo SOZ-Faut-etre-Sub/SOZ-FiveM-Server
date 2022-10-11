@@ -13,7 +13,7 @@ export const useMessageNotifications = () => {
 
     const setNotification = ({ message = '' }) => {
         const notification = {
-            app: 'SOCIETY_MESSAGE',
+            app: 'society-messages',
             id: NOTIFICATION_ID,
             sound: true,
             title: t('SOCIETY_MESSAGES.NOTIFICATION.TITLE'),
@@ -29,5 +29,9 @@ export const useMessageNotifications = () => {
         });
     };
 
-    return { setNotification };
+    const removeNotification = () => {
+        removeId(NOTIFICATION_ID);
+    };
+
+    return { setNotification, removeNotification };
 };

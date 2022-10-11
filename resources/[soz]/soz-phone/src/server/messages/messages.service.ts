@@ -145,6 +145,7 @@ class _MessagesService {
                             conversation_id: messageData.conversationId,
                             phoneNumber: authorPhoneNumber,
                             updatedAt: new Date().getTime(),
+                            unread: 1,
                         });
                     }
 
@@ -152,6 +153,7 @@ class _MessagesService {
                         conversation_id: messageData.conversationId,
                         phoneNumber: participantId,
                         updatedAt: new Date().getTime(),
+                        unread: 1,
                     });
                 }
             }
@@ -170,10 +172,10 @@ class _MessagesService {
         }
     }
 
-    async handleSetMessageRead(src: number, groupId: string) {
+    async handleSetMessageRead(src: number, conversation_id: string) {
         try {
-            const identifier = PlayerService.getIdentifier(src);
-            await this.messagesDB.setMessageRead(groupId, identifier);
+            const identifier = PlayerService.getPlayer(src).getPhoneNumber();
+            await this.messagesDB.setMessageRead(conversation_id, identifier);
             emitNet(MessageEvents.FETCH_MESSAGE_CONVERSATIONS, src);
         } catch (e) {
             messagesLogger.error(`Failed to set message as read, ${e.toString()}`, {

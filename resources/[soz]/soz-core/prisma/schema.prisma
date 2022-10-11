@@ -206,8 +206,7 @@ model phone_messages_conversations {
   conversation_id        String   @db.VarChar(128)
   participant_identifier String   @db.VarChar(8)
   label                  String?  @default("") @db.VarChar(60)
-  unreadCount            Int      @default(0)
-  unread                 Int?
+  unread                 Int @default(0)
   masked                 Boolean  @default(false)
   createdAt              DateTime @default(now()) @db.Timestamp(0)
   updatedAt              DateTime @default(now()) @db.Timestamp(0)
