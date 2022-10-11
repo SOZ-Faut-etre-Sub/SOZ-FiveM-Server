@@ -155,8 +155,7 @@ Zonesentreprise = {
         minZ = 30.3,
         maxZ = 34.3,
     }),
-    ["bennys_luxury"] = BoxZone:Create(vector3(-163.17, -1306.41, 31.26), 7.7, 20.0,
-                                       {
+    ["bennys_luxury"] = BoxZone:Create(vector3(-163.17, -1306.41, 31.26), 7.7, 20.0, {
         name = "bennys_luxury_z",
         heading = 0,
         minZ = 30.26,
