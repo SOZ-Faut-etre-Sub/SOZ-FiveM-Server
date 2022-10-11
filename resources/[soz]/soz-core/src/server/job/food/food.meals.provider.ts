@@ -10,7 +10,7 @@ import { Notifier } from '../../notifier';
 export class FoodMealsProvider {
     private readonly LIMIT_OF_ORDERS = 4;
 
-    private readonly MEAL_BOXES_PER_ORDER = 8;
+    private readonly MEAL_BOXES_PER_ORDER = 10;
 
     private readonly MEAL_BOX_ITEM = 'meal_box';
 
@@ -57,10 +57,13 @@ export class FoodMealsProvider {
 
             this.notifier.notify(
                 source,
-                'Merci pour votre commande ! Cela fera ~r~2000$~s~. Celle-ci sera prête dans ~g~une heure~s~.'
+                `Merci pour votre commande ! Cela fera ~r~${this.ORDER_PRICE.toLocaleString()}$~s~. Celle-ci sera prête dans ~g~une heure~s~.`
             );
         } else {
-            this.notifier.notify(source, `Il te manque ~r~2000$~s~ sur le compte de l'entreprise.`);
+            this.notifier.notify(
+                source,
+                `Il te manque ~r~${this.ORDER_PRICE.toLocaleString()}$~s~ sur le compte de l'entreprise.`
+            );
         }
     }
 
