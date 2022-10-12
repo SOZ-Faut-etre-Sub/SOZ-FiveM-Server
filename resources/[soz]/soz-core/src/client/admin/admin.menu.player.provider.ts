@@ -149,69 +149,29 @@ export class AdminMenuPlayerProvider {
     }): Promise<void> {
         switch (attribute) {
             case 'strength':
-                TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_METADATA,
-                    player,
-                    'strength',
-                    value === 'min' ? 0 : 150
-                );
+                TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'strength', value === 'min' ? 0 : 150);
                 this.notifier.notify(`La force du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
                 break;
             case 'stamina':
-                TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_METADATA,
-                    player,
-                    'max_stamina',
-                    value === 'min' ? 0 : 150
-                );
+                TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'max_stamina', value === 'min' ? 0 : 150);
                 this.notifier.notify(`L'endurance du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
                 break;
             case 'stress':
-                TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_METADATA,
-                    player,
-                    'stress_level',
-                    value === 'min' ? 0 : 100
-                );
+                TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'stress_level', value === 'min' ? 0 : 100);
                 this.notifier.notify(`Le stress du joueur ~g~${player.name}~s~ a été modifié.`, 'info');
                 break;
             case 'deficiency':
                 ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
-                    TriggerServerEvent(
-                        ServerEvent.ADMIN_SET_METADATA,
-                        player,
-                        attribute,
-                        value === 'min' ? 0 : 200
-                    );
+                    TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, attribute, value === 'min' ? 0 : 200);
                 });
                 this.notifier.notify(`Les carences du joueur ~g~${player.name}~s~ ont été modifiées.`, 'info');
                 break;
             case 'all':
-                TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_METADATA,
-                    player,
-                    'strength',
-                    value === 'min' ? 0 : 150
-                );
-                TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_METADATA,
-                    player,
-                    'max_stamina',
-                    value === 'min' ? 0 : 150
-                );
-                TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_METADATA,
-                    player,
-                    'stress_level',
-                    value === 'min' ? 100 : 0
-                );
+                TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'strength', value === 'min' ? 0 : 150);
+                TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'max_stamina', value === 'min' ? 0 : 150);
+                TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'stress_level', value === 'min' ? 100 : 0);
                 ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
-                    TriggerServerEvent(
-                        ServerEvent.ADMIN_SET_METADATA,
-                        player,
-                        attribute,
-                        value === 'min' ? 0 : 200
-                    );
+                    TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, attribute, value === 'min' ? 0 : 200);
                 });
                 this.notifier.notify(`Les attributs du joueur ~g~${player.name}~s~ ont été modifiés.`, 'info');
                 break;
