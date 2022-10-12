@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Outfit } from '../../shared/cloth';
+import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { Qbcore } from '../qbcore';
-import {Outfit} from "../../shared/cloth";
 
 @Injectable()
 export class PlayerService {

@@ -1,5 +1,5 @@
 import { Injectable } from '../core/decorators/injectable';
-import {Vector3} from "../shared/polyzone/vector";
+import { Vector3 } from '../shared/polyzone/vector';
 
 @Injectable()
 export class DrawService {
