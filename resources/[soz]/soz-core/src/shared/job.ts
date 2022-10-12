@@ -24,16 +24,7 @@ export enum JobType {
 export type Job = {
     // Must use the getJobs method to generate the id from the object.
     id: JobType;
-    grades: {
-        id: number;
-        is_default: boolean;
-        jobId: string;
-        name: string;
-        owner: number;
-        permissions: string[];
-        salary: number;
-        weight: number;
-    }[];
+    grades: JobGrade[];
     label: string;
     permissions: {
         [key: string]: {
@@ -47,4 +38,15 @@ export type Job = {
     canInvoice?: boolean;
     menuCallback?: ClientEvent;
     resell?: any;
+};
+
+export type JobGrade = {
+    id: number;
+    jobId: string;
+    name: string;
+    weight: number;
+    salary: number;
+    owner: number;
+    is_default: boolean;
+    permissions: string[];
 };
