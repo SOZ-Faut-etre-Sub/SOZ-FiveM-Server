@@ -92,7 +92,7 @@ export class ItemNutritionProvider {
             firstProp: prop,
         });
 
-        let dyspepsiaLuck = 1.0;
+        let dyspepsiaLuck = 0.5;
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             if (this.lastItemEatByPlayer[player.citizenid] === item.name && item.type === 'food') {
