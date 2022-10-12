@@ -1,13 +1,14 @@
-import {OnNuiEvent} from '../../core/decorators/event';
-import {Inject} from '../../core/decorators/injectable';
-import {Provider} from '../../core/decorators/provider';
-import {emitRpc} from '../../core/rpc';
-import {NuiEvent, ServerEvent} from '../../shared/event';
-import {Job} from '../../shared/job';
-import {RpcEvent} from '../../shared/rpc';
-import {Notifier} from '../notifier';
-import {NuiDispatch} from '../nui/nui.dispatch';
-import {Qbcore} from '../qbcore';
+import { OnNuiEvent } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { emitRpc } from '../../core/rpc';
+import { NuiEvent, ServerEvent } from '../../shared/event';
+import { Job } from '../../shared/job';
+import { Ok } from '../../shared/result';
+import { RpcEvent } from '../../shared/rpc';
+import { Notifier } from '../notifier';
+import { NuiDispatch } from '../nui/nui.dispatch';
+import { Qbcore } from '../qbcore';
 
 @Provider()
 export class AdminMenuJobProvider {
@@ -21,9 +22,9 @@ export class AdminMenuJobProvider {
     private notifier: Notifier;
 
     @OnNuiEvent(NuiEvent.AdminGetJobs)
-    public async getJobs(): Promise<void> {
+    public async getJobs() {
         const jobs = await emitRpc<Job[]>(RpcEvent.JOB_GET_JOBS);
-        this.nuiDispatch.dispatch('admin_job_submenu', 'SetJobs', jobs);
+        return Ok(jobs);
     }
 
     @OnNuiEvent(NuiEvent.AdminSetJob)

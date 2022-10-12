@@ -2,9 +2,9 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
 import { NuiEvent } from '../../../shared/event';
+import { isOk, Result } from '../../../shared/result';
 import { Vehicle, VehicleCategory } from '../../../shared/vehicle/vehicle';
 import { fetchNui } from '../../fetch';
-import { useNuiEvent } from '../../hook/nui';
 import {
     MenuContent,
     MenuItemButton,
@@ -20,28 +20,29 @@ export type VehicleSubMenuProps = {
     permission: SozRole;
 };
 
-export interface NuiAdminVehicleSubMenuMethodMap {
-    SetVehicles: any[];
-    SetCatalog: Record<keyof VehicleCategory, Vehicle[]>;
-}
-
 export const VEHICLE_OPTIONS = [
     { label: 'Faire apparaître', value: 'spawn' },
     { label: 'Voir le prix', value: 'see-car-price' },
     { label: 'Changer le prix', value: 'change-car-price' },
 ];
 
+type Catalog = Record<keyof VehicleCategory, Vehicle[]>;
+
 export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner, permission }) => {
     const [vehicles, setVehicles] = useState<any[]>([]);
-    const [catalog, setCatalog] = useState<Record<keyof VehicleCategory, Vehicle[]>>(null);
-
-    useNuiEvent('admin_vehicle_submenu', 'SetVehicles', setVehicles);
-
-    useNuiEvent('admin_vehicle_submenu', 'SetCatalog', setCatalog);
+    const [catalog, setCatalog] = useState<Catalog>(null);
 
     useEffect(() => {
         if (vehicles != null && vehicles.length === 0) {
-            fetchNui<never, any[]>(NuiEvent.AdminGetVehicles).then();
+            fetchNui<never, Result<{ vehicles: Vehicle[]; catalog: Catalog }, never>>(NuiEvent.AdminGetVehicles).then(
+                result => {
+                    if (isOk(result)) {
+                        const { catalog, vehicles } = result.ok;
+                        setVehicles(vehicles);
+                        setCatalog(catalog);
+                    }
+                }
+            );
         }
     });
 

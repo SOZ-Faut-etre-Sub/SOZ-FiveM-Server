@@ -32,10 +32,7 @@ export class AdminMenuVehicleProvider {
             .sort(([a], [b]) => a.localeCompare(b))
             .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}) as Record<keyof VehicleCategory, Vehicle[]>;
 
-        this.nuiDispatch.dispatch('admin_vehicle_submenu', 'SetCatalog', catalog);
-        this.nuiDispatch.dispatch('admin_vehicle_submenu', 'SetVehicles', vehicles);
-
-        return Ok(true);
+        return Ok({ catalog, vehicles });
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSpawn)
