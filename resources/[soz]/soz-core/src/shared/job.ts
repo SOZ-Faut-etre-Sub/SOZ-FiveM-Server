@@ -2,6 +2,7 @@ import { ClientEvent } from './event';
 
 export enum JobType {
     Unemployed = 'unemployed',
+    FBI = 'fbi',
     Adsl = 'adsl',
     Delivery = 'delivery',
     Religious = 'religious',
@@ -16,8 +17,9 @@ export enum JobType {
     Oil = 'oil',
     CashTransfer = 'cash-transfer',
     Bennys = 'bennys',
-    Pawl = 'pawl',
     Upw = 'upw',
+    Pawl = 'pawl',
+    Baun = 'baun',
     Ffs = 'ffs',
 }
 
