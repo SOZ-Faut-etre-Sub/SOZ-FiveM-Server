@@ -48,13 +48,13 @@ const transformProcesses: {
         input: SewingRawMaterial.SKIN,
         inputAmount: 1,
         output: FabricMaterial.LEATHER,
-        outputAmount: 3,
+        outputAmount: 8,
     },
     [FabricMaterial.LATEX]: {
         input: SewingRawMaterial.SAP,
-        inputAmount: 6,
+        inputAmount: 5,
         output: FabricMaterial.LATEX,
-        outputAmount: 1,
+        outputAmount: 2,
     },
 };
 
