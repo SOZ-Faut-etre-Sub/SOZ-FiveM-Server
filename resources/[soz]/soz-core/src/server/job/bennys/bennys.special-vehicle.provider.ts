@@ -51,5 +51,12 @@ export class BennysSpecialVehicleProvider {
                 },
             });
         }
+        await this.prismaService.player_vehicles.deleteMany({
+            where: {
+                plate: {
+                    startsWith: 'ESSAI',
+                },
+            },
+        });
     }
 }
