@@ -1,13 +1,13 @@
-import { OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { emitRpc } from '../../core/rpc';
-import { NuiEvent, ServerEvent } from '../../shared/event';
-import { Job } from '../../shared/job';
-import { RpcEvent } from '../../shared/rpc';
-import { Notifier } from '../notifier';
-import { NuiDispatch } from '../nui/nui.dispatch';
-import { Qbcore } from '../qbcore';
+import {OnNuiEvent} from '../../core/decorators/event';
+import {Inject} from '../../core/decorators/injectable';
+import {Provider} from '../../core/decorators/provider';
+import {emitRpc} from '../../core/rpc';
+import {NuiEvent, ServerEvent} from '../../shared/event';
+import {Job} from '../../shared/job';
+import {RpcEvent} from '../../shared/rpc';
+import {Notifier} from '../notifier';
+import {NuiDispatch} from '../nui/nui.dispatch';
+import {Qbcore} from '../qbcore';
 
 @Provider()
 export class AdminMenuJobProvider {
