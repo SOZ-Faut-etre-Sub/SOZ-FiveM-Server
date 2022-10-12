@@ -75,7 +75,7 @@ RegisterNetEvent("pawl:client:OpenCloakroomMenu", function()
                 disableMovement = true,
                 disableCombat = true,
             }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
             end)
         end,
     })
@@ -89,7 +89,7 @@ RegisterNetEvent("pawl:client:OpenCloakroomMenu", function()
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
                 end)
             end,
         })

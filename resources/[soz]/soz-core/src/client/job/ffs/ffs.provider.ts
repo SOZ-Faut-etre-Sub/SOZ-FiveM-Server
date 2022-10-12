@@ -144,9 +144,9 @@ export class FightForStyleProvider {
             let canCraft = true;
             const inputs = [];
             for (const input of craftProcess.inputs) {
-                const hasRequiredAmount = this.inventoryManager.hasEnoughItem(input.fabric, input.amount);
+                const hasRequiredAmount = this.inventoryManager.hasEnoughItem(input.id, input.amount);
                 inputs.push({
-                    label: this.itemService.getItem(input.fabric).label,
+                    label: this.itemService.getItem(input.id).label,
                     hasRequiredAmount,
                     amount: input.amount,
                 });

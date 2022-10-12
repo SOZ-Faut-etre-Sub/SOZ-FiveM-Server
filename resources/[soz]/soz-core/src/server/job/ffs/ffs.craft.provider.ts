@@ -54,7 +54,7 @@ export class FightForStyleCraftProvider {
 
     private canCraft(source: number, craftProcess: CraftProcess): boolean {
         for (const input of craftProcess.inputs) {
-            const item = this.inventoryManager.getFirstItemInventory(source, input.fabric);
+            const item = this.inventoryManager.getFirstItemInventory(source, input.id);
             if (!item || item.amount < input.amount) {
                 return false;
             }
@@ -80,7 +80,7 @@ export class FightForStyleCraftProvider {
         }
 
         for (const input of craftProcess.inputs) {
-            this.inventoryManager.removeItemFromInventory(source, input.fabric, input.amount);
+            this.inventoryManager.removeItemFromInventory(source, input.id, input.amount);
         }
         this.inventoryManager.addItemToInventory(source, craftProcess.output, craftProcess.outputAmount);
         return true;
