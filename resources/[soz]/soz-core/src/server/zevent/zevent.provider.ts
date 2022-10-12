@@ -28,16 +28,6 @@ export class ZEventProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @OnEvent(ServerEvent.ZEVENT_GET_POPCORN)
-    public onGetPopcorn(source: number) {
-        if (!this.inventoryManager.canCarryItem(source, this.ITEM_ID, this.AMOUNT_TO_GIVE)) {
-            this.notifier.notify(source, `Tu as les poches pleines.`, 'error');
-            return;
-        }
-        this.inventoryManager.addItemToInventory(source, this.ITEM_ID, this.AMOUNT_TO_GIVE);
-        this.notifier.notify(source, `Vous avez pris du pop-corn. Bon appétit !`, 'success');
-    }
-
     private async useTShirt(source: number) {
         const { completed } = await this.progressService.progress(source, 'wear_tshirt', '', 5000, {
             dictionary: 'anim@mp_yacht@shower@male@',
