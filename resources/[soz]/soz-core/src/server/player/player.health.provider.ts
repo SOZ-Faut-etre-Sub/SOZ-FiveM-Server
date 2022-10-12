@@ -14,8 +14,8 @@ import { PlayerMoneyService } from './player.money.service';
 import { PlayerService } from './player.service';
 import { PlayerStateService } from './player.state.service';
 
-const HUNGER_RATE = -1.6;
-const THIRST_RATE = -2.2;
+const HUNGER_RATE = -1.25;
+const THIRST_RATE = -1.66;
 const ALCOHOL_RATE = -3.8;
 const DRUG_RATE = -2.1;
 const STRENGTH_RATE = -1.0;
@@ -61,11 +61,11 @@ export class PlayerHealthProvider {
         }
 
         if (player.metadata.organ === 'rein') {
-            hungerDiff -= 8.4;
+            hungerDiff -= 4.0;
         }
 
         if (player.metadata.organ === 'foie') {
-            thirstDiff -= 7.6;
+            thirstDiff -= 5.0;
         }
 
         this.playerService.incrementMetadata(source, 'hunger', hungerDiff, 0, 100);
