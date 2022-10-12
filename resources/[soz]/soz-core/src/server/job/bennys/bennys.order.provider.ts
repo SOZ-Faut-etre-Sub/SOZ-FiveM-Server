@@ -43,7 +43,7 @@ export class BennysOrderProvider {
                 plate: 'ESSAI ' + this.orderedVehicle,
                 garage: 'bennys_luxury',
                 job: 'bennys',
-                category: vehicle.required_licence,
+                category: vehicle.requiredLicence,
                 fuel: 100,
                 engine: 1000,
                 body: 1000,
@@ -71,7 +71,7 @@ export class BennysOrderProvider {
             where: {
                 model,
                 NOT: {
-                    dealership_id: null,
+                    dealershipId: null,
                     price: 0,
                 },
             },
