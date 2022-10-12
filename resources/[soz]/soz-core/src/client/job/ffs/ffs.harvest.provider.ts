@@ -18,12 +18,12 @@ export class FightForStyleHarvestProvider {
         this.targetFactory.createForBoxZone(
             'ffs_harvest_zone',
             {
-                center: [2565.04, 4679.64, 34.08],
+                center: [2589.12, 4677.79, 34.08],
                 length: 1.4,
-                width: 0.8,
+                width: 0.2,
                 minZ: 33.08,
                 maxZ: 35.28,
-                heading: 313,
+                heading: 44,
             },
             [
                 {
