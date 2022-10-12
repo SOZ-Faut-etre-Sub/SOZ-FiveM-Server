@@ -102,7 +102,7 @@ export class PlayerDiseaseProvider {
     }
 
     @OnEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT)
-    public applyCurrentDiseaseEffect(disease: Disease | false) {
+    public applyCurrentDiseaseEffect(disease: Disease) {
         if (!disease) {
             TriggerScreenblurFadeOut(120);
             ClearPedTasks(PlayerPedId());

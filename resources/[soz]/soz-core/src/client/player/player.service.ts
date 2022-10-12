@@ -2,6 +2,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { Qbcore } from '../qbcore';
+import {Outfit} from "../../shared/cloth";
 
 @Injectable()
 export class PlayerService {
@@ -31,7 +32,7 @@ export class PlayerService {
         return this.qbcore.getClosestPlayer();
     }
 
-    public setTempClothes(clothes: any) {
-        TriggerEvent(ClientEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes);
+    public setTempClothes(clothes: Outfit | null) {
+        TriggerEvent(ClientEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes || {});
     }
 }

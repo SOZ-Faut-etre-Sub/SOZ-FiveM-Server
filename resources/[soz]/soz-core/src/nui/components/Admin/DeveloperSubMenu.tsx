@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
@@ -27,26 +27,13 @@ const coordOptions = [
 ];
 
 export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state, updateState }) => {
-    const [noClip, setNoClip] = useState<boolean>(false);
-    const [displayCoords, setDisplayCoords] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (state && state.noClip !== undefined) {
-            setNoClip(state.noClip);
-        }
-        if (state && state.displayCoords !== undefined) {
-            setDisplayCoords(state.displayCoords);
-        }
-    }, [state]);
-
     return (
         <SubMenu id="developer">
             <MenuTitle banner={banner}>Si véloces ces développeurs</MenuTitle>
             <MenuContent>
                 <MenuItemCheckbox
-                    checked={noClip}
+                    checked={state.noClip}
                     onChange={async value => {
-                        setNoClip(value);
                         updateState('developer', 'noClip', value);
                         await fetchNui(NuiEvent.AdminToggleNoClip);
                     }}
@@ -54,9 +41,8 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                     No clip
                 </MenuItemCheckbox>
                 <MenuItemCheckbox
-                    checked={displayCoords}
+                    checked={state.displayCoords}
                     onChange={async value => {
-                        setDisplayCoords(value);
                         updateState('developer', 'displayCoords', value);
                         await fetchNui(NuiEvent.AdminToggleShowCoordinates, value);
                     }}

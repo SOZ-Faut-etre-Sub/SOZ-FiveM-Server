@@ -48,7 +48,7 @@ export class Qbcore {
             .map(([key, value]) => ({ ...value, id: key as JobType }));
     }
 
-    public getProperties(vehicle: any): any[] {
+    public getVehicleProperties(vehicle: any): any[] {
         return this.QBCore.Functions.GetVehicleProperties(vehicle);
     }
 }

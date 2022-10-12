@@ -1,22 +1,23 @@
-import { Injectable } from '../../core/decorators/injectable';
-import { wait } from '../../core/utils';
+import { Inject, Injectable } from '../../core/decorators/injectable';
+import { ResourceLoader } from '../resources/resource.loader';
 
 @Injectable()
 export class SkinService {
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
     public async setModel(model: string) {
         if (!IsModelInCdimage(model) || !IsModelValid(model)) {
             return;
         }
         SetEntityInvincible(PlayerPedId(), true);
 
-        RequestModel(model);
-        while (!HasModelLoaded(model)) {
-            await wait(1);
-        }
+        await this.resourceLoader.loadModel(model);
+
         SetPlayerModel(PlayerId(), model);
         SetPedDefaultComponentVariation(PlayerPedId());
 
-        SetModelAsNoLongerNeeded(model);
+        this.resourceLoader.unloadModel(model);
         SetEntityInvincible(PlayerPedId(), false);
     }
 }

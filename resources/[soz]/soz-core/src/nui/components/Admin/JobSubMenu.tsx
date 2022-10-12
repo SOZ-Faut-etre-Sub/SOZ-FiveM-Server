@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { Job, JobType } from '../../../shared/job';
+import { Job } from '../../../shared/job';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
 import {
@@ -28,9 +28,6 @@ export interface NuiAdminJobSubMenuMethodMap {
 }
 
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, updateState }) => {
-    const [currentJobId, setCurrentJobId] = useState<JobType>(undefined);
-    const [currentJobIndex, setCurrentJobIndex] = useState<number>(0);
-    const [currentJobGradeIndex, setCurrentJobGradeIndex] = useState<number>(0);
     const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
     const [jobs, setJobs] = useState<Job[]>([]);
     const [grades, setGrades] = useState<Job['grades']>([]);
@@ -47,22 +44,10 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
     }, [jobs]);
 
     useEffect(() => {
-        if (state && state.isOnDuty) {
-            setIsOnDuty(state.isOnDuty);
+        if (jobs.length > 0 && state.currentJobIndex) {
+            setGrades(jobs[state.currentJobIndex].grades);
         }
-        if (state && state.currentJobIndex !== undefined) {
-            setCurrentJobIndex(state.currentJobIndex);
-        }
-        if (state && state.currentJobGradeIndex !== undefined) {
-            setCurrentJobGradeIndex(state.currentJobGradeIndex);
-        }
-    }, [state]);
-
-    useEffect(() => {
-        if (jobs.length > 0 && currentJobIndex) {
-            setGrades(jobs[currentJobIndex].grades);
-        }
-    }, [currentJobIndex, jobs]);
+    }, [state.currentJobIndex, jobs]);
 
     if (!jobs) {
         return null;
@@ -74,12 +59,10 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
             <MenuContent>
                 <MenuItemSelect
                     title="Changer de métier"
-                    value={currentJobIndex || 0}
+                    value={state.currentJobIndex || 0}
                     onConfirm={async selectedIndex => {
                         const job = jobs[selectedIndex];
 
-                        setCurrentJobId(job.id);
-                        setCurrentJobIndex(selectedIndex);
                         updateState('job', 'currentJobIndex', selectedIndex);
 
                         if (job.grades && Object.keys(job.grades).length > 0) {
@@ -98,18 +81,17 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                 </MenuItemSelect>
                 <MenuItemSelect
                     title="Changer de grade"
-                    value={currentJobGradeIndex || 0}
+                    value={state.currentJobGradeIndex || 0}
                     onConfirm={async selectedIndex => {
-                        const job = jobs[currentJobIndex];
+                        const job = jobs[state.currentJobIndex];
                         const currentJobGrade = job.grades[Object.keys(job.grades)[selectedIndex]].id;
 
-                        setCurrentJobGradeIndex(selectedIndex);
-                        await fetchNui(NuiEvent.AdminSetJob, { jobId: currentJobId, jobGrade: currentJobGrade });
+                        await fetchNui(NuiEvent.AdminSetJob, { jobId: job.id, jobGrade: currentJobGrade });
                         await updateState('job', 'currentJobGradeIndex', selectedIndex);
                     }}
                 >
                     {grades.map(grade => (
-                        <MenuItemSelectOption key={'grade_' + currentJobIndex + '_' + grade.id}>
+                        <MenuItemSelectOption key={'grade_' + state.currentJobIndex + '_' + grade.id}>
                             {grade.name}
                         </MenuItemSelectOption>
                     ))}

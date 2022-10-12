@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 
 import { SozRole } from '../../../core/permissions';
 import { LICENCES, MONEY_OPTIONS } from '../../../shared/admin/admin';
@@ -31,22 +31,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
     state,
     updateState,
 }) => {
-    const [moneyCase, setMoneyCase] = useState<boolean>(false);
-    const [invisible, setInvisible] = useState<boolean>(false);
-    const [godMode, setGodMode] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (state && state.moneyCase !== undefined) {
-            setMoneyCase(state.moneyCase);
-        }
-        if (state && state.invisible !== undefined) {
-            setInvisible(state.invisible);
-        }
-        if (state && state.godMode !== undefined) {
-            setGodMode(state.godMode);
-        }
-    }, [state]);
-
     const isAdmin = permission === 'admin';
 
     return (
@@ -94,10 +78,9 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     ))}
                 </MenuItemSelect>
                 <MenuItemCheckbox
-                    checked={moneyCase}
+                    checked={state.moneyCase}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        setMoneyCase(value);
                         updateState('gameMaster', 'moneyCase', value);
                         await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
                     }}
@@ -105,10 +88,9 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     💼 Mallette d'argent
                 </MenuItemCheckbox>
                 <MenuItemCheckbox
-                    checked={invisible}
+                    checked={state.invisible}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        setInvisible(value);
                         updateState('gameMaster', 'invisible', value);
                         await fetchNui(NuiEvent.AdminSetVisible, !value);
                     }}
@@ -123,10 +105,9 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     🏎️ Auto-pilote
                 </MenuItemButton>
                 <MenuItemCheckbox
-                    checked={godMode}
+                    checked={state.godMode}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        setGodMode(value);
                         updateState('gameMaster', 'godMode', value);
                         await fetchNui(NuiEvent.AdminSetGodMode, value);
                     }}

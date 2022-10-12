@@ -23,12 +23,9 @@ export type AdminPlayer = {
     name: string;
 };
 
-export type FullAdminPlayer = {
-    id: number; // That's the server id of the player.
-    name: string;
+export type FullAdminPlayer = AdminPlayer & {
     coords: number[];
     heading: number;
     cid: string;
-    citizenId: string;
     ped: number;
 };

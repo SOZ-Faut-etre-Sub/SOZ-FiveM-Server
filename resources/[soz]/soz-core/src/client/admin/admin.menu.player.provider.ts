@@ -150,7 +150,7 @@ export class AdminMenuPlayerProvider {
         switch (attribute) {
             case 'strength':
                 TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    ServerEvent.ADMIN_SET_METADATA,
                     player,
                     'strength',
                     value === 'min' ? 0 : 150
@@ -159,7 +159,7 @@ export class AdminMenuPlayerProvider {
                 break;
             case 'stamina':
                 TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    ServerEvent.ADMIN_SET_METADATA,
                     player,
                     'max_stamina',
                     value === 'min' ? 0 : 150
@@ -168,7 +168,7 @@ export class AdminMenuPlayerProvider {
                 break;
             case 'stress':
                 TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    ServerEvent.ADMIN_SET_METADATA,
                     player,
                     'stress_level',
                     value === 'min' ? 0 : 100
@@ -178,7 +178,7 @@ export class AdminMenuPlayerProvider {
             case 'deficiency':
                 ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
                     TriggerServerEvent(
-                        ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                        ServerEvent.ADMIN_SET_METADATA,
                         player,
                         attribute,
                         value === 'min' ? 0 : 200
@@ -188,26 +188,26 @@ export class AdminMenuPlayerProvider {
                 break;
             case 'all':
                 TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    ServerEvent.ADMIN_SET_METADATA,
                     player,
                     'strength',
                     value === 'min' ? 0 : 150
                 );
                 TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    ServerEvent.ADMIN_SET_METADATA,
                     player,
                     'max_stamina',
                     value === 'min' ? 0 : 150
                 );
                 TriggerServerEvent(
-                    ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                    ServerEvent.ADMIN_SET_METADATA,
                     player,
                     'stress_level',
                     value === 'min' ? 100 : 0
                 );
                 ['fiber', 'lipid', 'sugar', 'protein'].map(attribute => {
                     TriggerServerEvent(
-                        ServerEvent.ADMIN_SET_HEALTH_METADATA,
+                        ServerEvent.ADMIN_SET_METADATA,
                         player,
                         attribute,
                         value === 'min' ? 0 : 200

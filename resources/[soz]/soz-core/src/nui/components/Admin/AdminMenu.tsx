@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 
 import { SozRole } from '../../../core/permissions';
 import { NuiEvent } from '../../../shared/event';
@@ -28,37 +28,37 @@ export type AdminMenuStateProps = {
 };
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
-    const [state, setState] = useState<AdminMenuStateProps['data']['state']>(null);
-    const [banner, setBanner] = useState<string>(null);
-    const [permission, setPermission] = useState<SozRole>(null);
+    // const [state, setState] = useState<AdminMenuStateProps['data']['state']>(null);
+    // const [banner, setBanner] = useState<string>(null);
+    // const [permission, setPermission] = useState<SozRole>(null);
 
-    useEffect(() => {
-        if (data && data.state) {
-            setState(data.state);
-        }
-        if (data && data.banner) {
-            setBanner(data.banner);
-        }
-        if (data && data.permission) {
-            setPermission(data.permission);
-        }
-    }, [data]);
+    // useEffect(() => {
+    //     if (data && data.state) {
+    //         setState(data.state);
+    //     }
+    //     if (data && data.banner) {
+    //         setBanner(data.banner);
+    //     }
+    //     if (data && data.permission) {
+    //         setPermission(data.permission);
+    //     }
+    // }, [data]);
 
     const updateState = async (namespace: string, key: string, value: any) => {
-        state[namespace][key] = value;
+        data.state[namespace][key] = value;
         await fetchNui(NuiEvent.AdminUpdateState, { namespace, key, value });
     };
 
-    if (!state) {
+    if (!data.state) {
         return null;
     }
 
-    const isStaffOrAdmin = ['staff', 'admin'].includes(permission);
+    const isStaffOrAdmin = ['staff', 'admin'].includes(data.permission);
 
     return (
         <Menu type={MenuType.AdminMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}>Menu des admins</MenuTitle>
+                <MenuTitle banner={data.banner}>Menu des admins</MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="game_master">🎲 Menu du maître du jeu</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="interactive">🗺 Informations interactives</MenuItemSubMenuLink>
@@ -76,17 +76,17 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                 </MenuContent>
             </MainMenu>
             <GameMasterSubMenu
-                banner={banner}
-                permission={permission}
+                banner={data.banner}
+                permission={data.permission}
                 updateState={updateState}
-                state={state.gameMaster}
+                state={data.state.gameMaster}
             />
-            <InteractiveSubMenu banner={banner} updateState={updateState} state={state.interactive} />
-            <JobSubMenu banner={banner} updateState={updateState} state={state.job} />
-            <SkinSubMenu banner={banner} updateState={updateState} state={state.skin} />
-            <VehicleSubMenu banner={banner} permission={permission} />
-            <PlayerSubMenu banner={banner} permission={permission} />
-            <DeveloperSubMenu banner={banner} state={state.developer} updateState={updateState} />
+            <InteractiveSubMenu banner={data.banner} updateState={updateState} state={data.state.interactive} />
+            <JobSubMenu banner={data.banner} updateState={updateState} state={data.state.job} />
+            <SkinSubMenu banner={data.banner} updateState={updateState} state={data.state.skin} />
+            <VehicleSubMenu banner={data.banner} permission={data.permission} />
+            <PlayerSubMenu banner={data.banner} permission={data.permission} />
+            <DeveloperSubMenu banner={data.banner} state={data.state.developer} updateState={updateState} />
         </Menu>
     );
 };
