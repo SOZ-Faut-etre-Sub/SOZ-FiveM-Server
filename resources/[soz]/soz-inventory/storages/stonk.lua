@@ -42,3 +42,25 @@ Config.Storages["stonk_ammo"] = {
     size = vector2(2.0, 0.6),
     heading = 25.0,
 }
+
+Config.Storages["stonk_cloakroom_1"] = {
+    label = "Vestiaire - STONK Depository",
+    type = "cloakroom",
+    owner = "stonk",
+    position = vector3(-24.1, -708.6, 46.0),
+    size = vec2(0.8, 8.0),
+    minZ = 45.0,
+    maxZ = 47.2,
+    heading = 295,
+}
+
+Config.Storages["stonk_cloakroom_2"] = {
+    label = "Vestiaire - STONK Depository",
+    type = "cloakroom",
+    owner = "stonk",
+    position = vector3(-20.75, -706.325, 46.0),
+    size = vec2(0.8, 8.0),
+    minZ = 45.0,
+    maxZ = 47.2,
+    heading = 295,
+}

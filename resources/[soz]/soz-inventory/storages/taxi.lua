@@ -17,3 +17,15 @@ Config.Storages["taxi_storage"] = {
     heading = 238,
     offsetUpZ = 2.1,
 }
+
+Config.Storages["taxi_cloakroom"] = {
+    label = "Vestiaire - Carl'jr Service",
+    type = "cloakroom",
+    owner = "taxi",
+    position = vector3(889.1, -178.53, 74.7),
+    size = vec2(0.4, 6.8),
+    minZ = 73.75,
+    maxZ = 75.75,
+    heading = 330,
+}
+

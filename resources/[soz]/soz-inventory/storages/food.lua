@@ -27,3 +27,15 @@ Config.Storages["food_boss_storage"] = {
     size = vector2(0.5, 1.25),
     heading = 160.2,
 }
+
+Config.Storages["food_cloakroom"] = {
+    label = "Vestiaire - Château Marius",
+    type = "cloakroom",
+    owner = "food",
+    position = vector3(-1866.8, 2059.98, 141.0),
+    size = vec2(0.5, 1.5),
+    minZ = 140.0,
+    maxZ = 142.5,
+    heading = 340.76,
+}
+

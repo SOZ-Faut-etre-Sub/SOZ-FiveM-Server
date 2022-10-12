@@ -72,28 +72,6 @@ export class FightForStyleProvider {
                 },
             ]
         );
-        this.targetFactory.createForBoxZone(
-            'jobs:ffs:cloakroom',
-            {
-                center: [706.41, -959.03, 30.4],
-                length: 0.5,
-                width: 4.25,
-                minZ: 29.4,
-                maxZ: 31.6,
-            },
-            [
-                {
-                    label: 'Se changer',
-                    type: 'client',
-                    event: 'jobs:client:ffs:OpenCloakroomMenu',
-                    icon: 'c:jobs/habiller.png',
-                    job: 'ffs',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                },
-            ]
-        );
     }
 
     @OnNuiEvent(NuiEvent.FfsDisplayBlip)

@@ -15,7 +15,8 @@ export type ItemType =
     | 'plank'
     | 'flavor'
     | 'furniture'
-    | 'liquor';
+    | 'liquor'
+    | 'outfit';
 
 type BaseItem = {
     name: string;
@@ -106,6 +107,10 @@ export type GarmentItem = BaseItem & {
     type: 'item';
 };
 
+export type OutfitItem = BaseItem & {
+    type: 'outfit';
+};
+
 type AnimationItem = {
     name: string;
     dictionary: string;
@@ -168,4 +173,5 @@ export type Item =
     | CocktailItem
     | SewingRawMaterialItem
     | FabricItem
-    | GarmentItem;
+    | GarmentItem
+    | OutfitItem;

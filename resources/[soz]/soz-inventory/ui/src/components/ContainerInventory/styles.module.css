@@ -49,6 +49,10 @@
     background: url("../../assets/boss_storage.jpg") left no-repeat;
     background-size: cover;
 }
+.cloakroom {
+    background: url("../../assets/cloakroom.jpg") left no-repeat;
+    background-size: cover;
+}
 .flavor_storage {
     background: url("../../assets/flavor_storage.jpg") left no-repeat;
     background-size: cover;

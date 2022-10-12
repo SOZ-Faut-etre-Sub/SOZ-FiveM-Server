@@ -22,3 +22,15 @@ Config.Storages["bennys_fridge"] = {
     position = vector3(-204.2, -1340.54, 34.89),
     size = vec2(2.0, 2.0),
 }
+
+-- TODO: Recheck the position
+Config.Storages["bennys_cloakroom"] = {
+    label = "Vestiaire - Benny's",
+    type = "cloakroom",
+    owner = "bennys",
+    position = vector3(-205.29, -1331.31, 34.89),
+    size = vec2(5, 5),
+    minZ = 33.89,
+    maxZ = 37.89,
+    heading = 320,
+}

@@ -133,6 +133,13 @@ Container["boss_storage"] = InventoryContainer:new({
         return SozJobCore.Functions.HasPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
     end,
 })
+
+Container["cloakroom"] = InventoryContainer:new({
+    type = "cloakroom",
+    allowedTypes = {"outfit"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
 --- Todo: convert to storage type : storage
 Container["organ"] = InventoryContainer:new({
     type = "organ",
