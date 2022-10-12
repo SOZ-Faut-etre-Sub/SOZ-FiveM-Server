@@ -1,7 +1,7 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClothComponent, ClothProp, ComponentIndex, PropIndex } from '../../shared/clothing';
+import { Component, OutfitItem, Prop } from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
@@ -66,7 +66,7 @@ export class AdminMenuSkinProvider {
         index,
         isComponent,
     }: {
-        index: ComponentIndex | PropIndex;
+        index: Component | Prop;
         isComponent: boolean;
     }) {
         const formattedIndex = Number(index);
@@ -110,15 +110,16 @@ export class AdminMenuSkinProvider {
         componentIndex,
         component,
     }: {
-        componentIndex: ComponentIndex;
-        component: ClothComponent;
+        componentIndex: Component;
+        component: OutfitItem;
     }) {
         this.clothingService.applyComponent(componentIndex, component);
 
         return Ok(true);
     }
+
     @OnNuiEvent(NuiEvent.AdminMenuSkinChangeProp)
-    public async onSkinChangeProp({ propIndex, prop }: { propIndex: PropIndex; prop: ClothProp }) {
+    public async onSkinChangeProp({ propIndex, prop }: { propIndex: Prop; prop: OutfitItem }) {
         this.clothingService.applyProp(propIndex, prop);
 
         return Ok(true);
@@ -134,7 +135,7 @@ export class AdminMenuSkinProvider {
     public async onSkinSave() {
         const clothSet = this.clothingService.getClothSet();
 
-        const Components: ClothComponent[] = Object.entries(clothSet.Components)
+        const Components: OutfitItem[] = Object.entries(clothSet.Components)
             .sort(([a], [b]) => Number(a) - Number(b))
             .map(([componentIndex, component]) => ({
                 ...component,
@@ -144,8 +145,8 @@ export class AdminMenuSkinProvider {
         const Props = Object.fromEntries(
             Object.entries(clothSet.Props)
                 .sort(([a], [b]) => Number(a) - Number(b))
-                .map(([propIndex, prop], index) => [propIndex, { ...prop, Index: index }] as [string, ClothProp])
-        ) as Record<PropIndex, ClothProp>;
+                .map(([propIndex, prop], index) => [propIndex, { ...prop, Index: index }] as [string, OutfitItem])
+        ) as Record<Prop, OutfitItem>;
 
         TriggerServerEvent('admin:skin:UpdateClothes', { Components, Props });
     }

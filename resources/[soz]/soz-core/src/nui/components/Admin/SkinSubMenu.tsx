@@ -36,7 +36,7 @@ export interface NuiAdminSkinSubMenuMethodMap {
         }[];
     };
     SetComponentDrawable: {
-        index: number;
+        index: Component | Prop;
         drawable: number;
         isComponent: boolean;
     };
