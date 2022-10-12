@@ -16,7 +16,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
                 end)
             end,
         })
@@ -35,7 +35,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function()
                         anim = "male_shower_towel_dry_to_get_dressed",
                         flags = 16,
                     }, {}, {}, function() -- Done
-                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
                     end)
                 end,
             })
@@ -52,7 +52,7 @@ RegisterNetEvent("police:client:SetPrisonerClothes", function()
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", Config.PrisonerClothes[playerPedModel])
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", Config.PrisonerClothes[playerPedModel], false)
             LocalPlayer.state:set("havePrisonerClothes", true, true)
         end)
     else
@@ -60,7 +60,7 @@ RegisterNetEvent("police:client:SetPrisonerClothes", function()
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
             LocalPlayer.state:set("havePrisonerClothes", false, true)
         end)
     end

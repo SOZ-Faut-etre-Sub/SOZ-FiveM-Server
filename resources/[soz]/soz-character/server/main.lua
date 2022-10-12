@@ -20,9 +20,16 @@ RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
 
-RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
+RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, removeAnOutfit)
     local Player = QBCore.Functions.GetPlayer(source)
     local clothConfig = Player.PlayerData.cloth_config
+
+    if removeAnOutfit then
+        if not exports["soz-inventory"]:RemoveItem(source, "work_clothes", 1) then
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas d'habit de travail", "error")
+            return
+        end
+    end
 
     if clothes == nil then
         clothConfig["JobClothSet"] = clothes

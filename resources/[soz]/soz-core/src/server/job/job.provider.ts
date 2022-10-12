@@ -1,10 +1,13 @@
 import { Qbcore } from '../../client/qbcore';
+import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Job } from '../../shared/job';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
+import { ItemService } from '../item/item.service';
+import { PlayerService } from '../player/player.service';
 
 @Provider()
 export class JobProvider {
@@ -13,6 +16,12 @@ export class JobProvider {
 
     @Inject(Qbcore)
     private QBCore: Qbcore;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Rpc(RpcEvent.JOB_GET_JOBS)
     public async getJobs(): Promise<Job[]> {
@@ -48,5 +57,15 @@ export class JobProvider {
             });
 
         return jobs.filter(job => job.grades.length > 0);
+    }
+
+    private async useWorkClothes(source: number) {
+        const job = this.playerService.getPlayer(source).job.id;
+        TriggerClientEvent(`jobs:client:${job}:OpenCloakroomMenu`, source);
+    }
+
+    @Once()
+    public onStart() {
+        this.itemService.setItemUseCallback('work_clothes', this.useWorkClothes.bind(this));
     }
 }

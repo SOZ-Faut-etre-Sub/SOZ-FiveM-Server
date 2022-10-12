@@ -143,7 +143,7 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
             SetEnableScuba(PlayerPedId(), true)
             SetPedMaxTimeUnderwater(PlayerPedId(), 1500.00)
-            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin[PlayerData.skin.Model.Hash])
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin[PlayerData.skin.Model.Hash], false)
         end)
     else
         QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
@@ -152,7 +152,7 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
             SetEnableScuba(PlayerPedId(), false)
             SetPedMaxTimeUnderwater(PlayerPedId(), 15.00)
-            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
         end)
     end
 end)
