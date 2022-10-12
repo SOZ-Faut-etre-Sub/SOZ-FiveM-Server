@@ -23,6 +23,7 @@ export enum Prop {
 }
 
 export type OutfitItem = {
+    Index?: number;
     Drawable: number;
     Texture: number;
     Palette: number;
@@ -34,6 +35,7 @@ export type Outfit = {
 };
 
 export type ClothConfig = {
+    AdminOutfit?: Outfit;
     BaseClothSet: Outfit;
     NakedClothSet: Outfit;
     JobClothSet: Outfit | null;

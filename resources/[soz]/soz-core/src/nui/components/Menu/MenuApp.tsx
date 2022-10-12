@@ -5,6 +5,7 @@ import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { useMenuNuiEvent } from '../../hook/nui';
+import { AdminMenu } from '../Admin/AdminMenu';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
@@ -45,6 +46,7 @@ const MenuRouter: FunctionComponent = () => {
 
     return (
         <Routes>
+            <Route path={`/${MenuType.AdminMenu}/*`} element={<AdminMenu data={menuData} />} />
             <Route path={`/${MenuType.BahamaUnicornJobMenu}/*`} element={<BahamaUnicornJobMenu data={menuData} />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />
             <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />

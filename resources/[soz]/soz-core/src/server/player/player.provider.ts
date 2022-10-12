@@ -6,6 +6,7 @@ import { Permissions } from '../../core/permissions';
 import { PlayerServerState } from '../../shared/player';
 import { RpcEvent } from '../../shared/rpc';
 import { QBCore } from '../qbcore';
+import { ServerStateService } from '../server.state.service';
 import { PlayerStateService } from './player.state.service';
 
 @Provider()
@@ -19,9 +20,18 @@ export class PlayerProvider {
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
 
+    @Inject(ServerStateService)
+    private serverStateService: ServerStateService;
+
     @On('QBCore:Server:PlayerLoaded', false)
     onPlayerLoaded(player: any) {
         this.permissions.addPlayerRole(player.PlayerData.source, player.PlayerData.role);
+        this.serverStateService.addPlayer(player.PlayerData);
+    }
+
+    @On('QBCore:Server:PlayerUnload', false)
+    onPlayerUnload(source: number) {
+        this.serverStateService.removePlayer(source);
     }
 
     @Once()
@@ -31,6 +41,7 @@ export class PlayerProvider {
         for (const source of connectedSources) {
             const player = this.QBCore.getPlayer(source);
 
+            this.serverStateService.addPlayer(player.PlayerData);
             this.permissions.addPlayerRole(source, player.PlayerData.role);
         }
     }

@@ -8,5 +8,6 @@ const copyToClipboard = str => {
 };
 
 window.addEventListener('message', (event) => {
+    console.log(event.data);
     copyToClipboard(event.data.string);
 });

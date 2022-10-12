@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import './globals';
 
+import { AdminModule } from './client/admin/admin.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
@@ -33,7 +34,8 @@ async function bootstrap() {
         FightForStyleModule,
         BaunModule,
         StreamModule,
-        ZEventModule
+        ZEventModule,
+        AdminModule
     );
 
     await app.stop();

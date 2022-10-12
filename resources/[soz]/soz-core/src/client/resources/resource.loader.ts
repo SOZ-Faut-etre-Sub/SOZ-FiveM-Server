@@ -40,4 +40,18 @@ export class ResourceLoader {
     unloadedAnimationSet(name: string): void {
         RemoveAnimSet(name);
     }
+
+    async loadModel(name: string): Promise<void> {
+        if (!HasModelLoaded(name)) {
+            RequestModel(name);
+
+            while (!HasModelLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
+
+    unloadModel(name: string): void {
+        SetModelAsNoLongerNeeded(name);
+    }
 }

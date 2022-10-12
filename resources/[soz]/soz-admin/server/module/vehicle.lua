@@ -7,30 +7,3 @@ local function GeneratePlate()
         return plate:upper()
     end
 end
-
-RegisterNetEvent("admin:vehicle:AddVehicle", function(model, vehicle, mods)
-    if not SozAdmin.Functions.IsPlayerAdmin(source) then
-        return
-    end
-
-    local Player = QBCore.Functions.GetPlayer(source)
-    vehicle = NetworkGetEntityFromNetworkId(vehicle)
-
-    MySQL.Async.insert([[
-        INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state, boughttime, parkingtime)
-        VALUES (:license, :citizenid, :vehicle, :hash, :mods, :plate, :garage, :state, :boughttime, :parkingtime)
-        ]], {
-        ["license"] = Player.PlayerData.license,
-        ["citizenid"] = Player.PlayerData.citizenid,
-        ["vehicle"] = model,
-        ["hash"] = GetHashKey(vehicle),
-        ["mods"] = json.encode(mods),
-        ["plate"] = GeneratePlate(),
-        ["garage"] = "airportpublic",
-        ["state"] = 1,
-        ["boughttime"] = os.time(),
-        ["parkingtime"] = os.time(),
-    })
-
-    TriggerClientEvent("hud:client:DrawNotification", source, "Véhicule sauvegardé")
-end)
