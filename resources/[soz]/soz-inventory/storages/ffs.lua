@@ -30,3 +30,14 @@ Config.Storages["ffs_fridge"] = {
     minZ = 29.4,
     maxZ = 31.4,
 }
+
+Config.Storages["ffs_cloakroom"] = {
+    label = "Vestiaire - FFS",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(706.41, -959.03, 30.4),
+    size = vec2(0.5, 4.25),
+    minZ = 29.4,
+    maxZ = 31.6,
+    heading = 0,
+}

@@ -134,14 +134,6 @@ Citizen.CreateThread(function()
         },
         distance = 2.5,
     })
-
-    exports["qb-target"]:AddBoxZone("pawl:cloakroom1", vector3(-532.21, 5308.37, 76.37), 0.6, 7.2,
-                                    {name = "pawl:cloakroom1", heading = 250, minZ = 75.37, maxZ = 78.37}, {
-        options = {
-            {label = "S'habiller", icon = "c:jobs/habiller.png", event = "pawl:client:OpenCloakroomMenu", job = "pawl"},
-        },
-        distance = 2.5,
-    })
 end)
 
 RegisterNetEvent("pawl:client:craft", function(data)

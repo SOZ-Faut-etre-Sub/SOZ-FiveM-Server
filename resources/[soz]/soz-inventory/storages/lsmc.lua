@@ -44,3 +44,25 @@ Config.Storages["lsmc_organ"] = {
     size = vec2(0.6, 7.2),
     heading = 320,
 }
+
+Config.Storages["lsmc_male_cloakroom"] = {
+    label = "Vestiaire pour hommes - LSMC",
+    type = "cloakroom",
+    owner = "lsmc",
+    position = vector3(369.85, -1431.23, 32.51),
+    size = vec2(3.8, 0.4),
+    minZ = 31.71,
+    maxZ = 34.01,
+    heading = 320,
+}
+
+Config.Storages["lsmc_female_cloakroom"] = {
+    label = "Vestiaire pour femmes - LSMC",
+    type = "cloakroom",
+    owner = "lsmc",
+    position = vector3(368.92, -1430.18, 32.51),
+    size = vec2(3.6, 0.4),
+    minZ = 31.51,
+    maxZ = 33.91,
+    heading = 320,
+}

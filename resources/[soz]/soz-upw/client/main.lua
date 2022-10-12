@@ -153,9 +153,6 @@ Citizen.CreateThread(function()
         })
         QBCore.Functions.HideBlip("job_upw_resell", true)
     end
-
-    -- Cloakroom zone
-    CreateCloakroomZone()
 end)
 
 function CreateZone(identifier, zoneType, data)

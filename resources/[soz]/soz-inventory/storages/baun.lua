@@ -225,3 +225,36 @@ Config.Storages["baun_bahama_furniture_storage_2"] = {
     heading = 301,
     targetOption = getTargetOption("baun_bahama_furniture_storage_2", "furniture_crate"),
 }
+
+Config.Storages["baun_unicorn_cloakroom_1"] = {
+    label = "Vestiaire - Vanilla Unicorn",
+    type = "cloakroom",
+    owner = "baun",
+    position = vector3(106.36, -1299.08, 28.77),
+    size = vec2(0.4, 2.3),
+    minZ = 27.82,
+    maxZ = 30.27,
+    heading = 30,
+}
+
+Config.Storages["baun_bahama_cloakroom_2"] = {
+    label = "Vestiaire - Vanilla Unicorn",
+    type = "cloakroom",
+    owner = "baun",
+    position = vector3(109.05, -1304.24, 28.77),
+    size = vec2(2.25, 0.4),
+    minZ = 27.87,
+    maxZ = 30.27,
+    heading = 30,
+}
+
+Config.Storages["baun_bahama_cloakroom_1"] = {
+    label = "Vestiaire - Bahama Mamas",
+    type = "cloakroom",
+    owner = "baun",
+    position = vector3(-1381.38, -602.26, 30.32),
+    size = vec2(2.0, 6.4),
+    minZ = 29.92,
+    maxZ = 31.92,
+    heading = 303,
+}
