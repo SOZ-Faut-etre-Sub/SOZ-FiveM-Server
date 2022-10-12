@@ -78,7 +78,7 @@ export const simCard = createModel<RootModel>()({
                 ...state,
                 conversations: state.conversations.map(conversation =>
                     conversation.conversation_id === payload.conversation_id
-                        ? { ...payload, unread: conversation.unread + payload.unread }
+                        ? { ...payload, masked: false, unread: conversation.unread + payload.unread }
                         : conversation
                 ),
             };
@@ -103,7 +103,9 @@ export const simCard = createModel<RootModel>()({
             return {
                 ...state,
                 conversations: state.conversations.map(conversation =>
-                    conversation.conversation_id === payload ? { ...conversation, unread: 0 } : conversation
+                    conversation.conversation_id === payload
+                        ? { ...conversation, masked: false, unread: 0 }
+                        : conversation
                 ),
             };
         },
