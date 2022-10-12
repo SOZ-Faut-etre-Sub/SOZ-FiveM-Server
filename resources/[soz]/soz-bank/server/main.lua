@@ -156,6 +156,28 @@ RegisterNetEvent("baking:server:SafeStorageWithdraw", function(money_type, safeS
     end
 end)
 
+-- Source: Bank Account
+-- Target: Player server id
+exports('TransferCashMoney', function (source, target, amount, cb)
+    print("Source: " .. source .. " Target: " .. target .. " Amount: " .. amount)
+    local player = QBCore.Functions.GetPlayer(target)
+    amount = tonumber(amount)
+    local money_type = "money"
+
+    local CurrentMoney = Account(source)[money_type]
+    if amount <= CurrentMoney then
+        if player.Functions.AddMoney(money_type, amount) then
+            Account.RemoveMoney(source, amount, money_type)
+            cb(true)
+        else
+            cb(false, "could_not_add_money")
+        end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+        cb(false, "insufficient_funds")
+    end
+end)
+
 QBCore.Functions.CreateCallback("banking:server:openSafeStorage", function(source, cb, safeStorage)
     local account = Account(safeStorage)
 
