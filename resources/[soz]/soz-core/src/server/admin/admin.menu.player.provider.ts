@@ -14,7 +14,7 @@ export class AdminMenuPlayerProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnEvent(ServerEvent.ADMIN_SET_HEALTH_METADATA)
+    @OnEvent(ServerEvent.ADMIN_SET_METADATA)
     public async onSetHealthMetadata(source: number, target: number, key: keyof PlayerMetadata, value: number) {
         this.playerService.setPlayerMetadata(target, key, value);
     }

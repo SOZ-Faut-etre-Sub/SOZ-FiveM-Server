@@ -63,8 +63,11 @@ export class AdminMenuInteractiveProvider {
                             'CHandlingData',
                             'fOilVolume'
                         ).toFixed(2)}`;
-                    this.drawService.drawText3d(vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 1, ownerInfo);
-                    this.drawService.drawText3d(vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 2, vehicleInfo);
+                    this.drawService.drawText3d([vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 1], ownerInfo);
+                    this.drawService.drawText3d(
+                        [vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 2],
+                        vehicleInfo
+                    );
                 }
             }
         }, 1);

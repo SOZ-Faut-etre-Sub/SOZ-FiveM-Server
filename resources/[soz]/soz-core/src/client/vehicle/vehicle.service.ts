@@ -7,6 +7,6 @@ export class VehicleService {
     private QBCore: Qbcore;
 
     public getVehicleProperties(vehicle: number): any[] {
-        return this.QBCore.getProperties(vehicle);
+        return this.QBCore.getVehicleProperties(vehicle);
     }
 }

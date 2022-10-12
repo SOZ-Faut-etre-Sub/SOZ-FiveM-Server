@@ -37,7 +37,7 @@ export class ZEventProvider {
         const player = this.playerService.getPlayer();
         if (this.isWearingTShirt) {
             player.metadata.isWearingItem = null;
-            this.playerService.setTempClothes({});
+            this.playerService.setTempClothes(null);
         } else {
             player.metadata.isWearingItem = 'zevent2022_tshirt';
             this.playerService.setTempClothes(this.skin[player.skin.Model.Hash]);

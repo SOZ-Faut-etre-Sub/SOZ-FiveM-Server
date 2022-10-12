@@ -44,18 +44,18 @@ export class AdminMenuDeveloperProvider {
             const y = coords[1].toFixed(2);
             const z = coords[2].toFixed(2);
 
-            this.draw.drawText({
-                x: 0.4,
-                y: 0.01,
-                width: 0,
-                height: 0,
-                scale: 0.4,
-                r: 66,
-                g: 182,
-                b: 245,
-                a: 255,
-                text: `~w~Ped coordinates:~b~ vector4(${x}, ${y}, ${z}, ${heading})`,
-            });
+            this.draw.drawText(
+                0.4,
+                0.01,
+                0,
+                0,
+                0.4,
+                66,
+                182,
+                245,
+                255,
+                `~w~Ped coordinates:~b~ vector4(${x}, ${y}, ${z}, ${heading})`
+            );
         }, 1);
     }
 
