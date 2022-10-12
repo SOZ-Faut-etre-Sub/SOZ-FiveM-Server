@@ -26,7 +26,7 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, r
 
     if removeAnOutfit then
         if not exports["soz-inventory"]:RemoveItem(source, "work_clothes", 1) then
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas d'habit de travail", "error")
+            TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas de tenue de travail dans vos poches.", "error")
             return
         end
     end

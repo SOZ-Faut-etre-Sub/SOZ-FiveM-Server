@@ -4,6 +4,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Job } from '../../shared/job';
+import { JobType } from '../../shared/job';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { ItemService } from '../item/item.service';
@@ -61,7 +62,25 @@ export class JobProvider {
 
     private async useWorkClothes(source: number) {
         const job = this.playerService.getPlayer(source).job.id;
-        TriggerClientEvent(`jobs:client:${job}:OpenCloakroomMenu`, source);
+        switch (job) {
+            case JobType.Bennys:
+                TriggerClientEvent(`soz-bennys:client:OpenCloakroomMenu`, source);
+                break;
+            case JobType.LSMC:
+            case JobType.Taxi:
+            case JobType.Pawl:
+            case JobType.Upw:
+                TriggerClientEvent(`${job}:client:OpenCloakroomMenu`, source);
+                break;
+            case JobType.BCSO:
+            case JobType.LSPD:
+            case 'fbi':
+                TriggerClientEvent(`police:client:OpenCloakroomMenu`, source);
+                break;
+            default:
+                TriggerClientEvent(`jobs:client:${job}:OpenCloakroomMenu`, source);
+                break;
+        }
     }
 
     @Once()
