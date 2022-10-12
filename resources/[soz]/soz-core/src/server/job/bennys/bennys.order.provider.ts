@@ -41,7 +41,7 @@ export class BennysOrderProvider {
                 mods: JSON.stringify(BennysConfig.Mods.upgradedSimplifiedMods),
                 condition: '{}',
                 plate: 'ESSAI ' + this.orderedVehicle,
-                garage: 'bennys',
+                garage: 'bennys_luxury',
                 job: 'bennys',
                 category: vehicle.required_licence,
                 fuel: 100,
