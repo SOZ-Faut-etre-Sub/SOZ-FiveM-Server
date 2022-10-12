@@ -3,6 +3,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { SozRole } from '../../../core/permissions';
 import { AdminPlayer } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
+import { isOk, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
 import {
@@ -22,7 +23,6 @@ export type PlayerSubMenuProps = {
 };
 
 export interface NuiAdminPlayerSubMenuMethodMap {
-    SetPlayers: AdminPlayer[];
     SetSearchFilter: string;
 }
 
@@ -66,17 +66,17 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
     const [searchFilter, setSearchFilter] = useState<string>('');
 
-    useNuiEvent('admin_player_submenu', 'SetPlayers', players => {
-        setPlayers(players);
-    });
-
     useNuiEvent('admin_player_submenu', 'SetSearchFilter', filter => {
         setSearchFilter(filter);
     });
 
     useEffect(() => {
         if (players != null && players.length === 0) {
-            fetchNui<never, AdminPlayer[]>(NuiEvent.AdminGetPlayers).then();
+            fetchNui<never, Result<AdminPlayer[], never>>(NuiEvent.AdminGetPlayers).then(result => {
+                if (isOk(result)) {
+                    setPlayers(result.ok);
+                }
+            });
         }
     }, [players]);
 

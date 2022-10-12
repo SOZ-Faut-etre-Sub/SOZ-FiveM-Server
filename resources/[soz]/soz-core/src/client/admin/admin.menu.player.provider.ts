@@ -31,10 +31,10 @@ export class AdminMenuPlayerProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminGetPlayers)
-    public async onGetPlayers(): Promise<void> {
+    public async onGetPlayers() {
         const players = await this.getPlayers();
 
-        this.nuiDispatch.dispatch('admin_player_submenu', 'SetPlayers', players);
+        return Ok(players);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSearchPlayer)

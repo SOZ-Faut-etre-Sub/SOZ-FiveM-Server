@@ -2,8 +2,8 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { Job } from '../../../shared/job';
+import { isOk, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
-import { useNuiEvent } from '../../hook/nui';
 import {
     MenuContent,
     MenuItemCheckbox,
@@ -23,23 +23,20 @@ export type JobSubMenuProps = {
     };
 };
 
-export interface NuiAdminJobSubMenuMethodMap {
-    SetJobs: Job[];
-}
-
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, updateState }) => {
     const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
     const [jobs, setJobs] = useState<Job[]>([]);
     const [grades, setGrades] = useState<Job['grades']>([]);
 
-    useNuiEvent('admin_job_submenu', 'SetJobs', jobs => {
-        setJobs(jobs);
-        setGrades(jobs[0].grades);
-    });
-
     useEffect(() => {
         if (jobs !== null && jobs.length === 0) {
-            fetchNui<void, Job[]>(NuiEvent.AdminGetJobs).then();
+            fetchNui<void, Result<Job[], never>>(NuiEvent.AdminGetJobs).then(result => {
+                if (isOk(result)) {
+                    const jobs = result.ok;
+                    setJobs(jobs);
+                    setGrades(jobs[0].grades);
+                }
+            });
         }
     }, [jobs]);
 
