@@ -34,7 +34,8 @@ AddEventHandler("onClientResourceStop", function(resourceName)
 end)
 
 RegisterNetEvent("soz-jobs:client:baun:createCocktailBox", function()
-    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createCocktailBox", function() end)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createCocktailBox", function()
+    end)
 end)
 
 exports["qb-target"]:AddBoxZone("baun:bahama:duty", vector3(-1388.11, -606.23, 30.32), 0.55, 0.55,
