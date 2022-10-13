@@ -7,8 +7,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "jsx": "react-jsx",
-        "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true
+        "skipLibCheck": true
     },
     "include": [
         "src/**/*"
