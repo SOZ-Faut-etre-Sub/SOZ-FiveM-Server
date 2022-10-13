@@ -76,7 +76,7 @@ export class BennysOrderProvider {
             }
         );
 
-        if (!value || value.toLowerCase() === 'oui') {
+        if (value && value.toLowerCase() === 'oui') {
             await emitRpc<string>(RpcEvent.BENNYS_CANCEL_ORDER, uuid);
             await this.onGetOrders();
         }
