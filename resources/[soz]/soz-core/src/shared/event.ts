@@ -8,7 +8,6 @@ export enum ServerEvent {
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
-    BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
     BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
 
@@ -175,6 +174,11 @@ export enum NuiEvent {
     AdminMenuSkinSave = 'soz-core:client:admin:skin:save',
 
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
+
+    BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
+    BennysOrder = 'soz-core:client:job:bennys:order',
+    BennysGetOrders = 'soz-core:client:job:bennys:get-orders',
+
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',

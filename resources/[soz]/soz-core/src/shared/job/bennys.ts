@@ -43,3 +43,9 @@ export const BennysConfig = {
         zone: resellZone,
     },
 };
+
+export type BennysOrder = {
+    uuid: string;
+    model: string;
+    orderDate: string;
+};
