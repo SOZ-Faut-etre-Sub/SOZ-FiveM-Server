@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { BennysOrder } from '../../../shared/job/bennys';
+import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
@@ -35,7 +35,11 @@ export const BennysOrderMenu: FunctionComponent = () => {
                         .sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime())
                         .map(order => {
                             const remainingMinutes = Math.floor(
-                                (new Date(order.orderDate).getTime() + 1000 * 60 * 60 - Date.now()) / 1000 / 60
+                                (new Date(order.orderDate).getTime() +
+                                    1000 * 60 * BennysConfig.Order.waitingTime -
+                                    Date.now()) /
+                                    1000 /
+                                    60
                             );
                             return (
                                 <MenuItemButton

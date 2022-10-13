@@ -25,8 +25,6 @@ export class BennysOrderProvider {
     @Inject(BankService)
     private bankService: BankService;
 
-    private readonly WAITING_TIME = 60; // In minutes
-
     private ordersInProgress: Map<string, BennysOrder> = new Map();
 
     private orderedVehicle = 0;
@@ -35,7 +33,7 @@ export class BennysOrderProvider {
     @Tick(TickInterval.EVERY_MINUTE)
     public async onTick() {
         for (const [uuid, bennyOrder] of this.ordersInProgress.entries()) {
-            if (new Date(bennyOrder.orderDate).getTime() + 1000 * 60 * this.WAITING_TIME < Date.now()) {
+            if (new Date(bennyOrder.orderDate).getTime() + 1000 * 60 * BennysConfig.Order.waitingTime < Date.now()) {
                 await this.addVehicle(bennyOrder.model);
                 this.ordersInProgress.delete(uuid);
             }
@@ -74,7 +72,7 @@ export class BennysOrderProvider {
             this.notifier.notify(source, `Ce modèle de véhicule n'est pas disponible.`);
             return;
         }
-        const vehiclePrice = vehicle.price * 0.01;
+        const vehiclePrice = Math.ceil(vehicle.price * 0.01);
         const [transferred] = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
 
         if (!transferred) {
@@ -114,6 +112,12 @@ export class BennysOrderProvider {
                 model,
             },
         });
+        let category = 'car';
+        if (vehicle.requiredLicence === 'heli') {
+            category = 'air';
+        } else if (vehicle.requiredLicence === 'boat') {
+            category = 'boat';
+        }
         await this.prismaService.player_vehicles.create({
             data: {
                 vehicle: model,
@@ -123,7 +127,7 @@ export class BennysOrderProvider {
                 plate: 'ESSAI ' + this.orderedVehicle,
                 garage: 'bennys_luxury',
                 job: 'bennys',
-                category: vehicle.requiredLicence,
+                category: category,
                 fuel: 100,
                 engine: 1000,
                 body: 1000,
