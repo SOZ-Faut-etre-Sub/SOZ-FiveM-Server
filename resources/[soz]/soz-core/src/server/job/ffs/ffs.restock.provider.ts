@@ -45,21 +45,27 @@ export class FightForStyleRestockProvider {
 
         let amountLeft = item.amount;
         do {
-            const quantity = Math.max(amountLeft, 10);
-            amountLeft -= quantity;
-            await this.restock(amountLeft, brand, garment);
+            const quantity = Math.min(amountLeft, 10);
+            await this.restock(source, amountLeft, brand, garment);
             this.notifier.notify(source, `Vous avez restocké ~g~${quantity}~s~ vêtements`, 'success');
+            amountLeft -= quantity;
         } while (amountLeft > 0);
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
 
-    private async restock(amount: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
-        const { completed } = await this.progressService.progress(source, 'restock', 'Restockage', 2000 * amount, {
-            name: 'base',
-            dictionary: 'amb@prop_human_bum_bin@base',
-            flags: 1,
-        });
+    private async restock(source: number, amount: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
+        const { completed } = await this.progressService.progress(
+            source,
+            'restock',
+            'Restockage',
+            FfsConfig.restock.duration * amount,
+            {
+                name: 'base',
+                dictionary: 'amb@prop_human_bum_bin@base',
+                flags: 1,
+            }
+        );
 
         if (!completed) {
             return;

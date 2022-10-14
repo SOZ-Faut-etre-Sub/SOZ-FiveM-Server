@@ -16,45 +16,73 @@ export enum FabricMaterial {
     LATEX = 'latex',
 }
 
-export type TransformProcess = {
-    input: SewingRawMaterial;
-    inputAmount: number;
-    output: FabricMaterial;
-    outputAmount: number;
-};
-
 const transformProcesses: {
-    [key in FabricMaterial]: TransformProcess;
+    [key in FabricMaterial]: Process;
 } = {
     [FabricMaterial.NATURAL_FIBER]: {
-        input: SewingRawMaterial.COTTON_BALE,
-        inputAmount: 1,
-        output: FabricMaterial.NATURAL_FIBER,
-        outputAmount: 120,
+        label: '🧶 Fibre naturelle',
+        inputs: [
+            {
+                id: SewingRawMaterial.COTTON_BALE,
+                amount: 1,
+            },
+        ],
+        output: {
+            id: FabricMaterial.NATURAL_FIBER,
+            amount: 120,
+        },
     },
     [FabricMaterial.SYNTHETIC_FIBER]: {
-        input: SewingRawMaterial.REFINED_PETROLEUM,
-        inputAmount: 1,
-        output: FabricMaterial.SYNTHETIC_FIBER,
-        outputAmount: 20,
+        label: '🧶 Fibre synthétique',
+        inputs: [
+            {
+                id: SewingRawMaterial.REFINED_PETROLEUM,
+                amount: 1,
+            },
+        ],
+        output: {
+            id: FabricMaterial.SYNTHETIC_FIBER,
+            amount: 20,
+        },
     },
     [FabricMaterial.ARTIFICIAL_FIBER]: {
-        input: SewingRawMaterial.WOOD_PLANK,
-        inputAmount: 1,
-        output: FabricMaterial.ARTIFICIAL_FIBER,
-        outputAmount: 20,
+        label: '🧶 Fibre artificielle',
+        inputs: [
+            {
+                id: SewingRawMaterial.WOOD_PLANK,
+                amount: 1,
+            },
+        ],
+        output: {
+            id: FabricMaterial.ARTIFICIAL_FIBER,
+            amount: 20,
+        },
     },
     [FabricMaterial.LEATHER]: {
-        input: SewingRawMaterial.SKIN,
-        inputAmount: 1,
-        output: FabricMaterial.LEATHER,
-        outputAmount: 8,
+        label: '🧶 Cuir',
+        inputs: [
+            {
+                id: SewingRawMaterial.SKIN,
+                amount: 1,
+            },
+        ],
+        output: {
+            id: FabricMaterial.LEATHER,
+            amount: 8,
+        },
     },
     [FabricMaterial.LATEX]: {
-        input: SewingRawMaterial.SAP,
-        inputAmount: 5,
-        output: FabricMaterial.LATEX,
-        outputAmount: 2,
+        label: '🧶 Latex',
+        inputs: [
+            {
+                id: SewingRawMaterial.SAP,
+                amount: 5,
+            },
+        ],
+        output: {
+            id: FabricMaterial.LATEX,
+            amount: 2,
+        },
     },
 };
 
@@ -72,14 +100,16 @@ export enum LuxuryGarment {
     UNDERWEAR = 'luxury_garment_underwear',
 }
 
-export type CraftProcess = {
+export type Process = {
     label: string;
     inputs: {
         id: string;
         amount: number;
     }[];
-    output: string;
-    outputAmount: number;
+    output: {
+        id: string;
+        amount: number;
+    };
 };
 
 const craftZones: (ZoneOptions & { name: string })[] = [
@@ -135,64 +165,74 @@ const craftZones: (ZoneOptions & { name: string })[] = [
     },
 ];
 
-const craftProcesses: CraftProcess[] = [
+const craftProcesses: Process[] = [
     {
-        label: 'Haut en fibre naturelle',
+        label: '👕 Haut en fibre naturelle',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
                 amount: 40,
             },
         ],
-        output: Garment.TOP,
-        outputAmount: 1,
+        output: {
+            id: Garment.TOP,
+            amount: 1,
+        },
     },
     {
-        label: 'Haut en fibre artificielle',
+        label: '👕 Haut en fibre artificielle',
         inputs: [
             {
                 id: FabricMaterial.ARTIFICIAL_FIBER,
                 amount: 20,
             },
         ],
-        output: Garment.TOP,
-        outputAmount: 1,
+        output: {
+            id: Garment.TOP,
+            amount: 1,
+        },
     },
     {
-        label: 'Pantalon synthétique',
+        label: '👖 Pantalon synthétique',
         inputs: [
             {
                 id: FabricMaterial.SYNTHETIC_FIBER,
                 amount: 20,
             },
         ],
-        output: Garment.PANT,
-        outputAmount: 1,
+        output: {
+            id: Garment.PANT,
+            amount: 1,
+        },
     },
     {
-        label: 'Pantalon naturel',
+        label: '👖 Pantalon naturel',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
                 amount: 40,
             },
         ],
-        output: Garment.PANT,
-        outputAmount: 1,
+        output: {
+            id: Garment.PANT,
+            amount: 1,
+        },
     },
     {
-        label: 'Sous-vêtement',
+        label: '🩲 Sous-vêtement',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
                 amount: 20,
             },
         ],
-        output: Garment.UNDERWEAR,
-        outputAmount: 1,
+        output: {
+            id: Garment.UNDERWEAR,
+            amount: 1,
+        },
     },
     {
-        label: 'Vêtements de travail',
+        label: '⚒️ Vêtements de travail',
         inputs: [
             {
                 id: Garment.TOP,
@@ -203,8 +243,10 @@ const craftProcesses: CraftProcess[] = [
                 amount: 1,
             },
         ],
-        output: 'work_clothes',
-        outputAmount: 1,
+        output: {
+            id: 'work_clothes',
+            amount: 1,
+        },
     },
 ];
 
@@ -241,61 +283,71 @@ const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
     },
 ];
 
-const luxuryCraftProcesses: CraftProcess[] = [
+const luxuryCraftProcesses: Process[] = [
     {
-        label: 'Haut luxueux en fibre naturelle',
+        label: '👕 Haut luxueux en fibre naturelle',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
                 amount: 80,
             },
         ],
-        output: LuxuryGarment.TOP,
-        outputAmount: 1,
+        output: {
+            id: LuxuryGarment.TOP,
+            amount: 1,
+        },
     },
     {
-        label: 'Haut luxueux en fibre artificielle',
+        label: '👕 Haut luxueux en fibre artificielle',
         inputs: [
             {
                 id: FabricMaterial.ARTIFICIAL_FIBER,
                 amount: 40,
             },
         ],
-        output: LuxuryGarment.TOP,
-        outputAmount: 1,
+        output: {
+            id: LuxuryGarment.TOP,
+            amount: 1,
+        },
     },
     {
-        label: 'Pantalon luxueux synthétique',
+        label: '👖 Pantalon luxueux synthétique',
         inputs: [
             {
                 id: FabricMaterial.SYNTHETIC_FIBER,
                 amount: 40,
             },
         ],
-        output: LuxuryGarment.PANT,
-        outputAmount: 1,
+        output: {
+            id: LuxuryGarment.PANT,
+            amount: 1,
+        },
     },
     {
-        label: 'Pantalon luxueux naturel',
+        label: '👖 Pantalon luxueux naturel',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
                 amount: 80,
             },
         ],
-        output: LuxuryGarment.PANT,
-        outputAmount: 1,
+        output: {
+            id: LuxuryGarment.PANT,
+            amount: 1,
+        },
     },
     {
-        label: 'Sous-vêtement luxueux',
+        label: '🩲 Sous-vêtement luxueux',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
                 amount: 40,
             },
         ],
-        output: LuxuryGarment.UNDERWEAR,
-        outputAmount: 1,
+        output: {
+            id: LuxuryGarment.UNDERWEAR,
+            amount: 1,
+        },
     },
 ];
 
@@ -312,9 +364,9 @@ const shoesCraftZones: (ZoneOptions & { name: string })[] = [
     },
 ];
 
-const shoesCraftProcesses: CraftProcess[] = [
+const shoesCraftProcesses: Process[] = [
     {
-        label: 'Paire de chaussures',
+        label: '👞 Paire de chaussures',
         inputs: [
             {
                 id: FabricMaterial.LEATHER,
@@ -325,11 +377,13 @@ const shoesCraftProcesses: CraftProcess[] = [
                 amount: 2,
             },
         ],
-        output: Garment.SHOES,
-        outputAmount: 1,
+        output: {
+            id: Garment.SHOES,
+            amount: 1,
+        },
     },
     {
-        label: 'Paire de chaussures luxueuses',
+        label: '👞 Paire de chaussures luxueuses',
         inputs: [
             {
                 id: FabricMaterial.LEATHER,
@@ -340,8 +394,10 @@ const shoesCraftProcesses: CraftProcess[] = [
                 amount: 4,
             },
         ],
-        output: LuxuryGarment.SHOES,
-        outputAmount: 1,
+        output: {
+            id: LuxuryGarment.SHOES,
+            amount: 1,
+        },
     },
 ];
 
@@ -382,6 +438,7 @@ export const FfsConfig = {
         },
     },
     restock: {
+        duration: 2000,
         getRewardFromDeliveredGarment,
     },
 };
