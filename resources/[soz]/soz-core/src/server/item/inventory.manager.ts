@@ -108,4 +108,7 @@ export class InventoryManager {
     ): boolean {
         return this.sozInventory.CanSwapItem(source, firstItemId, firstItemAmount, secondItemId, secondItemAmount);
     }
+
+    // TODO: Implement the following method in soz core directly
+    // public canSwapItem(source: number, { id: string; amount: number; }[], { id: string; amount: number;}[]): boolean {
 }

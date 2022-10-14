@@ -3,7 +3,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
+import { FfsConfig, Process } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
@@ -31,7 +31,7 @@ export class FightForStyleCraftProvider {
     private itemService: ItemService;
 
     @OnEvent(ServerEvent.FFS_CRAFT)
-    public async onCraft(source: number, craftProcess: CraftProcess) {
+    public async onCraft(source: number, craftProcess: Process) {
         if (!this.canCraft(source, craftProcess)) {
             this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`, 'error');
             return;
@@ -41,7 +41,7 @@ export class FightForStyleCraftProvider {
 
         while (this.canCraft(source, craftProcess)) {
             const hasCrafted = await this.doCraft(source, craftProcess);
-            const outputItemLabel = this.itemService.getItem(craftProcess.output).label;
+            const outputItemLabel = this.itemService.getItem(craftProcess.output.id).label;
             if (hasCrafted) {
                 this.notifier.notify(source, `Vous avez confectionné un·e ~g~${outputItemLabel}~s~.`);
             } else {
@@ -52,7 +52,7 @@ export class FightForStyleCraftProvider {
         this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`);
     }
 
-    private canCraft(source: number, craftProcess: CraftProcess): boolean {
+    private canCraft(source: number, craftProcess: Process): boolean {
         for (const input of craftProcess.inputs) {
             const item = this.inventoryManager.getFirstItemInventory(source, input.id);
             if (!item || item.amount < input.amount) {
@@ -62,7 +62,7 @@ export class FightForStyleCraftProvider {
         return true;
     }
 
-    private async doCraft(source: number, craftProcess: CraftProcess) {
+    private async doCraft(source: number, craftProcess: Process) {
         const { completed } = await this.progressService.progress(
             source,
             'ffs_craft',
@@ -82,7 +82,7 @@ export class FightForStyleCraftProvider {
         for (const input of craftProcess.inputs) {
             this.inventoryManager.removeItemFromInventory(source, input.id, input.amount);
         }
-        this.inventoryManager.addItemToInventory(source, craftProcess.output, craftProcess.outputAmount);
+        this.inventoryManager.addItemToInventory(source, craftProcess.output.id, craftProcess.output.amount);
         return true;
     }
 }

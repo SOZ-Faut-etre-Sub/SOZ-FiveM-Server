@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { FfsRecipe } from '../../../nui/components/FightForStyle/FightForStyleJobMenu';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
+import { FfsConfig, Process } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';
@@ -87,13 +87,15 @@ export class FightForStyleProvider {
             return;
         }
 
+        const transformProcesses = Object.values(FfsConfig.transform.processes);
         const { craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } = FfsConfig.craft.processes;
         const recipes = [
+            ...this.computeRecipes(transformProcesses),
             ...this.computeRecipes(craftProcesses),
             ...this.computeRecipes(luxuryCraftProcesses),
             ...this.computeRecipes(shoesCraftProcesses),
         ];
-        recipes.sort((a, b) => a.label.localeCompare(b.label));
+        recipes.sort((a, b) => a.label.slice(2).localeCompare(b.label.slice(2)));
         this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, {
             recipes,
             state: this.state,
@@ -117,7 +119,7 @@ export class FightForStyleProvider {
         this.blipFactory.hide('ffs_cotton_bale', true);
     }
 
-    private computeRecipes(craftProcesses: CraftProcess[]): FfsRecipe[] {
+    private computeRecipes(craftProcesses: Process[]): FfsRecipe[] {
         return craftProcesses.map(craftProcess => {
             let canCraft = true;
             const inputs = [];
@@ -135,8 +137,8 @@ export class FightForStyleProvider {
                 label: craftProcess.label,
                 inputs: inputs,
                 output: {
-                    label: this.itemService.getItem(craftProcess.output).label,
-                    amount: craftProcess.outputAmount,
+                    label: this.itemService.getItem(craftProcess.output.id).label,
+                    amount: craftProcess.output.amount,
                 },
             };
         });
