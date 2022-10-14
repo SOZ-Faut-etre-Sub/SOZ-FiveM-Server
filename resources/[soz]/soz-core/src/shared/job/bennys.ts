@@ -38,7 +38,7 @@ export const BennysConfig = {
     },
     Order: {
         zone: orderZone,
-        waitingTime: 1, // In minutes
+        waitingTime: 60, // In minutes
     },
     Resell: {
         zone: resellZone,
