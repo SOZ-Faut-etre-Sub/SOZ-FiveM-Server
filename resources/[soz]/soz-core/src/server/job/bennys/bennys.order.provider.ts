@@ -124,7 +124,7 @@ export class BennysOrderProvider {
                 hash: GetHashKey(model).toString(),
                 mods: JSON.stringify(BennysConfig.Mods.upgradedSimplifiedMods),
                 condition: '{}',
-                plate: 'ESSAI ' + this.orderedVehicle,
+                plate: 'ESSAI ' + (this.orderedVehicle + 1),
                 garage: 'bennys_luxury',
                 job: 'bennys',
                 category: category,
