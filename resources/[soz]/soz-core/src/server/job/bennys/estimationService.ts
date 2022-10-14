@@ -38,6 +38,6 @@ export class EstimationService {
             }
         }
 
-        return Ok(price);
+        return Ok(Math.ceil(price));
     }
 }
