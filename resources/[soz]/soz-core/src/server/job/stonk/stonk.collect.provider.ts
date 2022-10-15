@@ -40,12 +40,7 @@ export class StonkCollectProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    private collectBagHistory: Record<StonkBagType, { [key in string]?: number }> = {
-        jewelbag: {},
-        small_moneybag: {},
-        medium_moneybag: {},
-        big_moneybag: {},
-    };
+    private collectBagHistory: Record<string, { [key in string]?: number }> = {};
 
     @OnEvent(ServerEvent.STONK_COLLECT)
     public async onCollect(source: number, brand: string, shop: string) {
@@ -71,7 +66,7 @@ export class StonkCollectProvider {
             return;
         }
 
-        if (!this.canCollect(source, brand, item)) {
+        if (!this.canCollect(source, brand, shop, item)) {
             this.notifier.notify(source, `Ce magasin n'a plus de sac actuellement !`, 'error');
             return;
         }
@@ -79,7 +74,7 @@ export class StonkCollectProvider {
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à collecter.', 'success');
 
         const outputItemLabel = this.itemService.getItem(item).label;
-        const hasCollected = await this.doCollect(source, item);
+        const hasCollected = await this.doCollect(source, shop, item);
 
         if (hasCollected) {
             this.monitor.publish(
@@ -105,8 +100,8 @@ export class StonkCollectProvider {
         }
     }
 
-    private canCollect(source: number, brand: string, item: StonkBagType): boolean {
-        const lastCollect = this.collectBagHistory[item][source] || 0;
+    private canCollect(source: number, brand: string, shop: string, item: StonkBagType): boolean {
+        const lastCollect = this.collectBagHistory[shop]?.[source] || 0;
 
         return (
             lastCollect + StonkConfig.collection[item].timeout <= new Date().getTime() &&
@@ -114,11 +109,11 @@ export class StonkCollectProvider {
         );
     }
 
-    private async doCollect(source: number, item: StonkBagType): Promise<boolean> {
+    private async doCollect(source: number, shop: string, item: StonkBagType): Promise<boolean> {
         const { completed } = await this.progressService.progress(
             source,
             'stonk_collect',
-            'Vous déposez...',
+            'Vous collectez...',
             StonkConfig.resell.duration,
             {
                 dictionary: 'anim@mp_radio@garage@low',
@@ -137,7 +132,11 @@ export class StonkCollectProvider {
         }
 
         const addRequest = this.inventoryManager.addItemToInventory(source, item, StonkConfig.collection[item].amount);
-        this.collectBagHistory[item][source] = new Date().getTime();
+
+        if (this.collectBagHistory[shop] === undefined) {
+            this.collectBagHistory[shop] = {};
+        }
+        this.collectBagHistory[shop][source] = new Date().getTime();
 
         return addRequest.success;
     }
