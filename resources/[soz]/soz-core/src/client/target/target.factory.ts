@@ -2,6 +2,7 @@ import { Injectable } from '../../core/decorators/injectable';
 import { Vector3 } from '../../shared/polyzone/vector';
 
 export type ZoneOptions = {
+    name?: string;
     center: Vector3;
     length?: number;
     width?: number;

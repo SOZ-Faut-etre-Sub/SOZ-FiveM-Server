@@ -25,6 +25,8 @@ export enum ServerEvent {
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
+    STONK_RESELL = 'soz-core:server:job:stonk:resell',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_BUY_ITEM = 'soz-core:server:job:lsmc:buy-item',
@@ -101,7 +103,7 @@ export enum ClientEvent {
     JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
     JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
-
+    JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
 

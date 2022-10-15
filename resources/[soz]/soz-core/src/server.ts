@@ -12,6 +12,7 @@ import { FightForStyleModule } from './server/job/ffs/ffs.module';
 import { FoodModule } from './server/job/food/food.module';
 import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
+import { StonkModule } from './server/job/stonk/stonk.module';
 import { PlayerModule } from './server/player/player.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
@@ -36,7 +37,8 @@ async function bootstrap() {
         AdminModule,
         VoipModule,
         JobModule,
-        BennysModule
+        BennysModule,
+        StonkModule
     );
 
     await app.stop();

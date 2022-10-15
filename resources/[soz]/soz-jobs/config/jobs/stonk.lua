@@ -20,8 +20,6 @@ StonkConfig.FillIn = {
     Amount = 4000,
 }
 
-StonkConfig.Blip = {Name = "STONK Depository", Icon = 605, Coords = vector2(6.25, -709.11), Scale = 1.0}
-
 StonkConfig.Accounts = {FarmAccount = "farm_stonk", BankAccount = "bank_refill", SafeStorage = "safe_cash-transfer"}
 
 StonkConfig.DutyOutfit = {

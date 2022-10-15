@@ -29,25 +29,6 @@ QBCore.Functions.CreateCallback("soz-jobs:server:stonk-collect-bag", function(so
     cb(success)
 end)
 
-QBCore.Functions.CreateCallback("soz-jobs:server:stonk-resale-bag", function(source, cb, nBags)
-    local Player = QBCore.Functions.GetPlayer(source)
-    if not Player then
-        return
-    end
-
-    local nItems = exports["soz-inventory"]:GetItem(Player.PlayerData.source, StonkConfig.Collection.BagItem, nil, true)
-
-    if nItems < nBags then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous n'avez pas suffisamment de sacs d'argent.", "error")
-        cb(false)
-        return
-    end
-
-    Player.Functions.RemoveItem(StonkConfig.Collection.BagItem, nBags, nil)
-    TriggerEvent("banking:server:TransferMoney", StonkConfig.Accounts.FarmAccount, StonkConfig.Accounts.SafeStorage, nBags * StonkConfig.Resale.Price)
-    cb(true)
-end)
-
 -- FILL IN
 QBCore.Functions.CreateCallback("soz-jobs:server:stonk-fill-in", function(source, cb, data)
     local Player = QBCore.Functions.GetPlayer(source)
