@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { JobPermission } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
@@ -46,7 +47,7 @@ export class BennysResellProvider {
                     const point: Vector3 = [coords[0], coords[1], coords[2]];
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', 'resell') &&
+                        this.QBCore.hasJobPermission('bennys', JobPermission.Bennys_Resell) &&
                         zone.isPointInside(point)
                     );
                 },
