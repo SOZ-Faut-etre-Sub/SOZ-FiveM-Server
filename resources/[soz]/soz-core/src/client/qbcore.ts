@@ -1,7 +1,7 @@
 import { Injectable } from '../core/decorators/injectable';
 import { Blip } from '../shared/blip';
 import { Item } from '../shared/item';
-import { Job, JobType } from '../shared/job';
+import { Job, JobPermission, JobType } from '../shared/job';
 import { PlayerData } from '../shared/player';
 
 @Injectable()
@@ -49,7 +49,7 @@ export class Qbcore {
     }
 
     // Temporary method that would be moved
-    public hasJobPermission(job: string, permission: string): boolean {
+    public hasJobPermission(job: string, permission: JobPermission): boolean {
         return this.SozJobCore.Functions.HasPermission(job, permission);
     }
 

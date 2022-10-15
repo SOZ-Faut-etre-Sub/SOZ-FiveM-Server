@@ -25,6 +25,12 @@ export class PlayerService {
         return player.PlayerData;
     }
 
+    public getPlayerJobAndGrade(source: number): [string, number] | null {
+        const player = this.QBCore.getPlayer(source);
+
+        return [player.PlayerData.job.id, Number(player.PlayerData.job.grade)];
+    }
+
     public updatePlayerMaxWeight(source: number): void {
         const player = this.QBCore.getPlayer(source);
 
