@@ -29,6 +29,7 @@ export class AdminMenuInteractiveProvider {
             players.push({
                 id: playerData.source,
                 citizenId: playerData.citizenid,
+                license: playerData.license,
                 name: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
             });
         }
@@ -48,6 +49,7 @@ export class AdminMenuInteractiveProvider {
             players.push({
                 id: playerData.source,
                 name: name,
+                license: playerData.license,
                 coords: GetEntityCoords(ped),
                 heading: GetEntityHeading(ped),
                 cid: name,

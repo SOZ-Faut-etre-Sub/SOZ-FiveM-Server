@@ -84,7 +84,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
         return null;
     }
 
-    const isAdminOrHelper = ['admin', 'helper'].includes(permission);
+    const isAdminOrStaff = ['admin', 'staff'].includes(permission);
 
     return (
         <>
@@ -200,7 +200,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         </MenuItemSelect>
                         <MenuItemSelect
                             title={'Rendre malade'}
-                            disabled={!isAdminOrHelper}
+                            disabled={!isAdminOrStaff}
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleDiseaseOption, {
                                     action: DISEASE_OPTIONS[selectedIndex].value,
@@ -215,7 +215,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             ))}
                         </MenuItemSelect>
                         <MenuItemButton
-                            disabled={!isAdminOrHelper}
+                            disabled={!isAdminOrStaff}
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleResetSkin, player);
                             }}

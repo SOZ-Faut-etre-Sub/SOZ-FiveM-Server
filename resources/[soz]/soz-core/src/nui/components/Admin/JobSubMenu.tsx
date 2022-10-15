@@ -64,6 +64,9 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
 
                         if (job.grades && Object.keys(job.grades).length > 0) {
                             const currentJobGrade = Object.values(jobs[selectedIndex].grades)[0];
+                            updateState('job', 'currentJobGradeIndex', 0);
+
+                            setGrades(job.grades);
 
                             await fetchNui(NuiEvent.AdminSetJob, { jobId: job.id, jobGrade: currentJobGrade });
                             return;
