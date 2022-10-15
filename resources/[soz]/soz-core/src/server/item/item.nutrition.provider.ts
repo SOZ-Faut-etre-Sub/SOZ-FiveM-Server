@@ -102,7 +102,7 @@ export class ItemNutritionProvider {
             const diffPercent = player.metadata.hunger + item.nutrition.hunger - 100;
 
             if (diffPercent > 0) {
-                dyspepsiaLuck += Math.floor(diffPercent / 4);
+                dyspepsiaLuck += Math.floor(diffPercent / 4) / 2;
             }
         }
 
