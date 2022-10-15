@@ -20,6 +20,7 @@ export const LICENCES = [
 export type AdminPlayer = {
     id: number; // That's the server id of the player.
     citizenId: string;
+    license: string;
     name: string;
 };
 

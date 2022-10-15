@@ -33,8 +33,9 @@ export class AdminMenuPlayerProvider {
 
     @OnEvent(ServerEvent.ADMIN_SET_STRENGTH)
     public onSetStrength(source: number, target: number, value: number) {
-        this.playerService.setPlayerMetadata(source, 'last_strength_update', new Date().toUTCString());
-        this.playerService.incrementMetadata(source, 'strength', value, 60, 150);
+        this.playerService.setPlayerMetadata(target, 'last_strength_update', new Date().toUTCString());
+        this.playerService.incrementMetadata(target, 'strength', value, 60, 150);
+        this.playerService.updatePlayerMaxWeight(target);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_AIO)
@@ -44,12 +45,12 @@ export class AdminMenuPlayerProvider {
         this.onSetStrength(source, target, value === 'min' ? -1000 : 1000);
 
         const nutritionValue = value === 'min' ? 0 : 25;
-        this.playerService.incrementMetadata(source, 'fiber', nutritionValue, 0, 25);
-        this.playerService.incrementMetadata(source, 'sugar', nutritionValue, 0, 25);
-        this.playerService.incrementMetadata(source, 'protein', nutritionValue, 0, 25);
-        this.playerService.incrementMetadata(source, 'lipid', nutritionValue, 0, 25);
+        this.playerService.incrementMetadata(target, 'fiber', nutritionValue, 0, 25);
+        this.playerService.incrementMetadata(target, 'sugar', nutritionValue, 0, 25);
+        this.playerService.incrementMetadata(target, 'protein', nutritionValue, 0, 25);
+        this.playerService.incrementMetadata(target, 'lipid', nutritionValue, 0, 25);
         const newHealthLevel = this.playerService.incrementMetadata(
-            source,
+            target,
             'health_level',
             value === 'min' ? 0 : 100,
             0,
@@ -65,7 +66,7 @@ export class AdminMenuPlayerProvider {
                 maxHealth = 160;
             }
 
-            this.playerService.setPlayerMetadata(source, 'max_health', maxHealth);
+            this.playerService.setPlayerMetadata(target, 'max_health', maxHealth);
         }
     }
 

@@ -32,10 +32,19 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                     checked={state.displayPlayerNames}
                     onChange={async value => {
                         updateState('interactive', 'displayPlayerNames', value);
-                        await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, value);
+                        await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, { value, withDetails: false });
                     }}
                 >
-                    Afficher les noms des joueurs
+                    Afficher les noms des joueurs (sans détails)
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.displayPlayerNames}
+                    onChange={async value => {
+                        updateState('interactive', 'displayPlayerNames', value);
+                        await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, { value, withDetails: true });
+                    }}
+                >
+                    Afficher les noms des joueurs (avec détails)
                 </MenuItemCheckbox>
                 <MenuItemCheckbox
                     checked={state.displayPlayersOnMap}
