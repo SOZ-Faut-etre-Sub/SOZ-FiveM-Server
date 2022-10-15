@@ -63,7 +63,7 @@ RegisterNetEvent("soz-concess:server:buyShowroomVehicle", function(dealership, v
     if dealership ~= Config.DealershipTypes.Cycle then
         local lastPurchase = GetLastPurchase(source, dealership)
         if lastPurchase then
-            local canPurchaseAfter = os.time() + (Config.Dealerships[dealership].daysBeforeNextPurchase * 24 * 60 * 60)
+            local canPurchaseAfter = lastPurchase.date + (Config.Dealerships[dealership].daysBeforeNextPurchase * 24 * 60 * 60)
             if os.time() < canPurchaseAfter then
                 local daysBeforeNextPurchase = math.floor(os.difftime(canPurchaseAfter, os.time()) / (24 * 60 * 60))
                 TriggerClientEvent("hud:client:DrawNotification", src, "Tu dois attendre " .. daysBeforeNextPurchase .. " jour(s) avant ton prochain achat.",
